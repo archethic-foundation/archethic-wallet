@@ -1,0 +1,272 @@
+// @dart=2.9
+
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:uniris_mobile_wallet/appstate_container.dart';
+import 'package:uniris_mobile_wallet/styles.dart';
+import 'package:uniris_mobile_wallet/model/setting_item.dart';
+import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
+
+class AppSettings {
+  //Settings item with a dropdown option
+  static Widget buildSettingsListItemWithDefaultValue(
+      BuildContext context,
+      String heading,
+      SettingSelectionItem defaultMethod,
+      IconData icon,
+      Function onPressed,
+      {bool disabled = false}) {
+    return IgnorePointer(
+      ignoring: disabled,
+      child: TextButton(
+        onPressed: () {
+          onPressed();
+        },
+        child: Container(
+          height: 30.0,
+          margin: EdgeInsetsDirectional.only(start: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsetsDirectional.only(end: 13.0),
+                child: Container(
+                  child: Row(
+                    children: [
+                      Icon(icon,
+                          color: disabled
+                              ? StateContainer.of(context).curTheme.icon45
+                              : StateContainer.of(context).curTheme.icon,
+                          size: 24),
+                      SizedBox(width: 16),
+                      AutoSizeText(
+                        heading,
+                        style: disabled
+                            ? AppStyles.textStyleSettingItemHeader45(context)
+                            : AppStyles.textStyleSettingItemHeader(context),
+                        maxLines: 1,
+                        stepGranularity: 0.1,
+                        minFontSize: 8,
+                      ),
+                    ],
+                  ),
+                  margin: EdgeInsets.only(top: 3, left: 3, bottom: 3, right: 3),
+                ),
+              ),
+              AutoSizeText(
+                defaultMethod.getDisplayName(context),
+                style: disabled
+                    ? AppStyles.textStyleSettingItemSubheader30(context)
+                    : AppStyles.textStyleSettingItemSubheader(context),
+                maxLines: 1,
+                stepGranularity: 0.1,
+                minFontSize: 8,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Widget buildSettingsListItemWithDefaultValueWithInfos(
+      BuildContext context,
+      String heading,
+      String info,
+      SettingSelectionItem defaultMethod,
+      IconData icon,
+      Function onPressed,
+      {bool disabled = false}) {
+    return TextButton(
+      onPressed: () {
+        if (onPressed != null) {
+          onPressed();
+        } else {
+          return;
+        }
+      },
+      child: Container(
+        height: 60.0,
+        margin: EdgeInsetsDirectional.only(start: 10.0),
+        child: Row(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsetsDirectional.only(end: 13.0),
+              child: Container(
+                child: Icon(
+                  icon,
+                  color: StateContainer.of(context).curTheme.icon,
+                  size: 24,
+                ),
+                margin: EdgeInsetsDirectional.only(
+                  top: 3,
+                  start: 3,
+                  bottom: 3,
+                  end: 3,
+                ),
+              ),
+            ),
+            Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                      width: UIUtil.drawerWidth(context) - 69,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            heading,
+                            style:
+                                AppStyles.textStyleSettingItemHeader(context),
+                          ),
+                          Text(
+                            defaultMethod.getDisplayName(context),
+                            style: disabled
+                                ? AppStyles.textStyleSettingItemSubheader30(
+                                    context)
+                                : AppStyles.textStyleSettingItemSubheader(
+                                    context),
+                          ),
+                        ],
+                      )),
+                  Container(
+                    width: UIUtil.drawerWidth(context) - 100,
+                    child: AutoSizeText(
+                      info,
+                      maxLines: 5,
+                      stepGranularity: 0.1,
+                      minFontSize: 8,
+                      style: AppStyles.textStyleSettingItemSubheader(context),
+                    ),
+                  ),
+                ]),
+           
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Widget buildSettingsListItemSingleLineWithInfos(
+      BuildContext context, String heading, String info, IconData settingIcon,
+      {Function onPressed}) {
+    return TextButton(
+      onPressed: () {
+        if (onPressed != null) {
+          onPressed();
+        } else {
+          return;
+        }
+      },
+      child: Container(
+        height: 60.0,
+        margin: EdgeInsetsDirectional.only(start: 10.0),
+        child: Row(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsetsDirectional.only(end: 13.0),
+              child: Container(
+                child: Icon(
+                  settingIcon,
+                  color: StateContainer.of(context).curTheme.icon,
+                  size: 24,
+                ),
+                margin: EdgeInsetsDirectional.only(
+                  top: 3,
+                  start: 3,
+                  bottom: 3,
+                  end: 3,
+                ),
+              ),
+            ),
+            Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    width: UIUtil.drawerWidth(context) - 100,
+                    child: Text(
+                      heading,
+                      style: AppStyles.textStyleSettingItemHeader(context),
+                    ),
+                  ),
+                  Container(
+                    width: UIUtil.drawerWidth(context) - 100,
+                    child: AutoSizeText(
+                      info,
+                      maxLines: 5,
+                      stepGranularity: 0.1,
+                      minFontSize: 8,
+                      style: AppStyles.textStyleSettingItemSubheader(context),
+                    ),
+                  ),
+                ]),
+            Container(
+              child: Icon(
+                FontAwesome5.chevron_right,
+                color: StateContainer.of(context).curTheme.icon,
+                size: 15,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  //Settings item without any dropdown option but rather a direct functionality
+  static Widget buildSettingsListItemSingleLine(
+      BuildContext context, String heading, IconData settingIcon,
+      {Function onPressed}) {
+    return TextButton(
+      onPressed: () {
+        if (onPressed != null) {
+          onPressed();
+        } else {
+          return;
+        }
+      },
+      child: Container(
+        height: 30.0,
+        margin: EdgeInsetsDirectional.only(start: 10.0),
+        child: Row(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsetsDirectional.only(end: 13.0),
+              child: Container(
+                child: Icon(
+                  settingIcon,
+                  color: StateContainer.of(context).curTheme.icon,
+                  size: 24,
+                ),
+                margin: EdgeInsetsDirectional.only(
+                  top: 3,
+                  start: 3,
+                  bottom: 3,
+                  end: 3,
+                ),
+              ),
+            ),
+            Container(
+              width: UIUtil.drawerWidth(context) - 100,
+              child: Text(
+                heading,
+                style: AppStyles.textStyleSettingItemHeader(context),
+              ),
+            ),
+            Container(
+              child: Icon(
+                FontAwesome5.chevron_right,
+                color: StateContainer.of(context).curTheme.icon,
+                size: 15,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
