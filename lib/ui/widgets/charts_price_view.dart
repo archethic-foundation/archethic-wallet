@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:charts_common/common.dart' as charts_common;
+import 'package:uniris_lib_dart/model/response/coins_price_response.dart';
+import 'package:uniris_lib_dart/services/api_coins_service.dart';
 import 'package:uniris_mobile_wallet/model/available_currency.dart';
-import 'package:uniris_mobile_wallet/network/model/response/coins_price_response.dart';
-import 'package:uniris_mobile_wallet/service/api_coins_service.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
 
 class ChartsPriceView extends StatefulWidget {
@@ -96,7 +96,7 @@ class _ChartsPriceViewState extends State<ChartsPriceView> {
               }));
 
     return Container(
-   alignment: Alignment.center,
+      alignment: Alignment.center,
       width: MediaQuery.of(context).size.width - 185,
       margin: EdgeInsets.only(
         left: MediaQuery.of(context).size.width * 0.0750,

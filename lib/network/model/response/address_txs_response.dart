@@ -9,10 +9,7 @@ import 'package:uniris_mobile_wallet/network/model/block_types.dart';
 import 'package:uniris_mobile_wallet/util/numberutil.dart';
 
 class AddressTxsResponse {
-  AddressTxsResponse({
-    this.result,
-    this.tokens
-  });
+  AddressTxsResponse({this.result, this.tokens});
 
   List<AddressTxsResponseResult> result;
   List<BisToken> tokens;

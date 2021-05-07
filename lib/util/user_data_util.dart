@@ -6,7 +6,6 @@ import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
-import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/model/address.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
@@ -22,7 +21,11 @@ class QRScanErrs {
   static const String PERMISSION_DENIED = "qr_denied";
   static const String UNKNOWN_ERROR = "qr_unknown";
   static const String CANCEL_ERROR = "qr_cancel";
-  static const List<String> ERROR_LIST = [PERMISSION_DENIED, UNKNOWN_ERROR, CANCEL_ERROR];
+  static const List<String> ERROR_LIST = [
+    PERMISSION_DENIED,
+    UNKNOWN_ERROR,
+    CANCEL_ERROR
+  ];
 }
 
 class UserDataUtil {
@@ -74,10 +77,12 @@ class UserDataUtil {
       return _parseData(data, type);
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.cameraAccessDenied) {
-        UIUtil.showSnackbar(AppLocalization.of(context).qrInvalidPermissions, context);
+        UIUtil.showSnackbar(
+            AppLocalization.of(context).qrInvalidPermissions, context);
         return QRScanErrs.PERMISSION_DENIED;
       } else {
-        UIUtil.showSnackbar(AppLocalization.of(context).qrUnknownError, context);
+        UIUtil.showSnackbar(
+            AppLocalization.of(context).qrUnknownError, context);
         return QRScanErrs.UNKNOWN_ERROR;
       }
     } on FormatException {
@@ -107,7 +112,9 @@ class UserDataUtil {
       });
       setStream = delayed.asStream().listen((_) {
         Clipboard.getData("text/plain").then((data) {
-          if (data != null && data.text != null && AppSeeds.isValidSeed(data.text)) {
+          if (data != null &&
+              data.text != null &&
+              AppSeeds.isValidSeed(data.text)) {
             Clipboard.setData(ClipboardData(text: ""));
           }
         });

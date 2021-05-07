@@ -326,6 +326,7 @@ class AppStyles {
       color: StateContainer.of(context).curTheme.choiceOption,
     );
   }
+
   // Text style for dialog button text
   static TextStyle textStyleDialogButtonText(BuildContext context) {
     return TextStyle(

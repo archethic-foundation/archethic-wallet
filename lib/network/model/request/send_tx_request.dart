@@ -35,7 +35,7 @@ class SendTxRequest {
     for (int i = 0; i < length; i++) {
       seeds.add(random.nextInt(255));
     }
-  
+
     return new Uint8List.fromList(seeds);
   }
 

@@ -10,7 +10,6 @@ import 'package:uniris_mobile_wallet/dimens.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ReceiveSheet extends StatefulWidget {
   final Widget qrWidget;
@@ -72,8 +71,8 @@ class _ReceiveSheetStateState extends State<ReceiveSheet> {
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 15.0),
-                      child: UIUtil.threeLineAddressText(
-                        context, '05A2525C9C4FDDC02BA97554980A0CFFADA2AEB0650E3EAD05796275F05DDA85',
+                      child: UIUtil.threeLineAddressText(context,
+                          '05A2525C9C4FDDC02BA97554980A0CFFADA2AEB0650E3EAD05796275F05DDA85',
                           // TODO:
                           //context, StateContainer.of(context).wallet.address,
                           type: ThreeLineAddressTextType.PRIMARY60),
@@ -121,7 +120,8 @@ class _ReceiveSheetStateState extends State<ReceiveSheet> {
                         child: CircleAvatar(
                           backgroundColor:
                               StateContainer.of(context).curTheme.primary,
-                          backgroundImage: ExactAssetImage("assets/uniris_icon.png"),
+                          backgroundImage:
+                              ExactAssetImage("assets/uniris_icon.png"),
                           radius: 100.0,
                         ),
                       ),

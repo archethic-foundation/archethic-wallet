@@ -252,45 +252,17 @@ class AppLocalization {
     return Intl.message('Custom Urls', desc: '', name: 'customUrlHeader');
   }
 
-  String get enterWalletServer {
-    return Intl.message('Enter a custom wallet server',
-        desc: '', name: 'enterWalletServer');
+  String get customUrlDesc {
+    return Intl.message('Define the endpoint', desc: '', name: 'customUrlDesc');
+  }
+
+  String get enterEndpoint {
+    return Intl.message('Enter an endpoint', desc: '', name: 'enterEndpoint');
   }
 
   String get enterWalletServerSwitch {
     return Intl.message('Use a custom wallet server',
         desc: '', name: 'enterWalletServerSwitch');
-  }
-
-  String get enterTokenApi {
-    return Intl.message('Enter url token api', desc: '', name: 'enterTokenApi');
-  }
-
-  String get enterExplorerUrlSwitch {
-    return Intl.message('Use a custom explorer url',
-        desc: '', name: 'enterExplorerUrlSwitch');
-  }
-
-  String get enterExplorerUrl {
-    return Intl.message('Enter a custom url explorer',
-        desc: '', name: 'enterExplorerUrl');
-  }
-
-  String get enterExplorerUrlInfo {
-    return Intl.message(
-        '(ex: https://bismuth.online/search?quicksearch=%1\n"%1" will be replaced by BIS address)',
-        desc: '',
-        name: 'enterExplorerUrlInfo');
-  }
-
-  String get enterWalletServerInfo {
-    return Intl.message('ip:port (ex: 11.22.33.44:2000)',
-        desc: '', name: 'enterWalletServerInfo');
-  }
-
-  String get enterTokenApiInfo {
-    return Intl.message('(ex: https://bismuth.today/api/balances/)',
-        desc: '', name: 'enterTokenApiInfo');
   }
 
   /// -- END CUSTOM URL
@@ -308,19 +280,17 @@ class AppLocalization {
   }
 
   String get addressBookHeader {
-    return Intl.message('Address book',
-        desc: '', name: 'addressBookHeader');
+    return Intl.message('Address book', desc: '', name: 'addressBookHeader');
   }
 
   String get contactHeader {
-    return Intl.message('Contact',
-        desc: '', name: 'contactHeader');
+    return Intl.message('Contact', desc: '', name: 'contactHeader');
   }
+
   String get addressBookDesc {
     return Intl.message('Create and manage frequently-used addresses',
         desc: '', name: 'addressBookDesc');
   }
-
 
   String get addContact {
     return Intl.message('Add Contact',
@@ -417,7 +387,7 @@ class AppLocalization {
   }
 
   String get sendAmountConfirm {
-    return Intl.message("Send %1 BIS",
+    return Intl.message("Send %1 UCO",
         desc: 'send_pin_description', name: 'sendAmountConfirm');
   }
 
@@ -440,16 +410,6 @@ class AppLocalization {
         desc: 'enter_address', name: 'enterAddress');
   }
 
-  String get enterOpenfield {
-    return Intl.message("Enter Data (Openfield)",
-        desc: 'send_openfield_hint', name: 'enterOpenfield');
-  }
-
-  String get enterOperation {
-    return Intl.message("Enter Operation",
-        desc: 'send_operation_hint', name: 'enterOperation');
-  }
-
   String get enterTokenQuantity {
     return Intl.message("Enter Quantity",
         desc: 'send_enterTokenQuantity_hint', name: 'enterTokenQuantity');
@@ -460,39 +420,8 @@ class AppLocalization {
         desc: 'sendATokenQuestion_hint', name: 'sendATokenQuestion');
   }
 
-  String get pasteBisUrl {
-    return Intl.message("You can paste a BIS url",
-        desc: 'pasteBisUrl_hint', name: 'pasteBisUrl');
-  }
-
-  String get pasteBisUrlPrefix {
-    return Intl.message("('bis://' or 'bis://pay)'",
-        desc: 'pasteBisUrlPrefix_hint', name: 'pasteBisUrlPrefix');
-  }
-
-  String get pasteBisUrlError {
-    return Intl.message("Your clipboard doesn't contain a BIS url",
-        desc: 'pasteBisUrlError_hint', name: 'pasteBisUrlError');
-  }
-
   String get available {
     return Intl.message("available", desc: 'available', name: 'available');
-  }
-
-  String get openfield {
-    return Intl.message("Data (Openfield)",
-        desc: 'openfield', name: 'openfield');
-  }
-
-  String get operation {
-    return Intl.message("Operation", desc: 'operation', name: 'operation');
-  }
-
-  String get diacritic {
-    return Intl.message(
-        "Common accents and diacritical signs will be replacing with an equivalent character",
-        desc: 'diacritic',
-        name: 'diacritic');
   }
 
   String get optionalParameters {
@@ -532,7 +461,7 @@ class AppLocalization {
   }
 
   String get minimumSend {
-    return Intl.message("Minimum send amount is %1 BIS",
+    return Intl.message("Minimum send amount is %1 UCO",
         desc: 'send_minimum_error', name: 'minimumSend');
   }
 
@@ -591,7 +520,7 @@ class AppLocalization {
   }
 
   String get authMethod {
-    return Intl.message("Authentication Method",
+    return Intl.message("Auth. Method",
         desc: 'settings_disable_fingerprint', name: 'authMethod');
   }
 
@@ -615,8 +544,7 @@ class AppLocalization {
   }
 
   String get changeCurrency {
-    return Intl.message("Currency",
-        desc: '', name: 'changeCurrency');
+    return Intl.message("Currency", desc: '', name: 'changeCurrency');
   }
 
   String get language {
@@ -766,24 +694,23 @@ class AppLocalization {
   // Scan
 
   String get scanInstructions {
-    return Intl.message("Scan a Bismuth \naddress QR code",
-        desc: 'scan_send_instruction_label', name: 'scanInstructions');
+    return Intl.message("Scan an Uniris \naddress QR code",
+        desc: '', name: 'scanInstructions');
   }
 
   /// -- LOCK SCREEN
 
   String get unlockPin {
-    return Intl.message("Enter PIN to Unlock my Bismuth Wallet",
-        desc: 'unlock_bismuth_pin', name: 'unlockPin');
+    return Intl.message("Enter PIN to Unlock", desc: '', name: 'unlockPin');
   }
 
   String get unlockBiometrics {
-    return Intl.message("Authenticate to Unlock my Bismuth Wallet",
-        desc: 'unlock_bismuth_bio', name: 'unlockBiometrics');
+    return Intl.message("Authenticate to Unlock",
+        desc: '', name: 'unlockBiometrics');
   }
 
   String get lockAppSetting {
-    return Intl.message("Authenticate on Launch",
+    return Intl.message("Auth. on Launch",
         desc: 'authenticate_on_launch', name: 'lockAppSetting');
   }
 
@@ -810,7 +737,7 @@ class AppLocalization {
   }
 
   String get autoLockHeader {
-    return Intl.message("Automatically Lock",
+    return Intl.message("Auto Lock",
         desc: 'auto_lock_header', name: 'autoLockHeader');
   }
 
@@ -1082,9 +1009,8 @@ class AppLocalization {
 
   String get passwordNoLongerRequiredToOpenParagraph {
     return Intl.message(
-        "You will not need a password to open my Bismuth Wallet anymore.",
-        desc:
-            'An info paragraph that tells the user a password will no longer be needed to open my Bismuth Wallet',
+        "You will not need a password to open your Wallet anymore.",
+        desc: '',
         name: 'passwordNoLongerRequiredToOpenParagraph');
   }
 
@@ -1178,21 +1104,13 @@ class AppLocalization {
 
   /// BUTTONS END
 
-  /// Live chat
-  String get connectingHeader {
-    return Intl.message("Connecting",
-        desc:
-            'A header to let the user now that my Bismuth Wallet is currently connecting to (or loading) live chat.',
-        name: 'connectingHeader');
-  }
-
   Future<String> getAccountExplorerUrl(String account) async {
     String explorerUrl = await sl.get<SharedPrefsUtil>().getExplorerUrl();
     return explorerUrl.replaceAll("%1", account);
   }
 
   String get privacyUrl {
-    return 'https://hypernodes.bismuth.live/?page_id=2565';
+    return 'https://uniris.io';
   }
 
   String get endpointUrl {

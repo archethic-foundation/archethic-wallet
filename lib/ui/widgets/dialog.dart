@@ -24,10 +24,7 @@ class AppDialogs {
           ),
           content: Text(content, style: AppStyles.textStyleParagraph(context)),
           actions: <Widget>[
-            FlatButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4.0)),
-              padding: EdgeInsets.all(12),
+            TextButton(
               child: Container(
                 constraints: BoxConstraints(maxWidth: 100),
                 child: Text(
@@ -42,10 +39,7 @@ class AppDialogs {
                 }
               },
             ),
-            FlatButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4.0)),
-              padding: EdgeInsets.all(12),
+            TextButton(
               child: Container(
                 constraints: BoxConstraints(maxWidth: 100),
                 child: Text(
@@ -75,7 +69,7 @@ class AppDialogs {
           ),
           content: Text(content, style: AppStyles.textStyleParagraph(context)),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(
                 AppLocalization.of(context).cancel.toUpperCase(),
                 style: AppStyles.textStyleDialogButtonText(context),
@@ -158,9 +152,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   Widget _getAnimation(BuildContext context) {
     switch (type) {
       case AnimationType.SEND:
-        return Center(
-         
-        );
+        return Center();
       case AnimationType.TRANSFER_SEARCHING_QR:
         return Stack(
           children: <Widget>[

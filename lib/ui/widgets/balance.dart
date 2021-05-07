@@ -10,8 +10,7 @@ class BalanceDisplay {
   // Primary button builder
   static Widget buildBalanceUCODisplay(
       BuildContext context, Animation<double> _opacityAnimation) {
-    if (StateContainer.of(context).wallet == null ||
-        StateContainer.of(context).wallet.loading) {
+    if (StateContainer.of(context).wallet == null) {
       // Placeholder for balance text
       return Container(
         child: Column(
@@ -210,8 +209,7 @@ class BalanceDisplay {
 
   static Widget buildBalanceNFTDisplay(
       BuildContext context, Animation<double> _opacityAnimation) {
-    if (StateContainer.of(context).wallet == null ||
-        StateContainer.of(context).wallet.loading) {
+    if (StateContainer.of(context).wallet == null) {
       // Placeholder for balance text
       return Container(
         child: Column(
@@ -353,10 +351,11 @@ class BalanceDisplay {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-             AutoSizeText(
-                "NFT",
-                textAlign: TextAlign.center,
-                style: AppStyles.textStyleCurrency(context),),
+            AutoSizeText(
+              "NFT",
+              textAlign: TextAlign.center,
+              style: AppStyles.textStyleCurrency(context),
+            ),
             Container(
               margin: EdgeInsetsDirectional.only(start: 10, end: 10),
               child: Row(

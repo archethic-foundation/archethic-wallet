@@ -77,17 +77,18 @@ class AppSeedBackupSheet {
                                   Container(
                                     margin: EdgeInsets.only(top: 15.0),
                                     constraints: BoxConstraints(
-                                        maxWidth: MediaQuery.of(context)
-                                                .size
-                                                .width -
-                                            140),
+                                        maxWidth:
+                                            MediaQuery.of(context).size.width -
+                                                140),
                                     child: Column(
                                       children: <Widget>[
                                         AutoSizeText(
                                           CaseChange.toUpperCase(
                                               showMnemonic
-                                                  ? AppLocalization.of(context).secretPhrase
-                                                  : AppLocalization.of(context).seed,
+                                                  ? AppLocalization.of(context)
+                                                      .secretPhrase
+                                                  : AppLocalization.of(context)
+                                                      .seed,
                                               context),
                                           style: AppStyles.textStyleHeader(
                                               context),
@@ -105,13 +106,7 @@ class AppSeedBackupSheet {
                                 height: 50,
                                 margin: EdgeInsetsDirectional.only(
                                     top: 10.0, end: 10.0),
-                                child: FlatButton(
-                                  highlightColor: StateContainer.of(context)
-                                      .curTheme
-                                      .text15,
-                                  splashColor: StateContainer.of(context)
-                                      .curTheme
-                                      .text15,
+                                child: TextButton(
                                   onPressed: () {
                                     setState(() {
                                       showMnemonic = !showMnemonic;
@@ -125,12 +120,6 @@ class AppSeedBackupSheet {
                                       color: StateContainer.of(context)
                                           .curTheme
                                           .text),
-                                  padding: EdgeInsets.all(13.0),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(100.0)),
-                                  materialTapTargetSize:
-                                      MaterialTapTargetSize.padded,
                                 ),
                               ),
                             ],
@@ -168,12 +157,14 @@ class AppSeedBackupSheet {
                                         ? AppButtonType.SUCCESS
                                         : AppButtonType.PRIMARY,
                                     _mnemonicCopied
-                                        ? AppLocalization.of(context).secretPhraseCopied
-                                        : AppLocalization.of(context).secretPhraseCopy,
+                                        ? AppLocalization.of(context)
+                                            .secretPhraseCopied
+                                        : AppLocalization.of(context)
+                                            .secretPhraseCopy,
                                     Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
-                                      Clipboard.setData(new ClipboardData(
-                                            text: _mnemonic.join(" ")));
-                                            
+                                  Clipboard.setData(new ClipboardData(
+                                      text: _mnemonic.join(" ")));
+
                                   //UserDataUtil.setSecureClipboardItem(_mnemonic.join(" "));
                                   setState(() {
                                     // Set copied style
@@ -201,10 +192,13 @@ class AppSeedBackupSheet {
                                     _seedCopied
                                         ? AppButtonType.SUCCESS
                                         : AppButtonType.PRIMARY,
-                                    _seedCopied ? AppLocalization.of(context).seedCopiedShort : AppLocalization.of(context).copySeed,
+                                    _seedCopied
+                                        ? AppLocalization.of(context)
+                                            .seedCopiedShort
+                                        : AppLocalization.of(context).copySeed,
                                     Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
-                                        Clipboard.setData(new ClipboardData(
-                                            text: _seed));
+                                  Clipboard.setData(
+                                      new ClipboardData(text: _seed));
                                   //UserDataUtil.setSecureClipboardItem(_seed);
                                   setState(() {
                                     // Set copied style

@@ -97,7 +97,7 @@ class _SendSheetState extends State<SendSheet> {
     _sendAmountController = TextEditingController();
     _sendAddressController = TextEditingController();
     _sendAddressStyle = AddressStyle.TEXT60;
-    _contacts = List();
+    _contacts = new List<Contact>.empty(growable: true);
     quickSendAmount = widget.quickSendAmount;
     this.animationOpen = false;
     if (widget.contact != null) {
@@ -542,21 +542,6 @@ class _SendSheetState extends State<SendSheet> {
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      margin:
-                                          EdgeInsets.symmetric(horizontal: 30),
-                                      child: Text(
-                                        AppLocalization.of(context).diacritic,
-                                        style: TextStyle(
-                                          color: StateContainer.of(context)
-                                              .curTheme
-                                              .primary60,
-                                          fontSize: 12.0,
-                                          fontWeight: FontWeight.w100,
-                                          fontFamily: 'Montserrat',
-                                        ),
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ],
@@ -902,10 +887,10 @@ class _SendSheetState extends State<SendSheet> {
             .toInt();
       }
 
-      int estimationFeesInt = (Decimal.parse(
-                  sl.get<AppService>().getFeesEstimation().toString()) *
-              Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits)))
-          .toInt();
+      int estimationFeesInt =
+          (Decimal.parse(sl.get<AppService>().getFeesEstimation().toString()) *
+                  Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits)))
+              .toInt();
 
       return textFieldInt + estimationFeesInt == balanceInt;
     } catch (e) {
@@ -965,7 +950,7 @@ class _SendSheetState extends State<SendSheet> {
         Container(
           height: 42,
           width: double.infinity - 5,
-          child: FlatButton(
+          child: TextButton(
             onPressed: () {
               _sendAddressController.text = contact.name;
               _sendAddressFocusNode.unfocus();
@@ -1107,8 +1092,7 @@ class _SendSheetState extends State<SendSheet> {
           }
 
           if (!_localCurrencyMode) {
-            double estimationFees =
-                sl.get<AppService>().getFeesEstimation();
+            double estimationFees = sl.get<AppService>().getFeesEstimation();
             _sendAmountController.text = StateContainer.of(context)
                 .wallet
                 .getAccountBalanceMoinsFeesDisplay(estimationFees)

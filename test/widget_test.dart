@@ -12,8 +12,6 @@ import 'package:flutter_test/flutter_test.dart';
 // TODO - we can probably do with some proper widget testing
 
 void main() {
-  testWidgets('App loads and draws at least 1 widget',
-      (WidgetTester tester) async {
- 
-  });
+  testWidgets(
+      'App loads and draws at least 1 widget', (WidgetTester tester) async {});
 }

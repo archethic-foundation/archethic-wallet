@@ -7,22 +7,15 @@ class Base85Decode {
   static const RFC1924 =
       '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#\$%&()*+-;<=>?@^_`{|}~';
 
-  String encode(String buffer)
-  {
-    try
-    {
-        if(buffer != null)
-        {
-            var codec = Base85Codec(RFC1924, AlgoType.rfc1924);
-            return codec.encode(Uint8List.fromList(buffer.codeUnits)); 
-        }
-        else
-        {
-          return "";
-        }
-    }
-    catch(e)
-    {
+  String encode(String buffer) {
+    try {
+      if (buffer != null) {
+        var codec = Base85Codec(RFC1924, AlgoType.rfc1924);
+        return codec.encode(Uint8List.fromList(buffer.codeUnits));
+      } else {
+        return "";
+      }
+    } catch (e) {
       return "";
     }
   }

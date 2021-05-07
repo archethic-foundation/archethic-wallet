@@ -1,29 +1,20 @@
 // @dart=2.9
 
 import 'dart:async';
-
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flare_flutter/base/animation/actor_animation.dart';
-
-import 'package:flare_flutter/flare.dart';
-import 'package:flare_flutter/flare_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:logger/logger.dart';
 import 'package:uniris_mobile_wallet/ui/particles/particles_flutter.dart';
-import 'package:uniris_mobile_wallet/ui/popup_button.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/app_icons.dart';
 import 'package:uniris_mobile_wallet/ui/receive/receive_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/settings/settings_drawer.dart';
+import 'package:uniris_mobile_wallet/ui/transactions_list.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/balance.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/charts_price_view.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/line_chart.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
@@ -504,6 +495,7 @@ class _AppHomePageState extends State<AppHomePage>
                         ),
                       ],
                     ),
+
                     // Buttons
                     /*Row(
                       crossAxisAlignment: CrossAxisAlignment.end,

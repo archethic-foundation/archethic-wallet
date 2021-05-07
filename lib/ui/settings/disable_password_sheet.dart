@@ -96,54 +96,60 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
                   ),
                   // Text field
                   Expanded(
-                    child: KeyboardAvoider(
-                      duration: Duration(milliseconds: 0),
-                      autoScroll: true,
-                      focusPadding: 40,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          AppTextField(
-                            topMargin: 30,
-                            padding: EdgeInsetsDirectional.only(start: 16, end: 16),
-                            focusNode: passwordFocusNode,
-                            controller: passwordController,
-                            textInputAction: TextInputAction.done,
-                            maxLines: 1,
-                            autocorrect: false,
-                            onChanged: (String newText) {
-                              if (passwordError != null) {
-                                setState(() {
-                                  passwordError = null;
-                                });
-                              }
-                            },
-                            hintText: AppLocalization.of(context).enterPasswordHint,
-                            keyboardType: TextInputType.text,
-                            obscureText: true,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16.0,
-                              color: StateContainer.of(context).curTheme.text,
-                              fontFamily: 'Montserrat',
-                            ),
-                          ),
-                          // Error Text
-                          Container(
-                            alignment: AlignmentDirectional(0, 0),
-                            margin: EdgeInsets.only(top: 3),
-                            child: Text(this.passwordError == null ? "" : passwordError,
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: StateContainer.of(context).curTheme.primary,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w600,
-                                )),
-                          ),
-                        ]
-                      )
-                    )
-                  )
+                      child: KeyboardAvoider(
+                          duration: Duration(milliseconds: 0),
+                          autoScroll: true,
+                          focusPadding: 40,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                AppTextField(
+                                  topMargin: 30,
+                                  padding: EdgeInsetsDirectional.only(
+                                      start: 16, end: 16),
+                                  focusNode: passwordFocusNode,
+                                  controller: passwordController,
+                                  textInputAction: TextInputAction.done,
+                                  maxLines: 1,
+                                  autocorrect: false,
+                                  onChanged: (String newText) {
+                                    if (passwordError != null) {
+                                      setState(() {
+                                        passwordError = null;
+                                      });
+                                    }
+                                  },
+                                  hintText: AppLocalization.of(context)
+                                      .enterPasswordHint,
+                                  keyboardType: TextInputType.text,
+                                  obscureText: true,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16.0,
+                                    color: StateContainer.of(context)
+                                        .curTheme
+                                        .text,
+                                    fontFamily: 'Montserrat',
+                                  ),
+                                ),
+                                // Error Text
+                                Container(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  margin: EdgeInsets.only(top: 3),
+                                  child: Text(
+                                      this.passwordError == null
+                                          ? ""
+                                          : passwordError,
+                                      style: TextStyle(
+                                        fontSize: 14.0,
+                                        color: StateContainer.of(context)
+                                            .curTheme
+                                            .primary,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w600,
+                                      )),
+                                ),
+                              ])))
                 ],
               ),
             ),
@@ -157,7 +163,8 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
                       AppButton.buildAppButton(
                           context,
                           AppButtonType.PRIMARY,
-                          AppLocalization.of(context).disablePasswordSheetHeader,
+                          AppLocalization.of(context)
+                              .disablePasswordSheetHeader,
                           Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
                         await submitAndDecrypt();
                       }),
@@ -193,8 +200,8 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
       }
     } else {
       try {
-        String decryptedSeed = HEX.encode(
-            AppCrypt.decrypt(encryptedSeed, passwordController.text));
+        String decryptedSeed = HEX
+            .encode(AppCrypt.decrypt(encryptedSeed, passwordController.text));
         throwIf(!AppSeeds.isValidSeed(decryptedSeed), FormatException());
         await sl.get<Vault>().setSeed(decryptedSeed);
         StateContainer.of(context).resetEncryptedSecret();

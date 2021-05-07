@@ -9,16 +9,17 @@ part 'contact.g.dart';
 
 @JsonSerializable()
 class Contact {
-  @JsonKey(ignore:true)
+  @JsonKey(ignore: true)
   int id;
-  @JsonKey(name:'name')
+  @JsonKey(name: 'name')
   String name;
-  @JsonKey(name:'address')
+  @JsonKey(name: 'address')
   String address;
 
   Contact({@required this.name, @required this.address, int id});
 
-  factory Contact.fromJson(Map<String, dynamic> json) => _$ContactFromJson(json);
+  factory Contact.fromJson(Map<String, dynamic> json) =>
+      _$ContactFromJson(json);
   Map<String, dynamic> toJson() => _$ContactToJson(this);
 
   bool operator ==(o) => o is Contact && o.name == name && o.address == address;

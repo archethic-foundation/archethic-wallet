@@ -1,6 +1,5 @@
 // @dart=2.9
 
-
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:uniris_mobile_wallet/util/base85/base_85_decoder.dart';

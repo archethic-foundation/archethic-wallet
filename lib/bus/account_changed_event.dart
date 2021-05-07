@@ -6,5 +6,6 @@ class AccountChangedEvent implements Event {
   final bool delayPop;
   final bool noPop;
 
-  AccountChangedEvent({this.account, this.delayPop = false, this.noPop = false});
+  AccountChangedEvent(
+      {this.account, this.delayPop = false, this.noPop = false});
 }

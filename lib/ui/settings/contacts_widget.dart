@@ -20,7 +20,6 @@ import 'package:uniris_mobile_wallet/model/db/contact.dart';
 import 'package:uniris_mobile_wallet/ui/contacts/add_contact.dart';
 import 'package:uniris_mobile_wallet/ui/contacts/contact_details.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 
 class ContactsList extends StatefulWidget {
   final AnimationController contactsController;

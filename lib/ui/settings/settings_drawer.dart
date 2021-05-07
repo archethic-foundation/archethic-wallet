@@ -3,13 +3,11 @@
 import 'dart:async';
 
 import 'package:fluttericon/font_awesome_icons.dart';
-import 'package:fluttericon/iconic_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:logger/logger.dart';
 import 'package:uniris_mobile_wallet/ui/settings/custom_url_widget.dart';
 import 'package:uniris_mobile_wallet/ui/settings/disable_password_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/settings/set_password_sheet.dart';
-import 'package:uniris_mobile_wallet/ui/settings/tokens_widget.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/app_simpledialog.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
@@ -34,7 +32,6 @@ import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 import 'package:uniris_mobile_wallet/util/caseconverter.dart';
 import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
 import 'package:uniris_mobile_wallet/util/biometrics.dart';
-import 'package:uniris_mobile_wallet/util/hapticutil.dart';
 
 import '../../appstate_container.dart';
 import '../../util/sharedprefsutil.dart';
@@ -49,8 +46,6 @@ class _SettingsSheetState extends State<SettingsSheet>
   Animation<Offset> _offsetFloat;
   AnimationController _securityController;
   Animation<Offset> _securityOffsetFloat;
-  AnimationController _tokensListController;
-  Animation<Offset> _tokensListOffsetFloat;
   AnimationController _customUrlController;
   Animation<Offset> _customUrlOffsetFloat;
 
@@ -69,8 +64,6 @@ class _SettingsSheetState extends State<SettingsSheet>
 
   bool _contactsOpen;
 
-  bool _tokensListOpen;
-
   bool _customUrlOpen;
 
   bool notNull(Object o) => o != null;
@@ -79,7 +72,6 @@ class _SettingsSheetState extends State<SettingsSheet>
   void initState() {
     super.initState();
     _contactsOpen = false;
-    _tokensListOpen = false;
     _securityOpen = false;
     _loadingAccounts = false;
     _customUrlOpen = false;
@@ -118,11 +110,6 @@ class _SettingsSheetState extends State<SettingsSheet>
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
-    // For token list menu
-    _tokensListController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 220),
-    );
     // For customUrl menu
     _customUrlController = AnimationController(
       vsync: this,
@@ -134,9 +121,6 @@ class _SettingsSheetState extends State<SettingsSheet>
     _securityOffsetFloat =
         Tween<Offset>(begin: Offset(1.1, 0), end: Offset(0, 0))
             .animate(_securityController);
-    _tokensListOffsetFloat =
-        Tween<Offset>(begin: Offset(1.1, 0), end: Offset(0, 0))
-            .animate(_tokensListController);
     _customUrlOffsetFloat =
         Tween<Offset>(begin: Offset(1.1, 0), end: Offset(0, 0))
             .animate(_customUrlController);
@@ -152,7 +136,6 @@ class _SettingsSheetState extends State<SettingsSheet>
   void dispose() {
     _controller.dispose();
     _securityController.dispose();
-    _tokensListController.dispose();
     _customUrlController.dispose();
     super.dispose();
   }
@@ -287,7 +270,7 @@ class _SettingsSheetState extends State<SettingsSheet>
   }
 
   List<Widget> _buildCurrencyOptions() {
-    List<Widget> ret = new List();
+    List<Widget> ret = new List<Widget>.empty(growable: true);
     AvailableCurrencyEnum.values.forEach((AvailableCurrencyEnum value) {
       ret.add(SimpleDialogOption(
         onPressed: () {
@@ -355,7 +338,7 @@ class _SettingsSheetState extends State<SettingsSheet>
   }
 
   List<Widget> _buildLanguageOptions() {
-    List<Widget> ret = new List();
+    List<Widget> ret = new List<Widget>.empty(growable: true);
     AvailableLanguage.values.forEach((AvailableLanguage value) {
       ret.add(SimpleDialogOption(
         onPressed: () {
@@ -420,7 +403,7 @@ class _SettingsSheetState extends State<SettingsSheet>
   }
 
   List<Widget> _buildLockTimeoutOptions() {
-    List<Widget> ret = new List();
+    List<Widget> ret = new List<Widget>.empty(growable: true);
     LockTimeoutOption.values.forEach((LockTimeoutOption value) {
       ret.add(SimpleDialogOption(
         onPressed: () {
@@ -428,13 +411,11 @@ class _SettingsSheetState extends State<SettingsSheet>
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: 
-          Row(
+          child: Row(
             children: [
               Text(LockTimeoutSetting(value).getDisplayName(context),
-                  style: _curUnlockSetting
-                              .getDisplayName(context) ==
-                         LockTimeoutSetting(value).getDisplayName(context)
+                  style: _curUnlockSetting.getDisplayName(context) ==
+                          LockTimeoutSetting(value).getDisplayName(context)
                       ? AppStyles.textStyleDialogOptionsChoice(context)
                       : AppStyles.textStyleDialogOptions(context)),
               SizedBox(width: 20),
@@ -499,12 +480,6 @@ class _SettingsSheetState extends State<SettingsSheet>
       });
       _securityController.reverse();
       return false;
-    } else if (_tokensListOpen) {
-      setState(() {
-        _tokensListOpen = false;
-      });
-      _tokensListController.reverse();
-      return false;
     } else if (_customUrlOpen) {
       setState(() {
         _customUrlOpen = false;
@@ -533,9 +508,6 @@ class _SettingsSheetState extends State<SettingsSheet>
             SlideTransition(
                 position: _securityOffsetFloat,
                 child: buildSecurityMenu(context)),
-            SlideTransition(
-                position: _tokensListOffsetFloat,
-                child: TokensList(_tokensListController, _tokensListOpen)),
             SlideTransition(
                 position: _customUrlOffsetFloat,
                 child: CustomUrl(_customUrlController, _customUrlOpen)),
@@ -571,7 +543,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                 ListView(
                   padding: EdgeInsets.only(top: 15.0),
                   children: <Widget>[
-                    Container(
+                    /*Container(
                       margin:
                           EdgeInsetsDirectional.only(start: 30.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context).informations,
@@ -584,20 +556,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemSingleLine(
-                        context,
-                        AppLocalization.of(context).tokensListHeader,
-                        Iconic.list_nested, onPressed: () {
-                      setState(() {
-                        _tokensListOpen = true;
-                      });
-                      _tokensListController.forward();
-                    }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
+                    ),*/
                     Container(
                       margin: EdgeInsetsDirectional.only(
                           start: 30.0, top: 20.0, bottom: 10.0),
@@ -661,9 +620,10 @@ class _SettingsSheetState extends State<SettingsSheet>
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,
                     ),
-                    AppSettings.buildSettingsListItemSingleLine(
+                    AppSettings.buildSettingsListItemSingleLineWithInfos(
                         context,
                         AppLocalization.of(context).customUrlHeader,
+                        AppLocalization.of(context).customUrlDesc,
                         FontAwesome.code, onPressed: () {
                       setState(() {
                         _customUrlOpen = true;
@@ -859,20 +819,13 @@ class _SettingsSheetState extends State<SettingsSheet>
                         height: 40,
                         width: 40,
                         margin: EdgeInsets.only(right: 10, left: 10),
-                        child: FlatButton(
-                            highlightColor:
-                                StateContainer.of(context).curTheme.text15,
-                            splashColor:
-                                StateContainer.of(context).curTheme.text15,
+                        child: TextButton(
                             onPressed: () {
                               setState(() {
                                 _securityOpen = false;
                               });
                               _securityController.reverse();
                             },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0)),
-                            padding: EdgeInsets.all(8.0),
                             child: Icon(AppIcons.back,
                                 color: StateContainer.of(context).curTheme.text,
                                 size: 24)),

@@ -54,7 +54,7 @@ class DBHelper {
     var dbClient = await db;
     List<Map> list =
         await dbClient.rawQuery('SELECT * FROM Contacts ORDER BY name');
-    List<Contact> contacts = new List();
+    List<Contact> contacts = new List<Contact>.empty(growable: true);
     for (int i = 0; i < list.length; i++) {
       contacts.add(new Contact(
         id: list[i]['id'],
@@ -69,7 +69,7 @@ class DBHelper {
     var dbClient = await db;
     List<Map> list = await dbClient.rawQuery(
         'SELECT * FROM Contacts WHERE name LIKE \'%$pattern%\' ORDER BY LOWER(name)');
-    List<Contact> contacts = new List();
+    List<Contact> contacts = new List<Contact>.empty(growable: true);
     for (int i = 0; i < list.length; i++) {
       contacts.add(new Contact(
         id: list[i]['id'],
@@ -152,7 +152,7 @@ class DBHelper {
     var dbClient = await db;
     List<Map> list =
         await dbClient.rawQuery('SELECT * FROM Accounts ORDER BY acct_index');
-    List<Account> accounts = new List();
+    List<Account> accounts = new List<Account>.empty(growable: true);
     for (int i = 0; i < list.length; i++) {
       accounts.add(Account(
         id: list[i]['id'],
@@ -175,7 +175,7 @@ class DBHelper {
     List<Map> list = await dbClient.rawQuery(
         'SELECT * FROM Accounts WHERE selected != 1 ORDER BY last_accessed DESC, acct_index ASC LIMIT ?',
         [limit]);
-    List<Account> accounts = new List();
+    List<Account> accounts = new List<Account>.empty(growable: true);
     for (int i = 0; i < list.length; i++) {
       accounts.add(Account(
         id: list[i]['id'],

@@ -3,6 +3,8 @@
 import 'dart:async';
 import 'package:hex/hex.dart';
 import 'package:logger/logger.dart';
+import 'package:uniris_lib_dart/model/response/simple_price_response.dart';
+import 'package:uniris_lib_dart/services/api_coins_service.dart';
 import 'package:uniris_mobile_wallet/model/balance.dart';
 import 'package:uniris_mobile_wallet/model/wallet.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -10,7 +12,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:uniris_mobile_wallet/network/model/response/address_txs_response.dart';
 import 'package:uniris_mobile_wallet/service/app_service.dart';
-import 'package:uniris_mobile_wallet/service/http_service.dart';
 import 'package:uniris_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
 import 'package:uniris_mobile_wallet/themes.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
@@ -129,7 +130,8 @@ class StateContainerState extends State<StateContainer> {
         .listen((event) {
       //print("listen TransactionsListEvent");
       AddressTxsResponse addressTxsResponse = new AddressTxsResponse();
-      addressTxsResponse.result = new List<AddressTxsResponseResult>();
+      addressTxsResponse.result =
+          new List<AddressTxsResponseResult>.empty(growable: true);
       for (int i = event.response.length - 1; i >= 0; i--) {
         AddressTxsResponseResult addressTxResponseResult =
             new AddressTxsResponseResult();
@@ -253,7 +255,7 @@ class StateContainerState extends State<StateContainer> {
   }
 
   Future<void> updateRecentlyUsedAccounts() async {
-    List<Account> otherAccounts = 
+    List<Account> otherAccounts =
         await sl.get<DBHelper>().getRecentlyUsedAccounts(await getSeed());
     if (otherAccounts != null && otherAccounts.length > 0) {
       if (otherAccounts.length > 1) {
@@ -284,7 +286,10 @@ class StateContainerState extends State<StateContainer> {
 
   // Change curency
   void updateCurrency(AvailableCurrency currency) async {
-    await sl.get<HttpService>().getSimplePrice(currency.getIso4217Code());
+    SimplePriceResponse simplePriceResponse = await sl
+        .get<ApiCoinsService>()
+        .getSimplePrice(currency.getIso4217Code());
+    EventTaxiImpl.singleton().fire(PriceEvent(response: simplePriceResponse));
     setState(() {
       curCurrency = currency;
     });
@@ -316,7 +321,8 @@ class StateContainerState extends State<StateContainer> {
     setState(() {
       if (wallet != null) {
         if (response == null) {
-          wallet.accountBalance = new Balance(nft: new BalanceNft(address: "", amount: 0), uco: 0);
+          wallet.accountBalance =
+              new Balance(nft: new BalanceNft(address: "", amount: 0), uco: 0);
         } else {
           wallet.accountBalance = response;
           sl.get<DBHelper>().updateAccountBalance(
@@ -339,24 +345,13 @@ class StateContainerState extends State<StateContainer> {
             .get<AppService>()
             .getBalanceGetResponse(selectedAccount.address, endpoint, true);
 
-        await sl
-            .get<HttpService>()
+        SimplePriceResponse simplePriceResponse = await sl
+            .get<ApiCoinsService>()
             .getSimplePrice(curCurrency.getIso4217Code());
+        EventTaxiImpl.singleton()
+            .fire(PriceEvent(response: simplePriceResponse));
 
         sl.get<AppService>().getAddressTxsResponse(wallet.address, count);
-
-        //sl.get<AppService>().getAlias(wallet.address);
-
-        AddressTxsResponse addressTxsResponse = new AddressTxsResponse();
-        addressTxsResponse.tokens = await sl
-            .get<HttpService>()
-            .getTokensBalance(selectedAccount.address);
-        setState(() {
-          wallet.tokens.clear();
-          wallet.tokens.add(
-              new BisToken(tokenName: "", tokensQuantity: 0, tokenMessage: ""));
-          wallet.tokens.addAll(addressTxsResponse.tokens);
-        });
       } catch (e) {
         // TODO handle account history error
         sl.get<Logger>().e("account_history e", e);

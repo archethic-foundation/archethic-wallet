@@ -1,4 +1,3 @@
-
 // Represent user-account
 
 // @dart=2.9
@@ -12,11 +11,20 @@ class Account {
   String address;
   String balance; // Last known balance in RAW
 
-  Account({this.id, this.index, this.name, this.lastAccess, this.selected = false, this.address, this.balance});
+  Account(
+      {this.id,
+      this.index,
+      this.name,
+      this.lastAccess,
+      this.selected = false,
+      this.address,
+      this.balance});
 
   String getShortName() {
     List<String> splitName = name.split(" ");
-    if (splitName.length > 1 && splitName[0].length >= 1 && splitName[1].length >= 1) {
+    if (splitName.length > 1 &&
+        splitName[0].length >= 1 &&
+        splitName[1].length >= 1) {
       String firstChar = splitName[0].substring(0, 1);
       String secondPart = splitName[1].substring(0, 1);
       try {

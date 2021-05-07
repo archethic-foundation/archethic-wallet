@@ -41,13 +41,17 @@ class ParticlePainter extends CustomPainter {
         randomColorPaint = Paint()..color = randomColor;
         canvas.drawCircle(
             offsets![index],
-            isRandSize! ? maxParticleSize! * (randSize![index]) : maxParticleSize!,
+            isRandSize!
+                ? maxParticleSize! * (randSize![index])
+                : maxParticleSize!,
             (hoverIndex!.contains(index) ? hoverPaint : randomColorPaint)!);
       } else {
         randomColorPaint = Paint()..color = randomColor;
         canvas.drawCircle(
             offsets![index],
-            isRandSize! ? maxParticleSize! * (randSize![index]) : maxParticleSize!,
+            isRandSize!
+                ? maxParticleSize! * (randSize![index])
+                : maxParticleSize!,
             (hoverIndex!.contains(index) ? hoverPaint : constColorPaint)!);
       }
     }

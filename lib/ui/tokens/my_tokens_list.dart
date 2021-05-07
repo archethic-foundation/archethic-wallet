@@ -18,8 +18,9 @@ class MyTokensList extends StatefulWidget {
 }
 
 class _MyTokensListStateState extends State<MyTokensList> {
-  List<BisToken> _myBisTokenList = new List<BisToken>();
-  List<BisToken> _myBisTokenListForDisplay = new List<BisToken>();
+  List<BisToken> _myBisTokenList = new List<BisToken>.empty(growable: true);
+  List<BisToken> _myBisTokenListForDisplay =
+      new List<BisToken>.empty(growable: true);
 
   @override
   void initState() {

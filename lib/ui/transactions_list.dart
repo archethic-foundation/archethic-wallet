@@ -10,7 +10,6 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 
 import 'package:intl/intl.dart';
@@ -39,11 +38,11 @@ import 'package:uniris_mobile_wallet/util/caseconverter.dart';
 
 class TransactionsList extends StatefulWidget {
   final String address;
-  final AnimationController TransactionsListController;
-  bool TransactionsListOpen;
+  final AnimationController transactionsListController;
+  bool transactionsListOpen;
 
   TransactionsList(
-      this.TransactionsListController, this.TransactionsListOpen, this.address)
+      this.transactionsListController, this.transactionsListOpen, this.address)
       : super();
 
   _TransactionsListStateState createState() => _TransactionsListStateState();
@@ -310,20 +309,13 @@ class _TransactionsListStateState extends State<TransactionsList>
                         height: 40,
                         width: 40,
                         margin: EdgeInsets.only(right: 10, left: 10),
-                        child: FlatButton(
-                            highlightColor:
-                                StateContainer.of(context).curTheme.text15,
-                            splashColor:
-                                StateContainer.of(context).curTheme.text15,
+                        child: TextButton(
                             onPressed: () {
                               setState(() {
-                                widget.TransactionsListOpen = false;
+                                widget.transactionsListOpen = false;
                               });
-                              widget.TransactionsListController.reverse();
+                              widget.transactionsListController.reverse();
                             },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0)),
-                            padding: EdgeInsets.all(8.0),
                             child: Icon(FontAwesome.cancel,
                                 color: StateContainer.of(context).curTheme.text,
                                 size: 24)),
@@ -486,13 +478,7 @@ class _TransactionsListStateState extends State<TransactionsList>
             borderRadius: BorderRadius.circular(10.0),
             boxShadow: [StateContainer.of(context).curTheme.boxShadow],
           ),
-          child: FlatButton(
-            highlightColor: StateContainer.of(context).curTheme.text15,
-            splashColor: StateContainer.of(context).curTheme.text15,
-            color: StateContainer.of(context).curTheme.backgroundDark,
-            padding: EdgeInsets.all(0.0),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
+          child: TextButton(
             onPressed: () {
               Sheets.showAppHeightEightSheet(
                   context: context,
@@ -879,7 +865,7 @@ class _TransactionDetailsSheetState extends State<TransactionDetailsSheet> {
                                                   // Add Contact Button
                                                   child: !widget.displayName
                                                           .startsWith("@")
-                                                      ? FlatButton(
+                                                      ? TextButton(
                                                           onPressed: () {
                                                             Navigator.of(
                                                                     context)
@@ -891,21 +877,6 @@ class _TransactionDetailsSheetState extends State<TransactionDetailsSheet> {
                                                                     address: widget
                                                                         .address));
                                                           },
-                                                          splashColor: Colors
-                                                              .transparent,
-                                                          highlightColor: Colors
-                                                              .transparent,
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          100.0)),
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  vertical:
-                                                                      10.0,
-                                                                  horizontal:
-                                                                      10),
                                                           child: Icon(
                                                               AppIcons
                                                                   .addcontact,

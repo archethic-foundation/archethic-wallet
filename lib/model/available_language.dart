@@ -4,7 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/model/setting_item.dart';
 
-enum AvailableLanguage { DEFAULT, ENGLISH, FRENCH, GERMAN, INDONESIAN, DUTCH, SPANISH, ITALIAN}
+enum AvailableLanguage {
+  DEFAULT,
+  ENGLISH,
+  FRENCH,
+  GERMAN,
+  INDONESIAN,
+  DUTCH,
+  SPANISH,
+  ITALIAN
+}
 
 /// Represent the available languages our app supports
 class LanguageSetting extends SettingSelectionItem {

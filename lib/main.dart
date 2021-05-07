@@ -168,14 +168,12 @@ class _AppState extends State<App> {
               );
             case '/home':
               return NoTransitionRoute(
-                builder: (_) =>
-                    AppHomePage(),
+                builder: (_) => AppHomePage(),
                 settings: settings,
               );
             case '/home_transition':
               return NoPopTransitionRoute(
-                builder: (_) =>
-                    AppHomePage(),
+                builder: (_) => AppHomePage(),
                 settings: settings,
               );
             case '/intro_welcome':

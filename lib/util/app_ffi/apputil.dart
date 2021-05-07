@@ -15,7 +15,6 @@ import 'package:uniris_mobile_wallet/service_locator.dart';
 import 'package:bs58check/bs58check.dart' as bs58check;
 
 class AppUtil {
-
   String seedToAddress(String seed, int index) {
     String mnemonic = bip39.entropyToMnemonic(seed);
     //print("Mnemonic : " + mnemonic);
@@ -28,7 +27,8 @@ class AppUtil {
     //print("BIP 32 node (private Key) : " + HEX.encode(node.privateKey));
     //print("BIP 32 node (public Key) : " + HEX.encode(node.publicKey));
     //print("index : " + index.toString());
-    bip32.BIP32 addressDerived = node.derivePath("m/44'/209'/0'/0/" + index.toString());
+    bip32.BIP32 addressDerived =
+        node.derivePath("m/44'/209'/0'/0/" + index.toString());
     //print("BIP 32 Extended private Key : " + addressDerived.toBase58());
 
     //bip32.BIP32 childNeutered = addressDerived.neutered();

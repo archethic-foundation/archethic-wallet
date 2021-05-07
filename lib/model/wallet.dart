@@ -9,10 +9,12 @@ import 'package:uniris_mobile_wallet/util/numberutil.dart';
 
 /// Main wallet object that's passed around the app via state
 class AppWallet {
-  static const String defaultRepresentative = '0xf2b4f700d2975abd39000587f9788f66afedf691';
+  static const String defaultRepresentative =
+      '0xf2b4f700d2975abd39000587f9788f66afedf691';
 
   bool _loading; // Whether or not app is initially loading
-  bool _historyLoading; // Whether or not we have received initial account history response
+  bool
+      _historyLoading; // Whether or not we have received initial account history response
   String _address;
   Balance _accountBalance;
   String _representative;
@@ -21,19 +23,27 @@ class AppWallet {
   List<AddressTxsResponseResult> _history;
   List<BisToken> _tokens;
 
-
-  AppWallet({String address, Balance accountBalance, 
-                String representative, String localCurrencyPrice,String btcPrice, 
-                List<AddressTxsResponseResult> history, bool loading, bool historyLoading, List<BisToken> tokens}) {
+  AppWallet(
+      {String address,
+      Balance accountBalance,
+      String representative,
+      String localCurrencyPrice,
+      String btcPrice,
+      List<AddressTxsResponseResult> history,
+      bool loading,
+      bool historyLoading,
+      List<BisToken> tokens}) {
     _address = address;
-    _accountBalance = accountBalance ?? new Balance(uco: 0, nft: new BalanceNft(address: "", amount: 0));
+    _accountBalance = accountBalance ??
+        new Balance(uco: 0, nft: new BalanceNft(address: "", amount: 0));
     _representative = representative;
     _localCurrencyPrice = localCurrencyPrice ?? "0";
     _btcPrice = btcPrice ?? "0";
-    _history = history ?? new List<AddressTxsResponseResult>();
-    _tokens = tokens ?? new List<BisToken>();
+    _history =
+        history ?? new List<AddressTxsResponseResult>.empty(growable: true);
+    _tokens = tokens ?? new List<BisToken>.empty(growable: true);
     _loading = loading ?? true;
-    _historyLoading = historyLoading  ?? true;
+    _historyLoading = historyLoading ?? true;
   }
 
   String get address => _address;
@@ -65,15 +75,26 @@ class AppWallet {
     return NumberUtil.getRawAsUsableString(value.toString());
   }
 
-  String getLocalCurrencyPrice(AvailableCurrency currency, {String locale = "en_US"}) {
-    Decimal converted = Decimal.parse(_localCurrencyPrice) * NumberUtil.getRawAsUsableDecimal(_accountBalance.uco.toString());
-    return NumberFormat.currency(locale:locale, symbol: currency.getCurrencySymbol()).format(converted.toDouble());
+  String getLocalCurrencyPrice(AvailableCurrency currency,
+      {String locale = "en_US"}) {
+    Decimal converted = Decimal.parse(_localCurrencyPrice) *
+        NumberUtil.getRawAsUsableDecimal(_accountBalance.uco.toString());
+    return NumberFormat.currency(
+            locale: locale, symbol: currency.getCurrencySymbol())
+        .format(converted.toDouble());
   }
 
-  String getLocalCurrencyPriceMoinsFees(AvailableCurrency currency, double estimationFees, {String locale = "en_US"}) {
+  String getLocalCurrencyPriceMoinsFees(
+      AvailableCurrency currency, double estimationFees,
+      {String locale = "en_US"}) {
     double value = _accountBalance.uco - estimationFees;
-    Decimal converted = Decimal.parse(_localCurrencyPrice) * NumberUtil.getRawAsUsableDecimal(value.toString());
-    return NumberFormat.currency(locale:locale, symbol: currency.getCurrencySymbol(), decimalDigits: 5).format(converted.toDouble());
+    Decimal converted = Decimal.parse(_localCurrencyPrice) *
+        NumberUtil.getRawAsUsableDecimal(value.toString());
+    return NumberFormat.currency(
+            locale: locale,
+            symbol: currency.getCurrencySymbol(),
+            decimalDigits: 5)
+        .format(converted.toDouble());
   }
 
   set localCurrencyPrice(String value) {
@@ -85,12 +106,15 @@ class AppWallet {
   }
 
   String get btcPrice {
-    Decimal converted = Decimal.parse(_btcPrice) * NumberUtil.getRawAsUsableDecimal(_accountBalance.uco.toString());
+    Decimal converted = Decimal.parse(_btcPrice) *
+        NumberUtil.getRawAsUsableDecimal(_accountBalance.uco.toString());
     // Show 4 decimal places for BTC price if its >= 0.0001 BTC, otherwise 6 decimals
     if (converted >= Decimal.parse("0.0001")) {
-      return new NumberFormat("#,##0.0000", "en_US").format(converted.toDouble());
+      return new NumberFormat("#,##0.0000", "en_US")
+          .format(converted.toDouble());
     } else {
-      return new NumberFormat("#,##0.000000000", "en_US").format(converted.toDouble());
+      return new NumberFormat("#,##0.000000000", "en_US")
+          .format(converted.toDouble());
     }
   }
 
@@ -99,7 +123,7 @@ class AppWallet {
   }
 
   String get representative {
-   return _representative ?? defaultRepresentative;
+    return _representative ?? defaultRepresentative;
   }
 
   set representative(String value) {

@@ -60,7 +60,7 @@ class SharedPrefsUtil {
 
   Future<dynamic> get(String key, {dynamic defaultValue}) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return await sharedPreferences.get(key) ?? defaultValue;
+    return sharedPreferences.get(key) ?? defaultValue;
   }
 
   // For encrypted data
@@ -159,8 +159,7 @@ class SharedPrefsUtil {
   }
 
   Future<String> getVersionApp() async {
-    return await get(version_app,
-        defaultValue: "");
+    return await get(version_app, defaultValue: "");
   }
 
   Future<void> setWalletServer(String v) async {
@@ -168,8 +167,7 @@ class SharedPrefsUtil {
   }
 
   Future<String> getWalletServer() async {
-    return await get(wallet_server,
-        defaultValue: "auto");
+    return await get(wallet_server, defaultValue: "auto");
   }
 
   Future<void> setTokensApi(String v) async {
@@ -186,8 +184,7 @@ class SharedPrefsUtil {
   }
 
   Future<String> getEndpoint() async {
-    return await get(endpoint,
-        defaultValue: "https://blockchain.uniris.io");
+    return await get(endpoint, defaultValue: "https://blockchain.uniris.io");
   }
 
   Future<void> setExplorerUrl(String v) async {
@@ -195,8 +192,7 @@ class SharedPrefsUtil {
   }
 
   Future<String> getExplorerUrl() async {
-    return await get(explorer_url,
-        defaultValue: "https://uniris.io");
+    return await get(explorer_url, defaultValue: "https://uniris.io");
   }
 
   Future<void> setLock(bool value) async {
@@ -212,9 +208,8 @@ class SharedPrefsUtil {
   }
 
   Future<LockTimeoutSetting> getLockTimeout() async {
-    return LockTimeoutSetting(LockTimeoutOption.values[await get(
-        lock_timeout,
-        defaultValue: LockTimeoutOption.ONE.index)]);
+    return LockTimeoutSetting(LockTimeoutOption.values[
+        await get(lock_timeout, defaultValue: LockTimeoutOption.ONE.index)]);
   }
 
   // Locking out when max pin attempts exceeded

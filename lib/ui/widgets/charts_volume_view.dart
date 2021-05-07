@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:charts_common/common.dart' as charts_common;
+import 'package:uniris_lib_dart/model/response/coins_price_response.dart';
+import 'package:uniris_lib_dart/services/api_coins_service.dart';
 import 'package:uniris_mobile_wallet/model/available_currency.dart';
-import 'package:uniris_mobile_wallet/network/model/response/coins_price_response.dart';
-import 'package:uniris_mobile_wallet/service/api_coins_service.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
 
 class ChartsVolumeView extends StatefulWidget {
@@ -56,7 +56,7 @@ class _ChartsVolumeViewState extends State<ChartsVolumeView> {
                 );
 
                 nbDaysSave = widget.nbDays;
-                
+
                 lineChart = charts.TimeSeriesChart(_seriesLineData,
                     primaryMeasureAxis: new charts.NumericAxisSpec(
                       tickProviderSpec:
@@ -75,16 +75,14 @@ class _ChartsVolumeViewState extends State<ChartsVolumeView> {
                     behaviors: [
                       new charts.SelectNearest(),
                       new charts.DomainHighlighter(),
-                      new charts.ChartTitle(
-                          "",
+                      new charts.ChartTitle("",
                           titleStyleSpec: charts_common.TextStyleSpec(
                             fontSize: 12,
                           ),
                           behaviorPosition: charts.BehaviorPosition.bottom,
                           titleOutsideJustification:
                               charts.OutsideJustification.middleDrawArea),
-                      new charts.ChartTitle(
-                          "",
+                      new charts.ChartTitle("",
                           titleStyleSpec: charts_common.TextStyleSpec(
                             fontSize: 12,
                           ),

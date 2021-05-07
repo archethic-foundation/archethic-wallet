@@ -490,9 +490,9 @@ class UIUtil {
 
   static String getDragginatorURL(String dna, String status) {
     if (status == "egg") {
-      return "https://dragginator.com/data/eggs/"+dna+"/egg.png";
+      return "https://dragginator.com/data/eggs/" + dna + "/egg.png";
     } else {
-      return "https://dragginator.com/data/eggs/"+dna+"/draggon.png";
+      return "https://dragginator.com/data/eggs/" + dna + "/draggon.png";
     }
   }
 }

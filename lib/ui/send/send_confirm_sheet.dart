@@ -343,29 +343,6 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                                       ],
                                     ),
                                   ),
-
-                                  Container(
-                                    margin:
-                                        EdgeInsets.only(top: 10.0, bottom: 0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                          CaseChange.toUpperCase(
-                                              AppLocalization.of(context)
-                                                  .openfield,
-                                              context),
-                                          style: TextStyle(
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .primary60,
-                                            fontSize: 12.0,
-                                            fontWeight: FontWeight.w100,
-                                            fontFamily: 'Montserrat',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
                                 ],
                               )
                             ])
@@ -486,7 +463,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
     try {
       _showSendingAnimation(context);
 
-    String seed = await StateContainer.of(context).getSeed();
+      String seed = await StateContainer.of(context).getSeed();
       int index = StateContainer.of(context).selectedAccount.index;
       String publicKeyBase64 =
           await AppUtil().seedToPublicKeyBase64(seed, index);

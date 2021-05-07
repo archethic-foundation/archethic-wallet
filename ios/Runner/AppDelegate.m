@@ -42,9 +42,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
                                            details:nil]);
                 return;
             }
-            if ([@"idena" isEqualToString:icon ]) {
-                [self lc_setAlternateIconName:nil];
-            } 
         } else if ([@"setSecureClipboardItem" isEqualToString:call.method]) {
             NSDictionary *arguments = [call arguments];
             NSString *value = arguments[@"value"];

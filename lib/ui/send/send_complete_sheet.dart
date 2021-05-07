@@ -18,7 +18,11 @@ class SendCompleteSheet extends StatefulWidget {
   final String title;
 
   SendCompleteSheet(
-      {this.amountRaw, this.destination, this.contactName, this.localAmount, this.title})
+      {this.amountRaw,
+      this.destination,
+      this.contactName,
+      this.localAmount,
+      this.title})
       : super();
 
   _SendCompleteSheetState createState() => _SendCompleteSheetState();
@@ -137,7 +141,10 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
                         // "SENT TO" text
                         Text(
                           CaseChange.toUpperCase(
-                              widget.title == null ? AppLocalization.of(context).sentTo : widget.title, context),
+                              widget.title == null
+                                  ? AppLocalization.of(context).sentTo
+                                  : widget.title,
+                              context),
                           style: TextStyle(
                             fontSize: 28.0,
                             fontWeight: FontWeight.w700,

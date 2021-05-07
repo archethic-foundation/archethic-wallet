@@ -677,23 +677,22 @@ class Slidable extends StatefulWidget {
     @required Function onTriggered,
     Function onAnimationChanged,
   }) : this.builder(
-          key: key,
-          child: child,
-          delegate: delegate,
-          actionDelegate: new SlideActionListDelegate(actions: actions),
-          secondaryActionDelegate:
-              new SlideActionListDelegate(actions: secondaryActions),
-          showAllActionsThreshold: showAllActionsThreshold,
-          actionExtentRatio: actionExtentRatio,
-          movementDuration: movementDuration,
-          direction: direction,
-          closeOnScroll: closeOnScroll,
-          enabled: enabled,
-          slideToDismissDelegate: slideToDismissDelegate,
-          controller: controller,
-          onTriggered: onTriggered,
-          onAnimationChanged: onAnimationChanged
-        );
+            key: key,
+            child: child,
+            delegate: delegate,
+            actionDelegate: new SlideActionListDelegate(actions: actions),
+            secondaryActionDelegate:
+                new SlideActionListDelegate(actions: secondaryActions),
+            showAllActionsThreshold: showAllActionsThreshold,
+            actionExtentRatio: actionExtentRatio,
+            movementDuration: movementDuration,
+            direction: direction,
+            closeOnScroll: closeOnScroll,
+            enabled: enabled,
+            slideToDismissDelegate: slideToDismissDelegate,
+            controller: controller,
+            onTriggered: onTriggered,
+            onAnimationChanged: onAnimationChanged);
 
   /// Creates a widget that can be slid.
   ///
@@ -710,23 +709,23 @@ class Slidable extends StatefulWidget {
   /// which means the item after the dismissed item would be synced with the
   /// state of the dismissed item. Using keys causes the widgets to sync
   /// according to their keys and avoids this pitfall.
-  Slidable.builder({
-    Key key,
-    @required this.child,
-    @required this.delegate,
-    this.actionDelegate,
-    this.secondaryActionDelegate,
-    this.showAllActionsThreshold = 0.5,
-    this.actionExtentRatio = _kActionsExtentRatio,
-    this.movementDuration = _kMovementDuration,
-    this.direction = Axis.horizontal,
-    this.closeOnScroll = true,
-    this.enabled = true,
-    this.slideToDismissDelegate,
-    this.controller,
-    @required this.onTriggered,
-    this.onAnimationChanged
-  })  : assert(delegate != null),
+  Slidable.builder(
+      {Key key,
+      @required this.child,
+      @required this.delegate,
+      this.actionDelegate,
+      this.secondaryActionDelegate,
+      this.showAllActionsThreshold = 0.5,
+      this.actionExtentRatio = _kActionsExtentRatio,
+      this.movementDuration = _kMovementDuration,
+      this.direction = Axis.horizontal,
+      this.closeOnScroll = true,
+      this.enabled = true,
+      this.slideToDismissDelegate,
+      this.controller,
+      @required this.onTriggered,
+      this.onAnimationChanged})
+      : assert(delegate != null),
         assert(direction != null),
         assert(
             showAllActionsThreshold != null &&
@@ -1043,7 +1042,10 @@ class SlidableState extends State<Slidable>
       setState(() {});
     }
 
-    if (_dragExtent < 0 && status == AnimationStatus.completed && actionsMoveAnimation.value >= 1.0 && !_callbackComplete) {
+    if (_dragExtent < 0 &&
+        status == AnimationStatus.completed &&
+        actionsMoveAnimation.value >= 1.0 &&
+        !_callbackComplete) {
       widget.onTriggered(true);
       setState(() {
         _dragUnderway = false;
@@ -1207,7 +1209,7 @@ class SlidableState extends State<Slidable>
       onHorizontalDragEnd: directionIsXAxis ? _handleDragEnd : null,
       onVerticalDragStart: directionIsXAxis ? null : _handleDragStart,
       onVerticalDragUpdate: directionIsXAxis ? null : _handleDragUpdate,
-      onVerticalDragEnd: directionIsXAxis  ? null : _handleDragEnd,
+      onVerticalDragEnd: directionIsXAxis ? null : _handleDragEnd,
       behavior: HitTestBehavior.opaque,
       child: content,
     );

@@ -63,7 +63,7 @@ class _SyncInfoViewState extends State<SyncInfoView> {
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(serverName, style: AppStyles.textStyleTiny(context)), 
+        Text(serverName, style: AppStyles.textStyleTiny(context)),
         connected == null || connected == false
             ? Icon(Icons.signal_cellular_alt_rounded, color: Colors.red)
             : Icon(Icons.signal_cellular_alt_rounded, color: Colors.green),
