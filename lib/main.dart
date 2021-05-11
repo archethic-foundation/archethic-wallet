@@ -12,7 +12,7 @@ import 'package:logger/logger.dart';
 import 'package:uniris_mobile_wallet/model/available_language.dart';
 import 'package:uniris_mobile_wallet/ui/before_scan_screen.dart';
 import 'package:uniris_mobile_wallet/ui/intro/intro_backup_safety.dart';
-import 'package:uniris_mobile_wallet/ui/intro/intro_enter_transaction_chain_seed.dart';
+import 'package:uniris_mobile_wallet/ui/intro/intro_enter_password.dart';
 import 'package:uniris_mobile_wallet/ui/intro/intro_password.dart';
 import 'package:uniris_mobile_wallet/ui/intro/intro_password_on_launch.dart';
 import 'package:uniris_mobile_wallet/ui/password_lock_screen.dart';
@@ -28,7 +28,6 @@ import 'package:uniris_mobile_wallet/service_locator.dart';
 import 'package:uniris_mobile_wallet/ui/home_page.dart';
 import 'package:uniris_mobile_wallet/ui/lock_screen.dart';
 import 'package:uniris_mobile_wallet/ui/intro/intro_welcome.dart';
-import 'package:uniris_mobile_wallet/ui/intro/intro_backup_seed.dart';
 import 'package:uniris_mobile_wallet/ui/intro/intro_backup_confirm.dart';
 import 'package:uniris_mobile_wallet/ui/util/routes.dart';
 import 'package:uniris_mobile_wallet/model/vault.dart';
@@ -82,7 +81,7 @@ class _AppState extends State<App> {
           accentColor: StateContainer.of(context).curTheme.primary10,
           backgroundColor: StateContainer.of(context).curTheme.background,
           fontFamily: 'Montserrat',
-          brightness: Brightness.light,
+          brightness: Brightness.dark,
         ),
         localizationsDelegates: [
           AppLocalizationsDelegate(StateContainer.of(context).curLanguage),
@@ -191,12 +190,6 @@ class _AppState extends State<App> {
                 builder: (_) => IntroPassword(seed: settings.arguments),
                 settings: settings,
               );
-            case '/intro_backup':
-              return MaterialPageRoute(
-                builder: (_) =>
-                    IntroBackupSeedPage(encryptedSeed: settings.arguments),
-                settings: settings,
-              );
             case '/intro_backup_safety':
               return MaterialPageRoute(
                 builder: (_) => IntroBackupSafetyPage(),
@@ -209,7 +202,7 @@ class _AppState extends State<App> {
               );
             case '/intro_enter_transaction_chain_seed':
               return MaterialPageRoute(
-                builder: (_) => IntroEnterTransactionChainSeedPage(),
+                builder: (_) => IntroEnterPasswordAccess(),
                 settings: settings,
               );
             case '/lock_screen':

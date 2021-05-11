@@ -1,22 +1,23 @@
 // @dart=2.9
 
 import 'dart:async';
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:logger/logger.dart';
 import 'package:uniris_mobile_wallet/ui/particles/particles_flutter.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/ui/receive/receive_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/settings/settings_drawer.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/balance.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/line_chart.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
+import 'package:uniris_mobile_wallet/ui/widgets/nft_list.dart';
+import 'package:uniris_mobile_wallet/ui/widgets/qr_code.dart';
 import 'package:uniris_mobile_wallet/ui/util/routes.dart';
 import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
@@ -323,214 +324,87 @@ class _AppHomePageState extends State<AppHomePage>
           child: Column(
             children: <Widget>[
               Expanded(
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: <Widget>[
-                    //Everything else
-                    CircularParticle(
-                      awayRadius: 80,
-                      numberOfParticles: 80,
-                      speedOfParticles: 0.5,
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      onTapAnimation: true,
-                      particleColor: StateContainer.of(context)
-                          .curTheme
-                          .primary10
-                          .withAlpha(150)
-                          .withOpacity(0.2),
-                      awayAnimationDuration: Duration(milliseconds: 600),
-                      maxParticleSize: 8,
-                      isRandSize: true,
-                      isRandomColor: false,
-                      awayAnimationCurve: Curves.easeInOutBack,
-                      enableHover: true,
-                      hoverColor: StateContainer.of(context).curTheme.primary30,
-                      hoverRadius: 90,
-                      connectDots: true,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          height: 150.0,
-                          child: ListView.builder(
-                            physics: AlwaysScrollableScrollPhysics(),
-                            itemCount: 3,
-                            controller: _scrollController,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Card(
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .backgroundDark,
-                                  child: AnimatedContainer(
-                                      duration: Duration(milliseconds: 200),
-                                      height: mainCardHeight,
-                                      curve: Curves.easeInOut,
-                                      child: index == 0
-                                          ? BalanceDisplay
-                                              .buildBalanceUCODisplay(
-                                                  context, _opacityAnimation)
-                                          : index == 1
-                                              ? BalanceDisplay
-                                                  .buildBalanceNFTDisplay(
-                                                      context,
-                                                      _opacityAnimation)
-                                              : LineChartWidget.buildTinyCoinsChart(context)),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(10.0)),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        SizedBox(height: 30),
-                        Container(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            height: 45,
-                            padding: EdgeInsets.all(3.5),
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            decoration: BoxDecoration(
-                              color: StateContainer.of(context)
-                                  .curTheme
-                                  .background,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .backgroundDark,
-                                  blurRadius: 5.0,
-                                  spreadRadius: 0.0,
-                                  offset: Offset(5.0,
-                                      5.0), // shadow direction: bottom right
-                                )
-                              ],
-                            ),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: InkWell(
-                                    onTap: () {},
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(12),
-                                              topLeft: Radius.circular(12))),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(FontAwesome5.arrow_circle_up,
-                                              color: StateContainer.of(context)
-                                                  .curTheme
-                                                  .primary),
-                                          SizedBox(
-                                            width: 20,
-                                          ),
-                                          Text(AppLocalization.of(context).send,
-                                              style: AppStyles
-                                                  .textStyleButtonPrimarySmallOutline(
-                                                      context)),
-                                        ],
-                                      ),
-                                    ),
+                child: KeyboardAvoider(
+                  duration: Duration(milliseconds: 0),
+                  autoScroll: true,
+                  focusPadding: 40,
+                  child: Stack(
+                    alignment: Alignment.topCenter,
+                    children: <Widget>[
+                      CircularParticle(
+                        awayRadius: 80,
+                        numberOfParticles: 80,
+                        speedOfParticles: 0.5,
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        onTapAnimation: true,
+                        particleColor: StateContainer.of(context)
+                            .curTheme
+                            .primary10
+                            .withAlpha(150)
+                            .withOpacity(0.2),
+                        awayAnimationDuration: Duration(milliseconds: 600),
+                        maxParticleSize: 8,
+                        isRandSize: true,
+                        isRandomColor: false,
+                        awayAnimationCurve: Curves.easeInOutBack,
+                        enableHover: true,
+                        hoverColor:
+                            StateContainer.of(context).curTheme.primary30,
+                        hoverRadius: 90,
+                        connectDots: true,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            height: 150.0,
+                            child: ListView.builder(
+                              physics: AlwaysScrollableScrollPhysics(),
+                              itemCount: 2,
+                              controller: _scrollController,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Card(
+                                    color: StateContainer.of(context)
+                                        .curTheme
+                                        .backgroundDark,
+                                    child: AnimatedContainer(
+                                        duration: Duration(milliseconds: 200),
+                                        height: mainCardHeight,
+                                        curve: Curves.easeInOut,
+                                        child: index == 0
+                                            ? FlipCard(
+                                                flipOnTouch: true,
+                                                direction:
+                                                    FlipDirection.HORIZONTAL,
+                                                front: BalanceDisplay
+                                                    .buildBalanceUCODisplay(
+                                                        context,
+                                                        _opacityAnimation),
+                                                back: LineChartWidget
+                                                    .buildTinyCoinsChart(
+                                                        context))
+                                            : QRcodeDisplay
+                                                    .buildQRCodeDisplay(context,
+                                                        _opacityAnimation)),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
                                   ),
-                                ),
-                                VerticalDivider(
-                                  width: 1.0,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .primary,
-                                  thickness: 1.5,
-                                  indent: 2.0,
-                                  endIndent: 2.0,
-                                ),
-                                Expanded(
-                                  child: InkWell(
-                                    onTap: () {
-                                      if (receive == null) {
-                                        return;
-                                      }
-                                      Sheets.showAppHeightEightSheet(
-                                          context: context, widget: receive);
-                                    },
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(FontAwesome5.arrow_circle_down,
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .primary),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Text(
-                                            AppLocalization.of(context).receive,
-                                            style: AppStyles
-                                                .textStyleButtonPrimarySmallOutline(
-                                                    context)),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
+                                );
+                              },
                             ),
                           ),
-                        ),
-                        SizedBox(height: 20),
-                        Container(
-                            padding: EdgeInsets.all(3.5),
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            decoration: BoxDecoration(
-                              color: StateContainer.of(context)
-                                  .curTheme
-                                  .backgroundDark,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .backgroundDarkest,
-                                  blurRadius: 5.0,
-                                  spreadRadius: 0.0,
-                                  offset: Offset(5.0, 5.0),
-                                )
-                              ],
-                            ),
-                            child: Column(
-                              children: [
-                                Text("Address",
-                                    style: AppStyles.textStyleAddressText60(
-                                        context)),
-                                SelectableText(
-                                    StateContainer.of(context)
-                                        .selectedAccount
-                                        .address,
-                                    style: AppStyles.textStyleAddressText90(
-                                        context))
-                              ],
-                            )),
-                      ],
-                    ),
-
-                    // Buttons
-                    /*Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        AppPopupButton(),
-                      ],
-                    ),*/
-                  ],
+                          SizedBox(height: 20),
+                          NftListWidget.buildNftList(context),
+                          SizedBox(height: 20),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

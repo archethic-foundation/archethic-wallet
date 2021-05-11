@@ -167,22 +167,18 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                 borderRadius: BorderRadius.circular(100.0),
               ),
             ),
-            //The main widget that holds the text fields, "SENDING" and "TO" texts
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  // "SENDING" TEXT
                   Container(
-                    margin: EdgeInsets.only(bottom: 10.0),
+                    margin: EdgeInsets.only(top: 20.0, bottom: 30.0),
                     child: Column(
                       children: <Widget>[
                         Text(
-                          CaseChange.toUpperCase(
-                              widget.title == null
-                                  ? AppLocalization.of(context).sending
-                                  : widget.title,
-                              context),
+                          widget.title == null
+                              ? AppLocalization.of(context).transfering
+                              : widget.title,
                           style: AppStyles.textStyleHeader(context),
                         ),
                       ],
@@ -278,8 +274,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          CaseChange.toUpperCase(
-                              AppLocalization.of(context).to, context),
+                          AppLocalization.of(context).to,
                           style: TextStyle(
                             color: StateContainer.of(context).curTheme.text60,
                             fontSize: 16.0,
@@ -311,85 +306,6 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                       child: UIUtil.threeLineAddressText(
                           context, destinationAltered,
                           contactName: widget.contactName)),
-
-                  Expanded(
-                    child: Stack(children: [
-                      SingleChildScrollView(
-                          padding: EdgeInsets.only(top: 30.0, bottom: 30),
-                          child: Column(children: <Widget>[
-                            Stack(children: <Widget>[
-                              Column(
-                                children: [
-                                  // "optional parameters" text
-                                  Container(
-                                    margin:
-                                        EdgeInsets.only(top: 0.0, bottom: 10),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                          CaseChange.toUpperCase(
-                                              AppLocalization.of(context)
-                                                  .optionalParameters,
-                                              context),
-                                          style: TextStyle(
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .text60,
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: 'Montserrat',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ])
-                          ])),
-                      //List Top Gradient End
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          height: 30.0,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                StateContainer.of(context)
-                                    .curTheme
-                                    .background00,
-                                StateContainer.of(context).curTheme.background
-                              ],
-                              begin: AlignmentDirectional(0.5, 1.0),
-                              end: AlignmentDirectional(0.5, -1.0),
-                            ),
-                          ),
-                        ),
-                      ), // List Top Gradient End
-
-                      //List Bottom Gradient
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          height: 30.0,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                StateContainer.of(context)
-                                    .curTheme
-                                    .background00,
-                                StateContainer.of(context).curTheme.background
-                              ],
-                              begin: AlignmentDirectional(0.5, -1),
-                              end: AlignmentDirectional(0.5, 0.5),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ]),
-                  )
                 ],
               ),
             ),
@@ -406,8 +322,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                       AppButton.buildAppButton(
                           context,
                           AppButtonType.PRIMARY,
-                          CaseChange.toUpperCase(
-                              AppLocalization.of(context).confirm, context),
+                          AppLocalization.of(context).confirm,
                           Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
                         // Authenticate
                         AuthenticationMethod authMethod =
@@ -444,9 +359,8 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                       // CANCEL Button
                       AppButton.buildAppButton(
                           context,
-                          AppButtonType.PRIMARY_OUTLINE,
-                          CaseChange.toUpperCase(
-                              AppLocalization.of(context).cancel, context),
+                          AppButtonType.PRIMARY,
+                          AppLocalization.of(context).cancel,
                           Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                         Navigator.of(context).pop();
                       }),
@@ -466,7 +380,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
       String seed = await StateContainer.of(context).getSeed();
       int index = StateContainer.of(context).selectedAccount.index;
       String publicKeyBase64 = "";
-      
+
       String privateKey = "";
       //print("send tx");
       /*sl.get<AppService>().sendUCO(originPrivateKey, transactionChainSeed, address, endpoint, listUcoTransfer)
@@ -494,7 +408,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
         PinOverlayType.ENTER_PIN,
         expectedPin: expectedPin,
         description: AppLocalization.of(context)
-            .sendAmountConfirmPin
+            .transferAmountConfirmPin
             .replaceAll("%1", amount),
       );
     }));

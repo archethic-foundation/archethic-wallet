@@ -156,12 +156,15 @@ class _AddContactSheetState extends State<AddContactSheet> {
             ],
           ),
           SizedBox(height: 30),
-          AutoSizeText(
-            AppLocalization.of(context).addressBookDesc,
-            style: AppStyles.textStyleParagraph(context),
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            stepGranularity: 0.1,
+          Container(
+            margin: EdgeInsets.only(left: 30, right: 30),
+            child: AutoSizeText(
+              AppLocalization.of(context).addressBookDesc,
+              style: AppStyles.textStyleParagraph(context),
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              stepGranularity: 0.1,
+            ),
           ),
 
           // The main container that holds "Enter Name" and "Enter Address" text fields

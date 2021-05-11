@@ -49,42 +49,56 @@ class AppService {
     Balance balance = new Balance(uco: balanceResponse.uco, nft: balanceNft);
     */
 
-    Balance balance = new Balance(
-        uco: 1340.56,
-        nft: new BalanceNft(
-            address:
-                "05A2525C9C4FDDC02BA97554980A0CFFADA2AEB0650E3EAD05796275F05DDA85",
-            amount: 900.00));
+    List<BalanceNft> balanceNftList =
+        new List<BalanceNft>.empty(growable: true);
+    balanceNftList.add(new BalanceNft(
+        name: "my Token 1",
+        address:
+            "00b9b052ef7e162a96c18c55272da7abccf72ebd2351dce66663e2962ef6b68d23",
+        amount: 900.00));
+    balanceNftList.add(new BalanceNft(
+        name: "my Token 2",
+        address:
+            "2da7abccf72ebd2351dce666636c18c5527e2962ef6b68d2300b9b052ef7e162a9",
+        amount: 1204.00));
+    balanceNftList.add(new BalanceNft(
+        name: "my Token 3",
+        address:
+            "6c18c55272d52ef7e162a9a7abccf72ebd2351dce66663e2962ef6b68d2300b9b0",
+        amount: 1.00));
+    balanceNftList.add(new BalanceNft(
+        name: "my Token 4",
+        address:
+            "da7abccf72ebd2351dce66663e2962ef6b6c18c5527268d2300b9b052ef7e162a9",
+        amount: 5667432.00));
+    Balance balance = new Balance(uco: 1340.56, nftList: balanceNftList);
 
     if (activeBus) {
       EventTaxiImpl.singleton().fire(BalanceGetEvent(response: balance));
     }
   }
-   
-  void sendUCO(originPrivateKey, String transactionChainSeed, String address, String endpoint, List<UcoTransfer> listUcoTransfer)
-  {
+
+  void sendUCO(originPrivateKey, String transactionChainSeed, String address,
+      String endpoint, List<UcoTransfer> listUcoTransfer) {
     var txIndex = getTransactionIndex(address, endpoint);
     TransactionBuilder builder = new TransactionBuilder("transfer");
-    listUcoTransfer.forEach((transfer) => builder.addUCOTransfer(transfer.to, transfer.amount));
+    listUcoTransfer.forEach(
+        (transfer) => builder.addUCOTransfer(transfer.to, transfer.amount));
 
-    TransactionBuilder tx = builder.build(transactionChainSeed, txIndex).originSign(originPrivateKey);
+    TransactionBuilder tx = builder
+        .build(transactionChainSeed, txIndex)
+        .originSign(originPrivateKey);
     Map<String, dynamic> transfer = {
       'address': uint8ListToHex(tx.address),
       'timestamp': tx.timestamp,
-      'data': 
-      {
-          'legder': 
-          {
-            'uco': 
-            {
-              'transfers': listUcoTransfer
-            } 
-          }
+      'data': {
+        'legder': {
+          'uco': {'transfers': listUcoTransfer}
+        }
       }
     };
     var data = sendTx(tx, endpoint);
-    if(data.errors)
-    {
+    if (data.errors) {
       print(data.errors);
     }
   }

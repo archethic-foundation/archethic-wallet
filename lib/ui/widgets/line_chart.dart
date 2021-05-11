@@ -62,9 +62,10 @@ class LineChartWidget {
                         children: [
                           Text(
                             StateContainer.of(context)
-                                .chartInfos
-                                .priceChangePercentage24h
-                                .toString(),
+                                    .chartInfos
+                                    .priceChangePercentage24h!
+                                    .toStringAsFixed(2) +
+                                "%",
                             style: AppStyles.textStyleChartGreen(context),
                           ),
                           Icon(Entypo.up_dir,
@@ -77,9 +78,10 @@ class LineChartWidget {
                         children: [
                           Text(
                             StateContainer.of(context)
-                                .chartInfos
-                                .priceChangePercentage24h
-                                .toString(),
+                                    .chartInfos
+                                    .priceChangePercentage24h!
+                                    .toStringAsFixed(2) +
+                                "%",
                             style: AppStyles.textStyleChartRed(context),
                           ),
                           Icon(Entypo.down_dir,

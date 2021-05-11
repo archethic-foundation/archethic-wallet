@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.0.2+2
+version: 0.0.5+5
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -39,8 +39,6 @@ dependencies:
   # Flare for animations
   flare_flutter: ^3.0.0
 
-  asn1lib: ^1.0.0
-  
   # Websockets
   web_socket_channel: ^2.1.0
 
@@ -62,19 +60,6 @@ dependencies:
   # Logger
   logger: ^1.0.0
 
-  # Native webview plugin
-  flutter_webview_plugin: 
-    git:
-      url: https://github.com/redDwarf03/flutter_webview_plugin.git
-      ref: master
-
-  bip32: 
-    git: 
-      url: https://github.com/redDwarf03/bip32-dart.git
-      ref: master
-
-  bip39: ^1.0.6
-  
   # SQLite
   sqflite: ^2.0.0+3
 
@@ -101,13 +86,6 @@ dependencies:
   barcode_scan2: ^4.1.3
 
   flutter_radar_chart: ^0.2.0
-
-  flip_card: ^0.5.0
-
-  scrolling_page_indicator:
-    git: 
-     url: https://github.com/redDwarf03/FlutterScrollingPageIndicator.git
-     ref: master
   
   # HTTP client
   http: ^0.13.3
@@ -129,8 +107,6 @@ dependencies:
   # Slidable list actions
   flutter_slidable: ^0.6.0
 
-  circular_profile_avatar: ^2.0.1-nullsafety
-
   # Lock helper
   synchronized: ^3.0.0
 
@@ -140,11 +116,6 @@ dependencies:
   quiver: ^3.0.1
 
   convert: ^3.0.0
-
-  bs58check: 
-    git: 
-      url: https://github.com/redDwarf03/bs58check-dart.git
-      ref: master
 
   # Root/Jailbreak detection
   root_checker:
@@ -158,31 +129,22 @@ dependencies:
   # Auto resize text widget
   auto_size_text: ^3.0.0-nullsafety.0
 
+  flip_card: ^0.5.0
+
   # Avoid keyboard from overlapping text fields
   keyboard_avoider: 
     git:
       url: https://github.com/redDwarf03/keyboard_avoider.git
       ref: master
 
-  hash:  
-    git: 
-      url: https://github.com/redDwarf03/hash.git
-      ref: master
-
   uniris_lib_dart:
     git:
       url: https://github.com/redDwarf03/uniris_lib_dart.git
       ref: master
-      
-  fast_base58: ^0.1.9
-
+    
   fluttericon: ^2.0.0
 
-  charts_flutter: ^0.10.0
-  
-  charts_common: ^0.10.0
-
-  fl_chart: ^0.36.0
+  fl_chart: ^0.36.1
 
 dev_dependencies:
   flutter_test:

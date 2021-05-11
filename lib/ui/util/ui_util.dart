@@ -1,14 +1,11 @@
 // @dart=2.9
 
-import 'dart:io';
 import 'dart:async';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/bus/events.dart';
 import 'package:uniris_mobile_wallet/ui/util/exceptions.dart';
 
@@ -377,42 +374,6 @@ class UIUtil {
           style: textStyle,
         ),
       ],
-    );
-  }
-
-  static Widget showAccountWebview(BuildContext context, String account) {
-    cancelLockEvent();
-    return FutureBuilder(
-        future: AppLocalization.of(context).getAccountExplorerUrl(account),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData && snapshot.data != null) {
-            return WebviewScaffold(
-              url: snapshot.data,
-              appBar: new AppBar(
-                backgroundColor:
-                    StateContainer.of(context).curTheme.backgroundDark,
-                brightness: StateContainer.of(context).curTheme.brightness,
-                iconTheme: IconThemeData(
-                    color: StateContainer.of(context).curTheme.text),
-              ),
-            );
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        });
-  }
-
-  static Widget showWebview(BuildContext context, String url) {
-    cancelLockEvent();
-    return WebviewScaffold(
-      resizeToAvoidBottomInset: Platform.isAndroid,
-      url: url,
-      appBar: new AppBar(
-        backgroundColor: StateContainer.of(context).curTheme.background,
-        brightness: StateContainer.of(context).curTheme.brightness,
-        iconTheme:
-            IconThemeData(color: StateContainer.of(context).curTheme.text),
-      ),
     );
   }
 

@@ -32,32 +32,23 @@ import 'package:uniris_mobile_wallet/bus/events.dart';
 import 'util/sharedprefsutil.dart';
 
 class _InheritedStateContainer extends InheritedWidget {
-  // Data is your entire state. In our case just 'User'
   final StateContainerState data;
 
-  // You must pass through a child and your state.
   _InheritedStateContainer({
     Key key,
     @required this.data,
     @required Widget child,
   }) : super(key: key, child: child);
 
-  // This is a built in method which you can use to check if
-  // any state has changed. If not, no reason to rebuild all the widgets
-  // that rely on your state.
   @override
   bool updateShouldNotify(_InheritedStateContainer old) => true;
 }
 
 class StateContainer extends StatefulWidget {
-  // You must pass through a child.
   final Widget child;
 
   StateContainer({@required this.child});
 
-  // This is the secret sauce. Write your own 'of' method that will behave
-  // Exactly like MediaQuery.of and Theme.of
-  // It basically says 'get the data from the widget of this type.
   static StateContainerState of(BuildContext context) {
     return context
         .dependOnInheritedWidgetOfExactType<_InheritedStateContainer>()
@@ -68,11 +59,6 @@ class StateContainer extends StatefulWidget {
   StateContainerState createState() => StateContainerState();
 }
 
-/// App InheritedWidget
-/// This is where we handle the global state and also where
-/// we interact with the server and make requests/handle+propagate responses
-///
-/// Basically the central hub behind the entire app
 class StateContainerState extends State<StateContainer> {
   final Logger log = sl.get<Logger>();
 
@@ -338,7 +324,7 @@ class StateContainerState extends State<StateContainer> {
       if (wallet != null) {
         if (response == null) {
           wallet.accountBalance =
-              new Balance(nft: new BalanceNft(address: "", amount: 0), uco: 0);
+              new Balance(nftList: null, uco: 0);
         } else {
           wallet.accountBalance = response;
           sl.get<DBHelper>().updateAccountBalance(

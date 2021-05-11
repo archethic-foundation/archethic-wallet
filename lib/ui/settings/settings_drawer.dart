@@ -24,11 +24,9 @@ import 'package:uniris_mobile_wallet/model/device_unlock_option.dart';
 import 'package:uniris_mobile_wallet/model/device_lock_timeout.dart';
 import 'package:uniris_mobile_wallet/model/available_language.dart';
 import 'package:uniris_mobile_wallet/model/vault.dart';
-import 'package:uniris_mobile_wallet/ui/settings/backupseed_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/settings/settings_list_item.dart';
 import 'package:uniris_mobile_wallet/ui/settings/contacts_widget.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/security.dart';
-import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 import 'package:uniris_mobile_wallet/util/caseconverter.dart';
 import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
 import 'package:uniris_mobile_wallet/util/biometrics.dart';
@@ -665,7 +663,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         StateContainer.of(context).curLanguage,
                         FontAwesome.language,
                         _languageDialog),
-                    Divider(
+                    /*Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,
                     ),
@@ -677,7 +675,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         _securityOpen = true;
                       });
                       _securityController.forward();
-                    }),
+                    }),*/
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,
@@ -726,20 +724,6 @@ class _SettingsSheetState extends State<SettingsSheet>
                         children: <Widget>[
                           Text(versionString,
                               style: AppStyles.textStyleVersion(context)),
-                          Text(" | ",
-                              style: AppStyles.textStyleVersion(context)),
-                          GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) {
-                                  return UIUtil.showWebview(context,
-                                      AppLocalization.of(context).privacyUrl);
-                                }));
-                              },
-                              child: Text(
-                                  AppLocalization.of(context).privacyPolicy,
-                                  style: AppStyles.textStyleVersionUnderline(
-                                      context))),
                         ],
                       ),
                     ),
@@ -976,9 +960,7 @@ class _SettingsSheetState extends State<SettingsSheet>
     if (auth != null && auth) {
       await Future.delayed(Duration(milliseconds: 200));
       Navigator.of(context).pop();
-      StateContainer.of(context).getSeed().then((seed) {
-        AppSeedBackupSheet(seed).mainBottomSheet(context);
-      });
+     
     }
   }
 }

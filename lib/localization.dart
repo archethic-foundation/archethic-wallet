@@ -31,7 +31,7 @@ class AppLocalization {
 
   String get welcomeText {
     return Intl.message(
-        "Welcome to Uniris Wallet.\n\nTo begin, you may connect to your wallet with a transaction chain seed.",
+        "Welcome to Uniris Wallet.\n\nTo begin, you may connect to your decentralized wallet with your password.",
         desc: '',
         name: 'welcomeText');
   }
@@ -41,19 +41,11 @@ class AppLocalization {
         desc: '', name: 'connectWallet');
   }
 
-  String get transactionChainSeedHeader {
-    return Intl.message("Transaction chain seed",
-        desc: '', name: 'transactionChainSeedHeader');
-  }
-
-  String get enterTransactionChainSeed {
-    return Intl.message("Please, enter your transaction chain seed",
-        desc: '', name: 'enterTransactionChainSeed');
-  }
-
-  String get enterEndPoint {
-    return Intl.message("Connected to the endpoint",
-        desc: '', name: 'enterEndPoint');
+  String get enterPasswordText {
+    return Intl.message(
+        "Please, enter your password to connect to your wallet",
+        desc: '',
+        name: 'enterPasswordText');
   }
 
   /// -- GENERIC ITEMS
@@ -87,11 +79,27 @@ class AppLocalization {
   }
 
   String get send {
-    return Intl.message('Send', desc: 'home_send_cta', name: 'send');
+    return Intl.message('Send', desc: '', name: 'send');
+  }
+
+  String get transferUCO {
+    return Intl.message('Transfer UCO', desc: '', name: 'transferUCO');
+  }
+
+  String get transferNFT {
+    return Intl.message('Transfer NFT', desc: '', name: 'transferNFT');
+  }
+
+  String get transferNFTName {
+    return Intl.message('Transfer %1', desc: '', name: 'transferNFTName');
+  }
+
+  String get transfer {
+    return Intl.message('Transfer', desc: '', name: 'transfer');
   }
 
   String get receive {
-    return Intl.message('Receive', desc: 'home_receive_cta', name: 'receive');
+    return Intl.message('Receive', desc: '', name: 'receive');
   }
 
   String get sent {
@@ -270,7 +278,7 @@ class AppLocalization {
   /// -- CONTACT ITEMS
 
   String get removeContact {
-    return Intl.message('Remove Contact',
+    return Intl.message('Remove Uniriser',
         desc: 'contact_remove_btn', name: 'removeContact');
   }
 
@@ -284,7 +292,7 @@ class AppLocalization {
   }
 
   String get contactHeader {
-    return Intl.message('Contact', desc: '', name: 'contactHeader');
+    return Intl.message('Uniriser', desc: '', name: 'contactHeader');
   }
 
   String get addressBookDesc {
@@ -293,7 +301,7 @@ class AppLocalization {
   }
 
   String get addContact {
-    return Intl.message('Add Contact',
+    return Intl.message('Add Uniriser',
         desc: 'contact_add_button', name: 'addContact');
   }
 
@@ -303,27 +311,27 @@ class AppLocalization {
   }
 
   String get contactInvalid {
-    return Intl.message("Invalid Contact Name",
+    return Intl.message("Invalid Uniriser Name",
         desc: 'contact_invalid_name', name: 'contactInvalid');
   }
 
   String get contactAdded {
-    return Intl.message("%1 added to contacts.",
+    return Intl.message("%1 added to address book.",
         desc: 'contact_added', name: 'contactAdded');
   }
 
   String get contactRemoved {
-    return Intl.message("%1 has been removed from contacts!",
+    return Intl.message("%1 has been removed from address book!",
         desc: 'contact_removed', name: 'contactRemoved');
   }
 
   String get contactNameMissing {
-    return Intl.message("Choose a Name for this Contact",
+    return Intl.message("Choose a Name for this Uniriser",
         desc: 'contact_name_missing', name: 'contactNameMissing');
   }
 
   String get contactExists {
-    return Intl.message("Contact Already Exists",
+    return Intl.message("Uniriser Already Exists",
         desc: 'contact_name_exists', name: 'contactExists');
   }
 
@@ -382,6 +390,10 @@ class AppLocalization {
     return Intl.message("Sending", desc: 'send_sending', name: 'sending');
   }
 
+  String get transfering {
+    return Intl.message("Transfering", desc: 'send_sending', name: 'transfering');
+  }
+
   String get to {
     return Intl.message("To", desc: 'send_to', name: 'to');
   }
@@ -389,6 +401,16 @@ class AppLocalization {
   String get sendAmountConfirm {
     return Intl.message("Send %1 UCO",
         desc: 'send_pin_description', name: 'sendAmountConfirm');
+  }
+
+  String get transferAmountConfirm {
+    return Intl.message("Transfer %1 UCO",
+        desc: 'send_pin_description', name: 'transferAmountConfirm');
+  }
+
+
+  String get transferAmountConfirmPin {
+    return transferAmountConfirm;
   }
 
   String get sendAmountConfirmPin {
@@ -583,13 +605,13 @@ class AppLocalization {
 
   String get logoutDetail {
     return Intl.message(
-        "Logging out will remove your seed and all Uniris Wallet-related data from this device. If your seed is not backed up, you will never be able to access your funds again",
+        "Logging out will remove all Uniris Wallet-related data from this device. If your password is not backed up, you will never be able to access your wallet again",
         desc: 'settings_logout_alert_message',
         name: 'logoutDetail');
   }
 
   String get logoutAction {
-    return Intl.message("Delete Seed and Logout",
+    return Intl.message("Delete Infos and Logout",
         desc: 'settings_logout_alert_confirm_cta', name: 'logoutAction');
   }
 

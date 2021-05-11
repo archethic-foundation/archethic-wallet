@@ -35,7 +35,7 @@ class AppWallet {
       List<BisToken> tokens}) {
     _address = address;
     _accountBalance = accountBalance ??
-        new Balance(uco: 0, nft: new BalanceNft(address: "", amount: 0));
+        new Balance(uco: 0, nftList: null);
     _representative = representative;
     _localCurrencyPrice = localCurrencyPrice ?? "0";
     _btcPrice = btcPrice ?? "0";

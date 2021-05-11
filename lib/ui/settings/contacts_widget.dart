@@ -253,7 +253,7 @@ class _ContactsListState extends State<ContactsList> {
         ),
         // Main Container
         Container(
-          padding: EdgeInsets.symmetric(vertical: 8.0),
+          padding: EdgeInsets.symmetric(vertical: 4.0),
           margin: new EdgeInsetsDirectional.only(start: 12.0, end: 20.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -261,7 +261,7 @@ class _ContactsListState extends State<ContactsList> {
               // Contact info
               Expanded(
                 child: Container(
-                  height: 60,
+                  height: 50,
                   margin: EdgeInsetsDirectional.only(start: 2.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -272,7 +272,7 @@ class _ContactsListState extends State<ContactsList> {
                           style: AppStyles.textStyleSettingItemHeader(context)),
                       //Contact address
                       Text(
-                        Address(contact.address).getShortString(),
+                        contact.address,
                         style: AppStyles.textStyleTransactionAddress(context),
                       ),
                     ],

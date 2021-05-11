@@ -35,6 +35,17 @@ class Address {
     }
   }
 
+  String getShortString3() {
+    if (_address == null) return "";
+    if (_address!.length < 27) {
+      return _address!;
+    } else {
+      return _address!.substring(0, 12) +
+          "..." +
+          _address!.substring(_address!.length - 12);
+    }
+  }
+
   String getShorterString() {
     if (_address == null) return "";
     if (_address!.length < 21) {

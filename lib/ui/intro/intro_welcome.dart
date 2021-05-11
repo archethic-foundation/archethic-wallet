@@ -123,7 +123,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                             AppButton.buildAppButton(
                                 context,
                                 AppButtonType.PRIMARY,
-                                AppLocalization.of(context).connectWallet,
+                                AppLocalization.of(context).nextButton,
                                 Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                               Navigator.of(context).pushNamed(
                                   '/intro_enter_transaction_chain_seed');

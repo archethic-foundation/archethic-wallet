@@ -1,19 +1,21 @@
 class Balance {
   Balance({
     this.uco,
-    this.nft,
+    this.nftList,
   });
 
   double? uco;
-  BalanceNft? nft;
+  List<BalanceNft>? nftList;
 }
 
 class BalanceNft {
   BalanceNft({
+    this.name,
     this.address,
     this.amount,
   });
 
+  String? name;
   String? address;
   double? amount;
 }

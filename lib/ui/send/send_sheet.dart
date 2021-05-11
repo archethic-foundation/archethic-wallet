@@ -228,11 +228,9 @@ class _SendSheetState extends State<SendSheet> {
                         children: <Widget>[
                           // Header
                           AutoSizeText(
-                            CaseChange.toUpperCase(
-                                widget.title == null
-                                    ? AppLocalization.of(context).sendFrom
-                                    : widget.title,
-                                context),
+                            widget.title == null
+                                ? AppLocalization.of(context).send
+                                : widget.title,
                             style: AppStyles.textStyleHeader(context),
                             textAlign: TextAlign.center,
                             maxLines: 1,
@@ -505,14 +503,19 @@ class _SendSheetState extends State<SendSheet> {
                                           )),
                                     ),
                                     // ******* Enter Address Error Container End ******* //
-
+                                    SizedBox(height: 10),
                                     Container(
                                       margin:
                                           EdgeInsets.symmetric(horizontal: 30),
                                       child: Text(
                                         "+ " +
                                             AppLocalization.of(context).fees +
-                                            ": To be determined...",
+                                            ": " +
+                                            sl
+                                                .get<AppService>()
+                                                .getFeesEstimation()
+                                                .toStringAsFixed(5) +
+                                            " UCO",
                                         style: TextStyle(
                                           color: StateContainer.of(context)
                                               .curTheme
@@ -523,67 +526,11 @@ class _SendSheetState extends State<SendSheet> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(height: 10),
-                                    Container(
-                                      margin:
-                                          EdgeInsets.symmetric(horizontal: 30),
-                                      child: Text(
-                                        CaseChange.toUpperCase(
-                                            AppLocalization.of(context)
-                                                .optionalParameters,
-                                            context),
-                                        style: TextStyle(
-                                          color: StateContainer.of(context)
-                                              .curTheme
-                                              .text60,
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w700,
-                                          fontFamily: 'Montserrat',
-                                        ),
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ],
                             ),
                           ],
-                        ),
-                      ),
-                    ),
-                    //List Top Gradient End
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        height: 30.0,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              StateContainer.of(context).curTheme.background00,
-                              StateContainer.of(context).curTheme.background
-                            ],
-                            begin: AlignmentDirectional(0.5, 1.0),
-                            end: AlignmentDirectional(0.5, -1.0),
-                          ),
-                        ),
-                      ),
-                    ), // List Top Gradient End
-
-                    //List Bottom Gradient
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 30.0,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              StateContainer.of(context).curTheme.background00,
-                              StateContainer.of(context).curTheme.background
-                            ],
-                            begin: AlignmentDirectional(0.5, -1),
-                            end: AlignmentDirectional(0.5, 0.5),
-                          ),
                         ),
                       ),
                     ),
@@ -603,7 +550,7 @@ class _SendSheetState extends State<SendSheet> {
                           context,
                           AppButtonType.PRIMARY,
                           widget.actionButtonTitle == null
-                              ? AppLocalization.of(context).send
+                              ? AppLocalization.of(context).transferUCO
                               : widget.actionButtonTitle,
                           Dimens.BUTTON_TOP_DIMENS, onPressed: () {
                         validRequest = _validateRequest();
@@ -665,7 +612,7 @@ class _SendSheetState extends State<SendSheet> {
                       // Scan QR Code Button
                       AppButton.buildAppButton(
                           context,
-                          AppButtonType.PRIMARY_OUTLINE,
+                          AppButtonType.PRIMARY,
                           AppLocalization.of(context).scanQrCode,
                           Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () async {
                         UIUtil.cancelLockEvent();
