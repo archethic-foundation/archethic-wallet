@@ -13,7 +13,6 @@ import 'package:uniris_mobile_wallet/service_locator.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/ui/receive/receive_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/settings/settings_drawer.dart';
-import 'package:uniris_mobile_wallet/ui/transactions_list.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/balance.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/line_chart.dart';
@@ -380,13 +379,7 @@ class _AppHomePageState extends State<AppHomePage>
                                                   .buildBalanceNFTDisplay(
                                                       context,
                                                       _opacityAnimation)
-                                              : LineChartWidget()
-                                      /*new ChartsPriceView(
-                                                localCurrency:
-                                                    StateContainer.of(context)
-                                                        .curCurrency,
-                                                nbDays: 1),*/
-                                      ),
+                                              : LineChartWidget.buildTinyCoinsChart(context)),
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(10.0)),
@@ -493,6 +486,40 @@ class _AppHomePageState extends State<AppHomePage>
                             ),
                           ),
                         ),
+                        SizedBox(height: 20),
+                        Container(
+                            padding: EdgeInsets.all(3.5),
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            decoration: BoxDecoration(
+                              color: StateContainer.of(context)
+                                  .curTheme
+                                  .backgroundDark,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: StateContainer.of(context)
+                                      .curTheme
+                                      .backgroundDarkest,
+                                  blurRadius: 5.0,
+                                  spreadRadius: 0.0,
+                                  offset: Offset(5.0, 5.0),
+                                )
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                Text("Address",
+                                    style: AppStyles.textStyleAddressText60(
+                                        context)),
+                                SelectableText(
+                                    StateContainer.of(context)
+                                        .selectedAccount
+                                        .address,
+                                    style: AppStyles.textStyleAddressText90(
+                                        context))
+                              ],
+                            )),
                       ],
                     ),
 

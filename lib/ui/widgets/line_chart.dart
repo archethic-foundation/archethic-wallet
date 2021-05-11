@@ -4,71 +4,126 @@ import 'package:fluttericon/entypo_icons.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
 
-class LineChartWidget extends StatefulWidget {
-  @override
-  _LineChartWidgetState createState() => _LineChartWidgetState();
-}
+class LineChartWidget {
+  List<FlSpot> data = [];
+  double minY = 0;
+  double minX = 0;
+  double maxY = 0;
+  double maxX = 0;
 
-class _LineChartWidgetState extends State<LineChartWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        AspectRatio(
-          aspectRatio: 1.70,
-          child: Container(
-            decoration: BoxDecoration(
-              color: StateContainer.of(context).curTheme.backgroundDark,
-              borderRadius: BorderRadius.all(
-                Radius.circular(15),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: StateContainer.of(context).curTheme.backgroundDarkest,
-                  blurRadius: 5.0,
-                  spreadRadius: 0.0,
-                  offset: Offset(5.0, 5.0),
+  static Widget buildTinyCoinsChart(BuildContext context) {
+    if (StateContainer.of(context).chartInfos != null &&
+        StateContainer.of(context).chartInfos.data != null) {
+      return Stack(
+        children: <Widget>[
+          AspectRatio(
+            aspectRatio: 1.70,
+            child: Container(
+              decoration: BoxDecoration(
+                color: StateContainer.of(context).curTheme.backgroundDark,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
                 ),
-              ],
+                boxShadow: [
+                  BoxShadow(
+                    color:
+                        StateContainer.of(context).curTheme.backgroundDarkest,
+                    blurRadius: 5.0,
+                    spreadRadius: 0.0,
+                    offset: Offset(5.0, 5.0),
+                  ),
+                ],
+              ),
+              child: Padding(
+                  padding: const EdgeInsets.only(
+                      right: 18.0, left: 12.0, top: 24, bottom: 12),
+                  child: LineChart(
+                    mainData(context),
+                  )),
             ),
+          ),
+          SizedBox(
             child: Padding(
-              padding: const EdgeInsets.only(
-                  right: 18.0, left: 12.0, top: 24, bottom: 12),
-              child: LineChart(
-                mainData(context),
+              padding: const EdgeInsets.only(left: 5.0, top: 5.0),
+              child: Text(
+                'UCO (1d)',
+                style: AppStyles.textStyleTransactionUnit(context),
               ),
             ),
           ),
-        ),
-        SizedBox(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 5.0, top: 5.0),
-            child: Text(
-              'UCO (1h)',
-              style: AppStyles.textStyleTransactionUnit(context),
-            ),
+          SizedBox(
+            child: Padding(
+                padding: const EdgeInsets.only(left: 5.0, top: 100.0),
+                child: StateContainer.of(context)
+                            .chartInfos
+                            .priceChangePercentage24h! >=
+                        0
+                    ? Row(
+                        children: [
+                          Text(
+                            StateContainer.of(context)
+                                .chartInfos
+                                .priceChangePercentage24h
+                                .toString(),
+                            style: AppStyles.textStyleChartGreen(context),
+                          ),
+                          Icon(Entypo.up_dir,
+                              color: StateContainer.of(context)
+                                  .curTheme
+                                  .positiveValue),
+                        ],
+                      )
+                    : Row(
+                        children: [
+                          Text(
+                            StateContainer.of(context)
+                                .chartInfos
+                                .priceChangePercentage24h
+                                .toString(),
+                            style: AppStyles.textStyleChartRed(context),
+                          ),
+                          Icon(Entypo.down_dir,
+                              color: StateContainer.of(context)
+                                  .curTheme
+                                  .negativeValue),
+                        ],
+                      )),
           ),
-        ),
-        SizedBox(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 5.0, top: 100.0),
-            child: Row(
-              children: [
-                Text(
-                  '+0,2\$ (0,10%)',
-                  style: AppStyles.textStyleChartGreen(context),
+        ],
+      );
+    } else {
+      return Stack(
+        children: <Widget>[
+          AspectRatio(
+            aspectRatio: 1.70,
+            child: Container(
+                decoration: BoxDecoration(
+                  color: StateContainer.of(context).curTheme.backgroundDark,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color:
+                          StateContainer.of(context).curTheme.backgroundDarkest,
+                      blurRadius: 5.0,
+                      spreadRadius: 0.0,
+                      offset: Offset(5.0, 5.0),
+                    ),
+                  ],
                 ),
-                Icon(Entypo.up_dir,
-                    color: StateContainer.of(context).curTheme.positiveValue),
-              ],
-            ),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      right: 18.0, left: 12.0, top: 24, bottom: 12),
+                  child: Center(child: CircularProgressIndicator()),
+                )),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    }
   }
 
-  LineChartData mainData(BuildContext context) {
+  static LineChartData mainData(BuildContext context) {
     List<Color> gradientColors = [
       StateContainer.of(context).curTheme.backgroundDark,
       StateContainer.of(context).curTheme.backgroundDarkest,
@@ -110,26 +165,13 @@ class _LineChartWidgetState extends State<LineChartWidget> {
       borderData: FlBorderData(
           show: false,
           border: Border.all(color: const Color(0xff37434d), width: 1)),
-      minX: 0,
-      maxX: 11,
-      minY: 0.210,
-      maxY: 0.229,
+      minX: StateContainer.of(context).chartInfos.minX,
+      maxX: StateContainer.of(context).chartInfos.maxX,
+      minY: StateContainer.of(context).chartInfos.minY,
+      maxY: StateContainer.of(context).chartInfos.maxY,
       lineBarsData: [
         LineChartBarData(
-          spots: [
-            FlSpot(0, 0.223),
-            FlSpot(1, 0.221),
-            FlSpot(2, 0.228),
-            FlSpot(3, 0.218),
-            FlSpot(4, 0.217),
-            FlSpot(5, 0.221),
-            FlSpot(6, 0.222),
-            FlSpot(7, 0.223),
-            FlSpot(8, 0.229),
-            FlSpot(9, 0.210),
-            FlSpot(10, 0.219),
-            FlSpot(11, 0.219),
-          ],
+          spots: StateContainer.of(context).chartInfos.data,
           isCurved: true,
           colors: gradientColors,
           barWidth: 1,

@@ -7,7 +7,6 @@ import 'package:uniris_mobile_wallet/model/address.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
 
 class BalanceDisplay {
-  // Primary button builder
   static Widget buildBalanceUCODisplay(
       BuildContext context, Animation<double> _opacityAnimation) {
     if (StateContainer.of(context).wallet == null) {

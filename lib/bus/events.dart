@@ -12,3 +12,4 @@ export 'authenticated_event.dart';
 export 'transaction_send_event.dart';
 export 'transactions_list_event.dart';
 export 'conn_status_event.dart';
+export 'chart_event.dart';

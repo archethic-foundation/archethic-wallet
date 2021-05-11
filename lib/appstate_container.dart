@@ -1,11 +1,15 @@
 // @dart=2.9
 
 import 'dart:async';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:hex/hex.dart';
 import 'package:logger/logger.dart';
+import 'package:uniris_lib_dart/model/response/coins_current_data_response.dart';
+import 'package:uniris_lib_dart/model/response/coins_price_response.dart';
 import 'package:uniris_lib_dart/model/response/simple_price_response.dart';
 import 'package:uniris_lib_dart/services/api_coins_service.dart';
 import 'package:uniris_mobile_wallet/model/balance.dart';
+import 'package:uniris_mobile_wallet/model/chart_infos.dart';
 import 'package:uniris_mobile_wallet/model/wallet.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/foundation.dart';
@@ -91,6 +95,8 @@ class StateContainerState extends State<StateContainer> {
   // When wallet is encrypted
   String encryptedSecret;
 
+  ChartInfos chartInfos;
+
   @override
   void initState() {
     super.initState();
@@ -114,6 +120,7 @@ class StateContainerState extends State<StateContainer> {
   // Subscriptions
   StreamSubscription<BalanceGetEvent> _balanceGetEventSub;
   StreamSubscription<PriceEvent> _priceEventSub;
+  StreamSubscription<ChartEvent> _chartEventSub;
   StreamSubscription<AccountModifiedEvent> _accountModifiedSub;
   StreamSubscription<TransactionsListEvent> _transactionsListEventSub;
 
@@ -161,11 +168,17 @@ class StateContainerState extends State<StateContainer> {
 
     _priceEventSub =
         EventTaxiImpl.singleton().registerTo<PriceEvent>().listen((event) {
-      // PriceResponse's get pushed periodically, it wasn't a request we made so don't pop the queue
       setState(() {
         wallet.btcPrice = event.response.btcPrice.toString();
         wallet.localCurrencyPrice =
             event.response.localCurrencyPrice.toString();
+      });
+    });
+
+    _chartEventSub =
+        EventTaxiImpl.singleton().registerTo<ChartEvent>().listen((event) {
+      setState(() {
+        chartInfos = event.chartInfos;
       });
     });
 
@@ -230,6 +243,9 @@ class StateContainerState extends State<StateContainer> {
     }
     if (_priceEventSub != null) {
       _priceEventSub.cancel();
+    }
+    if (_chartEventSub != null) {
+      _chartEventSub.cancel();
     }
     if (_accountModifiedSub != null) {
       _accountModifiedSub.cancel();
@@ -337,8 +353,6 @@ class StateContainerState extends State<StateContainer> {
     if (wallet != null &&
         wallet.address != null &&
         Address(wallet.address).isValid()) {
-      // Request account history
-      int count = 30;
       String endpoint = await sl.get<SharedPrefsUtil>().getEndpoint();
       try {
         sl
@@ -351,11 +365,41 @@ class StateContainerState extends State<StateContainer> {
         EventTaxiImpl.singleton()
             .fire(PriceEvent(response: simplePriceResponse));
 
-        sl.get<AppService>().getAddressTxsResponse(wallet.address, count);
-      } catch (e) {
-        // TODO handle account history error
-        sl.get<Logger>().e("account_history e", e);
-      }
+        CoinsPriceResponse coinsPriceResponse = await sl
+            .get<ApiCoinsService>()
+            .getCoinsChart(curCurrency.getIso4217Code(), 1);
+        chartInfos = new ChartInfos();
+        chartInfos.minY = 9999999;
+        chartInfos.maxY = 0;
+        CoinsCurrentDataResponse coinsCurrentDataResponse = await sl
+            .get<ApiCoinsService>().getCoinsCurrentData();
+        if(coinsCurrentDataResponse.marketData.priceChangePercentage24HInCurrency[curCurrency.getIso4217Code().toLowerCase()] != null)
+        {
+          chartInfos.priceChangePercentage24h = coinsCurrentDataResponse.marketData.priceChangePercentage24HInCurrency[curCurrency.getIso4217Code().toLowerCase()];
+        }
+        else
+        {
+          chartInfos.priceChangePercentage24h = coinsCurrentDataResponse.marketData.priceChangePercentage24H;
+        }
+        List<FlSpot> data = new List<FlSpot>.empty(growable: true);
+        for (int i = 0; i < coinsPriceResponse.prices.length; i = i + 1) {
+          FlSpot chart = FlSpot(
+              coinsPriceResponse.prices[i][0], double.tryParse(coinsPriceResponse.prices[i][1].toStringAsFixed(5)));
+          data.add(chart);
+          if (chartInfos.minY > coinsPriceResponse.prices[i][1]) {
+            chartInfos.minY = coinsPriceResponse.prices[i][1];
+          }
+
+          if (chartInfos.maxY < coinsPriceResponse.prices[i][1]) {
+            chartInfos.maxY = coinsPriceResponse.prices[i][1];
+          }
+        }
+        chartInfos.data = data;
+        chartInfos.minX = coinsPriceResponse.prices[0][0];
+        chartInfos.maxX =
+            coinsPriceResponse.prices[coinsPriceResponse.prices.length - 1][0];
+        EventTaxiImpl.singleton().fire(ChartEvent(chartInfos: chartInfos));
+      } catch (e) {}
     }
   }
 

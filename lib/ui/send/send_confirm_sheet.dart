@@ -465,18 +465,18 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
 
       String seed = await StateContainer.of(context).getSeed();
       int index = StateContainer.of(context).selectedAccount.index;
-      String publicKeyBase64 =
-          await AppUtil().seedToPublicKeyBase64(seed, index);
-      String privateKey = await AppUtil().seedToPrivateKey(seed, index);
+      String publicKeyBase64 = "";
+      
+      String privateKey = "";
       //print("send tx");
-      sl.get<AppService>().sendTx(
+      /*sl.get<AppService>().sendUCO(originPrivateKey, transactionChainSeed, address, endpoint, listUcoTransfer)
           StateContainer.of(context).wallet.address,
           widget.amountRaw,
           destinationAltered,
           "",
           "",
           publicKeyBase64,
-          privateKey);
+          privateKey);*/
     } catch (e) {
       // Send failed
       //print("send failed" + e.toString());

@@ -3,6 +3,9 @@
 import 'dart:async';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:logger/logger.dart';
+import 'package:uniris_lib_dart/api.dart';
+import 'package:uniris_lib_dart/transaction_builder.dart';
+import 'package:uniris_lib_dart/utils.dart';
 import 'package:uniris_mobile_wallet/bus/events.dart';
 import 'package:uniris_mobile_wallet/model/balance.dart';
 import 'package:uniris_mobile_wallet/network/model/request/send_tx_request.dart';
@@ -57,27 +60,32 @@ class AppService {
       EventTaxiImpl.singleton().fire(BalanceGetEvent(response: balance));
     }
   }
+   
+  void sendUCO(originPrivateKey, String transactionChainSeed, String address, String endpoint, List<UcoTransfer> listUcoTransfer)
+  {
+    var txIndex = getTransactionIndex(address, endpoint);
+    TransactionBuilder builder = new TransactionBuilder("transfer");
+    listUcoTransfer.forEach((transfer) => builder.addUCOTransfer(transfer.to, transfer.amount));
 
-  Future<void> sendTx(
-      String address,
-      String amount,
-      String destination,
-      String openfield,
-      String operation,
-      String publicKey,
-      String privateKey) async {
-    SendTxRequest sendTxRequest = new SendTxRequest();
-    Tx tx = new Tx();
-    //print("address : " + address);
-    //print("amount : " + amount);
-    //print("destination : " + destination);
-    //print("publicKey : " + publicKey);
-    //print("privateKey : " + privateKey);
-
-    try {} catch (e) {
-      //print("pb socket" + e.toString());
-      EventTaxiImpl.singleton().fire(
-          ConnStatusEvent(status: ConnectionStatus.DISCONNECTED, server: ""));
-    } finally {}
+    TransactionBuilder tx = builder.build(transactionChainSeed, txIndex).originSign(originPrivateKey);
+    Map<String, dynamic> transfer = {
+      'address': uint8ListToHex(tx.address),
+      'timestamp': tx.timestamp,
+      'data': 
+      {
+          'legder': 
+          {
+            'uco': 
+            {
+              'transfers': listUcoTransfer
+            } 
+          }
+      }
+    };
+    var data = sendTx(tx, endpoint);
+    if(data.errors)
+    {
+      print(data.errors);
+    }
   }
 }
