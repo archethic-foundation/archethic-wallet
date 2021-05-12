@@ -1,5 +1,7 @@
 import 'dart:core';
 
+import 'package:uniris_lib_dart/utils.dart';
+
 // Object to represent an account address or address URI, and provide useful utilities
 class Address {
   String? _address;
@@ -58,6 +60,7 @@ class Address {
   }
 
   bool isValid() {
-    return _address == null ? false : true;
+    
+    return _address == null ? false : isHex(_address!);
   }
 }

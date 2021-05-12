@@ -82,9 +82,7 @@ class ContactDetailsSheet {
                                             .replaceAll("%1", contact.name),
                                         context);
                                     Navigator.of(context).pop();
-                                  } else {
-                                    // TODO - error for failing to delete contact
-                                  }
+                                  } 
                                 });
                               },
                                   cancelText: CaseChange.toUpperCase(

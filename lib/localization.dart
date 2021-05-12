@@ -82,6 +82,10 @@ class AppLocalization {
     return Intl.message('Send', desc: '', name: 'send');
   }
 
+  String get add {
+    return Intl.message('Add', desc: '', name: 'add');
+  }
+
   String get transferUCO {
     return Intl.message('Transfer UCO', desc: '', name: 'transferUCO');
   }

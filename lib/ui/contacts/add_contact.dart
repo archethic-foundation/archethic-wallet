@@ -19,7 +19,6 @@ import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:uniris_mobile_wallet/ui/util/formatters.dart';
 import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
-import 'package:uniris_mobile_wallet/util/caseconverter.dart';
 import 'package:uniris_mobile_wallet/app_icons.dart';
 import 'package:uniris_mobile_wallet/util/user_data_util.dart';
 
@@ -233,7 +232,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                         ? AppStyles.textStyleAddressText90(context)
                         : AppStyles.textStyleAddressText60(context),
                     inputFormatters: [
-                      LengthLimitingTextInputFormatter(65),
+                      LengthLimitingTextInputFormatter(66),
                     ],
                     textInputAction: TextInputAction.done,
                     maxLines: null,

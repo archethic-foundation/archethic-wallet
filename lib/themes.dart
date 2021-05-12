@@ -57,6 +57,9 @@ abstract class BaseTheme {
   Color positiveValue;
   Color negativeValue;
 
+  Color contextMenuText;
+  Color contextMenuTextRed;
+
   Color choiceOption;
 
   Brightness brightness;
@@ -138,6 +141,9 @@ class UnirisTheme extends BaseTheme {
 
   Color positiveValue = Colors.lightGreenAccent[400];
   Color negativeValue = Colors.red[300];
+
+  Color contextMenuText = blue;
+  Color contextMenuTextRed = Colors.red[300];
 
   Color choiceOption = Colors.lightGreenAccent[400];
 

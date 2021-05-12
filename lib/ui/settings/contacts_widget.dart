@@ -14,7 +14,6 @@ import 'package:uniris_mobile_wallet/app_icons.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/bus/events.dart';
-import 'package:uniris_mobile_wallet/model/address.dart';
 import 'package:uniris_mobile_wallet/model/db/appdb.dart';
 import 'package:uniris_mobile_wallet/model/db/contact.dart';
 import 'package:uniris_mobile_wallet/ui/contacts/add_contact.dart';

@@ -1,6 +1,5 @@
-// @dart=2.9
-
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
+import 'package:uniris_lib_dart/transaction_builder.dart';
+import 'package:uniris_lib_dart/utils.dart';
 
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/dimens.dart';
@@ -24,22 +25,23 @@ import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/ui/send/send_confirm_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/app_text_field.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
+import 'package:uniris_mobile_wallet/ui/widgets/nft_list.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/one_or_three_address_text.dart';
 import 'package:uniris_mobile_wallet/ui/util/formatters.dart';
 import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
+import 'package:uniris_mobile_wallet/ui/widgets/uco_transfer_list.dart';
 import 'package:uniris_mobile_wallet/util/numberutil.dart';
-import 'package:uniris_mobile_wallet/util/caseconverter.dart';
 import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
 import 'package:uniris_mobile_wallet/util/user_data_util.dart';
 
 class SendSheet extends StatefulWidget {
-  final AvailableCurrency localCurrency;
-  final Contact contact;
-  final String address;
-  final String quickSendAmount;
-  final String title;
-  final String actionButtonTitle;
+  final AvailableCurrency? localCurrency;
+  final Contact? contact;
+  final String? address;
+  final String? quickSendAmount;
+  final String? title;
+  final String? actionButtonTitle;
 
   SendSheet({
     @required this.localCurrency,
@@ -58,20 +60,20 @@ enum AddressStyle { TEXT60, TEXT90, PRIMARY }
 class _SendSheetState extends State<SendSheet> {
   final Logger log = sl.get<Logger>();
 
-  FocusNode _sendAddressFocusNode;
-  TextEditingController _sendAddressController;
-  FocusNode _sendAmountFocusNode;
-  TextEditingController _sendAmountController;
+  FocusNode? _sendAddressFocusNode;
+  TextEditingController? _sendAddressController;
+  FocusNode? _sendAmountFocusNode;
+  TextEditingController? _sendAmountController;
 
   // States
-  AddressStyle _sendAddressStyle;
-  String _amountHint = "";
-  String _addressHint = "";
-  String _amountValidationText = "";
-  String _addressValidationText = "";
-  String quickSendAmount;
-  List<Contact> _contacts;
-  bool animationOpen;
+  AddressStyle? _sendAddressStyle;
+  String? _amountHint = "";
+  String? _addressHint = "";
+  String? _amountValidationText = "";
+  String? _addressValidationText = "";
+  String? quickSendAmount;
+  List<Contact>? _contacts;
+  bool? animationOpen;
   // Used to replace address textfield with colorized TextSpan
   bool _addressValidAndUnfocused = false;
   // Set to true when a contact is being entered
@@ -83,15 +85,28 @@ class _SendSheetState extends State<SendSheet> {
   bool _localCurrencyMode = false;
   String _lastLocalCurrencyAmount = "";
   String _lastCryptoAmount = "";
-  NumberFormat _localCurrencyFormat;
+  NumberFormat? _localCurrencyFormat;
   bool isTokenToSendSwitched = false;
-  String _rawAmount;
-  String _rawTokenQuantity;
+  String? _rawAmount;
   bool validRequest = true;
+
+  List<UcoTransfer> ucoTransferList =
+      new List<UcoTransfer>.empty(growable: true);
+
+  List<Contact> _contactsRef = new List<Contact>.empty(growable: true);
+
+  void _updateContacts() {
+    sl.get<DBHelper>().getContacts().then((contacts) {
+      setState(() {
+        _contactsRef = contacts;
+      });
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    _updateContacts();
     _sendAmountFocusNode = FocusNode();
     _sendAddressFocusNode = FocusNode();
     _sendAmountController = TextEditingController();
@@ -102,31 +117,31 @@ class _SendSheetState extends State<SendSheet> {
     this.animationOpen = false;
     if (widget.contact != null) {
       // Setup initial state for contact pre-filled
-      _sendAddressController.text = widget.contact.name;
+      _sendAddressController!.text = widget.contact!.name;
       _isContact = true;
       _showContactButton = false;
       _pasteButtonVisible = false;
       _sendAddressStyle = AddressStyle.PRIMARY;
     } else if (widget.address != null) {
       // Setup initial state with prefilled address
-      _sendAddressController.text = widget.address;
+      _sendAddressController!.text = widget.address!;
       _showContactButton = false;
       _pasteButtonVisible = false;
       _sendAddressStyle = AddressStyle.TEXT90;
       _addressValidAndUnfocused = true;
     }
     // On amount focus change
-    _sendAmountFocusNode.addListener(() {
-      if (_sendAmountFocusNode.hasFocus) {
+    _sendAmountFocusNode!.addListener(() {
+      if (_sendAmountFocusNode!.hasFocus) {
         if (_rawAmount != null) {
           setState(() {
-            _sendAmountController.text =
+            _sendAmountController!.text =
                 NumberUtil.getRawAsUsableString(_rawAmount).replaceAll(",", "");
             _rawAmount = null;
           });
         }
         if (quickSendAmount != null) {
-          _sendAmountController.text = "";
+          _sendAmountController!.text = "";
           setState(() {
             quickSendAmount = null;
           });
@@ -141,18 +156,18 @@ class _SendSheetState extends State<SendSheet> {
       }
     });
     // On address focus change
-    _sendAddressFocusNode.addListener(() {
-      if (_sendAddressFocusNode.hasFocus) {
+    _sendAddressFocusNode!.addListener(() {
+      if (_sendAddressFocusNode!.hasFocus) {
         setState(() {
           _addressHint = null;
           //_addressValidAndUnfocused = false;
         });
-        _sendAddressController.selection = TextSelection.fromPosition(
-            TextPosition(offset: _sendAddressController.text.length));
-        if (_sendAddressController.text.startsWith("@")) {
+        _sendAddressController!.selection = TextSelection.fromPosition(
+            TextPosition(offset: _sendAddressController!.text.length));
+        if (_sendAddressController!.text.startsWith("@")) {
           sl
               .get<DBHelper>()
-              .getContactsWithNameLike(_sendAddressController.text)
+              .getContactsWithNameLike(_sendAddressController!.text)
               .then((contactList) {
             setState(() {
               _contacts = contactList;
@@ -163,12 +178,12 @@ class _SendSheetState extends State<SendSheet> {
         setState(() {
           _addressHint = "";
           _contacts = [];
-          if (Address(_sendAddressController.text).isValid()) {
+          if (Address(_sendAddressController!.text).isValid()) {
             //_addressValidAndUnfocused = true;
           }
         });
-        if (_sendAddressController.text.trim() == "@") {
-          _sendAddressController.text = "";
+        if (_sendAddressController!.text.trim() == "@") {
+          _sendAddressController!.text = "";
           setState(() {
             _showContactButton = true;
           });
@@ -178,11 +193,11 @@ class _SendSheetState extends State<SendSheet> {
 
     // Set initial currency format
     _localCurrencyFormat = NumberFormat.currency(
-        locale: widget.localCurrency.getLocale().toString(),
-        symbol: widget.localCurrency.getCurrencySymbol());
+        locale: widget.localCurrency!.getLocale().toString(),
+        symbol: widget.localCurrency!.getCurrencySymbol());
     // Set quick send amount
     if (quickSendAmount != null) {
-      _sendAmountController.text =
+      _sendAmountController!.text =
           NumberUtil.getRawAsUsableString(quickSendAmount).replaceAll(",", "");
     }
   }
@@ -228,9 +243,9 @@ class _SendSheetState extends State<SendSheet> {
                         children: <Widget>[
                           // Header
                           AutoSizeText(
-                            widget.title == null
+                            (widget.title == null
                                 ? AppLocalization.of(context).send
-                                : widget.title,
+                                : widget.title)!,
                             style: AppStyles.textStyleHeader(context),
                             textAlign: TextAlign.center,
                             maxLines: 1,
@@ -249,36 +264,6 @@ class _SendSheetState extends State<SendSheet> {
               ],
             ),
 
-            Container(
-              margin: EdgeInsets.only(top: 0.0, left: 30, right: 30),
-              child: Container(
-                child: RichText(
-                  textAlign: TextAlign.start,
-                  text: TextSpan(
-                    text: '',
-                    children: [
-                      TextSpan(
-                        text: StateContainer.of(context).selectedAccount.name,
-                        style: TextStyle(
-                          color: StateContainer.of(context).curTheme.text60,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'Montserrat',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            // Address Text
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 30),
-              child: OneOrThreeLineAddressText(
-                  address: StateContainer.of(context).wallet.address,
-                  type: AddressTextType.PRIMARY60),
-            ),
-
             // A main container that holds everything
             Expanded(
               child: Container(
@@ -288,8 +273,8 @@ class _SendSheetState extends State<SendSheet> {
                     GestureDetector(
                       onTap: () {
                         // Clear focus of our fields when tapped in this empty space
-                        _sendAddressFocusNode.unfocus();
-                        _sendAmountFocusNode.unfocus();
+                        _sendAddressFocusNode!.unfocus();
+                        _sendAmountFocusNode!.unfocus();
                       },
                       child: Container(
                         color: Colors.transparent,
@@ -398,16 +383,11 @@ class _SendSheetState extends State<SendSheet> {
                                         );
                                       },
                                     ),
-
-                                    // ******* Enter Amount Container ******* //
                                     getEnterAmountContainer(),
-                                    // ******* Enter Amount Container End ******* //
-
-                                    // ******* Enter Amount Error Container ******* //
                                     Container(
                                       alignment: AlignmentDirectional(0, 0),
                                       margin: EdgeInsets.only(top: 3),
-                                      child: Text(_amountValidationText,
+                                      child: Text(_amountValidationText!,
                                           style: TextStyle(
                                             fontSize: 14.0,
                                             color: StateContainer.of(context)
@@ -417,11 +397,8 @@ class _SendSheetState extends State<SendSheet> {
                                             fontWeight: FontWeight.w600,
                                           )),
                                     ),
-                                    // ******* Enter Amount Error Container End ******* //
                                   ],
                                 ),
-
-                                // Column for Enter Address container + Enter Address Error container
                                 Column(
                                   children: <Widget>[
                                     Container(
@@ -441,16 +418,15 @@ class _SendSheetState extends State<SendSheet> {
                                                     0.105),
                                             alignment: Alignment.bottomCenter,
                                             constraints: BoxConstraints(
-                                                maxHeight: 174, minHeight: 0),
-                                            // ********************************************* //
-                                            // ********* The pop-up Contacts List ********* //
+                                                maxHeight: 173, minHeight: 0),
+                                            // The pop-up Contacts List
                                             child: ClipRRect(
                                               borderRadius:
-                                                  BorderRadius.circular(25),
+                                                  BorderRadius.circular(10),
                                               child: Container(
                                                 decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(25),
+                                                      BorderRadius.circular(10),
                                                   color:
                                                       StateContainer.of(context)
                                                           .curTheme
@@ -468,31 +444,26 @@ class _SendSheetState extends State<SendSheet> {
                                                     shrinkWrap: true,
                                                     padding: EdgeInsets.only(
                                                         bottom: 0, top: 0),
-                                                    itemCount: _contacts.length,
+                                                    itemCount:
+                                                        _contacts!.length,
                                                     itemBuilder:
                                                         (context, index) {
                                                       return _buildContactItem(
-                                                          _contacts[index]);
+                                                          _contacts![index]);
                                                     },
-                                                  ), // ********* The pop-up Contacts List End ********* //
-                                                  // ************************************************** //
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
-
-                                          // ******* Enter Address Container ******* //
                                           getEnterAddressContainer(),
-                                          // ******* Enter Address Container End ******* //
                                         ],
                                       ),
                                     ),
-
-                                    // ******* Enter Address Error Container ******* //
                                     Container(
                                       alignment: AlignmentDirectional(0, 0),
                                       margin: EdgeInsets.only(top: 3),
-                                      child: Text(_addressValidationText,
+                                      child: Text(_addressValidationText!,
                                           style: TextStyle(
                                             fontSize: 14.0,
                                             color: StateContainer.of(context)
@@ -502,7 +473,6 @@ class _SendSheetState extends State<SendSheet> {
                                             fontWeight: FontWeight.w600,
                                           )),
                                     ),
-                                    // ******* Enter Address Error Container End ******* //
                                     SizedBox(height: 10),
                                     Container(
                                       margin:
@@ -526,6 +496,131 @@ class _SendSheetState extends State<SendSheet> {
                                         ),
                                       ),
                                     ),
+                                    SizedBox(height: 10),
+                                    Row(
+                                      children: <Widget>[
+                                        AppButton.buildAppButton(
+                                            context,
+                                            AppButtonType.PRIMARY,
+                                            widget.actionButtonTitle == null
+                                                ? AppLocalization.of(context)
+                                                    .add
+                                                : widget.actionButtonTitle,
+                                            Dimens.BUTTON_TOP_DIMENS,
+                                            onPressed: () {
+                                          setState(() {
+                                            validRequest = _validateRequest();
+                                            String _to =
+                                                _sendAddressController!.text;
+
+                                            if (_sendAddressController!.text
+                                                    .startsWith("@") &&
+                                                validRequest) {
+                                              // Need to make sure its a valid contact
+                                              sl
+                                                  .get<DBHelper>()
+                                                  .getContactWithName(
+                                                      _sendAddressController!
+                                                          .text)
+                                                  .then((contact) {
+                                                if (contact == null) {
+                                                  setState(() {
+                                                    _addressValidationText =
+                                                        AppLocalization.of(
+                                                                context)
+                                                            .contactInvalid;
+                                                  });
+                                                }
+                                                _to = contact.address;
+                                                if (validRequest) {
+                                                  double _amount =
+                                                      double.tryParse(
+                                                          _sendAmountController!
+                                                              .text)!;
+
+                                                  for (int i = 0;
+                                                      i <
+                                                          ucoTransferList
+                                                              .length;
+                                                      i++) {
+                                                    if (uint8ListToHex(
+                                                            ucoTransferList[i]
+                                                                .to!) ==
+                                                        _to) {
+                                                      _amount = _amount +
+                                                          ucoTransferList[i]
+                                                              .amount!;
+                                                      ucoTransferList
+                                                          .removeAt(i);
+                                                      break;
+                                                    }
+                                                  }
+                                                  UcoTransfer ucoTransfer =
+                                                      new UcoTransfer(
+                                                          to: hexToUint8List(
+                                                              _to),
+                                                          amount: _amount);
+                                                  ucoTransferList
+                                                      .add(ucoTransfer);
+                                                }
+                                              });
+                                            } else {
+                                              if (validRequest) {
+                                                double _amount =
+                                                    double.tryParse(
+                                                        _sendAmountController!
+                                                            .text)!;
+
+                                                for (int i = 0;
+                                                    i < ucoTransferList.length;
+                                                    i++) {
+                                                  if (uint8ListToHex(
+                                                          ucoTransferList[i]
+                                                              .to!) ==
+                                                      _to) {
+                                                    _amount = _amount +
+                                                        ucoTransferList[i]
+                                                            .amount!;
+                                                    ucoTransferList.removeAt(i);
+                                                    break;
+                                                  }
+                                                }
+                                                UcoTransfer ucoTransfer =
+                                                    new UcoTransfer(
+                                                        to: hexToUint8List(_to),
+                                                        amount: _amount);
+                                                ucoTransferList
+                                                    .add(ucoTransfer);
+                                              }
+                                            }
+                                          });
+                                        }),
+                                      ],
+                                    ),
+                                    SizedBox(height: 10),
+                                    UcoTransferListWidget(
+                                        listUcoTransfer: ucoTransferList,
+                                        contacts: _contactsRef,
+                                        onGet: (UcoTransfer _ucoTransfer) {
+                                          setState(() {
+                                            _sendAddressController!.text =
+                                                uint8ListToHex(
+                                                    _ucoTransfer.to!);
+                                            _contactsRef.forEach((contact) {
+                                              if (contact.address ==
+                                                  uint8ListToHex(
+                                                      _ucoTransfer.to!)) {
+                                                _sendAddressController!.text =
+                                                    contact.name;
+                                              }
+                                            });
+                                            _sendAmountController!.text =
+                                                _ucoTransfer.amount.toString();
+                                          });
+                                        },
+                                        onDelete: () {
+                                          setState(() {});
+                                        }),
                                   ],
                                 ),
                               ],
@@ -538,71 +633,74 @@ class _SendSheetState extends State<SendSheet> {
                 ),
               ),
             ),
-
-            //A column with "Scan QR Code" and "Send" buttons
             Container(
               child: Column(
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      // Send Button
                       AppButton.buildAppButton(
                           context,
-                          AppButtonType.PRIMARY,
+                          ucoTransferList.length == 0
+                              ? AppButtonType.PRIMARY_OUTLINE
+                              : AppButtonType.PRIMARY,
                           widget.actionButtonTitle == null
                               ? AppLocalization.of(context).transferUCO
                               : widget.actionButtonTitle,
                           Dimens.BUTTON_TOP_DIMENS, onPressed: () {
-                        validRequest = _validateRequest();
-                        if (_sendAddressController.text.startsWith("@") &&
-                            validRequest) {
-                          // Need to make sure its a valid contact
-                          sl
-                              .get<DBHelper>()
-                              .getContactWithName(_sendAddressController.text)
-                              .then((contact) {
-                            if (contact == null) {
-                              setState(() {
-                                _addressValidationText =
-                                    AppLocalization.of(context).contactInvalid;
-                              });
-                            } else {
-                              Sheets.showAppHeightNineSheet(
-                                  context: context,
-                                  widget: SendConfirmSheet(
-                                      title: widget.title,
-                                      amountRaw: _localCurrencyMode
-                                          ? NumberUtil.getAmountAsRaw(
-                                              _convertLocalCurrencyToCrypto())
-                                          : _rawAmount == null
-                                              ? NumberUtil.getAmountAsRaw(
-                                                  _sendAmountController.text)
-                                              : _rawAmount,
-                                      destination: contact.address,
-                                      contactName: contact.name,
-                                      maxSend: _isMaxSend(),
-                                      localCurrency: _localCurrencyMode
-                                          ? _sendAmountController.text
-                                          : null));
-                            }
-                          });
-                        } else if (validRequest) {
-                          Sheets.showAppHeightNineSheet(
-                              context: context,
-                              widget: SendConfirmSheet(
-                                  title: widget.title,
-                                  amountRaw: _localCurrencyMode
-                                      ? NumberUtil.getAmountAsRaw(
-                                          _convertLocalCurrencyToCrypto())
-                                      : _rawAmount == null
-                                          ? NumberUtil.getAmountAsRaw(
-                                              _sendAmountController.text)
-                                          : _rawAmount,
-                                  destination: _sendAddressController.text,
-                                  maxSend: _isMaxSend(),
-                                  localCurrency: _localCurrencyMode
-                                      ? _sendAmountController.text
-                                      : null));
+                        if (ucoTransferList.length > 0) {
+                          validRequest = _validateRequest();
+                          if (_sendAddressController!.text.startsWith("@") &&
+                              validRequest) {
+                            // Need to make sure its a valid contact
+                            sl
+                                .get<DBHelper>()
+                                .getContactWithName(
+                                    _sendAddressController!.text)
+                                .then((contact) {
+                              if (contact == null) {
+                                setState(() {
+                                  _addressValidationText =
+                                      AppLocalization.of(context)
+                                          .contactInvalid;
+                                });
+                              } else {
+                                Sheets.showAppHeightNineSheet(
+                                    context: context,
+                                    widget: SendConfirmSheet(
+                                        title: widget.title,
+                                        amountRaw: _localCurrencyMode
+                                            ? NumberUtil.getAmountAsRaw(
+                                                _convertLocalCurrencyToCrypto())
+                                            : _rawAmount == null
+                                                ? NumberUtil.getAmountAsRaw(
+                                                    _sendAmountController!.text)
+                                                : _rawAmount,
+                                        destination: contact.address,
+                                        contactName: contact.name,
+                                        maxSend: _isMaxSend(),
+                                        localCurrency: _localCurrencyMode
+                                            ? _sendAmountController!.text
+                                            : null));
+                              }
+                            });
+                          } else if (validRequest) {
+                            Sheets.showAppHeightNineSheet(
+                                context: context,
+                                widget: SendConfirmSheet(
+                                    title: widget.title,
+                                    amountRaw: _localCurrencyMode
+                                        ? NumberUtil.getAmountAsRaw(
+                                            _convertLocalCurrencyToCrypto())
+                                        : _rawAmount == null
+                                            ? NumberUtil.getAmountAsRaw(
+                                                _sendAmountController!.text)
+                                            : _rawAmount,
+                                    destination: _sendAddressController!.text,
+                                    maxSend: _isMaxSend(),
+                                    localCurrency: _localCurrencyMode
+                                        ? _sendAmountController!.text
+                                        : null));
+                          }
                         }
                       }),
                     ],
@@ -641,8 +739,8 @@ class _SendSheetState extends State<SendSheet> {
                                 _pasteButtonVisible = false;
                                 _showContactButton = false;
                               });
-                              _sendAddressController.text = address.address;
-                              _sendAddressFocusNode.unfocus();
+                              _sendAddressController!.text = address.address;
+                              _sendAddressFocusNode!.unfocus();
                               setState(() {
                                 _addressValidAndUnfocused = true;
                               });
@@ -657,14 +755,14 @@ class _SendSheetState extends State<SendSheet> {
                                 _pasteButtonVisible = false;
                                 _showContactButton = false;
                               });
-                              _sendAddressController.text = contact.name;
+                              _sendAddressController!.text = contact.name;
                             }
                           }
                           // If amount is present, fill it and go to SendConfirm
                           if (address.amount != null) {
                             bool hasError = false;
                             BigInt amountBigInt =
-                                BigInt.tryParse(address.amount);
+                                BigInt.tryParse(address.amount)!;
                             if (amountBigInt != null &&
                                 amountBigInt < BigInt.from(10).pow(24)) {
                               hasError = true;
@@ -675,7 +773,7 @@ class _SendSheetState extends State<SendSheet> {
                                   context);
                             } else if (_localCurrencyMode && mounted) {
                               toggleLocalCurrency();
-                              _sendAmountController.text =
+                              _sendAmountController!.text =
                                   NumberUtil.getRawAsUsableString(
                                       address.amount);
                             } else if (mounted) {
@@ -686,12 +784,12 @@ class _SendSheetState extends State<SendSheet> {
                                         .replaceAll(",", "") ==
                                     NumberUtil.getRawAsUsableDecimal(_rawAmount)
                                         .toString()) {
-                                  _sendAmountController.text =
+                                  _sendAmountController!.text =
                                       NumberUtil.getRawAsUsableString(
                                               _rawAmount)
                                           .replaceAll(",", "");
                                 } else {
-                                  _sendAmountController
+                                  _sendAmountController!
                                       .text = NumberUtil.truncateDecimal(
                                               NumberUtil.getRawAsUsableDecimal(
                                                   address.amount),
@@ -700,7 +798,7 @@ class _SendSheetState extends State<SendSheet> {
                                       "~";
                                 }
                               });
-                              _sendAddressFocusNode.unfocus();
+                              _sendAddressFocusNode!.unfocus();
                             }
 
                             if (!hasError) {
@@ -714,7 +812,7 @@ class _SendSheetState extends State<SendSheet> {
                                               _convertLocalCurrencyToCrypto())
                                           : _rawAmount == null
                                               ? NumberUtil.getAmountAsRaw(
-                                                  _sendAmountController.text)
+                                                  _sendAmountController!.text)
                                               : _rawAmount,
                                       destination: contact != null
                                           ? contact.address
@@ -723,7 +821,7 @@ class _SendSheetState extends State<SendSheet> {
                                           contact != null ? contact.name : null,
                                       maxSend: _isMaxSend(),
                                       localCurrency: _localCurrencyMode
-                                          ? _sendAmountController.text
+                                          ? _sendAmountController!.text
                                           : null));
                             }
                           }
@@ -739,7 +837,7 @@ class _SendSheetState extends State<SendSheet> {
   }
 
   String _convertLocalCurrencyToCrypto() {
-    String convertedAmt = _sendAmountController.text.replaceAll(",", ".");
+    String convertedAmt = _sendAmountController!.text.replaceAll(",", ".");
     convertedAmt = NumberUtil.sanitizeNumber(convertedAmt);
     if (convertedAmt.isEmpty) {
       return "";
@@ -751,7 +849,7 @@ class _SendSheetState extends State<SendSheet> {
   }
 
   String _convertCryptoToLocalCurrency() {
-    String convertedAmt = NumberUtil.sanitizeNumber(_sendAmountController.text,
+    String convertedAmt = NumberUtil.sanitizeNumber(_sendAmountController!.text,
         maxDecimalDigits: 2);
     if (convertedAmt.isEmpty) {
       return "";
@@ -763,8 +861,8 @@ class _SendSheetState extends State<SendSheet> {
         NumberUtil.truncateDecimal(valueCrypto * conversion, digits: 2)
             .toString();
     convertedAmt =
-        convertedAmt.replaceAll(".", _localCurrencyFormat.symbols.DECIMAL_SEP);
-    convertedAmt = _localCurrencyFormat.currencySymbol + convertedAmt;
+        convertedAmt.replaceAll(".", _localCurrencyFormat!.symbols.DECIMAL_SEP);
+    convertedAmt = _localCurrencyFormat!.currencySymbol + convertedAmt;
     return convertedAmt;
   }
 
@@ -782,19 +880,19 @@ class _SendSheetState extends State<SendSheet> {
         NumberUtil.truncateDecimal(valueCrypto * conversion, digits: 5)
             .toString();
     convertedAmt =
-        convertedAmt.replaceAll(".", _localCurrencyFormat.symbols.DECIMAL_SEP);
-    convertedAmt = _localCurrencyFormat.currencySymbol + convertedAmt;
+        convertedAmt.replaceAll(".", _localCurrencyFormat!.symbols.DECIMAL_SEP);
+    convertedAmt = _localCurrencyFormat!.currencySymbol + convertedAmt;
     return convertedAmt;
   }
 
   // Determine if this is a max send or not by comparing balances
   bool _isMaxSend() {
     // Sanitize commas
-    if (_sendAmountController.text.isEmpty) {
+    if (_sendAmountController!.text.isEmpty) {
       return false;
     }
     try {
-      String textField = _sendAmountController.text;
+      String textField = _sendAmountController!.text;
 
       String balance;
       if (_localCurrencyMode) {
@@ -815,28 +913,28 @@ class _SendSheetState extends State<SendSheet> {
         textField = textField.replaceAll(",", ".");
         String sanitizedTextField = NumberUtil.sanitizeNumber(textField);
         balance =
-            balance.replaceAll(_localCurrencyFormat.symbols.GROUP_SEP, "");
+            balance.replaceAll(_localCurrencyFormat!.symbols.GROUP_SEP, "");
         balance = balance.replaceAll(",", ".");
         String sanitizedBalance = NumberUtil.sanitizeNumber(balance);
         textFieldInt = (Decimal.parse(sanitizedTextField) *
-                Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits)))
+                Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits).toInt()))
             .toInt();
         balanceInt = (Decimal.parse(sanitizedBalance) *
-                Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits)))
+                Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits).toInt()))
             .toInt();
       } else {
         textField = textField.replaceAll(",", "");
         textFieldInt = (Decimal.parse(textField) *
-                Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits)))
+                Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits).toInt()))
             .toInt();
         balanceInt = (Decimal.parse(balance) *
-                Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits)))
+                Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits).toInt()))
             .toInt();
       }
 
       int estimationFeesInt =
           (Decimal.parse(sl.get<AppService>().getFeesEstimation().toString()) *
-                  Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits)))
+                  Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits).toInt()))
               .toInt();
 
       return textFieldInt + estimationFeesInt == balanceInt;
@@ -852,10 +950,10 @@ class _SendSheetState extends State<SendSheet> {
       // Switching to crypto-mode
       String cryptoAmountStr;
       // Check out previous state
-      if (_sendAmountController.text == _lastLocalCurrencyAmount) {
+      if (_sendAmountController!.text == _lastLocalCurrencyAmount) {
         cryptoAmountStr = _lastCryptoAmount;
       } else {
-        _lastLocalCurrencyAmount = _sendAmountController.text;
+        _lastLocalCurrencyAmount = _sendAmountController!.text;
         _lastCryptoAmount = _convertLocalCurrencyToCrypto();
         cryptoAmountStr = _lastCryptoAmount;
       }
@@ -863,18 +961,18 @@ class _SendSheetState extends State<SendSheet> {
         _localCurrencyMode = false;
       });
       Future.delayed(Duration(milliseconds: 50), () {
-        _sendAmountController.text = cryptoAmountStr;
-        _sendAmountController.selection = TextSelection.fromPosition(
+        _sendAmountController!.text = cryptoAmountStr;
+        _sendAmountController!.selection = TextSelection.fromPosition(
             TextPosition(offset: cryptoAmountStr.length));
       });
     } else {
       // Switching to local-currency mode
       String localAmountStr;
       // Check our previous state
-      if (_sendAmountController.text == _lastCryptoAmount) {
+      if (_sendAmountController!.text == _lastCryptoAmount) {
         localAmountStr = _lastLocalCurrencyAmount;
       } else {
-        _lastCryptoAmount = _sendAmountController.text;
+        _lastCryptoAmount = _sendAmountController!.text;
         _lastLocalCurrencyAmount = _convertCryptoToLocalCurrency();
         localAmountStr = _lastLocalCurrencyAmount;
       }
@@ -882,8 +980,8 @@ class _SendSheetState extends State<SendSheet> {
         _localCurrencyMode = true;
       });
       Future.delayed(Duration(milliseconds: 50), () {
-        _sendAmountController.text = localAmountStr;
-        _sendAmountController.selection = TextSelection.fromPosition(
+        _sendAmountController!.text = localAmountStr;
+        _sendAmountController!.selection = TextSelection.fromPosition(
             TextPosition(offset: localAmountStr.length));
       });
     }
@@ -899,8 +997,8 @@ class _SendSheetState extends State<SendSheet> {
           width: double.infinity - 5,
           child: TextButton(
             onPressed: () {
-              _sendAddressController.text = contact.name;
-              _sendAddressFocusNode.unfocus();
+              _sendAddressController!.text = contact.name;
+              _sendAddressFocusNode!.unfocus();
               setState(() {
                 _isContact = true;
                 _showContactButton = false;
@@ -926,11 +1024,10 @@ class _SendSheetState extends State<SendSheet> {
   /// @returns true if valid, false otherwise
   bool _validateRequest() {
     bool isValid = true;
-    _sendAmountFocusNode.unfocus();
-    _sendAddressFocusNode.unfocus();
-    _sendAddressFocusNode.unfocus();
+    _sendAmountFocusNode!.unfocus();
+    _sendAddressFocusNode!.unfocus();
     // Validate amount
-    if (_sendAmountController.text.trim().isEmpty) {
+    if (_sendAmountController!.text.trim().isEmpty) {
       isValid = false;
       setState(() {
         _amountValidationText = AppLocalization.of(context).amountMissing;
@@ -942,10 +1039,10 @@ class _SendSheetState extends State<SendSheet> {
       String amount = _localCurrencyMode
           ? _convertLocalCurrencyToCrypto()
           : _rawAmount == null
-              ? _sendAmountController.text
+              ? _sendAmountController!.text
               : NumberUtil.getRawAsUsableString(_rawAmount);
-      double balanceRaw = StateContainer.of(context).wallet.accountBalance.uco;
-      double sendAmount = double.tryParse(amount);
+      double balanceRaw = StateContainer.of(context).wallet.accountBalance.uco!;
+      double sendAmount = double.tryParse(amount)!;
       if (sendAmount == null) {
         isValid = false;
         setState(() {
@@ -960,14 +1057,14 @@ class _SendSheetState extends State<SendSheet> {
       }
     }
     // Validate address
-    bool isContact = _sendAddressController.text.startsWith("@");
-    if (_sendAddressController.text.trim().isEmpty) {
+    bool isContact = _sendAddressController!.text.startsWith("@");
+    if (_sendAddressController!.text.trim().isEmpty) {
       isValid = false;
       setState(() {
         _addressValidationText = AppLocalization.of(context).addressMising;
         _pasteButtonVisible = true;
       });
-    } else if (!isContact && !Address(_sendAddressController.text).isValid()) {
+    } else if (!isContact && !Address(_sendAddressController!.text).isValid()) {
       isValid = false;
       setState(() {
         _addressValidationText = AppLocalization.of(context).invalidAddress;
@@ -978,13 +1075,11 @@ class _SendSheetState extends State<SendSheet> {
         _addressValidationText = "";
         _pasteButtonVisible = false;
       });
-      _sendAddressFocusNode.unfocus();
+      _sendAddressFocusNode!.unfocus();
     }
     return isValid;
   }
 
-  //************ Enter Amount Container Method ************//
-  //*******************************************************//
   getEnterAmountContainer() {
     return AppTextField(
       focusNode: _sendAmountFocusNode,
@@ -1003,8 +1098,8 @@ class _SendSheetState extends State<SendSheet> {
               _localCurrencyMode
                   ? CurrencyFormatter(
                       decimalSeparator:
-                          _localCurrencyFormat.symbols.DECIMAL_SEP,
-                      commaSeparator: _localCurrencyFormat.symbols.GROUP_SEP,
+                          _localCurrencyFormat!.symbols.DECIMAL_SEP,
+                      commaSeparator: _localCurrencyFormat!.symbols.GROUP_SEP,
                       maxDecimalDigits: 8)
                   : CurrencyFormatter(
                       maxDecimalDigits: NumberUtil.maxDecimalDigits),
@@ -1040,20 +1135,20 @@ class _SendSheetState extends State<SendSheet> {
 
           if (!_localCurrencyMode) {
             double estimationFees = sl.get<AppService>().getFeesEstimation();
-            _sendAmountController.text = StateContainer.of(context)
+            _sendAmountController!.text = StateContainer.of(context)
                 .wallet
                 .getAccountBalanceMoinsFeesDisplay(estimationFees)
                 .replaceAll(r",", "");
-            _sendAddressController.selection = TextSelection.fromPosition(
-                TextPosition(offset: _sendAddressController.text.length));
+            _sendAddressController!.selection = TextSelection.fromPosition(
+                TextPosition(offset: _sendAddressController!.text.length));
           } else {
             String feeString = _convertFeesToLocalCurrency();
             feeString = feeString.replaceAll(
-                _localCurrencyFormat.symbols.GROUP_SEP, "");
+                _localCurrencyFormat!.symbols.GROUP_SEP, "");
             feeString = feeString.replaceAll(
-                _localCurrencyFormat.symbols.DECIMAL_SEP, ".");
+                _localCurrencyFormat!.symbols.DECIMAL_SEP, ".");
             feeString = NumberUtil.sanitizeNumber(feeString)
-                .replaceAll(".", _localCurrencyFormat.symbols.DECIMAL_SEP);
+                .replaceAll(".", _localCurrencyFormat!.symbols.DECIMAL_SEP);
 
             String localAmount = StateContainer.of(context)
                 .wallet
@@ -1062,15 +1157,15 @@ class _SendSheetState extends State<SendSheet> {
                     double.tryParse(feeString),
                     locale: StateContainer.of(context).currencyLocale);
             localAmount = localAmount.replaceAll(
-                _localCurrencyFormat.symbols.GROUP_SEP, "");
+                _localCurrencyFormat!.symbols.GROUP_SEP, "");
             localAmount = localAmount.replaceAll(
-                _localCurrencyFormat.symbols.DECIMAL_SEP, ".");
+                _localCurrencyFormat!.symbols.DECIMAL_SEP, ".");
             localAmount = NumberUtil.sanitizeNumber(localAmount)
-                .replaceAll(".", _localCurrencyFormat.symbols.DECIMAL_SEP);
-            _sendAmountController.text =
-                _localCurrencyFormat.currencySymbol + localAmount;
-            _sendAddressController.selection = TextSelection.fromPosition(
-                TextPosition(offset: _sendAddressController.text.length));
+                .replaceAll(".", _localCurrencyFormat!.symbols.DECIMAL_SEP);
+            _sendAmountController!.text =
+                _localCurrencyFormat!.currencySymbol + localAmount;
+            _sendAddressController!.selection = TextSelection.fromPosition(
+                TextPosition(offset: _sendAddressController!.text.length));
           }
         },
       ),
@@ -1081,16 +1176,13 @@ class _SendSheetState extends State<SendSheet> {
       textAlign: TextAlign.center,
       onSubmitted: (text) {
         FocusScope.of(context).unfocus();
-        if (!Address(_sendAddressController.text).isValid()) {
+        if (!Address(_sendAddressController!.text).isValid()) {
           FocusScope.of(context).requestFocus(_sendAddressFocusNode);
         }
       },
     );
-  } //************ Enter Amount Container Method End ************//
-  //*************************************************************//
+  }
 
-  //************ Enter Address Container Method ************//
-  //*******************************************************//
   getEnterAddressContainer() {
     return AppTextField(
         topMargin: 124,
@@ -1104,7 +1196,7 @@ class _SendSheetState extends State<SendSheet> {
         inputFormatters: [
           _isContact
               ? LengthLimitingTextInputFormatter(20)
-              : LengthLimitingTextInputFormatter(65),
+              : LengthLimitingTextInputFormatter(66),
         ],
         textInputAction: TextInputAction.done,
         maxLines: null,
@@ -1115,13 +1207,13 @@ class _SendSheetState extends State<SendSheet> {
         prefixButton: TextFieldButton(
           icon: AppIcons.at,
           onPressed: () {
-            if (_showContactButton && _contacts.length == 0) {
+            if (_showContactButton && _contacts!.length == 0) {
               // Show menu
               FocusScope.of(context).requestFocus(_sendAddressFocusNode);
-              if (_sendAddressController.text.length == 0) {
-                _sendAddressController.text = "@";
-                _sendAddressController.selection = TextSelection.fromPosition(
-                    TextPosition(offset: _sendAddressController.text.length));
+              if (_sendAddressController!.text.length == 0) {
+                _sendAddressController!.text = "@";
+                _sendAddressController!.selection = TextSelection.fromPosition(
+                    TextPosition(offset: _sendAddressController!.text.length));
               }
               sl.get<DBHelper>().getContacts().then((contactList) {
                 setState(() {
@@ -1132,18 +1224,18 @@ class _SendSheetState extends State<SendSheet> {
           },
         ),
         fadePrefixOnCondition: true,
-        prefixShowFirstCondition: _showContactButton && _contacts.length == 0,
+        prefixShowFirstCondition: _showContactButton && _contacts!.length == 0,
         suffixButton: TextFieldButton(
           icon: AppIcons.paste,
           onPressed: () {
             if (!_pasteButtonVisible) {
               return;
             }
-            Clipboard.getData("text/plain").then((ClipboardData data) {
+            Clipboard.getData("text/plain").then((ClipboardData? data) {
               if (data == null || data.text == null) {
                 return;
               }
-              Address address = Address(data.text);
+              Address address = Address(data.text!);
               if (address.isValid()) {
                 sl
                     .get<DBHelper>()
@@ -1157,7 +1249,7 @@ class _SendSheetState extends State<SendSheet> {
                       _pasteButtonVisible = false;
                       _showContactButton = false;
                     });
-                    _sendAddressController.text = address.address;
+                    _sendAddressController!.text = address.address;
                     //_sendAddressFocusNode.unfocus();
                     setState(() {
                       //_addressValidAndUnfocused = true;
@@ -1171,7 +1263,7 @@ class _SendSheetState extends State<SendSheet> {
                       _pasteButtonVisible = false;
                       _showContactButton = false;
                     });
-                    _sendAddressController.text = contact.name;
+                    _sendAddressController!.text = contact.name;
                   }
                 });
               }
@@ -1259,9 +1351,7 @@ class _SendSheetState extends State<SendSheet> {
                   });
                 },
                 child: UIUtil.threeLineAddressText(
-                    context, _sendAddressController.text))
+                    context, _sendAddressController!.text))
             : null);
-  } //************ Enter Address Container Method End ************//
-  //*************************************************************//
-
+  }
 }

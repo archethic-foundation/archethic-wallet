@@ -8,7 +8,6 @@ import 'package:uniris_lib_dart/transaction_builder.dart';
 import 'package:uniris_lib_dart/utils.dart';
 import 'package:uniris_mobile_wallet/bus/events.dart';
 import 'package:uniris_mobile_wallet/model/balance.dart';
-import 'package:uniris_mobile_wallet/network/model/request/send_tx_request.dart';
 import 'package:uniris_mobile_wallet/network/model/response/address_txs_response.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
 

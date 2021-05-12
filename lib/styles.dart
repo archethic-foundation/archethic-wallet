@@ -56,6 +56,22 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.background);
   }
 
+  static TextStyle textContextMenu(BuildContext context) {
+    return TextStyle(
+        fontFamily: "Montserrat",
+        fontSize: AppFontSizes.small,
+        fontWeight: FontWeight.w700,
+        color: StateContainer.of(context).curTheme.contextMenuText);
+  }
+
+  static TextStyle textContextMenuRed(BuildContext context) {
+    return TextStyle(
+        fontFamily: "Montserrat",
+        fontSize: AppFontSizes.small,
+        fontWeight: FontWeight.w700,
+        color: StateContainer.of(context).curTheme.contextMenuTextRed);
+  }
+
   // Text style for primary button
   static TextStyle textStyleButtonPrimary(BuildContext context) {
     return TextStyle(
