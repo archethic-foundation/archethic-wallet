@@ -10,8 +10,8 @@ import 'package:uniris_mobile_wallet/model/db/appdb.dart';
 import 'package:uniris_mobile_wallet/model/db/contact.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/ui/send/send_confirm_sheet.dart';
-import 'package:uniris_mobile_wallet/ui/send/send_sheet.dart';
+import 'package:uniris_mobile_wallet/ui/transfer/send_confirm_sheet.dart';
+import 'package:uniris_mobile_wallet/ui/transfer/transfer_uco_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
 import 'package:uniris_mobile_wallet/util/hapticutil.dart';
@@ -72,7 +72,7 @@ class _AppPopupButtonState extends State<AppPopupButton> {
           // Go to send sheet
           Sheets.showAppHeightNineSheet(
               context: context,
-              widget: SendSheet(
+              widget: TransferUcoSheet(
                   localCurrency: StateContainer.of(context).curCurrency,
                   contact: contact,
                   address:
@@ -193,7 +193,7 @@ class _AppPopupButtonState extends State<AppPopupButton> {
                     StateContainer.of(context).wallet.accountBalance.uco > 0) {
                   Sheets.showAppHeightNineSheet(
                       context: context,
-                      widget: SendSheet(
+                      widget: TransferUcoSheet(
                           localCurrency:
                               StateContainer.of(context).curCurrency));
                 }

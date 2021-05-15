@@ -73,6 +73,7 @@ class _ContactsListState extends State<ContactsList> {
         //Sort by name
         _contacts.sort(
             (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+            StateContainer.of(context).updateContacts();
       });
       // Full update
       _updateContacts();

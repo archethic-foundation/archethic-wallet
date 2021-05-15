@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:focused_menu/focused_menu.dart';
-import 'package:focused_menu/modals.dart';
+import 'package:flutter/services.dart';
 import 'package:uniris_lib_dart/transaction_builder.dart';
 import 'package:uniris_lib_dart/utils.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/model/address.dart';
-import 'package:uniris_mobile_wallet/model/db/appdb.dart';
 import 'package:uniris_mobile_wallet/model/db/contact.dart';
-import 'package:uniris_mobile_wallet/service_locator.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
+import 'package:uniris_mobile_wallet/ui/widgets/context_menu.dart';
+import 'package:uniris_mobile_wallet/ui/widgets/context_menu_item.dart';
 
 class UcoTransferListWidget extends StatefulWidget {
   List<UcoTransfer>? listUcoTransfer;
@@ -16,25 +15,24 @@ class UcoTransferListWidget extends StatefulWidget {
   final Function(UcoTransfer)? onGet;
   final Function()? onDelete;
 
-  UcoTransferListWidget({this.listUcoTransfer, this.onGet, this.onDelete, this.contacts})
+  UcoTransferListWidget(
+      {this.listUcoTransfer, this.onGet, this.onDelete, this.contacts})
       : super();
 
   _UcoTransferListWidgetState createState() => _UcoTransferListWidgetState();
 }
 
-enum AddressStyle { TEXT60, TEXT90, PRIMARY }
-
 class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
-
   @override
   Widget build(BuildContext context) {
+    widget.listUcoTransfer!.sort((a, b) => uint8ListToHex(a.to!).compareTo(uint8ListToHex(b.to!)));
     return Stack(
       children: [
         SizedBox(
           child: Padding(
             padding: const EdgeInsets.only(top: 0.0),
             child: Container(
-              height: widget.listUcoTransfer!.length * 60,
+              height: widget.listUcoTransfer!.length * 45,
               padding: EdgeInsets.only(left: 3.5, right: 3.5),
               width: MediaQuery.of(context).size.width * 0.9,
               decoration: BoxDecoration(
@@ -55,10 +53,9 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                 padding:
                     const EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
                 child: ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: 20),
                   itemCount: widget.listUcoTransfer!.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return FocusedMenuHolder(
+                    return ContextMenu(
                         menuWidth: MediaQuery.of(context).size.width * 0.50,
                         blurSize: 5.0,
                         menuItemExtent: 45,
@@ -74,8 +71,8 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                         menuOffset:
                             10.0, // Offset value to show menuItem from the selected item
                         bottomOffsetHeight: 200.0,
-                        menuItems: <FocusedMenuItem>[
-                          FocusedMenuItem(
+                        menuItems: <ContextMenuItem>[
+                          ContextMenuItem(
                               title: Text("Get",
                                   style: AppStyles.textContextMenu(context)),
                               trailingIcon: Icon(Icons.get_app,
@@ -91,7 +88,7 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                                   widget.onGet!(_ucoTransfer);
                                 });
                               }),
-                          FocusedMenuItem(
+                          ContextMenuItem(
                               title: Text(
                                 "Delete",
                                 style: AppStyles.textContextMenuRed(context),

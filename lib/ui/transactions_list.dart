@@ -26,7 +26,7 @@ import 'package:uniris_mobile_wallet/network/model/block_types.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/app_icons.dart';
 import 'package:uniris_mobile_wallet/ui/contacts/add_contact.dart';
-import 'package:uniris_mobile_wallet/ui/send/send_sheet.dart';
+import 'package:uniris_mobile_wallet/ui/transfer/transfer_uco_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/receive/receive_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
@@ -428,7 +428,8 @@ class _TransactionsListStateState extends State<TransactionsList>
             // Go to send with address
             Sheets.showAppHeightNineSheet(
                 context: context,
-                widget: SendSheet(
+                widget: TransferUcoSheet(
+                  contactsRef: StateContainer.of(context).contactsRef,
                   localCurrency: StateContainer.of(context).curCurrency,
                   contact: contact,
                   address: item.from,

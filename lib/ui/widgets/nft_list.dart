@@ -5,7 +5,7 @@ import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/model/address.dart';
 import 'package:uniris_mobile_wallet/model/balance.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/ui/send/send_sheet.dart';
+import 'package:uniris_mobile_wallet/ui/transfer/transfer_nft_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
 
 class NftListWidget {
@@ -115,11 +115,12 @@ class NftListWidget {
                 onPressed: () {
                   Sheets.showAppHeightNineSheet(
                       context: context,
-                      widget: SendSheet(
-                          title: AppLocalization.of(context).transferNFT,
-                          actionButtonTitle: AppLocalization.of(context).transfer,
-                          localCurrency:
-                              StateContainer.of(context).curCurrency));
+                      widget: TransferNftSheet(
+                        contactsRef: StateContainer.of(context).contactsRef,
+                        title: AppLocalization.of(context).transferNFT,
+                        actionButtonTitle:
+                            AppLocalization.of(context).transferNFT,
+                      ));
                 },
                 child: Icon(FontAwesome5.arrow_circle_up,
                     color: StateContainer.of(context).curTheme.primary),
@@ -160,14 +161,15 @@ class NftListWidget {
                   onTap: () {
                     Sheets.showAppHeightNineSheet(
                         context: context,
-                        widget: SendSheet(
-                            title: AppLocalization.of(context)
-                                .transferNFTName
-                                .replaceAll("%1", balanceNft.name!),
-                                actionButtonTitle: AppLocalization.of(context)
-                                .transfer,
-                            localCurrency:
-                                StateContainer.of(context).curCurrency));
+                        widget: TransferNftSheet(
+                          contactsRef: StateContainer.of(context).contactsRef,
+                          title: AppLocalization.of(context)
+                              .transferNFTName
+                              .replaceAll("%1", balanceNft.name!),
+                          actionButtonTitle:
+                              AppLocalization.of(context).transferNFT,
+                          address: balanceNft.address,
+                        ));
                   },
                   child: Icon(FontAwesome5.arrow_circle_up,
                       color: StateContainer.of(context).curTheme.primary),

@@ -18,4 +18,9 @@ class BalanceNft {
   String? name;
   String? address;
   double? amount;
+
+  static String? getName(String content) {
+    RegExp regExp = new RegExp("/(?<=name: ).*/g");
+    return regExp.stringMatch(content);
+  }
 }

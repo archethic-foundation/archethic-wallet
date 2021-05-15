@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:logger/logger.dart';
 import 'package:uniris_lib_dart/api.dart';
+import 'package:uniris_lib_dart/model/response/transaction_response.dart';
 import 'package:uniris_lib_dart/transaction_builder.dart';
 import 'package:uniris_lib_dart/utils.dart';
 import 'package:uniris_mobile_wallet/bus/events.dart';
@@ -13,13 +14,6 @@ import 'package:uniris_mobile_wallet/service_locator.dart';
 
 class AppService {
   final Logger log = sl.get<Logger>();
-
-  // Lock instance for synchronization
-  String allMessages = "";
-
-  String getLengthBuffer(String message) {
-    return message == null ? null : message.length.toString().padLeft(10, '0');
-  }
 
   double getFeesEstimation() {
     const double FEE_BASE = 0.01;
@@ -54,23 +48,33 @@ class AppService {
         name: "my Token 1",
         address:
             "00b9b052ef7e162a96c18c55272da7abccf72ebd2351dce66663e2962ef6b68d23",
-        amount: 900.00));
+        amount: 900));
     balanceNftList.add(new BalanceNft(
         name: "my Token 2",
         address:
             "2da7abccf72ebd2351dce666636c18c5527e2962ef6b68d2300b9b052ef7e162a9",
-        amount: 1204.00));
+        amount: 1204));
     balanceNftList.add(new BalanceNft(
         name: "my Token 3",
         address:
             "6c18c55272d52ef7e162a9a7abccf72ebd2351dce66663e2962ef6b68d2300b9b0",
-        amount: 1.00));
+        amount: 1));
     balanceNftList.add(new BalanceNft(
         name: "my Token 4",
         address:
             "da7abccf72ebd2351dce66663e2962ef6b6c18c5527268d2300b9b052ef7e162a9",
-        amount: 5667432.00));
+        amount: 5667432));
     Balance balance = new Balance(uco: 1340.56, nftList: balanceNftList);
+
+    // TODO
+    /*
+    for (int i = 0; i < balance.nftList.length; i++) {
+      TransactionResponse transactionResponse =
+          await getTransactionContent(balance.nftList[i].address, endpoint);
+      String content = transactionResponse.data.content;
+
+      balance.nftList[i].name = BalanceNft.getName(content);
+    }*/
 
     if (activeBus) {
       EventTaxiImpl.singleton().fire(BalanceGetEvent(response: balance));

@@ -10,6 +10,7 @@ import 'package:uniris_lib_dart/model/response/simple_price_response.dart';
 import 'package:uniris_lib_dart/services/api_coins_service.dart';
 import 'package:uniris_mobile_wallet/model/balance.dart';
 import 'package:uniris_mobile_wallet/model/chart_infos.dart';
+import 'package:uniris_mobile_wallet/model/db/contact.dart';
 import 'package:uniris_mobile_wallet/model/wallet.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/foundation.dart';
@@ -83,6 +84,8 @@ class StateContainerState extends State<StateContainer> {
 
   ChartInfos chartInfos;
 
+  List<Contact> contactsRef = new List<Contact>.empty(growable: true);
+
   @override
   void initState() {
     super.initState();
@@ -144,6 +147,8 @@ class StateContainerState extends State<StateContainer> {
         }
       }
 
+      updateContacts();
+      
       setState(() {
         wallet.historyLoading = false;
         wallet.loading = false;
@@ -239,6 +244,14 @@ class StateContainerState extends State<StateContainer> {
     if (_transactionsListEventSub != null) {
       _transactionsListEventSub.cancel();
     }
+  }
+
+  void updateContacts() {
+    sl.get<DBHelper>().getContacts().then((contacts) {
+      setState(() {
+        contactsRef = contacts;
+      });
+    });
   }
 
   // Update the global wallet instance with a new address

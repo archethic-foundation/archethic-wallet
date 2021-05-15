@@ -6,7 +6,7 @@ import 'package:uniris_mobile_wallet/app_icons.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/ui/send/send_sheet.dart';
+import 'package:uniris_mobile_wallet/ui/transfer/transfer_uco_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
 
 class BalanceDisplay {
@@ -231,7 +231,8 @@ class BalanceDisplay {
                 onPressed: () {
                   Sheets.showAppHeightNineSheet(
                       context: context,
-                      widget: SendSheet(
+                      widget: TransferUcoSheet(
+                          contactsRef: StateContainer.of(context).contactsRef,
                           title: AppLocalization.of(context).transferUCO,
                           localCurrency:
                               StateContainer.of(context).curCurrency));

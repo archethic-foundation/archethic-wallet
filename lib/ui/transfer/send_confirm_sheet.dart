@@ -13,7 +13,7 @@ import 'package:uniris_mobile_wallet/service/app_service.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
-import 'package:uniris_mobile_wallet/ui/send/send_complete_sheet.dart';
+import 'package:uniris_mobile_wallet/ui/transfer/send_complete_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/util/routes.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/dialog.dart';

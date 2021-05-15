@@ -15,7 +15,7 @@ import 'package:uniris_mobile_wallet/service_locator.dart';
 import 'package:uniris_mobile_wallet/bus/events.dart';
 import 'package:uniris_mobile_wallet/model/db/contact.dart';
 import 'package:uniris_mobile_wallet/model/db/appdb.dart';
-import 'package:uniris_mobile_wallet/ui/send/send_sheet.dart';
+import 'package:uniris_mobile_wallet/ui/transfer/transfer_uco_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/dialog.dart';
@@ -82,7 +82,7 @@ class ContactDetailsSheet {
                                             .replaceAll("%1", contact.name),
                                         context);
                                     Navigator.of(context).pop();
-                                  } 
+                                  }
                                 });
                               },
                                   cancelText: CaseChange.toUpperCase(
@@ -260,7 +260,9 @@ class ContactDetailsSheet {
                                 Navigator.of(context).pop();
                                 Sheets.showAppHeightNineSheet(
                                     context: context,
-                                    widget: SendSheet(
+                                    widget: TransferUcoSheet(
+                                        contactsRef: StateContainer.of(context)
+                                            .contactsRef,
                                         localCurrency:
                                             StateContainer.of(context)
                                                 .curCurrency,

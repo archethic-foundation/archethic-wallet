@@ -1,12 +1,10 @@
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:decimal/decimal.dart';
-import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:uniris_lib_dart/transaction_builder.dart';
 import 'package:uniris_lib_dart/utils.dart';
@@ -14,7 +12,6 @@ import 'package:uniris_lib_dart/utils.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/dimens.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/model/available_currency.dart';
 import 'package:uniris_mobile_wallet/service/app_service.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
 import 'package:uniris_mobile_wallet/app_icons.dart';
@@ -22,42 +19,40 @@ import 'package:uniris_mobile_wallet/model/address.dart';
 import 'package:uniris_mobile_wallet/model/db/contact.dart';
 import 'package:uniris_mobile_wallet/model/db/appdb.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/ui/send/send_confirm_sheet.dart';
+import 'package:uniris_mobile_wallet/ui/transfer/send_confirm_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/app_text_field.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/nft_list.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/one_or_three_address_text.dart';
 import 'package:uniris_mobile_wallet/ui/util/formatters.dart';
 import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
+import 'package:uniris_mobile_wallet/ui/send/nft_transfer_list.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/uco_transfer_list.dart';
 import 'package:uniris_mobile_wallet/util/numberutil.dart';
 import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
 import 'package:uniris_mobile_wallet/util/user_data_util.dart';
 
-class SendSheet extends StatefulWidget {
-  final AvailableCurrency? localCurrency;
+class TransferNftSheet extends StatefulWidget {
+  final List<Contact>? contactsRef;
   final Contact? contact;
   final String? address;
   final String? quickSendAmount;
   final String? title;
   final String? actionButtonTitle;
 
-  SendSheet({
-    @required this.localCurrency,
+  TransferNftSheet({
     this.contact,
     this.address,
     this.quickSendAmount,
     this.title,
     this.actionButtonTitle,
+    this.contactsRef,
   }) : super();
 
-  _SendSheetState createState() => _SendSheetState();
+  _TransferNftSheetState createState() => _TransferNftSheetState();
 }
 
 enum AddressStyle { TEXT60, TEXT90, PRIMARY }
 
-class _SendSheetState extends State<SendSheet> {
+class _TransferNftSheetState extends State<TransferNftSheet> {
   final Logger log = sl.get<Logger>();
 
   FocusNode? _sendAddressFocusNode;
@@ -81,32 +76,16 @@ class _SendSheetState extends State<SendSheet> {
   // Buttons States (Used because we hide the buttons under certain conditions)
   bool _pasteButtonVisible = true;
   bool _showContactButton = true;
-  // Local currency mode/fiat conversion
-  bool _localCurrencyMode = false;
-  String _lastLocalCurrencyAmount = "";
-  String _lastCryptoAmount = "";
-  NumberFormat? _localCurrencyFormat;
-  bool isTokenToSendSwitched = false;
+
   String? _rawAmount;
   bool validRequest = true;
 
-  List<UcoTransfer> ucoTransferList =
-      new List<UcoTransfer>.empty(growable: true);
-
-  List<Contact> _contactsRef = new List<Contact>.empty(growable: true);
-
-  void _updateContacts() {
-    sl.get<DBHelper>().getContacts().then((contacts) {
-      setState(() {
-        _contactsRef = contacts;
-      });
-    });
-  }
+  List<NftTransfer> nftTransferList =
+      new List<NftTransfer>.empty(growable: true);
 
   @override
   void initState() {
     super.initState();
-    _updateContacts();
     _sendAmountFocusNode = FocusNode();
     _sendAddressFocusNode = FocusNode();
     _sendAmountController = TextEditingController();
@@ -191,10 +170,6 @@ class _SendSheetState extends State<SendSheet> {
       }
     });
 
-    // Set initial currency format
-    _localCurrencyFormat = NumberFormat.currency(
-        locale: widget.localCurrency!.getLocale().toString(),
-        symbol: widget.localCurrency!.getCurrencySymbol());
     // Set quick send amount
     if (quickSendAmount != null) {
       _sendAmountController!.text =
@@ -219,7 +194,7 @@ class _SendSheetState extends State<SendSheet> {
                 //Empty SizedBox
                 SizedBox(
                   width: 60,
-                  height: 60,
+                  height: 0,
                 ),
 
                 // Container for the header, address and balance text
@@ -259,7 +234,7 @@ class _SendSheetState extends State<SendSheet> {
                 //Empty SizedBox
                 SizedBox(
                   width: 60,
-                  height: 60,
+                  height: 0,
                 ),
               ],
             ),
@@ -285,7 +260,7 @@ class _SendSheetState extends State<SendSheet> {
                     // A column for Enter Amount, Enter Address, Error containers and the pop up list
                     SingleChildScrollView(
                       child: Padding(
-                        padding: EdgeInsets.only(top: 30, bottom: bottom + 80),
+                        padding: EdgeInsets.only(top: 0, bottom: bottom + 80),
                         child: Column(
                           children: <Widget>[
                             Stack(
@@ -324,21 +299,10 @@ class _SendSheetState extends State<SendSheet> {
                                                     ),
                                                   ),
                                                   TextSpan(
-                                                    text: _localCurrencyMode
-                                                        ? StateContainer.of(
-                                                                context)
-                                                            .wallet
-                                                            .getLocalCurrencyPrice(
-                                                                StateContainer.of(
-                                                                        context)
-                                                                    .curCurrency,
-                                                                locale: StateContainer.of(
-                                                                        context)
-                                                                    .currencyLocale)
-                                                        : StateContainer.of(
-                                                                context)
-                                                            .wallet
-                                                            .getAccountBalanceUCODisplay(),
+                                                    text: StateContainer.of(
+                                                            context)
+                                                        .wallet
+                                                        .getAccountBalanceUCODisplay(),
                                                     style: TextStyle(
                                                       color: StateContainer.of(
                                                               context)
@@ -351,9 +315,7 @@ class _SendSheetState extends State<SendSheet> {
                                                     ),
                                                   ),
                                                   TextSpan(
-                                                    text: _localCurrencyMode
-                                                        ? ")"
-                                                        : " UCO)",
+                                                    text: " UCO)",
                                                     style: TextStyle(
                                                       color: StateContainer.of(
                                                               context)
@@ -502,10 +464,11 @@ class _SendSheetState extends State<SendSheet> {
                                         AppButton.buildAppButton(
                                             context,
                                             AppButtonType.PRIMARY,
-                                            widget.actionButtonTitle == null
+                                            isInUcoTransferList()
                                                 ? AppLocalization.of(context)
-                                                    .add
-                                                : widget.actionButtonTitle,
+                                                    .update
+                                                : AppLocalization.of(context)
+                                                    .add,
                                             Dimens.BUTTON_TOP_DIMENS,
                                             onPressed: () {
                                           setState(() {
@@ -529,68 +492,66 @@ class _SendSheetState extends State<SendSheet> {
                                                         AppLocalization.of(
                                                                 context)
                                                             .contactInvalid;
+                                                    validRequest = false;
                                                   });
+                                                } else {
+                                                  _to = contact.address;
                                                 }
-                                                _to = contact.address;
+
                                                 if (validRequest) {
-                                                  double _amount =
-                                                      double.tryParse(
-                                                          _sendAmountController!
-                                                              .text)!;
+                                                  double _amount = double.tryParse(
+                                                      _sendAmountController!
+                                                          .text)!;
 
                                                   for (int i = 0;
                                                       i <
-                                                          ucoTransferList
+                                                          nftTransferList
                                                               .length;
                                                       i++) {
                                                     if (uint8ListToHex(
-                                                            ucoTransferList[i]
+                                                            nftTransferList[i]
                                                                 .to!) ==
                                                         _to) {
-                                                      _amount = _amount +
-                                                          ucoTransferList[i]
-                                                              .amount!;
-                                                      ucoTransferList
+                                                      nftTransferList
                                                           .removeAt(i);
                                                       break;
                                                     }
                                                   }
-                                                  UcoTransfer ucoTransfer =
-                                                      new UcoTransfer(
+                                                  NftTransfer nftTransfer =
+                                                      new NftTransfer(
                                                           to: hexToUint8List(
                                                               _to),
                                                           amount: _amount);
-                                                  ucoTransferList
-                                                      .add(ucoTransfer);
+                                                  nftTransferList
+                                                      .add(nftTransfer);
                                                 }
                                               });
                                             } else {
                                               if (validRequest) {
-                                                double _amount =
-                                                    double.tryParse(
-                                                        _sendAmountController!
-                                                            .text)!;
+                                                double _amount = double.tryParse(
+                                                    _sendAmountController!
+                                                        .text)!;
 
                                                 for (int i = 0;
-                                                    i < ucoTransferList.length;
+                                                    i < nftTransferList.length;
                                                     i++) {
                                                   if (uint8ListToHex(
-                                                          ucoTransferList[i]
+                                                          nftTransferList[i]
                                                               .to!) ==
                                                       _to) {
                                                     _amount = _amount +
-                                                        ucoTransferList[i]
+                                                        nftTransferList[i]
                                                             .amount!;
-                                                    ucoTransferList.removeAt(i);
+                                                    nftTransferList.removeAt(i);
                                                     break;
                                                   }
                                                 }
-                                                UcoTransfer ucoTransfer =
-                                                    new UcoTransfer(
+                                                NftTransfer nftTransfer =
+                                                    new NftTransfer(
                                                         to: hexToUint8List(_to),
                                                         amount: _amount);
-                                                ucoTransferList
-                                                    .add(ucoTransfer);
+                                                nftTransferList
+                                                    .add(nftTransfer);
                                               }
                                             }
                                           });
@@ -598,24 +559,24 @@ class _SendSheetState extends State<SendSheet> {
                                       ],
                                     ),
                                     SizedBox(height: 10),
-                                    UcoTransferListWidget(
-                                        listUcoTransfer: ucoTransferList,
-                                        contacts: _contactsRef,
-                                        onGet: (UcoTransfer _ucoTransfer) {
+                                    NftTransferListWidget(
+                                        listNftTransfer: nftTransferList,
+                                        contacts: widget.contactsRef,
+                                        onGet: (NftTransfer _nftTransfer) {
                                           setState(() {
                                             _sendAddressController!.text =
                                                 uint8ListToHex(
-                                                    _ucoTransfer.to!);
-                                            _contactsRef.forEach((contact) {
+                                                    _nftTransfer.to!);
+                                            widget.contactsRef!.forEach((contact) {
                                               if (contact.address ==
                                                   uint8ListToHex(
-                                                      _ucoTransfer.to!)) {
+                                                      _nftTransfer.to!)) {
                                                 _sendAddressController!.text =
                                                     contact.name;
                                               }
                                             });
                                             _sendAmountController!.text =
-                                                _ucoTransfer.amount.toString();
+                                                _nftTransfer.amount.toString();
                                           });
                                         },
                                         onDelete: () {
@@ -640,14 +601,14 @@ class _SendSheetState extends State<SendSheet> {
                     children: <Widget>[
                       AppButton.buildAppButton(
                           context,
-                          ucoTransferList.length == 0
+                          nftTransferList.length == 0
                               ? AppButtonType.PRIMARY_OUTLINE
                               : AppButtonType.PRIMARY,
                           widget.actionButtonTitle == null
                               ? AppLocalization.of(context).transferUCO
                               : widget.actionButtonTitle,
                           Dimens.BUTTON_TOP_DIMENS, onPressed: () {
-                        if (ucoTransferList.length > 0) {
+                        if (nftTransferList.length > 0) {
                           validRequest = _validateRequest();
                           if (_sendAddressController!.text.startsWith("@") &&
                               validRequest) {
@@ -668,19 +629,14 @@ class _SendSheetState extends State<SendSheet> {
                                     context: context,
                                     widget: SendConfirmSheet(
                                         title: widget.title,
-                                        amountRaw: _localCurrencyMode
+                                        amountRaw: _rawAmount == null
                                             ? NumberUtil.getAmountAsRaw(
-                                                _convertLocalCurrencyToCrypto())
-                                            : _rawAmount == null
-                                                ? NumberUtil.getAmountAsRaw(
-                                                    _sendAmountController!.text)
-                                                : _rawAmount,
+                                                _sendAmountController!.text)
+                                            : _rawAmount,
                                         destination: contact.address,
                                         contactName: contact.name,
                                         maxSend: _isMaxSend(),
-                                        localCurrency: _localCurrencyMode
-                                            ? _sendAmountController!.text
-                                            : null));
+                                        localCurrency: null));
                               }
                             });
                           } else if (validRequest) {
@@ -688,18 +644,13 @@ class _SendSheetState extends State<SendSheet> {
                                 context: context,
                                 widget: SendConfirmSheet(
                                     title: widget.title,
-                                    amountRaw: _localCurrencyMode
+                                    amountRaw: _rawAmount == null
                                         ? NumberUtil.getAmountAsRaw(
-                                            _convertLocalCurrencyToCrypto())
-                                        : _rawAmount == null
-                                            ? NumberUtil.getAmountAsRaw(
-                                                _sendAmountController!.text)
-                                            : _rawAmount,
+                                            _sendAmountController!.text)
+                                        : _rawAmount,
                                     destination: _sendAddressController!.text,
                                     maxSend: _isMaxSend(),
-                                    localCurrency: _localCurrencyMode
-                                        ? _sendAmountController!.text
-                                        : null));
+                                    localCurrency: null));
                           }
                         }
                       }),
@@ -771,11 +722,6 @@ class _SendSheetState extends State<SendSheet> {
                                       .minimumSend
                                       .replaceAll("%1", "0.000001"),
                                   context);
-                            } else if (_localCurrencyMode && mounted) {
-                              toggleLocalCurrency();
-                              _sendAmountController!.text =
-                                  NumberUtil.getRawAsUsableString(
-                                      address.amount);
                             } else if (mounted) {
                               setState(() {
                                 _rawAmount = address.amount;
@@ -807,22 +753,17 @@ class _SendSheetState extends State<SendSheet> {
                                   context: context,
                                   widget: SendConfirmSheet(
                                       title: widget.title,
-                                      amountRaw: _localCurrencyMode
+                                      amountRaw: _rawAmount == null
                                           ? NumberUtil.getAmountAsRaw(
-                                              _convertLocalCurrencyToCrypto())
-                                          : _rawAmount == null
-                                              ? NumberUtil.getAmountAsRaw(
-                                                  _sendAmountController!.text)
-                                              : _rawAmount,
+                                              _sendAmountController!.text)
+                                          : _rawAmount,
                                       destination: contact != null
                                           ? contact.address
                                           : address.address,
                                       contactName:
                                           contact != null ? contact.name : null,
                                       maxSend: _isMaxSend(),
-                                      localCurrency: _localCurrencyMode
-                                          ? _sendAmountController!.text
-                                          : null));
+                                      localCurrency: null));
                             }
                           }
                         }
@@ -848,43 +789,6 @@ class _SendSheetState extends State<SendSheet> {
     return NumberUtil.truncateDecimal(valueLocal / conversion).toString();
   }
 
-  String _convertCryptoToLocalCurrency() {
-    String convertedAmt = NumberUtil.sanitizeNumber(_sendAmountController!.text,
-        maxDecimalDigits: 2);
-    if (convertedAmt.isEmpty) {
-      return "";
-    }
-    Decimal valueCrypto = Decimal.parse(convertedAmt);
-    Decimal conversion = Decimal.parse(
-        StateContainer.of(context).wallet.localCurrencyConversion);
-    convertedAmt =
-        NumberUtil.truncateDecimal(valueCrypto * conversion, digits: 2)
-            .toString();
-    convertedAmt =
-        convertedAmt.replaceAll(".", _localCurrencyFormat!.symbols.DECIMAL_SEP);
-    convertedAmt = _localCurrencyFormat!.currencySymbol + convertedAmt;
-    return convertedAmt;
-  }
-
-  String _convertFeesToLocalCurrency() {
-    String convertedAmt = NumberUtil.sanitizeNumber(
-        sl.get<AppService>().getFeesEstimation().toStringAsFixed(5),
-        maxDecimalDigits: 5);
-    if (convertedAmt.isEmpty) {
-      return "";
-    }
-    Decimal valueCrypto = Decimal.parse(convertedAmt);
-    Decimal conversion = Decimal.parse(
-        StateContainer.of(context).wallet.localCurrencyConversion);
-    convertedAmt =
-        NumberUtil.truncateDecimal(valueCrypto * conversion, digits: 5)
-            .toString();
-    convertedAmt =
-        convertedAmt.replaceAll(".", _localCurrencyFormat!.symbols.DECIMAL_SEP);
-    convertedAmt = _localCurrencyFormat!.currencySymbol + convertedAmt;
-    return convertedAmt;
-  }
-
   // Determine if this is a max send or not by comparing balances
   bool _isMaxSend() {
     // Sanitize commas
@@ -895,42 +799,23 @@ class _SendSheetState extends State<SendSheet> {
       String textField = _sendAmountController!.text;
 
       String balance;
-      if (_localCurrencyMode) {
-        balance = StateContainer.of(context).wallet.getLocalCurrencyPrice(
-            StateContainer.of(context).curCurrency,
-            locale: StateContainer.of(context).currencyLocale);
-      } else {
-        balance = StateContainer.of(context)
-            .wallet
-            .getAccountBalanceUCODisplay()
-            .replaceAll(r",", "");
-      }
+
+      balance = StateContainer.of(context)
+          .wallet
+          .getAccountBalanceUCODisplay()
+          .replaceAll(r",", "");
+
       // Convert to Integer representations
       int textFieldInt;
       int balanceInt;
-      if (_localCurrencyMode) {
-        // Sanitize currency values into plain integer representations
-        textField = textField.replaceAll(",", ".");
-        String sanitizedTextField = NumberUtil.sanitizeNumber(textField);
-        balance =
-            balance.replaceAll(_localCurrencyFormat!.symbols.GROUP_SEP, "");
-        balance = balance.replaceAll(",", ".");
-        String sanitizedBalance = NumberUtil.sanitizeNumber(balance);
-        textFieldInt = (Decimal.parse(sanitizedTextField) *
-                Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits).toInt()))
-            .toInt();
-        balanceInt = (Decimal.parse(sanitizedBalance) *
-                Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits).toInt()))
-            .toInt();
-      } else {
-        textField = textField.replaceAll(",", "");
-        textFieldInt = (Decimal.parse(textField) *
-                Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits).toInt()))
-            .toInt();
-        balanceInt = (Decimal.parse(balance) *
-                Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits).toInt()))
-            .toInt();
-      }
+
+      textField = textField.replaceAll(",", "");
+      textFieldInt = (Decimal.parse(textField) *
+              Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits).toInt()))
+          .toInt();
+      balanceInt = (Decimal.parse(balance) *
+              Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits).toInt()))
+          .toInt();
 
       int estimationFeesInt =
           (Decimal.parse(sl.get<AppService>().getFeesEstimation().toString()) *
@@ -940,50 +825,6 @@ class _SendSheetState extends State<SendSheet> {
       return textFieldInt + estimationFeesInt == balanceInt;
     } catch (e) {
       return false;
-    }
-  }
-
-  void toggleLocalCurrency() {
-    // Keep a cache of previous amounts because, it's kinda nice to see approx what cryptocurrency is worth
-    // this way you can tap button and tap back and not end up with X.9993451 cryptocurrency
-    if (_localCurrencyMode) {
-      // Switching to crypto-mode
-      String cryptoAmountStr;
-      // Check out previous state
-      if (_sendAmountController!.text == _lastLocalCurrencyAmount) {
-        cryptoAmountStr = _lastCryptoAmount;
-      } else {
-        _lastLocalCurrencyAmount = _sendAmountController!.text;
-        _lastCryptoAmount = _convertLocalCurrencyToCrypto();
-        cryptoAmountStr = _lastCryptoAmount;
-      }
-      setState(() {
-        _localCurrencyMode = false;
-      });
-      Future.delayed(Duration(milliseconds: 50), () {
-        _sendAmountController!.text = cryptoAmountStr;
-        _sendAmountController!.selection = TextSelection.fromPosition(
-            TextPosition(offset: cryptoAmountStr.length));
-      });
-    } else {
-      // Switching to local-currency mode
-      String localAmountStr;
-      // Check our previous state
-      if (_sendAmountController!.text == _lastCryptoAmount) {
-        localAmountStr = _lastLocalCurrencyAmount;
-      } else {
-        _lastCryptoAmount = _sendAmountController!.text;
-        _lastLocalCurrencyAmount = _convertCryptoToLocalCurrency();
-        localAmountStr = _lastLocalCurrencyAmount;
-      }
-      setState(() {
-        _localCurrencyMode = true;
-      });
-      Future.delayed(Duration(milliseconds: 50), () {
-        _sendAmountController!.text = localAmountStr;
-        _sendAmountController!.selection = TextSelection.fromPosition(
-            TextPosition(offset: localAmountStr.length));
-      });
     }
   }
 
@@ -1024,8 +865,12 @@ class _SendSheetState extends State<SendSheet> {
   /// @returns true if valid, false otherwise
   bool _validateRequest() {
     bool isValid = true;
-    _sendAmountFocusNode!.unfocus();
-    _sendAddressFocusNode!.unfocus();
+    setState(() {
+      _sendAmountFocusNode!.unfocus();
+      _sendAddressFocusNode!.unfocus();
+      _addressValidationText = "";
+      _amountValidationText = "";
+    });
     // Validate amount
     if (_sendAmountController!.text.trim().isEmpty) {
       isValid = false;
@@ -1036,13 +881,11 @@ class _SendSheetState extends State<SendSheet> {
       // Estimation of fees
       double estimationFees = sl.get<AppService>().getFeesEstimation();
 
-      String amount = _localCurrencyMode
-          ? _convertLocalCurrencyToCrypto()
-          : _rawAmount == null
-              ? _sendAmountController!.text
-              : NumberUtil.getRawAsUsableString(_rawAmount);
+      String amount = _rawAmount == null
+          ? _sendAmountController!.text
+          : NumberUtil.getRawAsUsableString(_rawAmount);
       double balanceRaw = StateContainer.of(context).wallet.accountBalance.uco!;
-      double sendAmount = double.tryParse(amount)!;
+      int sendAmount = int.tryParse(amount)!;
       if (sendAmount == null) {
         isValid = false;
         setState(() {
@@ -1095,17 +938,7 @@ class _SendSheetState extends State<SendSheet> {
       inputFormatters: _rawAmount == null
           ? [
               LengthLimitingTextInputFormatter(16),
-              _localCurrencyMode
-                  ? CurrencyFormatter(
-                      decimalSeparator:
-                          _localCurrencyFormat!.symbols.DECIMAL_SEP,
-                      commaSeparator: _localCurrencyFormat!.symbols.GROUP_SEP,
-                      maxDecimalDigits: 8)
-                  : CurrencyFormatter(
-                      maxDecimalDigits: NumberUtil.maxDecimalDigits),
-              LocalCurrencyFormatter(
-                  active: _localCurrencyMode,
-                  currencyFormat: _localCurrencyFormat)
+              CurrencyFormatter(maxDecimalDigits: 4),
             ]
           : [LengthLimitingTextInputFormatter(16)],
       onChanged: (text) {
@@ -1133,40 +966,13 @@ class _SendSheetState extends State<SendSheet> {
             return;
           }
 
-          if (!_localCurrencyMode) {
-            double estimationFees = sl.get<AppService>().getFeesEstimation();
-            _sendAmountController!.text = StateContainer.of(context)
-                .wallet
-                .getAccountBalanceMoinsFeesDisplay(estimationFees)
-                .replaceAll(r",", "");
-            _sendAddressController!.selection = TextSelection.fromPosition(
-                TextPosition(offset: _sendAddressController!.text.length));
-          } else {
-            String feeString = _convertFeesToLocalCurrency();
-            feeString = feeString.replaceAll(
-                _localCurrencyFormat!.symbols.GROUP_SEP, "");
-            feeString = feeString.replaceAll(
-                _localCurrencyFormat!.symbols.DECIMAL_SEP, ".");
-            feeString = NumberUtil.sanitizeNumber(feeString)
-                .replaceAll(".", _localCurrencyFormat!.symbols.DECIMAL_SEP);
-
-            String localAmount = StateContainer.of(context)
-                .wallet
-                .getLocalCurrencyPriceMoinsFees(
-                    StateContainer.of(context).curCurrency,
-                    double.tryParse(feeString),
-                    locale: StateContainer.of(context).currencyLocale);
-            localAmount = localAmount.replaceAll(
-                _localCurrencyFormat!.symbols.GROUP_SEP, "");
-            localAmount = localAmount.replaceAll(
-                _localCurrencyFormat!.symbols.DECIMAL_SEP, ".");
-            localAmount = NumberUtil.sanitizeNumber(localAmount)
-                .replaceAll(".", _localCurrencyFormat!.symbols.DECIMAL_SEP);
-            _sendAmountController!.text =
-                _localCurrencyFormat!.currencySymbol + localAmount;
-            _sendAddressController!.selection = TextSelection.fromPosition(
-                TextPosition(offset: _sendAddressController!.text.length));
-          }
+          double estimationFees = sl.get<AppService>().getFeesEstimation();
+          _sendAmountController!.text = StateContainer.of(context)
+              .wallet
+              .getAccountBalanceMoinsFeesDisplay(estimationFees)
+              .replaceAll(r",", "");
+          _sendAddressController!.selection = TextSelection.fromPosition(
+              TextPosition(offset: _sendAddressController!.text.length));
         },
       ),
       fadeSuffixOnCondition: true,
@@ -1353,5 +1159,25 @@ class _SendSheetState extends State<SendSheet> {
                 child: UIUtil.threeLineAddressText(
                     context, _sendAddressController!.text))
             : null);
+  }
+
+  bool isInUcoTransferList() {
+    bool inList = false;
+    String contactAddress = "";
+    widget.contactsRef!.forEach((contact) {
+      if (contact.name == _sendAddressController!.text) {
+        contactAddress = contact.address;
+      }
+    });
+
+    for (int i = 0; i < nftTransferList.length; i++) {
+      if (uint8ListToHex(nftTransferList[i].to!) ==
+              _sendAddressController!.text ||
+          uint8ListToHex(nftTransferList[i].to!) == contactAddress) {
+        inList = true;
+        break;
+      }
+    }
+    return inList;
   }
 }

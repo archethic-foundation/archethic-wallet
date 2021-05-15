@@ -20,6 +20,8 @@ import 'package:uniris_mobile_wallet/ui/widgets/nft_list.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/qr_code.dart';
 import 'package:uniris_mobile_wallet/ui/util/routes.dart';
 import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
+import 'package:uniris_mobile_wallet/ui/widgets/reactive_refresh.dart';
+import 'package:uniris_mobile_wallet/util/hapticutil.dart';
 import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
 import 'package:uniris_mobile_wallet/util/caseconverter.dart';
 import 'package:package_info/package_info.dart';
@@ -59,6 +61,24 @@ class _AppHomePageState extends State<AppHomePage>
   AnimationController animationController;
   ColorTween colorTween;
   CurvedAnimation curvedAnimation;
+
+  bool _isRefreshing = false;
+
+  // Refresh list
+  Future<void> _refresh() async {
+    setState(() {
+      _isRefreshing = true;
+    });
+    sl.get<HapticUtil>().success();
+    StateContainer.of(context).requestUpdate();
+
+    // Hide refresh indicator after 3 seconds if no server response
+    Future.delayed(new Duration(seconds: 1), () {
+      setState(() {
+        _isRefreshing = false;
+      });
+    });
+  }
 
   _checkVersionApp() async {
     String versionAppCached = await sl.get<SharedPrefsUtil>().getVersionApp();
@@ -134,6 +154,16 @@ class _AppHomePageState extends State<AppHomePage>
     }
   }
 
+  void _disposeAnimation() {
+    if (!_animationDisposed) {
+      _animationDisposed = true;
+      _opacityAnimation.removeStatusListener(_animationStatusListener);
+      _placeholderCardAnimationController
+          .removeListener(_animationControllerListener);
+      _placeholderCardAnimationController.stop();
+    }
+  }
+
   StreamSubscription<DisableLockTimeoutEvent> _disableLockSub;
   StreamSubscription<AccountChangedEvent> _switchAccountSub;
 
@@ -161,6 +191,7 @@ class _AppHomePageState extends State<AppHomePage>
         StateContainer.of(context).wallet.loading = false;
         StateContainer.of(context).wallet.historyLoading = false;
       });
+
       paintQrCode(address: event.account.address);
       if (event.delayPop) {
         Future.delayed(Duration(milliseconds: 300), () {
@@ -265,6 +296,43 @@ class _AppHomePageState extends State<AppHomePage>
     });
   }
 
+  Widget _getTopCards(BuildContext context) {
+    return ListView.builder(
+      physics: AlwaysScrollableScrollPhysics(),
+      itemCount: 2,
+      controller: _scrollController,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
+            color: StateContainer.of(context).curTheme.backgroundDark,
+            child: AnimatedContainer(
+                duration: Duration(milliseconds: 200),
+                height: mainCardHeight,
+                curve: Curves.easeInOut,
+                child: index == 0
+                    ? FlipCard(
+                        flipOnTouch: true,
+                        direction: FlipDirection.HORIZONTAL,
+                        front: BalanceDisplay.buildBalanceUCODisplay(
+                            context, _opacityAnimation),
+                        back: LineChartWidget.buildTinyCoinsChart(context))
+                    : FlipCard(
+                        flipOnTouch: true,
+                        direction: FlipDirection.HORIZONTAL,
+                        front: QRcodeDisplay.buildAddressDisplay(
+                            context, _opacityAnimation),
+                        back: QRcodeDisplay.buildQRCodeDisplay(
+                            context, _opacityAnimation))),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     _displayReleaseNote
@@ -285,14 +353,7 @@ class _AppHomePageState extends State<AppHomePage>
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
-        actions: <Widget>[
-          /*Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Icon(
-              Icons.search,
-            ),
-          ),*/
-        ],
+        actions: <Widget>[],
         iconTheme:
             IconThemeData(color: StateContainer.of(context).curTheme.primary),
       ),
@@ -324,86 +385,55 @@ class _AppHomePageState extends State<AppHomePage>
           child: Column(
             children: <Widget>[
               Expanded(
-                child: KeyboardAvoider(
-                  duration: Duration(milliseconds: 0),
-                  autoScroll: true,
-                  focusPadding: 40,
-                  child: Stack(
-                    alignment: Alignment.topCenter,
-                    children: <Widget>[
-                      CircularParticle(
-                        awayRadius: 80,
-                        numberOfParticles: 80,
-                        speedOfParticles: 0.5,
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        onTapAnimation: true,
-                        particleColor: StateContainer.of(context)
-                            .curTheme
-                            .primary10
-                            .withAlpha(150)
-                            .withOpacity(0.2),
-                        awayAnimationDuration: Duration(milliseconds: 600),
-                        maxParticleSize: 8,
-                        isRandSize: true,
-                        isRandomColor: false,
-                        awayAnimationCurve: Curves.easeInOutBack,
-                        enableHover: true,
-                        hoverColor:
-                            StateContainer.of(context).curTheme.primary30,
-                        hoverRadius: 90,
-                        connectDots: true,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            height: 150.0,
-                            child: ListView.builder(
-                              physics: AlwaysScrollableScrollPhysics(),
-                              itemCount: 2,
-                              controller: _scrollController,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Card(
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .backgroundDark,
-                                    child: AnimatedContainer(
-                                        duration: Duration(milliseconds: 200),
-                                        height: mainCardHeight,
-                                        curve: Curves.easeInOut,
-                                        child: index == 0
-                                            ? FlipCard(
-                                                flipOnTouch: true,
-                                                direction:
-                                                    FlipDirection.HORIZONTAL,
-                                                front: BalanceDisplay
-                                                    .buildBalanceUCODisplay(
-                                                        context,
-                                                        _opacityAnimation),
-                                                back: LineChartWidget
-                                                    .buildTinyCoinsChart(
-                                                        context))
-                                            : QRcodeDisplay
-                                                    .buildQRCodeDisplay(context,
-                                                        _opacityAnimation)),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0)),
-                                  ),
-                                );
-                              },
+                child: ReactiveRefreshIndicator(
+                  onRefresh: _refresh,
+                  isRefreshing: _isRefreshing,
+                  backgroundColor:
+                      StateContainer.of(context).curTheme.backgroundDark,
+                  child: KeyboardAvoider(
+                    duration: Duration(milliseconds: 0),
+                    autoScroll: true,
+                    focusPadding: 40,
+                    child: Stack(
+                      alignment: Alignment.topCenter,
+                      children: <Widget>[
+                        CircularParticle(
+                          awayRadius: 80,
+                          numberOfParticles: 80,
+                          speedOfParticles: 0.5,
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          onTapAnimation: true,
+                          particleColor: StateContainer.of(context)
+                              .curTheme
+                              .primary10
+                              .withAlpha(150)
+                              .withOpacity(0.2),
+                          awayAnimationDuration: Duration(milliseconds: 600),
+                          maxParticleSize: 8,
+                          isRandSize: true,
+                          isRandomColor: false,
+                          awayAnimationCurve: Curves.easeInOutBack,
+                          enableHover: true,
+                          hoverColor:
+                              StateContainer.of(context).curTheme.primary30,
+                          hoverRadius: 90,
+                          connectDots: true,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              height: 150.0,
+                              child: _getTopCards(context),
                             ),
-                          ),
-                          SizedBox(height: 20),
-                          NftListWidget.buildNftList(context),
-                          SizedBox(height: 20),
-                        ],
-                      ),
-                    ],
+                            SizedBox(height: 20),
+                            NftListWidget.buildNftList(context),
+                            SizedBox(height: 20),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
