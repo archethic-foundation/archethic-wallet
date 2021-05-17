@@ -398,12 +398,25 @@ class AppLocalization {
     return Intl.message("Sending", desc: 'send_sending', name: 'sending');
   }
 
+  String get transferSuccess {
+    return Intl.message("The transaction was sent successfully", desc: '', name: 'transferSuccess');
+  }
+
+
   String get transfering {
     return Intl.message("Transfering", desc: 'send_sending', name: 'transfering');
   }
 
   String get to {
     return Intl.message("To", desc: 'send_to', name: 'to');
+  }
+
+  String get getOption {
+    return Intl.message("Get", desc: '', name: 'getOption');
+  }
+
+  String get deleteOption {
+    return Intl.message("Delete", desc: '', name: 'deleteOption');
   }
 
   String get sendAmountConfirm {

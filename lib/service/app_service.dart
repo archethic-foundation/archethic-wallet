@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:logger/logger.dart';
 import 'package:uniris_lib_dart/api.dart';
-import 'package:uniris_lib_dart/model/response/transaction_response.dart';
 import 'package:uniris_lib_dart/transaction_builder.dart';
 import 'package:uniris_lib_dart/utils.dart';
 import 'package:uniris_mobile_wallet/bus/events.dart';

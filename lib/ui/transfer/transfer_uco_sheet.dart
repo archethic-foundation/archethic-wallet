@@ -22,6 +22,7 @@ import 'package:uniris_mobile_wallet/model/db/contact.dart';
 import 'package:uniris_mobile_wallet/model/db/appdb.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/ui/transfer/send_confirm_sheet.dart';
+import 'package:uniris_mobile_wallet/ui/transfer/transfer_confirm_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/app_text_field.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:uniris_mobile_wallet/ui/util/formatters.dart';
@@ -587,6 +588,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                     ),
                                     SizedBox(height: 10),
                                     UcoTransferListWidget(
+                                        displayContextMenu: true,
                                         listUcoTransfer: ucoTransferList,
                                         contacts: widget.contactsRef,
                                         onGet: (UcoTransfer _ucoTransfer) {
@@ -594,7 +596,8 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                             _sendAddressController!.text =
                                                 uint8ListToHex(
                                                     _ucoTransfer.to!);
-                                            widget.contactsRef!.forEach((contact) {
+                                            widget.contactsRef!
+                                                .forEach((contact) {
                                               if (contact.address ==
                                                   uint8ListToHex(
                                                       _ucoTransfer.to!)) {
@@ -654,18 +657,11 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                               } else {
                                 Sheets.showAppHeightNineSheet(
                                     context: context,
-                                    widget: SendConfirmSheet(
+                                    widget: TransferConfirmSheet(
+                                        ucoTransferList: ucoTransferList,
+                                        contactsRef: widget.contactsRef,
                                         title: widget.title,
-                                        amountRaw: _localCurrencyMode
-                                            ? NumberUtil.getAmountAsRaw(
-                                                _convertLocalCurrencyToCrypto())
-                                            : _rawAmount == null
-                                                ? NumberUtil.getAmountAsRaw(
-                                                    _sendAmountController!.text)
-                                                : _rawAmount,
-                                        destination: contact.address,
-                                        contactName: contact.name,
-                                        maxSend: _isMaxSend(),
+                                        typeTransfer: "UCO",
                                         localCurrency: _localCurrencyMode
                                             ? _sendAmountController!.text
                                             : null));
@@ -674,17 +670,11 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                           } else if (validRequest) {
                             Sheets.showAppHeightNineSheet(
                                 context: context,
-                                widget: SendConfirmSheet(
+                                widget: TransferConfirmSheet(
+                                    ucoTransferList: ucoTransferList,
+                                    contactsRef: widget.contactsRef,
                                     title: widget.title,
-                                    amountRaw: _localCurrencyMode
-                                        ? NumberUtil.getAmountAsRaw(
-                                            _convertLocalCurrencyToCrypto())
-                                        : _rawAmount == null
-                                            ? NumberUtil.getAmountAsRaw(
-                                                _sendAmountController!.text)
-                                            : _rawAmount,
-                                    destination: _sendAddressController!.text,
-                                    maxSend: _isMaxSend(),
+                                    typeTransfer: "UCO",
                                     localCurrency: _localCurrencyMode
                                         ? _sendAmountController!.text
                                         : null));
@@ -793,21 +783,11 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                               // Go to confirm sheet
                               Sheets.showAppHeightNineSheet(
                                   context: context,
-                                  widget: SendConfirmSheet(
+                                  widget: TransferConfirmSheet(
+                                      ucoTransferList: ucoTransferList,
+                                      contactsRef: widget.contactsRef,
                                       title: widget.title,
-                                      amountRaw: _localCurrencyMode
-                                          ? NumberUtil.getAmountAsRaw(
-                                              _convertLocalCurrencyToCrypto())
-                                          : _rawAmount == null
-                                              ? NumberUtil.getAmountAsRaw(
-                                                  _sendAmountController!.text)
-                                              : _rawAmount,
-                                      destination: contact != null
-                                          ? contact.address
-                                          : address.address,
-                                      contactName:
-                                          contact != null ? contact.name : null,
-                                      maxSend: _isMaxSend(),
+                                      typeTransfer: "UCO",
                                       localCurrency: _localCurrencyMode
                                           ? _sendAmountController!.text
                                           : null));

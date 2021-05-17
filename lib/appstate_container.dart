@@ -91,6 +91,9 @@ class StateContainerState extends State<StateContainer> {
     super.initState();
     // Register RxBus
     _registerBus();
+
+    updateContacts();
+
     // Set currency locale here for the UI to access
     sl.get<SharedPrefsUtil>().getCurrency(deviceLocale).then((currency) {
       setState(() {
@@ -146,8 +149,6 @@ class StateContainerState extends State<StateContainer> {
           });
         }
       }
-
-      updateContacts();
       
       setState(() {
         wallet.historyLoading = false;

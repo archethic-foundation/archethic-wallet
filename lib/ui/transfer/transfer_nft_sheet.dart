@@ -19,12 +19,13 @@ import 'package:uniris_mobile_wallet/model/address.dart';
 import 'package:uniris_mobile_wallet/model/db/contact.dart';
 import 'package:uniris_mobile_wallet/model/db/appdb.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
+import 'package:uniris_mobile_wallet/ui/transfer/nft_transfer_list.dart';
 import 'package:uniris_mobile_wallet/ui/transfer/send_confirm_sheet.dart';
+import 'package:uniris_mobile_wallet/ui/transfer/transfer_confirm_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/app_text_field.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:uniris_mobile_wallet/ui/util/formatters.dart';
 import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
-import 'package:uniris_mobile_wallet/ui/send/nft_transfer_list.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
 import 'package:uniris_mobile_wallet/util/numberutil.dart';
 import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
@@ -499,9 +500,10 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                                 }
 
                                                 if (validRequest) {
-                                                  double _amount = double.tryParse(
-                                                      _sendAmountController!
-                                                          .text)!;
+                                                  double _amount =
+                                                      double.tryParse(
+                                                          _sendAmountController!
+                                                              .text)!;
 
                                                   for (int i = 0;
                                                       i <
@@ -528,9 +530,10 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                               });
                                             } else {
                                               if (validRequest) {
-                                                double _amount = double.tryParse(
-                                                    _sendAmountController!
-                                                        .text)!;
+                                                double _amount =
+                                                    double.tryParse(
+                                                        _sendAmountController!
+                                                            .text)!;
 
                                                 for (int i = 0;
                                                     i < nftTransferList.length;
@@ -560,6 +563,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                     ),
                                     SizedBox(height: 10),
                                     NftTransferListWidget(
+                                        displayContextMenu: true,
                                         listNftTransfer: nftTransferList,
                                         contacts: widget.contactsRef,
                                         onGet: (NftTransfer _nftTransfer) {
@@ -567,7 +571,8 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                             _sendAddressController!.text =
                                                 uint8ListToHex(
                                                     _nftTransfer.to!);
-                                            widget.contactsRef!.forEach((contact) {
+                                            widget.contactsRef!
+                                                .forEach((contact) {
                                               if (contact.address ==
                                                   uint8ListToHex(
                                                       _nftTransfer.to!)) {
@@ -627,29 +632,22 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                               } else {
                                 Sheets.showAppHeightNineSheet(
                                     context: context,
-                                    widget: SendConfirmSheet(
+                                    widget: TransferConfirmSheet(
+                                        nftTransferList: nftTransferList,
+                                        contactsRef: widget.contactsRef,
                                         title: widget.title,
-                                        amountRaw: _rawAmount == null
-                                            ? NumberUtil.getAmountAsRaw(
-                                                _sendAmountController!.text)
-                                            : _rawAmount,
-                                        destination: contact.address,
-                                        contactName: contact.name,
-                                        maxSend: _isMaxSend(),
+                                        typeTransfer: "NFT",
                                         localCurrency: null));
                               }
                             });
                           } else if (validRequest) {
                             Sheets.showAppHeightNineSheet(
                                 context: context,
-                                widget: SendConfirmSheet(
+                                widget: TransferConfirmSheet(
+                                    nftTransferList: nftTransferList,
+                                    contactsRef: widget.contactsRef,
                                     title: widget.title,
-                                    amountRaw: _rawAmount == null
-                                        ? NumberUtil.getAmountAsRaw(
-                                            _sendAmountController!.text)
-                                        : _rawAmount,
-                                    destination: _sendAddressController!.text,
-                                    maxSend: _isMaxSend(),
+                                    typeTransfer: "NFT",
                                     localCurrency: null));
                           }
                         }
@@ -751,18 +749,11 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                               // Go to confirm sheet
                               Sheets.showAppHeightNineSheet(
                                   context: context,
-                                  widget: SendConfirmSheet(
+                                  widget: TransferConfirmSheet(
+                                      nftTransferList: nftTransferList,
+                                      contactsRef: widget.contactsRef,
                                       title: widget.title,
-                                      amountRaw: _rawAmount == null
-                                          ? NumberUtil.getAmountAsRaw(
-                                              _sendAmountController!.text)
-                                          : _rawAmount,
-                                      destination: contact != null
-                                          ? contact.address
-                                          : address.address,
-                                      contactName:
-                                          contact != null ? contact.name : null,
-                                      maxSend: _isMaxSend(),
+                                      typeTransfer: "NFT",
                                       localCurrency: null));
                             }
                           }

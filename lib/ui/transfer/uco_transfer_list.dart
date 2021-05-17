@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:uniris_lib_dart/transaction_builder.dart';
 import 'package:uniris_lib_dart/utils.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
+import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/model/address.dart';
 import 'package:uniris_mobile_wallet/model/db/contact.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
@@ -14,9 +14,10 @@ class UcoTransferListWidget extends StatefulWidget {
   final List<Contact>? contacts;
   final Function(UcoTransfer)? onGet;
   final Function()? onDelete;
+  final bool? displayContextMenu;
 
   UcoTransferListWidget(
-      {this.listUcoTransfer, this.onGet, this.onDelete, this.contacts})
+      {this.listUcoTransfer, this.onGet, this.onDelete, this.contacts, @required this.displayContextMenu})
       : super();
 
   _UcoTransferListWidgetState createState() => _UcoTransferListWidgetState();
@@ -55,7 +56,7 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                 child: ListView.builder(
                   itemCount: widget.listUcoTransfer!.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ContextMenu(
+                    return widget.displayContextMenu == true ? ContextMenu(
                         menuWidth: MediaQuery.of(context).size.width * 0.50,
                         blurSize: 5.0,
                         menuItemExtent: 45,
@@ -73,7 +74,7 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                         bottomOffsetHeight: 200.0,
                         menuItems: <ContextMenuItem>[
                           ContextMenuItem(
-                              title: Text("Get",
+                              title: Text(AppLocalization.of(context).getOption,
                                   style: AppStyles.textContextMenu(context)),
                               trailingIcon: Icon(Icons.get_app,
                                   color: StateContainer.of(context)
@@ -90,7 +91,7 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                               }),
                           ContextMenuItem(
                               title: Text(
-                                "Delete",
+                                AppLocalization.of(context).deleteOption,
                                 style: AppStyles.textContextMenuRed(context),
                               ),
                               trailingIcon: Icon(
@@ -108,7 +109,8 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                         ],
                         onPressed: () {},
                         child: displayUcoDetail(
-                            context, widget.listUcoTransfer![index]));
+                            context, widget.listUcoTransfer![index])) : displayUcoDetail(
+                            context, widget.listUcoTransfer![index]);
                   },
                 ),
               ),
