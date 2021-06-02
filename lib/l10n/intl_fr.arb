@@ -1,0 +1,820 @@
+{
+  "@@last_modified": "2021-06-02T15:04:58.487557",
+  "@@locale" : "fr",
+  "welcomeText": "Bienvenue sur le wallet Uniris.\n\nPour débuter, vous devez vous connecter à votre wallet décentralisé via votre mot de passe.",
+  "@welcomeText": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "connectWallet": "Se connecter à mon wallet",
+  "@connectWallet": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterPasswordText": "Svp, veuillez saisir votre mot de passe pour vous connecter à votre wallet",
+  "@enterPasswordText": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancel": "Annuler",
+  "@cancel": {
+    "description": "dialog_cancel",
+    "type": "text",
+    "placeholders": {}
+  },
+  "close": "Fermer",
+  "@close": {
+    "description": "dialog_close",
+    "type": "text",
+    "placeholders": {}
+  },
+  "confirm": "Confirmer",
+  "@confirm": {
+    "description": "dialog_confirm",
+    "type": "text",
+    "placeholders": {}
+  },
+  "no": "Non",
+  "@no": {
+    "description": "intro_new_wallet_backup_no",
+    "type": "text",
+    "placeholders": {}
+  },
+  "yes": "Oui",
+  "@yes": {
+    "description": "intro_new_wallet_backup_yes",
+    "type": "text",
+    "placeholders": {}
+  },
+  "send": "Envoyer",
+  "@send": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "add": "Ajouter",
+  "@add": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "update": "Mettre à jour",
+  "@update": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "transferUCO": "Transférer des UCO",
+  "@transferUCO": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "transferNFT": "Transférer des NFT",
+  "@transferNFT": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "transferNFTName": "Transférer %1",
+  "@transferNFTName": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "sent": "Envoyé",
+  "@sent": {
+    "description": "history_sent",
+    "type": "text",
+    "placeholders": {}
+  },
+  "received": "Reçu",
+  "@received": {
+    "description": "history_received",
+    "type": "text",
+    "placeholders": {}
+  },
+  "transactionHeader": "Transaction",
+  "@transactionHeader": {
+    "description": "transaction_header",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addressCopied": "Addresse copiée",
+  "@addressCopied": {
+    "description": "receive_copied",
+    "type": "text",
+    "placeholders": {}
+  },
+  "copyAddress": "Copier l'addresse",
+  "@copyAddress": {
+    "description": "receive_copy_cta",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addressHint": "Saisie l'addresse",
+  "@addressHint": {
+    "description": "send_address_hint",
+    "type": "text",
+    "placeholders": {}
+  },
+  "scanQrCode": "Scanner le QR Code",
+  "@scanQrCode": {
+    "description": "send_scan_qr",
+    "type": "text",
+    "placeholders": {}
+  },
+  "qrInvalidAddress": "Le QR code ne contient pas une adresse valide",
+  "@qrInvalidAddress": {
+    "description": "qr_invalid_address",
+    "type": "text",
+    "placeholders": {}
+  },
+  "qrInvalidPermissions": "Svp, activez la permission de la caméra de scanner des QR Codes",
+  "@qrInvalidPermissions": {
+    "description": "User did not grant camera permissions to the app",
+    "type": "text",
+    "placeholders": {}
+  },
+  "qrUnknownError": "La lecture du QR Code n'est pas possible",
+  "@qrUnknownError": {
+    "description": "An unknown error occurred with the QR scanner",
+    "type": "text",
+    "placeholders": {}
+  },
+  "customUrlHeader": "Urls personnalisées",
+  "@customUrlHeader": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "customUrlDesc": "Define the endpoint",
+  "@customUrlDesc": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterEndpoint": "Enter an endpoint",
+  "@enterEndpoint": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "removeContact": "Supprimer un contact",
+  "@removeContact": {
+    "description": "contact_remove_btn",
+    "type": "text",
+    "placeholders": {}
+  },
+  "removeContactConfirmation": "Etes vous sûr(e)s de vouloir supprimer %1?",
+  "@removeContactConfirmation": {
+    "description": "contact_remove_sure",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addressBookHeader": "Carnet d'addresses",
+  "@addressBookHeader": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "contactHeader": "Contact",
+  "@contactHeader": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addressBookDesc": "Créer et gérer les adresses les plus fréquemment utilisées",
+  "@addressBookDesc": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addContact": "Ajouter un contact",
+  "@addContact": {
+    "description": "contact_add_button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "contactNameHint": "Saisir le nom @",
+  "@contactNameHint": {
+    "description": "contact_name_hint",
+    "type": "text",
+    "placeholders": {}
+  },
+  "contactInvalid": "Le nom du contact n'est pas valide",
+  "@contactInvalid": {
+    "description": "contact_invalid_name",
+    "type": "text",
+    "placeholders": {}
+  },
+  "contactAdded": "%1 a été ajouté au carnet d'adresses.",
+  "@contactAdded": {
+    "description": "contact_added",
+    "type": "text",
+    "placeholders": {}
+  },
+  "contactRemoved": "%1 a été supprimé du carnet d'adresses!",
+  "@contactRemoved": {
+    "description": "contact_removed",
+    "type": "text",
+    "placeholders": {}
+  },
+  "contactNameMissing": "Choisissez un nom pour ce contact",
+  "@contactNameMissing": {
+    "description": "contact_name_missing",
+    "type": "text",
+    "placeholders": {}
+  },
+  "contactExists": "Ce contact existe déjà",
+  "@contactExists": {
+    "description": "contact_name_exists",
+    "type": "text",
+    "placeholders": {}
+  },
+  "sentTo": "A été envoyé à",
+  "@sentTo": {
+    "description": "sent_to",
+    "type": "text",
+    "placeholders": {}
+  },
+  "transferSuccess": "La transaction a été transmise avec succès",
+  "@transferSuccess": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "transfering": "En cours de transfert",
+  "@transfering": {
+    "description": "send_sending",
+    "type": "text",
+    "placeholders": {}
+  },
+  "to": "A",
+  "@to": {
+    "description": "send_to",
+    "type": "text",
+    "placeholders": {}
+  },
+  "getOption": "Récupérer",
+  "@getOption": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "deleteOption": "Supprimer",
+  "@deleteOption": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "sendAmountConfirm": "Envoyer %1 UCO",
+  "@sendAmountConfirm": {
+    "description": "send_pin_description",
+    "type": "text",
+    "placeholders": {}
+  },
+  "transferAmountConfirm": "Transférer %1 UCO",
+  "@transferAmountConfirm": {
+    "description": "send_pin_description",
+    "type": "text",
+    "placeholders": {}
+  },
+  "sendError": "Une erreur est survenue. Veuillez essayer plus tard.",
+  "@sendError": {
+    "description": "send_generic_error",
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterAmount": "Saisissez un montant",
+  "@enterAmount": {
+    "description": "send_amount_hint",
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterAddress": "Saisissez une addresse",
+  "@enterAddress": {
+    "description": "enter_address",
+    "type": "text",
+    "placeholders": {}
+  },
+  "invalidAddress": "L'adresse saisie est invalide",
+  "@invalidAddress": {
+    "description": "send_invalid_address",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addressMising": "Veuillez saisir une adresse",
+  "@addressMising": {
+    "description": "send_enter_address",
+    "type": "text",
+    "placeholders": {}
+  },
+  "amountMissing": "Veuillez saisir un montant",
+  "@amountMissing": {
+    "description": "send_enter_amount",
+    "type": "text",
+    "placeholders": {}
+  },
+  "minimumSend": "Le montant minimum est de %1 UCO",
+  "@minimumSend": {
+    "description": "send_minimum_error",
+    "type": "text",
+    "placeholders": {}
+  },
+  "insufficientBalance": "Votre solde est insuffisant",
+  "@insufficientBalance": {
+    "description": "send_insufficient_balance",
+    "type": "text",
+    "placeholders": {}
+  },
+  "fees": "Frais",
+  "@fees": {
+    "description": "fees",
+    "type": "text",
+    "placeholders": {}
+  },
+  "pinCreateTitle": "Créez un code pin à 6 chiffres",
+  "@pinCreateTitle": {
+    "description": "pin_create_title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "pinConfirmTitle": "Confirmez votre code pin",
+  "@pinConfirmTitle": {
+    "description": "pin_confirm_title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "pinEnterTitle": "Saisissez le code pin",
+  "@pinEnterTitle": {
+    "description": "pin_enter_title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "pinConfirmError": "Les codes pin ne correspondent pas",
+  "@pinConfirmError": {
+    "description": "pin_confirm_error",
+    "type": "text",
+    "placeholders": {}
+  },
+  "pinInvalid": "Le code pin saisi est invalide",
+  "@pinInvalid": {
+    "description": "pin_error",
+    "type": "text",
+    "placeholders": {}
+  },
+  "authMethod": "Méthode d'auth.",
+  "@authMethod": {
+    "description": "settings_disable_fingerprint",
+    "type": "text",
+    "placeholders": {}
+  },
+  "pinMethod": "PIN",
+  "@pinMethod": {
+    "description": "settings_pin_method",
+    "type": "text",
+    "placeholders": {}
+  },
+  "biometricsMethod": "Biométrie",
+  "@biometricsMethod": {
+    "description": "settings_fingerprint_method",
+    "type": "text",
+    "placeholders": {}
+  },
+  "currency": "Monnaie",
+  "@currency": {
+    "description": "A settings menu item for changing currency",
+    "type": "text",
+    "placeholders": {}
+  },
+  "changeCurrency": "Monnaie",
+  "@changeCurrency": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "language": "Langue",
+  "@language": {
+    "description": "settings_change_language",
+    "type": "text",
+    "placeholders": {}
+  },
+  "logout": "Se déconnecter",
+  "@logout": {
+    "description": "settings_logout",
+    "type": "text",
+    "placeholders": {}
+  },
+  "rootWarning": "Il apparait que votre appareil est jailbreaké ou modifié. Ceci pourrait compromettre la sécurité de votre application. Il est recommandé de remettre à jour votre appareil dans son état initial avant de continuer.",
+  "@rootWarning": {
+    "description": "Shown to users if they have a rooted Android device or jailbroken iOS device",
+    "type": "text",
+    "placeholders": {}
+  },
+  "iUnderstandTheRisks": "Je comprends les risques",
+  "@iUnderstandTheRisks": {
+    "description": "Shown to users if they have a rooted Android device or jailbroken iOS device",
+    "type": "text",
+    "placeholders": {}
+  },
+  "exit": "Sortie",
+  "@exit": {
+    "description": "Exit action, like a button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "warning": "Attention",
+  "@warning": {
+    "description": "settings_logout_alert_title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "logoutDetail": "La déconnexion va supprimer l'ensemble des données relatives à votre wallet Uniris sur votre appareil. Si votre mot de passe n'a pas été sauvegardé par vos soins, vous ne pourrez plus être en capacité d'accéder à votre wallet à nouveau",
+  "@logoutDetail": {
+    "description": "settings_logout_alert_message",
+    "type": "text",
+    "placeholders": {}
+  },
+  "logoutAction": "Supprimer les infos et se déconnecter",
+  "@logoutAction": {
+    "description": "settings_logout_alert_confirm_cta",
+    "type": "text",
+    "placeholders": {}
+  },
+  "logoutAreYouSure": "Etes-vous sûr(e)s ?",
+  "@logoutAreYouSure": {
+    "description": "settings_logout_warning_title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "logoutReassurance": "Tant que vous avez sauvegardé votre mot de passe, vous n'avez aucune inquiétude à avoir.",
+  "@logoutReassurance": {
+    "description": "settings_logout_warning_message",
+    "type": "text",
+    "placeholders": {}
+  },
+  "preferences": "Préférences",
+  "@preferences": {
+    "description": "settings_preferences_header",
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage": "Gérer",
+  "@manage": {
+    "description": "settings_manage_header",
+    "type": "text",
+    "placeholders": {}
+  },
+  "backupSeed": "Backup Seed",
+  "@backupSeed": {
+    "description": "settings_backup_seed",
+    "type": "text",
+    "placeholders": {}
+  },
+  "fingerprintSeedBackup": "Authenticate to backup seed.",
+  "@fingerprintSeedBackup": {
+    "description": "settings_fingerprint_title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "pinSeedBackup": "Enter PIN to Backup Seed",
+  "@pinSeedBackup": {
+    "description": "settings_pin_title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "systemDefault": "Valeur système par défaut",
+  "@systemDefault": {
+    "description": "settings_default_language_string",
+    "type": "text",
+    "placeholders": {}
+  },
+  "unlockPin": "Saisissez votre code PIN pour déverrouiller",
+  "@unlockPin": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "unlockBiometrics": "Authentification pour déverrouiller",
+  "@unlockBiometrics": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "lockAppSetting": "Auth. au lancement",
+  "@lockAppSetting": {
+    "description": "authenticate_on_launch",
+    "type": "text",
+    "placeholders": {}
+  },
+  "locked": "Verrouillé",
+  "@locked": {
+    "description": "lockedtxt",
+    "type": "text",
+    "placeholders": {}
+  },
+  "unlock": "Déverrouillé",
+  "@unlock": {
+    "description": "unlocktxt",
+    "type": "text",
+    "placeholders": {}
+  },
+  "tooManyFailedAttempts": "Trop de tentatives ont été faites.",
+  "@tooManyFailedAttempts": {
+    "description": "fail_toomany_attempts",
+    "type": "text",
+    "placeholders": {}
+  },
+  "securityHeader": "Sécurité",
+  "@securityHeader": {
+    "description": "security_header",
+    "type": "text",
+    "placeholders": {}
+  },
+  "autoLockHeader": "Verrouillage auto",
+  "@autoLockHeader": {
+    "description": "auto_lock_header",
+    "type": "text",
+    "placeholders": {}
+  },
+  "xMinutes": "Après %1 minutes",
+  "@xMinutes": {
+    "description": "after_minutes",
+    "type": "text",
+    "placeholders": {}
+  },
+  "xMinute": "Après %1 minute",
+  "@xMinute": {
+    "description": "after_minute",
+    "type": "text",
+    "placeholders": {}
+  },
+  "instantly": "Instantanée",
+  "@instantly": {
+    "description": "insantly",
+    "type": "text",
+    "placeholders": {}
+  },
+  "setWalletPassword": "Définir le mot de passe du wallet",
+  "@setWalletPassword": {
+    "description": "Allows user to encrypt wallet with a password",
+    "type": "text",
+    "placeholders": {}
+  },
+  "setPassword": "Définir le mot de passe",
+  "@setPassword": {
+    "description": "A button that sets the wallet password",
+    "type": "text",
+    "placeholders": {}
+  },
+  "disableWalletPassword": "Désactiver le mot de passe du wallet",
+  "@disableWalletPassword": {
+    "description": "Allows user to deencrypt wallet with a password",
+    "type": "text",
+    "placeholders": {}
+  },
+  "encryptionFailedError": "La définition du mot de passe du wallet a échoué",
+  "@encryptionFailedError": {
+    "description": "If encrypting a wallet raised an error",
+    "type": "text",
+    "placeholders": {}
+  },
+  "setPasswordSuccess": "Le mot de passe a été défini avec succès",
+  "@setPasswordSuccess": {
+    "description": "Setting a Wallet Password was successful",
+    "type": "text",
+    "placeholders": {}
+  },
+  "disablePasswordSuccess": "Le mot de passe a été désactivé",
+  "@disablePasswordSuccess": {
+    "description": "Disabling a Wallet Password was successful",
+    "type": "text",
+    "placeholders": {}
+  },
+  "defaultAccountName": "Compte principal",
+  "@defaultAccountName": {
+    "description": "Default account name",
+    "type": "text",
+    "placeholders": {}
+  },
+  "defaultNewAccountName": "Compte %1",
+  "@defaultNewAccountName": {
+    "description": "Default new account name - e.g. Account 1",
+    "type": "text",
+    "placeholders": {}
+  },
+  "account": "Compte",
+  "@account": {
+    "description": "Account text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "accounts": "Comptes",
+  "@accounts": {
+    "description": "Accounts header",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addAccount": "Ajouter un compte",
+  "@addAccount": {
+    "description": "Default new account name - e.g. Account 1",
+    "type": "text",
+    "placeholders": {}
+  },
+  "hideAccountHeader": "Masquer le compte ?",
+  "@hideAccountHeader": {
+    "description": "Confirmation dialog header",
+    "type": "text",
+    "placeholders": {}
+  },
+  "removeAccountText": "Etes-vous sûr(e)s de vouloir masquer ce compte ? Vous pourrez le réactiver plus tard en tapant sur le bouton \"%1\".",
+  "@removeAccountText": {
+    "description": "Remove account dialog body",
+    "type": "text",
+    "placeholders": {}
+  },
+  "tapToReveal": "Révéler",
+  "@tapToReveal": {
+    "description": "Tap to reveal hidden content",
+    "type": "text",
+    "placeholders": {}
+  },
+  "tapToHide": "Cacher",
+  "@tapToHide": {
+    "description": "Tap to hide content",
+    "type": "text",
+    "placeholders": {}
+  },
+  "copied": "Copié",
+  "@copied": {
+    "description": "Copied (to clipboard)",
+    "type": "text",
+    "placeholders": {}
+  },
+  "copy": "Copier",
+  "@copy": {
+    "description": "Copy (to clipboard)",
+    "type": "text",
+    "placeholders": {}
+  },
+  "seedDescription": "Une seed porte les mêmes informations qu'une phrase secrète, mais d'une manière lisible par machine. Tant que vous en avez un sauvegardé, vous aurez accès à vos fonds.",
+  "@seedDescription": {
+    "description": "Describing what a seed is",
+    "type": "text",
+    "placeholders": {}
+  },
+  "secretInfoHeader": "La sécurité avant tout !",
+  "@secretInfoHeader": {
+    "description": "secret info header",
+    "type": "text",
+    "placeholders": {}
+  },
+  "secretInfo": "Dans le prochain écran, vous verrez votre phrase secrète. Il s'agit d'un mot de passe pour accéder à vos fonds. Il est crucial de le sauvegarder et de ne le partager avec personne.",
+  "@secretInfo": {
+    "description": "Description for seed",
+    "type": "text",
+    "placeholders": {}
+  },
+  "secretWarning": "Si vous perdez votre appareil ou déinstaller l'application, vous aurez besoin de votre phrase secrète ou votre seed pour retrouver vos fonds !",
+  "@secretWarning": {
+    "description": "Secret warning",
+    "type": "text",
+    "placeholders": {}
+  },
+  "gotItButton": "Compris !",
+  "@gotItButton": {
+    "description": "Got It! Acknowledgement button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "ackBackedUp": "Etes-vous sûr(e)s d'avoir sauvegardé votre phrase secrète ou votre code ?",
+  "@ackBackedUp": {
+    "description": "Ack backed up",
+    "type": "text",
+    "placeholders": {}
+  },
+  "backupSecretPhrase": "Sauvegarder la phrase secrète",
+  "@backupSecretPhrase": {
+    "description": "backup seed",
+    "type": "text",
+    "placeholders": {}
+  },
+  "createPasswordHint": "Créer un mot de passe",
+  "@createPasswordHint": {
+    "description": "A text field hint that tells the user to create a password",
+    "type": "text",
+    "placeholders": {}
+  },
+  "confirmPasswordHint": "Confirmez le mot de passe",
+  "@confirmPasswordHint": {
+    "description": "A text field hint that tells the user to confirm the password",
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterPasswordHint": "Saisissez votre mot de passe",
+  "@enterPasswordHint": {
+    "description": "A text field hint that tells the users to enter their password",
+    "type": "text",
+    "placeholders": {}
+  },
+  "passwordsDontMatch": "Les mots de passe ne correspondent pas",
+  "@passwordsDontMatch": {
+    "description": "An error indicating a password has been confirmed incorrectly",
+    "type": "text",
+    "placeholders": {}
+  },
+  "passwordBlank": "Le mot de passe est obligatoire",
+  "@passwordBlank": {
+    "description": "An error indicating a password has been entered incorrectly",
+    "type": "text",
+    "placeholders": {}
+  },
+  "invalidPassword": "Le mot de passe est invalide",
+  "@invalidPassword": {
+    "description": "An error indicating a password has been entered incorrectly",
+    "type": "text",
+    "placeholders": {}
+  },
+  "passwordWillBeRequiredToOpenParagraph": "Ce mot de passe sera requis pour l'ouverture de votre wallet.",
+  "@passwordWillBeRequiredToOpenParagraph": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "passwordNoLongerRequiredToOpenParagraph": "Vous n'aurez plus besoin de mot de passe pour ouvrir votre wallet dorénavant.",
+  "@passwordNoLongerRequiredToOpenParagraph": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "createPasswordFirstParagraph": "Vous pouvez créer un mot de passe pour ajouter une sécurité supplémentaire à votre wallet.",
+  "@createPasswordFirstParagraph": {
+    "description": "A paragraph that tells the users that they can create a password for additional security.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "createPasswordSecondParagraph": "Le mot de passe est optionnel, et votre wallet sera protégé par votre code PIN ou la biométrie",
+  "@createPasswordSecondParagraph": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "createAPasswordHeader": "Créer un mot de passe.",
+  "@createAPasswordHeader": {
+    "description": "A paragraph that tells the users to create a password.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "createPasswordSheetHeader": "Créer",
+  "@createPasswordSheetHeader": {
+    "description": "Prompt user to create a new password",
+    "type": "text",
+    "placeholders": {}
+  },
+  "disablePasswordSheetHeader": "Désactiver",
+  "@disablePasswordSheetHeader": {
+    "description": "Prompt user to disable their password",
+    "type": "text",
+    "placeholders": {}
+  },
+  "requireAPasswordToOpenHeader": "Un mot de passe est-il requis pour ouvrir le wallet Uniris ?",
+  "@requireAPasswordToOpenHeader": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "releaseNoteHeader": "Nouveautés",
+  "@releaseNoteHeader": {
+    "description": "What's new",
+    "type": "text",
+    "placeholders": {}
+  },
+  "ok": "Ok",
+  "@ok": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "noSkipButton": "Non, passer",
+  "@noSkipButton": {
+    "description": "A button that declines and skips the mentioned process.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "nextButton": "Suivant",
+  "@nextButton": {
+    "description": "A button that goes to the next screen.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "goBackButton": "Retour",
+  "@goBackButton": {
+    "description": "A button that goes to the previous screen.",
+    "type": "text",
+    "placeholders": {}
+  }
+}

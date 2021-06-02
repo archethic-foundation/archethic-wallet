@@ -8,7 +8,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:logger/logger.dart';
 import 'package:uniris_mobile_wallet/model/available_language.dart';
 import 'package:uniris_mobile_wallet/ui/before_scan_screen.dart';
 import 'package:uniris_mobile_wallet/ui/intro/intro_backup_safety.dart';
@@ -39,12 +38,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Setup Service Provide
   setupServiceLocator();
-  // Setup logger, only show warning and higher in release mode.
-  if (kReleaseMode) {
-    Logger.level = Level.warning;
-  } else {
-    Logger.level = Level.debug;
-  }
   // Run app
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {

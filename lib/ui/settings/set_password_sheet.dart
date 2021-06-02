@@ -2,8 +2,8 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:hex/hex.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
+import 'package:uniris_lib_dart/utils.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/dimens.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
@@ -284,9 +284,9 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
           AppLocalization.of(context).encryptionFailedError, context);
     } else {
       String encryptedSeed =
-          HEX.encode(AppCrypt.encrypt(seed, confirmPasswordController.text));
+          uint8ListToHex(AppCrypt.encrypt(seed, confirmPasswordController.text));
       await sl.get<Vault>().setSeed(encryptedSeed);
-      StateContainer.of(context).setEncryptedSecret(HEX.encode(
+      StateContainer.of(context).setEncryptedSecret(uint8ListToHex(
           AppCrypt.encrypt(seed, await sl.get<Vault>().getSessionKey())));
       UIUtil.showSnackbar(
           AppLocalization.of(context).setPasswordSuccess, context);

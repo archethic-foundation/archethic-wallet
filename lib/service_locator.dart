@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'package:logger/logger.dart';
 import 'package:uniris_lib_dart/services/api_coins_service.dart';
 import 'package:uniris_mobile_wallet/model/db/appdb.dart';
 import 'package:uniris_mobile_wallet/model/vault.dart';
@@ -17,6 +16,5 @@ void setupServiceLocator() {
   sl.registerLazySingleton<BiometricUtil>(() => BiometricUtil());
   sl.registerLazySingleton<Vault>(() => Vault());
   sl.registerLazySingleton<SharedPrefsUtil>(() => SharedPrefsUtil());
-  sl.registerLazySingleton<Logger>(() => Logger(printer: PrettyPrinter()));
   sl.registerLazySingleton<ApiCoinsService>(() => ApiCoinsService());
 }

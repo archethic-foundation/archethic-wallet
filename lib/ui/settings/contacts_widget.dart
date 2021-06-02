@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
@@ -30,7 +29,6 @@ class ContactsList extends StatefulWidget {
 }
 
 class _ContactsListState extends State<ContactsList> {
-  final Logger log = sl.get<Logger>();
 
   List<Contact> _contacts;
   String documentsDirectory;

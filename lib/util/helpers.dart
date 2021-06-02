@@ -2,7 +2,8 @@
 
 import 'dart:typed_data';
 import 'dart:convert';
-import 'package:hex/hex.dart';
+
+import 'package:uniris_lib_dart/utils.dart';
 
 class AppHelpers {
   static List<String> hexArray = '0123456789ABCDEF'.split('');
@@ -18,7 +19,7 @@ class AppHelpers {
 
   /// Converts a Uint8List to a hex string
   static String byteToHex(Uint8List bytes) {
-    return HEX.encode(bytes).toUpperCase();
+    return uint8ListToHex(bytes).toUpperCase();
   }
 
   static BigInt byteToBigInt(Uint8List bigIntBytes) {
@@ -27,7 +28,7 @@ class AppHelpers {
 
   /// Converts a hex string to a Uint8List
   static Uint8List hexToBytes(String hex) {
-    return Uint8List.fromList(HEX.decode(hex));
+    return Uint8List.fromList(hexToUint8List(hex));
   }
 
   /// Convert a bigint to a byte array
@@ -113,7 +114,7 @@ class AppHelpers {
   static Uint8List concat(List<Uint8List> bytes) {
     String hex = '';
     bytes.forEach((v) {
-      hex += HEX.encode(v);
+      hex += uint8ListToHex(v);
     });
     return AppHelpers.hexToBytes(hex);
   }

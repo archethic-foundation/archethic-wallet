@@ -2,7 +2,6 @@
 
 import 'dart:async';
 import 'package:event_taxi/event_taxi.dart';
-import 'package:logger/logger.dart';
 import 'package:uniris_lib_dart/api.dart';
 import 'package:uniris_lib_dart/transaction_builder.dart';
 import 'package:uniris_lib_dart/utils.dart';
@@ -12,7 +11,6 @@ import 'package:uniris_mobile_wallet/network/model/response/address_txs_response
 import 'package:uniris_mobile_wallet/service_locator.dart';
 
 class AppService {
-  final Logger log = sl.get<Logger>();
 
   double getFeesEstimation() {
     const double FEE_BASE = 0.01;

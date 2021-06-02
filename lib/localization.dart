@@ -48,7 +48,6 @@ class AppLocalization {
         name: 'enterPasswordText');
   }
 
-  /// -- GENERIC ITEMS
   String get cancel {
     return Intl.message('Cancel', desc: 'dialog_cancel', name: 'cancel');
   }
@@ -68,14 +67,6 @@ class AppLocalization {
   String get yes {
     return Intl.message('Yes',
         desc: 'intro_new_wallet_backup_yes', name: 'yes');
-  }
-
-  String get onStr {
-    return Intl.message('On', desc: 'generic_on', name: 'onStr');
-  }
-
-  String get off {
-    return Intl.message('Off', desc: 'generic_off', name: 'off');
   }
 
   String get send {
@@ -102,14 +93,6 @@ class AppLocalization {
     return Intl.message('Transfer %1', desc: '', name: 'transferNFTName');
   }
 
-  String get transfer {
-    return Intl.message('Transfer', desc: '', name: 'transfer');
-  }
-
-  String get receive {
-    return Intl.message('Receive', desc: '', name: 'receive');
-  }
-
   String get sent {
     return Intl.message('Sent', desc: 'history_sent', name: 'sent');
   }
@@ -118,78 +101,9 @@ class AppLocalization {
     return Intl.message('Received', desc: 'history_received', name: 'received');
   }
 
-  String get transactions {
-    return Intl.message('Transactions',
-        desc: 'transaction_header', name: 'transactions');
-  }
-
   String get transactionHeader {
     return Intl.message('Transaction',
         desc: 'transaction_header', name: 'transactionHeader');
-  }
-
-  String get transactionDetailBlock {
-    return Intl.message('Block',
-        desc: 'transaction_detail', name: 'transactionDetailBlock');
-  }
-
-  String get transactionDetailDate {
-    return Intl.message('Date',
-        desc: 'transaction_detail', name: 'transactionDetailDate');
-  }
-
-  String get transactionDetailFrom {
-    return Intl.message('From address',
-        desc: 'transaction_detail', name: 'transactionDetailFrom');
-  }
-
-  String get transactionDetailTo {
-    return Intl.message('To address',
-        desc: 'transaction_detail', name: 'transactionDetailTo');
-  }
-
-  String get transactionDetailTxId {
-    return Intl.message('Transaction id',
-        desc: 'transaction_detail', name: 'transactionDetailTxId');
-  }
-
-  String get transactionDetailAmount {
-    return Intl.message('Amount',
-        desc: 'transaction_detail', name: 'transactionDetailAmount');
-  }
-
-  String get transactionDetailFee {
-    return Intl.message('Fee',
-        desc: 'transaction_detail', name: 'transactionDetailFee');
-  }
-
-  String get transactionDetailReward {
-    return Intl.message('Reward',
-        desc: 'transaction_detail', name: 'transactionDetailReward');
-  }
-
-  String get transactionDetailOperation {
-    return Intl.message('Operation',
-        desc: 'transaction_detail', name: 'transactionDetailOperation');
-  }
-
-  String get transactionDetailOpenfield {
-    return Intl.message('Data (Openfield)',
-        desc: 'transaction_detail', name: 'transactionDetailOpenfield');
-  }
-
-  String get transactionDetailSignature {
-    return Intl.message('Signature',
-        desc: 'transaction_signature', name: 'transactionDetailSignature');
-  }
-
-  String get transactionDetailCopyPaste {
-    return Intl.message('Double click on text to copy to clipboard',
-        desc: 'transaction_detail', name: 'transactionDetailCopyPaste');
-  }
-
-  String get mempool {
-    return Intl.message('Unconfirmed', desc: 'mempool', name: 'mempool');
   }
 
   String get addressCopied {
@@ -202,46 +116,14 @@ class AppLocalization {
         desc: 'receive_copy_cta', name: 'copyAddress');
   }
 
-  String get addressShare {
-    return Intl.message('Share Address',
-        desc: 'receive_share_cta', name: 'addressShare');
-  }
-
   String get addressHint {
     return Intl.message('Enter Address',
         desc: 'send_address_hint', name: 'addressHint');
   }
 
-  String get seed {
-    return Intl.message('Seed',
-        desc: 'intro_new_wallet_seed_header', name: 'seed');
-  }
-
-  String get seedInvalid {
-    return Intl.message('Seed is Invalid',
-        desc: 'intro_seed_invalid', name: 'seedInvalid');
-  }
-
-  String get endPointInvalid {
-    return Intl.message('The endpoint is invalid',
-        desc: '', name: 'endPointInvalid');
-  }
-
-  String get seedCopied {
-    return Intl.message(
-        'Seed Copied to Clipboard\nIt is pasteable for 2 minutes.',
-        desc: 'intro_new_wallet_seed_copied',
-        name: 'seedCopied');
-  }
-
   String get scanQrCode {
     return Intl.message('Scan QR Code',
         desc: 'send_scan_qr', name: 'scanQrCode');
-  }
-
-  String get qrInvalidSeed {
-    return Intl.message("QR code does not contain a valid seed or private key",
-        desc: "qr_invalid_seed", name: 'qrInvalidSeed');
   }
 
   String get qrInvalidAddress {
@@ -261,9 +143,6 @@ class AppLocalization {
         name: "qrUnknownError");
   }
 
-  /// -- END GENERIC ITEMS
-  /// -- CUSTOM URL
-
   String get customUrlHeader {
     return Intl.message('Custom Urls', desc: '', name: 'customUrlHeader');
   }
@@ -276,17 +155,8 @@ class AppLocalization {
     return Intl.message('Enter an endpoint', desc: '', name: 'enterEndpoint');
   }
 
-  String get enterWalletServerSwitch {
-    return Intl.message('Use a custom wallet server',
-        desc: '', name: 'enterWalletServerSwitch');
-  }
-
-  /// -- END CUSTOM URL
-
-  /// -- CONTACT ITEMS
-
   String get removeContact {
-    return Intl.message('Remove Uniriser',
+    return Intl.message('Remove Contact',
         desc: 'contact_remove_btn', name: 'removeContact');
   }
 
@@ -300,7 +170,7 @@ class AppLocalization {
   }
 
   String get contactHeader {
-    return Intl.message('Uniriser', desc: '', name: 'contactHeader');
+    return Intl.message('Contact', desc: '', name: 'contactHeader');
   }
 
   String get addressBookDesc {
@@ -309,7 +179,7 @@ class AppLocalization {
   }
 
   String get addContact {
-    return Intl.message('Add Uniriser',
+    return Intl.message('Add Contact',
         desc: 'contact_add_button', name: 'addContact');
   }
 
@@ -319,7 +189,7 @@ class AppLocalization {
   }
 
   String get contactInvalid {
-    return Intl.message("Invalid Uniriser Name",
+    return Intl.message("Invalid Contact Name",
         desc: 'contact_invalid_name', name: 'contactInvalid');
   }
 
@@ -334,68 +204,17 @@ class AppLocalization {
   }
 
   String get contactNameMissing {
-    return Intl.message("Choose a Name for this Uniriser",
+    return Intl.message("Choose a Name for this contact",
         desc: 'contact_name_missing', name: 'contactNameMissing');
   }
 
   String get contactExists {
-    return Intl.message("Uniriser Already Exists",
+    return Intl.message("Contact Already Exists",
         desc: 'contact_name_exists', name: 'contactExists');
   }
 
-  /// -- END CONTACT ITEMS
-
-  /// -- INTRO ITEMS
-  String get backupYourSeed {
-    return Intl.message('Backup your seed',
-        desc: 'intro_new_wallet_seed_backup_header', name: 'backupYourSeed');
-  }
-
-  String get backupSeedConfirm {
-    return Intl.message('Are you sure that you backed up your wallet seed?',
-        desc: 'intro_new_wallet_backup', name: 'backupSeedConfirm');
-  }
-
-  String get seedBackupInfo {
-    return Intl.message(
-        "Below is your wallet's seed. It is crucial that you backup your seed and never store it as plaintext or a screenshot.",
-        desc: 'intro_new_wallet_seed',
-        name: 'seedBackupInfo');
-  }
-
-  String get copySeed {
-    return Intl.message("Copy Seed", desc: 'copy_seed_btn', name: 'copySeed');
-  }
-
-  String get seedCopiedShort {
-    return Intl.message("Seed Copied",
-        desc: 'seed_copied_btn', name: 'seedCopiedShort');
-  }
-
-  String get importSeedHint {
-    return Intl.message("Please enter your seed below.",
-        desc: 'intro_seed_info', name: 'importSeedHint');
-  }
-
-  String get newWallet {
-    return Intl.message("New Wallet",
-        desc: 'intro_welcome_new_wallet', name: 'newWallet');
-  }
-
-  String get importWallet {
-    return Intl.message("Import Wallet",
-        desc: 'intro_welcome_have_wallet', name: 'importWallet');
-  }
-
-  /// -- END INTRO ITEMS
-
-  /// -- SEND ITEMS
   String get sentTo {
     return Intl.message("Sent To", desc: 'sent_to', name: 'sentTo');
-  }
-
-  String get sending {
-    return Intl.message("Sending", desc: 'send_sending', name: 'sending');
   }
 
   String get transferSuccess {
@@ -429,13 +248,8 @@ class AppLocalization {
         desc: 'send_pin_description', name: 'transferAmountConfirm');
   }
 
-
   String get transferAmountConfirmPin {
     return transferAmountConfirm;
-  }
-
-  String get sendAmountConfirmPin {
-    return sendAmountConfirm;
   }
 
   String get sendError {
@@ -453,25 +267,6 @@ class AppLocalization {
         desc: 'enter_address', name: 'enterAddress');
   }
 
-  String get enterTokenQuantity {
-    return Intl.message("Enter Quantity",
-        desc: 'send_enterTokenQuantity_hint', name: 'enterTokenQuantity');
-  }
-
-  String get sendATokenQuestion {
-    return Intl.message("Send a token ?",
-        desc: 'sendATokenQuestion_hint', name: 'sendATokenQuestion');
-  }
-
-  String get available {
-    return Intl.message("available", desc: 'available', name: 'available');
-  }
-
-  String get optionalParameters {
-    return Intl.message("Optional Parameters",
-        desc: 'optionalParameters', name: 'optionalParameters');
-  }
-
   String get invalidAddress {
     return Intl.message("Address entered was invalid",
         desc: 'send_invalid_address', name: 'invalidAddress');
@@ -487,22 +282,6 @@ class AppLocalization {
         desc: 'send_enter_amount', name: 'amountMissing');
   }
 
-  String get tokenQuantityMissing {
-    return Intl.message("Please Enter a Quantity",
-        desc: 'send_enter_token_quantity', name: 'tokenQuantityMissing');
-  }
-
-  String get tokenMissing {
-    return Intl.message("Please choose a Token",
-        desc: 'send_enter_token', name: 'tokenMissing');
-  }
-
-  String get insufficientTokenQuantity {
-    return Intl.message("Insufficient Quantity in your wallet",
-        desc: 'send_insufficient_token_quantity',
-        name: 'insufficientTokenQuantity');
-  }
-
   String get minimumSend {
     return Intl.message("Minimum send amount is %1 UCO",
         desc: 'send_minimum_error', name: 'minimumSend');
@@ -513,17 +292,10 @@ class AppLocalization {
         desc: 'send_insufficient_balance', name: 'insufficientBalance');
   }
 
-  String get sendFrom {
-    return Intl.message("Send From", desc: 'send_title', name: 'sendFrom');
-  }
-
   String get fees {
     return Intl.message("Fees", desc: 'fees', name: 'fees');
   }
 
-  /// -- END SEND ITEMS
-
-  /// -- PIN SCREEN
   String get pinCreateTitle {
     return Intl.message("Create a 6-digit pin",
         desc: 'pin_create_title', name: 'pinCreateTitle');
@@ -549,19 +321,6 @@ class AppLocalization {
         desc: 'pin_error', name: 'pinInvalid');
   }
 
-  /// -- END PIN SCREEN
-
-  /// -- SETTINGS ITEMS
-
-  String get pickFromList {
-    return Intl.message("Pick From a List",
-        desc: 'pick rep from list', name: 'pickFromList');
-  }
-
-  String get uptime {
-    return Intl.message("Uptime", desc: 'Rep uptime', name: 'uptime');
-  }
-
   String get authMethod {
     return Intl.message("Auth. Method",
         desc: 'settings_disable_fingerprint', name: 'authMethod');
@@ -569,11 +328,6 @@ class AppLocalization {
 
   String get pinMethod {
     return Intl.message("PIN", desc: 'settings_pin_method', name: 'pinMethod');
-  }
-
-  String get privacyPolicy {
-    return Intl.message("Privacy Policy",
-        desc: 'settings_privacy_policy', name: 'privacyPolicy');
   }
 
   String get biometricsMethod {
@@ -648,63 +402,10 @@ class AppLocalization {
         name: 'logoutReassurance');
   }
 
-  String get settingsHeader {
-    return Intl.message("Settings",
-        desc: 'settings_title', name: 'settingsHeader');
-  }
 
   String get preferences {
     return Intl.message("Preferences",
         desc: 'settings_preferences_header', name: 'preferences');
-  }
-
-  String get informations {
-    return Intl.message("Informations",
-        desc: 'settings_informations_header', name: 'informations');
-  }
-
-  String get letsPlay {
-    return Intl.message("Let's play", desc: '', name: 'letsPlay');
-  }
-
-  String get searchField {
-    return Intl.message("Search...",
-        desc: 'search_field_hint', name: 'searchField');
-  }
-
-  String get myTokens {
-    return Intl.message("Tokens", desc: 'my_tokens_button', name: 'myTokens');
-  }
-
-  String get myTokensListHeader {
-    return Intl.message("My Token List",
-        desc: 'my_tokens_list_header', name: 'myTokensListHeader');
-  }
-
-  String get noTokenOwner {
-    return Intl.message("You don't have any token",
-        desc: 'no_token_owner_error', name: 'noTokenOwner');
-  }
-
-  String get tokensListHeader {
-    return Intl.message("NFT",
-        desc: 'settings_tokens_list_header', name: 'tokensListHeader');
-  }
-
-  String get tokensListTotalSupply {
-    return Intl.message("Total supply : ",
-        desc: 'settings_tokens_list_total_supply',
-        name: 'tokensListTotalSupply');
-  }
-
-  String get tokensListCreatedThe {
-    return Intl.message("Created the ",
-        desc: 'settings_tokens_list_created_the', name: 'tokensListCreatedThe');
-  }
-
-  String get tokensListCreatedBy {
-    return Intl.message("By ",
-        desc: 'settings_tokens_list_created_by', name: 'tokensListCreatedBy');
   }
 
   String get manage {
@@ -732,17 +433,6 @@ class AppLocalization {
         desc: 'settings_default_language_string', name: 'systemDefault');
   }
 
-  /// -- END SETTINGS ITEMS
-
-  // Scan
-
-  String get scanInstructions {
-    return Intl.message("Scan an Uniris \naddress QR code",
-        desc: '', name: 'scanInstructions');
-  }
-
-  /// -- LOCK SCREEN
-
   String get unlockPin {
     return Intl.message("Enter PIN to Unlock", desc: '', name: 'unlockPin');
   }
@@ -769,10 +459,6 @@ class AppLocalization {
     return Intl.message("Too many failed unlock attempts.",
         desc: 'fail_toomany_attempts', name: 'tooManyFailedAttempts');
   }
-
-  /// -- END LOCK SCREEN
-
-  /// -- SECURITY SETTINGS SUBMENU
 
   String get securityHeader {
     return Intl.message("Security",
@@ -833,10 +519,6 @@ class AppLocalization {
         name: 'disablePasswordSuccess');
   }
 
-  /// -- END SECURITY SETTINGS SUBMENU
-
-  /// -- START MULTI-ACCOUNT
-
   String get defaultAccountName {
     return Intl.message("Main Account",
         desc: "Default account name", name: 'defaultAccountName');
@@ -873,8 +555,6 @@ class AppLocalization {
         name: 'removeAccountText');
   }
 
-  /// -- END MULTI-ACCOUNT
-
   String get tapToReveal {
     return Intl.message("Tap to reveal",
         desc: "Tap to reveal hidden content", name: 'tapToReveal');
@@ -899,46 +579,6 @@ class AppLocalization {
         "A seed bears the same information as a secret phrase, but in a machine-readable way. As long as you have one of them backed up, you'll have access to your funds.",
         desc: "Describing what a seed is",
         name: 'seedDescription');
-  }
-
-  String get importSecretPhrase {
-    return Intl.message("Import Secret Phrase",
-        desc: "Header for restoring using mnemonic",
-        name: 'importSecretPhrase');
-  }
-
-  String get importSecretPhraseHint {
-    return Intl.message(
-        "Please enter your 24-word secret phrase below. Each word should be separated by a space.",
-        desc: 'helper message for importing mnemnic',
-        name: 'importSecretPhraseHint');
-  }
-
-  String get qrMnemonicError {
-    return Intl.message("QR does not contain a valid secret phrase",
-        desc: 'When QR does not contain a valid mnemonic phrase',
-        name: 'qrMnemonicError');
-  }
-
-  String get mnemonicInvalidWord {
-    return Intl.message("%1 is not a valid word",
-        desc: 'A word that is not part of bip39', name: 'mnemonicInvalidWord');
-  }
-
-  String get mnemonicSizeError {
-    return Intl.message("Secret phrase may only contain 24 words",
-        desc: 'err', name: 'mnemonicSizeError');
-  }
-
-  String get secretPhrase {
-    return Intl.message("Secret Phrase",
-        desc: 'Secret (mnemonic) phrase', name: 'secretPhrase');
-  }
-
-  String get backupConfirmButton {
-    return Intl.message("I've Backed It Up",
-        desc: 'Has backed up seed confirmation button',
-        name: 'backupConfirmButton');
   }
 
   String get secretInfoHeader {
@@ -972,40 +612,11 @@ class AppLocalization {
         name: 'ackBackedUp');
   }
 
-  String get secretPhraseCopy {
-    return Intl.message("Copy Secret Phrase",
-        desc: 'Copy secret phrase to clipboard', name: 'secretPhraseCopy');
-  }
-
-  String get secretPhraseCopied {
-    return Intl.message("Secret Phrase Copied",
-        desc: 'Copied secret phrase to clipboard', name: 'secretPhraseCopied');
-  }
-
-  String get import {
-    return Intl.message("Import", desc: "Generic import", name: 'import');
-  }
-
-  String get importSeedInstead {
-    return Intl.message("Import Seed Instead",
-        desc: "importSeedInstead", name: 'importSeedInstead');
-  }
-
-  String get switchToSeed {
-    return Intl.message("Switch to Seed",
-        desc: "switchToSeed", name: 'switchToSeed');
-  }
-
   String get backupSecretPhrase {
     return Intl.message("Backup Secret Phrase",
         desc: 'backup seed', name: 'backupSecretPhrase');
   }
 
-  /// -- SEED PROCESS
-
-  /// -- END SEED PROCESS
-
-  /// HINTS
   String get createPasswordHint {
     return Intl.message("Create a password",
         desc: 'A text field hint that tells the user to create a password',
@@ -1042,9 +653,6 @@ class AppLocalization {
         name: 'invalidPassword');
   }
 
-  /// HINTS END
-
-  /// PARAGRAPS
   String get passwordWillBeRequiredToOpenParagraph {
     return Intl.message("This password will be required to open your Wallet.",
         desc: '', name: 'passwordWillBeRequiredToOpenParagraph');
@@ -1067,14 +675,11 @@ class AppLocalization {
 
   String get createPasswordSecondParagraph {
     return Intl.message(
-        "Password is optional, and your wallet will be protected with your PIN or biometrics regardless\n\n... and soon with your finger ;)",
+        "Password is optional, and your wallet will be protected with your PIN or biometrics regardless",
         desc: '',
         name: 'createPasswordSecondParagraph');
   }
 
-  /// PARAGRAPS END
-
-  /// HEADERS
   String get createAPasswordHeader {
     return Intl.message("Create a password.",
         desc: 'A paragraph that tells the users to create a password.',
@@ -1098,8 +703,6 @@ class AppLocalization {
         desc: '', name: 'requireAPasswordToOpenHeader');
   }
 
-  /// HEADERS END
-
   String get releaseNoteHeader {
     return Intl.message("What's new",
         desc: "What's new", name: 'releaseNoteHeader');
@@ -1109,17 +712,10 @@ class AppLocalization {
     return Intl.message("Ok", desc: "", name: 'ok');
   }
 
-  /// BUTTONS
   String get noSkipButton {
     return Intl.message("No, Skip",
         desc: 'A button that declines and skips the mentioned process.',
         name: 'noSkipButton');
-  }
-
-  String get yesButton {
-    return Intl.message("Yes",
-        desc: 'A button that accepts the mentioned process.',
-        name: 'yesButton');
   }
 
   String get nextButton {
@@ -1132,20 +728,6 @@ class AppLocalization {
         desc: 'A button that goes to the previous screen.',
         name: 'goBackButton');
   }
-
-  String get supportButton {
-    return Intl.message("Support",
-        desc: 'A button to open up the live support window',
-        name: 'supportButton');
-  }
-
-  String get liveSupportButton {
-    return Intl.message("Support",
-        desc: 'A button to open up the live support window',
-        name: 'liveSupportButton');
-  }
-
-  /// BUTTONS END
 
   Future<String> getAccountExplorerUrl(String account) async {
     String explorerUrl = await sl.get<SharedPrefsUtil>().getExplorerUrl();
@@ -1163,8 +745,6 @@ class AppLocalization {
   String get explorerUrlByDefault {
     return 'https://blockchain.uniris.io';
   }
-
-  /// -- END NON-TRANSLATABLE ITEMS
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {

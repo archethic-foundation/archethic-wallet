@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 
 import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
-import 'package:logger/logger.dart';
 import 'package:uniris_lib_dart/transaction_builder.dart';
 import 'package:uniris_lib_dart/utils.dart';
 
@@ -21,7 +20,6 @@ import 'package:uniris_mobile_wallet/model/address.dart';
 import 'package:uniris_mobile_wallet/model/db/contact.dart';
 import 'package:uniris_mobile_wallet/model/db/appdb.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/ui/transfer/send_confirm_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/transfer/transfer_confirm_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/app_text_field.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
@@ -58,7 +56,6 @@ class TransferUcoSheet extends StatefulWidget {
 enum AddressStyle { TEXT60, TEXT90, PRIMARY }
 
 class _TransferUcoSheetState extends State<TransferUcoSheet> {
-  final Logger log = sl.get<Logger>();
 
   FocusNode? _sendAddressFocusNode;
   TextEditingController? _sendAddressController;

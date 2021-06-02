@@ -171,7 +171,7 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                         AppButton.buildAppButton(
                             context,
                             AppButtonType.PRIMARY,
-                            AppLocalization.of(context).yesButton,
+                            AppLocalization.of(context).yes,
                             Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                           Navigator.of(context).pushNamed('/intro_password',
                               arguments: widget.seed);

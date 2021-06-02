@@ -2,7 +2,7 @@ library particles_flutter;
 
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:uniris_mobile_wallet/ui/particles/painter.dart';
+import 'package:uniris_mobile_wallet/ui/util/particles/painter.dart';
 
 class CircularParticle extends StatefulWidget {
   CircularParticle({

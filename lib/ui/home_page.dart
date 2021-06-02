@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:logger/logger.dart';
-import 'package:uniris_mobile_wallet/ui/particles/particles_flutter.dart';
+import 'package:uniris_mobile_wallet/ui/util/particles/particles_flutter.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
@@ -38,7 +37,6 @@ class AppHomePage extends StatefulWidget {
 class _AppHomePageState extends State<AppHomePage>
     with WidgetsBindingObserver, TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final Logger log = sl.get<Logger>();
 
   // Controller for placeholder card animations
   AnimationController _placeholderCardAnimationController;
@@ -259,7 +257,7 @@ class _AppHomePageState extends State<AppHomePage>
         try {
           StateContainer.of(context).resetEncryptedSecret();
         } catch (e) {
-          log.w(
+         print(
               "Failed to reset encrypted secret when locking ${e.toString()}");
         } finally {
           Navigator.of(context)

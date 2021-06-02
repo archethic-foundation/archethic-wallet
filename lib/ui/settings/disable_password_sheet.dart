@@ -3,8 +3,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hex/hex.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
+import 'package:uniris_lib_dart/utils.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/dimens.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
@@ -200,8 +200,7 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
       }
     } else {
       try {
-        String decryptedSeed = HEX
-            .encode(AppCrypt.decrypt(encryptedSeed, passwordController.text));
+        String decryptedSeed = uint8ListToHex(AppCrypt.decrypt(encryptedSeed, passwordController.text));
         throwIf(!AppSeeds.isValidSeed(decryptedSeed), FormatException());
         await sl.get<Vault>().setSeed(decryptedSeed);
         StateContainer.of(context).resetEncryptedSecret();

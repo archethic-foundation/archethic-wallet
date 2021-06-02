@@ -3,8 +3,8 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
 
-import 'package:vibrate/vibrate.dart';
 import 'package:device_info/device_info.dart';
+import 'package:vibration/vibration.dart';
 
 /// Utilities for haptic feedback
 class HapticUtil {
@@ -36,8 +36,8 @@ class HapticUtil {
   Future<void> error() async {
     if (Platform.isIOS) {
       // If this is simulator or this device doesnt have tapic then we can't use this
-      if (await hasTapicEngine() && await Vibrate.canVibrate) {
-        Vibrate.feedback(FeedbackType.error);
+      if (await hasTapicEngine() && await Vibration.hasVibrator()) {
+        Vibration.vibrate(duration: 200);
       } else {
         HapticFeedback.vibrate();
       }
@@ -50,8 +50,8 @@ class HapticUtil {
   Future<void> success() async {
     if (Platform.isIOS) {
       // If this is simulator or this device doesnt have tapic then we can't use this
-      if (await hasTapicEngine() && await Vibrate.canVibrate) {
-        Vibrate.feedback(FeedbackType.medium);
+      if (await hasTapicEngine() && await Vibration.hasVibrator()) {
+        Vibration.vibrate(duration: 200);
       } else {
         HapticFeedback.mediumImpact();
       }

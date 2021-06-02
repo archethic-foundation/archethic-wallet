@@ -2,8 +2,8 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:hex/hex.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
+import 'package:uniris_lib_dart/utils.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/dimens.dart';
 import 'package:uniris_mobile_wallet/model/db/appdb.dart';
@@ -309,10 +309,10 @@ class _IntroPasswordState extends State<IntroPassword> {
         });
       }
     } else if (widget.seed != null) {
-      String encryptedSeed = HEX.encode(
+      String encryptedSeed = uint8ListToHex(
           AppCrypt.encrypt(widget.seed, confirmPasswordController.text));
       await sl.get<Vault>().setSeed(encryptedSeed);
-      StateContainer.of(context).setEncryptedSecret(HEX.encode(AppCrypt.encrypt(
+      StateContainer.of(context).setEncryptedSecret(uint8ListToHex(AppCrypt.encrypt(
           widget.seed, await sl.get<Vault>().getSessionKey())));
       await sl.get<DBHelper>().dropAccounts();
       await AppUtil().loginAccount(widget.seed, context);
@@ -328,10 +328,10 @@ class _IntroPasswordState extends State<IntroPassword> {
       // Generate a new seed and encrypt
       String seed = AppSeeds.generateSeed();
       String encryptedSeed =
-          HEX.encode(AppCrypt.encrypt(seed, confirmPasswordController.text));
+          uint8ListToHex(AppCrypt.encrypt(seed, confirmPasswordController.text));
       await sl.get<Vault>().setSeed(encryptedSeed);
       // Also encrypt it with the session key, so user doesnt need password to sign blocks within the app
-      StateContainer.of(context).setEncryptedSecret(HEX.encode(
+      StateContainer.of(context).setEncryptedSecret(uint8ListToHex(
           AppCrypt.encrypt(seed, await sl.get<Vault>().getSessionKey())));
       // Update wallet
       AppUtil()

@@ -2,12 +2,11 @@
 
 import 'dart:async';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:hex/hex.dart';
-import 'package:logger/logger.dart';
 import 'package:uniris_lib_dart/model/response/coins_current_data_response.dart';
 import 'package:uniris_lib_dart/model/response/coins_price_response.dart';
 import 'package:uniris_lib_dart/model/response/simple_price_response.dart';
 import 'package:uniris_lib_dart/services/api_coins_service.dart';
+import 'package:uniris_lib_dart/utils.dart';
 import 'package:uniris_mobile_wallet/model/balance.dart';
 import 'package:uniris_mobile_wallet/model/chart_infos.dart';
 import 'package:uniris_mobile_wallet/model/db/contact.dart';
@@ -61,7 +60,6 @@ class StateContainer extends StatefulWidget {
 }
 
 class StateContainerState extends State<StateContainer> {
-  final Logger log = sl.get<Logger>();
 
   // Minimum receive = 0.000001
   String receiveThreshold = BigInt.from(10).pow(24).toString();
@@ -414,7 +412,8 @@ class StateContainerState extends State<StateContainer> {
   Future<String> getSeed() async {
     String seed;
     if (encryptedSecret != null) {
-      seed = HEX.encode(AppCrypt.decrypt(
+
+      seed = uint8ListToHex(AppCrypt.decrypt(
           encryptedSecret, await sl.get<Vault>().getSessionKey()));
     } else {
       seed = await sl.get<Vault>().getSeed();

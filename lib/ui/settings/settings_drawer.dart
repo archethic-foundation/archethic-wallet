@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
-import 'package:logger/logger.dart';
 import 'package:uniris_mobile_wallet/ui/settings/custom_url_widget.dart';
 import 'package:uniris_mobile_wallet/ui/settings/disable_password_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/settings/set_password_sheet.dart';
@@ -28,6 +27,7 @@ import 'package:uniris_mobile_wallet/ui/settings/settings_list_item.dart';
 import 'package:uniris_mobile_wallet/ui/settings/contacts_widget.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/security.dart';
 import 'package:uniris_mobile_wallet/util/caseconverter.dart';
+import 'package:uniris_mobile_wallet/util/hapticutil.dart';
 import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
 import 'package:uniris_mobile_wallet/util/biometrics.dart';
 
@@ -49,7 +49,6 @@ class _SettingsSheetState extends State<SettingsSheet>
 
   String versionString = "";
 
-  final Logger log = sl.get<Logger>();
   bool _hasBiometrics = false;
   AuthenticationMethod _curAuthMethod =
       AuthenticationMethod(AuthMethod.BIOMETRICS);
@@ -579,7 +578,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       });
                       _controller.forward();
                     }),
-                    /*Divider(
+                    Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,
                     ),
@@ -604,7 +603,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                           if (authenticated) {
                             sl.get<HapticUtil>().fingerprintSucess();
                             StateContainer.of(context).getSeed().then((seed) {
-                              AppSeedBackupSheet(seed).mainBottomSheet(context);
+                            
                             });
                           }
                         } catch (e) {
@@ -613,7 +612,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       } else {
                         await authenticateWithPin();
                       }
-                    }),*/
+                    }),
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,

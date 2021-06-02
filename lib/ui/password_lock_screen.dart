@@ -1,13 +1,13 @@
 // @dart=2.9
 
 import 'package:flutter/material.dart';
-import 'package:hex/hex.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
+import 'package:uniris_lib_dart/utils.dart';
 import 'package:uniris_mobile_wallet/app_icons.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
 import 'package:uniris_mobile_wallet/model/vault.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/ui/particles/particles_flutter.dart';
+import 'package:uniris_mobile_wallet/ui/util/particles/particles_flutter.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/app_text_field.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
@@ -259,9 +259,9 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
 
   Future<void> validateAndDecrypt() async {
     try {
-      String decryptedSeed = HEX.encode(AppCrypt.decrypt(
+      String decryptedSeed = uint8ListToHex(AppCrypt.decrypt(
           await sl.get<Vault>().getSeed(), enterPasswordController.text));
-      StateContainer.of(context).setEncryptedSecret(HEX.encode(AppCrypt.encrypt(
+      StateContainer.of(context).setEncryptedSecret(uint8ListToHex(AppCrypt.encrypt(
           decryptedSeed, await sl.get<Vault>().getSessionKey())));
       _goHome();
     } catch (e) {

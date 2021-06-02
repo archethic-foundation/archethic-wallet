@@ -5,15 +5,13 @@ import 'dart:io';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:logger/logger.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/model/address.dart';
-import 'package:uniris_mobile_wallet/service_locator.dart';
 import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 import 'package:uniris_mobile_wallet/util/app_ffi/keys/seeds.dart';
 
 import 'package:quiver/strings.dart';
-import 'package:validators2/validators.dart';
+import 'package:validators/validators.dart';
 
 enum DataType { RAW, URL, ADDRESS, SEED }
 
@@ -29,7 +27,6 @@ class QRScanErrs {
 }
 
 class UserDataUtil {
-  static final Logger log = sl.get<Logger>();
 
   static const MethodChannel _channel = const MethodChannel('fappchannel');
   static StreamSubscription<dynamic> setStream;
@@ -88,7 +85,7 @@ class UserDataUtil {
     } on FormatException {
       return QRScanErrs.CANCEL_ERROR;
     } catch (e) {
-      log.e("Unknown QR Scan Error ${e.toString()}", e);
+      print("Unknown QR Scan Error ${e.toString()}");
       return QRScanErrs.UNKNOWN_ERROR;
     }
   }

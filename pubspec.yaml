@@ -1,32 +1,19 @@
 name: uniris_mobile_wallet
 description: Uniris Wallet app (iOS/Android).
 
-# The following line prevents the package from being accidentally published to
-# pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.0.9+9
+version: 0.0.10+10
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
-
+    
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
 
-  # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.3
 
@@ -34,37 +21,31 @@ dependencies:
   flutter_secure_storage: ^4.2.0
 
   # Shared prefs
-  shared_preferences: ^2.0.5
+  shared_preferences: ^2.0.6
 
   # Flare for animations
   flare_flutter: ^3.0.0
 
-  # Websockets
-  web_socket_channel: ^2.1.0
-
   # Platform-specific build info
-  package_info: ^2.0.0
+  package_info: ^2.0.1
 
   # Device-specific info
-  device_info: ^2.0.0
+  device_info: ^2.0.1
 
   # JSON Serialization
-  json_annotation: ^4.0.1
+  json_annotation: ^3.1.1
 
   # Localization
-  intl: ^0.17.0
+  intl: ^0.17.0 
 
   # BigDecimal alternative
   decimal: ^1.1.0
-
-  # Logger
-  logger: ^1.0.0
 
   # SQLite
   sqflite: ^2.0.0+3
 
   # Android/iOS path provider
-  path_provider: ^2.0.1
+  path_provider: ^2.0.2
   
   # TouchID/FaceID
   local_auth: ^1.1.5
@@ -74,44 +55,29 @@ dependencies:
 
   # SVG
   flutter_svg: ^0.22.0
-  
-  ffi: ^1.0.0
-
-  flutter_launcher_icons: ^0.9.0
 
   # QR Codes
   qr_flutter: ^4.0.0
 
   # Generator
   barcode_scan2: ^4.1.3
-
-  flutter_radar_chart: ^0.2.0
   
   # HTTP client
   http: ^0.13.3
 
-  # Easy hexadecimal encoding and decoding
-  hex: ^0.2.0
-
   pointycastle: ^3.0.1
   
   # Vibrate
-  vibrate:
-    git:
-      url: https://github.com/redDwarf03/flutter_vibrate.git
-      ref: master
-
+  vibration: ^1.7.4-nullsafety.0
+  
   # Toast
   oktoast: ^3.0.0
 
   # Slidable list actions
   flutter_slidable: ^0.6.0
 
-  # Lock helper
-  synchronized: ^3.0.0
-
   # Service provider
-  get_it: ^7.1.0
+  get_it: ^7.1.3
   
   quiver: ^3.0.1
 
@@ -124,7 +90,7 @@ dependencies:
       ref: master
 
   # Validation utilities
-  validators2: ^3.0.0
+  validators: ^3.0.0
 
   # Auto resize text widget
   auto_size_text: ^3.0.0-nullsafety.0
@@ -149,8 +115,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^1.7.0
-  json_serializable: ^4.0.3
+  build_runner: 1.11.1
+  json_serializable: ^3.5.1
+  intl_translation:
+    git: 
+      url: https://github.com/reddwarf03/intl_translation.git
+      ref: master 
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
