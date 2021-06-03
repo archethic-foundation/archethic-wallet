@@ -15,7 +15,7 @@ class CurrencyFormatter extends TextInputFormatter {
   String commaSeparator;
   String decimalSeparator;
   int maxDecimalDigits;
-  
+
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
@@ -45,11 +45,12 @@ class CurrencyFormatter extends TextInputFormatter {
     // If this string contains more than 1 decimal, move all characters to after the first decimal
     if (splitStr.length > 2) {
       returnOriginal = false;
-      splitStr.forEach((String val) {
+
+      for (String val in splitStr) {
         if (splitStr.indexOf(val) > 1) {
           splitStr[1] += val;
         }
-      });
+      }
     }
     if (splitStr[1].length <= maxDecimalDigits) {
       if (workingText == newValue.text) {

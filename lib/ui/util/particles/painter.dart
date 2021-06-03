@@ -31,7 +31,7 @@ class ParticlePainter extends CustomPainter {
   final bool? enableHover;
   final Color? hoverColor;
   final List<List>? lineOffsets;
-  
+
   @override
   void paint(Canvas canvas, Size size) {
     for (int index = 0; index < offsets!.length; index++) {
@@ -55,14 +55,13 @@ class ParticlePainter extends CustomPainter {
             (hoverIndex!.contains(index) ? hoverPaint : constColorPaint)!);
       }
     }
-    lineOffsets!.forEach(
-      (List item) {
-        randomColorPaint = Paint()
-          ..color = particleColor!
-          ..strokeWidth = (4 * (1 - item[2] / 50)).toDouble();
-        canvas.drawLine(item[0], item[1], randomColorPaint!);
-      },
-    );
+
+    for (List item in lineOffsets!) {
+      randomColorPaint = Paint()
+        ..color = particleColor!
+        ..strokeWidth = (4 * (1 - item[2] / 50)).toDouble();
+      canvas.drawLine(item[0], item[1], randomColorPaint!);
+    }
   }
 
   @override

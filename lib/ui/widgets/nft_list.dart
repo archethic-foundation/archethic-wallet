@@ -11,7 +11,7 @@ import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
 class NftListWidget {
   static Widget buildNftList(BuildContext context) {
     return Stack(
-      children: [
+      children: <Widget>[
         if (StateContainer.of(context).wallet == null ||
                 StateContainer.of(context).wallet.accountBalance == null ||
                 StateContainer.of(context).wallet.accountBalance.nftList == null) const SizedBox() else SizedBox(
@@ -32,7 +32,7 @@ class NftListWidget {
                       borderRadius: const BorderRadius.all(
                         Radius.circular(15),
                       ),
-                      boxShadow: [
+                      boxShadow: <BoxShadow>[
                         BoxShadow(
                           color: StateContainer.of(context)
                               .curTheme
@@ -81,7 +81,7 @@ class NftListWidget {
                   bottomLeft: Radius.circular(5),
                   bottomRight: Radius.circular(5),
                 ),
-                boxShadow: [
+                boxShadow: <BoxShadow>[
                   BoxShadow(
                     color:
                         StateContainer.of(context).curTheme.backgroundDarkest!,
@@ -93,7 +93,7 @@ class NftListWidget {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: <Widget>[
                   Text('NFT', style: AppStyles.textStyleAddressText60(context)),
                 ],
               ),
@@ -149,12 +149,12 @@ class NftListWidget {
 
   static Column displayNftDetail(BuildContext context, BalanceNft balanceNft) {
     return Column(
-      children: [
+      children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+          children: <Widget>[
             Row(
-              children: [
+              children: <Widget>[
                 InkWell(
                   onTap: () {
                     Sheets.showAppHeightNineSheet(
@@ -176,7 +176,7 @@ class NftListWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     Text(balanceNft.name!,
                         style: AppStyles.textStyleAddressText90(context)),
                     Text(Address(balanceNft.address!).getShortString3(),

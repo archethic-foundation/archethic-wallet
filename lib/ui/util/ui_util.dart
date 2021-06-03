@@ -59,7 +59,7 @@ class UIUtil {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
                     style: AppStyles.textStyleAddressText60(context),
@@ -75,7 +75,7 @@ class UIUtil {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
                     style: AppStyles.textStyleAddressText60(context),
@@ -87,7 +87,7 @@ class UIUtil {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
                     style: AppStyles.textStyleAddressText60(context),
@@ -115,7 +115,7 @@ class UIUtil {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
                     style: AppStyles.textStyleAddressText90(context),
@@ -131,7 +131,7 @@ class UIUtil {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
                     style: AppStyles.textStyleAddressText90(context),
@@ -143,7 +143,7 @@ class UIUtil {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
                     style: AppStyles.textStyleAddressText90(context),
@@ -172,7 +172,7 @@ class UIUtil {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
                     style: AppStyles.textStyleAddressText90(context),
@@ -188,7 +188,7 @@ class UIUtil {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
                     style: AppStyles.textStyleAddressText90(context),
@@ -200,7 +200,7 @@ class UIUtil {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
                     style: AppStyles.textStyleAddressText90(context),
@@ -221,7 +221,7 @@ class UIUtil {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
                     style: AppStyles.textStyleAddressText90(context),
@@ -237,7 +237,7 @@ class UIUtil {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
                     style: AppStyles.textStyleAddressText90(context),
@@ -249,7 +249,7 @@ class UIUtil {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
                     style: AppStyles.textStyleAddressText90(context),
@@ -280,7 +280,7 @@ class UIUtil {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
                     style: AppStyles.textStyleAddressText60(context),
@@ -305,7 +305,7 @@ class UIUtil {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
                     style: AppStyles.textStyleAddressText90(context),
@@ -330,7 +330,7 @@ class UIUtil {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
                     style: AppStyles.textStyleAddressSuccess(context),
@@ -397,7 +397,7 @@ class UIUtil {
           decoration: BoxDecoration(
             color: StateContainer.of(context).curTheme.primary,
             borderRadius: BorderRadius.circular(10),
-            boxShadow: [
+            boxShadow: <BoxShadow>[
               BoxShadow(
                   color: StateContainer.of(context).curTheme.overlay80,
                   offset: const Offset(0, 15),

@@ -70,7 +70,7 @@ abstract class BaseTheme {
   AppIconEnum? appIcon;
 }
 
-class UnirisTheme extends BaseTheme {
+class UnirisTheme implements BaseTheme {
   static const Color orange = Color(0xFFfc9034);
 
   static const Color orangeDark = Color(0xFFf9852b);

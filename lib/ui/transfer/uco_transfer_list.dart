@@ -29,7 +29,7 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
   Widget build(BuildContext context) {
     widget.listUcoTransfer!.sort((UcoTransfer a, UcoTransfer b) => uint8ListToHex(a.to!).compareTo(uint8ListToHex(b.to!)));
     return Stack(
-      children: [
+      children: <Widget>[
         SizedBox(
           child: Padding(
             padding: const EdgeInsets.only(top: 0.0),
@@ -42,7 +42,7 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                 borderRadius: const BorderRadius.all(
                   Radius.circular(15),
                 ),
-                boxShadow: [
+                boxShadow: <BoxShadow>[
                   BoxShadow(
                     color: StateContainer.of(context).curTheme.backgroundDark!,
                     blurRadius: 5.0,
@@ -126,11 +126,11 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
     String displayName =
         Address(uint8ListToHex(ucoTransfer.to!)).getShortString3();
 
-    widget.contacts!.forEach((Contact contact) {
+    for (Contact contact in widget.contacts!) {
       if (contact.address == uint8ListToHex(ucoTransfer.to!)) {
         displayName = contact.name;
       }
-    });
+    }
     return Column(
       children: [
         Row(

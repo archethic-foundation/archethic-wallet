@@ -30,8 +30,8 @@ class IntSink extends ChunkedConversionSink<List<int>> {
   final _outSink;
 
   @override
-  void add(List<int> data) {
-    _outSink.add(_converter.convert(data));
+  void add(List<int> chunk) {
+    _outSink.add(_converter.convert(chunk));
   }
 
   @override

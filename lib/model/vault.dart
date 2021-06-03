@@ -120,7 +120,9 @@ class Vault {
   // For encrypted data
   Future<void> setEncrypted(String key, String value) async {
     final String secret = await getSecret();
-    if (secret == null) return null;
+    if (secret == null) {
+      return;
+    }
     // Decrypt and return
     final Salsa20Encryptor encrypter = Salsa20Encryptor(
         secret.substring(0, secret.length - 8),
@@ -132,14 +134,20 @@ class Vault {
 
   Future<String> getEncrypted(String key) async {
     final String secret = await getSecret();
-    if (secret == null) return null;
+    if (secret == null) 
+    {
+      return null;
+    }
     // Decrypt and return
     final Salsa20Encryptor encrypter = Salsa20Encryptor(
         secret.substring(0, secret.length - 8),
         secret.substring(secret.length - 8));
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String encrypted = prefs.get(key);
-    if (encrypted == null) return null;
+    if (encrypted == null) 
+    {
+      return null;
+    }
     return encrypter.decrypt(encrypted);
   }
 

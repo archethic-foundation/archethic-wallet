@@ -24,13 +24,13 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       body: Stack(
-        children: [
+        children: <Widget>[
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [
+                colors: <Color>[
                   StateContainer.of(context).curTheme.backgroundDark,
                   StateContainer.of(context).curTheme.background
                 ],

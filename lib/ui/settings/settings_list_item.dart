@@ -34,7 +34,7 @@ class AppSettings {
                 margin: const EdgeInsetsDirectional.only(end: 13.0),
                 child: Container(
                   child: Row(
-                    children: [
+                    children: <Widget>[
                       Icon(icon,
                           color: disabled
                               ? StateContainer.of(context).curTheme.icon45
@@ -116,7 +116,7 @@ class AppSettings {
                       width: UIUtil.drawerWidth(context) - 69,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: <Widget>[
                           Text(
                             heading,
                             style:

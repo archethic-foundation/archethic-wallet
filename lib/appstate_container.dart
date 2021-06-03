@@ -297,7 +297,7 @@ class StateContainerState extends State<StateContainer> {
   }
 
   // Change curency
-  void updateCurrency(AvailableCurrency currency) async {
+  Future<void> updateCurrency(AvailableCurrency currency) async {
     final SimplePriceResponse simplePriceResponse = await sl
         .get<ApiCoinsService>()
         .getSimplePrice(currency.getIso4217Code());

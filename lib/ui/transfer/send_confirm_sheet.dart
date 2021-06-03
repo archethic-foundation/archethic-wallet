@@ -196,12 +196,12 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                     // Amount text
 
                     child: Column(
-                      children: [
+                      children: <Widget>[
                         if (double.tryParse(amount.replaceAll(',', '')) > 0) RichText(
                                 textAlign: TextAlign.center,
                                 text: TextSpan(
                                   text: '',
-                                  children: [
+                                  children: <InlineSpan>[
                                     TextSpan(
                                       text: '$amount',
                                       style: TextStyle(

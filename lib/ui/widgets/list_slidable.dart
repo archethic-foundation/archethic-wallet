@@ -193,7 +193,7 @@ class SlideToDismissDrawerDelegate extends SlideToDismissDelegate {
                   animation: ctx.state.overallMoveAnimation,
                   builder: (BuildContext context, Widget child) {
                     return Stack(
-                      children: List.generate(ctx.state.actionCount, (int index) {
+                      children: List<Widget>.generate(ctx.state.actionCount, (int index) {
                         // For the main actions we have to reverse the order if we want the last item at the bottom of the stack.
                         final int displayIndex = ctx.showActions
                             ? ctx.state.actionCount - index - 1
@@ -333,7 +333,7 @@ class SlidableDelegateContext {
 
   /// Builds the slide actions using the active [SlideActionDelegate]'s builder.
   List<Widget> buildActions(BuildContext context) {
-    return List.generate(
+    return List<Widget>.generate(
         state.actionCount,
         (int index) => state.actionDelegate.build(context, index,
             state.actionsMoveAnimation, SlidableRenderingMode.slide));
@@ -578,7 +578,7 @@ class SlidableDrawerDelegate extends SlidableStackDelegate {
             animation: actionsMoveAnimation,
             builder: (BuildContext context, Widget child) {
               return Stack(
-                children: List.generate(count, (int index) {
+                children: List<Widget>.generate(count, (int index) {
                   // For the main actions we have to reverse the order if we want the last item at the bottom of the stack.
                   final int displayIndex = showActions ? count - index - 1 : index;
                   return ctx.createPositioned(
@@ -990,7 +990,10 @@ class SlidableState extends State<Slidable>
   }
 
   void _isScrollingListener() {
-    if (!widget.closeOnScroll || _scrollPosition == null) return;
+    if (!widget.closeOnScroll || _scrollPosition == null) 
+    {
+      return;
+    }
 
     // When a scroll starts close this.
     if (_scrollPosition.isScrollingNotifier.value) {
@@ -1090,7 +1093,7 @@ class SlidableState extends State<Slidable>
     }
   }
 
-  void _handleDismissStatusChanged(AnimationStatus status) async {
+  Future<void> _handleDismissStatusChanged(AnimationStatus status) async {
     if (dismissible) {
       if (status == AnimationStatus.completed &&
           _overallMoveController.value == _overallMoveController.upperBound &&

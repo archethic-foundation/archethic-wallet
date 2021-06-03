@@ -10,7 +10,6 @@ import 'package:uniris_mobile_wallet/model/balance.dart';
 import 'package:uniris_mobile_wallet/network/model/response/address_txs_response.dart';
 
 class AppService {
-
   double getFeesEstimation() {
     const double FEE_BASE = 0.01;
     const double fees = FEE_BASE;
@@ -21,7 +20,7 @@ class AppService {
 
   Future<void> getAddressTxsResponse(String address, int limit) async {
     final AddressTxsResponse addressTxsResponse = AddressTxsResponse();
-    addressTxsResponse.result = List<AddressTxsResponseResult>();
+    addressTxsResponse.result = List<AddressTxsResponseResult>.empty(growable: true);
 
     try {} catch (e) {
       EventTaxiImpl.singleton().fire(
@@ -81,8 +80,9 @@ class AppService {
       String endpoint, List<UcoTransfer> listUcoTransfer) {
     final txIndex = getTransactionIndex(address, endpoint);
     final TransactionBuilder builder = TransactionBuilder('transfer');
-    listUcoTransfer.forEach(
-        (UcoTransfer transfer) => builder.addUCOTransfer(transfer.to, transfer.amount));
+    for (UcoTransfer transfer in listUcoTransfer) {
+      builder.addUCOTransfer(transfer.to, transfer.amount);
+    }
 
     final TransactionBuilder tx = builder
         .build(transactionChainSeed, txIndex)

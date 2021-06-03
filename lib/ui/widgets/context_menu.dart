@@ -77,14 +77,14 @@ class _ContextMenuState extends State<ContextMenu> {
         child: widget.child);
   }
 
-  Future openMenu(BuildContext context) async {
+  Future<void> openMenu(BuildContext context) async {
     getOffset();
     await Navigator.push(
         context,
         PageRouteBuilder(
             transitionDuration:
                 widget.duration ?? const Duration(milliseconds: 100),
-            pageBuilder: (context, animation, secondaryAnimation) {
+            pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
               animation = Tween(begin: 0.0, end: 1.0).animate(animation);
               return FadeTransition(
                   opacity: animation,
@@ -142,15 +142,15 @@ class FocusedMenuDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    final maxMenuHeight = size.height * 0.45;
-    final listHeight = menuItems.length * (itemExtent ?? 50.0);
+    final double maxMenuHeight = size.height * 0.45;
+    final double listHeight = menuItems.length * (itemExtent ?? 50.0);
 
-    final maxMenuWidth = menuWidth ?? (size.width * 0.70);
-    final menuHeight = listHeight < maxMenuHeight ? listHeight : maxMenuHeight;
-    final leftOffset = (childOffset.dx + maxMenuWidth) < size.width
+    final double maxMenuWidth = menuWidth ?? (size.width * 0.70);
+    final double menuHeight = listHeight < maxMenuHeight ? listHeight : maxMenuHeight;
+    final double leftOffset = (childOffset.dx + maxMenuWidth) < size.width
         ? childOffset.dx
         : (childOffset.dx - maxMenuWidth + childSize!.width);
-    final topOffset = (childOffset.dy + menuHeight + childSize!.height) <
+    final double topOffset = (childOffset.dy + menuHeight + childSize!.height) <
             size.height - bottomOffsetHeight!
         ? childOffset.dy + childSize!.height + menuOffset!
         : childOffset.dy - menuHeight - menuOffset!;
@@ -193,7 +193,7 @@ class FocusedMenuDetails extends StatelessWidget {
                           color: Colors.grey.shade200,
                           borderRadius:
                               const BorderRadius.all(Radius.circular(5.0)),
-                          boxShadow: [
+                          boxShadow: <BoxShadow>[
                             const BoxShadow(
                                 color: Colors.black38,
                                 blurRadius: 10,

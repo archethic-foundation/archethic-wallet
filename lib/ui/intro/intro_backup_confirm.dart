@@ -26,7 +26,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
+          colors: <Color>[
             StateContainer.of(context).curTheme.backgroundDark,
             StateContainer.of(context).curTheme.background
           ],
@@ -144,7 +144,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
     );
   }
 
-  void _pinEnteredCallback(String pin) async {
+  Future<void> _pinEnteredCallback(String pin) async {
     await sl.get<Vault>().writePin(pin);
     final PriceConversion conversion =
         await sl.get<SharedPrefsUtil>().getPriceConversion();

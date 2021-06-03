@@ -28,7 +28,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 textAlign: TextAlign.center,
                 text: TextSpan(
                   text: '',
-                  children: [
+                  children: <InlineSpan>[
                     TextSpan(
                       text: stringPartOne,
                       style: AppStyles.textStyleAddressText60(context),
@@ -53,7 +53,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 textAlign: TextAlign.center,
                 text: TextSpan(
                   text: '',
-                  children: [
+                  children: <InlineSpan>[
                     TextSpan(
                       text: stringPartOne,
                       style: AppStyles.textStyleAddressText90(context),
@@ -78,7 +78,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 textAlign: TextAlign.center,
                 text: TextSpan(
                   text: '',
-                  children: [
+                  children: <InlineSpan>[
                     TextSpan(
                       text: stringPartOne,
                       style: AppStyles.textStyleAddressSuccess(context),
@@ -141,7 +141,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
                     style: AppStyles.textStyleAddressText60(context),
@@ -157,7 +157,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
                     style: AppStyles.textStyleAddressText60(context),
@@ -169,7 +169,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
                     style: AppStyles.textStyleAddressText60(context),
@@ -197,7 +197,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
                     style: AppStyles.textStyleAddressText90(context),
@@ -213,7 +213,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
                     style: AppStyles.textStyleAddressText90(context),
@@ -225,7 +225,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
                     style: AppStyles.textStyleAddressText90(context),
@@ -254,7 +254,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
                     style: AppStyles.textStyleAddressSuccess(context),
@@ -270,7 +270,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
                     style: AppStyles.textStyleAddressText90(context),
@@ -282,7 +282,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
               textAlign: TextAlign.center,
               text: TextSpan(
                 text: '',
-                children: [
+                children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
                     style: AppStyles.textStyleAddressText90(context),

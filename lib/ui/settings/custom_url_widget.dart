@@ -28,11 +28,11 @@ class _CustomUrlState extends State<CustomUrl> {
   String _endpointHint = '';
   String _endpointValidationText = '';
 
-  void initControllerText() async {
+  Future<void> initControllerText() async {
     _endpointController.text = await sl.get<SharedPrefsUtil>().getEndpoint();
   }
 
-  void updateEndpoint() async {
+  Future<void> updateEndpoint() async {
     await sl.get<SharedPrefsUtil>().setEndpoint(_endpointController.text);
     setState(() {});
   }
@@ -66,7 +66,7 @@ class _CustomUrlState extends State<CustomUrl> {
     return Container(
       decoration: BoxDecoration(
         color: StateContainer.of(context).curTheme.backgroundDark,
-        boxShadow: [
+        boxShadow: <BoxShadow>[
           BoxShadow(
               color: StateContainer.of(context).curTheme.overlay30,
               offset: const Offset(-5, 0),
@@ -184,7 +184,7 @@ class _CustomUrlState extends State<CustomUrl> {
             fontFamily: 'Montserrat',
           ),
           inputFormatters: [LengthLimitingTextInputFormatter(150)],
-          onChanged: (text) {
+          onChanged: (String text) {
             updateEndpoint();
             // Always reset the error message to be less annoying
             setState(() {
@@ -199,7 +199,7 @@ class _CustomUrlState extends State<CustomUrl> {
               : AppLocalization.of(context).enterEndpoint,
           keyboardType: TextInputType.multiline,
           textAlign: TextAlign.left,
-          onSubmitted: (text) {
+          onSubmitted: (String text) {
             FocusScope.of(context).unfocus();
           },
         ),

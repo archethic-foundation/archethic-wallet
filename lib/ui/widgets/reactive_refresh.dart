@@ -223,7 +223,9 @@ class ReactiveRefreshIndicatorState extends State<ReactiveRefreshIndicator>
   }
 
   bool _handleScrollNotification(ScrollNotification notification) {
-    if (!widget.notificationPredicate(notification)) return false;
+    if (!widget.notificationPredicate(notification)) {
+      return false;
+    }
     if (notification is ScrollStartNotification &&
         notification.metrics.extentBefore == 0.0 &&
         _mode == null &&
@@ -287,7 +289,9 @@ class ReactiveRefreshIndicatorState extends State<ReactiveRefreshIndicator>
   }
 
   bool _handleGlowNotification(OverscrollIndicatorNotification notification) {
-    if (notification.depth != 0 || !notification.leading) return false;
+    if (notification.depth != 0 || !notification.leading) {
+      return false;
+    }
     if (_mode == _RefreshIndicatorMode.drag) {
       notification.disallowGlow();
       return true;
@@ -405,7 +409,9 @@ class ReactiveRefreshIndicatorState extends State<ReactiveRefreshIndicator>
   Future<void> show({bool atTop = true}) {
     if (_mode != _RefreshIndicatorMode.refresh &&
         _mode != _RefreshIndicatorMode.snap) {
-      if (_mode == null) _start(atTop ? AxisDirection.down : AxisDirection.up);
+      if (_mode == null) {
+        _start(atTop ? AxisDirection.down : AxisDirection.up);
+      }
       _show();
     }
     return _pendingRefreshFuture;

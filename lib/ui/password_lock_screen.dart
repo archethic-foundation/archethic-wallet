@@ -43,13 +43,13 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
-        children: [
+        children: <Widget>[
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [
+                colors: <Color>[
                   StateContainer.of(context).curTheme.backgroundDark,
                   StateContainer.of(context).curTheme.background
                 ],
@@ -120,7 +120,7 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                                     sl
                                         .get<SharedPrefsUtil>()
                                         .deleteAll()
-                                        .then((result) {
+                                        .then((_) {
                                       StateContainer.of(context).logOut();
                                       Navigator.of(context)
                                           .pushNamedAndRemoveUntil('/',
@@ -198,7 +198,7 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                                             });
                                           }
                                         },
-                                        onSubmitted: (value) async {
+                                        onSubmitted: (_) async {
                                           FocusScope.of(context).unfocus();
                                           await validateAndDecrypt();
                                         },

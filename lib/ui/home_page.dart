@@ -79,7 +79,7 @@ class _AppHomePageState extends State<AppHomePage>
     });
   }
 
-  void _checkVersionApp() async {
+  Future<void> _checkVersionApp() async {
     final String versionAppCached = await sl.get<SharedPrefsUtil>().getVersionApp();
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) async {
       if (versionAppCached != packageInfo.version) {
@@ -371,7 +371,7 @@ class _AppHomePageState extends State<AppHomePage>
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
+            colors: <Color>[
               StateContainer.of(context).curTheme.backgroundDark,
               StateContainer.of(context).curTheme.background
             ],

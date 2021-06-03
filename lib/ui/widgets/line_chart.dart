@@ -24,7 +24,7 @@ class LineChartWidget {
                 borderRadius: const BorderRadius.all(
                   Radius.circular(15),
                 ),
-                boxShadow: [
+                boxShadow: <BoxShadow>[
                   BoxShadow(
                     color:
                         StateContainer.of(context).curTheme.backgroundDarkest!,
@@ -59,7 +59,7 @@ class LineChartWidget {
                             .priceChangePercentage24h! >=
                         0
                     ? Row(
-                        children: [
+                        children: <Widget>[
                           Text(
                             StateContainer.of(context)
                                     .chartInfos
@@ -104,7 +104,7 @@ class LineChartWidget {
                   borderRadius: const BorderRadius.all(
                     Radius.circular(15),
                   ),
-                  boxShadow: [
+                  boxShadow: <BoxShadow>[
                     BoxShadow(
                       color:
                           StateContainer.of(context).curTheme.backgroundDarkest!,

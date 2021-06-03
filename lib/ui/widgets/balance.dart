@@ -148,7 +148,7 @@ class BalanceDisplay {
             decoration: BoxDecoration(
               color: StateContainer.of(context).curTheme.backgroundDarkest,
               borderRadius: const BorderRadius.all(Radius.circular(15)),
-              boxShadow: [
+              boxShadow: <BoxShadow>[
                 BoxShadow(
                   color: StateContainer.of(context).curTheme.backgroundDarkest,
                   blurRadius: 5.0,

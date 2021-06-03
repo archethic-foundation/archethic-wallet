@@ -113,9 +113,10 @@ class AppHelpers {
   /// @returns {Uint8List}
   static Uint8List concat(List<Uint8List> bytes) {
     String hex = '';
-    bytes.forEach((Uint8List v) {
-      hex += uint8ListToHex(v);
-    });
+    for(Uint8List v in bytes)
+    {
+       hex += uint8ListToHex(v);
+    }
     return AppHelpers.hexToBytes(hex);
   }
 }

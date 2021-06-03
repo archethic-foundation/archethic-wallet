@@ -61,7 +61,7 @@ class AppWallet {
   }
 
   // Get pretty account balance version
-  String getAccountBalanceMoinsFeesDisplay(estimationFees) {
+  String getAccountBalanceMoinsFeesDisplay(double estimationFees) {
     if (accountBalance == null) {
       return '0';
     }

@@ -144,7 +144,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: <Widget>[
               // The header of the sheet
               AutoSizeText(
                 AppLocalization.of(context).addContact,
@@ -198,7 +198,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                       LengthLimitingTextInputFormatter(20),
                       ContactInputFormatter()
                     ],
-                    onSubmitted: (text) {
+                    onSubmitted: (String text) {
                       if (widget.address == null) {
                         if (!Address(_addressController!.text).isValid()) {
                           FocusScope.of(context)
@@ -287,7 +287,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                     ),
                     fadeSuffixOnCondition: true,
                     suffixShowFirstCondition: _showPasteButton,
-                    onChanged: (text) {
+                    onChanged: (String text) {
                       /*Address address = Address(text);
                       if (address.isValid()) {
                             setState(() {

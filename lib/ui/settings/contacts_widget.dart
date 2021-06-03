@@ -110,7 +110,7 @@ class _ContactsListState extends State<ContactsList> {
     return Container(
         decoration: BoxDecoration(
           color: StateContainer.of(context).curTheme.backgroundDark,
-          boxShadow: [
+          boxShadow: <BoxShadow>[
             BoxShadow(
                 color: StateContainer.of(context).curTheme.overlay30,
                 offset: const Offset(-5, 0),
@@ -181,7 +181,7 @@ class _ContactsListState extends State<ContactsList> {
                         width: double.infinity,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [
+                            colors: <Color>[
                               StateContainer.of(context)
                                   .curTheme
                                   .backgroundDark,
@@ -203,7 +203,7 @@ class _ContactsListState extends State<ContactsList> {
                         width: double.infinity,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [
+                            colors: <Color>[
                               StateContainer.of(context)
                                   .curTheme
                                   .backgroundDark00,

@@ -215,7 +215,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
+          colors: <Color>[
             StateContainer.of(context).curTheme.backgroundDark,
             StateContainer.of(context).curTheme.background
           ],

@@ -308,7 +308,7 @@ class AvailableCurrency extends SettingSelectionItem {
   // Get best currency for a given locale
   // Default to USD
   static AvailableCurrency getBestForLocale(Locale locale) {
-    AvailableCurrencyEnum.values.forEach((AvailableCurrencyEnum value) {
+    for (AvailableCurrencyEnum value in AvailableCurrencyEnum.values) {
       final AvailableCurrency currency = AvailableCurrency(value);
       if (locale != null && locale.countryCode == null) {
         // Special cases
@@ -339,7 +339,8 @@ class AvailableCurrency extends SettingSelectionItem {
           return currency;
         }
       }
-    });
+    }
+
     return AvailableCurrency(AvailableCurrencyEnum.USD);
   }
 }

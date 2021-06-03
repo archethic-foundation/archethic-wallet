@@ -111,8 +111,8 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
 
   Future<void> _changeAccount(Account account, StateSetter setState) async {
     // Change account
-    widget.accounts.forEach((Account a) {
-      if (a.selected) {
+    for (Account a in widget.accounts) {
+            if (a.selected) {
         setState(() {
           a.selected = false;
         });
@@ -121,7 +121,8 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
           a.selected = true;
         });
       }
-    });
+    }
+
     await sl.get<DBHelper>().changeAccount(account);
     EventTaxiImpl.singleton()
         .fire(AccountChangedEvent(account: account, delayPop: true));
@@ -168,7 +169,7 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: <Widget>[
                   //A container for the header
                   Container(
                     margin: const EdgeInsets.only(bottom: 15),
@@ -208,7 +209,7 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                           width: double.infinity,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              colors: [
+                              colors: <Color>[
                                 StateContainer.of(context)
                                     .curTheme
                                     .backgroundDark00,
@@ -230,7 +231,7 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                           width: double.infinity,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              colors: [
+                              colors: <Color>[
                                 StateContainer.of(context)
                                     .curTheme
                                     .backgroundDark,
@@ -443,7 +444,7 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                               alignment: const AlignmentDirectional(1, 0),
                               child: AutoSizeText.rich(
                                 TextSpan(
-                                  children: [
+                                  children: <InlineSpan>[
                                     // Main balance text
                                     TextSpan(
                                       text: account.balance == null

@@ -9,7 +9,7 @@ import 'package:uniris_mobile_wallet/ui/widgets/app_simpledialog.dart';
 
 class AppDialogs {
   static void showConfirmDialog(
-      var context, var title, var content, var buttonText, Function onPressed,
+      BuildContext context, String title, String content, String buttonText, Function onPressed,
       {String cancelText, Function cancelAction}) {
     cancelText ??= AppLocalization.of(context).cancel.toUpperCase();
     showAppDialog(

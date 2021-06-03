@@ -34,7 +34,7 @@ import 'package:uniris_mobile_wallet/util/app_ffi/apputil.dart';
 import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
 import 'package:root_checker/root_checker.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Setup Service Provide
   setupServiceLocator();
@@ -154,67 +154,67 @@ class _AppState extends State<App> {
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
             case '/':
-              return NoTransitionRoute(
+              return NoTransitionRoute<Splash>(
                 builder: (_) => Splash(),
                 settings: settings,
               );
             case '/home':
-              return NoTransitionRoute(
+              return NoTransitionRoute<AppHomePage>(
                 builder: (_) => const AppHomePage(),
                 settings: settings,
               );
             case '/home_transition':
-              return NoPopTransitionRoute(
+              return NoPopTransitionRoute<AppHomePage>(
                 builder: (_) => const AppHomePage(),
                 settings: settings,
               );
             case '/intro_welcome':
-              return NoTransitionRoute(
+              return NoTransitionRoute<IntroWelcomePage>(
                 builder: (_) => IntroWelcomePage(),
                 settings: settings,
               );
             case '/intro_password_on_launch':
-              return MaterialPageRoute(
+              return MaterialPageRoute<IntroPasswordOnLaunch>(
                 builder: (_) => IntroPasswordOnLaunch(seed: settings.arguments),
                 settings: settings,
               );
             case '/intro_password':
-              return MaterialPageRoute(
+              return MaterialPageRoute<IntroPassword>(
                 builder: (_) => IntroPassword(seed: settings.arguments),
                 settings: settings,
               );
             case '/intro_backup_safety':
-              return MaterialPageRoute(
+              return MaterialPageRoute<IntroBackupSafetyPage>(
                 builder: (_) => IntroBackupSafetyPage(),
                 settings: settings,
               );
             case '/intro_backup_confirm':
-              return MaterialPageRoute(
+              return MaterialPageRoute<IntroBackupConfirm>(
                 builder: (_) => IntroBackupConfirm(),
                 settings: settings,
               );
             case '/intro_enter_transaction_chain_seed':
-              return MaterialPageRoute(
+              return MaterialPageRoute<IntroEnterPasswordAccess>(
                 builder: (_) => IntroEnterPasswordAccess(),
                 settings: settings,
               );
             case '/lock_screen':
-              return NoTransitionRoute(
+              return NoTransitionRoute<AppLockScreen>(
                 builder: (_) => AppLockScreen(),
                 settings: settings,
               );
             case '/lock_screen_transition':
-              return MaterialPageRoute(
+              return MaterialPageRoute<AppLockScreen>(
                 builder: (_) => AppLockScreen(),
                 settings: settings,
               );
             case '/password_lock_screen':
-              return NoTransitionRoute(
+              return NoTransitionRoute<AppPasswordLockScreen>(
                 builder: (_) => AppPasswordLockScreen(),
                 settings: settings,
               );
             case '/before_scan_screen':
-              return NoTransitionRoute(
+              return NoTransitionRoute<BeforeScanScreen>(
                 builder: (_) => BeforeScanScreen(),
                 settings: settings,
               );

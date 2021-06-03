@@ -43,13 +43,13 @@ class _IntroEnterPasswordAccessState extends State<IntroEnterPasswordAccess> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
-        children: [
+        children: <Widget>[
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [
+                colors: <Color>[
                   StateContainer.of(context).curTheme.backgroundDark,
                   StateContainer.of(context).curTheme.background
                 ],
@@ -243,7 +243,7 @@ class _IntroEnterPasswordAccessState extends State<IntroEnterPasswordAccess> {
     }
   }
 
-  void _pinEnteredCallback(String pin) async {
+  Future<void> _pinEnteredCallback(String pin) async {
     await sl.get<Vault>().writePin(pin);
     final PriceConversion conversion =
         await sl.get<SharedPrefsUtil>().getPriceConversion();

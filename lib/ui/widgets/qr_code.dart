@@ -21,7 +21,7 @@ class QRcodeDisplay {
                   decoration: BoxDecoration(
                     color: StateContainer.of(context).curTheme.background,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    boxShadow: [
+                    boxShadow: <BoxShadow>[
                       BoxShadow(
                         color: StateContainer.of(context)
                             .curTheme
@@ -41,7 +41,7 @@ class QRcodeDisplay {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: <Widget>[
                             QrImage(
                               data: StateContainer.of(context)
                                   .selectedAccount
@@ -86,7 +86,7 @@ static Widget buildAddressDisplay(
                   decoration: BoxDecoration(
                     color: StateContainer.of(context).curTheme.background,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    boxShadow: [
+                    boxShadow: <BoxShadow>[
                       BoxShadow(
                         color: StateContainer.of(context)
                             .curTheme
@@ -106,9 +106,9 @@ static Widget buildAddressDisplay(
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: <Widget>[
                             Column(
-                              children: [
+                              children: <Widget>[
                                 Text(
                                     StateContainer.of(context)
                                         .selectedAccount

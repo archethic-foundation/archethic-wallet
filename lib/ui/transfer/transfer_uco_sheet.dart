@@ -50,8 +50,6 @@ class TransferUcoSheet extends StatefulWidget {
   final String? title;
   final String? actionButtonTitle;
 
-  
-
   @override
   _TransferUcoSheetState createState() => _TransferUcoSheetState();
 }
@@ -59,7 +57,6 @@ class TransferUcoSheet extends StatefulWidget {
 enum AddressStyle { TEXT60, TEXT90, PRIMARY }
 
 class _TransferUcoSheetState extends State<TransferUcoSheet> {
-
   FocusNode? _sendAddressFocusNode;
   TextEditingController? _sendAddressController;
   FocusNode? _sendAmountFocusNode;
@@ -89,8 +86,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
   String? _rawAmount;
   bool validRequest = true;
 
-  List<UcoTransfer> ucoTransferList =
-      List<UcoTransfer>.empty(growable: true);
+  List<UcoTransfer> ucoTransferList = List<UcoTransfer>.empty(growable: true);
 
   @override
   void initState() {
@@ -285,7 +281,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                           .get<SharedPrefsUtil>()
                                           .getPriceConversion(),
                                       builder: (BuildContext context,
-                                          AsyncSnapshot snapshot) {
+                                          AsyncSnapshot<PriceConversion> snapshot) {
                                         if (snapshot.hasData &&
                                             snapshot.data != null &&
                                             snapshot.data !=
@@ -295,7 +291,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                               textAlign: TextAlign.start,
                                               text: TextSpan(
                                                 text: '',
-                                                children: [
+                                                children: <InlineSpan>[
                                                   TextSpan(
                                                     text: '(',
                                                     style: TextStyle(
@@ -371,7 +367,8 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                     ),
                                     getEnterAmountContainer(),
                                     Container(
-                                      alignment: const AlignmentDirectional(0, 0),
+                                      alignment:
+                                          const AlignmentDirectional(0, 0),
                                       margin: const EdgeInsets.only(top: 3),
                                       child: Text(_amountValidationText!,
                                           style: TextStyle(
@@ -428,12 +425,14 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                                       bottom: 50),
                                                   child: ListView.builder(
                                                     shrinkWrap: true,
-                                                    padding: const EdgeInsets.only(
-                                                        bottom: 0, top: 0),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 0, top: 0),
                                                     itemCount:
                                                         _contacts!.length,
                                                     itemBuilder:
-                                                        (BuildContext context, int index) {
+                                                        (BuildContext context,
+                                                            int index) {
                                                       return _buildContactItem(
                                                           _contacts![index]);
                                                     },
@@ -447,7 +446,8 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                       ),
                                     ),
                                     Container(
-                                      alignment: const AlignmentDirectional(0, 0),
+                                      alignment:
+                                          const AlignmentDirectional(0, 0),
                                       margin: const EdgeInsets.only(top: 3),
                                       child: Text(_addressValidationText!,
                                           style: TextStyle(
@@ -461,8 +461,8 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                     ),
                                     const SizedBox(height: 10),
                                     Container(
-                                      margin:
-                                          const EdgeInsets.symmetric(horizontal: 30),
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 30),
                                       child: Text(
                                         '+ ' +
                                             AppLocalization.of(context).fees +
@@ -542,8 +542,8 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                                       break;
                                                     }
                                                   }
-                                                  final UcoTransfer ucoTransfer =
-                                                      UcoTransfer(
+                                                  final UcoTransfer
+                                                      ucoTransfer = UcoTransfer(
                                                           to: hexToUint8List(
                                                               _to),
                                                           amount: _amount);
@@ -594,15 +594,16 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                             _sendAddressController!.text =
                                                 uint8ListToHex(
                                                     _ucoTransfer.to!);
-                                            widget.contactsRef!
-                                                .forEach((Contact contact) {
+                                            for (Contact contact
+                                                in widget.contactsRef!) {
                                               if (contact.address ==
                                                   uint8ListToHex(
                                                       _ucoTransfer.to!)) {
                                                 _sendAddressController!.text =
                                                     contact.name;
                                               }
-                                            });
+                                            }
+
                                             _sendAmountController!.text =
                                                 _ucoTransfer.amount.toString();
                                           });
@@ -632,7 +633,8 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                           ucoTransferList.isEmpty
                               ? AppButtonType.PRIMARY_OUTLINE
                               : AppButtonType.PRIMARY,
-                          widget.actionButtonTitle ?? AppLocalization.of(context).transferUCO,
+                          widget.actionButtonTitle ??
+                              AppLocalization.of(context).transferUCO,
                           Dimens.BUTTON_TOP_DIMENS, onPressed: () {
                         if (ucoTransferList.isNotEmpty) {
                           validRequest = _validateRequest();
@@ -1009,7 +1011,8 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
           : _rawAmount == null
               ? _sendAmountController!.text
               : NumberUtil.getRawAsUsableString(_rawAmount);
-      final double balanceRaw = StateContainer.of(context).wallet.accountBalance.uco!;
+      final double balanceRaw =
+          StateContainer.of(context).wallet.accountBalance.uco!;
       final double sendAmount = double.tryParse(amount)!;
       if (sendAmount == null) {
         isValid = false;
@@ -1063,18 +1066,20 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
       inputFormatters: _rawAmount == null
           ? [
               LengthLimitingTextInputFormatter(16),
-              if (_localCurrencyMode) CurrencyFormatter(
-                      decimalSeparator:
-                          _localCurrencyFormat!.symbols.DECIMAL_SEP,
-                      commaSeparator: _localCurrencyFormat!.symbols.GROUP_SEP,
-                      maxDecimalDigits: 8) else CurrencyFormatter(
-                      maxDecimalDigits: NumberUtil.maxDecimalDigits),
+              if (_localCurrencyMode)
+                CurrencyFormatter(
+                    decimalSeparator: _localCurrencyFormat!.symbols.DECIMAL_SEP,
+                    commaSeparator: _localCurrencyFormat!.symbols.GROUP_SEP,
+                    maxDecimalDigits: 8)
+              else
+                CurrencyFormatter(
+                    maxDecimalDigits: NumberUtil.maxDecimalDigits),
               LocalCurrencyFormatter(
                   active: _localCurrencyMode,
                   currencyFormat: _localCurrencyFormat)
             ]
           : [LengthLimitingTextInputFormatter(16)],
-      onChanged: (text) {
+      onChanged: (String text) {
         // Always reset the error message to be less annoying
         setState(() {
           _amountValidationText = '';
@@ -1100,7 +1105,8 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
           }
 
           if (!_localCurrencyMode) {
-            final double estimationFees = sl.get<AppService>().getFeesEstimation();
+            final double estimationFees =
+                sl.get<AppService>().getFeesEstimation();
             _sendAmountController!.text = StateContainer.of(context)
                 .wallet
                 .getAccountBalanceMoinsFeesDisplay(estimationFees)
@@ -1140,7 +1146,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
       keyboardType:
           const TextInputType.numberWithOptions(signed: true, decimal: true),
       textAlign: TextAlign.center,
-      onSubmitted: (text) {
+      onSubmitted: (String text) {
         FocusScope.of(context).unfocus();
         if (!Address(_sendAddressController!.text).isValid()) {
           FocusScope.of(context).requestFocus(_sendAddressFocusNode);
@@ -1160,7 +1166,10 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
         controller: _sendAddressController,
         cursorColor: StateContainer.of(context).curTheme.primary,
         inputFormatters: [
-          if (_isContact) LengthLimitingTextInputFormatter(20) else LengthLimitingTextInputFormatter(66),
+          if (_isContact)
+            LengthLimitingTextInputFormatter(20)
+          else
+            LengthLimitingTextInputFormatter(66),
         ],
         textInputAction: TextInputAction.done,
         maxLines: null,
@@ -1179,7 +1188,10 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                 _sendAddressController!.selection = TextSelection.fromPosition(
                     TextPosition(offset: _sendAddressController!.text.length));
               }
-              sl.get<DBHelper>().getContacts().then((List<Contact> contactList) {
+              sl
+                  .get<DBHelper>()
+                  .getContacts()
+                  .then((List<Contact> contactList) {
                 setState(() {
                   _contacts = contactList;
                 });
@@ -1241,8 +1253,8 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
             : _sendAddressStyle == AddressStyle.TEXT90
                 ? AppStyles.textStyleAddressText90(context)
                 : AppStyles.textStyleAddressText90(context),
-        onChanged: (text) {
-          if (text.length > 0) {
+        onChanged: (String text) {
+          if (text.isNotEmpty) {
             setState(() {
               _showContactButton = false;
             });
@@ -1322,11 +1334,11 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
   bool isInUcoTransferList() {
     bool inList = false;
     String contactAddress = '';
-    widget.contactsRef!.forEach((Contact contact) {
+    for (Contact contact in widget.contactsRef!) {
       if (contact.name == _sendAddressController!.text) {
         contactAddress = contact.address;
       }
-    });
+    }
 
     for (int i = 0; i < ucoTransferList.length; i++) {
       if (uint8ListToHex(ucoTransferList[i].to!) ==

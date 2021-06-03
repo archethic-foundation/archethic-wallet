@@ -26,7 +26,7 @@ class MnemonicDisplay extends StatefulWidget {
 }
 
 class _MnemonicDisplayState extends State<MnemonicDisplay> {
-  static final List<String> _obscuredSeed = List.filled(24, '•' * 6);
+  static final List<String> _obscuredSeed = List<String>.filled(24, '•' * 6);
   bool _seedCopied;
   bool _seedObscured;
   Timer _seedCopiedTimer;
@@ -59,7 +59,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                 itemsPerRow,
             child: RichText(
               textAlign: TextAlign.start,
-              text: TextSpan(children: [
+              text: TextSpan(children: <InlineSpan>[
                 TextSpan(
                   text: curWord < 9 ? ' ' : '',
                   style: AppStyles.textStyleNumbersOfMnemonic(context),

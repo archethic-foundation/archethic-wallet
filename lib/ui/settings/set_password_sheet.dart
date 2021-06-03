@@ -153,7 +153,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                                             .text,
                                     fontFamily: 'Montserrat',
                                   ),
-                                  onSubmitted: (text) {
+                                  onSubmitted: (String text) {
                                     confirmPasswordFocusNode.requestFocus();
                                   },
                                 ),

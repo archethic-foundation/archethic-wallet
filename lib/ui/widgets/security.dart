@@ -71,7 +71,7 @@ class _PinScreenState extends State<PinScreen>
     } else {
       _header = pinCreateTitle;
     }
-    _dotStates = List.filled(_pinLength, AppIcons.dotemtpy);
+    _dotStates = List<IconData>.filled(_pinLength, AppIcons.dotemtpy);
     _awaitingConfirmation = false;
     _pin = '';
     _pinConfirmed = '';
@@ -87,7 +87,7 @@ class _PinScreenState extends State<PinScreen>
     final Animation curve =
         CurvedAnimation(parent: _controller, curve: ShakeCurve());
     _animation = Tween(begin: 0.0, end: 25.0).animate(curve)
-      ..addStatusListener((status) {
+      ..addStatusListener((AnimationStatus status) {
         if (status == AnimationStatus.completed) {
           if (widget.type == PinOverlayType.ENTER_PIN) {
             sl.get<SharedPrefsUtil>().incrementLockAttempts().then((_) {
@@ -105,7 +105,7 @@ class _PinScreenState extends State<PinScreen>
                 setState(() {
                   _pin = '';
                   _header = AppLocalization.of(context).pinInvalid;
-                  _dotStates = List.filled(_pinLength, AppIcons.dotemtpy);
+                  _dotStates = List<IconData>.filled(_pinLength, AppIcons.dotemtpy);
                   _controller.value = 0;
                 });
               }
@@ -113,7 +113,7 @@ class _PinScreenState extends State<PinScreen>
           } else {
             setState(() {
               _awaitingConfirmation = false;
-              _dotStates = List.filled(_pinLength, AppIcons.dotemtpy);
+              _dotStates = List<IconData>.filled(_pinLength, AppIcons.dotemtpy);
               _pin = '';
               _pinConfirmed = '';
               _header = AppLocalization.of(context).pinConfirmError;
@@ -216,7 +216,7 @@ class _PinScreenState extends State<PinScreen>
                   // Switch to confirm pin
                   setState(() {
                     _awaitingConfirmation = true;
-                    _dotStates = List.filled(_pinLength, AppIcons.dotemtpy);
+                    _dotStates = List<IconData>.filled(_pinLength, AppIcons.dotemtpy);
                     _header = AppLocalization.of(context).pinConfirmTitle;
                   });
                 } else {
@@ -284,7 +284,7 @@ class _PinScreenState extends State<PinScreen>
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
+            colors: <Color>[
               StateContainer.of(context).curTheme.backgroundDark,
               StateContainer.of(context).curTheme.background
             ],

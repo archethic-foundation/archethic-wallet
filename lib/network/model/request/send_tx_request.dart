@@ -56,7 +56,7 @@ class SendTxRequest {
       ECDomainParameters('secp256k1'),
     );
     final PrivateKeyParameter<PrivateKey> privParams =
-        PrivateKeyParameter(_privateKey);
+        PrivateKeyParameter<PrivateKey>(_privateKey);
 
     final SecureRandom rnd = SecureRandom('AES/CTR/PRNG');
     final Uint8List key = getSecureRandom(16);
@@ -64,11 +64,11 @@ class SendTxRequest {
     final KeyParameter keyParam = KeyParameter(Uint8List.fromList(key));
 
     final ParametersWithIV<KeyParameter> params =
-        ParametersWithIV(keyParam, Uint8List.fromList(iv));
+        ParametersWithIV<KeyParameter>(keyParam, Uint8List.fromList(iv));
     rnd.seed(params);
 
     signer.reset();
-    signer.init(true, ParametersWithRandom(privParams, rnd));
+    signer.init(true, ParametersWithRandom<PrivateKeyParameter<PrivateKey>>(privParams, rnd));
     ECSignature sig = signer.generateSignature(utf8.encode(msgToSign));
     sig = sig.normalize(ECDomainParameters('secp256k1'));
 
@@ -82,7 +82,7 @@ class SendTxRequest {
     return sig64;
   }
 
-  void buildSignature(String privateKey) async {
+  void buildSignature(String privateKey) {
     signature = signString(privateKey, buffer);
     //print("signature: " + signature);
   }

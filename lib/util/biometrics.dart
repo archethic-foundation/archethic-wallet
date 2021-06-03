@@ -14,10 +14,11 @@ class BiometricUtil {
     if (canCheck) {
       final List<BiometricType> availableBiometrics =
           await localAuth.getAvailableBiometrics();
-      availableBiometrics.forEach((BiometricType type) {
+      //for (BiometricType type in availableBiometrics) {
         //sl.get<Logger>().i(type.toString());
         //sl.get<Logger>().i("${type == BiometricType.face ? 'face' : type == BiometricType.iris ? 'iris' : type == BiometricType.fingerprint ? 'fingerprint' : 'unknown'}");
-      });
+      //}
+
       if (availableBiometrics.contains(BiometricType.face)) {
         return true;
       } else if (availableBiometrics.contains(BiometricType.fingerprint)) {

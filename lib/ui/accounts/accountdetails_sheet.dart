@@ -178,7 +178,7 @@ class AccountDetailsSheet {
                                       textAlign: TextAlign.start,
                                       text: TextSpan(
                                         text: '',
-                                        children: [
+                                        children: <InlineSpan>[
                                           TextSpan(
                                             text: '(',
                                             style: TextStyle(

@@ -142,7 +142,7 @@ class ContactDetailsSheet {
                                     .curTheme
                                     .backgroundDarkest,
                                 borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
+                                boxShadow: <BoxShadow>[
                                   BoxShadow(
                                     color: StateContainer.of(context)
                                         .curTheme
@@ -200,7 +200,7 @@ class ContactDetailsSheet {
                                       .curTheme
                                       .backgroundDarkest,
                                   borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
+                                  boxShadow: <BoxShadow>[
                                     BoxShadow(
                                       color: StateContainer.of(context)
                                           .curTheme
@@ -255,8 +255,8 @@ class ContactDetailsSheet {
                                   Dimens.BUTTON_TOP_DIMENS,
                                   disabled: StateContainer.of(context)
                                           .wallet
-                                          .accountBalance ==
-                                      BigInt.zero, onPressed: () {
+                                          .accountBalance.uco ==
+                                      0, onPressed: () {
                                 Navigator.of(context).pop();
                                 Sheets.showAppHeightNineSheet(
                                     context: context,

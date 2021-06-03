@@ -34,20 +34,21 @@ class DBHelper {
   }
 
   Future<Database> initDb() async {
-    final io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    final io.Directory documentsDirectory =
+        await getApplicationDocumentsDirectory();
     final String path = join(documentsDirectory.path, 'uniris.db');
     final Database theDb = await openDatabase(path,
         version: DB_VERSION, onCreate: _onCreate, onUpgrade: _onUpgrade);
     return theDb;
   }
 
-  void _onCreate(Database db, int version) async {
+  Future<void> _onCreate(Database db, int version) async {
     // When creating the db, create the tables
     await db.execute(CONTACTS_SQL);
     await db.execute(ACCOUNTS_SQL);
   }
 
-  void _onUpgrade(Database db, int oldVersion, int newVersion) async {}
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {}
 
   // Contacts
   Future<List<Contact>> getContacts() async {
@@ -163,9 +164,10 @@ class DBHelper {
         balance: list[i]['balance'],
       ));
     }
-    accounts.forEach((Account a) {
+
+    for (Account a in accounts) {
       a.address = AppUtil().seedToAddress(seed, a.index);
-    });
+    }
     return accounts;
   }
 
@@ -186,9 +188,9 @@ class DBHelper {
         balance: list[i]['balance'],
       ));
     }
-    accounts.forEach((Account a) async {
+    for (Account a in accounts) {
       a.address = AppUtil().seedToAddress(seed, a.index);
-    });
+    }
     return accounts;
   }
 

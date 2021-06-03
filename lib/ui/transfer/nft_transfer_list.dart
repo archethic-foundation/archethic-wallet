@@ -23,7 +23,7 @@ class NftTransferListWidget extends StatefulWidget {
   final Function(NftTransfer)? onGet;
   final Function()? onDelete;
   final bool? displayContextMenu;
-  
+
   @override
   _NftTransferListWidgetState createState() => _NftTransferListWidgetState();
 }
@@ -31,10 +31,10 @@ class NftTransferListWidget extends StatefulWidget {
 class _NftTransferListWidgetState extends State<NftTransferListWidget> {
   @override
   Widget build(BuildContext context) {
-    widget.listNftTransfer!
-        .sort((NftTransfer a, NftTransfer b) => uint8ListToHex(a.to!).compareTo(uint8ListToHex(b.to!)));
+    widget.listNftTransfer!.sort((NftTransfer a, NftTransfer b) =>
+        uint8ListToHex(a.to!).compareTo(uint8ListToHex(b.to!)));
     return Stack(
-      children: [
+      children: <Widget>[
         SizedBox(
           child: Padding(
             padding: const EdgeInsets.only(top: 0.0),
@@ -47,7 +47,7 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                 borderRadius: const BorderRadius.all(
                   Radius.circular(15),
                 ),
-                boxShadow: [
+                boxShadow: <BoxShadow>[
                   BoxShadow(
                     color: StateContainer.of(context).curTheme.backgroundDark!,
                     blurRadius: 5.0,
@@ -82,7 +82,8 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                             bottomOffsetHeight: 200.0,
                             menuItems: <ContextMenuItem>[
                               ContextMenuItem(
-                                  title: Text(AppLocalization.of(context).getOption,
+                                  title: Text(
+                                      AppLocalization.of(context).getOption,
                                       style:
                                           AppStyles.textContextMenu(context)),
                                   trailingIcon: Icon(Icons.get_app,
@@ -139,22 +140,23 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
     String displayName =
         Address(uint8ListToHex(nftTransfer.to!)).getShortString3();
 
-    widget.contacts!.forEach((Contact contact) {
+    for (Contact contact in widget.contacts!) {
       if (contact.address == uint8ListToHex(nftTransfer.to!)) {
         displayName = contact.name;
       }
-    });
+    }
+
     return Column(
-      children: [
+      children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+          children: <Widget>[
             Row(
-              children: [
+              children: <Widget>[
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     Text(
                         nftTransfer.nft == null
                             ? 'NFT 1....'

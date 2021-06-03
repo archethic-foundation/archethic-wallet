@@ -97,7 +97,7 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
                       textAlign: TextAlign.center,
                       text: TextSpan(
                         text: '',
-                        children: [
+                        children: <InlineSpan>[
                           TextSpan(
                             text: '$amount',
                             style: TextStyle(

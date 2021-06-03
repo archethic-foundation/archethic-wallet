@@ -167,7 +167,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       borderRadius: BorderRadius.circular(50),
                     ),
                     child: Column(
-                      children: [
+                      children: <Widget>[
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 30),
                           child: Text(
@@ -313,7 +313,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     }));
     //print("authenticateWithPin - auth : " + auth.toString());
     if (auth != null && auth) {
-      await Future.delayed(const Duration(milliseconds: 200));
+      await Future<Duration>.delayed(const Duration(milliseconds: 200));
       //print("authenticateWithPin - fire AuthenticatedEvent");
       EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
     }

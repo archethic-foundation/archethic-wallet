@@ -113,7 +113,10 @@ class _CircularParticleState extends State<CircularParticle>
             }
             offsets[index] = Offset(dx!, dy!);
           }
-          if (widget.connectDots!) connectLines(); //not recommended
+          if (widget.connectDots!) 
+          {
+            connectLines(); //not recommended
+          }
         });
       });
     controller!.repeat();
@@ -128,7 +131,7 @@ class _CircularParticleState extends State<CircularParticle>
     super.dispose();
   }
 
-  void changeDirection() async {
+  Future<void> changeDirection() async {
     Future.doWhile(() async {
       await Future.delayed(const Duration(milliseconds: 600));
 
@@ -217,7 +220,7 @@ class _CircularParticleState extends State<CircularParticle>
     }
   }
 
-  void onHover(tapdx, tapdy) {
+  void onHover(double tapdx, double tapdy) {
     {
       awayAnimationController = AnimationController(
           duration: widget.awayAnimationDuration, vsync: this);
