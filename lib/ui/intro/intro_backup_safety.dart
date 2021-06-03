@@ -15,7 +15,7 @@ class IntroBackupSafetyPage extends StatefulWidget {
 }
 
 class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
           ),
         ),
         child: LayoutBuilder(
-          builder: (context, constraints) => SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
             minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
                 top: MediaQuery.of(context).size.height * 0.075),
@@ -84,7 +84,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                           end: smallScreen(context) ? 30 : 40,
                           top: 10,
                         ),
-                        alignment: AlignmentDirectional(-1, 0),
+                        alignment: const AlignmentDirectional(-1, 0),
                         child: AutoSizeText(
                           AppLocalization.of(context).secretInfoHeader,
                           style: AppStyles.textStyleHeaderColored(context),
@@ -109,7 +109,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               stepGranularity: 0.5,
                             ),
                             Container(
-                              margin: EdgeInsetsDirectional.only(top: 15),
+                              margin: const EdgeInsetsDirectional.only(top: 15),
                               child: AutoSizeText(
                                 AppLocalization.of(context).secretWarning,
                                 style: AppStyles.textStyleParagraphPrimary(

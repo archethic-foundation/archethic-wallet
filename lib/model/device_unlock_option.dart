@@ -8,10 +8,11 @@ enum UnlockOption { YES, NO }
 
 /// Represent authenticate to open setting
 class UnlockSetting extends SettingSelectionItem {
-  UnlockOption setting;
-
   UnlockSetting(this.setting);
 
+  UnlockOption setting;
+
+  @override
   String getDisplayName(BuildContext context) {
     switch (setting) {
       case UnlockOption.YES:

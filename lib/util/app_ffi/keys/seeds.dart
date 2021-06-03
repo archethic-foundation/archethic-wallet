@@ -15,9 +15,9 @@ class AppSeeds {
   }
 
   static String generateSeed() {
-    String result = ""; // Resulting seed when done
-    String chars = "abcdef0123456789"; // Characters a seed may contain
-    Random rng = Random.secure();
+    String result = ''; // Resulting seed when done
+    const String chars = 'abcdef0123456789'; // Characters a seed may contain
+    final Random rng = Random.secure();
     for (int i = 0; i < 64; i++) {
       result += chars[rng.nextInt(chars.length)];
     }

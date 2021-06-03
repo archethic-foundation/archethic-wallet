@@ -13,7 +13,7 @@ class NumberUtil {
   /// @return Decimal value 1.000000000000000000000000000000
   ///
   static Decimal getRawAsUsableDecimal(String raw) {
-    Decimal amount = Decimal.parse(raw.toString());
+    final Decimal amount = Decimal.parse(raw.toString());
     return amount;
   }
 
@@ -34,16 +34,16 @@ class NumberUtil {
   /// @returns 1
   ///
   static String getRawAsUsableString(String raw) {
-    NumberFormat nf = new NumberFormat.currency(
+    final NumberFormat nf = NumberFormat.currency(
         locale: 'en_US', decimalDigits: maxDecimalDigits, symbol: '');
     String asString = nf.format(truncateDecimal(getRawAsUsableDecimal(raw)));
-    var split = asString.split(".");
+    final List<String> split = asString.split('.');
     if (split.length > 1) {
       // Remove trailing 0s from this
       if (int.parse(split[1]) == 0) {
         asString = split[0];
       } else {
-        String newStr = split[0] + ".";
+        String newStr = split[0] + '.';
         String digits = split[1];
         int endIndex = digits.length;
         for (int i = 1; i <= digits.length; i++) {
@@ -54,7 +54,7 @@ class NumberUtil {
           }
         }
         digits = digits.substring(0, endIndex);
-        newStr = split[0] + "." + digits;
+        newStr = split[0] + '.' + digits;
         asString = newStr;
       }
     }
@@ -66,7 +66,7 @@ class NumberUtil {
   /// @returns  101000000000000000000000000000
   ///
   static String getAmountAsRaw(String amount) {
-    Decimal asDecimal = Decimal.parse(amount);
+    final Decimal asDecimal = Decimal.parse(amount);
     return asDecimal.toString();
   }
 
@@ -74,9 +74,9 @@ class NumberUtil {
   /// @param amount 10020243004141
   /// @return 0.0000001%
   static String getPercentOfTotalSupply(BigInt amount) {
-    Decimal totalSupply =
+    final Decimal totalSupply =
         Decimal.parse('133248290000000000000000000000000000000');
-    Decimal amountRaw = Decimal.parse(amount.toString());
+    final Decimal amountRaw = Decimal.parse(amount.toString());
     return ((amountRaw / totalSupply) * Decimal.fromInt(100))
         .toStringAsFixed(4);
   }
@@ -87,17 +87,17 @@ class NumberUtil {
   /// @returns 1.512
   static String sanitizeNumber(String input,
       {int maxDecimalDigits = maxDecimalDigits}) {
-    String sanitized = "";
-    List<String> splitStr = input.split(".");
+    String sanitized = '';
+    final List<String> splitStr = input.split('.');
     if (splitStr.length > 1) {
       if (splitStr[1].length > maxDecimalDigits) {
         splitStr[1] = splitStr[1].substring(0, maxDecimalDigits);
-        input = splitStr[0] + "." + splitStr[1];
+        input = splitStr[0] + '.' + splitStr[1];
       }
     }
     for (int i = 0; i < input.length; i++) {
       try {
-        if (input[i] == ".") {
+        if (input[i] == '.') {
           sanitized = sanitized + input[i];
         } else {
           int.parse(input[i]);

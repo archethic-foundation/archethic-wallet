@@ -27,14 +27,7 @@ import 'package:uniris_mobile_wallet/model/vault.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/security.dart';
 
 class TransferConfirmSheet extends StatefulWidget {
-  final String? typeTransfer;
-  final String? localCurrency;
-  final String? title;
-  final List<Contact>? contactsRef;
-  final List<UcoTransfer>? ucoTransferList;
-  final List<NftTransfer>? nftTransferList;
-
-  TransferConfirmSheet(
+  const TransferConfirmSheet(
       {this.typeTransfer,
       this.localCurrency,
       this.contactsRef,
@@ -43,6 +36,14 @@ class TransferConfirmSheet extends StatefulWidget {
       this.nftTransferList})
       : super();
 
+  final String? typeTransfer;
+  final String? localCurrency;
+  final String? title;
+  final List<Contact>? contactsRef;
+  final List<UcoTransfer>? ucoTransferList;
+  final List<NftTransfer>? nftTransferList;
+
+  @override
   _TransferConfirmSheetState createState() => _TransferConfirmSheetState();
 }
 
@@ -55,7 +56,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   void _registerBus() {
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
-        .listen((event) {
+        .listen((AuthenticatedEvent event) {
       if (event.authType == AUTH_EVENT_TYPE.SEND) {
         _doSend();
       }
@@ -63,17 +64,17 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
 
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
-        .listen((event) {
-      if (event.response != "Success") {
+        .listen((TransactionSendEvent event) {
+      if (event.response != 'Success') {
         // Send failed
         if (animationOpen!) {
           Navigator.of(context).pop();
         }
         UIUtil.showSnackbar(
             AppLocalization.of(context).sendError +
-                " (" +
+                ' (' +
                 event.response! +
-                ")",
+                ')',
             context);
         Navigator.of(context).pop();
       } else {
@@ -103,7 +104,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   void initState() {
     super.initState();
     _registerBus();
-    this.animationOpen = false;
+    animationOpen = false;
   }
 
   @override
@@ -130,7 +131,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
           children: <Widget>[
             // Sheet handle
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               height: 5,
               width: MediaQuery.of(context).size.width * 0.15,
               decoration: BoxDecoration(
@@ -143,13 +144,11 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(top: 20.0, bottom: 30.0),
+                    margin: const EdgeInsets.only(top: 20.0, bottom: 30.0),
                     child: Column(
                       children: <Widget>[
                         Text(
-                          (widget.title == null
-                              ? AppLocalization.of(context).transfering
-                              : widget.title)!,
+                          (widget.title ?? AppLocalization.of(context).transfering)!,
                           style: AppStyles.textStyleHeader(context),
                         ),
                       ],
@@ -160,7 +159,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                     margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.105,
                         right: MediaQuery.of(context).size.width * 0.105),
-                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color:
@@ -170,15 +169,15 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                     child: Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 30),
+                          margin: const EdgeInsets.symmetric(horizontal: 30),
                           child: Text(
                             AppLocalization.of(context).fees +
-                                ": " +
+                                ': ' +
                                 sl
                                     .get<AppService>()
                                     .getFeesEstimation()
                                     .toStringAsFixed(5) +
-                                " UCO",
+                                ' UCO',
                             style: TextStyle(
                               color:
                                   StateContainer.of(context).curTheme.primary60,
@@ -192,22 +191,22 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                     ),
                   ),
 
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   Container( 
                      height: 300,
-                    child: widget.typeTransfer == "UCO"
+                    child: widget.typeTransfer == 'UCO'
                             ? UcoTransferListWidget(
                                 listUcoTransfer: widget.ucoTransferList,
                                 contacts: widget.contactsRef,
                                 displayContextMenu: false,
                               )
-                            : widget.typeTransfer == "NFT" ?
+                            : widget.typeTransfer == 'NFT' ?
                            NftTransferListWidget(
                                 listNftTransfer: widget.nftTransferList,
                                 contacts: widget.contactsRef,
                                 displayContextMenu: false,
                               )
-                            : SizedBox(),  
+                            : const SizedBox(),  
                   )
                 
                 ],
@@ -216,7 +215,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
 
             //A container for CONFIRM and CANCEL buttons
             Container(
-              margin: EdgeInsets.only(top: 10.0, bottom: 0),
+              margin: const EdgeInsets.only(top: 10.0, bottom: 0),
               child: Column(
                 children: <Widget>[
                   // A row for CONFIRM Button
@@ -229,16 +228,16 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                           AppLocalization.of(context).confirm,
                           Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
                         // Authenticate
-                        AuthenticationMethod authMethod =
+                        final AuthenticationMethod authMethod =
                             await sl.get<SharedPrefsUtil>().getAuthMethod();
-                        bool hasBiometrics =
+                        final bool hasBiometrics =
                             await sl.get<BiometricUtil>().hasBiometrics();
                         if (authMethod.method == AuthMethod.BIOMETRICS &&
                             hasBiometrics) {
                           try {
-                            bool authenticated = await sl
+                            final bool authenticated = await sl
                                 .get<BiometricUtil>()
-                                .authenticateWithBiometrics(context, "");
+                                .authenticateWithBiometrics(context, '');
                             if (authenticated) {
                               sl.get<HapticUtil>().fingerprintSucess();
                               EventTaxiImpl.singleton().fire(
@@ -277,11 +276,11 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     try {
       _showSendingAnimation(context);
 
-      String seed = await StateContainer.of(context).getSeed();
-      int index = StateContainer.of(context).selectedAccount.index;
-      String publicKeyBase64 = "";
+      final String seed = await StateContainer.of(context).getSeed();
+      final int index = StateContainer.of(context).selectedAccount.index;
+      const String publicKeyBase64 = '';
 
-      String privateKey = "";
+      const String privateKey = '';
       //print("send tx");
       /*sl.get<AppService>().sendUCO(originPrivateKey, transactionChainSeed, address, endpoint, listUcoTransfer)
           StateContainer.of(context).wallet.address,
@@ -292,7 +291,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
           publicKeyBase64,
           privateKey);*/
           EventTaxiImpl.singleton()
-          .fire(TransactionSendEvent(response: "Success"));
+          .fire(TransactionSendEvent(response: 'Success'));
     } catch (e) {
       // Send failed
       //print("send failed" + e.toString());
@@ -303,18 +302,18 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
 
   Future<void> authenticateWithPin() async {
     // PIN Authentication
-    String expectedPin = await sl.get<Vault>().getPin();
-    bool auth = await Navigator.of(context)
+    final String expectedPin = await sl.get<Vault>().getPin();
+    final bool auth = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
-      return new PinScreen(
+      return PinScreen(
         PinOverlayType.ENTER_PIN,
         expectedPin: expectedPin,
-        description: "",
+        description: '',
       );
     }));
     //print("authenticateWithPin - auth : " + auth.toString());
     if (auth != null && auth) {
-      await Future.delayed(Duration(milliseconds: 200));
+      await Future.delayed(const Duration(milliseconds: 200));
       //print("authenticateWithPin - fire AuthenticatedEvent");
       EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
     }

@@ -16,9 +16,9 @@ import 'package:validators/validators.dart';
 enum DataType { RAW, URL, ADDRESS, SEED }
 
 class QRScanErrs {
-  static const String PERMISSION_DENIED = "qr_denied";
-  static const String UNKNOWN_ERROR = "qr_unknown";
-  static const String CANCEL_ERROR = "qr_cancel";
+  static const String PERMISSION_DENIED = 'qr_denied';
+  static const String UNKNOWN_ERROR = 'qr_unknown';
+  static const String CANCEL_ERROR = 'qr_cancel';
   static const List<String> ERROR_LIST = [
     PERMISSION_DENIED,
     UNKNOWN_ERROR,
@@ -28,7 +28,7 @@ class QRScanErrs {
 
 class UserDataUtil {
 
-  static const MethodChannel _channel = const MethodChannel('fappchannel');
+  static const MethodChannel _channel = MethodChannel('fappchannel');
   static StreamSubscription<dynamic> setStream;
 
   static String _parseData(String data, DataType type) {
@@ -42,7 +42,7 @@ class UserDataUtil {
         return data;
       }
     } else if (type == DataType.ADDRESS) {
-      Address address = Address(data);
+      final Address address = Address(data);
       if (address.isValid()) {
         return address.address;
       }
@@ -56,7 +56,7 @@ class UserDataUtil {
   }
 
   static Future<String> getClipboardText(DataType type) async {
-    ClipboardData data = await Clipboard.getData("text/plain");
+    final ClipboardData data = await Clipboard.getData('text/plain');
     if (data == null || data.text == null) {
       return null;
     }
@@ -66,8 +66,8 @@ class UserDataUtil {
   static Future<String> getQRData(DataType type, BuildContext context) async {
     UIUtil.cancelLockEvent();
     try {
-      var scanResult = await BarcodeScanner.scan();
-      String data = scanResult.rawContent;
+      final ScanResult scanResult = await BarcodeScanner.scan();
+      final String data = scanResult.rawContent;
       if (isEmpty(data)) {
         return null;
       }
@@ -85,7 +85,7 @@ class UserDataUtil {
     } on FormatException {
       return QRScanErrs.CANCEL_ERROR;
     } catch (e) {
-      print("Unknown QR Scan Error ${e.toString()}");
+      print('Unknown QR Scan Error ${e.toString()}');
       return QRScanErrs.UNKNOWN_ERROR;
     }
   }
@@ -95,24 +95,24 @@ class UserDataUtil {
       final Map<String, dynamic> params = <String, dynamic>{
         'value': value,
       };
-      await _channel.invokeMethod("setSecureClipboardItem", params);
+      await _channel.invokeMethod('setSecureClipboardItem', params);
     } else {
       // Set item in clipboard
-      await Clipboard.setData(new ClipboardData(text: value));
+      await Clipboard.setData(ClipboardData(text: value));
       // Auto clear it after 2 minutes
       if (setStream != null) {
         setStream.cancel();
       }
-      Future<dynamic> delayed = new Future.delayed(new Duration(minutes: 2));
+      final Future<dynamic> delayed = Future.delayed(const Duration(minutes: 2));
       delayed.then((_) {
         return true;
       });
       setStream = delayed.asStream().listen((_) {
-        Clipboard.getData("text/plain").then((data) {
+        Clipboard.getData('text/plain').then((ClipboardData data) {
           if (data != null &&
               data.text != null &&
               AppSeeds.isValidSeed(data.text)) {
-            Clipboard.setData(ClipboardData(text: ""));
+            Clipboard.setData(const ClipboardData(text: ''));
           }
         });
       });

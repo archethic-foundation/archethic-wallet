@@ -1,6 +1,7 @@
 // @dart=2.9
 
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -28,7 +29,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:uniris_mobile_wallet/bus/events.dart';
 
 class AppHomePage extends StatefulWidget {
-  AppHomePage() : super();
+  const AppHomePage() : super();
 
   @override
   _AppHomePageState createState() => _AppHomePageState();
@@ -36,7 +37,7 @@ class AppHomePage extends StatefulWidget {
 
 class _AppHomePageState extends State<AppHomePage>
     with WidgetsBindingObserver, TickerProviderStateMixin {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Controller for placeholder card animations
   AnimationController _placeholderCardAnimationController;
@@ -71,16 +72,16 @@ class _AppHomePageState extends State<AppHomePage>
     StateContainer.of(context).requestUpdate();
 
     // Hide refresh indicator after 3 seconds if no server response
-    Future.delayed(new Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         _isRefreshing = false;
       });
     });
   }
 
-  _checkVersionApp() async {
-    String versionAppCached = await sl.get<SharedPrefsUtil>().getVersionApp();
-    PackageInfo.fromPlatform().then((packageInfo) async {
+  void _checkVersionApp() async {
+    final String versionAppCached = await sl.get<SharedPrefsUtil>().getVersionApp();
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) async {
       if (versionAppCached != packageInfo.version) {
         // TODO
         _displayReleaseNote = false;
@@ -106,13 +107,13 @@ class _AppHomePageState extends State<AppHomePage>
 
     // Setup placeholder animation and start
     _animationDisposed = false;
-    _placeholderCardAnimationController = new AnimationController(
+    _placeholderCardAnimationController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
     _placeholderCardAnimationController
         .addListener(_animationControllerListener);
-    _opacityAnimation = new Tween(begin: 1.0, end: 0.4).animate(
+    _opacityAnimation = Tween(begin: 1.0, end: 0.4).animate(
       CurvedAnimation(
         parent: _placeholderCardAnimationController,
         curve: Curves.easeIn,
@@ -122,7 +123,7 @@ class _AppHomePageState extends State<AppHomePage>
     _opacityAnimation.addStatusListener(_animationStatusListener);
     _placeholderCardAnimationController.forward();
 
-    _scrollController = new ScrollController();
+    _scrollController = ScrollController();
   }
 
   void _animationStatusListener(AnimationStatus status) {
@@ -134,7 +135,7 @@ class _AppHomePageState extends State<AppHomePage>
         _placeholderCardAnimationController.reverse();
         break;
       default:
-        return null;
+        break;
     }
   }
 
@@ -169,7 +170,7 @@ class _AppHomePageState extends State<AppHomePage>
     // Hackish event to block auto-lock functionality
     _disableLockSub = EventTaxiImpl.singleton()
         .registerTo<DisableLockTimeoutEvent>()
-        .listen((event) {
+        .listen((DisableLockTimeoutEvent event) {
       if (event.disable) {
         cancelLockEvent();
       }
@@ -178,7 +179,7 @@ class _AppHomePageState extends State<AppHomePage>
     // User changed account
     _switchAccountSub = EventTaxiImpl.singleton()
         .registerTo<AccountChangedEvent>()
-        .listen((event) {
+        .listen((AccountChangedEvent event) {
       setState(() {
         StateContainer.of(context).wallet.loading = true;
         StateContainer.of(context).wallet.historyLoading = true;
@@ -192,11 +193,11 @@ class _AppHomePageState extends State<AppHomePage>
 
       paintQrCode(address: event.account.address);
       if (event.delayPop) {
-        Future.delayed(Duration(milliseconds: 300), () {
-          Navigator.of(context).popUntil(RouteUtils.withNameLike("/home"));
+        Future.delayed(const Duration(milliseconds: 300), () {
+          Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
         });
       } else if (!event.noPop) {
-        Navigator.of(context).popUntil(RouteUtils.withNameLike("/home"));
+        Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
       }
     });
   }
@@ -248,7 +249,7 @@ class _AppHomePageState extends State<AppHomePage>
       if (lockStreamListener != null) {
         lockStreamListener.cancel();
       }
-      Future<dynamic> delayed = new Future.delayed(
+      final Future<dynamic> delayed = Future.delayed(
           (await sl.get<SharedPrefsUtil>().getLockTimeout()).getDuration());
       delayed.then((_) {
         return true;
@@ -258,7 +259,7 @@ class _AppHomePageState extends State<AppHomePage>
           StateContainer.of(context).resetEncryptedSecret();
         } catch (e) {
          print(
-              "Failed to reset encrypted secret when locking ${e.toString()}");
+              'Failed to reset encrypted secret when locking ${e.toString()}');
         } finally {
           Navigator.of(context)
               .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
@@ -274,16 +275,16 @@ class _AppHomePageState extends State<AppHomePage>
   }
 
   void paintQrCode({String address}) {
-    QrPainter painter = QrPainter(
+    final QrPainter painter = QrPainter(
       //data:
       //    address == null ? StateContainer.of(context).wallet.address : address,
       // TODO:
-      data: "05A2525C9C4FDDC02BA97554980A0CFFADA2AEB0650E3EAD05796275F05DDA85",
+      data: '05A2525C9C4FDDC02BA97554980A0CFFADA2AEB0650E3EAD05796275F05DDA85',
       version: 6,
       gapless: false,
       errorCorrectionLevel: QrErrorCorrectLevel.Q,
     );
-    painter.toImageData(MediaQuery.of(context).size.width).then((byteData) {
+    painter.toImageData(MediaQuery.of(context).size.width).then((ByteData byteData) {
       setState(() {
         receive = ReceiveSheet(
           qrWidget: Container(
@@ -296,17 +297,17 @@ class _AppHomePageState extends State<AppHomePage>
 
   Widget _getTopCards(BuildContext context) {
     return ListView.builder(
-      physics: AlwaysScrollableScrollPhysics(),
+      physics: const AlwaysScrollableScrollPhysics(),
       itemCount: 2,
       controller: _scrollController,
       scrollDirection: Axis.horizontal,
-      itemBuilder: (context, index) {
+      itemBuilder: (BuildContext context, int index) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Card(
             color: StateContainer.of(context).curTheme.backgroundDark,
             child: AnimatedContainer(
-                duration: Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 200),
                 height: mainCardHeight,
                 curve: Curves.easeInOut,
                 child: index == 0
@@ -344,9 +345,9 @@ class _AppHomePageState extends State<AppHomePage>
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: new AppBar(
+      appBar: AppBar(
         title: Container(
-          child: SvgPicture.asset("assets/uniris_logo.svg"),
+          child: SvgPicture.asset('assets/uniris_logo.svg'),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
@@ -389,7 +390,7 @@ class _AppHomePageState extends State<AppHomePage>
                   backgroundColor:
                       StateContainer.of(context).curTheme.backgroundDark,
                   child: KeyboardAvoider(
-                    duration: Duration(milliseconds: 0),
+                    duration: const Duration(milliseconds: 0),
                     autoScroll: true,
                     focusPadding: 40,
                     child: Stack(
@@ -407,7 +408,7 @@ class _AppHomePageState extends State<AppHomePage>
                               .primary10
                               .withAlpha(150)
                               .withOpacity(0.2),
-                          awayAnimationDuration: Duration(milliseconds: 600),
+                          awayAnimationDuration: const Duration(milliseconds: 600),
                           maxParticleSize: 8,
                           isRandSize: true,
                           isRandomColor: false,
@@ -425,9 +426,9 @@ class _AppHomePageState extends State<AppHomePage>
                               height: 150.0,
                               child: _getTopCards(context),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             NftListWidget.buildNftList(context),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                           ],
                         ),
                       ],
@@ -444,13 +445,13 @@ class _AppHomePageState extends State<AppHomePage>
 
   void displayReleaseNote() {
     _displayReleaseNote = false;
-    PackageInfo.fromPlatform().then((packageInfo) {
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       AppDialogs.showConfirmDialog(
           context,
           AppLocalization.of(context).releaseNoteHeader +
-              " " +
+              ' ' +
               packageInfo.version,
-          "",
+          '',
           CaseChange.toUpperCase(AppLocalization.of(context).ok, context),
           () async {
         await sl.get<SharedPrefsUtil>().setVersionApp(packageInfo.version);

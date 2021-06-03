@@ -10,7 +10,7 @@ class QRcodeDisplay {
       BuildContext context, Animation<double> _opacityAnimation) {
     return StateContainer.of(context).selectedAccount == null ||
             StateContainer.of(context).selectedAccount.address == null
-        ? SizedBox()
+        ? const SizedBox()
         : Stack(
             children: <Widget>[
               AspectRatio(
@@ -20,7 +20,7 @@ class QRcodeDisplay {
                   width: MediaQuery.of(context).size.width - 185,
                   decoration: BoxDecoration(
                     color: StateContainer.of(context).curTheme.background,
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
                     boxShadow: [
                       BoxShadow(
                         color: StateContainer.of(context)
@@ -29,7 +29,7 @@ class QRcodeDisplay {
                         blurRadius: 5.0,
                         spreadRadius: 0.0,
                         offset:
-                            Offset(5.0, 5.0), // shadow direction: bottom right
+                            const Offset(5.0, 5.0), // shadow direction: bottom right
                       )
                     ],
                   ),
@@ -75,7 +75,7 @@ static Widget buildAddressDisplay(
       BuildContext context, Animation<double> _opacityAnimation) {
     return StateContainer.of(context).selectedAccount == null ||
             StateContainer.of(context).selectedAccount.address == null
-        ? SizedBox()
+        ? const SizedBox()
         : Stack(
             children: <Widget>[
               AspectRatio(
@@ -85,7 +85,7 @@ static Widget buildAddressDisplay(
                   width: MediaQuery.of(context).size.width - 185,
                   decoration: BoxDecoration(
                     color: StateContainer.of(context).curTheme.background,
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
                     boxShadow: [
                       BoxShadow(
                         color: StateContainer.of(context)
@@ -94,7 +94,7 @@ static Widget buildAddressDisplay(
                         blurRadius: 5.0,
                         spreadRadius: 0.0,
                         offset:
-                            Offset(5.0, 5.0), // shadow direction: bottom right
+                            const Offset(5.0, 5.0), // shadow direction: bottom right
                       )
                     ],
                   ),
@@ -157,12 +157,12 @@ static Widget buildAddressDisplay(
                   child: Container(
                     height: 36,
                     width: 36,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
                     child: TextButton(
                       onPressed: () {
-                        Clipboard.setData(new ClipboardData(
+                        Clipboard.setData(ClipboardData(
                             text: StateContainer.of(context).wallet.address));
                       },
                       child: Icon(Icons.content_copy,

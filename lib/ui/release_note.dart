@@ -26,7 +26,7 @@ class _ReleaseNoteState extends State<ReleaseNote> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 //Empty SizedBox
-                SizedBox(
+                const SizedBox(
                   width: 60,
                   height: 60,
                 ),
@@ -35,7 +35,7 @@ class _ReleaseNoteState extends State<ReleaseNote> {
                   children: <Widget>[
                     // Sheet handle
                     Container(
-                      margin: EdgeInsets.only(top: 10),
+                      margin: const EdgeInsets.only(top: 10),
                       height: 5,
                       width: MediaQuery.of(context).size.width * 0.15,
                       decoration: BoxDecoration(
@@ -46,7 +46,7 @@ class _ReleaseNoteState extends State<ReleaseNote> {
                   ],
                 ),
                 //Empty SizedBox
-                SizedBox(
+                const SizedBox(
                   width: 60,
                   height: 60,
                 ),

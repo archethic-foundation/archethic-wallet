@@ -16,7 +16,7 @@ class Vault {
   static const String encryptionKey = 'funiris_secret_phrase';
   static const String pinKey = 'funiris_pin';
   static const String sessionKey = 'fencsess_key';
-  final FlutterSecureStorage secureStorage = new FlutterSecureStorage();
+  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
   Future<bool> legacy() async {
     return await sl.get<SharedPrefsUtil>().useLegacyStorage();
@@ -41,7 +41,7 @@ class Vault {
 
   Future<void> deleteAll() async {
     if (await legacy()) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove(encryptionKey);
       await prefs.remove(seedKey);
       await prefs.remove(pinKey);
@@ -62,7 +62,7 @@ class Vault {
 
   Future<void> deleteSeed() async {
     if (await legacy()) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove(seedKey);
     }
     return await secureStorage.delete(key: seedKey);
@@ -79,14 +79,12 @@ class Vault {
   /// Used to keep the seed in-memory in the session without being plaintext
   Future<String> getSessionKey() async {
     String key = await _read(sessionKey);
-    if (key == null) {
-      key = await updateSessionKey();
-    }
+    key ??= await updateSessionKey();
     return key;
   }
 
   Future<String> updateSessionKey() async {
-    String key = RandomUtil.generateEncryptionSecret(25);
+    final String key = RandomUtil.generateEncryptionSecret(25);
     await writeSessionKey(key);
     return key;
   }
@@ -97,7 +95,7 @@ class Vault {
 
   Future<void> deleteEncryptionPhrase() async {
     if (await legacy()) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove(encryptionKey);
     }
     return await secureStorage.delete(key: encryptionKey);
@@ -113,7 +111,7 @@ class Vault {
 
   Future<void> deletePin() async {
     if (await legacy()) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove(pinKey);
     }
     return await secureStorage.delete(key: pinKey);
@@ -121,31 +119,31 @@ class Vault {
 
   // For encrypted data
   Future<void> setEncrypted(String key, String value) async {
-    String secret = await getSecret();
+    final String secret = await getSecret();
     if (secret == null) return null;
     // Decrypt and return
-    Salsa20Encryptor encrypter = new Salsa20Encryptor(
+    final Salsa20Encryptor encrypter = Salsa20Encryptor(
         secret.substring(0, secret.length - 8),
         secret.substring(secret.length - 8));
     // Encrypt and save
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(key, encrypter.encrypt(value));
   }
 
   Future<String> getEncrypted(String key) async {
-    String secret = await getSecret();
+    final String secret = await getSecret();
     if (secret == null) return null;
     // Decrypt and return
-    Salsa20Encryptor encrypter = new Salsa20Encryptor(
+    final Salsa20Encryptor encrypter = Salsa20Encryptor(
         secret.substring(0, secret.length - 8),
         secret.substring(secret.length - 8));
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String encrypted = prefs.get(key);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String encrypted = prefs.get(key);
     if (encrypted == null) return null;
     return encrypter.decrypt(encrypted);
   }
 
-  static const _channel = const MethodChannel('fappchannel');
+  static const MethodChannel _channel = MethodChannel('fappchannel');
 
   Future<String> getSecret() async {
     return await _channel.invokeMethod('getSecret');

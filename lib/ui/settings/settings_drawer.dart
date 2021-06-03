@@ -35,6 +35,7 @@ import '../../appstate_container.dart';
 import '../../util/sharedprefsutil.dart';
 
 class SettingsSheet extends StatefulWidget {
+  @override
   _SettingsSheetState createState() => _SettingsSheetState();
 }
 
@@ -47,7 +48,7 @@ class _SettingsSheetState extends State<SettingsSheet>
   AnimationController _customUrlController;
   Animation<Offset> _customUrlOffsetFloat;
 
-  String versionString = "";
+  String versionString = '';
 
   bool _hasBiometrics = false;
   AuthenticationMethod _curAuthMethod =
@@ -57,7 +58,6 @@ class _SettingsSheetState extends State<SettingsSheet>
       LockTimeoutSetting(LockTimeoutOption.ONE);
 
   bool _securityOpen;
-  bool _loadingAccounts;
 
   bool _contactsOpen;
 
@@ -70,7 +70,6 @@ class _SettingsSheetState extends State<SettingsSheet>
     super.initState();
     _contactsOpen = false;
     _securityOpen = false;
-    _loadingAccounts = false;
     _customUrlOpen = false;
     // Determine if they have face or fingerprint enrolled, if not hide the setting
     sl.get<BiometricUtil>().hasBiometrics().then((bool hasBiometrics) {
@@ -79,20 +78,20 @@ class _SettingsSheetState extends State<SettingsSheet>
       });
     });
     // Get default auth method setting
-    sl.get<SharedPrefsUtil>().getAuthMethod().then((authMethod) {
+    sl.get<SharedPrefsUtil>().getAuthMethod().then((AuthenticationMethod authMethod) {
       setState(() {
         _curAuthMethod = authMethod;
       });
     });
     // Get default unlock settings
-    sl.get<SharedPrefsUtil>().getLock().then((lock) {
+    sl.get<SharedPrefsUtil>().getLock().then((bool lock) {
       setState(() {
         _curUnlockSetting = lock
             ? UnlockSetting(UnlockOption.YES)
             : UnlockSetting(UnlockOption.NO);
       });
     });
-    sl.get<SharedPrefsUtil>().getLockTimeout().then((lockTimeout) {
+    sl.get<SharedPrefsUtil>().getLockTimeout().then((LockTimeoutSetting lockTimeout) {
       setState(() {
         _curTimeoutSetting = lockTimeout;
       });
@@ -113,18 +112,18 @@ class _SettingsSheetState extends State<SettingsSheet>
       duration: const Duration(milliseconds: 220),
     );
 
-    _offsetFloat = Tween<Offset>(begin: Offset(1.1, 0), end: Offset(0, 0))
+    _offsetFloat = Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
         .animate(_controller);
     _securityOffsetFloat =
-        Tween<Offset>(begin: Offset(1.1, 0), end: Offset(0, 0))
+        Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_securityController);
     _customUrlOffsetFloat =
-        Tween<Offset>(begin: Offset(1.1, 0), end: Offset(0, 0))
+        Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_customUrlController);
     // Version string
-    PackageInfo.fromPlatform().then((packageInfo) {
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
-        versionString = "v${packageInfo.version}";
+        versionString = 'v${packageInfo.version}';
       });
     });
   }
@@ -267,7 +266,7 @@ class _SettingsSheetState extends State<SettingsSheet>
   }
 
   List<Widget> _buildCurrencyOptions() {
-    List<Widget> ret = new List<Widget>.empty(growable: true);
+    final List<Widget> ret = List<Widget>.empty(growable: true);
     AvailableCurrencyEnum.values.forEach((AvailableCurrencyEnum value) {
       ret.add(SimpleDialogOption(
         onPressed: () {
@@ -284,15 +283,13 @@ class _SettingsSheetState extends State<SettingsSheet>
                           AvailableCurrency(value).getDisplayName(context)
                       ? AppStyles.textStyleDialogOptionsChoice(context)
                       : AppStyles.textStyleDialogOptions(context)),
-              SizedBox(width: 20),
-              StateContainer.of(context).curCurrency.getDisplayName(context) ==
-                      AvailableCurrency(value).getDisplayName(context)
-                  ? Icon(
+              const SizedBox(width: 20),
+              if (StateContainer.of(context).curCurrency.getDisplayName(context) ==
+                      AvailableCurrency(value).getDisplayName(context)) Icon(
                       FontAwesome.ok,
                       color: StateContainer.of(context).curTheme.choiceOption,
                       size: 16,
-                    )
-                  : SizedBox(),
+                    ) else const SizedBox(),
             ],
           ),
         ),
@@ -302,7 +299,7 @@ class _SettingsSheetState extends State<SettingsSheet>
   }
 
   Future<void> _currencyDialog() async {
-    AvailableCurrencyEnum selection =
+    final AvailableCurrencyEnum selection =
         await showAppDialog<AvailableCurrencyEnum>(
             context: context,
             builder: (BuildContext context) {
@@ -335,7 +332,7 @@ class _SettingsSheetState extends State<SettingsSheet>
   }
 
   List<Widget> _buildLanguageOptions() {
-    List<Widget> ret = new List<Widget>.empty(growable: true);
+    final List<Widget> ret = List<Widget>.empty(growable: true);
     AvailableLanguage.values.forEach((AvailableLanguage value) {
       ret.add(SimpleDialogOption(
         onPressed: () {
@@ -352,15 +349,13 @@ class _SettingsSheetState extends State<SettingsSheet>
                           LanguageSetting(value).getDisplayName(context)
                       ? AppStyles.textStyleDialogOptionsChoice(context)
                       : AppStyles.textStyleDialogOptions(context)),
-              SizedBox(width: 20),
-              StateContainer.of(context).curLanguage.getDisplayName(context) ==
-                      LanguageSetting(value).getDisplayName(context)
-                  ? Icon(
+              const SizedBox(width: 20),
+              if (StateContainer.of(context).curLanguage.getDisplayName(context) ==
+                      LanguageSetting(value).getDisplayName(context)) Icon(
                       FontAwesome.ok,
                       color: StateContainer.of(context).curTheme.choiceOption,
                       size: 16,
-                    )
-                  : SizedBox(),
+                    ) else const SizedBox(),
             ],
           ),
         ),
@@ -370,7 +365,7 @@ class _SettingsSheetState extends State<SettingsSheet>
   }
 
   Future<void> _languageDialog() async {
-    AvailableLanguage selection = await showAppDialog<AvailableLanguage>(
+    final AvailableLanguage selection = await showAppDialog<AvailableLanguage>(
         context: context,
         builder: (BuildContext context) {
           return AppSimpleDialog(
@@ -400,7 +395,7 @@ class _SettingsSheetState extends State<SettingsSheet>
   }
 
   List<Widget> _buildLockTimeoutOptions() {
-    List<Widget> ret = new List<Widget>.empty(growable: true);
+    final List<Widget> ret = List<Widget>.empty(growable: true);
     LockTimeoutOption.values.forEach((LockTimeoutOption value) {
       ret.add(SimpleDialogOption(
         onPressed: () {
@@ -415,15 +410,13 @@ class _SettingsSheetState extends State<SettingsSheet>
                           LockTimeoutSetting(value).getDisplayName(context)
                       ? AppStyles.textStyleDialogOptionsChoice(context)
                       : AppStyles.textStyleDialogOptions(context)),
-              SizedBox(width: 20),
-              _curUnlockSetting.getDisplayName(context) ==
-                      LockTimeoutSetting(value).getDisplayName(context)
-                  ? Icon(
+              const SizedBox(width: 20),
+              if (_curUnlockSetting.getDisplayName(context) ==
+                      LockTimeoutSetting(value).getDisplayName(context)) Icon(
                       FontAwesome.ok,
                       color: StateContainer.of(context).curTheme.choiceOption,
                       size: 16,
-                    )
-                  : SizedBox(),
+                    ) else const SizedBox(),
             ],
           ),
         ),
@@ -433,7 +426,7 @@ class _SettingsSheetState extends State<SettingsSheet>
   }
 
   Future<void> _lockTimeoutDialog() async {
-    LockTimeoutOption selection = await showAppDialog<LockTimeoutOption>(
+    final LockTimeoutOption selection = await showAppDialog<LockTimeoutOption>(
         context: context,
         builder: (BuildContext context) {
           return AppSimpleDialog(
@@ -489,14 +482,14 @@ class _SettingsSheetState extends State<SettingsSheet>
 
   @override
   Widget build(BuildContext context) {
-    return new WillPopScope(
+    return WillPopScope(
       onWillPop: _onBackButtonPressed,
       child: ClipRect(
         child: Stack(
           children: <Widget>[
             Container(
               color: StateContainer.of(context).curTheme.backgroundDark,
-              constraints: BoxConstraints.expand(),
+              constraints: const BoxConstraints.expand(),
             ),
             buildMainSettings(context),
             SlideTransition(
@@ -527,9 +520,9 @@ class _SettingsSheetState extends State<SettingsSheet>
           children: <Widget>[
             Container(
               margin:
-                  EdgeInsetsDirectional.only(start: 26.0, end: 20, bottom: 15),
+                  const EdgeInsetsDirectional.only(start: 26.0, end: 20, bottom: 15),
               child: Text(
-                "Settings",
+                'Settings',
                 style: AppStyles.textStyleSettingItemHeader(context),
               ),
             ),
@@ -538,7 +531,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                 child: Stack(
               children: <Widget>[
                 ListView(
-                  padding: EdgeInsets.only(top: 15.0),
+                  padding: const EdgeInsets.only(top: 15.0),
                   children: <Widget>[
                     /*Container(
                       margin:
@@ -555,7 +548,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       color: StateContainer.of(context).curTheme.text15,
                     ),*/
                     Container(
-                      margin: EdgeInsetsDirectional.only(
+                      margin: const EdgeInsetsDirectional.only(
                           start: 30.0, top: 20.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context).manage,
                           style: TextStyle(
@@ -587,14 +580,14 @@ class _SettingsSheetState extends State<SettingsSheet>
                         AppLocalization.of(context).backupSecretPhrase,
                         AppIcons.backupseed, onPressed: () async {
                       // Authenticate
-                      AuthenticationMethod authMethod =
+                      final AuthenticationMethod authMethod =
                           await sl.get<SharedPrefsUtil>().getAuthMethod();
-                      bool hasBiometrics =
+                      final bool hasBiometrics =
                           await sl.get<BiometricUtil>().hasBiometrics();
                       if (authMethod.method == AuthMethod.BIOMETRICS &&
                           hasBiometrics) {
                         try {
-                          bool authenticated = await sl
+                          final bool authenticated = await sl
                               .get<BiometricUtil>()
                               .authenticateWithBiometrics(
                                   context,
@@ -602,7 +595,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                                       .fingerprintSeedBackup);
                           if (authenticated) {
                             sl.get<HapticUtil>().fingerprintSucess();
-                            StateContainer.of(context).getSeed().then((seed) {
+                            StateContainer.of(context).getSeed().then((String seed) {
                             
                             });
                           }
@@ -632,7 +625,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       color: StateContainer.of(context).curTheme.text15,
                     ),
                     Container(
-                      margin: EdgeInsetsDirectional.only(
+                      margin: const EdgeInsetsDirectional.only(
                           start: 30.0, top: 20.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context).preferences,
                           style: TextStyle(
@@ -648,7 +641,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemWithDefaultValueWithInfos(
                         context,
                         AppLocalization.of(context).changeCurrency,
-                        "Select the fiat currency you would like to display alongside UCO",
+                        'Select the fiat currency you would like to display alongside UCO',
                         StateContainer.of(context).curCurrency,
                         FontAwesome.money,
                         _currencyDialog),
@@ -717,7 +710,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       color: StateContainer.of(context).curTheme.text15,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -740,8 +733,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                           StateContainer.of(context).curTheme.backgroundDark,
                           StateContainer.of(context).curTheme.backgroundDark00
                         ],
-                        begin: AlignmentDirectional(0.5, -1.0),
-                        end: AlignmentDirectional(0.5, 1.0),
+                        begin: const AlignmentDirectional(0.5, -1.0),
+                        end: const AlignmentDirectional(0.5, 1.0),
                       ),
                     ),
                   ),
@@ -758,8 +751,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                           StateContainer.of(context).curTheme.backgroundDark00,
                           StateContainer.of(context).curTheme.backgroundDark
                         ],
-                        begin: AlignmentDirectional(0.5, -1),
-                        end: AlignmentDirectional(0.5, 0.5),
+                        begin: const AlignmentDirectional(0.5, -1),
+                        end: const AlignmentDirectional(0.5, 0.5),
                       ),
                     ),
                   ),
@@ -779,19 +772,19 @@ class _SettingsSheetState extends State<SettingsSheet>
         boxShadow: [
           BoxShadow(
               color: StateContainer.of(context).curTheme.overlay30,
-              offset: Offset(-5, 0),
+              offset: const Offset(-5, 0),
               blurRadius: 20),
         ],
       ),
       child: SafeArea(
-        minimum: EdgeInsets.only(
+        minimum: const EdgeInsets.only(
           top: 60,
         ),
         child: Column(
           children: <Widget>[
             // Back button and Security Text
             Container(
-              margin: EdgeInsets.only(bottom: 10.0, top: 5),
+              margin: const EdgeInsets.only(bottom: 10.0, top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -801,7 +794,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       Container(
                         height: 40,
                         width: 40,
-                        margin: EdgeInsets.only(right: 10, left: 10),
+                        margin: const EdgeInsets.only(right: 10, left: 10),
                         child: TextButton(
                             onPressed: () {
                               setState(() {
@@ -827,11 +820,11 @@ class _SettingsSheetState extends State<SettingsSheet>
                 child: Stack(
               children: <Widget>[
                 ListView(
-                  padding: EdgeInsets.only(top: 15.0),
+                  padding: const EdgeInsets.only(top: 15.0),
                   children: <Widget>[
                     Container(
                       margin:
-                          EdgeInsetsDirectional.only(start: 30.0, bottom: 10),
+                          const EdgeInsetsDirectional.only(start: 30.0, bottom: 10),
                       child: Text(AppLocalization.of(context).preferences,
                           style: TextStyle(
                               fontSize: 16.0,
@@ -840,23 +833,18 @@ class _SettingsSheetState extends State<SettingsSheet>
                                   StateContainer.of(context).curTheme.text60)),
                     ),
                     // Authentication Method
-                    _hasBiometrics
-                        ? Divider(
+                    if (_hasBiometrics) Divider(
                             height: 2,
                             color: StateContainer.of(context).curTheme.text15,
-                          )
-                        : null,
-                    _hasBiometrics
-                        ? AppSettings.buildSettingsListItemWithDefaultValue(
+                          ) else null,
+                    if (_hasBiometrics) AppSettings.buildSettingsListItemWithDefaultValue(
                             context,
                             AppLocalization.of(context).authMethod,
                             _curAuthMethod,
                             AppIcons.fingerprint,
-                            _authMethodDialog)
-                        : null,
+                            _authMethodDialog) else null,
                     // Authenticate on Launch
-                    StateContainer.of(context).encryptedSecret == null
-                        ? Column(children: <Widget>[
+                    if (StateContainer.of(context).encryptedSecret == null) Column(children: <Widget>[
                             Divider(
                                 height: 2,
                                 color:
@@ -867,8 +855,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                                 _curUnlockSetting,
                                 AppIcons.lock,
                                 _lockDialog),
-                          ])
-                        : SizedBox(),
+                          ]) else const SizedBox(),
                     // Authentication Timer
                     Divider(
                       height: 2,
@@ -884,8 +871,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                           StateContainer.of(context).encryptedSecret == null,
                     ),
                     // Encrypt option
-                    StateContainer.of(context).encryptedSecret == null
-                        ? Column(children: <Widget>[
+                    if (StateContainer.of(context).encryptedSecret == null) Column(children: <Widget>[
                             Divider(
                                 height: 2,
                                 color:
@@ -897,9 +883,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                               Sheets.showAppHeightNineSheet(
                                   context: context, widget: SetPasswordSheet());
                             })
-                          ])
-                        : // Decrypt option
-                        Column(children: <Widget>[
+                          ]) else Column(children: <Widget>[
                             Divider(
                                 height: 2,
                                 color:
@@ -931,8 +915,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                           StateContainer.of(context).curTheme.backgroundDark,
                           StateContainer.of(context).curTheme.backgroundDark00
                         ],
-                        begin: AlignmentDirectional(0.5, -1.0),
-                        end: AlignmentDirectional(0.5, 1.0),
+                        begin: const AlignmentDirectional(0.5, -1.0),
+                        end: const AlignmentDirectional(0.5, 1.0),
                       ),
                     ),
                   ),
@@ -947,17 +931,17 @@ class _SettingsSheetState extends State<SettingsSheet>
 
   Future<void> authenticateWithPin() async {
     // PIN Authentication
-    String expectedPin = await sl.get<Vault>().getPin();
-    bool auth = await Navigator.of(context)
+    final String expectedPin = await sl.get<Vault>().getPin();
+    final bool auth = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
-      return new PinScreen(
+      return PinScreen(
         PinOverlayType.ENTER_PIN,
         expectedPin: expectedPin,
         description: AppLocalization.of(context).pinSeedBackup,
       );
     }));
     if (auth != null && auth) {
-      await Future.delayed(Duration(milliseconds: 200));
+      await Future.delayed(const Duration(milliseconds: 200));
       Navigator.of(context).pop();
      
     }

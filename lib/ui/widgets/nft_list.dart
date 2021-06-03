@@ -12,11 +12,9 @@ class NftListWidget {
   static Widget buildNftList(BuildContext context) {
     return Stack(
       children: [
-        StateContainer.of(context).wallet == null ||
+        if (StateContainer.of(context).wallet == null ||
                 StateContainer.of(context).wallet.accountBalance == null ||
-                StateContainer.of(context).wallet.accountBalance.nftList == null
-            ? SizedBox()
-            : SizedBox(
+                StateContainer.of(context).wallet.accountBalance.nftList == null) const SizedBox() else SizedBox(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 0.0),
                   child: Container(
@@ -26,22 +24,22 @@ class NftListWidget {
                             .nftList!
                             .length *
                         60,
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         top: 23.5, left: 3.5, right: 3.5, bottom: 3.5),
                     width: MediaQuery.of(context).size.width * 0.9,
                     decoration: BoxDecoration(
                       color: StateContainer.of(context).curTheme.background,
-                      borderRadius: BorderRadius.all(
+                      borderRadius: const BorderRadius.all(
                         Radius.circular(15),
                       ),
                       boxShadow: [
                         BoxShadow(
                           color: StateContainer.of(context)
                               .curTheme
-                              .backgroundDark,
+                              .backgroundDark!,
                           blurRadius: 5.0,
                           spreadRadius: 0.0,
-                          offset: Offset(5.0, 5.0),
+                          offset: const Offset(5.0, 5.0),
                         ),
                       ],
                     ),
@@ -49,7 +47,7 @@ class NftListWidget {
                       padding: const EdgeInsets.only(
                           left: 6, right: 6, top: 6, bottom: 6),
                       child: ListView.builder(
-                        padding: EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         itemCount: StateContainer.of(context)
                             .wallet
                             .accountBalance
@@ -72,12 +70,12 @@ class NftListWidget {
           child: Padding(
             padding: const EdgeInsets.only(top: 0.0),
             child: Container(
-              padding: EdgeInsets.all(3.5),
+              padding: const EdgeInsets.all(3.5),
               width: MediaQuery.of(context).size.width * 0.9,
               height: 40,
               decoration: BoxDecoration(
                 color: StateContainer.of(context).curTheme.backgroundDark,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(15),
                   topRight: Radius.circular(15),
                   bottomLeft: Radius.circular(5),
@@ -86,17 +84,17 @@ class NftListWidget {
                 boxShadow: [
                   BoxShadow(
                     color:
-                        StateContainer.of(context).curTheme.backgroundDarkest,
+                        StateContainer.of(context).curTheme.backgroundDarkest!,
                     blurRadius: 5.0,
                     spreadRadius: 0.0,
-                    offset: Offset(5.0, 5.0),
+                    offset: const Offset(5.0, 5.0),
                   )
                 ],
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("NFT", style: AppStyles.textStyleAddressText60(context)),
+                  Text('NFT', style: AppStyles.textStyleAddressText60(context)),
                 ],
               ),
             ),
@@ -108,7 +106,7 @@ class NftListWidget {
             child: Container(
               height: 36,
               width: 36,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
               ),
               child: TextButton(
@@ -134,7 +132,7 @@ class NftListWidget {
             child: Container(
               height: 36,
               width: 36,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
               ),
               child: TextButton(
@@ -149,7 +147,7 @@ class NftListWidget {
     );
   }
 
-  static displayNftDetail(BuildContext context, BalanceNft balanceNft) {
+  static Column displayNftDetail(BuildContext context, BalanceNft balanceNft) {
     return Column(
       children: [
         Row(
@@ -165,7 +163,7 @@ class NftListWidget {
                           contactsRef: StateContainer.of(context).contactsRef,
                           title: AppLocalization.of(context)
                               .transferNFTName
-                              .replaceAll("%1", balanceNft.name!),
+                              .replaceAll('%1', balanceNft.name!),
                           actionButtonTitle:
                               AppLocalization.of(context).transferNFT,
                           address: balanceNft.address,
@@ -174,7 +172,7 @@ class NftListWidget {
                   child: Icon(FontAwesome5.arrow_circle_up,
                       color: StateContainer.of(context).curTheme.primary),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -191,11 +189,11 @@ class NftListWidget {
                 style: AppStyles.textStyleAddressText90(context)),
           ],
         ),
-        SizedBox(height: 6),
+        const SizedBox(height: 6),
         Divider(
             height: 4,
             color: StateContainer.of(context).curTheme.backgroundDark),
-        SizedBox(height: 6),
+        const SizedBox(height: 6),
       ],
     );
   }

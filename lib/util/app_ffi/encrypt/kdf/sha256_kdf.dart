@@ -13,14 +13,15 @@ import 'package:uniris_mobile_wallet/util/app_ffi/encrypt/model/keyiv.dart';
 /// there's no centralized database of key
 class Sha256KDF extends KDF {
   /// Gets the key and iv
+  @override
   KeyIV deriveKey(String password, {Uint8List salt}) {
-    Uint8List pwBytes = AppHelpers.stringToBytesUtf8(password);
-    Uint8List saltBytes = salt == null ? Uint8List(1) : salt;
+    final Uint8List pwBytes = AppHelpers.stringToBytesUtf8(password);
+    final Uint8List saltBytes = salt ?? Uint8List(1);
 
     // Key = sha256 (password + salt);
-    Uint8List key = Sha.sha256([pwBytes, saltBytes]);
+    final Uint8List key = Sha.sha256([pwBytes, saltBytes]);
     // iv = sha256 (KEY + password + salt);
-    Uint8List iv = Sha.sha256([key, pwBytes, saltBytes]).sublist(0, 16);
+    final Uint8List iv = Sha.sha256([key, pwBytes, saltBytes]).sublist(0, 16);
 
     return KeyIV(key, iv);
   }

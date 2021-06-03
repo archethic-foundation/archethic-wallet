@@ -19,13 +19,13 @@ import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
 class IntroPasswordOnLaunch extends StatefulWidget {
   final String seed;
 
-  IntroPasswordOnLaunch({this.seed});
+  const IntroPasswordOnLaunch({this.seed});
   @override
   _IntroPasswordOnLaunchState createState() => _IntroPasswordOnLaunchState();
 }
 
 class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +43,7 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
           ),
         ),
         child: LayoutBuilder(
-          builder: (context, constraints) => SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
             minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
                 top: MediaQuery.of(context).size.height * 0.075),
@@ -81,7 +81,7 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                           end: smallScreen(context) ? 30 : 40,
                           top: 10,
                         ),
-                        alignment: AlignmentDirectional(-1, 0),
+                        alignment: const AlignmentDirectional(-1, 0),
                         child: AutoSizeText(
                           AppLocalization.of(context)
                               .requireAPasswordToOpenHeader,
@@ -137,10 +137,10 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                             await sl.get<DBHelper>().dropAccounts();
                             await AppUtil().loginAccount(widget.seed, context);
                             StateContainer.of(context).requestUpdate();
-                            String pin = await Navigator.of(context).push(
+                            final String pin = await Navigator.of(context).push(
                                 MaterialPageRoute(
                                     builder: (BuildContext context) {
-                              return PinScreen(
+                              return const PinScreen(
                                 PinOverlayType.NEW_PIN,
                               );
                             }));
@@ -151,9 +151,9 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                             sl
                                 .get<Vault>()
                                 .setSeed(AppSeeds.generateSeed())
-                                .then((result) {
+                                .then((String result) {
                               // Update wallet
-                              StateContainer.of(context).getSeed().then((seed) {
+                              StateContainer.of(context).getSeed().then((String seed) {
                                 AppUtil().loginAccount(seed, context).then((_) {
                                   StateContainer.of(context).requestUpdate();
                                   Navigator.of(context)
@@ -190,7 +190,7 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
 
   void _pinEnteredCallback(String pin) async {
     await sl.get<Vault>().writePin(pin);
-    PriceConversion conversion =
+    final PriceConversion conversion =
         await sl.get<SharedPrefsUtil>().getPriceConversion();
     // Update wallet
     Navigator.of(context).pushNamedAndRemoveUntil(

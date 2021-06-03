@@ -1,12 +1,13 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'dart:ui' as ui;
 
 class AppStyles {
   // Text style for paragraph text.
   static TextStyle textStyleParagraph(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.medium,
         fontWeight: FontWeight.w200,
         color: StateContainer.of(context).curTheme.text);
@@ -15,7 +16,7 @@ class AppStyles {
   // Text style for paragraph text with primary color.
   static TextStyle textStyleParagraphPrimary(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.medium,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.primary);
@@ -23,7 +24,7 @@ class AppStyles {
 
   static TextStyle textStyleParagraphSmall(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w200,
         color: StateContainer.of(context).curTheme.text);
@@ -32,7 +33,7 @@ class AppStyles {
   // Text style for thin paragraph text with primary color.
   static TextStyle textStyleParagraphThinPrimary(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w600,
         color: StateContainer.of(context).curTheme.primary);
@@ -41,7 +42,7 @@ class AppStyles {
   // Text style for paragraph text with primary color.
   static TextStyle textStyleParagraphSuccess(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.success);
@@ -50,7 +51,7 @@ class AppStyles {
   // For snackbar/Toast text
   static TextStyle textStyleSnackbar(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.background);
@@ -58,7 +59,7 @@ class AppStyles {
 
   static TextStyle textContextMenu(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.contextMenuText);
@@ -66,7 +67,7 @@ class AppStyles {
 
   static TextStyle textContextMenuRed(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.contextMenuTextRed);
@@ -75,7 +76,7 @@ class AppStyles {
   // Text style for primary button
   static TextStyle textStyleButtonPrimary(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes._large,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.background);
@@ -84,7 +85,7 @@ class AppStyles {
   // Text style for outline button
   static TextStyle textStyleButtonPrimaryOutline(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes._large,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.primary);
@@ -93,7 +94,7 @@ class AppStyles {
   // Text style for small outline button
   static TextStyle textStyleButtonPrimarySmallOutline(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.primary);
@@ -102,7 +103,7 @@ class AppStyles {
   // Text style for small success outline button
   static TextStyle textStyleButtonSuccessSmallOutline(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.success);
@@ -110,7 +111,7 @@ class AppStyles {
 
   static TextStyle textStyleButtonPrimaryOutlineDisabled(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes._large,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.primary60);
@@ -119,7 +120,7 @@ class AppStyles {
   // Text style for success outline button
   static TextStyle textStyleButtonSuccessOutline(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes._large,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.success);
@@ -128,7 +129,7 @@ class AppStyles {
   // Text style for text outline button
   static TextStyle textStyleButtonTextOutline(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes._large,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.text);
@@ -167,15 +168,15 @@ class AppStyles {
   // Text style for alternate currencies on home page
   static TextStyle textStyleCurrencyAlt(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w600,
         color: StateContainer.of(context).curTheme.text60);
   }
 
   static TextStyle textStyleCurrencyAltHidden(BuildContext context) {
-    return TextStyle(
-        fontFamily: "Montserrat",
+    return const TextStyle(
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w600,
         color: Colors.transparent);
@@ -184,7 +185,7 @@ class AppStyles {
   // Text style for primary currency on home page
   static TextStyle textStyleCurrency(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes._largest,
         fontWeight: FontWeight.w900,
         color: StateContainer.of(context).curTheme.primary);
@@ -193,7 +194,7 @@ class AppStyles {
   // Text style for primary currency on home page
   static TextStyle textStyleCurrencySmaller(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: 22,
         fontWeight: FontWeight.w900,
         color: StateContainer.of(context).curTheme.primary);
@@ -203,7 +204,7 @@ class AppStyles {
   // Text style for transaction card "Received"/"Sent" text
   static TextStyle textStyleTransactionType(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w600,
         color: StateContainer.of(context).curTheme.text);
@@ -211,17 +212,17 @@ class AppStyles {
 
   static TextStyle textStyleTransactionTypeGreen(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w600,
         foreground: Paint()
-          ..shader = ui.Gradient.linear(Offset.zero, Offset(0, 60),
+          ..shader = ui.Gradient.linear(Offset.zero, const Offset(0, 60),
               [Colors.green[200]!, Colors.green[800]!]));
   }
 
   static TextStyle textStyleChartGreen(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes.smallest,
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.positiveValue,
@@ -230,7 +231,7 @@ class AppStyles {
 
   static TextStyle textStyleChartRed(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes.smallest,
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.negativeValue,
@@ -239,28 +240,28 @@ class AppStyles {
 
   static TextStyle textStyleTransactionTypeBlue(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w600,
         foreground: Paint()
-          ..shader = ui.Gradient.linear(Offset.zero, Offset(0, 60),
+          ..shader = ui.Gradient.linear(Offset.zero, const Offset(0, 60),
               [Colors.blue[200]!, Colors.blue[800]!]));
   }
 
   static TextStyle textStyleTransactionTypeRed(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w600,
         foreground: Paint()
-          ..shader = ui.Gradient.linear(Offset.zero, Offset(0, 60),
+          ..shader = ui.Gradient.linear(Offset.zero, const Offset(0, 60),
               [Colors.red[200]!, Colors.red[800]!]));
   }
 
   // Amount
   static TextStyle textStyleTransactionAmount(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         color: StateContainer.of(context).curTheme.primary60,
         fontSize: AppFontSizes.smallest,
         fontWeight: FontWeight.w600);
@@ -269,7 +270,7 @@ class AppStyles {
   // Unit (e.g. BAN)
   static TextStyle textStyleTransactionUnit(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       color: StateContainer.of(context).curTheme.primary60,
       fontSize: AppFontSizes.smallest,
       fontWeight: FontWeight.w100,
@@ -278,7 +279,7 @@ class AppStyles {
 
   static TextStyle textStyleTiny(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       color: StateContainer.of(context).curTheme.primary60,
       fontSize: AppFontSizes.tiny,
       fontWeight: FontWeight.w100,
@@ -298,7 +299,7 @@ class AppStyles {
   // Version info in settings
   static TextStyle textStyleVersion(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w100,
         color: StateContainer.of(context).curTheme.text60);
@@ -306,7 +307,7 @@ class AppStyles {
 
   static TextStyle textStyleVersionUnderline(BuildContext context) {
     return TextStyle(
-        fontFamily: "Montserrat",
+        fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w100,
         color: StateContainer.of(context).curTheme.text60,
@@ -316,7 +317,7 @@ class AppStyles {
   // Text style for alert dialog header
   static TextStyle textStyleDialogHeader(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes._large,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.primary,
@@ -326,7 +327,7 @@ class AppStyles {
   // Text style for dialog options
   static TextStyle textStyleDialogOptions(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes.medium,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text,
@@ -336,7 +337,7 @@ class AppStyles {
   // Text style for dialog options
   static TextStyle textStyleDialogOptionsChoice(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes.medium,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.choiceOption,
@@ -346,7 +347,7 @@ class AppStyles {
   // Text style for dialog button text
   static TextStyle textStyleDialogButtonText(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes.smallest,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.primary,
@@ -413,7 +414,7 @@ class AppStyles {
   // Text style for general headers like sheet headers
   static TextStyle textStyleHeader(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes.larger,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.text,
@@ -423,7 +424,7 @@ class AppStyles {
   // Text style for settings headers
   static TextStyle textStyleSettingsHeader(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes._largest,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.text,
@@ -433,7 +434,7 @@ class AppStyles {
   // Text style for primary color header
   static TextStyle textStyleHeaderColored(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes._largest,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.primary,
@@ -443,7 +444,7 @@ class AppStyles {
   // Text style for primary color header
   static TextStyle textStyleHeader2Colored(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes.larger,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.primary,
@@ -452,7 +453,7 @@ class AppStyles {
 
   static TextStyle textStylePinScreenHeaderColored(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes._large,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.primary,
@@ -461,7 +462,7 @@ class AppStyles {
 
   static TextStyle textStyleLogoutButton(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes.small,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text,
@@ -471,7 +472,7 @@ class AppStyles {
   // Text style for setting item header
   static TextStyle textStyleSettingItemHeader(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes.medium,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text,
@@ -480,7 +481,7 @@ class AppStyles {
 
   static TextStyle textStyleSettingItemHeader60(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes.medium,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text60,
@@ -489,7 +490,7 @@ class AppStyles {
 
   static TextStyle textStyleSettingItemHeader45(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes.medium,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text45,
@@ -499,7 +500,7 @@ class AppStyles {
   // Text style for setting item subheader
   static TextStyle textStyleSettingItemSubheader(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes.smallest,
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.text60,
@@ -508,7 +509,7 @@ class AppStyles {
 
   static TextStyle textStyleSettingItemSubheader30(BuildContext context) {
     return TextStyle(
-      fontFamily: "Montserrat",
+      fontFamily: 'Montserrat',
       fontSize: AppFontSizes.smallest,
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.text30,
@@ -585,16 +586,16 @@ class AppStyles {
 }
 
 class AppFontSizes {
-  static const tiny = 10.0;
-  static const smallest = 12.0;
-  static const small = 14.0;
-  static const medium = 16.0;
-  static const _large = 20.0;
-  static const larger = 24.0;
-  static const _largest = 28.0;
-  static const largestc = 28.0;
-  static const _sslarge = 18.0;
-  static const _sslargest = 22.0;
+  static const double tiny = 10.0;
+  static const double smallest = 12.0;
+  static const double small = 14.0;
+  static const double medium = 16.0;
+  static const double _large = 20.0;
+  static const double larger = 24.0;
+  static const double _largest = 28.0;
+  static const double largestc = 28.0;
+  static const double _sslarge = 18.0;
+  static const double _sslargest = 22.0;
   static double largest(context) {
     if (smallScreen(context)) {
       return _sslargest;

@@ -35,7 +35,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: LayoutBuilder(
-          builder: (context, constraints) => SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
             minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
                 top: MediaQuery.of(context).size.height * 0.075),
@@ -73,7 +73,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           end: smallScreen(context) ? 30 : 40,
                           top: 10,
                         ),
-                        alignment: AlignmentDirectional(-1, 0),
+                        alignment: const AlignmentDirectional(-1, 0),
                         child: AutoSizeText(
                           AppLocalization.of(context).ackBackedUp,
                           maxLines: 4,
@@ -109,10 +109,10 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                             AppButtonType.PRIMARY,
                             AppLocalization.of(context).yes.toUpperCase(),
                             Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
-                          String pin = await Navigator.of(context).push(
+                          final String pin = await Navigator.of(context).push(
                               MaterialPageRoute(
                                   builder: (BuildContext context) {
-                            return new PinScreen(
+                            return const PinScreen(
                               PinOverlayType.NEW_PIN,
                             );
                           }));
@@ -146,7 +146,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
 
   void _pinEnteredCallback(String pin) async {
     await sl.get<Vault>().writePin(pin);
-    PriceConversion conversion =
+    final PriceConversion conversion =
         await sl.get<SharedPrefsUtil>().getPriceConversion();
 
     Navigator.of(context).pushNamedAndRemoveUntil(

@@ -14,7 +14,7 @@ class _BeforeScanScreenState extends State<BeforeScanScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 150), () async {
+    Future.delayed(const Duration(milliseconds: 150), () async {
       String scanResult;
       Navigator.pop(context, scanResult);
     });
@@ -29,7 +29,7 @@ class _BeforeScanScreenState extends State<BeforeScanScreen> {
       child: Hero(
         tag: 'scanButton',
         child: AnimatedContainer(
-          duration: Duration(milliseconds: 100),
+          duration: const Duration(milliseconds: 100),
           curve: Curves.easeOut,
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
@@ -37,7 +37,7 @@ class _BeforeScanScreenState extends State<BeforeScanScreen> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(0),
           ),
-          child: Icon(
+          child: const Icon(
             AppIcons.scan,
             size: 50,
             color: Colors.black,

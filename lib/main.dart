@@ -3,11 +3,11 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:uniris_mobile_wallet/model/available_currency.dart';
 import 'package:uniris_mobile_wallet/model/available_language.dart';
 import 'package:uniris_mobile_wallet/ui/before_scan_screen.dart';
 import 'package:uniris_mobile_wallet/ui/intro/intro_backup_safety.dart';
@@ -41,13 +41,13 @@ void main() async {
   // Run app
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-    runApp(new StateContainer(child: new App()));
+    runApp(StateContainer(child: App()));
   });
 }
 
 class App extends StatefulWidget {
   @override
-  _AppState createState() => new _AppState();
+  _AppState createState() => _AppState();
 }
 
 class _AppState extends State<App> {
@@ -160,12 +160,12 @@ class _AppState extends State<App> {
               );
             case '/home':
               return NoTransitionRoute(
-                builder: (_) => AppHomePage(),
+                builder: (_) => const AppHomePage(),
                 settings: settings,
               );
             case '/home_transition':
               return NoPopTransitionRoute(
-                builder: (_) => AppHomePage(),
+                builder: (_) => const AppHomePage(),
                 settings: settings,
               );
             case '/intro_welcome':
@@ -231,7 +231,7 @@ class _AppState extends State<App> {
 /// Default page route that determines if user is logged in and routes them appropriately.
 class Splash extends StatefulWidget {
   @override
-  SplashState createState() => new SplashState();
+  SplashState createState() => SplashState();
 }
 
 class SplashState extends State<Splash> with WidgetsBindingObserver {
@@ -243,9 +243,9 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       return false;
     }
     try {
-      String salted = AppHelpers.bytesToUtf8String(
+      final String salted = AppHelpers.bytesToUtf8String(
           AppHelpers.hexToBytes(seed.substring(0, 16)));
-      if (salted == "Salted__") {
+      if (salted == 'Salted__') {
         return true;
       }
       return false;
@@ -286,7 +286,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
     }
     try {
       // iOS key store is persistent, so if this is first launch then we will clear the keystore
-      bool firstLaunch = await sl.get<SharedPrefsUtil>().getFirstLaunch();
+      final bool firstLaunch = await sl.get<SharedPrefsUtil>().getFirstLaunch();
       if (firstLaunch) {
         await sl.get<Vault>().deleteAll();
       }
@@ -294,8 +294,8 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       // See if logged in already
       bool isLoggedIn = false;
       bool isEncrypted = false;
-      var seed = await sl.get<Vault>().getSeed();
-      var pin = await sl.get<Vault>().getPin();
+      final String seed = await sl.get<Vault>().getSeed();
+      final String pin = await sl.get<Vault>().getPin();
       // If we have a seed set, but not a pin - or vice versa
       // Then delete the seed and pin from device and start over.
       // This would mean user did not complete the intro screen completely.
@@ -316,7 +316,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
           Navigator.of(context).pushReplacementNamed('/lock_screen');
         } else {
           await AppUtil().loginAccount(seed, context);
-          PriceConversion conversion =
+          final PriceConversion conversion =
               await sl.get<SharedPrefsUtil>().getPriceConversion();
           Navigator.of(context)
               .pushReplacementNamed('/home', arguments: conversion);
@@ -332,7 +332,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       /// Instead of telling them they are out of luck, this is an automatic "fallback"
       /// It will generate a 64-byte secret using the native android "bottlerocketstudios" Vault
       /// This secret is used to encrypt sensitive data and save it in SharedPreferences
-      if (Platform.isAndroid && e.toString().contains("flutter_secure")) {
+      if (Platform.isAndroid && e.toString().contains('flutter_secure')) {
         if (!(await sl.get<SharedPrefsUtil>().useLegacyStorage())) {
           await sl.get<SharedPrefsUtil>().setUseLegacyStorage();
           checkLoggedIn();
@@ -388,7 +388,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
     setState(() {
       StateContainer.of(context).deviceLocale = Localizations.localeOf(context);
     });
-    sl.get<SharedPrefsUtil>().getLanguage().then((setting) {
+    sl.get<SharedPrefsUtil>().getLanguage().then((LanguageSetting setting) {
       setState(() {
         StateContainer.of(context).updateLanguage(setting);
       });
@@ -401,10 +401,10 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
     sl
         .get<SharedPrefsUtil>()
         .getCurrency(StateContainer.of(context).deviceLocale)
-        .then((currency) {
+        .then((AvailableCurrency currency) {
       StateContainer.of(context).curCurrency = currency;
     });
-    return new Scaffold(
+    return Scaffold(
       backgroundColor: StateContainer.of(context).curTheme.background,
     );
   }

@@ -175,7 +175,7 @@ class AppButton {
           ),
         );
       default:
-        throw new UIException("Invalid Button Type $type");
+        throw UIException('Invalid Button Type $type');
     }
   } //
 }

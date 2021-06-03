@@ -16,11 +16,11 @@ class UIUtil {
   static Widget threeLineAddressText(BuildContext context, String address,
       {ThreeLineAddressTextType type = ThreeLineAddressTextType.PRIMARY,
       String contactName}) {
-    String stringPartOne = "";
-    String stringPartTwo = "";
-    String stringPartThree = "";
-    String stringPartFour = "";
-    String stringPartFive = "";
+    String stringPartOne = '';
+    String stringPartTwo = '';
+    String stringPartThree = '';
+    String stringPartFour = '';
+    String stringPartFive = '';
     if (address.length >= 12) {
       stringPartOne = address.substring(0, 12);
     } else {
@@ -101,13 +101,13 @@ class UIUtil {
           ],
         );
       case ThreeLineAddressTextType.PRIMARY:
-        Widget contactWidget = contactName != null
+        final Widget contactWidget = contactName != null
             ? RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
                     text: contactName,
                     style: AppStyles.textStyleAddressText90(context)))
-            : SizedBox();
+            : const SizedBox();
         return Column(
           children: <Widget>[
             contactWidget,
@@ -158,13 +158,13 @@ class UIUtil {
           ],
         );
       case ThreeLineAddressTextType.SUCCESS:
-        Widget contactWidget = contactName != null
+        final Widget contactWidget = contactName != null
             ? RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
                     text: contactName,
                     style: AppStyles.textStyleAddressSuccess(context)))
-            : SizedBox();
+            : const SizedBox();
         return Column(
           children: <Widget>[
             contactWidget,
@@ -264,14 +264,14 @@ class UIUtil {
           ],
         );
       default:
-        throw new UIException("Invalid threeLineAddressText Type $type");
+        throw UIException('Invalid threeLineAddressText Type $type');
     }
   }
 
   static Widget oneLineAddressText(BuildContext context, String address,
       {OneLineAddressTextType type = OneLineAddressTextType.PRIMARY}) {
-    String stringPartOne = address.substring(0, 12);
-    String stringPartFive = address.substring(59);
+    final String stringPartOne = address.substring(0, 12);
+    final String stringPartFive = address.substring(59);
     switch (type) {
       case OneLineAddressTextType.PRIMARY60:
         return Column(
@@ -286,7 +286,7 @@ class UIUtil {
                     style: AppStyles.textStyleAddressText60(context),
                   ),
                   TextSpan(
-                    text: "...",
+                    text: '...',
                     style: AppStyles.textStyleAddressText60(context),
                   ),
                   TextSpan(
@@ -311,7 +311,7 @@ class UIUtil {
                     style: AppStyles.textStyleAddressText90(context),
                   ),
                   TextSpan(
-                    text: "...",
+                    text: '...',
                     style: AppStyles.textStyleAddressText90(context),
                   ),
                   TextSpan(
@@ -336,7 +336,7 @@ class UIUtil {
                     style: AppStyles.textStyleAddressSuccess(context),
                   ),
                   TextSpan(
-                    text: "...",
+                    text: '...',
                     style: AppStyles.textStyleAddressText90(context),
                   ),
                   TextSpan(
@@ -349,16 +349,16 @@ class UIUtil {
           ],
         );
       default:
-        throw new UIException("Invalid oneLineAddressText Type $type");
+        throw UIException('Invalid oneLineAddressText Type $type');
     }
   }
 
   static Widget threeLineSeedText(BuildContext context, String address,
       {TextStyle textStyle}) {
     textStyle = textStyle ?? AppStyles.textStyleSeed(context);
-    String stringPartOne = address.substring(0, 22);
-    String stringPartTwo = address.substring(22, 44);
-    String stringPartThree = address.substring(44, 64);
+    final String stringPartOne = address.substring(0, 22);
+    final String stringPartTwo = address.substring(22, 44);
+    final String stringPartThree = address.substring(44, 64);
     return Column(
       children: <Widget>[
         Text(
@@ -392,7 +392,7 @@ class UIUtil {
           margin: EdgeInsets.symmetric(
               vertical: MediaQuery.of(context).size.height * 0.05,
               horizontal: 14),
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
           width: MediaQuery.of(context).size.width - 30,
           decoration: BoxDecoration(
             color: StateContainer.of(context).curTheme.primary,
@@ -400,7 +400,7 @@ class UIUtil {
             boxShadow: [
               BoxShadow(
                   color: StateContainer.of(context).curTheme.overlay80,
-                  offset: Offset(0, 15),
+                  offset: const Offset(0, 15),
                   blurRadius: 30,
                   spreadRadius: -5),
             ],
@@ -413,7 +413,7 @@ class UIUtil {
         ),
       ),
       dismissOtherToast: true,
-      duration: Duration(milliseconds: 3500),
+      duration: const Duration(milliseconds: 3500),
     );
   }
 
@@ -425,7 +425,7 @@ class UIUtil {
       _lockDisableSub.cancel();
     }
     EventTaxiImpl.singleton().fire(DisableLockTimeoutEvent(disable: true));
-    Future<dynamic> delayed = Future.delayed(Duration(seconds: 10));
+    final Future<dynamic> delayed = Future.delayed(const Duration(seconds: 10));
     delayed.then((_) {
       return true;
     });
@@ -443,17 +443,17 @@ class UIUtil {
 
   static String getRobohashURL(String address) {
     if (address == null) {
-      return "https://robohash.org/uco?set=set4";
+      return 'https://robohash.org/uco?set=set4';
     } else {
-      return "https://robohash.org/$address?set=set4";
+      return 'https://robohash.org/$address?set=set4';
     }
   }
 
   static String getDragginatorURL(String dna, String status) {
-    if (status == "egg") {
-      return "https://dragginator.com/data/eggs/" + dna + "/egg.png";
+    if (status == 'egg') {
+      return 'https://dragginator.com/data/eggs/' + dna + '/egg.png';
     } else {
-      return "https://dragginator.com/data/eggs/" + dna + "/draggon.png";
+      return 'https://dragginator.com/data/eggs/' + dna + '/draggon.png';
     }
   }
 }

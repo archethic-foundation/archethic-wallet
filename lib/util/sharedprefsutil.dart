@@ -1,17 +1,18 @@
 // @dart=2.9
 
-import 'dart:ui';
 import 'dart:async';
+import 'dart:ui';
+
 import 'package:intl/intl.dart';
-import 'package:uniris_mobile_wallet/util/random_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uniris_mobile_wallet/service_locator.dart';
-import 'package:uniris_mobile_wallet/util/encrypt.dart';
 import 'package:uniris_mobile_wallet/model/authentication_method.dart';
 import 'package:uniris_mobile_wallet/model/available_currency.dart';
 import 'package:uniris_mobile_wallet/model/available_language.dart';
 import 'package:uniris_mobile_wallet/model/device_lock_timeout.dart';
 import 'package:uniris_mobile_wallet/model/vault.dart';
+import 'package:uniris_mobile_wallet/service_locator.dart';
+import 'package:uniris_mobile_wallet/util/encrypt.dart';
+import 'package:uniris_mobile_wallet/util/random_util.dart';
 
 /// Price conversion preference values
 enum PriceConversion { BTC, NONE, HIDDEN }
@@ -46,7 +47,7 @@ class SharedPrefsUtil {
 
   // For plain-text data
   Future<void> set(String key, value) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     if (value is bool) {
       sharedPreferences.setBool(key, value);
     } else if (value is String) {
@@ -59,7 +60,7 @@ class SharedPrefsUtil {
   }
 
   Future<dynamic> get(String key, {dynamic defaultValue}) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.get(key) ?? defaultValue;
   }
 
@@ -69,25 +70,25 @@ class SharedPrefsUtil {
     String secret = await sl.get<Vault>().getEncryptionPhrase();
     if (secret == null) {
       secret = RandomUtil.generateEncryptionSecret(16) +
-          ":" +
+          ':' +
           RandomUtil.generateEncryptionSecret(8);
       await sl.get<Vault>().writeEncryptionPhrase(secret);
     }
     // Encrypt and save
-    Salsa20Encryptor encrypter =
-        new Salsa20Encryptor(secret.split(":")[0], secret.split(":")[1]);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final Salsa20Encryptor encrypter =
+        Salsa20Encryptor(secret.split(':')[0], secret.split(':')[1]);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(key, encrypter.encrypt(value));
   }
 
   Future<String> getEncrypted(String key) async {
-    String secret = await sl.get<Vault>().getEncryptionPhrase();
+    final String secret = await sl.get<Vault>().getEncryptionPhrase();
     if (secret == null) return null;
     // Decrypt and return
-    Salsa20Encryptor encrypter =
-        new Salsa20Encryptor(secret.split(":")[0], secret.split(":")[1]);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String encrypted = prefs.get(key);
+    final Salsa20Encryptor encrypter =
+        Salsa20Encryptor(secret.split(':')[0], secret.split(':')[1]);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String encrypted = prefs.get(key);
     if (encrypted == null) return null;
     return encrypter.decrypt(encrypted);
   }
@@ -159,7 +160,7 @@ class SharedPrefsUtil {
   }
 
   Future<String> getVersionApp() async {
-    return await get(version_app, defaultValue: "");
+    return await get(version_app, defaultValue: '');
   }
 
   Future<void> setWalletServer(String v) async {
@@ -167,7 +168,7 @@ class SharedPrefsUtil {
   }
 
   Future<String> getWalletServer() async {
-    return await get(wallet_server, defaultValue: "auto");
+    return await get(wallet_server, defaultValue: 'auto');
   }
 
   Future<void> setTokensApi(String v) async {
@@ -176,7 +177,7 @@ class SharedPrefsUtil {
 
   Future<String> getTokensApi() async {
     return await get(tokens_api,
-        defaultValue: "https://uco.today/api/balances/");
+        defaultValue: 'https://uco.today/api/balances/');
   }
 
   Future<void> setEndpoint(String v) async {
@@ -184,7 +185,7 @@ class SharedPrefsUtil {
   }
 
   Future<String> getEndpoint() async {
-    return await get(endpoint, defaultValue: "https://blockchain.uniris.io");
+    return await get(endpoint, defaultValue: 'https://blockchain.uniris.io');
   }
 
   Future<void> setExplorerUrl(String v) async {
@@ -192,7 +193,7 @@ class SharedPrefsUtil {
   }
 
   Future<String> getExplorerUrl() async {
-    return await get(explorer_url, defaultValue: "https://uniris.io");
+    return await get(explorer_url, defaultValue: 'https://uniris.io');
   }
 
   Future<void> setLock(bool value) async {
@@ -222,7 +223,7 @@ class SharedPrefsUtil {
   }
 
   Future<void> resetLockAttempts() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove(pin_attempts);
     await prefs.remove(pin_lock_until);
   }
@@ -235,39 +236,39 @@ class SharedPrefsUtil {
   }
 
   Future<void> updateLockDate() async {
-    int attempts = await getLockAttempts();
+    final int attempts = await getLockAttempts();
     if (attempts >= 20) {
       // 4+ failed attempts
       await set(
           pin_lock_until,
           DateFormat.yMd()
               .add_jms()
-              .format(DateTime.now().toUtc().add(Duration(hours: 24))));
+              .format(DateTime.now().toUtc().add(const Duration(hours: 24))));
     } else if (attempts >= 15) {
       // 3 failed attempts
       await set(
           pin_lock_until,
           DateFormat.yMd()
               .add_jms()
-              .format(DateTime.now().toUtc().add(Duration(minutes: 15))));
+              .format(DateTime.now().toUtc().add(const Duration(minutes: 15))));
     } else if (attempts >= 10) {
       // 2 failed attempts
       await set(
           pin_lock_until,
           DateFormat.yMd()
               .add_jms()
-              .format(DateTime.now().toUtc().add(Duration(minutes: 5))));
+              .format(DateTime.now().toUtc().add(const Duration(minutes: 5))));
     } else if (attempts >= 5) {
       await set(
           pin_lock_until,
           DateFormat.yMd()
               .add_jms()
-              .format(DateTime.now().toUtc().add(Duration(minutes: 1))));
+              .format(DateTime.now().toUtc().add(const Duration(minutes: 1))));
     }
   }
 
   Future<DateTime> getLockDate() async {
-    String lockDateStr = await get(pin_lock_until);
+    final String lockDateStr = await get(pin_lock_until);
     if (lockDateStr == null) {
       return null;
     }
@@ -284,7 +285,7 @@ class SharedPrefsUtil {
 
   // For logging out
   Future<void> deleteAll() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove(price_conversion);
     await prefs.remove(cur_currency);
     await prefs.remove(auth_method);

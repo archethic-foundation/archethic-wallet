@@ -1,22 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ParticlePainter extends CustomPainter {
-  final List<Offset>? offsets;
-  final bool? isRandomColor;
-  final Color? particleColor;
-  final Paint? constColorPaint;
-  final double? maxParticleSize;
-  static Color randomColor = Colors.blue;
-  static Paint? randomColorPaint;
-  final Paint? hoverPaint;
-  final List<double>? randSize;
-  final bool? isRandSize;
-  final List<Color>? randColorList;
-  final List<int>? hoverIndex;
-  final bool? enableHover;
-  final Color? hoverColor;
-  final List<List>? lineOffsets;
-
   ParticlePainter({
     this.enableHover,
     this.randColorList,
@@ -32,6 +16,22 @@ class ParticlePainter extends CustomPainter {
   })  : constColorPaint = Paint()..color = particleColor!,
         hoverPaint = Paint()..color = hoverColor!;
 
+  final List<Offset>? offsets;
+  final bool? isRandomColor;
+  final Color? particleColor;
+  final Paint? constColorPaint;
+  final double? maxParticleSize;
+  static Color randomColor = Colors.blue;
+  static Paint? randomColorPaint;
+  final Paint? hoverPaint;
+  final List<double>? randSize;
+  final bool? isRandSize;
+  final List<Color>? randColorList;
+  final List<int>? hoverIndex;
+  final bool? enableHover;
+  final Color? hoverColor;
+  final List<List>? lineOffsets;
+  
   @override
   void paint(Canvas canvas, Size size) {
     for (int index = 0; index < offsets!.length; index++) {
@@ -56,7 +56,7 @@ class ParticlePainter extends CustomPainter {
       }
     }
     lineOffsets!.forEach(
-      (item) {
+      (List item) {
         randomColorPaint = Paint()
           ..color = particleColor!
           ..strokeWidth = (4 * (1 - item[2] / 50)).toDouble();

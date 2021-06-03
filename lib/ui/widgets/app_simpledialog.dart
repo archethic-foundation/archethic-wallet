@@ -314,8 +314,8 @@ class AppAlertDialog extends StatelessWidget {
     }
 
     if (actions != null) {
-      children.add(new ButtonBarTheme(
-        data: ButtonBarThemeData(alignment: MainAxisAlignment.center),
+      children.add(ButtonBarTheme(
+        data: const ButtonBarThemeData(alignment: MainAxisAlignment.center),
         child: ButtonBar(
           children: actions,
         ),

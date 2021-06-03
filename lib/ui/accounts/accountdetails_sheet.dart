@@ -26,6 +26,10 @@ import 'package:uniris_mobile_wallet/util/numberutil.dart';
 
 // Account Details Sheet
 class AccountDetailsSheet {
+  AccountDetailsSheet(this.account) {
+    originalName = account.name;
+    deleted = false;
+  }
   Account account;
   String originalName;
   TextEditingController _nameController;
@@ -36,15 +40,10 @@ class AccountDetailsSheet {
   // Timer reference so we can cancel repeated events
   Timer _addressCopiedTimer;
 
-  AccountDetailsSheet(this.account) {
-    this.originalName = account.name;
-    this.deleted = false;
-  }
-
   Future<bool> _onWillPop(BuildContext context) async {
     // Update name if changed and valid
     if (originalName != _nameController.text &&
-        _nameController.text.trim().length > 0 &&
+        _nameController.text.trim().isNotEmpty &&
         !deleted) {
       sl.get<DBHelper>().changeAccountName(account, _nameController.text);
       account.name = _nameController.text;
@@ -79,10 +78,10 @@ class AccountDetailsSheet {
                                 Container(
                                     width: 50,
                                     height: 50,
-                                    margin: EdgeInsetsDirectional.only(
+                                    margin: const EdgeInsetsDirectional.only(
                                         top: 10.0, start: 10.0),
                                     child: account.index == 0
-                                        ? SizedBox()
+                                        ? const SizedBox()
                                         : TextButton(
                                             onPressed: () {
                                               AppDialogs.showConfirmDialog(
@@ -92,7 +91,7 @@ class AccountDetailsSheet {
                                                   AppLocalization.of(context)
                                                       .removeAccountText
                                                       .replaceAll(
-                                                          "%1",
+                                                          '%1',
                                                           AppLocalization.of(
                                                                   context)
                                                               .addAccount),
@@ -106,7 +105,7 @@ class AccountDetailsSheet {
                                                 sl
                                                     .get<DBHelper>()
                                                     .deleteAccount(account)
-                                                    .then((id) {
+                                                    .then((int id) {
                                                   EventTaxiImpl.singleton()
                                                       .fire(
                                                           AccountModifiedEvent(
@@ -131,7 +130,7 @@ class AccountDetailsSheet {
                                           )),
                                 // The header of the sheet
                                 Container(
-                                  margin: EdgeInsets.only(top: 25.0),
+                                  margin: const EdgeInsets.only(top: 25.0),
                                   constraints: BoxConstraints(
                                       maxWidth:
                                           MediaQuery.of(context).size.width -
@@ -152,12 +151,12 @@ class AccountDetailsSheet {
                                   ),
                                 ),
                                 // Search Button
-                                SizedBox(height: 50, width: 50),
+                                const SizedBox(height: 50, width: 50),
                               ],
                             ),
                             // Address Text
                             Container(
-                              margin: EdgeInsets.only(top: 10.0),
+                              margin: const EdgeInsets.only(top: 10.0),
                               child: account.address != null
                                   ? UIUtil.threeLineAddressText(
                                       context, account.address,
@@ -170,19 +169,18 @@ class AccountDetailsSheet {
                                               .address,
                                           type: ThreeLineAddressTextType
                                               .PRIMARY60)
-                                      : SizedBox(),
+                                      : const SizedBox(),
                             ),
                             // Balance Text
-                            (account.balance != null || account.selected)
-                                ? Container(
-                                    margin: EdgeInsets.only(top: 5.0),
+                            if (account.balance != null || account.selected) Container(
+                                    margin: const EdgeInsets.only(top: 5.0),
                                     child: RichText(
                                       textAlign: TextAlign.start,
                                       text: TextSpan(
                                         text: '',
                                         children: [
                                           TextSpan(
-                                            text: "(",
+                                            text: '(',
                                             style: TextStyle(
                                               color: StateContainer.of(context)
                                                   .curTheme
@@ -195,13 +193,12 @@ class AccountDetailsSheet {
                                           TextSpan(
                                             text:
                                                 NumberUtil.getRawAsUsableString(
-                                                    account.balance == null
-                                                        ? StateContainer.of(
+                                                    account.balance ??
+                                                        StateContainer.of(
                                                                 context)
                                                             .wallet
                                                             .accountBalance
-                                                            .toString()
-                                                        : account.balance),
+                                                            .toString()),
                                             style: TextStyle(
                                               color: StateContainer.of(context)
                                                   .curTheme
@@ -212,7 +209,7 @@ class AccountDetailsSheet {
                                             ),
                                           ),
                                           TextSpan(
-                                            text: " UCO)",
+                                            text: ' UCO)',
                                             style: TextStyle(
                                               color: StateContainer.of(context)
                                                   .curTheme
@@ -225,13 +222,12 @@ class AccountDetailsSheet {
                                         ],
                                       ),
                                     ),
-                                  )
-                                : SizedBox(),
+                                  ) else const SizedBox(),
 
                             // The main container that holds Contact Name and Contact Address
                             Expanded(
                               child: KeyboardAvoider(
-                                duration: Duration(milliseconds: 0),
+                                duration: const Duration(milliseconds: 0),
                                 autoScroll: true,
                                 focusPadding: 40,
                                 child: Column(
@@ -283,7 +279,7 @@ class AccountDetailsSheet {
                                                   .copyAddress,
                                           Dimens.BUTTON_TOP_DIMENS,
                                           onPressed: () {
-                                        Clipboard.setData(new ClipboardData(
+                                        Clipboard.setData(ClipboardData(
                                             text: account.address));
                                         setState(() {
                                           // Set copied style
@@ -292,7 +288,7 @@ class AccountDetailsSheet {
                                         if (_addressCopiedTimer != null) {
                                           _addressCopiedTimer.cancel();
                                         }
-                                        _addressCopiedTimer = new Timer(
+                                        _addressCopiedTimer = Timer(
                                             const Duration(milliseconds: 800),
                                             () {
                                           setState(() {

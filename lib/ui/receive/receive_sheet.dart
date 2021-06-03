@@ -12,10 +12,11 @@ import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 
 class ReceiveSheet extends StatefulWidget {
+  const ReceiveSheet({this.qrWidget}) : super();
+
   final Widget qrWidget;
 
-  ReceiveSheet({this.qrWidget}) : super();
-
+  @override
   _ReceiveSheetStateState createState() => _ReceiveSheetStateState();
 }
 
@@ -52,7 +53,7 @@ class _ReceiveSheetStateState extends State<ReceiveSheet> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 //Empty SizedBox
-                SizedBox(
+                const SizedBox(
                   width: 60,
                   height: 60,
                 ),
@@ -61,7 +62,7 @@ class _ReceiveSheetStateState extends State<ReceiveSheet> {
                   children: <Widget>[
                     // Sheet handle
                     Container(
-                      margin: EdgeInsets.only(top: 10),
+                      margin: const EdgeInsets.only(top: 10),
                       height: 5,
                       width: MediaQuery.of(context).size.width * 0.15,
                       decoration: BoxDecoration(
@@ -70,7 +71,7 @@ class _ReceiveSheetStateState extends State<ReceiveSheet> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 15.0),
+                      margin: const EdgeInsets.only(top: 15.0),
                       child: UIUtil.threeLineAddressText(context,
                           '05A2525C9C4FDDC02BA97554980A0CFFADA2AEB0650E3EAD05796275F05DDA85',
                           // TODO:
@@ -80,7 +81,7 @@ class _ReceiveSheetStateState extends State<ReceiveSheet> {
                   ],
                 ),
                 //Empty SizedBox
-                SizedBox(
+                const SizedBox(
                   width: 60,
                   height: 60,
                 ),
@@ -110,7 +111,7 @@ class _ReceiveSheetStateState extends State<ReceiveSheet> {
                         child: widget.qrWidget,
                       ),
                     ),
-                    SizedBox(),
+                    const SizedBox(),
                     Center(
                       child: Container(
                         width: MediaQuery.of(context).size.width / 5,
@@ -121,7 +122,7 @@ class _ReceiveSheetStateState extends State<ReceiveSheet> {
                           backgroundColor:
                               StateContainer.of(context).curTheme.primary,
                           backgroundImage:
-                              ExactAssetImage("assets/uniris_icon.png"),
+                              const ExactAssetImage('assets/uniris_icon.png'),
                           radius: 100.0,
                         ),
                       ),
@@ -146,7 +147,7 @@ class _ReceiveSheetStateState extends State<ReceiveSheet> {
                             ? AppLocalization.of(context).addressCopied
                             : AppLocalization.of(context).copyAddress,
                         Dimens.BUTTON_TOP_DIMENS, onPressed: () {
-                      Clipboard.setData(new ClipboardData(
+                      Clipboard.setData(ClipboardData(
                           text: StateContainer.of(context).wallet.address));
                       setState(() {
                         // Set copied style
@@ -156,7 +157,7 @@ class _ReceiveSheetStateState extends State<ReceiveSheet> {
                         _addressCopiedTimer.cancel();
                       }
                       _addressCopiedTimer =
-                          new Timer(const Duration(milliseconds: 800), () {
+                          Timer(const Duration(milliseconds: 800), () {
                         setState(() {
                           _addressCopied = false;
                         });

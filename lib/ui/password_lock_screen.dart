@@ -34,8 +34,8 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
   @override
   void initState() {
     super.initState();
-    this.enterPasswordFocusNode = FocusNode();
-    this.enterPasswordController = TextEditingController();
+    enterPasswordFocusNode = FocusNode();
+    enterPasswordController = TextEditingController();
   }
 
   @override
@@ -67,7 +67,7 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                   .primary10
                   .withAlpha(150)
                   .withOpacity(0.2),
-              awayAnimationDuration: Duration(milliseconds: 600),
+              awayAnimationDuration: const Duration(milliseconds: 600),
               maxParticleSize: 8,
               isRandSize: true,
               isRandomColor: false,
@@ -89,7 +89,7 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                   children: <Widget>[
                     // Logout button
                     Container(
-                      margin: EdgeInsetsDirectional.only(start: 16, top: 12),
+                      margin: const EdgeInsetsDirectional.only(start: 16, top: 12),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -140,7 +140,7 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                                           .text),
                                   Container(
                                     margin:
-                                        EdgeInsetsDirectional.only(start: 4),
+                                        const EdgeInsetsDirectional.only(start: 4),
                                     child: Text(
                                         AppLocalization.of(context).logout,
                                         style: AppStyles.textStyleLogoutButton(
@@ -171,11 +171,11 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                                 AppLocalization.of(context).locked, context),
                             style: AppStyles.textStyleHeaderColored(context),
                           ),
-                          margin: EdgeInsets.only(top: 10),
+                          margin: const EdgeInsets.only(top: 10),
                         ),
                         Expanded(
                             child: KeyboardAvoider(
-                                duration: Duration(milliseconds: 0),
+                                duration: const Duration(milliseconds: 0),
                                 autoScroll: true,
                                 focusPadding: 40,
                                 child: Column(
@@ -185,7 +185,7 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                                       // Enter your password Text Field
                                       AppTextField(
                                         topMargin: 30,
-                                        padding: EdgeInsetsDirectional.only(
+                                        padding: const EdgeInsetsDirectional.only(
                                             start: 16, end: 16),
                                         focusNode: enterPasswordFocusNode,
                                         controller: enterPasswordController,
@@ -218,12 +218,10 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                                       ),
                                       // Error Container
                                       Container(
-                                        alignment: AlignmentDirectional(0, 0),
-                                        margin: EdgeInsets.only(top: 3),
+                                        alignment: const AlignmentDirectional(0, 0),
+                                        margin: const EdgeInsets.only(top: 3),
                                         child: Text(
-                                            this.passwordError == null
-                                                ? ""
-                                                : this.passwordError,
+                                            passwordError ?? '',
                                             style: TextStyle(
                                               fontSize: 14.0,
                                               color: StateContainer.of(context)
@@ -259,7 +257,7 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
 
   Future<void> validateAndDecrypt() async {
     try {
-      String decryptedSeed = uint8ListToHex(AppCrypt.decrypt(
+      final String decryptedSeed = uint8ListToHex(AppCrypt.decrypt(
           await sl.get<Vault>().getSeed(), enterPasswordController.text));
       StateContainer.of(context).setEncryptedSecret(uint8ListToHex(AppCrypt.encrypt(
           decryptedSeed, await sl.get<Vault>().getSessionKey())));
@@ -279,7 +277,7 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
           .loginAccount(await StateContainer.of(context).getSeed(), context);
     }
     StateContainer.of(context).requestUpdate();
-    PriceConversion conversion =
+    final PriceConversion conversion =
         await sl.get<SharedPrefsUtil>().getPriceConversion();
     Navigator.of(context).pushNamedAndRemoveUntil(
         '/home_transition', (Route<dynamic> route) => false,

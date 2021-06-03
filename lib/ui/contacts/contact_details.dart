@@ -25,17 +25,17 @@ import 'package:uniris_mobile_wallet/util/caseconverter.dart';
 
 // Contact Details Sheet
 class ContactDetailsSheet {
+  ContactDetailsSheet(this.contact, this.documentsDirectory);
+
   Contact contact;
   String documentsDirectory;
-
-  ContactDetailsSheet(this.contact, this.documentsDirectory);
 
   // State variables
   bool _addressCopied = false;
   // Timer reference so we can cancel repeated events
   Timer _addressCopiedTimer;
 
-  mainBottomSheet(BuildContext context) {
+  Widget mainBottomSheet(BuildContext context) {
     AppSheets.showAppHeightEightSheet(
         context: context,
         builder: (BuildContext context) {
@@ -54,7 +54,7 @@ class ContactDetailsSheet {
                         Container(
                           width: 50,
                           height: 50,
-                          margin: EdgeInsetsDirectional.only(
+                          margin: const EdgeInsetsDirectional.only(
                               top: 10.0, start: 10.0),
                           child: TextButton(
                             onPressed: () {
@@ -70,7 +70,7 @@ class ContactDetailsSheet {
                                 sl
                                     .get<DBHelper>()
                                     .deleteContact(contact)
-                                    .then((deleted) {
+                                    .then((bool deleted) {
                                   if (deleted) {
                                     EventTaxiImpl.singleton().fire(
                                         ContactRemovedEvent(contact: contact));
@@ -79,7 +79,7 @@ class ContactDetailsSheet {
                                     UIUtil.showSnackbar(
                                         AppLocalization.of(context)
                                             .contactRemoved
-                                            .replaceAll("%1", contact.name),
+                                            .replaceAll('%1', contact.name),
                                         context);
                                     Navigator.of(context).pop();
                                   }
@@ -96,7 +96,7 @@ class ContactDetailsSheet {
                         ),
                         // The header of the sheet
                         Container(
-                          margin: EdgeInsets.only(top: 25.0),
+                          margin: const EdgeInsets.only(top: 25.0),
                           constraints: BoxConstraints(
                               maxWidth:
                                   MediaQuery.of(context).size.width - 140),
@@ -113,7 +113,7 @@ class ContactDetailsSheet {
                           ),
                         ),
 
-                        SizedBox(
+                        const SizedBox(
                           width: 50,
                           height: 50,
                         ),
@@ -123,7 +123,7 @@ class ContactDetailsSheet {
                     // The main container that holds Contact Name and Contact Address
                     Expanded(
                       child: Container(
-                        padding: EdgeInsetsDirectional.only(top: 4, bottom: 12),
+                        padding: const EdgeInsetsDirectional.only(top: 4, bottom: 12),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -135,7 +135,7 @@ class ContactDetailsSheet {
                                 right:
                                     MediaQuery.of(context).size.width * 0.105,
                               ),
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 25.0, vertical: 12.0),
                               decoration: BoxDecoration(
                                 color: StateContainer.of(context)
@@ -149,7 +149,7 @@ class ContactDetailsSheet {
                                         .backgroundDarkest,
                                     blurRadius: 5.0,
                                     spreadRadius: 0.0,
-                                    offset: Offset(5.0,
+                                    offset: const Offset(5.0,
                                         5.0), // shadow direction: bottom right
                                   )
                                 ],
@@ -171,14 +171,14 @@ class ContactDetailsSheet {
                             GestureDetector(
                               onTap: () {
                                 Clipboard.setData(
-                                    new ClipboardData(text: contact.address));
+                                    ClipboardData(text: contact.address));
                                 setState(() {
                                   _addressCopied = true;
                                 });
                                 if (_addressCopiedTimer != null) {
                                   _addressCopiedTimer.cancel();
                                 }
-                                _addressCopiedTimer = new Timer(
+                                _addressCopiedTimer = Timer(
                                     const Duration(milliseconds: 800), () {
                                   setState(() {
                                     _addressCopied = false;
@@ -193,7 +193,7 @@ class ContactDetailsSheet {
                                     right: MediaQuery.of(context).size.width *
                                         0.105,
                                     top: 15),
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 25.0, vertical: 15.0),
                                 decoration: BoxDecoration(
                                   color: StateContainer.of(context)
@@ -207,7 +207,7 @@ class ContactDetailsSheet {
                                           .backgroundDarkest,
                                       blurRadius: 5.0,
                                       spreadRadius: 0.0,
-                                      offset: Offset(5.0,
+                                      offset: const Offset(5.0,
                                           5.0), // shadow direction: bottom right
                                     )
                                   ],
@@ -221,12 +221,12 @@ class ContactDetailsSheet {
                             ),
                             // Address Copied text container
                             Container(
-                              margin: EdgeInsets.only(top: 5, bottom: 5),
+                              margin: const EdgeInsets.only(top: 5, bottom: 5),
                               child: Text(
                                   _addressCopied
                                       ? AppLocalization.of(context)
                                           .addressCopied
-                                      : "",
+                                      : '',
                                   style: TextStyle(
                                     fontSize: 14.0,
                                     color: StateContainer.of(context)

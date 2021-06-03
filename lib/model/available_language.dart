@@ -17,26 +17,27 @@ enum AvailableLanguage {
 
 /// Represent the available languages our app supports
 class LanguageSetting extends SettingSelectionItem {
-  AvailableLanguage language;
-
   LanguageSetting(this.language);
 
+  AvailableLanguage language;
+
+  @override
   String getDisplayName(BuildContext context) {
     switch (language) {
       case AvailableLanguage.ENGLISH:
-        return "English (en)";
+        return 'English (en)';
       case AvailableLanguage.FRENCH:
-        return "Français (fr)";
+        return 'Français (fr)';
       case AvailableLanguage.GERMAN:
-        return "Deutsch (de)";
+        return 'Deutsch (de)';
       case AvailableLanguage.INDONESIAN:
-        return "Bahasa Indonesia (id)";
+        return 'Bahasa Indonesia (id)';
       case AvailableLanguage.DUTCH:
-        return "Nederlands (nl)";
+        return 'Nederlands (nl)';
       case AvailableLanguage.SPANISH:
-        return "Español (es)";
+        return 'Español (es)';
       case AvailableLanguage.ITALIAN:
-        return "Italiano (it)";
+        return 'Italiano (it)';
       default:
         return AppLocalization.of(context).systemDefault;
     }
@@ -45,28 +46,28 @@ class LanguageSetting extends SettingSelectionItem {
   String getLocaleString() {
     switch (language) {
       case AvailableLanguage.ENGLISH:
-        return "en";
+        return 'en';
       case AvailableLanguage.FRENCH:
-        return "fr";
+        return 'fr';
       case AvailableLanguage.GERMAN:
-        return "de";
+        return 'de';
       case AvailableLanguage.INDONESIAN:
-        return "id";
+        return 'id';
       case AvailableLanguage.DUTCH:
-        return "nl";
+        return 'nl';
       case AvailableLanguage.SPANISH:
-        return "es";
+        return 'es';
       case AvailableLanguage.ITALIAN:
-        return "it";
+        return 'it';
       default:
-        return "DEFAULT";
+        return 'DEFAULT';
     }
   }
 
   Locale getLocale() {
-    String localeStr = getLocaleString();
+    final String localeStr = getLocaleString();
     if (localeStr == 'DEFAULT') {
-      return Locale('en');
+      return const Locale('en');
     }
     return Locale(localeStr);
   }

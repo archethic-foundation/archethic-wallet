@@ -7,10 +7,11 @@ import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
 
 class TransferCompleteSheet extends StatefulWidget {
+  const TransferCompleteSheet({this.title}) : super();
+
   final String? title;
 
-  TransferCompleteSheet({this.title}) : super();
-
+  @override
   _TransferCompleteSheetState createState() => _TransferCompleteSheetState();
 }
 
@@ -24,7 +25,7 @@ class _TransferCompleteSheetState extends State<TransferCompleteSheet> {
           children: <Widget>[
             // Sheet handle
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               height: 5,
               width: MediaQuery.of(context).size.width * 0.15,
               decoration: BoxDecoration(
@@ -38,15 +39,15 @@ class _TransferCompleteSheetState extends State<TransferCompleteSheet> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    alignment: AlignmentDirectional(0, 0),
-                    margin: EdgeInsets.only(bottom: 25),
+                    alignment: const AlignmentDirectional(0, 0),
+                    margin: const EdgeInsets.only(bottom: 25),
                     child: Icon(AppIcons.success,
                         size: 100,
                         color: StateContainer.of(context).curTheme.primary),
                   ),
                   Container(
-                    alignment: AlignmentDirectional(0, 0),
-                    margin: EdgeInsets.only(bottom: 25),
+                    alignment: const AlignmentDirectional(0, 0),
+                    margin: const EdgeInsets.only(bottom: 25),
                     child: Text(AppLocalization.of(context).transferSuccess, style: AppStyles.textStyleParagraph(context)),
                   ),
                 ],

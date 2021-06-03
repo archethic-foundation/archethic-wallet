@@ -8,10 +8,11 @@ enum AuthMethod { PIN, BIOMETRICS }
 
 /// Represent the available authentication methods our app supports
 class AuthenticationMethod extends SettingSelectionItem {
-  AuthMethod method;
-
   AuthenticationMethod(this.method);
 
+  AuthMethod method;
+  
+  @override
   String getDisplayName(BuildContext context) {
     switch (method) {
       case AuthMethod.BIOMETRICS:

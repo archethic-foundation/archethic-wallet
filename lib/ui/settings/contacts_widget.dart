@@ -1,6 +1,7 @@
 // @dart=2.9
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
@@ -20,11 +21,12 @@ import 'package:uniris_mobile_wallet/ui/contacts/contact_details.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
 
 class ContactsList extends StatefulWidget {
+  ContactsList(this.contactsController, this.contactsOpen);
+
   final AnimationController contactsController;
   bool contactsOpen;
 
-  ContactsList(this.contactsController, this.contactsOpen);
-
+  @override
   _ContactsListState createState() => _ContactsListState();
 }
 
@@ -38,7 +40,7 @@ class _ContactsListState extends State<ContactsList> {
     _registerBus();
     // Initial contacts list
     _contacts = List<Contact>.empty(growable: true);
-    getApplicationDocumentsDirectory().then((directory) {
+    getApplicationDocumentsDirectory().then((Directory directory) {
       documentsDirectory = directory.path;
       setState(() {
         documentsDirectory = directory.path;
@@ -65,12 +67,12 @@ class _ContactsListState extends State<ContactsList> {
     // Contact added bus event
     _contactAddedSub = EventTaxiImpl.singleton()
         .registerTo<ContactAddedEvent>()
-        .listen((event) {
+        .listen((ContactAddedEvent event) {
       setState(() {
         _contacts.add(event.contact);
         //Sort by name
         _contacts.sort(
-            (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+            (Contact a, Contact b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
             StateContainer.of(context).updateContacts();
       });
       // Full update
@@ -79,7 +81,7 @@ class _ContactsListState extends State<ContactsList> {
     // Contact removed bus event
     _contactRemovedSub = EventTaxiImpl.singleton()
         .registerTo<ContactRemovedEvent>()
-        .listen((event) {
+        .listen((ContactRemovedEvent event) {
       setState(() {
         _contacts.remove(event.contact);
       });
@@ -87,7 +89,7 @@ class _ContactsListState extends State<ContactsList> {
   }
 
   void _updateContacts() {
-    sl.get<DBHelper>().getContacts().then((contacts) {
+    sl.get<DBHelper>().getContacts().then((List<Contact> contacts) {
       for (Contact c in contacts) {
         if (!_contacts.contains(c)) {
           setState(() {
@@ -98,7 +100,7 @@ class _ContactsListState extends State<ContactsList> {
       // Re-sort list
       setState(() {
         _contacts.sort(
-            (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+            (Contact a, Contact b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
       });
     });
   }
@@ -111,7 +113,7 @@ class _ContactsListState extends State<ContactsList> {
           boxShadow: [
             BoxShadow(
                 color: StateContainer.of(context).curTheme.overlay30,
-                offset: Offset(-5, 0),
+                offset: const Offset(-5, 0),
                 blurRadius: 20),
           ],
         ),
@@ -124,7 +126,7 @@ class _ContactsListState extends State<ContactsList> {
             children: <Widget>[
               // Back button and Contacts Text
               Container(
-                margin: EdgeInsets.only(bottom: 10.0, top: 5),
+                margin: const EdgeInsets.only(bottom: 10.0, top: 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -134,7 +136,7 @@ class _ContactsListState extends State<ContactsList> {
                         Container(
                           height: 40,
                           width: 40,
-                          margin: EdgeInsets.only(right: 10, left: 10),
+                          margin: const EdgeInsets.only(right: 10, left: 10),
                           child: TextButton(
                               onPressed: () {
                                 setState(() {
@@ -164,9 +166,9 @@ class _ContactsListState extends State<ContactsList> {
                     // Contacts list
                     ListView.builder(
                       physics: const AlwaysScrollableScrollPhysics(),
-                      padding: EdgeInsets.only(top: 15.0, bottom: 15),
+                      padding: const EdgeInsets.only(top: 15.0, bottom: 15),
                       itemCount: _contacts.length,
-                      itemBuilder: (context, index) {
+                      itemBuilder: (BuildContext context, int index) {
                         // Build contact
                         return buildSingleContact(context, _contacts[index]);
                       },
@@ -187,8 +189,8 @@ class _ContactsListState extends State<ContactsList> {
                                   .curTheme
                                   .backgroundDark00
                             ],
-                            begin: AlignmentDirectional(0.5, -1.0),
-                            end: AlignmentDirectional(0.5, 1.0),
+                            begin: const AlignmentDirectional(0.5, -1.0),
+                            end: const AlignmentDirectional(0.5, 1.0),
                           ),
                         ),
                       ),
@@ -209,8 +211,8 @@ class _ContactsListState extends State<ContactsList> {
                                   .curTheme
                                   .backgroundDark,
                             ],
-                            begin: AlignmentDirectional(0.5, -1.0),
-                            end: AlignmentDirectional(0.5, 1.0),
+                            begin: const AlignmentDirectional(0.5, -1.0),
+                            end: const AlignmentDirectional(0.5, 1.0),
                           ),
                         ),
                       ),
@@ -219,7 +221,7 @@ class _ContactsListState extends State<ContactsList> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 10),
+                margin: const EdgeInsets.only(top: 10),
                 child: Row(
                   children: <Widget>[
                     AppButton.buildAppButton(
@@ -228,7 +230,7 @@ class _ContactsListState extends State<ContactsList> {
                         AppLocalization.of(context).addContact,
                         Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                       Sheets.showAppHeightNineSheet(
-                          context: context, widget: AddContactSheet());
+                          context: context, widget: const AddContactSheet());
                     }),
                   ],
                 ),
@@ -251,8 +253,8 @@ class _ContactsListState extends State<ContactsList> {
         ),
         // Main Container
         Container(
-          padding: EdgeInsets.symmetric(vertical: 4.0),
-          margin: new EdgeInsetsDirectional.only(start: 12.0, end: 20.0),
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          margin: const EdgeInsetsDirectional.only(start: 12.0, end: 20.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -260,7 +262,7 @@ class _ContactsListState extends State<ContactsList> {
               Expanded(
                 child: Container(
                   height: 50,
-                  margin: EdgeInsetsDirectional.only(start: 2.0),
+                  margin: const EdgeInsetsDirectional.only(start: 2.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,

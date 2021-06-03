@@ -11,11 +11,11 @@ import 'package:uniris_mobile_wallet/util/app_ffi/apputil.dart';
 
 class DBHelper {
   static const int DB_VERSION = 1;
-  static const String CONTACTS_SQL = """CREATE TABLE Contacts( 
+  static const String CONTACTS_SQL = '''CREATE TABLE Contacts( 
         id INTEGER PRIMARY KEY AUTOINCREMENT, 
         name TEXT, 
-        address TEXT)""";
-  static const String ACCOUNTS_SQL = """CREATE TABLE Accounts( 
+        address TEXT)''';
+  static const String ACCOUNTS_SQL = '''CREATE TABLE Accounts( 
         id INTEGER PRIMARY KEY AUTOINCREMENT, 
         name TEXT, 
         acct_index INTEGER, 
@@ -24,7 +24,7 @@ class DBHelper {
         private_key TEXT,
         address TEXT,
         balance TEXT
-        )""";
+        )''';
   static Database _db;
 
   Future<Database> get db async {
@@ -33,10 +33,10 @@ class DBHelper {
     return _db;
   }
 
-  initDb() async {
-    io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "uniris.db");
-    var theDb = await openDatabase(path,
+  Future<Database> initDb() async {
+    final io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    final String path = join(documentsDirectory.path, 'uniris.db');
+    final Database theDb = await openDatabase(path,
         version: DB_VERSION, onCreate: _onCreate, onUpgrade: _onUpgrade);
     return theDb;
   }
@@ -51,12 +51,12 @@ class DBHelper {
 
   // Contacts
   Future<List<Contact>> getContacts() async {
-    var dbClient = await db;
-    List<Map> list =
+    final Database dbClient = await db;
+    final List<Map> list =
         await dbClient.rawQuery('SELECT * FROM Contacts ORDER BY name');
-    List<Contact> contacts = new List<Contact>.empty(growable: true);
+    final List<Contact> contacts = List<Contact>.empty(growable: true);
     for (int i = 0; i < list.length; i++) {
-      contacts.add(new Contact(
+      contacts.add(Contact(
         id: list[i]['id'],
         name: list[i]['name'],
         address: list[i]['address'],
@@ -66,12 +66,12 @@ class DBHelper {
   }
 
   Future<List<Contact>> getContactsWithNameLike(String pattern) async {
-    var dbClient = await db;
-    List<Map> list = await dbClient.rawQuery(
+    final Database dbClient = await db;
+    final List<Map> list = await dbClient.rawQuery(
         'SELECT * FROM Contacts WHERE name LIKE \'%$pattern%\' ORDER BY LOWER(name)');
-    List<Contact> contacts = new List<Contact>.empty(growable: true);
+    final List<Contact> contacts = List<Contact>.empty(growable: true);
     for (int i = 0; i < list.length; i++) {
-      contacts.add(new Contact(
+      contacts.add(Contact(
         id: list[i]['id'],
         name: list[i]['name'],
         address: list[i]['address'],
@@ -81,10 +81,10 @@ class DBHelper {
   }
 
   Future<Contact> getContactWithAddress(String address) async {
-    var dbClient = await db;
-    List<Map> list = await dbClient
+    final Database dbClient = await db;
+    final List<Map> list = await dbClient
         .rawQuery('SELECT * FROM Contacts WHERE address like \'%$address\'');
-    if (list.length > 0) {
+    if (list.isNotEmpty) {
       return Contact(
         id: list[0]['id'],
         name: list[0]['name'],
@@ -95,10 +95,10 @@ class DBHelper {
   }
 
   Future<Contact> getContactWithName(String name) async {
-    var dbClient = await db;
-    List<Map> list = await dbClient
+    final Database dbClient = await db;
+    final List<Map> list = await dbClient
         .rawQuery('SELECT * FROM Contacts WHERE name = ?', [name]);
-    if (list.length > 0) {
+    if (list.isNotEmpty) {
       return Contact(
         id: list[0]['id'],
         name: list[0]['name'],
@@ -109,22 +109,22 @@ class DBHelper {
   }
 
   Future<bool> contactExistsWithName(String name) async {
-    var dbClient = await db;
-    int count = Sqflite.firstIntValue(await dbClient.rawQuery(
+    final Database dbClient = await db;
+    final int count = Sqflite.firstIntValue(await dbClient.rawQuery(
         'SELECT count(*) FROM Contacts WHERE lower(name) = ?',
         [name.toLowerCase()]));
     return count > 0;
   }
 
   Future<bool> contactExistsWithAddress(String address) async {
-    var dbClient = await db;
-    int count = Sqflite.firstIntValue(await dbClient.rawQuery(
+    final Database dbClient = await db;
+    final int count = Sqflite.firstIntValue(await dbClient.rawQuery(
         'SELECT count(*) FROM Contacts WHERE lower(address) like \'%$address\''));
     return count > 0;
   }
 
   Future<int> saveContact(Contact contact) async {
-    var dbClient = await db;
+    final Database dbClient = await db;
     return await dbClient.rawInsert(
         'INSERT INTO Contacts (name, address) values(?, ?)',
         [contact.name, contact.address]);
@@ -141,7 +141,7 @@ class DBHelper {
   }
 
   Future<bool> deleteContact(Contact contact) async {
-    var dbClient = await db;
+    final Database dbClient = await db;
     return await dbClient.rawDelete(
             "DELETE FROM Contacts WHERE lower(address) like \'%${contact.address.toLowerCase()}\'") >
         0;
@@ -149,10 +149,10 @@ class DBHelper {
 
   // Accounts
   Future<List<Account>> getAccounts(String seed) async {
-    var dbClient = await db;
-    List<Map> list =
+    final Database dbClient = await db;
+    final List<Map> list =
         await dbClient.rawQuery('SELECT * FROM Accounts ORDER BY acct_index');
-    List<Account> accounts = new List<Account>.empty(growable: true);
+    final List<Account> accounts = List<Account>.empty(growable: true);
     for (int i = 0; i < list.length; i++) {
       accounts.add(Account(
         id: list[i]['id'],
@@ -163,7 +163,7 @@ class DBHelper {
         balance: list[i]['balance'],
       ));
     }
-    accounts.forEach((a) {
+    accounts.forEach((Account a) {
       a.address = AppUtil().seedToAddress(seed, a.index);
     });
     return accounts;
@@ -171,11 +171,11 @@ class DBHelper {
 
   Future<List<Account>> getRecentlyUsedAccounts(String seed,
       {int limit = 2}) async {
-    var dbClient = await db;
-    List<Map> list = await dbClient.rawQuery(
+    final Database dbClient = await db;
+    final List<Map> list = await dbClient.rawQuery(
         'SELECT * FROM Accounts WHERE selected != 1 ORDER BY last_accessed DESC, acct_index ASC LIMIT ?',
         [limit]);
-    List<Account> accounts = new List<Account>.empty(growable: true);
+    final List<Account> accounts = List<Account>.empty(growable: true);
     for (int i = 0; i < list.length; i++) {
       accounts.add(Account(
         id: list[i]['id'],
@@ -186,19 +186,19 @@ class DBHelper {
         balance: list[i]['balance'],
       ));
     }
-    accounts.forEach((a) async {
+    accounts.forEach((Account a) async {
       a.address = AppUtil().seedToAddress(seed, a.index);
     });
     return accounts;
   }
 
   Future<Account> addAccount(String seed, {String nameBuilder}) async {
-    var dbClient = await db;
+    final Database dbClient = await db;
     Account account;
     await dbClient.transaction((Transaction txn) async {
       int nextIndex = 1;
       int curIndex;
-      List<Map> accounts = await txn.rawQuery(
+      final List<Map> accounts = await txn.rawQuery(
           'SELECT * from Accounts WHERE acct_index > 0 ORDER BY acct_index ASC');
       for (int i = 0; i < accounts.length; i++) {
         curIndex = accounts[i]['acct_index'];
@@ -207,13 +207,13 @@ class DBHelper {
         }
         nextIndex++;
       }
-      int nextID = nextIndex + 1;
-      String nextName = nameBuilder.replaceAll("%1", nextID.toString());
+      final int nextID = nextIndex + 1;
+      final String nextName = nameBuilder.replaceAll('%1', nextID.toString());
       account = Account(
         index: nextIndex,
         name: nextName,
         lastAccess: 0,
-        balance: "0",
+        balance: '0',
         selected: false,
         address: AppUtil().seedToAddress(seed, nextIndex),
       );
@@ -223,7 +223,7 @@ class DBHelper {
             account.name,
             account.index,
             account.lastAccess,
-            account.selected ? 1 : 0,
+            if (account.selected) 1 else 0,
             account.address,
             account.balance,
           ]);
@@ -232,37 +232,37 @@ class DBHelper {
   }
 
   Future<int> deleteAccount(Account account) async {
-    var dbClient = await db;
+    final Database dbClient = await db;
     return await dbClient.rawDelete(
         'DELETE FROM Accounts WHERE acct_index = ?', [account.index]);
   }
 
   Future<int> saveAccount(Account account) async {
-    var dbClient = await db;
+    final Database dbClient = await db;
     return await dbClient.rawInsert(
         'INSERT INTO Accounts (name, acct_index, last_accessed, selected, balance) values(?, ?, ?, ?, ?)',
         [
           account.name,
           account.index,
           account.lastAccess,
-          account.selected ? 1 : 0,
+          if (account.selected) 1 else 0,
           account.balance,
         ]);
   }
 
   Future<int> changeAccountName(Account account, String name) async {
-    var dbClient = await db;
+    final Database dbClient = await db;
     return await dbClient.rawUpdate(
         'UPDATE Accounts SET name = ? WHERE acct_index = ?',
         [name, account.index]);
   }
 
   Future<void> changeAccount(Account account) async {
-    var dbClient = await db;
+    final Database dbClient = await db;
     return await dbClient.transaction((Transaction txn) async {
       await txn.rawUpdate('UPDATE Accounts set selected = 0');
       // Get access increment count
-      List<Map> list = await txn
+      final List<Map> list = await txn
           .rawQuery('SELECT max(last_accessed) as last_access FROM Accounts');
       await txn.rawUpdate(
           'UPDATE Accounts set selected = ?, last_accessed = ? where acct_index = ?',
@@ -271,20 +271,20 @@ class DBHelper {
   }
 
   Future<void> updateAccountBalance(Account account, String balance) async {
-    var dbClient = await db;
+    final Database dbClient = await db;
     return await dbClient.rawUpdate(
         'UPDATE Accounts set balance = ? where acct_index = ?',
         [balance, account.index]);
   }
 
   Future<Account> getSelectedAccount(String seed) async {
-    var dbClient = await db;
-    List<Map> list =
+    final Database dbClient = await db;
+    final List<Map> list =
         await dbClient.rawQuery('SELECT * FROM Accounts where selected = 1');
-    if (list.length == 0) {
+    if (list.isEmpty) {
       return null;
     }
-    Account account = Account(
+    final Account account = Account(
       id: list[0]['id'],
       name: list[0]['name'],
       index: list[0]['acct_index'],
@@ -297,15 +297,15 @@ class DBHelper {
   }
 
   Future<Account> getMainAccount(String seed) async {
-    var dbClient = await db;
-    List<Map> list =
+    final Database dbClient = await db;
+    final List<Map> list =
         await dbClient.rawQuery('SELECT * FROM Accounts where acct_index = 0');
-    if (list.length == 0) {
+    if (list.isEmpty) {
       return null;
     }
-    String address = AppUtil().seedToAddress(seed, list[0]['acct_index']);
+    final String address = AppUtil().seedToAddress(seed, list[0]['acct_index']);
 
-    Account account = Account(
+    final Account account = Account(
       id: list[0]['id'],
       name: list[0]['name'],
       index: list[0]['acct_index'],
@@ -318,7 +318,7 @@ class DBHelper {
   }
 
   Future<void> dropAccounts() async {
-    var dbClient = await db;
+    final Database dbClient = await db;
     return await dbClient.rawDelete('DELETE FROM ACCOUNTS');
   }
 }

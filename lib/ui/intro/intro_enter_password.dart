@@ -34,8 +34,8 @@ class _IntroEnterPasswordAccessState extends State<IntroEnterPasswordAccess> {
   @override
   void initState() {
     super.initState();
-    this.enterPasswordFocusNode = FocusNode();
-    this.enterPasswordController = TextEditingController();
+    enterPasswordFocusNode = FocusNode();
+    enterPasswordController = TextEditingController();
   }
 
   @override
@@ -67,7 +67,7 @@ class _IntroEnterPasswordAccessState extends State<IntroEnterPasswordAccess> {
                   .primary10
                   .withAlpha(150)
                   .withOpacity(0.2),
-              awayAnimationDuration: Duration(milliseconds: 600),
+              awayAnimationDuration: const Duration(milliseconds: 600),
               maxParticleSize: 8,
               isRandSize: true,
               isRandomColor: false,
@@ -132,7 +132,7 @@ class _IntroEnterPasswordAccessState extends State<IntroEnterPasswordAccess> {
                         ),
                         Expanded(
                             child: KeyboardAvoider(
-                                duration: Duration(milliseconds: 0),
+                                duration: const Duration(milliseconds: 0),
                                 autoScroll: true,
                                 focusPadding: 40,
                                 child: Column(
@@ -142,7 +142,7 @@ class _IntroEnterPasswordAccessState extends State<IntroEnterPasswordAccess> {
                                       // Enter your password Text Field
                                       AppTextField(
                                         topMargin: 10,
-                                        padding: EdgeInsetsDirectional.only(
+                                        padding: const EdgeInsetsDirectional.only(
                                             start: 16, end: 16),
                                         focusNode: enterPasswordFocusNode,
                                         controller: enterPasswordController,
@@ -175,12 +175,10 @@ class _IntroEnterPasswordAccessState extends State<IntroEnterPasswordAccess> {
                                       ),
                                       // Error Container
                                       Container(
-                                        alignment: AlignmentDirectional(0, 0),
-                                        margin: EdgeInsets.only(top: 3),
+                                        alignment: const AlignmentDirectional(0, 0),
+                                        margin: const EdgeInsets.only(top: 3),
                                         child: Text(
-                                            this.passwordError == null
-                                                ? ""
-                                                : this.passwordError,
+                                            passwordError ?? '',
                                             style: TextStyle(
                                               fontSize: 14.0,
                                               color: StateContainer.of(context)
@@ -216,15 +214,15 @@ class _IntroEnterPasswordAccessState extends State<IntroEnterPasswordAccess> {
 
   Future<void> validateAndDecrypt() async {
     try {
-      String _seed =
-          "05A2525C9C4FDDC02BA97554980A0CFFADA2AEB0650E3EAD05796275F05DDA85";
+      const String _seed =
+          '05A2525C9C4FDDC02BA97554980A0CFFADA2AEB0650E3EAD05796275F05DDA85';
       await sl.get<Vault>().setSeed(_seed);
       await sl.get<DBHelper>().dropAccounts();
       await AppUtil().loginAccount(_seed, context);
       StateContainer.of(context).requestUpdate();
-      String pin = await Navigator.of(context)
+      final String pin = await Navigator.of(context)
           .push(MaterialPageRoute(builder: (BuildContext context) {
-        return PinScreen(
+        return const PinScreen(
           PinOverlayType.NEW_PIN,
         );
       }));
@@ -247,7 +245,7 @@ class _IntroEnterPasswordAccessState extends State<IntroEnterPasswordAccess> {
 
   void _pinEnteredCallback(String pin) async {
     await sl.get<Vault>().writePin(pin);
-    PriceConversion conversion =
+    final PriceConversion conversion =
         await sl.get<SharedPrefsUtil>().getPriceConversion();
     // Update wallet
     Navigator.of(context).pushNamedAndRemoveUntil(

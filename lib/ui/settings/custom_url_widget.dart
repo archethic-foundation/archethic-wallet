@@ -11,11 +11,12 @@ import 'package:uniris_mobile_wallet/ui/widgets/app_text_field.dart';
 import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
 
 class CustomUrl extends StatefulWidget {
+  CustomUrl(this.tokensListController, this.tokensListOpen);
+
   final AnimationController tokensListController;
   bool tokensListOpen;
 
-  CustomUrl(this.tokensListController, this.tokensListOpen);
-
+  @override
   _CustomUrlState createState() => _CustomUrlState();
 }
 
@@ -24,8 +25,8 @@ class _CustomUrlState extends State<CustomUrl> {
   TextEditingController _endpointController;
   bool useCustomEndpoint;
 
-  String _endpointHint = "";
-  String _endpointValidationText = "";
+  String _endpointHint = '';
+  String _endpointValidationText = '';
 
   void initControllerText() async {
     _endpointController.text = await sl.get<SharedPrefsUtil>().getEndpoint();
@@ -53,7 +54,7 @@ class _CustomUrlState extends State<CustomUrl> {
         });
       } else {
         setState(() {
-          _endpointHint = "";
+          _endpointHint = '';
         });
       }
     });
@@ -61,14 +62,14 @@ class _CustomUrlState extends State<CustomUrl> {
 
   @override
   Widget build(BuildContext context) {
-    final bottom = MediaQuery.of(context).viewInsets.bottom;
+    final double bottom = MediaQuery.of(context).viewInsets.bottom;
     return Container(
       decoration: BoxDecoration(
         color: StateContainer.of(context).curTheme.backgroundDark,
         boxShadow: [
           BoxShadow(
               color: StateContainer.of(context).curTheme.overlay30,
-              offset: Offset(-5, 0),
+              offset: const Offset(-5, 0),
               blurRadius: 20),
         ],
       ),
@@ -80,7 +81,7 @@ class _CustomUrlState extends State<CustomUrl> {
         child: Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(bottom: 10.0, top: 5),
+              margin: const EdgeInsets.only(bottom: 10.0, top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -89,7 +90,7 @@ class _CustomUrlState extends State<CustomUrl> {
                     Container(
                       height: 40,
                       width: 40,
-                      margin: EdgeInsets.only(right: 10, left: 10),
+                      margin: const EdgeInsets.only(right: 10, left: 10),
                       child: TextButton(
                           onPressed: () {
                             setState(() {
@@ -125,8 +126,8 @@ class _CustomUrlState extends State<CustomUrl> {
                                 child: getEndpointContainer(),
                               ),
                               Container(
-                                alignment: AlignmentDirectional(0, 0),
-                                margin: EdgeInsets.only(top: 3),
+                                alignment: const AlignmentDirectional(0, 0),
+                                margin: const EdgeInsets.only(top: 3),
                                 child: Text(_endpointValidationText,
                                     style: TextStyle(
                                       fontSize: 14.0,
@@ -152,7 +153,7 @@ class _CustomUrlState extends State<CustomUrl> {
     );
   }
 
-  getEndpointContainer() {
+  Column getEndpointContainer() {
     return Column(
       children: [
         Row(
@@ -187,14 +188,14 @@ class _CustomUrlState extends State<CustomUrl> {
             updateEndpoint();
             // Always reset the error message to be less annoying
             setState(() {
-              _endpointValidationText = "";
+              _endpointValidationText = '';
             });
           },
           textInputAction: TextInputAction.next,
           maxLines: null,
           autocorrect: false,
           hintText: _endpointHint == null
-              ? ""
+              ? ''
               : AppLocalization.of(context).enterEndpoint,
           keyboardType: TextInputType.multiline,
           textAlign: TextAlign.left,

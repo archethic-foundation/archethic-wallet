@@ -11,4 +11,4 @@ List<List<dynamic>> tokensBalanceGetResponseFromJson(String str) =>
         json.decode(str).map((x) => List<dynamic>.from(x.map((x) => x))));
 
 String tokensBalanceGetResponseToJson(List<List<dynamic>> data) => json.encode(
-    List<dynamic>.from(data.map((x) => List<dynamic>.from(x.map((x) => x)))));
+    List<dynamic>.from(data.map((List x) => List<dynamic>.from(x.map((x) => x)))));

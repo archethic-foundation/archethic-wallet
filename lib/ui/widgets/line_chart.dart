@@ -21,16 +21,16 @@ class LineChartWidget {
             child: Container(
               decoration: BoxDecoration(
                 color: StateContainer.of(context).curTheme.backgroundDark,
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(15),
                 ),
                 boxShadow: [
                   BoxShadow(
                     color:
-                        StateContainer.of(context).curTheme.backgroundDarkest,
+                        StateContainer.of(context).curTheme.backgroundDarkest!,
                     blurRadius: 5.0,
                     spreadRadius: 0.0,
-                    offset: Offset(5.0, 5.0),
+                    offset: const Offset(5.0, 5.0),
                   ),
                 ],
               ),
@@ -65,7 +65,7 @@ class LineChartWidget {
                                     .chartInfos
                                     .priceChangePercentage24h!
                                     .toStringAsFixed(2) +
-                                "%",
+                                '%',
                             style: AppStyles.textStyleChartGreen(context),
                           ),
                           Icon(Entypo.up_dir,
@@ -81,7 +81,7 @@ class LineChartWidget {
                                     .chartInfos
                                     .priceChangePercentage24h!
                                     .toStringAsFixed(2) +
-                                "%",
+                                '%',
                             style: AppStyles.textStyleChartRed(context),
                           ),
                           Icon(Entypo.down_dir,
@@ -101,21 +101,21 @@ class LineChartWidget {
             child: Container(
                 decoration: BoxDecoration(
                   color: StateContainer.of(context).curTheme.backgroundDark,
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(15),
                   ),
                   boxShadow: [
                     BoxShadow(
                       color:
-                          StateContainer.of(context).curTheme.backgroundDarkest,
+                          StateContainer.of(context).curTheme.backgroundDarkest!,
                       blurRadius: 5.0,
                       spreadRadius: 0.0,
-                      offset: Offset(5.0, 5.0),
+                      offset: const Offset(5.0, 5.0),
                     ),
                   ],
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
+                child: const Padding(
+                  padding: EdgeInsets.only(
                       right: 18.0, left: 12.0, top: 24, bottom: 12),
                   child: Center(child: CircularProgressIndicator()),
                 )),
@@ -126,21 +126,21 @@ class LineChartWidget {
   }
 
   static LineChartData mainData(BuildContext context) {
-    List<Color> gradientColors = [
-      StateContainer.of(context).curTheme.backgroundDark,
-      StateContainer.of(context).curTheme.backgroundDarkest,
+    final List<Color> gradientColors = [
+      StateContainer.of(context).curTheme.backgroundDark!,
+      StateContainer.of(context).curTheme.backgroundDarkest!,
     ];
     return LineChartData(
       gridData: FlGridData(
         show: false,
         drawVerticalLine: false,
-        getDrawingHorizontalLine: (value) {
+        getDrawingHorizontalLine: (double value) {
           return FlLine(
             color: StateContainer.of(context).curTheme.backgroundDarkest,
             strokeWidth: 1,
           );
         },
-        getDrawingVerticalLine: (value) {
+        getDrawingVerticalLine: (double value) {
           return FlLine(
             color: StateContainer.of(context).curTheme.backgroundDarkest,
             strokeWidth: 1,
@@ -152,13 +152,13 @@ class LineChartWidget {
         bottomTitles: SideTitles(
           showTitles: false,
           reservedSize: 10,
-          getTextStyles: (value) => const TextStyle(
+          getTextStyles: (double value) => const TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),
           margin: 8,
         ),
         leftTitles: SideTitles(
           showTitles: false,
-          getTextStyles: (value) => const TextStyle(
+          getTextStyles: (double value) => const TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),
           reservedSize: 10,
           margin: 12,
@@ -184,7 +184,7 @@ class LineChartWidget {
           belowBarData: BarAreaData(
             show: false,
             colors:
-                gradientColors.map((color) => color.withOpacity(0.3)).toList(),
+                gradientColors.map((Color color) => color.withOpacity(0.3)).toList(),
           ),
         ),
       ],

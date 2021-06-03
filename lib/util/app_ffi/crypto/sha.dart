@@ -10,9 +10,9 @@ class Sha {
   /// @param {List<Uint8List>} byte arrays
   /// @returns {Uint8List}
   static Uint8List sha256(List<Uint8List> byteArrays) {
-    Digest digest = Digest("SHA-256");
-    Uint8List hashed = Uint8List(32);
-    byteArrays.forEach((byteArray) {
+    final Digest digest = Digest('SHA-256');
+    final Uint8List hashed = Uint8List(32);
+    byteArrays.forEach((Uint8List byteArray) {
       digest.update(byteArray, 0, byteArray.lengthInBytes);
     });
     digest.doFinal(hashed, 0);
@@ -24,9 +24,9 @@ class Sha {
   /// @param {List<Uint8List>} byte arrays
   /// @returns {Uint8List}
   static Uint8List sha512(List<Uint8List> byteArrays) {
-    Digest digest = Digest("SHA-512");
-    Uint8List hashed = Uint8List(64);
-    byteArrays.forEach((byteArray) {
+    final Digest digest = Digest('SHA-512');
+    final Uint8List hashed = Uint8List(64);
+    byteArrays.forEach((Uint8List byteArray) {
       digest.update(byteArray, 0, byteArray.lengthInBytes);
     });
     digest.doFinal(hashed, 0);

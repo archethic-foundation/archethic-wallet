@@ -1,173 +1,220 @@
-// @dart=2.9
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 abstract class BaseTheme {
-  Color primary;
-  Color primary60;
-  Color primary45;
-  Color primary30;
-  Color primary20;
-  Color primary15;
-  Color primary10;
+  Color? primary;
+  Color? primary60;
+  Color? primary45;
+  Color? primary30;
+  Color? primary20;
+  Color? primary15;
+  Color? primary10;
 
-  Color icon;
-  Color icon45;
-  Color icon60;
+  Color? icon;
+  Color? icon45;
+  Color? icon60;
 
-  Color success;
-  Color success60;
-  Color success30;
-  Color success15;
-  Color successDark;
-  Color successDark30;
+  Color? success;
+  Color? success60;
+  Color? success30;
+  Color? success15;
+  Color? successDark;
+  Color? successDark30;
 
-  Color background;
-  Color background40;
-  Color background00;
+  Color? background;
+  Color? background40;
+  Color? background00;
 
-  Color backgroundDark;
-  Color backgroundDark00;
+  Color? backgroundDark;
+  Color? backgroundDark00;
 
-  Color backgroundDarkest;
+  Color? backgroundDarkest;
 
-  Color text;
-  Color text60;
-  Color text45;
-  Color text30;
-  Color text20;
-  Color text15;
-  Color text10;
-  Color text05;
-  Color text03;
+  Color? text;
+  Color? text60;
+  Color? text45;
+  Color? text30;
+  Color? text20;
+  Color? text15;
+  Color? text10;
+  Color? text05;
+  Color? text03;
 
-  Color overlay20;
-  Color overlay30;
-  Color overlay50;
-  Color overlay70;
-  Color overlay80;
-  Color overlay85;
-  Color overlay90;
+  Color? overlay20;
+  Color? overlay30;
+  Color? overlay50;
+  Color? overlay70;
+  Color? overlay80;
+  Color? overlay85;
+  Color? overlay90;
 
-  Color animationOverlayMedium;
-  Color animationOverlayStrong;
+  Color? animationOverlayMedium;
+  Color? animationOverlayStrong;
 
-  Color positiveValue;
-  Color negativeValue;
+  Color? positiveValue;
+  Color? negativeValue;
 
-  Color contextMenuText;
-  Color contextMenuTextRed;
+  Color? contextMenuText;
+  Color? contextMenuTextRed;
 
-  Color choiceOption;
+  Color? choiceOption;
 
-  Brightness brightness;
-  SystemUiOverlayStyle statusBar;
+  Brightness? brightness;
+  SystemUiOverlayStyle? statusBar;
 
-  BoxShadow boxShadow;
-  BoxShadow boxShadowButton;
+  BoxShadow? boxShadow;
+  BoxShadow? boxShadowButton;
 
   // App icon (iOS only)
-  AppIconEnum appIcon;
+  AppIconEnum? appIcon;
 }
 
 class UnirisTheme extends BaseTheme {
-  static const orange = Color(0xFFfc9034);
+  static const Color orange = Color(0xFFfc9034);
 
-  static const orangeDark = Color(0xFFf9852b);
+  static const Color orangeDark = Color(0xFFf9852b);
 
-  static const blue = Color(0xFF1ba5d9);
+  static const Color blue = Color(0xFF1ba5d9);
 
-  static const blueDark = Color(0xFF106fcf);
+  static const Color blueDark = Color(0xFF106fcf);
 
-  static const blueDarktest = Color(0xFF06347c);
+  static const Color blueDarktest = Color(0xFF06347c);
 
-  static const white = Color(0xFFFFFFFF);
+  static const Color white = Color(0xFFFFFFFF);
 
-  static const black = Color(0xFF000000);
+  static const Color black = Color(0xFF000000);
 
-  static const grey = Color(0xFF4b4b4b);
+  static const Color grey = Color(0xFF4b4b4b);
 
-  Color primary = white;
-  Color primary60 = white.withOpacity(0.6);
-  Color primary45 = white.withOpacity(0.45);
-  Color primary30 = white.withOpacity(0.3);
-  Color primary20 = white.withOpacity(0.2);
-  Color primary15 = white.withOpacity(0.15);
-  Color primary10 = white.withOpacity(0.1);
+  @override
+  Color? primary = white;
+  @override
+  Color? primary60 = white.withOpacity(0.6);
+  @override
+  Color? primary45 = white.withOpacity(0.45);
+  @override
+  Color? primary30 = white.withOpacity(0.3);
+  @override
+  Color? primary20 = white.withOpacity(0.2);
+  @override
+  Color? primary15 = white.withOpacity(0.15);
+  @override
+  Color? primary10 = white.withOpacity(0.1);
 
-  Color icon = white;
-  Color icon45 = white.withOpacity(0.45);
-  Color icon60 = white.withOpacity(0.60);
+  @override
+  Color? icon = white;
+  @override
+  Color? icon45 = white.withOpacity(0.45);
+  @override
+  Color? icon60 = white.withOpacity(0.60);
 
-  Color success = orange;
-  Color success60 = orange.withOpacity(0.6);
-  Color success30 = orange.withOpacity(0.3);
-  Color success15 = orange.withOpacity(0.15);
+  @override
+  Color? success = orange;
+  @override
+  Color? success60 = orange.withOpacity(0.6);
+  @override
+  Color? success30 = orange.withOpacity(0.3);
+  @override
+  Color? success15 = orange.withOpacity(0.15);
 
-  Color successDark = orangeDark;
-  Color successDark30 = orangeDark.withOpacity(0.3);
+  @override
+  Color? successDark = orangeDark;
+  @override
+  Color? successDark30 = orangeDark.withOpacity(0.3);
 
-  Color background = blue;
-  Color background40 = blue.withOpacity(0.4);
-  Color background00 = blue.withOpacity(0.0);
+  @override
+  Color? background = blue;
+  @override
+  Color? background40 = blue.withOpacity(0.4);
+  @override
+  Color? background00 = blue.withOpacity(0.0);
+  @override
+  Color? backgroundDark = blueDark;
+  @override
+  Color? backgroundDark00 = blueDark.withOpacity(0.0);
 
-  Color backgroundDark = blueDark;
-  Color backgroundDark00 = blueDark.withOpacity(0.0);
+  @override
+  Color? backgroundDarkest = blueDarktest;
 
-  Color backgroundDarkest = blueDarktest;
+  @override
+  Color? text = white.withOpacity(0.9);
+  @override
+  Color? text60 = white.withOpacity(0.6);
+  @override
+  Color? text45 = white.withOpacity(0.45);
+  @override
+  Color? text30 = white.withOpacity(0.3);
+  @override
+  Color? text20 = white.withOpacity(0.2);
+  @override
+  Color? text15 = white.withOpacity(0.15);
+  @override
+  Color? text10 = white.withOpacity(0.1);
+  @override
+  Color? text05 = white.withOpacity(0.05);
+  @override
+  Color? text03 = white.withOpacity(0.03);
 
-  Color text = white.withOpacity(0.9);
-  Color text60 = white.withOpacity(0.6);
-  Color text45 = white.withOpacity(0.45);
-  Color text30 = white.withOpacity(0.3);
-  Color text20 = white.withOpacity(0.2);
-  Color text15 = white.withOpacity(0.15);
-  Color text10 = white.withOpacity(0.1);
-  Color text05 = white.withOpacity(0.05);
-  Color text03 = white.withOpacity(0.03);
+  @override
+  Color? overlay90 = black.withOpacity(0.9);
+  @override
+  Color? overlay85 = black.withOpacity(0.85);
+  @override
+  Color? overlay80 = black.withOpacity(0.8);
+  @override
+  Color? overlay70 = black.withOpacity(0.7);
+  @override
+  Color? overlay50 = black.withOpacity(0.5);
+  @override
+  Color? overlay30 = black.withOpacity(0.3);
+  @override
+  Color? overlay20 = black.withOpacity(0.2);
 
-  Color overlay90 = black.withOpacity(0.9);
-  Color overlay85 = black.withOpacity(0.85);
-  Color overlay80 = black.withOpacity(0.8);
-  Color overlay70 = black.withOpacity(0.7);
-  Color overlay50 = black.withOpacity(0.5);
-  Color overlay30 = black.withOpacity(0.3);
-  Color overlay20 = black.withOpacity(0.2);
+  @override
+  Color? animationOverlayMedium = black.withOpacity(0.7);
+  @override
+  Color? animationOverlayStrong = black.withOpacity(0.85);
 
-  Color animationOverlayMedium = black.withOpacity(0.7);
-  Color animationOverlayStrong = black.withOpacity(0.85);
+  @override
+  Color? positiveValue = Colors.lightGreenAccent[400];
+  @override
+  Color? negativeValue = Colors.red[300];
 
-  Color positiveValue = Colors.lightGreenAccent[400];
-  Color negativeValue = Colors.red[300];
+  @override
+  Color? contextMenuText = blue;
+  @override
+  Color? contextMenuTextRed = Colors.red[300];
 
-  Color contextMenuText = blue;
-  Color contextMenuTextRed = Colors.red[300];
+  @override
+  Color? choiceOption = Colors.lightGreenAccent[400];
 
-  Color choiceOption = Colors.lightGreenAccent[400];
-
-  Brightness brightness = Brightness.dark;
-  SystemUiOverlayStyle statusBar =
+  @override
+  Brightness? brightness = Brightness.dark;
+  @override
+  SystemUiOverlayStyle? statusBar =
       SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent);
 
-  BoxShadow boxShadow = BoxShadow(color: Colors.transparent);
-  BoxShadow boxShadowButton = BoxShadow(color: Colors.transparent);
+  @override
+  BoxShadow? boxShadow = const BoxShadow(color: Colors.transparent);
+  @override
+  BoxShadow? boxShadowButton = const BoxShadow(color: Colors.transparent);
 
-  AppIconEnum appIcon = AppIconEnum.UNIRIS;
+  @override
+  AppIconEnum? appIcon = AppIconEnum.UNIRIS;
 }
 
 enum AppIconEnum { UNIRIS }
 
 class AppIcon {
-  static const _channel = const MethodChannel('fappchannel');
+  static const MethodChannel _channel = MethodChannel('fappchannel');
 
   static Future<void> setAppIcon() async {
     if (!Platform.isIOS) {
       return null;
     }
     final Map<String, dynamic> params = <String, dynamic>{
-      'icon': "uniris",
+      'icon': 'uniris',
     };
     return await _channel.invokeMethod('changeIcon', params);
   }

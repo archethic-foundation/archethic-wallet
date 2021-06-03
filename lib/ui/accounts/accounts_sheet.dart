@@ -22,9 +22,10 @@ import 'package:uniris_mobile_wallet/util/caseconverter.dart';
 import 'package:uniris_mobile_wallet/util/numberutil.dart';
 
 class AppAccountsSheet {
-  List<Account> accounts;
 
   AppAccountsSheet(this.accounts);
+
+  List<Account> accounts;
 
   mainBottomSheet(BuildContext context) {
     AppSheets.showAppHeightNineSheet(
@@ -38,7 +39,7 @@ class AppAccountsSheet {
 class AppAccountsWidget extends StatefulWidget {
   final List<Account> accounts;
 
-  AppAccountsWidget({Key key, @required this.accounts}) : super(key: key);
+  const AppAccountsWidget({Key key, @required this.accounts}) : super(key: key);
 
   @override
   _AppAccountsWidgetState createState() => _AppAccountsWidgetState();
@@ -50,7 +51,7 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
 
   bool _addingAccount;
 
-  ScrollController _scrollController = new ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   StreamSubscription<AccountModifiedEvent> _accountModifiedSub;
 
@@ -60,8 +61,8 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
   void initState() {
     super.initState();
     _registerBus();
-    this._addingAccount = false;
-    this._accountIsChanging = false;
+    _addingAccount = false;
+    _accountIsChanging = false;
   }
 
   @override
@@ -73,30 +74,30 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
   void _registerBus() {
     _accountModifiedSub = EventTaxiImpl.singleton()
         .registerTo<AccountModifiedEvent>()
-        .listen((event) {
+        .listen((AccountModifiedEvent event) {
       if (event.deleted) {
         if (event.account.selected) {
-          Future.delayed(Duration(milliseconds: 50), () {
+          Future.delayed(const Duration(milliseconds: 50), () {
             setState(() {
               widget.accounts
-                  .where((a) =>
+                  .where((Account a) =>
                       a.index ==
                       StateContainer.of(context).selectedAccount.index)
-                  .forEach((account) {
+                  .forEach((Account account) {
                 account.selected = true;
               });
             });
           });
         }
         setState(() {
-          widget.accounts.removeWhere((a) => a.index == event.account.index);
+          widget.accounts.removeWhere((Account a) => a.index == event.account.index);
         });
       } else {
         // Name change
         setState(() {
-          widget.accounts.removeWhere((a) => a.index == event.account.index);
+          widget.accounts.removeWhere((Account a) => a.index == event.account.index);
           widget.accounts.add(event.account);
-          widget.accounts.sort((a, b) => a.index.compareTo(b.index));
+          widget.accounts.sort((Account a, Account b) => a.index.compareTo(b.index));
         });
       }
     });
@@ -110,7 +111,7 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
 
   Future<void> _changeAccount(Account account, StateSetter setState) async {
     // Change account
-    widget.accounts.forEach((a) {
+    widget.accounts.forEach((Account a) {
       if (a.selected) {
         setState(() {
           a.selected = false;
@@ -141,7 +142,7 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     width: 60,
                     height: 40,
                   ),
@@ -149,7 +150,7 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                     children: <Widget>[
                       // Sheet handle
                       Container(
-                        margin: EdgeInsets.only(top: 10),
+                        margin: const EdgeInsets.only(top: 10),
                         height: 5,
                         width: MediaQuery.of(context).size.width * 0.15,
                         decoration: BoxDecoration(
@@ -159,7 +160,7 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                       ),
                     ],
                   ), // Empty SizedBox
-                  SizedBox(
+                  const SizedBox(
                     width: 60,
                     height: 40,
                   ),
@@ -170,7 +171,7 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                 children: [
                   //A container for the header
                   Container(
-                    margin: EdgeInsets.only(bottom: 15),
+                    margin: const EdgeInsets.only(bottom: 15),
                     constraints: BoxConstraints(
                         maxWidth: MediaQuery.of(context).size.width - 140),
                     child: AutoSizeText(
@@ -188,12 +189,10 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                   key: expandedKey,
                   child: Stack(
                     children: <Widget>[
-                      widget.accounts == null
-                          ? Center(
-                              child: Text("Loading"),
-                            )
-                          : ListView.builder(
-                              padding: EdgeInsets.symmetric(vertical: 20),
+                      if (widget.accounts == null) const Center(
+                              child: Text('Loading'),
+                            ) else ListView.builder(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
                               itemCount: widget.accounts.length,
                               controller: _scrollController,
                               itemBuilder: (BuildContext context, int index) {
@@ -217,8 +216,8 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                                     .curTheme
                                     .backgroundDark,
                               ],
-                              begin: AlignmentDirectional(0.5, 1.0),
-                              end: AlignmentDirectional(0.5, -1.0),
+                              begin: const AlignmentDirectional(0.5, 1.0),
+                              end: const AlignmentDirectional(0.5, -1.0),
                             ),
                           ),
                         ),
@@ -239,24 +238,22 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                                     .curTheme
                                     .backgroundDark00
                               ],
-                              begin: AlignmentDirectional(0.5, 1.0),
-                              end: AlignmentDirectional(0.5, -1.0),
+                              begin: const AlignmentDirectional(0.5, 1.0),
+                              end: const AlignmentDirectional(0.5, -1.0),
                             ),
                           ),
                         ),
                       ),
                     ],
                   )),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               //A row with Add Account button
               Row(
                 children: <Widget>[
-                  widget.accounts == null ||
-                          widget.accounts.length >= MAX_ACCOUNTS
-                      ? SizedBox()
-                      : AppButton.buildAppButton(
+                  if (widget.accounts == null ||
+                          widget.accounts.length >= MAX_ACCOUNTS) const SizedBox() else AppButton.buildAppButton(
                           context,
                           AppButtonType.PRIMARY,
                           AppLocalization.of(context).addAccount,
@@ -267,23 +264,23 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                               setState(() {
                                 _addingAccount = true;
                               });
-                              StateContainer.of(context).getSeed().then((seed) {
+                              StateContainer.of(context).getSeed().then((String seed) {
                                 sl
                                     .get<DBHelper>()
                                     .addAccount(seed,
                                         nameBuilder: AppLocalization.of(context)
                                             .defaultNewAccountName)
-                                    .then((newAccount) {
+                                    .then((Account newAccount) {
                                   StateContainer.of(context)
                                       .updateRecentlyUsedAccounts();
                                   widget.accounts.add(newAccount);
                                   setState(() {
                                     _addingAccount = false;
                                     widget.accounts.sort(
-                                        (a, b) => a.index.compareTo(b.index));
+                                        (Account a, Account b) => a.index.compareTo(b.index));
                                     // Scroll if list is full
                                     if (expandedKey.currentContext != null) {
-                                      RenderBox box = expandedKey.currentContext
+                                      final RenderBox box = expandedKey.currentContext
                                           .findRenderObject();
                                       if (widget.accounts.length * 72.0 >=
                                           box.size.height) {
@@ -334,7 +331,7 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
       key: Key(account.id.toString()),
       secondaryActions: _getSlideActionsForAccount(context, account, setState),
       actionExtentRatio: 0.2,
-      actionPane: SlidableStrechActionPane(),
+      actionPane: const SlidableStrechActionPane(),
       child: TextButton(
           onPressed: () {
             if (!_accountIsChanging) {
@@ -370,7 +367,7 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                     // Icon, Account Name, Address and Amount
                     Expanded(
                       child: Container(
-                        margin: EdgeInsetsDirectional.only(start: 8, end: 16),
+                        margin: const EdgeInsetsDirectional.only(start: 8, end: 16),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -397,7 +394,7 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                                           116) *
                                       0.5,
                                   margin:
-                                      EdgeInsetsDirectional.only(start: 8.0),
+                                      const EdgeInsetsDirectional.only(start: 8.0),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
@@ -407,7 +404,7 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                                       AutoSizeText(
                                         account.name,
                                         style: TextStyle(
-                                          fontFamily: "Montserrat",
+                                          fontFamily: 'Montserrat',
                                           fontWeight: FontWeight.w600,
                                           fontSize: 16.0,
                                           color: StateContainer.of(context)
@@ -422,9 +419,9 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                                       // Account address
                                       AutoSizeText(
                                         account.address.substring(0, 12) +
-                                            "...",
+                                            '...',
                                         style: TextStyle(
-                                          fontFamily: "Montserrat",
+                                          fontFamily: 'Montserrat',
                                           fontWeight: FontWeight.w100,
                                           fontSize: 14.0,
                                           color: StateContainer.of(context)
@@ -443,20 +440,20 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                             Container(
                               width: (MediaQuery.of(context).size.width - 116) *
                                   0.4,
-                              alignment: AlignmentDirectional(1, 0),
+                              alignment: const AlignmentDirectional(1, 0),
                               child: AutoSizeText.rich(
                                 TextSpan(
                                   children: [
                                     // Main balance text
                                     TextSpan(
                                       text: account.balance == null
-                                          ? ""
+                                          ? ''
                                           : NumberUtil.getRawAsUsableString(
                                                   account.balance) +
-                                              " UCO",
+                                              ' UCO',
                                       style: TextStyle(
                                           fontSize: 16.0,
-                                          fontFamily: "Montserrat",
+                                          fontFamily: 'Montserrat',
                                           fontWeight: FontWeight.w900,
                                           color: StateContainer.of(context)
                                               .curTheme
@@ -465,7 +462,7 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                                   ],
                                 ),
                                 maxLines: 1,
-                                style: TextStyle(fontSize: 16.0),
+                                style: const TextStyle(fontSize: 16.0),
                                 stepGranularity: 0.1,
                                 minFontSize: 1,
                                 textAlign: TextAlign.end,
@@ -493,11 +490,11 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
 
   List<Widget> _getSlideActionsForAccount(
       BuildContext context, Account account, StateSetter setState) {
-    List<Widget> _actions = new List<Widget>.empty(growable: true);
+    final List<Widget> _actions = List<Widget>.empty(growable: true);
     _actions.add(SlideAction(
         child: Container(
-          margin: EdgeInsetsDirectional.only(start: 2, top: 1, bottom: 1),
-          constraints: BoxConstraints.expand(),
+          margin: const EdgeInsetsDirectional.only(start: 2, top: 1, bottom: 1),
+          constraints: const BoxConstraints.expand(),
           decoration: BoxDecoration(
             color: StateContainer.of(context).curTheme.primary,
           ),
@@ -512,8 +509,8 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
     if (account.index > 0) {
       _actions.add(SlideAction(
           child: Container(
-            margin: EdgeInsetsDirectional.only(start: 2, top: 1, bottom: 1),
-            constraints: BoxConstraints.expand(),
+            margin: const EdgeInsetsDirectional.only(start: 2, top: 1, bottom: 1),
+            constraints: const BoxConstraints.expand(),
             decoration: BoxDecoration(
               color: StateContainer.of(context).curTheme.primary,
             ),
@@ -528,15 +525,15 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                 AppLocalization.of(context).hideAccountHeader,
                 AppLocalization.of(context)
                     .removeAccountText
-                    .replaceAll("%1", AppLocalization.of(context).addAccount),
+                    .replaceAll('%1', AppLocalization.of(context).addAccount),
                 CaseChange.toUpperCase(
                     AppLocalization.of(context).yes, context), () {
               // Remove account
-              sl.get<DBHelper>().deleteAccount(account).then((id) {
+              sl.get<DBHelper>().deleteAccount(account).then((int id) {
                 EventTaxiImpl.singleton().fire(
                     AccountModifiedEvent(account: account, deleted: true));
                 setState(() {
-                  widget.accounts.removeWhere((a) => a.index == account.index);
+                  widget.accounts.removeWhere((Account a) => a.index == account.index);
                 });
               });
             },

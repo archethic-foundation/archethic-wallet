@@ -11,9 +11,7 @@ class AppDialogs {
   static void showConfirmDialog(
       var context, var title, var content, var buttonText, Function onPressed,
       {String cancelText, Function cancelAction}) {
-    if (cancelText == null) {
-      cancelText = AppLocalization.of(context).cancel.toUpperCase();
-    }
+    cancelText ??= AppLocalization.of(context).cancel.toUpperCase();
     showAppDialog(
       context: context,
       builder: (BuildContext context) {
@@ -26,7 +24,7 @@ class AppDialogs {
           actions: <Widget>[
             TextButton(
               child: Container(
-                constraints: BoxConstraints(maxWidth: 100),
+                constraints: const BoxConstraints(maxWidth: 100),
                 child: Text(
                   cancelText,
                   style: AppStyles.textStyleDialogButtonText(context),
@@ -41,7 +39,7 @@ class AppDialogs {
             ),
             TextButton(
               child: Container(
-                constraints: BoxConstraints(maxWidth: 100),
+                constraints: const BoxConstraints(maxWidth: 100),
                 child: Text(
                   buttonText,
                   style: AppStyles.textStyleDialogButtonText(context),
@@ -58,7 +56,7 @@ class AppDialogs {
     );
   }
 
-  static void showInfoDialog(var context, var title, var content) {
+  static void showInfoDialog(BuildContext context, String title, String content) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -94,16 +92,16 @@ enum AnimationType {
 }
 
 class AnimationLoadingOverlay extends ModalRoute<void> {
+  AnimationLoadingOverlay(this.type, this.overlay85, this.overlay70,
+      {this.onPoppedCallback});
+
   AnimationType type;
   Function onPoppedCallback;
   Color overlay85;
   Color overlay70;
 
-  AnimationLoadingOverlay(this.type, this.overlay85, this.overlay70,
-      {this.onPoppedCallback});
-
   @override
-  Duration get transitionDuration => Duration(milliseconds: 0);
+  Duration get transitionDuration => const Duration(milliseconds: 0);
 
   @override
   bool get opaque => false;
@@ -129,8 +127,8 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
 
   @override
   void didComplete(void result) {
-    if (this.onPoppedCallback != null) {
-      this.onPoppedCallback();
+    if (onPoppedCallback != null) {
+      onPoppedCallback();
     }
     super.didComplete(result);
   }
@@ -152,28 +150,28 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   Widget _getAnimation(BuildContext context) {
     switch (type) {
       case AnimationType.SEND:
-        return Center();
+        return const Center();
       case AnimationType.TRANSFER_SEARCHING_QR:
         return Stack(
           children: <Widget>[
-            Center(
+            const Center(
               child: FlareActor(
-                "assets/searchseedqr_animation_qronly.flr",
-                animation: "main",
+                'assets/searchseedqr_animation_qronly.flr',
+                animation: 'main',
+                fit: BoxFit.contain,
+              ),
+            ),
+            const Center(
+              child: FlareActor(
+                'assets/searchseedqr_animation_glassonly.flr',
+                animation: 'main',
                 fit: BoxFit.contain,
               ),
             ),
             Center(
               child: FlareActor(
-                "assets/searchseedqr_animation_glassonly.flr",
-                animation: "main",
-                fit: BoxFit.contain,
-              ),
-            ),
-            Center(
-              child: FlareActor(
-                "assets/searchseedqr_animation_magnifyingglassonly.flr",
-                animation: "main",
+                'assets/searchseedqr_animation_magnifyingglassonly.flr',
+                animation: 'main',
                 fit: BoxFit.contain,
                 color: StateContainer.of(context).curTheme.primary,
               ),
@@ -185,23 +183,23 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
           children: <Widget>[
             Center(
               child: FlareActor(
-                "assets/searchseedmanual_animation_seedonly.flr",
-                animation: "main",
+                'assets/searchseedmanual_animation_seedonly.flr',
+                animation: 'main',
                 fit: BoxFit.contain,
                 color: StateContainer.of(context).curTheme.primary30,
               ),
             ),
-            Center(
+            const Center(
               child: FlareActor(
-                "assets/searchseedmanual_animation_glassonly.flr",
-                animation: "main",
+                'assets/searchseedmanual_animation_glassonly.flr',
+                animation: 'main',
                 fit: BoxFit.contain,
               ),
             ),
             Center(
               child: FlareActor(
-                "assets/searchseedmanual_animation_magnifyingglassonly.flr",
-                animation: "main",
+                'assets/searchseedmanual_animation_magnifyingglassonly.flr',
+                animation: 'main',
                 fit: BoxFit.contain,
                 color: StateContainer.of(context).curTheme.primary,
               ),
@@ -211,9 +209,9 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
       case AnimationType.TRANSFER_TRANSFERRING:
         return Stack(
           children: <Widget>[
-            FlareActor(
-              "assets/transfer_animation_paperwalletonly.flr",
-              animation: "main",
+            const FlareActor(
+              'assets/transfer_animation_paperwalletonly.flr',
+              animation: 'main',
               fit: BoxFit.contain,
             ),
           ],
@@ -221,7 +219,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
       case AnimationType.GENERIC:
       default:
         return CircularProgressIndicator(
-            valueColor: new AlwaysStoppedAnimation<Color>(
+            valueColor: AlwaysStoppedAnimation<Color>(
                 StateContainer.of(context).curTheme.primary60));
     }
   }
@@ -235,7 +233,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
       children: <Widget>[
         Container(
           margin: type == AnimationType.SEND
-              ? EdgeInsets.only(bottom: 10.0, left: 90, right: 90)
+              ? const EdgeInsets.only(bottom: 10.0, left: 90, right: 90)
               : EdgeInsets.zero,
           //Widgth/Height ratio is needed because BoxFit is not working as expected
           width: type == AnimationType.SEND ? double.infinity : 100,

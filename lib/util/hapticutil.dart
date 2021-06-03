@@ -13,8 +13,8 @@ class HapticUtil {
     if (!Platform.isIOS) {
       return false;
     }
-    IosDeviceInfo deviceInfo = await DeviceInfoPlugin().iosInfo;
-    String deviceIdentifier = deviceInfo.utsname.machine;
+    final IosDeviceInfo deviceInfo = await DeviceInfoPlugin().iosInfo;
+    final String deviceIdentifier = deviceInfo.utsname.machine;
     switch (deviceIdentifier) {
       case 'iPhone5,1': // iPhone 5
       case 'iPhone5,2': // iPhone 5
@@ -64,7 +64,7 @@ class HapticUtil {
   /// iOS-only, since Android already gives us feedback on success
   Future<void> fingerprintSucess() async {
     if (Platform.isIOS) {
-      Future.delayed(Duration(milliseconds: 50), () => success());
+      Future.delayed(const Duration(milliseconds: 50), () => success());
     }
   }
 }

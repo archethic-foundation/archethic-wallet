@@ -27,7 +27,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
   bool _showUnlockButton = false;
   bool _showLock = false;
   bool _lockedOut = true;
-  String _countDownTxt = "";
+  String _countDownTxt = '';
 
   Future<void> _goHome() async {
     if (StateContainer.of(context).wallet == null) {
@@ -35,7 +35,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
           .loginAccount(await StateContainer.of(context).getSeed(), context);
     }
     StateContainer.of(context).requestUpdate();
-    PriceConversion conversion =
+    final PriceConversion conversion =
         await sl.get<SharedPrefsUtil>().getPriceConversion();
     Navigator.of(context).pushNamedAndRemoveUntil(
         '/home_transition', (Route<dynamic> route) => false,
@@ -55,51 +55,51 @@ class _AppLockScreenState extends State<AppLockScreen> {
       // Seconds only
       String secondsStr = count.toString();
       if (count < 10) {
-        secondsStr = "0" + secondsStr;
+        secondsStr = '0' + secondsStr;
       }
-      return "00:" + secondsStr;
+      return '00:' + secondsStr;
     } else if (count > 60 && count <= 3600) {
       // Minutes:Seconds
-      String minutesStr = "";
-      int minutes = count ~/ 60;
+      String minutesStr = '';
+      final int minutes = count ~/ 60;
       if (minutes < 10) {
-        minutesStr = "0" + minutes.toString();
+        minutesStr = '0' + minutes.toString();
       } else {
         minutesStr = minutes.toString();
       }
-      String secondsStr = "";
-      int seconds = count % 60;
+      String secondsStr = '';
+      final int seconds = count % 60;
       if (seconds < 10) {
-        secondsStr = "0" + seconds.toString();
+        secondsStr = '0' + seconds.toString();
       } else {
         secondsStr = seconds.toString();
       }
-      return minutesStr + ":" + secondsStr;
+      return minutesStr + ':' + secondsStr;
     } else {
       // Hours:Minutes:Seconds
-      String hoursStr = "";
-      int hours = count ~/ 3600;
+      String hoursStr = '';
+      final int hours = count ~/ 3600;
       if (hours < 10) {
-        hoursStr = "0" + hours.toString();
+        hoursStr = '0' + hours.toString();
       } else {
         hoursStr = hours.toString();
       }
       count = count % 3600;
-      String minutesStr = "";
-      int minutes = count ~/ 60;
+      String minutesStr = '';
+      final int minutes = count ~/ 60;
       if (minutes < 10) {
-        minutesStr = "0" + minutes.toString();
+        minutesStr = '0' + minutes.toString();
       } else {
         minutesStr = minutes.toString();
       }
-      String secondsStr = "";
-      int seconds = count % 60;
+      String secondsStr = '';
+      final int seconds = count % 60;
       if (seconds < 10) {
-        secondsStr = "0" + seconds.toString();
+        secondsStr = '0' + seconds.toString();
       } else {
         secondsStr = seconds.toString();
       }
-      return hoursStr + ":" + minutesStr + ":" + secondsStr;
+      return hoursStr + ':' + minutesStr + ':' + secondsStr;
     }
   }
 
@@ -113,7 +113,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
           _countDownTxt = _formatCountDisplay(count);
         });
       }
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 1), () {
         _runCountdown(count - 1);
       });
     } else {
@@ -126,7 +126,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
   }
 
   Future<void> authenticateWithBiometrics() async {
-    bool authenticated = await sl
+    final bool authenticated = await sl
         .get<BiometricUtil>()
         .authenticateWithBiometrics(
             context, AppLocalization.of(context).unlockBiometrics);
@@ -140,7 +140,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
   }
 
   Future<void> authenticateWithPin({bool transitions = false}) async {
-    String expectedPin = await sl.get<Vault>().getPin();
+    final String expectedPin = await sl.get<Vault>().getPin();
     bool auth = false;
     if (transitions) {
       auth = await Navigator.of(context).push(
@@ -155,7 +155,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
         }),
       );
     }
-    await Future.delayed(Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: 200));
     if (mounted) {
       setState(() {
         _showUnlockButton = true;
@@ -170,11 +170,11 @@ class _AppLockScreenState extends State<AppLockScreen> {
   Future<void> _authenticate({bool transitions = false}) async {
     // Test if user is locked out
     // Get duration of lockout
-    DateTime lockUntil = await sl.get<SharedPrefsUtil>().getLockDate();
+    final DateTime lockUntil = await sl.get<SharedPrefsUtil>().getLockDate();
     if (lockUntil == null) {
       await sl.get<SharedPrefsUtil>().resetLockAttempts();
     } else {
-      int countDown = lockUntil.difference(DateTime.now().toUtc()).inSeconds;
+      final int countDown = lockUntil.difference(DateTime.now().toUtc()).inSeconds;
       // They're not allowed to attempt
       if (countDown > 0) {
         _runCountdown(countDown);
@@ -184,9 +184,9 @@ class _AppLockScreenState extends State<AppLockScreen> {
     setState(() {
       _lockedOut = false;
     });
-    AuthenticationMethod authMethod =
+    final AuthenticationMethod authMethod =
         await sl.get<SharedPrefsUtil>().getAuthMethod();
-    bool hasBiometrics = await sl.get<BiometricUtil>().hasBiometrics();
+    final bool hasBiometrics = await sl.get<BiometricUtil>().hasBiometrics();
     if (authMethod.method == AuthMethod.BIOMETRICS && hasBiometrics) {
       setState(() {
         _showLock = true;
@@ -232,7 +232,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
               children: <Widget>[
                 // Logout button
                 Container(
-                  margin: EdgeInsetsDirectional.only(start: 16, top: 12),
+                  margin: const EdgeInsetsDirectional.only(start: 16, top: 12),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -265,7 +265,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                   color:
                                       StateContainer.of(context).curTheme.text),
                               Container(
-                                margin: EdgeInsetsDirectional.only(start: 4),
+                                margin: const EdgeInsetsDirectional.only(start: 4),
                                 child: Text(AppLocalization.of(context).logout,
                                     style: AppStyles.textStyleLogoutButton(
                                         context)),
@@ -300,25 +300,22 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                 style:
                                     AppStyles.textStyleHeaderColored(context),
                               ),
-                              margin: EdgeInsets.only(top: 10),
+                              margin: const EdgeInsets.only(top: 10),
                             ),
                           ],
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                 ),
-                _lockedOut
-                    ? Container(
+                if (_lockedOut) Container(
                         width: MediaQuery.of(context).size.width - 100,
-                        margin: EdgeInsets.symmetric(horizontal: 50),
+                        margin: const EdgeInsets.symmetric(horizontal: 50),
                         child: Text(
                           AppLocalization.of(context).tooManyFailedAttempts,
                           style: AppStyles.textStyleErrorMedium(context),
                           textAlign: TextAlign.center,
                         ),
-                      )
-                    : SizedBox(),
-                _showUnlockButton
-                    ? Row(
+                      ) else const SizedBox(),
+                if (_showUnlockButton) Row(
                         children: <Widget>[
                           AppButton.buildAppButton(
                               context,
@@ -332,8 +329,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                             }
                           }, disabled: _lockedOut),
                         ],
-                      )
-                    : SizedBox(),
+                      ) else const SizedBox(),
               ],
             ),
           ),

@@ -4,8 +4,9 @@ import 'package:event_taxi/event_taxi.dart';
 enum ConnectionStatus { CONNECTED, DISCONNECTED }
 
 class ConnStatusEvent implements Event {
+  ConnStatusEvent({this.status, this.server});
+
   final ConnectionStatus? status;
   final String? server;
 
-  ConnStatusEvent({this.status, this.server});
 }

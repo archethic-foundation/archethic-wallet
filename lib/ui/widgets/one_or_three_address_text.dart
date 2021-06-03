@@ -6,19 +6,20 @@ import 'package:uniris_mobile_wallet/styles.dart';
 enum AddressTextType { PRIMARY60, PRIMARY, SUCCESS }
 
 class OneOrThreeLineAddressText extends StatelessWidget {
+  OneOrThreeLineAddressText(
+      {@required this.address, @required this.type, this.contactName});
+
   String address;
   String contactName;
   AddressTextType type;
 
-  OneOrThreeLineAddressText(
-      {@required this.address, @required this.type, this.contactName});
 
   @override
   Widget build(BuildContext context) {
     // One line for small displays
     if (MediaQuery.of(context).size.height < 667) {
-      String stringPartOne = address.substring(0, 12);
-      String stringPartFive = address.substring(36);
+      final String stringPartOne = address.substring(0, 12);
+      final String stringPartFive = address.substring(36);
       switch (type) {
         case AddressTextType.PRIMARY60:
           return Column(
@@ -33,7 +34,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                       style: AppStyles.textStyleAddressText60(context),
                     ),
                     TextSpan(
-                      text: "...",
+                      text: '...',
                       style: AppStyles.textStyleAddressText60(context),
                     ),
                     TextSpan(
@@ -58,7 +59,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                       style: AppStyles.textStyleAddressText90(context),
                     ),
                     TextSpan(
-                      text: "...",
+                      text: '...',
                       style: AppStyles.textStyleAddressText90(context),
                     ),
                     TextSpan(
@@ -83,7 +84,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                       style: AppStyles.textStyleAddressSuccess(context),
                     ),
                     TextSpan(
-                      text: "...",
+                      text: '...',
                       style: AppStyles.textStyleAddressText90(context),
                     ),
                     TextSpan(
@@ -98,11 +99,11 @@ class OneOrThreeLineAddressText extends StatelessWidget {
       }
     }
     // Three line
-    String stringPartOne = "";
-    String stringPartTwo = "";
-    String stringPartThree = "";
-    String stringPartFour = "";
-    String stringPartFive = "";
+    String stringPartOne = '';
+    String stringPartTwo = '';
+    String stringPartThree = '';
+    String stringPartFour = '';
+    String stringPartFive = '';
     if (address.length >= 12) {
       stringPartOne = address.substring(0, 12);
     } else {
@@ -182,13 +183,13 @@ class OneOrThreeLineAddressText extends StatelessWidget {
           ],
         );
       case AddressTextType.PRIMARY:
-        Widget contactWidget = contactName != null
+        final Widget contactWidget = contactName != null
             ? RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
                     text: contactName,
                     style: AppStyles.textStyleAddressText90(context)))
-            : SizedBox();
+            : const SizedBox();
         return Column(
           children: <Widget>[
             contactWidget,
@@ -239,13 +240,13 @@ class OneOrThreeLineAddressText extends StatelessWidget {
           ],
         );
       case AddressTextType.SUCCESS:
-        Widget contactWidget = contactName != null
+        final Widget contactWidget = contactName != null
             ? RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
                     text: contactName,
                     style: AppStyles.textStyleAddressSuccess(context)))
-            : SizedBox();
+            : const SizedBox();
         return Column(
           children: <Widget>[
             contactWidget,

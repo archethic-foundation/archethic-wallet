@@ -12,15 +12,16 @@ import 'package:uniris_mobile_wallet/styles.dart';
 
 /// A widget for displaying a mnemonic phrase
 class MnemonicDisplay extends StatefulWidget {
+  const MnemonicDisplay(
+      {@required this.wordList,
+      this.obscureSeed = false,
+      this.showButton = true});
+      
   final List<String> wordList;
   final bool obscureSeed;
   final bool showButton;
 
-  MnemonicDisplay(
-      {@required this.wordList,
-      this.obscureSeed = false,
-      this.showButton = true});
-
+  @override
   _MnemonicDisplayState createState() => _MnemonicDisplayState();
 }
 
@@ -38,18 +39,18 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
   }
 
   List<Widget> _buildMnemonicRows() {
-    int nRows = 8;
-    int itemsPerRow = 24 ~/ nRows;
+    const int nRows = 8;
+    const int itemsPerRow = 24 ~/ nRows;
     int curWord = 0;
-    List<Widget> ret = [];
+    final List<Widget> ret = [];
     for (int i = 0; i < nRows; i++) {
       ret.add(Container(
-        width: (MediaQuery.of(context).size.width),
+        width: MediaQuery.of(context).size.width,
         height: 1,
         color: StateContainer.of(context).curTheme.text05,
       ));
       // Build individual items
-      List<Widget> items = [];
+      final List<Widget> items = [];
       for (int j = 0; j < itemsPerRow; j++) {
         items.add(
           Container(
@@ -60,11 +61,11 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
               textAlign: TextAlign.start,
               text: TextSpan(children: [
                 TextSpan(
-                  text: curWord < 9 ? " " : "",
+                  text: curWord < 9 ? ' ' : '',
                   style: AppStyles.textStyleNumbersOfMnemonic(context),
                 ),
                 TextSpan(
-                  text: " ${curWord + 1}) ",
+                  text: ' ${curWord + 1}) ',
                   style: AppStyles.textStyleNumbersOfMnemonic(context),
                 ),
                 TextSpan(
@@ -86,14 +87,14 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
             padding: EdgeInsets.symmetric(
                 vertical: smallScreen(context) ? 6.0 : 9.0),
             child: Container(
-              margin: EdgeInsetsDirectional.only(start: 5),
+              margin: const EdgeInsetsDirectional.only(start: 5),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.center, children: items),
             )),
       );
       if (curWord == itemsPerRow * nRows) {
         ret.add(Container(
-          width: (MediaQuery.of(context).size.width),
+          width: MediaQuery.of(context).size.width,
           height: 1,
           color: StateContainer.of(context).curTheme.text05,
         ));
@@ -117,15 +118,14 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
         child: Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: 15),
+              margin: const EdgeInsets.only(top: 15),
               child: Column(
                 children: _buildMnemonicRows(),
               ),
             ),
             // Tap to reveal or hide
-            widget.obscureSeed
-                ? Container(
-                    margin: EdgeInsetsDirectional.only(top: 8),
+            if (widget.obscureSeed) Container(
+                    margin: const EdgeInsetsDirectional.only(top: 8),
                     child: _seedObscured
                         ? AutoSizeText(
                             AppLocalization.of(context).tapToReveal,
@@ -137,19 +137,17 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                             style: AppStyles.textStyleParagraphThinPrimary(
                                 context),
                           ),
-                  )
-                : SizedBox(),
+                  ) else const SizedBox(),
           ],
         ),
       ),
-      widget.showButton
-          ? Container(
-              margin: EdgeInsetsDirectional.only(top: 5),
-              padding: EdgeInsets.all(0.0),
+      if (widget.showButton) Container(
+              margin: const EdgeInsetsDirectional.only(top: 5),
+              padding: const EdgeInsets.all(0.0),
               child: OutlinedButton(
                 onPressed: () {
                   Clipboard.setData(
-                      new ClipboardData(text: widget.wordList.join(' ')));
+                      ClipboardData(text: widget.wordList.join(' ')));
                   //UserDataUtil.setSecureClipboardItem(widget.wordList.join(' '));
                   setState(() {
                     _seedCopied = true;
@@ -158,7 +156,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                     _seedCopiedTimer.cancel();
                   }
                   _seedCopiedTimer =
-                      new Timer(const Duration(milliseconds: 1500), () {
+                      Timer(const Duration(milliseconds: 1500), () {
                     setState(() {
                       _seedCopied = false;
                     });
@@ -176,8 +174,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                   stepGranularity: 0.5,
                 ),
               ),
-            )
-          : SizedBox(),
+            ) else const SizedBox(),
     ]);
   }
 }

@@ -28,14 +28,7 @@ import 'package:uniris_mobile_wallet/model/vault.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/security.dart';
 
 class SendConfirmSheet extends StatefulWidget {
-  final String amountRaw;
-  final String destination;
-  final String contactName;
-  final String localCurrency;
-  final bool maxSend;
-  final String title;
-
-  SendConfirmSheet(
+  const SendConfirmSheet(
       {this.amountRaw,
       this.destination,
       this.contactName,
@@ -44,6 +37,14 @@ class SendConfirmSheet extends StatefulWidget {
       this.title})
       : super();
 
+  final String amountRaw;
+  final String destination;
+  final String contactName;
+  final String localCurrency;
+  final bool maxSend;
+  final String title;
+
+  @override
   _SendConfirmSheetState createState() => _SendConfirmSheetState();
 }
 
@@ -58,7 +59,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
   void _registerBus() {
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
-        .listen((event) {
+        .listen((AuthenticatedEvent event) {
       if (event.authType == AUTH_EVENT_TYPE.SEND) {
         _doSend();
       }
@@ -66,16 +67,16 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
 
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
-        .listen((event) {
+        .listen((TransactionSendEvent event) {
       //print("listen TransactionSendEvent");
       //print("result : " + event.response);
-      if (event.response != "Success") {
+      if (event.response != 'Success') {
         // Send failed
         if (animationOpen) {
           Navigator.of(context).pop();
         }
         UIUtil.showSnackbar(
-            AppLocalization.of(context).sendError + " (" + event.response + ")",
+            AppLocalization.of(context).sendError + ' (' + event.response + ')',
             context);
         Navigator.of(context).pop();
       } else {
@@ -87,8 +88,8 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
         sl
             .get<DBHelper>()
             .getContactWithAddress(widget.destination)
-            .then((value) => contact);
-        String contactName = contact == null ? null : contact.name;
+            .then((Contact value) => contact);
+        final String contactName = contact == null ? null : contact.name;
         Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
         StateContainer.of(context).requestUpdate();
         Sheets.showAppHeightNineSheet(
@@ -118,9 +119,9 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
   void initState() {
     super.initState();
     _registerBus();
-    this.animationOpen = false;
+    animationOpen = false;
     // Derive amount from raw amount
-    if (NumberUtil.getRawAsUsableString(widget.amountRaw).replaceAll(",", "") ==
+    if (NumberUtil.getRawAsUsableString(widget.amountRaw).replaceAll(',', '') ==
         NumberUtil.getRawAsUsableDecimal(widget.amountRaw).toString()) {
       amount = NumberUtil.getRawAsUsableString(widget.amountRaw);
     } else {
@@ -128,7 +129,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                   NumberUtil.getRawAsUsableDecimal(widget.amountRaw),
                   digits: 6)
               .toStringAsFixed(6) +
-          "~";
+          '~';
     }
     destinationAltered = widget.destination;
   }
@@ -157,7 +158,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
           children: <Widget>[
             // Sheet handle
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               height: 5,
               width: MediaQuery.of(context).size.width * 0.15,
               decoration: BoxDecoration(
@@ -170,13 +171,11 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(top: 20.0, bottom: 30.0),
+                    margin: const EdgeInsets.only(top: 20.0, bottom: 30.0),
                     child: Column(
                       children: <Widget>[
                         Text(
-                          widget.title == null
-                              ? AppLocalization.of(context).transfering
-                              : widget.title,
+                          widget.title ?? AppLocalization.of(context).transfering,
                           style: AppStyles.textStyleHeader(context),
                         ),
                       ],
@@ -187,7 +186,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                     margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.105,
                         right: MediaQuery.of(context).size.width * 0.105),
-                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color:
@@ -198,14 +197,13 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
 
                     child: Column(
                       children: [
-                        double.tryParse(amount.replaceAll(",", "")) > 0
-                            ? RichText(
+                        if (double.tryParse(amount.replaceAll(',', '')) > 0) RichText(
                                 textAlign: TextAlign.center,
                                 text: TextSpan(
                                   text: '',
                                   children: [
                                     TextSpan(
-                                      text: "$amount",
+                                      text: '$amount',
                                       style: TextStyle(
                                         color: StateContainer.of(context)
                                             .curTheme
@@ -216,7 +214,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                                       ),
                                     ),
                                     TextSpan(
-                                      text: " UCO",
+                                      text: ' UCO',
                                       style: TextStyle(
                                         color: StateContainer.of(context)
                                             .curTheme
@@ -228,8 +226,8 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                                     ),
                                     TextSpan(
                                       text: widget.localCurrency != null
-                                          ? " (${widget.localCurrency})"
-                                          : "",
+                                          ? ' (${widget.localCurrency})'
+                                          : '',
                                       style: TextStyle(
                                         color: StateContainer.of(context)
                                             .curTheme
@@ -241,19 +239,18 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                                     ),
                                   ],
                                 ),
-                              )
-                            : SizedBox(),
+                              ) else const SizedBox(),
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 30),
+                          margin: const EdgeInsets.symmetric(horizontal: 30),
                           child: Text(
-                            "+ " +
+                            '+ ' +
                                 AppLocalization.of(context).fees +
-                                ": " +
+                                ': ' +
                                 sl
                                     .get<AppService>()
                                     .getFeesEstimation()
                                     .toStringAsFixed(5) +
-                                " UCO",
+                                ' UCO',
                             style: TextStyle(
                               color:
                                   StateContainer.of(context).curTheme.primary60,
@@ -268,7 +265,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                   ),
                   // "TO" text
                   Container(
-                    margin: EdgeInsets.only(top: 10.0, bottom: 0),
+                    margin: const EdgeInsets.only(top: 10.0, bottom: 0),
                     child: Column(
                       children: <Widget>[
                         Text(
@@ -285,7 +282,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                   ),
                   // Address text
                   Container(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 25.0,
                         vertical: 15.0,
                       ),
@@ -310,7 +307,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
 
             //A container for CONFIRM and CANCEL buttons
             Container(
-              margin: EdgeInsets.only(top: 10.0, bottom: 0),
+              margin: const EdgeInsets.only(top: 10.0, bottom: 0),
               child: Column(
                 children: <Widget>[
                   // A row for CONFIRM Button
@@ -323,20 +320,20 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                           AppLocalization.of(context).confirm,
                           Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
                         // Authenticate
-                        AuthenticationMethod authMethod =
+                        final AuthenticationMethod authMethod =
                             await sl.get<SharedPrefsUtil>().getAuthMethod();
-                        bool hasBiometrics =
+                        final bool hasBiometrics =
                             await sl.get<BiometricUtil>().hasBiometrics();
                         if (authMethod.method == AuthMethod.BIOMETRICS &&
                             hasBiometrics) {
                           try {
-                            bool authenticated = await sl
+                            final bool authenticated = await sl
                                 .get<BiometricUtil>()
                                 .authenticateWithBiometrics(
                                     context,
                                     AppLocalization.of(context)
                                         .sendAmountConfirm
-                                        .replaceAll("%1", amount));
+                                        .replaceAll('%1', amount));
                             if (authenticated) {
                               sl.get<HapticUtil>().fingerprintSucess();
                               EventTaxiImpl.singleton().fire(
@@ -375,11 +372,11 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
     try {
       _showSendingAnimation(context);
 
-      String seed = await StateContainer.of(context).getSeed();
-      int index = StateContainer.of(context).selectedAccount.index;
-      String publicKeyBase64 = "";
+      final String seed = await StateContainer.of(context).getSeed();
+      final int index = StateContainer.of(context).selectedAccount.index;
+      const String publicKeyBase64 = '';
 
-      String privateKey = "";
+      const String privateKey = '';
       //print("send tx");
       /*sl.get<AppService>().sendUCO(originPrivateKey, transactionChainSeed, address, endpoint, listUcoTransfer)
           StateContainer.of(context).wallet.address,
@@ -399,20 +396,20 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
 
   Future<void> authenticateWithPin() async {
     // PIN Authentication
-    String expectedPin = await sl.get<Vault>().getPin();
-    bool auth = await Navigator.of(context)
+    final String expectedPin = await sl.get<Vault>().getPin();
+    final bool auth = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
-      return new PinScreen(
+      return PinScreen(
         PinOverlayType.ENTER_PIN,
         expectedPin: expectedPin,
         description: AppLocalization.of(context)
             .transferAmountConfirmPin
-            .replaceAll("%1", amount),
+            .replaceAll('%1', amount),
       );
     }));
     //print("authenticateWithPin - auth : " + auth.toString());
     if (auth != null && auth) {
-      await Future.delayed(Duration(milliseconds: 200));
+      await Future.delayed(const Duration(milliseconds: 200));
       //print("authenticateWithPin - fire AuthenticatedEvent");
       EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
     }

@@ -22,8 +22,10 @@ import 'package:uniris_mobile_wallet/util/app_ffi/keys/seeds.dart';
 import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
 
 class IntroPassword extends StatefulWidget {
+  const IntroPassword({this.seed});
+
   final String seed;
-  IntroPassword({this.seed});
+
   @override
   _IntroPasswordState createState() => _IntroPasswordState();
 }
@@ -41,11 +43,11 @@ class _IntroPasswordState extends State<IntroPassword> {
   @override
   void initState() {
     super.initState();
-    this.passwordsMatch = false;
-    this.createPasswordFocusNode = FocusNode();
-    this.confirmPasswordFocusNode = FocusNode();
-    this.createPasswordController = TextEditingController();
-    this.confirmPasswordController = TextEditingController();
+    passwordsMatch = false;
+    createPasswordFocusNode = FocusNode();
+    confirmPasswordFocusNode = FocusNode();
+    createPasswordController = TextEditingController();
+    confirmPasswordController = TextEditingController();
   }
 
   @override
@@ -65,7 +67,7 @@ class _IntroPasswordState extends State<IntroPassword> {
         ),
         child: TapOutsideUnfocus(
             child: LayoutBuilder(
-          builder: (context, constraints) => SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
             minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
                 top: MediaQuery.of(context).size.height * 0.075),
@@ -103,7 +105,7 @@ class _IntroPasswordState extends State<IntroPassword> {
                           end: smallScreen(context) ? 30 : 40,
                           top: 10,
                         ),
-                        alignment: AlignmentDirectional(-1, 0),
+                        alignment: const AlignmentDirectional(-1, 0),
                         child: AutoSizeText(
                           AppLocalization.of(context).createAPasswordHeader,
                           maxLines: 3,
@@ -127,7 +129,7 @@ class _IntroPasswordState extends State<IntroPassword> {
                       ),
                       Expanded(
                           child: KeyboardAvoider(
-                              duration: Duration(milliseconds: 0),
+                              duration: const Duration(milliseconds: 0),
                               autoScroll: true,
                               focusPadding: 40,
                               child: Column(
@@ -136,7 +138,7 @@ class _IntroPasswordState extends State<IntroPassword> {
                                     // Create a Password Text Field
                                     AppTextField(
                                       topMargin: 30,
-                                      padding: EdgeInsetsDirectional.only(
+                                      padding: const EdgeInsetsDirectional.only(
                                           start: 16, end: 16),
                                       focusNode: createPasswordFocusNode,
                                       controller: createPasswordController,
@@ -172,7 +174,7 @@ class _IntroPasswordState extends State<IntroPassword> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 16.0,
-                                        color: this.passwordsMatch
+                                        color: passwordsMatch
                                             ? StateContainer.of(context)
                                                 .curTheme
                                                 .primary
@@ -188,7 +190,7 @@ class _IntroPasswordState extends State<IntroPassword> {
                                     // Confirm Password Text Field
                                     AppTextField(
                                       topMargin: 20,
-                                      padding: EdgeInsetsDirectional.only(
+                                      padding: const EdgeInsetsDirectional.only(
                                           start: 16, end: 16),
                                       focusNode: confirmPasswordFocusNode,
                                       controller: confirmPasswordController,
@@ -224,7 +226,7 @@ class _IntroPasswordState extends State<IntroPassword> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 16.0,
-                                        color: this.passwordsMatch
+                                        color: passwordsMatch
                                             ? StateContainer.of(context)
                                                 .curTheme
                                                 .primary
@@ -236,12 +238,10 @@ class _IntroPasswordState extends State<IntroPassword> {
                                     ),
                                     // Error Text
                                     Container(
-                                      alignment: AlignmentDirectional(0, 0),
-                                      margin: EdgeInsets.only(top: 3),
+                                      alignment: const AlignmentDirectional(0, 0),
+                                      margin: const EdgeInsets.only(top: 3),
                                       child: Text(
-                                          this.passwordError == null
-                                              ? ""
-                                              : passwordError,
+                                          passwordError ?? '',
                                           style: TextStyle(
                                             fontSize: 14.0,
                                             color: StateContainer.of(context)
@@ -309,7 +309,7 @@ class _IntroPasswordState extends State<IntroPassword> {
         });
       }
     } else if (widget.seed != null) {
-      String encryptedSeed = uint8ListToHex(
+      final String encryptedSeed = uint8ListToHex(
           AppCrypt.encrypt(widget.seed, confirmPasswordController.text));
       await sl.get<Vault>().setSeed(encryptedSeed);
       StateContainer.of(context).setEncryptedSecret(uint8ListToHex(AppCrypt.encrypt(
@@ -317,17 +317,17 @@ class _IntroPasswordState extends State<IntroPassword> {
       await sl.get<DBHelper>().dropAccounts();
       await AppUtil().loginAccount(widget.seed, context);
       StateContainer.of(context).requestUpdate();
-      String pin = await Navigator.of(context)
+      final String pin = await Navigator.of(context)
           .push(MaterialPageRoute(builder: (BuildContext context) {
-        return PinScreen(PinOverlayType.NEW_PIN);
+        return const PinScreen(PinOverlayType.NEW_PIN);
       }));
       if (pin != null && pin.length > 5) {
         _pinEnteredCallback(pin);
       }
     } else {
-      // Generate a new seed and encrypt
-      String seed = AppSeeds.generateSeed();
-      String encryptedSeed =
+      // Generate a seed and encrypt
+      final String seed = AppSeeds.generateSeed();
+      final String encryptedSeed =
           uint8ListToHex(AppCrypt.encrypt(seed, confirmPasswordController.text));
       await sl.get<Vault>().setSeed(encryptedSeed);
       // Also encrypt it with the session key, so user doesnt need password to sign blocks within the app
@@ -345,7 +345,7 @@ class _IntroPasswordState extends State<IntroPassword> {
 
   void _pinEnteredCallback(String pin) async {
     await sl.get<Vault>().writePin(pin);
-    PriceConversion conversion =
+    final PriceConversion conversion =
         await sl.get<SharedPrefsUtil>().getPriceConversion();
     // Update wallet
     Navigator.of(context).pushNamedAndRemoveUntil(

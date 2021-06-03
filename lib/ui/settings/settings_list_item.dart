@@ -25,13 +25,13 @@ class AppSettings {
         },
         child: Container(
           height: 30.0,
-          margin: EdgeInsetsDirectional.only(start: 10.0),
+          margin: const EdgeInsetsDirectional.only(start: 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                margin: EdgeInsetsDirectional.only(end: 13.0),
+                margin: const EdgeInsetsDirectional.only(end: 13.0),
                 child: Container(
                   child: Row(
                     children: [
@@ -40,7 +40,7 @@ class AppSettings {
                               ? StateContainer.of(context).curTheme.icon45
                               : StateContainer.of(context).curTheme.icon,
                           size: 24),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       AutoSizeText(
                         heading,
                         style: disabled
@@ -52,7 +52,7 @@ class AppSettings {
                       ),
                     ],
                   ),
-                  margin: EdgeInsets.only(top: 3, left: 3, bottom: 3, right: 3),
+                  margin: const EdgeInsets.only(top: 3, left: 3, bottom: 3, right: 3),
                 ),
               ),
               AutoSizeText(
@@ -89,18 +89,18 @@ class AppSettings {
       },
       child: Container(
         height: 60.0,
-        margin: EdgeInsetsDirectional.only(start: 10.0),
+        margin: const EdgeInsetsDirectional.only(start: 10.0),
         child: Row(
           children: <Widget>[
             Container(
-              margin: EdgeInsetsDirectional.only(end: 13.0),
+              margin: const EdgeInsetsDirectional.only(end: 13.0),
               child: Container(
                 child: Icon(
                   icon,
                   color: StateContainer.of(context).curTheme.icon,
                   size: 24,
                 ),
-                margin: EdgeInsetsDirectional.only(
+                margin: const EdgeInsetsDirectional.only(
                   top: 3,
                   start: 3,
                   bottom: 3,
@@ -162,18 +162,18 @@ class AppSettings {
       },
       child: Container(
         height: 60.0,
-        margin: EdgeInsetsDirectional.only(start: 10.0),
+        margin: const EdgeInsetsDirectional.only(start: 10.0),
         child: Row(
           children: <Widget>[
             Container(
-              margin: EdgeInsetsDirectional.only(end: 13.0),
+              margin: const EdgeInsetsDirectional.only(end: 13.0),
               child: Container(
                 child: Icon(
                   settingIcon,
                   color: StateContainer.of(context).curTheme.icon,
                   size: 24,
                 ),
-                margin: EdgeInsetsDirectional.only(
+                margin: const EdgeInsetsDirectional.only(
                   top: 3,
                   start: 3,
                   bottom: 3,
@@ -230,18 +230,18 @@ class AppSettings {
       },
       child: Container(
         height: 30.0,
-        margin: EdgeInsetsDirectional.only(start: 10.0),
+        margin: const EdgeInsetsDirectional.only(start: 10.0),
         child: Row(
           children: <Widget>[
             Container(
-              margin: EdgeInsetsDirectional.only(end: 13.0),
+              margin: const EdgeInsetsDirectional.only(end: 13.0),
               child: Container(
                 child: Icon(
                   settingIcon,
                   color: StateContainer.of(context).curTheme.icon,
                   size: 24,
                 ),
-                margin: EdgeInsetsDirectional.only(
+                margin: const EdgeInsetsDirectional.only(
                   top: 3,
                   start: 3,
                   bottom: 3,

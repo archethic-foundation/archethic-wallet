@@ -9,12 +9,12 @@ class BiometricUtil {
   ///
   /// @returns [true] if device has fingerprint/faceID available and registered, [false] otherwise
   Future<bool> hasBiometrics() async {
-    LocalAuthentication localAuth = new LocalAuthentication();
-    bool canCheck = await localAuth.canCheckBiometrics;
+    final LocalAuthentication localAuth = LocalAuthentication();
+    final bool canCheck = await localAuth.canCheckBiometrics;
     if (canCheck) {
-      List<BiometricType> availableBiometrics =
+      final List<BiometricType> availableBiometrics =
           await localAuth.getAvailableBiometrics();
-      availableBiometrics.forEach((type) {
+      availableBiometrics.forEach((BiometricType type) {
         //sl.get<Logger>().i(type.toString());
         //sl.get<Logger>().i("${type == BiometricType.face ? 'face' : type == BiometricType.iris ? 'iris' : type == BiometricType.fingerprint ? 'fingerprint' : 'unknown'}");
       });
@@ -34,9 +34,9 @@ class BiometricUtil {
   /// @returns [true] if successfully authenticated, [false] otherwise
   Future<bool> authenticateWithBiometrics(
       BuildContext context, String message) async {
-    bool hasBiometricsEnrolled = await hasBiometrics();
+    final bool hasBiometricsEnrolled = await hasBiometrics();
     if (hasBiometricsEnrolled) {
-      LocalAuthentication localAuth = new LocalAuthentication();
+      final LocalAuthentication localAuth = LocalAuthentication();
       return await localAuth.authenticateWithBiometrics(
           localizedReason: message, useErrorDialogs: false);
     }

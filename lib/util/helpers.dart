@@ -1,7 +1,7 @@
 // @dart=2.9
 
-import 'dart:typed_data';
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:uniris_lib_dart/utils.dart';
 
@@ -33,7 +33,7 @@ class AppHelpers {
 
   /// Convert a bigint to a byte array
   static Uint8List bigIntToBytes(BigInt bigInt) {
-    return hexToBytes(bigInt.toRadixString(16).padLeft(32, "0"));
+    return hexToBytes(bigInt.toRadixString(16).padLeft(32, '0'));
   }
 
   /// Converts a hex string to a binary string
@@ -47,7 +47,7 @@ class AppHelpers {
   }
 
   static Uint8List reverse(Uint8List bytes) {
-    Uint8List reversed = Uint8List(bytes.length);
+    final Uint8List reversed = Uint8List(bytes.length);
     for (int i = bytes.length; i > 0; i--) {
       reversed[bytes.length - i] = bytes[i - 1];
     }
@@ -55,7 +55,7 @@ class AppHelpers {
   }
 
   static bool isHexString(String input) {
-    List<String> hexChars = [
+    final List<String> hexChars = [
       '0',
       '1',
       '2',
@@ -89,7 +89,7 @@ class AppHelpers {
 
   // Convert an integer to a byte array
   static Uint8List intToBytes(int integer, int length) {
-    Uint8List ret = Uint8List(length);
+    final Uint8List ret = Uint8List(length);
     for (int i = 0; i < length; i++) {
       ret[i] = integer & 0xff;
       integer = (integer - ret[i]) ~/ 256;
@@ -113,7 +113,7 @@ class AppHelpers {
   /// @returns {Uint8List}
   static Uint8List concat(List<Uint8List> bytes) {
     String hex = '';
-    bytes.forEach((v) {
+    bytes.forEach((Uint8List v) {
       hex += uint8ListToHex(v);
     });
     return AppHelpers.hexToBytes(hex);

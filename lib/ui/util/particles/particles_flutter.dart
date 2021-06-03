@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:uniris_mobile_wallet/ui/util/particles/painter.dart';
 
 class CircularParticle extends StatefulWidget {
-  CircularParticle({
+  const CircularParticle({
     Key? key,
     this.height,
     this.width,
@@ -49,28 +49,32 @@ class CircularParticle extends StatefulWidget {
   final double? hoverRadius;
   final bool? connectDots; //not recommended
 
+  @override
   _CircularParticleState createState() => _CircularParticleState();
 }
 
 class _CircularParticleState extends State<CircularParticle>
     with TickerProviderStateMixin {
+  
+  _CircularParticleState();
+
   Animation<double>? animation;
   AnimationController? controller;
   List<Offset> offsets = [];
   List<bool> randDirection = [];
   double speedOfparticle = 0;
-  var rng = new Random();
+  Random rng = Random();
   double randValue = 0;
   double? dx;
   double? dy;
   List<double> randomDouble = [];
   AnimationController? awayAnimationController;
-  _CircularParticleState();
+
   List<double> randomSize = [];
   List<int> hoverIndex = [];
   List<List> lineOffset = [];
 
-  initailizeOffsets(_) {
+  void initailizeOffsets(_) {
     for (int index = 0; index < widget.numberOfParticles!; index++) {
       offsets.add(Offset(
           rng.nextDouble() * widget.width!, rng.nextDouble() * widget.height!));
@@ -124,26 +128,26 @@ class _CircularParticleState extends State<CircularParticle>
     super.dispose();
   }
 
-  changeDirection() async {
+  void changeDirection() async {
     Future.doWhile(() async {
-      await Future.delayed(Duration(milliseconds: 600));
+      await Future.delayed(const Duration(milliseconds: 600));
 
       for (int index = 0; index < widget.numberOfParticles!; index++) {
-        randDirection[index] = (rng.nextBool());
+        randDirection[index] = rng.nextBool();
       }
       return true;
     });
   }
 
-  connectLines() {
+  void connectLines() {
     lineOffset = [];
     double distanceBetween = 0;
     for (int point1 = 0; point1 < offsets.length; point1++) {
       for (int point2 = 0; point2 < offsets.length; point2++) {
         //    if(offsets)
         distanceBetween = sqrt(
-            pow((offsets[point2].dx - offsets[point1].dx), 2) +
-                pow((offsets[point2].dy - offsets[point1].dy), 2));
+            pow(offsets[point2].dx - offsets[point1].dx, 2) +
+                pow(offsets[point2].dy - offsets[point1].dy, 2));
         if (distanceBetween < 50) {
           lineOffset.add([offsets[point1], offsets[point2], distanceBetween]);
         }
@@ -151,17 +155,17 @@ class _CircularParticleState extends State<CircularParticle>
     }
   }
 
-  onTapGesture(double tapdx, double tapdy) {
+  void onTapGesture(double tapdx, double tapdy) {
     awayAnimationController = AnimationController(
         duration: widget.awayAnimationDuration, vsync: this);
     awayAnimationController!.reset();
     double directiondx;
     double directiondy;
-    List<double> distance = [];
+    final List<double> distance = [];
     double noAnimationDistance = 0;
 
     if (widget.onTapAnimation!) {
-      List<Animation<Offset>> awayAnimation = [];
+      final List<Animation<Offset>> awayAnimation = [];
       awayAnimationController!.forward();
       for (int index = 0; index < offsets.length; index++) {
         distance.add(sqrt(
@@ -169,7 +173,7 @@ class _CircularParticleState extends State<CircularParticle>
                 ((tapdy - offsets[index].dy) * (tapdy - offsets[index].dy))));
         directiondx = (tapdx - offsets[index].dx) / distance[index];
         directiondy = (tapdy - offsets[index].dy) / distance[index];
-        Offset begin = offsets[index];
+        final Offset begin = offsets[index];
         awayAnimation.add(Tween<Offset>(
                 begin: begin,
                 end: Offset(
@@ -213,7 +217,7 @@ class _CircularParticleState extends State<CircularParticle>
     }
   }
 
-  onHover(tapdx, tapdy) {
+  void onHover(tapdx, tapdy) {
     {
       awayAnimationController = AnimationController(
           duration: widget.awayAnimationDuration, vsync: this);
@@ -242,13 +246,13 @@ class _CircularParticleState extends State<CircularParticle>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTapDown: (TapDownDetails details) {
-        RenderBox getBox = context.findRenderObject() as RenderBox;
+        final RenderBox getBox = context.findRenderObject() as RenderBox;
         onTapGesture(getBox.globalToLocal(details.globalPosition).dx,
             getBox.globalToLocal(details.globalPosition).dy);
       },
       onPanUpdate: (DragUpdateDetails details) {
         if (widget.enableHover!) {
-          RenderBox getBox = context.findRenderObject() as RenderBox;
+          final RenderBox getBox = context.findRenderObject() as RenderBox;
           onHover(getBox.globalToLocal(details.globalPosition).dx,
               getBox.globalToLocal(details.globalPosition).dy);
         }

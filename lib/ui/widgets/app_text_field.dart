@@ -6,10 +6,11 @@ import 'package:uniris_mobile_wallet/appstate_container.dart';
 
 /// TextField button
 class TextFieldButton extends StatelessWidget {
+
+  const TextFieldButton({@required this.icon, this.onPressed});
+  
   final IconData icon;
   final Function onPressed;
-
-  TextFieldButton({@required this.icon, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -28,36 +29,7 @@ class TextFieldButton extends StatelessWidget {
 
 /// A widget for our custom textfields
 class AppTextField extends StatefulWidget {
-  final TextAlign textAlign;
-  final FocusNode focusNode;
-  final TextEditingController controller;
-  final Color cursorColor;
-  final Brightness keyboardAppearance;
-  final List<TextInputFormatter> inputFormatters;
-  final TextInputAction textInputAction;
-  final int maxLines;
-  final bool autocorrect;
-  final String hintText;
-  final TextFieldButton prefixButton;
-  final TextFieldButton suffixButton;
-  final bool fadePrefixOnCondition;
-  final bool prefixShowFirstCondition;
-  final bool fadeSuffixOnCondition;
-  final bool suffixShowFirstCondition;
-  final EdgeInsetsGeometry padding;
-  final Widget overrideTextFieldWidget;
-  final int buttonFadeDurationMs;
-  final TextInputType keyboardType;
-  final Function onSubmitted;
-  final Function onChanged;
-  final double topMargin;
-  final double leftMargin;
-  final double rightMargin;
-  final TextStyle style;
-  final bool obscureText;
-  final bool autofocus;
-
-  AppTextField(
+  const AppTextField(
       {this.focusNode,
       this.controller,
       this.cursorColor,
@@ -87,6 +59,36 @@ class AppTextField extends StatefulWidget {
       this.topMargin = 0,
       this.autofocus = false});
 
+  final TextAlign textAlign;
+  final FocusNode focusNode;
+  final TextEditingController controller;
+  final Color cursorColor;
+  final Brightness keyboardAppearance;
+  final List<TextInputFormatter> inputFormatters;
+  final TextInputAction textInputAction;
+  final int maxLines;
+  final bool autocorrect;
+  final String hintText;
+  final TextFieldButton prefixButton;
+  final TextFieldButton suffixButton;
+  final bool fadePrefixOnCondition;
+  final bool prefixShowFirstCondition;
+  final bool fadeSuffixOnCondition;
+  final bool suffixShowFirstCondition;
+  final EdgeInsetsGeometry padding;
+  final Widget overrideTextFieldWidget;
+  final int buttonFadeDurationMs;
+  final TextInputType keyboardType;
+  final Function onSubmitted;
+  final Function onChanged;
+  final double topMargin;
+  final double leftMargin;
+  final double rightMargin;
+  final TextStyle style;
+  final bool obscureText;
+  final bool autofocus;
+
+  @override
   _AppTextFieldState createState() => _AppTextFieldState();
 }
 
@@ -106,97 +108,87 @@ class _AppTextFieldState extends State<AppTextField> {
           color: StateContainer.of(context).curTheme.backgroundDarkest,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: widget.overrideTextFieldWidget == null
-            ? Stack(alignment: AlignmentDirectional.center, children: <Widget>[
-                TextField(
-                    // User defined fields
-                    textAlign: widget.textAlign,
-                    keyboardAppearance: widget.keyboardAppearance,
-                    autocorrect: widget.autocorrect,
-                    maxLines: widget.maxLines,
-                    focusNode: widget.focusNode,
-                    controller: widget.controller,
-                    cursorColor: widget.cursorColor ??
-                        StateContainer.of(context).curTheme.primary,
-                    inputFormatters: widget.inputFormatters,
-                    textInputAction: widget.textInputAction,
-                    keyboardType: widget.keyboardType,
-                    obscureText: widget.obscureText,
-                    autofocus: widget.autofocus,
-                    onSubmitted: widget.onSubmitted != null
-                        ? widget.onSubmitted
-                        : (text) {
-                            if (widget.textInputAction ==
-                                TextInputAction.done) {
-                              FocusScope.of(context).unfocus();
-                            }
-                          },
-                    onChanged: widget.onChanged,
-                    // Style
-                    style: widget.style,
-                    // Input decoration
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        // Hint
-                        hintText:
-                            widget.hintText == null ? "" : widget.hintText,
-                        hintStyle: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w100,
-                          fontFamily: 'Montserrat',
-                          color: StateContainer.of(context).curTheme.text20,
-                        ),
-                        // First button
-                        prefixIcon: widget.prefixButton == null
-                            ? Container(width: 0, height: 0)
-                            : Container(width: 48, height: 48),
-                        suffixIcon: widget.suffixButton == null
-                            ? Container(width: 0, height: 0)
-                            : Container(width: 48, height: 48))),
-                // Buttons
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          widget.fadePrefixOnCondition != null &&
-                                  widget.prefixButton != null
-                              ? AnimatedCrossFade(
-                                  duration: Duration(
-                                      milliseconds:
-                                          widget.buttonFadeDurationMs),
-                                  firstChild: widget.prefixButton,
-                                  secondChild: SizedBox(height: 48, width: 48),
-                                  crossFadeState:
-                                      widget.prefixShowFirstCondition
-                                          ? CrossFadeState.showFirst
-                                          : CrossFadeState.showSecond,
-                                )
-                              : widget.prefixButton != null
-                                  ? widget.prefixButton
-                                  : SizedBox(),
-                          // Second (suffix) button
-                          widget.fadeSuffixOnCondition != null &&
-                                  widget.suffixButton != null
-                              ? AnimatedCrossFade(
-                                  duration: Duration(
-                                      milliseconds:
-                                          widget.buttonFadeDurationMs),
-                                  firstChild: widget.suffixButton,
-                                  secondChild: SizedBox(height: 48, width: 48),
-                                  crossFadeState:
-                                      widget.suffixShowFirstCondition
-                                          ? CrossFadeState.showFirst
-                                          : CrossFadeState.showSecond,
-                                )
-                              : widget.suffixButton != null
-                                  ? widget.suffixButton
-                                  : SizedBox()
-                        ])
-                  ],
-                )
-              ])
-            : widget.overrideTextFieldWidget);
+        child: widget.overrideTextFieldWidget ??
+            Stack(alignment: AlignmentDirectional.center, children: <Widget>[
+              TextField(
+                  // User defined fields
+                  textAlign: widget.textAlign,
+                  keyboardAppearance: widget.keyboardAppearance,
+                  autocorrect: widget.autocorrect,
+                  maxLines: widget.maxLines,
+                  focusNode: widget.focusNode,
+                  controller: widget.controller,
+                  cursorColor: widget.cursorColor ??
+                      StateContainer.of(context).curTheme.primary,
+                  inputFormatters: widget.inputFormatters,
+                  textInputAction: widget.textInputAction,
+                  keyboardType: widget.keyboardType,
+                  obscureText: widget.obscureText,
+                  autofocus: widget.autofocus,
+                  onSubmitted: widget.onSubmitted ??
+                      (String text) {
+                        if (widget.textInputAction == TextInputAction.done) {
+                          FocusScope.of(context).unfocus();
+                        }
+                      },
+                  onChanged: widget.onChanged,
+                  // Style
+                  style: widget.style,
+                  // Input decoration
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      // Hint
+                      hintText: widget.hintText ?? '',
+                      hintStyle: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w100,
+                        fontFamily: 'Montserrat',
+                        color: StateContainer.of(context).curTheme.text20,
+                      ),
+                      // First button
+                      prefixIcon: widget.prefixButton == null
+                          ? Container(width: 0, height: 0)
+                          : Container(width: 48, height: 48),
+                      suffixIcon: widget.suffixButton == null
+                          ? Container(width: 0, height: 0)
+                          : Container(width: 48, height: 48))),
+              // Buttons
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        if (widget.fadePrefixOnCondition != null &&
+                            widget.prefixButton != null)
+                          AnimatedCrossFade(
+                            duration: Duration(
+                                milliseconds: widget.buttonFadeDurationMs),
+                            firstChild: widget.prefixButton,
+                            secondChild: const SizedBox(height: 48, width: 48),
+                            crossFadeState: widget.prefixShowFirstCondition
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
+                          )
+                        else
+                          widget.prefixButton ?? const SizedBox(),
+                        // Second (suffix) button
+                        if (widget.fadeSuffixOnCondition != null &&
+                            widget.suffixButton != null)
+                          AnimatedCrossFade(
+                            duration: Duration(
+                                milliseconds: widget.buttonFadeDurationMs),
+                            firstChild: widget.suffixButton,
+                            secondChild: const SizedBox(height: 48, width: 48),
+                            crossFadeState: widget.suffixShowFirstCondition
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
+                          )
+                        else
+                          widget.suffixButton ?? const SizedBox()
+                      ])
+                ],
+              )
+            ]));
   }
 }

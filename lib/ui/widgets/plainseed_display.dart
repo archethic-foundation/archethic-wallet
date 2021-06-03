@@ -13,13 +13,14 @@ import 'package:uniris_mobile_wallet/styles.dart';
 
 /// A widget for displaying a mnemonic phrase
 class PlainSeedDisplay extends StatefulWidget {
+  const PlainSeedDisplay(
+      {@required this.seed, this.obscureSeed = false, this.showButton = true});
+
   final String seed;
   final bool obscureSeed;
   final bool showButton;
 
-  PlainSeedDisplay(
-      {@required this.seed, this.obscureSeed = false, this.showButton = true});
-
+  @override
   _PlainSeedDisplayState createState() => _PlainSeedDisplayState();
 }
 
@@ -68,8 +69,8 @@ class _PlainSeedDisplayState extends State<PlainSeedDisplay> {
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
-                  margin: EdgeInsets.only(top: 25),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
+                  margin: const EdgeInsets.only(top: 25),
                   decoration: BoxDecoration(
                     color:
                         StateContainer.of(context).curTheme.backgroundDarkest,
@@ -85,9 +86,8 @@ class _PlainSeedDisplayState extends State<PlainSeedDisplay> {
                           : AppStyles.textStyleSeed(context)),
                 ),
                 // Tap to reveal or hide
-                widget.obscureSeed
-                    ? Container(
-                        margin: EdgeInsetsDirectional.only(top: 8),
+                if (widget.obscureSeed) Container(
+                        margin: const EdgeInsetsDirectional.only(top: 8),
                         child: _seedObscured
                             ? AutoSizeText(
                                 AppLocalization.of(context).tapToReveal,
@@ -99,18 +99,16 @@ class _PlainSeedDisplayState extends State<PlainSeedDisplay> {
                                 style: AppStyles.textStyleParagraphThinPrimary(
                                     context),
                               ),
-                      )
-                    : SizedBox(),
+                      ) else const SizedBox(),
               ],
             )),
         // Container for the copy button
-        widget.showButton
-            ? Container(
-                margin: EdgeInsetsDirectional.only(top: 5),
-                padding: EdgeInsets.all(0.0),
+        if (widget.showButton) Container(
+                margin: const EdgeInsetsDirectional.only(top: 5),
+                padding: const EdgeInsets.all(0.0),
                 child: OutlinedButton(
                   onPressed: () {
-                    Clipboard.setData(new ClipboardData(text: widget.seed));
+                    Clipboard.setData(ClipboardData(text: widget.seed));
                     //UserDataUtil.setSecureClipboardItem(widget.seed);
                     setState(() {
                       _seedCopied = true;
@@ -119,7 +117,7 @@ class _PlainSeedDisplayState extends State<PlainSeedDisplay> {
                       _seedCopiedTimer.cancel();
                     }
                     _seedCopiedTimer =
-                        new Timer(const Duration(milliseconds: 1500), () {
+                        Timer(const Duration(milliseconds: 1500), () {
                       setState(() {
                         _seedCopied = false;
                       });
@@ -137,8 +135,7 @@ class _PlainSeedDisplayState extends State<PlainSeedDisplay> {
                     stepGranularity: 0.5,
                   ),
                 ),
-              )
-            : SizedBox(),
+              ) else const SizedBox(),
       ],
     );
   }

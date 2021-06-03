@@ -24,11 +24,11 @@ class AppCrypt {
       throw Exception('Value should be a string or a byte array');
     }
 
-    Uint8List salt = valBytes.sublist(8, 16);
-    KeyIV key = kdf.deriveKey(password, salt: salt);
+    final Uint8List salt = valBytes.sublist(8, 16);
+    final KeyIV key = kdf.deriveKey(password, salt: salt);
 
     // Decrypt
-    Uint8List encData = valBytes.sublist(16);
+    final Uint8List encData = valBytes.sublist(16);
 
     return AesCbcPkcs7.decrypt(encData, key: key.key, iv: key.iv);
   }
@@ -47,18 +47,18 @@ class AppCrypt {
     }
 
     // Generate a random salt
-    Uint8List salt = Uint8List(8);
-    Random rng = Random.secure();
+    final Uint8List salt = Uint8List(8);
+    final Random rng = Random.secure();
     for (int i = 0; i < 8; i++) {
       salt[i] = rng.nextInt(255);
     }
 
-    KeyIV keyInfo = kdf.deriveKey(password, salt: salt);
+    final KeyIV keyInfo = kdf.deriveKey(password, salt: salt);
 
-    Uint8List seedEncrypted =
+    final Uint8List seedEncrypted =
         AesCbcPkcs7.encrypt(valBytes, key: keyInfo.key, iv: keyInfo.iv);
 
     return AppHelpers.concat(
-        [AppHelpers.stringToBytesUtf8("Salted__"), salt, seedEncrypted]);
+        [AppHelpers.stringToBytesUtf8('Salted__'), salt, seedEncrypted]);
   }
 }

@@ -10,23 +10,24 @@ import 'package:uniris_mobile_wallet/ui/widgets/context_menu.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/context_menu_item.dart';
 
 class UcoTransferListWidget extends StatefulWidget {
+  UcoTransferListWidget(
+      {this.listUcoTransfer, this.onGet, this.onDelete, this.contacts, @required this.displayContextMenu})
+      : super();
+
   List<UcoTransfer>? listUcoTransfer;
   final List<Contact>? contacts;
   final Function(UcoTransfer)? onGet;
   final Function()? onDelete;
   final bool? displayContextMenu;
 
-  UcoTransferListWidget(
-      {this.listUcoTransfer, this.onGet, this.onDelete, this.contacts, @required this.displayContextMenu})
-      : super();
-
+  @override
   _UcoTransferListWidgetState createState() => _UcoTransferListWidgetState();
 }
 
 class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
   @override
   Widget build(BuildContext context) {
-    widget.listUcoTransfer!.sort((a, b) => uint8ListToHex(a.to!).compareTo(uint8ListToHex(b.to!)));
+    widget.listUcoTransfer!.sort((UcoTransfer a, UcoTransfer b) => uint8ListToHex(a.to!).compareTo(uint8ListToHex(b.to!)));
     return Stack(
       children: [
         SizedBox(
@@ -34,19 +35,19 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
             padding: const EdgeInsets.only(top: 0.0),
             child: Container(
               height: widget.listUcoTransfer!.length * 45,
-              padding: EdgeInsets.only(left: 3.5, right: 3.5),
+              padding: const EdgeInsets.only(left: 3.5, right: 3.5),
               width: MediaQuery.of(context).size.width * 0.9,
               decoration: BoxDecoration(
                 color: StateContainer.of(context).curTheme.background,
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(15),
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: StateContainer.of(context).curTheme.backgroundDark,
+                    color: StateContainer.of(context).curTheme.backgroundDark!,
                     blurRadius: 5.0,
                     spreadRadius: 0.0,
-                    offset: Offset(5.0, 5.0),
+                    offset: const Offset(5.0, 5.0),
                   ),
                 ],
               ),
@@ -60,11 +61,11 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                         menuWidth: MediaQuery.of(context).size.width * 0.50,
                         blurSize: 5.0,
                         menuItemExtent: 45,
-                        menuBoxDecoration: BoxDecoration(
+                        menuBoxDecoration: const BoxDecoration(
                             color: Colors.grey,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(15.0))),
-                        duration: Duration(milliseconds: 100),
+                        duration: const Duration(milliseconds: 100),
                         animateMenuItems: true,
                         blurBackgroundColor: Colors.black54,
                         openWithTap:
@@ -82,7 +83,7 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                                       .contextMenuText),
                               onPressed: () {
                                 setState(() {
-                                  UcoTransfer _ucoTransfer = new UcoTransfer(
+                                  final UcoTransfer _ucoTransfer = UcoTransfer(
                                       to: widget.listUcoTransfer![index].to,
                                       amount: widget
                                           .listUcoTransfer![index].amount);
@@ -125,7 +126,7 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
     String displayName =
         Address(uint8ListToHex(ucoTransfer.to!)).getShortString3();
 
-    widget.contacts!.forEach((contact) {
+    widget.contacts!.forEach((Contact contact) {
       if (contact.address == uint8ListToHex(ucoTransfer.to!)) {
         displayName = contact.name;
       }
@@ -145,11 +146,11 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                 style: AppStyles.textStyleAddressText90(context)),
           ],
         ),
-        SizedBox(height: 6),
+        const SizedBox(height: 6),
         Divider(
             height: 4,
             color: StateContainer.of(context).curTheme.backgroundDark),
-        SizedBox(height: 6),
+        const SizedBox(height: 6),
       ],
     );
   }

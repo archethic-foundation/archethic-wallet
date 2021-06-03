@@ -22,6 +22,15 @@ class SendTxRequest {
     this.websocketCommand,
   });
 
+  factory SendTxRequest.fromJson(Map<String, dynamic> json) => SendTxRequest(
+        id: json['id'],
+        tx: Tx.fromJson(json['tx']),
+        buffer: json['buffer'],
+        signature: json['signature'],
+        publicKey: json['public_key'],
+        websocketCommand: json['websocket_command'],
+      );
+
   int id;
   Tx tx;
   String buffer;
@@ -30,42 +39,44 @@ class SendTxRequest {
   String websocketCommand;
 
   Uint8List getSecureRandom(int length) {
-    var random = Random.secure();
-    List<int> seeds = [];
+    final Random random = Random.secure();
+    final List<int> seeds = [];
     for (int i = 0; i < length; i++) {
       seeds.add(random.nextInt(255));
     }
 
-    return new Uint8List.fromList(seeds);
+    return Uint8List.fromList(seeds);
   }
 
   String signString(String privateKey, String msgToSign) {
     final ECDSASigner signer = Signer('SHA-256/ECDSA');
 
-    final _privateKey = ECPrivateKey(
+    final ECPrivateKey _privateKey = ECPrivateKey(
       BigInt.parse(privateKey, radix: 16),
       ECDomainParameters('secp256k1'),
     );
-    var privParams = PrivateKeyParameter(_privateKey);
+    final PrivateKeyParameter<PrivateKey> privParams =
+        PrivateKeyParameter(_privateKey);
 
-    final rnd = new SecureRandom("AES/CTR/PRNG");
-    final key = getSecureRandom(16);
-    final iv = getSecureRandom(16);
-    final keyParam = new KeyParameter(new Uint8List.fromList(key));
+    final SecureRandom rnd = SecureRandom('AES/CTR/PRNG');
+    final Uint8List key = getSecureRandom(16);
+    final Uint8List iv = getSecureRandom(16);
+    final KeyParameter keyParam = KeyParameter(Uint8List.fromList(key));
 
-    final params = new ParametersWithIV(keyParam, new Uint8List.fromList(iv));
+    final ParametersWithIV<KeyParameter> params =
+        ParametersWithIV(keyParam, Uint8List.fromList(iv));
     rnd.seed(params);
 
     signer.reset();
-    signer.init(true, new ParametersWithRandom(privParams, rnd));
+    signer.init(true, ParametersWithRandom(privParams, rnd));
     ECSignature sig = signer.generateSignature(utf8.encode(msgToSign));
     sig = sig.normalize(ECDomainParameters('secp256k1'));
 
-    var topLevel = new asn1lib.ASN1Sequence();
+    final asn1lib.ASN1Sequence topLevel = asn1lib.ASN1Sequence();
     topLevel.add(asn1lib.ASN1Integer(sig.r));
     topLevel.add(asn1lib.ASN1Integer(sig.s));
 
-    var sig64 = base64.encode(topLevel.encodedBytes);
+    final String sig64 = base64.encode(topLevel.encodedBytes);
 
     //print("return sig64 : " + sig64);
     return sig64;
@@ -75,15 +86,6 @@ class SendTxRequest {
     signature = signString(privateKey, buffer);
     //print("signature: " + signature);
   }
-
-  factory SendTxRequest.fromJson(Map<String, dynamic> json) => SendTxRequest(
-        id: json['id'],
-        tx: Tx.fromJson(json['tx']),
-        buffer: json['buffer'],
-        signature: json['signature'],
-        publicKey: json['public_key'],
-        websocketCommand: json['websocket_command'],
-      );
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -118,13 +120,6 @@ class Tx {
     this.openfield,
   });
 
-  String timestamp;
-  String address;
-  String recipient;
-  String amount;
-  String operation;
-  String openfield;
-
   factory Tx.fromJson(Map<String, dynamic> json) => Tx(
         timestamp: json['timestamp'],
         address: json['address'],
@@ -133,6 +128,13 @@ class Tx {
         operation: json['operation'],
         openfield: json['openfield'],
       );
+      
+  String timestamp;
+  String address;
+  String recipient;
+  String amount;
+  String operation;
+  String openfield;
 
   Map<String, dynamic> toJson() => {
         'timestamp': timestamp,

@@ -16,7 +16,7 @@ class IntroWelcomePage extends StatefulWidget {
 }
 
 class _IntroWelcomePageState extends State<IntroWelcomePage> {
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                   .primary10
                   .withAlpha(150)
                   .withOpacity(0.2),
-              awayAnimationDuration: Duration(milliseconds: 600),
+              awayAnimationDuration: const Duration(milliseconds: 600),
               maxParticleSize: 8,
               isRandSize: true,
               isRandomColor: false,
@@ -61,7 +61,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
           ),
           Container(
             child: LayoutBuilder(
-              builder: (context, constraints) => SafeArea(
+              builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
                 minimum: EdgeInsets.only(
                   bottom: MediaQuery.of(context).size.height * 0.035,
                   top: MediaQuery.of(context).size.height * 0.10,
@@ -81,7 +81,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                                 child: SizedBox(
                                   height: 300,
                                   child: SvgPicture.asset(
-                                      "assets/uniris_logo.svg"),
+                                      'assets/uniris_logo.svg'),
                                 ),
                               ),
                             ),

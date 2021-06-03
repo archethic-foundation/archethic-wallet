@@ -24,13 +24,13 @@ class BalanceDisplay {
               children: <Widget>[
                 Container(
                   child: Stack(
-                    alignment: AlignmentDirectional(0, 0),
+                    alignment: const AlignmentDirectional(0, 0),
                     children: <Widget>[
-                      Text(
-                        "1234567",
+                      const Text(
+                        '1234567',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontFamily: "Montserrat",
+                            fontFamily: 'Montserrat',
                             fontSize: AppFontSizes.small,
                             fontWeight: FontWeight.w600,
                             color: Colors.transparent),
@@ -42,11 +42,11 @@ class BalanceDisplay {
                             color: StateContainer.of(context).curTheme.text20,
                             borderRadius: BorderRadius.circular(100),
                           ),
-                          child: Text(
-                            "1234567",
+                          child: const Text(
+                            '1234567',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontFamily: "Montserrat",
+                                fontFamily: 'Montserrat',
                                 fontSize: AppFontSizes.small - 3,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.transparent),
@@ -60,12 +60,12 @@ class BalanceDisplay {
                   constraints: BoxConstraints(
                       maxWidth: MediaQuery.of(context).size.width - 225),
                   child: Stack(
-                    alignment: AlignmentDirectional(0, 0),
+                    alignment: const AlignmentDirectional(0, 0),
                     children: <Widget>[
-                      AutoSizeText(
-                        "1234567",
+                      const AutoSizeText(
+                        '1234567',
                         style: TextStyle(
-                            fontFamily: "Montserrat",
+                            fontFamily: 'Montserrat',
                             fontSize: AppFontSizes.largestc,
                             fontWeight: FontWeight.w900,
                             color: Colors.transparent),
@@ -81,10 +81,10 @@ class BalanceDisplay {
                                 StateContainer.of(context).curTheme.primary60,
                             borderRadius: BorderRadius.circular(100),
                           ),
-                          child: AutoSizeText(
-                            "1234567",
+                          child: const AutoSizeText(
+                            '1234567',
                             style: TextStyle(
-                                fontFamily: "Montserrat",
+                                fontFamily: 'Montserrat',
                                 fontSize: AppFontSizes.largestc - 8,
                                 fontWeight: FontWeight.w900,
                                 color: Colors.transparent),
@@ -99,13 +99,13 @@ class BalanceDisplay {
                 ),
                 Container(
                   child: Stack(
-                    alignment: AlignmentDirectional(0, 0),
+                    alignment: const AlignmentDirectional(0, 0),
                     children: <Widget>[
-                      Text(
-                        "1234567",
+                      const Text(
+                        '1234567',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontFamily: "Montserrat",
+                            fontFamily: 'Montserrat',
                             fontSize: AppFontSizes.small,
                             fontWeight: FontWeight.w600,
                             color: Colors.transparent),
@@ -117,11 +117,11 @@ class BalanceDisplay {
                             color: StateContainer.of(context).curTheme.text20,
                             borderRadius: BorderRadius.circular(100),
                           ),
-                          child: Text(
-                            "1234567",
+                          child: const Text(
+                            '1234567',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontFamily: "Montserrat",
+                                fontFamily: 'Montserrat',
                                 fontSize: AppFontSizes.small - 3,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.transparent),
@@ -147,13 +147,13 @@ class BalanceDisplay {
             width: MediaQuery.of(context).size.width - 185,
             decoration: BoxDecoration(
               color: StateContainer.of(context).curTheme.backgroundDarkest,
-              borderRadius: BorderRadius.all(Radius.circular(15)),
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
               boxShadow: [
                 BoxShadow(
                   color: StateContainer.of(context).curTheme.backgroundDarkest,
                   blurRadius: 5.0,
                   spreadRadius: 0.0,
-                  offset: Offset(5.0, 5.0), // shadow direction: bottom right
+                  offset: const Offset(5.0, 5.0), // shadow direction: bottom right
                 )
               ],
             ),
@@ -170,7 +170,7 @@ class BalanceDisplay {
                       textAlign: TextAlign.center,
                       style: AppStyles.textStyleCurrencyAlt(context)),
                   Container(
-                    margin: EdgeInsetsDirectional.only(start: 10, end: 10),
+                    margin: const EdgeInsetsDirectional.only(start: 10, end: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -187,13 +187,13 @@ class BalanceDisplay {
                                   text: StateContainer.of(context)
                                           .wallet
                                           .getAccountBalanceUCODisplay() +
-                                      " UCO",
+                                      ' UCO',
                                   style: AppStyles.textStyleCurrency(context),
                                 ),
                               ],
                             ),
                             maxLines: 1,
-                            style: TextStyle(fontSize: 28),
+                            style: const TextStyle(fontSize: 28),
                             stepGranularity: 0.1,
                             minFontSize: 1,
                             maxFontSize: 28,
@@ -224,7 +224,7 @@ class BalanceDisplay {
             child: Container(
               height: 36,
               width: 36,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
               ),
               child: TextButton(

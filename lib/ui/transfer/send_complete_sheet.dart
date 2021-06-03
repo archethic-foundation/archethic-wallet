@@ -11,13 +11,7 @@ import 'package:uniris_mobile_wallet/util/caseconverter.dart';
 import 'package:uniris_mobile_wallet/util/numberutil.dart';
 
 class SendCompleteSheet extends StatefulWidget {
-  final String amountRaw;
-  final String destination;
-  final String contactName;
-  final String localAmount;
-  final String title;
-
-  SendCompleteSheet(
+  const SendCompleteSheet(
       {this.amountRaw,
       this.destination,
       this.contactName,
@@ -25,6 +19,13 @@ class SendCompleteSheet extends StatefulWidget {
       this.title})
       : super();
 
+  final String amountRaw;
+  final String destination;
+  final String contactName;
+  final String localAmount;
+  final String title;
+  
+  @override
   _SendCompleteSheetState createState() => _SendCompleteSheetState();
 }
 
@@ -36,7 +37,7 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
   void initState() {
     super.initState();
     // Indicate that this is a special amount if some digits are not displayed
-    if (NumberUtil.getRawAsUsableString(widget.amountRaw).replaceAll(",", "") ==
+    if (NumberUtil.getRawAsUsableString(widget.amountRaw).replaceAll(',', '') ==
         NumberUtil.getRawAsUsableDecimal(widget.amountRaw).toString()) {
       amount = NumberUtil.getRawAsUsableString(widget.amountRaw);
     } else {
@@ -44,7 +45,7 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
                   NumberUtil.getRawAsUsableDecimal(widget.amountRaw),
                   digits: 8)
               .toStringAsFixed(8) +
-          "~";
+          '~';
     }
     destinationAltered = widget.destination;
   }
@@ -58,7 +59,7 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
           children: <Widget>[
             // Sheet handle
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               height: 5,
               width: MediaQuery.of(context).size.width * 0.15,
               decoration: BoxDecoration(
@@ -73,8 +74,8 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
                 children: <Widget>[
                   // Success tick (icon)
                   Container(
-                    alignment: AlignmentDirectional(0, 0),
-                    margin: EdgeInsets.only(bottom: 25),
+                    alignment: const AlignmentDirectional(0, 0),
+                    margin: const EdgeInsets.only(bottom: 25),
                     child: Icon(AppIcons.success,
                         size: 100,
                         color: StateContainer.of(context).curTheme.success),
@@ -84,7 +85,7 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
                     margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.105,
                         right: MediaQuery.of(context).size.width * 0.105),
-                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color:
@@ -98,7 +99,7 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
                         text: '',
                         children: [
                           TextSpan(
-                            text: "$amount",
+                            text: '$amount',
                             style: TextStyle(
                               color:
                                   StateContainer.of(context).curTheme.success,
@@ -108,7 +109,7 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
                             ),
                           ),
                           TextSpan(
-                            text: " UCO",
+                            text: ' UCO',
                             style: TextStyle(
                               color:
                                   StateContainer.of(context).curTheme.success,
@@ -119,8 +120,8 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
                           ),
                           TextSpan(
                             text: widget.localAmount != null
-                                ? " (${widget.localAmount})"
-                                : "",
+                                ? ' (${widget.localAmount})'
+                                : '',
                             style: TextStyle(
                               color:
                                   StateContainer.of(context).curTheme.success,
@@ -135,15 +136,13 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
                   ),
                   // Container for the "SENT TO" text
                   Container(
-                    margin: EdgeInsets.only(top: 30.0, bottom: 10),
+                    margin: const EdgeInsets.only(top: 30.0, bottom: 10),
                     child: Column(
                       children: <Widget>[
                         // "SENT TO" text
                         Text(
                           CaseChange.toUpperCase(
-                              widget.title == null
-                                  ? AppLocalization.of(context).sentTo
-                                  : widget.title,
+                              widget.title ?? AppLocalization.of(context).sentTo,
                               context),
                           style: TextStyle(
                             fontSize: 28.0,
@@ -157,7 +156,7 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
                   ),
                   // The container for the address
                   Container(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                           horizontal: 25.0, vertical: 15.0),
                       margin: EdgeInsets.only(
                           left: MediaQuery.of(context).size.width * 0.105,

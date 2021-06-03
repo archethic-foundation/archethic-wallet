@@ -18,6 +18,7 @@ import 'package:uniris_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
 import 'package:uniris_mobile_wallet/util/app_ffi/keys/seeds.dart';
 
 class SetPasswordSheet extends StatefulWidget {
+  @override
   _SetPasswordSheetState createState() => _SetPasswordSheetState();
 }
 
@@ -34,25 +35,25 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
   @override
   void initState() {
     super.initState();
-    this.passwordsMatch = false;
-    this.createPasswordFocusNode = FocusNode();
-    this.confirmPasswordFocusNode = FocusNode();
-    this.createPasswordController = TextEditingController();
-    this.confirmPasswordController = TextEditingController();
+    passwordsMatch = false;
+    createPasswordFocusNode = FocusNode();
+    confirmPasswordFocusNode = FocusNode();
+    createPasswordController = TextEditingController();
+    confirmPasswordController = TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
     return TapOutsideUnfocus(
         child: LayoutBuilder(
-      builder: (context, constraints) => SafeArea(
+      builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
         minimum:
             EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
         child: Column(
           children: <Widget>[
             // Sheet handle
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               height: 5,
               width: MediaQuery.of(context).size.width * 0.15,
               decoration: BoxDecoration(
@@ -68,7 +69,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                   // The header
                   Container(
                     margin:
-                        EdgeInsetsDirectional.only(top: 10, start: 60, end: 60),
+                        const EdgeInsetsDirectional.only(top: 10, start: 60, end: 60),
                     child: Column(
                       children: <Widget>[
                         AutoSizeText(
@@ -98,7 +99,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                   ),
                   Expanded(
                       child: KeyboardAvoider(
-                          duration: Duration(milliseconds: 0),
+                          duration: const Duration(milliseconds: 0),
                           autoScroll: true,
                           focusPadding: 40,
                           child: Column(
@@ -107,7 +108,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                                 // Create a Password Text Field
                                 AppTextField(
                                   topMargin: 30,
-                                  padding: EdgeInsetsDirectional.only(
+                                  padding: const EdgeInsetsDirectional.only(
                                       start: 16, end: 16),
                                   focusNode: createPasswordFocusNode,
                                   controller: createPasswordController,
@@ -143,7 +144,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 16.0,
-                                    color: this.passwordsMatch
+                                    color: passwordsMatch
                                         ? StateContainer.of(context)
                                             .curTheme
                                             .primary
@@ -159,7 +160,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                                 // Confirm Password Text Field
                                 AppTextField(
                                   topMargin: 20,
-                                  padding: EdgeInsetsDirectional.only(
+                                  padding: const EdgeInsetsDirectional.only(
                                       start: 16, end: 16),
                                   focusNode: confirmPasswordFocusNode,
                                   controller: confirmPasswordController,
@@ -195,7 +196,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 16.0,
-                                    color: this.passwordsMatch
+                                    color: passwordsMatch
                                         ? StateContainer.of(context)
                                             .curTheme
                                             .primary
@@ -207,12 +208,10 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                                 ),
                                 // Error Text
                                 Container(
-                                  alignment: AlignmentDirectional(0, 0),
-                                  margin: EdgeInsets.only(top: 3),
+                                  alignment: const AlignmentDirectional(0, 0),
+                                  margin: const EdgeInsets.only(top: 3),
                                   child: Text(
-                                      this.passwordError == null
-                                          ? ""
-                                          : passwordError,
+                                      passwordError ?? '',
                                       style: TextStyle(
                                         fontSize: 14.0,
                                         color: StateContainer.of(context)
@@ -263,7 +262,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
   }
 
   Future<void> submitAndEncrypt() async {
-    String seed = await sl.get<Vault>().getSeed();
+    final String seed = await sl.get<Vault>().getSeed();
     if (createPasswordController.text.isEmpty ||
         confirmPasswordController.text.isEmpty) {
       if (mounted) {
@@ -283,7 +282,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
       UIUtil.showSnackbar(
           AppLocalization.of(context).encryptionFailedError, context);
     } else {
-      String encryptedSeed =
+      final String encryptedSeed =
           uint8ListToHex(AppCrypt.encrypt(seed, confirmPasswordController.text));
       await sl.get<Vault>().setSeed(encryptedSeed);
       StateContainer.of(context).setEncryptedSecret(uint8ListToHex(

@@ -20,6 +20,7 @@ import 'package:uniris_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
 import 'package:uniris_mobile_wallet/util/app_ffi/keys/seeds.dart';
 
 class DisablePasswordSheet extends StatefulWidget {
+  @override
   _DisablePasswordSheetState createState() => _DisablePasswordSheetState();
 }
 
@@ -32,22 +33,22 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
   @override
   void initState() {
     super.initState();
-    this.passwordFocusNode = FocusNode();
-    this.passwordController = TextEditingController();
+    passwordFocusNode = FocusNode();
+    passwordController = TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
     return TapOutsideUnfocus(
         child: LayoutBuilder(
-      builder: (context, constraints) => SafeArea(
+      builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
         minimum:
             EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
         child: Column(
           children: <Widget>[
             // Sheet handle
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               height: 5,
               width: MediaQuery.of(context).size.width * 0.15,
               decoration: BoxDecoration(
@@ -63,7 +64,7 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
                   // The header
                   Container(
                     margin:
-                        EdgeInsetsDirectional.only(top: 10, start: 60, end: 60),
+                        const EdgeInsetsDirectional.only(top: 10, start: 60, end: 60),
                     child: Column(
                       children: <Widget>[
                         AutoSizeText(
@@ -97,7 +98,7 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
                   // Text field
                   Expanded(
                       child: KeyboardAvoider(
-                          duration: Duration(milliseconds: 0),
+                          duration: const Duration(milliseconds: 0),
                           autoScroll: true,
                           focusPadding: 40,
                           child: Column(
@@ -105,7 +106,7 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
                               children: <Widget>[
                                 AppTextField(
                                   topMargin: 30,
-                                  padding: EdgeInsetsDirectional.only(
+                                  padding: const EdgeInsetsDirectional.only(
                                       start: 16, end: 16),
                                   focusNode: passwordFocusNode,
                                   controller: passwordController,
@@ -134,12 +135,10 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
                                 ),
                                 // Error Text
                                 Container(
-                                  alignment: AlignmentDirectional(0, 0),
-                                  margin: EdgeInsets.only(top: 3),
+                                  alignment: const AlignmentDirectional(0, 0),
+                                  margin: const EdgeInsets.only(top: 3),
                                   child: Text(
-                                      this.passwordError == null
-                                          ? ""
-                                          : passwordError,
+                                      passwordError ?? '',
                                       style: TextStyle(
                                         fontSize: 14.0,
                                         color: StateContainer.of(context)
@@ -191,7 +190,7 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
   }
 
   Future<void> submitAndDecrypt() async {
-    String encryptedSeed = await sl.get<Vault>().getSeed();
+    final String encryptedSeed = await sl.get<Vault>().getSeed();
     if (passwordController.text.isEmpty) {
       if (mounted) {
         setState(() {
@@ -200,8 +199,8 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
       }
     } else {
       try {
-        String decryptedSeed = uint8ListToHex(AppCrypt.decrypt(encryptedSeed, passwordController.text));
-        throwIf(!AppSeeds.isValidSeed(decryptedSeed), FormatException());
+        final String decryptedSeed = uint8ListToHex(AppCrypt.decrypt(encryptedSeed, passwordController.text));
+        throwIf(!AppSeeds.isValidSeed(decryptedSeed), const FormatException());
         await sl.get<Vault>().setSeed(decryptedSeed);
         StateContainer.of(context).resetEncryptedSecret();
         UIUtil.showSnackbar(
