@@ -8,5 +8,4 @@ class AccountChangedEvent implements Event {
   final Account? account;
   final bool delayPop;
   final bool noPop;
-
 }

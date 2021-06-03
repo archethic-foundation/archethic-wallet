@@ -11,7 +11,11 @@ import 'package:uniris_mobile_wallet/ui/widgets/context_menu_item.dart';
 
 class UcoTransferListWidget extends StatefulWidget {
   UcoTransferListWidget(
-      {this.listUcoTransfer, this.onGet, this.onDelete, this.contacts, @required this.displayContextMenu})
+      {this.listUcoTransfer,
+      this.onGet,
+      this.onDelete,
+      this.contacts,
+      @required this.displayContextMenu})
       : super();
 
   List<UcoTransfer>? listUcoTransfer;
@@ -27,7 +31,8 @@ class UcoTransferListWidget extends StatefulWidget {
 class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
   @override
   Widget build(BuildContext context) {
-    widget.listUcoTransfer!.sort((UcoTransfer a, UcoTransfer b) => uint8ListToHex(a.to!).compareTo(uint8ListToHex(b.to!)));
+    widget.listUcoTransfer!.sort((UcoTransfer a, UcoTransfer b) =>
+        uint8ListToHex(a.to!).compareTo(uint8ListToHex(b.to!)));
     return Stack(
       children: <Widget>[
         SizedBox(
@@ -57,60 +62,68 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                 child: ListView.builder(
                   itemCount: widget.listUcoTransfer!.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return widget.displayContextMenu == true ? ContextMenu(
-                        menuWidth: MediaQuery.of(context).size.width * 0.50,
-                        blurSize: 5.0,
-                        menuItemExtent: 45,
-                        menuBoxDecoration: const BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.0))),
-                        duration: const Duration(milliseconds: 100),
-                        animateMenuItems: true,
-                        blurBackgroundColor: Colors.black54,
-                        openWithTap:
-                            false, // Open Focused-Menu on Tap rather than Long Press
-                        menuOffset:
-                            10.0, // Offset value to show menuItem from the selected item
-                        bottomOffsetHeight: 200.0,
-                        menuItems: <ContextMenuItem>[
-                          ContextMenuItem(
-                              title: Text(AppLocalization.of(context).getOption,
-                                  style: AppStyles.textContextMenu(context)),
-                              trailingIcon: Icon(Icons.get_app,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .contextMenuText),
-                              onPressed: () {
-                                setState(() {
-                                  final UcoTransfer _ucoTransfer = UcoTransfer(
-                                      to: widget.listUcoTransfer![index].to,
-                                      amount: widget
-                                          .listUcoTransfer![index].amount);
-                                  widget.onGet!(_ucoTransfer);
-                                });
-                              }),
-                          ContextMenuItem(
-                              title: Text(
-                                AppLocalization.of(context).deleteOption,
-                                style: AppStyles.textContextMenuRed(context),
-                              ),
-                              trailingIcon: Icon(
-                                Icons.delete,
-                                color: StateContainer.of(context)
-                                    .curTheme
-                                    .contextMenuTextRed,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  widget.listUcoTransfer!.removeAt(index);
-                                  widget.onDelete!();
-                                });
-                              }),
-                        ],
-                        onPressed: () {},
-                        child: displayUcoDetail(
-                            context, widget.listUcoTransfer![index])) : displayUcoDetail(
+                    return widget.displayContextMenu == true
+                        ? ContextMenu(
+                            menuWidth: MediaQuery.of(context).size.width * 0.50,
+                            blurSize: 5.0,
+                            menuItemExtent: 45,
+                            menuBoxDecoration: const BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.0))),
+                            duration: const Duration(milliseconds: 100),
+                            animateMenuItems: true,
+                            blurBackgroundColor: Colors.black54,
+                            openWithTap:
+                                false, // Open Focused-Menu on Tap rather than Long Press
+                            menuOffset:
+                                10.0, // Offset value to show menuItem from the selected item
+                            bottomOffsetHeight: 200.0,
+                            menuItems: <ContextMenuItem>[
+                              ContextMenuItem(
+                                  title: Text(
+                                      AppLocalization.of(context).getOption,
+                                      style:
+                                          AppStyles.textContextMenu(context)),
+                                  trailingIcon: Icon(Icons.get_app,
+                                      color: StateContainer.of(context)
+                                          .curTheme
+                                          .contextMenuText),
+                                  onPressed: () {
+                                    setState(() {
+                                      final UcoTransfer _ucoTransfer =
+                                          UcoTransfer(
+                                              to: widget
+                                                  .listUcoTransfer![index].to,
+                                              amount: widget
+                                                  .listUcoTransfer![index]
+                                                  .amount);
+                                      widget.onGet!(_ucoTransfer);
+                                    });
+                                  }),
+                              ContextMenuItem(
+                                  title: Text(
+                                    AppLocalization.of(context).deleteOption,
+                                    style:
+                                        AppStyles.textContextMenuRed(context),
+                                  ),
+                                  trailingIcon: Icon(
+                                    Icons.delete,
+                                    color: StateContainer.of(context)
+                                        .curTheme
+                                        .contextMenuTextRed,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      widget.listUcoTransfer!.removeAt(index);
+                                      widget.onDelete!();
+                                    });
+                                  }),
+                            ],
+                            onPressed: () {},
+                            child: displayUcoDetail(
+                                context, widget.listUcoTransfer![index]))
+                        : displayUcoDetail(
                             context, widget.listUcoTransfer![index]);
                   },
                 ),

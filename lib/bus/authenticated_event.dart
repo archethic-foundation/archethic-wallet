@@ -6,5 +6,4 @@ class AuthenticatedEvent implements Event {
   AuthenticatedEvent(this.authType);
 
   final AUTH_EVENT_TYPE authType;
-
 }

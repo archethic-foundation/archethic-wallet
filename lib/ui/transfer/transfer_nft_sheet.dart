@@ -269,7 +269,8 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                           .get<SharedPrefsUtil>()
                                           .getPriceConversion(),
                                       builder: (BuildContext context,
-                                          AsyncSnapshot<PriceConversion> snapshot) {
+                                          AsyncSnapshot<PriceConversion>
+                                              snapshot) {
                                         if (snapshot.hasData &&
                                             snapshot.data != null &&
                                             snapshot.data !=
@@ -1148,7 +1149,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
     bool inList = false;
     String contactAddress = '';
     for (Contact contact in widget.contactsRef!) {
-       if (contact.name == _sendAddressController!.text) {
+      if (contact.name == _sendAddressController!.text) {
         contactAddress = contact.address;
       }
     }

@@ -84,7 +84,8 @@ class _ContextMenuState extends State<ContextMenu> {
         PageRouteBuilder(
             transitionDuration:
                 widget.duration ?? const Duration(milliseconds: 100),
-            pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+            pageBuilder: (BuildContext context, Animation<double> animation,
+                Animation<double> secondaryAnimation) {
               animation = Tween(begin: 0.0, end: 1.0).animate(animation);
               return FadeTransition(
                   opacity: animation,
@@ -146,7 +147,8 @@ class FocusedMenuDetails extends StatelessWidget {
     final double listHeight = menuItems.length * (itemExtent ?? 50.0);
 
     final double maxMenuWidth = menuWidth ?? (size.width * 0.70);
-    final double menuHeight = listHeight < maxMenuHeight ? listHeight : maxMenuHeight;
+    final double menuHeight =
+        listHeight < maxMenuHeight ? listHeight : maxMenuHeight;
     final double leftOffset = (childOffset.dx + maxMenuWidth) < size.width
         ? childOffset.dx
         : (childOffset.dx - maxMenuWidth + childSize!.width);
@@ -233,7 +235,8 @@ class FocusedMenuDetails extends StatelessWidget {
                                 )));
                         if (animateMenu) {
                           return TweenAnimationBuilder(
-                              builder: (BuildContext context, dynamic value, Widget? child) {
+                              builder: (BuildContext context, dynamic value,
+                                  Widget? child) {
                                 return Transform(
                                   transform: Matrix4.rotationX(1.5708 * value),
                                   alignment: Alignment.bottomCenter,

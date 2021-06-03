@@ -13,59 +13,61 @@ class NftListWidget {
     return Stack(
       children: <Widget>[
         if (StateContainer.of(context).wallet == null ||
-                StateContainer.of(context).wallet.accountBalance == null ||
-                StateContainer.of(context).wallet.accountBalance.nftList == null) const SizedBox() else SizedBox(
+            StateContainer.of(context).wallet.accountBalance == null ||
+            StateContainer.of(context).wallet.accountBalance.nftList == null)
+          const SizedBox()
+        else
+          SizedBox(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 0.0),
+              child: Container(
+                height: StateContainer.of(context)
+                        .wallet
+                        .accountBalance
+                        .nftList!
+                        .length *
+                    60,
+                padding: const EdgeInsets.only(
+                    top: 23.5, left: 3.5, right: 3.5, bottom: 3.5),
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: BoxDecoration(
+                  color: StateContainer.of(context).curTheme.background,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color:
+                          StateContainer.of(context).curTheme.backgroundDark!,
+                      blurRadius: 5.0,
+                      spreadRadius: 0.0,
+                      offset: const Offset(5.0, 5.0),
+                    ),
+                  ],
+                ),
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 0.0),
-                  child: Container(
-                    height: StateContainer.of(context)
-                            .wallet
-                            .accountBalance
-                            .nftList!
-                            .length *
-                        60,
-                    padding: const EdgeInsets.only(
-                        top: 23.5, left: 3.5, right: 3.5, bottom: 3.5),
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    decoration: BoxDecoration(
-                      color: StateContainer.of(context).curTheme.background,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                          color: StateContainer.of(context)
-                              .curTheme
-                              .backgroundDark!,
-                          blurRadius: 5.0,
-                          spreadRadius: 0.0,
-                          offset: const Offset(5.0, 5.0),
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 6, right: 6, top: 6, bottom: 6),
-                      child: ListView.builder(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        itemCount: StateContainer.of(context)
-                            .wallet
-                            .accountBalance
-                            .nftList!
-                            .length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return displayNftDetail(
-                              context,
-                              StateContainer.of(context)
-                                  .wallet
-                                  .accountBalance
-                                  .nftList![index]);
-                        },
-                      ),
-                    ),
+                  padding: const EdgeInsets.only(
+                      left: 6, right: 6, top: 6, bottom: 6),
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    itemCount: StateContainer.of(context)
+                        .wallet
+                        .accountBalance
+                        .nftList!
+                        .length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return displayNftDetail(
+                          context,
+                          StateContainer.of(context)
+                              .wallet
+                              .accountBalance
+                              .nftList![index]);
+                    },
                   ),
                 ),
               ),
+            ),
+          ),
         SizedBox(
           child: Padding(
             padding: const EdgeInsets.only(top: 0.0),

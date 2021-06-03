@@ -24,7 +24,7 @@ class SendCompleteSheet extends StatefulWidget {
   final String contactName;
   final String localAmount;
   final String title;
-  
+
   @override
   _SendCompleteSheetState createState() => _SendCompleteSheetState();
 }
@@ -85,7 +85,8 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
                     margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.105,
                         right: MediaQuery.of(context).size.width * 0.105),
-                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 25, vertical: 15),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color:
@@ -142,7 +143,8 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
                         // "SENT TO" text
                         Text(
                           CaseChange.toUpperCase(
-                              widget.title ?? AppLocalization.of(context).sentTo,
+                              widget.title ??
+                                  AppLocalization.of(context).sentTo,
                               context),
                           style: TextStyle(
                             fontSize: 28.0,

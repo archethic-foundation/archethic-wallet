@@ -55,7 +55,6 @@ class CircularParticle extends StatefulWidget {
 
 class _CircularParticleState extends State<CircularParticle>
     with TickerProviderStateMixin {
-  
   _CircularParticleState();
 
   Animation<double>? animation;
@@ -113,8 +112,7 @@ class _CircularParticleState extends State<CircularParticle>
             }
             offsets[index] = Offset(dx!, dy!);
           }
-          if (widget.connectDots!) 
-          {
+          if (widget.connectDots!) {
             connectLines(); //not recommended
           }
         });
@@ -148,9 +146,8 @@ class _CircularParticleState extends State<CircularParticle>
     for (int point1 = 0; point1 < offsets.length; point1++) {
       for (int point2 = 0; point2 < offsets.length; point2++) {
         //    if(offsets)
-        distanceBetween = sqrt(
-            pow(offsets[point2].dx - offsets[point1].dx, 2) +
-                pow(offsets[point2].dy - offsets[point1].dy, 2));
+        distanceBetween = sqrt(pow(offsets[point2].dx - offsets[point1].dx, 2) +
+            pow(offsets[point2].dy - offsets[point1].dy, 2));
         if (distanceBetween < 50) {
           lineOffset.add([offsets[point1], offsets[point2], distanceBetween]);
         }

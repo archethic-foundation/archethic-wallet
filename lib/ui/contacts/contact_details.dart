@@ -123,7 +123,8 @@ class ContactDetailsSheet {
                     // The main container that holds Contact Name and Contact Address
                     Expanded(
                       child: Container(
-                        padding: const EdgeInsetsDirectional.only(top: 4, bottom: 12),
+                        padding: const EdgeInsetsDirectional.only(
+                            top: 4, bottom: 12),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -255,7 +256,8 @@ class ContactDetailsSheet {
                                   Dimens.BUTTON_TOP_DIMENS,
                                   disabled: StateContainer.of(context)
                                           .wallet
-                                          .accountBalance.uco ==
+                                          .accountBalance
+                                          .uco ==
                                       0, onPressed: () {
                                 Navigator.of(context).pop();
                                 Sheets.showAppHeightNineSheet(

@@ -175,7 +175,8 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          widget.title ?? AppLocalization.of(context).transfering,
+                          widget.title ??
+                              AppLocalization.of(context).transfering,
                           style: AppStyles.textStyleHeader(context),
                         ),
                       ],
@@ -186,7 +187,8 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                     margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.105,
                         right: MediaQuery.of(context).size.width * 0.105),
-                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 25, vertical: 15),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color:
@@ -197,49 +199,52 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
 
                     child: Column(
                       children: <Widget>[
-                        if (double.tryParse(amount.replaceAll(',', '')) > 0) RichText(
-                                textAlign: TextAlign.center,
-                                text: TextSpan(
-                                  text: '',
-                                  children: <InlineSpan>[
-                                    TextSpan(
-                                      text: '$amount',
-                                      style: TextStyle(
-                                        color: StateContainer.of(context)
-                                            .curTheme
-                                            .primary,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'Montserrat',
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: ' UCO',
-                                      style: TextStyle(
-                                        color: StateContainer.of(context)
-                                            .curTheme
-                                            .primary,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w100,
-                                        fontFamily: 'Montserrat',
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: widget.localCurrency != null
-                                          ? ' (${widget.localCurrency})'
-                                          : '',
-                                      style: TextStyle(
-                                        color: StateContainer.of(context)
-                                            .curTheme
-                                            .primary,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'Montserrat',
-                                      ),
-                                    ),
-                                  ],
+                        if (double.tryParse(amount.replaceAll(',', '')) > 0)
+                          RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              text: '',
+                              children: <InlineSpan>[
+                                TextSpan(
+                                  text: '$amount',
+                                  style: TextStyle(
+                                    color: StateContainer.of(context)
+                                        .curTheme
+                                        .primary,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: 'Montserrat',
+                                  ),
                                 ),
-                              ) else const SizedBox(),
+                                TextSpan(
+                                  text: ' UCO',
+                                  style: TextStyle(
+                                    color: StateContainer.of(context)
+                                        .curTheme
+                                        .primary,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w100,
+                                    fontFamily: 'Montserrat',
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: widget.localCurrency != null
+                                      ? ' (${widget.localCurrency})'
+                                      : '',
+                                  style: TextStyle(
+                                    color: StateContainer.of(context)
+                                        .curTheme
+                                        .primary,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: 'Montserrat',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        else
+                          const SizedBox(),
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 30),
                           child: Text(

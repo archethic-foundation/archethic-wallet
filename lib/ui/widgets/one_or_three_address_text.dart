@@ -13,7 +13,6 @@ class OneOrThreeLineAddressText extends StatelessWidget {
   String contactName;
   AddressTextType type;
 
-
   @override
   Widget build(BuildContext context) {
     // One line for small displays

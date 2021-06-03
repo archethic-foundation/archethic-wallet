@@ -28,8 +28,8 @@ class QRcodeDisplay {
                             .backgroundDarkest,
                         blurRadius: 5.0,
                         spreadRadius: 0.0,
-                        offset:
-                            const Offset(5.0, 5.0), // shadow direction: bottom right
+                        offset: const Offset(
+                            5.0, 5.0), // shadow direction: bottom right
                       )
                     ],
                   ),
@@ -49,7 +49,6 @@ class QRcodeDisplay {
                               version: QrVersions.auto,
                               size: 100.0,
                             ),
-                            
                           ],
                         ),
                       ],
@@ -66,12 +65,11 @@ class QRcodeDisplay {
                   ),
                 ),
               ),
-              
             ],
           );
   }
 
-static Widget buildAddressDisplay(
+  static Widget buildAddressDisplay(
       BuildContext context, Animation<double> _opacityAnimation) {
     return StateContainer.of(context).selectedAccount == null ||
             StateContainer.of(context).selectedAccount.address == null
@@ -93,8 +91,8 @@ static Widget buildAddressDisplay(
                             .backgroundDarkest,
                         blurRadius: 5.0,
                         spreadRadius: 0.0,
-                        offset:
-                            const Offset(5.0, 5.0), // shadow direction: bottom right
+                        offset: const Offset(
+                            5.0, 5.0), // shadow direction: bottom right
                       )
                     ],
                   ),
@@ -114,25 +112,29 @@ static Widget buildAddressDisplay(
                                         .selectedAccount
                                         .address
                                         .substring(0, 16),
-                                    style: AppStyles.textStyleAddressText90(context)),
+                                    style: AppStyles.textStyleAddressText90(
+                                        context)),
                                 Text(
                                     StateContainer.of(context)
                                         .selectedAccount
                                         .address
                                         .substring(16, 32),
-                                    style: AppStyles.textStyleAddressText90(context)),
+                                    style: AppStyles.textStyleAddressText90(
+                                        context)),
                                 Text(
                                     StateContainer.of(context)
                                         .selectedAccount
                                         .address
                                         .substring(32, 48),
-                                    style: AppStyles.textStyleAddressText90(context)),
+                                    style: AppStyles.textStyleAddressText90(
+                                        context)),
                                 Text(
                                     StateContainer.of(context)
                                         .selectedAccount
                                         .address
                                         .substring(48, 64),
-                                    style: AppStyles.textStyleAddressText90(context)),
+                                    style: AppStyles.textStyleAddressText90(
+                                        context)),
                               ],
                             ),
                           ],

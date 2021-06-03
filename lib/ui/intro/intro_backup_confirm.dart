@@ -35,7 +35,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) =>
+              SafeArea(
             minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
                 top: MediaQuery.of(context).size.height * 0.075),

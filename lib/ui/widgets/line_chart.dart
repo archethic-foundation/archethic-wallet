@@ -106,8 +106,9 @@ class LineChartWidget {
                   ),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                      color:
-                          StateContainer.of(context).curTheme.backgroundDarkest!,
+                      color: StateContainer.of(context)
+                          .curTheme
+                          .backgroundDarkest!,
                       blurRadius: 5.0,
                       spreadRadius: 0.0,
                       offset: const Offset(5.0, 5.0),
@@ -183,8 +184,9 @@ class LineChartWidget {
           ),
           belowBarData: BarAreaData(
             show: false,
-            colors:
-                gradientColors.map((Color color) => color.withOpacity(0.3)).toList(),
+            colors: gradientColors
+                .map((Color color) => color.withOpacity(0.3))
+                .toList(),
           ),
         ),
       ],

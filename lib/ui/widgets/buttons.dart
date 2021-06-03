@@ -25,7 +25,9 @@ class AppButton {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),
-              boxShadow: <BoxShadow>[StateContainer.of(context).curTheme.boxShadowButton],
+              boxShadow: <BoxShadow>[
+                StateContainer.of(context).curTheme.boxShadowButton
+              ],
             ),
             height: 55,
             margin: EdgeInsetsDirectional.fromSTEB(
@@ -59,7 +61,9 @@ class AppButton {
             decoration: BoxDecoration(
               color: StateContainer.of(context).curTheme.backgroundDark,
               borderRadius: BorderRadius.circular(100),
-              boxShadow: <BoxShadow>[StateContainer.of(context).curTheme.boxShadowButton],
+              boxShadow: <BoxShadow>[
+                StateContainer.of(context).curTheme.boxShadowButton
+              ],
             ),
             height: 55,
             margin: EdgeInsetsDirectional.fromSTEB(
@@ -88,7 +92,9 @@ class AppButton {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),
-              boxShadow: <BoxShadow>[StateContainer.of(context).curTheme.boxShadowButton],
+              boxShadow: <BoxShadow>[
+                StateContainer.of(context).curTheme.boxShadowButton
+              ],
             ),
             height: 55,
             margin: EdgeInsetsDirectional.fromSTEB(
@@ -124,7 +130,9 @@ class AppButton {
             decoration: BoxDecoration(
               color: StateContainer.of(context).curTheme.backgroundDark,
               borderRadius: BorderRadius.circular(100),
-              boxShadow: <BoxShadow>[StateContainer.of(context).curTheme.boxShadowButton],
+              boxShadow: <BoxShadow>[
+                StateContainer.of(context).curTheme.boxShadowButton
+              ],
             ),
             height: 55,
             margin: EdgeInsetsDirectional.fromSTEB(
@@ -152,7 +160,9 @@ class AppButton {
             decoration: BoxDecoration(
               color: StateContainer.of(context).curTheme.backgroundDark,
               borderRadius: BorderRadius.circular(100),
-              boxShadow: <BoxShadow>[StateContainer.of(context).curTheme.boxShadowButton],
+              boxShadow: <BoxShadow>[
+                StateContainer.of(context).curTheme.boxShadowButton
+              ],
             ),
             height: 55,
             margin: EdgeInsetsDirectional.fromSTEB(

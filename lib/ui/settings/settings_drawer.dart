@@ -715,10 +715,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                                 AppLocalization.of(context).yes, context), () {
                           // Delete all data
                           sl.get<Vault>().deleteAll().then((_) {
-                            sl
-                                .get<SharedPrefsUtil>()
-                                .deleteAll()
-                                .then((_) {
+                            sl.get<SharedPrefsUtil>().deleteAll().then((_) {
                               StateContainer.of(context).logOut();
                               Navigator.of(context).pushNamedAndRemoveUntil(
                                   '/', (Route<dynamic> route) => false);

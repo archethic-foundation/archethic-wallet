@@ -10,7 +10,6 @@ import 'package:uniris_mobile_wallet/service_locator.dart';
 
 class AppUtil {
   String seedToAddress(String seed, int index) {
-
     final String genesisAddress = deriveAddress(seed, 0);
     //print("genesisAddress : " + genesisAddress);
     return genesisAddress;

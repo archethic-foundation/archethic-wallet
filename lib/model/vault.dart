@@ -134,8 +134,7 @@ class Vault {
 
   Future<String> getEncrypted(String key) async {
     final String secret = await getSecret();
-    if (secret == null) 
-    {
+    if (secret == null) {
       return null;
     }
     // Decrypt and return
@@ -144,8 +143,7 @@ class Vault {
         secret.substring(secret.length - 8));
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String encrypted = prefs.get(key);
-    if (encrypted == null) 
-    {
+    if (encrypted == null) {
       return null;
     }
     return encrypter.decrypt(encrypted);

@@ -16,7 +16,7 @@ class RequestItem<T> {
   }
   // After this time a request will expire
   static const int EXPIRE_TIME_S = 15;
-  
+
   DateTime _expireDt;
   bool _isProcessing;
   T _request;

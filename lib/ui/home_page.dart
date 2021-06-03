@@ -80,7 +80,8 @@ class _AppHomePageState extends State<AppHomePage>
   }
 
   Future<void> _checkVersionApp() async {
-    final String versionAppCached = await sl.get<SharedPrefsUtil>().getVersionApp();
+    final String versionAppCached =
+        await sl.get<SharedPrefsUtil>().getVersionApp();
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) async {
       if (versionAppCached != packageInfo.version) {
         // TODO
@@ -258,7 +259,7 @@ class _AppHomePageState extends State<AppHomePage>
         try {
           StateContainer.of(context).resetEncryptedSecret();
         } catch (e) {
-         print(
+          print(
               'Failed to reset encrypted secret when locking ${e.toString()}');
         } finally {
           Navigator.of(context)
@@ -284,7 +285,9 @@ class _AppHomePageState extends State<AppHomePage>
       gapless: false,
       errorCorrectionLevel: QrErrorCorrectLevel.Q,
     );
-    painter.toImageData(MediaQuery.of(context).size.width).then((ByteData byteData) {
+    painter
+        .toImageData(MediaQuery.of(context).size.width)
+        .then((ByteData byteData) {
       setState(() {
         receive = ReceiveSheet(
           qrWidget: Container(
@@ -408,7 +411,8 @@ class _AppHomePageState extends State<AppHomePage>
                               .primary10
                               .withAlpha(150)
                               .withOpacity(0.2),
-                          awayAnimationDuration: const Duration(milliseconds: 600),
+                          awayAnimationDuration:
+                              const Duration(milliseconds: 600),
                           maxParticleSize: 8,
                           isRandSize: true,
                           isRandomColor: false,

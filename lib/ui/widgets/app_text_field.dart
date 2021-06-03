@@ -6,9 +6,8 @@ import 'package:uniris_mobile_wallet/appstate_container.dart';
 
 /// TextField button
 class TextFieldButton extends StatelessWidget {
-
   const TextFieldButton({@required this.icon, this.onPressed});
-  
+
   final IconData icon;
   final Function onPressed;
 

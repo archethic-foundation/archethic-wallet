@@ -67,7 +67,8 @@ class _IntroPasswordState extends State<IntroPassword> {
         ),
         child: TapOutsideUnfocus(
             child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) =>
+              SafeArea(
             minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
                 top: MediaQuery.of(context).size.height * 0.075),
@@ -238,10 +239,10 @@ class _IntroPasswordState extends State<IntroPassword> {
                                     ),
                                     // Error Text
                                     Container(
-                                      alignment: const AlignmentDirectional(0, 0),
+                                      alignment:
+                                          const AlignmentDirectional(0, 0),
                                       margin: const EdgeInsets.only(top: 3),
-                                      child: Text(
-                                          passwordError ?? '',
+                                      child: Text(passwordError ?? '',
                                           style: TextStyle(
                                             fontSize: 14.0,
                                             color: StateContainer.of(context)
@@ -312,8 +313,9 @@ class _IntroPasswordState extends State<IntroPassword> {
       final String encryptedSeed = uint8ListToHex(
           AppCrypt.encrypt(widget.seed, confirmPasswordController.text));
       await sl.get<Vault>().setSeed(encryptedSeed);
-      StateContainer.of(context).setEncryptedSecret(uint8ListToHex(AppCrypt.encrypt(
-          widget.seed, await sl.get<Vault>().getSessionKey())));
+      StateContainer.of(context).setEncryptedSecret(uint8ListToHex(
+          AppCrypt.encrypt(
+              widget.seed, await sl.get<Vault>().getSessionKey())));
       await sl.get<DBHelper>().dropAccounts();
       await AppUtil().loginAccount(widget.seed, context);
       StateContainer.of(context).requestUpdate();
@@ -327,8 +329,8 @@ class _IntroPasswordState extends State<IntroPassword> {
     } else {
       // Generate a seed and encrypt
       final String seed = AppSeeds.generateSeed();
-      final String encryptedSeed =
-          uint8ListToHex(AppCrypt.encrypt(seed, confirmPasswordController.text));
+      final String encryptedSeed = uint8ListToHex(
+          AppCrypt.encrypt(seed, confirmPasswordController.text));
       await sl.get<Vault>().setSeed(encryptedSeed);
       // Also encrypt it with the session key, so user doesnt need password to sign blocks within the app
       StateContainer.of(context).setEncryptedSecret(uint8ListToHex(

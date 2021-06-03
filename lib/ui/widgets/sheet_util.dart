@@ -186,7 +186,8 @@ class _AppHeightNineModalRoute<T> extends PopupRoute<T> {
           data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
           child: AnimatedBuilder(
             animation: appSheetAnimation,
-            builder: (BuildContext context, Widget child) => CustomSingleChildLayout(
+            builder: (BuildContext context, Widget child) =>
+                CustomSingleChildLayout(
               delegate: _AppHeightNineSheetLayout(appSheetAnimation.value),
               child: BottomSheet(
                 animationController: _animationController,
@@ -316,7 +317,8 @@ class _AppHeightEightModalRoute<T> extends PopupRoute<T> {
         data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
         child: AnimatedBuilder(
           animation: appSheetAnimation,
-          builder: (BuildContext context, Widget child) => CustomSingleChildLayout(
+          builder: (BuildContext context, Widget child) =>
+              CustomSingleChildLayout(
             delegate: _AppHeightEightSheetLayout(appSheetAnimation.value),
             child: BottomSheet(
               animationController: _animationController,

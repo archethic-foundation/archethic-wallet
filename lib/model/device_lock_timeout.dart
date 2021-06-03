@@ -11,7 +11,7 @@ class LockTimeoutSetting extends SettingSelectionItem {
   LockTimeoutSetting(this.setting);
 
   LockTimeoutOption setting;
-  
+
   @override
   String getDisplayName(BuildContext context) {
     switch (setting) {

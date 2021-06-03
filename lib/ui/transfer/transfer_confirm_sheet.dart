@@ -148,7 +148,8 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          (widget.title ?? AppLocalization.of(context).transfering)!,
+                          (widget.title ??
+                              AppLocalization.of(context).transfering)!,
                           style: AppStyles.textStyleHeader(context),
                         ),
                       ],
@@ -159,7 +160,8 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                     margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.105,
                         right: MediaQuery.of(context).size.width * 0.105),
-                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 25, vertical: 15),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color:
@@ -187,28 +189,28 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                             ),
                           ),
                         ),
-                       ],
+                      ],
                     ),
                   ),
-
-                  const SizedBox(height: 20,),
-                  Container( 
-                     height: 300,
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    height: 300,
                     child: widget.typeTransfer == 'UCO'
-                            ? UcoTransferListWidget(
-                                listUcoTransfer: widget.ucoTransferList,
-                                contacts: widget.contactsRef,
-                                displayContextMenu: false,
-                              )
-                            : widget.typeTransfer == 'NFT' ?
-                           NftTransferListWidget(
+                        ? UcoTransferListWidget(
+                            listUcoTransfer: widget.ucoTransferList,
+                            contacts: widget.contactsRef,
+                            displayContextMenu: false,
+                          )
+                        : widget.typeTransfer == 'NFT'
+                            ? NftTransferListWidget(
                                 listNftTransfer: widget.nftTransferList,
                                 contacts: widget.contactsRef,
                                 displayContextMenu: false,
                               )
-                            : const SizedBox(),  
+                            : const SizedBox(),
                   )
-                
                 ],
               ),
             ),
@@ -290,8 +292,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
           "",
           publicKeyBase64,
           privateKey);*/
-          EventTaxiImpl.singleton()
-          .fire(TransactionSendEvent(response: 'Success'));
+      EventTaxiImpl.singleton().fire(TransactionSendEvent(response: 'Success'));
     } catch (e) {
       // Send failed
       //print("send failed" + e.toString());

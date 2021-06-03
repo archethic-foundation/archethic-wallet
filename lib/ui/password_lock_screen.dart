@@ -89,7 +89,8 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                   children: <Widget>[
                     // Logout button
                     Container(
-                      margin: const EdgeInsetsDirectional.only(start: 16, top: 12),
+                      margin:
+                          const EdgeInsetsDirectional.only(start: 16, top: 12),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -139,8 +140,8 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                                           .curTheme
                                           .text),
                                   Container(
-                                    margin:
-                                        const EdgeInsetsDirectional.only(start: 4),
+                                    margin: const EdgeInsetsDirectional.only(
+                                        start: 4),
                                     child: Text(
                                         AppLocalization.of(context).logout,
                                         style: AppStyles.textStyleLogoutButton(
@@ -185,8 +186,9 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                                       // Enter your password Text Field
                                       AppTextField(
                                         topMargin: 30,
-                                        padding: const EdgeInsetsDirectional.only(
-                                            start: 16, end: 16),
+                                        padding:
+                                            const EdgeInsetsDirectional.only(
+                                                start: 16, end: 16),
                                         focusNode: enterPasswordFocusNode,
                                         controller: enterPasswordController,
                                         textInputAction: TextInputAction.go,
@@ -218,10 +220,10 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                                       ),
                                       // Error Container
                                       Container(
-                                        alignment: const AlignmentDirectional(0, 0),
+                                        alignment:
+                                            const AlignmentDirectional(0, 0),
                                         margin: const EdgeInsets.only(top: 3),
-                                        child: Text(
-                                            passwordError ?? '',
+                                        child: Text(passwordError ?? '',
                                             style: TextStyle(
                                               fontSize: 14.0,
                                               color: StateContainer.of(context)
@@ -259,8 +261,9 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
     try {
       final String decryptedSeed = uint8ListToHex(AppCrypt.decrypt(
           await sl.get<Vault>().getSeed(), enterPasswordController.text));
-      StateContainer.of(context).setEncryptedSecret(uint8ListToHex(AppCrypt.encrypt(
-          decryptedSeed, await sl.get<Vault>().getSessionKey())));
+      StateContainer.of(context).setEncryptedSecret(uint8ListToHex(
+          AppCrypt.encrypt(
+              decryptedSeed, await sl.get<Vault>().getSessionKey())));
       _goHome();
     } catch (e) {
       if (mounted) {

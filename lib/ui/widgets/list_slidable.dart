@@ -49,7 +49,8 @@ typedef DismissSlideActionCallback = void Function(SlideActionType actionType);
 /// given [actionType].
 ///
 /// Used by [SlideToDismissDelegate.onWillDismiss].
-typedef SlideActionWillBeDismissed = FutureOr<bool> Function(SlideActionType actionType);
+typedef SlideActionWillBeDismissed = FutureOr<bool> Function(
+    SlideActionType actionType);
 
 /// Signature for the builder callback used to create slide actions.
 typedef SlideActionBuilder = Widget Function(BuildContext context, int index,
@@ -170,13 +171,15 @@ class SlideToDismissDrawerDelegate extends SlideToDismissDelegate {
       child: Stack(
         children: <Widget>[
           Positioned.fill(
-            child: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+            child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
               final int count = ctx.state.actionCount;
               final double actionExtent = ctx.getMaxExtent(constraints) *
                   ctx.state.widget.actionExtentRatio;
               final double totalExtent = ctx.getMaxExtent(constraints);
 
-              final List<Animation<double>> extentAnimations = Iterable.generate(count).map((index) {
+              final List<Animation<double>> extentAnimations =
+                  Iterable.generate(count).map((index) {
                 return Tween(
                   begin: actionExtent,
                   end: totalExtent -
@@ -193,7 +196,8 @@ class SlideToDismissDrawerDelegate extends SlideToDismissDelegate {
                   animation: ctx.state.overallMoveAnimation,
                   builder: (BuildContext context, Widget child) {
                     return Stack(
-                      children: List<Widget>.generate(ctx.state.actionCount, (int index) {
+                      children: List<Widget>.generate(ctx.state.actionCount,
+                          (int index) {
                         // For the main actions we have to reverse the order if we want the last item at the bottom of the stack.
                         final int displayIndex = ctx.showActions
                             ? ctx.state.actionCount - index - 1
@@ -340,9 +344,7 @@ class SlidableDelegateContext {
   }
 
   Offset createOffset(double value) {
-    return state.directionIsXAxis
-        ? Offset(value, 0.0)
-        : Offset(0.0, value);
+    return state.directionIsXAxis ? Offset(value, 0.0) : Offset(0.0, value);
   }
 
   double getMaxExtent(BoxConstraints constraints) {
@@ -443,7 +445,8 @@ class SlidableStrechDelegate extends SlidableStackDelegate {
     ).animate(ctx.state.actionsMoveAnimation);
 
     return Positioned.fill(
-      child: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+      child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
         return AnimatedBuilder(
             animation: ctx.state.actionsMoveAnimation,
             builder: (BuildContext context, Widget child) {
@@ -480,7 +483,8 @@ class SlidableBehindDelegate extends SlidableStackDelegate {
   @override
   Widget buildStackActions(BuildContext context, SlidableDelegateContext ctx) {
     return Positioned.fill(
-      child: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+      child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
         return Stack(
           children: <Widget>[
             ctx.createPositioned(
@@ -513,7 +517,8 @@ class SlidableScrollDelegate extends SlidableStackDelegate {
   @override
   Widget buildStackActions(BuildContext context, SlidableDelegateContext ctx) {
     return Positioned.fill(
-      child: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+      child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
         final double totalExtent =
             ctx.getMaxExtent(constraints) * ctx.state.totalActionsExtent;
 
@@ -557,7 +562,8 @@ class SlidableDrawerDelegate extends SlidableStackDelegate {
   @override
   Widget buildStackActions(BuildContext context, SlidableDelegateContext ctx) {
     return Positioned.fill(
-      child: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+      child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
         final SlidableStateView state = ctx.state;
         final int count = state.actionCount;
         final bool showActions = ctx.showActions;
@@ -567,7 +573,8 @@ class SlidableDrawerDelegate extends SlidableStackDelegate {
             ctx.getMaxExtent(constraints) * state.widget.actionExtentRatio;
         final SlideActionDelegate actionDelegate = state.actionDelegate;
 
-        final List<Animation<num>> animations = Iterable.generate(count).map((index) {
+        final List<Animation<num>> animations =
+            Iterable.generate(count).map((index) {
           return Tween(
             begin: -actionExtent,
             end: (count - index - 1) * actionExtent,
@@ -580,7 +587,8 @@ class SlidableDrawerDelegate extends SlidableStackDelegate {
               return Stack(
                 children: List<Widget>.generate(count, (int index) {
                   // For the main actions we have to reverse the order if we want the last item at the bottom of the stack.
-                  final int displayIndex = showActions ? count - index - 1 : index;
+                  final int displayIndex =
+                      showActions ? count - index - 1 : index;
                   return ctx.createPositioned(
                     position: animations[index].value,
                     extent: actionExtent,
@@ -990,8 +998,7 @@ class SlidableState extends State<Slidable>
   }
 
   void _isScrollingListener() {
-    if (!widget.closeOnScroll || _scrollPosition == null) 
-    {
+    if (!widget.closeOnScroll || _scrollPosition == null) {
       return;
     }
 
@@ -1299,8 +1306,8 @@ class SlideAction extends ClosableSlideAction {
             color == null || decoration == null,
             'Cannot provide both a color and a decoration\n'
             'The color argument is just a shorthand for "decoration: BoxDecoration(color: color)".'),
-        decoration = decoration ??
-            (color != null ? BoxDecoration(color: color) : null),
+        decoration =
+            decoration ?? (color != null ? BoxDecoration(color: color) : null),
         super(
           key: key,
           onTap: onTap,

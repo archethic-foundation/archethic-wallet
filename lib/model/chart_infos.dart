@@ -1,7 +1,13 @@
 import 'package:fl_chart/fl_chart.dart';
 
 class ChartInfos {
-  ChartInfos({this.minY, this.maxY, this.minX, this.maxX, this.data, this.priceChangePercentage24h});
+  ChartInfos(
+      {this.minY,
+      this.maxY,
+      this.minX,
+      this.maxX,
+      this.data,
+      this.priceChangePercentage24h});
 
   double? minY = 0;
   double? maxY = 0;

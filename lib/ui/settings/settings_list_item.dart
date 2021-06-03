@@ -52,7 +52,8 @@ class AppSettings {
                       ),
                     ],
                   ),
-                  margin: const EdgeInsets.only(top: 3, left: 3, bottom: 3, right: 3),
+                  margin: const EdgeInsets.only(
+                      top: 3, left: 3, bottom: 3, right: 3),
                 ),
               ),
               AutoSizeText(

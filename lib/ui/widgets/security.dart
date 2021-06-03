@@ -105,7 +105,8 @@ class _PinScreenState extends State<PinScreen>
                 setState(() {
                   _pin = '';
                   _header = AppLocalization.of(context).pinInvalid;
-                  _dotStates = List<IconData>.filled(_pinLength, AppIcons.dotemtpy);
+                  _dotStates =
+                      List<IconData>.filled(_pinLength, AppIcons.dotemtpy);
                   _controller.value = 0;
                 });
               }
@@ -216,7 +217,8 @@ class _PinScreenState extends State<PinScreen>
                   // Switch to confirm pin
                   setState(() {
                     _awaitingConfirmation = true;
-                    _dotStates = List<IconData>.filled(_pinLength, AppIcons.dotemtpy);
+                    _dotStates =
+                        List<IconData>.filled(_pinLength, AppIcons.dotemtpy);
                     _header = AppLocalization.of(context).pinConfirmTitle;
                   });
                 } else {
@@ -313,8 +315,8 @@ class _PinScreenState extends State<PinScreen>
                     ),
                     // Descripttion
                     Container(
-                      margin:
-                          const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 10),
                       child: AutoSizeText(
                         widget.description,
                         style: AppStyles.textStyleParagraph(context),

@@ -8,8 +8,8 @@ import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/app_simpledialog.dart';
 
 class AppDialogs {
-  static void showConfirmDialog(
-      BuildContext context, String title, String content, String buttonText, Function onPressed,
+  static void showConfirmDialog(BuildContext context, String title,
+      String content, String buttonText, Function onPressed,
       {String cancelText, Function cancelAction}) {
     cancelText ??= AppLocalization.of(context).cancel.toUpperCase();
     showAppDialog(
@@ -56,7 +56,8 @@ class AppDialogs {
     );
   }
 
-  static void showInfoDialog(BuildContext context, String title, String content) {
+  static void showInfoDialog(
+      BuildContext context, String title, String content) {
     showDialog(
       context: context,
       builder: (BuildContext context) {

@@ -31,7 +31,6 @@ class ContactsList extends StatefulWidget {
 }
 
 class _ContactsListState extends State<ContactsList> {
-
   List<Contact> _contacts;
   String documentsDirectory;
   @override
@@ -71,9 +70,9 @@ class _ContactsListState extends State<ContactsList> {
       setState(() {
         _contacts.add(event.contact);
         //Sort by name
-        _contacts.sort(
-            (Contact a, Contact b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
-            StateContainer.of(context).updateContacts();
+        _contacts.sort((Contact a, Contact b) =>
+            a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+        StateContainer.of(context).updateContacts();
       });
       // Full update
       _updateContacts();
@@ -99,8 +98,8 @@ class _ContactsListState extends State<ContactsList> {
       }
       // Re-sort list
       setState(() {
-        _contacts.sort(
-            (Contact a, Contact b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+        _contacts.sort((Contact a, Contact b) =>
+            a.name.toLowerCase().compareTo(b.name.toLowerCase()));
       });
     });
   }

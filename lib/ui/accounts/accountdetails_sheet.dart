@@ -172,57 +172,58 @@ class AccountDetailsSheet {
                                       : const SizedBox(),
                             ),
                             // Balance Text
-                            if (account.balance != null || account.selected) Container(
-                                    margin: const EdgeInsets.only(top: 5.0),
-                                    child: RichText(
-                                      textAlign: TextAlign.start,
-                                      text: TextSpan(
-                                        text: '',
-                                        children: <InlineSpan>[
-                                          TextSpan(
-                                            text: '(',
-                                            style: TextStyle(
-                                              color: StateContainer.of(context)
-                                                  .curTheme
-                                                  .primary60,
-                                              fontSize: 14.0,
-                                              fontWeight: FontWeight.w100,
-                                              fontFamily: 'Montserrat',
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text:
-                                                NumberUtil.getRawAsUsableString(
-                                                    account.balance ??
-                                                        StateContainer.of(
-                                                                context)
-                                                            .wallet
-                                                            .accountBalance
-                                                            .toString()),
-                                            style: TextStyle(
-                                              color: StateContainer.of(context)
-                                                  .curTheme
-                                                  .primary60,
-                                              fontSize: 14.0,
-                                              fontWeight: FontWeight.w700,
-                                              fontFamily: 'Montserrat',
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text: ' UCO)',
-                                            style: TextStyle(
-                                              color: StateContainer.of(context)
-                                                  .curTheme
-                                                  .primary60,
-                                              fontSize: 14.0,
-                                              fontWeight: FontWeight.w100,
-                                              fontFamily: 'Montserrat',
-                                            ),
-                                          ),
-                                        ],
+                            if (account.balance != null || account.selected)
+                              Container(
+                                margin: const EdgeInsets.only(top: 5.0),
+                                child: RichText(
+                                  textAlign: TextAlign.start,
+                                  text: TextSpan(
+                                    text: '',
+                                    children: <InlineSpan>[
+                                      TextSpan(
+                                        text: '(',
+                                        style: TextStyle(
+                                          color: StateContainer.of(context)
+                                              .curTheme
+                                              .primary60,
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w100,
+                                          fontFamily: 'Montserrat',
+                                        ),
                                       ),
-                                    ),
-                                  ) else const SizedBox(),
+                                      TextSpan(
+                                        text: NumberUtil.getRawAsUsableString(
+                                            account.balance ??
+                                                StateContainer.of(context)
+                                                    .wallet
+                                                    .accountBalance
+                                                    .toString()),
+                                        style: TextStyle(
+                                          color: StateContainer.of(context)
+                                              .curTheme
+                                              .primary60,
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: 'Montserrat',
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: ' UCO)',
+                                        style: TextStyle(
+                                          color: StateContainer.of(context)
+                                              .curTheme
+                                              .primary60,
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w100,
+                                          fontFamily: 'Montserrat',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            else
+                              const SizedBox(),
 
                             // The main container that holds Contact Name and Contact Address
                             Expanded(

@@ -11,7 +11,7 @@ class AuthenticationMethod extends SettingSelectionItem {
   AuthenticationMethod(this.method);
 
   AuthMethod method;
-  
+
   @override
   String getDisplayName(BuildContext context) {
     switch (method) {

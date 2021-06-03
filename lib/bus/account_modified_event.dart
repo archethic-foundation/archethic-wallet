@@ -6,5 +6,4 @@ class AccountModifiedEvent implements Event {
 
   final Account? account;
   final bool deleted;
-
 }

@@ -16,7 +16,7 @@ class MnemonicDisplay extends StatefulWidget {
       {@required this.wordList,
       this.obscureSeed = false,
       this.showButton = true});
-      
+
   final List<String> wordList;
   final bool obscureSeed;
   final bool showButton;
@@ -124,57 +124,59 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
               ),
             ),
             // Tap to reveal or hide
-            if (widget.obscureSeed) Container(
-                    margin: const EdgeInsetsDirectional.only(top: 8),
-                    child: _seedObscured
-                        ? AutoSizeText(
-                            AppLocalization.of(context).tapToReveal,
-                            style: AppStyles.textStyleParagraphThinPrimary(
-                                context),
-                          )
-                        : Text(
-                            AppLocalization.of(context).tapToHide,
-                            style: AppStyles.textStyleParagraphThinPrimary(
-                                context),
-                          ),
-                  ) else const SizedBox(),
+            if (widget.obscureSeed)
+              Container(
+                margin: const EdgeInsetsDirectional.only(top: 8),
+                child: _seedObscured
+                    ? AutoSizeText(
+                        AppLocalization.of(context).tapToReveal,
+                        style: AppStyles.textStyleParagraphThinPrimary(context),
+                      )
+                    : Text(
+                        AppLocalization.of(context).tapToHide,
+                        style: AppStyles.textStyleParagraphThinPrimary(context),
+                      ),
+              )
+            else
+              const SizedBox(),
           ],
         ),
       ),
-      if (widget.showButton) Container(
-              margin: const EdgeInsetsDirectional.only(top: 5),
-              padding: const EdgeInsets.all(0.0),
-              child: OutlinedButton(
-                onPressed: () {
-                  Clipboard.setData(
-                      ClipboardData(text: widget.wordList.join(' ')));
-                  //UserDataUtil.setSecureClipboardItem(widget.wordList.join(' '));
-                  setState(() {
-                    _seedCopied = true;
-                  });
-                  if (_seedCopiedTimer != null) {
-                    _seedCopiedTimer.cancel();
-                  }
-                  _seedCopiedTimer =
-                      Timer(const Duration(milliseconds: 1500), () {
-                    setState(() {
-                      _seedCopied = false;
-                    });
-                  });
-                },
-                child: AutoSizeText(
-                  _seedCopied
-                      ? AppLocalization.of(context).copied
-                      : AppLocalization.of(context).copy,
-                  textAlign: TextAlign.center,
-                  style: _seedCopied
-                      ? AppStyles.textStyleButtonSuccessSmallOutline(context)
-                      : AppStyles.textStyleButtonPrimarySmallOutline(context),
-                  maxLines: 1,
-                  stepGranularity: 0.5,
-                ),
-              ),
-            ) else const SizedBox(),
+      if (widget.showButton)
+        Container(
+          margin: const EdgeInsetsDirectional.only(top: 5),
+          padding: const EdgeInsets.all(0.0),
+          child: OutlinedButton(
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: widget.wordList.join(' ')));
+              //UserDataUtil.setSecureClipboardItem(widget.wordList.join(' '));
+              setState(() {
+                _seedCopied = true;
+              });
+              if (_seedCopiedTimer != null) {
+                _seedCopiedTimer.cancel();
+              }
+              _seedCopiedTimer = Timer(const Duration(milliseconds: 1500), () {
+                setState(() {
+                  _seedCopied = false;
+                });
+              });
+            },
+            child: AutoSizeText(
+              _seedCopied
+                  ? AppLocalization.of(context).copied
+                  : AppLocalization.of(context).copy,
+              textAlign: TextAlign.center,
+              style: _seedCopied
+                  ? AppStyles.textStyleButtonSuccessSmallOutline(context)
+                  : AppStyles.textStyleButtonPrimarySmallOutline(context),
+              maxLines: 1,
+              stepGranularity: 0.5,
+            ),
+          ),
+        )
+      else
+        const SizedBox(),
     ]);
   }
 }

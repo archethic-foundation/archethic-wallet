@@ -43,7 +43,8 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
           ),
         ),
         child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
+          builder: (BuildContext context, BoxConstraints constraints) =>
+              SafeArea(
             minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
                 top: MediaQuery.of(context).size.height * 0.075),
@@ -153,7 +154,9 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                                 .setSeed(AppSeeds.generateSeed())
                                 .then((String result) {
                               // Update wallet
-                              StateContainer.of(context).getSeed().then((String seed) {
+                              StateContainer.of(context)
+                                  .getSeed()
+                                  .then((String seed) {
                                 AppUtil().loginAccount(seed, context).then((_) {
                                   StateContainer.of(context).requestUpdate();
                                   Navigator.of(context)

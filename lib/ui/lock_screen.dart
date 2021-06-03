@@ -174,7 +174,8 @@ class _AppLockScreenState extends State<AppLockScreen> {
     if (lockUntil == null) {
       await sl.get<SharedPrefsUtil>().resetLockAttempts();
     } else {
-      final int countDown = lockUntil.difference(DateTime.now().toUtc()).inSeconds;
+      final int countDown =
+          lockUntil.difference(DateTime.now().toUtc()).inSeconds;
       // They're not allowed to attempt
       if (countDown > 0) {
         _runCountdown(countDown);
@@ -265,7 +266,8 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                   color:
                                       StateContainer.of(context).curTheme.text),
                               Container(
-                                margin: const EdgeInsetsDirectional.only(start: 4),
+                                margin:
+                                    const EdgeInsetsDirectional.only(start: 4),
                                 child: Text(AppLocalization.of(context).logout,
                                     style: AppStyles.textStyleLogoutButton(
                                         context)),
@@ -306,30 +308,36 @@ class _AppLockScreenState extends State<AppLockScreen> {
                         )
                       : const SizedBox(),
                 ),
-                if (_lockedOut) Container(
-                        width: MediaQuery.of(context).size.width - 100,
-                        margin: const EdgeInsets.symmetric(horizontal: 50),
-                        child: Text(
-                          AppLocalization.of(context).tooManyFailedAttempts,
-                          style: AppStyles.textStyleErrorMedium(context),
-                          textAlign: TextAlign.center,
-                        ),
-                      ) else const SizedBox(),
-                if (_showUnlockButton) Row(
-                        children: <Widget>[
-                          AppButton.buildAppButton(
-                              context,
-                              AppButtonType.PRIMARY,
-                              _lockedOut
-                                  ? _countDownTxt
-                                  : AppLocalization.of(context).unlock,
-                              Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
-                            if (!_lockedOut) {
-                              _authenticate(transitions: true);
-                            }
-                          }, disabled: _lockedOut),
-                        ],
-                      ) else const SizedBox(),
+                if (_lockedOut)
+                  Container(
+                    width: MediaQuery.of(context).size.width - 100,
+                    margin: const EdgeInsets.symmetric(horizontal: 50),
+                    child: Text(
+                      AppLocalization.of(context).tooManyFailedAttempts,
+                      style: AppStyles.textStyleErrorMedium(context),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                else
+                  const SizedBox(),
+                if (_showUnlockButton)
+                  Row(
+                    children: <Widget>[
+                      AppButton.buildAppButton(
+                          context,
+                          AppButtonType.PRIMARY,
+                          _lockedOut
+                              ? _countDownTxt
+                              : AppLocalization.of(context).unlock,
+                          Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
+                        if (!_lockedOut) {
+                          _authenticate(transitions: true);
+                        }
+                      }, disabled: _lockedOut),
+                    ],
+                  )
+                else
+                  const SizedBox(),
               ],
             ),
           ),

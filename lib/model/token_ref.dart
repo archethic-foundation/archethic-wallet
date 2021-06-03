@@ -7,5 +7,4 @@ class TokenRef {
   int totalSupply;
   DateTime creationDate;
   String creator;
-
 }

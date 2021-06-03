@@ -48,7 +48,8 @@ class _TransferCompleteSheetState extends State<TransferCompleteSheet> {
                   Container(
                     alignment: const AlignmentDirectional(0, 0),
                     margin: const EdgeInsets.only(bottom: 25),
-                    child: Text(AppLocalization.of(context).transferSuccess, style: AppStyles.textStyleParagraph(context)),
+                    child: Text(AppLocalization.of(context).transferSuccess,
+                        style: AppStyles.textStyleParagraph(context)),
                   ),
                 ],
               ),

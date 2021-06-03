@@ -8,5 +8,4 @@ class ConnStatusEvent implements Event {
 
   final ConnectionStatus? status;
   final String? server;
-
 }

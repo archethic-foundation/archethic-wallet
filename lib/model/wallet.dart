@@ -9,8 +9,6 @@ import 'package:uniris_mobile_wallet/util/numberutil.dart';
 
 /// Main wallet object that's passed around the app via state
 class AppWallet {
-
-
   AppWallet(
       {String address,
       Balance accountBalance,
@@ -20,16 +18,13 @@ class AppWallet {
       bool loading,
       bool historyLoading}) {
     _address = address;
-    _accountBalance = accountBalance ??
-        Balance(uco: 0, nftList: null);
+    _accountBalance = accountBalance ?? Balance(uco: 0, nftList: null);
     _localCurrencyPrice = localCurrencyPrice ?? '0';
     _btcPrice = btcPrice ?? '0';
-    _history =
-        history ?? List<AddressTxsResponseResult>.empty(growable: true);
+    _history = history ?? List<AddressTxsResponseResult>.empty(growable: true);
     _loading = loading ?? true;
     _historyLoading = historyLoading ?? true;
   }
-
 
   bool _loading; // Whether or not app is initially loading
   bool
@@ -104,8 +99,7 @@ class AppWallet {
         NumberUtil.getRawAsUsableDecimal(_accountBalance.uco.toString());
     // Show 4 decimal places for BTC price if its >= 0.0001 BTC, otherwise 6 decimals
     if (converted >= Decimal.parse('0.0001')) {
-      return NumberFormat('#,##0.0000', 'en_US')
-          .format(converted.toDouble());
+      return NumberFormat('#,##0.0000', 'en_US').format(converted.toDouble());
     } else {
       return NumberFormat('#,##0.000000000', 'en_US')
           .format(converted.toDouble());

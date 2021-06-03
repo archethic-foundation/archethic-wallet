@@ -27,7 +27,6 @@ class QRScanErrs {
 }
 
 class UserDataUtil {
-
   static const MethodChannel _channel = MethodChannel('fappchannel');
   static StreamSubscription<dynamic> setStream;
 
@@ -103,7 +102,8 @@ class UserDataUtil {
       if (setStream != null) {
         setStream.cancel();
       }
-      final Future<dynamic> delayed = Future.delayed(const Duration(minutes: 2));
+      final Future<dynamic> delayed =
+          Future.delayed(const Duration(minutes: 2));
       delayed.then((_) {
         return true;
       });

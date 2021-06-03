@@ -7,5 +7,4 @@ class BalanceGetEvent implements Event {
 
   final Account? account;
   final Balance? response;
-
 }

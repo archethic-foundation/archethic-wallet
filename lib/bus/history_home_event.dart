@@ -3,6 +3,6 @@ import 'package:uniris_mobile_wallet/network/model/response/address_txs_response
 
 class HistoryHomeEvent implements Event {
   HistoryHomeEvent({this.items});
-  
+
   final List<AddressTxsResponseResult>? items;
 }

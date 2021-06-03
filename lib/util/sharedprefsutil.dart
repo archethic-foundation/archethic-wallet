@@ -47,7 +47,8 @@ class SharedPrefsUtil {
 
   // For plain-text data
   Future<void> set(String key, value) async {
-    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
     if (value is bool) {
       sharedPreferences.setBool(key, value);
     } else if (value is String) {
@@ -60,7 +61,8 @@ class SharedPrefsUtil {
   }
 
   Future<dynamic> get(String key, {dynamic defaultValue}) async {
-    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
     return sharedPreferences.get(key) ?? defaultValue;
   }
 

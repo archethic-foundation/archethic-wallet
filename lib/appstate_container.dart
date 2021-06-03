@@ -60,7 +60,6 @@ class StateContainer extends StatefulWidget {
 }
 
 class StateContainerState extends State<StateContainer> {
-
   // Minimum receive = 0.000001
   String receiveThreshold = BigInt.from(10).pow(24).toString();
 
@@ -93,7 +92,10 @@ class StateContainerState extends State<StateContainer> {
     updateContacts();
 
     // Set currency locale here for the UI to access
-    sl.get<SharedPrefsUtil>().getCurrency(deviceLocale).then((AvailableCurrency currency) {
+    sl
+        .get<SharedPrefsUtil>()
+        .getCurrency(deviceLocale)
+        .then((AvailableCurrency currency) {
       setState(() {
         currencyLocale = currency.getLocale().toString();
         curCurrency = currency;
@@ -116,8 +118,9 @@ class StateContainerState extends State<StateContainer> {
 
   // Register RX event listeners
   void _registerBus() {
-    _balanceGetEventSub =
-        EventTaxiImpl.singleton().registerTo<BalanceGetEvent>().listen((BalanceGetEvent event) {
+    _balanceGetEventSub = EventTaxiImpl.singleton()
+        .registerTo<BalanceGetEvent>()
+        .listen((BalanceGetEvent event) {
       //print("listen BalanceGetEvent");
       handleAddressResponse(event.response);
     });
@@ -132,7 +135,7 @@ class StateContainerState extends State<StateContainer> {
       for (int i = event.response.length - 1; i >= 0; i--) {
         final AddressTxsResponseResult addressTxResponseResult =
             AddressTxsResponseResult();
-       addressTxsResponse.result.add(addressTxResponseResult);
+        addressTxsResponse.result.add(addressTxResponseResult);
       }
 
       wallet.history.clear();
@@ -145,7 +148,7 @@ class StateContainerState extends State<StateContainer> {
           });
         }
       }
-      
+
       setState(() {
         wallet.historyLoading = false;
         wallet.loading = false;
@@ -154,8 +157,9 @@ class StateContainerState extends State<StateContainer> {
       EventTaxiImpl.singleton().fire(HistoryHomeEvent(items: wallet.history));
     });
 
-    _priceEventSub =
-        EventTaxiImpl.singleton().registerTo<PriceEvent>().listen((PriceEvent event) {
+    _priceEventSub = EventTaxiImpl.singleton()
+        .registerTo<PriceEvent>()
+        .listen((PriceEvent event) {
       setState(() {
         wallet.btcPrice = event.response.btcPrice.toString();
         wallet.localCurrencyPrice =
@@ -163,8 +167,9 @@ class StateContainerState extends State<StateContainer> {
       });
     });
 
-    _chartEventSub =
-        EventTaxiImpl.singleton().registerTo<ChartEvent>().listen((ChartEvent event) {
+    _chartEventSub = EventTaxiImpl.singleton()
+        .registerTo<ChartEvent>()
+        .listen((ChartEvent event) {
       setState(() {
         chartInfos = event.chartInfos;
       });
@@ -203,7 +208,10 @@ class StateContainerState extends State<StateContainer> {
                 AccountChangedEvent(account: recentSecondLast, noPop: true));
           } else if (event.account.index == selectedAccount.index) {
             getSeed().then((String seed) {
-              sl.get<DBHelper>().getMainAccount(seed).then((Account mainAccount) {
+              sl
+                  .get<DBHelper>()
+                  .getMainAccount(seed)
+                  .then((Account mainAccount) {
                 sl.get<DBHelper>().changeAccount(mainAccount);
                 setState(() {
                   selectedAccount = mainAccount;
@@ -324,7 +332,10 @@ class StateContainerState extends State<StateContainer> {
   /// Handle address response
   void handleAddressResponse(Balance response) {
     // Set currency locale here for the UI to access
-    sl.get<SharedPrefsUtil>().getCurrency(deviceLocale).then((AvailableCurrency currency) {
+    sl
+        .get<SharedPrefsUtil>()
+        .getCurrency(deviceLocale)
+        .then((AvailableCurrency currency) {
       setState(() {
         currencyLocale = currency.getLocale().toString();
         curCurrency = currency;
@@ -333,8 +344,7 @@ class StateContainerState extends State<StateContainer> {
     setState(() {
       if (wallet != null) {
         if (response == null) {
-          wallet.accountBalance =
-              Balance(nftList: null, uco: 0);
+          wallet.accountBalance = Balance(nftList: null, uco: 0);
         } else {
           wallet.accountBalance = response;
           sl.get<DBHelper>().updateAccountBalance(
@@ -367,20 +377,25 @@ class StateContainerState extends State<StateContainer> {
         chartInfos = ChartInfos();
         chartInfos.minY = 9999999;
         chartInfos.maxY = 0;
-        final CoinsCurrentDataResponse coinsCurrentDataResponse = await sl
-            .get<ApiCoinsService>().getCoinsCurrentData();
-        if(coinsCurrentDataResponse.marketData.priceChangePercentage24HInCurrency[curCurrency.getIso4217Code().toLowerCase()] != null)
-        {
-          chartInfos.priceChangePercentage24h = coinsCurrentDataResponse.marketData.priceChangePercentage24HInCurrency[curCurrency.getIso4217Code().toLowerCase()];
-        }
-        else
-        {
-          chartInfos.priceChangePercentage24h = coinsCurrentDataResponse.marketData.priceChangePercentage24H;
+        final CoinsCurrentDataResponse coinsCurrentDataResponse =
+            await sl.get<ApiCoinsService>().getCoinsCurrentData();
+        if (coinsCurrentDataResponse
+                    .marketData.priceChangePercentage24HInCurrency[
+                curCurrency.getIso4217Code().toLowerCase()] !=
+            null) {
+          chartInfos.priceChangePercentage24h = coinsCurrentDataResponse
+                  .marketData.priceChangePercentage24HInCurrency[
+              curCurrency.getIso4217Code().toLowerCase()];
+        } else {
+          chartInfos.priceChangePercentage24h =
+              coinsCurrentDataResponse.marketData.priceChangePercentage24H;
         }
         final List<FlSpot> data = List<FlSpot>.empty(growable: true);
         for (int i = 0; i < coinsPriceResponse.prices.length; i = i + 1) {
           final FlSpot chart = FlSpot(
-              coinsPriceResponse.prices[i][0], double.tryParse(coinsPriceResponse.prices[i][1].toStringAsFixed(5)));
+              coinsPriceResponse.prices[i][0],
+              double.tryParse(
+                  coinsPriceResponse.prices[i][1].toStringAsFixed(5)));
           data.add(chart);
           if (chartInfos.minY > coinsPriceResponse.prices[i][1]) {
             chartInfos.minY = coinsPriceResponse.prices[i][1];
@@ -410,7 +425,6 @@ class StateContainerState extends State<StateContainer> {
   Future<String> getSeed() async {
     String seed;
     if (encryptedSecret != null) {
-
       seed = uint8ListToHex(AppCrypt.decrypt(
           encryptedSecret, await sl.get<Vault>().getSessionKey()));
     } else {

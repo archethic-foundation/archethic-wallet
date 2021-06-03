@@ -5,5 +5,4 @@ class ContactModifiedEvent implements Event {
   ContactModifiedEvent({this.contact});
 
   final Contact? contact;
-
 }

@@ -153,7 +153,8 @@ class BalanceDisplay {
                   color: StateContainer.of(context).curTheme.backgroundDarkest,
                   blurRadius: 5.0,
                   spreadRadius: 0.0,
-                  offset: const Offset(5.0, 5.0), // shadow direction: bottom right
+                  offset:
+                      const Offset(5.0, 5.0), // shadow direction: bottom right
                 )
               ],
             ),
@@ -170,7 +171,8 @@ class BalanceDisplay {
                       textAlign: TextAlign.center,
                       style: AppStyles.textStyleCurrencyAlt(context)),
                   Container(
-                    margin: const EdgeInsetsDirectional.only(start: 10, end: 10),
+                    margin:
+                        const EdgeInsetsDirectional.only(start: 10, end: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,

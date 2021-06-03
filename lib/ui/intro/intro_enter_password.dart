@@ -142,8 +142,9 @@ class _IntroEnterPasswordAccessState extends State<IntroEnterPasswordAccess> {
                                       // Enter your password Text Field
                                       AppTextField(
                                         topMargin: 10,
-                                        padding: const EdgeInsetsDirectional.only(
-                                            start: 16, end: 16),
+                                        padding:
+                                            const EdgeInsetsDirectional.only(
+                                                start: 16, end: 16),
                                         focusNode: enterPasswordFocusNode,
                                         controller: enterPasswordController,
                                         textInputAction: TextInputAction.go,
@@ -175,10 +176,10 @@ class _IntroEnterPasswordAccessState extends State<IntroEnterPasswordAccess> {
                                       ),
                                       // Error Container
                                       Container(
-                                        alignment: const AlignmentDirectional(0, 0),
+                                        alignment:
+                                            const AlignmentDirectional(0, 0),
                                         margin: const EdgeInsets.only(top: 3),
-                                        child: Text(
-                                            passwordError ?? '',
+                                        child: Text(passwordError ?? '',
                                             style: TextStyle(
                                               fontSize: 14.0,
                                               color: StateContainer.of(context)

@@ -20,7 +20,8 @@ class AppService {
 
   Future<void> getAddressTxsResponse(String address, int limit) async {
     final AddressTxsResponse addressTxsResponse = AddressTxsResponse();
-    addressTxsResponse.result = List<AddressTxsResponseResult>.empty(growable: true);
+    addressTxsResponse.result =
+        List<AddressTxsResponseResult>.empty(growable: true);
 
     try {} catch (e) {
       EventTaxiImpl.singleton().fire(

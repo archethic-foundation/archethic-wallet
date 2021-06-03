@@ -69,7 +69,8 @@ class _PlainSeedDisplayState extends State<PlainSeedDisplay> {
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 25.0, vertical: 15),
                   margin: const EdgeInsets.only(top: 25),
                   decoration: BoxDecoration(
                     color:
@@ -86,56 +87,62 @@ class _PlainSeedDisplayState extends State<PlainSeedDisplay> {
                           : AppStyles.textStyleSeed(context)),
                 ),
                 // Tap to reveal or hide
-                if (widget.obscureSeed) Container(
-                        margin: const EdgeInsetsDirectional.only(top: 8),
-                        child: _seedObscured
-                            ? AutoSizeText(
-                                AppLocalization.of(context).tapToReveal,
-                                style: AppStyles.textStyleParagraphThinPrimary(
-                                    context),
-                              )
-                            : Text(
-                                AppLocalization.of(context).tapToHide,
-                                style: AppStyles.textStyleParagraphThinPrimary(
-                                    context),
-                              ),
-                      ) else const SizedBox(),
+                if (widget.obscureSeed)
+                  Container(
+                    margin: const EdgeInsetsDirectional.only(top: 8),
+                    child: _seedObscured
+                        ? AutoSizeText(
+                            AppLocalization.of(context).tapToReveal,
+                            style: AppStyles.textStyleParagraphThinPrimary(
+                                context),
+                          )
+                        : Text(
+                            AppLocalization.of(context).tapToHide,
+                            style: AppStyles.textStyleParagraphThinPrimary(
+                                context),
+                          ),
+                  )
+                else
+                  const SizedBox(),
               ],
             )),
         // Container for the copy button
-        if (widget.showButton) Container(
-                margin: const EdgeInsetsDirectional.only(top: 5),
-                padding: const EdgeInsets.all(0.0),
-                child: OutlinedButton(
-                  onPressed: () {
-                    Clipboard.setData(ClipboardData(text: widget.seed));
-                    //UserDataUtil.setSecureClipboardItem(widget.seed);
-                    setState(() {
-                      _seedCopied = true;
-                    });
-                    if (_seedCopiedTimer != null) {
-                      _seedCopiedTimer.cancel();
-                    }
-                    _seedCopiedTimer =
-                        Timer(const Duration(milliseconds: 1500), () {
-                      setState(() {
-                        _seedCopied = false;
-                      });
-                    });
-                  },
-                  child: AutoSizeText(
-                    _seedCopied
-                        ? AppLocalization.of(context).copied
-                        : AppLocalization.of(context).copy,
-                    textAlign: TextAlign.center,
-                    style: _seedCopied
-                        ? AppStyles.textStyleButtonSuccessSmallOutline(context)
-                        : AppStyles.textStyleButtonPrimarySmallOutline(context),
-                    maxLines: 1,
-                    stepGranularity: 0.5,
-                  ),
-                ),
-              ) else const SizedBox(),
+        if (widget.showButton)
+          Container(
+            margin: const EdgeInsetsDirectional.only(top: 5),
+            padding: const EdgeInsets.all(0.0),
+            child: OutlinedButton(
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: widget.seed));
+                //UserDataUtil.setSecureClipboardItem(widget.seed);
+                setState(() {
+                  _seedCopied = true;
+                });
+                if (_seedCopiedTimer != null) {
+                  _seedCopiedTimer.cancel();
+                }
+                _seedCopiedTimer =
+                    Timer(const Duration(milliseconds: 1500), () {
+                  setState(() {
+                    _seedCopied = false;
+                  });
+                });
+              },
+              child: AutoSizeText(
+                _seedCopied
+                    ? AppLocalization.of(context).copied
+                    : AppLocalization.of(context).copy,
+                textAlign: TextAlign.center,
+                style: _seedCopied
+                    ? AppStyles.textStyleButtonSuccessSmallOutline(context)
+                    : AppStyles.textStyleButtonPrimarySmallOutline(context),
+                maxLines: 1,
+                stepGranularity: 0.5,
+              ),
+            ),
+          )
+        else
+          const SizedBox(),
       ],
     );
   }

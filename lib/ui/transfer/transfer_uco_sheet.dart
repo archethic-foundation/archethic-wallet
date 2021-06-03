@@ -281,7 +281,8 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                           .get<SharedPrefsUtil>()
                                           .getPriceConversion(),
                                       builder: (BuildContext context,
-                                          AsyncSnapshot<PriceConversion> snapshot) {
+                                          AsyncSnapshot<PriceConversion>
+                                              snapshot) {
                                         if (snapshot.hasData &&
                                             snapshot.data != null &&
                                             snapshot.data !=

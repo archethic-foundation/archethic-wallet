@@ -42,10 +42,8 @@ class AppLocalization {
   }
 
   String get enterPasswordText {
-    return Intl.message(
-        'Please, enter your password to connect to your wallet',
-        desc: '',
-        name: 'enterPasswordText');
+    return Intl.message('Please, enter your password to connect to your wallet',
+        desc: '', name: 'enterPasswordText');
   }
 
   String get cancel {
@@ -218,12 +216,13 @@ class AppLocalization {
   }
 
   String get transferSuccess {
-    return Intl.message('The transaction was sent successfully', desc: '', name: 'transferSuccess');
+    return Intl.message('The transaction was sent successfully',
+        desc: '', name: 'transferSuccess');
   }
 
-
   String get transfering {
-    return Intl.message('Transfering', desc: 'send_sending', name: 'transfering');
+    return Intl.message('Transfering',
+        desc: 'send_sending', name: 'transfering');
   }
 
   String get to {
@@ -401,7 +400,6 @@ class AppLocalization {
         desc: 'settings_logout_warning_message',
         name: 'logoutReassurance');
   }
-
 
   String get preferences {
     return Intl.message('Preferences',

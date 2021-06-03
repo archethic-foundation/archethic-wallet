@@ -15,8 +15,8 @@ class BiometricUtil {
       final List<BiometricType> availableBiometrics =
           await localAuth.getAvailableBiometrics();
       //for (BiometricType type in availableBiometrics) {
-        //sl.get<Logger>().i(type.toString());
-        //sl.get<Logger>().i("${type == BiometricType.face ? 'face' : type == BiometricType.iris ? 'iris' : type == BiometricType.fingerprint ? 'fingerprint' : 'unknown'}");
+      //sl.get<Logger>().i(type.toString());
+      //sl.get<Logger>().i("${type == BiometricType.face ? 'face' : type == BiometricType.iris ? 'iris' : type == BiometricType.fingerprint ? 'fingerprint' : 'unknown'}");
       //}
 
       if (availableBiometrics.contains(BiometricType.face)) {

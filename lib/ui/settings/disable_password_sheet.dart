@@ -63,8 +63,8 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
                 children: <Widget>[
                   // The header
                   Container(
-                    margin:
-                        const EdgeInsetsDirectional.only(top: 10, start: 60, end: 60),
+                    margin: const EdgeInsetsDirectional.only(
+                        top: 10, start: 60, end: 60),
                     child: Column(
                       children: <Widget>[
                         AutoSizeText(
@@ -137,8 +137,7 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
                                 Container(
                                   alignment: const AlignmentDirectional(0, 0),
                                   margin: const EdgeInsets.only(top: 3),
-                                  child: Text(
-                                      passwordError ?? '',
+                                  child: Text(passwordError ?? '',
                                       style: TextStyle(
                                         fontSize: 14.0,
                                         color: StateContainer.of(context)
@@ -199,7 +198,8 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
       }
     } else {
       try {
-        final String decryptedSeed = uint8ListToHex(AppCrypt.decrypt(encryptedSeed, passwordController.text));
+        final String decryptedSeed = uint8ListToHex(
+            AppCrypt.decrypt(encryptedSeed, passwordController.text));
         throwIf(!AppSeeds.isValidSeed(decryptedSeed), const FormatException());
         await sl.get<Vault>().setSeed(decryptedSeed);
         StateContainer.of(context).resetEncryptedSecret();

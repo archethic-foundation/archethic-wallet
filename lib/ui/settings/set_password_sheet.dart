@@ -68,8 +68,8 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                 children: <Widget>[
                   // The header
                   Container(
-                    margin:
-                        const EdgeInsetsDirectional.only(top: 10, start: 60, end: 60),
+                    margin: const EdgeInsetsDirectional.only(
+                        top: 10, start: 60, end: 60),
                     child: Column(
                       children: <Widget>[
                         AutoSizeText(
@@ -210,8 +210,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                                 Container(
                                   alignment: const AlignmentDirectional(0, 0),
                                   margin: const EdgeInsets.only(top: 3),
-                                  child: Text(
-                                      passwordError ?? '',
+                                  child: Text(passwordError ?? '',
                                       style: TextStyle(
                                         fontSize: 14.0,
                                         color: StateContainer.of(context)
@@ -282,8 +281,8 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
       UIUtil.showSnackbar(
           AppLocalization.of(context).encryptionFailedError, context);
     } else {
-      final String encryptedSeed =
-          uint8ListToHex(AppCrypt.encrypt(seed, confirmPasswordController.text));
+      final String encryptedSeed = uint8ListToHex(
+          AppCrypt.encrypt(seed, confirmPasswordController.text));
       await sl.get<Vault>().setSeed(encryptedSeed);
       StateContainer.of(context).setEncryptedSecret(uint8ListToHex(
           AppCrypt.encrypt(seed, await sl.get<Vault>().getSessionKey())));

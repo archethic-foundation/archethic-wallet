@@ -225,7 +225,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
                   // Enter Address container
                   AppTextField(
                     padding: !_shouldShowTextField()
-                        ? const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0)
+                        ? const EdgeInsets.symmetric(
+                            horizontal: 25.0, vertical: 15.0)
                         : EdgeInsets.zero,
                     focusNode: _addressFocusNode,
                     controller: _addressController,
@@ -245,8 +246,9 @@ class _AddContactSheetState extends State<AddContactSheet> {
                         icon: AppIcons.scan,
                         onPressed: () async {
                           UIUtil.cancelLockEvent();
-                          final String scanResult = await UserDataUtil.getQRData(
-                              DataType.ADDRESS, context);
+                          final String scanResult =
+                              await UserDataUtil.getQRData(
+                                  DataType.ADDRESS, context);
                           if (!QRScanErrs.ERROR_LIST.contains(scanResult)) {
                             if (mounted) {
                               setState(() {
@@ -317,13 +319,13 @@ class _AddContactSheetState extends State<AddContactSheet> {
                               setState(() {
                                 _addressValidAndUnfocused = false;
                               });
-                              Future.delayed(const Duration(milliseconds: 50), () {
+                              Future.delayed(const Duration(milliseconds: 50),
+                                  () {
                                 FocusScope.of(context)
                                     .requestFocus(_addressFocusNode);
                               });
                             },
-                            child: UIUtil.threeLineAddressText(
-                                context,
+                            child: UIUtil.threeLineAddressText(context,
                                 widget.address ?? _addressController!.text))
                         : null,
                   ),
@@ -357,7 +359,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
                       if (await validateForm()) {
                         final Contact newContact = Contact(
                             name: _nameController!.text,
-                            address: widget.address ?? _addressController!.text);
+                            address:
+                                widget.address ?? _addressController!.text);
                         await sl.get<DBHelper>().saveContact(newContact);
 
                         EventTaxiImpl.singleton()

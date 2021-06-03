@@ -68,7 +68,8 @@ class SendTxRequest {
     rnd.seed(params);
 
     signer.reset();
-    signer.init(true, ParametersWithRandom<PrivateKeyParameter<PrivateKey>>(privParams, rnd));
+    signer.init(true,
+        ParametersWithRandom<PrivateKeyParameter<PrivateKey>>(privParams, rnd));
     ECSignature sig = signer.generateSignature(utf8.encode(msgToSign));
     sig = sig.normalize(ECDomainParameters('secp256k1'));
 
@@ -128,7 +129,7 @@ class Tx {
         operation: json['operation'],
         openfield: json['openfield'],
       );
-      
+
   String timestamp;
   String address;
   String recipient;

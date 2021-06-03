@@ -6,7 +6,7 @@ class ContextMenuItem {
       required this.title,
       this.trailingIcon,
       required this.onPressed});
-      
+
   Color? backgroundColor;
   Widget title;
   Icon? trailingIcon;
