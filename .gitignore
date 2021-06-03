@@ -135,3 +135,4 @@ update_g_cmd.txt
 update_translation.txt
 android/fastlane/report.xml
 ios/fastlane/report.xml
+preparePackage.txt
