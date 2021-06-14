@@ -1,31 +1,37 @@
 // @dart=2.9
 
+// Dart imports:
 import 'dart:async';
 
-import 'package:event_taxi/event_taxi.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:event_taxi/event_taxi.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/bus/events.dart';
 import 'package:uniris_mobile_wallet/dimens.dart';
+import 'package:uniris_mobile_wallet/localization.dart';
+import 'package:uniris_mobile_wallet/model/authentication_method.dart';
 import 'package:uniris_mobile_wallet/model/db/appdb.dart';
 import 'package:uniris_mobile_wallet/model/db/contact.dart';
+import 'package:uniris_mobile_wallet/model/vault.dart';
 import 'package:uniris_mobile_wallet/service/app_service.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
+import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/ui/transfer/send_complete_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/util/routes.dart';
+import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/dialog.dart';
-import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
+import 'package:uniris_mobile_wallet/ui/widgets/security.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
-import 'package:uniris_mobile_wallet/util/numberutil.dart';
-import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
 import 'package:uniris_mobile_wallet/util/biometrics.dart';
 import 'package:uniris_mobile_wallet/util/hapticutil.dart';
-import 'package:uniris_mobile_wallet/model/authentication_method.dart';
-import 'package:uniris_mobile_wallet/model/vault.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/security.dart';
+import 'package:uniris_mobile_wallet/util/numberutil.dart';
+import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
 
 class SendConfirmSheet extends StatefulWidget {
   const SendConfirmSheet(

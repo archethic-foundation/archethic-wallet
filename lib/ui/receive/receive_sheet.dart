@@ -1,15 +1,20 @@
 // @dart=2.9
 
+// Dart imports:
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:uniris_mobile_wallet/localization.dart';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/rendering.dart';
-import 'package:uniris_mobile_wallet/dimens.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
+import 'package:flutter/services.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/appstate_container.dart';
+import 'package:uniris_mobile_wallet/dimens.dart';
+import 'package:uniris_mobile_wallet/localization.dart';
+import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
+import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
 
 class ReceiveSheet extends StatefulWidget {
   const ReceiveSheet({this.qrWidget}) : super();

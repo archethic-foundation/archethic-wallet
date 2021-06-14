@@ -1,6 +1,9 @@
 // @dart=2.9
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:local_auth/local_auth.dart';
 
 class BiometricUtil {

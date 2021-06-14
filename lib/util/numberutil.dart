@@ -1,8 +1,11 @@
 // @dart=2.9
 
+// Dart imports:
 import 'dart:math';
-import 'package:intl/intl.dart';
+
+// Package imports:
 import 'package:decimal/decimal.dart';
+import 'package:intl/intl.dart';
 
 class NumberUtil {
   static const int maxDecimalDigits = 6; // Max digits after decimal

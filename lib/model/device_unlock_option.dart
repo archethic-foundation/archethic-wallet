@@ -1,6 +1,9 @@
 // @dart=2.9
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/model/setting_item.dart';
 

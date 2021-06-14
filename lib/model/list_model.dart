@@ -1,6 +1,9 @@
 // @dart=2.9
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:meta/meta.dart';
 
 /// Keeps a Dart List in sync with an AnimatedList.

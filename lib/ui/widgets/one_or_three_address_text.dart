@@ -1,6 +1,9 @@
 // @dart=2.9
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/styles.dart';
 
 enum AddressTextType { PRIMARY60, PRIMARY, SUCCESS }

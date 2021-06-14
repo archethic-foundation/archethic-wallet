@@ -1,24 +1,30 @@
 // @dart=2.9
 
+// Dart imports:
 import 'dart:async';
 import 'dart:io';
 
-import 'package:event_taxi/event_taxi.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
+
+// Package imports:
+import 'package:event_taxi/event_taxi.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:uniris_mobile_wallet/service_locator.dart';
-import 'package:uniris_mobile_wallet/dimens.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/app_icons.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/bus/events.dart';
+import 'package:uniris_mobile_wallet/dimens.dart';
+import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/model/db/appdb.dart';
 import 'package:uniris_mobile_wallet/model/db/contact.dart';
+import 'package:uniris_mobile_wallet/service_locator.dart';
+import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/ui/contacts/add_contact.dart';
 import 'package:uniris_mobile_wallet/ui/contacts/contact_details.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
+import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
 
 class ContactsList extends StatefulWidget {
   ContactsList(this.contactsController, this.contactsOpen);

@@ -1,20 +1,26 @@
 // @dart=2.9
 
+// Dart imports:
 import 'dart:async';
-import 'package:auto_size_text/auto_size_text.dart';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:uniris_mobile_wallet/appstate_container.dart';
+
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 
-import 'package:uniris_mobile_wallet/dimens.dart';
+// Project imports:
 import 'package:uniris_mobile_wallet/app_icons.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/service_locator.dart';
+import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/bus/events.dart';
-import 'package:uniris_mobile_wallet/model/db/contact.dart';
+import 'package:uniris_mobile_wallet/dimens.dart';
+import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/model/db/appdb.dart';
+import 'package:uniris_mobile_wallet/model/db/contact.dart';
+import 'package:uniris_mobile_wallet/service_locator.dart';
+import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/ui/transfer/transfer_uco_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';

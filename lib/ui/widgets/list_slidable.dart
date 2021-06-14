@@ -1,10 +1,13 @@
 // @dart=2.9
 
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+// Project imports:
 import 'package:uniris_mobile_wallet/service_locator.dart';
 import 'package:uniris_mobile_wallet/util/hapticutil.dart';
 

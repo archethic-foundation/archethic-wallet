@@ -1,3 +1,4 @@
+// Package imports:
 import 'package:fl_chart/fl_chart.dart';
 
 class ChartInfos {

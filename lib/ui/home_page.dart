@@ -1,32 +1,39 @@
 // @dart=2.9
 
+// Dart imports:
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:flip_card/flip_card.dart';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:event_taxi/event_taxi.dart';
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:uniris_mobile_wallet/ui/util/particles/particles_flutter.dart';
+import 'package:package_info/package_info.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/appstate_container.dart';
+import 'package:uniris_mobile_wallet/bus/events.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
 import 'package:uniris_mobile_wallet/ui/receive/receive_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/settings/settings_drawer.dart';
+import 'package:uniris_mobile_wallet/ui/util/particles/particles_flutter.dart';
+import 'package:uniris_mobile_wallet/ui/util/routes.dart';
+import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/balance.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/line_chart.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/nft_list.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/qr_code.dart';
-import 'package:uniris_mobile_wallet/ui/util/routes.dart';
-import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/reactive_refresh.dart';
+import 'package:uniris_mobile_wallet/util/caseconverter.dart';
 import 'package:uniris_mobile_wallet/util/hapticutil.dart';
 import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
-import 'package:uniris_mobile_wallet/util/caseconverter.dart';
-import 'package:package_info/package_info.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:uniris_mobile_wallet/bus/events.dart';
 
 class AppHomePage extends StatefulWidget {
   const AppHomePage() : super();

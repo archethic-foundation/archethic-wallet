@@ -1,11 +1,16 @@
 // @dart=2.9
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:uniris_lib_dart/address_util.dart';
-import 'package:uniris_mobile_wallet/model/db/appdb.dart';
-import 'package:uniris_mobile_wallet/model/db/account.dart' as Account;
+
+// Project imports:
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
+import 'package:uniris_mobile_wallet/model/db/account.dart' as Account;
+import 'package:uniris_mobile_wallet/model/db/appdb.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
 
 class AppUtil {

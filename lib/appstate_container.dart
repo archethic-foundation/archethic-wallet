@@ -1,34 +1,40 @@
 // @dart=2.9
 
+// Dart imports:
 import 'dart:async';
+
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:event_taxi/event_taxi.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:uniris_lib_dart/model/response/coins_current_data_response.dart';
 import 'package:uniris_lib_dart/model/response/coins_price_response.dart';
 import 'package:uniris_lib_dart/model/response/simple_price_response.dart';
 import 'package:uniris_lib_dart/services/api_coins_service.dart';
 import 'package:uniris_lib_dart/utils.dart';
-import 'package:uniris_mobile_wallet/model/balance.dart';
-import 'package:uniris_mobile_wallet/model/chart_infos.dart';
-import 'package:uniris_mobile_wallet/model/db/contact.dart';
-import 'package:uniris_mobile_wallet/model/wallet.dart';
-import 'package:event_taxi/event_taxi.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:uniris_mobile_wallet/network/model/response/address_txs_response.dart';
-import 'package:uniris_mobile_wallet/service/app_service.dart';
-import 'package:uniris_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
-import 'package:uniris_mobile_wallet/themes.dart';
-import 'package:uniris_mobile_wallet/service_locator.dart';
+
+// Project imports:
+import 'package:uniris_mobile_wallet/bus/events.dart';
+import 'package:uniris_mobile_wallet/model/address.dart';
 import 'package:uniris_mobile_wallet/model/available_currency.dart';
 import 'package:uniris_mobile_wallet/model/available_language.dart';
-import 'package:uniris_mobile_wallet/model/address.dart';
-import 'package:uniris_mobile_wallet/model/vault.dart';
-import 'package:uniris_mobile_wallet/model/db/appdb.dart';
+import 'package:uniris_mobile_wallet/model/balance.dart';
+import 'package:uniris_mobile_wallet/model/chart_infos.dart';
 import 'package:uniris_mobile_wallet/model/db/account.dart';
-import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:uniris_mobile_wallet/model/db/appdb.dart';
+import 'package:uniris_mobile_wallet/model/db/contact.dart';
+import 'package:uniris_mobile_wallet/model/vault.dart';
+import 'package:uniris_mobile_wallet/model/wallet.dart';
+import 'package:uniris_mobile_wallet/network/model/response/address_txs_response.dart';
+import 'package:uniris_mobile_wallet/service/app_service.dart';
+import 'package:uniris_mobile_wallet/service_locator.dart';
+import 'package:uniris_mobile_wallet/themes.dart';
 import 'package:uniris_mobile_wallet/util/app_ffi/apputil.dart';
-import 'package:uniris_mobile_wallet/bus/events.dart';
-
+import 'package:uniris_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
+import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
 import 'util/sharedprefsutil.dart';
 
 class _InheritedStateContainer extends InheritedWidget {

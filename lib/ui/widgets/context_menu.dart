@@ -1,7 +1,12 @@
 library focused_menu;
 
+// Dart imports:
 import 'dart:ui';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/service_locator.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/context_menu_item.dart';
 import 'package:uniris_mobile_wallet/util/hapticutil.dart';

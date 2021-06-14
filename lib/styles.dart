@@ -1,6 +1,10 @@
+// Dart imports:
 import 'dart:ui' as ui;
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 
 class AppStyles {

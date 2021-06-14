@@ -1,12 +1,17 @@
 // @dart=2.9
 
-import 'package:auto_size_text/auto_size_text.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_svg/svg.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/dimens.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
+import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/ui/util/particles/particles_flutter.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
 

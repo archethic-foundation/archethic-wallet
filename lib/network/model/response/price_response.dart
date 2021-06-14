@@ -1,5 +1,6 @@
 // @dart=2.9
 
+// Package imports:
 import 'package:json_annotation/json_annotation.dart';
 
 part 'price_response.g.dart';

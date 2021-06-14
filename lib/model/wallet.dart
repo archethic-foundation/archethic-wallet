@@ -1,7 +1,10 @@
 // @dart=2.9
 
+// Package imports:
 import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/model/available_currency.dart';
 import 'package:uniris_mobile_wallet/model/balance.dart';
 import 'package:uniris_mobile_wallet/network/model/response/address_txs_response.dart';

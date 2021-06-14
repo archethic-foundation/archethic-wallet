@@ -1,29 +1,33 @@
+// Dart imports:
 import 'dart:math';
 
-import 'package:auto_size_text/auto_size_text.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:decimal/decimal.dart';
 import 'package:uniris_lib_dart/transaction_builder.dart';
 import 'package:uniris_lib_dart/utils.dart';
 
+// Project imports:
+import 'package:uniris_mobile_wallet/app_icons.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/dimens.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
+import 'package:uniris_mobile_wallet/model/address.dart';
+import 'package:uniris_mobile_wallet/model/db/appdb.dart';
+import 'package:uniris_mobile_wallet/model/db/contact.dart';
 import 'package:uniris_mobile_wallet/service/app_service.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
-import 'package:uniris_mobile_wallet/app_icons.dart';
-import 'package:uniris_mobile_wallet/model/address.dart';
-import 'package:uniris_mobile_wallet/model/db/contact.dart';
-import 'package:uniris_mobile_wallet/model/db/appdb.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/ui/transfer/nft_transfer_list.dart';
 import 'package:uniris_mobile_wallet/ui/transfer/transfer_confirm_sheet.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/app_text_field.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:uniris_mobile_wallet/ui/util/formatters.dart';
 import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
+import 'package:uniris_mobile_wallet/ui/widgets/app_text_field.dart';
+import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
 import 'package:uniris_mobile_wallet/util/numberutil.dart';
 import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';

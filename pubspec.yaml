@@ -117,6 +117,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: 1.11.1
   json_serializable: ^3.5.1
+  import_sorter: ^4.6.0
   intl_translation:
     git: 
       url: https://github.com/reddwarf03/intl_translation.git

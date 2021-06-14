@@ -1,8 +1,13 @@
 // @dart=2.9
 
-import 'package:intl/intl.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:intl/intl.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/util/numberutil.dart';
 
 /// Input formatter for Crpto/Fiat amounts

@@ -1,12 +1,19 @@
 // @dart=2.9
 
+// Dart imports:
 import 'dart:async';
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:event_taxi/event_taxi.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/bus/events.dart';
+import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/ui/util/exceptions.dart';
 
 enum ThreeLineAddressTextType { PRIMARY60, PRIMARY, SUCCESS, SUCCESS_FULL }

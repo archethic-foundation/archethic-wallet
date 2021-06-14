@@ -1,23 +1,28 @@
 // @dart=2.9
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:uniris_lib_dart/utils.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/app_icons.dart';
-import 'package:uniris_mobile_wallet/service_locator.dart';
+import 'package:uniris_mobile_wallet/appstate_container.dart';
+import 'package:uniris_mobile_wallet/dimens.dart';
+import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/model/vault.dart';
+import 'package:uniris_mobile_wallet/service_locator.dart';
 import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/ui/util/particles/particles_flutter.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/app_text_field.dart';
+import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
-import 'package:uniris_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
 import 'package:uniris_mobile_wallet/util/app_ffi/apputil.dart';
+import 'package:uniris_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
 import 'package:uniris_mobile_wallet/util/caseconverter.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/dimens.dart';
 import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
 
 class AppPasswordLockScreen extends StatefulWidget {

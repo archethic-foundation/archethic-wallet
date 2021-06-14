@@ -1,15 +1,20 @@
 // @dart=2.9
 
+// Dart imports:
 import 'dart:math';
 
-import 'package:auto_size_text/auto_size_text.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
+
+// Project imports:
+import 'package:uniris_mobile_wallet/app_icons.dart';
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/app_icons.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/service_locator.dart';
+import 'package:uniris_mobile_wallet/styles.dart';
 import 'package:uniris_mobile_wallet/util/hapticutil.dart';
 import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
 

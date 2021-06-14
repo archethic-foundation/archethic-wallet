@@ -1,10 +1,14 @@
 // @dart=2.9
 
+// Dart imports:
 import 'dart:async';
 import 'dart:ui';
 
+// Package imports:
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/model/authentication_method.dart';
 import 'package:uniris_mobile_wallet/model/available_currency.dart';
 import 'package:uniris_mobile_wallet/model/available_language.dart';

@@ -1,7 +1,9 @@
 // @dart=2.9
 
+// Dart imports:
 import 'dart:typed_data';
 
+// Package imports:
 import 'package:pointycastle/pointycastle.dart';
 
 class Sha {

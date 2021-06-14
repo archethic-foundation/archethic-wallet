@@ -1,17 +1,23 @@
 // @dart=2.9
 
+// Dart imports:
 import 'dart:async';
 import 'dart:io';
-import 'package:barcode_scan2/barcode_scan2.dart';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:barcode_scan2/barcode_scan2.dart';
+import 'package:quiver/strings.dart';
+import 'package:validators/validators.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/localization.dart';
 import 'package:uniris_mobile_wallet/model/address.dart';
 import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 import 'package:uniris_mobile_wallet/util/app_ffi/keys/seeds.dart';
-
-import 'package:quiver/strings.dart';
-import 'package:validators/validators.dart';
 
 enum DataType { RAW, URL, ADDRESS, SEED }
 

@@ -1,36 +1,41 @@
 // @dart=2.9
 
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
+import 'package:package_info/package_info.dart';
+
+// Project imports:
+import 'package:uniris_mobile_wallet/app_icons.dart';
+import 'package:uniris_mobile_wallet/appstate_container.dart';
+import 'package:uniris_mobile_wallet/localization.dart';
+import 'package:uniris_mobile_wallet/model/authentication_method.dart';
+import 'package:uniris_mobile_wallet/model/available_currency.dart';
+import 'package:uniris_mobile_wallet/model/available_language.dart';
+import 'package:uniris_mobile_wallet/model/device_lock_timeout.dart';
+import 'package:uniris_mobile_wallet/model/device_unlock_option.dart';
+import 'package:uniris_mobile_wallet/model/vault.dart';
+import 'package:uniris_mobile_wallet/service_locator.dart';
+import 'package:uniris_mobile_wallet/styles.dart';
+import 'package:uniris_mobile_wallet/ui/settings/contacts_widget.dart';
 import 'package:uniris_mobile_wallet/ui/settings/custom_url_widget.dart';
 import 'package:uniris_mobile_wallet/ui/settings/disable_password_sheet.dart';
 import 'package:uniris_mobile_wallet/ui/settings/set_password_sheet.dart';
+import 'package:uniris_mobile_wallet/ui/settings/settings_list_item.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/app_simpledialog.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/dialog.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
-import 'package:package_info/package_info.dart';
-import 'package:flutter/material.dart';
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/app_icons.dart';
-import 'package:uniris_mobile_wallet/service_locator.dart';
-import 'package:uniris_mobile_wallet/model/authentication_method.dart';
-import 'package:uniris_mobile_wallet/model/available_currency.dart';
-import 'package:uniris_mobile_wallet/model/device_unlock_option.dart';
-import 'package:uniris_mobile_wallet/model/device_lock_timeout.dart';
-import 'package:uniris_mobile_wallet/model/available_language.dart';
-import 'package:uniris_mobile_wallet/model/vault.dart';
-import 'package:uniris_mobile_wallet/ui/settings/settings_list_item.dart';
-import 'package:uniris_mobile_wallet/ui/settings/contacts_widget.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/security.dart';
+import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
+import 'package:uniris_mobile_wallet/util/biometrics.dart';
 import 'package:uniris_mobile_wallet/util/caseconverter.dart';
 import 'package:uniris_mobile_wallet/util/hapticutil.dart';
 import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
-import 'package:uniris_mobile_wallet/util/biometrics.dart';
-
 import '../../appstate_container.dart';
 import '../../util/sharedprefsutil.dart';
 

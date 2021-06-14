@@ -1,10 +1,15 @@
 // @dart=2.9
 
-import 'package:auto_size_text/auto_size_text.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:get_it/get_it.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:uniris_lib_dart/utils.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/appstate_container.dart';
 import 'package:uniris_mobile_wallet/dimens.dart';
 import 'package:uniris_mobile_wallet/localization.dart';
@@ -15,9 +20,9 @@ import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/app_text_field.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:uniris_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
-import 'package:uniris_mobile_wallet/util/caseconverter.dart';
 import 'package:uniris_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
 import 'package:uniris_mobile_wallet/util/app_ffi/keys/seeds.dart';
+import 'package:uniris_mobile_wallet/util/caseconverter.dart';
 
 class DisablePasswordSheet extends StatefulWidget {
   @override

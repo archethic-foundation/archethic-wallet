@@ -1,8 +1,12 @@
 // @dart=2.9
 
+// Dart imports:
 import 'dart:ui';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/model/setting_item.dart';
 
 enum AvailableCurrencyEnum {

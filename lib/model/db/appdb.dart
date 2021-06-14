@@ -1,10 +1,15 @@
 // @dart=2.9
 
+// Dart imports:
 import 'dart:async';
 import 'dart:io' as io;
+
+// Package imports:
 import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
+
+// Project imports:
 import 'package:uniris_mobile_wallet/model/db/account.dart';
 import 'package:uniris_mobile_wallet/model/db/contact.dart';
 import 'package:uniris_mobile_wallet/util/app_ffi/apputil.dart';

@@ -4,10 +4,12 @@
 
 // @dart=2.9
 
+// Dart imports:
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 
+// Package imports:
 import 'package:asn1lib/asn1lib.dart' as asn1lib;
 import 'package:pointycastle/pointycastle.dart';
 import 'package:pointycastle/signers/ecdsa_signer.dart';
