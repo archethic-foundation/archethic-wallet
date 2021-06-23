@@ -10,10 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/l10n/messages_all.dart';
-import 'package:uniris_mobile_wallet/model/available_language.dart';
-import 'package:uniris_mobile_wallet/service_locator.dart';
-import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:archethic_mobile_wallet/l10n/messages_all.dart';
+import 'package:archethic_mobile_wallet/model/available_language.dart';
+import 'package:archethic_mobile_wallet/service_locator.dart';
+import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 /// Localization
 class AppLocalization {
@@ -37,7 +37,7 @@ class AppLocalization {
 
   String get welcomeText {
     return Intl.message(
-        'Welcome to Uniris Wallet.\n\nTo begin, you may connect to your decentralized wallet with your password.',
+        'Welcome to ArchEthic Wallet.\n\nTo begin, you may connect to your decentralized wallet with your password.',
         desc: '',
         name: 'welcomeText');
   }
@@ -385,7 +385,7 @@ class AppLocalization {
 
   String get logoutDetail {
     return Intl.message(
-        'Logging out will remove all Uniris Wallet-related data from this device. If your password is not backed up, you will never be able to access your wallet again',
+        'Logging out will remove all ArchEthic Wallet-related data from this device. If your password is not backed up, you will never be able to access your wallet again',
         desc: 'settings_logout_alert_message',
         name: 'logoutDetail');
   }
@@ -703,7 +703,7 @@ class AppLocalization {
   }
 
   String get requireAPasswordToOpenHeader {
-    return Intl.message('Require a password to open Uniris Wallet ?',
+    return Intl.message('Require a password to open ArchEthic Wallet ?',
         desc: '', name: 'requireAPasswordToOpenHeader');
   }
 

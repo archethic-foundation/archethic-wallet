@@ -1,9 +1,9 @@
-name: uniris_mobile_wallet
-description: Uniris Wallet app (iOS/Android).
+name: archethic_mobile_wallet
+description: ArchEthic Wallet app (iOS/Android).
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.0.10+10
+version: 0.0.11+11
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -103,10 +103,7 @@ dependencies:
       url: https://github.com/redDwarf03/keyboard_avoider.git
       ref: master
 
-  uniris_lib_dart:
-    git:
-      url: https://github.com/redDwarf03/uniris_lib_dart.git
-      ref: master
+  archethic_lib_dart: ^0.0.6+6
     
   fluttericon: ^2.0.0
 

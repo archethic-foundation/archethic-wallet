@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/model/address.dart';
-import 'package:uniris_mobile_wallet/model/balance.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/ui/transfer/transfer_nft_sheet.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/localization.dart';
+import 'package:archethic_mobile_wallet/model/address.dart';
+import 'package:archethic_mobile_wallet/model/balance.dart';
+import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/transfer/transfer_nft_sheet.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 
 class NftListWidget {
   static Widget buildNftList(BuildContext context) {

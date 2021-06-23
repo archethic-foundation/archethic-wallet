@@ -4,10 +4,10 @@
 import 'dart:typed_data';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/util/app_ffi/crypto/sha.dart';
-import 'package:uniris_mobile_wallet/util/app_ffi/encrypt/kdf/kdf.dart';
-import 'package:uniris_mobile_wallet/util/app_ffi/encrypt/model/keyiv.dart';
-import 'package:uniris_mobile_wallet/util/helpers.dart';
+import 'package:archethic_mobile_wallet/util/app_ffi/crypto/sha.dart';
+import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/kdf/kdf.dart';
+import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/model/keyiv.dart';
+import 'package:archethic_mobile_wallet/util/helpers.dart';
 
 /// Sha256 Key Derivation Function
 /// It's not very anti-brute forceable, but it's fast which is an important feature

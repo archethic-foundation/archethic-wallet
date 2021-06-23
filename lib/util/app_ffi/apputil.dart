@@ -4,14 +4,14 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:uniris_lib_dart/address_util.dart';
+import 'package:archethic_lib_dart/address_util.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/model/db/account.dart' as Account;
-import 'package:uniris_mobile_wallet/model/db/appdb.dart';
-import 'package:uniris_mobile_wallet/service_locator.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/localization.dart';
+import 'package:archethic_mobile_wallet/model/db/account.dart' as Account;
+import 'package:archethic_mobile_wallet/model/db/appdb.dart';
+import 'package:archethic_mobile_wallet/service_locator.dart';
 
 class AppUtil {
   String seedToAddress(String seed, int index) {

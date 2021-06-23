@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
 
 /// TextField button
 class TextFieldButton extends StatelessWidget {

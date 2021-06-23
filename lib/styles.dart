@@ -5,7 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
 
 class AppStyles {
   // Text style for paragraph text.

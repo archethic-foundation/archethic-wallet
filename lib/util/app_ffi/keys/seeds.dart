@@ -4,7 +4,7 @@
 import 'dart:math';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/util/helpers.dart';
+import 'package:archethic_mobile_wallet/util/helpers.dart';
 
 class AppSeeds {
   // Returns true if a seed is valid, false otherwise

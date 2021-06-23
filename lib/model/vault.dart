@@ -8,16 +8,16 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/service_locator.dart';
-import 'package:uniris_mobile_wallet/util/encrypt.dart';
-import 'package:uniris_mobile_wallet/util/random_util.dart';
-import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:archethic_mobile_wallet/service_locator.dart';
+import 'package:archethic_mobile_wallet/util/encrypt.dart';
+import 'package:archethic_mobile_wallet/util/random_util.dart';
+import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 // Singleton for keystore access methods in android/iOS
 class Vault {
-  static const String seedKey = 'funiris_seed';
-  static const String encryptionKey = 'funiris_secret_phrase';
-  static const String pinKey = 'funiris_pin';
+  static const String seedKey = 'farchethic_seed';
+  static const String encryptionKey = 'farchethic_secret_phrase';
+  static const String pinKey = 'farchethic_pin';
   static const String sessionKey = 'fencsess_key';
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 

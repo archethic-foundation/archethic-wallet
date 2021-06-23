@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 // Package imports:
-import 'package:uniris_lib_dart/utils.dart';
+import 'package:archethic_lib_dart/utils.dart';
 
 class AppHelpers {
   static List<String> hexArray = '0123456789ABCDEF'.split('');

@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flare_flutter/flare_actor.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/app_simpledialog.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/localization.dart';
+import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/app_simpledialog.dart';
 
 class AppDialogs {
   static void showConfirmDialog(BuildContext context, String title,

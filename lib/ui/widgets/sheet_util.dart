@@ -7,8 +7,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/ui/util/routes.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/ui/util/routes.dart';
 
 class Sheets {
   //App Ninty Height Sheet

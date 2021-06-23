@@ -5,10 +5,10 @@ import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/model/available_currency.dart';
-import 'package:uniris_mobile_wallet/model/balance.dart';
-import 'package:uniris_mobile_wallet/network/model/response/address_txs_response.dart';
-import 'package:uniris_mobile_wallet/util/numberutil.dart';
+import 'package:archethic_mobile_wallet/model/available_currency.dart';
+import 'package:archethic_mobile_wallet/model/balance.dart';
+import 'package:archethic_mobile_wallet/network/model/response/address_txs_response.dart';
+import 'package:archethic_mobile_wallet/util/numberutil.dart';
 
 /// Main wallet object that's passed around the app via state
 class AppWallet {

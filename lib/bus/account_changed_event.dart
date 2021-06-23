@@ -2,7 +2,7 @@
 import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/model/db/account.dart';
+import 'package:archethic_mobile_wallet/model/db/account.dart';
 
 class AccountChangedEvent implements Event {
   AccountChangedEvent(

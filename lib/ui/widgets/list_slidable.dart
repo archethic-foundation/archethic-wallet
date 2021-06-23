@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/service_locator.dart';
-import 'package:uniris_mobile_wallet/util/hapticutil.dart';
+import 'package:archethic_mobile_wallet/service_locator.dart';
+import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 
 const double _kActionsExtentRatio = 0.25;
 const double _kFastThreshold = 2500.0;

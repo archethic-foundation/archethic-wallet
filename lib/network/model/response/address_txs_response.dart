@@ -5,9 +5,9 @@
 // @dart=2.9
 
 // Project imports:
-import 'package:uniris_mobile_wallet/model/address.dart';
-import 'package:uniris_mobile_wallet/network/model/block_types.dart';
-import 'package:uniris_mobile_wallet/util/numberutil.dart';
+import 'package:archethic_mobile_wallet/model/address.dart';
+import 'package:archethic_mobile_wallet/network/model/block_types.dart';
+import 'package:archethic_mobile_wallet/util/numberutil.dart';
 
 class AddressTxsResponse {
   AddressTxsResponse({this.result});

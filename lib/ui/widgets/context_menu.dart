@@ -7,9 +7,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/service_locator.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/context_menu_item.dart';
-import 'package:uniris_mobile_wallet/util/hapticutil.dart';
+import 'package:archethic_mobile_wallet/service_locator.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/context_menu_item.dart';
+import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 
 class ContextMenu extends StatefulWidget {
   const ContextMenu(

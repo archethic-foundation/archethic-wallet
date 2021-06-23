@@ -11,10 +11,10 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:oktoast/oktoast.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/bus/events.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/ui/util/exceptions.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/bus/events.dart';
+import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/util/exceptions.dart';
 
 enum ThreeLineAddressTextType { PRIMARY60, PRIMARY, SUCCESS, SUCCESS_FULL }
 enum OneLineAddressTextType { PRIMARY60, PRIMARY, SUCCESS }

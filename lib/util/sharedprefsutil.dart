@@ -9,14 +9,14 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/model/authentication_method.dart';
-import 'package:uniris_mobile_wallet/model/available_currency.dart';
-import 'package:uniris_mobile_wallet/model/available_language.dart';
-import 'package:uniris_mobile_wallet/model/device_lock_timeout.dart';
-import 'package:uniris_mobile_wallet/model/vault.dart';
-import 'package:uniris_mobile_wallet/service_locator.dart';
-import 'package:uniris_mobile_wallet/util/encrypt.dart';
-import 'package:uniris_mobile_wallet/util/random_util.dart';
+import 'package:archethic_mobile_wallet/model/authentication_method.dart';
+import 'package:archethic_mobile_wallet/model/available_currency.dart';
+import 'package:archethic_mobile_wallet/model/available_language.dart';
+import 'package:archethic_mobile_wallet/model/device_lock_timeout.dart';
+import 'package:archethic_mobile_wallet/model/vault.dart';
+import 'package:archethic_mobile_wallet/service_locator.dart';
+import 'package:archethic_mobile_wallet/util/encrypt.dart';
+import 'package:archethic_mobile_wallet/util/random_util.dart';
 
 /// Price conversion preference values
 enum PriceConversion { BTC, NONE, HIDDEN }
@@ -24,30 +24,30 @@ enum PriceConversion { BTC, NONE, HIDDEN }
 /// Singleton wrapper for shared preferences
 class SharedPrefsUtil {
   // Keys
-  static const String first_launch_key = 'funiris_first_launch';
-  static const String price_conversion = 'funiris_price_conversion_pref';
-  static const String auth_method = 'funiris_auth_method';
-  static const String cur_currency = 'funiris_currency_pref';
-  static const String cur_language = 'funiris_language_pref';
-  static const String cur_theme = 'funiris_theme_pref';
-  static const String firstcontact_added = 'funiris_first_c_added';
-  static const String lock = 'funiris_lock_dev';
-  static const String lock_timeout = 'funiris_lock_timeout';
+  static const String first_launch_key = 'farchethic_first_launch';
+  static const String price_conversion = 'farchethic_price_conversion_pref';
+  static const String auth_method = 'farchethic_auth_method';
+  static const String cur_currency = 'farchethic_currency_pref';
+  static const String cur_language = 'farchethic_language_pref';
+  static const String cur_theme = 'farchethic_theme_pref';
+  static const String firstcontact_added = 'farchethic_first_c_added';
+  static const String lock = 'farchethic_lock_dev';
+  static const String lock_timeout = 'farchethic_lock_timeout';
   static const String has_shown_root_warning =
-      'funiris_root_warn'; // If user has seen the root/jailbreak warning yet
+      'farchethic_root_warn'; // If user has seen the root/jailbreak warning yet
   // For maximum pin attempts
-  static const String pin_attempts = 'funiris_pin_attempts';
-  static const String pin_lock_until = 'funiris_lock_duraton';
+  static const String pin_attempts = 'farchethic_pin_attempts';
+  static const String pin_lock_until = 'farchethic_lock_duraton';
   // For certain keystore incompatible androids
-  static const String use_legacy_storage = 'funiris_legacy_storage';
+  static const String use_legacy_storage = 'farchethic_legacy_storage';
 
-  static const String version_app = 'funiris_version_app';
+  static const String version_app = 'farchethic_version_app';
 
-  static const String wallet_server = 'funiris_wallet_server';
-  static const String tokens_api = 'funiris_tokens_api';
-  static const String explorer_url = 'funiris_explorer_url';
+  static const String wallet_server = 'farchethic_wallet_server';
+  static const String tokens_api = 'farchethic_tokens_api';
+  static const String explorer_url = 'farchethic_explorer_url';
 
-  static const String endpoint = 'funiris_endpoint';
+  static const String endpoint = 'farchethic_endpoint';
 
   // For plain-text data
   Future<void> set(String key, value) async {

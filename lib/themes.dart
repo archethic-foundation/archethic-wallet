@@ -73,7 +73,7 @@ abstract class BaseTheme {
   AppIconEnum? appIcon;
 }
 
-class UnirisTheme implements BaseTheme {
+class ArchEthicTheme implements BaseTheme {
   static const Color orange = Color(0xFFfc9034);
 
   static const Color orangeDark = Color(0xFFf9852b);
@@ -204,10 +204,10 @@ class UnirisTheme implements BaseTheme {
   BoxShadow? boxShadowButton = const BoxShadow(color: Colors.transparent);
 
   @override
-  AppIconEnum? appIcon = AppIconEnum.UNIRIS;
+  AppIconEnum? appIcon = AppIconEnum.ARCHETHIC;
 }
 
-enum AppIconEnum { UNIRIS }
+enum AppIconEnum { ARCHETHIC }
 
 class AppIcon {
   static const MethodChannel _channel = MethodChannel('fappchannel');
@@ -217,7 +217,7 @@ class AppIcon {
       return null;
     }
     final Map<String, dynamic> params = <String, dynamic>{
-      'icon': 'uniris',
+      'icon': 'archethic',
     };
     return await _channel.invokeMethod('changeIcon', params);
   }

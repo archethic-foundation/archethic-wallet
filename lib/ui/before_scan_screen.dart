@@ -7,7 +7,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/app_icons.dart';
+import 'package:archethic_mobile_wallet/app_icons.dart';
 
 class BeforeScanScreen extends StatefulWidget {
   @override

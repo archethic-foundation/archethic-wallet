@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
 
 class ReleaseNote extends StatefulWidget {
   @override

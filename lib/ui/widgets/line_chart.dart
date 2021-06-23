@@ -6,8 +6,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:fluttericon/entypo_icons.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/styles.dart';
 
 class LineChartWidget {
   List<FlSpot> data = [];

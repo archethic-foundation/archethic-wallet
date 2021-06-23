@@ -12,21 +12,21 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/bus/events.dart';
-import 'package:uniris_mobile_wallet/dimens.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/model/db/account.dart';
-import 'package:uniris_mobile_wallet/model/db/appdb.dart';
-import 'package:uniris_mobile_wallet/service_locator.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/ui/accounts/accountdetails_sheet.dart';
-import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/dialog.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/sheets.dart';
-import 'package:uniris_mobile_wallet/util/caseconverter.dart';
-import 'package:uniris_mobile_wallet/util/numberutil.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/bus/events.dart';
+import 'package:archethic_mobile_wallet/dimens.dart';
+import 'package:archethic_mobile_wallet/localization.dart';
+import 'package:archethic_mobile_wallet/model/db/account.dart';
+import 'package:archethic_mobile_wallet/model/db/appdb.dart';
+import 'package:archethic_mobile_wallet/service_locator.dart';
+import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/accounts/accountdetails_sheet.dart';
+import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/sheets.dart';
+import 'package:archethic_mobile_wallet/util/caseconverter.dart';
+import 'package:archethic_mobile_wallet/util/numberutil.dart';
 
 class AppAccountsSheet {
   AppAccountsSheet(this.accounts);

@@ -8,12 +8,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/app_icons.dart';
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/ui/transfer/transfer_uco_sheet.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_mobile_wallet/app_icons.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/localization.dart';
+import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/transfer/transfer_uco_sheet.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 
 class BalanceDisplay {
   static Widget buildBalanceUCODisplay(

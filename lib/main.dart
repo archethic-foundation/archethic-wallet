@@ -15,29 +15,29 @@ import 'package:oktoast/oktoast.dart';
 import 'package:root_checker/root_checker.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/model/available_currency.dart';
-import 'package:uniris_mobile_wallet/model/available_language.dart';
-import 'package:uniris_mobile_wallet/model/vault.dart';
-import 'package:uniris_mobile_wallet/service_locator.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/ui/before_scan_screen.dart';
-import 'package:uniris_mobile_wallet/ui/home_page.dart';
-import 'package:uniris_mobile_wallet/ui/intro/intro_backup_confirm.dart';
-import 'package:uniris_mobile_wallet/ui/intro/intro_backup_safety.dart';
-import 'package:uniris_mobile_wallet/ui/intro/intro_enter_password.dart';
-import 'package:uniris_mobile_wallet/ui/intro/intro_password.dart';
-import 'package:uniris_mobile_wallet/ui/intro/intro_password_on_launch.dart';
-import 'package:uniris_mobile_wallet/ui/intro/intro_welcome.dart';
-import 'package:uniris_mobile_wallet/ui/lock_screen.dart';
-import 'package:uniris_mobile_wallet/ui/password_lock_screen.dart';
-import 'package:uniris_mobile_wallet/ui/util/routes.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/dialog.dart';
-import 'package:uniris_mobile_wallet/util/app_ffi/apputil.dart';
-import 'package:uniris_mobile_wallet/util/caseconverter.dart';
-import 'package:uniris_mobile_wallet/util/helpers.dart';
-import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/localization.dart';
+import 'package:archethic_mobile_wallet/model/available_currency.dart';
+import 'package:archethic_mobile_wallet/model/available_language.dart';
+import 'package:archethic_mobile_wallet/model/vault.dart';
+import 'package:archethic_mobile_wallet/service_locator.dart';
+import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/before_scan_screen.dart';
+import 'package:archethic_mobile_wallet/ui/home_page.dart';
+import 'package:archethic_mobile_wallet/ui/intro/intro_backup_confirm.dart';
+import 'package:archethic_mobile_wallet/ui/intro/intro_backup_safety.dart';
+import 'package:archethic_mobile_wallet/ui/intro/intro_enter_password.dart';
+import 'package:archethic_mobile_wallet/ui/intro/intro_password.dart';
+import 'package:archethic_mobile_wallet/ui/intro/intro_password_on_launch.dart';
+import 'package:archethic_mobile_wallet/ui/intro/intro_welcome.dart';
+import 'package:archethic_mobile_wallet/ui/lock_screen.dart';
+import 'package:archethic_mobile_wallet/ui/password_lock_screen.dart';
+import 'package:archethic_mobile_wallet/ui/util/routes.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
+import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
+import 'package:archethic_mobile_wallet/util/caseconverter.dart';
+import 'package:archethic_mobile_wallet/util/helpers.dart';
+import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -71,7 +71,7 @@ class _AppState extends State<App> {
       backgroundColor: StateContainer.of(context).curTheme.background,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Uniris Wallet',
+        title: 'ArchEthic Wallet',
         theme: ThemeData(
           dialogBackgroundColor:
               StateContainer.of(context).curTheme.backgroundDark,

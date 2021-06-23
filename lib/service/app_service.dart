@@ -4,15 +4,15 @@
 import 'dart:async';
 
 // Package imports:
+import 'package:archethic_lib_dart/api.dart';
+import 'package:archethic_lib_dart/transaction_builder.dart';
+import 'package:archethic_lib_dart/utils.dart';
 import 'package:event_taxi/event_taxi.dart';
-import 'package:uniris_lib_dart/api.dart';
-import 'package:uniris_lib_dart/transaction_builder.dart';
-import 'package:uniris_lib_dart/utils.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/bus/events.dart';
-import 'package:uniris_mobile_wallet/model/balance.dart';
-import 'package:uniris_mobile_wallet/network/model/response/address_txs_response.dart';
+import 'package:archethic_mobile_wallet/bus/events.dart';
+import 'package:archethic_mobile_wallet/model/balance.dart';
+import 'package:archethic_mobile_wallet/network/model/response/address_txs_response.dart';
 
 class AppService {
   double getFeesEstimation() {

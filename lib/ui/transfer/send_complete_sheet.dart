@@ -4,14 +4,14 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/app_icons.dart';
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/dimens.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:uniris_mobile_wallet/util/caseconverter.dart';
-import 'package:uniris_mobile_wallet/util/numberutil.dart';
+import 'package:archethic_mobile_wallet/app_icons.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/dimens.dart';
+import 'package:archethic_mobile_wallet/localization.dart';
+import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_mobile_wallet/util/caseconverter.dart';
+import 'package:archethic_mobile_wallet/util/numberutil.dart';
 
 class SendCompleteSheet extends StatefulWidget {
   const SendCompleteSheet(

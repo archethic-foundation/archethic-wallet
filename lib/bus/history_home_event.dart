@@ -2,7 +2,7 @@
 import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/network/model/response/address_txs_response.dart';
+import 'package:archethic_mobile_wallet/network/model/response/address_txs_response.dart';
 
 class HistoryHomeEvent implements Event {
   HistoryHomeEvent({this.items});

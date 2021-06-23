@@ -132,7 +132,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "logoutAreYouSure":
             MessageLookupByLibrary.simpleMessage("Are you sure?"),
         "logoutDetail": MessageLookupByLibrary.simpleMessage(
-            "Logging out will remove all Uniris Wallet-related data from this device. If your password is not backed up, you will never be able to access your wallet again"),
+            "Logging out will remove all ArchEthic Wallet-related data from this device. If your password is not backed up, you will never be able to access your wallet again"),
         "logoutReassurance": MessageLookupByLibrary.simpleMessage(
             "As long as you\'ve backed up your seed you have nothing to worry about."),
         "manage": MessageLookupByLibrary.simpleMessage("Manage"),
@@ -180,7 +180,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "removeContactConfirmation": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete %1?"),
         "requireAPasswordToOpenHeader": MessageLookupByLibrary.simpleMessage(
-            "Require a password to open Uniris Wallet ?"),
+            "Require a password to open ArchEthic Wallet ?"),
         "rootWarning": MessageLookupByLibrary.simpleMessage(
             "It appears your device is \"rooted\", \"jailbroken\", or modified in a way that compromises security. It is recommended that you reset your device to its original state before proceeding."),
         "scanQrCode": MessageLookupByLibrary.simpleMessage("Scan QR Code"),
@@ -229,7 +229,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "update": MessageLookupByLibrary.simpleMessage("Update"),
         "warning": MessageLookupByLibrary.simpleMessage("Warning"),
         "welcomeText": MessageLookupByLibrary.simpleMessage(
-            "Welcome to Uniris Wallet.\n\nTo begin, you may connect to your decentralized wallet with your password."),
+            "Welcome to ArchEthic Wallet.\n\nTo begin, you may connect to your decentralized wallet with your password."),
         "xMinute": MessageLookupByLibrary.simpleMessage("After %1 minute"),
         "xMinutes": MessageLookupByLibrary.simpleMessage("After %1 minutes"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes")

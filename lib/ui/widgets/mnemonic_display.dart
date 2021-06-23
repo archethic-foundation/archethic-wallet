@@ -11,9 +11,9 @@ import 'package:flutter/services.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/localization.dart';
+import 'package:archethic_mobile_wallet/styles.dart';
 
 /// A widget for displaying a mnemonic phrase
 class MnemonicDisplay extends StatefulWidget {

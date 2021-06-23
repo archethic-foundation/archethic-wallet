@@ -8,10 +8,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/model/setting_item.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/model/setting_item.dart';
+import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 
 class AppSettings {
   //Settings item with a dropdown option

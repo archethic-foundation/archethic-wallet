@@ -1,2 +1,2 @@
-# Uniris Wallet
+# ArchEthic Wallet
 

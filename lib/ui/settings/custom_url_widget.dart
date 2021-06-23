@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/app_icons.dart';
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/service_locator.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/app_text_field.dart';
-import 'package:uniris_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:archethic_mobile_wallet/app_icons.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/localization.dart';
+import 'package:archethic_mobile_wallet/service_locator.dart';
+import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/app_text_field.dart';
+import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 class CustomUrl extends StatefulWidget {
   CustomUrl(this.tokensListController, this.tokensListOpen);

@@ -14,10 +14,10 @@ import 'package:quiver/strings.dart';
 import 'package:validators/validators.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/model/address.dart';
-import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
-import 'package:uniris_mobile_wallet/util/app_ffi/keys/seeds.dart';
+import 'package:archethic_mobile_wallet/localization.dart';
+import 'package:archethic_mobile_wallet/model/address.dart';
+import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
+import 'package:archethic_mobile_wallet/util/app_ffi/keys/seeds.dart';
 
 enum DataType { RAW, URL, ADDRESS, SEED }
 

@@ -2,7 +2,7 @@
 import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/network/model/response/error_response.dart';
+import 'package:archethic_mobile_wallet/network/model/response/error_response.dart';
 
 class ErrorEvent implements Event {
   ErrorEvent({this.response});

@@ -1,6 +1,6 @@
 {
-  "@@last_modified": "2021-06-03T23:43:27.180914",
-  "welcomeText": "Welcome to Uniris Wallet.\n\nTo begin, you may connect to your decentralized wallet with your password.",
+  "@@last_modified": "2021-06-23T20:19:17.036874",
+  "welcomeText": "Welcome to ArchEthic Wallet.\n\nTo begin, you may connect to your decentralized wallet with your password.",
   "@welcomeText": {
     "description": "",
     "type": "text",
@@ -432,7 +432,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "logoutDetail": "Logging out will remove all Uniris Wallet-related data from this device. If your password is not backed up, you will never be able to access your wallet again",
+  "logoutDetail": "Logging out will remove all ArchEthic Wallet-related data from this device. If your password is not backed up, you will never be able to access your wallet again",
   "@logoutDetail": {
     "description": "settings_logout_alert_message",
     "type": "text",
@@ -780,7 +780,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "requireAPasswordToOpenHeader": "Require a password to open Uniris Wallet ?",
+  "requireAPasswordToOpenHeader": "Require a password to open ArchEthic Wallet ?",
   "@requireAPasswordToOpenHeader": {
     "description": "",
     "type": "text",

@@ -4,7 +4,7 @@
 import 'dart:typed_data';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/util/app_ffi/encrypt/model/keyiv.dart';
+import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/model/keyiv.dart';
 
 /// KDF (Key derivator function) base class
 abstract class KDF {

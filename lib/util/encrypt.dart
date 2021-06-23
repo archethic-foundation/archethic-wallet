@@ -4,12 +4,12 @@
 import 'dart:typed_data';
 
 // Package imports:
+import 'package:archethic_lib_dart/utils.dart';
 import 'package:pointycastle/api.dart' show ParametersWithIV, KeyParameter;
 import 'package:pointycastle/stream/salsa20.dart';
-import 'package:uniris_lib_dart/utils.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/util/helpers.dart';
+import 'package:archethic_mobile_wallet/util/helpers.dart';
 
 /*
  * Encryption using Salsa20 from pointycastle

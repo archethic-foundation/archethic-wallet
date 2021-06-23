@@ -1,4 +1,4 @@
-package io.reddwarf.uniris_mobile_wallet;
+package io.reddwarf.archethic_mobile_wallet;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -8,7 +8,7 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 import io.flutter.view.FlutterMain;
 
-public class MainActivityUnirisMobileWallet extends FlutterFragmentActivity {
+public class MainActivityArchEthicMobileWallet extends FlutterFragmentActivity {
     private static final String CHANNEL = "fappchannel";
 
     @Override

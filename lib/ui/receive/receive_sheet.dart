@@ -10,11 +10,11 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/dimens.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/dimens.dart';
+import 'package:archethic_mobile_wallet/localization.dart';
+import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
 
 class ReceiveSheet extends StatefulWidget {
   const ReceiveSheet({this.qrWidget}) : super();

@@ -140,7 +140,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "logoutAreYouSure":
             MessageLookupByLibrary.simpleMessage("Etes-vous sûr(e)s ?"),
         "logoutDetail": MessageLookupByLibrary.simpleMessage(
-            "La déconnexion va supprimer l\'ensemble des données relatives à votre wallet Uniris sur votre appareil. Si votre mot de passe n\'a pas été sauvegardé par vos soins, vous ne pourrez plus être en capacité d\'accéder à votre wallet à nouveau"),
+            "La déconnexion va supprimer l\'ensemble des données relatives à votre wallet ArchEthic sur votre appareil. Si votre mot de passe n\'a pas été sauvegardé par vos soins, vous ne pourrez plus être en capacité d\'accéder à votre wallet à nouveau"),
         "logoutReassurance": MessageLookupByLibrary.simpleMessage(
             "Tant que vous avez sauvegardé votre mot de passe, vous n\'avez aucune inquiétude à avoir."),
         "manage": MessageLookupByLibrary.simpleMessage("Gérer"),
@@ -189,7 +189,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "removeContactConfirmation": MessageLookupByLibrary.simpleMessage(
             "Etes vous sûr(e)s de vouloir supprimer %1?"),
         "requireAPasswordToOpenHeader": MessageLookupByLibrary.simpleMessage(
-            "Un mot de passe est-il requis pour ouvrir le wallet Uniris ?"),
+            "Un mot de passe est-il requis pour ouvrir le wallet ArchEthic ?"),
         "rootWarning": MessageLookupByLibrary.simpleMessage(
             "Il apparait que votre appareil est jailbreaké ou modifié. Ceci pourrait compromettre la sécurité de votre application. Il est recommandé de remettre à jour votre appareil dans son état initial avant de continuer."),
         "scanQrCode":
@@ -245,7 +245,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "update": MessageLookupByLibrary.simpleMessage("Mettre à jour"),
         "warning": MessageLookupByLibrary.simpleMessage("Attention"),
         "welcomeText": MessageLookupByLibrary.simpleMessage(
-            "Bienvenue sur le wallet Uniris.\n\nPour débuter, vous devez vous connecter à votre wallet décentralisé via votre mot de passe."),
+            "Bienvenue sur le wallet ArchEthic.\n\nPour débuter, vous devez vous connecter à votre wallet décentralisé via votre mot de passe."),
         "xMinute": MessageLookupByLibrary.simpleMessage("Après %1 minute"),
         "xMinutes": MessageLookupByLibrary.simpleMessage("Après %1 minutes"),
         "yes": MessageLookupByLibrary.simpleMessage("Oui")

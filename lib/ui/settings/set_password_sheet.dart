@@ -4,23 +4,23 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:archethic_lib_dart/utils.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:uniris_lib_dart/utils.dart';
 
 // Project imports:
-import 'package:uniris_mobile_wallet/appstate_container.dart';
-import 'package:uniris_mobile_wallet/dimens.dart';
-import 'package:uniris_mobile_wallet/localization.dart';
-import 'package:uniris_mobile_wallet/model/vault.dart';
-import 'package:uniris_mobile_wallet/service_locator.dart';
-import 'package:uniris_mobile_wallet/styles.dart';
-import 'package:uniris_mobile_wallet/ui/util/ui_util.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/app_text_field.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:uniris_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
-import 'package:uniris_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
-import 'package:uniris_mobile_wallet/util/app_ffi/keys/seeds.dart';
+import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/dimens.dart';
+import 'package:archethic_mobile_wallet/localization.dart';
+import 'package:archethic_mobile_wallet/model/vault.dart';
+import 'package:archethic_mobile_wallet/service_locator.dart';
+import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/app_text_field.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
+import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
+import 'package:archethic_mobile_wallet/util/app_ffi/keys/seeds.dart';
 
 class SetPasswordSheet extends StatefulWidget {
   @override
