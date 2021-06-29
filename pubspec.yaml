@@ -3,7 +3,7 @@ description: ArchEthic Wallet app (iOS/Android).
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.0.11+11
+version: 0.0.12+12
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -14,114 +14,116 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.3
-
-  # Securley store data in a keystore
+  # Flutter Secure Storage provides API to store data in secure storage. Keychain is used in iOS, KeyStore based solution is used in Android
   flutter_secure_storage: ^4.2.0
 
-  # Shared prefs
+  # Flutter plugin for reading and writing simple key-value pairs. Wraps NSUserDefaults on iOS and SharedPreferences on Android
   shared_preferences: ^2.0.6
 
-  # Flare for animations
-  flare_flutter: ^3.0.0
+  # Vector design and runtime animation for Flutter
+  flare_flutter: ^3.0.1
 
-  # Platform-specific build info
-  package_info: ^2.0.1
+  # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
+  package_info: ^2.0.2
 
-  # Device-specific info
-  device_info: ^2.0.1
+  # Flutter plugin providing detailed information about the device (make, model, etc.), and Android or iOS version the app is running on
+  device_info: ^2.0.2
 
-  # JSON Serialization
+  # Classes and helper functions that support JSON code generation via the `json_serializable` package
   json_annotation: ^3.1.1
 
   # Localization
   intl: ^0.17.0 
 
-  # BigDecimal alternative
-  decimal: ^1.1.0
+  # The decimal package allows you to deal with decimal numbers without losing precision
+  decimal: ^1.2.0
 
-  # SQLite
+  # Flutter plugin for SQLite, a self-contained, high-reliability, embedded, SQL database engine
   sqflite: ^2.0.0+3
 
-  # Android/iOS path provider
+  # Flutter plugin for getting commonly used locations on host platform file systems, such as the temp and app data directories
   path_provider: ^2.0.2
   
-  # TouchID/FaceID
-  local_auth: ^1.1.5
+  # Flutter plugin for Android and iOS devices to allow local authentication via fingerprint, touch ID, face ID, passcode, pin, or pattern
+  local_auth: ^1.1.6
  
-  # Eventbus
+  # EventTaxi could be used to send events through different layers of the application decoupled from the architecture
   event_taxi: ^1.0.0
 
-  # SVG
+  # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files
   flutter_svg: ^0.22.0
 
-  # QR Codes
+  # QR.Flutter is a Flutter library for simple and fast QR code rendering via a Widget or custom painter
   qr_flutter: ^4.0.0
 
-  # Generator
+  # A flutter plugin for scanning 2D barcodes and QRCodes via camera
   barcode_scan2: ^4.1.3
   
-  # HTTP client
+  # A composable, multi-platform, Future-based API for HTTP requests
   http: ^0.13.3
 
-  pointycastle: ^3.0.1
-  
-  # Vibrate
+  # A plugin for handling Vibration API on iOS, Android, and web
   vibration: ^1.7.4-nullsafety.0
   
-  # Toast
+  # A pure flutter toast library Support custom style/widget. Easy to use. You can use this library to achieve the same effect as Android toast
   oktoast: ^3.0.0
 
-  # Slidable list actions
+  # A Flutter implementation of slidable list item with directional slide actions that can be dismissed
   flutter_slidable: ^0.6.0
 
-  # Service provider
+  # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
   get_it: ^7.1.3
   
+  # Quiver is a set of utility libraries for Dart that makes using many Dart libraries easier and more convenient, or adds additional functionality
   quiver: ^3.0.1
 
-  convert: ^3.0.0
+  # Utilities for converting between data representations. Provides a number of Sink, Codec, Decoder, and Encoder types
+  convert: ^3.0.1
 
-  # Root/Jailbreak detection
+  # Plugin used for detecting root device in android and ios
   root_checker:
     git:
       url: https://github.com/redDwarf03/root_checker.git
       ref: master
 
-  # Validation utilities
+  # String validation and sanitization for Dart
   validators: ^3.0.0
 
-  # Auto resize text widget
+  # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0-nullsafety.0
 
+  # A component that provides flip card animation. It could be used for hide and show details of a product
   flip_card: ^0.5.0
 
-  # Avoid keyboard from overlapping text fields
+  # A lightweight alternative to the Scaffold widget for avoiding the on-screen software keyboard. Automatically scrolls obscured TextField child widgets into view on focus
   keyboard_avoider: 
     git:
       url: https://github.com/redDwarf03/keyboard_avoider.git
       ref: master
 
+  # ArchEthic dart library for Flutter based on Official ArchEthic Javascript library for Node and Browser
   archethic_lib_dart: ^0.0.6+6
     
+  # Flutter icons from popular web icon fonts. Customize your final icon package using fluttericon.com
   fluttericon: ^2.0.0
 
-  fl_chart: ^0.36.1
+  # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart
+  fl_chart: ^0.36.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # A build system for Dart code generation and modular compilation
   build_runner: 1.11.1
+  # Automatically generate code for converting to and from JSON by annotating Dart classes
   json_serializable: ^3.5.1
+  # Automatically organize your dart imports
   import_sorter: ^4.6.0
+  # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues
   intl_translation:
     git: 
       url: https://github.com/reddwarf03/intl_translation.git
       ref: master 
-
-# For information on the generic Dart part of this file, see the
-# following page: https://www.dartlang.org/tools/pub/pubspec
 
 flutter_icons:
   android: true
