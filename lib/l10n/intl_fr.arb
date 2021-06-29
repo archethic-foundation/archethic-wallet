@@ -816,5 +816,11 @@
     "description": "A button that goes to the previous screen.",
     "type": "text",
     "placeholders": {}
+  },
+  "addressInfos": "Informations addresse",
+  "@addressInfos": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
   }
 }

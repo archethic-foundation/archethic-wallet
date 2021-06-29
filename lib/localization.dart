@@ -733,6 +733,13 @@ class AppLocalization {
         name: 'goBackButton');
   }
 
+  String get addressInfos {
+    return Intl.message('Address informations',
+        desc: '',
+        name: 'addressInfos');
+  }
+
+
   Future<String> getAccountExplorerUrl(String account) async {
     final String explorerUrl = await sl.get<SharedPrefsUtil>().getExplorerUrl();
     return explorerUrl.replaceAll('%1', account);
