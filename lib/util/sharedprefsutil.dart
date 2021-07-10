@@ -48,6 +48,7 @@ class SharedPrefsUtil {
   static const String explorer_url = 'farchethic_explorer_url';
 
   static const String endpoint = 'farchethic_endpoint';
+  static const String pinPadShuffle = 'farchethic_pinPadShuffle';
 
   // For plain-text data
   Future<void> set(String key, value) async {
@@ -210,6 +211,14 @@ class SharedPrefsUtil {
     return await get(lock, defaultValue: false);
   }
 
+  Future<void> setPinPadShuffle(bool value) async {
+    return await set(pinPadShuffle, value);
+  }
+
+  Future<bool> getPinPadShuffle() async {
+    return await get(pinPadShuffle, defaultValue: false);
+  }
+
   Future<void> setLockTimeout(LockTimeoutSetting setting) async {
     return await set(lock_timeout, setting.getIndex());
   }
@@ -305,5 +314,6 @@ class SharedPrefsUtil {
     await prefs.remove(tokens_api);
     await prefs.remove(explorer_url);
     await prefs.remove(endpoint);
+    await prefs.remove(pinPadShuffle);
   }
 }

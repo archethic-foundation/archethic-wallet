@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:package_info/package_info.dart';
@@ -30,7 +31,7 @@ import 'package:archethic_mobile_wallet/ui/settings/set_password_sheet.dart';
 import 'package:archethic_mobile_wallet/ui/settings/settings_list_item.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/app_simpledialog.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/security.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 import 'package:archethic_mobile_wallet/util/biometrics.dart';
 import 'package:archethic_mobile_wallet/util/caseconverter.dart';
@@ -68,6 +69,8 @@ class _SettingsSheetState extends State<SettingsSheet>
 
   bool _customUrlOpen;
 
+  bool _pinPadShuffleActive;
+
   bool notNull(Object o) => o != null;
 
   @override
@@ -80,6 +83,11 @@ class _SettingsSheetState extends State<SettingsSheet>
     sl.get<BiometricUtil>().hasBiometrics().then((bool hasBiometrics) {
       setState(() {
         _hasBiometrics = hasBiometrics;
+      });
+    });
+    sl.get<SharedPrefsUtil>().getPinPadShuffle().then((bool pinPadShuffle) {
+      setState(() {
+        _pinPadShuffleActive = pinPadShuffle;
       });
     });
     // Get default auth method setting
@@ -602,41 +610,6 @@ class _SettingsSheetState extends State<SettingsSheet>
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,
                     ),
-                    AppSettings.buildSettingsListItemSingleLine(
-                        context,
-                        AppLocalization.of(context).backupSecretPhrase,
-                        AppIcons.backupseed, onPressed: () async {
-                      // Authenticate
-                      final AuthenticationMethod authMethod =
-                          await sl.get<SharedPrefsUtil>().getAuthMethod();
-                      final bool hasBiometrics =
-                          await sl.get<BiometricUtil>().hasBiometrics();
-                      if (authMethod.method == AuthMethod.BIOMETRICS &&
-                          hasBiometrics) {
-                        try {
-                          final bool authenticated = await sl
-                              .get<BiometricUtil>()
-                              .authenticateWithBiometrics(
-                                  context,
-                                  AppLocalization.of(context)
-                                      .fingerprintSeedBackup);
-                          if (authenticated) {
-                            sl.get<HapticUtil>().fingerprintSucess();
-                            StateContainer.of(context)
-                                .getSeed()
-                                .then((String seed) {});
-                          }
-                        } catch (e) {
-                          await authenticateWithPin();
-                        }
-                      } else {
-                        await authenticateWithPin();
-                      }
-                    }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
                     AppSettings.buildSettingsListItemSingleLineWithInfos(
                         context,
                         AppLocalization.of(context).customUrlHeader,
@@ -682,7 +655,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         StateContainer.of(context).curLanguage,
                         FontAwesome.language,
                         _languageDialog),
-                    /*Divider(
+                    Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,
                     ),
@@ -694,7 +667,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         _securityOpen = true;
                       });
                       _securityController.forward();
-                    }),*/
+                    }),
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,
@@ -888,11 +861,28 @@ class _SettingsSheetState extends State<SettingsSheet>
                       ])
                     else
                       const SizedBox(),
-                    // Authentication Timer
+
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,
                     ),
+                    AppSettings.buildSettingsListItemSwitch(
+                        context,
+                        AppLocalization.of(context).pinPadShuffle,
+                        Entypo.shuffle,
+                        _pinPadShuffleActive, onChanged: (_isSwitched) {
+                      setState(() {
+                        _pinPadShuffleActive = _isSwitched;
+                        _isSwitched
+                            ? sl.get<SharedPrefsUtil>().setPinPadShuffle(true)
+                            : sl.get<SharedPrefsUtil>().setPinPadShuffle(false);
+                      });
+                    }),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.text15,
+                    ),
+                    // Authentication Timer
                     AppSettings.buildSettingsListItemWithDefaultValue(
                       context,
                       AppLocalization.of(context).autoLockHeader,

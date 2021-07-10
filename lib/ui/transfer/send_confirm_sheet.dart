@@ -26,7 +26,7 @@ import 'package:archethic_mobile_wallet/ui/util/routes.dart';
 import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/security.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 import 'package:archethic_mobile_wallet/util/biometrics.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';

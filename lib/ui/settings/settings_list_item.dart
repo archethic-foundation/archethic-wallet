@@ -274,4 +274,60 @@ class AppSettings {
       ),
     );
   }
+
+  static Widget buildSettingsListItemSwitch(BuildContext context,
+      String heading, IconData settingIcon, bool _isSwitched,
+      {Function onChanged}) {
+    return TextButton(
+      onPressed: () {},
+      child: Container(
+        height: 30.0,
+        margin: EdgeInsetsDirectional.only(start: 10.0),
+        child: Row(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsetsDirectional.only(end: 13.0),
+              child: Container(
+                child: Icon(
+                  settingIcon,
+                  color: StateContainer.of(context).curTheme.icon,
+                  size: 24,
+                ),
+                margin: EdgeInsetsDirectional.only(
+                  top: 3,
+                  start: 3,
+                  bottom: 3,
+                  end: 3,
+                ),
+              ),
+            ),
+            Container(
+                width: UIUtil.drawerWidth(context) - 100,
+                child: Row(
+                  children: [
+                    Text(
+                      heading,
+                      style: AppStyles.textStyleSettingItemHeader(context),
+                    ),
+                    Switch(
+                        value: _isSwitched == null ? false : _isSwitched,
+                        onChanged: (value) {
+                          if (onChanged != null) {
+                            _isSwitched = value;
+                            onChanged(_isSwitched);
+                          } else {
+                            return;
+                          }
+                        },
+                        activeTrackColor: StateContainer.of(context)
+                            .curTheme
+                            .backgroundDarkest,
+                        activeColor: Colors.green),
+                  ],
+                )),
+          ],
+        ),
+      ),
+    );
+  }
 }

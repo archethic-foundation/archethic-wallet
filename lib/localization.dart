@@ -574,6 +574,10 @@ class AppLocalization {
         desc: 'Copied (to clipboard)', name: 'copied');
   }
 
+  String get pinPadShuffle {
+    return Intl.message('PIN Pad Shuffle', desc: '', name: 'pinPadShuffle');
+  }
+
   String get copy {
     return Intl.message('Copy', desc: 'Copy (to clipboard)', name: 'copy');
   }
@@ -734,11 +738,8 @@ class AppLocalization {
   }
 
   String get addressInfos {
-    return Intl.message('Address informations',
-        desc: '',
-        name: 'addressInfos');
+    return Intl.message('Address informations', desc: '', name: 'addressInfos');
   }
-
 
   Future<String> getAccountExplorerUrl(String account) async {
     final String explorerUrl = await sl.get<SharedPrefsUtil>().getExplorerUrl();
@@ -750,11 +751,11 @@ class AppLocalization {
   }
 
   String get endpointUrl {
-    return 'https://blockchain.uniris.io';
+    return 'http://www.archethic.net';
   }
 
   String get explorerUrlByDefault {
-    return 'https://blockchain.uniris.io';
+    return 'http://www.archethic.net';
   }
 }
 

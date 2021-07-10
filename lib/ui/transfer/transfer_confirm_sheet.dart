@@ -26,7 +26,7 @@ import 'package:archethic_mobile_wallet/ui/util/routes.dart';
 import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/security.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 import 'package:archethic_mobile_wallet/util/biometrics.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
@@ -285,7 +285,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       _showSendingAnimation(context);
 
       final String seed = await StateContainer.of(context).getSeed();
-      final int index = StateContainer.of(context).selectedAccount.index;
+      final int index = StateContainer.of(context).selectedAccount.index!;
       const String publicKeyBase64 = '';
 
       const String privateKey = '';

@@ -19,7 +19,7 @@ import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/util/particles/particles_flutter.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/app_text_field.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/security.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
 import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';

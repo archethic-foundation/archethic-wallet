@@ -61,6 +61,7 @@ class _PinScreenState extends State<PinScreen>
       _awaitingConfirmation; // true if pin has been entered once, false if not entered once
   String _header;
   int _failedAttempts = 0;
+  List<int> _listPinNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
   // Invalid animation
   AnimationController _controller;
@@ -69,6 +70,14 @@ class _PinScreenState extends State<PinScreen>
   @override
   void initState() {
     super.initState();
+
+    sl.get<SharedPrefsUtil>().getPinPadShuffle().then((value) {
+      if (value) {
+        _listPinNumber.shuffle();
+        print("coucou");
+      }
+    });
+
     // Initialize list all empty
     if (widget.type == PinOverlayType.ENTER_PIN) {
       _header = pinEnterTitle;
@@ -365,9 +374,15 @@ class _PinScreenState extends State<PinScreen>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            _buildPinScreenButton('1', context),
-                            _buildPinScreenButton('2', context),
-                            _buildPinScreenButton('3', context),
+                            _buildPinScreenButton(
+                                _listPinNumber.elementAt(0).toString(),
+                                context),
+                            _buildPinScreenButton(
+                                _listPinNumber.elementAt(1).toString(),
+                                context),
+                            _buildPinScreenButton(
+                                _listPinNumber.elementAt(2).toString(),
+                                context),
                           ],
                         ),
                       ),
@@ -377,9 +392,15 @@ class _PinScreenState extends State<PinScreen>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            _buildPinScreenButton('4', context),
-                            _buildPinScreenButton('5', context),
-                            _buildPinScreenButton('6', context),
+                            _buildPinScreenButton(
+                                _listPinNumber.elementAt(3).toString(),
+                                context),
+                            _buildPinScreenButton(
+                                _listPinNumber.elementAt(4).toString(),
+                                context),
+                            _buildPinScreenButton(
+                                _listPinNumber.elementAt(5).toString(),
+                                context),
                           ],
                         ),
                       ),
@@ -389,9 +410,15 @@ class _PinScreenState extends State<PinScreen>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            _buildPinScreenButton('7', context),
-                            _buildPinScreenButton('8', context),
-                            _buildPinScreenButton('9', context),
+                            _buildPinScreenButton(
+                                _listPinNumber.elementAt(6).toString(),
+                                context),
+                            _buildPinScreenButton(
+                                _listPinNumber.elementAt(7).toString(),
+                                context),
+                            _buildPinScreenButton(
+                                _listPinNumber.elementAt(8).toString(),
+                                context),
                           ],
                         ),
                       ),
@@ -409,7 +436,9 @@ class _PinScreenState extends State<PinScreen>
                                   ? buttonSize - 15
                                   : buttonSize,
                             ),
-                            _buildPinScreenButton('0', context),
+                            _buildPinScreenButton(
+                                _listPinNumber.elementAt(9).toString(),
+                                context),
                             Container(
                               height: smallScreen(context)
                                   ? buttonSize - 15

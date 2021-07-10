@@ -822,5 +822,11 @@
     "description": "",
     "type": "text",
     "placeholders": {}
+  },
+  "pinPadShuffle": "Mélange du clavier du code PIN",
+  "@pinPadShuffle": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
   }
 }

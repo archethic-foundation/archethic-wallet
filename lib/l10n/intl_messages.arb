@@ -821,5 +821,11 @@
     "description": "",
     "type": "text",
     "placeholders": {}
+  },
+  "pinPadShuffle": "PIN Pad Shuffle",
+  "@pinPadShuffle": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
   }
 }
