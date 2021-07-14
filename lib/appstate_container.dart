@@ -268,8 +268,8 @@ class StateContainerState extends State<StateContainer> {
   // Update the global wallet instance with a new address
   Future<void> updateWallet({Account account}) async {
     //print("updateWallet");
-    String address;
-    address = AppUtil().seedToAddress(await getSeed(), account.index);
+    String address = await getSeed();
+    //address = AppUtil().seedToAddress(await getSeed(), account.index);
     account.address = address;
     selectedAccount = account;
     updateRecentlyUsedAccounts();

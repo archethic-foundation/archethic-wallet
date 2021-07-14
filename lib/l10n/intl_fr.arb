@@ -13,8 +13,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "enterPasswordText": "Svp, veuillez saisir votre mot de passe pour vous connecter à votre wallet",
-  "@enterPasswordText": {
+  "enterTxAddressText": "Svp, veuillez saisir une adresse de transaction",
+  "@enterTxAddressText": {
     "description": "",
     "type": "text",
     "placeholders": {}
@@ -715,9 +715,15 @@
     "type": "text",
     "placeholders": {}
   },
+  "enterTxAddressHint": "Saisissez une adresse de transaction",
+  "@enterTxAddressHint": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
   "enterPasswordHint": "Saisissez votre mot de passe",
   "@enterPasswordHint": {
-    "description": "A text field hint that tells the users to enter their password",
+    "description": "",
     "type": "text",
     "placeholders": {}
   },
@@ -825,6 +831,24 @@
   },
   "pinPadShuffle": "Mélange du clavier du code PIN",
   "@pinPadShuffle": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "informations": "Informations",
+  "@informations": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "nodesHeader": "Noeuds",
+  "@nodesHeader": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "nodesHeaderDesc": "Informations sur les noeuds",
+  "@nodesHeaderDesc": {
     "description": "",
     "type": "text",
     "placeholders": {}

@@ -43,10 +43,6 @@ class SharedPrefsUtil {
 
   static const String version_app = 'farchethic_version_app';
 
-  static const String wallet_server = 'farchethic_wallet_server';
-  static const String tokens_api = 'farchethic_tokens_api';
-  static const String explorer_url = 'farchethic_explorer_url';
-
   static const String endpoint = 'farchethic_endpoint';
   static const String pinPadShuffle = 'farchethic_pinPadShuffle';
 
@@ -170,37 +166,12 @@ class SharedPrefsUtil {
     return await get(version_app, defaultValue: '');
   }
 
-  Future<void> setWalletServer(String v) async {
-    return await set(wallet_server, v);
-  }
-
-  Future<String> getWalletServer() async {
-    return await get(wallet_server, defaultValue: 'auto');
-  }
-
-  Future<void> setTokensApi(String v) async {
-    return await set(tokens_api, v);
-  }
-
-  Future<String> getTokensApi() async {
-    return await get(tokens_api,
-        defaultValue: 'https://uco.today/api/balances/');
-  }
-
   Future<void> setEndpoint(String v) async {
     return await set(endpoint, v);
   }
 
   Future<String> getEndpoint() async {
-    return await get(endpoint, defaultValue: 'https://blockchain.uniris.io');
-  }
-
-  Future<void> setExplorerUrl(String v) async {
-    return await set(explorer_url, v);
-  }
-
-  Future<String> getExplorerUrl() async {
-    return await get(explorer_url, defaultValue: 'https://uniris.io');
+    return await get(endpoint, defaultValue: 'https://www.archethic.net');
   }
 
   Future<void> setLock(bool value) async {
@@ -310,9 +281,6 @@ class SharedPrefsUtil {
     await prefs.remove(lock_timeout);
     await prefs.remove(has_shown_root_warning);
     await prefs.remove(version_app);
-    await prefs.remove(wallet_server);
-    await prefs.remove(tokens_api);
-    await prefs.remove(explorer_url);
     await prefs.remove(endpoint);
     await prefs.remove(pinPadShuffle);
   }

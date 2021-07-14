@@ -17,6 +17,23 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.text);
   }
 
+  static TextStyle textArch(BuildContext context) {
+    return TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: AppFontSizes.largestc,
+        fontWeight: FontWeight.w200,
+        color: StateContainer.of(context).curTheme.text);
+  }
+
+  static TextStyle textEthic(BuildContext context) {
+    return TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: AppFontSizes.largestc,
+        fontStyle: FontStyle.italic,
+        fontWeight: FontWeight.w200,
+        color: StateContainer.of(context).curTheme.text);
+  }
+
   // Text style for paragraph text with primary color.
   static TextStyle textStyleParagraphPrimary(BuildContext context) {
     return TextStyle(

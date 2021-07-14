@@ -97,7 +97,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
     animationOpen = false;
     if (widget.contact != null) {
       // Setup initial state for contact pre-filled
-      _sendAddressController!.text = widget.contact!.name;
+      _sendAddressController!.text = widget.contact!.name!;
       _isContact = true;
       _showContactButton = false;
       _pasteButtonVisible = false;
@@ -499,7 +499,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                                     validRequest = false;
                                                   });
                                                 } else {
-                                                  _to = contact.address;
+                                                  _to = contact.address!;
                                                 }
 
                                                 if (validRequest) {
@@ -580,7 +580,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                                   uint8ListToHex(
                                                       _nftTransfer.to!)) {
                                                 _sendAddressController!.text =
-                                                    contact.name;
+                                                    contact.name!;
                                               }
                                             }
 
@@ -707,7 +707,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                 _pasteButtonVisible = false;
                                 _showContactButton = false;
                               });
-                              _sendAddressController!.text = contact.name;
+                              _sendAddressController!.text = contact.name!;
                             }
                           }
                           // If amount is present, fill it and go to SendConfirm
@@ -820,7 +820,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
           width: double.infinity - 5,
           child: TextButton(
             onPressed: () {
-              _sendAddressController!.text = contact.name;
+              _sendAddressController!.text = contact.name!;
               _sendAddressFocusNode!.unfocus();
               setState(() {
                 _isContact = true;
@@ -829,7 +829,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                 _sendAddressStyle = AddressStyle.PRIMARY;
               });
             },
-            child: Text(contact.name,
+            child: Text(contact.name!,
                 textAlign: TextAlign.center,
                 style: AppStyles.textStyleAddressText90(context)),
           ),
@@ -1057,7 +1057,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                       _pasteButtonVisible = false;
                       _showContactButton = false;
                     });
-                    _sendAddressController!.text = contact.name;
+                    _sendAddressController!.text = contact.name!;
                   }
                 });
               }
@@ -1154,7 +1154,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
     String contactAddress = '';
     for (Contact contact in widget.contactsRef!) {
       if (contact.name == _sendAddressController!.text) {
-        contactAddress = contact.address;
+        contactAddress = contact.address!;
       }
     }
 

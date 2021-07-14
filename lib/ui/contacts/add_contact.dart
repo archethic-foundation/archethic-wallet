@@ -371,7 +371,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                         UIUtil.showSnackbar(
                             AppLocalization.of(context)
                                 .contactAdded
-                                .replaceAll('%1', newContact.name),
+                                .replaceAll('%1', newContact.name!),
                             context);
                         EventTaxiImpl.singleton()
                             .fire(ContactModifiedEvent(contact: newContact));

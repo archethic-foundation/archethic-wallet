@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:ui';
 
@@ -338,8 +336,8 @@ class AvailableCurrency extends SettingSelectionItem {
           'ES'
         ].contains(locale.countryCode)) {
           return AvailableCurrency(AvailableCurrencyEnum.EUR);
-        } else if (currency.getLocale().countryCode.toUpperCase() ==
-            locale.countryCode.toUpperCase()) {
+        } else if (currency.getLocale().countryCode!.toUpperCase() ==
+            locale.countryCode!.toUpperCase()) {
           return currency;
         }
       }

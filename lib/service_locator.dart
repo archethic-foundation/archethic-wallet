@@ -1,5 +1,7 @@
 // Package imports:
+import 'package:archethic_lib_dart/services/address_service.dart';
 import 'package:archethic_lib_dart/services/api_coins_service.dart';
+import 'package:archethic_lib_dart/services/api_service.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
@@ -20,4 +22,6 @@ void setupServiceLocator() {
   sl.registerLazySingleton<Vault>(() => Vault());
   sl.registerLazySingleton<SharedPrefsUtil>(() => SharedPrefsUtil());
   sl.registerLazySingleton<ApiCoinsService>(() => ApiCoinsService());
+  sl.registerLazySingleton<ApiService>(() => ApiService());
+  sl.registerLazySingleton<AddressService>(() => AddressService());
 }

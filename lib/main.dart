@@ -26,7 +26,7 @@ import 'package:archethic_mobile_wallet/ui/before_scan_screen.dart';
 import 'package:archethic_mobile_wallet/ui/home_page.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_backup_confirm.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_backup_safety.dart';
-import 'package:archethic_mobile_wallet/ui/intro/intro_enter_password.dart';
+import 'package:archethic_mobile_wallet/ui/intro/intro_enter_tx_address.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_password.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_password_on_launch.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_welcome.dart';
@@ -198,9 +198,9 @@ class _AppState extends State<App> {
                 builder: (_) => IntroBackupConfirm(),
                 settings: settings,
               );
-            case '/intro_enter_transaction_chain_seed':
-              return MaterialPageRoute<IntroEnterPasswordAccess>(
-                builder: (_) => IntroEnterPasswordAccess(),
+            case '/intro_enter_transaction_address':
+              return MaterialPageRoute<IntroEnterTxAddress>(
+                builder: (_) => IntroEnterTxAddress(),
                 settings: settings,
               );
             case '/lock_screen':

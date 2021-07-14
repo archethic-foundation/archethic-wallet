@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/address_util.dart';
+import 'package:archethic_lib_dart/services/address_service.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -15,8 +15,9 @@ import 'package:archethic_mobile_wallet/service_locator.dart';
 
 class AppUtil {
   String seedToAddress(String seed, int index) {
-    final String genesisAddress = deriveAddress(seed, 0);
-    //print("genesisAddress : " + genesisAddress);
+    final String genesisAddress =
+        sl.get<AddressService>().deriveAddress(seed, 0);
+    print("genesisAddress : " + genesisAddress);
     return genesisAddress;
   }
 

@@ -147,7 +147,7 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
 
     for (Contact contact in widget.contacts!) {
       if (contact.address == uint8ListToHex(nftTransfer.to!)) {
-        displayName = contact.name;
+        displayName = contact.name!;
       }
     }
 

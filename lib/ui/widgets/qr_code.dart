@@ -1,7 +1,6 @@
 // @dart=2.9
 
 // Flutter imports:
-import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,6 +9,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 
 class QRcodeDisplay {
@@ -66,7 +66,8 @@ class QRcodeDisplay {
               SizedBox(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 5.0, top: 5.0),
-                  child: Text(AppLocalization.of(context).addressInfos,
+                  child: Text(
+                    AppLocalization.of(context).addressInfos,
                     style: AppStyles.textStyleTransactionUnit(context),
                   ),
                 ),

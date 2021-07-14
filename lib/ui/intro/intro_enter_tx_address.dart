@@ -2,6 +2,7 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
@@ -17,30 +18,31 @@ import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/util/particles/particles_flutter.dart';
+import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/app_text_field.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
 import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:archethic_mobile_wallet/util/user_data_util.dart';
 
-class IntroEnterPasswordAccess extends StatefulWidget {
+class IntroEnterTxAddress extends StatefulWidget {
   @override
-  _IntroEnterPasswordAccessState createState() =>
-      _IntroEnterPasswordAccessState();
+  _IntroEnterTxAddressState createState() => _IntroEnterTxAddressState();
 }
 
-class _IntroEnterPasswordAccessState extends State<IntroEnterPasswordAccess> {
-  FocusNode enterPasswordFocusNode;
-  TextEditingController enterPasswordController;
+class _IntroEnterTxAddressState extends State<IntroEnterTxAddress> {
+  FocusNode enterTxAddressFocusNode;
+  TextEditingController enterTxAddressController;
 
   String passwordError;
 
   @override
   void initState() {
     super.initState();
-    enterPasswordFocusNode = FocusNode();
-    enterPasswordController = TextEditingController();
+    enterTxAddressFocusNode = FocusNode();
+    enterTxAddressController = TextEditingController();
   }
 
   @override
@@ -115,21 +117,13 @@ class _IntroEnterPasswordAccessState extends State<IntroEnterPasswordAccess> {
                     Expanded(
                         child: Column(
                       children: <Widget>[
-                        Container(
-                          child: Icon(
-                            AppIcons.lock,
-                            size: 80,
-                            color: StateContainer.of(context).curTheme.primary,
-                          ),
-                          margin: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.1),
-                        ),
+                        SizedBox(height: 80),
                         Container(
                           margin: EdgeInsets.symmetric(
                               horizontal: smallScreen(context) ? 30 : 40,
                               vertical: 20),
                           child: AutoSizeText(
-                            AppLocalization.of(context).enterPasswordText,
+                            AppLocalization.of(context).enterTxAddressText,
                             style: AppStyles.textStyleParagraph(context),
                             maxLines: 4,
                             stepGranularity: 0.5,
@@ -144,41 +138,62 @@ class _IntroEnterPasswordAccessState extends State<IntroEnterPasswordAccess> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
-                                      // Enter your password Text Field
                                       AppTextField(
-                                        topMargin: 10,
-                                        padding:
-                                            const EdgeInsetsDirectional.only(
-                                                start: 16, end: 16),
-                                        focusNode: enterPasswordFocusNode,
-                                        controller: enterPasswordController,
-                                        textInputAction: TextInputAction.go,
-                                        autofocus: true,
-                                        onChanged: (String newText) {
-                                          if (passwordError != null) {
-                                            setState(() {
-                                              passwordError = null;
-                                            });
-                                          }
-                                        },
-                                        onSubmitted: (value) async {
-                                          FocusScope.of(context).unfocus();
-                                          await validateAndDecrypt();
-                                        },
+                                        padding: EdgeInsets.zero,
+                                        focusNode: enterTxAddressFocusNode,
+                                        controller: enterTxAddressController,
+                                        style: AppStyles.textStyleAddressText60(
+                                            context),
+                                        inputFormatters: [
+                                          LengthLimitingTextInputFormatter(255),
+                                        ],
+                                        textInputAction: TextInputAction.done,
+                                        maxLines: null,
+                                        autocorrect: false,
                                         hintText: AppLocalization.of(context)
-                                            .enterPasswordHint,
-                                        keyboardType: TextInputType.text,
-                                        obscureText: true,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 16.0,
-                                          color: StateContainer.of(context)
-                                              .curTheme
-                                              .primary,
-                                          fontFamily: 'Montserrat',
+                                            .enterTxAddressHint,
+                                        prefixButton: TextFieldButton(
+                                            icon: AppIcons.scan,
+                                            onPressed: () async {
+                                              UIUtil.cancelLockEvent();
+                                              final String scanResult =
+                                                  await UserDataUtil.getQRData(
+                                                      DataType.ADDRESS,
+                                                      context);
+                                              if (!QRScanErrs.ERROR_LIST
+                                                  .contains(scanResult)) {
+                                                if (mounted) {
+                                                  setState(() {
+                                                    enterTxAddressController
+                                                        .text = scanResult;
+                                                  });
+                                                  enterTxAddressFocusNode
+                                                      .unfocus();
+                                                }
+                                              }
+                                            }),
+                                        fadePrefixOnCondition: true,
+                                        prefixShowFirstCondition: true,
+                                        suffixButton: TextFieldButton(
+                                          icon: AppIcons.paste,
+                                          onPressed: () async {
+                                            final String data =
+                                                await UserDataUtil
+                                                    .getClipboardText(
+                                                        DataType.ADDRESS);
+                                            if (data != null) {
+                                              setState(() {
+                                                enterTxAddressController.text =
+                                                    data;
+                                              });
+                                            } else {}
+                                          },
                                         ),
+                                        fadeSuffixOnCondition: true,
+                                        suffixShowFirstCondition: true,
+                                        onChanged: (String text) {},
                                       ),
+
                                       // Error Container
                                       Container(
                                         alignment:
@@ -220,8 +235,7 @@ class _IntroEnterPasswordAccessState extends State<IntroEnterPasswordAccess> {
 
   Future<void> validateAndDecrypt() async {
     try {
-      const String _seed =
-          '05A2525C9C4FDDC02BA97554980A0CFFADA2AEB0650E3EAD05796275F05DDA85';
+      String _seed = enterTxAddressController.text;
       await sl.get<Vault>().setSeed(_seed);
       await sl.get<DBHelper>().dropAccounts();
       await AppUtil().loginAccount(_seed, context);
@@ -236,7 +250,7 @@ class _IntroEnterPasswordAccessState extends State<IntroEnterPasswordAccess> {
         _pinEnteredCallback(pin);
       }
       /*String decryptedSeed = HEX.encode(AppCrypt.decrypt(
-          await sl.get<Vault>().getSeed(), enterPasswordController.text));
+          await sl.get<Vault>().getSeed(), enterTxAddressController.text));
       StateContainer.of(context).setEncryptedSecret(HEX.encode(AppCrypt.encrypt(
           decryptedSeed, await sl.get<Vault>().getSessionKey())));
       _goHome();*/

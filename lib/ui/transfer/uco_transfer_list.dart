@@ -146,7 +146,7 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
 
     for (Contact contact in widget.contacts!) {
       if (contact.address == uint8ListToHex(ucoTransfer.to!)) {
-        displayName = contact.name;
+        displayName = contact.name!;
       }
     }
     return Column(

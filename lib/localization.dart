@@ -47,9 +47,9 @@ class AppLocalization {
         desc: '', name: 'connectWallet');
   }
 
-  String get enterPasswordText {
-    return Intl.message('Please, enter your password to connect to your wallet',
-        desc: '', name: 'enterPasswordText');
+  String get enterTxAddressText {
+    return Intl.message('Please, enter a transaction address',
+        desc: '', name: 'enterTxAddressText');
   }
 
   String get cancel {
@@ -639,8 +639,12 @@ class AppLocalization {
 
   String get enterPasswordHint {
     return Intl.message('Enter your password',
-        desc: 'A text field hint that tells the users to enter their password',
-        name: 'enterPasswordHint');
+        desc: '', name: 'enterPasswordHint');
+  }
+
+  String get enterTxAddressHint {
+    return Intl.message('Enter a transaction address',
+        desc: '', name: 'enterTxAddressHint');
   }
 
   String get passwordsDontMatch {
@@ -741,21 +745,17 @@ class AppLocalization {
     return Intl.message('Address informations', desc: '', name: 'addressInfos');
   }
 
-  Future<String> getAccountExplorerUrl(String account) async {
-    final String explorerUrl = await sl.get<SharedPrefsUtil>().getExplorerUrl();
-    return explorerUrl.replaceAll('%1', account);
+  String get informations {
+    return Intl.message('Informations', desc: '', name: 'informations');
   }
 
-  String get privacyUrl {
-    return 'https://uniris.io';
+  String get nodesHeader {
+    return Intl.message('Nodes', desc: '', name: 'nodes');
   }
 
-  String get endpointUrl {
-    return 'http://www.archethic.net';
-  }
-
-  String get explorerUrlByDefault {
-    return 'http://www.archethic.net';
+  String get nodesHeaderDesc {
+    return Intl.message('Nodes informations',
+        desc: '', name: 'nodesHeaderDesc');
   }
 }
 

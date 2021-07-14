@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:fluttericon/entypo_icons.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:package_info/package_info.dart';
@@ -27,6 +28,7 @@ import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/settings/contacts_widget.dart';
 import 'package:archethic_mobile_wallet/ui/settings/custom_url_widget.dart';
 import 'package:archethic_mobile_wallet/ui/settings/disable_password_sheet.dart';
+import 'package:archethic_mobile_wallet/ui/settings/nodes_widget.dart';
 import 'package:archethic_mobile_wallet/ui/settings/set_password_sheet.dart';
 import 'package:archethic_mobile_wallet/ui/settings/settings_list_item.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/app_simpledialog.dart';
@@ -35,7 +37,6 @@ import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 import 'package:archethic_mobile_wallet/util/biometrics.dart';
 import 'package:archethic_mobile_wallet/util/caseconverter.dart';
-import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 import '../../appstate_container.dart';
 import '../../util/sharedprefsutil.dart';
@@ -51,6 +52,8 @@ class _SettingsSheetState extends State<SettingsSheet>
   Animation<Offset> _offsetFloat;
   AnimationController _securityController;
   Animation<Offset> _securityOffsetFloat;
+  AnimationController _nodesController;
+  Animation<Offset> _nodesOffsetFloat;
   AnimationController _customUrlController;
   Animation<Offset> _customUrlOffsetFloat;
 
@@ -67,6 +70,8 @@ class _SettingsSheetState extends State<SettingsSheet>
 
   bool _contactsOpen;
 
+  bool _nodesOpen;
+
   bool _customUrlOpen;
 
   bool _pinPadShuffleActive;
@@ -77,6 +82,7 @@ class _SettingsSheetState extends State<SettingsSheet>
   void initState() {
     super.initState();
     _contactsOpen = false;
+    _nodesOpen = false;
     _securityOpen = false;
     _customUrlOpen = false;
     // Determine if they have face or fingerprint enrolled, if not hide the setting
@@ -125,6 +131,11 @@ class _SettingsSheetState extends State<SettingsSheet>
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
+    // For nodes menu
+    _nodesController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 220),
+    );
     // For customUrl menu
     _customUrlController = AnimationController(
       vsync: this,
@@ -137,6 +148,9 @@ class _SettingsSheetState extends State<SettingsSheet>
     _securityOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_securityController);
+    _nodesOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
+            .animate(_nodesController);
     _customUrlOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_customUrlController);
@@ -153,6 +167,7 @@ class _SettingsSheetState extends State<SettingsSheet>
     _controller.dispose();
     _securityController.dispose();
     _customUrlController.dispose();
+    _nodesController.dispose();
     super.dispose();
   }
 
@@ -511,6 +526,12 @@ class _SettingsSheetState extends State<SettingsSheet>
       });
       _customUrlController.reverse();
       return false;
+    } else if (_nodesOpen) {
+      setState(() {
+        _nodesOpen = false;
+      });
+      _nodesController.reverse();
+      return false;
     }
     return true;
   }
@@ -533,6 +554,9 @@ class _SettingsSheetState extends State<SettingsSheet>
             SlideTransition(
                 position: _securityOffsetFloat,
                 child: buildSecurityMenu(context)),
+            SlideTransition(
+                position: _nodesOffsetFloat,
+                child: NodesList(_nodesController, _nodesOpen)),
             SlideTransition(
                 position: _customUrlOffsetFloat,
                 child: CustomUrl(_customUrlController, _customUrlOpen)),
@@ -568,7 +592,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                 ListView(
                   padding: const EdgeInsets.only(top: 15.0),
                   children: <Widget>[
-                    /*Container(
+                    Container(
                       margin:
                           EdgeInsetsDirectional.only(start: 30.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context).informations,
@@ -581,7 +605,21 @@ class _SettingsSheetState extends State<SettingsSheet>
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,
-                    ),*/
+                    ),
+                    AppSettings.buildSettingsListItemSingleLineWithInfos(
+                        context,
+                        AppLocalization.of(context).nodesHeader,
+                        AppLocalization.of(context).nodesHeaderDesc,
+                        Entypo.network, onPressed: () {
+                      setState(() {
+                        _nodesOpen = true;
+                      });
+                      _nodesController.forward();
+                    }),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.text15,
+                    ),
                     Container(
                       margin: const EdgeInsetsDirectional.only(
                           start: 30.0, top: 20.0, bottom: 10.0),

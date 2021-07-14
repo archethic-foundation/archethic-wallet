@@ -3,7 +3,7 @@ description: ArchEthic Wallet app (iOS/Android).
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.0.12+12
+version: 0.0.13+13
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -102,7 +102,7 @@ dependencies:
       ref: master
 
   # ArchEthic dart library for Flutter based on Official ArchEthic Javascript library for Node and Browser
-  archethic_lib_dart: ^0.0.6+6
+  archethic_lib_dart: ^0.0.20
     
   # Flutter icons from popular web icon fonts. Customize your final icon package using fluttericon.com
   fluttericon: ^2.0.0
@@ -147,6 +147,7 @@ flutter:
     - assets/QR.svg
     - assets/uniris_icon.png
     - assets/uniris_logo.svg
+    - assets/uniris_icon_1024.svg
     - assets/send_animation.flr
     - assets/searchseedqr_animation_magnifyingglassonly.flr
     - assets/searchseedqr_animation_glassonly.flr

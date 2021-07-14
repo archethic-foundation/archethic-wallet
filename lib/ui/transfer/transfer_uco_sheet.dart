@@ -105,7 +105,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     animationOpen = false;
     if (widget.contact != null) {
       // Setup initial state for contact pre-filled
-      _sendAddressController!.text = widget.contact!.name;
+      _sendAddressController!.text = widget.contact!.name!;
       _isContact = true;
       _showContactButton = false;
       _pasteButtonVisible = false;
@@ -524,7 +524,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                                     validRequest = false;
                                                   });
                                                 } else {
-                                                  _to = contact.address;
+                                                  _to = contact.address!;
                                                 }
 
                                                 if (validRequest) {
@@ -605,7 +605,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                                   uint8ListToHex(
                                                       _ucoTransfer.to!)) {
                                                 _sendAddressController!.text =
-                                                    contact.name;
+                                                    contact.name!;
                                               }
                                             }
 
@@ -736,7 +736,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                 _pasteButtonVisible = false;
                                 _showContactButton = false;
                               });
-                              _sendAddressController!.text = contact.name;
+                              _sendAddressController!.text = contact.name!;
                             }
                           }
                           // If amount is present, fill it and go to SendConfirm
@@ -968,7 +968,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
           width: double.infinity - 5,
           child: TextButton(
             onPressed: () {
-              _sendAddressController!.text = contact.name;
+              _sendAddressController!.text = contact.name!;
               _sendAddressFocusNode!.unfocus();
               setState(() {
                 _isContact = true;
@@ -977,7 +977,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                 _sendAddressStyle = AddressStyle.PRIMARY;
               });
             },
-            child: Text(contact.name,
+            child: Text(contact.name!,
                 textAlign: TextAlign.center,
                 style: AppStyles.textStyleAddressText90(context)),
           ),
@@ -1244,7 +1244,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                       _pasteButtonVisible = false;
                       _showContactButton = false;
                     });
-                    _sendAddressController!.text = contact.name;
+                    _sendAddressController!.text = contact.name!;
                   }
                 });
               }
@@ -1341,7 +1341,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     String contactAddress = '';
     for (Contact contact in widget.contactsRef!) {
       if (contact.name == _sendAddressController!.text) {
-        contactAddress = contact.address;
+        contactAddress = contact.address!;
       }
     }
 

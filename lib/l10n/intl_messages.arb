@@ -12,8 +12,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "enterPasswordText": "Please, enter your password to connect to your wallet",
-  "@enterPasswordText": {
+  "enterTxAddressText": "Please, enter a transaction address",
+  "@enterTxAddressText": {
     "description": "",
     "type": "text",
     "placeholders": {}
@@ -714,9 +714,15 @@
     "type": "text",
     "placeholders": {}
   },
+  "enterTxAddressHint": "Enter a transaction address",
+  "@enterTxAddressHint": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
   "enterPasswordHint": "Enter your password",
   "@enterPasswordHint": {
-    "description": "A text field hint that tells the users to enter their password",
+    "description": "",
     "type": "text",
     "placeholders": {}
   },
@@ -824,6 +830,24 @@
   },
   "pinPadShuffle": "PIN Pad Shuffle",
   "@pinPadShuffle": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "informations": "Informations",
+  "@informations": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "nodesHeader": "Nodes",
+  "@nodesHeader": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "nodesHeaderDesc": "Nodes informations",
+  "@nodesHeaderDesc": {
     "description": "",
     "type": "text",
     "placeholders": {}

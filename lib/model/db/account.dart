@@ -1,7 +1,5 @@
 // Represent user-account
 
-// @dart=2.9
-
 class Account {
   Account(
       {this.id,
@@ -12,16 +10,16 @@ class Account {
       this.address,
       this.balance});
 
-  int id; // Primary Key
-  int index; // Index on the seed
-  String name; // Account nickname
-  int lastAccess; // Last Accessed incrementor
-  bool selected; // Whether this is the currently selected account
-  String address;
-  String balance; // Last known balance in RAW
+  int? id; // Primary Key
+  int? index; // Index on the seed
+  String? name; // Account nickname
+  int? lastAccess; // Last Accessed incrementor
+  bool? selected; // Whether this is the currently selected account
+  String? address;
+  String? balance; // Last known balance in RAW
 
   String getShortName() {
-    final List<String> splitName = name.split(' ');
+    final List<String> splitName = name!.split(' ');
     if (splitName.length > 1 &&
         splitName[0].isNotEmpty &&
         splitName[1].isNotEmpty) {
@@ -33,10 +31,10 @@ class Account {
         }
       } catch (e) {}
       return firstChar + secondPart;
-    } else if (name.length >= 2) {
-      return name.substring(0, 2);
+    } else if (name!.length >= 2) {
+      return name!.substring(0, 2);
     } else {
-      return name.substring(0, 1);
+      return name!.substring(0, 1);
     }
   }
 }

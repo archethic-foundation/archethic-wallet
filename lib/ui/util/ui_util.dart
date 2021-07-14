@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:async';
 
@@ -22,7 +20,7 @@ enum OneLineAddressTextType { PRIMARY60, PRIMARY, SUCCESS }
 class UIUtil {
   static Widget threeLineAddressText(BuildContext context, String address,
       {ThreeLineAddressTextType type = ThreeLineAddressTextType.PRIMARY,
-      String contactName}) {
+      String? contactName}) {
     String stringPartOne = '';
     String stringPartTwo = '';
     String stringPartThree = '';
@@ -361,7 +359,7 @@ class UIUtil {
   }
 
   static Widget threeLineSeedText(BuildContext context, String address,
-      {TextStyle textStyle}) {
+      {TextStyle? textStyle}) {
     textStyle = textStyle ?? AppStyles.textStyleSeed(context);
     final String stringPartOne = address.substring(0, 22);
     final String stringPartTwo = address.substring(22, 44);
@@ -406,7 +404,7 @@ class UIUtil {
             borderRadius: BorderRadius.circular(10),
             boxShadow: <BoxShadow>[
               BoxShadow(
-                  color: StateContainer.of(context).curTheme.overlay80,
+                  color: StateContainer.of(context).curTheme.overlay80!,
                   offset: const Offset(0, 15),
                   blurRadius: 30,
                   spreadRadius: -5),
@@ -424,12 +422,12 @@ class UIUtil {
     );
   }
 
-  static StreamSubscription<dynamic> _lockDisableSub;
+  static StreamSubscription<dynamic>? _lockDisableSub;
 
   static Future<void> cancelLockEvent() async {
     // Cancel auto-lock event, usually if we are launching another intent
     if (_lockDisableSub != null) {
-      _lockDisableSub.cancel();
+      _lockDisableSub!.cancel();
     }
     EventTaxiImpl.singleton().fire(DisableLockTimeoutEvent(disable: true));
     final Future<dynamic> delayed = Future.delayed(const Duration(seconds: 10));
