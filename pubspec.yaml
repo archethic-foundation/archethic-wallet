@@ -102,7 +102,7 @@ dependencies:
       ref: master
 
   # ArchEthic dart library for Flutter based on Official ArchEthic Javascript library for Node and Browser
-  archethic_lib_dart: ^0.0.20
+  archethic_lib_dart: ^0.0.27
     
   # Flutter icons from popular web icon fonts. Customize your final icon package using fluttericon.com
   fluttericon: ^2.0.0
@@ -145,9 +145,9 @@ flutter:
           weight: 400
   assets:
     - assets/QR.svg
-    - assets/uniris_icon.png
-    - assets/uniris_logo.svg
-    - assets/uniris_icon_1024.svg
+    - assets/archethic_icon.png
+    - assets/archethic_logo.svg
+    - assets/archethic_logo_alone.svg
     - assets/send_animation.flr
     - assets/searchseedqr_animation_magnifyingglassonly.flr
     - assets/searchseedqr_animation_glassonly.flr

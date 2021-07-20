@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter_svg/svg.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -12,7 +13,6 @@ import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/util/particles/particles_flutter.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/archethic_text.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
 
 class IntroWelcomePage extends StatefulWidget {
@@ -83,7 +83,13 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                             width: double.infinity,
                             height: MediaQuery.of(context).size.width * 5 / 8,
                             child: Center(
-                              child: ArchEthicText.getLabel(context),
+                              child: Container(
+                                child: SizedBox(
+                                  height: 300,
+                                  child: SvgPicture.asset(
+                                      "assets/archethic_logo.svg", height: 200,),
+                                ),
+                              ),
                             ),
                           ),
                           Container(
@@ -93,7 +99,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                             child: AutoSizeText(
                               AppLocalization.of(context).welcomeText,
                               style: AppStyles.textStyleParagraph(context),
-                              maxLines: 4,
+                              maxLines: 5,
                               stepGranularity: 0.5,
                             ),
                           ),
@@ -126,7 +132,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                                 AppLocalization.of(context).nextButton,
                                 Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                               Navigator.of(context).pushNamed(
-                                  '/intro_enter_transaction_address');
+                                  '/intro_enter_transaction_chain_seed');
                             }),
                           ],
                         ),

@@ -4,7 +4,7 @@
 import 'dart:typed_data';
 
 // Package imports:
-import 'package:archethic_lib_dart/utils.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show uint8ListToHex;
 import 'package:pointycastle/api.dart' show ParametersWithIV, KeyParameter;
 import 'package:pointycastle/stream/salsa20.dart';
 

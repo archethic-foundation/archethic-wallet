@@ -2,7 +2,7 @@
 import 'dart:core';
 
 // Package imports:
-import 'package:archethic_lib_dart/utils.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show isHex;
 
 // Object to represent an account address or address URI, and provide useful utilities
 class Address {

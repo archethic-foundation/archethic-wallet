@@ -7,7 +7,8 @@ class Account {
       this.name,
       this.lastAccess,
       this.selected = false,
-      this.address,
+      this.genesisAddress,
+      this.lastAddress,
       this.balance});
 
   int? id; // Primary Key
@@ -15,7 +16,8 @@ class Account {
   String? name; // Account nickname
   int? lastAccess; // Last Accessed incrementor
   bool? selected; // Whether this is the currently selected account
-  String? address;
+  String? genesisAddress; // Genesis Address
+  String? lastAddress; // Last address
   String? balance; // Last known balance in RAW
 
   String getShortName() {

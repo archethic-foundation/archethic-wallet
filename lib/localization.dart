@@ -37,7 +37,7 @@ class AppLocalization {
 
   String get welcomeText {
     return Intl.message(
-        'Welcome to ArchEthic Wallet.\n\nTo begin, you may connect to your decentralized wallet with your password.',
+        'Welcome to ArchEthic Wallet.\n\nTo begin, you may connect to your decentralized wallet with your transaction chain seed.',
         desc: '',
         name: 'welcomeText');
   }
@@ -47,9 +47,9 @@ class AppLocalization {
         desc: '', name: 'connectWallet');
   }
 
-  String get enterTxAddressText {
-    return Intl.message('Please, enter a transaction address',
-        desc: '', name: 'enterTxAddressText');
+  String get enterTxChainSeedText {
+    return Intl.message('Please, enter a transaction chain seed',
+        desc: '', name: 'enterTxChainSeedText');
   }
 
   String get cancel {
@@ -647,6 +647,11 @@ class AppLocalization {
         desc: '', name: 'enterTxAddressHint');
   }
 
+  String get enterTxChainSeedHint {
+    return Intl.message('Enter a transaction chain seed',
+        desc: '', name: 'enterTxChainSeedHint');
+  }
+
   String get passwordsDontMatch {
     return Intl.message('Passwords do not match',
         desc: 'An error indicating a password has been confirmed incorrectly',
@@ -750,7 +755,7 @@ class AppLocalization {
   }
 
   String get nodesHeader {
-    return Intl.message('Nodes', desc: '', name: 'nodes');
+    return Intl.message('Nodes', desc: '', name: 'nodesHeader');
   }
 
   String get nodesHeaderDesc {

@@ -16,7 +16,7 @@ class QRcodeDisplay {
   static Widget buildQRCodeDisplay(
       BuildContext context, Animation<double> _opacityAnimation) {
     return StateContainer.of(context).selectedAccount == null ||
-            StateContainer.of(context).selectedAccount.address == null
+            StateContainer.of(context).selectedAccount.lastAddress == null
         ? const SizedBox()
         : Stack(
             children: <Widget>[
@@ -52,7 +52,7 @@ class QRcodeDisplay {
                             QrImage(
                               data: StateContainer.of(context)
                                   .selectedAccount
-                                  .address,
+                                  .lastAddress,
                               version: QrVersions.auto,
                               size: 100.0,
                             ),
@@ -79,7 +79,7 @@ class QRcodeDisplay {
   static Widget buildAddressDisplay(
       BuildContext context, Animation<double> _opacityAnimation) {
     return StateContainer.of(context).selectedAccount == null ||
-            StateContainer.of(context).selectedAccount.address == null
+            StateContainer.of(context).selectedAccount.lastAddress == null
         ? const SizedBox()
         : Stack(
             children: <Widget>[
@@ -117,28 +117,28 @@ class QRcodeDisplay {
                                 Text(
                                     StateContainer.of(context)
                                         .selectedAccount
-                                        .address
+                                        .lastAddress
                                         .substring(0, 16),
                                     style: AppStyles.textStyleAddressText90(
                                         context)),
                                 Text(
                                     StateContainer.of(context)
                                         .selectedAccount
-                                        .address
+                                        .lastAddress
                                         .substring(16, 32),
                                     style: AppStyles.textStyleAddressText90(
                                         context)),
                                 Text(
                                     StateContainer.of(context)
                                         .selectedAccount
-                                        .address
+                                        .lastAddress
                                         .substring(32, 48),
                                     style: AppStyles.textStyleAddressText90(
                                         context)),
                                 Text(
                                     StateContainer.of(context)
                                         .selectedAccount
-                                        .address
+                                        .lastAddress
                                         .substring(48, 64),
                                     style: AppStyles.textStyleAddressText90(
                                         context)),

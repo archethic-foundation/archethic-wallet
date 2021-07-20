@@ -26,7 +26,7 @@ import 'package:archethic_mobile_wallet/ui/before_scan_screen.dart';
 import 'package:archethic_mobile_wallet/ui/home_page.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_backup_confirm.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_backup_safety.dart';
-import 'package:archethic_mobile_wallet/ui/intro/intro_enter_tx_address.dart';
+import 'package:archethic_mobile_wallet/ui/intro/intro_enter_tx_chain_seed.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_password.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_password_on_launch.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_welcome.dart';
@@ -41,8 +41,6 @@ import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Setup Service Provide
-  setupServiceLocator();
   // Run app
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
@@ -198,9 +196,9 @@ class _AppState extends State<App> {
                 builder: (_) => IntroBackupConfirm(),
                 settings: settings,
               );
-            case '/intro_enter_transaction_address':
-              return MaterialPageRoute<IntroEnterTxAddress>(
-                builder: (_) => IntroEnterTxAddress(),
+            case '/intro_enter_transaction_chain_seed':
+              return MaterialPageRoute<IntroEnterTxChainSeed>(
+                builder: (_) => IntroEnterTxChainSeed(),
                 settings: settings,
               );
             case '/lock_screen':

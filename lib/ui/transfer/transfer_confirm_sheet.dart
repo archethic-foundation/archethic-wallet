@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/transaction_builder.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show UcoTransfer, NftTransfer;
 import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:package_info/package_info.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -24,7 +25,6 @@ import 'package:archethic_mobile_wallet/ui/settings/settings_drawer.dart';
 import 'package:archethic_mobile_wallet/ui/util/particles/particles_flutter.dart';
 import 'package:archethic_mobile_wallet/ui/util/routes.dart';
 import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/archethic_text.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/balance.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/line_chart.dart';
@@ -199,7 +199,7 @@ class _AppHomePageState extends State<AppHomePage>
         StateContainer.of(context).wallet.historyLoading = false;
       });
 
-      paintQrCode(address: event.account.address);
+      paintQrCode(address: event.account.lastAddress);
       if (event.delayPop) {
         Future.delayed(const Duration(milliseconds: 300), () {
           Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
@@ -357,7 +357,7 @@ class _AppHomePageState extends State<AppHomePage>
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Container(
-          child: ArchEthicText.getLabel(context),
+          child: SvgPicture.asset("assets/archethic_logo_alone.svg", height: 40,)
         ),
         backgroundColor: Colors.transparent,
         elevation: 0.0,

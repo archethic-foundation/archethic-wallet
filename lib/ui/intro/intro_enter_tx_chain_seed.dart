@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show AddressService; 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 
@@ -27,22 +28,35 @@ import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 import 'package:archethic_mobile_wallet/util/user_data_util.dart';
 
-class IntroEnterTxAddress extends StatefulWidget {
+class IntroEnterTxChainSeed extends StatefulWidget {
   @override
-  _IntroEnterTxAddressState createState() => _IntroEnterTxAddressState();
+  _IntroEnterTxChainSeedState createState() => _IntroEnterTxChainSeedState();
 }
 
-class _IntroEnterTxAddressState extends State<IntroEnterTxAddress> {
-  FocusNode enterTxAddressFocusNode;
-  TextEditingController enterTxAddressController;
+class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
+  FocusNode enterTxChainSeedFocusNode;
+  TextEditingController enterTxChainSeedController;
+  FocusNode enterEndpointFocusNode;
+  TextEditingController enterEndpointController;
+  bool useCustomEndpoint;
 
-  String passwordError;
+  String enterEndpointHint = '';
+  String enterEndpointValidationText = '';
+
+  Future<void> initControllerText() async {
+    enterEndpointController.text =
+        await sl.get<SharedPrefsUtil>().getEndpoint();
+  }
 
   @override
   void initState() {
     super.initState();
-    enterTxAddressFocusNode = FocusNode();
-    enterTxAddressController = TextEditingController();
+    enterTxChainSeedFocusNode = FocusNode();
+    enterTxChainSeedController = TextEditingController();
+    enterEndpointFocusNode = FocusNode();
+    enterEndpointController = TextEditingController();
+
+    initControllerText();
   }
 
   @override
@@ -123,7 +137,7 @@ class _IntroEnterTxAddressState extends State<IntroEnterTxAddress> {
                               horizontal: smallScreen(context) ? 30 : 40,
                               vertical: 20),
                           child: AutoSizeText(
-                            AppLocalization.of(context).enterTxAddressText,
+                            AppLocalization.of(context).enterTxChainSeedText,
                             style: AppStyles.textStyleParagraph(context),
                             maxLines: 4,
                             stepGranularity: 0.5,
@@ -140,8 +154,8 @@ class _IntroEnterTxAddressState extends State<IntroEnterTxAddress> {
                                     children: <Widget>[
                                       AppTextField(
                                         padding: EdgeInsets.zero,
-                                        focusNode: enterTxAddressFocusNode,
-                                        controller: enterTxAddressController,
+                                        focusNode: enterTxChainSeedFocusNode,
+                                        controller: enterTxChainSeedController,
                                         style: AppStyles.textStyleAddressText60(
                                             context),
                                         inputFormatters: [
@@ -151,7 +165,7 @@ class _IntroEnterTxAddressState extends State<IntroEnterTxAddress> {
                                         maxLines: null,
                                         autocorrect: false,
                                         hintText: AppLocalization.of(context)
-                                            .enterTxAddressHint,
+                                            .enterTxChainSeedHint,
                                         prefixButton: TextFieldButton(
                                             icon: AppIcons.scan,
                                             onPressed: () async {
@@ -164,10 +178,10 @@ class _IntroEnterTxAddressState extends State<IntroEnterTxAddress> {
                                                   .contains(scanResult)) {
                                                 if (mounted) {
                                                   setState(() {
-                                                    enterTxAddressController
+                                                    enterTxChainSeedController
                                                         .text = scanResult;
                                                   });
-                                                  enterTxAddressFocusNode
+                                                  enterTxChainSeedFocusNode
                                                       .unfocus();
                                                 }
                                               }
@@ -183,8 +197,8 @@ class _IntroEnterTxAddressState extends State<IntroEnterTxAddress> {
                                                         DataType.ADDRESS);
                                             if (data != null) {
                                               setState(() {
-                                                enterTxAddressController.text =
-                                                    data;
+                                                enterTxChainSeedController
+                                                    .text = data;
                                               });
                                             } else {}
                                           },
@@ -193,23 +207,61 @@ class _IntroEnterTxAddressState extends State<IntroEnterTxAddress> {
                                         suffixShowFirstCondition: true,
                                         onChanged: (String text) {},
                                       ),
-
-                                      // Error Container
-                                      Container(
-                                        alignment:
-                                            const AlignmentDirectional(0, 0),
-                                        margin: const EdgeInsets.only(top: 3),
-                                        child: Text(passwordError ?? '',
-                                            style: TextStyle(
-                                              fontSize: 14.0,
-                                              color: StateContainer.of(context)
-                                                  .curTheme
-                                                  .primary,
-                                              fontFamily: 'Montserrat',
-                                              fontWeight: FontWeight.w600,
-                                            )),
-                                      ),
-                                    ])))
+                                    ]))),
+                        Expanded(
+                            child: KeyboardAvoider(
+                          duration: const Duration(milliseconds: 0),
+                          autoScroll: true,
+                          focusPadding: 40,
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    AppLocalization.of(context).enterEndpoint,
+                                    style:
+                                        AppStyles.textStyleParagraph(context),
+                                  ),
+                                ],
+                              ),
+                              AppTextField(
+                                padding: EdgeInsets.zero,
+                                focusNode: enterEndpointFocusNode,
+                                controller: enterEndpointController,
+                                cursorColor:
+                                    StateContainer.of(context).curTheme.primary,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16.0,
+                                  color: StateContainer.of(context)
+                                      .curTheme
+                                      .primary,
+                                  fontFamily: 'Montserrat',
+                                ),
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(150)
+                                ],
+                                onChanged: (String text) {
+                                  setState(() {
+                                    enterEndpointValidationText = '';
+                                  });
+                                },
+                                textInputAction: TextInputAction.next,
+                                maxLines: null,
+                                autocorrect: false,
+                                hintText: enterEndpointHint == null
+                                    ? ''
+                                    : AppLocalization.of(context).enterEndpoint,
+                                keyboardType: TextInputType.multiline,
+                                textAlign: TextAlign.left,
+                                onSubmitted: (String text) {
+                                  FocusScope.of(context).unfocus();
+                                },
+                              ),
+                            ],
+                          ),
+                        )),
                       ],
                     )),
                     Row(
@@ -219,7 +271,7 @@ class _IntroEnterTxAddressState extends State<IntroEnterTxAddress> {
                             AppButtonType.PRIMARY,
                             AppLocalization.of(context).connectWallet,
                             Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () async {
-                          await validateAndDecrypt();
+                          await validate();
                         }),
                       ],
                     )
@@ -233,12 +285,22 @@ class _IntroEnterTxAddressState extends State<IntroEnterTxAddress> {
     );
   }
 
-  Future<void> validateAndDecrypt() async {
+  Future<void> validate() async {
     try {
-      String _seed = enterTxAddressController.text;
+      await sl.get<SharedPrefsUtil>().setEndpoint(enterEndpointController.text);
+      await setupServiceLocator();
+
+      String _seed = enterTxChainSeedController.text;
+      print("seed: " + _seed);
+
+      // TODO: Faut il vraiment garder dans le Vault la seed....
       await sl.get<Vault>().setSeed(_seed);
       await sl.get<DBHelper>().dropAccounts();
-      await AppUtil().loginAccount(_seed, context);
+      final String genesisAddress =
+          sl.get<AddressService>().deriveAddress(_seed, 0);
+      print("genesisAddress: " + genesisAddress);
+
+      await AppUtil().loginAccount(genesisAddress, context);
       StateContainer.of(context).requestUpdate();
       final String pin = await Navigator.of(context)
           .push(MaterialPageRoute(builder: (BuildContext context) {
@@ -249,17 +311,8 @@ class _IntroEnterTxAddressState extends State<IntroEnterTxAddress> {
       if (pin != null && pin.length > 5) {
         _pinEnteredCallback(pin);
       }
-      /*String decryptedSeed = HEX.encode(AppCrypt.decrypt(
-          await sl.get<Vault>().getSeed(), enterTxAddressController.text));
-      StateContainer.of(context).setEncryptedSecret(HEX.encode(AppCrypt.encrypt(
-          decryptedSeed, await sl.get<Vault>().getSessionKey())));
-      _goHome();*/
     } catch (e) {
-      if (mounted) {
-        setState(() {
-          passwordError = AppLocalization.of(context).invalidPassword;
-        });
-      }
+      print(e);
     }
   }
 

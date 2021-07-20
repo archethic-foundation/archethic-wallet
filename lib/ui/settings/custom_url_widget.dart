@@ -37,6 +37,7 @@ class _CustomUrlState extends State<CustomUrl> {
 
   Future<void> updateEndpoint() async {
     await sl.get<SharedPrefsUtil>().setEndpoint(_endpointController.text);
+    await setupServiceLocator();
     setState(() {});
   }
 

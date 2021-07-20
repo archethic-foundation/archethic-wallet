@@ -4,10 +4,7 @@
 import 'dart:async';
 
 // Package imports:
-import 'package:archethic_lib_dart/model/response/balance_response.dart';
-import 'package:archethic_lib_dart/services/api_service.dart';
-import 'package:archethic_lib_dart/transaction_builder.dart';
-import 'package:archethic_lib_dart/utils.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show BalanceResponse, ApiService, TransactionBuilder, UcoTransfer, uint8ListToHex;
 import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
@@ -36,11 +33,9 @@ class AppService {
     } finally {}
   }
 
-  Future<void> getBalanceGetResponse(
-      String address, String endpoint, bool activeBus) async {
+  Future<void> getBalanceGetResponse(String address, bool activeBus) async {
     BalanceResponse balanceResponse;
-    balanceResponse =
-        await sl.get<ApiService>().fetchBalance(address, endpoint);
+    balanceResponse = await sl.get<ApiService>().fetchBalance(address);
     List<b.BalanceNft> balanceNftList =
         List<b.BalanceNft>.empty(growable: true);
     /*for(int i = 0; i < balanceResponse.data.balance.nft.length; i ++)
@@ -63,8 +58,7 @@ class AppService {
       String address,
       String endpoint,
       List<UcoTransfer> listUcoTransfer) async {
-    int txIndex =
-        await sl.get<ApiService>().getTransactionIndex(address, endpoint);
+    int txIndex = await sl.get<ApiService>().getTransactionIndex(address);
     final TransactionBuilder builder = TransactionBuilder('transfer');
     for (UcoTransfer transfer in listUcoTransfer) {
       builder.addUCOTransfer(transfer.to, transfer.amount);
@@ -81,7 +75,7 @@ class AppService {
         }
       }
     };
-    final data = await sl.get<ApiService>().sendTx(tx, endpoint);
+    final data = await sl.get<ApiService>().sendTx(tx);
     if (data.errors) {
       print(data.errors);
     }

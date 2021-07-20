@@ -26,8 +26,7 @@ class DBHelper {
         acct_index INTEGER, 
         selected INTEGER, 
         last_accessed INTEGER,
-        private_key TEXT,
-        address TEXT,
+        genesisAddress TEXT,
         balance TEXT
         )''';
   static Database _db;
@@ -161,17 +160,13 @@ class DBHelper {
     final List<Account> accounts = List<Account>.empty(growable: true);
     for (int i = 0; i < list.length; i++) {
       accounts.add(Account(
-        id: list[i]['id'],
-        name: list[i]['name'],
-        index: list[i]['acct_index'],
-        lastAccess: list[i]['last_accessed'],
-        selected: list[i]['selected'] == 1 ? true : false,
-        balance: list[i]['balance'],
-      ));
-    }
-
-    for (Account a in accounts) {
-      a.address = AppUtil().seedToAddress(seed, a.index);
+          id: list[i]['id'],
+          name: list[i]['name'],
+          index: list[i]['acct_index'],
+          lastAccess: list[i]['last_accessed'],
+          selected: list[i]['selected'] == 1 ? true : false,
+          balance: list[i]['balance'],
+          genesisAddress: list[i]['genesisAddress']));
     }
     return accounts;
   }
@@ -185,21 +180,19 @@ class DBHelper {
     final List<Account> accounts = List<Account>.empty(growable: true);
     for (int i = 0; i < list.length; i++) {
       accounts.add(Account(
-        id: list[i]['id'],
-        name: list[i]['name'],
-        index: list[i]['acct_index'],
-        lastAccess: list[i]['last_accessed'],
-        selected: list[i]['selected'] == 1 ? true : false,
-        balance: list[i]['balance'],
-      ));
-    }
-    for (Account a in accounts) {
-      a.address = AppUtil().seedToAddress(seed, a.index);
+          id: list[i]['id'],
+          name: list[i]['name'],
+          index: list[i]['acct_index'],
+          lastAccess: list[i]['last_accessed'],
+          selected: list[i]['selected'] == 1 ? true : false,
+          balance: list[i]['balance'],
+          genesisAddress: list[i]['genesisAddress']));
     }
     return accounts;
   }
 
-  Future<Account> addAccount(String seed, {String nameBuilder}) async {
+  Future<Account> addAccount(String genesisAddress,
+      {String nameBuilder}) async {
     final Database dbClient = await db;
     Account account;
     await dbClient.transaction((Transaction txn) async {
@@ -222,16 +215,16 @@ class DBHelper {
         lastAccess: 0,
         balance: '0',
         selected: false,
-        address: AppUtil().seedToAddress(seed, nextIndex),
+        genesisAddress: genesisAddress,
       );
       await txn.rawInsert(
-          'INSERT INTO Accounts (name, acct_index, last_accessed, selected, address, balance) values(?, ?, ?, ?, ?, ?)',
+          'INSERT INTO Accounts (name, acct_index, last_accessed, selected, genesisAddress, balance) values(?, ?, ?, ?, ?, ?)',
           [
             account.name,
             account.index,
             account.lastAccess,
             if (account.selected) 1 else 0,
-            account.address,
+            account.genesisAddress,
             account.balance,
           ]);
     });
@@ -247,13 +240,14 @@ class DBHelper {
   Future<int> saveAccount(Account account) async {
     final Database dbClient = await db;
     return await dbClient.rawInsert(
-        'INSERT INTO Accounts (name, acct_index, last_accessed, selected, balance) values(?, ?, ?, ?, ?)',
+        'INSERT INTO Accounts (name, acct_index, last_accessed, selected, balance, genesisAddress) values(?, ?, ?, ?, ?, ?)',
         [
           account.name,
           account.index,
           account.lastAccess,
           if (account.selected) 1 else 0,
           account.balance,
+          account.genesisAddress
         ]);
   }
 
@@ -284,7 +278,7 @@ class DBHelper {
         [balance, account.index]);
   }
 
-  Future<Account> getSelectedAccount(String seed) async {
+  Future<Account> getSelectedAccount(String genesisAddress) async {
     final Database dbClient = await db;
     final List<Map> list =
         await dbClient.rawQuery('SELECT * FROM Accounts where selected = 1');
@@ -298,20 +292,18 @@ class DBHelper {
       selected: true,
       lastAccess: list[0]['last_accessed'],
       balance: list[0]['balance'],
-      address: AppUtil().seedToAddress(seed, list[0]['acct_index']),
+      genesisAddress: list[0]['genesisAddress'],
     );
     return account;
   }
 
-  Future<Account> getMainAccount(String seed) async {
+  Future<Account> getMainAccount(String genesisAddress) async {
     final Database dbClient = await db;
     final List<Map> list =
         await dbClient.rawQuery('SELECT * FROM Accounts where acct_index = 0');
     if (list.isEmpty) {
       return null;
     }
-    final String address = AppUtil().seedToAddress(seed, list[0]['acct_index']);
-
     final Account account = Account(
       id: list[0]['id'],
       name: list[0]['name'],
@@ -319,7 +311,7 @@ class DBHelper {
       selected: true,
       lastAccess: list[0]['last_accessed'],
       balance: list[0]['balance'],
-      address: address,
+      genesisAddress: list[0]['genesisAddress'],
     );
     return account;
   }

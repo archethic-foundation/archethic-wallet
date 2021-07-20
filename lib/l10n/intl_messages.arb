@@ -1,6 +1,6 @@
 {
-  "@@last_modified": "2021-06-23T22:05:36.766545",
-  "welcomeText": "Welcome to ArchEthic Wallet.\n\nTo begin, you may connect to your decentralized wallet with your password.",
+  "@@last_modified": "2021-07-15T23:03:44.610466",
+  "welcomeText": "Welcome to ArchEthic Wallet.\n\nTo begin, you may connect to your decentralized wallet with your transaction chain seed.",
   "@welcomeText": {
     "description": "",
     "type": "text",
@@ -12,8 +12,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "enterTxAddressText": "Please, enter a transaction address",
-  "@enterTxAddressText": {
+  "enterTxChainSeedText": "Please, enter a transaction chain seed",
+  "@enterTxChainSeedText": {
     "description": "",
     "type": "text",
     "placeholders": {}
@@ -654,6 +654,12 @@
     "type": "text",
     "placeholders": {}
   },
+  "pinPadShuffle": "PIN Pad Shuffle",
+  "@pinPadShuffle": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
   "copy": "Copy",
   "@copy": {
     "description": "Copy (to clipboard)",
@@ -714,14 +720,14 @@
     "type": "text",
     "placeholders": {}
   },
-  "enterTxAddressHint": "Enter a transaction address",
-  "@enterTxAddressHint": {
+  "enterPasswordHint": "Enter your password",
+  "@enterPasswordHint": {
     "description": "",
     "type": "text",
     "placeholders": {}
   },
-  "enterPasswordHint": "Enter your password",
-  "@enterPasswordHint": {
+  "enterTxAddressHint": "Enter a transaction address",
+  "@enterTxAddressHint": {
     "description": "",
     "type": "text",
     "placeholders": {}
@@ -824,12 +830,6 @@
   },
   "addressInfos": "Address informations",
   "@addressInfos": {
-    "description": "",
-    "type": "text",
-    "placeholders": {}
-  },
-  "pinPadShuffle": "PIN Pad Shuffle",
-  "@pinPadShuffle": {
     "description": "",
     "type": "text",
     "placeholders": {}

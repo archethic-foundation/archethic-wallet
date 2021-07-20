@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 // Package imports:
-import 'package:archethic_lib_dart/utils.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show uint8ListToHex, hexToUint8List;
 
 class AppHelpers {
   static List<String> hexArray = '0123456789ABCDEF'.split('');

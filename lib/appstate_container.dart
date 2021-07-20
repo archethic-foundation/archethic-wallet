@@ -8,11 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/model/response/coins_current_data_response.dart';
-import 'package:archethic_lib_dart/model/response/coins_price_response.dart';
-import 'package:archethic_lib_dart/model/response/simple_price_response.dart';
-import 'package:archethic_lib_dart/services/api_coins_service.dart';
-import 'package:archethic_lib_dart/utils.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show uint8ListToHex, AddressService, ApiCoinsService, SimplePriceResponse, CoinsPriceResponse, CoinsCurrentDataResponse;
 import 'package:event_taxi/event_taxi.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -92,6 +88,9 @@ class StateContainerState extends State<StateContainer> {
   @override
   void initState() {
     super.initState();
+    // Setup Service Provide
+    setupServiceLocator();
+
     // Register RxBus
     _registerBus();
 
@@ -268,14 +267,17 @@ class StateContainerState extends State<StateContainer> {
   // Update the global wallet instance with a new address
   Future<void> updateWallet({Account account}) async {
     //print("updateWallet");
-    String address = await getSeed();
+    String genesisAddress = await getSeed();
     //address = AppUtil().seedToAddress(await getSeed(), account.index);
-    account.address = address;
+    account.genesisAddress = genesisAddress;
+    account.lastAddress =
+        await sl.get<AddressService>().lastAddress(genesisAddress);
+    print("lastAddress: " + account.lastAddress);
     selectedAccount = account;
     updateRecentlyUsedAccounts();
 
     setState(() {
-      wallet = AppWallet(address: address, loading: true);
+      wallet = AppWallet(address: account.lastAddress, loading: true);
       requestUpdate();
     });
   }
@@ -361,15 +363,13 @@ class StateContainerState extends State<StateContainer> {
   }
 
   Future<void> requestUpdate() async {
-    //print("requestUpdate");
     if (wallet != null &&
         wallet.address != null &&
         Address(wallet.address).isValid()) {
-      final String endpoint = await sl.get<SharedPrefsUtil>().getEndpoint();
       try {
         sl
             .get<AppService>()
-            .getBalanceGetResponse(selectedAccount.address, endpoint, true);
+            .getBalanceGetResponse(selectedAccount.lastAddress, true);
 
         final SimplePriceResponse simplePriceResponse = await sl
             .get<ApiCoinsService>()

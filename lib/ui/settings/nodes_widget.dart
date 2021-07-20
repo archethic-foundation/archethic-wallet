@@ -7,10 +7,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/model/response/nodes_response.dart';
-import 'package:archethic_lib_dart/model/response/transactions_response.dart';
-import 'package:archethic_lib_dart/services/address_service.dart';
-import 'package:archethic_lib_dart/services/api_service.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show Node, NodesResponse, ApiService, TransactionsResponse, AddressService;
 
 // Project imports:
 import 'package:archethic_mobile_wallet/app_icons.dart';
@@ -19,7 +16,6 @@ import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/address.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 class NodesList extends StatefulWidget {
   NodesList(this.nodesController, this.nodesOpen);
@@ -42,13 +38,12 @@ class _NodesListState extends State<NodesList> {
   }
 
   Future<void> initNodesList() async {
-    final String endpoint = await sl.get<SharedPrefsUtil>().getEndpoint();
-    _nodes = await sl.get<ApiService>().getNodeList(endpoint);
+    _nodes = await sl.get<ApiService>().getNodeList();
     String genesisAddress = sl
         .get<AddressService>()
         .deriveAddress(_nodes.data.nodes[0].rewardAddress, 0);
     TransactionsResponse transactionsResponse =
-        await sl.get<ApiService>().getTransactions(genesisAddress, 1, endpoint);
+        await sl.get<ApiService>().getTransactions(genesisAddress, 1);
     print(transactionsResponse.data.transactionChain[0].address);
   }
 

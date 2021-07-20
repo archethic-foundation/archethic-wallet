@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/utils.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show uint8ListToHex;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 

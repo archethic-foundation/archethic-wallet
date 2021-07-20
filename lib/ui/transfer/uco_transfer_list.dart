@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/transaction_builder.dart';
-import 'package:archethic_lib_dart/utils.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show UcoTransfer, uint8ListToHex;
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
