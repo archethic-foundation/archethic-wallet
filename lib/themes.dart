@@ -13,6 +13,8 @@ abstract class BaseTheme {
   Color? primary20;
   Color? primary15;
   Color? primary10;
+  Color? primary05;
+  Color? primary03;
 
   Color? icon;
   Color? icon45;
@@ -33,16 +35,6 @@ abstract class BaseTheme {
   Color? backgroundDark00;
 
   Color? backgroundDarkest;
-
-  Color? text;
-  Color? text60;
-  Color? text45;
-  Color? text30;
-  Color? text20;
-  Color? text15;
-  Color? text10;
-  Color? text05;
-  Color? text03;
 
   Color? overlay20;
   Color? overlay30;
@@ -104,6 +96,10 @@ class ArchEthicTheme implements BaseTheme {
   Color? primary15 = white.withOpacity(0.15);
   @override
   Color? primary10 = white.withOpacity(0.1);
+  @override
+  Color? primary05 = white.withOpacity(0.05);
+  @override
+  Color? primary03 = white.withOpacity(0.03);
 
   @override
   Color? icon = white;
@@ -139,25 +135,6 @@ class ArchEthicTheme implements BaseTheme {
 
   @override
   Color? backgroundDarkest = blueDarktest;
-
-  @override
-  Color? text = white.withOpacity(0.9);
-  @override
-  Color? text60 = white.withOpacity(0.6);
-  @override
-  Color? text45 = white.withOpacity(0.45);
-  @override
-  Color? text30 = white.withOpacity(0.3);
-  @override
-  Color? text20 = white.withOpacity(0.2);
-  @override
-  Color? text15 = white.withOpacity(0.15);
-  @override
-  Color? text10 = white.withOpacity(0.1);
-  @override
-  Color? text05 = white.withOpacity(0.05);
-  @override
-  Color? text03 = white.withOpacity(0.03);
 
   @override
   Color? overlay90 = black.withOpacity(0.9);

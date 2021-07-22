@@ -62,7 +62,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
               height: 5,
               width: MediaQuery.of(context).size.width * 0.15,
               decoration: BoxDecoration(
-                color: StateContainer.of(context).curTheme.text10,
+                color: StateContainer.of(context).curTheme.primary10,
                 borderRadius: BorderRadius.circular(100.0),
               ),
             ),
@@ -79,7 +79,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                       children: <Widget>[
                         AutoSizeText(
                           AppLocalization.of(context).createPasswordSheetHeader,
-                          style: AppStyles.textStyleHeader(context),
+                          style: AppStyles.textStyleLargerW700Primary(context),
                           minFontSize: 12,
                           stepGranularity: 0.1,
                           textAlign: TextAlign.center,
@@ -97,7 +97,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                     child: AutoSizeText(
                       AppLocalization.of(context)
                           .passwordWillBeRequiredToOpenParagraph,
-                      style: AppStyles.textStyleParagraph(context),
+                      style: AppStyles.textStyleMediumW200Primary(context),
                       maxLines: 5,
                       stepGranularity: 0.5,
                     ),
@@ -155,7 +155,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                                             .primary
                                         : StateContainer.of(context)
                                             .curTheme
-                                            .text,
+                                            .primary,
                                     fontFamily: 'Montserrat',
                                   ),
                                   onSubmitted: (String text) {
@@ -207,7 +207,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                                             .primary
                                         : StateContainer.of(context)
                                             .curTheme
-                                            .text,
+                                            .primary,
                                     fontFamily: 'Montserrat',
                                   ),
                                 ),

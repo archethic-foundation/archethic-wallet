@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show AddressService; 
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show AddressService;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 
@@ -46,6 +46,8 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
   Future<void> initControllerText() async {
     enterEndpointController.text =
         await sl.get<SharedPrefsUtil>().getEndpoint();
+    enterTxChainSeedController.text =
+        '008ACC0FCD48A5FDF5602106D064F334D136A6F49C69F536F4A1D792716971FC75';
   }
 
   @override
@@ -122,8 +124,9 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                                 Navigator.pop(context);
                               },
                               child: Icon(AppIcons.back,
-                                  color:
-                                      StateContainer.of(context).curTheme.text,
+                                  color: StateContainer.of(context)
+                                      .curTheme
+                                      .primary,
                                   size: 24)),
                         ),
                       ],
@@ -138,7 +141,8 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                               vertical: 20),
                           child: AutoSizeText(
                             AppLocalization.of(context).enterTxChainSeedText,
-                            style: AppStyles.textStyleParagraph(context),
+                            style:
+                                AppStyles.textStyleMediumW200Primary(context),
                             maxLines: 4,
                             stepGranularity: 0.5,
                           ),
@@ -156,8 +160,9 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                                         padding: EdgeInsets.zero,
                                         focusNode: enterTxChainSeedFocusNode,
                                         controller: enterTxChainSeedController,
-                                        style: AppStyles.textStyleAddressText60(
-                                            context),
+                                        style:
+                                            AppStyles.textStyleSmallW100Text60(
+                                                context),
                                         inputFormatters: [
                                           LengthLimitingTextInputFormatter(255),
                                         ],
@@ -220,8 +225,8 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                                 children: [
                                   Text(
                                     AppLocalization.of(context).enterEndpoint,
-                                    style:
-                                        AppStyles.textStyleParagraph(context),
+                                    style: AppStyles.textStyleMediumW200Primary(
+                                        context),
                                   ),
                                 ],
                               ),

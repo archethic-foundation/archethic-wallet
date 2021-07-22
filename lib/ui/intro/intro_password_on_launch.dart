@@ -75,7 +75,7 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                                 child: Icon(AppIcons.back,
                                     color: StateContainer.of(context)
                                         .curTheme
-                                        .text,
+                                        .primary,
                                     size: 24)),
                           ),
                         ],
@@ -93,7 +93,7 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                               .requireAPasswordToOpenHeader,
                           maxLines: 3,
                           stepGranularity: 0.5,
-                          style: AppStyles.textStyleHeaderColored(context),
+                          style: AppStyles.textStyleLargestW700Primary(context),
                         ),
                       ),
                       // The paragraph
@@ -105,7 +105,7 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                         child: AutoSizeText(
                           AppLocalization.of(context)
                               .createPasswordFirstParagraph,
-                          style: AppStyles.textStyleParagraph(context),
+                          style: AppStyles.textStyleMediumW200Primary(context),
                           maxLines: 5,
                           stepGranularity: 0.5,
                         ),
@@ -118,7 +118,7 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                         child: AutoSizeText(
                           AppLocalization.of(context)
                               .createPasswordSecondParagraph,
-                          style: AppStyles.textStyleParagraphPrimary(context),
+                          style: AppStyles.textStyleMediumW700Primary(context),
                           maxLines: 5,
                           stepGranularity: 0.5,
                         ),

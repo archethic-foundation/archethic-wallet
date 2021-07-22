@@ -66,7 +66,7 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
               height: 5,
               width: MediaQuery.of(context).size.width * 0.15,
               decoration: BoxDecoration(
-                color: StateContainer.of(context).curTheme.text10,
+                color: StateContainer.of(context).curTheme.primary10,
                 borderRadius: BorderRadius.circular(100.0),
               ),
             ),
@@ -173,7 +173,7 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
                             .backgroundDarkest,
                         borderRadius: BorderRadius.circular(25),
                       ),
-                      child: UIUtil.threeLineAddressText(
+                      child: UIUtil.threeLinetextStyleSmallestW400Text(
                           context, destinationAltered,
                           type: ThreeLineAddressTextType.SUCCESS,
                           contactName: widget.contactName)),

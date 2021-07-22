@@ -67,7 +67,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                 child: Icon(AppIcons.back,
                                     color: StateContainer.of(context)
                                         .curTheme
-                                        .text,
+                                        .primary,
                                     size: 24)),
                           ),
                         ],
@@ -84,7 +84,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           AppLocalization.of(context).ackBackedUp,
                           maxLines: 4,
                           stepGranularity: 0.5,
-                          style: AppStyles.textStyleHeaderColored(context),
+                          style: AppStyles.textStyleLargestW700Primary(context),
                         ),
                       ),
                       // The paragraph
@@ -95,7 +95,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                             top: 15.0),
                         child: AutoSizeText(
                           AppLocalization.of(context).secretWarning,
-                          style: AppStyles.textStyleParagraph(context),
+                          style: AppStyles.textStyleMediumW200Primary(context),
                           maxLines: 5,
                           stepGranularity: 0.5,
                         ),

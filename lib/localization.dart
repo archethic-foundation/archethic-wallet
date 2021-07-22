@@ -12,8 +12,6 @@ import 'package:intl/intl.dart';
 // Project imports:
 import 'package:archethic_mobile_wallet/l10n/messages_all.dart';
 import 'package:archethic_mobile_wallet/model/available_language.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 /// Localization
 class AppLocalization {
@@ -37,7 +35,7 @@ class AppLocalization {
 
   String get welcomeText {
     return Intl.message(
-        'Welcome to ArchEthic Wallet.\n\nTo begin, you may connect to your decentralized wallet with your transaction chain seed.',
+        'Welcome to Internet of Trust.\n\nJoin the Internet of Trust with ArchEthic Public Blockchain by Uniris and be the only key.\n\nTo begin, you may connect to your decentralized wallet with your transaction chain seed.',
         desc: '',
         name: 'welcomeText');
   }

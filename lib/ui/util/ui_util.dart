@@ -18,7 +18,7 @@ enum ThreeLineAddressTextType { PRIMARY60, PRIMARY, SUCCESS, SUCCESS_FULL }
 enum OneLineAddressTextType { PRIMARY60, PRIMARY, SUCCESS }
 
 class UIUtil {
-  static Widget threeLineAddressText(BuildContext context, String address,
+  static Widget threeLinetextStyleSmallestW400Text(BuildContext context, String address,
       {ThreeLineAddressTextType type = ThreeLineAddressTextType.PRIMARY,
       String? contactName}) {
     String stringPartOne = '';
@@ -67,11 +67,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: AppStyles.textStyleAddressText60(context),
+                    style: AppStyles.textStyleSmallW100Text60(context),
                   ),
                   TextSpan(
                     text: stringPartTwo,
-                    style: AppStyles.textStyleAddressText60(context),
+                    style: AppStyles.textStyleSmallW100Text60(context),
                   ),
                 ],
               ),
@@ -83,7 +83,7 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
-                    style: AppStyles.textStyleAddressText60(context),
+                    style: AppStyles.textStyleSmallW100Text60(context),
                   ),
                 ],
               ),
@@ -95,11 +95,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
-                    style: AppStyles.textStyleAddressText60(context),
+                    style: AppStyles.textStyleSmallW100Text60(context),
                   ),
                   TextSpan(
                       text: stringPartFive,
-                      style: AppStyles.textStyleAddressText60(context)),
+                      style: AppStyles.textStyleSmallW100Text60(context)),
                 ],
               ),
             )
@@ -111,7 +111,7 @@ class UIUtil {
                 textAlign: TextAlign.center,
                 text: TextSpan(
                     text: contactName,
-                    style: AppStyles.textStyleAddressText90(context)))
+                    style: AppStyles.textStyleSmallW100Primary(context)))
             : const SizedBox();
         return Column(
           children: <Widget>[
@@ -123,11 +123,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                   TextSpan(
                     text: stringPartTwo,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                 ],
               ),
@@ -139,7 +139,7 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                 ],
               ),
@@ -151,11 +151,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                   TextSpan(
                     text: stringPartFive,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                 ],
               ),
@@ -168,7 +168,7 @@ class UIUtil {
                 textAlign: TextAlign.center,
                 text: TextSpan(
                     text: contactName,
-                    style: AppStyles.textStyleAddressSuccess(context)))
+                    style: AppStyles.textStyleSmallW100Sucess(context)))
             : const SizedBox();
         return Column(
           children: <Widget>[
@@ -180,11 +180,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                   TextSpan(
                     text: stringPartTwo,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                 ],
               ),
@@ -196,7 +196,7 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                 ],
               ),
@@ -208,11 +208,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                   TextSpan(
                     text: stringPartFive,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                 ],
               ),
@@ -229,11 +229,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                   TextSpan(
                     text: stringPartTwo,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                 ],
               ),
@@ -245,7 +245,7 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                 ],
               ),
@@ -257,11 +257,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                   TextSpan(
                     text: stringPartFive,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                 ],
               ),
@@ -273,7 +273,7 @@ class UIUtil {
     }
   }
 
-  static Widget oneLineAddressText(BuildContext context, String address,
+  static Widget oneLinetextStyleSmallestW400Text(BuildContext context, String address,
       {OneLineAddressTextType type = OneLineAddressTextType.PRIMARY}) {
     final String stringPartOne = address.substring(0, 12);
     final String stringPartFive = address.substring(59);
@@ -288,15 +288,15 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: AppStyles.textStyleAddressText60(context),
+                    style: AppStyles.textStyleSmallW100Text60(context),
                   ),
                   TextSpan(
                     text: '...',
-                    style: AppStyles.textStyleAddressText60(context),
+                    style: AppStyles.textStyleSmallW100Text60(context),
                   ),
                   TextSpan(
                     text: stringPartFive,
-                    style: AppStyles.textStyleAddressText60(context),
+                    style: AppStyles.textStyleSmallW100Text60(context),
                   ),
                 ],
               ),
@@ -313,15 +313,15 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                   TextSpan(
                     text: '...',
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                   TextSpan(
                     text: stringPartFive,
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                 ],
               ),
@@ -338,15 +338,15 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: AppStyles.textStyleAddressSuccess(context),
+                    style: AppStyles.textStyleSmallW100Sucess(context),
                   ),
                   TextSpan(
                     text: '...',
-                    style: AppStyles.textStyleAddressText90(context),
+                    style: AppStyles.textStyleSmallW100Primary(context),
                   ),
                   TextSpan(
                     text: stringPartFive,
-                    style: AppStyles.textStyleAddressSuccess(context),
+                    style: AppStyles.textStyleSmallW100Sucess(context),
                   ),
                 ],
               ),
@@ -360,7 +360,7 @@ class UIUtil {
 
   static Widget threeLineSeedText(BuildContext context, String address,
       {TextStyle? textStyle}) {
-    textStyle = textStyle ?? AppStyles.textStyleSeed(context);
+    textStyle = textStyle ?? AppStyles.textStyleSmallW100Primary(context);
     final String stringPartOne = address.substring(0, 22);
     final String stringPartTwo = address.substring(22, 44);
     final String stringPartThree = address.substring(44, 64);
@@ -412,7 +412,7 @@ class UIUtil {
           ),
           child: Text(
             content,
-            style: AppStyles.textStyleSnackbar(context),
+            style: AppStyles.textStyleSmallW700Background(context),
             textAlign: TextAlign.start,
           ),
         ),

@@ -88,7 +88,7 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                                   title: Text(
                                       AppLocalization.of(context).getOption,
                                       style:
-                                          AppStyles.textContextMenu(context)),
+                                          AppStyles.textStyleSmallW700ContextMenuPrimary(context)),
                                   trailingIcon: Icon(Icons.get_app,
                                       color: StateContainer.of(context)
                                           .curTheme
@@ -109,7 +109,7 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                                   title: Text(
                                     AppLocalization.of(context).deleteOption,
                                     style:
-                                        AppStyles.textContextMenuRed(context),
+                                        AppStyles.textStyleSmallW700ContextMenuTextRed(context),
                                   ),
                                   trailingIcon: Icon(
                                     Icons.delete,
@@ -156,11 +156,11 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
             Row(
               children: [
                 Text(displayName,
-                    style: AppStyles.textStyleAddressText90(context)),
+                    style: AppStyles.textStyleSmallW100Primary(context)),
               ],
             ),
             Text(ucoTransfer.amount!.toString(),
-                style: AppStyles.textStyleAddressText90(context)),
+                style: AppStyles.textStyleSmallW100Primary(context)),
           ],
         ),
         const SizedBox(height: 6),

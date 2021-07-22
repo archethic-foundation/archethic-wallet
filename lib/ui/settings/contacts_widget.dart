@@ -151,13 +151,13 @@ class _ContactsListState extends State<ContactsList> {
                               },
                               child: Icon(AppIcons.back,
                                   color:
-                                      StateContainer.of(context).curTheme.text,
+                                      StateContainer.of(context).curTheme.primary,
                                   size: 24)),
                         ),
                         //Contacts Header Text
                         Text(
                           AppLocalization.of(context).addressBookHeader,
-                          style: AppStyles.textStyleSettingsHeader(context),
+                          style: AppStyles.textStyleLargestW700Primary(context),
                         ),
                       ],
                     ),
@@ -254,7 +254,7 @@ class _ContactsListState extends State<ContactsList> {
       child: Column(children: <Widget>[
         Divider(
           height: 2,
-          color: StateContainer.of(context).curTheme.text15,
+          color: StateContainer.of(context).curTheme.primary15,
         ),
         // Main Container
         Container(
@@ -274,11 +274,11 @@ class _ContactsListState extends State<ContactsList> {
                     children: <Widget>[
                       //Contact name
                       Text(contact.name,
-                          style: AppStyles.textStyleSettingItemHeader(context)),
+                          style: AppStyles.textStyleMediumW600Primary(context)),
                       //Contact address
                       Text(
                         contact.address,
-                        style: AppStyles.textStyleTransactionAddress(context),
+                        style: AppStyles.textStyleSmallestW100Text60(context),
                       ),
                     ],
                   ),

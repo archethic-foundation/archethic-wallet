@@ -52,7 +52,7 @@ class LineChartWidget {
               padding: const EdgeInsets.only(left: 5.0, top: 5.0),
               child: Text(
                 'UCO (1d)',
-                style: AppStyles.textStyleTransactionUnit(context),
+                style: AppStyles.textStyleSmallestW100Primary60(context),
               ),
             ),
           ),
@@ -71,7 +71,7 @@ class LineChartWidget {
                                     .priceChangePercentage24h!
                                     .toStringAsFixed(2) +
                                 '%',
-                            style: AppStyles.textStyleChartGreen(context),
+                            style: AppStyles.textStyleSmallestW100PositiveValue(context),
                           ),
                           Icon(Entypo.up_dir,
                               color: StateContainer.of(context)
@@ -87,7 +87,7 @@ class LineChartWidget {
                                     .priceChangePercentage24h!
                                     .toStringAsFixed(2) +
                                 '%',
-                            style: AppStyles.textStyleChartRed(context),
+                            style: AppStyles.textStyleSmallestW100NegativeValue(context),
                           ),
                           Icon(Entypo.down_dir,
                               color: StateContainer.of(context)

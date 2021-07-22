@@ -89,7 +89,7 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                                   title: Text(
                                       AppLocalization.of(context).getOption,
                                       style:
-                                          AppStyles.textContextMenu(context)),
+                                          AppStyles.textStyleSmallW700ContextMenuPrimary(context)),
                                   trailingIcon: Icon(Icons.get_app,
                                       color: StateContainer.of(context)
                                           .curTheme
@@ -110,7 +110,7 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                                   title: Text(
                                     AppLocalization.of(context).deleteOption,
                                     style:
-                                        AppStyles.textContextMenuRed(context),
+                                        AppStyles.textStyleSmallW700ContextMenuTextRed(context),
                                   ),
                                   trailingIcon: Icon(
                                     Icons.delete,
@@ -165,15 +165,15 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                         nftTransfer.nft == null
                             ? 'NFT 1....'
                             : uint8ListToHex(nftTransfer.nft!),
-                        style: AppStyles.textStyleAddressText90(context)),
+                        style: AppStyles.textStyleSmallW100Primary(context)),
                     Text(Address(displayName).getShortString3(),
-                        style: AppStyles.textStyleTiny(context))
+                        style: AppStyles.textStyleTinyW100Primary60(context))
                   ],
                 ),
               ],
             ),
             Text(nftTransfer.amount!.toString(),
-                style: AppStyles.textStyleAddressText90(context)),
+                style: AppStyles.textStyleSmallW100Primary(context)),
           ],
         ),
         const SizedBox(height: 6),

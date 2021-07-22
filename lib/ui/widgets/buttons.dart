@@ -48,7 +48,7 @@ class AppButton {
               ),
               child: AutoSizeText(buttonText,
                   textAlign: TextAlign.center,
-                  style: AppStyles.textStyleButtonPrimary(context),
+                  style: AppStyles.textStyleLargeW700Background(context),
                   maxLines: 1,
                   stepGranularity: 0.5),
               onPressed: () {
@@ -78,8 +78,8 @@ class AppButton {
                 buttonText,
                 textAlign: TextAlign.center,
                 style: disabled
-                    ? AppStyles.textStyleButtonPrimaryOutlineDisabled(context)
-                    : AppStyles.textStyleButtonPrimaryOutline(context),
+                    ? AppStyles.textStyleSmallW700Primary60(context)
+                    : AppStyles.textStyleLargeW700Primary(context),
                 maxLines: 1,
                 stepGranularity: 0.5,
               ),
@@ -116,7 +116,7 @@ class AppButton {
               child: AutoSizeText(
                 buttonText,
                 textAlign: TextAlign.center,
-                style: AppStyles.textStyleButtonPrimary(context),
+                style: AppStyles.textStyleLargeW700Background(context),
                 maxLines: 1,
                 stepGranularity: 0.5,
               ),
@@ -146,7 +146,7 @@ class AppButton {
               child: AutoSizeText(
                 buttonText,
                 textAlign: TextAlign.center,
-                style: AppStyles.textStyleButtonSuccessOutline(context),
+                style: AppStyles.textStyleSmallW700Success(context),
                 maxLines: 1,
                 stepGranularity: 0.5,
               ),
@@ -176,7 +176,7 @@ class AppButton {
               child: AutoSizeText(
                 buttonText,
                 textAlign: TextAlign.center,
-                style: AppStyles.textStyleButtonTextOutline(context),
+                style: AppStyles.textStyleSmallW700Primary(context),
                 maxLines: 1,
                 stepGranularity: 0.5,
               ),

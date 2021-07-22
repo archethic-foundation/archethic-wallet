@@ -28,7 +28,6 @@ import 'package:archethic_mobile_wallet/network/model/response/address_txs_respo
 import 'package:archethic_mobile_wallet/service/app_service.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/themes.dart';
-import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
 import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 import 'util/sharedprefsutil.dart';

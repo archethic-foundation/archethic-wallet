@@ -168,7 +168,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
               height: 5,
               width: MediaQuery.of(context).size.width * 0.15,
               decoration: BoxDecoration(
-                color: StateContainer.of(context).curTheme.text10,
+                color: StateContainer.of(context).curTheme.primary10,
                 borderRadius: BorderRadius.circular(100.0),
               ),
             ),
@@ -183,7 +183,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                         Text(
                           widget.title ??
                               AppLocalization.of(context).transfering,
-                          style: AppStyles.textStyleHeader(context),
+                          style: AppStyles.textStyleLargerW700Primary(context),
                         ),
                       ],
                     ),
@@ -282,7 +282,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                         Text(
                           AppLocalization.of(context).to,
                           style: TextStyle(
-                            color: StateContainer.of(context).curTheme.text60,
+                            color: StateContainer.of(context).curTheme.primary60,
                             fontSize: 16.0,
                             fontWeight: FontWeight.w700,
                             fontFamily: 'Montserrat',
@@ -309,7 +309,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                             .backgroundDarkest,
                         borderRadius: BorderRadius.circular(25),
                       ),
-                      child: UIUtil.threeLineAddressText(
+                      child: UIUtil.threeLinetextStyleSmallestW400Text(
                           context, destinationAltered,
                           contactName: widget.contactName)),
                 ],

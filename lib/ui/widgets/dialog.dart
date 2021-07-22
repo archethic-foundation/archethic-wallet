@@ -23,16 +23,16 @@ class AppDialogs {
         return AppAlertDialog(
           title: Text(
             title,
-            style: AppStyles.textStyleButtonPrimaryOutline(context),
+            style: AppStyles.textStyleLargeW700Primary(context),
           ),
-          content: Text(content, style: AppStyles.textStyleParagraph(context)),
+          content: Text(content, style: AppStyles.textStyleMediumW200Primary(context)),
           actions: <Widget>[
             TextButton(
               child: Container(
                 constraints: const BoxConstraints(maxWidth: 100),
                 child: Text(
                   cancelText,
-                  style: AppStyles.textStyleDialogButtonText(context),
+                  style: AppStyles.textStyleSmallestW600Primary(context),
                 ),
               ),
               onPressed: () {
@@ -47,7 +47,7 @@ class AppDialogs {
                 constraints: const BoxConstraints(maxWidth: 100),
                 child: Text(
                   buttonText,
-                  style: AppStyles.textStyleDialogButtonText(context),
+                  style: AppStyles.textStyleSmallestW600Primary(context),
                 ),
               ),
               onPressed: () {
@@ -69,14 +69,14 @@ class AppDialogs {
         return AppAlertDialog(
           title: Text(
             title,
-            style: AppStyles.textStyleButtonPrimaryOutline(context),
+            style: AppStyles.textStyleLargeW700Primary(context),
           ),
-          content: Text(content, style: AppStyles.textStyleParagraph(context)),
+          content: Text(content, style: AppStyles.textStyleMediumW200Primary(context)),
           actions: <Widget>[
             TextButton(
               child: Text(
                 AppLocalization.of(context).cancel.toUpperCase(),
-                style: AppStyles.textStyleDialogButtonText(context),
+                style: AppStyles.textStyleSmallestW600Primary(context),
               ),
               onPressed: () {
                 Navigator.of(context).pop();

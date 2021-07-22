@@ -42,8 +42,11 @@ class _NodesListState extends State<NodesList> {
     String genesisAddress = sl
         .get<AddressService>()
         .deriveAddress(_nodes.data.nodes[0].rewardAddress, 0);
+    //TransactionsResponse transactionsResponse =
+    //    await sl.get<ApiService>().getTransactions(genesisAddress, 1);
+    // TODO
     TransactionsResponse transactionsResponse =
-        await sl.get<ApiService>().getTransactions(genesisAddress, 1);
+        await sl.get<ApiService>().getTransactions('00BEB8B908F67FF85BCB2D8174F11436A44D90EFCFCD32D1FCFB71A54710577685', 1);
     print(transactionsResponse.data.transactionChain[0].address);
   }
 
@@ -88,13 +91,13 @@ class _NodesListState extends State<NodesList> {
                               },
                               child: Icon(AppIcons.back,
                                   color:
-                                      StateContainer.of(context).curTheme.text,
+                                      StateContainer.of(context).curTheme.primary,
                                   size: 24)),
                         ),
                         //Nodes Header Text
                         Text(
                           AppLocalization.of(context).nodesHeader,
-                          style: AppStyles.textStyleSettingsHeader(context),
+                          style: AppStyles.textStyleLargestW700Primary(context),
                         ),
                       ],
                     ),
@@ -211,20 +214,20 @@ class _NodesListState extends State<NodesList> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text('First public key : ',
-                          style: AppStyles.textStyleDialogButtonText(context)),
+                          style: AppStyles.textStyleSmallestW600Primary(context)),
                       Text(Address(node.firstPublicKey).getShortString2(),
                           style:
-                              AppStyles.textStyleTransactionAddress(context)),
+                              AppStyles.textStyleSmallestW100Primary(context)),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
                         'Last public key : ',
-                        style: AppStyles.textStyleDialogButtonText(context),
+                        style: AppStyles.textStyleSmallestW600Primary(context),
                       ),
                       Text(
                         Address(node.lastPublicKey).getShortString2(),
-                        style: AppStyles.textStyleTransactionAddress(context),
+                        style: AppStyles.textStyleSmallestW100Primary(context),
                       ),
                       SizedBox(
                         height: 10,
@@ -233,9 +236,9 @@ class _NodesListState extends State<NodesList> {
                         children: [
                           Text('IP : ',
                               style:
-                                  AppStyles.textStyleDialogButtonText(context)),
+                                  AppStyles.textStyleSmallestW600Primary(context)),
                           Text(node.ip + ":" + node.port.toString(),
-                              style: AppStyles.textStyleTransactionAddress(
+                              style: AppStyles.textStyleSmallestW100Primary(
                                   context)),
                         ],
                       ),
@@ -246,15 +249,15 @@ class _NodesListState extends State<NodesList> {
                         children: [
                           Text('Geo patch : ',
                               style:
-                                  AppStyles.textStyleDialogButtonText(context)),
+                                  AppStyles.textStyleSmallestW600Primary(context)),
                           Text(node.geoPatch,
-                              style: AppStyles.textStyleTransactionAddress(
+                              style: AppStyles.textStyleSmallestW100Primary(
                                   context)),
                           Text(" - Network patch : ",
                               style:
-                                  AppStyles.textStyleDialogButtonText(context)),
+                                  AppStyles.textStyleSmallestW600Primary(context)),
                           Text(node.networkPatch,
-                              style: AppStyles.textStyleTransactionAddress(
+                              style: AppStyles.textStyleSmallestW100Primary(
                                   context)),
                         ],
                       ),
@@ -265,9 +268,9 @@ class _NodesListState extends State<NodesList> {
                         children: [
                           Text('Average availability : ',
                               style:
-                                  AppStyles.textStyleDialogButtonText(context)),
+                                  AppStyles.textStyleSmallestW600Primary(context)),
                           Text(node.averageAvailability.toString(),
-                              style: AppStyles.textStyleTransactionAddress(
+                              style: AppStyles.textStyleSmallestW100Primary(
                                   context)),
                         ],
                       ),
@@ -278,9 +281,9 @@ class _NodesListState extends State<NodesList> {
                         children: [
                           Text('Authorized : ',
                               style:
-                                  AppStyles.textStyleDialogButtonText(context)),
+                                  AppStyles.textStyleSmallestW600Primary(context)),
                           Text(node.authorized.toString(),
-                              style: AppStyles.textStyleTransactionAddress(
+                              style: AppStyles.textStyleSmallestW100Primary(
                                   context)),
                         ],
                       ),
@@ -288,10 +291,10 @@ class _NodesListState extends State<NodesList> {
                         height: 10,
                       ),
                       Text('Reward address : ',
-                          style: AppStyles.textStyleDialogButtonText(context)),
+                          style: AppStyles.textStyleSmallestW600Primary(context)),
                       Text(Address(node.rewardAddress).getShortString2(),
                           style:
-                              AppStyles.textStyleTransactionAddress(context)),
+                              AppStyles.textStyleSmallestW100Primary(context)),
                     ],
                   ),
                 ),
@@ -301,7 +304,7 @@ class _NodesListState extends State<NodesList> {
         ),
         Divider(
           height: 2,
-          color: StateContainer.of(context).curTheme.text15,
+          color: StateContainer.of(context).curTheme.primary15,
         ),
       ]),
     );

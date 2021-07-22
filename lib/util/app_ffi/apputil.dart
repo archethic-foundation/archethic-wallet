@@ -12,7 +12,6 @@ import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/db/account.dart' as Account;
 import 'package:archethic_mobile_wallet/model/db/appdb.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 class AppUtil {
   Future<String> seedToAddress(String seed, int index) async {

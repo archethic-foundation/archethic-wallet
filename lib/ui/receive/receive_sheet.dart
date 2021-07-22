@@ -71,13 +71,13 @@ class _ReceiveSheetStateState extends State<ReceiveSheet> {
                       height: 5,
                       width: MediaQuery.of(context).size.width * 0.15,
                       decoration: BoxDecoration(
-                        color: StateContainer.of(context).curTheme.text10,
+                        color: StateContainer.of(context).curTheme.primary10,
                         borderRadius: BorderRadius.circular(100.0),
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 15.0),
-                      child: UIUtil.threeLineAddressText(context,
+                      child: UIUtil.threeLinetextStyleSmallestW400Text(context,
                           '05A2525C9C4FDDC02BA97554980A0CFFADA2AEB0650E3EAD05796275F05DDA85',
                           // TODO:
                           //context, StateContainer.of(context).wallet.address,

@@ -12,7 +12,6 @@ import 'package:sqflite/sqflite.dart';
 // Project imports:
 import 'package:archethic_mobile_wallet/model/db/account.dart';
 import 'package:archethic_mobile_wallet/model/db/contact.dart';
-import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
 
 class DBHelper {
   static const int DB_VERSION = 1;

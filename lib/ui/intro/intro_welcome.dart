@@ -98,7 +98,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                                 vertical: 20),
                             child: AutoSizeText(
                               AppLocalization.of(context).welcomeText,
-                              style: AppStyles.textStyleParagraph(context),
+                              style: AppStyles.textStyleMediumW700Primary(context),
                               maxLines: 5,
                               stepGranularity: 0.5,
                             ),

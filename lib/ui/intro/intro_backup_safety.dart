@@ -66,7 +66,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                                 child: Icon(AppIcons.back,
                                     color: StateContainer.of(context)
                                         .curTheme
-                                        .text,
+                                        .primary,
                                     size: 24)),
                           ),
                         ],
@@ -93,7 +93,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                         alignment: const AlignmentDirectional(-1, 0),
                         child: AutoSizeText(
                           AppLocalization.of(context).secretInfoHeader,
-                          style: AppStyles.textStyleHeaderColored(context),
+                          style: AppStyles.textStyleLargestW700Primary(context),
                           stepGranularity: 0.1,
                           maxLines: 1,
                           minFontSize: 12,
@@ -110,7 +110,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                           children: <Widget>[
                             AutoSizeText(
                               AppLocalization.of(context).secretInfo,
-                              style: AppStyles.textStyleParagraph(context),
+                              style: AppStyles.textStyleMediumW200Primary(context),
                               maxLines: 5,
                               stepGranularity: 0.5,
                             ),
@@ -118,7 +118,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               margin: const EdgeInsetsDirectional.only(top: 15),
                               child: AutoSizeText(
                                 AppLocalization.of(context).secretWarning,
-                                style: AppStyles.textStyleParagraphPrimary(
+                                style: AppStyles.textStyleMediumW700Primary(
                                     context),
                                 maxLines: 4,
                                 stepGranularity: 0.5,

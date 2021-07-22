@@ -32,7 +32,7 @@ class _TransferCompleteSheetState extends State<TransferCompleteSheet> {
               height: 5,
               width: MediaQuery.of(context).size.width * 0.15,
               decoration: BoxDecoration(
-                color: StateContainer.of(context).curTheme.text10,
+                color: StateContainer.of(context).curTheme.primary10,
                 borderRadius: BorderRadius.circular(100.0),
               ),
             ),
@@ -52,7 +52,7 @@ class _TransferCompleteSheetState extends State<TransferCompleteSheet> {
                     alignment: const AlignmentDirectional(0, 0),
                     margin: const EdgeInsets.only(bottom: 25),
                     child: Text(AppLocalization.of(context).transferSuccess,
-                        style: AppStyles.textStyleParagraph(context)),
+                        style: AppStyles.textStyleMediumW200Primary(context)),
                   ),
                 ],
               ),

@@ -57,7 +57,7 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
               height: 5,
               width: MediaQuery.of(context).size.width * 0.15,
               decoration: BoxDecoration(
-                color: StateContainer.of(context).curTheme.text10,
+                color: StateContainer.of(context).curTheme.primary10,
                 borderRadius: BorderRadius.circular(100.0),
               ),
             ),
@@ -77,7 +77,7 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
                               AppLocalization.of(context)
                                   .disablePasswordSheetHeader,
                               context),
-                          style: AppStyles.textStyleHeader(context),
+                          style: AppStyles.textStyleLargerW700Primary(context),
                           minFontSize: 12,
                           stepGranularity: 0.1,
                           textAlign: TextAlign.center,
@@ -95,7 +95,7 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
                     child: AutoSizeText(
                       AppLocalization.of(context)
                           .passwordNoLongerRequiredToOpenParagraph,
-                      style: AppStyles.textStyleParagraph(context),
+                      style: AppStyles.textStyleMediumW200Primary(context),
                       maxLines: 5,
                       stepGranularity: 0.5,
                     ),
@@ -134,7 +134,7 @@ class _DisablePasswordSheetState extends State<DisablePasswordSheet> {
                                     fontSize: 16.0,
                                     color: StateContainer.of(context)
                                         .curTheme
-                                        .text,
+                                        .primary,
                                     fontFamily: 'Montserrat',
                                   ),
                                 ),

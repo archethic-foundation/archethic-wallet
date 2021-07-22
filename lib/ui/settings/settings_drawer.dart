@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:fluttericon/entypo_icons.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:package_info/package_info.dart';
@@ -193,7 +192,7 @@ class _SettingsSheetState extends State<SettingsSheet>
           return AppSimpleDialog(
             title: Text(
               AppLocalization.of(context).authMethod,
-              style: AppStyles.textStyleDialogHeader(context),
+              style: AppStyles.textStyleLargeW700Primary(context),
             ),
             children: <Widget>[
               AppSimpleDialogOption(
@@ -204,7 +203,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
                     AppLocalization.of(context).biometricsMethod,
-                    style: AppStyles.textStyleDialogOptions(context),
+                    style: AppStyles.textStyleMediumW600Primary(context),
                   ),
                 ),
               ),
@@ -216,7 +215,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
                     AppLocalization.of(context).pinMethod,
-                    style: AppStyles.textStyleDialogOptions(context),
+                    style: AppStyles.textStyleMediumW600Primary(context),
                   ),
                 ),
               ),
@@ -253,7 +252,7 @@ class _SettingsSheetState extends State<SettingsSheet>
           return AppSimpleDialog(
             title: Text(
               AppLocalization.of(context).lockAppSetting,
-              style: AppStyles.textStyleDialogHeader(context),
+              style: AppStyles.textStyleLargeW700Primary(context),
             ),
             children: <Widget>[
               AppSimpleDialogOption(
@@ -264,7 +263,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
                     AppLocalization.of(context).no,
-                    style: AppStyles.textStyleDialogOptions(context),
+                    style: AppStyles.textStyleMediumW600Primary(context),
                   ),
                 ),
               ),
@@ -276,7 +275,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
                     AppLocalization.of(context).yes,
-                    style: AppStyles.textStyleDialogOptions(context),
+                    style: AppStyles.textStyleMediumW600Primary(context),
                   ),
                 ),
               ),
@@ -316,8 +315,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                               .curCurrency
                               .getDisplayName(context) ==
                           AvailableCurrency(value).getDisplayName(context)
-                      ? AppStyles.textStyleDialogOptionsChoice(context)
-                      : AppStyles.textStyleDialogOptions(context)),
+                      ? AppStyles.textStyleMediumW600ChoiceOption(context)
+                      : AppStyles.textStyleMediumW600Primary(context)),
               const SizedBox(width: 20),
               if (StateContainer.of(context)
                       .curCurrency
@@ -348,7 +347,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                   padding: const EdgeInsets.only(bottom: 10.0),
                   child: Text(
                     AppLocalization.of(context).currency,
-                    style: AppStyles.textStyleDialogHeader(context),
+                    style: AppStyles.textStyleLargeW700Primary(context),
                   ),
                 ),
                 children: _buildCurrencyOptions(),
@@ -387,8 +386,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                               .curLanguage
                               .getDisplayName(context) ==
                           LanguageSetting(value).getDisplayName(context)
-                      ? AppStyles.textStyleDialogOptionsChoice(context)
-                      : AppStyles.textStyleDialogOptions(context)),
+                      ? AppStyles.textStyleMediumW600ChoiceOption(context)
+                      : AppStyles.textStyleMediumW600Primary(context)),
               const SizedBox(width: 20),
               if (StateContainer.of(context)
                       .curLanguage
@@ -419,7 +418,7 @@ class _SettingsSheetState extends State<SettingsSheet>
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
                 AppLocalization.of(context).language,
-                style: AppStyles.textStyleDialogHeader(context),
+                style: AppStyles.textStyleLargeW700Primary(context),
               ),
             ),
             children: _buildLanguageOptions(),
@@ -454,8 +453,8 @@ class _SettingsSheetState extends State<SettingsSheet>
               Text(LockTimeoutSetting(value).getDisplayName(context),
                   style: _curUnlockSetting.getDisplayName(context) ==
                           LockTimeoutSetting(value).getDisplayName(context)
-                      ? AppStyles.textStyleDialogOptionsChoice(context)
-                      : AppStyles.textStyleDialogOptions(context)),
+                      ? AppStyles.textStyleMediumW600ChoiceOption(context)
+                      : AppStyles.textStyleMediumW600Primary(context)),
               const SizedBox(width: 20),
               if (_curUnlockSetting.getDisplayName(context) ==
                   LockTimeoutSetting(value).getDisplayName(context))
@@ -484,7 +483,7 @@ class _SettingsSheetState extends State<SettingsSheet>
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
                 AppLocalization.of(context).autoLockHeader,
-                style: AppStyles.textStyleDialogHeader(context),
+                style: AppStyles.textStyleLargeW700Primary(context),
               ),
             ),
             children: _buildLockTimeoutOptions(),
@@ -582,7 +581,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                   start: 26.0, end: 20, bottom: 15),
               child: Text(
                 'Settings',
-                style: AppStyles.textStyleSettingItemHeader(context),
+                style: AppStyles.textStyleMediumW600Primary(context),
               ),
             ),
             // Settings items
@@ -600,11 +599,11 @@ class _SettingsSheetState extends State<SettingsSheet>
                               fontSize: 16.0,
                               fontWeight: FontWeight.w100,
                               color:
-                                  StateContainer.of(context).curTheme.text60)),
+                                  StateContainer.of(context).curTheme.primary60)),
                     ),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
+                      color: StateContainer.of(context).curTheme.primary15,
                     ),
                     AppSettings.buildSettingsListItemSingleLineWithInfos(
                         context,
@@ -618,7 +617,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     }),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
+                      color: StateContainer.of(context).curTheme.primary15,
                     ),
                     Container(
                       margin: const EdgeInsetsDirectional.only(
@@ -628,11 +627,11 @@ class _SettingsSheetState extends State<SettingsSheet>
                               fontSize: 16.0,
                               fontWeight: FontWeight.w100,
                               color:
-                                  StateContainer.of(context).curTheme.text60)),
+                                  StateContainer.of(context).curTheme.primary60)),
                     ),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
+                      color: StateContainer.of(context).curTheme.primary15,
                     ),
                     AppSettings.buildSettingsListItemSingleLineWithInfos(
                         context,
@@ -646,7 +645,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     }),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
+                      color: StateContainer.of(context).curTheme.primary15,
                     ),
                     AppSettings.buildSettingsListItemSingleLineWithInfos(
                         context,
@@ -660,7 +659,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     }),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
+                      color: StateContainer.of(context).curTheme.primary15,
                     ),
                     Container(
                       margin: const EdgeInsetsDirectional.only(
@@ -670,11 +669,11 @@ class _SettingsSheetState extends State<SettingsSheet>
                               fontSize: 16.0,
                               fontWeight: FontWeight.w100,
                               color:
-                                  StateContainer.of(context).curTheme.text60)),
+                                  StateContainer.of(context).curTheme.primary60)),
                     ),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
+                      color: StateContainer.of(context).curTheme.primary15,
                     ),
                     AppSettings.buildSettingsListItemWithDefaultValueWithInfos(
                         context,
@@ -685,7 +684,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         _currencyDialog),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
+                      color: StateContainer.of(context).curTheme.primary15,
                     ),
                     AppSettings.buildSettingsListItemWithDefaultValue(
                         context,
@@ -695,7 +694,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         _languageDialog),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
+                      color: StateContainer.of(context).curTheme.primary15,
                     ),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
@@ -708,7 +707,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     }),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
+                      color: StateContainer.of(context).curTheme.primary15,
                     ),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
@@ -742,7 +741,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     }),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
+                      color: StateContainer.of(context).curTheme.primary15,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
@@ -750,7 +749,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(versionString,
-                              style: AppStyles.textStyleVersion(context)),
+                              style: AppStyles.textStyleSmallW100Text60(context)),
                         ],
                       ),
                     ),
@@ -838,13 +837,13 @@ class _SettingsSheetState extends State<SettingsSheet>
                               _securityController.reverse();
                             },
                             child: Icon(AppIcons.back,
-                                color: StateContainer.of(context).curTheme.text,
+                                color: StateContainer.of(context).curTheme.primary,
                                 size: 24)),
                       ),
                       //Security Header Text
                       Text(
                         AppLocalization.of(context).securityHeader,
-                        style: AppStyles.textStyleSettingsHeader(context),
+                        style: AppStyles.textStyleLargestW700Primary(context),
                       ),
                     ],
                   ),
@@ -865,13 +864,13 @@ class _SettingsSheetState extends State<SettingsSheet>
                               fontSize: 16.0,
                               fontWeight: FontWeight.w100,
                               color:
-                                  StateContainer.of(context).curTheme.text60)),
+                                  StateContainer.of(context).curTheme.primary60)),
                     ),
                     // Authentication Method
                     if (_hasBiometrics)
                       Divider(
                         height: 2,
-                        color: StateContainer.of(context).curTheme.text15,
+                        color: StateContainer.of(context).curTheme.primary15,
                       )
                     else
                       null,
@@ -889,7 +888,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       Column(children: <Widget>[
                         Divider(
                             height: 2,
-                            color: StateContainer.of(context).curTheme.text15),
+                            color: StateContainer.of(context).curTheme.primary15),
                         AppSettings.buildSettingsListItemWithDefaultValue(
                             context,
                             AppLocalization.of(context).lockAppSetting,
@@ -902,7 +901,7 @@ class _SettingsSheetState extends State<SettingsSheet>
 
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
+                      color: StateContainer.of(context).curTheme.primary15,
                     ),
                     AppSettings.buildSettingsListItemSwitch(
                         context,
@@ -918,7 +917,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     }),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
+                      color: StateContainer.of(context).curTheme.primary15,
                     ),
                     // Authentication Timer
                     AppSettings.buildSettingsListItemWithDefaultValue(
@@ -935,7 +934,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       Column(children: <Widget>[
                         Divider(
                             height: 2,
-                            color: StateContainer.of(context).curTheme.text15),
+                            color: StateContainer.of(context).curTheme.primary15),
                         AppSettings.buildSettingsListItemSingleLine(
                             context,
                             AppLocalization.of(context).setWalletPassword,
@@ -948,7 +947,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       Column(children: <Widget>[
                         Divider(
                             height: 2,
-                            color: StateContainer.of(context).curTheme.text15),
+                            color: StateContainer.of(context).curTheme.primary15),
                         AppSettings.buildSettingsListItemSingleLine(
                             context,
                             AppLocalization.of(context).disableWalletPassword,
@@ -959,7 +958,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       ]),
                     Divider(
                         height: 2,
-                        color: StateContainer.of(context).curTheme.text15),
+                        color: StateContainer.of(context).curTheme.primary15),
                   ].where(notNull).toList(),
                 ),
                 //List Top Gradient End

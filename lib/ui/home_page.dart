@@ -5,6 +5,8 @@ import 'dart:async';
 import 'dart:typed_data';
 
 // Flutter imports:
+import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/transactions_chain.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -357,8 +359,10 @@ class _AppHomePageState extends State<AppHomePage>
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Container(
-          child: SvgPicture.asset("assets/archethic_logo_alone.svg", height: 40,)
-        ),
+            child: SvgPicture.asset(
+          "assets/archethic_logo_alone.svg",
+          height: 40,
+        )),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
@@ -440,6 +444,7 @@ class _AppHomePageState extends State<AppHomePage>
                             const SizedBox(height: 20),
                             NftListWidget.buildNftList(context),
                             const SizedBox(height: 20),
+                            
                           ],
                         ),
                       ],

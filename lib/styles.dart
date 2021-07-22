@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:ui' as ui;
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -8,34 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 
 class AppStyles {
-  // Text style for paragraph text.
-  static TextStyle textStyleParagraph(BuildContext context) {
+
+  static TextStyle textStyleMediumW200Primary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.medium,
         fontWeight: FontWeight.w200,
-        color: StateContainer.of(context).curTheme.text);
+        color: StateContainer.of(context).curTheme.primary);
   }
 
-  static TextStyle textArch(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.largestc,
-        fontWeight: FontWeight.w200,
-        color: StateContainer.of(context).curTheme.text);
-  }
-
-  static TextStyle textEthic(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.largestc,
-        fontStyle: FontStyle.italic,
-        fontWeight: FontWeight.w200,
-        color: StateContainer.of(context).curTheme.text);
-  }
-
-  // Text style for paragraph text with primary color.
-  static TextStyle textStyleParagraphPrimary(BuildContext context) {
+  static TextStyle textStyleMediumW700Primary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.medium,
@@ -43,16 +22,15 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.primary);
   }
 
-  static TextStyle textStyleParagraphSmall(BuildContext context) {
+  static TextStyle textStyleSmallW200Primary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w200,
-        color: StateContainer.of(context).curTheme.text);
+        color: StateContainer.of(context).curTheme.primary);
   }
 
-  // Text style for thin paragraph text with primary color.
-  static TextStyle textStyleParagraphThinPrimary(BuildContext context) {
+  static TextStyle textStyleSmallW600Primary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
@@ -60,17 +38,7 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.primary);
   }
 
-  // Text style for paragraph text with primary color.
-  static TextStyle textStyleParagraphSuccess(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.small,
-        fontWeight: FontWeight.w700,
-        color: StateContainer.of(context).curTheme.success);
-  }
-
-  // For snackbar/Toast text
-  static TextStyle textStyleSnackbar(BuildContext context) {
+  static TextStyle textStyleSmallW700Background(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
@@ -78,7 +46,7 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.background);
   }
 
-  static TextStyle textContextMenu(BuildContext context) {
+  static TextStyle textStyleSmallW700ContextMenuPrimary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
@@ -86,7 +54,7 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.contextMenuText);
   }
 
-  static TextStyle textContextMenuRed(BuildContext context) {
+  static TextStyle textStyleSmallW700ContextMenuTextRed(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
@@ -94,8 +62,7 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.contextMenuTextRed);
   }
 
-  // Text style for primary button
-  static TextStyle textStyleButtonPrimary(BuildContext context) {
+  static TextStyle textStyleLargeW700Background(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes._large,
@@ -103,8 +70,7 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.background);
   }
 
-  // Text style for outline button
-  static TextStyle textStyleButtonPrimaryOutline(BuildContext context) {
+  static TextStyle textStyleLargeW700Primary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes._large,
@@ -112,8 +78,7 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.primary);
   }
 
-  // Text style for small outline button
-  static TextStyle textStyleButtonPrimarySmallOutline(BuildContext context) {
+  static TextStyle textStyleSmallW700Primary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
@@ -121,8 +86,7 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.primary);
   }
 
-  // Text style for small success outline button
-  static TextStyle textStyleButtonSuccessSmallOutline(BuildContext context) {
+  static TextStyle textStyleSmallW700Success(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
@@ -130,7 +94,7 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.success);
   }
 
-  static TextStyle textStyleButtonPrimaryOutlineDisabled(BuildContext context) {
+  static TextStyle textStyleSmallW700Primary60(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes._large,
@@ -138,8 +102,7 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.primary60);
   }
 
-  // Text style for success outline button
-  static TextStyle textStyleButtonSuccessOutline(BuildContext context) {
+  static TextStyle textStyleLargeW700Success(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes._large,
@@ -147,64 +110,45 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.success);
   }
 
-  // Text style for text outline button
-  static TextStyle textStyleButtonTextOutline(BuildContext context) {
+  static TextStyle textStyleSmallW100Sucess(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes._large,
-        fontWeight: FontWeight.w700,
-        color: StateContainer.of(context).curTheme.text);
-  }
-
-  static TextStyle textStyleAddressSuccess(BuildContext context) {
-    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.small,
+      fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.success,
-      fontSize: AppFontSizes.small,
       height: 1.5,
-      fontWeight: FontWeight.w100,
-      fontFamily: 'Montserrat',
     );
   }
 
-  static TextStyle textStyleAddressText60(BuildContext context) {
+  static TextStyle textStyleSmallW100Text60(BuildContext context) {
     return TextStyle(
-      color: StateContainer.of(context).curTheme.text60,
-      fontSize: AppFontSizes.small,
-      height: 1.5,
-      fontWeight: FontWeight.w100,
       fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.small,
+      fontWeight: FontWeight.w100,
+      color: StateContainer.of(context).curTheme.primary60,
+      height: 1.5,
     );
   }
 
-  static TextStyle textStyleAddressText90(BuildContext context) {
+  static TextStyle textStyleSmallW100Primary(BuildContext context) {
     return TextStyle(
-      color: StateContainer.of(context).curTheme.text,
-      fontSize: AppFontSizes.small,
-      height: 1.5,
-      fontWeight: FontWeight.w100,
       fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.small,
+      fontWeight: FontWeight.w100,
+      color: StateContainer.of(context).curTheme.primary,
+      height: 1.5,
     );
   }
 
-  // Text style for alternate currencies on home page
-  static TextStyle textStyleCurrencyAlt(BuildContext context) {
+  static TextStyle textStyleSmallW600Text60(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.small,
         fontWeight: FontWeight.w600,
-        color: StateContainer.of(context).curTheme.text60);
+        color: StateContainer.of(context).curTheme.primary60);
   }
 
-  static TextStyle textStyleCurrencyAltHidden(BuildContext context) {
-    return const TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.small,
-        fontWeight: FontWeight.w600,
-        color: Colors.transparent);
-  }
-
-  // Text style for primary currency on home page
-  static TextStyle textStyleCurrency(BuildContext context) {
+  static TextStyle textStyleLargestW900Primary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes._largest,
@@ -212,36 +156,7 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.primary);
   }
 
-  // Text style for primary currency on home page
-  static TextStyle textStyleCurrencySmaller(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: 22,
-        fontWeight: FontWeight.w900,
-        color: StateContainer.of(context).curTheme.primary);
-  }
-
-  /* Transaction cards */
-  // Text style for transaction card "Received"/"Sent" text
-  static TextStyle textStyleTransactionType(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.small,
-        fontWeight: FontWeight.w600,
-        color: StateContainer.of(context).curTheme.text);
-  }
-
-  static TextStyle textStyleTransactionTypeGreen(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.small,
-        fontWeight: FontWeight.w600,
-        foreground: Paint()
-          ..shader = ui.Gradient.linear(Offset.zero, const Offset(0, 60),
-              [Colors.green[200]!, Colors.green[800]!]));
-  }
-
-  static TextStyle textStyleChartGreen(BuildContext context) {
+  static TextStyle textStyleSmallestW100PositiveValue(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.smallest,
@@ -250,7 +165,7 @@ class AppStyles {
     );
   }
 
-  static TextStyle textStyleChartRed(BuildContext context) {
+  static TextStyle textStyleSmallestW100NegativeValue(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.smallest,
@@ -259,37 +174,7 @@ class AppStyles {
     );
   }
 
-  static TextStyle textStyleTransactionTypeBlue(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.small,
-        fontWeight: FontWeight.w600,
-        foreground: Paint()
-          ..shader = ui.Gradient.linear(Offset.zero, const Offset(0, 60),
-              [Colors.blue[200]!, Colors.blue[800]!]));
-  }
-
-  static TextStyle textStyleTransactionTypeRed(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.small,
-        fontWeight: FontWeight.w600,
-        foreground: Paint()
-          ..shader = ui.Gradient.linear(Offset.zero, const Offset(0, 60),
-              [Colors.red[200]!, Colors.red[800]!]));
-  }
-
-  // Amount
-  static TextStyle textStyleTransactionAmount(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        color: StateContainer.of(context).curTheme.primary60,
-        fontSize: AppFontSizes.smallest,
-        fontWeight: FontWeight.w600);
-  }
-
-  // Unit (e.g. BAN)
-  static TextStyle textStyleTransactionUnit(BuildContext context) {
+  static TextStyle textStyleSmallestW100Primary60(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       color: StateContainer.of(context).curTheme.primary60,
@@ -298,7 +183,16 @@ class AppStyles {
     );
   }
 
-  static TextStyle textStyleTiny(BuildContext context) {
+  static TextStyle textStyleSmallestW100Primary(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      color: StateContainer.of(context).curTheme.primary,
+      fontSize: AppFontSizes.smallest,
+      fontWeight: FontWeight.w100,
+    );
+  }
+
+  static TextStyle textStyleTinyW100Primary60(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       color: StateContainer.of(context).curTheme.primary60,
@@ -307,56 +201,25 @@ class AppStyles {
     );
   }
 
-  // Address
-  static TextStyle textStyleTransactionAddress(BuildContext context) {
+  static TextStyle textStyleSmallestW100Text60(BuildContext context) {
     return TextStyle(
       fontSize: AppFontSizes.smallest,
       fontFamily: 'Montserrat',
       fontWeight: FontWeight.w100,
-      color: StateContainer.of(context).curTheme.text60,
+      color: StateContainer.of(context).curTheme.primary60,
     );
   }
 
-  // Version info in settings
-  static TextStyle textStyleVersion(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.small,
-        fontWeight: FontWeight.w100,
-        color: StateContainer.of(context).curTheme.text60);
-  }
-
-  static TextStyle textStyleVersionUnderline(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.small,
-        fontWeight: FontWeight.w100,
-        color: StateContainer.of(context).curTheme.text60,
-        decoration: TextDecoration.underline);
-  }
-
-  // Text style for alert dialog header
-  static TextStyle textStyleDialogHeader(BuildContext context) {
-    return TextStyle(
-      fontFamily: 'Montserrat',
-      fontSize: AppFontSizes._large,
-      fontWeight: FontWeight.w700,
-      color: StateContainer.of(context).curTheme.primary,
-    );
-  }
-
-  // Text style for dialog options
-  static TextStyle textStyleDialogOptions(BuildContext context) {
+  static TextStyle textStyleMediumW600Primary(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.medium,
       fontWeight: FontWeight.w600,
-      color: StateContainer.of(context).curTheme.text,
+      color: StateContainer.of(context).curTheme.primary,
     );
   }
 
-  // Text style for dialog options
-  static TextStyle textStyleDialogOptionsChoice(BuildContext context) {
+  static TextStyle textStyleMediumW600ChoiceOption(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.medium,
@@ -365,8 +228,7 @@ class AppStyles {
     );
   }
 
-  // Text style for dialog button text
-  static TextStyle textStyleDialogButtonText(BuildContext context) {
+  static TextStyle textStyleSmallestW600Primary(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.smallest,
@@ -375,53 +237,7 @@ class AppStyles {
     );
   }
 
-  // Text style for seed text
-  static TextStyle textStyleSeed(BuildContext context) {
-    return TextStyle(
-      fontSize: AppFontSizes.small,
-      fontWeight: FontWeight.w100,
-      fontFamily: 'Montserrat',
-      color: StateContainer.of(context).curTheme.primary,
-      height: 1.5,
-      letterSpacing: 1,
-    );
-  }
-
-  static TextStyle textStyleSeedGray(BuildContext context) {
-    return TextStyle(
-      fontSize: AppFontSizes.small,
-      fontWeight: FontWeight.w100,
-      fontFamily: 'Montserrat',
-      color: StateContainer.of(context).curTheme.text60,
-      height: 1.5,
-      letterSpacing: 1,
-    );
-  }
-
-  // Text style for mnemonic text
-  static TextStyle textStyleMnemonicText(BuildContext context) {
-    return TextStyle(
-      fontSize: AppFontSizes.smallText(context),
-      fontWeight: FontWeight.w100,
-      fontFamily: 'Montserrat',
-      color: StateContainer.of(context).curTheme.primary,
-      height: 1,
-      letterSpacing: 1,
-    );
-  }
-
-  static TextStyle textStyleMnemonicTextGray(BuildContext context) {
-    return TextStyle(
-      fontSize: AppFontSizes.smallText(context),
-      fontWeight: FontWeight.w100,
-      fontFamily: 'Montserrat',
-      color: StateContainer.of(context).curTheme.text60,
-      height: 1,
-      letterSpacing: 1,
-    );
-  }
-
-  static TextStyle textStyleSeedGreen(BuildContext context) {
+  static TextStyle textStyleSmallW100Success(BuildContext context) {
     return TextStyle(
       fontSize: AppFontSizes.small,
       fontWeight: FontWeight.w100,
@@ -432,38 +248,7 @@ class AppStyles {
     );
   }
 
-  // Text style for general headers like sheet headers
-  static TextStyle textStyleHeader(BuildContext context) {
-    return TextStyle(
-      fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.larger,
-      fontWeight: FontWeight.w700,
-      color: StateContainer.of(context).curTheme.text,
-    );
-  }
-
-  // Text style for settings headers
-  static TextStyle textStyleSettingsHeader(BuildContext context) {
-    return TextStyle(
-      fontFamily: 'Montserrat',
-      fontSize: AppFontSizes._largest,
-      fontWeight: FontWeight.w700,
-      color: StateContainer.of(context).curTheme.text,
-    );
-  }
-
-  // Text style for primary color header
-  static TextStyle textStyleHeaderColored(BuildContext context) {
-    return TextStyle(
-      fontFamily: 'Montserrat',
-      fontSize: AppFontSizes._largest,
-      fontWeight: FontWeight.w700,
-      color: StateContainer.of(context).curTheme.primary,
-    );
-  }
-
-  // Text style for primary color header
-  static TextStyle textStyleHeader2Colored(BuildContext context) {
+  static TextStyle textStyleLargerW700Primary(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.larger,
@@ -472,136 +257,66 @@ class AppStyles {
     );
   }
 
-  static TextStyle textStylePinScreenHeaderColored(BuildContext context) {
+  static TextStyle textStyleLargestW700Primary(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      fontSize: AppFontSizes._large,
+      fontSize: AppFontSizes._largest,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.primary,
     );
   }
 
-  static TextStyle textStyleLogoutButton(BuildContext context) {
-    return TextStyle(
-      fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.small,
-      fontWeight: FontWeight.w600,
-      color: StateContainer.of(context).curTheme.text,
-    );
-  }
-
-  // Text style for setting item header
-  static TextStyle textStyleSettingItemHeader(BuildContext context) {
+  static TextStyle textStyleMediumW600Text45(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.medium,
       fontWeight: FontWeight.w600,
-      color: StateContainer.of(context).curTheme.text,
+      color: StateContainer.of(context).curTheme.primary45,
     );
   }
 
-  static TextStyle textStyleSettingItemHeader60(BuildContext context) {
-    return TextStyle(
-      fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.medium,
-      fontWeight: FontWeight.w600,
-      color: StateContainer.of(context).curTheme.text60,
-    );
-  }
-
-  static TextStyle textStyleSettingItemHeader45(BuildContext context) {
-    return TextStyle(
-      fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.medium,
-      fontWeight: FontWeight.w600,
-      color: StateContainer.of(context).curTheme.text45,
-    );
-  }
-
-  // Text style for setting item subheader
-  static TextStyle textStyleSettingItemSubheader(BuildContext context) {
+  static TextStyle textStyleSmallestW100Text30(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.smallest,
       fontWeight: FontWeight.w100,
-      color: StateContainer.of(context).curTheme.text60,
+      color: StateContainer.of(context).curTheme.primary30,
     );
   }
 
-  static TextStyle textStyleSettingItemSubheader30(BuildContext context) {
+  static TextStyle textStyleSmallTextW100Primary(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.smallText(context),
+      fontWeight: FontWeight.w100,
+      color: StateContainer.of(context).curTheme.primary,
+    );
+  }
+
+  static TextStyle textStyleSmallTextW100Success(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.smallText(context),
+      fontWeight: FontWeight.w100,
+      color: StateContainer.of(context).curTheme.success,
+    );
+  }
+
+  static TextStyle textStyleSmallTextW100Text30(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.smallText(context),
+      fontWeight: FontWeight.w100,
+      color: StateContainer.of(context).curTheme.primary30,
+    );
+  }
+
+  static TextStyle textStyleSmallestW400Primary(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.smallest,
-      fontWeight: FontWeight.w100,
-      color: StateContainer.of(context).curTheme.text30,
-    );
-  }
-
-  // Text style for lock screen error
-  static TextStyle textStyleErrorMedium(BuildContext context) {
-    return TextStyle(
-      fontSize: AppFontSizes.small,
-      color: StateContainer.of(context).curTheme.primary,
-      fontFamily: 'Montserrat',
-      fontWeight: FontWeight.w600,
-    );
-  }
-
-  // Text style for mnemonic
-  static TextStyle textStyleMnemonic(BuildContext context) {
-    return TextStyle(
-      fontSize: AppFontSizes.smallText(context),
-      color: StateContainer.of(context).curTheme.primary,
-      fontFamily: 'Montserrat',
-      fontWeight: FontWeight.w100,
-    );
-  }
-
-  // Text style for mnemonic success
-  static TextStyle textStyleMnemonicSuccess(BuildContext context) {
-    return TextStyle(
-      fontSize: AppFontSizes.smallText(context),
-      color: StateContainer.of(context).curTheme.success,
-      fontFamily: 'Montserrat',
-      fontWeight: FontWeight.w100,
-    );
-  }
-
-  // Text style for numbers of mnemonic
-  static TextStyle textStyleNumbersOfMnemonic(BuildContext context) {
-    return TextStyle(
-      fontSize: AppFontSizes.smallText(context),
-      color: StateContainer.of(context).curTheme.text30,
-      fontFamily: 'Montserrat',
-      fontWeight: FontWeight.w100,
-    );
-  }
-
-  // Text style for numbers of mnemonic
-  static TextStyle headerPrimary(BuildContext context) {
-    return TextStyle(
-      fontSize: 16,
-      color: StateContainer.of(context).curTheme.primary,
-      fontFamily: 'Montserrat',
-      fontWeight: FontWeight.w700,
-    );
-  }
-
-  static TextStyle headerSuccess(BuildContext context) {
-    return TextStyle(
-      fontSize: 16,
-      color: StateContainer.of(context).curTheme.success,
-      fontFamily: 'Montserrat',
-      fontWeight: FontWeight.w700,
-    );
-  }
-
-  static TextStyle addressText(BuildContext context) {
-    return TextStyle(
-      fontSize: 12,
-      color: StateContainer.of(context).curTheme.text,
-      fontFamily: 'Montserrat',
       fontWeight: FontWeight.w400,
+      color: StateContainer.of(context).curTheme.primary,     
     );
   }
 }

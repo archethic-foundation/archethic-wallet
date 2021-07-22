@@ -218,7 +218,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                       height: 5,
                       width: MediaQuery.of(context).size.width * 0.15,
                       decoration: BoxDecoration(
-                        color: StateContainer.of(context).curTheme.text10,
+                        color: StateContainer.of(context).curTheme.primary10,
                         borderRadius: BorderRadius.circular(100.0),
                       ),
                     ),
@@ -231,7 +231,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                           // Header
                           AutoSizeText(
                             (widget.title ?? AppLocalization.of(context).send)!,
-                            style: AppStyles.textStyleHeader(context),
+                            style: AppStyles.textStyleLargerW700Primary(context),
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             stepGranularity: 0.1,
@@ -978,13 +978,13 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
             },
             child: Text(contact.name!,
                 textAlign: TextAlign.center,
-                style: AppStyles.textStyleAddressText90(context)),
+                style: AppStyles.textStyleSmallW100Primary(context)),
           ),
         ),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 25),
           height: 1,
-          color: StateContainer.of(context).curTheme.text03,
+          color: StateContainer.of(context).curTheme.primary03,
         ),
       ],
     );
@@ -1253,10 +1253,10 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
         fadeSuffixOnCondition: true,
         suffixShowFirstCondition: _pasteButtonVisible,
         style: _sendAddressStyle == AddressStyle.TEXT60
-            ? AppStyles.textStyleAddressText60(context)
+            ? AppStyles.textStyleSmallW100Text60(context)
             : _sendAddressStyle == AddressStyle.TEXT90
-                ? AppStyles.textStyleAddressText90(context)
-                : AppStyles.textStyleAddressText90(context),
+                ? AppStyles.textStyleSmallW100Primary(context)
+                : AppStyles.textStyleSmallW100Primary(context),
         onChanged: (String text) {
           if (text.isNotEmpty) {
             setState(() {
@@ -1330,7 +1330,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                     FocusScope.of(context).requestFocus(_sendAddressFocusNode);
                   });
                 },
-                child: UIUtil.threeLineAddressText(
+                child: UIUtil.threeLinetextStyleSmallestW400Text(
                     context, _sendAddressController!.text))
             : null);
   }

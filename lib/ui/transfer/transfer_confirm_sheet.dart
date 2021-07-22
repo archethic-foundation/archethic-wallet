@@ -141,7 +141,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
               height: 5,
               width: MediaQuery.of(context).size.width * 0.15,
               decoration: BoxDecoration(
-                color: StateContainer.of(context).curTheme.text10,
+                color: StateContainer.of(context).curTheme.primary10,
                 borderRadius: BorderRadius.circular(100.0),
               ),
             ),
@@ -156,7 +156,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                         Text(
                           (widget.title ??
                               AppLocalization.of(context).transfering)!,
-                          style: AppStyles.textStyleHeader(context),
+                          style: AppStyles.textStyleLargerW700Primary(context),
                         ),
                       ],
                     ),

@@ -145,7 +145,7 @@ class _AppTextFieldState extends State<AppTextField> {
                         fontSize: 16.0,
                         fontWeight: FontWeight.w100,
                         fontFamily: 'Montserrat',
-                        color: StateContainer.of(context).curTheme.text20,
+                        color: StateContainer.of(context).curTheme.primary20,
                       ),
                       // First button
                       prefixIcon: widget.prefixButton == null

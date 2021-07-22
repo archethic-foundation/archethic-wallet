@@ -101,7 +101,7 @@ class NftListWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('NFT', style: AppStyles.textStyleAddressText60(context)),
+                  Text('NFT', style: AppStyles.textStyleSmallW100Text60(context)),
                 ],
               ),
             ),
@@ -185,15 +185,15 @@ class NftListWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(balanceNft.name!,
-                        style: AppStyles.textStyleAddressText90(context)),
+                        style: AppStyles.textStyleSmallW100Primary(context)),
                     Text(Address(balanceNft.address!).getShortString3(),
-                        style: AppStyles.textStyleTiny(context))
+                        style: AppStyles.textStyleTinyW100Primary60(context))
                   ],
                 ),
               ],
             ),
             Text(balanceNft.amount!.toString(),
-                style: AppStyles.textStyleAddressText90(context)),
+                style: AppStyles.textStyleSmallW100Primary(context)),
           ],
         ),
         const SizedBox(height: 6),

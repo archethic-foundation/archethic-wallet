@@ -103,13 +103,13 @@ class _CustomUrlState extends State<CustomUrl> {
                             widget.tokensListController.reverse();
                           },
                           child: Icon(AppIcons.back,
-                              color: StateContainer.of(context).curTheme.text,
+                              color: StateContainer.of(context).curTheme.primary,
                               size: 24)),
                     ),
                     // Header Text
                     Text(
                       AppLocalization.of(context).customUrlHeader,
-                      style: AppStyles.textStyleSettingsHeader(context),
+                      style: AppStyles.textStyleLargestW700Primary(context),
                     ),
                   ]),
                 ],
@@ -169,7 +169,7 @@ class _CustomUrlState extends State<CustomUrl> {
                 fontSize: 16.0,
                 fontWeight: FontWeight.w100,
                 fontFamily: 'Montserrat',
-                color: StateContainer.of(context).curTheme.text60,
+                color: StateContainer.of(context).curTheme.primary60,
               ),
             ),
           ],

@@ -267,12 +267,12 @@ class _AppLockScreenState extends State<AppLockScreen> {
                               Icon(AppIcons.logout,
                                   size: 16,
                                   color:
-                                      StateContainer.of(context).curTheme.text),
+                                      StateContainer.of(context).curTheme.primary),
                               Container(
                                 margin:
                                     const EdgeInsetsDirectional.only(start: 4),
                                 child: Text(AppLocalization.of(context).logout,
-                                    style: AppStyles.textStyleLogoutButton(
+                                    style: AppStyles.textStyleSmallW600Primary(
                                         context)),
                               ),
                             ],
@@ -303,7 +303,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                     AppLocalization.of(context).locked,
                                     context),
                                 style:
-                                    AppStyles.textStyleHeaderColored(context),
+                                    AppStyles.textStyleLargestW700Primary(context),
                               ),
                               margin: const EdgeInsets.only(top: 10),
                             ),
@@ -317,7 +317,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                     margin: const EdgeInsets.symmetric(horizontal: 50),
                     child: Text(
                       AppLocalization.of(context).tooManyFailedAttempts,
-                      style: AppStyles.textStyleErrorMedium(context),
+                      style: AppStyles.textStyleSmallW600Primary(context),
                       textAlign: TextAlign.center,
                     ),
                   )

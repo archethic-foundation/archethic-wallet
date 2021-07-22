@@ -65,7 +65,7 @@ class _AppState extends State<App> {
     SystemChrome.setSystemUIOverlayStyle(
         StateContainer.of(context).curTheme.statusBar);
     return OKToast(
-      textStyle: AppStyles.textStyleSnackbar(context),
+      textStyle: AppStyles.textStyleSmallW700Background(context),
       backgroundColor: StateContainer.of(context).curTheme.background,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

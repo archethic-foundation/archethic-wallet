@@ -133,7 +133,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                     height: 5,
                     width: MediaQuery.of(context).size.width * 0.15,
                     decoration: BoxDecoration(
-                      color: StateContainer.of(context).curTheme.text10,
+                      color: StateContainer.of(context).curTheme.primary10,
                       borderRadius: BorderRadius.circular(100.0),
                     ),
                   ),
@@ -151,7 +151,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
               // The header of the sheet
               AutoSizeText(
                 AppLocalization.of(context).addContact,
-                style: AppStyles.textStyleHeader(context),
+                style: AppStyles.textStyleLargerW700Primary(context),
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 stepGranularity: 0.1,
@@ -163,7 +163,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
             margin: const EdgeInsets.only(left: 30, right: 30),
             child: AutoSizeText(
               AppLocalization.of(context).addressBookDesc,
-              style: AppStyles.textStyleParagraph(context),
+              style: AppStyles.textStyleMediumW200Primary(context),
               textAlign: TextAlign.center,
               maxLines: 1,
               stepGranularity: 0.1,
@@ -194,7 +194,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 16.0,
-                      color: StateContainer.of(context).curTheme.text,
+                      color: StateContainer.of(context).curTheme.primary,
                       fontFamily: 'Montserrat',
                     ),
                     inputFormatters: [
@@ -234,8 +234,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
                     focusNode: _addressFocusNode,
                     controller: _addressController,
                     style: _addressValid!
-                        ? AppStyles.textStyleAddressText90(context)
-                        : AppStyles.textStyleAddressText60(context),
+                        ? AppStyles.textStyleSmallW100Primary(context)
+                        : AppStyles.textStyleSmallW100Text60(context),
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(66),
                     ],
@@ -328,7 +328,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                                     .requestFocus(_addressFocusNode);
                               });
                             },
-                            child: UIUtil.threeLineAddressText(context,
+                            child: UIUtil.threeLinetextStyleSmallestW400Text(context,
                                 widget.address ?? _addressController!.text))
                         : null,
                   ),

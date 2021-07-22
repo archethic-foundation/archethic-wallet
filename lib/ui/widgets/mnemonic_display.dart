@@ -52,7 +52,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
       ret.add(Container(
         width: MediaQuery.of(context).size.width,
         height: 1,
-        color: StateContainer.of(context).curTheme.text05,
+        color: StateContainer.of(context).curTheme.primary05,
       ));
       // Build individual items
       final List<Widget> items = [];
@@ -67,19 +67,19 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
               text: TextSpan(children: <InlineSpan>[
                 TextSpan(
                   text: curWord < 9 ? ' ' : '',
-                  style: AppStyles.textStyleNumbersOfMnemonic(context),
+                  style: AppStyles.textStyleSmallTextW100Text30(context),
                 ),
                 TextSpan(
                   text: ' ${curWord + 1}) ',
-                  style: AppStyles.textStyleNumbersOfMnemonic(context),
+                  style: AppStyles.textStyleSmallTextW100Text30(context),
                 ),
                 TextSpan(
                   text: _seedObscured && widget.obscureSeed
                       ? _obscuredSeed[curWord]
                       : widget.wordList[curWord],
                   style: _seedCopied
-                      ? AppStyles.textStyleMnemonicSuccess(context)
-                      : AppStyles.textStyleMnemonic(context),
+                      ? AppStyles.textStyleSmallTextW100Success(context)
+                      : AppStyles.textStyleSmallTextW100Primary(context),
                 )
               ]),
             ),
@@ -101,7 +101,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
         ret.add(Container(
           width: MediaQuery.of(context).size.width,
           height: 1,
-          color: StateContainer.of(context).curTheme.text05,
+          color: StateContainer.of(context).curTheme.primary05,
         ));
       }
     }
@@ -135,11 +135,11 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                 child: _seedObscured
                     ? AutoSizeText(
                         AppLocalization.of(context).tapToReveal,
-                        style: AppStyles.textStyleParagraphThinPrimary(context),
+                        style: AppStyles.textStyleSmallW600Primary(context),
                       )
                     : Text(
                         AppLocalization.of(context).tapToHide,
-                        style: AppStyles.textStyleParagraphThinPrimary(context),
+                        style: AppStyles.textStyleSmallW600Primary(context),
                       ),
               )
             else
@@ -173,8 +173,8 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                   : AppLocalization.of(context).copy,
               textAlign: TextAlign.center,
               style: _seedCopied
-                  ? AppStyles.textStyleButtonSuccessSmallOutline(context)
-                  : AppStyles.textStyleButtonPrimarySmallOutline(context),
+                  ? AppStyles.textStyleSmallW700Success(context)
+                  : AppStyles.textStyleSmallW700Primary(context),
               maxLines: 1,
               stepGranularity: 0.5,
             ),

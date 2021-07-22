@@ -45,7 +45,7 @@ class BalanceDisplay {
                         opacity: _opacityAnimation.value,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: StateContainer.of(context).curTheme.text20,
+                            color: StateContainer.of(context).curTheme.primary20,
                             borderRadius: BorderRadius.circular(100),
                           ),
                           child: const Text(
@@ -120,7 +120,7 @@ class BalanceDisplay {
                         opacity: _opacityAnimation.value,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: StateContainer.of(context).curTheme.text20,
+                            color: StateContainer.of(context).curTheme.primary20,
                             borderRadius: BorderRadius.circular(100),
                           ),
                           child: const Text(
@@ -175,7 +175,7 @@ class BalanceDisplay {
                           StateContainer.of(context).curCurrency,
                           locale: StateContainer.of(context).currencyLocale),
                       textAlign: TextAlign.center,
-                      style: AppStyles.textStyleCurrencyAlt(context)),
+                      style: AppStyles.textStyleSmallW600Text60(context)),
                   Container(
                     margin:
                         const EdgeInsetsDirectional.only(start: 10, end: 10),
@@ -196,7 +196,7 @@ class BalanceDisplay {
                                           .wallet
                                           .getAccountBalanceUCODisplay() +
                                       ' UCO',
-                                  style: AppStyles.textStyleCurrency(context),
+                                  style: AppStyles.textStyleLargestW900Primary(context),
                                 ),
                               ],
                             ),
@@ -214,11 +214,11 @@ class BalanceDisplay {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Icon(AppIcons.btc,
-                          color: StateContainer.of(context).curTheme.text60,
+                          color: StateContainer.of(context).curTheme.primary60,
                           size: 14),
                       Text(StateContainer.of(context).wallet.btcPrice,
                           textAlign: TextAlign.center,
-                          style: AppStyles.textStyleCurrencyAlt(context)),
+                          style: AppStyles.textStyleSmallW600Text60(context)),
                     ],
                   ),
                 ],
@@ -256,7 +256,7 @@ class BalanceDisplay {
             padding: const EdgeInsets.only(left: 5.0, top: 5.0),
             child: Text(
               'Balance',
-              style: AppStyles.textStyleTransactionUnit(context),
+              style: AppStyles.textStyleSmallestW100Primary60(context),
             ),
           ),
         ),

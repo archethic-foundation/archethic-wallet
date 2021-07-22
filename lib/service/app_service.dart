@@ -4,7 +4,13 @@
 import 'dart:async';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show BalanceResponse, ApiService, TransactionBuilder, UcoTransfer, uint8ListToHex;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show
+        BalanceResponse,
+        ApiService,
+        TransactionBuilder,
+        UcoTransfer,
+        uint8ListToHex;
 import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
@@ -58,7 +64,10 @@ class AppService {
       String address,
       String endpoint,
       List<UcoTransfer> listUcoTransfer) async {
-    int txIndex = await sl.get<ApiService>().getTransactionIndex(address);
+    // TODO
+    int txIndex = await sl.get<ApiService>().getTransactionIndex(
+        '00BEB8B908F67FF85BCB2D8174F11436A44D90EFCFCD32D1FCFB71A54710577685');
+    //int txIndex = await sl.get<ApiService>().getTransactionIndex(address);
     final TransactionBuilder builder = TransactionBuilder('transfer');
     for (UcoTransfer transfer in listUcoTransfer) {
       builder.addUCOTransfer(transfer.to, transfer.amount);

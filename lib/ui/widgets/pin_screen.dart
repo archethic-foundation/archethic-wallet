@@ -321,7 +321,7 @@ class _PinScreenState extends State<PinScreen>
                       child: AutoSizeText(
                         _header,
                         style:
-                            AppStyles.textStylePinScreenHeaderColored(context),
+                            AppStyles.textStyleLargeW700Primary(context),
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         stepGranularity: 0.1,
@@ -333,7 +333,7 @@ class _PinScreenState extends State<PinScreen>
                           horizontal: 40, vertical: 10),
                       child: AutoSizeText(
                         widget.description,
-                        style: AppStyles.textStyleParagraph(context),
+                        style: AppStyles.textStyleMediumW200Primary(context),
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         stepGranularity: 0.1,

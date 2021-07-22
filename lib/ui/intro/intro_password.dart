@@ -99,7 +99,7 @@ class _IntroPasswordState extends State<IntroPassword> {
                                 child: Icon(AppIcons.back,
                                     color: StateContainer.of(context)
                                         .curTheme
-                                        .text,
+                                        .primary,
                                     size: 24)),
                           ),
                         ],
@@ -116,7 +116,7 @@ class _IntroPasswordState extends State<IntroPassword> {
                           AppLocalization.of(context).createAPasswordHeader,
                           maxLines: 3,
                           stepGranularity: 0.5,
-                          style: AppStyles.textStyleHeaderColored(context),
+                          style: AppStyles.textStyleLargestW700Primary(context),
                         ),
                       ),
                       // The paragraph
@@ -128,7 +128,7 @@ class _IntroPasswordState extends State<IntroPassword> {
                         child: AutoSizeText(
                           AppLocalization.of(context)
                               .passwordWillBeRequiredToOpenParagraph,
-                          style: AppStyles.textStyleParagraph(context),
+                          style: AppStyles.textStyleMediumW200Primary(context),
                           maxLines: 5,
                           stepGranularity: 0.5,
                         ),
@@ -186,7 +186,7 @@ class _IntroPasswordState extends State<IntroPassword> {
                                                 .primary
                                             : StateContainer.of(context)
                                                 .curTheme
-                                                .text,
+                                                .primary,
                                         fontFamily: 'Montserrat',
                                       ),
                                       onSubmitted: (String text) {
@@ -238,7 +238,7 @@ class _IntroPasswordState extends State<IntroPassword> {
                                                 .primary
                                             : StateContainer.of(context)
                                                 .curTheme
-                                                .text,
+                                                .primary,
                                         fontFamily: 'Montserrat',
                                       ),
                                     ),
