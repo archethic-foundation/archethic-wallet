@@ -108,7 +108,7 @@ dependencies:
   vibration: ^1.7.4-nullsafety.0
 
   # ArchEthic dart library for Flutter based on Official ArchEthic Javascript library for Node and Browser
-  archethic_lib_dart: ^0.1.0
+  archethic_lib_dart: ^0.1.1
 
 dev_dependencies:
   flutter_test:

@@ -58,16 +58,9 @@ class AppService {
     }
   }
 
-  Future<void> sendUCO(
-      originPrivateKey,
-      String transactionChainSeed,
-      String address,
-      String endpoint,
-      List<UcoTransfer> listUcoTransfer) async {
-    // TODO
-    int txIndex = await sl.get<ApiService>().getTransactionIndex(
-        '00BEB8B908F67FF85BCB2D8174F11436A44D90EFCFCD32D1FCFB71A54710577685');
-    //int txIndex = await sl.get<ApiService>().getTransactionIndex(address);
+  Future<void> sendUCO(originPrivateKey, String transactionChainSeed,
+      String address, List<UcoTransfer> listUcoTransfer) async {
+    int txIndex = await sl.get<ApiService>().getTransactionIndex(address);
     final TransactionBuilder builder = TransactionBuilder('transfer');
     for (UcoTransfer transfer in listUcoTransfer) {
       builder.addUCOTransfer(transfer.to, transfer.amount);
@@ -76,17 +69,13 @@ class AppService {
     final TransactionBuilder tx = builder
         .build(transactionChainSeed, txIndex, 'P256')
         .originSign(originPrivateKey);
-    final Map<String, dynamic> transfer = {
-      'address': uint8ListToHex(tx.address),
-      'data': {
-        'legder': {
-          'uco': {'transfers': listUcoTransfer}
-        }
+    try {
+      final data = await sl.get<ApiService>().sendTx(tx);
+      if (data.errors) {
+        print(data.errors);
       }
-    };
-    final data = await sl.get<ApiService>().sendTx(tx);
-    if (data.errors) {
-      print(data.errors);
+    } catch (e) {
+      print("error: " + e);
     }
   }
 }

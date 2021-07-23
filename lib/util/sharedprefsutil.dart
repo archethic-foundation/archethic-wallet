@@ -171,7 +171,7 @@ class SharedPrefsUtil {
   }
 
   Future<String> getEndpoint() async {
-    return await get(endpoint, defaultValue: 'https://www.archethic.net');
+    return await get(endpoint, defaultValue: 'http://192.168.0.151:4000');
   }
 
   Future<void> setLock(bool value) async {

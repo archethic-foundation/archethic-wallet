@@ -281,27 +281,15 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   }
 
   Future<void> _doSend() async {
-    try {
+    try { 
       _showSendingAnimation(context);
-
-      final String seed = await StateContainer.of(context).getSeed();
-      final int index = StateContainer.of(context).selectedAccount.index!;
-      const String publicKeyBase64 = '';
-
-      const String privateKey = '';
-      //print("send tx");
-      /*sl.get<AppService>().sendUCO(originPrivateKey, transactionChainSeed, address, endpoint, listUcoTransfer)
-          StateContainer.of(context).wallet.address,
-          widget.amountRaw,
-          destinationAltered,
-          "",
-          "",
-          publicKeyBase64,
-          privateKey);*/
+      String originPrivateKey = '01009280BDB84B8F8AEDBA205FE3552689964A5626EE2C60AA10E3BF22A91A036009';
+      String transactionChainSeed = await StateContainer.of(context).getSeed();
+      sl.get<AppService>().sendUCO(originPrivateKey, transactionChainSeed, StateContainer.of(context).selectedAccount.lastAddress, widget.ucoTransferList);
       EventTaxiImpl.singleton().fire(TransactionSendEvent(response: 'Success'));
     } catch (e) {
       // Send failed
-      //print("send failed" + e.toString());
+      print("send failed" + e.toString());
       EventTaxiImpl.singleton()
           .fire(TransactionSendEvent(response: e.toString()));
     }
@@ -309,7 +297,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
 
   Future<void> authenticateWithPin() async {
     // PIN Authentication
-    final String expectedPin = await sl.get<Vault>().getPin();
+    /*final String expectedPin = await sl.get<Vault>().getPin();
     final bool auth = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
       return PinScreen(
@@ -318,11 +306,10 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         description: '',
       );
     }));
-    //print("authenticateWithPin - auth : " + auth.toString());
-    if (auth != null && auth) {
+    if (auth) {
       await Future<Duration>.delayed(const Duration(milliseconds: 200));
-      //print("authenticateWithPin - fire AuthenticatedEvent");
       EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
-    }
+    }*/
+    _doSend();
   }
 }

@@ -47,7 +47,7 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
     enterEndpointController.text =
         await sl.get<SharedPrefsUtil>().getEndpoint();
     enterTxChainSeedController.text =
-        '008ACC0FCD48A5FDF5602106D064F334D136A6F49C69F536F4A1D792716971FC75';
+        'testnet';
   }
 
   @override
@@ -295,15 +295,11 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
       await sl.get<SharedPrefsUtil>().setEndpoint(enterEndpointController.text);
       await setupServiceLocator();
 
+      final String genesisAddress =
+          sl.get<AddressService>().deriveAddress(enterTxChainSeedController.text, 0);
       String _seed = enterTxChainSeedController.text;
-      print("seed: " + _seed);
-
-      // TODO: Faut il vraiment garder dans le Vault la seed....
       await sl.get<Vault>().setSeed(_seed);
       await sl.get<DBHelper>().dropAccounts();
-      final String genesisAddress =
-          sl.get<AddressService>().deriveAddress(_seed, 0);
-      print("genesisAddress: " + genesisAddress);
 
       await AppUtil().loginAccount(genesisAddress, context);
       StateContainer.of(context).requestUpdate();

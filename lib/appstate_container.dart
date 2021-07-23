@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -265,12 +266,16 @@ class StateContainerState extends State<StateContainer> {
 
   // Update the global wallet instance with a new address
   Future<void> updateWallet({Account account}) async {
-    //print("updateWallet");
-    String genesisAddress = await getSeed();
-    //address = AppUtil().seedToAddress(await getSeed(), account.index);
+
+    String seed = await getSeed();
+    final String genesisAddress =
+          sl.get<AddressService>().deriveAddress(seed, 0);
+
+    final String lastAddress = await sl.get<AddressService>().lastAddress(seed);
+
     account.genesisAddress = genesisAddress;
-    account.lastAddress =
-        await sl.get<AddressService>().lastAddress(genesisAddress);
+    account.lastAddress = lastAddress;
+    print("genesisAddress: " + account.genesisAddress);
     print("lastAddress: " + account.lastAddress);
     selectedAccount = account;
     updateRecentlyUsedAccounts();
