@@ -1,13 +1,12 @@
 // @dart=2.9
 
 // Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show Transaction, Balance;
 import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/model/available_currency.dart';
-import 'package:archethic_mobile_wallet/model/balance.dart';
-import 'package:archethic_mobile_wallet/network/model/response/address_txs_response.dart';
 import 'package:archethic_mobile_wallet/util/numberutil.dart';
 
 /// Main wallet object that's passed around the app via state
@@ -17,14 +16,14 @@ class AppWallet {
       Balance accountBalance,
       String localCurrencyPrice,
       String btcPrice,
-      List<AddressTxsResponseResult> history,
+      List<Transaction> history,
       bool loading,
       bool historyLoading}) {
     _address = address;
-    _accountBalance = accountBalance ?? Balance(uco: 0, nftList: null);
+    _accountBalance = accountBalance ?? Balance(uco: 0, nft: null);
     _localCurrencyPrice = localCurrencyPrice ?? '0';
     _btcPrice = btcPrice ?? '0';
-    _history = history ?? List<AddressTxsResponseResult>.empty(growable: true);
+    _history = history ?? List<Transaction>.empty(growable: true);
     _loading = loading ?? true;
     _historyLoading = historyLoading ?? true;
   }
@@ -36,7 +35,7 @@ class AppWallet {
   Balance _accountBalance;
   String _localCurrencyPrice;
   String _btcPrice;
-  List<AddressTxsResponseResult> _history;
+  List<Transaction> _history;
 
   String get address => _address;
 
@@ -113,9 +112,9 @@ class AppWallet {
     _btcPrice = value;
   }
 
-  List<AddressTxsResponseResult> get history => _history;
+  List<Transaction> get history => _history;
 
-  set history(List<AddressTxsResponseResult> value) {
+  set history(List<Transaction> value) {
     _history = value;
   }
 

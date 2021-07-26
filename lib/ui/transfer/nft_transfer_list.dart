@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show uint8ListToHex, NftTransfer;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show uint8ListToHex, NFTTransfer;
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -22,9 +22,9 @@ class NftTransferListWidget extends StatefulWidget {
       @required this.displayContextMenu})
       : super();
 
-  List<NftTransfer>? listNftTransfer;
+  List<NFTTransfer>? listNftTransfer;
   final List<Contact>? contacts;
-  final Function(NftTransfer)? onGet;
+  final Function(NFTTransfer)? onGet;
   final Function()? onDelete;
   final bool? displayContextMenu;
 
@@ -35,8 +35,8 @@ class NftTransferListWidget extends StatefulWidget {
 class _NftTransferListWidgetState extends State<NftTransferListWidget> {
   @override
   Widget build(BuildContext context) {
-    widget.listNftTransfer!.sort((NftTransfer a, NftTransfer b) =>
-        uint8ListToHex(a.to!).compareTo(uint8ListToHex(b.to!)));
+    widget.listNftTransfer!.sort((NFTTransfer a, NFTTransfer b) =>
+        a.to!.compareTo(b.to!));
     return Stack(
       children: <Widget>[
         SizedBox(
@@ -96,8 +96,8 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                                           .contextMenuText),
                                   onPressed: () {
                                     setState(() {
-                                      final NftTransfer _nftTransfer =
-                                          NftTransfer(
+                                      final NFTTransfer _nftTransfer =
+                                          NFTTransfer(
                                               to: widget
                                                   .listNftTransfer![index].to,
                                               amount: widget
@@ -140,12 +140,12 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
     );
   }
 
-  Widget displayNftDetail(BuildContext context, NftTransfer nftTransfer) {
+  Widget displayNftDetail(BuildContext context, NFTTransfer nftTransfer) {
     String displayName =
-        Address(uint8ListToHex(nftTransfer.to!)).getShortString3();
+        Address(nftTransfer.to!).getShortString3();
 
     for (Contact contact in widget.contacts!) {
-      if (contact.address == uint8ListToHex(nftTransfer.to!)) {
+      if (contact.address == nftTransfer.to!) {
         displayName = contact.name!;
       }
     }
@@ -164,7 +164,7 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                     Text(
                         nftTransfer.nft == null
                             ? 'NFT 1....'
-                            : uint8ListToHex(nftTransfer.nft!),
+                            : nftTransfer.nft!,
                         style: AppStyles.textStyleSmallW100Primary(context)),
                     Text(Address(displayName).getShortString3(),
                         style: AppStyles.textStyleTinyW100Primary60(context))

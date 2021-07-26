@@ -282,18 +282,18 @@ class AppSettings {
       onPressed: () {},
       child: Container(
         height: 30.0,
-        margin: EdgeInsetsDirectional.only(start: 10.0),
+        margin: const EdgeInsetsDirectional.only(start: 10.0),
         child: Row(
           children: <Widget>[
             Container(
-              margin: EdgeInsetsDirectional.only(end: 13.0),
+              margin: const EdgeInsetsDirectional.only(end: 13.0),
               child: Container(
                 child: Icon(
                   settingIcon,
                   color: StateContainer.of(context).curTheme.icon,
                   size: 24,
                 ),
-                margin: EdgeInsetsDirectional.only(
+                margin: const EdgeInsetsDirectional.only(
                   top: 3,
                   start: 3,
                   bottom: 3,

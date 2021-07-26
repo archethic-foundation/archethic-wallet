@@ -3,29 +3,16 @@
 import 'dart:async';
 
 import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/db/appdb.dart';
 import 'package:archethic_mobile_wallet/model/db/contact.dart';
-import 'package:archethic_mobile_wallet/network/model/block_types.dart';
-import 'package:archethic_mobile_wallet/network/model/response/address_txs_response.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/list_slidable.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/reactive_refresh.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
-import 'package:archethic_mobile_wallet/util/caseconverter.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flare_flutter/base/animation/actor_animation.dart';
 
 import 'package:flare_flutter/flare.dart';
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
-
-import 'package:intl/intl.dart';
 
 class TransactionsChain extends StatefulWidget {
   final String address;
@@ -39,7 +26,7 @@ class _TransactionsChainStateState extends State<TransactionsChain>
         WidgetsBindingObserver,
         SingleTickerProviderStateMixin,
         FlareController {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Controller for placeholder card animations
   AnimationController _placeholderCardAnimationController;
@@ -51,7 +38,7 @@ class _TransactionsChainStateState extends State<TransactionsChain>
   final Map<String, GlobalKey<AnimatedListState>> _listKeyMap = Map();
 
   // List of contacts (Store it so we only have to query the DB once for transaction cards)
-  List<Contact> _contacts = new List<Contact>.empty(growable: true);
+  final List<Contact> _contacts = List<Contact>.empty(growable: true);
 
   bool _isRefreshing = false;
   bool _lockDisabled = false; // whether we should avoid locking the app
@@ -68,8 +55,8 @@ class _TransactionsChainStateState extends State<TransactionsChain>
 
   void initialize(FlutterActorArtboard actor) {
     _fanimationPosition = 0.0;
-    _sendSlideAnimation = actor.getAnimation("pull");
-    _sendSlideReleaseAnimation = actor.getAnimation("release");
+    _sendSlideAnimation = actor.getAnimation('pull');
+    _sendSlideReleaseAnimation = actor.getAnimation('release');
   }
 
   void setViewTransform(Mat2D viewTransform) {}
@@ -99,13 +86,13 @@ class _TransactionsChainStateState extends State<TransactionsChain>
 
     // Setup placeholder animation and start
     _animationDisposed = false;
-    _placeholderCardAnimationController = new AnimationController(
+    _placeholderCardAnimationController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
     _placeholderCardAnimationController
         .addListener(_animationControllerListener);
-    _opacityAnimation = new Tween(begin: 1.0, end: 0.4).animate(
+    _opacityAnimation = Tween(begin: 1.0, end: 0.4).animate(
       CurvedAnimation(
         parent: _placeholderCardAnimationController,
         curve: Curves.easeIn,
@@ -153,7 +140,7 @@ class _TransactionsChainStateState extends State<TransactionsChain>
   // Used to build list items that haven't been removed.
   Widget _buildItem(
       BuildContext context, int index, Animation<double> animation) {
-    return Text("tto");
+    return const Text('tto');
   }
 
   // Return widget for list
@@ -162,7 +149,7 @@ class _TransactionsChainStateState extends State<TransactionsChain>
       backgroundColor: StateContainer.of(context).curTheme.backgroundDark,
       child: AnimatedList(
         key: _listKeyMap[StateContainer.of(context).wallet.address],
-        padding: EdgeInsetsDirectional.fromSTEB(0, 5.0, 0, 15.0),
+        padding: const EdgeInsetsDirectional.fromSTEB(0, 5.0, 0, 15.0),
         initialItemCount: StateContainer.of(context).wallet.history.length,
         itemBuilder: _buildItem,
       ),
@@ -180,7 +167,7 @@ class _TransactionsChainStateState extends State<TransactionsChain>
     StateContainer.of(context).requestUpdate();
 
     // Hide refresh indicator after 3 seconds if no server response
-    Future.delayed(new Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       setState(() {
         _isRefreshing = false;
       });
@@ -201,7 +188,7 @@ class _TransactionsChainStateState extends State<TransactionsChain>
         child: Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(bottom: 10.0, top: 5),
+              margin: const EdgeInsets.only(bottom: 10.0, top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -246,8 +233,8 @@ class _TransactionsChainStateState extends State<TransactionsChain>
                                           .curTheme
                                           .background
                                     ],
-                                    begin: AlignmentDirectional(0.5, 1.0),
-                                    end: AlignmentDirectional(0.5, -1.0),
+                                    begin: const AlignmentDirectional(0.5, 1.0),
+                                    end: const AlignmentDirectional(0.5, -1.0),
                                   ),
                                 ),
                               ),
@@ -269,8 +256,8 @@ class _TransactionsChainStateState extends State<TransactionsChain>
                                           .curTheme
                                           .background
                                     ],
-                                    begin: AlignmentDirectional(0.5, -1),
-                                    end: AlignmentDirectional(0.5, 0.5),
+                                    begin: const AlignmentDirectional(0.5, -1),
+                                    end: const AlignmentDirectional(0.5, 0.5),
                                   ),
                                 ),
                               ),

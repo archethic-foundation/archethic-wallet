@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show NftTransfer, hexToUint8List, uint8ListToHex;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show NFTTransfer;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:decimal/decimal.dart';
 
@@ -81,7 +81,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
   String? _rawAmount;
   bool validRequest = true;
 
-  List<NftTransfer> nftTransferList = List<NftTransfer>.empty(growable: true);
+  List<NFTTransfer> nftTransferList = List<NFTTransfer>.empty(growable: true);
 
   @override
   void initState() {
@@ -512,19 +512,19 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                                           nftTransferList
                                                               .length;
                                                       i++) {
-                                                    if (uint8ListToHex(
+                                                    if (
                                                             nftTransferList[i]
-                                                                .to!) ==
+                                                                .to! ==
                                                         _to) {
                                                       nftTransferList
                                                           .removeAt(i);
                                                       break;
                                                     }
                                                   }
-                                                  final NftTransfer
-                                                      nftTransfer = NftTransfer(
-                                                          to: hexToUint8List(
-                                                              _to),
+                                                  final NFTTransfer
+                                                      nftTransfer = NFTTransfer(
+                                                          to: 
+                                                              _to,
                                                           amount: _amount);
                                                   nftTransferList
                                                       .add(nftTransfer);
@@ -540,9 +540,9 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                                 for (int i = 0;
                                                     i < nftTransferList.length;
                                                     i++) {
-                                                  if (uint8ListToHex(
+                                                  if (
                                                           nftTransferList[i]
-                                                              .to!) ==
+                                                              .to! ==
                                                       _to) {
                                                     _amount = _amount +
                                                         nftTransferList[i]
@@ -551,9 +551,9 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                                     break;
                                                   }
                                                 }
-                                                final NftTransfer nftTransfer =
-                                                    NftTransfer(
-                                                        to: hexToUint8List(_to),
+                                                final NFTTransfer nftTransfer =
+                                                    NFTTransfer(
+                                                        to: _to,
                                                         amount: _amount);
                                                 nftTransferList
                                                     .add(nftTransfer);
@@ -568,16 +568,16 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                         displayContextMenu: true,
                                         listNftTransfer: nftTransferList,
                                         contacts: widget.contactsRef,
-                                        onGet: (NftTransfer _nftTransfer) {
+                                        onGet: (NFTTransfer _nftTransfer) {
                                           setState(() {
                                             _sendAddressController!.text =
-                                                uint8ListToHex(
-                                                    _nftTransfer.to!);
+                                              
+                                                    _nftTransfer.to!;
                                             for (Contact contact
                                                 in widget.contactsRef!) {
                                               if (contact.address ==
-                                                  uint8ListToHex(
-                                                      _nftTransfer.to!)) {
+                                               
+                                                      _nftTransfer.to!) {
                                                 _sendAddressController!.text =
                                                     contact.name!;
                                               }
@@ -1158,9 +1158,9 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
     }
 
     for (int i = 0; i < nftTransferList.length; i++) {
-      if (uint8ListToHex(nftTransferList[i].to!) ==
+      if (nftTransferList[i].to! ==
               _sendAddressController!.text ||
-          uint8ListToHex(nftTransferList[i].to!) == contactAddress) {
+          nftTransferList[i].to! == contactAddress) {
         inList = true;
         break;
       }

@@ -7,7 +7,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show Node, NodesResponse, ApiService, TransactionsResponse, AddressService;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show Node, ApiService;
 
 // Project imports:
 import 'package:archethic_mobile_wallet/app_icons.dart';
@@ -28,7 +28,7 @@ class NodesList extends StatefulWidget {
 }
 
 class _NodesListState extends State<NodesList> {
-  NodesResponse _nodes;
+  List<Node> _nodes;
 
   @override
   void initState() {
@@ -39,15 +39,6 @@ class _NodesListState extends State<NodesList> {
 
   Future<void> initNodesList() async {
     _nodes = await sl.get<ApiService>().getNodeList();
-    String genesisAddress = sl
-        .get<AddressService>()
-        .deriveAddress(_nodes.data.nodes[0].rewardAddress, 0);
-    //TransactionsResponse transactionsResponse =
-    //    await sl.get<ApiService>().getTransactions(genesisAddress, 1);
-    // TODO
-    TransactionsResponse transactionsResponse =
-        await sl.get<ApiService>().getTransactions('00BEB8B908F67FF85BCB2D8174F11436A44D90EFCFCD32D1FCFB71A54710577685', 1);
-    print(transactionsResponse.data.transactionChain[0].address);
   }
 
   @override
@@ -104,14 +95,14 @@ class _NodesListState extends State<NodesList> {
                   ],
                 ),
               ),
-              _nodes == null || _nodes.data == null || _nodes.data.nodes == null
-                  ? SizedBox()
+              _nodes == null
+                  ? const SizedBox()
                   : Container(
                       margin: const EdgeInsetsDirectional.only(start: 20.0),
                       alignment: Alignment.bottomLeft,
                       child: Text(
                           'Nb of nodes : ' +
-                              _nodes.data.nodes.length.toString(),
+                              _nodes.length.toString(),
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: AppFontSizes.smallest,
@@ -122,20 +113,17 @@ class _NodesListState extends State<NodesList> {
               Expanded(
                 child: Stack(
                   children: <Widget>[
-                    _nodes == null ||
-                            _nodes.data == null ||
-                            _nodes.data.nodes == null
-                        ? SizedBox()
+                    _nodes == null ? const SizedBox()
                         :
                         // Nodes list
                         ListView.builder(
                             physics: const AlwaysScrollableScrollPhysics(),
                             padding:
                                 const EdgeInsets.only(top: 15.0, bottom: 15),
-                            itemCount: _nodes.data.nodes.length,
+                            itemCount: _nodes.length,
                             itemBuilder: (BuildContext context, int index) {
                               return buildSingleNode(
-                                  context, _nodes.data.nodes[index]);
+                                  context, _nodes[index]);
                             },
                           ),
                     //List Top Gradient End
@@ -218,7 +206,7 @@ class _NodesListState extends State<NodesList> {
                       Text(Address(node.firstPublicKey).getShortString2(),
                           style:
                               AppStyles.textStyleSmallestW100Primary(context)),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
@@ -229,7 +217,7 @@ class _NodesListState extends State<NodesList> {
                         Address(node.lastPublicKey).getShortString2(),
                         style: AppStyles.textStyleSmallestW100Primary(context),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -237,12 +225,12 @@ class _NodesListState extends State<NodesList> {
                           Text('IP : ',
                               style:
                                   AppStyles.textStyleSmallestW600Primary(context)),
-                          Text(node.ip + ":" + node.port.toString(),
+                          Text(node.ip + ':' + node.port.toString(),
                               style: AppStyles.textStyleSmallestW100Primary(
                                   context)),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -253,7 +241,7 @@ class _NodesListState extends State<NodesList> {
                           Text(node.geoPatch,
                               style: AppStyles.textStyleSmallestW100Primary(
                                   context)),
-                          Text(" - Network patch : ",
+                          Text(' - Network patch : ',
                               style:
                                   AppStyles.textStyleSmallestW600Primary(context)),
                           Text(node.networkPatch,
@@ -261,7 +249,7 @@ class _NodesListState extends State<NodesList> {
                                   context)),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -274,7 +262,7 @@ class _NodesListState extends State<NodesList> {
                                   context)),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -287,7 +275,7 @@ class _NodesListState extends State<NodesList> {
                                   context)),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text('Reward address : ',

@@ -48,7 +48,7 @@ Future<void> setupServiceLocator() async {
   }
   sl.registerLazySingleton<Vault>(() => Vault());
 
-  String endpoint = await sl.get<SharedPrefsUtil>().getEndpoint();
+  final String endpoint = await sl.get<SharedPrefsUtil>().getEndpoint();
 
   if (sl.isRegistered<ApiService>()) {
     sl.unregister<ApiService>();

@@ -87,7 +87,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                                 child: SizedBox(
                                   height: 300,
                                   child: SvgPicture.asset(
-                                      "assets/archethic_logo.svg", height: 200,),
+                                      'assets/archethic_logo.svg', height: 200,),
                                 ),
                               ),
                             ),

@@ -236,7 +236,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                     style: _addressValid!
                         ? AppStyles.textStyleSmallW100Primary(context)
                         : AppStyles.textStyleSmallW100Text60(context),
-                    inputFormatters: [
+                    inputFormatters: <LengthLimitingTextInputFormatter>[
                       LengthLimitingTextInputFormatter(66),
                     ],
                     textInputAction: TextInputAction.done,

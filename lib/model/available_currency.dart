@@ -312,9 +312,9 @@ class AvailableCurrency extends SettingSelectionItem {
   static AvailableCurrency getBestForLocale(Locale locale) {
     for (AvailableCurrencyEnum value in AvailableCurrencyEnum.values) {
       final AvailableCurrency currency = AvailableCurrency(value);
-      if (locale != null && locale.countryCode == null) {
+      if (locale.countryCode == null) {
         // Special cases
-        if ([
+        if (<String>[
           'AT',
           'BE',
           'CY',

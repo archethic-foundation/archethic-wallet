@@ -9,10 +9,11 @@ environment:
   sdk: '>=2.12.0 <3.0.0'
     
 dependencies:
-  flutter:
-    sdk: flutter
-  flutter_localizations:
-    sdk: flutter
+  # ArchEthic dart library for Flutter based on Official ArchEthic Javascript library for Node and Browser
+  archethic_lib_dart:     
+    git: 
+      url: https://github.com/archethic-foundation/libdart.git
+      ref: master 
 
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0-nullsafety.0
@@ -41,6 +42,11 @@ dependencies:
   # A component that provides flip card animation. It could be used for hide and show details of a product
   flip_card: ^0.5.0
 
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
   # Flutter Secure Storage provides API to store data in secure storage. Keychain is used in iOS, KeyStore based solution is used in Android
   flutter_secure_storage: ^4.2.0
  
@@ -61,7 +67,10 @@ dependencies:
 
   # Localization
   intl: ^0.17.0 
-  
+
+  # Classes and helper functions that support JSON code generation via the `json_serializable` package
+  json_annotation: ^3.1.1
+
   # A lightweight alternative to the Scaffold widget for avoiding the on-screen software keyboard. Automatically scrolls obscured TextField child widgets into view on focus
   keyboard_avoider: 
     git:
@@ -70,9 +79,6 @@ dependencies:
 
   # Flutter plugin for Android and iOS devices to allow local authentication via fingerprint, touch ID, face ID, passcode, pin, or pattern
   local_auth: ^1.1.6
-
-  # Classes and helper functions that support JSON code generation via the `json_serializable` package
-  json_annotation: ^3.1.1
 
   # A pure flutter toast library Support custom style/widget. Easy to use. You can use this library to achieve the same effect as Android toast
   oktoast: ^3.0.0
@@ -107,16 +113,11 @@ dependencies:
   # A plugin for handling Vibration API on iOS, Android, and web
   vibration: ^1.7.4-nullsafety.0
 
-  # ArchEthic dart library for Flutter based on Official ArchEthic Javascript library for Node and Browser
-  archethic_lib_dart: ^0.1.1
-
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   # A build system for Dart code generation and modular compilation
   build_runner: 1.11.1
-  # Automatically generate code for converting to and from JSON by annotating Dart classes
-  json_serializable: ^3.5.1
+  flutter_test:
+    sdk: flutter
   # Automatically organize your dart imports
   import_sorter: ^4.6.0
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues
@@ -124,6 +125,8 @@ dev_dependencies:
     git: 
       url: https://github.com/reddwarf03/intl_translation.git
       ref: master 
+  # Automatically generate code for converting to and from JSON by annotating Dart classes
+  json_serializable: ^3.5.1
 
 flutter_icons:
   android: true

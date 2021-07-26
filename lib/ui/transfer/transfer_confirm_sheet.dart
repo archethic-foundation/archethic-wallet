@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show UcoTransfer, NftTransfer;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show UCOTransfer, NFTTransfer;
 import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
@@ -46,8 +46,8 @@ class TransferConfirmSheet extends StatefulWidget {
   final String? localCurrency;
   final String? title;
   final List<Contact>? contactsRef;
-  final List<UcoTransfer>? ucoTransferList;
-  final List<NftTransfer>? nftTransferList;
+  final List<UCOTransfer>? ucoTransferList;
+  final List<NFTTransfer>? nftTransferList;
 
   @override
   _TransferConfirmSheetState createState() => _TransferConfirmSheetState();
@@ -283,13 +283,13 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   Future<void> _doSend() async {
     try { 
       _showSendingAnimation(context);
-      String originPrivateKey = '01009280BDB84B8F8AEDBA205FE3552689964A5626EE2C60AA10E3BF22A91A036009';
-      String transactionChainSeed = await StateContainer.of(context).getSeed();
+      const String originPrivateKey = '01009280BDB84B8F8AEDBA205FE3552689964A5626EE2C60AA10E3BF22A91A036009';
+      final String transactionChainSeed = await StateContainer.of(context).getSeed();
       sl.get<AppService>().sendUCO(originPrivateKey, transactionChainSeed, StateContainer.of(context).selectedAccount.lastAddress, widget.ucoTransferList);
       EventTaxiImpl.singleton().fire(TransactionSendEvent(response: 'Success'));
     } catch (e) {
       // Send failed
-      print("send failed" + e.toString());
+      print('send failed' + e.toString());
       EventTaxiImpl.singleton()
           .fire(TransactionSendEvent(response: e.toString()));
     }
@@ -297,7 +297,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
 
   Future<void> authenticateWithPin() async {
     // PIN Authentication
-    /*final String expectedPin = await sl.get<Vault>().getPin();
+    final String expectedPin = await sl.get<Vault>().getPin();
     final bool auth = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
       return PinScreen(
@@ -309,7 +309,6 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     if (auth) {
       await Future<Duration>.delayed(const Duration(milliseconds: 200));
       EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
-    }*/
-    _doSend();
+    }
   }
 }

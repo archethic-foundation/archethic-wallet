@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show NftBalance;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -7,19 +7,16 @@ import 'package:fluttericon/font_awesome5_icons.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/address.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/transfer/transfer_nft_sheet.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 
-class NftListWidget {
-  static Widget buildNftList(BuildContext context) {
+
+class TxListWidget {
+  static Widget buildTxList(BuildContext context) {
     return Stack(
       children: <Widget>[
         if (StateContainer.of(context).wallet == null ||
-            StateContainer.of(context).wallet.accountBalance == null ||
-            StateContainer.of(context).wallet.accountBalance.nft == null)
+            StateContainer.of(context).wallet.history == null)
           const SizedBox()
         else
           SizedBox(
@@ -28,10 +25,9 @@ class NftListWidget {
               child: Container(
                 height: StateContainer.of(context)
                         .wallet
-                        .accountBalance
-                        .nft!
+                        .history
                         .length *
-                    60,
+                    100,
                 padding: const EdgeInsets.only(
                     top: 23.5, left: 3.5, right: 3.5, bottom: 3.5),
                 width: MediaQuery.of(context).size.width * 0.9,
@@ -57,16 +53,14 @@ class NftListWidget {
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     itemCount: StateContainer.of(context)
                         .wallet
-                        .accountBalance
-                        .nft!
+                        .history
                         .length,
                     itemBuilder: (BuildContext context, int index) {
-                      return displayNftDetail(
+                      return displayTxDetail(
                           context,
                           StateContainer.of(context)
                               .wallet
-                              .accountBalance
-                              .nft![index]);
+                              .history[index]);
                     },
                   ),
                 ),
@@ -101,7 +95,7 @@ class NftListWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('NFT', style: AppStyles.textStyleSmallW100Text60(context)),
+                  Text('Transactions', style: AppStyles.textStyleSmallW100Text60(context)),
                 ],
               ),
             ),
@@ -118,14 +112,7 @@ class NftListWidget {
               ),
               child: TextButton(
                 onPressed: () {
-                  Sheets.showAppHeightNineSheet(
-                      context: context,
-                      widget: TransferNftSheet(
-                        contactsRef: StateContainer.of(context).contactsRef,
-                        title: AppLocalization.of(context).transferNFT,
-                        actionButtonTitle:
-                            AppLocalization.of(context).transferNFT,
-                      ));
+                 // TODO
                 },
                 child: Icon(FontAwesome5.arrow_circle_up,
                     color: StateContainer.of(context).curTheme.primary),
@@ -133,28 +120,11 @@ class NftListWidget {
             ),
           ),
         ),
-        SizedBox(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 0.0, left: 40),
-            child: Container(
-              height: 36,
-              width: 36,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-              ),
-              child: TextButton(
-                onPressed: () {},
-                child: Icon(FontAwesome5.plus_circle,
-                    color: StateContainer.of(context).curTheme.primary),
-              ),
-            ),
-          ),
-        ),
-      ],
+       ],
     );
   }
 
-  static Column displayNftDetail(BuildContext context, NftBalance nftBalance) {
+  static Column displayTxDetail(BuildContext context, Transaction transaction) {
     return Column(
       children: <Widget>[
         Row(
@@ -162,37 +132,20 @@ class NftListWidget {
           children: <Widget>[
             Row(
               children: <Widget>[
-                InkWell(
-                  onTap: () {
-                    Sheets.showAppHeightNineSheet(
-                        context: context,
-                        widget: TransferNftSheet(
-                          contactsRef: StateContainer.of(context).contactsRef,
-                          title: AppLocalization.of(context)
-                              .transferNFTName
-                              .replaceAll('%1', nftBalance.address!),
-                          actionButtonTitle:
-                              AppLocalization.of(context).transferNFT,
-                          address: nftBalance.address,
-                        ));
-                  },
-                  child: Icon(FontAwesome5.arrow_circle_up,
-                      color: StateContainer.of(context).curTheme.primary),
-                ),
-                const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(nftBalance.address!,
+                    Text(transaction.type!,
                         style: AppStyles.textStyleSmallW100Primary(context)),
-                    Text(Address(nftBalance.address!).getShortString3(),
+                    Text(Address(transaction.address!).getShortString3(),
                         style: AppStyles.textStyleTinyW100Primary60(context))
                   ],
                 ),
               ],
             ),
-            Text(nftBalance.amount!.toString(),
+            transaction.type! != 'transfer' ? const SizedBox() :
+            Text(transaction.data!.ledger!.uco!.transfers![0].toString(),
                 style: AppStyles.textStyleSmallW100Primary(context)),
           ],
         ),

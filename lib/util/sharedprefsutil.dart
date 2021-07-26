@@ -86,13 +86,17 @@ class SharedPrefsUtil {
 
   Future<String> getEncrypted(String key) async {
     final String secret = await sl.get<Vault>().getEncryptionPhrase();
-    if (secret == null) return null;
+    if (secret == null) {
+      return null;
+    }
     // Decrypt and return
     final Salsa20Encryptor encrypter =
         Salsa20Encryptor(secret.split(':')[0], secret.split(':')[1]);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String encrypted = prefs.get(key);
-    if (encrypted == null) return null;
+    if (encrypted == null) {
+      return null;
+    }
     return encrypter.decrypt(encrypted);
   }
 

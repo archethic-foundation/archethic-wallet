@@ -25,7 +25,7 @@ class QRScanErrs {
   static const String PERMISSION_DENIED = 'qr_denied';
   static const String UNKNOWN_ERROR = 'qr_unknown';
   static const String CANCEL_ERROR = 'qr_cancel';
-  static const List<String> ERROR_LIST = [
+  static const List<String> ERROR_LIST = <String>[
     PERMISSION_DENIED,
     UNKNOWN_ERROR,
     CANCEL_ERROR

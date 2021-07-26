@@ -61,6 +61,6 @@ class AppCrypt {
         AesCbcPkcs7.encrypt(valBytes, key: keyInfo.key, iv: keyInfo.iv);
 
     return AppHelpers.concat(
-        [AppHelpers.stringToBytesUtf8('Salted__'), salt, seedEncrypted]);
+        <Uint8List>[AppHelpers.stringToBytesUtf8('Salted__'), salt, seedEncrypted]);
   }
 }

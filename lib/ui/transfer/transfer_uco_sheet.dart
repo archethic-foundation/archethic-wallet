@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show UcoTransfer, hexToUint8List, uint8ListToHex;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show UCOTransfer;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
@@ -89,7 +90,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
   String? _rawAmount;
   bool validRequest = true;
 
-  List<UcoTransfer> ucoTransferList = List<UcoTransfer>.empty(growable: true);
+  List<UCOTransfer> ucoTransferList = List<UCOTransfer>.empty(growable: true);
 
   @override
   void initState() {
@@ -231,7 +232,8 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                           // Header
                           AutoSizeText(
                             (widget.title ?? AppLocalization.of(context).send)!,
-                            style: AppStyles.textStyleLargerW700Primary(context),
+                            style:
+                                AppStyles.textStyleLargerW700Primary(context),
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             stepGranularity: 0.1,
@@ -537,19 +539,17 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                                           ucoTransferList
                                                               .length;
                                                       i++) {
-                                                    if (uint8ListToHex(
-                                                            ucoTransferList[i]
-                                                                .to!) ==
+                                                    if (ucoTransferList[i]
+                                                            .to! ==
                                                         _to) {
                                                       ucoTransferList
                                                           .removeAt(i);
                                                       break;
                                                     }
                                                   }
-                                                  final UcoTransfer
-                                                      ucoTransfer = UcoTransfer(
-                                                          to: hexToUint8List(
-                                                              _to),
+                                                  final UCOTransfer
+                                                      ucoTransfer = UCOTransfer(
+                                                          to: _to,
                                                           amount: _amount);
                                                   ucoTransferList
                                                       .add(ucoTransfer);
@@ -565,9 +565,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                                 for (int i = 0;
                                                     i < ucoTransferList.length;
                                                     i++) {
-                                                  if (uint8ListToHex(
-                                                          ucoTransferList[i]
-                                                              .to!) ==
+                                                  if (ucoTransferList[i].to! ==
                                                       _to) {
                                                     _amount = _amount +
                                                         ucoTransferList[i]
@@ -576,9 +574,9 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                                     break;
                                                   }
                                                 }
-                                                final UcoTransfer ucoTransfer =
-                                                    UcoTransfer(
-                                                        to: hexToUint8List(_to),
+                                                final UCOTransfer ucoTransfer =
+                                                    UCOTransfer(
+                                                        to: _to,
                                                         amount: _amount);
                                                 ucoTransferList
                                                     .add(ucoTransfer);
@@ -593,16 +591,14 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                         displayContextMenu: true,
                                         listUcoTransfer: ucoTransferList,
                                         contacts: widget.contactsRef,
-                                        onGet: (UcoTransfer _ucoTransfer) {
+                                        onGet: (UCOTransfer _ucoTransfer) {
                                           setState(() {
                                             _sendAddressController!.text =
-                                                uint8ListToHex(
-                                                    _ucoTransfer.to!);
+                                                _ucoTransfer.to!;
                                             for (Contact contact
                                                 in widget.contactsRef!) {
                                               if (contact.address ==
-                                                  uint8ListToHex(
-                                                      _ucoTransfer.to!)) {
+                                                  _ucoTransfer.to!) {
                                                 _sendAddressController!.text =
                                                     contact.name!;
                                               }
@@ -1345,9 +1341,8 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     }
 
     for (int i = 0; i < ucoTransferList.length; i++) {
-      if (uint8ListToHex(ucoTransferList[i].to!) ==
-              _sendAddressController!.text ||
-          uint8ListToHex(ucoTransferList[i].to!) == contactAddress) {
+      if (ucoTransferList[i].to! == _sendAddressController!.text ||
+          ucoTransferList[i].to! == contactAddress) {
         inList = true;
         break;
       }

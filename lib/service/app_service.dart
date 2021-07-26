@@ -5,17 +5,11 @@ import 'dart:async';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show
-        BalanceResponse,
-        ApiService,
-        TransactionBuilder,
-        UcoTransfer,
-        uint8ListToHex;
+    show ApiService, Transaction, Balance, UCOTransfer, NftBalance;
 import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/bus/events.dart';
-import 'package:archethic_mobile_wallet/model/balance.dart' as b;
 import 'package:archethic_mobile_wallet/network/model/response/address_txs_response.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 
@@ -33,49 +27,48 @@ class AppService {
     addressTxsResponse.result =
         List<AddressTxsResponseResult>.empty(growable: true);
 
-    try {} catch (e) {
-      EventTaxiImpl.singleton().fire(
-          ConnStatusEvent(status: ConnectionStatus.DISCONNECTED, server: ''));
-    } finally {}
+    const int page = 1;
+    final List<Transaction> transactionChain =
+        await sl.get<ApiService>().getTransactionChain(address, page);
+    EventTaxiImpl.singleton()
+        .fire(TransactionsListEvent(transaction: transactionChain));
   }
 
   Future<void> getBalanceGetResponse(String address, bool activeBus) async {
-    BalanceResponse balanceResponse;
-    balanceResponse = await sl.get<ApiService>().fetchBalance(address);
-    List<b.BalanceNft> balanceNftList =
-        List<b.BalanceNft>.empty(growable: true);
-    /*for(int i = 0; i < balanceResponse.data.balance.nft.length; i ++)
-    {
-        b.BalanceNft balanceNft = new b.BalanceNft();
-        balanceNft = balanceResponse.data.balance.nft[i];
-    }*/
-
-    b.Balance balance = b.Balance(
-        uco: balanceResponse.data.balance.uco, nftList: balanceNftList);
+    Balance balance;
+    balance = await sl.get<ApiService>().fetchBalance(address);
+    final List<NftBalance> balanceNftList = List<NftBalance>.empty(growable: true);
+    for (int i = 0; i < balance.nft.length; i++) {
+      NftBalance balanceNft = NftBalance();
+      balanceNft = balance.nft[i];
+      balanceNftList.add(balanceNft);
+    }
 
     if (activeBus) {
       EventTaxiImpl.singleton().fire(BalanceGetEvent(response: balance));
     }
   }
 
-  Future<void> sendUCO(originPrivateKey, String transactionChainSeed,
-      String address, List<UcoTransfer> listUcoTransfer) async {
-    int txIndex = await sl.get<ApiService>().getTransactionIndex(address);
-    final TransactionBuilder builder = TransactionBuilder('transfer');
-    for (UcoTransfer transfer in listUcoTransfer) {
-      builder.addUCOTransfer(transfer.to, transfer.amount);
+  Future<void> sendUCO(String originPrivateKey, String transactionChainSeed,
+      String address, List<UCOTransfer> listUcoTransfer) async {
+    final int txIndex = await sl.get<ApiService>().getTransactionIndex(address);
+    final Transaction transaction = Transaction(
+        type: 'transfer',
+        data: Transaction.initData());
+    for (UCOTransfer transfer in listUcoTransfer) {
+      transaction.addUCOTransfer(transfer.to, transfer.amount);
     }
 
-    final TransactionBuilder tx = builder
+    transaction
         .build(transactionChainSeed, txIndex, 'P256')
         .originSign(originPrivateKey);
     try {
-      final data = await sl.get<ApiService>().sendTx(tx);
+      final data = await sl.get<ApiService>().sendTx(transaction);
       if (data.errors) {
         print(data.errors);
       }
     } catch (e) {
-      print("error: " + e);
+      print('error: ' + e);
     }
   }
 }

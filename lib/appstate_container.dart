@@ -4,12 +4,20 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show uint8ListToHex, AddressService, ApiCoinsService, SimplePriceResponse, CoinsPriceResponse, CoinsCurrentDataResponse;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show
+        uint8ListToHex,
+        AddressService,
+        ApiCoinsService,
+        Balance,
+        SimplePriceResponse,
+        CoinsPriceResponse,
+        Transaction,
+        CoinsCurrentDataResponse;
 import 'package:event_taxi/event_taxi.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -18,14 +26,12 @@ import 'package:archethic_mobile_wallet/bus/events.dart';
 import 'package:archethic_mobile_wallet/model/address.dart';
 import 'package:archethic_mobile_wallet/model/available_currency.dart';
 import 'package:archethic_mobile_wallet/model/available_language.dart';
-import 'package:archethic_mobile_wallet/model/balance.dart';
 import 'package:archethic_mobile_wallet/model/chart_infos.dart';
 import 'package:archethic_mobile_wallet/model/db/account.dart';
 import 'package:archethic_mobile_wallet/model/db/appdb.dart';
 import 'package:archethic_mobile_wallet/model/db/contact.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/model/wallet.dart';
-import 'package:archethic_mobile_wallet/network/model/response/address_txs_response.dart';
 import 'package:archethic_mobile_wallet/service/app_service.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/themes.dart';
@@ -126,30 +132,20 @@ class StateContainerState extends State<StateContainer> {
     _balanceGetEventSub = EventTaxiImpl.singleton()
         .registerTo<BalanceGetEvent>()
         .listen((BalanceGetEvent event) {
-      //print("listen BalanceGetEvent");
       handleAddressResponse(event.response);
     });
 
     _transactionsListEventSub = EventTaxiImpl.singleton()
         .registerTo<TransactionsListEvent>()
         .listen((TransactionsListEvent event) {
-      //print("listen TransactionsListEvent");
-      final AddressTxsResponse addressTxsResponse = AddressTxsResponse();
-      addressTxsResponse.result =
-          List<AddressTxsResponseResult>.empty(growable: true);
-      for (int i = event.response.length - 1; i >= 0; i--) {
-        final AddressTxsResponseResult addressTxResponseResult =
-            AddressTxsResponseResult();
-        addressTxsResponse.result.add(addressTxResponseResult);
-      }
 
       wallet.history.clear();
 
       // Iterate list in reverse (oldest to newest block)
-      if (addressTxsResponse != null && addressTxsResponse.result != null) {
-        for (AddressTxsResponseResult item in addressTxsResponse.result) {
+      if (event != null && event.transaction != null) {
+        for (Transaction transactionChain in event.transaction) {
           setState(() {
-            wallet.history.insert(0, item);
+            wallet.history.insert(0, transactionChain);
           });
         }
       }
@@ -158,17 +154,15 @@ class StateContainerState extends State<StateContainer> {
         wallet.historyLoading = false;
         wallet.loading = false;
       });
-
-      EventTaxiImpl.singleton().fire(HistoryHomeEvent(items: wallet.history));
     });
 
     _priceEventSub = EventTaxiImpl.singleton()
         .registerTo<PriceEvent>()
         .listen((PriceEvent event) {
       setState(() {
-        wallet.btcPrice = event.response.btcPrice.toString();
+        wallet.btcPrice = event == null || event.response == null || event.response.btcPrice == null ? '0' : event.response.btcPrice.toString();
         wallet.localCurrencyPrice =
-            event.response.localCurrencyPrice.toString();
+            event == null || event.response == null || event.response.localCurrencyPrice == null ? '0' : event.response.localCurrencyPrice.toString();
       });
     });
 
@@ -266,17 +260,14 @@ class StateContainerState extends State<StateContainer> {
 
   // Update the global wallet instance with a new address
   Future<void> updateWallet({Account account}) async {
-
-    String seed = await getSeed();
+    final String seed = await getSeed();
     final String genesisAddress =
-          sl.get<AddressService>().deriveAddress(seed, 0);
+        sl.get<AddressService>().deriveAddress(seed, 0);
 
     final String lastAddress = await sl.get<AddressService>().lastAddress(seed);
 
     account.genesisAddress = genesisAddress;
     account.lastAddress = lastAddress;
-    print("genesisAddress: " + account.genesisAddress);
-    print("lastAddress: " + account.lastAddress);
     selectedAccount = account;
     updateRecentlyUsedAccounts();
 
@@ -356,7 +347,7 @@ class StateContainerState extends State<StateContainer> {
     setState(() {
       if (wallet != null) {
         if (response == null) {
-          wallet.accountBalance = Balance(nftList: null, uco: 0);
+          wallet.accountBalance = Balance(nft: null, uco: 0);
         } else {
           wallet.accountBalance = response;
           sl.get<DBHelper>().updateAccountBalance(
@@ -380,6 +371,10 @@ class StateContainerState extends State<StateContainer> {
             .getSimplePrice(curCurrency.getIso4217Code());
         EventTaxiImpl.singleton()
             .fire(PriceEvent(response: simplePriceResponse));
+        const int limit = 10;
+        sl
+            .get<AppService>()
+            .getAddressTxsResponse(selectedAccount.lastAddress, limit);
 
         final CoinsPriceResponse coinsPriceResponse = await sl
             .get<ApiCoinsService>()

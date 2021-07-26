@@ -46,8 +46,7 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
   Future<void> initControllerText() async {
     enterEndpointController.text =
         await sl.get<SharedPrefsUtil>().getEndpoint();
-    enterTxChainSeedController.text =
-        'testnet';
+    enterTxChainSeedController.text = 'testnet';
   }
 
   @override
@@ -134,11 +133,11 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                     Expanded(
                         child: Column(
                       children: <Widget>[
-                        SizedBox(height: 80),
+                        const SizedBox(height: 160),
                         Container(
                           margin: EdgeInsets.symmetric(
-                              horizontal: smallScreen(context) ? 30 : 40,
-                              vertical: 20),
+                            horizontal: smallScreen(context) ? 30 : 40,
+                          ),
                           child: AutoSizeText(
                             AppLocalization.of(context).enterTxChainSeedText,
                             style:
@@ -161,9 +160,9 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                                         focusNode: enterTxChainSeedFocusNode,
                                         controller: enterTxChainSeedController,
                                         style:
-                                            AppStyles.textStyleSmallW100Text60(
+                                            AppStyles.textStyleSmallW100Primary(
                                                 context),
-                                        inputFormatters: [
+                                        inputFormatters: <LengthLimitingTextInputFormatter>[
                                           LengthLimitingTextInputFormatter(255),
                                         ],
                                         textInputAction: TextInputAction.done,
@@ -219,10 +218,10 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                           autoScroll: true,
                           focusPadding: 40,
                           child: Column(
-                            children: [
+                            children: <Widget>[
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
+                                children: <Widget>[
                                   Text(
                                     AppLocalization.of(context).enterEndpoint,
                                     style: AppStyles.textStyleMediumW200Primary(
@@ -236,15 +235,9 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                                 controller: enterEndpointController,
                                 cursorColor:
                                     StateContainer.of(context).curTheme.primary,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16.0,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .primary,
-                                  fontFamily: 'Montserrat',
-                                ),
-                                inputFormatters: [
+                                style:
+                                    AppStyles.textStyleSmallW100Primary(context),
+                                inputFormatters: <LengthLimitingTextInputFormatter>[
                                   LengthLimitingTextInputFormatter(150)
                                 ],
                                 onChanged: (String text) {
@@ -295,9 +288,10 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
       await sl.get<SharedPrefsUtil>().setEndpoint(enterEndpointController.text);
       await setupServiceLocator();
 
-      final String genesisAddress =
-          sl.get<AddressService>().deriveAddress(enterTxChainSeedController.text, 0);
-      String _seed = enterTxChainSeedController.text;
+      final String genesisAddress = sl
+          .get<AddressService>()
+          .deriveAddress(enterTxChainSeedController.text, 0);
+      final String _seed = enterTxChainSeedController.text;
       await sl.get<Vault>().setSeed(_seed);
       await sl.get<DBHelper>().dropAccounts();
 

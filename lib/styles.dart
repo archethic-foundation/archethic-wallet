@@ -332,21 +332,21 @@ class AppFontSizes {
   static const double largestc = 28.0;
   static const double _sslarge = 18.0;
   static const double _sslargest = 22.0;
-  static double largest(context) {
+  static double largest(BuildContext context) {
     if (smallScreen(context)) {
       return _sslargest;
     }
     return _largest;
   }
 
-  static double large(context) {
+  static double large(BuildContext context) {
     if (smallScreen(context)) {
       return _sslarge;
     }
     return _large;
   }
 
-  static double smallText(context) {
+  static double smallText(BuildContext context) {
     if (smallScreen(context)) {
       return smallest;
     }

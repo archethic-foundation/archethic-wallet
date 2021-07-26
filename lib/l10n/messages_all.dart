@@ -19,7 +19,7 @@ import 'messages_fr.dart' as messages_fr;
 import 'messages_messages.dart' as messages_messages;
 
 typedef Future<dynamic> LibraryLoader();
-Map<String, LibraryLoader> _deferredLibraries = {
+Map<String, LibraryLoader> _deferredLibraries = <String, LibraryLoader>{
   'fr': () => new Future.value(null),
   'messages': () => new Future.value(null),
 };
@@ -37,7 +37,7 @@ MessageLookupByLibrary? _findExact(String localeName) {
 
 /// User programs should call this before using [localeName] for messages.
 Future<bool> initializeMessages(String localeName) async {
-  var availableLocale = Intl.verifiedLocale(
+  final String availableLocale = Intl.verifiedLocale(
     localeName,
     (locale) => _deferredLibraries[locale] != null,
     onFailure: (_) => null);
@@ -60,8 +60,11 @@ bool _messagesExistFor(String locale) {
 }
 
 MessageLookupByLibrary? _findGeneratedMessagesFor(String locale) {
-  var actualLocale = Intl.verifiedLocale(locale, _messagesExistFor,
+  final String actualLocale = Intl.verifiedLocale(locale, _messagesExistFor,
       onFailure: (_) => null);
-  if (actualLocale == null) return null;
+  if (actualLocale == null) 
+  {
+    return null;
+  }
   return _findExact(actualLocale)!;
 }

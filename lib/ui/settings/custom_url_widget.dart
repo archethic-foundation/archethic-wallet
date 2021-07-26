@@ -159,10 +159,10 @@ class _CustomUrlState extends State<CustomUrl> {
 
   Column getEndpointContainer() {
     return Column(
-      children: [
+      children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Text(
               AppLocalization.of(context).enterEndpoint,
               style: TextStyle(
@@ -187,7 +187,7 @@ class _CustomUrlState extends State<CustomUrl> {
             color: StateContainer.of(context).curTheme.primary,
             fontFamily: 'Montserrat',
           ),
-          inputFormatters: [LengthLimitingTextInputFormatter(150)],
+          inputFormatters: <LengthLimitingTextInputFormatter>[LengthLimitingTextInputFormatter(150)],
           onChanged: (String text) {
             updateEndpoint();
             // Always reset the error message to be less annoying

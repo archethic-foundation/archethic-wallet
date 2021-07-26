@@ -42,7 +42,7 @@ import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Run app
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+  SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp])
       .then((_) {
     runApp(StateContainer(child: App()));
   });
@@ -257,7 +257,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
     }
   }
 
-  Future checkLoggedIn() async {
+  Future<void> checkLoggedIn() async {
     // Update session key
     await sl.get<Vault>().updateSessionKey();
     // Check if device is rooted or jailbroken, show user a warning informing them of the risks if so

@@ -593,7 +593,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                   children: <Widget>[
                     Container(
                       margin:
-                          EdgeInsetsDirectional.only(start: 30.0, bottom: 10.0),
+                          const EdgeInsetsDirectional.only(start: 30.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context).informations,
                           style: TextStyle(
                               fontSize: 16.0,

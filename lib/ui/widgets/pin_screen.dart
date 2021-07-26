@@ -74,7 +74,6 @@ class _PinScreenState extends State<PinScreen>
     sl.get<SharedPrefsUtil>().getPinPadShuffle().then((value) {
       if (value) {
         _listPinNumber.shuffle();
-        print("coucou");
       }
     });
 

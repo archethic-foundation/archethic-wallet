@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show UcoTransfer, uint8ListToHex;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show UCOTransfer;
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -22,9 +22,9 @@ class UcoTransferListWidget extends StatefulWidget {
       @required this.displayContextMenu})
       : super();
 
-  List<UcoTransfer>? listUcoTransfer;
+  List<UCOTransfer>? listUcoTransfer;
   final List<Contact>? contacts;
-  final Function(UcoTransfer)? onGet;
+  final Function(UCOTransfer)? onGet;
   final Function()? onDelete;
   final bool? displayContextMenu;
 
@@ -35,8 +35,8 @@ class UcoTransferListWidget extends StatefulWidget {
 class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
   @override
   Widget build(BuildContext context) {
-    widget.listUcoTransfer!.sort((UcoTransfer a, UcoTransfer b) =>
-        uint8ListToHex(a.to!).compareTo(uint8ListToHex(b.to!)));
+    widget.listUcoTransfer!.sort((UCOTransfer a, UCOTransfer b) =>
+        a.to!.compareTo(b.to!));
     return Stack(
       children: <Widget>[
         SizedBox(
@@ -95,8 +95,8 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                                           .contextMenuText),
                                   onPressed: () {
                                     setState(() {
-                                      final UcoTransfer _ucoTransfer =
-                                          UcoTransfer(
+                                      final UCOTransfer _ucoTransfer =
+                                          UCOTransfer(
                                               to: widget
                                                   .listUcoTransfer![index].to,
                                               amount: widget
@@ -139,12 +139,12 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
     );
   }
 
-  Widget displayUcoDetail(BuildContext context, UcoTransfer ucoTransfer) {
+  Widget displayUcoDetail(BuildContext context, UCOTransfer ucoTransfer) {
     String displayName =
-        Address(uint8ListToHex(ucoTransfer.to!)).getShortString3();
+        Address(ucoTransfer.to!).getShortString3();
 
     for (Contact contact in widget.contacts!) {
-      if (contact.address == uint8ListToHex(ucoTransfer.to!)) {
+      if (contact.address == ucoTransfer.to!) {
         displayName = contact.name!;
       }
     }

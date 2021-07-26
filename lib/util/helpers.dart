@@ -57,7 +57,7 @@ class AppHelpers {
   }
 
   static bool isHexString(String input) {
-    final List<String> hexChars = [
+    final List<String> hexChars = <String>[
       '0',
       '1',
       '2',
