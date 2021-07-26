@@ -101,7 +101,7 @@ class NftListWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('NFT', style: AppStyles.textStyleSmallW100Text60(context)),
+                  Text('NFT', style: AppStyles.textStyleSmallW600Primary(context)),
                 ],
               ),
             ),

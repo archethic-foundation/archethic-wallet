@@ -5,7 +5,7 @@ import 'dart:async';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show ApiService, Transaction, Balance, UCOTransfer, NftBalance;
+    show ApiService, Transaction, Balance, UCOTransfer, NftBalance, TransactionStatus;
 import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
@@ -37,7 +37,8 @@ class AppService {
   Future<void> getBalanceGetResponse(String address, bool activeBus) async {
     Balance balance;
     balance = await sl.get<ApiService>().fetchBalance(address);
-    final List<NftBalance> balanceNftList = List<NftBalance>.empty(growable: true);
+    final List<NftBalance> balanceNftList =
+        List<NftBalance>.empty(growable: true);
     for (int i = 0; i < balance.nft.length; i++) {
       NftBalance balanceNft = NftBalance();
       balanceNft = balance.nft[i];
@@ -49,26 +50,24 @@ class AppService {
     }
   }
 
-  Future<void> sendUCO(String originPrivateKey, String transactionChainSeed,
+  Future<TransactionStatus> sendUCO(String originPrivateKey, String transactionChainSeed,
       String address, List<UCOTransfer> listUcoTransfer) async {
     final int txIndex = await sl.get<ApiService>().getTransactionIndex(address);
-    final Transaction transaction = Transaction(
-        type: 'transfer',
-        data: Transaction.initData());
+    final Transaction transaction =
+        Transaction(type: 'transfer', data: Transaction.initData());
     for (UCOTransfer transfer in listUcoTransfer) {
       transaction.addUCOTransfer(transfer.to, transfer.amount);
     }
-
+    TransactionStatus transactionStatus = new TransactionStatus();
     transaction
         .build(transactionChainSeed, txIndex, 'P256')
         .originSign(originPrivateKey);
     try {
-      final data = await sl.get<ApiService>().sendTx(transaction);
-      if (data.errors) {
-        print(data.errors);
-      }
+      transactionStatus = await sl.get<ApiService>().sendTx(transaction);
     } catch (e) {
       print('error: ' + e);
+      transactionStatus.status = 'e';
     }
+    return transactionStatus;
   }
 }

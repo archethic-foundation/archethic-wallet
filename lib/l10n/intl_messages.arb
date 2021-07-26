@@ -1,6 +1,6 @@
 {
-  "@@last_modified": "2021-07-15T23:03:44.610466",
-  "welcomeText": "Welcome to ArchEthic Wallet.\n\nTo begin, you may connect to your decentralized wallet with your transaction chain seed.",
+  "@@last_modified": "2021-07-26T20:54:24.537094",
+  "welcomeText": "Welcome to Internet of Trust.\n\nJoin the Internet of Trust with ArchEthic Public Blockchain by Uniris and be the only key.\n\nTo begin, you may connect to your decentralized wallet with your transaction chain seed.",
   "@welcomeText": {
     "description": "",
     "type": "text",
@@ -728,6 +728,12 @@
   },
   "enterTxAddressHint": "Enter a transaction address",
   "@enterTxAddressHint": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterTxChainSeedHint": "Enter a transaction chain seed",
+  "@enterTxChainSeedHint": {
     "description": "",
     "type": "text",
     "placeholders": {}

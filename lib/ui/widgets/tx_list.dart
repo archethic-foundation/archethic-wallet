@@ -17,7 +17,7 @@ class TxListWidget {
       children: <Widget>[
         if (StateContainer.of(context).wallet == null ||
             StateContainer.of(context).wallet.history == null)
-          const SizedBox()
+          Center(child: CircularProgressIndicator())
         else
           SizedBox(
             child: Padding(
@@ -27,7 +27,7 @@ class TxListWidget {
                         .wallet
                         .history
                         .length *
-                    100,
+                    70,
                 padding: const EdgeInsets.only(
                     top: 23.5, left: 3.5, right: 3.5, bottom: 3.5),
                 width: MediaQuery.of(context).size.width * 0.9,
@@ -95,31 +95,13 @@ class TxListWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('Transactions', style: AppStyles.textStyleSmallW100Text60(context)),
+                  Text('Transactions', style: AppStyles.textStyleSmallW600Primary(context)),
                 ],
               ),
             ),
           ),
         ),
-        SizedBox(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 0.0),
-            child: Container(
-              height: 36,
-              width: 36,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-              ),
-              child: TextButton(
-                onPressed: () {
-                 // TODO
-                },
-                child: Icon(FontAwesome5.arrow_circle_up,
-                    color: StateContainer.of(context).curTheme.primary),
-              ),
-            ),
-          ),
-        ),
+        
        ],
     );
   }
@@ -137,16 +119,16 @@ class TxListWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(transaction.type!,
-                        style: AppStyles.textStyleSmallW100Primary(context)),
+                        style: AppStyles.textStyleSmallW700Primary(context)),
                     Text(Address(transaction.address!).getShortString3(),
-                        style: AppStyles.textStyleTinyW100Primary60(context))
+                        style: AppStyles.textStyleTinyW100Primary(context))
                   ],
                 ),
               ],
             ),
             transaction.type! != 'transfer' ? const SizedBox() :
-            Text(transaction.data!.ledger!.uco!.transfers![0].toString(),
-                style: AppStyles.textStyleSmallW100Primary(context)),
+            Text(transaction.data!.ledger!.uco!.transfers![0].amount.toString() + ' UCO',
+                style: AppStyles.textStyleSmallW600Primary(context)),
           ],
         ),
         const SizedBox(height: 6),

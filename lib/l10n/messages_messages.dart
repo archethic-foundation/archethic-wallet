@@ -75,6 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "enterEndpoint" : MessageLookupByLibrary.simpleMessage("Enter an endpoint"),
     "enterPasswordHint" : MessageLookupByLibrary.simpleMessage("Enter your password"),
     "enterTxAddressHint" : MessageLookupByLibrary.simpleMessage("Enter a transaction address"),
+    "enterTxChainSeedHint" : MessageLookupByLibrary.simpleMessage("Enter a transaction chain seed"),
     "enterTxChainSeedText" : MessageLookupByLibrary.simpleMessage("Please, enter a transaction chain seed"),
     "exit" : MessageLookupByLibrary.simpleMessage("Exit"),
     "fees" : MessageLookupByLibrary.simpleMessage("Fees"),
@@ -159,7 +160,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "unlockPin" : MessageLookupByLibrary.simpleMessage("Enter PIN to Unlock"),
     "update" : MessageLookupByLibrary.simpleMessage("Update"),
     "warning" : MessageLookupByLibrary.simpleMessage("Warning"),
-    "welcomeText" : MessageLookupByLibrary.simpleMessage("Welcome to ArchEthic Wallet.\n\nTo begin, you may connect to your decentralized wallet with your transaction chain seed."),
+    "welcomeText" : MessageLookupByLibrary.simpleMessage("Welcome to Internet of Trust.\n\nJoin the Internet of Trust with ArchEthic Public Blockchain by Uniris and be the only key.\n\nTo begin, you may connect to your decentralized wallet with your transaction chain seed."),
     "xMinute" : MessageLookupByLibrary.simpleMessage("After %1 minute"),
     "xMinutes" : MessageLookupByLibrary.simpleMessage("After %1 minutes"),
     "yes" : MessageLookupByLibrary.simpleMessage("Yes")

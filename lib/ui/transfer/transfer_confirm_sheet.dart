@@ -5,7 +5,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show UCOTransfer, NFTTransfer;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show UCOTransfer, NFTTransfer, TransactionStatus;
 import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
@@ -71,7 +72,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) {
-      if (event.response != 'Success') {
+      if (event.response!.toUpperCase() != 'OK') {
         // Send failed
         if (animationOpen!) {
           Navigator.of(context).pop();
@@ -82,10 +83,10 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                 event.response! +
                 ')',
             context);
-        Navigator.of(context).pop();
+        Navigator.of(context).pop();  
       } else {
-        Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
         StateContainer.of(context).requestUpdate();
+        Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
         Sheets.showAppHeightNineSheet(
             context: context,
             closeOnTap: true,
@@ -281,17 +282,23 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   }
 
   Future<void> _doSend() async {
-    try { 
+    TransactionStatus transactionStatus = new TransactionStatus();
+    try {
       _showSendingAnimation(context);
-      const String originPrivateKey = '01009280BDB84B8F8AEDBA205FE3552689964A5626EE2C60AA10E3BF22A91A036009';
-      final String transactionChainSeed = await StateContainer.of(context).getSeed();
-      sl.get<AppService>().sendUCO(originPrivateKey, transactionChainSeed, StateContainer.of(context).selectedAccount.lastAddress, widget.ucoTransferList);
-      EventTaxiImpl.singleton().fire(TransactionSendEvent(response: 'Success'));
-    } catch (e) {
-      // Send failed
-      print('send failed' + e.toString());
+      const String originPrivateKey =
+          '01009280BDB84B8F8AEDBA205FE3552689964A5626EE2C60AA10E3BF22A91A036009';
+      final String transactionChainSeed =
+          await StateContainer.of(context).getSeed();
+      TransactionStatus transactionStatus = await sl.get<AppService>().sendUCO(
+          originPrivateKey,
+          transactionChainSeed,
+          StateContainer.of(context).selectedAccount.lastAddress,
+          widget.ucoTransferList);
       EventTaxiImpl.singleton()
-          .fire(TransactionSendEvent(response: e.toString()));
+          .fire(TransactionSendEvent(response: transactionStatus.status));
+    } catch (e) {
+      EventTaxiImpl.singleton()
+          .fire(TransactionSendEvent(response: transactionStatus.status));
     }
   }
 
