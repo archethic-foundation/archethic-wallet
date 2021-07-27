@@ -96,8 +96,9 @@ class ContactDetailsSheet {
                             },
                             child: Icon(AppIcons.trashcan,
                                 size: 24,
-                                color:
-                                    StateContainer.of(context).curTheme.primary),
+                                color: StateContainer.of(context)
+                                    .curTheme
+                                    .primary),
                           ),
                         ),
                         // The header of the sheet
@@ -110,7 +111,8 @@ class ContactDetailsSheet {
                             children: <Widget>[
                               AutoSizeText(
                                 AppLocalization.of(context).contactHeader,
-                                style: AppStyles.textStyleLargerW700Primary(context),
+                                style: AppStyles.textStyleLargerW700Primary(
+                                    context),
                                 textAlign: TextAlign.center,
                                 maxLines: 1,
                                 stepGranularity: 0.1,
@@ -219,11 +221,13 @@ class ContactDetailsSheet {
                                     )
                                   ],
                                 ),
-                                child: UIUtil.threeLinetextStyleSmallestW400Text(
-                                    context, contact.address,
-                                    type: _addressCopied
-                                        ? ThreeLineAddressTextType.SUCCESS_FULL
-                                        : ThreeLineAddressTextType.PRIMARY),
+                                child:
+                                    UIUtil.threeLinetextStyleSmallestW400Text(
+                                        context, contact.address,
+                                        type: _addressCopied
+                                            ? ThreeLineAddressTextType
+                                                .SUCCESS_FULL
+                                            : ThreeLineAddressTextType.PRIMARY),
                               ),
                             ),
                             // Address Copied text container

@@ -268,7 +268,7 @@ class _PinScreenState extends State<PinScreen>
     final List<Widget> ret = List<Widget>.empty(growable: true);
     for (int i = 0; i < _pinLength; i++) {
       ret.add(Icon(_dotStates[i],
-          color: StateContainer.of(context).curTheme.primary, size: 20.0));
+          color: StateContainer.of(context).curTheme.primary, size: 15.0));
     }
     return ret;
   }
@@ -319,8 +319,7 @@ class _PinScreenState extends State<PinScreen>
                       margin: const EdgeInsets.symmetric(horizontal: 40),
                       child: AutoSizeText(
                         _header,
-                        style:
-                            AppStyles.textStyleLargeW700Primary(context),
+                        style: AppStyles.textStyleLargeW700Primary(context),
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         stepGranularity: 0.1,

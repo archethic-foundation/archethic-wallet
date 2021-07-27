@@ -10,7 +10,6 @@ import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/model/address.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 
-
 class TxListWidget {
   static Widget buildTxList(BuildContext context) {
     return Stack(
@@ -23,11 +22,7 @@ class TxListWidget {
             child: Padding(
               padding: const EdgeInsets.only(top: 0.0),
               child: Container(
-                height: StateContainer.of(context)
-                        .wallet
-                        .history
-                        .length *
-                    70,
+                height: StateContainer.of(context).wallet.history.length * 70,
                 padding: const EdgeInsets.only(
                     top: 23.5, left: 3.5, right: 3.5, bottom: 3.5),
                 width: MediaQuery.of(context).size.width * 0.9,
@@ -51,16 +46,10 @@ class TxListWidget {
                       left: 6, right: 6, top: 6, bottom: 6),
                   child: ListView.builder(
                     padding: const EdgeInsets.symmetric(vertical: 20),
-                    itemCount: StateContainer.of(context)
-                        .wallet
-                        .history
-                        .length,
+                    itemCount: StateContainer.of(context).wallet.history.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return displayTxDetail(
-                          context,
-                          StateContainer.of(context)
-                              .wallet
-                              .history[index]);
+                      return displayTxDetail(context,
+                          StateContainer.of(context).wallet.history[index]);
                     },
                   ),
                 ),
@@ -95,14 +84,14 @@ class TxListWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('Transactions', style: AppStyles.textStyleSmallW600Primary(context)),
+                  Text('Recent transactions',
+                      style: AppStyles.textStyleSmallW600Primary(context)),
                 ],
               ),
             ),
           ),
         ),
-        
-       ],
+      ],
     );
   }
 
@@ -126,9 +115,13 @@ class TxListWidget {
                 ),
               ],
             ),
-            transaction.type! != 'transfer' ? const SizedBox() :
-            Text(transaction.data!.ledger!.uco!.transfers![0].amount.toString() + ' UCO',
-                style: AppStyles.textStyleSmallW600Primary(context)),
+            transaction.type! != 'transfer'
+                ? const SizedBox()
+                : Text(
+                    transaction.data!.ledger!.uco!.transfers![0].amount
+                            .toString() +
+                        ' UCO',
+                    style: AppStyles.textStyleSmallW600Primary(context)),
           ],
         ),
         const SizedBox(height: 6),

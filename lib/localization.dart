@@ -153,6 +153,15 @@ class AppLocalization {
     return Intl.message('Define the endpoint', desc: '', name: 'customUrlDesc');
   }
 
+  String get walletFAQHeader {
+    return Intl.message('Wallet FAQ', desc: '', name: 'walletFAQHeader');
+  }
+
+  String get walletFAQDesc {
+    return Intl.message('Have a question? Check here first!',
+        desc: '', name: 'walletFAQDesc');
+  }
+
   String get enterEndpoint {
     return Intl.message('Enter an endpoint', desc: '', name: 'enterEndpoint');
   }
@@ -343,8 +352,15 @@ class AppLocalization {
         desc: 'A settings menu item for changing currency', name: 'currency');
   }
 
-  String get changeCurrency {
-    return Intl.message('Currency', desc: '', name: 'changeCurrency');
+  String get changeCurrencyHeader {
+    return Intl.message('Currency', desc: '', name: 'changeCurrencyHeader');
+  }
+
+  String get changeCurrencyDesc {
+    return Intl.message(
+        'Select the fiat currency you would like to display alongside UCO',
+        desc: '',
+        name: 'changeCurrencyDesc');
   }
 
   String get language {
@@ -465,6 +481,24 @@ class AppLocalization {
   String get securityHeader {
     return Intl.message('Security',
         desc: 'security_header', name: 'securityHeader');
+  }
+
+  String get aboutHeader {
+    return Intl.message('About', desc: '', name: 'aboutHeader');
+  }
+
+  String get aboutGeneralTermsAndConditions {
+    return Intl.message('General Terms & Conditions',
+        desc: '', name: 'aboutGeneralTermsAndConditions');
+  }
+
+  String get aboutWalletServiceTerms {
+    return Intl.message('Wallet Service Terms',
+        desc: '', name: 'aboutWalletServiceTerms');
+  }
+
+  String get aboutPrivacyPolicy {
+    return Intl.message('Privacy Policy', desc: '', name: 'aboutPrivacyPolicy');
   }
 
   String get autoLockHeader {

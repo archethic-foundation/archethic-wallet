@@ -328,7 +328,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
                                     .requestFocus(_addressFocusNode);
                               });
                             },
-                            child: UIUtil.threeLinetextStyleSmallestW400Text(context,
+                            child: UIUtil.threeLinetextStyleSmallestW400Text(
+                                context,
                                 widget.address ?? _addressController!.text))
                         : null,
                   ),

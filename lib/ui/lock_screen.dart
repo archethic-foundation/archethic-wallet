@@ -266,8 +266,9 @@ class _AppLockScreenState extends State<AppLockScreen> {
                             children: <Widget>[
                               Icon(AppIcons.logout,
                                   size: 16,
-                                  color:
-                                      StateContainer.of(context).curTheme.primary),
+                                  color: StateContainer.of(context)
+                                      .curTheme
+                                      .primary),
                               Container(
                                 margin:
                                     const EdgeInsetsDirectional.only(start: 4),
@@ -302,8 +303,8 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                 CaseChange.toUpperCase(
                                     AppLocalization.of(context).locked,
                                     context),
-                                style:
-                                    AppStyles.textStyleLargestW700Primary(context),
+                                style: AppStyles.textStyleLargestW700Primary(
+                                    context),
                               ),
                               margin: const EdgeInsets.only(top: 10),
                             ),

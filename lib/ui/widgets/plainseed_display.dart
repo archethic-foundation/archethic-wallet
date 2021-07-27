@@ -98,13 +98,11 @@ class _PlainSeedDisplayState extends State<PlainSeedDisplay> {
                     child: _seedObscured
                         ? AutoSizeText(
                             AppLocalization.of(context).tapToReveal,
-                            style: AppStyles.textStyleSmallW600Primary(
-                                context),
+                            style: AppStyles.textStyleSmallW600Primary(context),
                           )
                         : Text(
                             AppLocalization.of(context).tapToHide,
-                            style: AppStyles.textStyleSmallW600Primary(
-                                context),
+                            style: AppStyles.textStyleSmallW600Primary(context),
                           ),
                   )
                 else

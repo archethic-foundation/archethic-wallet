@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show uint8ListToHex, NFTTransfer;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show uint8ListToHex, NFTTransfer;
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -35,8 +36,8 @@ class NftTransferListWidget extends StatefulWidget {
 class _NftTransferListWidgetState extends State<NftTransferListWidget> {
   @override
   Widget build(BuildContext context) {
-    widget.listNftTransfer!.sort((NFTTransfer a, NFTTransfer b) =>
-        a.to!.compareTo(b.to!));
+    widget.listNftTransfer!
+        .sort((NFTTransfer a, NFTTransfer b) => a.to!.compareTo(b.to!));
     return Stack(
       children: <Widget>[
         SizedBox(
@@ -88,8 +89,9 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                               ContextMenuItem(
                                   title: Text(
                                       AppLocalization.of(context).getOption,
-                                      style:
-                                          AppStyles.textStyleSmallW700ContextMenuPrimary(context)),
+                                      style: AppStyles
+                                          .textStyleSmallW700ContextMenuPrimary(
+                                              context)),
                                   trailingIcon: Icon(Icons.get_app,
                                       color: StateContainer.of(context)
                                           .curTheme
@@ -109,8 +111,9 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                               ContextMenuItem(
                                   title: Text(
                                     AppLocalization.of(context).deleteOption,
-                                    style:
-                                        AppStyles.textStyleSmallW700ContextMenuTextRed(context),
+                                    style: AppStyles
+                                        .textStyleSmallW700ContextMenuTextRed(
+                                            context),
                                   ),
                                   trailingIcon: Icon(
                                     Icons.delete,
@@ -141,8 +144,7 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
   }
 
   Widget displayNftDetail(BuildContext context, NFTTransfer nftTransfer) {
-    String displayName =
-        Address(nftTransfer.to!).getShortString3();
+    String displayName = Address(nftTransfer.to!).getShortString3();
 
     for (Contact contact in widget.contacts!) {
       if (contact.address == nftTransfer.to!) {

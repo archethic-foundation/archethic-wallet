@@ -7,7 +7,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show Node, ApiService;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show Node, ApiService;
 
 // Project imports:
 import 'package:archethic_mobile_wallet/app_icons.dart';
@@ -81,8 +82,9 @@ class _NodesListState extends State<NodesList> {
                                 widget.nodesController.reverse();
                               },
                               child: Icon(AppIcons.back,
-                                  color:
-                                      StateContainer.of(context).curTheme.primary,
+                                  color: StateContainer.of(context)
+                                      .curTheme
+                                      .primary,
                                   size: 24)),
                         ),
                         //Nodes Header Text
@@ -100,9 +102,7 @@ class _NodesListState extends State<NodesList> {
                   : Container(
                       margin: const EdgeInsetsDirectional.only(start: 20.0),
                       alignment: Alignment.bottomLeft,
-                      child: Text(
-                          'Nb of nodes : ' +
-                              _nodes.length.toString(),
+                      child: Text('Nb of nodes : ' + _nodes.length.toString(),
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: AppFontSizes.smallest,
@@ -113,7 +113,8 @@ class _NodesListState extends State<NodesList> {
               Expanded(
                 child: Stack(
                   children: <Widget>[
-                    _nodes == null ? const SizedBox()
+                    _nodes == null
+                        ? const SizedBox()
                         :
                         // Nodes list
                         ListView.builder(
@@ -122,8 +123,7 @@ class _NodesListState extends State<NodesList> {
                                 const EdgeInsets.only(top: 15.0, bottom: 15),
                             itemCount: _nodes.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return buildSingleNode(
-                                  context, _nodes[index]);
+                              return buildSingleNode(context, _nodes[index]);
                             },
                           ),
                     //List Top Gradient End
@@ -202,7 +202,8 @@ class _NodesListState extends State<NodesList> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text('First public key : ',
-                          style: AppStyles.textStyleSmallestW600Primary(context)),
+                          style:
+                              AppStyles.textStyleSmallestW600Primary(context)),
                       Text(Address(node.firstPublicKey).getShortString2(),
                           style:
                               AppStyles.textStyleSmallestW100Primary(context)),
@@ -223,8 +224,8 @@ class _NodesListState extends State<NodesList> {
                       Row(
                         children: [
                           Text('IP : ',
-                              style:
-                                  AppStyles.textStyleSmallestW600Primary(context)),
+                              style: AppStyles.textStyleSmallestW600Primary(
+                                  context)),
                           Text(node.ip + ':' + node.port.toString(),
                               style: AppStyles.textStyleSmallestW100Primary(
                                   context)),
@@ -236,14 +237,14 @@ class _NodesListState extends State<NodesList> {
                       Row(
                         children: [
                           Text('Geo patch : ',
-                              style:
-                                  AppStyles.textStyleSmallestW600Primary(context)),
+                              style: AppStyles.textStyleSmallestW600Primary(
+                                  context)),
                           Text(node.geoPatch,
                               style: AppStyles.textStyleSmallestW100Primary(
                                   context)),
                           Text(' - Network patch : ',
-                              style:
-                                  AppStyles.textStyleSmallestW600Primary(context)),
+                              style: AppStyles.textStyleSmallestW600Primary(
+                                  context)),
                           Text(node.networkPatch,
                               style: AppStyles.textStyleSmallestW100Primary(
                                   context)),
@@ -255,8 +256,8 @@ class _NodesListState extends State<NodesList> {
                       Row(
                         children: [
                           Text('Average availability : ',
-                              style:
-                                  AppStyles.textStyleSmallestW600Primary(context)),
+                              style: AppStyles.textStyleSmallestW600Primary(
+                                  context)),
                           Text(node.averageAvailability.toString(),
                               style: AppStyles.textStyleSmallestW100Primary(
                                   context)),
@@ -268,8 +269,8 @@ class _NodesListState extends State<NodesList> {
                       Row(
                         children: [
                           Text('Authorized : ',
-                              style:
-                                  AppStyles.textStyleSmallestW600Primary(context)),
+                              style: AppStyles.textStyleSmallestW600Primary(
+                                  context)),
                           Text(node.authorized.toString(),
                               style: AppStyles.textStyleSmallestW100Primary(
                                   context)),
@@ -279,7 +280,8 @@ class _NodesListState extends State<NodesList> {
                         height: 10,
                       ),
                       Text('Reward address : ',
-                          style: AppStyles.textStyleSmallestW600Primary(context)),
+                          style:
+                              AppStyles.textStyleSmallestW600Primary(context)),
                       Text(Address(node.rewardAddress).getShortString2(),
                           style:
                               AppStyles.textStyleSmallestW100Primary(context)),

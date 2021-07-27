@@ -103,7 +103,8 @@ class _CustomUrlState extends State<CustomUrl> {
                             widget.tokensListController.reverse();
                           },
                           child: Icon(AppIcons.back,
-                              color: StateContainer.of(context).curTheme.primary,
+                              color:
+                                  StateContainer.of(context).curTheme.primary,
                               size: 24)),
                     ),
                     // Header Text
@@ -132,15 +133,11 @@ class _CustomUrlState extends State<CustomUrl> {
                               Container(
                                 alignment: const AlignmentDirectional(0, 0),
                                 margin: const EdgeInsets.only(top: 3),
-                                child: Text(_endpointValidationText,
-                                    style: TextStyle(
-                                      fontSize: 14.0,
-                                      color: StateContainer.of(context)
-                                          .curTheme
-                                          .primary,
-                                      fontFamily: 'Montserrat',
-                                      fontWeight: FontWeight.w600,
-                                    )),
+                                child: Text(
+                                  _endpointValidationText,
+                                  style: AppStyles.textStyleSmallW600Primary(
+                                      context),
+                                ),
                               ),
                             ],
                           ),
@@ -165,12 +162,7 @@ class _CustomUrlState extends State<CustomUrl> {
           children: <Widget>[
             Text(
               AppLocalization.of(context).enterEndpoint,
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w100,
-                fontFamily: 'Montserrat',
-                color: StateContainer.of(context).curTheme.primary60,
-              ),
+              style: AppStyles.textStyleMediumW200Primary(context),
             ),
           ],
         ),
@@ -181,13 +173,10 @@ class _CustomUrlState extends State<CustomUrl> {
           focusNode: _endpointFocusNode,
           controller: _endpointController,
           cursorColor: StateContainer.of(context).curTheme.primary,
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 16.0,
-            color: StateContainer.of(context).curTheme.primary,
-            fontFamily: 'Montserrat',
-          ),
-          inputFormatters: <LengthLimitingTextInputFormatter>[LengthLimitingTextInputFormatter(150)],
+          style: AppStyles.textStyleSmallW100Primary(context),
+          inputFormatters: <LengthLimitingTextInputFormatter>[
+            LengthLimitingTextInputFormatter(150)
+          ],
           onChanged: (String text) {
             updateEndpoint();
             // Always reset the error message to be less annoying

@@ -10,6 +10,7 @@ import 'package:oktoast/oktoast.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:archethic_mobile_wallet/bus/events.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/util/exceptions.dart';
@@ -18,7 +19,8 @@ enum ThreeLineAddressTextType { PRIMARY60, PRIMARY, SUCCESS, SUCCESS_FULL }
 enum OneLineAddressTextType { PRIMARY60, PRIMARY, SUCCESS }
 
 class UIUtil {
-  static Widget threeLinetextStyleSmallestW400Text(BuildContext context, String address,
+  static Widget threeLinetextStyleSmallestW400Text(
+      BuildContext context, String address,
       {ThreeLineAddressTextType type = ThreeLineAddressTextType.PRIMARY,
       String? contactName}) {
     String stringPartOne = '';
@@ -273,7 +275,8 @@ class UIUtil {
     }
   }
 
-  static Widget oneLinetextStyleSmallestW400Text(BuildContext context, String address,
+  static Widget oneLinetextStyleSmallestW400Text(
+      BuildContext context, String address,
       {OneLineAddressTextType type = OneLineAddressTextType.PRIMARY}) {
     final String stringPartOne = address.substring(0, 12);
     final String stringPartFive = address.substring(59);
@@ -446,19 +449,15 @@ class UIUtil {
       return false;
   }
 
-  static String getRobohashURL(String address) {
-    if (address == null) {
-      return 'https://robohash.org/uco?set=set4';
-    } else {
-      return 'https://robohash.org/$address?set=set4';
-    }
-  }
-
-  static String getDragginatorURL(String dna, String status) {
-    if (status == 'egg') {
-      return 'https://dragginator.com/data/eggs/' + dna + '/egg.png';
-    } else {
-      return 'https://dragginator.com/data/eggs/' + dna + '/draggon.png';
-    }
+  static Widget showWebview(BuildContext context, String url) {
+    return WebviewScaffold(
+      url: url,
+      appBar: new AppBar(
+        backgroundColor: StateContainer.of(context).curTheme.backgroundDark,
+        brightness: StateContainer.of(context).curTheme.brightness,
+        iconTheme:
+            IconThemeData(color: StateContainer.of(context).curTheme.primary),
+      ),
+    );
   }
 }

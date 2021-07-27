@@ -149,8 +149,9 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                                         start: 4),
                                     child: Text(
                                         AppLocalization.of(context).logout,
-                                        style: AppStyles.textStyleSmallW600Primary(
-                                            context)),
+                                        style:
+                                            AppStyles.textStyleSmallW600Primary(
+                                                context)),
                                   ),
                                 ],
                               ),
@@ -175,7 +176,8 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                           child: Text(
                             CaseChange.toUpperCase(
                                 AppLocalization.of(context).locked, context),
-                            style: AppStyles.textStyleLargestW700Primary(context),
+                            style:
+                                AppStyles.textStyleLargestW700Primary(context),
                           ),
                           margin: const EdgeInsets.only(top: 10),
                         ),

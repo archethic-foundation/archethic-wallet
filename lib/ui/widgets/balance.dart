@@ -45,7 +45,8 @@ class BalanceDisplay {
                         opacity: _opacityAnimation.value,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: StateContainer.of(context).curTheme.primary20,
+                            color:
+                                StateContainer.of(context).curTheme.primary20,
                             borderRadius: BorderRadius.circular(100),
                           ),
                           child: const Text(
@@ -120,7 +121,8 @@ class BalanceDisplay {
                         opacity: _opacityAnimation.value,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: StateContainer.of(context).curTheme.primary20,
+                            color:
+                                StateContainer.of(context).curTheme.primary20,
                             borderRadius: BorderRadius.circular(100),
                           ),
                           child: const Text(
@@ -196,7 +198,8 @@ class BalanceDisplay {
                                           .wallet
                                           .getAccountBalanceUCODisplay() +
                                       ' UCO',
-                                  style: AppStyles.textStyleLargestW900Primary(context),
+                                  style: AppStyles.textStyleLargestW900Primary(
+                                      context),
                                 ),
                               ],
                             ),

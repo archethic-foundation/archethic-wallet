@@ -35,8 +35,8 @@ class UcoTransferListWidget extends StatefulWidget {
 class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
   @override
   Widget build(BuildContext context) {
-    widget.listUcoTransfer!.sort((UCOTransfer a, UCOTransfer b) =>
-        a.to!.compareTo(b.to!));
+    widget.listUcoTransfer!
+        .sort((UCOTransfer a, UCOTransfer b) => a.to!.compareTo(b.to!));
     return Stack(
       children: <Widget>[
         SizedBox(
@@ -87,8 +87,9 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                               ContextMenuItem(
                                   title: Text(
                                       AppLocalization.of(context).getOption,
-                                      style:
-                                          AppStyles.textStyleSmallW700ContextMenuPrimary(context)),
+                                      style: AppStyles
+                                          .textStyleSmallW700ContextMenuPrimary(
+                                              context)),
                                   trailingIcon: Icon(Icons.get_app,
                                       color: StateContainer.of(context)
                                           .curTheme
@@ -108,8 +109,9 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                               ContextMenuItem(
                                   title: Text(
                                     AppLocalization.of(context).deleteOption,
-                                    style:
-                                        AppStyles.textStyleSmallW700ContextMenuTextRed(context),
+                                    style: AppStyles
+                                        .textStyleSmallW700ContextMenuTextRed(
+                                            context),
                                   ),
                                   trailingIcon: Icon(
                                     Icons.delete,
@@ -140,8 +142,7 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
   }
 
   Widget displayUcoDetail(BuildContext context, UCOTransfer ucoTransfer) {
-    String displayName =
-        Address(ucoTransfer.to!).getShortString3();
+    String displayName = Address(ucoTransfer.to!).getShortString3();
 
     for (Contact contact in widget.contacts!) {
       if (contact.address == ucoTransfer.to!) {

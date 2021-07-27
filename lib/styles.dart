@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 
 class AppStyles {
-
   static TextStyle textStyleMediumW200Primary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
@@ -20,6 +19,14 @@ class AppStyles {
         fontSize: AppFontSizes.medium,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.primary);
+  }
+
+  static TextStyle textStyleMediumW100Primary60(BuildContext context) {
+    return TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: AppFontSizes.medium,
+        fontWeight: FontWeight.w100,
+        color: StateContainer.of(context).curTheme.primary60);
   }
 
   static TextStyle textStyleSmallW200Primary(BuildContext context) {
@@ -192,6 +199,15 @@ class AppStyles {
     );
   }
 
+  static TextStyle textStyleSmallestW100Primary30(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      color: StateContainer.of(context).curTheme.primary,
+      fontSize: AppFontSizes.smallest,
+      fontWeight: FontWeight.w100,
+    );
+  }
+
   static TextStyle textStyleTinyW100Primary60(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
@@ -225,6 +241,15 @@ class AppStyles {
       fontSize: AppFontSizes.medium,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.primary,
+    );
+  }
+
+  static TextStyle textStyleMediumW600Primary30(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.medium,
+      fontWeight: FontWeight.w600,
+      color: StateContainer.of(context).curTheme.primary30,
     );
   }
 
@@ -325,7 +350,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.smallest,
       fontWeight: FontWeight.w400,
-      color: StateContainer.of(context).curTheme.primary,     
+      color: StateContainer.of(context).curTheme.primary,
     );
   }
 }

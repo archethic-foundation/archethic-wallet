@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show UCOTransfer;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show UCOTransfer;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';

@@ -5,7 +5,13 @@ import 'dart:async';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show ApiService, Transaction, Balance, UCOTransfer, NftBalance, TransactionStatus;
+    show
+        ApiService,
+        Transaction,
+        Balance,
+        UCOTransfer,
+        NftBalance,
+        TransactionStatus;
 import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
@@ -50,8 +56,11 @@ class AppService {
     }
   }
 
-  Future<TransactionStatus> sendUCO(String originPrivateKey, String transactionChainSeed,
-      String address, List<UCOTransfer> listUcoTransfer) async {
+  Future<TransactionStatus> sendUCO(
+      String originPrivateKey,
+      String transactionChainSeed,
+      String address,
+      List<UCOTransfer> listUcoTransfer) async {
     final int txIndex = await sl.get<ApiService>().getTransactionIndex(address);
     final Transaction transaction =
         Transaction(type: 'transfer', data: Transaction.initData());

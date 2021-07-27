@@ -18,8 +18,7 @@ class Address {
   String get amount => _amount!;
 
   String getShortString() {
-    if (_address == null) 
-    {
+    if (_address == null) {
       return '';
     }
     if (_address!.length < 21) {
@@ -32,8 +31,7 @@ class Address {
   }
 
   String getShortString2() {
-    if (_address == null) 
-    {
+    if (_address == null) {
       return '';
     }
     if (_address!.length < 21) {
@@ -46,8 +44,7 @@ class Address {
   }
 
   String getShortString3() {
-    if (_address == null) 
-    {
+    if (_address == null) {
       return '';
     }
     if (_address!.length < 27) {
@@ -60,8 +57,7 @@ class Address {
   }
 
   String getShorterString() {
-    if (_address == null) 
-    {
+    if (_address == null) {
       return '';
     }
     if (_address!.length < 21) {

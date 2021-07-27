@@ -87,7 +87,9 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                                 child: SizedBox(
                                   height: 300,
                                   child: SvgPicture.asset(
-                                      'assets/archethic_logo.svg', height: 200,),
+                                    'assets/archethic_logo.svg',
+                                    height: 200,
+                                  ),
                                 ),
                               ),
                             ),
@@ -96,11 +98,10 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                             margin: EdgeInsets.symmetric(
                                 horizontal: smallScreen(context) ? 30 : 40,
                                 vertical: 20),
-                            child: AutoSizeText(
+                            child: Text(
                               AppLocalization.of(context).welcomeText,
-                              style: AppStyles.textStyleLargestW700Primary(context),
-                              maxLines: 5,
-                              stepGranularity: 0.5,
+                              style:
+                                  AppStyles.textStyleSmallW600Primary(context),
                             ),
                           ),
                         ],

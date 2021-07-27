@@ -162,7 +162,8 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                                         style:
                                             AppStyles.textStyleSmallW100Primary(
                                                 context),
-                                        inputFormatters: <LengthLimitingTextInputFormatter>[
+                                        inputFormatters: <
+                                            LengthLimitingTextInputFormatter>[
                                           LengthLimitingTextInputFormatter(255),
                                         ],
                                         textInputAction: TextInputAction.done,
@@ -235,9 +236,10 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                                 controller: enterEndpointController,
                                 cursorColor:
                                     StateContainer.of(context).curTheme.primary,
-                                style:
-                                    AppStyles.textStyleSmallW100Primary(context),
-                                inputFormatters: <LengthLimitingTextInputFormatter>[
+                                style: AppStyles.textStyleSmallW100Primary(
+                                    context),
+                                inputFormatters: <
+                                    LengthLimitingTextInputFormatter>[
                                   LengthLimitingTextInputFormatter(150)
                                 ],
                                 onChanged: (String text) {

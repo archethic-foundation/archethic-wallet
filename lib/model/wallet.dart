@@ -1,7 +1,8 @@
 // @dart=2.9
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show Transaction, Balance;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show Transaction, Balance;
 import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
 

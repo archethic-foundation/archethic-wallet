@@ -23,7 +23,8 @@ class Sha256KDF extends KDF {
     // Key = sha256 (password + salt);
     final Uint8List key = Sha.sha256(<Uint8List>[pwBytes, saltBytes]);
     // iv = sha256 (KEY + password + salt);
-    final Uint8List iv = Sha.sha256(<Uint8List>[key, pwBytes, saltBytes]).sublist(0, 16);
+    final Uint8List iv =
+        Sha.sha256(<Uint8List>[key, pwBytes, saltBytes]).sublist(0, 16);
 
     return KeyIV(key, iv);
   }

@@ -219,7 +219,8 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                           // Header
                           AutoSizeText(
                             (widget.title ?? AppLocalization.of(context).send)!,
-                            style: AppStyles.textStyleLargerW700Primary(context),
+                            style:
+                                AppStyles.textStyleLargerW700Primary(context),
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             stepGranularity: 0.1,
@@ -512,9 +513,8 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                                           nftTransferList
                                                               .length;
                                                       i++) {
-                                                    if (
-                                                            nftTransferList[i]
-                                                                .to! ==
+                                                    if (nftTransferList[i]
+                                                            .to! ==
                                                         _to) {
                                                       nftTransferList
                                                           .removeAt(i);
@@ -523,8 +523,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                                   }
                                                   final NFTTransfer
                                                       nftTransfer = NFTTransfer(
-                                                          to: 
-                                                              _to,
+                                                          to: _to,
                                                           amount: _amount);
                                                   nftTransferList
                                                       .add(nftTransfer);
@@ -540,9 +539,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                                 for (int i = 0;
                                                     i < nftTransferList.length;
                                                     i++) {
-                                                  if (
-                                                          nftTransferList[i]
-                                                              .to! ==
+                                                  if (nftTransferList[i].to! ==
                                                       _to) {
                                                     _amount = _amount +
                                                         nftTransferList[i]
@@ -571,13 +568,11 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                         onGet: (NFTTransfer _nftTransfer) {
                                           setState(() {
                                             _sendAddressController!.text =
-                                              
-                                                    _nftTransfer.to!;
+                                                _nftTransfer.to!;
                                             for (Contact contact
                                                 in widget.contactsRef!) {
                                               if (contact.address ==
-                                               
-                                                      _nftTransfer.to!) {
+                                                  _nftTransfer.to!) {
                                                 _sendAddressController!.text =
                                                     contact.name!;
                                               }
@@ -1158,8 +1153,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
     }
 
     for (int i = 0; i < nftTransferList.length; i++) {
-      if (nftTransferList[i].to! ==
-              _sendAddressController!.text ||
+      if (nftTransferList[i].to! == _sendAddressController!.text ||
           nftTransferList[i].to! == contactAddress) {
         inList = true;
         break;

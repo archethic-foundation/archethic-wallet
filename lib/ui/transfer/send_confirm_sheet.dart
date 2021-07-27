@@ -282,7 +282,8 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                         Text(
                           AppLocalization.of(context).to,
                           style: TextStyle(
-                            color: StateContainer.of(context).curTheme.primary60,
+                            color:
+                                StateContainer.of(context).curTheme.primary60,
                             fontSize: 16.0,
                             fontWeight: FontWeight.w700,
                             fontFamily: 'Montserrat',

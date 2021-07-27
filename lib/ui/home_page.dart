@@ -77,7 +77,8 @@ class _AppHomePageState extends State<AppHomePage>
       _isRefreshing = true;
     });
     sl.get<HapticUtil>().success();
-    StateContainer.of(context).updateWallet(account: StateContainer.of(context).selectedAccount);
+    StateContainer.of(context)
+        .updateWallet(account: StateContainer.of(context).selectedAccount);
 
     // Hide refresh indicator after 3 seconds if no server response
     Future.delayed(const Duration(seconds: 1), () {

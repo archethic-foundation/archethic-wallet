@@ -110,7 +110,8 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                           children: <Widget>[
                             AutoSizeText(
                               AppLocalization.of(context).secretInfo,
-                              style: AppStyles.textStyleMediumW200Primary(context),
+                              style:
+                                  AppStyles.textStyleMediumW200Primary(context),
                               maxLines: 5,
                               stepGranularity: 0.5,
                             ),

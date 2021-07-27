@@ -4,6 +4,8 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:archethic_mobile_wallet/ui/settings/wallet_faq_widget.dart';
+import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -47,14 +49,18 @@ class SettingsSheet extends StatefulWidget {
 
 class _SettingsSheetState extends State<SettingsSheet>
     with TickerProviderStateMixin, WidgetsBindingObserver {
-  AnimationController _controller;
-  Animation<Offset> _offsetFloat;
+  AnimationController _contactsController;
+  Animation<Offset> _contactsOffsetFloat;
   AnimationController _securityController;
   Animation<Offset> _securityOffsetFloat;
   AnimationController _nodesController;
   Animation<Offset> _nodesOffsetFloat;
   AnimationController _customUrlController;
   Animation<Offset> _customUrlOffsetFloat;
+  AnimationController _walletFAQController;
+  Animation<Offset> _walletFAQOffsetFloat;
+  AnimationController _aboutController;
+  Animation<Offset> _aboutOffsetFloat;
 
   String versionString = '';
 
@@ -66,12 +72,11 @@ class _SettingsSheetState extends State<SettingsSheet>
       LockTimeoutSetting(LockTimeoutOption.ONE);
 
   bool _securityOpen;
-
+  bool _aboutOpen;
   bool _contactsOpen;
-
   bool _nodesOpen;
-
   bool _customUrlOpen;
+  bool _walletFAQOpen;
 
   bool _pinPadShuffleActive;
 
@@ -83,7 +88,9 @@ class _SettingsSheetState extends State<SettingsSheet>
     _contactsOpen = false;
     _nodesOpen = false;
     _securityOpen = false;
+    _aboutOpen = false;
     _customUrlOpen = false;
+    _walletFAQOpen = false;
     // Determine if they have face or fingerprint enrolled, if not hide the setting
     sl.get<BiometricUtil>().hasBiometrics().then((bool hasBiometrics) {
       setState(() {
@@ -120,53 +127,64 @@ class _SettingsSheetState extends State<SettingsSheet>
         _curTimeoutSetting = lockTimeout;
       });
     });
-    // Setup animation controller
-    _controller = AnimationController(
+    _contactsController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
-    // For security menu
     _securityController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
-    // For nodes menu
+    _aboutController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 220),
+    );
     _nodesController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
-    // For customUrl menu
     _customUrlController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
-
-    _offsetFloat =
+    _walletFAQController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 220),
+    );
+    _contactsOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
-            .animate(_controller);
+            .animate(_contactsController);
     _securityOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_securityController);
+    _aboutOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
+            .animate(_aboutController);
     _nodesOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_nodesController);
     _customUrlOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_customUrlController);
+    _walletFAQOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
+            .animate(_walletFAQController);
     // Version string
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
-        versionString = 'v${packageInfo.version}';
+        versionString = 'Version: ${packageInfo.version}';
       });
     });
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _contactsController.dispose();
     _securityController.dispose();
+    _aboutController.dispose();
     _customUrlController.dispose();
     _nodesController.dispose();
+    _walletFAQController.dispose();
     super.dispose();
   }
 
@@ -511,13 +529,19 @@ class _SettingsSheetState extends State<SettingsSheet>
       setState(() {
         _contactsOpen = false;
       });
-      _controller.reverse();
+      _contactsController.reverse();
       return false;
     } else if (_securityOpen) {
       setState(() {
         _securityOpen = false;
       });
       _securityController.reverse();
+      return false;
+    } else if (_aboutOpen) {
+      setState(() {
+        _aboutOpen = false;
+      });
+      _aboutController.reverse();
       return false;
     } else if (_customUrlOpen) {
       setState(() {
@@ -530,6 +554,12 @@ class _SettingsSheetState extends State<SettingsSheet>
         _nodesOpen = false;
       });
       _nodesController.reverse();
+      return false;
+    } else if (_walletFAQOpen) {
+      setState(() {
+        _walletFAQOpen = false;
+      });
+      _walletFAQController.reverse();
       return false;
     }
     return true;
@@ -548,17 +578,22 @@ class _SettingsSheetState extends State<SettingsSheet>
             ),
             buildMainSettings(context),
             SlideTransition(
-                position: _offsetFloat,
-                child: ContactsList(_controller, _contactsOpen)),
+                position: _contactsOffsetFloat,
+                child: ContactsList(_contactsController, _contactsOpen)),
             SlideTransition(
                 position: _securityOffsetFloat,
                 child: buildSecurityMenu(context)),
+            SlideTransition(
+                position: _aboutOffsetFloat, child: buildAboutMenu(context)),
             SlideTransition(
                 position: _nodesOffsetFloat,
                 child: NodesList(_nodesController, _nodesOpen)),
             SlideTransition(
                 position: _customUrlOffsetFloat,
                 child: CustomUrl(_customUrlController, _customUrlOpen)),
+            SlideTransition(
+                position: _walletFAQOffsetFloat,
+                child: WalletFAQ(_walletFAQController, _walletFAQOpen)),
           ],
         ),
       ),
@@ -592,14 +627,11 @@ class _SettingsSheetState extends State<SettingsSheet>
                   padding: const EdgeInsets.only(top: 15.0),
                   children: <Widget>[
                     Container(
-                      margin:
-                          const EdgeInsetsDirectional.only(start: 30.0, bottom: 10.0),
+                      margin: const EdgeInsetsDirectional.only(
+                          start: 30.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context).informations,
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w100,
-                              color:
-                                  StateContainer.of(context).curTheme.primary60)),
+                          style:
+                              AppStyles.textStyleMediumW100Primary60(context)),
                     ),
                     Divider(
                       height: 2,
@@ -619,15 +651,39 @@ class _SettingsSheetState extends State<SettingsSheet>
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
                     ),
+                    AppSettings.buildSettingsListItemSingleLineWithInfos(
+                        context,
+                        AppLocalization.of(context).walletFAQHeader,
+                        AppLocalization.of(context).walletFAQDesc,
+                        FontAwesome.help_circled, onPressed: () {
+                      setState(() {
+                        _walletFAQOpen = true;
+                      });
+                      _walletFAQController.forward();
+                    }),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
+                    AppSettings.buildSettingsListItemSingleLine(
+                        context,
+                        AppLocalization.of(context).aboutHeader,
+                        FontAwesome.info_circled, onPressed: () {
+                      setState(() {
+                        _aboutOpen = true;
+                      });
+                      _aboutController.forward();
+                    }),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
                     Container(
                       margin: const EdgeInsetsDirectional.only(
                           start: 30.0, top: 20.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context).manage,
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w100,
-                              color:
-                                  StateContainer.of(context).curTheme.primary60)),
+                          style:
+                              AppStyles.textStyleMediumW100Primary60(context)),
                     ),
                     Divider(
                       height: 2,
@@ -641,7 +697,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       setState(() {
                         _contactsOpen = true;
                       });
-                      _controller.forward();
+                      _contactsController.forward();
                     }),
                     Divider(
                       height: 2,
@@ -665,11 +721,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                       margin: const EdgeInsetsDirectional.only(
                           start: 30.0, top: 20.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context).preferences,
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w100,
-                              color:
-                                  StateContainer.of(context).curTheme.primary60)),
+                          style:
+                              AppStyles.textStyleMediumW100Primary60(context)),
                     ),
                     Divider(
                       height: 2,
@@ -677,8 +730,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                     ),
                     AppSettings.buildSettingsListItemWithDefaultValueWithInfos(
                         context,
-                        AppLocalization.of(context).changeCurrency,
-                        'Select the fiat currency you would like to display alongside UCO',
+                        AppLocalization.of(context).changeCurrencyHeader,
+                        AppLocalization.of(context).changeCurrencyDesc,
                         StateContainer.of(context).curCurrency,
                         FontAwesome.money,
                         _currencyDialog),
@@ -742,16 +795,6 @@ class _SettingsSheetState extends State<SettingsSheet>
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(versionString,
-                              style: AppStyles.textStyleSmallW100Text60(context)),
-                        ],
-                      ),
                     ),
                   ].where(notNull).toList(),
                 ),
@@ -837,7 +880,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                               _securityController.reverse();
                             },
                             child: Icon(AppIcons.back,
-                                color: StateContainer.of(context).curTheme.primary,
+                                color:
+                                    StateContainer.of(context).curTheme.primary,
                                 size: 24)),
                       ),
                       //Security Header Text
@@ -863,8 +907,9 @@ class _SettingsSheetState extends State<SettingsSheet>
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w100,
-                              color:
-                                  StateContainer.of(context).curTheme.primary60)),
+                              color: StateContainer.of(context)
+                                  .curTheme
+                                  .primary60)),
                     ),
                     // Authentication Method
                     if (_hasBiometrics)
@@ -888,7 +933,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                       Column(children: <Widget>[
                         Divider(
                             height: 2,
-                            color: StateContainer.of(context).curTheme.primary15),
+                            color:
+                                StateContainer.of(context).curTheme.primary15),
                         AppSettings.buildSettingsListItemWithDefaultValue(
                             context,
                             AppLocalization.of(context).lockAppSetting,
@@ -934,7 +980,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                       Column(children: <Widget>[
                         Divider(
                             height: 2,
-                            color: StateContainer.of(context).curTheme.primary15),
+                            color:
+                                StateContainer.of(context).curTheme.primary15),
                         AppSettings.buildSettingsListItemSingleLine(
                             context,
                             AppLocalization.of(context).setWalletPassword,
@@ -947,7 +994,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                       Column(children: <Widget>[
                         Divider(
                             height: 2,
-                            color: StateContainer.of(context).curTheme.primary15),
+                            color:
+                                StateContainer.of(context).curTheme.primary15),
                         AppSettings.buildSettingsListItemSingleLine(
                             context,
                             AppLocalization.of(context).disableWalletPassword,
@@ -959,6 +1007,138 @@ class _SettingsSheetState extends State<SettingsSheet>
                     Divider(
                         height: 2,
                         color: StateContainer.of(context).curTheme.primary15),
+                  ].where(notNull).toList(),
+                ),
+                //List Top Gradient End
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    height: 20.0,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: <Color>[
+                          StateContainer.of(context).curTheme.backgroundDark,
+                          StateContainer.of(context).curTheme.backgroundDark00
+                        ],
+                        begin: const AlignmentDirectional(0.5, -1.0),
+                        end: const AlignmentDirectional(0.5, 1.0),
+                      ),
+                    ),
+                  ),
+                ), //List Top Gradient End
+              ],
+            )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildAboutMenu(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: StateContainer.of(context).curTheme.backgroundDark,
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+              color: StateContainer.of(context).curTheme.overlay30,
+              offset: const Offset(-5, 0),
+              blurRadius: 20),
+        ],
+      ),
+      child: SafeArea(
+        minimum: const EdgeInsets.only(
+          top: 60,
+        ),
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.only(bottom: 10.0, top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      //Back button
+                      Container(
+                        height: 40,
+                        width: 40,
+                        margin: const EdgeInsets.only(right: 10, left: 10),
+                        child: TextButton(
+                            onPressed: () {
+                              setState(() {
+                                _aboutOpen = false;
+                              });
+                              _aboutController.reverse();
+                            },
+                            child: Icon(AppIcons.back,
+                                color:
+                                    StateContainer.of(context).curTheme.primary,
+                                size: 24)),
+                      ),
+                      Text(
+                        AppLocalization.of(context).aboutHeader,
+                        style: AppStyles.textStyleLargestW700Primary(context),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+                child: Stack(
+              children: <Widget>[
+                ListView(
+                  padding: const EdgeInsets.only(top: 15.0),
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0, bottom: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text(versionString,
+                              style:
+                                  AppStyles.textStyleSmallW100Primary(context)),
+                        ],
+                      ),
+                    ),
+                    Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.primary15),
+                    AppSettings.buildSettingsListItemSingleLine(
+                        context,
+                        AppLocalization.of(context)
+                            .aboutGeneralTermsAndConditions,
+                        FontAwesome.info_circled, onPressed: () {
+                      Sheets.showAppHeightNineSheet(
+                          context: context,
+                          widget: UIUtil.showWebview(
+                              context, 'https://archethic.net'));
+                    }),
+                    Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.primary15),
+                    AppSettings.buildSettingsListItemSingleLine(
+                        context,
+                        AppLocalization.of(context).aboutWalletServiceTerms,
+                        FontAwesome.info_circled, onPressed: () {
+                      Sheets.showAppHeightNineSheet(
+                          context: context,
+                          widget: UIUtil.showWebview(
+                              context, 'https://archethic.net'));
+                    }),
+                    Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.primary15),
+                    AppSettings.buildSettingsListItemSingleLine(
+                        context,
+                        AppLocalization.of(context).aboutPrivacyPolicy,
+                        FontAwesome.info_circled, onPressed: () {
+                      Sheets.showAppHeightNineSheet(
+                          context: context,
+                          widget: UIUtil.showWebview(
+                              context, 'https://archethic.net'));
+                    }),
                   ].where(notNull).toList(),
                 ),
                 //List Top Gradient End

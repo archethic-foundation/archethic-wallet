@@ -83,7 +83,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                 event.response! +
                 ')',
             context);
-        Navigator.of(context).pop();  
+        Navigator.of(context).pop();
       } else {
         StateContainer.of(context).requestUpdate();
         Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));

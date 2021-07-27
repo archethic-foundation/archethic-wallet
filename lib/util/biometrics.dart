@@ -41,7 +41,10 @@ class BiometricUtil {
     final bool hasBiometricsEnrolled = await hasBiometrics();
     if (hasBiometricsEnrolled) {
       final LocalAuthentication localAuth = LocalAuthentication();
-      return await localAuth.authenticate(localizedReason: message, useErrorDialogs: false, biometricOnly: true);
+      return await localAuth.authenticate(
+          localizedReason: message,
+          useErrorDialogs: false,
+          biometricOnly: true);
     }
     return false;
   }

@@ -42,8 +42,8 @@ import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Run app
-  SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp])
-      .then((_) {
+  SystemChrome.setPreferredOrientations(
+      <DeviceOrientation>[DeviceOrientation.portraitUp]).then((_) {
     runApp(StateContainer(child: App()));
   });
 }

@@ -25,7 +25,8 @@ class AppDialogs {
             title,
             style: AppStyles.textStyleLargeW700Primary(context),
           ),
-          content: Text(content, style: AppStyles.textStyleMediumW200Primary(context)),
+          content: Text(content,
+              style: AppStyles.textStyleMediumW200Primary(context)),
           actions: <Widget>[
             TextButton(
               child: Container(
@@ -71,7 +72,8 @@ class AppDialogs {
             title,
             style: AppStyles.textStyleLargeW700Primary(context),
           ),
-          content: Text(content, style: AppStyles.textStyleMediumW200Primary(context)),
+          content: Text(content,
+              style: AppStyles.textStyleMediumW200Primary(context)),
           actions: <Widget>[
             TextButton(
               child: Text(

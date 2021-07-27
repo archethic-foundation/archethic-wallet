@@ -150,8 +150,9 @@ class _ContactsListState extends State<ContactsList> {
                                 widget.contactsController.reverse();
                               },
                               child: Icon(AppIcons.back,
-                                  color:
-                                      StateContainer.of(context).curTheme.primary,
+                                  color: StateContainer.of(context)
+                                      .curTheme
+                                      .primary,
                                   size: 24)),
                         ),
                         //Contacts Header Text

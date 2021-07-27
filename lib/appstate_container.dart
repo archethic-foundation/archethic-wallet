@@ -138,7 +138,6 @@ class StateContainerState extends State<StateContainer> {
     _transactionsListEventSub = EventTaxiImpl.singleton()
         .registerTo<TransactionsListEvent>()
         .listen((TransactionsListEvent event) {
-
       wallet.history.clear();
 
       // Iterate list in reverse (oldest to newest block)
@@ -160,9 +159,16 @@ class StateContainerState extends State<StateContainer> {
         .registerTo<PriceEvent>()
         .listen((PriceEvent event) {
       setState(() {
-        wallet.btcPrice = event == null || event.response == null || event.response.btcPrice == null ? '0' : event.response.btcPrice.toString();
-        wallet.localCurrencyPrice =
-            event == null || event.response == null || event.response.localCurrencyPrice == null ? '0' : event.response.localCurrencyPrice.toString();
+        wallet.btcPrice = event == null ||
+                event.response == null ||
+                event.response.btcPrice == null
+            ? '0'
+            : event.response.btcPrice.toString();
+        wallet.localCurrencyPrice = event == null ||
+                event.response == null ||
+                event.response.localCurrencyPrice == null
+            ? '0'
+            : event.response.localCurrencyPrice.toString();
       });
     });
 

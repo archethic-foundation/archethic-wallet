@@ -49,7 +49,7 @@ class AppSettings {
                       AutoSizeText(
                         heading,
                         style: disabled
-                            ? AppStyles.textStyleMediumW600Text45(context)
+                            ? AppStyles.textStyleMediumW600Primary30(context)
                             : AppStyles.textStyleMediumW600Primary(context),
                         maxLines: 1,
                         stepGranularity: 0.1,
@@ -64,8 +64,8 @@ class AppSettings {
               AutoSizeText(
                 defaultMethod.getDisplayName(context),
                 style: disabled
-                    ? AppStyles.textStyleSmallestW100Text30(context)
-                    : AppStyles.textStyleSmallestW100Text60(context),
+                    ? AppStyles.textStyleSmallestW100Primary30(context)
+                    : AppStyles.textStyleSmallestW100Primary(context),
                 maxLines: 1,
                 stepGranularity: 0.1,
                 minFontSize: 8,
@@ -131,9 +131,9 @@ class AppSettings {
                           Text(
                             defaultMethod.getDisplayName(context),
                             style: disabled
-                                ? AppStyles.textStyleSmallestW100Text30(
+                                ? AppStyles.textStyleSmallestW100Primary30(
                                     context)
-                                : AppStyles.textStyleSmallestW100Text60(
+                                : AppStyles.textStyleSmallestW100Primary(
                                     context),
                           ),
                         ],
@@ -145,7 +145,7 @@ class AppSettings {
                       maxLines: 5,
                       stepGranularity: 0.1,
                       minFontSize: 8,
-                      style: AppStyles.textStyleSmallestW100Text60(context),
+                      style: AppStyles.textStyleSmallestW100Primary(context),
                     ),
                   ),
                 ]),
@@ -205,7 +205,7 @@ class AppSettings {
                       maxLines: 5,
                       stepGranularity: 0.1,
                       minFontSize: 8,
-                      style: AppStyles.textStyleSmallestW100Text60(context),
+                      style: AppStyles.textStyleSmallestW100Primary(context),
                     ),
                   ),
                 ]),
@@ -257,7 +257,7 @@ class AppSettings {
             ),
             Container(
               width: UIUtil.drawerWidth(context) - 100,
-              child: Text(
+              child: AutoSizeText(
                 heading,
                 style: AppStyles.textStyleMediumW600Primary(context),
               ),

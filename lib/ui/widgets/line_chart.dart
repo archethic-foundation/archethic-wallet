@@ -71,7 +71,8 @@ class LineChartWidget {
                                     .priceChangePercentage24h!
                                     .toStringAsFixed(2) +
                                 '%',
-                            style: AppStyles.textStyleSmallestW100PositiveValue(context),
+                            style: AppStyles.textStyleSmallestW100PositiveValue(
+                                context),
                           ),
                           Icon(Entypo.up_dir,
                               color: StateContainer.of(context)
@@ -87,7 +88,8 @@ class LineChartWidget {
                                     .priceChangePercentage24h!
                                     .toStringAsFixed(2) +
                                 '%',
-                            style: AppStyles.textStyleSmallestW100NegativeValue(context),
+                            style: AppStyles.textStyleSmallestW100NegativeValue(
+                                context),
                           ),
                           Icon(Entypo.down_dir,
                               color: StateContainer.of(context)
