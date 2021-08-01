@@ -298,7 +298,7 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
       await sl.get<DBHelper>().dropAccounts();
 
       await AppUtil().loginAccount(genesisAddress, context);
-      StateContainer.of(context).requestUpdate();
+      StateContainer.of(context).requestUpdate(StateContainer.of(context).selectedAccount);
       final String pin = await Navigator.of(context)
           .push(MaterialPageRoute(builder: (BuildContext context) {
         return const PinScreen(

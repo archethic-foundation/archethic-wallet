@@ -142,7 +142,7 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                             await sl.get<Vault>().setSeed(widget.seed);
                             await sl.get<DBHelper>().dropAccounts();
                             await AppUtil().loginAccount(widget.seed, context);
-                            StateContainer.of(context).requestUpdate();
+                            StateContainer.of(context).requestUpdate(StateContainer.of(context).selectedAccount);
                             final String pin = await Navigator.of(context).push(
                                 MaterialPageRoute(
                                     builder: (BuildContext context) {
@@ -163,7 +163,7 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                                   .getSeed()
                                   .then((String seed) {
                                 AppUtil().loginAccount(seed, context).then((_) {
-                                  StateContainer.of(context).requestUpdate();
+                                  StateContainer.of(context).requestUpdate(StateContainer.of(context).selectedAccount);
                                   Navigator.of(context)
                                       .pushNamed('/intro_backup_safety');
                                 });

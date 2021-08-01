@@ -114,12 +114,18 @@ class TxListWidget {
                         style: AppStyles.textStyleSmallW600Primary(context)),
               ],
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              Text(
-                  'To: ' +
-                      Address(transaction.data!.ledger!.uco!.transfers![0].to!).getShortString3(),
-                  style: AppStyles.textStyleTinyW100Primary(context))
-            ]),
+            transaction.type != 'transfer'
+                ? const SizedBox()
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                        Text(
+                            'To: ' +
+                                Address(transaction
+                                        .data!.ledger!.uco!.transfers![0].to!)
+                                    .getShortString3(),
+                            style: AppStyles.textStyleTinyW100Primary(context))
+                      ]),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
               transaction.type != 'transfer' && transaction.type != 'nft'
                   ? const SizedBox()

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' show NftBalance;
+import 'package:archethic_mobile_wallet/ui/nft/add_nft.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -139,7 +140,10 @@ class NftListWidget {
                 shape: BoxShape.circle,
               ),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Sheets.showAppHeightNineSheet(
+                      context: context, widget: const AddNFTSheet());
+                },
                 child: Icon(FontAwesome5.plus_circle,
                     color: StateContainer.of(context).curTheme.primary),
               ),
@@ -180,8 +184,7 @@ class NftListWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(
-                      Address(nftBalance.address!).getShortString3(), 
+                    Text(Address(nftBalance.address!).getShortString3(),
                         style: AppStyles.textStyleSmallW100Primary(context)),
                   ],
                 ),

@@ -63,18 +63,27 @@ class AppService {
       transactionStatus = await sl.get<ApiService>().sendTx(transaction);
     } catch (e) {
       print('error: ' + e.toString());
-      transactionStatus.status = 'e';
+      transactionStatus.status = e.toString();
     }
+    return transactionStatus;
+  }
 
-    // TODO: Test
-    TransactionStatus transactionStatus2 = new TransactionStatus();
-    final int txIndex2 = await sl.get<ApiService>().getTransactionIndex(address);
-    Transaction transaction2 = NFTService().prepareNewNFT(10, 'Test', transactionChainSeed, txIndex2, 'P256', originPrivateKey);
+  Future<TransactionStatus> addNFT(
+      String originPrivateKey,
+      String transactionChainSeed,
+      String name,
+      String address,
+      int initialSupply
+      ) async {
+ 
+    TransactionStatus transactionStatus = new TransactionStatus();
+    final int txIndex = await sl.get<ApiService>().getTransactionIndex(address);
+    Transaction transaction = NFTService().prepareNewNFT(initialSupply, name, transactionChainSeed, txIndex, 'P256', originPrivateKey);
     try {
-      transactionStatus2 = await sl.get<ApiService>().sendTx(transaction2);
+      transactionStatus = await sl.get<ApiService>().sendTx(transaction);
     } catch (e) {
       print('error: ' + e.toString());
-      transactionStatus2.status = 'e';
+      transactionStatus.status = e.toString();
     }
     
     return transactionStatus;

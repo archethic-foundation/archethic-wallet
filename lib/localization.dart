@@ -284,9 +284,9 @@ class AppLocalization {
         desc: 'send_invalid_address', name: 'invalidAddress');
   }
 
-  String get addressMising {
+  String get addressMissing {
     return Intl.message('Please Enter an Address',
-        desc: 'send_enter_address', name: 'addressMising');
+        desc: 'send_enter_address', name: 'addressMissing');
   }
 
   String get amountMissing {
@@ -793,6 +793,49 @@ class AppLocalization {
   String get nodesHeaderDesc {
     return Intl.message('Nodes informations',
         desc: '', name: 'nodesHeaderDesc');
+  }
+
+  String get addNFT {
+    return Intl.message('Add NFT', desc: '', name: 'addNFT');
+  }
+
+  String get addNFTHeader {
+    return Intl.message('Add NFT', desc: '', name: 'addNFTHeader');
+  }
+
+  String get nftHeader {
+    return Intl.message('NFT',
+        desc: '', name: 'nftHeader');
+  }
+
+  String get nftHeaderDesc {
+    return Intl.message('Manage your NFTs',
+        desc: '', name: 'nftHeaderDesc');
+  }
+
+  String get nftNameHint {
+    return Intl.message('Enter a name',
+        desc: '', name: 'nftNameHint');
+  }
+
+  String get nftInitialSupplyHint {
+    return Intl.message('Enter an initial supply',
+        desc: '', name: 'nftInitialSupplyHint');
+  }
+
+  String get nftNameMissing {
+    return Intl.message('Choose a Name for the NFT',
+        desc: '', name: 'nftNameMissing');
+  }
+
+  String get nftInitialSupplyMissing {
+    return Intl.message('Choose an initial supply for the NFT',
+        desc: '', name: 'nftInitialSupplyMissing');
+  }
+
+  String get nftInitialSupplyPositive {
+    return Intl.message('The initial supply should be > 0',
+        desc: '', name: 'nftInitialSupplyPositive');
   }
 }
 

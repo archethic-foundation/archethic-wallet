@@ -881,7 +881,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
     if (_sendAddressController!.text.trim().isEmpty) {
       isValid = false;
       setState(() {
-        _addressValidationText = AppLocalization.of(context).addressMising;
+        _addressValidationText = AppLocalization.of(context).addressMissing;
         _pasteButtonVisible = true;
       });
     } else if (!isContact && !Address(_sendAddressController!.text).isValid()) {

@@ -409,7 +409,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
       if (_addressController!.text.isEmpty) {
         isValid = false;
         setState(() {
-          _addressValidationText = AppLocalization.of(context).addressMising;
+          _addressValidationText = AppLocalization.of(context).addressMissing;
         });
       } else if (!Address(_addressController!.text).isValid()) {
         isValid = false;

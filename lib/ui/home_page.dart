@@ -444,6 +444,7 @@ class _AppHomePageState extends State<AppHomePage>
                             const SizedBox(height: 20),
                             NftListWidget.buildNftList(context),
                             const SizedBox(height: 20),
+                            StateContainer.of(context).wallet == null ? const SizedBox() : 
                             TxListWidget.buildTxList(context,
                                 StateContainer.of(context).wallet.history),
                           ],

@@ -229,19 +229,8 @@ class StateContainerState extends State<StateContainer> {
 
   // Update the global wallet instance
   Future<void> updateWallet({Account account}) async {
-    final String seed = await getSeed();
-    final String genesisAddress =
-        sl.get<AddressService>().deriveAddress(seed, 0);
-
-    final String lastAddress = await sl.get<AddressService>().lastAddress(seed);
-
-    account.genesisAddress = genesisAddress;
-    account.lastAddress = lastAddress;
-    selectedAccount = account;
-
     setState(() {
-      wallet = AppWallet(address: account.lastAddress, loading: true);
-      requestUpdate();
+      requestUpdate(account);
     });
   }
 
@@ -338,7 +327,23 @@ class StateContainerState extends State<StateContainer> {
     EventTaxiImpl.singleton().fire(ChartEvent(chartInfos: chartInfos));
   }
 
-  Future<void> requestUpdate() async {
+  Future<void> requestUpdateLastAddress(Account account) async {
+    final String seed = await getSeed();
+    final String genesisAddress =
+        sl.get<AddressService>().deriveAddress(seed, 0);
+
+    final String lastAddress = await sl.get<AddressService>().lastAddress(seed);
+    account.genesisAddress = genesisAddress;
+    account.lastAddress = lastAddress;
+    selectedAccount = account;
+
+    setState(() {
+      wallet = AppWallet(address: account.lastAddress, loading: true);
+    });
+  }
+
+  Future<void> requestUpdate(Account account) async {
+    await requestUpdateLastAddress(account);
     await requestUpdateBalance();
     await requestUpdatePrice();
     await requestUpdateRecentTransactions();

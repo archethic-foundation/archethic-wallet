@@ -4,12 +4,15 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:archethic_mobile_wallet/ui/contacts/add_contact.dart';
+import 'package:archethic_mobile_wallet/ui/nft/add_nft.dart';
 import 'package:archethic_mobile_wallet/ui/settings/wallet_faq_widget.dart';
 import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:fluttericon/entypo_icons.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:package_info/package_info.dart';
@@ -55,6 +58,8 @@ class _SettingsSheetState extends State<SettingsSheet>
   Animation<Offset> _securityOffsetFloat;
   AnimationController _nodesController;
   Animation<Offset> _nodesOffsetFloat;
+  AnimationController _nftController;
+  Animation<Offset> _nftOffsetFloat;
   AnimationController _customUrlController;
   Animation<Offset> _customUrlOffsetFloat;
   AnimationController _walletFAQController;
@@ -77,6 +82,7 @@ class _SettingsSheetState extends State<SettingsSheet>
   bool _nodesOpen;
   bool _customUrlOpen;
   bool _walletFAQOpen;
+  bool _nftOpen;
 
   bool _pinPadShuffleActive;
 
@@ -91,6 +97,8 @@ class _SettingsSheetState extends State<SettingsSheet>
     _aboutOpen = false;
     _customUrlOpen = false;
     _walletFAQOpen = false;
+    _nftOpen = false;
+
     // Determine if they have face or fingerprint enrolled, if not hide the setting
     sl.get<BiometricUtil>().hasBiometrics().then((bool hasBiometrics) {
       setState(() {
@@ -151,6 +159,10 @@ class _SettingsSheetState extends State<SettingsSheet>
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
+    _nftController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 220),
+    );
     _contactsOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_contactsController);
@@ -169,7 +181,9 @@ class _SettingsSheetState extends State<SettingsSheet>
     _walletFAQOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_walletFAQController);
-    // Version string
+    _nftOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
+            .animate(_nftController);
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
         versionString = 'Version: ${packageInfo.version}';
@@ -185,6 +199,7 @@ class _SettingsSheetState extends State<SettingsSheet>
     _customUrlController.dispose();
     _nodesController.dispose();
     _walletFAQController.dispose();
+    _nftController.dispose();
     super.dispose();
   }
 
@@ -561,6 +576,12 @@ class _SettingsSheetState extends State<SettingsSheet>
       });
       _walletFAQController.reverse();
       return false;
+    } else if (_nftOpen) {
+      setState(() {
+        _nftOpen = false;
+      });
+      _nftController.reverse();
+      return false;
     }
     return true;
   }
@@ -594,6 +615,8 @@ class _SettingsSheetState extends State<SettingsSheet>
             SlideTransition(
                 position: _walletFAQOffsetFloat,
                 child: WalletFAQ(_walletFAQController, _walletFAQOpen)),
+            SlideTransition(
+                position: _nftOffsetFloat, child: buildNFTMenu(context)),
           ],
         ),
       ),
@@ -633,6 +656,20 @@ class _SettingsSheetState extends State<SettingsSheet>
                           style:
                               AppStyles.textStyleMediumW100Primary60(context)),
                     ),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
+                    AppSettings.buildSettingsListItemSingleLineWithInfos(
+                        context,
+                        AppLocalization.of(context).nftHeader,
+                        AppLocalization.of(context).nftHeaderDesc,
+                        FontAwesome5.stamp, onPressed: () {
+                      setState(() {
+                        _nftOpen = true;
+                      });
+                      _nftController.forward();
+                    }),
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
@@ -1114,8 +1151,10 @@ class _SettingsSheetState extends State<SettingsSheet>
                       Sheets.showAppHeightNineSheet(
                           context: context,
                           widget: UIUtil.showWebview(
-                              context, 'https://archethic.net', AppLocalization.of(context)
-                            .aboutGeneralTermsAndConditions));
+                              context,
+                              'https://archethic.net',
+                              AppLocalization.of(context)
+                                  .aboutGeneralTermsAndConditions));
                     }),
                     Divider(
                         height: 2,
@@ -1127,7 +1166,10 @@ class _SettingsSheetState extends State<SettingsSheet>
                       Sheets.showAppHeightNineSheet(
                           context: context,
                           widget: UIUtil.showWebview(
-                              context, 'https://archethic.net', AppLocalization.of(context).aboutWalletServiceTerms));
+                              context,
+                              'https://archethic.net',
+                              AppLocalization.of(context)
+                                  .aboutWalletServiceTerms));
                     }),
                     Divider(
                         height: 2,
@@ -1139,8 +1181,107 @@ class _SettingsSheetState extends State<SettingsSheet>
                       Sheets.showAppHeightNineSheet(
                           context: context,
                           widget: UIUtil.showWebview(
-                              context, 'https://archethic.net', AppLocalization.of(context).aboutPrivacyPolicy));
+                              context,
+                              'https://archethic.net',
+                              AppLocalization.of(context).aboutPrivacyPolicy));
                     }),
+                  ].where(notNull).toList(),
+                ),
+                //List Top Gradient End
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    height: 20.0,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: <Color>[
+                          StateContainer.of(context).curTheme.backgroundDark,
+                          StateContainer.of(context).curTheme.backgroundDark00
+                        ],
+                        begin: const AlignmentDirectional(0.5, -1.0),
+                        end: const AlignmentDirectional(0.5, 1.0),
+                      ),
+                    ),
+                  ),
+                ), //List Top Gradient End
+              ],
+            )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildNFTMenu(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: StateContainer.of(context).curTheme.backgroundDark,
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+              color: StateContainer.of(context).curTheme.overlay30,
+              offset: const Offset(-5, 0),
+              blurRadius: 20),
+        ],
+      ),
+      child: SafeArea(
+        minimum: const EdgeInsets.only(
+          top: 60,
+        ),
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.only(bottom: 10.0, top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      //Back button
+                      Container(
+                        height: 40,
+                        width: 40,
+                        margin: const EdgeInsets.only(right: 10, left: 10),
+                        child: TextButton(
+                            onPressed: () {
+                              setState(() {
+                                _nftOpen = false;
+                              });
+                              _nftController.reverse();
+                            },
+                            child: Icon(AppIcons.back,
+                                color:
+                                    StateContainer.of(context).curTheme.primary,
+                                size: 24)),
+                      ),
+                      Text(
+                        AppLocalization.of(context).nftHeader,
+                        style: AppStyles.textStyleLargestW700Primary(context),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+                child: Stack(
+              children: <Widget>[
+                ListView(
+                  padding: const EdgeInsets.only(top: 15.0),
+                  children: <Widget>[
+                    Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.primary15),
+                    AppSettings.buildSettingsListItemSingleLine(
+                        context,
+                        AppLocalization.of(context).addNFTHeader,
+                        Entypo.feather, onPressed: () {
+                      Sheets.showAppHeightNineSheet(
+                          context: context, widget: const AddNFTSheet());
+                    }),
+                    Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.primary15),
                   ].where(notNull).toList(),
                 ),
                 //List Top Gradient End

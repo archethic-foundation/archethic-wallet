@@ -262,7 +262,6 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   }
 
   Future<void> _doSend() async {
-    TransactionStatus transactionStatus = new TransactionStatus();
     try {
       _showSendingAnimation(context);
       final String transactionChainSeed =
@@ -276,7 +275,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
           .fire(TransactionSendEvent(response: transactionStatus.status));
     } catch (e) {
       EventTaxiImpl.singleton()
-          .fire(TransactionSendEvent(response: transactionStatus.status));
+          .fire(TransactionSendEvent(response: e.toString()));
     }
   }
 

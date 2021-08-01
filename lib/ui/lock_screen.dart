@@ -37,7 +37,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
       await AppUtil()
           .loginAccount(await StateContainer.of(context).getSeed(), context);
     }
-    StateContainer.of(context).requestUpdate();
+    StateContainer.of(context).requestUpdate(StateContainer.of(context).selectedAccount);
     final PriceConversion conversion =
         await sl.get<SharedPrefsUtil>().getPriceConversion();
     Navigator.of(context).pushNamedAndRemoveUntil(

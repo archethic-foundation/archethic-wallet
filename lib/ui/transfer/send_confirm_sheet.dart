@@ -98,7 +98,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
         final String contactName = contact == null ? null : contact.name;
         Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
         setState(() {
-          StateContainer.of(context).requestUpdate();
+          StateContainer.of(context).requestUpdate(StateContainer.of(context).selectedAccount);
         });
         Sheets.showAppHeightNineSheet(
             context: context,
