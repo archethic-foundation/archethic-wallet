@@ -26,12 +26,7 @@ class NftListWidget {
             child: Padding(
               padding: const EdgeInsets.only(top: 0.0),
               child: Container(
-                height: StateContainer.of(context)
-                        .wallet
-                        .accountBalance
-                        .nft!
-                        .length *
-                    60,
+                height: 100,
                 padding: const EdgeInsets.only(
                     top: 23.5, left: 3.5, right: 3.5, bottom: 3.5),
                 width: MediaQuery.of(context).size.width * 0.9,
@@ -185,10 +180,9 @@ class NftListWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(nftBalance.address!,
+                    Text(
+                      Address(nftBalance.address!).getShortString3(), 
                         style: AppStyles.textStyleSmallW100Primary(context)),
-                    Text(Address(nftBalance.address!).getShortString3(),
-                        style: AppStyles.textStyleTinyW100Primary60(context))
                   ],
                 ),
               ],

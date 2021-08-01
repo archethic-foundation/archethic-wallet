@@ -449,10 +449,14 @@ class UIUtil {
       return false;
   }
 
-  static Widget showWebview(BuildContext context, String url) {
+  static Widget showWebview(BuildContext context, String url, String title) {
     return WebviewScaffold(
       url: url,
       appBar: new AppBar(
+        title: Text(
+          title,
+          style: AppStyles.textStyleLargestW700Primary(context),
+        ),
         backgroundColor: StateContainer.of(context).curTheme.backgroundDark,
         brightness: StateContainer.of(context).curTheme.brightness,
         iconTheme:

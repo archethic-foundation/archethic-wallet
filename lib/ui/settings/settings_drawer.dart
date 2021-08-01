@@ -796,6 +796,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
                     ),
+                    const SizedBox(height: 30),
                   ].where(notNull).toList(),
                 ),
                 //List Top Gradient End
@@ -1113,7 +1114,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                       Sheets.showAppHeightNineSheet(
                           context: context,
                           widget: UIUtil.showWebview(
-                              context, 'https://archethic.net'));
+                              context, 'https://archethic.net', AppLocalization.of(context)
+                            .aboutGeneralTermsAndConditions));
                     }),
                     Divider(
                         height: 2,
@@ -1125,7 +1127,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       Sheets.showAppHeightNineSheet(
                           context: context,
                           widget: UIUtil.showWebview(
-                              context, 'https://archethic.net'));
+                              context, 'https://archethic.net', AppLocalization.of(context).aboutWalletServiceTerms));
                     }),
                     Divider(
                         height: 2,
@@ -1137,7 +1139,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       Sheets.showAppHeightNineSheet(
                           context: context,
                           widget: UIUtil.showWebview(
-                              context, 'https://archethic.net'));
+                              context, 'https://archethic.net', AppLocalization.of(context).aboutPrivacyPolicy));
                     }),
                   ].where(notNull).toList(),
                 ),

@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:archethic_mobile_wallet/global_var.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -85,7 +86,8 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
             context);
         Navigator.of(context).pop();
       } else {
-        StateContainer.of(context).requestUpdate();
+        StateContainer.of(context)
+            .updateWallet(account: StateContainer.of(context).selectedAccount);
         Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
         Sheets.showAppHeightNineSheet(
             context: context,
@@ -151,7 +153,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    margin: const EdgeInsets.only(top: 20.0, bottom: 30.0),
+                    margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
                     child: Column(
                       children: <Widget>[
                         Text(
@@ -162,41 +164,19 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       ],
                     ),
                   ),
-                  Container(
-                    height: 50,
-                    margin: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.105,
-                        right: MediaQuery.of(context).size.width * 0.105),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 25, vertical: 15),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color:
-                          StateContainer.of(context).curTheme.backgroundDarkest,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 30),
-                          child: Text(
-                            AppLocalization.of(context).fees +
-                                ': ' +
-                                sl
-                                    .get<AppService>()
-                                    .getFeesEstimation()
-                                    .toStringAsFixed(5) +
-                                ' UCO',
-                            style: TextStyle(
-                              color:
-                                  StateContainer.of(context).curTheme.primary60,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w100,
-                              fontFamily: 'Montserrat',
-                            ),
-                          ),
-                        ),
-                      ],
+                  Text(
+                    AppLocalization.of(context).fees +
+                        ': ' +
+                        sl
+                            .get<AppService>()
+                            .getFeesEstimation()
+                            .toStringAsFixed(5) +
+                        ' UCO',
+                    style: TextStyle(
+                      color: StateContainer.of(context).curTheme.primary60,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w100,
+                      fontFamily: 'Montserrat',
                     ),
                   ),
                   const SizedBox(
@@ -285,15 +265,13 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     TransactionStatus transactionStatus = new TransactionStatus();
     try {
       _showSendingAnimation(context);
-      const String originPrivateKey =
-          '01009280BDB84B8F8AEDBA205FE3552689964A5626EE2C60AA10E3BF22A91A036009';
       final String transactionChainSeed =
           await StateContainer.of(context).getSeed();
       TransactionStatus transactionStatus = await sl.get<AppService>().sendUCO(
-          originPrivateKey,
+          globalVarOriginPrivateKey,
           transactionChainSeed,
-          StateContainer.of(context).selectedAccount.lastAddress,
-          widget.ucoTransferList);
+          StateContainer.of(context).selectedAccount.lastAddress!,
+          widget.ucoTransferList!);
       EventTaxiImpl.singleton()
           .fire(TransactionSendEvent(response: transactionStatus.status));
     } catch (e) {

@@ -1,6 +1,7 @@
 // @dart=2.9
 
 // Flutter imports:
+import 'package:archethic_mobile_wallet/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -46,7 +47,7 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
   Future<void> initControllerText() async {
     enterEndpointController.text =
         await sl.get<SharedPrefsUtil>().getEndpoint();
-    enterTxChainSeedController.text = 'testnet';
+    enterTxChainSeedController.text = globalVarTransactionChainSeed;
   }
 
   @override
@@ -133,7 +134,7 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                     Expanded(
                         child: Column(
                       children: <Widget>[
-                        const SizedBox(height: 160),
+                        const SizedBox(height: 20),
                         Container(
                           margin: EdgeInsets.symmetric(
                             horizontal: smallScreen(context) ? 30 : 40,
@@ -153,7 +154,7 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                                 focusPadding: 40,
                                 child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       AppTextField(
                                         padding: EdgeInsets.zero,
@@ -212,56 +213,55 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                                         suffixShowFirstCondition: true,
                                         onChanged: (String text) {},
                                       ),
+                                      const SizedBox(height: 40),
+                                      Container(
+                                        margin: EdgeInsets.symmetric(
+                                          horizontal:
+                                              smallScreen(context) ? 30 : 40,
+                                        ),
+                                        child: AutoSizeText(
+                                          AppLocalization.of(context)
+                                              .enterEndpoint,
+                                          style: AppStyles
+                                              .textStyleMediumW200Primary(
+                                                  context),
+                                          maxLines: 4,
+                                          stepGranularity: 0.5,
+                                        ),
+                                      ),
+                                      AppTextField(
+                                        padding: EdgeInsets.zero,
+                                        focusNode: enterEndpointFocusNode,
+                                        controller: enterEndpointController,
+                                        cursorColor: StateContainer.of(context)
+                                            .curTheme
+                                            .primary,
+                                        style:
+                                            AppStyles.textStyleSmallW100Primary(
+                                                context),
+                                        inputFormatters: <
+                                            LengthLimitingTextInputFormatter>[
+                                          LengthLimitingTextInputFormatter(150)
+                                        ],
+                                        onChanged: (String text) {
+                                          setState(() {
+                                            enterEndpointValidationText = '';
+                                          });
+                                        },
+                                        textInputAction: TextInputAction.next,
+                                        maxLines: null,
+                                        autocorrect: false,
+                                        hintText: enterEndpointHint == null
+                                            ? ''
+                                            : AppLocalization.of(context)
+                                                .enterEndpoint,
+                                        keyboardType: TextInputType.multiline,
+                                        textAlign: TextAlign.left,
+                                        onSubmitted: (String text) {
+                                          FocusScope.of(context).unfocus();
+                                        },
+                                      ),
                                     ]))),
-                        Expanded(
-                            child: KeyboardAvoider(
-                          duration: const Duration(milliseconds: 0),
-                          autoScroll: true,
-                          focusPadding: 40,
-                          child: Column(
-                            children: <Widget>[
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    AppLocalization.of(context).enterEndpoint,
-                                    style: AppStyles.textStyleMediumW200Primary(
-                                        context),
-                                  ),
-                                ],
-                              ),
-                              AppTextField(
-                                padding: EdgeInsets.zero,
-                                focusNode: enterEndpointFocusNode,
-                                controller: enterEndpointController,
-                                cursorColor:
-                                    StateContainer.of(context).curTheme.primary,
-                                style: AppStyles.textStyleSmallW100Primary(
-                                    context),
-                                inputFormatters: <
-                                    LengthLimitingTextInputFormatter>[
-                                  LengthLimitingTextInputFormatter(150)
-                                ],
-                                onChanged: (String text) {
-                                  setState(() {
-                                    enterEndpointValidationText = '';
-                                  });
-                                },
-                                textInputAction: TextInputAction.next,
-                                maxLines: null,
-                                autocorrect: false,
-                                hintText: enterEndpointHint == null
-                                    ? ''
-                                    : AppLocalization.of(context).enterEndpoint,
-                                keyboardType: TextInputType.multiline,
-                                textAlign: TextAlign.left,
-                                onSubmitted: (String text) {
-                                  FocusScope.of(context).unfocus();
-                                },
-                              ),
-                            ],
-                          ),
-                        )),
                       ],
                     )),
                     Row(

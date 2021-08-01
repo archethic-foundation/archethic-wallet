@@ -167,7 +167,7 @@ class AppStyles {
     return TextStyle(
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.smallest,
-      fontWeight: FontWeight.w100,
+      fontWeight: FontWeight.w800,
       color: StateContainer.of(context).curTheme.positiveValue,
     );
   }
@@ -176,7 +176,7 @@ class AppStyles {
     return TextStyle(
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.smallest,
-      fontWeight: FontWeight.w100,
+      fontWeight: FontWeight.w800,
       color: StateContainer.of(context).curTheme.negativeValue,
     );
   }

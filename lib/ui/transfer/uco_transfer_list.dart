@@ -160,7 +160,7 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                     style: AppStyles.textStyleSmallW100Primary(context)),
               ],
             ),
-            Text(ucoTransfer.amount!.toString(),
+            Text(ucoTransfer.amount!.toString() + ' UCO',
                 style: AppStyles.textStyleSmallW100Primary(context)),
           ],
         ),

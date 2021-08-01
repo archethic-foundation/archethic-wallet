@@ -70,7 +70,7 @@ class AppWallet {
   String getLocalCurrencyPrice(AvailableCurrency currency,
       {String locale = 'en_US'}) {
     final Decimal converted = Decimal.parse(_localCurrencyPrice) *
-        NumberUtil.getRawAsUsableDecimal(_accountBalance.uco.toString());
+        NumberUtil.getRawAsUsableDecimal(_accountBalance == null || _accountBalance.uco == null ? "0" : _accountBalance.uco.toString());
     return NumberFormat.currency(
             locale: locale, symbol: currency.getCurrencySymbol())
         .format(converted.toDouble());

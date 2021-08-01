@@ -80,7 +80,7 @@ class _AppHomePageState extends State<AppHomePage>
     StateContainer.of(context)
         .updateWallet(account: StateContainer.of(context).selectedAccount);
 
-    // Hide refresh indicator after 3 seconds if no server response
+    // Hide refresh indicator after 1 second if no server response
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         _isRefreshing = false;
@@ -357,7 +357,7 @@ class _AppHomePageState extends State<AppHomePage>
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
+      appBar: AppBar(  
         title: Container(
             child: SvgPicture.asset(
           'assets/archethic_logo_alone.svg',
@@ -444,7 +444,8 @@ class _AppHomePageState extends State<AppHomePage>
                             const SizedBox(height: 20),
                             NftListWidget.buildNftList(context),
                             const SizedBox(height: 20),
-                            TxListWidget.buildTxList(context),
+                            TxListWidget.buildTxList(context,
+                                StateContainer.of(context).wallet.history),
                           ],
                         ),
                       ],
