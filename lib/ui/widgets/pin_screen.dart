@@ -17,6 +17,7 @@ import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 enum PinOverlayType { NEW_PIN, ENTER_PIN }
 
@@ -218,7 +219,7 @@ class _PinScreenState extends State<PinScreen>
               if (widget.type == PinOverlayType.ENTER_PIN) {
                 // Pin is not what was expected
                 if (_pin != widget.expectedPin) {
-                  sl.get<HapticUtil>().error();
+                  sl.get<HapticUtil>().feedback(FeedbackType.error);
                   _controller.forward();
                 } else {
                   sl.get<SharedPrefsUtil>().resetLockAttempts().then((_) {
@@ -239,7 +240,7 @@ class _PinScreenState extends State<PinScreen>
                   if (_pin == _pinConfirmed) {
                     Navigator.of(context).pop(_pin);
                   } else {
-                    sl.get<HapticUtil>().error();
+                    sl.get<HapticUtil>().feedback(FeedbackType.error);
                     _controller.forward();
                   }
                 }

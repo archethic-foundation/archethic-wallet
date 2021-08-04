@@ -99,7 +99,7 @@ class AppWallet {
 
   String get btcPrice {
     final Decimal converted = Decimal.parse(_btcPrice) *
-        NumberUtil.getRawAsUsableDecimal(_accountBalance.uco.toString());
+        NumberUtil.getRawAsUsableDecimal(_accountBalance.uco == null ? "0" : _accountBalance.uco.toString());
     // Show 4 decimal places for BTC price if its >= 0.0001 BTC, otherwise 6 decimals
     if (converted >= Decimal.parse('0.0001')) {
       return NumberFormat('#,##0.0000', 'en_US').format(converted.toDouble());

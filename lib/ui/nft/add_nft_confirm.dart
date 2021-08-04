@@ -35,45 +35,34 @@ import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class TransferConfirmSheet extends StatefulWidget {
-  const TransferConfirmSheet(
-      {this.typeTransfer,
-      this.localCurrency,
-      this.contactsRef,
-      this.title,
-      this.ucoTransferList,
-      this.nftTransferList})
-      : super();
+class AddNFTConfirm extends StatefulWidget {
+  const AddNFTConfirm({this.nftName, this.nftInitialSupply}) : super();
 
-  final String? typeTransfer;
-  final String? localCurrency;
-  final String? title;
-  final List<Contact>? contactsRef;
-  final List<UCOTransfer>? ucoTransferList;
-  final List<NFTTransfer>? nftTransferList;
+  final String? nftName;
+  final int? nftInitialSupply;
 
   @override
-  _TransferConfirmSheetState createState() => _TransferConfirmSheetState();
+  _AddNFTConfirmState createState() => _AddNFTConfirmState();
 }
 
-class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
+class _AddNFTConfirmState extends State<AddNFTConfirm> {
   bool? animationOpen;
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
-  StreamSubscription<TransactionSendEvent>? _sendTxSub;
+  StreamSubscription<NFTAddEvent>? _addNFTSub;
 
   void _registerBus() {
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
         .listen((AuthenticatedEvent event) {
       if (event.authType == AUTH_EVENT_TYPE.SEND) {
-        _doSend();
+        _doAdd();
       }
     });
 
-    _sendTxSub = EventTaxiImpl.singleton()
-        .registerTo<TransactionSendEvent>()
-        .listen((TransactionSendEvent event) {
+    _addNFTSub = EventTaxiImpl.singleton()
+        .registerTo<NFTAddEvent>()
+        .listen((NFTAddEvent event) {
       if (event.response!.toUpperCase() != 'OK') {
         // Send failed
         if (animationOpen!) {
@@ -89,13 +78,13 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       } else {
         StateContainer.of(context)
             .updateWallet(account: StateContainer.of(context).selectedAccount);
-        Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+        Navigator.pop(context);
         Sheets.showAppHeightNineSheet(
             context: context,
             closeOnTap: true,
             removeUntilHome: true,
             widget: TransferCompleteSheet(
-              title: widget.title,
+              title: 'NFT Created',
             ));
       }
     });
@@ -105,8 +94,8 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     if (_authSub != null) {
       _authSub!.cancel();
     }
-    if (_sendTxSub != null) {
-      _sendTxSub!.cancel();
+    if (_addNFTSub != null) {
+      _addNFTSub!.cancel();
     }
   }
 
@@ -158,8 +147,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          (widget.title ??
-                              AppLocalization.of(context).transfering)!,
+                          AppLocalization.of(context).addNFTHeader,
                           style: AppStyles.textStyleLargerW700Primary(context),
                         ),
                       ],
@@ -183,22 +171,6 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    height: 300,
-                    child: widget.typeTransfer == 'UCO'
-                        ? UcoTransferListWidget(
-                            listUcoTransfer: widget.ucoTransferList,
-                            contacts: widget.contactsRef,
-                            displayContextMenu: false,
-                          )
-                        : widget.typeTransfer == 'NFT'
-                            ? NftTransferListWidget(
-                                listNftTransfer: widget.nftTransferList,
-                                contacts: widget.contactsRef,
-                                displayContextMenu: false,
-                              )
-                            : const SizedBox(),
-                  )
                 ],
               ),
             ),
@@ -262,21 +234,21 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         ));
   }
 
-  Future<void> _doSend() async {
+  Future<void> _doAdd() async {
     try {
       _showSendingAnimation(context);
       final String transactionChainSeed =
           await StateContainer.of(context).getSeed();
-      TransactionStatus transactionStatus = await sl.get<AppService>().sendUCO(
+      TransactionStatus transactionStatus = await sl.get<AppService>().addNFT(
           globalVarOriginPrivateKey,
           transactionChainSeed,
           StateContainer.of(context).selectedAccount.lastAddress!,
-          widget.ucoTransferList!);
+          widget.nftName!,
+          widget.nftInitialSupply!);
       EventTaxiImpl.singleton()
-          .fire(TransactionSendEvent(response: transactionStatus.status));
+          .fire(NFTAddEvent(response: transactionStatus.status));
     } catch (e) {
-      EventTaxiImpl.singleton()
-          .fire(TransactionSendEvent(response: e.toString()));
+      EventTaxiImpl.singleton().fire(NFTAddEvent(response: e.toString()));
     }
   }
 

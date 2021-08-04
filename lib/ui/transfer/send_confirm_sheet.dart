@@ -32,6 +32,7 @@ import 'package:archethic_mobile_wallet/util/biometrics.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 import 'package:archethic_mobile_wallet/util/numberutil.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class SendConfirmSheet extends StatefulWidget {
   const SendConfirmSheet(
@@ -349,7 +350,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                                         .sendAmountConfirm
                                         .replaceAll('%1', amount));
                             if (authenticated) {
-                              sl.get<HapticUtil>().fingerprintSucess();
+                              sl.get<HapticUtil>().feedback(FeedbackType.success);
                               EventTaxiImpl.singleton().fire(
                                   AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
                             }

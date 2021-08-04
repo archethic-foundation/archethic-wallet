@@ -332,7 +332,11 @@ class StateContainerState extends State<StateContainer> {
     final String genesisAddress =
         sl.get<AddressService>().deriveAddress(seed, 0);
 
-    final String lastAddress = await sl.get<AddressService>().lastAddress(seed);
+    String lastAddress = await sl.get<AddressService>().lastAddressFromAddress(genesisAddress);
+    if(lastAddress == '')
+    {
+      lastAddress = genesisAddress;
+    }
     account.genesisAddress = genesisAddress;
     account.lastAddress = lastAddress;
     selectedAccount = account;

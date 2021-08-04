@@ -30,7 +30,8 @@ class AppService {
   }
 
   Future<Balance> getBalanceGetResponse(String address) async {
-    Balance balance = Balance(uco: 0, nft: List<NftBalance>.empty(growable: true));
+    Balance balance =
+        Balance(uco: 0, nft: List<NftBalance>.empty(growable: true));
     balance = await sl.get<ApiService>().fetchBalance(address);
     final List<NftBalance> balanceNftList =
         List<NftBalance>.empty(growable: true);
@@ -49,7 +50,8 @@ class AppService {
       String transactionChainSeed,
       String address,
       List<UCOTransfer> listUcoTransfer) async {
-    final int txIndex = await sl.get<ApiService>().getTransactionIndex(address);
+    final Transaction lastTransaction =
+        await sl.get<ApiService>().getLastTransaction(address);
     final Transaction transaction =
         Transaction(type: 'transfer', data: Transaction.initData());
     for (UCOTransfer transfer in listUcoTransfer) {
@@ -57,7 +59,7 @@ class AppService {
     }
     TransactionStatus transactionStatus = new TransactionStatus();
     transaction
-        .build(transactionChainSeed, txIndex, 'P256')
+        .build(transactionChainSeed, lastTransaction.chainLength!, 'P256')
         .originSign(originPrivateKey);
     try {
       transactionStatus = await sl.get<ApiService>().sendTx(transaction);
@@ -71,21 +73,26 @@ class AppService {
   Future<TransactionStatus> addNFT(
       String originPrivateKey,
       String transactionChainSeed,
-      String name,
       String address,
-      int initialSupply
-      ) async {
- 
+      String name,
+      int initialSupply) async {
     TransactionStatus transactionStatus = new TransactionStatus();
-    final int txIndex = await sl.get<ApiService>().getTransactionIndex(address);
-    Transaction transaction = NFTService().prepareNewNFT(initialSupply, name, transactionChainSeed, txIndex, 'P256', originPrivateKey);
+    final Transaction lastTransaction =
+        await sl.get<ApiService>().getLastTransaction(address);
+    final Transaction transaction = NFTService().prepareNewNFT(
+        initialSupply,
+        name,
+        transactionChainSeed,
+        lastTransaction.chainLength!,
+        'P256',
+        originPrivateKey);
     try {
       transactionStatus = await sl.get<ApiService>().sendTx(transaction);
     } catch (e) {
       print('error: ' + e.toString());
       transactionStatus.status = e.toString();
     }
-    
+
     return transactionStatus;
   }
 }

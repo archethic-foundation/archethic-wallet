@@ -10,6 +10,7 @@ import 'package:flutter/widgets.dart';
 // Project imports:
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 const double _kActionsExtentRatio = 0.25;
 const double _kFastThreshold = 2500.0;
@@ -1076,7 +1077,7 @@ class SlidableState extends State<Slidable>
         _callbackComplete = true;
         close();
       });
-      sl.get<HapticUtil>().success();
+      sl.get<HapticUtil>().feedback(FeedbackType.selection);
       final Future delayed = Future.delayed(const Duration(milliseconds: 150));
       delayed.then((_) {
         Future.delayed(const Duration(milliseconds: 100), () {

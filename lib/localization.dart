@@ -460,6 +460,11 @@ class AppLocalization {
         desc: '', name: 'unlockBiometrics');
   }
 
+  String get confirmBiometrics {
+    return Intl.message('Authenticate to Confirm',
+        desc: '', name: 'confirmBiometrics');
+  }
+
   String get lockAppSetting {
     return Intl.message('Auth. on Launch',
         desc: 'authenticate_on_launch', name: 'lockAppSetting');

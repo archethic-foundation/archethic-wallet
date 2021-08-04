@@ -79,7 +79,8 @@ class QRcodeDisplay {
   static Widget buildAddressDisplay(
       BuildContext context, Animation<double> _opacityAnimation) {
     return StateContainer.of(context).selectedAccount == null ||
-            StateContainer.of(context).selectedAccount.lastAddress == null
+            StateContainer.of(context).selectedAccount.lastAddress == null ||
+            StateContainer.of(context).selectedAccount.lastAddress == ''
         ? const SizedBox()
         : Stack(
             children: <Widget>[

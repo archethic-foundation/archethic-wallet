@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:package_info/package_info.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -76,7 +77,7 @@ class _AppHomePageState extends State<AppHomePage>
     setState(() {
       _isRefreshing = true;
     });
-    sl.get<HapticUtil>().success();
+    sl.get<HapticUtil>().feedback(FeedbackType.light);
     StateContainer.of(context)
         .updateWallet(account: StateContainer.of(context).selectedAccount);
 

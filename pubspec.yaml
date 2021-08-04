@@ -3,7 +3,7 @@ description: ArchEthic Wallet app (iOS/Android).
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.0.15+15
+e stufversion: 0.0.17+17
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -116,8 +116,8 @@ dependencies:
   # String validation and sanitization for Dart
   validators: ^3.0.0
 
-  # A plugin for handling Vibration API on iOS, Android, and web
-  vibration: ^1.7.4-nullsafety.0
+  # A Flutter plugin to vibrate the device
+  flutter_vibrate: ^1.1.0
 
 dev_dependencies:
   # A build system for Dart code generation and modular compilation

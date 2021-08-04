@@ -43,7 +43,16 @@ class TxListWidget {
                   scrollDirection: Axis.vertical,
                   itemCount: transactions.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return displayTxDetail(context, transactions[index]);
+                    if (transactions[index].type == 'transfer') {
+                      return displayTxDetailTransfer(
+                          context, transactions[index]);
+                    } else {
+                      if (transactions[index].type == 'nft') {
+                        return displayTxDetailNFT(context, transactions[index]);
+                      } else {
+                        return const SizedBox();
+                      }
+                    }
                   },
                 ),
               ),
@@ -89,7 +98,7 @@ class TxListWidget {
     );
   }
 
-  static Container displayTxDetail(
+  static Container displayTxDetailTransfer(
       BuildContext context, Transaction transaction) {
     return Container(
         padding: const EdgeInsets.all(3.5),
@@ -105,51 +114,91 @@ class TxListWidget {
                         style: AppStyles.textStyleSmallW700Primary(context)),
                   ],
                 ),
-                transaction.type != 'transfer'
-                    ? const SizedBox()
-                    : Text(
-                        transaction.data!.ledger!.uco!.transfers![0].amount
-                                .toString() +
-                            ' UCO',
-                        style: AppStyles.textStyleSmallW600Primary(context)),
+                Text(
+                    transaction.data!.ledger!.uco!.transfers![0].amount
+                            .toString() +
+                        ' UCO',
+                    style: AppStyles.textStyleSmallW600Primary(context)),
               ],
             ),
-            transaction.type != 'transfer'
-                ? const SizedBox()
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                        Text(
-                            'To: ' +
-                                Address(transaction
-                                        .data!.ledger!.uco!.transfers![0].to!)
-                                    .getShortString3(),
-                            style: AppStyles.textStyleTinyW100Primary(context))
-                      ]),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              transaction.type != 'transfer' && transaction.type != 'nft'
-                  ? const SizedBox()
-                  : Text(
-                      'Date: ' +
-                          DateFormat.yMEd(
-                                  Localizations.localeOf(context).languageCode)
-                              .add_Hm()
-                              .format(DateTime.fromMillisecondsSinceEpoch(
-                                      transaction.validationStamp!.timestamp! *
-                                          1000)
-                                  .toLocal())
-                              .toString(),
-                      style: AppStyles.textStyleTinyW100Primary(context)),
+              Text(
+                  'To: ' +
+                      Address(transaction.data!.ledger!.uco!.transfers![0].to!)
+                          .getShortString3(),
+                  style: AppStyles.textStyleTinyW100Primary(context))
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              transaction.type != 'transfer' && transaction.type != 'nft'
-                  ? const SizedBox()
-                  : Text(
-                      'Fees: ' +
-                          transaction.validationStamp!.ledgerOperations!.fee
-                              .toString() +
-                          ' UCO',
-                      style: AppStyles.textStyleTinyW100Primary(context)),
+              Text(
+                  'Date: ' +
+                      DateFormat.yMEd(
+                              Localizations.localeOf(context).languageCode)
+                          .add_Hm()
+                          .format(DateTime.fromMillisecondsSinceEpoch(
+                                  transaction.validationStamp!.timestamp! *
+                                      1000)
+                              .toLocal())
+                          .toString(),
+                  style: AppStyles.textStyleTinyW100Primary(context)),
+            ]),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+              Text(
+                  'Fees: ' +
+                      transaction.validationStamp!.ledgerOperations!.fee
+                          .toString() +
+                      ' UCO',
+                  style: AppStyles.textStyleTinyW100Primary(context)),
+            ]),
+            const SizedBox(height: 6),
+            Divider(
+                height: 4,
+                color: StateContainer.of(context).curTheme.backgroundDark),
+            const SizedBox(height: 6),
+          ],
+        ));
+  }
+
+  static Container displayTxDetailNFT(
+      BuildContext context, Transaction transaction) {
+    return Container(
+        padding: const EdgeInsets.all(3.5),
+        width: MediaQuery.of(context).size.width * 0.9,
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text(transaction.type!,
+                        style: AppStyles.textStyleSmallW700Primary(context)),
+                  ],
+                ),
+                Text(
+                    transaction.inputs![1].amount
+                            .toString() + ' ' + transaction.data!.contentDisplay!.substring(transaction.data!.contentDisplay!.indexOf('name: ') + 'name: '.length),
+                    style: AppStyles.textStyleSmallW600Primary(context)),
+              ],
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+              Text(
+                  'Address: ' +
+                      Address(transaction.inputs![1].nftAddress!)
+                          .getShortString3(),
+                  style: AppStyles.textStyleTinyW100Primary(context)),
+            ]),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+              Text(
+                  'Date: ' +
+                      DateFormat.yMEd(
+                              Localizations.localeOf(context).languageCode)
+                          .add_Hm()
+                          .format(DateTime.fromMillisecondsSinceEpoch(
+                                  transaction.validationStamp!.timestamp! *
+                                      1000)
+                              .toLocal())
+                          .toString(),
+                  style: AppStyles.textStyleTinyW100Primary(context)),
             ]),
             const SizedBox(height: 6),
             Divider(

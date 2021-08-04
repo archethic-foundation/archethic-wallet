@@ -9,6 +9,7 @@ import 'package:archethic_mobile_wallet/model/authentication_method.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service/app_service.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
+import 'package:archethic_mobile_wallet/ui/nft/add_nft_confirm.dart';
 import 'package:archethic_mobile_wallet/ui/transfer/transfer_complete_sheet.dart';
 import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
@@ -54,69 +55,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
   String? _nameValidationText;
   String? _initialSupplyValidationText;
 
-  String nftName = '';
-  int nftInitialSupply = 0;
-
-  StreamSubscription<AuthenticatedEvent>? authSub;
-  StreamSubscription<NFTAddEvent>? addNFTSub;
-
   bool? animationOpen;
-
-  void registerBus() {
-    authSub = EventTaxiImpl.singleton()
-        .registerTo<AuthenticatedEvent>()
-        .listen((AuthenticatedEvent event) {
-                    print("arrrraanftName:" + nftName);
-      print("aarrrranftInitialSupply:" + nftInitialSupply.toString());
-      if (event.authType == AUTH_EVENT_TYPE.SEND) {
-        doAdd();
-      }
-    });
-
-    addNFTSub = EventTaxiImpl.singleton()
-        .registerTo<NFTAddEvent>()
-        .listen((NFTAddEvent event) {
-      if (event.response!.toUpperCase() != 'OK') {
-        // Send failed
-        if (animationOpen!) {
-          Navigator.of(context).pop();
-        }
-        UIUtil.showSnackbar(
-            AppLocalization.of(context).sendError +
-                ' (' +
-                event.response! +
-                ')',
-            context);
-        Navigator.of(context).pop();
-      } else {
-        StateContainer.of(context)
-            .updateWallet(account: StateContainer.of(context).selectedAccount);
-        Navigator.pop(context);
-        Sheets.showAppHeightNineSheet(
-            context: context,
-            closeOnTap: true,
-            removeUntilHome: true,
-            widget: TransferCompleteSheet(
-              title: 'NFT Created',
-            ));
-      }
-    });
-  }
-
-  void _destroyBus() {
-    if (authSub != null) {
-      authSub!.cancel();
-    }
-    if (addNFTSub != null) {
-      addNFTSub!.cancel();
-    }
-  }
-
-  @override
-  void dispose() {
-    _destroyBus();
-    super.dispose();
-  }
 
   void _showSendingAnimation(BuildContext context) {
     animationOpen = true;
@@ -130,7 +69,6 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
   @override
   void initState() {
     super.initState();
-    registerBus();
     _nameFocusNode = FocusNode();
     _initialSupplyFocusNode = FocusNode();
     _nameController = TextEditingController();
@@ -302,27 +240,13 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                         AppLocalization.of(context).addNFT,
                         Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
                       if (await validateForm()) {
-                        final AuthenticationMethod authMethod =
-                            await sl.get<SharedPrefsUtil>().getAuthMethod();
-                        final bool hasBiometrics =
-                            await sl.get<BiometricUtil>().hasBiometrics();
-                        if (authMethod.method == AuthMethod.BIOMETRICS &&
-                            hasBiometrics) {
-                          try {
-                            final bool authenticated = await sl
-                                .get<BiometricUtil>()
-                                .authenticateWithBiometrics(context, '');
-                            if (authenticated) {
-                              sl.get<HapticUtil>().fingerprintSucess();
-                              EventTaxiImpl.singleton().fire(
-                                  AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
-                            }
-                          } catch (e) {
-                            await authenticateWithPin();
-                          }
-                        } else {
-                          await authenticateWithPin();
-                        }
+                        Sheets.showAppHeightNineSheet(
+                            context: context,
+                            widget: AddNFTConfirm(
+                              nftName: _nameController!.text,
+                              nftInitialSupply:
+                                  int.tryParse(_initialSupplyController!.text),
+                            ));
                       }
                     }),
                   ],
@@ -350,8 +274,6 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
   Future<bool> validateForm() async {
     bool isValid = true;
     setState(() {
-      nftName = '';
-      nftInitialSupply = 0;
       _nameValidationText = '';
       _initialSupplyValidationText = '';
     });
@@ -377,53 +299,6 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
         });
       }
     }
-    if (isValid) {
-      setState(() {
-        nftName = _nameController!.text;
-        nftInitialSupply = int.tryParse(_initialSupplyController!.text)!;
-              print("nftName:" + nftName);
-      print("nftInitialSupply:" + nftInitialSupply.toString());
-      });
-    }
     return isValid;
-  }
-
-  Future<void> doAdd() async {
-    try {
-      print("nftName:" + nftName);
-      print("nftInitialSupply:" + nftInitialSupply.toString());
-      _showSendingAnimation(context);
-      final String transactionChainSeed =
-          await StateContainer.of(context).getSeed();
-      TransactionStatus transactionStatus = await sl.get<AppService>().addNFT(
-          globalVarOriginPrivateKey,
-          transactionChainSeed,
-          StateContainer.of(context).selectedAccount.lastAddress!,
-          nftName,
-          nftInitialSupply);
-      EventTaxiImpl.singleton()
-          .fire(NFTAddEvent(response: transactionStatus.status));
-    } catch (e) {
-      EventTaxiImpl.singleton().fire(NFTAddEvent(response: e.toString()));
-    }
-  }
-
-  Future<void> authenticateWithPin() async {
-    // PIN Authentication
-          print("aaanftName:" + nftName);
-      print("aaanftInitialSupply:" + nftInitialSupply.toString());
-    final String expectedPin = await sl.get<Vault>().getPin();
-    final bool auth = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) {
-      return PinScreen(
-        PinOverlayType.ENTER_PIN,
-        expectedPin: expectedPin,
-        description: '',
-      );
-    }));
-    if (auth) {
-      await Future<Duration>.delayed(const Duration(milliseconds: 200));
-      EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
-    }
   }
 }

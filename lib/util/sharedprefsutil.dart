@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:ui';
 
 // Package imports:
+import 'package:archethic_mobile_wallet/global_var.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -175,7 +176,7 @@ class SharedPrefsUtil {
   }
 
   Future<String> getEndpoint() async {
-    return await get(endpoint, defaultValue: 'http://192.168.0.151:4000');
+    return await get(endpoint, defaultValue: glovalVarEndPointDev);
   }
 
   Future<void> setLock(bool value) async {
