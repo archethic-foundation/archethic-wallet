@@ -246,8 +246,9 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       return false;
     }
     try {
+      
       final String salted = AppHelpers.bytesToUtf8String(
-          AppHelpers.hexToBytes(seed.substring(0, 16)));
+          AppHelpers.hexToBytes(seed.length >= 16 ? seed.substring(0, 16) : seed));
       if (salted == 'Salted__') {
         return true;
       }
