@@ -1,3 +1,5 @@
+// @dart=2.9
+
 // Flutter imports:
 import 'package:flutter/services.dart';
 
@@ -33,11 +35,11 @@ class Vault {
     return value;
   }
 
-  Future<String?> _read(String key, {String? defaultValue}) async {
+  Future<String> _read(String key, {String defaultValue}) async {
     if (await legacy()) {
       return await getEncrypted(key);
     }
-    return await secureStorage.read(key: key) ?? defaultValue!;
+    return await secureStorage.read(key: key) ?? defaultValue;
   }
 
   Future<void> deleteAll() async {
@@ -53,7 +55,7 @@ class Vault {
   }
 
   // Specific keys
-  Future<String?> getSeed() async {
+  Future<String> getSeed() async {
     return await _read(seedKey);
   }
 
@@ -69,7 +71,7 @@ class Vault {
     return await secureStorage.delete(key: seedKey);
   }
 
-  Future<String?> getEncryptionPhrase() async {
+  Future<String> getEncryptionPhrase() async {
     return await _read(encryptionKey);
   }
 
@@ -78,8 +80,9 @@ class Vault {
   }
 
   /// Used to keep the seed in-memory in the session without being plaintext
-  Future<String?> getSessionKey() async {
-    String? key = await _read(sessionKey);
+  Future<String> getSessionKey() async {
+    String key = await _read(sessionKey);
+    key ??= await updateSessionKey();
     return key;
   }
 
@@ -101,7 +104,7 @@ class Vault {
     return await secureStorage.delete(key: encryptionKey);
   }
 
-  Future<String?> getPin() async {
+  Future<String> getPin() async {
     return await _read(pinKey);
   }
 
@@ -120,6 +123,9 @@ class Vault {
   // For encrypted data
   Future<void> setEncrypted(String key, String value) async {
     final String secret = await getSecret();
+    if (secret == null) {
+      return;
+    }
     // Decrypt and return
     final Salsa20Encryptor encrypter = Salsa20Encryptor(
         secret.substring(0, secret.length - 8),
@@ -129,8 +135,8 @@ class Vault {
     prefs.setString(key, encrypter.encrypt(value));
   }
 
-  Future<String?> getEncrypted(String key) async {
-    final String? secret = await getSecret();
+  Future<String> getEncrypted(String key) async {
+    final String secret = await getSecret();
     if (secret == null) {
       return null;
     }
@@ -139,7 +145,7 @@ class Vault {
         secret.substring(0, secret.length - 8),
         secret.substring(secret.length - 8));
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? encrypted = prefs.get(key).toString();
+    final String encrypted = prefs.get(key);
     if (encrypted == null) {
       return null;
     }

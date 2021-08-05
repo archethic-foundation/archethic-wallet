@@ -16,142 +16,48 @@ import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 
 class NftListWidget {
   static Widget buildNftList(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        if (StateContainer.of(context).wallet == null ||
-            StateContainer.of(context).wallet.accountBalance == null ||
-            StateContainer.of(context).wallet.accountBalance.nft == null)
-          const SizedBox()
-        else
-          SizedBox(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 0.0),
-              child: Container(
-                height: 100,
-                padding: const EdgeInsets.only(
-                    top: 23.5, left: 3.5, right: 3.5, bottom: 3.5),
-                width: MediaQuery.of(context).size.width * 0.9,
-                decoration: BoxDecoration(
-                  color: StateContainer.of(context).curTheme.background,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(15),
-                  ),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color:
-                          StateContainer.of(context).curTheme.backgroundDark!,
-                      blurRadius: 5.0,
-                      spreadRadius: 0.0,
-                      offset: const Offset(5.0, 5.0),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 6, right: 6, top: 6, bottom: 6),
-                  child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    itemCount: StateContainer.of(context)
-                        .wallet
-                        .accountBalance
-                        .nft!
-                        .length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return displayNftDetail(
-                          context,
-                          StateContainer.of(context)
+    return StateContainer.of(context).wallet.transactionChainLoading == true
+        ? Center(child: CircularProgressIndicator())
+        : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(AppLocalization.of(context).nftHeader,
+                style: AppStyles.textStyleSize14W600BackgroundDarkest(context)),
+            Stack(
+              children: <Widget>[
+                SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 0.0),
+                    child: Container(
+                      height: 100,
+                      padding: const EdgeInsets.only(
+                          top: 23.5, left: 3.5, right: 3.5, bottom: 3.5),
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      color: Colors.transparent,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 6, right: 6, top: 6, bottom: 6),
+                        child: ListView.builder(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          itemCount: StateContainer.of(context)
                               .wallet
                               .accountBalance
-                              .nft![index]);
-                    },
+                              .nft!
+                              .length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return displayNftDetail(
+                                context,
+                                StateContainer.of(context)
+                                    .wallet
+                                    .accountBalance
+                                    .nft![index]);
+                          },
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
-        SizedBox(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 0.0),
-            child: Container(
-              padding: const EdgeInsets.all(3.5),
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: 40,
-              decoration: BoxDecoration(
-                color: StateContainer.of(context).curTheme.backgroundDark,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
-                  bottomLeft: Radius.circular(5),
-                  bottomRight: Radius.circular(5),
-                ),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color:
-                        StateContainer.of(context).curTheme.backgroundDarkest!,
-                    blurRadius: 5.0,
-                    spreadRadius: 0.0,
-                    offset: const Offset(5.0, 5.0),
-                  )
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text('NFT',
-                      style: AppStyles.textStyleSize14W600Primary(context)),
-                ],
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 0.0),
-            child: Container(
-              height: 36,
-              width: 36,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-              ),
-              child: TextButton(
-                onPressed: () {
-                  Sheets.showAppHeightNineSheet(
-                      context: context,
-                      widget: TransferNftSheet(
-                        contactsRef: StateContainer.of(context).contactsRef,
-                        title: AppLocalization.of(context).transferNFT,
-                        actionButtonTitle:
-                            AppLocalization.of(context).transferNFT,
-                      ));
-                },
-                child: Icon(FontAwesome5.arrow_circle_up,
-                    color: StateContainer.of(context).curTheme.primary),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 0.0, left: 40),
-            child: Container(
-              height: 36,
-              width: 36,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-              ),
-              child: TextButton(
-                onPressed: () {
-                  Sheets.showAppHeightNineSheet(
-                      context: context, widget: const AddNFTSheet());
-                },
-                child: Icon(FontAwesome5.plus_circle,
-                    color: StateContainer.of(context).curTheme.primary),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
+              ],
+            )
+          ]);
   }
 
   static Column displayNftDetail(BuildContext context, NftBalance nftBalance) {

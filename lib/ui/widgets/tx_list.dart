@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -11,94 +12,100 @@ import 'package:archethic_mobile_wallet/model/address.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 
 class TxListWidget {
-  static Widget buildTxList(
-      BuildContext context, List<Transaction> transactions) {
-        return StateContainer.of(context).wallet.transactionChainLoading == true ? Text("toto") :
-     Stack(
-      children: <Widget>[
-        Container(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 0.0),
-            child: Container(
-              height: MediaQuery.of(context).size.height - 400,
-              padding: const EdgeInsets.only(
-                  top: 23.5, left: 3.5, right: 3.5, bottom: 3.5),
-              width: MediaQuery.of(context).size.width * 0.9,
-              decoration: BoxDecoration(
-                color: StateContainer.of(context).curTheme.background,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(15),
-                ),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: StateContainer.of(context).curTheme.backgroundDark!,
-                    blurRadius: 5.0,
-                    spreadRadius: 0.0,
-                    offset: const Offset(5.0, 5.0),
+  static Widget buildTxList(BuildContext context,
+      List<Transaction> transactions, Animation<double> _opacityAnimation) {
+    return StateContainer.of(context).wallet == null || StateContainer.of(context).wallet.transactionChainLoading == true
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(AppLocalization.of(context).recentTransactionsHeader,
+                  style:
+                      AppStyles.textStyleSize14W600BackgroundDarkest(context)),
+              Stack(
+                children: <Widget>[
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 0.0),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height - 120,
+                        padding: const EdgeInsets.only(
+                            top: 3.5, left: 3.5, right: 3.5, bottom: 3.5),
+                        color: Colors.transparent,
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 6, right: 6, top: 6, bottom: 6),
+                            child: Column(
+                              children: [
+                                displayTxDetailSearching(
+                                    context, _opacityAnimation),
+                                displayTxDetailSearching(
+                                    context, _opacityAnimation),
+                                displayTxDetailSearching(
+                                    context, _opacityAnimation),
+                                displayTxDetailSearching(
+                                    context, _opacityAnimation),
+                                displayTxDetailSearching(
+                                    context, _opacityAnimation),
+                                displayTxDetailSearching(
+                                    context, _opacityAnimation),
+                                displayTxDetailSearching(
+                                    context, _opacityAnimation),
+                              ],
+                            )),
+                      ),
+                    ),
                   ),
                 ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    left: 6, right: 6, top: 30, bottom: 6),
-                child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  itemCount: transactions.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (transactions[index].type == 'transfer') {
-                      return displayTxDetailTransfer(
-                          context, transactions[index]);
-                    } else {
-                      if (transactions[index].type == 'nft') {
-                        return displayTxDetailNFT(context, transactions[index]);
-                      } else {
-                        return const SizedBox();
-                      }
-                    }
-                  },
-                ),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 0.0),
-            child: Container(
-              padding: const EdgeInsets.all(3.5),
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: 40,
-              decoration: BoxDecoration(
-                color: StateContainer.of(context).curTheme.backgroundDark,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
-                  bottomLeft: Radius.circular(5),
-                  bottomRight: Radius.circular(5),
-                ),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color:
-                        StateContainer.of(context).curTheme.backgroundDarkest!,
-                    blurRadius: 5.0,
-                    spreadRadius: 0.0,
-                    offset: const Offset(5.0, 5.0),
-                  )
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              )
+            ],
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(AppLocalization.of(context).recentTransactionsHeader,
+                  style:
+                      AppStyles.textStyleSize14W600BackgroundDarkest(context)),
+              Stack(
                 children: <Widget>[
-                  Text('Recent transactions',
-                      style: AppStyles.textStyleSize14W600Primary(context)),
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 0.0),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height - 200,
+                        padding: const EdgeInsets.only(
+                            top: 3.5, left: 3.5, right: 3.5, bottom: 3.5),
+                        color: Colors.transparent,
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 6, right: 6, top: 6, bottom: 6),
+                          child: ListView.builder(
+                            physics: BouncingScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            itemCount: transactions.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (transactions[index].type == 'transfer') {
+                                return displayTxDetailTransfer(
+                                    context, transactions[index]);
+                              } else {
+                                if (transactions[index].type == 'nft') {
+                                  return displayTxDetailNFT(
+                                      context, transactions[index]);
+                                } else {
+                                  return const SizedBox();
+                                }
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
+              )
+            ],
+          );
   }
 
   static Container displayTxDetailTransfer(
@@ -187,6 +194,7 @@ class TxListWidget {
                     style: AppStyles.textStyleSize14W600Primary(context)),
               ],
             ),
+            transaction.inputs![1].nftAddress == null ? const SizedBox() :
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
               Text(
                   'Address: ' +
@@ -206,6 +214,132 @@ class TxListWidget {
                               .toLocal())
                           .toString(),
                   style: AppStyles.textStyleSize10W100Primary(context)),
+            ]),
+            const SizedBox(height: 6),
+            Divider(
+                height: 4,
+                color: StateContainer.of(context).curTheme.backgroundDark),
+            const SizedBox(height: 6),
+          ],
+        ));
+  }
+
+  static Container displayTxDetailSearching(
+      BuildContext context, Animation<double> _opacityAnimation) {
+    return Container(
+        padding: const EdgeInsets.all(3.5),
+        width: MediaQuery.of(context).size.width * 0.9,
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Opacity(
+                      opacity: _opacityAnimation.value,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: StateContainer.of(context).curTheme.primary,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: const Text(
+                          'Transfer',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: AppFontSizes.size14 - 3,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.transparent),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Opacity(
+                  opacity: _opacityAnimation.value,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: StateContainer.of(context).curTheme.primary,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: const Text(
+                      '1234567 UCO',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: AppFontSizes.size14 - 3,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.transparent),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+              Opacity(
+                opacity: _opacityAnimation.value,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: StateContainer.of(context).curTheme.primary60,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Text(
+                    'To: ' +
+                        Address('123456789012345678901234567890123456789012345678901234567890123456')
+                            .getShortString3(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: AppFontSizes.size10 - 3,
+                        fontWeight: FontWeight.w100,
+                        color: Colors.transparent),
+                  ),
+                ),
+              ),
+            ]),
+            const SizedBox(height: 4),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+              Opacity(
+                opacity: _opacityAnimation.value,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: StateContainer.of(context).curTheme.primary60,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Text(
+                    'Date: Mon. 01/01/2021',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: AppFontSizes.size10 - 3,
+                        fontWeight: FontWeight.w100,
+                        color: Colors.transparent),
+                  ),
+                ),
+              ),
+            ]),
+            const SizedBox(height: 4),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+              Opacity(
+                opacity: _opacityAnimation.value,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: StateContainer.of(context).curTheme.primary60,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Text(
+                    'Fees: 1234567 UCO',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: AppFontSizes.size10 - 3,
+                        fontWeight: FontWeight.w100,
+                        color: Colors.transparent),
+                  ),
+                ),
+              ),
             ]),
             const SizedBox(height: 6),
             Divider(

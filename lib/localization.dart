@@ -108,6 +108,11 @@ class AppLocalization {
         desc: 'transaction_header', name: 'transactionHeader');
   }
 
+  String get recentTransactionsHeader {
+    return Intl.message('Recent transactions',
+        desc: '', name: 'recentTransactionsHeader');
+  }
+
   String get addressCopied {
     return Intl.message('Address Copied',
         desc: 'receive_copied', name: 'addressCopied');
@@ -813,7 +818,7 @@ class AppLocalization {
   }
 
   String get nftHeaderDesc {
-    return Intl.message('Manage your NFTs', desc: '', name: 'nftHeaderDesc');
+    return Intl.message('Manage your Non Financial Tokens', desc: '', name: 'nftHeaderDesc');
   }
 
   String get nftNameHint {

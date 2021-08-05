@@ -122,7 +122,7 @@ class AppWallet {
     _history = value;
   }
 
-  bool get transactionChainLoading => _transactionChainLoading;
+  bool get transactionChainLoading => _transactionChainLoading == null ? true : _transactionChainLoading;
 
   set transactionChainLoading(bool value) {
     _transactionChainLoading = value;

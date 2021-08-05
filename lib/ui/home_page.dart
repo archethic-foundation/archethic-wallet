@@ -60,10 +60,6 @@ class _AppHomePageState extends State<AppHomePage>
 
   bool _lockDisabled = false; // whether we should avoid locking the app
 
-  // Main card height
-  double mainCardHeight;
-  double settingsIconMarginTop = 5;
-
   ScrollController _scrollController;
 
   AnimationController animationController;
@@ -111,10 +107,6 @@ class _AppHomePageState extends State<AppHomePage>
 
     _registerBus();
     WidgetsBinding.instance.addObserver(this);
-
-    // Main Card Size
-    mainCardHeight = 120;
-    settingsIconMarginTop = 7;
 
     // Setup placeholder animation and start
     _animationDisposed = false;
@@ -319,7 +311,7 @@ class _AppHomePageState extends State<AppHomePage>
             color: StateContainer.of(context).curTheme.backgroundDark,
             child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                height: mainCardHeight,
+                height: 120,
                 curve: Curves.easeInOut,
                 child: index == 0
                     ? FlipCard(
@@ -396,61 +388,67 @@ class _AppHomePageState extends State<AppHomePage>
               bottom: MediaQuery.of(context).size.height * 0.035),
           child: Column(
             children: <Widget>[
+              Container(
+                height: 150.0,
+                child: _getTopCards(context),
+              ),
               Expanded(
-                child: ReactiveRefreshIndicator(
-                  onRefresh: _refresh,
-                  isRefreshing: _isRefreshing,
-                  backgroundColor:
-                      StateContainer.of(context).curTheme.backgroundDark,
-                  child: KeyboardAvoider(
-                    duration: const Duration(milliseconds: 0),
-                    autoScroll: true,
-                    focusPadding: 40,
-                    child: Stack(
-                      alignment: Alignment.topCenter,
-                      children: <Widget>[
-                        CircularParticle(
-                          awayRadius: 80,
-                          numberOfParticles: 80,
-                          speedOfParticles: 0.5,
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                          onTapAnimation: true,
-                          particleColor: StateContainer.of(context)
-                              .curTheme
-                              .primary10
-                              .withAlpha(150)
-                              .withOpacity(0.2),
-                          awayAnimationDuration:
-                              const Duration(milliseconds: 600),
-                          maxParticleSize: 8,
-                          isRandSize: true,
-                          isRandomColor: false,
-                          awayAnimationCurve: Curves.easeInOutBack,
-                          enableHover: true,
-                          hoverColor:
-                              StateContainer.of(context).curTheme.primary30,
-                          hoverRadius: 90,
-                          connectDots: true,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              height: 150.0,
-                              child: _getTopCards(context),
-                            ),
-                            const SizedBox(height: 20),
-                            NftListWidget.buildNftList(context),
-                            const SizedBox(height: 20),
-                            StateContainer.of(context).wallet == null
-                                ? const SizedBox()
-                                : TxListWidget.buildTxList(context,
-                                    StateContainer.of(context).wallet.history),
-                          ],
-                        ),
-                      ],
-                    ),
+                child: KeyboardAvoider(
+                  duration: const Duration(milliseconds: 0),
+                  autoScroll: true,
+                  focusPadding: 40,
+                  child: Stack(
+                    alignment: Alignment.topCenter,
+                    children: <Widget>[
+                      CircularParticle(
+                        awayRadius: 80,
+                        numberOfParticles: 80,
+                        speedOfParticles: 0.5,
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        onTapAnimation: true,
+                        particleColor: StateContainer.of(context)
+                            .curTheme
+                            .primary10
+                            .withAlpha(150)
+                            .withOpacity(0.2),
+                        awayAnimationDuration:
+                            const Duration(milliseconds: 600),
+                        maxParticleSize: 8,
+                        isRandSize: true,
+                        isRandomColor: false,
+                        awayAnimationCurve: Curves.easeInOutBack,
+                        enableHover: true,
+                        hoverColor:
+                            StateContainer.of(context).curTheme.primary30,
+                        hoverRadius: 90,
+                        connectDots: true,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          ReactiveRefreshIndicator(
+                            onRefresh: _refresh,
+                            isRefreshing: _isRefreshing,
+                            backgroundColor: StateContainer.of(context)
+                                .curTheme
+                                .backgroundDark,
+                            child:
+                                //const SizedBox(height: 20),
+                                //NftListWidget.buildNftList(context),
+                                //const SizedBox(height: 20),
+                                StateContainer.of(context).wallet == null
+                                    ? const SizedBox()
+                                    : TxListWidget.buildTxList(
+                                        context,
+                                        StateContainer.of(context)
+                                            .wallet
+                                            .history,
+                                            _opacityAnimation),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
