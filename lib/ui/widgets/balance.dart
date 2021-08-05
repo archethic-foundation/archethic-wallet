@@ -37,7 +37,7 @@ class BalanceDisplay {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Montserrat',
-                            fontSize: AppFontSizes.small,
+                            fontSize: AppFontSizes.size14,
                             fontWeight: FontWeight.w600,
                             color: Colors.transparent),
                       ),
@@ -54,7 +54,7 @@ class BalanceDisplay {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontFamily: 'Montserrat',
-                                fontSize: AppFontSizes.small - 3,
+                                fontSize: AppFontSizes.size14 - 3,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.transparent),
                           ),
@@ -73,7 +73,7 @@ class BalanceDisplay {
                         '1234567',
                         style: TextStyle(
                             fontFamily: 'Montserrat',
-                            fontSize: AppFontSizes.largestc,
+                            fontSize: AppFontSizes.size28,
                             fontWeight: FontWeight.w900,
                             color: Colors.transparent),
                         maxLines: 1,
@@ -92,7 +92,7 @@ class BalanceDisplay {
                             '1234567',
                             style: TextStyle(
                                 fontFamily: 'Montserrat',
-                                fontSize: AppFontSizes.largestc - 8,
+                                fontSize: AppFontSizes.size28 - 8,
                                 fontWeight: FontWeight.w900,
                                 color: Colors.transparent),
                             maxLines: 1,
@@ -113,7 +113,7 @@ class BalanceDisplay {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'Montserrat',
-                            fontSize: AppFontSizes.small,
+                            fontSize: AppFontSizes.size14,
                             fontWeight: FontWeight.w600,
                             color: Colors.transparent),
                       ),
@@ -130,7 +130,7 @@ class BalanceDisplay {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontFamily: 'Montserrat',
-                                fontSize: AppFontSizes.small - 3,
+                                fontSize: AppFontSizes.size14 - 3,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.transparent),
                           ),
@@ -177,7 +177,7 @@ class BalanceDisplay {
                           StateContainer.of(context).curCurrency,
                           locale: StateContainer.of(context).currencyLocale),
                       textAlign: TextAlign.center,
-                      style: AppStyles.textStyleSmallW600Text60(context)),
+                      style: AppStyles.textStyleSize14W600Text60(context)),
                   Container(
                     margin:
                         const EdgeInsetsDirectional.only(start: 10, end: 10),
@@ -198,7 +198,7 @@ class BalanceDisplay {
                                           .wallet
                                           .getAccountBalanceUCODisplay() +
                                       ' UCO',
-                                  style: AppStyles.textStyleLargestW900Primary(
+                                  style: AppStyles.textStyleSize28W900Primary(
                                       context),
                                 ),
                               ],
@@ -221,7 +221,7 @@ class BalanceDisplay {
                           size: 14),
                       Text(StateContainer.of(context).wallet.btcPrice,
                           textAlign: TextAlign.center,
-                          style: AppStyles.textStyleSmallW600Text60(context)),
+                          style: AppStyles.textStyleSize14W600Text60(context)),
                     ],
                   ),
                 ],
@@ -259,7 +259,7 @@ class BalanceDisplay {
             padding: const EdgeInsets.only(left: 5.0, top: 5.0),
             child: Text(
               'Balance',
-              style: AppStyles.textStyleSmallestW100Primary60(context),
+              style: AppStyles.textStyleSize12W100Primary60(context),
             ),
           ),
         ),

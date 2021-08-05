@@ -151,7 +151,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
               // The header of the sheet
               AutoSizeText(
                 AppLocalization.of(context).addContact,
-                style: AppStyles.textStyleLargerW700Primary(context),
+                style: AppStyles.textStyleSize24W700Primary(context),
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 stepGranularity: 0.1,
@@ -163,7 +163,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
             margin: const EdgeInsets.only(left: 30, right: 30),
             child: AutoSizeText(
               AppLocalization.of(context).addressBookDesc,
-              style: AppStyles.textStyleMediumW200Primary(context),
+              style: AppStyles.textStyleSize16W200Primary(context),
               textAlign: TextAlign.center,
               maxLines: 1,
               stepGranularity: 0.1,
@@ -191,12 +191,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                         ? AppLocalization.of(context).contactNameHint
                         : '',
                     keyboardType: TextInputType.text,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16.0,
-                      color: StateContainer.of(context).curTheme.primary,
-                      fontFamily: 'Montserrat',
-                    ),
+                    style: AppStyles.textStyleSize16W600Primary(context),
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(20),
                       ContactInputFormatter()
@@ -218,12 +213,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                   Container(
                     margin: const EdgeInsets.only(top: 5, bottom: 5),
                     child: Text(_nameValidationText!,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: StateContainer.of(context).curTheme.primary,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600,
-                        )),
+                        style: AppStyles.textStyleSize14W600Primary(context)),
                   ),
                   // Enter Address container
                   AppTextField(
@@ -234,8 +224,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
                     focusNode: _addressFocusNode,
                     controller: _addressController,
                     style: _addressValid!
-                        ? AppStyles.textStyleSmallW100Primary(context)
-                        : AppStyles.textStyleSmallW100Text60(context),
+                        ? AppStyles.textStyleSize14W100Primary(context)
+                        : AppStyles.textStyleSize14W100Text60(context),
                     inputFormatters: <LengthLimitingTextInputFormatter>[
                       LengthLimitingTextInputFormatter(66),
                     ],
@@ -337,12 +327,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                   Container(
                     margin: const EdgeInsets.only(top: 5, bottom: 5),
                     child: Text(_addressValidationText!,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: StateContainer.of(context).curTheme.primary,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600,
-                        )),
+                        style: AppStyles.textStyleSize14W600Primary(context)),
                   ),
                 ],
               ),

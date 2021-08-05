@@ -37,7 +37,8 @@ class _AppLockScreenState extends State<AppLockScreen> {
       await AppUtil()
           .loginAccount(await StateContainer.of(context).getSeed(), context);
     }
-    StateContainer.of(context).requestUpdate(StateContainer.of(context).selectedAccount);
+    StateContainer.of(context)
+        .requestUpdate(StateContainer.of(context).selectedAccount);
     final PriceConversion conversion =
         await sl.get<SharedPrefsUtil>().getPriceConversion();
     Navigator.of(context).pushNamedAndRemoveUntil(
@@ -273,7 +274,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                 margin:
                                     const EdgeInsetsDirectional.only(start: 4),
                                 child: Text(AppLocalization.of(context).logout,
-                                    style: AppStyles.textStyleSmallW600Primary(
+                                    style: AppStyles.textStyleSize14W600Primary(
                                         context)),
                               ),
                             ],
@@ -303,7 +304,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                 CaseChange.toUpperCase(
                                     AppLocalization.of(context).locked,
                                     context),
-                                style: AppStyles.textStyleLargestW700Primary(
+                                style: AppStyles.textStyleSize28W700Primary(
                                     context),
                               ),
                               margin: const EdgeInsets.only(top: 10),
@@ -318,7 +319,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                     margin: const EdgeInsets.symmetric(horizontal: 50),
                     child: Text(
                       AppLocalization.of(context).tooManyFailedAttempts,
-                      style: AppStyles.textStyleSmallW600Primary(context),
+                      style: AppStyles.textStyleSize14W600Primary(context),
                       textAlign: TextAlign.center,
                     ),
                   )

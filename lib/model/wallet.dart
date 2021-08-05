@@ -3,6 +3,8 @@
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show Transaction, Balance;
+
+// Package imports:
 import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
 
@@ -18,20 +20,17 @@ class AppWallet {
       String localCurrencyPrice,
       String btcPrice,
       List<Transaction> history,
-      bool loading,
-      bool historyLoading}) {
+      bool transactionChainLoading}) {
     _address = address;
     _accountBalance = accountBalance ?? Balance(uco: 0, nft: null);
     _localCurrencyPrice = localCurrencyPrice ?? '0';
     _btcPrice = btcPrice ?? '0';
     _history = history ?? List<Transaction>.empty(growable: true);
-    _loading = loading ?? true;
-    _historyLoading = historyLoading ?? true;
+    _transactionChainLoading = transactionChainLoading ?? true;
   }
 
-  bool _loading; // Whether or not app is initially loading
   bool
-      _historyLoading; // Whether or not we have received initial account history response
+      _transactionChainLoading; 
   String _address;
   Balance _accountBalance;
   String _localCurrencyPrice;
@@ -70,7 +69,10 @@ class AppWallet {
   String getLocalCurrencyPrice(AvailableCurrency currency,
       {String locale = 'en_US'}) {
     final Decimal converted = Decimal.parse(_localCurrencyPrice) *
-        NumberUtil.getRawAsUsableDecimal(_accountBalance == null || _accountBalance.uco == null ? "0" : _accountBalance.uco.toString());
+        NumberUtil.getRawAsUsableDecimal(
+            _accountBalance == null || _accountBalance.uco == null
+                ? "0"
+                : _accountBalance.uco.toString());
     return NumberFormat.currency(
             locale: locale, symbol: currency.getCurrencySymbol())
         .format(converted.toDouble());
@@ -99,7 +101,8 @@ class AppWallet {
 
   String get btcPrice {
     final Decimal converted = Decimal.parse(_btcPrice) *
-        NumberUtil.getRawAsUsableDecimal(_accountBalance.uco == null ? "0" : _accountBalance.uco.toString());
+        NumberUtil.getRawAsUsableDecimal(
+            _accountBalance.uco == null ? "0" : _accountBalance.uco.toString());
     // Show 4 decimal places for BTC price if its >= 0.0001 BTC, otherwise 6 decimals
     if (converted >= Decimal.parse('0.0001')) {
       return NumberFormat('#,##0.0000', 'en_US').format(converted.toDouble());
@@ -119,15 +122,9 @@ class AppWallet {
     _history = value;
   }
 
-  bool get loading => _loading;
+  bool get transactionChainLoading => _transactionChainLoading;
 
-  set loading(bool value) {
-    _loading = value;
-  }
-
-  bool get historyLoading => _historyLoading;
-
-  set historyLoading(bool value) {
-    _historyLoading = value;
+  set transactionChainLoading(bool value) {
+    _transactionChainLoading = value;
   }
 }

@@ -1,17 +1,20 @@
 // Flutter imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:intl/intl.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/model/address.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:intl/intl.dart';
 
 class TxListWidget {
   static Widget buildTxList(
       BuildContext context, List<Transaction> transactions) {
-    return Stack(
+        return StateContainer.of(context).wallet.transactionChainLoading == true ? Text("toto") :
+     Stack(
       children: <Widget>[
         Container(
           child: Padding(
@@ -88,7 +91,7 @@ class TxListWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text('Recent transactions',
-                      style: AppStyles.textStyleSmallW600Primary(context)),
+                      style: AppStyles.textStyleSize14W600Primary(context)),
                 ],
               ),
             ),
@@ -111,14 +114,14 @@ class TxListWidget {
                 Row(
                   children: <Widget>[
                     Text(transaction.type!,
-                        style: AppStyles.textStyleSmallW700Primary(context)),
+                        style: AppStyles.textStyleSize14W700Primary(context)),
                   ],
                 ),
                 Text(
                     transaction.data!.ledger!.uco!.transfers![0].amount
                             .toString() +
                         ' UCO',
-                    style: AppStyles.textStyleSmallW600Primary(context)),
+                    style: AppStyles.textStyleSize14W600Primary(context)),
               ],
             ),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
@@ -126,7 +129,7 @@ class TxListWidget {
                   'To: ' +
                       Address(transaction.data!.ledger!.uco!.transfers![0].to!)
                           .getShortString3(),
-                  style: AppStyles.textStyleTinyW100Primary(context))
+                  style: AppStyles.textStyleSize10W100Primary(context))
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
               Text(
@@ -139,7 +142,7 @@ class TxListWidget {
                                       1000)
                               .toLocal())
                           .toString(),
-                  style: AppStyles.textStyleTinyW100Primary(context)),
+                  style: AppStyles.textStyleSize10W100Primary(context)),
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
               Text(
@@ -147,7 +150,7 @@ class TxListWidget {
                       transaction.validationStamp!.ledgerOperations!.fee
                           .toString() +
                       ' UCO',
-                  style: AppStyles.textStyleTinyW100Primary(context)),
+                  style: AppStyles.textStyleSize10W100Primary(context)),
             ]),
             const SizedBox(height: 6),
             Divider(
@@ -171,13 +174,17 @@ class TxListWidget {
                 Row(
                   children: <Widget>[
                     Text(transaction.type!,
-                        style: AppStyles.textStyleSmallW700Primary(context)),
+                        style: AppStyles.textStyleSize14W700Primary(context)),
                   ],
                 ),
                 Text(
-                    transaction.inputs![1].amount
-                            .toString() + ' ' + transaction.data!.contentDisplay!.substring(transaction.data!.contentDisplay!.indexOf('name: ') + 'name: '.length),
-                    style: AppStyles.textStyleSmallW600Primary(context)),
+                    transaction.inputs![1].amount.toString() +
+                        ' ' +
+                        transaction.data!.contentDisplay!.substring(transaction
+                                .data!.contentDisplay!
+                                .indexOf('name: ') +
+                            'name: '.length),
+                    style: AppStyles.textStyleSize14W600Primary(context)),
               ],
             ),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
@@ -185,7 +192,7 @@ class TxListWidget {
                   'Address: ' +
                       Address(transaction.inputs![1].nftAddress!)
                           .getShortString3(),
-                  style: AppStyles.textStyleTinyW100Primary(context)),
+                  style: AppStyles.textStyleSize10W100Primary(context)),
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
               Text(
@@ -198,7 +205,7 @@ class TxListWidget {
                                       1000)
                               .toLocal())
                           .toString(),
-                  style: AppStyles.textStyleTinyW100Primary(context)),
+                  style: AppStyles.textStyleSize10W100Primary(context)),
             ]),
             const SizedBox(height: 6),
             Divider(

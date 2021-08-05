@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/app_icons.dart';
@@ -17,7 +18,6 @@ import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 enum PinOverlayType { NEW_PIN, ENTER_PIN }
 
@@ -253,12 +253,7 @@ class _PinScreenState extends State<PinScreen>
           child: Text(
             buttonText,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20.0,
-              color: StateContainer.of(context).curTheme.primary,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w700,
-            ),
+            style: AppStyles.textStyleSize20W700Primary(context),
           ),
         ),
       ),
@@ -320,7 +315,7 @@ class _PinScreenState extends State<PinScreen>
                       margin: const EdgeInsets.symmetric(horizontal: 40),
                       child: AutoSizeText(
                         _header,
-                        style: AppStyles.textStyleLargeW700Primary(context),
+                        style: AppStyles.textStyleSize20W700Primary(context),
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         stepGranularity: 0.1,
@@ -332,7 +327,7 @@ class _PinScreenState extends State<PinScreen>
                           horizontal: 40, vertical: 10),
                       child: AutoSizeText(
                         widget.description,
-                        style: AppStyles.textStyleMediumW200Primary(context),
+                        style: AppStyles.textStyleSize16W200Primary(context),
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         stepGranularity: 0.1,

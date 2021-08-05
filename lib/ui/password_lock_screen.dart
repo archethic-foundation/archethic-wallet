@@ -149,8 +149,8 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                                         start: 4),
                                     child: Text(
                                         AppLocalization.of(context).logout,
-                                        style:
-                                            AppStyles.textStyleSmallW600Primary(
+                                        style: AppStyles
+                                            .textStyleSize14W600Primary(
                                                 context)),
                                   ),
                                 ],
@@ -177,7 +177,7 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                             CaseChange.toUpperCase(
                                 AppLocalization.of(context).locked, context),
                             style:
-                                AppStyles.textStyleLargestW700Primary(context),
+                                AppStyles.textStyleSize28W700Primary(context),
                           ),
                           margin: const EdgeInsets.only(top: 10),
                         ),
@@ -192,53 +192,42 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                                     children: <Widget>[
                                       // Enter your password Text Field
                                       AppTextField(
-                                        topMargin: 30,
-                                        padding:
-                                            const EdgeInsetsDirectional.only(
-                                                start: 16, end: 16),
-                                        focusNode: enterPasswordFocusNode,
-                                        controller: enterPasswordController,
-                                        textInputAction: TextInputAction.go,
-                                        autofocus: true,
-                                        onChanged: (String newText) {
-                                          if (passwordError != null) {
-                                            setState(() {
-                                              passwordError = null;
-                                            });
-                                          }
-                                        },
-                                        onSubmitted: (_) async {
-                                          FocusScope.of(context).unfocus();
-                                          await validateAndDecrypt();
-                                        },
-                                        hintText: AppLocalization.of(context)
-                                            .enterPasswordHint,
-                                        keyboardType: TextInputType.text,
-                                        obscureText: true,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 16.0,
-                                          color: StateContainer.of(context)
-                                              .curTheme
-                                              .primary,
-                                          fontFamily: 'Montserrat',
-                                        ),
-                                      ),
+                                          topMargin: 30,
+                                          padding:
+                                              const EdgeInsetsDirectional.only(
+                                                  start: 16, end: 16),
+                                          focusNode: enterPasswordFocusNode,
+                                          controller: enterPasswordController,
+                                          textInputAction: TextInputAction.go,
+                                          autofocus: true,
+                                          onChanged: (String newText) {
+                                            if (passwordError != null) {
+                                              setState(() {
+                                                passwordError = null;
+                                              });
+                                            }
+                                          },
+                                          onSubmitted: (_) async {
+                                            FocusScope.of(context).unfocus();
+                                            await validateAndDecrypt();
+                                          },
+                                          hintText: AppLocalization.of(context)
+                                              .enterPasswordHint,
+                                          keyboardType: TextInputType.text,
+                                          obscureText: true,
+                                          textAlign: TextAlign.center,
+                                          style: AppStyles
+                                              .textStyleSize16W700Primary(
+                                                  context)),
                                       // Error Container
                                       Container(
                                         alignment:
                                             const AlignmentDirectional(0, 0),
                                         margin: const EdgeInsets.only(top: 3),
                                         child: Text(passwordError ?? '',
-                                            style: TextStyle(
-                                              fontSize: 14.0,
-                                              color: StateContainer.of(context)
-                                                  .curTheme
-                                                  .primary,
-                                              fontFamily: 'Montserrat',
-                                              fontWeight: FontWeight.w600,
-                                            )),
+                                            style: AppStyles
+                                                .textStyleSize14W600Primary(
+                                                    context)),
                                       ),
                                     ])))
                       ],
@@ -286,7 +275,8 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
       await AppUtil()
           .loginAccount(await StateContainer.of(context).getSeed(), context);
     }
-    StateContainer.of(context).requestUpdate(StateContainer.of(context).selectedAccount);
+    StateContainer.of(context)
+        .requestUpdate(StateContainer.of(context).selectedAccount);
     final PriceConversion conversion =
         await sl.get<SharedPrefsUtil>().getPriceConversion();
     Navigator.of(context).pushNamedAndRemoveUntil(

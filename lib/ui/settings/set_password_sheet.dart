@@ -79,7 +79,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                       children: <Widget>[
                         AutoSizeText(
                           AppLocalization.of(context).createPasswordSheetHeader,
-                          style: AppStyles.textStyleLargerW700Primary(context),
+                          style: AppStyles.textStyleSize24W700Primary(context),
                           minFontSize: 12,
                           stepGranularity: 0.1,
                           textAlign: TextAlign.center,
@@ -97,7 +97,7 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                     child: AutoSizeText(
                       AppLocalization.of(context)
                           .passwordWillBeRequiredToOpenParagraph,
-                      style: AppStyles.textStyleMediumW200Primary(context),
+                      style: AppStyles.textStyleSize16W200Primary(context),
                       maxLines: 5,
                       stepGranularity: 0.5,
                     ),
@@ -146,84 +146,58 @@ class _SetPasswordSheetState extends State<SetPasswordSheet> {
                                   keyboardType: TextInputType.text,
                                   obscureText: true,
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16.0,
-                                    color: passwordsMatch
-                                        ? StateContainer.of(context)
-                                            .curTheme
-                                            .primary
-                                        : StateContainer.of(context)
-                                            .curTheme
-                                            .primary,
-                                    fontFamily: 'Montserrat',
-                                  ),
+                                  style: AppStyles.textStyleSize16W700Primary(
+                                      context),
                                   onSubmitted: (String text) {
                                     confirmPasswordFocusNode.requestFocus();
                                   },
                                 ),
                                 // Confirm Password Text Field
                                 AppTextField(
-                                  topMargin: 20,
-                                  padding: const EdgeInsetsDirectional.only(
-                                      start: 16, end: 16),
-                                  focusNode: confirmPasswordFocusNode,
-                                  controller: confirmPasswordController,
-                                  textInputAction: TextInputAction.done,
-                                  maxLines: 1,
-                                  autocorrect: false,
-                                  onChanged: (String newText) {
-                                    if (passwordError != null) {
-                                      setState(() {
-                                        passwordError = null;
-                                      });
-                                    }
-                                    if (confirmPasswordController.text ==
-                                        createPasswordController.text) {
-                                      if (mounted) {
+                                    topMargin: 20,
+                                    padding: const EdgeInsetsDirectional.only(
+                                        start: 16, end: 16),
+                                    focusNode: confirmPasswordFocusNode,
+                                    controller: confirmPasswordController,
+                                    textInputAction: TextInputAction.done,
+                                    maxLines: 1,
+                                    autocorrect: false,
+                                    onChanged: (String newText) {
+                                      if (passwordError != null) {
                                         setState(() {
-                                          passwordsMatch = true;
+                                          passwordError = null;
                                         });
                                       }
-                                    } else {
-                                      if (mounted) {
-                                        setState(() {
-                                          passwordsMatch = false;
-                                        });
+                                      if (confirmPasswordController.text ==
+                                          createPasswordController.text) {
+                                        if (mounted) {
+                                          setState(() {
+                                            passwordsMatch = true;
+                                          });
+                                        }
+                                      } else {
+                                        if (mounted) {
+                                          setState(() {
+                                            passwordsMatch = false;
+                                          });
+                                        }
                                       }
-                                    }
-                                  },
-                                  hintText: AppLocalization.of(context)
-                                      .confirmPasswordHint,
-                                  keyboardType: TextInputType.text,
-                                  obscureText: true,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16.0,
-                                    color: passwordsMatch
-                                        ? StateContainer.of(context)
-                                            .curTheme
-                                            .primary
-                                        : StateContainer.of(context)
-                                            .curTheme
-                                            .primary,
-                                    fontFamily: 'Montserrat',
-                                  ),
-                                ),
+                                    },
+                                    hintText: AppLocalization.of(context)
+                                        .confirmPasswordHint,
+                                    keyboardType: TextInputType.text,
+                                    obscureText: true,
+                                    textAlign: TextAlign.center,
+                                    style: AppStyles.textStyleSize16W700Primary(
+                                        context)),
                                 // Error Text
                                 Container(
                                   alignment: const AlignmentDirectional(0, 0),
                                   margin: const EdgeInsets.only(top: 3),
                                   child: Text(passwordError ?? '',
-                                      style: TextStyle(
-                                        fontSize: 14.0,
-                                        color: StateContainer.of(context)
-                                            .curTheme
-                                            .primary,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.w600,
-                                      )),
+                                      style:
+                                          AppStyles.textStyleSize14W600Primary(
+                                              context)),
                                 ),
                               ])))
                 ],

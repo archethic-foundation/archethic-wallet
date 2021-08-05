@@ -110,7 +110,7 @@ class _CustomUrlState extends State<CustomUrl> {
                     // Header Text
                     Text(
                       AppLocalization.of(context).customUrlHeader,
-                      style: AppStyles.textStyleLargestW700Primary(context),
+                      style: AppStyles.textStyleSize28W700Primary(context),
                     ),
                   ]),
                 ],
@@ -135,7 +135,7 @@ class _CustomUrlState extends State<CustomUrl> {
                                 margin: const EdgeInsets.only(top: 3),
                                 child: Text(
                                   _endpointValidationText,
-                                  style: AppStyles.textStyleSmallW600Primary(
+                                  style: AppStyles.textStyleSize14W600Primary(
                                       context),
                                 ),
                               ),
@@ -162,7 +162,7 @@ class _CustomUrlState extends State<CustomUrl> {
           children: <Widget>[
             Text(
               AppLocalization.of(context).enterEndpoint,
-              style: AppStyles.textStyleMediumW200Primary(context),
+              style: AppStyles.textStyleSize16W200Primary(context),
             ),
           ],
         ),
@@ -173,7 +173,7 @@ class _CustomUrlState extends State<CustomUrl> {
           focusNode: _endpointFocusNode,
           controller: _endpointController,
           cursorColor: StateContainer.of(context).curTheme.primary,
-          style: AppStyles.textStyleSmallW100Primary(context),
+          style: AppStyles.textStyleSize14W100Primary(context),
           inputFormatters: <LengthLimitingTextInputFormatter>[
             LengthLimitingTextInputFormatter(150)
           ],

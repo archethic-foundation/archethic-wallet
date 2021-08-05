@@ -23,17 +23,17 @@ class AppDialogs {
         return AppAlertDialog(
           title: Text(
             title,
-            style: AppStyles.textStyleLargeW700Primary(context),
+            style: AppStyles.textStyleSize20W700Primary(context),
           ),
           content: Text(content,
-              style: AppStyles.textStyleMediumW200Primary(context)),
+              style: AppStyles.textStyleSize16W200Primary(context)),
           actions: <Widget>[
             TextButton(
               child: Container(
                 constraints: const BoxConstraints(maxWidth: 100),
                 child: Text(
                   cancelText,
-                  style: AppStyles.textStyleSmallestW600Primary(context),
+                  style: AppStyles.textStyleSize12W600Primary(context),
                 ),
               ),
               onPressed: () {
@@ -48,7 +48,7 @@ class AppDialogs {
                 constraints: const BoxConstraints(maxWidth: 100),
                 child: Text(
                   buttonText,
-                  style: AppStyles.textStyleSmallestW600Primary(context),
+                  style: AppStyles.textStyleSize12W600Primary(context),
                 ),
               ),
               onPressed: () {
@@ -70,15 +70,15 @@ class AppDialogs {
         return AppAlertDialog(
           title: Text(
             title,
-            style: AppStyles.textStyleLargeW700Primary(context),
+            style: AppStyles.textStyleSize20W700Primary(context),
           ),
           content: Text(content,
-              style: AppStyles.textStyleMediumW200Primary(context)),
+              style: AppStyles.textStyleSize16W200Primary(context)),
           actions: <Widget>[
             TextButton(
               child: Text(
                 AppLocalization.of(context).cancel.toUpperCase(),
-                style: AppStyles.textStyleSmallestW600Primary(context),
+                style: AppStyles.textStyleSize12W600Primary(context),
               ),
               onPressed: () {
                 Navigator.of(context).pop();

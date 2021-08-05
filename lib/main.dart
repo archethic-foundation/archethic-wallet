@@ -65,7 +65,7 @@ class _AppState extends State<App> {
     SystemChrome.setSystemUIOverlayStyle(
         StateContainer.of(context).curTheme.statusBar);
     return OKToast(
-      textStyle: AppStyles.textStyleSmallW700Background(context),
+      textStyle: AppStyles.textStyleSize14W700Background(context),
       backgroundColor: StateContainer.of(context).curTheme.background,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -246,9 +246,8 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       return false;
     }
     try {
-      
-      final String salted = AppHelpers.bytesToUtf8String(
-          AppHelpers.hexToBytes(seed.length >= 16 ? seed.substring(0, 16) : seed));
+      final String salted = AppHelpers.bytesToUtf8String(AppHelpers.hexToBytes(
+          seed.length >= 16 ? seed.substring(0, 16) : seed));
       if (salted == 'Salted__') {
         return true;
       }

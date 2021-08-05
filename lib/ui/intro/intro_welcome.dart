@@ -101,7 +101,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                             child: Text(
                               AppLocalization.of(context).welcomeText,
                               style:
-                                  AppStyles.textStyleSmallW600Primary(context),
+                                  AppStyles.textStyleSize14W600Primary(context),
                             ),
                           ),
                         ],

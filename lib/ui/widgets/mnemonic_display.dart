@@ -135,11 +135,11 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                 child: _seedObscured
                     ? AutoSizeText(
                         AppLocalization.of(context).tapToReveal,
-                        style: AppStyles.textStyleSmallW600Primary(context),
+                        style: AppStyles.textStyleSize14W600Primary(context),
                       )
                     : Text(
                         AppLocalization.of(context).tapToHide,
-                        style: AppStyles.textStyleSmallW600Primary(context),
+                        style: AppStyles.textStyleSize14W600Primary(context),
                       ),
               )
             else
@@ -173,8 +173,8 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                   : AppLocalization.of(context).copy,
               textAlign: TextAlign.center,
               style: _seedCopied
-                  ? AppStyles.textStyleSmallW700Success(context)
-                  : AppStyles.textStyleSmallW700Primary(context),
+                  ? AppStyles.textStyleSize14W700Success(context)
+                  : AppStyles.textStyleSize14W700Primary(context),
               maxLines: 1,
               stepGranularity: 0.5,
             ),

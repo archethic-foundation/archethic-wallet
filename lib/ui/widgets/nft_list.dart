@@ -1,9 +1,8 @@
 // Flutter imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show NftBalance;
-import 'package:archethic_mobile_wallet/ui/nft/add_nft.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show NftBalance;
 import 'package:fluttericon/font_awesome5_icons.dart';
 
 // Project imports:
@@ -11,6 +10,7 @@ import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/address.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/nft/add_nft.dart';
 import 'package:archethic_mobile_wallet/ui/transfer/transfer_nft_sheet.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 
@@ -98,7 +98,7 @@ class NftListWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text('NFT',
-                      style: AppStyles.textStyleSmallW600Primary(context)),
+                      style: AppStyles.textStyleSize14W600Primary(context)),
                 ],
               ),
             ),
@@ -185,13 +185,13 @@ class NftListWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(Address(nftBalance.address!).getShortString3(),
-                        style: AppStyles.textStyleSmallW100Primary(context)),
+                        style: AppStyles.textStyleSize14W100Primary(context)),
                   ],
                 ),
               ],
             ),
             Text(nftBalance.amount!.toString(),
-                style: AppStyles.textStyleSmallW100Primary(context)),
+                style: AppStyles.textStyleSize14W100Primary(context)),
           ],
         ),
         const SizedBox(height: 6),

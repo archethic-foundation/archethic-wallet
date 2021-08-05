@@ -6,11 +6,13 @@ import 'dart:ui';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+
 // Project imports:
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/context_menu_item.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class ContextMenu extends StatefulWidget {
   const ContextMenu(

@@ -232,7 +232,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                           AutoSizeText(
                             (widget.title ?? AppLocalization.of(context).send)!,
                             style:
-                                AppStyles.textStyleLargerW700Primary(context),
+                                AppStyles.textStyleSize24W700Primary(context),
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             stepGranularity: 0.1,
@@ -299,59 +299,36 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                                 children: <InlineSpan>[
                                                   TextSpan(
                                                     text: '(',
-                                                    style: TextStyle(
-                                                      color: StateContainer.of(
-                                                              context)
-                                                          .curTheme
-                                                          .primary60,
-                                                      fontSize: 14.0,
-                                                      fontWeight:
-                                                          FontWeight.w100,
-                                                      fontFamily: 'Montserrat',
-                                                    ),
+                                                    style: AppStyles
+                                                        .textStyleSize14W100Primary(
+                                                            context),
                                                   ),
                                                   TextSpan(
-                                                    text: _localCurrencyMode
-                                                        ? StateContainer.of(
-                                                                context)
-                                                            .wallet
-                                                            .getLocalCurrencyPrice(
-                                                                StateContainer.of(
-                                                                        context)
-                                                                    .curCurrency,
-                                                                locale: StateContainer.of(
-                                                                        context)
-                                                                    .currencyLocale)
-                                                        : StateContainer.of(
-                                                                context)
-                                                            .wallet
-                                                            .getAccountBalanceUCODisplay(),
-                                                    style: TextStyle(
-                                                      color: StateContainer.of(
-                                                              context)
-                                                          .curTheme
-                                                          .primary60,
-                                                      fontSize: 14.0,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontFamily: 'Montserrat',
-                                                    ),
-                                                  ),
+                                                      text: _localCurrencyMode
+                                                          ? StateContainer.of(
+                                                                  context)
+                                                              .wallet
+                                                              .getLocalCurrencyPrice(
+                                                                  StateContainer.of(
+                                                                          context)
+                                                                      .curCurrency,
+                                                                  locale: StateContainer.of(
+                                                                          context)
+                                                                      .currencyLocale)
+                                                          : StateContainer.of(
+                                                                  context)
+                                                              .wallet
+                                                              .getAccountBalanceUCODisplay(),
+                                                      style: AppStyles
+                                                          .textStyleSize14W700Primary(
+                                                              context)),
                                                   TextSpan(
-                                                    text: _localCurrencyMode
-                                                        ? ')'
-                                                        : ' UCO)',
-                                                    style: TextStyle(
-                                                      color: StateContainer.of(
-                                                              context)
-                                                          .curTheme
-                                                          .primary60,
-                                                      fontSize: 14.0,
-                                                      fontWeight:
-                                                          FontWeight.w100,
-                                                      fontFamily: 'Montserrat',
-                                                    ),
-                                                  ),
+                                                      text: _localCurrencyMode
+                                                          ? ')'
+                                                          : ' UCO)',
+                                                      style: AppStyles
+                                                          .textStyleSize14W100Primary(
+                                                              context)),
                                                 ],
                                               ),
                                             ),
@@ -376,14 +353,9 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                           const AlignmentDirectional(0, 0),
                                       margin: const EdgeInsets.only(top: 3),
                                       child: Text(_amountValidationText!,
-                                          style: TextStyle(
-                                            fontSize: 14.0,
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .primary,
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w600,
-                                          )),
+                                          style: AppStyles
+                                              .textStyleSize14W600Primary(
+                                                  context)),
                                     ),
                                   ],
                                 ),
@@ -455,14 +427,9 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                           const AlignmentDirectional(0, 0),
                                       margin: const EdgeInsets.only(top: 3),
                                       child: Text(_addressValidationText!,
-                                          style: TextStyle(
-                                            fontSize: 14.0,
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .primary,
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w600,
-                                          )),
+                                          style: AppStyles
+                                              .textStyleSize14W600Primary(
+                                                  context)),
                                     ),
                                     const SizedBox(height: 10),
                                     Container(
@@ -477,14 +444,9 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                                 .getFeesEstimation()
                                                 .toStringAsFixed(5) +
                                             ' UCO',
-                                        style: TextStyle(
-                                          color: StateContainer.of(context)
-                                              .curTheme
-                                              .primary60,
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.w100,
-                                          fontFamily: 'Montserrat',
-                                        ),
+                                        style: AppStyles
+                                            .textStyleSize14W100Primary(
+                                                context),
                                       ),
                                     ),
                                     const SizedBox(height: 10),
@@ -973,7 +935,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
             },
             child: Text(contact.name!,
                 textAlign: TextAlign.center,
-                style: AppStyles.textStyleSmallW100Primary(context)),
+                style: AppStyles.textStyleSize14W100Primary(context)),
           ),
         ),
         Container(
@@ -1056,12 +1018,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
       controller: _sendAmountController,
       topMargin: 30,
       cursorColor: StateContainer.of(context).curTheme.primary,
-      style: TextStyle(
-        fontWeight: FontWeight.w700,
-        fontSize: 16.0,
-        color: StateContainer.of(context).curTheme.primary,
-        fontFamily: 'Montserrat',
-      ),
+      style: AppStyles.textStyleSize16W700Primary(context),
       inputFormatters: _rawAmount == null
           ? [
               LengthLimitingTextInputFormatter(16),
@@ -1248,10 +1205,10 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
         fadeSuffixOnCondition: true,
         suffixShowFirstCondition: _pasteButtonVisible,
         style: _sendAddressStyle == AddressStyle.TEXT60
-            ? AppStyles.textStyleSmallW100Text60(context)
+            ? AppStyles.textStyleSize14W100Text60(context)
             : _sendAddressStyle == AddressStyle.TEXT90
-                ? AppStyles.textStyleSmallW100Primary(context)
-                : AppStyles.textStyleSmallW100Primary(context),
+                ? AppStyles.textStyleSize14W100Primary(context)
+                : AppStyles.textStyleSize14W100Primary(context),
         onChanged: (String text) {
           if (text.isNotEmpty) {
             setState(() {

@@ -1,6 +1,8 @@
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show ApiCoinsService, ApiService, AddressService;
+
+// Package imports:
 import 'package:get_it/get_it.dart';
 
 // Project imports:

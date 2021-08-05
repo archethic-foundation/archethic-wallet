@@ -1,6 +1,9 @@
 // Dart imports:
 import 'dart:async';
 
+// Project imports:
+import 'package:archethic_mobile_wallet/service_locator.dart';
+
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show
@@ -11,9 +14,6 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
         NftBalance,
         NFTService,
         TransactionStatus;
-
-// Project imports:
-import 'package:archethic_mobile_wallet/service_locator.dart';
 
 class AppService {
   double getFeesEstimation() {

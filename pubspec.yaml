@@ -107,9 +107,6 @@ dependencies:
   # Flutter plugin for reading and writing simple key-value pairs. Wraps NSUserDefaults on iOS and SharedPreferences on Android
   shared_preferences: ^2.0.6
 
-  # A package provides an easy way to add shimmer effect in Flutter project
-  shimmer: ^2.0.0
-
   # Flutter plugin for SQLite, a self-contained, high-reliability, embedded, SQL database engine
   sqflite: ^2.0.0+3
 

@@ -220,7 +220,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                           AutoSizeText(
                             (widget.title ?? AppLocalization.of(context).send)!,
                             style:
-                                AppStyles.textStyleLargerW700Primary(context),
+                                AppStyles.textStyleSize24W700Primary(context),
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             stepGranularity: 0.1,
@@ -286,47 +286,23 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                                 text: '',
                                                 children: <InlineSpan>[
                                                   TextSpan(
-                                                    text: '(',
-                                                    style: TextStyle(
-                                                      color: StateContainer.of(
-                                                              context)
-                                                          .curTheme
-                                                          .primary60,
-                                                      fontSize: 14.0,
-                                                      fontWeight:
-                                                          FontWeight.w100,
-                                                      fontFamily: 'Montserrat',
-                                                    ),
-                                                  ),
+                                                      text: '(',
+                                                      style: AppStyles
+                                                          .textStyleSize14W100Primary(
+                                                              context)),
                                                   TextSpan(
-                                                    text: StateContainer.of(
-                                                            context)
-                                                        .wallet
-                                                        .getAccountBalanceUCODisplay(),
-                                                    style: TextStyle(
-                                                      color: StateContainer.of(
+                                                      text: StateContainer.of(
                                                               context)
-                                                          .curTheme
-                                                          .primary60,
-                                                      fontSize: 14.0,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontFamily: 'Montserrat',
-                                                    ),
-                                                  ),
+                                                          .wallet
+                                                          .getAccountBalanceUCODisplay(),
+                                                      style: AppStyles
+                                                          .textStyleSize14W700Primary(
+                                                              context)),
                                                   TextSpan(
-                                                    text: ' UCO)',
-                                                    style: TextStyle(
-                                                      color: StateContainer.of(
-                                                              context)
-                                                          .curTheme
-                                                          .primary60,
-                                                      fontSize: 14.0,
-                                                      fontWeight:
-                                                          FontWeight.w100,
-                                                      fontFamily: 'Montserrat',
-                                                    ),
-                                                  ),
+                                                      text: ' UCO)',
+                                                      style: AppStyles
+                                                          .textStyleSize14W100Primary(
+                                                              context)),
                                                 ],
                                               ),
                                             ),
@@ -351,14 +327,9 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                           const AlignmentDirectional(0, 0),
                                       margin: const EdgeInsets.only(top: 3),
                                       child: Text(_amountValidationText!,
-                                          style: TextStyle(
-                                            fontSize: 14.0,
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .primary,
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w600,
-                                          )),
+                                          style: AppStyles
+                                              .textStyleSize14W600Primary(
+                                                  context)),
                                     ),
                                   ],
                                 ),
@@ -430,14 +401,9 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                           const AlignmentDirectional(0, 0),
                                       margin: const EdgeInsets.only(top: 3),
                                       child: Text(_addressValidationText!,
-                                          style: TextStyle(
-                                            fontSize: 14.0,
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .primary,
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w600,
-                                          )),
+                                          style: AppStyles
+                                              .textStyleSize14W600Primary(
+                                                  context)),
                                     ),
                                     const SizedBox(height: 10),
                                     Container(
@@ -452,14 +418,9 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                                 .getFeesEstimation()
                                                 .toStringAsFixed(5) +
                                             ' UCO',
-                                        style: TextStyle(
-                                          color: StateContainer.of(context)
-                                              .curTheme
-                                              .primary60,
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.w100,
-                                          fontFamily: 'Montserrat',
-                                        ),
+                                        style: AppStyles
+                                            .textStyleSize14W100Primary(
+                                                context),
                                       ),
                                     ),
                                     const SizedBox(height: 10),
@@ -825,7 +786,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
             },
             child: Text(contact.name!,
                 textAlign: TextAlign.center,
-                style: AppStyles.textStyleSmallW100Primary(context)),
+                style: AppStyles.textStyleSize14W100Primary(context)),
           ),
         ),
         Container(
@@ -906,12 +867,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
       controller: _sendAmountController,
       topMargin: 30,
       cursorColor: StateContainer.of(context).curTheme.primary,
-      style: TextStyle(
-        fontWeight: FontWeight.w700,
-        fontSize: 16.0,
-        color: StateContainer.of(context).curTheme.primary,
-        fontFamily: 'Montserrat',
-      ),
+      style: AppStyles.textStyleSize16W700Primary(context),
       inputFormatters: _rawAmount == null
           ? [
               LengthLimitingTextInputFormatter(16),
@@ -1061,10 +1017,10 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
         fadeSuffixOnCondition: true,
         suffixShowFirstCondition: _pasteButtonVisible,
         style: _sendAddressStyle == AddressStyle.TEXT60
-            ? AppStyles.textStyleSmallW100Text60(context)
+            ? AppStyles.textStyleSize14W100Text60(context)
             : _sendAddressStyle == AddressStyle.TEXT90
-                ? AppStyles.textStyleSmallW100Primary(context)
-                : AppStyles.textStyleSmallW100Primary(context),
+                ? AppStyles.textStyleSize14W100Primary(context)
+                : AppStyles.textStyleSize14W100Primary(context),
         onChanged: (String text) {
           if (text.isNotEmpty) {
             setState(() {

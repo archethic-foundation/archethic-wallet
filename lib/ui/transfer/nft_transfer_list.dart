@@ -1,10 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show uint8ListToHex, NFTTransfer;
-
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
@@ -13,6 +9,10 @@ import 'package:archethic_mobile_wallet/model/db/contact.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/context_menu.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/context_menu_item.dart';
+
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show uint8ListToHex, NFTTransfer;
 
 class NftTransferListWidget extends StatefulWidget {
   NftTransferListWidget(
@@ -90,7 +90,7 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                                   title: Text(
                                       AppLocalization.of(context).getOption,
                                       style: AppStyles
-                                          .textStyleSmallW700ContextMenuPrimary(
+                                          .textStyleSize14W700ContextMenuPrimary(
                                               context)),
                                   trailingIcon: Icon(Icons.get_app,
                                       color: StateContainer.of(context)
@@ -112,7 +112,7 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                                   title: Text(
                                     AppLocalization.of(context).deleteOption,
                                     style: AppStyles
-                                        .textStyleSmallW700ContextMenuTextRed(
+                                        .textStyleSize14W700ContextMenuTextRed(
                                             context),
                                   ),
                                   trailingIcon: Icon(
@@ -167,15 +167,15 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                         nftTransfer.nft == null
                             ? 'NFT 1....'
                             : nftTransfer.nft!,
-                        style: AppStyles.textStyleSmallW100Primary(context)),
+                        style: AppStyles.textStyleSize14W100Primary(context)),
                     Text(Address(displayName).getShortString3(),
-                        style: AppStyles.textStyleTinyW100Primary60(context))
+                        style: AppStyles.textStyleSize10W100Primary60(context))
                   ],
                 ),
               ],
             ),
             Text(nftTransfer.amount!.toString(),
-                style: AppStyles.textStyleSmallW100Primary(context)),
+                style: AppStyles.textStyleSize14W100Primary(context)),
           ],
         ),
         const SizedBox(height: 6),

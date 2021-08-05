@@ -8,16 +8,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show
-        uint8ListToHex,
-        AddressService,
-        ApiCoinsService,
-        Balance,
-        SimplePriceResponse,
-        CoinsPriceResponse,
-        Transaction,
-        CoinsCurrentDataResponse;
 import 'package:event_taxi/event_taxi.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -37,6 +27,18 @@ import 'package:archethic_mobile_wallet/themes.dart';
 import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 import 'util/sharedprefsutil.dart';
+
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show
+        uint8ListToHex,
+        AddressService,
+        ApiCoinsService,
+        Balance,
+        SimplePriceResponse,
+        CoinsPriceResponse,
+        Transaction,
+        CoinsCurrentDataResponse;
 
 class _InheritedStateContainer extends InheritedWidget {
   const _InheritedStateContainer({
@@ -167,8 +169,7 @@ class StateContainerState extends State<StateContainer> {
       }
 
       setState(() {
-        wallet.historyLoading = false;
-        wallet.loading = false;
+        wallet.transactionChainLoading = false;
       });
     });
 
@@ -281,6 +282,9 @@ class StateContainerState extends State<StateContainer> {
   }
 
   Future<void> requestUpdateRecentTransactions() async {
+     setState(() {
+        wallet.transactionChainLoading = true;
+      });
     final List<Transaction> transactionChain = await sl
         .get<AppService>()
         .getTransactionChain(selectedAccount.lastAddress);
@@ -332,9 +336,9 @@ class StateContainerState extends State<StateContainer> {
     final String genesisAddress =
         sl.get<AddressService>().deriveAddress(seed, 0);
 
-    String lastAddress = await sl.get<AddressService>().lastAddressFromAddress(genesisAddress);
-    if(lastAddress == '')
-    {
+    String lastAddress =
+        await sl.get<AddressService>().lastAddressFromAddress(genesisAddress);
+    if (lastAddress == '') {
       lastAddress = genesisAddress;
     }
     account.genesisAddress = genesisAddress;
@@ -342,7 +346,7 @@ class StateContainerState extends State<StateContainer> {
     selectedAccount = account;
 
     setState(() {
-      wallet = AppWallet(address: account.lastAddress, loading: true);
+      wallet = AppWallet(address: account.lastAddress);
     });
   }
 

@@ -809,18 +809,15 @@ class AppLocalization {
   }
 
   String get nftHeader {
-    return Intl.message('NFT',
-        desc: '', name: 'nftHeader');
+    return Intl.message('NFT', desc: '', name: 'nftHeader');
   }
 
   String get nftHeaderDesc {
-    return Intl.message('Manage your NFTs',
-        desc: '', name: 'nftHeaderDesc');
+    return Intl.message('Manage your NFTs', desc: '', name: 'nftHeaderDesc');
   }
 
   String get nftNameHint {
-    return Intl.message('Enter a name',
-        desc: '', name: 'nftNameHint');
+    return Intl.message('Enter a name', desc: '', name: 'nftNameHint');
   }
 
   String get nftInitialSupplyHint {

@@ -4,10 +4,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_mobile_wallet/ui/contacts/add_contact.dart';
-import 'package:archethic_mobile_wallet/ui/nft/add_nft.dart';
-import 'package:archethic_mobile_wallet/ui/settings/wallet_faq_widget.dart';
-import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -29,12 +25,16 @@ import 'package:archethic_mobile_wallet/model/device_unlock_option.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/contacts/add_contact.dart';
+import 'package:archethic_mobile_wallet/ui/nft/add_nft.dart';
 import 'package:archethic_mobile_wallet/ui/settings/contacts_widget.dart';
 import 'package:archethic_mobile_wallet/ui/settings/custom_url_widget.dart';
 import 'package:archethic_mobile_wallet/ui/settings/disable_password_sheet.dart';
 import 'package:archethic_mobile_wallet/ui/settings/nodes_widget.dart';
 import 'package:archethic_mobile_wallet/ui/settings/set_password_sheet.dart';
 import 'package:archethic_mobile_wallet/ui/settings/settings_list_item.dart';
+import 'package:archethic_mobile_wallet/ui/settings/wallet_faq_widget.dart';
+import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/app_simpledialog.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
@@ -225,7 +225,7 @@ class _SettingsSheetState extends State<SettingsSheet>
           return AppSimpleDialog(
             title: Text(
               AppLocalization.of(context).authMethod,
-              style: AppStyles.textStyleLargeW700Primary(context),
+              style: AppStyles.textStyleSize20W700Primary(context),
             ),
             children: <Widget>[
               AppSimpleDialogOption(
@@ -236,7 +236,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
                     AppLocalization.of(context).biometricsMethod,
-                    style: AppStyles.textStyleMediumW600Primary(context),
+                    style: AppStyles.textStyleSize16W600Primary(context),
                   ),
                 ),
               ),
@@ -248,7 +248,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
                     AppLocalization.of(context).pinMethod,
-                    style: AppStyles.textStyleMediumW600Primary(context),
+                    style: AppStyles.textStyleSize16W600Primary(context),
                   ),
                 ),
               ),
@@ -285,7 +285,7 @@ class _SettingsSheetState extends State<SettingsSheet>
           return AppSimpleDialog(
             title: Text(
               AppLocalization.of(context).lockAppSetting,
-              style: AppStyles.textStyleLargeW700Primary(context),
+              style: AppStyles.textStyleSize20W700Primary(context),
             ),
             children: <Widget>[
               AppSimpleDialogOption(
@@ -296,7 +296,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
                     AppLocalization.of(context).no,
-                    style: AppStyles.textStyleMediumW600Primary(context),
+                    style: AppStyles.textStyleSize16W600Primary(context),
                   ),
                 ),
               ),
@@ -308,7 +308,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
                     AppLocalization.of(context).yes,
-                    style: AppStyles.textStyleMediumW600Primary(context),
+                    style: AppStyles.textStyleSize16W600Primary(context),
                   ),
                 ),
               ),
@@ -348,8 +348,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                               .curCurrency
                               .getDisplayName(context) ==
                           AvailableCurrency(value).getDisplayName(context)
-                      ? AppStyles.textStyleMediumW600ChoiceOption(context)
-                      : AppStyles.textStyleMediumW600Primary(context)),
+                      ? AppStyles.textStyleSize16W600ChoiceOption(context)
+                      : AppStyles.textStyleSize16W600Primary(context)),
               const SizedBox(width: 20),
               if (StateContainer.of(context)
                       .curCurrency
@@ -380,7 +380,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                   padding: const EdgeInsets.only(bottom: 10.0),
                   child: Text(
                     AppLocalization.of(context).currency,
-                    style: AppStyles.textStyleLargeW700Primary(context),
+                    style: AppStyles.textStyleSize20W700Primary(context),
                   ),
                 ),
                 children: _buildCurrencyOptions(),
@@ -419,8 +419,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                               .curLanguage
                               .getDisplayName(context) ==
                           LanguageSetting(value).getDisplayName(context)
-                      ? AppStyles.textStyleMediumW600ChoiceOption(context)
-                      : AppStyles.textStyleMediumW600Primary(context)),
+                      ? AppStyles.textStyleSize16W600ChoiceOption(context)
+                      : AppStyles.textStyleSize16W600Primary(context)),
               const SizedBox(width: 20),
               if (StateContainer.of(context)
                       .curLanguage
@@ -451,7 +451,7 @@ class _SettingsSheetState extends State<SettingsSheet>
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
                 AppLocalization.of(context).language,
-                style: AppStyles.textStyleLargeW700Primary(context),
+                style: AppStyles.textStyleSize20W700Primary(context),
               ),
             ),
             children: _buildLanguageOptions(),
@@ -486,8 +486,8 @@ class _SettingsSheetState extends State<SettingsSheet>
               Text(LockTimeoutSetting(value).getDisplayName(context),
                   style: _curUnlockSetting.getDisplayName(context) ==
                           LockTimeoutSetting(value).getDisplayName(context)
-                      ? AppStyles.textStyleMediumW600ChoiceOption(context)
-                      : AppStyles.textStyleMediumW600Primary(context)),
+                      ? AppStyles.textStyleSize16W600ChoiceOption(context)
+                      : AppStyles.textStyleSize16W600Primary(context)),
               const SizedBox(width: 20),
               if (_curUnlockSetting.getDisplayName(context) ==
                   LockTimeoutSetting(value).getDisplayName(context))
@@ -516,7 +516,7 @@ class _SettingsSheetState extends State<SettingsSheet>
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
                 AppLocalization.of(context).autoLockHeader,
-                style: AppStyles.textStyleLargeW700Primary(context),
+                style: AppStyles.textStyleSize20W700Primary(context),
               ),
             ),
             children: _buildLockTimeoutOptions(),
@@ -639,7 +639,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                   start: 26.0, end: 20, bottom: 15),
               child: Text(
                 'Settings',
-                style: AppStyles.textStyleMediumW600Primary(context),
+                style: AppStyles.textStyleSize16W600Primary(context),
               ),
             ),
             // Settings items
@@ -654,7 +654,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                           start: 30.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context).informations,
                           style:
-                              AppStyles.textStyleMediumW100Primary60(context)),
+                              AppStyles.textStyleSize16W100Primary60(context)),
                     ),
                     Divider(
                       height: 2,
@@ -720,7 +720,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                           start: 30.0, top: 20.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context).manage,
                           style:
-                              AppStyles.textStyleMediumW100Primary60(context)),
+                              AppStyles.textStyleSize16W100Primary60(context)),
                     ),
                     Divider(
                       height: 2,
@@ -759,7 +759,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                           start: 30.0, top: 20.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context).preferences,
                           style:
-                              AppStyles.textStyleMediumW100Primary60(context)),
+                              AppStyles.textStyleSize16W100Primary60(context)),
                     ),
                     Divider(
                       height: 2,
@@ -925,7 +925,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       //Security Header Text
                       Text(
                         AppLocalization.of(context).securityHeader,
-                        style: AppStyles.textStyleLargestW700Primary(context),
+                        style: AppStyles.textStyleSize28W700Primary(context),
                       ),
                     ],
                   ),
@@ -1116,7 +1116,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       ),
                       Text(
                         AppLocalization.of(context).aboutHeader,
-                        style: AppStyles.textStyleLargestW700Primary(context),
+                        style: AppStyles.textStyleSize28W700Primary(context),
                       ),
                     ],
                   ),
@@ -1135,8 +1135,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Text(versionString,
-                              style:
-                                  AppStyles.textStyleSmallW100Primary(context)),
+                              style: AppStyles.textStyleSize14W100Primary(
+                                  context)),
                         ],
                       ),
                     ),
@@ -1256,7 +1256,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       ),
                       Text(
                         AppLocalization.of(context).nftHeader,
-                        style: AppStyles.textStyleLargestW700Primary(context),
+                        style: AppStyles.textStyleSize28W700Primary(context),
                       ),
                     ],
                   ),

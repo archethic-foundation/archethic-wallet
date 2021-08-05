@@ -6,10 +6,6 @@ import 'dart:async';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show Node, ApiService;
-
 // Project imports:
 import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -17,6 +13,10 @@ import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/address.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
+
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show Node, ApiService;
 
 class NodesList extends StatefulWidget {
   NodesList(this.nodesController, this.nodesOpen);
@@ -90,7 +90,7 @@ class _NodesListState extends State<NodesList> {
                         //Nodes Header Text
                         Text(
                           AppLocalization.of(context).nodesHeader,
-                          style: AppStyles.textStyleLargestW700Primary(context),
+                          style: AppStyles.textStyleSize28W700Primary(context),
                         ),
                       ],
                     ),
@@ -103,11 +103,7 @@ class _NodesListState extends State<NodesList> {
                       margin: const EdgeInsetsDirectional.only(start: 20.0),
                       alignment: Alignment.bottomLeft,
                       child: Text('Nb of nodes : ' + _nodes.length.toString(),
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: AppFontSizes.smallest,
-                            color: StateContainer.of(context).curTheme.primary,
-                          )),
+                          style: AppStyles.textStyleSize12W100Primary(context)),
                     ),
               // Nodes list + top and bottom gradients
               Expanded(
@@ -202,21 +198,19 @@ class _NodesListState extends State<NodesList> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text('First public key : ',
-                          style:
-                              AppStyles.textStyleSmallestW600Primary(context)),
+                          style: AppStyles.textStyleSize12W600Primary(context)),
                       Text(Address(node.firstPublicKey).getShortString2(),
-                          style:
-                              AppStyles.textStyleSmallestW100Primary(context)),
+                          style: AppStyles.textStyleSize12W100Primary(context)),
                       const SizedBox(
                         height: 10,
                       ),
                       Text(
                         'Last public key : ',
-                        style: AppStyles.textStyleSmallestW600Primary(context),
+                        style: AppStyles.textStyleSize12W600Primary(context),
                       ),
                       Text(
                         Address(node.lastPublicKey).getShortString2(),
-                        style: AppStyles.textStyleSmallestW100Primary(context),
+                        style: AppStyles.textStyleSize12W100Primary(context),
                       ),
                       const SizedBox(
                         height: 10,
@@ -224,10 +218,10 @@ class _NodesListState extends State<NodesList> {
                       Row(
                         children: [
                           Text('IP : ',
-                              style: AppStyles.textStyleSmallestW600Primary(
+                              style: AppStyles.textStyleSize12W600Primary(
                                   context)),
                           Text(node.ip + ':' + node.port.toString(),
-                              style: AppStyles.textStyleSmallestW100Primary(
+                              style: AppStyles.textStyleSize12W100Primary(
                                   context)),
                         ],
                       ),
@@ -237,16 +231,16 @@ class _NodesListState extends State<NodesList> {
                       Row(
                         children: [
                           Text('Geo patch : ',
-                              style: AppStyles.textStyleSmallestW600Primary(
+                              style: AppStyles.textStyleSize12W600Primary(
                                   context)),
                           Text(node.geoPatch,
-                              style: AppStyles.textStyleSmallestW100Primary(
+                              style: AppStyles.textStyleSize12W100Primary(
                                   context)),
                           Text(' - Network patch : ',
-                              style: AppStyles.textStyleSmallestW600Primary(
+                              style: AppStyles.textStyleSize12W600Primary(
                                   context)),
                           Text(node.networkPatch,
-                              style: AppStyles.textStyleSmallestW100Primary(
+                              style: AppStyles.textStyleSize12W100Primary(
                                   context)),
                         ],
                       ),
@@ -256,10 +250,10 @@ class _NodesListState extends State<NodesList> {
                       Row(
                         children: [
                           Text('Average availability : ',
-                              style: AppStyles.textStyleSmallestW600Primary(
+                              style: AppStyles.textStyleSize12W600Primary(
                                   context)),
                           Text(node.averageAvailability.toString(),
-                              style: AppStyles.textStyleSmallestW100Primary(
+                              style: AppStyles.textStyleSize12W100Primary(
                                   context)),
                         ],
                       ),
@@ -269,10 +263,10 @@ class _NodesListState extends State<NodesList> {
                       Row(
                         children: [
                           Text('Authorized : ',
-                              style: AppStyles.textStyleSmallestW600Primary(
+                              style: AppStyles.textStyleSize12W600Primary(
                                   context)),
                           Text(node.authorized.toString(),
-                              style: AppStyles.textStyleSmallestW100Primary(
+                              style: AppStyles.textStyleSize12W100Primary(
                                   context)),
                         ],
                       ),
@@ -280,11 +274,9 @@ class _NodesListState extends State<NodesList> {
                         height: 10,
                       ),
                       Text('Reward address : ',
-                          style:
-                              AppStyles.textStyleSmallestW600Primary(context)),
+                          style: AppStyles.textStyleSize12W600Primary(context)),
                       Text(Address(node.rewardAddress).getShortString2(),
-                          style:
-                              AppStyles.textStyleSmallestW100Primary(context)),
+                          style: AppStyles.textStyleSize12W100Primary(context)),
                     ],
                   ),
                 ),

@@ -8,6 +8,7 @@ import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
+import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:archethic_mobile_wallet/util/caseconverter.dart';
@@ -103,37 +104,19 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
                         text: '',
                         children: <InlineSpan>[
                           TextSpan(
-                            text: '$amount',
-                            style: TextStyle(
-                              color:
-                                  StateContainer.of(context).curTheme.success,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Montserrat',
-                            ),
-                          ),
+                              text: '$amount',
+                              style: AppStyles.textStyleSize16W700Primary(
+                                  context)),
                           TextSpan(
-                            text: ' UCO',
-                            style: TextStyle(
-                              color:
-                                  StateContainer.of(context).curTheme.success,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w100,
-                              fontFamily: 'Montserrat',
-                            ),
-                          ),
+                              text: ' UCO',
+                              style: AppStyles.textStyleSize16W100Success(
+                                  context)),
                           TextSpan(
-                            text: widget.localAmount != null
-                                ? ' (${widget.localAmount})'
-                                : '',
-                            style: TextStyle(
-                              color:
-                                  StateContainer.of(context).curTheme.success,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Montserrat',
-                            ),
-                          ),
+                              text: widget.localAmount != null
+                                  ? ' (${widget.localAmount})'
+                                  : '',
+                              style: AppStyles.textStyleSize16W700Success(
+                                  context)),
                         ],
                       ),
                     ),
@@ -145,17 +128,12 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
                       children: <Widget>[
                         // "SENT TO" text
                         Text(
-                          CaseChange.toUpperCase(
-                              widget.title ??
-                                  AppLocalization.of(context).sentTo,
-                              context),
-                          style: TextStyle(
-                            fontSize: 28.0,
-                            fontWeight: FontWeight.w700,
-                            color: StateContainer.of(context).curTheme.success,
-                            fontFamily: 'Montserrat',
-                          ),
-                        ),
+                            CaseChange.toUpperCase(
+                                widget.title ??
+                                    AppLocalization.of(context).sentTo,
+                                context),
+                            style:
+                                AppStyles.textStyleSize28W700Success(context)),
                       ],
                     ),
                   ),

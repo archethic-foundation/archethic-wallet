@@ -5,7 +5,6 @@ import 'dart:async';
 import 'dart:typed_data';
 
 // Flutter imports:
-import 'package:archethic_mobile_wallet/ui/widgets/tx_list.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -33,6 +32,7 @@ import 'package:archethic_mobile_wallet/ui/widgets/line_chart.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/nft_list.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/qr_code.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/reactive_refresh.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/tx_list.dart';
 import 'package:archethic_mobile_wallet/util/caseconverter.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
@@ -192,14 +192,12 @@ class _AppHomePageState extends State<AppHomePage>
         .registerTo<AccountChangedEvent>()
         .listen((AccountChangedEvent event) {
       setState(() {
-        StateContainer.of(context).wallet.loading = true;
-        StateContainer.of(context).wallet.historyLoading = true;
+        StateContainer.of(context).wallet.transactionChainLoading = true;
 
         _startAnimation();
         StateContainer.of(context).updateWallet(account: event.account);
 
-        StateContainer.of(context).wallet.loading = false;
-        StateContainer.of(context).wallet.historyLoading = false;
+        StateContainer.of(context).wallet.transactionChainLoading = false;
       });
 
       paintQrCode(address: event.account.lastAddress);
@@ -358,7 +356,7 @@ class _AppHomePageState extends State<AppHomePage>
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(  
+      appBar: AppBar(
         title: Container(
             child: SvgPicture.asset(
           'assets/archethic_logo_alone.svg',
@@ -445,9 +443,10 @@ class _AppHomePageState extends State<AppHomePage>
                             const SizedBox(height: 20),
                             NftListWidget.buildNftList(context),
                             const SizedBox(height: 20),
-                            StateContainer.of(context).wallet == null ? const SizedBox() : 
-                            TxListWidget.buildTxList(context,
-                                StateContainer.of(context).wallet.history),
+                            StateContainer.of(context).wallet == null
+                                ? const SizedBox()
+                                : TxListWidget.buildTxList(context,
+                                    StateContainer.of(context).wallet.history),
                           ],
                         ),
                       ],

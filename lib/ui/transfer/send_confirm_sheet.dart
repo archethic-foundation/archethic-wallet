@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:event_taxi/event_taxi.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -32,7 +33,6 @@ import 'package:archethic_mobile_wallet/util/biometrics.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 import 'package:archethic_mobile_wallet/util/numberutil.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class SendConfirmSheet extends StatefulWidget {
   const SendConfirmSheet(
@@ -99,7 +99,8 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
         final String contactName = contact == null ? null : contact.name;
         Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
         setState(() {
-          StateContainer.of(context).requestUpdate(StateContainer.of(context).selectedAccount);
+          StateContainer.of(context)
+              .requestUpdate(StateContainer.of(context).selectedAccount);
         });
         Sheets.showAppHeightNineSheet(
             context: context,
@@ -186,7 +187,7 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                         Text(
                           widget.title ??
                               AppLocalization.of(context).transfering,
-                          style: AppStyles.textStyleLargerW700Primary(context),
+                          style: AppStyles.textStyleSize24W700Primary(context),
                         ),
                       ],
                     ),
@@ -215,40 +216,19 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                               text: '',
                               children: <InlineSpan>[
                                 TextSpan(
-                                  text: '$amount',
-                                  style: TextStyle(
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .primary,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Montserrat',
-                                  ),
-                                ),
+                                    text: '$amount',
+                                    style: AppStyles.textStyleSize16W700Primary(
+                                        context)),
                                 TextSpan(
-                                  text: ' UCO',
-                                  style: TextStyle(
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .primary,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w100,
-                                    fontFamily: 'Montserrat',
-                                  ),
-                                ),
+                                    text: ' UCO',
+                                    style: AppStyles.textStyleSize16W100Primary(
+                                        context)),
                                 TextSpan(
-                                  text: widget.localCurrency != null
-                                      ? ' (${widget.localCurrency})'
-                                      : '',
-                                  style: TextStyle(
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .primary,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Montserrat',
-                                  ),
-                                ),
+                                    text: widget.localCurrency != null
+                                        ? ' (${widget.localCurrency})'
+                                        : '',
+                                    style: AppStyles.textStyleSize16W700Primary(
+                                        context)),
                               ],
                             ),
                           )
@@ -257,22 +237,16 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 30),
                           child: Text(
-                            '+ ' +
-                                AppLocalization.of(context).fees +
-                                ': ' +
-                                sl
-                                    .get<AppService>()
-                                    .getFeesEstimation()
-                                    .toStringAsFixed(5) +
-                                ' UCO',
-                            style: TextStyle(
-                              color:
-                                  StateContainer.of(context).curTheme.primary60,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w100,
-                              fontFamily: 'Montserrat',
-                            ),
-                          ),
+                              '+ ' +
+                                  AppLocalization.of(context).fees +
+                                  ': ' +
+                                  sl
+                                      .get<AppService>()
+                                      .getFeesEstimation()
+                                      .toStringAsFixed(5) +
+                                  ' UCO',
+                              style: AppStyles.textStyleSize14W100Primary(
+                                  context)),
                         ),
                       ],
                     ),
@@ -282,16 +256,9 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                     margin: const EdgeInsets.only(top: 10.0, bottom: 0),
                     child: Column(
                       children: <Widget>[
-                        Text(
-                          AppLocalization.of(context).to,
-                          style: TextStyle(
-                            color:
-                                StateContainer.of(context).curTheme.primary60,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'Montserrat',
-                          ),
-                        ),
+                        Text(AppLocalization.of(context).to,
+                            style:
+                                AppStyles.textStyleSize16W700Primary(context)),
                       ],
                     ),
                   ),
@@ -350,7 +317,9 @@ class _SendConfirmSheetState extends State<SendConfirmSheet> {
                                         .sendAmountConfirm
                                         .replaceAll('%1', amount));
                             if (authenticated) {
-                              sl.get<HapticUtil>().feedback(FeedbackType.success);
+                              sl
+                                  .get<HapticUtil>()
+                                  .feedback(FeedbackType.success);
                               EventTaxiImpl.singleton().fire(
                                   AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
                             }

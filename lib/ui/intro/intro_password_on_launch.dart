@@ -93,7 +93,7 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                               .requireAPasswordToOpenHeader,
                           maxLines: 3,
                           stepGranularity: 0.5,
-                          style: AppStyles.textStyleLargestW700Primary(context),
+                          style: AppStyles.textStyleSize28W700Primary(context),
                         ),
                       ),
                       // The paragraph
@@ -105,7 +105,7 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                         child: AutoSizeText(
                           AppLocalization.of(context)
                               .createPasswordFirstParagraph,
-                          style: AppStyles.textStyleMediumW200Primary(context),
+                          style: AppStyles.textStyleSize16W200Primary(context),
                           maxLines: 5,
                           stepGranularity: 0.5,
                         ),
@@ -118,7 +118,7 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                         child: AutoSizeText(
                           AppLocalization.of(context)
                               .createPasswordSecondParagraph,
-                          style: AppStyles.textStyleMediumW700Primary(context),
+                          style: AppStyles.textStyleSize16W700Primary(context),
                           maxLines: 5,
                           stepGranularity: 0.5,
                         ),
@@ -142,7 +142,8 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                             await sl.get<Vault>().setSeed(widget.seed);
                             await sl.get<DBHelper>().dropAccounts();
                             await AppUtil().loginAccount(widget.seed, context);
-                            StateContainer.of(context).requestUpdate(StateContainer.of(context).selectedAccount);
+                            StateContainer.of(context).requestUpdate(
+                                StateContainer.of(context).selectedAccount);
                             final String pin = await Navigator.of(context).push(
                                 MaterialPageRoute(
                                     builder: (BuildContext context) {
@@ -163,7 +164,9 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                                   .getSeed()
                                   .then((String seed) {
                                 AppUtil().loginAccount(seed, context).then((_) {
-                                  StateContainer.of(context).requestUpdate(StateContainer.of(context).selectedAccount);
+                                  StateContainer.of(context).requestUpdate(
+                                      StateContainer.of(context)
+                                          .selectedAccount);
                                   Navigator.of(context)
                                       .pushNamed('/intro_backup_safety');
                                 });

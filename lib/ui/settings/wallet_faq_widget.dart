@@ -64,7 +64,7 @@ class _WalletFAQState extends State<WalletFAQ> {
                     // Header Text
                     Text(
                       AppLocalization.of(context).walletFAQHeader,
-                      style: AppStyles.textStyleLargestW700Primary(context),
+                      style: AppStyles.textStyleSize28W700Primary(context),
                     ),
                   ]),
                 ],

@@ -111,7 +111,7 @@ class ContactDetailsSheet {
                             children: <Widget>[
                               AutoSizeText(
                                 AppLocalization.of(context).contactHeader,
-                                style: AppStyles.textStyleLargerW700Primary(
+                                style: AppStyles.textStyleSize24W700Primary(
                                     context),
                                 textAlign: TextAlign.center,
                                 maxLines: 1,
@@ -163,18 +163,10 @@ class ContactDetailsSheet {
                                   )
                                 ],
                               ),
-                              child: Text(
-                                contact.name,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16.0,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .primary,
-                                  fontFamily: 'Montserrat',
-                                ),
-                              ),
+                              child: Text(contact.name,
+                                  textAlign: TextAlign.center,
+                                  style: AppStyles.textStyleSize16W600Primary(
+                                      context)),
                             ),
                             // Contact Address
                             GestureDetector(
@@ -238,14 +230,8 @@ class ContactDetailsSheet {
                                       ? AppLocalization.of(context)
                                           .addressCopied
                                       : '',
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .success,
-                                    fontFamily: 'Montserrat',
-                                    fontWeight: FontWeight.w600,
-                                  )),
+                                  style: AppStyles.textStyleSize14W600Success(
+                                      context)),
                             ),
                           ],
                         ),

@@ -5,275 +5,259 @@ import 'package:flutter/material.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 
 class AppStyles {
-  static TextStyle textStyleMediumW200Primary(BuildContext context) {
+  static TextStyle textStyleSize16W200Primary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.medium,
+        fontSize: AppFontSizes.size16,
         fontWeight: FontWeight.w200,
         color: StateContainer.of(context).curTheme.primary);
   }
 
-  static TextStyle textStyleMediumW700Primary(BuildContext context) {
+  static TextStyle textStyleSize16W700Primary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.medium,
+        fontSize: AppFontSizes.size16,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.primary);
   }
 
-  static TextStyle textStyleMediumW100Primary60(BuildContext context) {
+  static TextStyle textStyleSize16W100Primary60(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.medium,
+        fontSize: AppFontSizes.size16,
         fontWeight: FontWeight.w100,
         color: StateContainer.of(context).curTheme.primary60);
   }
 
-  static TextStyle textStyleSmallW200Primary(BuildContext context) {
+  static TextStyle textStyleSize14W600Primary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.small,
-        fontWeight: FontWeight.w200,
-        color: StateContainer.of(context).curTheme.primary);
-  }
-
-  static TextStyle textStyleSmallW600Primary(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.small,
+        fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w600,
         color: StateContainer.of(context).curTheme.primary);
   }
 
-  static TextStyle textStyleSmallW700Background(BuildContext context) {
+  static TextStyle textStyleSize14W700Background(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.small,
+        fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.background);
   }
 
-  static TextStyle textStyleSmallW700ContextMenuPrimary(BuildContext context) {
+  static TextStyle textStyleSize14W700ContextMenuPrimary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.small,
+        fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.contextMenuText);
   }
 
-  static TextStyle textStyleSmallW700ContextMenuTextRed(BuildContext context) {
+  static TextStyle textStyleSize14W700ContextMenuTextRed(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.small,
+        fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.contextMenuTextRed);
   }
 
-  static TextStyle textStyleLargeW700Background(BuildContext context) {
+  static TextStyle textStyleSize20W700Background(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
-        fontSize: AppFontSizes._large,
+        fontSize: AppFontSizes.size20,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.background);
   }
 
-  static TextStyle textStyleLargeW700Primary(BuildContext context) {
+  static TextStyle textStyleSize20W700Primary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
-        fontSize: AppFontSizes._large,
+        fontSize: AppFontSizes.size20,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.primary);
   }
 
-  static TextStyle textStyleSmallW700Primary(BuildContext context) {
+  static TextStyle textStyleSize14W700Primary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.small,
+        fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.primary);
   }
 
-  static TextStyle textStyleSmallW700Success(BuildContext context) {
+  static TextStyle textStyleSize14W700Success(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.small,
+        fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.success);
   }
 
-  static TextStyle textStyleSmallW700Primary60(BuildContext context) {
+  static TextStyle textStyleSize20W700Primary60(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
-        fontSize: AppFontSizes._large,
+        fontSize: AppFontSizes.size20,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.primary60);
   }
 
-  static TextStyle textStyleLargeW700Success(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes._large,
-        fontWeight: FontWeight.w700,
-        color: StateContainer.of(context).curTheme.success);
-  }
-
-  static TextStyle textStyleSmallW100Sucess(BuildContext context) {
+  static TextStyle textStyleSize14W100Sucess(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.small,
+      fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.success,
       height: 1.5,
     );
   }
 
-  static TextStyle textStyleSmallW100Text60(BuildContext context) {
+  static TextStyle textStyleSize14W100Text60(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.small,
+      fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.primary60,
       height: 1.5,
     );
   }
 
-  static TextStyle textStyleSmallW100Primary(BuildContext context) {
+  static TextStyle textStyleSize14W100Primary(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.small,
+      fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.primary,
       height: 1.5,
     );
   }
 
-  static TextStyle textStyleSmallW600Text60(BuildContext context) {
+  static TextStyle textStyleSize14W600Text60(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.small,
+        fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w600,
         color: StateContainer.of(context).curTheme.primary60);
   }
 
-  static TextStyle textStyleLargestW900Primary(BuildContext context) {
+  static TextStyle textStyleSize28W900Primary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
-        fontSize: AppFontSizes._largest,
+        fontSize: AppFontSizes.size28,
         fontWeight: FontWeight.w900,
         color: StateContainer.of(context).curTheme.primary);
   }
 
-  static TextStyle textStyleSmallestW100PositiveValue(BuildContext context) {
+  static TextStyle textStyleSize12W100PositiveValue(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.smallest,
+      fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w800,
       color: StateContainer.of(context).curTheme.positiveValue,
     );
   }
 
-  static TextStyle textStyleSmallestW100NegativeValue(BuildContext context) {
+  static TextStyle textStyleSize12W100NegativeValue(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.smallest,
+      fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w800,
       color: StateContainer.of(context).curTheme.negativeValue,
     );
   }
 
-  static TextStyle textStyleSmallestW100Primary60(BuildContext context) {
+  static TextStyle textStyleSize12W100Primary60(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       color: StateContainer.of(context).curTheme.primary60,
-      fontSize: AppFontSizes.smallest,
+      fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
     );
   }
 
-  static TextStyle textStyleSmallestW100Primary(BuildContext context) {
+  static TextStyle textStyleSize12W100Primary(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       color: StateContainer.of(context).curTheme.primary,
-      fontSize: AppFontSizes.smallest,
+      fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
     );
   }
 
-  static TextStyle textStyleSmallestW100Primary30(BuildContext context) {
+  static TextStyle textStyleSize12W100Primary30(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       color: StateContainer.of(context).curTheme.primary,
-      fontSize: AppFontSizes.smallest,
+      fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
     );
   }
 
-  static TextStyle textStyleTinyW100Primary60(BuildContext context) {
+  static TextStyle textStyleSize10W100Primary60(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       color: StateContainer.of(context).curTheme.primary60,
-      fontSize: AppFontSizes.tiny,
+      fontSize: AppFontSizes.size10,
       fontWeight: FontWeight.w100,
     );
   }
 
-  static TextStyle textStyleTinyW100Primary(BuildContext context) {
+  static TextStyle textStyleSize10W100Primary(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       color: StateContainer.of(context).curTheme.primary,
-      fontSize: AppFontSizes.tiny,
+      fontSize: AppFontSizes.size10,
       fontWeight: FontWeight.w100,
     );
   }
 
-  static TextStyle textStyleSmallestW100Text60(BuildContext context) {
+  static TextStyle textStyleSize12W100Text60(BuildContext context) {
     return TextStyle(
-      fontSize: AppFontSizes.smallest,
+      fontSize: AppFontSizes.size12,
       fontFamily: 'Montserrat',
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.primary60,
     );
   }
 
-  static TextStyle textStyleMediumW600Primary(BuildContext context) {
+  static TextStyle textStyleSize16W600Primary(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.medium,
+      fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.primary,
     );
   }
 
-  static TextStyle textStyleMediumW600Primary30(BuildContext context) {
+  static TextStyle textStyleSize16W600Primary30(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.medium,
+      fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.primary30,
     );
   }
 
-  static TextStyle textStyleMediumW600ChoiceOption(BuildContext context) {
+  static TextStyle textStyleSize16W600ChoiceOption(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.medium,
+      fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.choiceOption,
     );
   }
 
-  static TextStyle textStyleSmallestW600Primary(BuildContext context) {
+  static TextStyle textStyleSize12W600Primary(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.smallest,
+      fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.primary,
     );
   }
 
-  static TextStyle textStyleSmallW100Success(BuildContext context) {
+  static TextStyle textStyleSize14W100Success(BuildContext context) {
     return TextStyle(
-      fontSize: AppFontSizes.small,
+      fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w100,
       fontFamily: 'Montserrat',
       color: StateContainer.of(context).curTheme.success,
@@ -282,37 +266,37 @@ class AppStyles {
     );
   }
 
-  static TextStyle textStyleLargerW700Primary(BuildContext context) {
+  static TextStyle textStyleSize24W700Primary(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.larger,
+      fontSize: AppFontSizes.size24,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.primary,
     );
   }
 
-  static TextStyle textStyleLargestW700Primary(BuildContext context) {
+  static TextStyle textStyleSize28W700Primary(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      fontSize: AppFontSizes._largest,
+      fontSize: AppFontSizes.size28,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.primary,
     );
   }
 
-  static TextStyle textStyleMediumW600Text45(BuildContext context) {
+  static TextStyle textStyleSize16W600Text45(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.medium,
+      fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.primary45,
     );
   }
 
-  static TextStyle textStyleSmallestW100Text30(BuildContext context) {
+  static TextStyle textStyleSize12W100Text30(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.smallest,
+      fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.primary30,
     );
@@ -345,46 +329,100 @@ class AppStyles {
     );
   }
 
-  static TextStyle textStyleSmallestW400Primary(BuildContext context) {
+  static TextStyle textStyleSize14W600Success(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.smallest,
+      fontSize: AppFontSizes.size14,
+      fontWeight: FontWeight.w600,
+      color: StateContainer.of(context).curTheme.success,
+    );
+  }
+
+  static TextStyle textStyleSize16W100Success(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.size16,
+      fontWeight: FontWeight.w100,
+      color: StateContainer.of(context).curTheme.success,
+    );
+  }
+
+  static TextStyle textStyleSize16W700Success(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.size16,
+      fontWeight: FontWeight.w700,
+      color: StateContainer.of(context).curTheme.success,
+    );
+  }
+
+  static TextStyle textStyleSize28W700Success(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.size28,
+      fontWeight: FontWeight.w700,
+      color: StateContainer.of(context).curTheme.success,
+    );
+  }
+
+  static TextStyle textStyleSize16W100Primary(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.size16,
+      fontWeight: FontWeight.w100,
+      color: StateContainer.of(context).curTheme.primary,
+    );
+  }
+
+  static TextStyle textStyleSize12W400Primary(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
       color: StateContainer.of(context).curTheme.primary,
+    );
+  }
+
+  static TextStyle textStyleSize14W700Primary60(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.size14,
+      fontWeight: FontWeight.w700,
+      color: StateContainer.of(context).curTheme.primary60,
     );
   }
 }
 
 class AppFontSizes {
-  static const double tiny = 10.0;
-  static const double smallest = 12.0;
-  static const double small = 14.0;
-  static const double medium = 16.0;
-  static const double _large = 20.0;
-  static const double larger = 24.0;
-  static const double _largest = 28.0;
-  static const double largestc = 28.0;
-  static const double _sslarge = 18.0;
-  static const double _sslargest = 22.0;
+  static const double size10 = 10.0;
+  static const double size12 = 12.0;
+  static const double size14 = 14.0;
+  static const double size16 = 16.0;
+  static const double size18 = 18.0;
+  static const double size20 = 20.0;
+  static const double size22 = 22.0;
+  static const double size24 = 24.0;
+  static const double size28 = 28.0;
+
   static double largest(BuildContext context) {
     if (smallScreen(context)) {
-      return _sslargest;
+      return size22;
     }
-    return _largest;
+    return size28;
   }
 
   static double large(BuildContext context) {
     if (smallScreen(context)) {
-      return _sslarge;
+      return size18;
     }
-    return _large;
+    return size20;
   }
 
   static double smallText(BuildContext context) {
     if (smallScreen(context)) {
-      return smallest;
+      return size12;
     }
-    return small;
+    return size14;
   }
 }
 

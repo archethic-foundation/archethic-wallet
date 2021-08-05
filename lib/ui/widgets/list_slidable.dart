@@ -7,10 +7,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+// Package imports:
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+
 // Project imports:
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 const double _kActionsExtentRatio = 0.25;
 const double _kFastThreshold = 2500.0;

@@ -1,6 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:fluttericon/font_awesome_icons.dart';
+
 // Project imports:
 import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -8,7 +11,6 @@ import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
 
 class TransferCompleteSheet extends StatefulWidget {
   const TransferCompleteSheet({this.title}) : super();
@@ -53,7 +55,7 @@ class _TransferCompleteSheetState extends State<TransferCompleteSheet> {
                     alignment: const AlignmentDirectional(0, 0),
                     margin: const EdgeInsets.only(bottom: 25),
                     child: Text(AppLocalization.of(context).transferSuccess,
-                        style: AppStyles.textStyleMediumW200Primary(context)),
+                        style: AppStyles.textStyleSize16W200Primary(context)),
                   ),
                 ],
               ),

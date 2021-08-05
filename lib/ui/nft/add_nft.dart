@@ -1,39 +1,40 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:async';
 
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:archethic_mobile_wallet/bus/events.dart';
-import 'package:archethic_mobile_wallet/bus/nft_add_event.dart';
-import 'package:archethic_mobile_wallet/global_var.dart';
-import 'package:archethic_mobile_wallet/model/authentication_method.dart';
-import 'package:archethic_mobile_wallet/model/vault.dart';
-import 'package:archethic_mobile_wallet/service/app_service.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/ui/nft/add_nft_confirm.dart';
-import 'package:archethic_mobile_wallet/ui/transfer/transfer_complete_sheet.dart';
-import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
-import 'package:archethic_mobile_wallet/util/biometrics.dart';
-import 'package:archethic_mobile_wallet/util/hapticutil.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
-import 'package:event_taxi/event_taxi.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:event_taxi/event_taxi.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/bus/events.dart';
+import 'package:archethic_mobile_wallet/bus/nft_add_event.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
+import 'package:archethic_mobile_wallet/global_var.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
+import 'package:archethic_mobile_wallet/model/authentication_method.dart';
+import 'package:archethic_mobile_wallet/model/vault.dart';
+import 'package:archethic_mobile_wallet/service/app_service.dart';
+import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/nft/add_nft_confirm.dart';
+import 'package:archethic_mobile_wallet/ui/transfer/transfer_complete_sheet.dart';
+import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/app_text_field.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
+import 'package:archethic_mobile_wallet/util/biometrics.dart';
+import 'package:archethic_mobile_wallet/util/hapticutil.dart';
+import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 class AddNFTSheet extends StatefulWidget {
   const AddNFTSheet({this.address}) : super();
@@ -142,7 +143,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
             children: <Widget>[
               AutoSizeText(
                 AppLocalization.of(context).addNFTHeader,
-                style: AppStyles.textStyleLargerW700Primary(context),
+                style: AppStyles.textStyleSize24W700Primary(context),
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 stepGranularity: 0.1,
@@ -159,7 +160,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                 children: <Widget>[
                   Text(
                     AppLocalization.of(context).nftNameHint,
-                    style: AppStyles.textStyleMediumW200Primary(context),
+                    style: AppStyles.textStyleSize16W200Primary(context),
                   ),
                   AppTextField(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -170,12 +171,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                         ? AppLocalization.of(context).nftNameHint
                         : '',
                     keyboardType: TextInputType.text,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16.0,
-                      color: StateContainer.of(context).curTheme.primary,
-                      fontFamily: 'Montserrat',
-                    ),
+                    style: AppStyles.textStyleSize16W600Primary(context),
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(100),
                     ],
@@ -183,17 +179,12 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                   Container(
                     margin: const EdgeInsets.only(top: 5, bottom: 5),
                     child: Text(_nameValidationText!,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: StateContainer.of(context).curTheme.primary,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600,
-                        )),
+                        style: AppStyles.textStyleSize14W600Primary(context)),
                   ),
                   const SizedBox(height: 30),
                   Text(
                     AppLocalization.of(context).nftInitialSupplyHint,
-                    style: AppStyles.textStyleMediumW200Primary(context),
+                    style: AppStyles.textStyleSize16W200Primary(context),
                   ),
                   AppTextField(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -204,25 +195,17 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                         ? AppLocalization.of(context).nftInitialSupplyHint
                         : '',
                     keyboardType: TextInputType.number,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16.0,
-                      color: StateContainer.of(context).curTheme.primary,
-                      fontFamily: 'Montserrat',
-                    ),
+                    style: AppStyles.textStyleSize16W600Primary(context),
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(10),
                     ],
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 5, bottom: 5),
-                    child: Text(_initialSupplyValidationText!,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: StateContainer.of(context).curTheme.primary,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600,
-                        )),
+                    child: Text(
+                      _initialSupplyValidationText!,
+                      style: AppStyles.textStyleSize14W600Primary(context),
+                    ),
                   ),
                 ],
               ),

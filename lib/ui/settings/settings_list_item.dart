@@ -49,8 +49,8 @@ class AppSettings {
                       AutoSizeText(
                         heading,
                         style: disabled
-                            ? AppStyles.textStyleMediumW600Primary30(context)
-                            : AppStyles.textStyleMediumW600Primary(context),
+                            ? AppStyles.textStyleSize16W600Primary30(context)
+                            : AppStyles.textStyleSize16W600Primary(context),
                         maxLines: 1,
                         stepGranularity: 0.1,
                         minFontSize: 8,
@@ -64,8 +64,8 @@ class AppSettings {
               AutoSizeText(
                 defaultMethod.getDisplayName(context),
                 style: disabled
-                    ? AppStyles.textStyleSmallestW100Primary30(context)
-                    : AppStyles.textStyleSmallestW100Primary(context),
+                    ? AppStyles.textStyleSize12W100Primary30(context)
+                    : AppStyles.textStyleSize12W100Primary(context),
                 maxLines: 1,
                 stepGranularity: 0.1,
                 minFontSize: 8,
@@ -126,15 +126,14 @@ class AppSettings {
                           Text(
                             heading,
                             style:
-                                AppStyles.textStyleMediumW600Primary(context),
+                                AppStyles.textStyleSize16W600Primary(context),
                           ),
                           Text(
                             defaultMethod.getDisplayName(context),
                             style: disabled
-                                ? AppStyles.textStyleSmallestW100Primary30(
+                                ? AppStyles.textStyleSize12W100Primary30(
                                     context)
-                                : AppStyles.textStyleSmallestW100Primary(
-                                    context),
+                                : AppStyles.textStyleSize12W100Primary(context),
                           ),
                         ],
                       )),
@@ -145,7 +144,7 @@ class AppSettings {
                       maxLines: 5,
                       stepGranularity: 0.1,
                       minFontSize: 8,
-                      style: AppStyles.textStyleSmallestW100Primary(context),
+                      style: AppStyles.textStyleSize12W100Primary(context),
                     ),
                   ),
                 ]),
@@ -195,7 +194,7 @@ class AppSettings {
                     width: UIUtil.drawerWidth(context) - 100,
                     child: Text(
                       heading,
-                      style: AppStyles.textStyleMediumW600Primary(context),
+                      style: AppStyles.textStyleSize16W600Primary(context),
                     ),
                   ),
                   Container(
@@ -205,7 +204,7 @@ class AppSettings {
                       maxLines: 5,
                       stepGranularity: 0.1,
                       minFontSize: 8,
-                      style: AppStyles.textStyleSmallestW100Primary(context),
+                      style: AppStyles.textStyleSize12W100Primary(context),
                     ),
                   ),
                 ]),
@@ -259,7 +258,7 @@ class AppSettings {
               width: UIUtil.drawerWidth(context) - 100,
               child: AutoSizeText(
                 heading,
-                style: AppStyles.textStyleMediumW600Primary(context),
+                style: AppStyles.textStyleSize16W600Primary(context),
               ),
             ),
             Container(
@@ -307,7 +306,7 @@ class AppSettings {
                   children: [
                     Text(
                       heading,
-                      style: AppStyles.textStyleMediumW600Primary(context),
+                      style: AppStyles.textStyleSize16W600Primary(context),
                     ),
                     Switch(
                         value: _isSwitched == null ? false : _isSwitched,

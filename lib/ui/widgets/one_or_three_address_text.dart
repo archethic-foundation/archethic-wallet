@@ -33,15 +33,15 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                   children: <InlineSpan>[
                     TextSpan(
                       text: stringPartOne,
-                      style: AppStyles.textStyleSmallW100Text60(context),
+                      style: AppStyles.textStyleSize14W100Text60(context),
                     ),
                     TextSpan(
                       text: '...',
-                      style: AppStyles.textStyleSmallW100Text60(context),
+                      style: AppStyles.textStyleSize14W100Text60(context),
                     ),
                     TextSpan(
                       text: stringPartFive,
-                      style: AppStyles.textStyleSmallW100Text60(context),
+                      style: AppStyles.textStyleSize14W100Text60(context),
                     ),
                   ],
                 ),
@@ -58,15 +58,15 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                   children: <InlineSpan>[
                     TextSpan(
                       text: stringPartOne,
-                      style: AppStyles.textStyleSmallW100Primary(context),
+                      style: AppStyles.textStyleSize14W100Primary(context),
                     ),
                     TextSpan(
                       text: '...',
-                      style: AppStyles.textStyleSmallW100Primary(context),
+                      style: AppStyles.textStyleSize14W100Primary(context),
                     ),
                     TextSpan(
                       text: stringPartFive,
-                      style: AppStyles.textStyleSmallW100Primary(context),
+                      style: AppStyles.textStyleSize14W100Primary(context),
                     ),
                   ],
                 ),
@@ -83,15 +83,15 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                   children: <InlineSpan>[
                     TextSpan(
                       text: stringPartOne,
-                      style: AppStyles.textStyleSmallW100Sucess(context),
+                      style: AppStyles.textStyleSize14W100Sucess(context),
                     ),
                     TextSpan(
                       text: '...',
-                      style: AppStyles.textStyleSmallW100Primary(context),
+                      style: AppStyles.textStyleSize14W100Primary(context),
                     ),
                     TextSpan(
                       text: stringPartFive,
-                      style: AppStyles.textStyleSmallW100Sucess(context),
+                      style: AppStyles.textStyleSize14W100Sucess(context),
                     ),
                   ],
                 ),
@@ -146,11 +146,11 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: AppStyles.textStyleSmallW100Text60(context),
+                    style: AppStyles.textStyleSize14W100Text60(context),
                   ),
                   TextSpan(
                     text: stringPartTwo,
-                    style: AppStyles.textStyleSmallW100Text60(context),
+                    style: AppStyles.textStyleSize14W100Text60(context),
                   ),
                 ],
               ),
@@ -162,7 +162,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
-                    style: AppStyles.textStyleSmallW100Text60(context),
+                    style: AppStyles.textStyleSize14W100Text60(context),
                   ),
                 ],
               ),
@@ -174,11 +174,11 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
-                    style: AppStyles.textStyleSmallW100Text60(context),
+                    style: AppStyles.textStyleSize14W100Text60(context),
                   ),
                   TextSpan(
                       text: stringPartFive,
-                      style: AppStyles.textStyleSmallW100Text60(context)),
+                      style: AppStyles.textStyleSize14W100Text60(context)),
                 ],
               ),
             )
@@ -190,7 +190,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 textAlign: TextAlign.center,
                 text: TextSpan(
                     text: contactName,
-                    style: AppStyles.textStyleSmallW100Primary(context)))
+                    style: AppStyles.textStyleSize14W100Primary(context)))
             : const SizedBox();
         return Column(
           children: <Widget>[
@@ -202,11 +202,11 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: AppStyles.textStyleSmallW100Primary(context),
+                    style: AppStyles.textStyleSize14W100Primary(context),
                   ),
                   TextSpan(
                     text: stringPartTwo,
-                    style: AppStyles.textStyleSmallW100Primary(context),
+                    style: AppStyles.textStyleSize14W100Primary(context),
                   ),
                 ],
               ),
@@ -218,7 +218,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
-                    style: AppStyles.textStyleSmallW100Primary(context),
+                    style: AppStyles.textStyleSize14W100Primary(context),
                   ),
                 ],
               ),
@@ -230,11 +230,11 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
-                    style: AppStyles.textStyleSmallW100Primary(context),
+                    style: AppStyles.textStyleSize14W100Primary(context),
                   ),
                   TextSpan(
                     text: stringPartFive,
-                    style: AppStyles.textStyleSmallW100Primary(context),
+                    style: AppStyles.textStyleSize14W100Primary(context),
                   ),
                 ],
               ),
@@ -247,7 +247,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 textAlign: TextAlign.center,
                 text: TextSpan(
                     text: contactName,
-                    style: AppStyles.textStyleSmallW100Sucess(context)))
+                    style: AppStyles.textStyleSize14W100Sucess(context)))
             : const SizedBox();
         return Column(
           children: <Widget>[
@@ -259,11 +259,11 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: AppStyles.textStyleSmallW100Sucess(context),
+                    style: AppStyles.textStyleSize14W100Sucess(context),
                   ),
                   TextSpan(
                     text: stringPartTwo,
-                    style: AppStyles.textStyleSmallW100Primary(context),
+                    style: AppStyles.textStyleSize14W100Primary(context),
                   ),
                 ],
               ),
@@ -275,7 +275,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
-                    style: AppStyles.textStyleSmallW100Primary(context),
+                    style: AppStyles.textStyleSize14W100Primary(context),
                   ),
                 ],
               ),
@@ -287,11 +287,11 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
-                    style: AppStyles.textStyleSmallW100Primary(context),
+                    style: AppStyles.textStyleSize14W100Primary(context),
                   ),
                   TextSpan(
                     text: stringPartFive,
-                    style: AppStyles.textStyleSmallW100Sucess(context),
+                    style: AppStyles.textStyleSize14W100Sucess(context),
                   ),
                 ],
               ),

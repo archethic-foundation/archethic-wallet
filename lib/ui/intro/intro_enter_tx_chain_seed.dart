@@ -1,7 +1,6 @@
 // @dart=2.9
 
 // Flutter imports:
-import 'package:archethic_mobile_wallet/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,6 +13,7 @@ import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
+import 'package:archethic_mobile_wallet/global_var.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/db/appdb.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
@@ -142,7 +142,7 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                           child: AutoSizeText(
                             AppLocalization.of(context).enterTxChainSeedText,
                             style:
-                                AppStyles.textStyleMediumW200Primary(context),
+                                AppStyles.textStyleSize16W200Primary(context),
                             maxLines: 4,
                             stepGranularity: 0.5,
                           ),
@@ -160,8 +160,8 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                                         padding: EdgeInsets.zero,
                                         focusNode: enterTxChainSeedFocusNode,
                                         controller: enterTxChainSeedController,
-                                        style:
-                                            AppStyles.textStyleSmallW100Primary(
+                                        style: AppStyles
+                                            .textStyleSize14W100Primary(
                                                 context),
                                         inputFormatters: <
                                             LengthLimitingTextInputFormatter>[
@@ -223,7 +223,7 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                                           AppLocalization.of(context)
                                               .enterEndpoint,
                                           style: AppStyles
-                                              .textStyleMediumW200Primary(
+                                              .textStyleSize16W200Primary(
                                                   context),
                                           maxLines: 4,
                                           stepGranularity: 0.5,
@@ -236,8 +236,8 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                                         cursorColor: StateContainer.of(context)
                                             .curTheme
                                             .primary,
-                                        style:
-                                            AppStyles.textStyleSmallW100Primary(
+                                        style: AppStyles
+                                            .textStyleSize14W100Primary(
                                                 context),
                                         inputFormatters: <
                                             LengthLimitingTextInputFormatter>[
@@ -298,7 +298,8 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
       await sl.get<DBHelper>().dropAccounts();
 
       await AppUtil().loginAccount(genesisAddress, context);
-      StateContainer.of(context).requestUpdate(StateContainer.of(context).selectedAccount);
+      StateContainer.of(context)
+          .requestUpdate(StateContainer.of(context).selectedAccount);
       final String pin = await Navigator.of(context)
           .push(MaterialPageRoute(builder: (BuildContext context) {
         return const PinScreen(

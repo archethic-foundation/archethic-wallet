@@ -68,7 +68,7 @@ class QRcodeDisplay {
                   padding: const EdgeInsets.only(left: 5.0, top: 5.0),
                   child: Text(
                     AppLocalization.of(context).addressInfos,
-                    style: AppStyles.textStyleSmallestW100Primary60(context),
+                    style: AppStyles.textStyleSize12W100Primary60(context),
                   ),
                 ),
               ),
@@ -120,28 +120,28 @@ class QRcodeDisplay {
                                         .selectedAccount
                                         .lastAddress
                                         .substring(0, 16),
-                                    style: AppStyles.textStyleSmallW100Primary(
+                                    style: AppStyles.textStyleSize14W100Primary(
                                         context)),
                                 Text(
                                     StateContainer.of(context)
                                         .selectedAccount
                                         .lastAddress
                                         .substring(16, 32),
-                                    style: AppStyles.textStyleSmallW100Primary(
+                                    style: AppStyles.textStyleSize14W100Primary(
                                         context)),
                                 Text(
                                     StateContainer.of(context)
                                         .selectedAccount
                                         .lastAddress
                                         .substring(32, 48),
-                                    style: AppStyles.textStyleSmallW100Primary(
+                                    style: AppStyles.textStyleSize14W100Primary(
                                         context)),
                                 Text(
                                     StateContainer.of(context)
                                         .selectedAccount
                                         .lastAddress
                                         .substring(48, 64),
-                                    style: AppStyles.textStyleSmallW100Primary(
+                                    style: AppStyles.textStyleSize14W100Primary(
                                         context)),
                               ],
                             ),
@@ -157,7 +157,7 @@ class QRcodeDisplay {
                   padding: const EdgeInsets.only(left: 5.0, top: 5.0),
                   child: Text(
                     'Address informations',
-                    style: AppStyles.textStyleSmallestW100Primary60(context),
+                    style: AppStyles.textStyleSize12W100Primary60(context),
                   ),
                 ),
               ),

@@ -158,7 +158,7 @@ class _ContactsListState extends State<ContactsList> {
                         //Contacts Header Text
                         Text(
                           AppLocalization.of(context).addressBookHeader,
-                          style: AppStyles.textStyleLargestW700Primary(context),
+                          style: AppStyles.textStyleSize28W700Primary(context),
                         ),
                       ],
                     ),
@@ -275,11 +275,11 @@ class _ContactsListState extends State<ContactsList> {
                     children: <Widget>[
                       //Contact name
                       Text(contact.name,
-                          style: AppStyles.textStyleMediumW600Primary(context)),
+                          style: AppStyles.textStyleSize16W600Primary(context)),
                       //Contact address
                       Text(
                         contact.address,
-                        style: AppStyles.textStyleSmallestW100Text60(context),
+                        style: AppStyles.textStyleSize12W100Text60(context),
                       ),
                     ],
                   ),

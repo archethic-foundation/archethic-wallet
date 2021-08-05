@@ -93,7 +93,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                         alignment: const AlignmentDirectional(-1, 0),
                         child: AutoSizeText(
                           AppLocalization.of(context).secretInfoHeader,
-                          style: AppStyles.textStyleLargestW700Primary(context),
+                          style: AppStyles.textStyleSize28W700Primary(context),
                           stepGranularity: 0.1,
                           maxLines: 1,
                           minFontSize: 12,
@@ -111,7 +111,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                             AutoSizeText(
                               AppLocalization.of(context).secretInfo,
                               style:
-                                  AppStyles.textStyleMediumW200Primary(context),
+                                  AppStyles.textStyleSize16W200Primary(context),
                               maxLines: 5,
                               stepGranularity: 0.5,
                             ),
@@ -119,7 +119,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               margin: const EdgeInsetsDirectional.only(top: 15),
                               child: AutoSizeText(
                                 AppLocalization.of(context).secretWarning,
-                                style: AppStyles.textStyleMediumW700Primary(
+                                style: AppStyles.textStyleSize16W700Primary(
                                     context),
                                 maxLines: 4,
                                 stepGranularity: 0.5,

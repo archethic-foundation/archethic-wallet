@@ -116,7 +116,7 @@ class _IntroPasswordState extends State<IntroPassword> {
                           AppLocalization.of(context).createAPasswordHeader,
                           maxLines: 3,
                           stepGranularity: 0.5,
-                          style: AppStyles.textStyleLargestW700Primary(context),
+                          style: AppStyles.textStyleSize28W700Primary(context),
                         ),
                       ),
                       // The paragraph
@@ -128,7 +128,7 @@ class _IntroPasswordState extends State<IntroPassword> {
                         child: AutoSizeText(
                           AppLocalization.of(context)
                               .passwordWillBeRequiredToOpenParagraph,
-                          style: AppStyles.textStyleMediumW200Primary(context),
+                          style: AppStyles.textStyleSize16W200Primary(context),
                           maxLines: 5,
                           stepGranularity: 0.5,
                         ),
@@ -177,18 +177,9 @@ class _IntroPasswordState extends State<IntroPassword> {
                                       keyboardType: TextInputType.text,
                                       obscureText: true,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16.0,
-                                        color: passwordsMatch
-                                            ? StateContainer.of(context)
-                                                .curTheme
-                                                .primary
-                                            : StateContainer.of(context)
-                                                .curTheme
-                                                .primary,
-                                        fontFamily: 'Montserrat',
-                                      ),
+                                      style:
+                                          AppStyles.textStyleSize16W700Primary(
+                                              context),
                                       onSubmitted: (String text) {
                                         confirmPasswordFocusNode.requestFocus();
                                       },
@@ -229,18 +220,9 @@ class _IntroPasswordState extends State<IntroPassword> {
                                       keyboardType: TextInputType.text,
                                       obscureText: true,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16.0,
-                                        color: passwordsMatch
-                                            ? StateContainer.of(context)
-                                                .curTheme
-                                                .primary
-                                            : StateContainer.of(context)
-                                                .curTheme
-                                                .primary,
-                                        fontFamily: 'Montserrat',
-                                      ),
+                                      style:
+                                          AppStyles.textStyleSize16W700Primary(
+                                              context),
                                     ),
                                     // Error Text
                                     Container(
@@ -248,14 +230,9 @@ class _IntroPasswordState extends State<IntroPassword> {
                                           const AlignmentDirectional(0, 0),
                                       margin: const EdgeInsets.only(top: 3),
                                       child: Text(passwordError ?? '',
-                                          style: TextStyle(
-                                            fontSize: 14.0,
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .primary,
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w600,
-                                          )),
+                                          style: AppStyles
+                                              .textStyleSize14W600Primary(
+                                                  context)),
                                     ),
                                   ])))
                     ],
@@ -323,7 +300,8 @@ class _IntroPasswordState extends State<IntroPassword> {
               widget.seed, await sl.get<Vault>().getSessionKey())));
       await sl.get<DBHelper>().dropAccounts();
       await AppUtil().loginAccount(widget.seed, context);
-      StateContainer.of(context).requestUpdate(StateContainer.of(context).selectedAccount);
+      StateContainer.of(context)
+          .requestUpdate(StateContainer.of(context).selectedAccount);
       final String pin = await Navigator.of(context)
           .push(MaterialPageRoute(builder: (BuildContext context) {
         return const PinScreen(PinOverlayType.NEW_PIN);
@@ -344,7 +322,8 @@ class _IntroPasswordState extends State<IntroPassword> {
       AppUtil()
           .loginAccount(await StateContainer.of(context).getSeed(), context)
           .then((_) {
-        StateContainer.of(context).requestUpdate(StateContainer.of(context).selectedAccount);
+        StateContainer.of(context)
+            .requestUpdate(StateContainer.of(context).selectedAccount);
         Navigator.of(context).pushNamed('/intro_backup_safety');
       });
     }

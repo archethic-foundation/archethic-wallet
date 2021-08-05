@@ -56,7 +56,7 @@ class _PlainSeedDisplayState extends State<PlainSeedDisplay> {
           alignment: Alignment.centerLeft,
           child: AutoSizeText(
             AppLocalization.of(context).seedDescription,
-            style: AppStyles.textStyleMediumW200Primary(context),
+            style: AppStyles.textStyleSize16W200Primary(context),
             maxLines: 5,
             stepGranularity: 0.5,
           ),
@@ -88,8 +88,8 @@ class _PlainSeedDisplayState extends State<PlainSeedDisplay> {
                           ? _obscuredSeed
                           : widget.seed,
                       textStyle: _seedCopied
-                          ? AppStyles.textStyleSmallW100Success(context)
-                          : AppStyles.textStyleSmallW100Primary(context)),
+                          ? AppStyles.textStyleSize14W100Success(context)
+                          : AppStyles.textStyleSize14W100Primary(context)),
                 ),
                 // Tap to reveal or hide
                 if (widget.obscureSeed)
@@ -98,11 +98,13 @@ class _PlainSeedDisplayState extends State<PlainSeedDisplay> {
                     child: _seedObscured
                         ? AutoSizeText(
                             AppLocalization.of(context).tapToReveal,
-                            style: AppStyles.textStyleSmallW600Primary(context),
+                            style:
+                                AppStyles.textStyleSize14W600Primary(context),
                           )
                         : Text(
                             AppLocalization.of(context).tapToHide,
-                            style: AppStyles.textStyleSmallW600Primary(context),
+                            style:
+                                AppStyles.textStyleSize14W600Primary(context),
                           ),
                   )
                 else
@@ -137,8 +139,8 @@ class _PlainSeedDisplayState extends State<PlainSeedDisplay> {
                     : AppLocalization.of(context).copy,
                 textAlign: TextAlign.center,
                 style: _seedCopied
-                    ? AppStyles.textStyleSmallW700Success(context)
-                    : AppStyles.textStyleSmallW700Primary(context),
+                    ? AppStyles.textStyleSize14W700Success(context)
+                    : AppStyles.textStyleSize14W700Primary(context),
                 maxLines: 1,
                 stepGranularity: 0.5,
               ),
