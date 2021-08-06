@@ -813,6 +813,11 @@ class AppLocalization {
     return Intl.message('Add NFT', desc: '', name: 'addNFTHeader');
   }
 
+  String get addNFTConfirmationMessage {
+    return Intl.message('Do you confirm the creation of the following NFT ?',
+        desc: '', name: 'addNFTConfirmationMessage');
+  }
+  
   String get nftHeader {
     return Intl.message('NFT', desc: '', name: 'nftHeader');
   }
@@ -825,6 +830,10 @@ class AppLocalization {
     return Intl.message('Enter a name', desc: '', name: 'nftNameHint');
   }
 
+  String get nftName {
+    return Intl.message('Name: ', desc: '', name: 'nftName');
+  }
+
   String get nftInitialSupplyHint {
     return Intl.message('Enter an initial supply',
         desc: '', name: 'nftInitialSupplyHint');
@@ -833,6 +842,11 @@ class AppLocalization {
   String get nftNameMissing {
     return Intl.message('Choose a Name for the NFT',
         desc: '', name: 'nftNameMissing');
+  }
+
+  String get nftInitialSupply {
+    return Intl.message('Initial supply: ',
+        desc: '', name: 'nftInitialSupply');
   }
 
   String get nftInitialSupplyMissing {

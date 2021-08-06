@@ -29,7 +29,6 @@ import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/balance.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/line_chart.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/nft_list.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/qr_code.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/reactive_refresh.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/tx_list.dart';
@@ -393,62 +392,58 @@ class _AppHomePageState extends State<AppHomePage>
                 child: _getTopCards(context),
               ),
               Expanded(
-                child: KeyboardAvoider(
-                  duration: const Duration(milliseconds: 0),
-                  autoScroll: true,
-                  focusPadding: 40,
-                  child: Stack(
-                    alignment: Alignment.topCenter,
-                    children: <Widget>[
-                      CircularParticle(
-                        awayRadius: 80,
-                        numberOfParticles: 80,
-                        speedOfParticles: 0.5,
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        onTapAnimation: true,
-                        particleColor: StateContainer.of(context)
-                            .curTheme
-                            .primary10
-                            .withAlpha(150)
-                            .withOpacity(0.2),
-                        awayAnimationDuration:
-                            const Duration(milliseconds: 600),
-                        maxParticleSize: 8,
-                        isRandSize: true,
-                        isRandomColor: false,
-                        awayAnimationCurve: Curves.easeInOutBack,
-                        enableHover: true,
-                        hoverColor:
-                            StateContainer.of(context).curTheme.primary30,
-                        hoverRadius: 90,
-                        connectDots: true,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          ReactiveRefreshIndicator(
-                            onRefresh: _refresh,
-                            isRefreshing: _isRefreshing,
-                            backgroundColor: StateContainer.of(context)
-                                .curTheme
-                                .backgroundDark,
-                            child:
-                                //const SizedBox(height: 20),
-                                //NftListWidget.buildNftList(context),
-                                //const SizedBox(height: 20),
-                                StateContainer.of(context).wallet == null
-                                    ? const SizedBox()
-                                    : TxListWidget.buildTxList(
-                                        context,
-                                        StateContainer.of(context)
-                                            .wallet
-                                            .history,
-                                            _opacityAnimation),
-                          ),
-                        ],
-                      ),
-                    ],
+                child: ReactiveRefreshIndicator(
+                  onRefresh: _refresh,
+                  isRefreshing: _isRefreshing,
+                  backgroundColor:
+                      StateContainer.of(context).curTheme.backgroundDark,
+                  child: KeyboardAvoider(
+                    duration: const Duration(milliseconds: 0),
+                    autoScroll: true,
+                    focusPadding: 40,
+                    child: Stack(
+                      alignment: Alignment.topCenter,
+                      children: <Widget>[
+                        CircularParticle(
+                          awayRadius: 80,
+                          numberOfParticles: 80,
+                          speedOfParticles: 0.5,
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          onTapAnimation: true,
+                          particleColor: StateContainer.of(context)
+                              .curTheme
+                              .primary10
+                              .withAlpha(150)
+                              .withOpacity(0.2),
+                          awayAnimationDuration:
+                              const Duration(milliseconds: 600),
+                          maxParticleSize: 8,
+                          isRandSize: true,
+                          isRandomColor: false,
+                          awayAnimationCurve: Curves.easeInOutBack,
+                          enableHover: true,
+                          hoverColor:
+                              StateContainer.of(context).curTheme.primary30,
+                          hoverRadius: 90,
+                          connectDots: true,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            //const SizedBox(height: 20),
+                            //NftListWidget.buildNftList(context),
+                            //const SizedBox(height: 20),
+                            StateContainer.of(context).wallet == null
+                                ? const SizedBox()
+                                : TxListWidget.buildTxList(
+                                    context,
+                                    StateContainer.of(context).wallet.history,
+                                    _opacityAnimation),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

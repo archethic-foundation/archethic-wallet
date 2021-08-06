@@ -14,95 +14,101 @@ import 'package:archethic_mobile_wallet/styles.dart';
 class TxListWidget {
   static Widget buildTxList(BuildContext context,
       List<Transaction> transactions, Animation<double> _opacityAnimation) {
-    return StateContainer.of(context).wallet == null || StateContainer.of(context).wallet.transactionChainLoading == true
+    return StateContainer.of(context).wallet == null ||
+            StateContainer.of(context).wallet.transactionChainLoading == true
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(AppLocalization.of(context).recentTransactionsHeader,
-                  style:
-                      AppStyles.textStyleSize14W600BackgroundDarkest(context)),
-              Stack(
-                children: <Widget>[
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 0.0),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height - 120,
-                        padding: const EdgeInsets.only(
-                            top: 3.5, left: 3.5, right: 3.5, bottom: 3.5),
-                        color: Colors.transparent,
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 6, right: 6, top: 6, bottom: 6),
-                            child: Column(
-                              children: [
-                                displayTxDetailSearching(
-                                    context, _opacityAnimation),
-                                displayTxDetailSearching(
-                                    context, _opacityAnimation),
-                                displayTxDetailSearching(
-                                    context, _opacityAnimation),
-                                displayTxDetailSearching(
-                                    context, _opacityAnimation),
-                                displayTxDetailSearching(
-                                    context, _opacityAnimation),
-                                displayTxDetailSearching(
-                                    context, _opacityAnimation),
-                                displayTxDetailSearching(
-                                    context, _opacityAnimation),
-                              ],
-                            )),
-                      ),
+              Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Text(
+                      AppLocalization.of(context).recentTransactionsHeader,
+                      style: AppStyles.textStyleSize14W600BackgroundDarkest(
+                          context))),
+              SizedBox(
+                child: Container(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 0.0),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height - 120,
+                      padding: const EdgeInsets.only(
+                          top: 3.5, left: 3.5, right: 3.5, bottom: 3.5),
+                      color: Colors.transparent,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 6, right: 6, top: 6, bottom: 6),
+                          child: Column(
+                            children: [
+                              displayTxDetailSearching(
+                                  context, _opacityAnimation),
+                              displayTxDetailSearching(
+                                  context, _opacityAnimation),
+                              displayTxDetailSearching(
+                                  context, _opacityAnimation),
+                              displayTxDetailSearching(
+                                  context, _opacityAnimation),
+                              displayTxDetailSearching(
+                                  context, _opacityAnimation),
+                              displayTxDetailSearching(
+                                  context, _opacityAnimation),
+                              displayTxDetailSearching(
+                                  context, _opacityAnimation),
+                            ],
+                          )),
                     ),
                   ),
-                ],
+                ),
               )
             ],
           )
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(AppLocalization.of(context).recentTransactionsHeader,
-                  style:
-                      AppStyles.textStyleSize14W600BackgroundDarkest(context)),
-              Stack(
-                children: <Widget>[
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 0.0),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height - 200,
-                        padding: const EdgeInsets.only(
-                            top: 3.5, left: 3.5, right: 3.5, bottom: 3.5),
-                        color: Colors.transparent,
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        child: Padding(
+              Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Text(
+                      AppLocalization.of(context).recentTransactionsHeader,
+                      style: AppStyles.textStyleSize14W600BackgroundDarkest(
+                          context))),
+              SizedBox(
+                child: transactions.length == 0
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: Align(
+                            alignment: Alignment.center,
+                            child: Text('No transaction yet')))
+                    : Container(
+                        child: Container(
+                          height: MediaQuery.of(context).size.height - 200,
                           padding: const EdgeInsets.only(
-                              left: 6, right: 6, top: 6, bottom: 6),
-                          child: ListView.builder(
-                            physics: BouncingScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            itemCount: transactions.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              if (transactions[index].type == 'transfer') {
-                                return displayTxDetailTransfer(
-                                    context, transactions[index]);
-                              } else {
-                                if (transactions[index].type == 'nft') {
-                                  return displayTxDetailNFT(
+                              top: 3.5, left: 3.5, right: 3.5, bottom: 3.5),
+                          color: Colors.transparent,
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 6, right: 6, top: 6, bottom: 6),
+                            child: ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              itemCount: transactions.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                if (transactions[index].type == 'transfer') {
+                                  return displayTxDetailTransfer(
                                       context, transactions[index]);
                                 } else {
-                                  return const SizedBox();
+                                  if (transactions[index].type == 'nft') {
+                                    return displayTxDetailNFT(
+                                        context, transactions[index]);
+                                  } else {
+                                    return const SizedBox();
+                                  }
                                 }
-                              }
-                            },
+                              },
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                ],
               )
             ],
           );
@@ -194,14 +200,18 @@ class TxListWidget {
                     style: AppStyles.textStyleSize14W600Primary(context)),
               ],
             ),
-            transaction.inputs![1].nftAddress == null ? const SizedBox() :
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              Text(
-                  'Address: ' +
-                      Address(transaction.inputs![1].nftAddress!)
-                          .getShortString3(),
-                  style: AppStyles.textStyleSize10W100Primary(context)),
-            ]),
+            transaction.inputs![1].nftAddress == null
+                ? const SizedBox()
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                        Text(
+                            'Address: ' +
+                                Address(transaction.inputs![1].nftAddress!)
+                                    .getShortString3(),
+                            style:
+                                AppStyles.textStyleSize10W100Primary(context)),
+                      ]),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
               Text(
                   'Date: ' +

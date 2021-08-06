@@ -15,14 +15,11 @@ import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/global_var.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/authentication_method.dart';
-import 'package:archethic_mobile_wallet/model/db/contact.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service/app_service.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/transfer/nft_transfer_list.dart';
 import 'package:archethic_mobile_wallet/ui/transfer/transfer_complete_sheet.dart';
-import 'package:archethic_mobile_wallet/ui/transfer/uco_transfer_list.dart';
 import 'package:archethic_mobile_wallet/ui/util/routes.dart';
 import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
@@ -35,7 +32,7 @@ import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show UCOTransfer, NFTTransfer, TransactionStatus;
+    show TransactionStatus;
 
 class AddNFTConfirm extends StatefulWidget {
   const AddNFTConfirm({this.nftName, this.nftInitialSupply}) : super();
@@ -78,9 +75,11 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
             context);
         Navigator.of(context).pop();
       } else {
-        StateContainer.of(context)
-            .updateWallet(account: StateContainer.of(context).selectedAccount);
-        Navigator.pop(context);
+        Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+        setState(() {
+          StateContainer.of(context)
+              .requestUpdate(StateContainer.of(context).selectedAccount);
+        });
         Sheets.showAppHeightNineSheet(
             context: context,
             closeOnTap: true,
@@ -145,7 +144,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                    margin: const EdgeInsets.only(top: 20.0),
                     child: Column(
                       children: <Widget>[
                         Text(
@@ -153,6 +152,32 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                           style: AppStyles.textStyleSize24W700Primary(context),
                         ),
                       ],
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Container(
+                    child: RichText(
+                      textAlign: TextAlign.start,
+                      text: TextSpan(
+                        text: '',
+                        children: <InlineSpan>[
+                          TextSpan(
+                            text: '(',
+                            style:
+                                AppStyles.textStyleSize14W100Primary(context),
+                          ),
+                          TextSpan(
+                              text: StateContainer.of(context)
+                                  .wallet
+                                  .getAccountBalanceUCODisplay(),
+                              style: AppStyles.textStyleSize14W700Primary(
+                                  context)),
+                          TextSpan(
+                              text: ' UCO)',
+                              style: AppStyles.textStyleSize14W100Primary(
+                                  context)),
+                        ],
+                      ),
                     ),
                   ),
                   Text(
@@ -164,8 +189,41 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                               .toStringAsFixed(5) +
                           ' UCO',
                       style: AppStyles.textStyleSize14W100Primary(context)),
+                  const SizedBox(height: 30),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                      child: Text(
+                          AppLocalization.of(context).addNFTConfirmationMessage,
+                          style:
+                              AppStyles.textStyleSize14W600Primary(context))),
                   const SizedBox(
                     height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 40.0),
+                    child: Row(
+                      children: [
+                        Text(AppLocalization.of(context).nftName,
+                            style:
+                                AppStyles.textStyleSize14W600Primary(context)),
+                        Text(widget.nftName!,
+                            style:
+                                AppStyles.textStyleSize14W100Primary(context)),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 40.0),
+                    child: Row(
+                      children: [
+                        Text(AppLocalization.of(context).nftInitialSupply,
+                            style:
+                                AppStyles.textStyleSize14W600Primary(context)),
+                        Text(widget.nftInitialSupply!.toString(),
+                            style:
+                                AppStyles.textStyleSize14W100Primary(context)),
+                      ],
+                    ),
                   ),
                 ],
               ),

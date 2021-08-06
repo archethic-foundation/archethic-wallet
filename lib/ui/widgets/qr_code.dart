@@ -49,13 +49,16 @@ class QRcodeDisplay {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
+                            Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child:
                             QrImage(
                               data: StateContainer.of(context)
                                   .selectedAccount
                                   .lastAddress,
                               version: QrVersions.auto,
                               size: 100.0,
-                            ),
+                            ),),
                           ],
                         ),
                       ],
@@ -157,7 +160,7 @@ class QRcodeDisplay {
                   padding: const EdgeInsets.only(left: 5.0, top: 5.0),
                   child: Text(
                     'Address informations',
-                    style: AppStyles.textStyleSize12W100Primary60(context),
+                    style: AppStyles.textStyleSize12W100Primary(context),
                   ),
                 ),
               ),

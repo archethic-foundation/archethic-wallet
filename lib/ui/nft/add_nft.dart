@@ -13,28 +13,17 @@ import 'package:keyboard_avoider/keyboard_avoider.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/bus/events.dart';
-import 'package:archethic_mobile_wallet/bus/nft_add_event.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
-import 'package:archethic_mobile_wallet/global_var.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/authentication_method.dart';
-import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service/app_service.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/nft/add_nft_confirm.dart';
-import 'package:archethic_mobile_wallet/ui/transfer/transfer_complete_sheet.dart';
-import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/app_text_field.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
-import 'package:archethic_mobile_wallet/util/biometrics.dart';
-import 'package:archethic_mobile_wallet/util/hapticutil.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 class AddNFTSheet extends StatefulWidget {
   const AddNFTSheet({this.address}) : super();
@@ -150,6 +139,35 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
               ),
             ],
           ),
+          const SizedBox(height: 15),
+          Container(
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: '',
+                children: <InlineSpan>[
+                  TextSpan(
+                    text: '(',
+                    style: AppStyles.textStyleSize14W100Primary(context),
+                  ),
+                  TextSpan(
+                      text: StateContainer.of(context)
+                          .wallet
+                          .getAccountBalanceUCODisplay(),
+                      style: AppStyles.textStyleSize14W700Primary(context)),
+                  TextSpan(
+                      text: ' UCO)',
+                      style: AppStyles.textStyleSize14W100Primary(context)),
+                ],
+              ),
+            ),
+          ),
+          Text(
+              AppLocalization.of(context).fees +
+                  ': ' +
+                  sl.get<AppService>().getFeesEstimation().toStringAsFixed(5) +
+                  ' UCO',
+              style: AppStyles.textStyleSize14W100Primary(context)),
           const SizedBox(height: 30),
           Expanded(
             child: KeyboardAvoider(

@@ -52,7 +52,7 @@ class LineChartWidget {
               padding: const EdgeInsets.only(left: 5.0, top: 5.0),
               child: Text(
                 'UCO (1d)',
-                style: AppStyles.textStyleSize12W100Primary60(context),
+                style: AppStyles.textStyleSize12W100Primary(context),
               ),
             ),
           ),
