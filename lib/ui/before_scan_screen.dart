@@ -6,8 +6,8 @@ import 'dart:async';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
-import 'package:archethic_mobile_wallet/app_icons.dart';
+// Package imports:
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BeforeScanScreen extends StatefulWidget {
   @override
@@ -41,8 +41,8 @@ class _BeforeScanScreenState extends State<BeforeScanScreen> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(0),
           ),
-          child: const Icon(
-            AppIcons.scan,
+          child: const FaIcon(
+            FontAwesomeIcons.qrcode,
             size: 50,
             color: Colors.black,
           ),

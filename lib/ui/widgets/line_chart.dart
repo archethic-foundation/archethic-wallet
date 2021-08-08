@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:fl_chart/fl_chart.dart';
-import 'package:fluttericon/entypo_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -74,7 +74,7 @@ class LineChartWidget {
                             style: AppStyles.textStyleSize12W100PositiveValue(
                                 context),
                           ),
-                          Icon(Entypo.up_dir,
+                          FaIcon(FontAwesomeIcons.caretUp,
                               color: StateContainer.of(context)
                                   .curTheme
                                   .positiveValue),
@@ -91,7 +91,7 @@ class LineChartWidget {
                             style: AppStyles.textStyleSize12W100NegativeValue(
                                 context),
                           ),
-                          Icon(Entypo.down_dir,
+                          FaIcon(FontAwesomeIcons.caretDown,
                               color: StateContainer.of(context)
                                   .curTheme
                                   .negativeValue),

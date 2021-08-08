@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' show uint8ListToHex;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
@@ -139,7 +139,7 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                             child: Container(
                               child: Row(
                                 children: <Widget>[
-                                  Icon(AppIcons.logout,
+                                  FaIcon(FontAwesomeIcons.signOutAlt,
                                       size: 16,
                                       color: StateContainer.of(context)
                                           .curTheme
@@ -164,8 +164,8 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                         child: Column(
                       children: <Widget>[
                         Container(
-                          child: Icon(
-                            AppIcons.lock,
+                          child: FaIcon(
+                            FontAwesomeIcons.lock,
                             size: 80,
                             color: StateContainer.of(context).curTheme.primary,
                           ),

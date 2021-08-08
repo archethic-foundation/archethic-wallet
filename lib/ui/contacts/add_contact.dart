@@ -5,10 +5,10 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/bus/events.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
@@ -236,7 +236,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                         ? AppLocalization.of(context)!.addressHint
                         : '',
                     prefixButton: TextFieldButton(
-                        icon: AppIcons.scan,
+                        icon: FontAwesomeIcons.qrcode,
                         onPressed: () async {
                           UIUtil.cancelLockEvent();
                           final String scanResult =
@@ -257,7 +257,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                     fadePrefixOnCondition: true,
                     prefixShowFirstCondition: _showPasteButton,
                     suffixButton: TextFieldButton(
-                      icon: AppIcons.paste,
+                      icon: FontAwesomeIcons.paste,
                       onPressed: () async {
                         if (!_showPasteButton!) {
                           return;

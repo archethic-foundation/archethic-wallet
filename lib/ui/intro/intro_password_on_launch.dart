@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
@@ -72,7 +72,7 @@ class _IntroPasswordOnLaunchState extends State<IntroPasswordOnLaunch> {
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: Icon(AppIcons.back,
+                                child: FaIcon(FontAwesomeIcons.chevronLeft,
                                     color: StateContainer.of(context)
                                         .curTheme
                                         .primary,

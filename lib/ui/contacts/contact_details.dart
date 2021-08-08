@@ -10,9 +10,9 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/bus/events.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
@@ -94,7 +94,7 @@ class ContactDetailsSheet {
                                   cancelText: CaseChange.toUpperCase(
                                       AppLocalization.of(context).no, context));
                             },
-                            child: Icon(AppIcons.trashcan,
+                            child: FaIcon(FontAwesomeIcons.trash,
                                 size: 24,
                                 color: StateContainer.of(context)
                                     .curTheme

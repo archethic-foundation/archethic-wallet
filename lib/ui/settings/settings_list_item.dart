@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -40,7 +40,7 @@ class AppSettings {
                 child: Container(
                   child: Row(
                     children: <Widget>[
-                      Icon(icon,
+                      FaIcon(icon,
                           color: disabled
                               ? StateContainer.of(context).curTheme.icon45
                               : StateContainer.of(context).curTheme.icon,
@@ -99,9 +99,9 @@ class AppSettings {
         child: Row(
           children: <Widget>[
             Container(
-              margin: const EdgeInsetsDirectional.only(end: 13.0),
+              margin: const EdgeInsetsDirectional.only(end: 7.0),
               child: Container(
-                child: Icon(
+                child: FaIcon(
                   icon,
                   color: StateContainer.of(context).curTheme.icon,
                   size: 24,
@@ -173,7 +173,7 @@ class AppSettings {
             Container(
               margin: const EdgeInsetsDirectional.only(end: 13.0),
               child: Container(
-                child: Icon(
+                child: FaIcon(
                   settingIcon,
                   color: StateContainer.of(context).curTheme.icon,
                   size: 24,
@@ -209,8 +209,8 @@ class AppSettings {
                   ),
                 ]),
             Container(
-              child: Icon(
-                FontAwesome5.chevron_right,
+              child: FaIcon(
+                FontAwesomeIcons.chevronRight,
                 color: StateContainer.of(context).curTheme.icon,
                 size: 15,
               ),
@@ -241,7 +241,7 @@ class AppSettings {
             Container(
               margin: const EdgeInsetsDirectional.only(end: 13.0),
               child: Container(
-                child: Icon(
+                child: FaIcon(
                   settingIcon,
                   color: StateContainer.of(context).curTheme.icon,
                   size: 24,
@@ -262,8 +262,8 @@ class AppSettings {
               ),
             ),
             Container(
-              child: Icon(
-                FontAwesome5.chevron_right,
+              child: FaIcon(
+                FontAwesomeIcons.chevronRight,
                 color: StateContainer.of(context).curTheme.icon,
                 size: 15,
               ),
@@ -287,7 +287,7 @@ class AppSettings {
             Container(
               margin: const EdgeInsetsDirectional.only(end: 13.0),
               child: Container(
-                child: Icon(
+                child: FaIcon(
                   settingIcon,
                   color: StateContainer.of(context).curTheme.icon,
                   size: 24,

@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
@@ -156,7 +155,7 @@ class BalanceDisplay {
                                 localCurrency:
                                     StateContainer.of(context).curCurrency));
                       },
-                      child: Icon(FontAwesome5.arrow_circle_up,
+                      child: FaIcon(FontAwesomeIcons.arrowCircleUp,
                           color: StateContainer.of(context).curTheme.primary),
                     ),
                   ),
@@ -252,7 +251,7 @@ class BalanceDisplay {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Icon(AppIcons.btc,
+                            FaIcon(FontAwesomeIcons.btc,
                                 color: StateContainer.of(context)
                                     .curTheme
                                     .primary60,
@@ -288,7 +287,7 @@ class BalanceDisplay {
                                 localCurrency:
                                     StateContainer.of(context).curCurrency));
                       },
-                      child: Icon(FontAwesome5.arrow_circle_up,
+                      child: FaIcon(FontAwesomeIcons.arrowCircleUp,
                           color: StateContainer.of(context).curTheme.primary),
                     ),
                   ),

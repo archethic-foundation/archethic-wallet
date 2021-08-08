@@ -4,6 +4,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 
@@ -23,7 +26,7 @@ class TextFieldButton extends StatelessWidget {
           onPressed: () {
             onPressed != null ? onPressed() : null;
           },
-          child: Icon(icon,
+          child: FaIcon(icon,
               size: 20, color: StateContainer.of(context).curTheme.icon),
         ));
   }

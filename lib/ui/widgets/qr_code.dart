@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 // Project imports:
@@ -178,7 +179,7 @@ class QRcodeDisplay {
                         Clipboard.setData(ClipboardData(
                             text: StateContainer.of(context).wallet.address));
                       },
-                      child: Icon(Icons.content_copy,
+                      child: FaIcon(FontAwesomeIcons.solidCopy,
                           color: StateContainer.of(context).curTheme.primary),
                     ),
                   ),

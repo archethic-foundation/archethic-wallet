@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' show uint8ListToHex;
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
@@ -96,7 +96,7 @@ class _IntroPasswordState extends State<IntroPassword> {
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: Icon(AppIcons.back,
+                                child: FaIcon(FontAwesomeIcons.chevronLeft,
                                     color: StateContainer.of(context)
                                         .curTheme
                                         .primary,

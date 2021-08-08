@@ -6,8 +6,10 @@ import 'dart:async';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 // Project imports:
-import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/address.dart';
@@ -81,7 +83,7 @@ class _NodesListState extends State<NodesList> {
                                 });
                                 widget.nodesController.reverse();
                               },
-                              child: Icon(AppIcons.back,
+                              child: FaIcon(FontAwesomeIcons.chevronLeft,
                                   color: StateContainer.of(context)
                                       .curTheme
                                       .primary,

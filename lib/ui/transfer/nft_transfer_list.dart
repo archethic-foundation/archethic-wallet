@@ -1,6 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show NFTTransfer;
+
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
@@ -9,9 +12,6 @@ import 'package:archethic_mobile_wallet/model/db/contact.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/context_menu.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/context_menu_item.dart';
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show NFTTransfer;
 
 class NftTransferListWidget extends StatefulWidget {
   NftTransferListWidget(

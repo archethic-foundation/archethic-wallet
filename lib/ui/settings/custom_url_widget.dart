@@ -4,8 +4,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 // Project imports:
-import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
@@ -102,7 +104,7 @@ class _CustomUrlState extends State<CustomUrl> {
                             });
                             widget.tokensListController.reverse();
                           },
-                          child: Icon(AppIcons.back,
+                          child: FaIcon(FontAwesomeIcons.chevronLeft,
                               color:
                                   StateContainer.of(context).curTheme.primary,
                               size: 24)),

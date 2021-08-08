@@ -9,9 +9,9 @@ import 'package:flutter/services.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' show NFTTransfer;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:decimal/decimal.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
@@ -888,7 +888,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
       hintText:
           _amountHint == null ? '' : AppLocalization.of(context)!.enterAmount,
       suffixButton: TextFieldButton(
-        icon: AppIcons.max,
+        icon: FontAwesomeIcons.angleDoubleUp,
         onPressed: () {
           setState(() {
             _amountValidationText = '';
@@ -946,7 +946,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
             ? ''
             : AppLocalization.of(context)!.enterAddress,
         prefixButton: TextFieldButton(
-          icon: AppIcons.at,
+          icon: FontAwesomeIcons.at,
           onPressed: () {
             if (_showContactButton && _contacts!.isEmpty) {
               // Show menu
@@ -970,7 +970,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
         fadePrefixOnCondition: true,
         prefixShowFirstCondition: _showContactButton && _contacts!.isEmpty,
         suffixButton: TextFieldButton(
-          icon: AppIcons.paste,
+          icon: FontAwesomeIcons.paste,
           onPressed: () {
             if (!_pasteButtonVisible) {
               return;

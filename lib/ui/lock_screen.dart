@@ -3,8 +3,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 // Project imports:
-import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
@@ -265,7 +267,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                         child: Container(
                           child: Row(
                             children: <Widget>[
-                              Icon(AppIcons.logout,
+                              FaIcon(FontAwesomeIcons.signOutAlt,
                                   size: 16,
                                   color: StateContainer.of(context)
                                       .curTheme
@@ -289,8 +291,8 @@ class _AppLockScreenState extends State<AppLockScreen> {
                       ? Column(
                           children: <Widget>[
                             Container(
-                              child: Icon(
-                                AppIcons.lock,
+                              child: FaIcon(
+                                FontAwesomeIcons.lock,
                                 size: 80,
                                 color:
                                     StateContainer.of(context).curTheme.primary,

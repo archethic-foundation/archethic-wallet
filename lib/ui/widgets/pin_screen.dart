@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
@@ -85,7 +85,7 @@ class _PinScreenState extends State<PinScreen>
     } else {
       _header = pinCreateTitle;
     }
-    _dotStates = List<IconData>.filled(_pinLength, AppIcons.dotemtpy);
+    _dotStates = List<IconData>.filled(_pinLength, FontAwesomeIcons.circle);
     _awaitingConfirmation = false;
     _pin = '';
     _pinConfirmed = '';
@@ -119,8 +119,8 @@ class _PinScreenState extends State<PinScreen>
                 setState(() {
                   _pin = '';
                   _header = AppLocalization.of(context).pinInvalid;
-                  _dotStates =
-                      List<IconData>.filled(_pinLength, AppIcons.dotemtpy);
+                  _dotStates = List<IconData>.filled(
+                      _pinLength, FontAwesomeIcons.circle);
                   _controller.value = 0;
                 });
               }
@@ -128,7 +128,8 @@ class _PinScreenState extends State<PinScreen>
           } else {
             setState(() {
               _awaitingConfirmation = false;
-              _dotStates = List<IconData>.filled(_pinLength, AppIcons.dotemtpy);
+              _dotStates =
+                  List<IconData>.filled(_pinLength, FontAwesomeIcons.circle);
               _pin = '';
               _pinConfirmed = '';
               _header = AppLocalization.of(context).pinConfirmError;
@@ -163,33 +164,33 @@ class _PinScreenState extends State<PinScreen>
       });
     }
     for (int i = 0; i < _dotStates.length; i++) {
-      if (_dotStates[i] == AppIcons.dotemtpy) {
+      if (_dotStates[i] == FontAwesomeIcons.circle) {
         setState(() {
-          _dotStates[i] = AppIcons.dotfilled;
+          _dotStates[i] = FontAwesomeIcons.solidCircle;
         });
         break;
       }
     }
-    if (_dotStates.last == AppIcons.dotfilled) {
+    if (_dotStates.last == FontAwesomeIcons.solidCircle) {
       return true;
     }
     return false;
   }
 
   void _backSpace() {
-    if (_dotStates[0] != AppIcons.dotemtpy) {
+    if (_dotStates[0] != FontAwesomeIcons.circle) {
       int lastFilledIndex;
       for (int i = 0; i < _dotStates.length; i++) {
-        if (_dotStates[i] == AppIcons.dotfilled) {
+        if (_dotStates[i] == FontAwesomeIcons.solidCircle) {
           if (i == _dotStates.length ||
-              _dotStates[i + 1] == AppIcons.dotemtpy) {
+              _dotStates[i + 1] == FontAwesomeIcons.circle) {
             lastFilledIndex = i;
             break;
           }
         }
       }
       setState(() {
-        _dotStates[lastFilledIndex] = AppIcons.dotemtpy;
+        _dotStates[lastFilledIndex] = FontAwesomeIcons.circle;
         if (_awaitingConfirmation) {
           _pinConfirmed = _pinConfirmed.substring(0, _pinConfirmed.length - 1);
         } else {
@@ -231,8 +232,8 @@ class _PinScreenState extends State<PinScreen>
                   // Switch to confirm pin
                   setState(() {
                     _awaitingConfirmation = true;
-                    _dotStates =
-                        List<IconData>.filled(_pinLength, AppIcons.dotemtpy);
+                    _dotStates = List<IconData>.filled(
+                        _pinLength, FontAwesomeIcons.circle);
                     _header = AppLocalization.of(context).pinConfirmTitle;
                   });
                 } else {
@@ -263,7 +264,7 @@ class _PinScreenState extends State<PinScreen>
   List<Widget> _buildPinDots() {
     final List<Widget> ret = List<Widget>.empty(growable: true);
     for (int i = 0; i < _pinLength; i++) {
-      ret.add(Icon(_dotStates[i],
+      ret.add(FaIcon(_dotStates[i],
           color: StateContainer.of(context).curTheme.primary, size: 15.0));
     }
     return ret;
@@ -454,7 +455,7 @@ class _PinScreenState extends State<PinScreen>
                                 },
                                 child: Container(
                                   alignment: const AlignmentDirectional(0, 0),
-                                  child: Icon(Icons.backspace,
+                                  child: FaIcon(Icons.backspace,
                                       color: StateContainer.of(context)
                                           .curTheme
                                           .primary,

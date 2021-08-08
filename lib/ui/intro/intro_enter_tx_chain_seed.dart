@@ -7,10 +7,10 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' show AddressService;
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/global_var.dart';
@@ -123,7 +123,7 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                               onPressed: () {
                                 Navigator.pop(context);
                               },
-                              child: Icon(AppIcons.back,
+                              child: FaIcon(FontAwesomeIcons.chevronLeft,
                                   color: StateContainer.of(context)
                                       .curTheme
                                       .primary,
@@ -173,7 +173,7 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                                         hintText: AppLocalization.of(context)
                                             .enterTxChainSeedHint,
                                         prefixButton: TextFieldButton(
-                                            icon: AppIcons.scan,
+                                            icon: FontAwesomeIcons.qrcode,
                                             onPressed: () async {
                                               UIUtil.cancelLockEvent();
                                               final String scanResult =
@@ -195,7 +195,7 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                                         fadePrefixOnCondition: true,
                                         prefixShowFirstCondition: true,
                                         suffixButton: TextFieldButton(
-                                          icon: AppIcons.paste,
+                                          icon: FontAwesomeIcons.paste,
                                           onPressed: () async {
                                             final String data =
                                                 await UserDataUtil

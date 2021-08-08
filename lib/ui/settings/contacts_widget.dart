@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:event_taxi/event_taxi.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/bus/events.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
@@ -149,7 +149,7 @@ class _ContactsListState extends State<ContactsList> {
                                 });
                                 widget.contactsController.reverse();
                               },
-                              child: Icon(AppIcons.back,
+                              child: FaIcon(FontAwesomeIcons.chevronLeft,
                                   color: StateContainer.of(context)
                                       .curTheme
                                       .primary,

@@ -67,43 +67,48 @@ class TxListWidget {
             children: [
               Padding(
                   padding: const EdgeInsets.only(left: 5.0),
-                  child: transactions.length > 0 ? Text(
-                      AppLocalization.of(context)!.recentTransactionsHeader,
-                      style: AppStyles.textStyleSize14W600BackgroundDarkest(
-                          context)) : Text(AppLocalization.of(context)!.recentTransactionsNoTransactionYet, style: AppStyles.textStyleSize14W600Primary(
-                          context))),
+                  child: transactions.length > 0
+                      ? Text(
+                          AppLocalization.of(context)!.recentTransactionsHeader,
+                          style: AppStyles.textStyleSize14W600BackgroundDarkest(
+                              context))
+                      : Text(
+                          AppLocalization.of(context)!
+                              .recentTransactionsNoTransactionYet,
+                          style:
+                              AppStyles.textStyleSize14W600Primary(context))),
               SizedBox(
                 child: Container(
-                        child: Container(
-                          height: MediaQuery.of(context).size.height - 200,
-                          padding: const EdgeInsets.only(
-                              top: 3.5, left: 3.5, right: 3.5, bottom: 3.5),
-                          color: Colors.transparent,
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 6, right: 6, top: 6, bottom: 6),
-                            child: ListView.builder(
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              itemCount: transactions.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                if (transactions[index].type == 'transfer') {
-                                  return displayTxDetailTransfer(
-                                      context, transactions[index]);
-                                } else {
-                                  if (transactions[index].type == 'nft') {
-                                    return displayTxDetailNFT(
-                                        context, transactions[index]);
-                                  } else {
-                                    return const SizedBox();
-                                  }
-                                }
-                              },
-                            ),
-                          ),
-                        ),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height - 200,
+                    padding: const EdgeInsets.only(
+                        top: 3.5, left: 3.5, right: 3.5, bottom: 3.5),
+                    color: Colors.transparent,
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 6, right: 6, top: 6, bottom: 6),
+                      child: ListView.builder(
+                        physics: BouncingScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemCount: transactions.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (transactions[index].type == 'transfer') {
+                            return displayTxDetailTransfer(
+                                context, transactions[index]);
+                          } else {
+                            if (transactions[index].type == 'nft') {
+                              return displayTxDetailNFT(
+                                  context, transactions[index]);
+                            } else {
+                              return const SizedBox();
+                            }
+                          }
+                        },
                       ),
+                    ),
+                  ),
+                ),
               )
             ],
           );

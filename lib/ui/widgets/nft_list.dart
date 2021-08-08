@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' show NftBalance;
-import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -81,7 +81,7 @@ class NftListWidget {
                           address: nftBalance.address,
                         ));
                   },
-                  child: Icon(FontAwesome5.arrow_circle_up,
+                  child: FaIcon(FontAwesomeIcons.arrowCircleUp,
                       color: StateContainer.of(context).curTheme.primary),
                 ),
                 const SizedBox(width: 10),

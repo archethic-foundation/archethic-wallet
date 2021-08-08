@@ -9,6 +9,7 @@ import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/service_locator.dart';
@@ -1388,7 +1389,7 @@ class IconSlideAction extends ClosableSlideAction {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Flexible(
-              child: Icon(
+              child: FaIcon(
                 icon,
                 color: foregroundColor ?? estimatedColor,
               ),
