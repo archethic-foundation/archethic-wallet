@@ -225,7 +225,7 @@ class BalanceDisplay {
                                             205),
                                 child: AutoSizeText.rich(
                                   TextSpan(
-                                    children: [
+                                    children: <TextSpan>[
                                       // Main balance text
                                       TextSpan(
                                         text: StateContainer.of(context)

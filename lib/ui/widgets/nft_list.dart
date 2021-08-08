@@ -16,8 +16,8 @@ import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 class NftListWidget {
   static Widget buildNftList(BuildContext context) {
     return StateContainer.of(context).wallet.transactionChainLoading == true
-        ? Center(child: CircularProgressIndicator())
-        : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        ? const Center(child: CircularProgressIndicator())
+        : Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
             Text(AppLocalization.of(context)!.nftHeader,
                 style: AppStyles.textStyleSize14W600BackgroundDarkest(context)),
             Stack(

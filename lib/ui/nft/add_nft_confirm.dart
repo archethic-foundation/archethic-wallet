@@ -84,7 +84,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
             context: context,
             closeOnTap: true,
             removeUntilHome: true,
-            widget: TransferCompleteSheet(
+            widget: const TransferCompleteSheet(
               title: 'NFT Created',
             ));
       }
@@ -203,7 +203,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                   Padding(
                     padding: const EdgeInsets.only(left: 40.0),
                     child: Row(
-                      children: [
+                      children: <Widget>[
                         Text(AppLocalization.of(context)!.nftName,
                             style:
                                 AppStyles.textStyleSize14W600Primary(context)),
@@ -216,7 +216,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                   Padding(
                     padding: const EdgeInsets.only(left: 40.0),
                     child: Row(
-                      children: [
+                      children: <Widget>[
                         Text(AppLocalization.of(context)!.nftInitialSupply,
                             style:
                                 AppStyles.textStyleSize14W600Primary(context)),
@@ -299,7 +299,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
       _showSendingAnimation(context);
       final String transactionChainSeed =
           await StateContainer.of(context).getSeed();
-      TransactionStatus transactionStatus = await sl.get<AppService>().addNFT(
+      final TransactionStatus transactionStatus = await sl.get<AppService>().addNFT(
           globalVarOriginPrivateKey,
           transactionChainSeed,
           StateContainer.of(context).selectedAccount.lastAddress!,
@@ -322,7 +322,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
         expectedPin: expectedPin,
         description: '',
       );
-    }));
+    })) as bool;
     if (auth) {
       await Future<Duration>.delayed(const Duration(milliseconds: 200));
       EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));

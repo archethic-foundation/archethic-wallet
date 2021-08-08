@@ -303,14 +303,14 @@ class AppSettings {
             Container(
                 width: UIUtil.drawerWidth(context) - 100,
                 child: Row(
-                  children: [
+                  children: <Widget>[
                     Text(
                       heading,
                       style: AppStyles.textStyleSize16W600Primary(context),
                     ),
                     Switch(
                         value: _isSwitched == null ? false : _isSwitched,
-                        onChanged: (value) {
+                        onChanged: (bool value) {
                           if (onChanged != null) {
                             _isSwitched = value;
                             onChanged(_isSwitched);

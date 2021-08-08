@@ -164,7 +164,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
       } else {
         setState(() {
           _addressHint = '';
-          _contacts = [];
+          _contacts = <Contact>[];
           if (Address(_sendAddressController!.text).isValid()) {
             //_addressValidAndUnfocused = true;
           }
@@ -230,7 +230,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                         children: <Widget>[
                           // Header
                           AutoSizeText(
-                            (widget.title ?? AppLocalization.of(context)!.send),
+                            widget.title ?? AppLocalization.of(context)!.send,
                             style:
                                 AppStyles.textStyleSize24W700Primary(context),
                             textAlign: TextAlign.center,
@@ -887,7 +887,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
       setState(() {
         _localCurrencyMode = false;
       });
-      Future.delayed(const Duration(milliseconds: 50), () {
+      Future<void>.delayed(const Duration(milliseconds: 50), () {
         _sendAmountController!.text = cryptoAmountStr;
         _sendAmountController!.selection = TextSelection.fromPosition(
             TextPosition(offset: cryptoAmountStr.length));
@@ -906,7 +906,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
       setState(() {
         _localCurrencyMode = true;
       });
-      Future.delayed(const Duration(milliseconds: 50), () {
+      Future<void>.delayed(const Duration(milliseconds: 50), () {
         _sendAmountController!.text = localAmountStr;
         _sendAmountController!.selection = TextSelection.fromPosition(
             TextPosition(offset: localAmountStr.length));
@@ -1034,7 +1034,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                   active: _localCurrencyMode,
                   currencyFormat: _localCurrencyFormat!)
             ]
-          : [LengthLimitingTextInputFormatter(16)],
+          : <LengthLimitingTextInputFormatter>[LengthLimitingTextInputFormatter(16)],
       onChanged: (String text) {
         // Always reset the error message to be less annoying
         setState(() {
@@ -1121,7 +1121,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
         focusNode: _sendAddressFocusNode,
         controller: _sendAddressController,
         cursorColor: StateContainer.of(context).curTheme.primary,
-        inputFormatters: [
+        inputFormatters: <LengthLimitingTextInputFormatter>[
           if (_isContact)
             LengthLimitingTextInputFormatter(20)
           else
@@ -1278,7 +1278,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                     _addressValidAndUnfocused = false;
                     _addressValidationText = '';
                   });
-                  Future.delayed(const Duration(milliseconds: 50), () {
+                  Future<void>.delayed(const Duration(milliseconds: 50), () {
                     FocusScope.of(context).requestFocus(_sendAddressFocusNode);
                   });
                 },

@@ -156,7 +156,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
       } else {
         setState(() {
           _addressHint = '';
-          _contacts = [];
+          _contacts = <Contact>[];
           if (Address(_sendAddressController!.text).isValid()) {
             //_addressValidAndUnfocused = true;
           }
@@ -218,7 +218,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                         children: <Widget>[
                           // Header
                           AutoSizeText(
-                            (widget.title ?? AppLocalization.of(context)!.send),
+                            widget.title ?? AppLocalization.of(context)!.send,
                             style:
                                 AppStyles.textStyleSize24W700Primary(context),
                             textAlign: TextAlign.center,
@@ -268,7 +268,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                 Column(
                                   children: <Widget>[
                                     // Balance Text
-                                    FutureBuilder(
+                                    FutureBuilder<PriceConversion>(
                                       future: sl
                                           .get<SharedPrefsUtil>()
                                           .getPriceConversion(),
@@ -873,7 +873,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
               LengthLimitingTextInputFormatter(16),
               CurrencyFormatter(maxDecimalDigits: 4),
             ]
-          : [LengthLimitingTextInputFormatter(16)],
+          : <LengthLimitingTextInputFormatter>[LengthLimitingTextInputFormatter(16)],
       onChanged: (String text) {
         // Always reset the error message to be less annoying
         setState(() {
@@ -933,7 +933,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
         focusNode: _sendAddressFocusNode,
         controller: _sendAddressController,
         cursorColor: StateContainer.of(context).curTheme.primary,
-        inputFormatters: [
+        inputFormatters: <LengthLimitingTextInputFormatter>[
           if (_isContact)
             LengthLimitingTextInputFormatter(20)
           else
@@ -1090,7 +1090,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                     _addressValidAndUnfocused = false;
                     _addressValidationText = '';
                   });
-                  Future.delayed(const Duration(milliseconds: 50), () {
+                  Future<void>.delayed(const Duration(milliseconds: 50), () {
                     FocusScope.of(context).requestFocus(_sendAddressFocusNode);
                   });
                 },

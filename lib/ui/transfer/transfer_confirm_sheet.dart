@@ -160,8 +160,8 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          (widget.title ??
-                              AppLocalization.of(context)!.transfering),
+                          widget.title ??
+                              AppLocalization.of(context)!.transfering,
                           style: AppStyles.textStyleSize24W700Primary(context),
                         ),
                       ],
@@ -268,7 +268,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       _showSendingAnimation(context);
       final String transactionChainSeed =
           await StateContainer.of(context).getSeed();
-      TransactionStatus transactionStatus = await sl.get<AppService>().sendUCO(
+      final TransactionStatus transactionStatus = await sl.get<AppService>().sendUCO(
           globalVarOriginPrivateKey,
           transactionChainSeed,
           StateContainer.of(context).selectedAccount.lastAddress!,
@@ -291,7 +291,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         expectedPin: expectedPin,
         description: '',
       );
-    }));
+    })) as bool;
     if (auth) {
       await Future<Duration>.delayed(const Duration(milliseconds: 200));
       EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));

@@ -70,7 +70,7 @@ class AppWallet {
     final Decimal converted = Decimal.parse(_localCurrencyPrice) *
         NumberUtil.getRawAsUsableDecimal(
             _accountBalance == null || _accountBalance.uco == null
-                ? "0"
+                ? '0'
                 : _accountBalance.uco.toString());
     return NumberFormat.currency(
             locale: locale, symbol: currency.getCurrencySymbol())
@@ -101,7 +101,7 @@ class AppWallet {
   String get btcPrice {
     final Decimal converted = Decimal.parse(_btcPrice) *
         NumberUtil.getRawAsUsableDecimal(
-            _accountBalance.uco == null ? "0" : _accountBalance.uco.toString());
+            _accountBalance.uco == null ? '0' : _accountBalance.uco.toString());
     // Show 4 decimal places for BTC price if its >= 0.0001 BTC, otherwise 6 decimals
     if (converted >= Decimal.parse('0.0001')) {
       return NumberFormat('#,##0.0000', 'en_US').format(converted.toDouble());

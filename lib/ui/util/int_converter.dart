@@ -8,11 +8,11 @@ class IntConverter extends Converter<List<int>, List<int>> {
   const IntConverter();
 
   @override
-  List<int> convert(List<int> data) {
-    if (data is Uint8List) {
-      return data.buffer.asInt64List();
+  List<int> convert(List<int> input) {
+    if (input is Uint8List) {
+      return input.buffer.asInt64List();
     } else {
-      return Uint64List.fromList(data).buffer.asUint8List();
+      return Uint64List.fromList(input).buffer.asUint8List();
     }
   }
 
@@ -25,7 +25,7 @@ class IntConverter extends Converter<List<int>, List<int>> {
 class IntSink extends ChunkedConversionSink<List<int>> {
   IntSink(this._outSink) : _converter = const IntConverter();
 
-  final _converter;
+  final IntConverter _converter;
   // fales when this type is used
   // final ChunkedConversionSink<List<int>> _outSink;
   final _outSink;

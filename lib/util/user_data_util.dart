@@ -109,7 +109,7 @@ class UserDataUtil {
         setStream.cancel();
       }
       final Future<dynamic> delayed =
-          Future.delayed(const Duration(minutes: 2));
+          Future<void>.delayed(const Duration(minutes: 2));
       delayed.then((_) {
         return true;
       });

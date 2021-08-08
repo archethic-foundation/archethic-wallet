@@ -119,7 +119,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
           _countDownTxt = _formatCountDisplay(count);
         });
       }
-      Future.delayed(const Duration(seconds: 1), () {
+      Future<void>.delayed(const Duration(seconds: 1), () {
         _runCountdown(count - 1);
       });
     } else {
@@ -153,7 +153,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
         MaterialPageRoute(builder: (BuildContext context) {
           return _buildPinScreen(context, expectedPin);
         }),
-      );
+      ) as bool;
     } else {
       auth = await Navigator.of(context).push(
         NoPushTransitionRoute(builder: (BuildContext context) {
@@ -161,7 +161,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
         }),
       );
     }
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future<void>.delayed(const Duration(milliseconds: 200));
     if (mounted) {
       setState(() {
         _showUnlockButton = true;

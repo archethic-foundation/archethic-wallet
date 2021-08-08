@@ -22,9 +22,10 @@ import 'package:archethic_mobile_wallet/util/app_ffi/keys/seeds.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 class IntroPasswordOnLaunch extends StatefulWidget {
+  const IntroPasswordOnLaunch({this.seed});
+
   final String seed;
 
-  const IntroPasswordOnLaunch({this.seed});
   @override
   _IntroPasswordOnLaunchState createState() => _IntroPasswordOnLaunchState();
 }

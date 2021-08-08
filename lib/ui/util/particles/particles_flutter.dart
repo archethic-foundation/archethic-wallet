@@ -136,7 +136,7 @@ class _CircularParticleState extends State<CircularParticle>
 
   Future<void> changeDirection() async {
     Future.doWhile(() async {
-      await Future.delayed(const Duration(milliseconds: 600));
+      await Future<void>.delayed(const Duration(milliseconds: 600));
 
       for (int index = 0; index < widget.numberOfParticles!; index++) {
         randDirection[index] = rng.nextBool();

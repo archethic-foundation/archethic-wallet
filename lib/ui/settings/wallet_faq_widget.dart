@@ -82,7 +82,7 @@ class _WalletFAQState extends State<WalletFAQ> {
                         children: <Widget>[
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[],
+                            children: const <Widget>[],
                           ),
                         ],
                       ),

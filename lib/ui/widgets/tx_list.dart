@@ -18,7 +18,7 @@ class TxListWidget {
             StateContainer.of(context).wallet.transactionChainLoading == true
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Padding(
                   padding: const EdgeInsets.only(left: 5.0),
                   child: Text(
@@ -39,7 +39,7 @@ class TxListWidget {
                           padding: const EdgeInsets.only(
                               left: 6, right: 6, top: 6, bottom: 6),
                           child: Column(
-                            children: [
+                            children: <Widget>[
                               displayTxDetailSearching(
                                   context, _opacityAnimation),
                               displayTxDetailSearching(
@@ -64,10 +64,10 @@ class TxListWidget {
           )
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Padding(
                   padding: const EdgeInsets.only(left: 5.0),
-                  child: transactions.length > 0
+                  child: transactions.isNotEmpty
                       ? Text(
                           AppLocalization.of(context)!.recentTransactionsHeader,
                           style: AppStyles.textStyleSize14W600BackgroundDarkest(
@@ -89,7 +89,7 @@ class TxListWidget {
                       padding: const EdgeInsets.only(
                           left: 6, right: 6, top: 6, bottom: 6),
                       child: ListView.builder(
-                        physics: BouncingScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemCount: transactions.length,
                         itemBuilder: (BuildContext context, int index) {
@@ -300,7 +300,7 @@ class TxListWidget {
                         Address('123456789012345678901234567890123456789012345678901234567890123456')
                             .getShortString3(),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: AppFontSizes.size10 - 3,
                         fontWeight: FontWeight.w100,
@@ -318,7 +318,7 @@ class TxListWidget {
                     color: StateContainer.of(context).curTheme.primary60,
                     borderRadius: BorderRadius.circular(100),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Date: Mon. 01/01/2021',
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -339,7 +339,7 @@ class TxListWidget {
                     color: StateContainer.of(context).curTheme.primary60,
                     borderRadius: BorderRadius.circular(100),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Fees: 1234567 UCO',
                     textAlign: TextAlign.center,
                     style: TextStyle(

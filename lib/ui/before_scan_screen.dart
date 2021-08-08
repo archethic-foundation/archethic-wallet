@@ -18,7 +18,7 @@ class _BeforeScanScreenState extends State<BeforeScanScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 150), () async {
+    Future<void>.delayed(const Duration(milliseconds: 150), () async {
       String scanResult;
       Navigator.pop(context, scanResult);
     });

@@ -57,7 +57,7 @@ class AppService {
     for (UCOTransfer transfer in listUcoTransfer) {
       transaction.addUCOTransfer(transfer.to, transfer.amount!);
     }
-    TransactionStatus transactionStatus = new TransactionStatus();
+    TransactionStatus transactionStatus = TransactionStatus();
     transaction
         .build(transactionChainSeed, lastTransaction.chainLength!, 'P256')
         .originSign(originPrivateKey);
@@ -76,7 +76,7 @@ class AppService {
       String address,
       String name,
       int initialSupply) async {
-    TransactionStatus transactionStatus = new TransactionStatus();
+    TransactionStatus transactionStatus = TransactionStatus();
     final Transaction lastTransaction =
         await sl.get<ApiService>().getLastTransaction(address);
     final Transaction transaction = NFTService().prepareNewNFT(

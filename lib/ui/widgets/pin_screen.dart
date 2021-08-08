@@ -62,7 +62,7 @@ class _PinScreenState extends State<PinScreen>
       _awaitingConfirmation; // true if pin has been entered once, false if not entered once
   String _header;
   int _failedAttempts = 0;
-  List<int> _listPinNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+  final List<int> _listPinNumber = <int>[1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
   // Invalid animation
   AnimationController _controller;
@@ -72,7 +72,7 @@ class _PinScreenState extends State<PinScreen>
   void initState() {
     super.initState();
 
-    sl.get<SharedPrefsUtil>().getPinPadShuffle().then((value) {
+    sl.get<SharedPrefsUtil>().getPinPadShuffle().then((bool value) {
       if (value) {
         _listPinNumber.shuffle();
       }
@@ -100,7 +100,7 @@ class _PinScreenState extends State<PinScreen>
         duration: const Duration(milliseconds: 350), vsync: this);
     final Animation curve =
         CurvedAnimation(parent: _controller, curve: ShakeCurve());
-    _animation = Tween(begin: 0.0, end: 25.0).animate(curve)
+    _animation = Tween<double>(begin: 0.0, end: 25.0).animate(curve)
       ..addStatusListener((AnimationStatus status) {
         if (status == AnimationStatus.completed) {
           if (widget.type == PinOverlayType.ENTER_PIN) {
@@ -216,7 +216,7 @@ class _PinScreenState extends State<PinScreen>
           }
           if (_setCharacter(buttonText)) {
             // Mild delay so they can actually see the last dot get filled
-            Future.delayed(const Duration(milliseconds: 50), () {
+            Future<void>.delayed(const Duration(milliseconds: 50), () {
               if (widget.type == PinOverlayType.ENTER_PIN) {
                 // Pin is not what was expected
                 if (_pin != widget.expectedPin) {

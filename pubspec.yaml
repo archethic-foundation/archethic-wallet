@@ -56,6 +56,9 @@ dependencies:
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files
   flutter_svg: ^0.22.0
 
+  # A Flutter plugin to vibrate the device
+  flutter_vibrate: ^1.1.0
+
   # Plugin that allow Flutter to communicate with a native Webview.
   flutter_webview_plugin: ^0.4.0
 
@@ -112,9 +115,6 @@ dependencies:
 
   # String validation and sanitization for Dart
   validators: ^3.0.0
-
-  # A Flutter plugin to vibrate the device
-  flutter_vibrate: ^1.1.0
 
 dev_dependencies:
   # A build system for Dart code generation and modular compilation

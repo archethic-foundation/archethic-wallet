@@ -47,7 +47,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
     const int nRows = 8;
     const int itemsPerRow = 24 ~/ nRows;
     int curWord = 0;
-    final List<Widget> ret = [];
+    final List<Widget> ret = <Widget>[];
     for (int i = 0; i < nRows; i++) {
       ret.add(Container(
         width: MediaQuery.of(context).size.width,
@@ -55,7 +55,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
         color: StateContainer.of(context).curTheme.primary05,
       ));
       // Build individual items
-      final List<Widget> items = [];
+      final List<Widget> items = <Widget>[];
       for (int j = 0; j < itemsPerRow; j++) {
         items.add(
           Container(

@@ -433,7 +433,7 @@ class UIUtil {
       _lockDisableSub!.cancel();
     }
     EventTaxiImpl.singleton().fire(DisableLockTimeoutEvent(disable: true));
-    final Future<dynamic> delayed = Future.delayed(const Duration(seconds: 10));
+    final Future<dynamic> delayed = Future<void>.delayed(const Duration(seconds: 10));
     delayed.then((_) {
       return true;
     });
@@ -452,7 +452,7 @@ class UIUtil {
   static Widget showWebview(BuildContext context, String url, String title) {
     return WebviewScaffold(
       url: url,
-      appBar: new AppBar(
+      appBar: AppBar(
         title: Text(
           title,
           style: AppStyles.textStyleSize28W700Primary(context),

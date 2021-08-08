@@ -218,7 +218,7 @@ class _NodesListState extends State<NodesList> {
                         height: 10,
                       ),
                       Row(
-                        children: [
+                        children: <Widget>[
                           Text('IP : ',
                               style: AppStyles.textStyleSize12W600Primary(
                                   context)),
@@ -231,7 +231,7 @@ class _NodesListState extends State<NodesList> {
                         height: 10,
                       ),
                       Row(
-                        children: [
+                        children: <Widget>[
                           Text('Geo patch : ',
                               style: AppStyles.textStyleSize12W600Primary(
                                   context)),
@@ -250,7 +250,7 @@ class _NodesListState extends State<NodesList> {
                         height: 10,
                       ),
                       Row(
-                        children: [
+                        children: <Widget>[
                           Text('Average availability : ',
                               style: AppStyles.textStyleSize12W600Primary(
                                   context)),
@@ -263,7 +263,7 @@ class _NodesListState extends State<NodesList> {
                         height: 10,
                       ),
                       Row(
-                        children: [
+                        children: <Widget>[
                           Text('Authorized : ',
                               style: AppStyles.textStyleSize12W600Primary(
                                   context)),

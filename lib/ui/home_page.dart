@@ -77,7 +77,7 @@ class _AppHomePageState extends State<AppHomePage>
         .updateWallet(account: StateContainer.of(context).selectedAccount);
 
     // Hide refresh indicator after 1 second if no server response
-    Future.delayed(const Duration(seconds: 1), () {
+    Future<void>.delayed(const Duration(seconds: 1), () {
       setState(() {
         _isRefreshing = false;
       });
@@ -115,7 +115,7 @@ class _AppHomePageState extends State<AppHomePage>
     );
     _placeholderCardAnimationController
         .addListener(_animationControllerListener);
-    _opacityAnimation = Tween(begin: 1.0, end: 0.4).animate(
+    _opacityAnimation = Tween<double>(begin: 1.0, end: 0.4).animate(
       CurvedAnimation(
         parent: _placeholderCardAnimationController,
         curve: Curves.easeIn,
@@ -194,7 +194,7 @@ class _AppHomePageState extends State<AppHomePage>
 
       paintQrCode(event.account.lastAddress);
       if (event.delayPop) {
-        Future.delayed(const Duration(milliseconds: 300), () {
+        Future<void>.delayed(const Duration(milliseconds: 300), () {
           Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
         });
       } else if (!event.noPop) {
@@ -250,7 +250,7 @@ class _AppHomePageState extends State<AppHomePage>
       if (lockStreamListener != null) {
         lockStreamListener.cancel();
       }
-      final Future<dynamic> delayed = Future.delayed(
+      final Future<dynamic> delayed = Future<void>.delayed(
           (await sl.get<SharedPrefsUtil>().getLockTimeout()).getDuration());
       delayed.then((_) {
         return true;
@@ -348,7 +348,7 @@ class _AppHomePageState extends State<AppHomePage>
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
-        actions: <Widget>[],
+        actions: const <Widget>[],
         iconTheme:
             IconThemeData(color: StateContainer.of(context).curTheme.primary),
       ),

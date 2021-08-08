@@ -150,12 +150,12 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
       }
     }
     return Column(
-      children: [
+      children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+          children: <Widget>[
             Row(
-              children: [
+              children: <Widget>[
                 Text(displayName,
                     style: AppStyles.textStyleSize14W100Primary(context)),
               ],

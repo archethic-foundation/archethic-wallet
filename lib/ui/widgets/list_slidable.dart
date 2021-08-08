@@ -169,7 +169,7 @@ class SlideToDismissDrawerDelegate extends SlideToDismissDelegate {
   @override
   Widget buildActionsWhileDismissing(
       BuildContext context, SlidableDelegateContext ctx) {
-    final Animation<Offset> animation = Tween(
+    final Animation<Offset> animation = Tween<Offset>(
       begin: Offset.zero,
       end: ctx.createOffset(ctx.state.dragSign),
     ).animate(ctx.state.overallMoveAnimation);
@@ -187,7 +187,7 @@ class SlideToDismissDrawerDelegate extends SlideToDismissDelegate {
 
               final List<Animation<double>> extentAnimations =
                   Iterable.generate(count).map((index) {
-                return Tween(
+                return Tween<double>(
                   begin: actionExtent,
                   end: totalExtent -
                       (actionExtent * (ctx.state.actionCount - index - 1)),
@@ -408,7 +408,7 @@ abstract class SlidableStackDelegate extends SlidableDelegate {
 
   @override
   Widget buildActions(BuildContext context, SlidableDelegateContext ctx) {
-    final Animation<Offset> animation = Tween(
+    final Animation<Offset> animation = Tween<Offset>(
       begin: Offset.zero,
       end: ctx.createOffset(ctx.state.totalActionsExtent * ctx.state.dragSign),
     ).animate(ctx.state.actionsMoveAnimation);
@@ -446,7 +446,7 @@ class SlidableStrechDelegate extends SlidableStackDelegate {
 
   @override
   Widget buildStackActions(BuildContext context, SlidableDelegateContext ctx) {
-    final Animation<double> animation = Tween(
+    final Animation<double> animation = Tween<double>(
       begin: 0.0,
       end: ctx.state.totalActionsExtent * ctx.state.dragSign,
     ).animate(ctx.state.actionsMoveAnimation);
@@ -529,7 +529,7 @@ class SlidableScrollDelegate extends SlidableStackDelegate {
         final double totalExtent =
             ctx.getMaxExtent(constraints) * ctx.state.totalActionsExtent;
 
-        final Animation<double> animation = Tween(
+        final Animation<double> animation = Tween<double>(
           begin: -totalExtent,
           end: 0.0,
         ).animate(ctx.state.actionsMoveAnimation);
@@ -1081,9 +1081,9 @@ class SlidableState extends State<Slidable>
         close();
       });
       sl.get<HapticUtil>().feedback(FeedbackType.selection);
-      final Future delayed = Future.delayed(const Duration(milliseconds: 150));
+      final Future<void> delayed = Future<void>.delayed(const Duration(milliseconds: 150));
       delayed.then((_) {
-        Future.delayed(const Duration(milliseconds: 100), () {
+        Future<void>.delayed(const Duration(milliseconds: 100), () {
           setState(() {
             _callbackComplete = false;
           });

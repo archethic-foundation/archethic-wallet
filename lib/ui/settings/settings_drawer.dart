@@ -986,7 +986,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         context,
                         AppLocalization.of(context).pinPadShuffle,
                         FontAwesomeIcons.random,
-                        _pinPadShuffleActive, onChanged: (_isSwitched) {
+                        _pinPadShuffleActive, onChanged: (bool _isSwitched) {
                       setState(() {
                         _pinPadShuffleActive = _isSwitched;
                         _isSwitched
@@ -1315,9 +1315,9 @@ class _SettingsSheetState extends State<SettingsSheet>
         expectedPin: expectedPin,
         description: AppLocalization.of(context).pinSeedBackup,
       );
-    }));
+    })) as bool;
     if (auth != null && auth) {
-      await Future.delayed(const Duration(milliseconds: 200));
+      await Future<void>.delayed(const Duration(milliseconds: 200));
       Navigator.of(context).pop();
     }
   }

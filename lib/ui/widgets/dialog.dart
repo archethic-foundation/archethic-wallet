@@ -216,8 +216,8 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
         );
       case AnimationType.TRANSFER_TRANSFERRING:
         return Stack(
-          children: <Widget>[
-            const FlareActor(
+          children: const <Widget>[
+            FlareActor(
               'assets/transfer_animation_paperwalletonly.flr',
               animation: 'main',
               fit: BoxFit.contain,

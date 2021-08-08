@@ -10,7 +10,7 @@ import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 
 class LineChartWidget {
-  List<FlSpot> data = [];
+  List<FlSpot> data = <FlSpot>[];
   double minY = 0;
   double minX = 0;
   double maxY = 0;
@@ -81,7 +81,7 @@ class LineChartWidget {
                         ],
                       )
                     : Row(
-                        children: [
+                        children: <Widget>[
                           Text(
                             StateContainer.of(context)
                                     .chartInfos
@@ -134,7 +134,7 @@ class LineChartWidget {
   }
 
   static LineChartData mainData(BuildContext context) {
-    final List<Color> gradientColors = [
+    final List<Color> gradientColors = <Color>[
       StateContainer.of(context).curTheme.backgroundDark!,
       StateContainer.of(context).curTheme.backgroundDarkest!,
     ];
@@ -179,7 +179,7 @@ class LineChartWidget {
       maxX: StateContainer.of(context).chartInfos.maxX,
       minY: StateContainer.of(context).chartInfos.minY,
       maxY: StateContainer.of(context).chartInfos.maxY,
-      lineBarsData: [
+      lineBarsData: <LineChartBarData>[
         LineChartBarData(
           spots: StateContainer.of(context).chartInfos.data,
           isCurved: true,

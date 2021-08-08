@@ -103,7 +103,7 @@ class DBHelper {
   Future<Contact> getContactWithName(String name) async {
     final Database dbClient = await db;
     final List<Map> list = await dbClient
-        .rawQuery('SELECT * FROM Contacts WHERE name = ?', [name]);
+        .rawQuery('SELECT * FROM Contacts WHERE name = ?', <String>[name]);
     if (list.isNotEmpty) {
       return Contact(
         id: list[0]['id'],
@@ -118,7 +118,7 @@ class DBHelper {
     final Database dbClient = await db;
     final int count = Sqflite.firstIntValue(await dbClient.rawQuery(
         'SELECT count(*) FROM Contacts WHERE lower(name) = ?',
-        [name.toLowerCase()]));
+        <String>[name.toLowerCase()]));
     return count > 0;
   }
 
@@ -133,7 +133,7 @@ class DBHelper {
     final Database dbClient = await db;
     return await dbClient.rawInsert(
         'INSERT INTO Contacts (name, address) values(?, ?)',
-        [contact.name, contact.address]);
+        <String>[contact.name, contact.address]);
   }
 
   Future<int> saveContacts(List<Contact> contacts) async {
@@ -235,7 +235,7 @@ class DBHelper {
   Future<int> deleteAccount(Account account) async {
     final Database dbClient = await db;
     return await dbClient.rawDelete(
-        'DELETE FROM Accounts WHERE acct_index = ?', [account.index]);
+        'DELETE FROM Accounts WHERE acct_index = ?', <int>[account.index]);
   }
 
   Future<int> saveAccount(Account account) async {

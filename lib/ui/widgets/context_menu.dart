@@ -94,7 +94,7 @@ class _ContextMenuState extends State<ContextMenu> {
                 widget.duration ?? const Duration(milliseconds: 100),
             pageBuilder: (BuildContext context, Animation<double> animation,
                 Animation<double> secondaryAnimation) {
-              animation = Tween(begin: 0.0, end: 1.0).animate(animation);
+              animation = Tween<double>(begin: 0.0, end: 1.0).animate(animation);
               return FadeTransition(
                   opacity: animation,
                   child: FocusedMenuDetails(
@@ -185,7 +185,7 @@ class FocusedMenuDetails extends StatelessWidget {
             Positioned(
               top: topOffset,
               left: leftOffset,
-              child: TweenAnimationBuilder(
+              child: TweenAnimationBuilder<double>(
                 duration: const Duration(milliseconds: 200),
                 builder: (BuildContext context, dynamic value, Widget? child) {
                   return Transform.scale(
@@ -194,7 +194,7 @@ class FocusedMenuDetails extends StatelessWidget {
                     child: child,
                   );
                 },
-                tween: Tween(begin: 0.0, end: 1.0),
+                tween: Tween<double>(begin: 0.0, end: 1.0),
                 child: Container(
                   width: maxMenuWidth,
                   height: menuHeight,
@@ -203,8 +203,8 @@ class FocusedMenuDetails extends StatelessWidget {
                           color: Colors.grey.shade200,
                           borderRadius:
                               const BorderRadius.all(Radius.circular(5.0)),
-                          boxShadow: <BoxShadow>[
-                            const BoxShadow(
+                          boxShadow: const <BoxShadow>[
+                            BoxShadow(
                                 color: Colors.black38,
                                 blurRadius: 10,
                                 spreadRadius: 1)
@@ -235,14 +235,14 @@ class FocusedMenuDetails extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       item.title,
-                                      if (item.trailingIcon != null) ...[
+                                      if (item.trailingIcon != null) ...<Icon>[
                                         item.trailingIcon!
                                       ]
                                     ],
                                   ),
                                 )));
                         if (animateMenu) {
-                          return TweenAnimationBuilder(
+                          return TweenAnimationBuilder<double>(
                               builder: (BuildContext context, dynamic value,
                                   Widget? child) {
                                 return Transform(
@@ -251,7 +251,7 @@ class FocusedMenuDetails extends StatelessWidget {
                                   child: child,
                                 );
                               },
-                              tween: Tween(begin: 1.0, end: 0.0),
+                              tween: Tween<double>(begin: 1.0, end: 0.0),
                               duration: Duration(milliseconds: index * 200),
                               child: listItem);
                         } else {

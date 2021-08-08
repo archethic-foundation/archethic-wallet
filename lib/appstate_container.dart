@@ -28,7 +28,6 @@ import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 import 'util/sharedprefsutil.dart';
 
-// Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show
         uint8ListToHex,
@@ -39,6 +38,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
         CoinsPriceResponse,
         Transaction,
         CoinsCurrentDataResponse;
+
 
 class _InheritedStateContainer extends InheritedWidget {
   const _InheritedStateContainer({
