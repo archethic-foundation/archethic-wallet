@@ -11,8 +11,7 @@ import 'package:archethic_mobile_wallet/ui/widgets/context_menu.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/context_menu_item.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show uint8ListToHex, NFTTransfer;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show NFTTransfer;
 
 class NftTransferListWidget extends StatefulWidget {
   NftTransferListWidget(
@@ -88,7 +87,7 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                             menuItems: <ContextMenuItem>[
                               ContextMenuItem(
                                   title: Text(
-                                      AppLocalization.of(context).getOption,
+                                      AppLocalization.of(context)!.getOption,
                                       style: AppStyles
                                           .textStyleSize14W700ContextMenuPrimary(
                                               context)),
@@ -110,7 +109,7 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                                   }),
                               ContextMenuItem(
                                   title: Text(
-                                    AppLocalization.of(context).deleteOption,
+                                    AppLocalization.of(context)!.deleteOption,
                                     style: AppStyles
                                         .textStyleSize14W700ContextMenuTextRed(
                                             context),

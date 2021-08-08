@@ -103,19 +103,19 @@
     "type": "text",
     "placeholders": {}
   },
-  "addressCopied": "Addresse copiée",
+  "addressCopied": "Adresse copiée",
   "@addressCopied": {
     "description": "receive_copied",
     "type": "text",
     "placeholders": {}
   },
-  "copyAddress": "Copier l'addresse",
+  "copyAddress": "Copier l'adresse",
   "@copyAddress": {
     "description": "receive_copy_cta",
     "type": "text",
     "placeholders": {}
   },
-  "addressHint": "Saisie l'addresse",
+  "addressHint": "Saisie l'adresse",
   "@addressHint": {
     "description": "send_address_hint",
     "type": "text",
@@ -175,7 +175,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "addressBookHeader": "Carnet d'addresses",
+  "addressBookHeader": "Carnet d'adresses",
   "@addressBookHeader": {
     "description": "",
     "type": "text",
@@ -295,7 +295,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "enterAddress": "Saisissez une addresse",
+  "enterAddress": "Saisissez une adresse",
   "@enterAddress": {
     "description": "enter_address",
     "type": "text",
@@ -823,7 +823,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "addressInfos": "Informations addresse",
+  "addressInfos": "Informations adresse",
   "@addressInfos": {
     "description": "",
     "type": "text",

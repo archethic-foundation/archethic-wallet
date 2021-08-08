@@ -50,15 +50,15 @@ class QRcodeDisplay {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child:
-                            QrImage(
-                              data: StateContainer.of(context)
-                                  .selectedAccount
-                                  .lastAddress,
-                              version: QrVersions.auto,
-                              size: 100.0,
-                            ),),
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: QrImage(
+                                data: StateContainer.of(context)
+                                    .selectedAccount
+                                    .lastAddress,
+                                version: QrVersions.auto,
+                                size: 100.0,
+                              ),
+                            ),
                           ],
                         ),
                       ],

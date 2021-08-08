@@ -29,8 +29,7 @@ class AppWallet {
     _transactionChainLoading = transactionChainLoading ?? true;
   }
 
-  bool
-      _transactionChainLoading; 
+  bool _transactionChainLoading;
   String _address;
   Balance _accountBalance;
   String _localCurrencyPrice;
@@ -122,7 +121,8 @@ class AppWallet {
     _history = value;
   }
 
-  bool get transactionChainLoading => _transactionChainLoading == null ? true : _transactionChainLoading;
+  bool get transactionChainLoading =>
+      _transactionChainLoading == null ? true : _transactionChainLoading;
 
   set transactionChainLoading(bool value) {
     _transactionChainLoading = value;

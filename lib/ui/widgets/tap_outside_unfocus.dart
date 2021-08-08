@@ -1,11 +1,9 @@
-// @dart=2.9
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 /// Simple wrapper that will clear focus when a tap is detected outside its boundaries
 class TapOutsideUnfocus extends StatelessWidget {
-  const TapOutsideUnfocus({@required this.child});
+  const TapOutsideUnfocus({required this.child});
 
   final Widget child;
 

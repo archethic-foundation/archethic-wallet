@@ -10,7 +10,6 @@ import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/address.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/nft/add_nft.dart';
 import 'package:archethic_mobile_wallet/ui/transfer/transfer_nft_sheet.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 
@@ -19,7 +18,7 @@ class NftListWidget {
     return StateContainer.of(context).wallet.transactionChainLoading == true
         ? Center(child: CircularProgressIndicator())
         : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(AppLocalization.of(context).nftHeader,
+            Text(AppLocalization.of(context)!.nftHeader,
                 style: AppStyles.textStyleSize14W600BackgroundDarkest(context)),
             Stack(
               children: <Widget>[
@@ -74,11 +73,11 @@ class NftListWidget {
                         context: context,
                         widget: TransferNftSheet(
                           contactsRef: StateContainer.of(context).contactsRef,
-                          title: AppLocalization.of(context)
+                          title: AppLocalization.of(context)!
                               .transferNFTName
                               .replaceAll('%1', nftBalance.address!),
                           actionButtonTitle:
-                              AppLocalization.of(context).transferNFT,
+                              AppLocalization.of(context)!.transferNFT,
                           address: nftBalance.address,
                         ));
                   },

@@ -282,9 +282,9 @@ class StateContainerState extends State<StateContainer> {
   }
 
   Future<void> requestUpdateRecentTransactions() async {
-     setState(() {
-        wallet.transactionChainLoading = true;
-      });
+    setState(() {
+      wallet.transactionChainLoading = true;
+    });
     final List<Transaction> transactionChain = await sl
         .get<AppService>()
         .getTransactionChain(selectedAccount.lastAddress);

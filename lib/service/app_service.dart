@@ -35,7 +35,7 @@ class AppService {
     balance = await sl.get<ApiService>().fetchBalance(address);
     final List<NftBalance> balanceNftList =
         List<NftBalance>.empty(growable: true);
-    if (balance != null && balance.nft != null) {
+    if (balance.nft != null) {
       for (int i = 0; i < balance.nft!.length; i++) {
         NftBalance balanceNft = NftBalance();
         balanceNft = balance.nft![i];

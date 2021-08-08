@@ -68,7 +68,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
           Navigator.of(context).pop();
         }
         UIUtil.showSnackbar(
-            AppLocalization.of(context).sendError +
+            AppLocalization.of(context)!.sendError +
                 ' (' +
                 event.response! +
                 ')',
@@ -148,7 +148,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          AppLocalization.of(context).addNFTHeader,
+                          AppLocalization.of(context)!.addNFTHeader,
                           style: AppStyles.textStyleSize24W700Primary(context),
                         ),
                       ],
@@ -181,7 +181,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                     ),
                   ),
                   Text(
-                      AppLocalization.of(context).fees +
+                      AppLocalization.of(context)!.fees +
                           ': ' +
                           sl
                               .get<AppService>()
@@ -193,7 +193,8 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                   Padding(
                       padding: const EdgeInsets.only(left: 30.0, right: 30.0),
                       child: Text(
-                          AppLocalization.of(context).addNFTConfirmationMessage,
+                          AppLocalization.of(context)!
+                              .addNFTConfirmationMessage,
                           style:
                               AppStyles.textStyleSize14W600Primary(context))),
                   const SizedBox(
@@ -203,7 +204,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                     padding: const EdgeInsets.only(left: 40.0),
                     child: Row(
                       children: [
-                        Text(AppLocalization.of(context).nftName,
+                        Text(AppLocalization.of(context)!.nftName,
                             style:
                                 AppStyles.textStyleSize14W600Primary(context)),
                         Text(widget.nftName!,
@@ -216,7 +217,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                     padding: const EdgeInsets.only(left: 40.0),
                     child: Row(
                       children: [
-                        Text(AppLocalization.of(context).nftInitialSupply,
+                        Text(AppLocalization.of(context)!.nftInitialSupply,
                             style:
                                 AppStyles.textStyleSize14W600Primary(context)),
                         Text(widget.nftInitialSupply!.toString(),
@@ -241,7 +242,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                       AppButton.buildAppButton(
                           context,
                           AppButtonType.PRIMARY,
-                          AppLocalization.of(context).confirm,
+                          AppLocalization.of(context)!.confirm,
                           Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
                         // Authenticate
                         final AuthenticationMethod authMethod =
@@ -255,7 +256,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                                 .get<BiometricUtil>()
                                 .authenticateWithBiometrics(
                                     context,
-                                    AppLocalization.of(context)
+                                    AppLocalization.of(context)!
                                         .confirmBiometrics);
                             if (authenticated) {
                               sl
@@ -280,7 +281,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                       AppButton.buildAppButton(
                           context,
                           AppButtonType.PRIMARY,
-                          AppLocalization.of(context).cancel,
+                          AppLocalization.of(context)!.cancel,
                           Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                         Navigator.of(context).pop();
                       }),

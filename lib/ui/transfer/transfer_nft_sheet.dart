@@ -218,7 +218,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                         children: <Widget>[
                           // Header
                           AutoSizeText(
-                            (widget.title ?? AppLocalization.of(context).send)!,
+                            (widget.title ?? AppLocalization.of(context)!.send),
                             style:
                                 AppStyles.textStyleSize24W700Primary(context),
                             textAlign: TextAlign.center,
@@ -411,7 +411,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                           horizontal: 30),
                                       child: Text(
                                         '+ ' +
-                                            AppLocalization.of(context).fees +
+                                            AppLocalization.of(context)!.fees +
                                             ': ' +
                                             sl
                                                 .get<AppService>()
@@ -430,9 +430,9 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                             context,
                                             AppButtonType.PRIMARY,
                                             isInUcoTransferList()
-                                                ? AppLocalization.of(context)
+                                                ? AppLocalization.of(context)!
                                                     .update
-                                                : AppLocalization.of(context)
+                                                : AppLocalization.of(context)!
                                                     .add,
                                             Dimens.BUTTON_TOP_DIMENS,
                                             onPressed: () {
@@ -455,7 +455,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                                   setState(() {
                                                     _addressValidationText =
                                                         AppLocalization.of(
-                                                                context)
+                                                                context)!
                                                             .contactInvalid;
                                                     validRequest = false;
                                                   });
@@ -569,7 +569,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                               ? AppButtonType.PRIMARY_OUTLINE
                               : AppButtonType.PRIMARY,
                           widget.actionButtonTitle ??
-                              AppLocalization.of(context).transferUCO,
+                              AppLocalization.of(context)!.transferUCO,
                           Dimens.BUTTON_TOP_DIMENS, onPressed: () {
                         if (nftTransferList.isNotEmpty) {
                           validRequest = _validateRequest();
@@ -584,7 +584,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                               if (contact == null) {
                                 setState(() {
                                   _addressValidationText =
-                                      AppLocalization.of(context)
+                                      AppLocalization.of(context)!
                                           .contactInvalid;
                                 });
                               } else {
@@ -618,14 +618,14 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                       AppButton.buildAppButton(
                           context,
                           AppButtonType.PRIMARY,
-                          AppLocalization.of(context).scanQrCode,
+                          AppLocalization.of(context)!.scanQrCode,
                           Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () async {
                         UIUtil.cancelLockEvent();
                         final String scanResult = await UserDataUtil.getQRData(
                             DataType.ADDRESS, context);
                         if (scanResult == null) {
                           UIUtil.showSnackbar(
-                              AppLocalization.of(context).qrInvalidAddress,
+                              AppLocalization.of(context)!.qrInvalidAddress,
                               context);
                         } else if (QRScanErrs.ERROR_LIST.contains(scanResult)) {
                           return;
@@ -674,7 +674,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                                 amountBigInt < BigInt.from(10).pow(24)) {
                               hasError = true;
                               UIUtil.showSnackbar(
-                                  AppLocalization.of(context)
+                                  AppLocalization.of(context)!
                                       .minimumSend
                                       .replaceAll('%1', '0.000001'),
                                   context);
@@ -812,7 +812,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
     if (_sendAmountController!.text.trim().isEmpty) {
       isValid = false;
       setState(() {
-        _amountValidationText = AppLocalization.of(context).amountMissing;
+        _amountValidationText = AppLocalization.of(context)!.amountMissing;
       });
     } else {
       // Estimation of fees
@@ -827,13 +827,13 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
       if (sendAmount == null) {
         isValid = false;
         setState(() {
-          _amountValidationText = AppLocalization.of(context).amountMissing;
+          _amountValidationText = AppLocalization.of(context)!.amountMissing;
         });
       } else if (sendAmount + estimationFees > balanceRaw) {
         isValid = false;
         setState(() {
           _amountValidationText =
-              AppLocalization.of(context).insufficientBalance;
+              AppLocalization.of(context)!.insufficientBalance;
         });
       }
     }
@@ -842,13 +842,13 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
     if (_sendAddressController!.text.trim().isEmpty) {
       isValid = false;
       setState(() {
-        _addressValidationText = AppLocalization.of(context).addressMissing;
+        _addressValidationText = AppLocalization.of(context)!.addressMissing;
         _pasteButtonVisible = true;
       });
     } else if (!isContact && !Address(_sendAddressController!.text).isValid()) {
       isValid = false;
       setState(() {
-        _addressValidationText = AppLocalization.of(context).invalidAddress;
+        _addressValidationText = AppLocalization.of(context)!.invalidAddress;
         _pasteButtonVisible = true;
       });
     } else if (!isContact) {
@@ -886,7 +886,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
       maxLines: null,
       autocorrect: false,
       hintText:
-          _amountHint == null ? '' : AppLocalization.of(context).enterAmount,
+          _amountHint == null ? '' : AppLocalization.of(context)!.enterAmount,
       suffixButton: TextFieldButton(
         icon: AppIcons.max,
         onPressed: () {
@@ -944,7 +944,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
         autocorrect: false,
         hintText: _addressHint == null
             ? ''
-            : AppLocalization.of(context).enterAddress,
+            : AppLocalization.of(context)!.enterAddress,
         prefixButton: TextFieldButton(
           icon: AppIcons.at,
           onPressed: () {

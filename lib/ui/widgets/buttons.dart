@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -23,7 +21,7 @@ class AppButton {
   // Primary button builder
   static Widget buildAppButton(BuildContext context, AppButtonType type,
       String buttonText, List<double> dimens,
-      {Function onPressed, bool disabled = false}) {
+      {required Function onPressed, bool disabled = false}) {
     switch (type) {
       case AppButtonType.PRIMARY:
         return Expanded(
@@ -31,7 +29,7 @@ class AppButton {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),
               boxShadow: <BoxShadow>[
-                StateContainer.of(context).curTheme.boxShadowButton
+                StateContainer.of(context).curTheme.boxShadowButton!
               ],
             ),
             height: 55,
@@ -67,7 +65,7 @@ class AppButton {
               color: StateContainer.of(context).curTheme.backgroundDark,
               borderRadius: BorderRadius.circular(100),
               boxShadow: <BoxShadow>[
-                StateContainer.of(context).curTheme.boxShadowButton
+                StateContainer.of(context).curTheme.boxShadowButton!
               ],
             ),
             height: 55,
@@ -98,7 +96,7 @@ class AppButton {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),
               boxShadow: <BoxShadow>[
-                StateContainer.of(context).curTheme.boxShadowButton
+                StateContainer.of(context).curTheme.boxShadowButton!
               ],
             ),
             height: 55,
@@ -136,7 +134,7 @@ class AppButton {
               color: StateContainer.of(context).curTheme.backgroundDark,
               borderRadius: BorderRadius.circular(100),
               boxShadow: <BoxShadow>[
-                StateContainer.of(context).curTheme.boxShadowButton
+                StateContainer.of(context).curTheme.boxShadowButton!
               ],
             ),
             height: 55,
@@ -166,7 +164,7 @@ class AppButton {
               color: StateContainer.of(context).curTheme.backgroundDark,
               borderRadius: BorderRadius.circular(100),
               boxShadow: <BoxShadow>[
-                StateContainer.of(context).curTheme.boxShadowButton
+                StateContainer.of(context).curTheme.boxShadowButton!
               ],
             ),
             height: 55,

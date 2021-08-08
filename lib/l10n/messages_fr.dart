@@ -33,15 +33,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "addressBookDesc": MessageLookupByLibrary.simpleMessage(
             "Créer et gérer les adresses les plus fréquemment utilisées"),
         "addressBookHeader":
-            MessageLookupByLibrary.simpleMessage("Carnet d\'addresses"),
-        "addressCopied":
-            MessageLookupByLibrary.simpleMessage("Addresse copiée"),
+            MessageLookupByLibrary.simpleMessage("Carnet d\'adresses"),
+        "addressCopied": MessageLookupByLibrary.simpleMessage("Adresse copiée"),
         "addressHint":
-            MessageLookupByLibrary.simpleMessage("Saisie l\'addresse"),
+            MessageLookupByLibrary.simpleMessage("Saisie l\'adresse"),
         "addressInfos":
-            MessageLookupByLibrary.simpleMessage("Informations addresse"),
-        "addressMising":
-            MessageLookupByLibrary.simpleMessage("Veuillez saisir une adresse"),
+            MessageLookupByLibrary.simpleMessage("Informations adresse"),
         "amountMissing":
             MessageLookupByLibrary.simpleMessage("Veuillez saisir un montant"),
         "authMethod": MessageLookupByLibrary.simpleMessage("Méthode d\'auth."),
@@ -52,7 +49,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "backupSeed": MessageLookupByLibrary.simpleMessage("Backup Seed"),
         "biometricsMethod": MessageLookupByLibrary.simpleMessage("Biométrie"),
         "cancel": MessageLookupByLibrary.simpleMessage("Annuler"),
-        "changeCurrency": MessageLookupByLibrary.simpleMessage("Monnaie"),
         "close": MessageLookupByLibrary.simpleMessage("Fermer"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirmer"),
         "confirmPasswordHint":
@@ -75,7 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "copied": MessageLookupByLibrary.simpleMessage("Copié"),
         "copy": MessageLookupByLibrary.simpleMessage("Copier"),
         "copyAddress":
-            MessageLookupByLibrary.simpleMessage("Copier l\'addresse"),
+            MessageLookupByLibrary.simpleMessage("Copier l\'adresse"),
         "createAPasswordHeader":
             MessageLookupByLibrary.simpleMessage("Créer un mot de passe."),
         "createPasswordFirstParagraph": MessageLookupByLibrary.simpleMessage(
@@ -105,7 +101,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "encryptionFailedError": MessageLookupByLibrary.simpleMessage(
             "La définition du mot de passe du wallet a échoué"),
         "enterAddress":
-            MessageLookupByLibrary.simpleMessage("Saisissez une addresse"),
+            MessageLookupByLibrary.simpleMessage("Saisissez une adresse"),
         "enterAmount":
             MessageLookupByLibrary.simpleMessage("Saisissez un montant"),
         "enterEndpoint":

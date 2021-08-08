@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:event_taxi/event_taxi.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
 
 // Project imports:
@@ -21,7 +19,6 @@ import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/nft/add_nft_confirm.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/app_text_field.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
 
@@ -46,15 +43,6 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
   String? _initialSupplyValidationText;
 
   bool? animationOpen;
-
-  void _showSendingAnimation(BuildContext context) {
-    animationOpen = true;
-    Navigator.of(context).push(AnimationLoadingOverlay(
-        AnimationType.SEND,
-        StateContainer.of(context).curTheme.animationOverlayStrong,
-        StateContainer.of(context).curTheme.animationOverlayMedium,
-        onPoppedCallback: () => animationOpen = false));
-  }
 
   @override
   void initState() {
@@ -131,7 +119,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               AutoSizeText(
-                AppLocalization.of(context).addNFTHeader,
+                AppLocalization.of(context)!.addNFTHeader,
                 style: AppStyles.textStyleSize24W700Primary(context),
                 textAlign: TextAlign.center,
                 maxLines: 1,
@@ -163,7 +151,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
             ),
           ),
           Text(
-              AppLocalization.of(context).fees +
+              AppLocalization.of(context)!.fees +
                   ': ' +
                   sl.get<AppService>().getFeesEstimation().toStringAsFixed(5) +
                   ' UCO',
@@ -177,7 +165,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
               child: Column(
                 children: <Widget>[
                   Text(
-                    AppLocalization.of(context).nftNameHint,
+                    AppLocalization.of(context)!.nftNameHint,
                     style: AppStyles.textStyleSize16W200Primary(context),
                   ),
                   AppTextField(
@@ -186,7 +174,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                     controller: _nameController,
                     textInputAction: TextInputAction.next,
                     hintText: _showNameHint!
-                        ? AppLocalization.of(context).nftNameHint
+                        ? AppLocalization.of(context)!.nftNameHint
                         : '',
                     keyboardType: TextInputType.text,
                     style: AppStyles.textStyleSize16W600Primary(context),
@@ -201,7 +189,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                   ),
                   const SizedBox(height: 30),
                   Text(
-                    AppLocalization.of(context).nftInitialSupplyHint,
+                    AppLocalization.of(context)!.nftInitialSupplyHint,
                     style: AppStyles.textStyleSize16W200Primary(context),
                   ),
                   AppTextField(
@@ -210,7 +198,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                     controller: _initialSupplyController,
                     textInputAction: TextInputAction.done,
                     hintText: _showInitialSupplyHint!
-                        ? AppLocalization.of(context).nftInitialSupplyHint
+                        ? AppLocalization.of(context)!.nftInitialSupplyHint
                         : '',
                     keyboardType: TextInputType.number,
                     style: AppStyles.textStyleSize16W600Primary(context),
@@ -238,7 +226,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                     AppButton.buildAppButton(
                         context,
                         AppButtonType.PRIMARY,
-                        AppLocalization.of(context).addNFT,
+                        AppLocalization.of(context)!.addNFT,
                         Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
                       if (await validateForm()) {
                         Sheets.showAppHeightNineSheet(
@@ -258,7 +246,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                     AppButton.buildAppButton(
                         context,
                         AppButtonType.PRIMARY,
-                        AppLocalization.of(context).close,
+                        AppLocalization.of(context)!.close,
                         Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                       Navigator.pop(context);
                     }),
@@ -281,14 +269,14 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
     if (_nameController!.text.isEmpty) {
       isValid = false;
       setState(() {
-        _nameValidationText = AppLocalization.of(context).nftNameMissing;
+        _nameValidationText = AppLocalization.of(context)!.nftNameMissing;
       });
     }
     if (_initialSupplyController!.text.isEmpty) {
       isValid = false;
       setState(() {
         _initialSupplyValidationText =
-            AppLocalization.of(context).nftInitialSupplyMissing;
+            AppLocalization.of(context)!.nftInitialSupplyMissing;
       });
     } else {
       if (int.tryParse(_initialSupplyController!.text) == null ||
@@ -296,7 +284,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
         isValid = false;
         setState(() {
           _initialSupplyValidationText =
-              AppLocalization.of(context).nftInitialSupplyPositive;
+              AppLocalization.of(context)!.nftInitialSupplyPositive;
         });
       }
     }

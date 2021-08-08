@@ -82,7 +82,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
           Navigator.of(context).pop();
         }
         UIUtil.showSnackbar(
-            AppLocalization.of(context).sendError +
+            AppLocalization.of(context)!.sendError +
                 ' (' +
                 event.response! +
                 ')',
@@ -161,14 +161,14 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       children: <Widget>[
                         Text(
                           (widget.title ??
-                              AppLocalization.of(context).transfering)!,
+                              AppLocalization.of(context)!.transfering),
                           style: AppStyles.textStyleSize24W700Primary(context),
                         ),
                       ],
                     ),
                   ),
                   Text(
-                      AppLocalization.of(context).fees +
+                      AppLocalization.of(context)!.fees +
                           ': ' +
                           sl
                               .get<AppService>()
@@ -211,7 +211,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       AppButton.buildAppButton(
                           context,
                           AppButtonType.PRIMARY,
-                          AppLocalization.of(context).confirm,
+                          AppLocalization.of(context)!.confirm,
                           Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
                         // Authenticate
                         final AuthenticationMethod authMethod =
@@ -225,7 +225,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                                 .get<BiometricUtil>()
                                 .authenticateWithBiometrics(
                                     context,
-                                    AppLocalization.of(context)
+                                    AppLocalization.of(context)!
                                         .confirmBiometrics);
                             if (authenticated) {
                               sl
@@ -250,7 +250,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       AppButton.buildAppButton(
                           context,
                           AppButtonType.PRIMARY,
-                          AppLocalization.of(context).cancel,
+                          AppLocalization.of(context)!.cancel,
                           Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                         Navigator.of(context).pop();
                       }),

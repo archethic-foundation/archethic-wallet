@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -8,6 +7,7 @@ import 'package:intl/intl.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/address.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 
@@ -22,7 +22,7 @@ class TxListWidget {
               Padding(
                   padding: const EdgeInsets.only(left: 5.0),
                   child: Text(
-                      AppLocalization.of(context).recentTransactionsHeader,
+                      AppLocalization.of(context)!.recentTransactionsHeader,
                       style: AppStyles.textStyleSize14W600BackgroundDarkest(
                           context))),
               SizedBox(
@@ -68,7 +68,7 @@ class TxListWidget {
               Padding(
                   padding: const EdgeInsets.only(left: 5.0),
                   child: Text(
-                      AppLocalization.of(context).recentTransactionsHeader,
+                      AppLocalization.of(context)!.recentTransactionsHeader,
                       style: AppStyles.textStyleSize14W600BackgroundDarkest(
                           context))),
               SizedBox(

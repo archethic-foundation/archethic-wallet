@@ -86,7 +86,7 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                             menuItems: <ContextMenuItem>[
                               ContextMenuItem(
                                   title: Text(
-                                      AppLocalization.of(context).getOption,
+                                      AppLocalization.of(context)!.getOption,
                                       style: AppStyles
                                           .textStyleSize14W700ContextMenuPrimary(
                                               context)),
@@ -108,7 +108,7 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                                   }),
                               ContextMenuItem(
                                   title: Text(
-                                    AppLocalization.of(context).deleteOption,
+                                    AppLocalization.of(context)!.deleteOption,
                                     style: AppStyles
                                         .textStyleSize14W700ContextMenuTextRed(
                                             context),

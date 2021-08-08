@@ -22,6 +22,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function>{
+        "aboutGeneralTermsAndConditions":
+            MessageLookupByLibrary.simpleMessage("General Terms & Conditions"),
+        "aboutHeader": MessageLookupByLibrary.simpleMessage("About"),
+        "aboutPrivacyPolicy":
+            MessageLookupByLibrary.simpleMessage("Privacy Policy"),
+        "aboutWalletServiceTerms":
+            MessageLookupByLibrary.simpleMessage("Wallet Service Terms"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
         "accounts": MessageLookupByLibrary.simpleMessage("Accounts"),
         "ackBackedUp": MessageLookupByLibrary.simpleMessage(
@@ -29,6 +36,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "addAccount": MessageLookupByLibrary.simpleMessage("Add Account"),
         "addContact": MessageLookupByLibrary.simpleMessage("Add Contact"),
+        "addNFT": MessageLookupByLibrary.simpleMessage("Add NFT"),
+        "addNFTConfirmationMessage": MessageLookupByLibrary.simpleMessage(
+            "Do you confirm the creation of the following NFT ?"),
+        "addNFTHeader": MessageLookupByLibrary.simpleMessage("Add NFT"),
         "addressBookDesc": MessageLookupByLibrary.simpleMessage(
             "Create and manage frequently-used addresses"),
         "addressBookHeader":
@@ -37,7 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addressHint": MessageLookupByLibrary.simpleMessage("Enter Address"),
         "addressInfos":
             MessageLookupByLibrary.simpleMessage("Address informations"),
-        "addressMising":
+        "addressMissing":
             MessageLookupByLibrary.simpleMessage("Please Enter an Address"),
         "amountMissing":
             MessageLookupByLibrary.simpleMessage("Please Enter an Amount"),
@@ -48,9 +59,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "backupSeed": MessageLookupByLibrary.simpleMessage("Backup Seed"),
         "biometricsMethod": MessageLookupByLibrary.simpleMessage("Biometrics"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
-        "changeCurrency": MessageLookupByLibrary.simpleMessage("Currency"),
+        "changeCurrencyDesc": MessageLookupByLibrary.simpleMessage(
+            "Select the fiat currency you would like to display alongside UCO"),
+        "changeCurrencyHeader":
+            MessageLookupByLibrary.simpleMessage("Currency"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "confirmBiometrics":
+            MessageLookupByLibrary.simpleMessage("Authenticate to Confirm"),
         "confirmPasswordHint":
             MessageLookupByLibrary.simpleMessage("Confirm the password"),
         "connectWallet":
@@ -146,6 +162,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "minimumSend": MessageLookupByLibrary.simpleMessage(
             "Minimum send amount is %1 UCO"),
         "nextButton": MessageLookupByLibrary.simpleMessage("Next"),
+        "nftHeader": MessageLookupByLibrary.simpleMessage("NFT"),
+        "nftHeaderDesc": MessageLookupByLibrary.simpleMessage(
+            "Manage your Non Financial Tokens"),
+        "nftInitialSupply":
+            MessageLookupByLibrary.simpleMessage("Initial supply: "),
+        "nftInitialSupplyHint":
+            MessageLookupByLibrary.simpleMessage("Enter an initial supply"),
+        "nftInitialSupplyMissing": MessageLookupByLibrary.simpleMessage(
+            "Choose an initial supply for the NFT"),
+        "nftInitialSupplyPositive": MessageLookupByLibrary.simpleMessage(
+            "The initial supply should be > 0"),
+        "nftName": MessageLookupByLibrary.simpleMessage("Name: "),
+        "nftNameHint": MessageLookupByLibrary.simpleMessage("Enter a name"),
+        "nftNameMissing":
+            MessageLookupByLibrary.simpleMessage("Choose a Name for the NFT"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "noSkipButton": MessageLookupByLibrary.simpleMessage("No, Skip"),
         "nodesHeader": MessageLookupByLibrary.simpleMessage("Nodes"),
@@ -184,6 +215,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "qrUnknownError":
             MessageLookupByLibrary.simpleMessage("Could not Read QR Code"),
         "received": MessageLookupByLibrary.simpleMessage("Received"),
+        "recentTransactionsHeader":
+            MessageLookupByLibrary.simpleMessage("Recent transactions"),
         "releaseNoteHeader":
             MessageLookupByLibrary.simpleMessage("What\'s new"),
         "removeAccountText": MessageLookupByLibrary.simpleMessage(
@@ -239,6 +272,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "unlockPin":
             MessageLookupByLibrary.simpleMessage("Enter PIN to Unlock"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
+        "walletFAQDesc": MessageLookupByLibrary.simpleMessage(
+            "Have a question? Check here first!"),
+        "walletFAQHeader": MessageLookupByLibrary.simpleMessage("Wallet FAQ"),
         "warning": MessageLookupByLibrary.simpleMessage("Warning"),
         "welcomeText": MessageLookupByLibrary.simpleMessage(
             "Welcome to Internet of Trust.\n\nJoin the Internet of Trust with ArchEthic Public Blockchain by Uniris and be the only key.\n\nTo begin, you may connect to your decentralized wallet with your transaction chain seed."),

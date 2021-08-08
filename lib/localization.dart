@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:async';
 
@@ -29,7 +27,7 @@ class AppLocalization {
     });
   }
 
-  static AppLocalization of(BuildContext context) {
+  static AppLocalization? of(BuildContext context) {
     return Localizations.of<AppLocalization>(context, AppLocalization);
   }
 
@@ -817,13 +815,14 @@ class AppLocalization {
     return Intl.message('Do you confirm the creation of the following NFT ?',
         desc: '', name: 'addNFTConfirmationMessage');
   }
-  
+
   String get nftHeader {
     return Intl.message('NFT', desc: '', name: 'nftHeader');
   }
 
   String get nftHeaderDesc {
-    return Intl.message('Manage your Non Financial Tokens', desc: '', name: 'nftHeaderDesc');
+    return Intl.message('Manage your Non Financial Tokens',
+        desc: '', name: 'nftHeaderDesc');
   }
 
   String get nftNameHint {
@@ -845,8 +844,7 @@ class AppLocalization {
   }
 
   String get nftInitialSupply {
-    return Intl.message('Initial supply: ',
-        desc: '', name: 'nftInitialSupply');
+    return Intl.message('Initial supply: ', desc: '', name: 'nftInitialSupply');
   }
 
   String get nftInitialSupplyMissing {

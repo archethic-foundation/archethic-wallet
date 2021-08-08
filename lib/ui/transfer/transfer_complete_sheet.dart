@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/app_icons.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
@@ -54,7 +53,7 @@ class _TransferCompleteSheetState extends State<TransferCompleteSheet> {
                   Container(
                     alignment: const AlignmentDirectional(0, 0),
                     margin: const EdgeInsets.only(bottom: 25),
-                    child: Text(AppLocalization.of(context).transferSuccess,
+                    child: Text(AppLocalization.of(context)!.transferSuccess,
                         style: AppStyles.textStyleSize16W200Primary(context)),
                   ),
                 ],
@@ -70,7 +69,7 @@ class _TransferCompleteSheetState extends State<TransferCompleteSheet> {
                       AppButton.buildAppButton(
                           context,
                           AppButtonType.PRIMARY,
-                          AppLocalization.of(context).close,
+                          AppLocalization.of(context)!.close,
                           Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                         Navigator.of(context).pop();
                       }),

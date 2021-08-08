@@ -25,7 +25,6 @@ import 'package:archethic_mobile_wallet/model/device_unlock_option.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/contacts/add_contact.dart';
 import 'package:archethic_mobile_wallet/ui/nft/add_nft.dart';
 import 'package:archethic_mobile_wallet/ui/settings/contacts_widget.dart';
 import 'package:archethic_mobile_wallet/ui/settings/custom_url_widget.dart';

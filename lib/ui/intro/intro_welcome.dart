@@ -4,7 +4,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_svg/svg.dart';
 
 // Project imports:
@@ -117,7 +116,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                       AppButton.buildAppButton(
                           context,
                           AppButtonType.PRIMARY,
-                          AppLocalization.of(context).newWallet,
+                          AppLocalization.of(context)!.newWallet,
                           Dimens.BUTTON_TOP_DIMENS, onPressed: () {
                         Navigator.of(context)
                             .pushNamed('/intro_password_on_launch');

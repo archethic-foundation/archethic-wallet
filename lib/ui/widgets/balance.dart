@@ -18,7 +18,8 @@ import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 class BalanceDisplay {
   static Widget buildBalanceUCODisplay(
       BuildContext context, Animation<double> _opacityAnimation) {
-    return StateContainer.of(context).wallet == null || StateContainer.of(context).wallet.transactionChainLoading == true
+    return StateContainer.of(context).wallet == null ||
+            StateContainer.of(context).wallet.transactionChainLoading == true
         ? Stack(
             children: <Widget>[
               AspectRatio(

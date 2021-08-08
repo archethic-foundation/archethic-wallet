@@ -336,10 +336,9 @@ class _AppHomePageState extends State<AppHomePage>
 
   @override
   Widget build(BuildContext context) {
-    _displayReleaseNote
-        ? WidgetsBinding.instance
-            .addPostFrameCallback((_) => displayReleaseNote())
-        : null;
+    if (_displayReleaseNote)
+      WidgetsBinding.instance.addPostFrameCallback((_) => displayReleaseNote());
+
     // Create QR ahead of time because it improves performance this way
     if (receive == null && StateContainer.of(context).wallet != null) {
       paintQrCode();

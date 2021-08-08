@@ -40,7 +40,7 @@ class LanguageSetting extends SettingSelectionItem {
       case AvailableLanguage.ITALIAN:
         return 'Italiano (it)';
       default:
-        return AppLocalization.of(context).systemDefault;
+        return AppLocalization.of(context)!.systemDefault;
     }
   }
 
