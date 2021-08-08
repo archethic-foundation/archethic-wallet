@@ -67,18 +67,13 @@ class TxListWidget {
             children: [
               Padding(
                   padding: const EdgeInsets.only(left: 5.0),
-                  child: Text(
+                  child: transactions.length > 0 ? Text(
                       AppLocalization.of(context)!.recentTransactionsHeader,
                       style: AppStyles.textStyleSize14W600BackgroundDarkest(
+                          context)) : Text(AppLocalization.of(context)!.recentTransactionsNoTransactionYet, style: AppStyles.textStyleSize14W600Primary(
                           context))),
               SizedBox(
-                child: transactions.length == 0
-                    ? Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: Align(
-                            alignment: Alignment.center,
-                            child: Text('No transaction yet')))
-                    : Container(
+                child: Container(
                         child: Container(
                           height: MediaQuery.of(context).size.height - 200,
                           padding: const EdgeInsets.only(

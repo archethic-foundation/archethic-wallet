@@ -111,6 +111,11 @@ class AppLocalization {
         desc: '', name: 'recentTransactionsHeader');
   }
 
+  String get recentTransactionsNoTransactionYet {
+    return Intl.message('No transaction yet',
+        desc: '', name: 'recentTransactionsNoTransactionYet');
+  }
+
   String get addressCopied {
     return Intl.message('Address Copied',
         desc: 'receive_copied', name: 'addressCopied');

@@ -187,11 +187,12 @@ class _AppHomePageState extends State<AppHomePage>
 
         _startAnimation();
         StateContainer.of(context).updateWallet(account: event.account);
+        _disposeAnimation();
 
         StateContainer.of(context).wallet.transactionChainLoading = false;
       });
 
-      paintQrCode(address: event.account.lastAddress);
+      paintQrCode(event.account.lastAddress);
       if (event.delayPop) {
         Future.delayed(const Duration(milliseconds: 300), () {
           Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
@@ -274,12 +275,9 @@ class _AppHomePageState extends State<AppHomePage>
     }
   }
 
-  void paintQrCode({String address}) {
+  void paintQrCode(String address) {
     final QrPainter painter = QrPainter(
-      //data:
-      //    address == null ? StateContainer.of(context).wallet.address : address,
-      // TODO:
-      data: '05A2525C9C4FDDC02BA97554980A0CFFADA2AEB0650E3EAD05796275F05DDA85',
+      data: address,
       version: 6,
       gapless: false,
       errorCorrectionLevel: QrErrorCorrectLevel.Q,
@@ -338,11 +336,6 @@ class _AppHomePageState extends State<AppHomePage>
   Widget build(BuildContext context) {
     if (_displayReleaseNote)
       WidgetsBinding.instance.addPostFrameCallback((_) => displayReleaseNote());
-
-    // Create QR ahead of time because it improves performance this way
-    if (receive == null && StateContainer.of(context).wallet != null) {
-      paintQrCode();
-    }
 
     return Scaffold(
       extendBodyBehindAppBar: true,
