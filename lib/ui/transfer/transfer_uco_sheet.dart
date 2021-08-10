@@ -1034,7 +1034,9 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                   active: _localCurrencyMode,
                   currencyFormat: _localCurrencyFormat!)
             ]
-          : <LengthLimitingTextInputFormatter>[LengthLimitingTextInputFormatter(16)],
+          : <LengthLimitingTextInputFormatter>[
+              LengthLimitingTextInputFormatter(16)
+            ],
       onChanged: (String text) {
         // Always reset the error message to be less annoying
         setState(() {

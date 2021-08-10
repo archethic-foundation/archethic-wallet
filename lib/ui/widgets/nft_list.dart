@@ -17,7 +17,8 @@ class NftListWidget {
   static Widget buildNftList(BuildContext context) {
     return StateContainer.of(context).wallet.transactionChainLoading == true
         ? const Center(child: CircularProgressIndicator())
-        : Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+        : Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+            Widget>[
             Text(AppLocalization.of(context)!.nftHeader,
                 style: AppStyles.textStyleSize14W600BackgroundDarkest(context)),
             Stack(

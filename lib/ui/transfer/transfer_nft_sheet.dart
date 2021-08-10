@@ -569,7 +569,7 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
                               ? AppButtonType.PRIMARY_OUTLINE
                               : AppButtonType.PRIMARY,
                           widget.actionButtonTitle ??
-                              AppLocalization.of(context)!.transferUCO,
+                              AppLocalization.of(context)!.transferNFT,
                           Dimens.BUTTON_TOP_DIMENS, onPressed: () {
                         if (nftTransferList.isNotEmpty) {
                           validRequest = _validateRequest();
@@ -873,7 +873,9 @@ class _TransferNftSheetState extends State<TransferNftSheet> {
               LengthLimitingTextInputFormatter(16),
               CurrencyFormatter(maxDecimalDigits: 4),
             ]
-          : <LengthLimitingTextInputFormatter>[LengthLimitingTextInputFormatter(16)],
+          : <LengthLimitingTextInputFormatter>[
+              LengthLimitingTextInputFormatter(16)
+            ],
       onChanged: (String text) {
         // Always reset the error message to be less annoying
         setState(() {

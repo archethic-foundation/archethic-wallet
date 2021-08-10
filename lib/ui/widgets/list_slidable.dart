@@ -1081,7 +1081,8 @@ class SlidableState extends State<Slidable>
         close();
       });
       sl.get<HapticUtil>().feedback(FeedbackType.selection);
-      final Future<void> delayed = Future<void>.delayed(const Duration(milliseconds: 150));
+      final Future<void> delayed =
+          Future<void>.delayed(const Duration(milliseconds: 150));
       delayed.then((_) {
         Future<void>.delayed(const Duration(milliseconds: 100), () {
           setState(() {

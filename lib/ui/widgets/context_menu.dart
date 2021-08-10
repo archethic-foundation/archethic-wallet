@@ -94,7 +94,8 @@ class _ContextMenuState extends State<ContextMenu> {
                 widget.duration ?? const Duration(milliseconds: 100),
             pageBuilder: (BuildContext context, Animation<double> animation,
                 Animation<double> secondaryAnimation) {
-              animation = Tween<double>(begin: 0.0, end: 1.0).animate(animation);
+              animation =
+                  Tween<double>(begin: 0.0, end: 1.0).animate(animation);
               return FadeTransition(
                   opacity: animation,
                   child: FocusedMenuDetails(

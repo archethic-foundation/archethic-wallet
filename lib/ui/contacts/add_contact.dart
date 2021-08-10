@@ -312,8 +312,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
                               setState(() {
                                 _addressValidAndUnfocused = false;
                               });
-                              Future<void>.delayed(const Duration(milliseconds: 50),
-                                  () {
+                              Future<void>.delayed(
+                                  const Duration(milliseconds: 50), () {
                                 FocusScope.of(context)
                                     .requestFocus(_addressFocusNode);
                               });

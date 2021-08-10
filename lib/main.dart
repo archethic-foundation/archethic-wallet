@@ -90,7 +90,7 @@ class _AppState extends State<App> {
                     AvailableLanguage.DEFAULT
             ? null
             : StateContainer.of(context).curLanguage.getLocale(),
-        supportedLocales: const<Locale>[
+        supportedLocales: const <Locale>[
           Locale('en', 'US'), // English
           // Currency-default requires country included
           Locale('es', 'AR'),
