@@ -19,9 +19,6 @@ import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/util/encrypt.dart';
 import 'package:archethic_mobile_wallet/util/random_util.dart';
 
-/// Price conversion preference values
-enum PriceConversion { BTC, NONE, HIDDEN }
-
 /// Singleton wrapper for shared preferences
 class SharedPrefsUtil {
   // Keys
@@ -123,15 +120,6 @@ class SharedPrefsUtil {
 
   Future<bool> getFirstContactAdded() async {
     return await get(firstcontact_added, defaultValue: false);
-  }
-
-  Future<void> setPriceConversion(PriceConversion conversion) async {
-    return await set(price_conversion, conversion.index);
-  }
-
-  Future<PriceConversion> getPriceConversion() async {
-    return PriceConversion.values[
-        await get(price_conversion, defaultValue: PriceConversion.BTC.index)];
   }
 
   Future<void> setAuthMethod(AuthenticationMethod method) async {

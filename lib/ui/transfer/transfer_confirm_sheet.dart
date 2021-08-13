@@ -15,7 +15,7 @@ import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/global_var.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/authentication_method.dart';
-import 'package:archethic_mobile_wallet/model/db/contact.dart';
+import 'package:archethic_mobile_wallet/model/data/hiveDB.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service/app_service.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';

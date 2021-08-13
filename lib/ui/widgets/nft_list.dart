@@ -10,8 +10,6 @@ import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/address.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/transfer/transfer_nft_sheet.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 
 class NftListWidget {
   static Widget buildNftList(BuildContext context) {
@@ -70,7 +68,7 @@ class NftListWidget {
               children: <Widget>[
                 InkWell(
                   onTap: () {
-                    Sheets.showAppHeightNineSheet(
+                    /*Sheets.showAppHeightNineSheet(
                         context: context,
                         widget: TransferNftSheet(
                           contactsRef: StateContainer.of(context).contactsRef,
@@ -80,7 +78,7 @@ class NftListWidget {
                           actionButtonTitle:
                               AppLocalization.of(context)!.transferNFT,
                           address: nftBalance.address,
-                        ));
+                        ));*/
                   },
                   child: FaIcon(FontAwesomeIcons.arrowCircleUp,
                       color: StateContainer.of(context).curTheme.primary),

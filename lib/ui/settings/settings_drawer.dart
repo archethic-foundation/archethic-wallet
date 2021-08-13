@@ -29,7 +29,6 @@ import 'package:archethic_mobile_wallet/ui/settings/nodes_widget.dart';
 import 'package:archethic_mobile_wallet/ui/settings/set_password_sheet.dart';
 import 'package:archethic_mobile_wallet/ui/settings/settings_list_item.dart';
 import 'package:archethic_mobile_wallet/ui/settings/wallet_faq_widget.dart';
-import 'package:archethic_mobile_wallet/ui/transfer/transfer_nft_sheet.dart';
 import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/app_simpledialog.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
@@ -1282,12 +1281,12 @@ class _SettingsSheetState extends State<SettingsSheet>
                         context,
                         AppLocalization.of(context).transferNFT,
                         FontAwesomeIcons.share, onPressed: () {
-                      Sheets.showAppHeightNineSheet(
+                      /*Sheets.showAppHeightNineSheet(
                           context: context,
                           widget: TransferNftSheet(
                             contactsRef: StateContainer.of(context).contactsRef,
                             title: AppLocalization.of(context).transferNFT,
-                          ));
+                          ));*/
                     }),
                     Divider(
                         height: 2,

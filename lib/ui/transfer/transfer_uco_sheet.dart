@@ -18,8 +18,8 @@ import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/address.dart';
 import 'package:archethic_mobile_wallet/model/available_currency.dart';
-import 'package:archethic_mobile_wallet/model/db/appdb.dart';
-import 'package:archethic_mobile_wallet/model/db/contact.dart';
+import 'package:archethic_mobile_wallet/model/data/appdb.dart';
+import 'package:archethic_mobile_wallet/model/data/hiveDB.dart';
 import 'package:archethic_mobile_wallet/service/app_service.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
@@ -280,72 +280,45 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                 Column(
                                   children: <Widget>[
                                     // Balance Text
-                                    FutureBuilder(
-                                      future: sl
-                                          .get<SharedPrefsUtil>()
-                                          .getPriceConversion(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<PriceConversion>
-                                              snapshot) {
-                                        if (snapshot.hasData &&
-                                            snapshot.data != null &&
-                                            snapshot.data !=
-                                                PriceConversion.HIDDEN) {
-                                          return Container(
-                                            child: RichText(
-                                              textAlign: TextAlign.start,
-                                              text: TextSpan(
-                                                text: '',
-                                                children: <InlineSpan>[
-                                                  TextSpan(
-                                                    text: '(',
-                                                    style: AppStyles
-                                                        .textStyleSize14W100Primary(
-                                                            context),
-                                                  ),
-                                                  TextSpan(
-                                                      text: _localCurrencyMode
-                                                          ? StateContainer.of(
-                                                                  context)
-                                                              .wallet
-                                                              .getLocalCurrencyPrice(
-                                                                  StateContainer.of(
-                                                                          context)
-                                                                      .curCurrency,
-                                                                  locale: StateContainer.of(
-                                                                          context)
-                                                                      .currencyLocale)
-                                                          : StateContainer.of(
-                                                                  context)
-                                                              .wallet
-                                                              .getAccountBalanceUCODisplay(),
-                                                      style: AppStyles
-                                                          .textStyleSize14W700Primary(
-                                                              context)),
-                                                  TextSpan(
-                                                      text: _localCurrencyMode
-                                                          ? ')'
-                                                          : ' UCO)',
-                                                      style: AppStyles
-                                                          .textStyleSize14W100Primary(
-                                                              context)),
-                                                ],
-                                              ),
+                                    Container(
+                                      child: RichText(
+                                        textAlign: TextAlign.start,
+                                        text: TextSpan(
+                                          text: '',
+                                          children: <InlineSpan>[
+                                            TextSpan(
+                                              text: '(',
+                                              style: AppStyles
+                                                  .textStyleSize14W100Primary(
+                                                      context),
                                             ),
-                                          );
-                                        }
-                                        return Container(
-                                          child: const Text(
-                                            '*******',
-                                            style: TextStyle(
-                                              color: Colors.transparent,
-                                              fontSize: 14.0,
-                                              fontWeight: FontWeight.w100,
-                                              fontFamily: 'Montserrat',
-                                            ),
-                                          ),
-                                        );
-                                      },
+                                            TextSpan(
+                                                text: _localCurrencyMode
+                                                    ? StateContainer.of(context)
+                                                        .wallet
+                                                        .getLocalCurrencyPrice(
+                                                            StateContainer.of(
+                                                                    context)
+                                                                .curCurrency,
+                                                            locale: StateContainer
+                                                                    .of(context)
+                                                                .currencyLocale)
+                                                    : StateContainer.of(context)
+                                                        .wallet
+                                                        .getAccountBalanceUCODisplay(),
+                                                style: AppStyles
+                                                    .textStyleSize14W700Primary(
+                                                        context)),
+                                            TextSpan(
+                                                text: _localCurrencyMode
+                                                    ? ')'
+                                                    : ' UCO)',
+                                                style: AppStyles
+                                                    .textStyleSize14W100Primary(
+                                                        context)),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                     getEnterAmountContainer(),
                                     Container(
@@ -461,89 +434,72 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                                 : AppLocalization.of(context)!
                                                     .add,
                                             Dimens.BUTTON_TOP_DIMENS,
-                                            onPressed: () {
-                                          setState(() {
-                                            validRequest = _validateRequest();
-                                            String _to =
-                                                _sendAddressController!.text;
-
-                                            if (_sendAddressController!.text
-                                                    .startsWith('@') &&
-                                                validRequest) {
-                                              // Need to make sure its a valid contact
-                                              sl
+                                            onPressed: () async {
+                                          validRequest = _validateRequest();
+                                          String _to =
+                                              _sendAddressController!.text;
+                                          if (_to.startsWith('@') &&
+                                              validRequest) {
+                                            try {
+                                              Contact contact = await sl
                                                   .get<DBHelper>()
                                                   .getContactWithName(
                                                       _sendAddressController!
-                                                          .text)
-                                                  .then((Contact contact) {
-                                                if (contact == null) {
-                                                  setState(() {
-                                                    _addressValidationText =
-                                                        AppLocalization.of(
-                                                                context)!
-                                                            .contactInvalid;
-                                                    validRequest = false;
-                                                  });
-                                                } else {
-                                                  _to = contact.address!;
-                                                }
-
-                                                if (validRequest) {
-                                                  final double _amount =
-                                                      double.tryParse(
-                                                          _sendAmountController!
-                                                              .text)!;
-
-                                                  for (int i = 0;
-                                                      i <
-                                                          ucoTransferList
-                                                              .length;
-                                                      i++) {
-                                                    if (ucoTransferList[i]
-                                                            .to! ==
-                                                        _to) {
-                                                      ucoTransferList
-                                                          .removeAt(i);
-                                                      break;
-                                                    }
-                                                  }
-                                                  final UCOTransfer
-                                                      ucoTransfer = UCOTransfer(
-                                                          to: _to,
-                                                          amount: _amount);
-                                                  ucoTransferList
-                                                      .add(ucoTransfer);
-                                                }
+                                                          .text);
+                                              _to = contact.address!;
+                                            } on Exception {
+                                              setState(() {
+                                                _addressValidationText =
+                                                    AppLocalization.of(context)!
+                                                        .contactInvalid;
+                                                validRequest = false;
                                               });
-                                            } else {
-                                              if (validRequest) {
-                                                double _amount =
-                                                    double.tryParse(
-                                                        _sendAmountController!
-                                                            .text)!;
-
-                                                for (int i = 0;
-                                                    i < ucoTransferList.length;
-                                                    i++) {
-                                                  if (ucoTransferList[i].to! ==
-                                                      _to) {
-                                                    _amount = _amount +
-                                                        ucoTransferList[i]
-                                                            .amount!;
-                                                    ucoTransferList.removeAt(i);
-                                                    break;
-                                                  }
-                                                }
-                                                final UCOTransfer ucoTransfer =
-                                                    UCOTransfer(
-                                                        to: _to,
-                                                        amount: _amount);
-                                                ucoTransferList
-                                                    .add(ucoTransfer);
-                                              }
                                             }
-                                          });
+
+                                            if (validRequest) {
+                                              final double _amount =
+                                                  double.tryParse(
+                                                      _sendAmountController!
+                                                          .text)!;
+
+                                              for (int i = 0;
+                                                  i < ucoTransferList.length;
+                                                  i++) {
+                                                if (ucoTransferList[i].to! ==
+                                                    _to) {
+                                                  ucoTransferList.removeAt(i);
+                                                  break;
+                                                }
+                                              }
+                                              final UCOTransfer ucoTransfer =
+                                                  UCOTransfer(
+                                                      to: _to, amount: _amount);
+                                              ucoTransferList.add(ucoTransfer);
+                                            }
+                                          } else {
+                                            if (validRequest) {
+                                              double _amount = double.tryParse(
+                                                  _sendAmountController!.text)!;
+
+                                              for (int i = 0;
+                                                  i < ucoTransferList.length;
+                                                  i++) {
+                                                if (ucoTransferList[i].to! ==
+                                                    _to) {
+                                                  _amount = _amount +
+                                                      ucoTransferList[i]
+                                                          .amount!;
+                                                  ucoTransferList.removeAt(i);
+                                                  break;
+                                                }
+                                              }
+                                              final UCOTransfer ucoTransfer =
+                                                  UCOTransfer(
+                                                      to: _to, amount: _amount);
+                                              ucoTransferList.add(ucoTransfer);
+                                            }
+                                          }
+                                          setState(() {});
                                         }),
                                       ],
                                     ),
@@ -596,36 +552,30 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                               : AppButtonType.PRIMARY,
                           widget.actionButtonTitle ??
                               AppLocalization.of(context)!.transferUCO,
-                          Dimens.BUTTON_TOP_DIMENS, onPressed: () {
+                          Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
                         if (ucoTransferList.isNotEmpty) {
                           validRequest = _validateRequest();
                           if (_sendAddressController!.text.startsWith('@') &&
                               validRequest) {
-                            // Need to make sure its a valid contact
-                            sl
-                                .get<DBHelper>()
-                                .getContactWithName(
-                                    _sendAddressController!.text)
-                                .then((Contact contact) {
-                              if (contact == null) {
-                                setState(() {
-                                  _addressValidationText =
-                                      AppLocalization.of(context)!
-                                          .contactInvalid;
-                                });
-                              } else {
-                                Sheets.showAppHeightNineSheet(
-                                    context: context,
-                                    widget: TransferConfirmSheet(
-                                        ucoTransferList: ucoTransferList,
-                                        contactsRef: widget.contactsRef,
-                                        title: widget.title,
-                                        typeTransfer: 'UCO',
-                                        localCurrency: _localCurrencyMode
-                                            ? _sendAmountController!.text
-                                            : null));
-                              }
-                            });
+                            try {
+                              await sl.get<DBHelper>().getContactWithName(
+                                  _sendAddressController!.text);
+                              Sheets.showAppHeightNineSheet(
+                                  context: context,
+                                  widget: TransferConfirmSheet(
+                                      ucoTransferList: ucoTransferList,
+                                      contactsRef: widget.contactsRef,
+                                      title: widget.title,
+                                      typeTransfer: 'UCO',
+                                      localCurrency: _localCurrencyMode
+                                          ? _sendAmountController!.text
+                                          : null));
+                            } on Exception {
+                              setState(() {
+                                _addressValidationText =
+                                    AppLocalization.of(context)!.contactInvalid;
+                              });
+                            }
                           } else if (validRequest) {
                             Sheets.showAppHeightNineSheet(
                                 context: context,
@@ -663,10 +613,24 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                           // Is a URI
                           final Address address = Address(scanResult);
                           // See if this address belongs to a contact
-                          final Contact contact = await sl
-                              .get<DBHelper>()
-                              .getContactWithAddress(address.address);
-                          if (contact == null) {
+                          final Contact? contact;
+                          try {
+                            contact = await sl
+                                .get<DBHelper>()
+                                .getContactWithAddress(address.address);
+
+                            // Is a contact
+                            if (mounted) {
+                              setState(() {
+                                _isContact = true;
+                                _addressValidationText = '';
+                                _sendAddressStyle = AddressStyle.PRIMARY;
+                                _pasteButtonVisible = false;
+                                _showContactButton = false;
+                              });
+                              _sendAddressController!.text = contact.name!;
+                            }
+                          } on Exception {
                             // Not a contact
                             if (mounted) {
                               setState(() {
@@ -682,19 +646,8 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                 _addressValidAndUnfocused = true;
                               });
                             }
-                          } else {
-                            // Is a contact
-                            if (mounted) {
-                              setState(() {
-                                _isContact = true;
-                                _addressValidationText = '';
-                                _sendAddressStyle = AddressStyle.PRIMARY;
-                                _pasteButtonVisible = false;
-                                _showContactButton = false;
-                              });
-                              _sendAddressController!.text = contact.name!;
-                            }
                           }
+
                           // If amount is present, fill it and go to SendConfirm
                           if (address.amount != null) {
                             bool hasError = false;
@@ -1165,41 +1118,39 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
             if (!_pasteButtonVisible) {
               return;
             }
-            Clipboard.getData('text/plain').then((ClipboardData? data) {
+            Clipboard.getData('text/plain').then((ClipboardData? data) async {
               if (data == null || data.text == null) {
                 return;
               }
               final Address address = Address(data.text!);
               if (address.isValid()) {
-                sl
-                    .get<DBHelper>()
-                    .getContactWithAddress(address.address)
-                    .then((Contact contact) {
-                  if (contact == null) {
-                    setState(() {
-                      _isContact = false;
-                      _addressValidationText = '';
-                      _sendAddressStyle = AddressStyle.TEXT90;
-                      _pasteButtonVisible = false;
-                      _showContactButton = false;
-                    });
-                    _sendAddressController!.text = address.address;
-                    //_sendAddressFocusNode.unfocus();
-                    setState(() {
-                      //_addressValidAndUnfocused = true;
-                    });
-                  } else {
-                    // Is a contact
-                    setState(() {
-                      _isContact = true;
-                      _addressValidationText = '';
-                      _sendAddressStyle = AddressStyle.PRIMARY;
-                      _pasteButtonVisible = false;
-                      _showContactButton = false;
-                    });
-                    _sendAddressController!.text = contact.name!;
-                  }
-                });
+                try {
+                  Contact contact = await sl
+                      .get<DBHelper>()
+                      .getContactWithAddress(address.address);
+
+                  setState(() {
+                    _isContact = true;
+                    _addressValidationText = '';
+                    _sendAddressStyle = AddressStyle.PRIMARY;
+                    _pasteButtonVisible = false;
+                    _showContactButton = false;
+                  });
+                  _sendAddressController!.text = contact.name!;
+                } on Exception {
+                  setState(() {
+                    _isContact = false;
+                    _addressValidationText = '';
+                    _sendAddressStyle = AddressStyle.TEXT90;
+                    _pasteButtonVisible = false;
+                    _showContactButton = false;
+                  });
+                  _sendAddressController!.text = address.address;
+                  //_sendAddressFocusNode.unfocus();
+                  setState(() {
+                    //_addressValidAndUnfocused = true;
+                  });
+                }
               }
             });
           },
@@ -1211,7 +1162,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
             : _sendAddressStyle == AddressStyle.TEXT90
                 ? AppStyles.textStyleSize14W100Primary(context)
                 : AppStyles.textStyleSize14W100Primary(context),
-        onChanged: (String text) {
+        onChanged: (String text) async {
           if (text.isNotEmpty) {
             setState(() {
               _showContactButton = false;
@@ -1258,19 +1209,18 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
               _pasteButtonVisible = true;
             });
           } else {
-            sl.get<DBHelper>().getContactWithName(text).then((Contact contact) {
-              if (contact == null) {
-                setState(() {
-                  _sendAddressStyle = AddressStyle.TEXT60;
-                });
-              } else {
-                setState(() {
-                  _pasteButtonVisible = false;
-                  _addressValidationText = '';
-                  _sendAddressStyle = AddressStyle.PRIMARY;
-                });
-              }
-            });
+            try {
+              await sl.get<DBHelper>().getContactWithName(text);
+              setState(() {
+                _pasteButtonVisible = false;
+                _addressValidationText = '';
+                _sendAddressStyle = AddressStyle.PRIMARY;
+              });
+            } on Exception {
+              setState(() {
+                _sendAddressStyle = AddressStyle.TEXT60;
+              });
+            }
           }
         },
         overrideTextFieldWidget: _addressValidAndUnfocused

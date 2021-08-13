@@ -13,7 +13,7 @@ import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/db/appdb.dart';
+import 'package:archethic_mobile_wallet/model/data/appdb.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
@@ -24,7 +24,6 @@ import 'package:archethic_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
 import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
 import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
 import 'package:archethic_mobile_wallet/util/app_ffi/keys/seeds.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 class IntroPassword extends StatefulWidget {
   const IntroPassword({this.seed});
@@ -331,11 +330,9 @@ class _IntroPasswordState extends State<IntroPassword> {
 
   Future<void> _pinEnteredCallback(String pin) async {
     await sl.get<Vault>().writePin(pin);
-    final PriceConversion conversion =
-        await sl.get<SharedPrefsUtil>().getPriceConversion();
-    // Update wallet
     Navigator.of(context).pushNamedAndRemoveUntil(
-        '/home', (Route<dynamic> route) => false,
-        arguments: conversion);
+      '/home',
+      (Route<dynamic> route) => false,
+    );
   }
 }

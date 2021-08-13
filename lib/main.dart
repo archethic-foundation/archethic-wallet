@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +20,7 @@ import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/available_currency.dart';
 import 'package:archethic_mobile_wallet/model/available_language.dart';
+import 'package:archethic_mobile_wallet/model/data/appdb.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
@@ -41,6 +43,7 @@ import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await DBHelper.setupDatabase();
   // Run app
   SystemChrome.setPreferredOrientations(
       <DeviceOrientation>[DeviceOrientation.portraitUp]).then((_) {
@@ -260,28 +263,32 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
   Future<void> checkLoggedIn() async {
     // Update session key
     await sl.get<Vault>().updateSessionKey();
-    // Check if device is rooted or jailbroken, show user a warning informing them of the risks if so
-    if (!(await sl.get<SharedPrefsUtil>().getHasSeenRootWarning()) &&
-        (await RootChecker.isDeviceRooted)) {
-      AppDialogs.showConfirmDialog(
-          context,
-          CaseChange.toUpperCase(AppLocalization.of(context).warning, context),
-          AppLocalization.of(context).rootWarning,
-          AppLocalization.of(context).iUnderstandTheRisks.toUpperCase(),
-          () async {
-            await sl.get<SharedPrefsUtil>().setHasSeenRootWarning();
-            checkLoggedIn();
-          },
-          cancelText: AppLocalization.of(context).exit.toUpperCase(),
-          cancelAction: () {
-            if (Platform.isIOS) {
-              exit(0);
-            } else {
-              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-            }
-          });
-      return;
+    if (!kIsWeb) {
+      // Check if device is rooted or jailbroken, show user a warning informing them of the risks if so
+      if (!(await sl.get<SharedPrefsUtil>().getHasSeenRootWarning()) &&
+          (await RootChecker.isDeviceRooted)) {
+        AppDialogs.showConfirmDialog(
+            context,
+            CaseChange.toUpperCase(
+                AppLocalization.of(context).warning, context),
+            AppLocalization.of(context).rootWarning,
+            AppLocalization.of(context).iUnderstandTheRisks.toUpperCase(),
+            () async {
+              await sl.get<SharedPrefsUtil>().setHasSeenRootWarning();
+              checkLoggedIn();
+            },
+            cancelText: AppLocalization.of(context).exit.toUpperCase(),
+            cancelAction: () {
+              if (!kIsWeb && Platform.isIOS) {
+                exit(0);
+              } else {
+                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+              }
+            });
+        return;
+      }
     }
+
     if (!_hasCheckedLoggedIn) {
       _hasCheckedLoggedIn = true;
     } else {
@@ -319,10 +326,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
           Navigator.of(context).pushReplacementNamed('/lock_screen');
         } else {
           await AppUtil().loginAccount(seed, context);
-          final PriceConversion conversion =
-              await sl.get<SharedPrefsUtil>().getPriceConversion();
-          Navigator.of(context)
-              .pushReplacementNamed('/home', arguments: conversion);
+          Navigator.of(context).pushReplacementNamed('/home');
         }
       } else {
         Navigator.of(context).pushReplacementNamed('/intro_welcome');
@@ -335,7 +339,10 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       /// Instead of telling them they are out of luck, this is an automatic "fallback"
       /// It will generate a 64-byte secret using the native android "bottlerocketstudios" Vault
       /// This secret is used to encrypt sensitive data and save it in SharedPreferences
-      if (Platform.isAndroid && e.toString().contains('flutter_secure')) {
+      if (kIsWeb ||
+          (!kIsWeb &&
+              Platform.isAndroid &&
+              e.toString().contains('flutter_secure'))) {
         if (!(await sl.get<SharedPrefsUtil>().useLegacyStorage())) {
           await sl.get<SharedPrefsUtil>().setUseLegacyStorage();
           checkLoggedIn();

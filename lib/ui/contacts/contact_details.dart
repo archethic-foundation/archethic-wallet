@@ -17,8 +17,8 @@ import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/bus/events.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/db/appdb.dart';
-import 'package:archethic_mobile_wallet/model/db/contact.dart';
+import 'package:archethic_mobile_wallet/model/data/appdb.dart';
+import 'package:archethic_mobile_wallet/model/data/hiveDB.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/transfer/transfer_uco_sheet.dart';
@@ -76,19 +76,17 @@ class ContactDetailsSheet {
                                 sl
                                     .get<DBHelper>()
                                     .deleteContact(contact)
-                                    .then((bool deleted) {
-                                  if (deleted) {
-                                    EventTaxiImpl.singleton().fire(
-                                        ContactRemovedEvent(contact: contact));
-                                    EventTaxiImpl.singleton().fire(
-                                        ContactModifiedEvent(contact: contact));
-                                    UIUtil.showSnackbar(
-                                        AppLocalization.of(context)
-                                            .contactRemoved
-                                            .replaceAll('%1', contact.name),
-                                        context);
-                                    Navigator.of(context).pop();
-                                  }
+                                    .then((value) {
+                                  EventTaxiImpl.singleton().fire(
+                                      ContactRemovedEvent(contact: contact));
+                                  EventTaxiImpl.singleton().fire(
+                                      ContactModifiedEvent(contact: contact));
+                                  UIUtil.showSnackbar(
+                                      AppLocalization.of(context)
+                                          .contactRemoved
+                                          .replaceAll('%1', contact.name),
+                                      context);
+                                  Navigator.of(context).pop();
                                 });
                               },
                                   cancelText: CaseChange.toUpperCase(

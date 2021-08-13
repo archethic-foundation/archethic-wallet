@@ -15,7 +15,7 @@ import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/global_var.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/db/appdb.dart';
+import 'package:archethic_mobile_wallet/model/data/appdb.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
@@ -316,11 +316,10 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
 
   Future<void> _pinEnteredCallback(String pin) async {
     await sl.get<Vault>().writePin(pin);
-    final PriceConversion conversion =
-        await sl.get<SharedPrefsUtil>().getPriceConversion();
     // Update wallet
     Navigator.of(context).pushNamedAndRemoveUntil(
-        '/home', (Route<dynamic> route) => false,
-        arguments: conversion);
+      '/home',
+      (Route<dynamic> route) => false,
+    );
   }
 }

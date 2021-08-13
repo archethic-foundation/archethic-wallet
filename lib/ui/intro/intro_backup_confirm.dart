@@ -16,7 +16,6 @@ import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 class IntroBackupConfirm extends StatefulWidget {
   @override
@@ -152,11 +151,9 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
 
   Future<void> _pinEnteredCallback(String pin) async {
     await sl.get<Vault>().writePin(pin);
-    final PriceConversion conversion =
-        await sl.get<SharedPrefsUtil>().getPriceConversion();
-
     Navigator.of(context).pushNamedAndRemoveUntil(
-        '/home', (Route<dynamic> route) => false,
-        arguments: conversion);
+      '/home',
+      (Route<dynamic> route) => false,
+    );
   }
 }

@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -60,9 +57,6 @@ abstract class BaseTheme {
 
   BoxShadow? boxShadow;
   BoxShadow? boxShadowButton;
-
-  // App icon (iOS only)
-  AppIconEnum? appIcon;
 }
 
 class ArchEthicTheme implements BaseTheme {
@@ -179,23 +173,4 @@ class ArchEthicTheme implements BaseTheme {
   BoxShadow? boxShadow = const BoxShadow(color: Colors.transparent);
   @override
   BoxShadow? boxShadowButton = const BoxShadow(color: Colors.transparent);
-
-  @override
-  AppIconEnum? appIcon = AppIconEnum.ARCHETHIC;
-}
-
-enum AppIconEnum { ARCHETHIC }
-
-class AppIcon {
-  static const MethodChannel _channel = MethodChannel('fappchannel');
-
-  static Future<void> setAppIcon() async {
-    if (!Platform.isIOS) {
-      return null;
-    }
-    final Map<String, dynamic> params = <String, dynamic>{
-      'icon': 'archethic',
-    };
-    return await _channel.invokeMethod('changeIcon', params);
-  }
 }

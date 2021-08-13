@@ -16,9 +16,8 @@ import 'package:archethic_mobile_wallet/bus/events.dart';
 import 'package:archethic_mobile_wallet/model/available_currency.dart';
 import 'package:archethic_mobile_wallet/model/available_language.dart';
 import 'package:archethic_mobile_wallet/model/chart_infos.dart';
-import 'package:archethic_mobile_wallet/model/db/account.dart';
-import 'package:archethic_mobile_wallet/model/db/appdb.dart';
-import 'package:archethic_mobile_wallet/model/db/contact.dart';
+import 'package:archethic_mobile_wallet/model/data/appdb.dart';
+import 'package:archethic_mobile_wallet/model/data/hiveDB.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/model/wallet.dart';
 import 'package:archethic_mobile_wallet/service/app_service.dart';
@@ -78,8 +77,8 @@ class StateContainerState extends State<StateContainer> {
   LanguageSetting curLanguage = LanguageSetting(AvailableLanguage.DEFAULT);
   BaseTheme curTheme = ArchEthicTheme();
   // Currently selected account
-  Account selectedAccount =
-      Account(id: 1, name: 'AB', index: 0, lastAccess: 0, selected: true);
+  Account selectedAccount = Account(
+      name: 'AB', index: 0, lastAccess: 0, selected: true, genesisAddress: '0');
   // Two most recently used accounts
   Account recentLast;
   Account recentSecondLast;

@@ -4,6 +4,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -88,6 +89,7 @@ class _AppHeightNineSheetLayout extends SingleChildLayoutDelegate {
           minHeight: 0.0,
           maxHeight: constraints.maxHeight * 0.95);
     if ((constraints.maxHeight / constraints.maxWidth > 2.1 &&
+            !kIsWeb &&
             Platform.isAndroid) ||
         constraints.maxHeight > 812)
       return BoxConstraints(

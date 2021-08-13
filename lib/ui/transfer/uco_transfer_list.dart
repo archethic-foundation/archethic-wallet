@@ -8,7 +8,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart' show UCOTransfer;
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/address.dart';
-import 'package:archethic_mobile_wallet/model/db/contact.dart';
+import 'package:archethic_mobile_wallet/model/data/hiveDB.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/context_menu.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/context_menu_item.dart';

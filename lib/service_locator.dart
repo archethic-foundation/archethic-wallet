@@ -6,7 +6,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/model/db/appdb.dart';
+import 'package:archethic_mobile_wallet/model/data/appdb.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service/app_service.dart';
 import 'package:archethic_mobile_wallet/util/biometrics.dart';

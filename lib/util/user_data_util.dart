@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -96,32 +97,34 @@ class UserDataUtil {
   }
 
   static Future<void> setSecureClipboardItem(String value) async {
-    if (Platform.isIOS) {
-      final Map<String, dynamic> params = <String, dynamic>{
-        'value': value,
-      };
-      await _channel.invokeMethod('setSecureClipboardItem', params);
-    } else {
-      // Set item in clipboard
-      await Clipboard.setData(ClipboardData(text: value));
-      // Auto clear it after 2 minutes
-      if (setStream != null) {
-        setStream.cancel();
-      }
-      final Future<dynamic> delayed =
-          Future<void>.delayed(const Duration(minutes: 2));
-      delayed.then((_) {
-        return true;
-      });
-      setStream = delayed.asStream().listen((_) {
-        Clipboard.getData('text/plain').then((ClipboardData data) {
-          if (data != null &&
-              data.text != null &&
-              AppSeeds.isValidSeed(data.text)) {
-            Clipboard.setData(const ClipboardData(text: ''));
-          }
+    if (!kIsWeb) {
+      if (Platform.isIOS) {
+        final Map<String, dynamic> params = <String, dynamic>{
+          'value': value,
+        };
+        await _channel.invokeMethod('setSecureClipboardItem', params);
+      } else {
+        // Set item in clipboard
+        await Clipboard.setData(ClipboardData(text: value));
+        // Auto clear it after 2 minutes
+        if (setStream != null) {
+          setStream.cancel();
+        }
+        final Future<dynamic> delayed =
+            Future<void>.delayed(const Duration(minutes: 2));
+        delayed.then((_) {
+          return true;
         });
-      });
+        setStream = delayed.asStream().listen((_) {
+          Clipboard.getData('text/plain').then((ClipboardData data) {
+            if (data != null &&
+                data.text != null &&
+                AppSeeds.isValidSeed(data.text)) {
+              Clipboard.setData(const ClipboardData(text: ''));
+            }
+          });
+        });
+      }
     }
   }
 }

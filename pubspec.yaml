@@ -65,14 +65,15 @@ dependencies:
   # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
   get_it: ^7.2.0
 
+  # Hive is a lightweight and blazing fast key-value database written in pure Dart
+  hive: ^2.0.4
+  hive_flutter: ^1.1.0
+
   # A composable, multi-platform, Future-based API for HTTP requests
   http: ^0.13.3
 
   # Localization
   intl: ^0.17.0 
-
-  # Classes and helper functions that support JSON code generation via the `json_serializable` package
-  json_annotation: ^3.1.1
 
   # A lightweight alternative to the Scaffold widget for avoiding the on-screen software keyboard. Automatically scrolls obscured TextField child widgets into view on focus
   keyboard_avoider: 
@@ -89,9 +90,6 @@ dependencies:
   # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
   package_info: ^2.0.2
 
-  # Flutter plugin for getting commonly used locations on host platform file systems, such as the temp and app data directories
-  path_provider: ^2.0.2
-
   # QR.Flutter is a Flutter library for simple and fast QR code rendering via a Widget or custom painter
   qr_flutter: ^4.0.0
 
@@ -107,26 +105,24 @@ dependencies:
   # Flutter plugin for reading and writing simple key-value pairs. Wraps NSUserDefaults on iOS and SharedPreferences on Android
   shared_preferences: ^2.0.6
 
-  # Flutter plugin for SQLite, a self-contained, high-reliability, embedded, SQL database engine
-  sqflite: ^2.0.0+3
-
   # String validation and sanitization for Dart
   validators: ^3.0.0
 
 dev_dependencies:
   # A build system for Dart code generation and modular compilation
-  build_runner: 1.11.1
+  # hive_generator: ^1.1.0
+  # build_runner: ^2.1.1
   flutter_test:
     sdk: flutter
   # Automatically organize your dart imports
   import_sorter: ^4.6.0
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues
-  intl_translation:
-    git: 
-      url: https://github.com/reddwarf03/intl_translation.git
-      ref: master 
+  # intl_translation:
+  #  git: 
+  #    url: https://github.com/reddwarf03/intl_translation.git
+  #    ref: master 
   # Automatically generate code for converting to and from JSON by annotating Dart classes
-  json_serializable: ^3.5.1
+  # json_serializable: ^3.5.1
 
 flutter_icons:
   android: true

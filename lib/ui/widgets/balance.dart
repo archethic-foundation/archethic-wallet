@@ -155,7 +155,7 @@ class BalanceDisplay {
                                 localCurrency:
                                     StateContainer.of(context).curCurrency));
                       },
-                      child: FaIcon(FontAwesomeIcons.arrowCircleUp,
+                      child: FaIcon(FontAwesomeIcons.share,
                           color: StateContainer.of(context).curTheme.primary),
                     ),
                   ),
