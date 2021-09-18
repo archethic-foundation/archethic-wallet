@@ -1,6 +1,7 @@
 // @dart=2.9
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -74,6 +75,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                 child: Column(
                   children: <Widget>[
                     Expanded(
+                      child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
@@ -85,10 +87,12 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                               child: Container(
                                 child: SizedBox(
                                   height: 300,
-                                  child: SvgPicture.asset(
-                                    'assets/archethic_logo.svg',
-                                    height: 200,
-                                  ),
+                                  child: kIsWeb
+                                      ? SizedBox()
+                                      : SvgPicture.asset(
+                                          'assets/archethic_logo.svg',
+                                          height: 200,
+                                        ),
                                 ),
                               ),
                             ),
@@ -104,7 +108,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                             ),
                           ),
                         ],
-                      ),
+                      ),),
                     ),
 
                     //A column with "New Wallet" and "Import Wallet" buttons

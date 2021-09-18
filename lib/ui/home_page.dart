@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,7 +14,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 // Project imports:
@@ -341,10 +342,15 @@ class _AppHomePageState extends State<AppHomePage>
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Container(
-            child: SvgPicture.asset(
-          'assets/archethic_logo_alone.svg',
-          height: 40,
-        )),
+            child: kIsWeb
+                ? Image.network(
+                    'assets/archethic_logo_alone.svg',
+                    height: 40,
+                  )
+                : SvgPicture.asset(
+                    'assets/archethic_logo_alone.svg',
+                    height: 40,
+                  )),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
@@ -426,12 +432,13 @@ class _AppHomePageState extends State<AppHomePage>
                             //const SizedBox(height: 20),
                             //NftListWidget.buildNftList(context),
                             //const SizedBox(height: 20),
-                            if(StateContainer.of(context).wallet == null)
-                                const SizedBox() else
-                                TxListWidget.buildTxList(
-                                    context,
-                                    StateContainer.of(context).wallet.history,
-                                    _opacityAnimation),
+                            if (StateContainer.of(context).wallet == null)
+                              const SizedBox()
+                            else
+                              TxListWidget.buildTxList(
+                                  context,
+                                  StateContainer.of(context).wallet.history,
+                                  _opacityAnimation),
                           ],
                         ),
                       ],

@@ -1,6 +1,7 @@
 // @dart=2.9
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
@@ -27,23 +28,34 @@ class Vault {
 
   // Re-usable
   Future<String> _write(String key, String value) async {
-    if (await legacy()) {
-      await setEncrypted(key, value);
+    if (kIsWeb) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString(key, value);
     } else {
-      await secureStorage.write(key: key, value: value);
+      if (await legacy()) {
+        await setEncrypted(key, value);
+      } else {
+        await secureStorage.write(key: key, value: value);
+      }
     }
+
     return value;
   }
 
   Future<String> _read(String key, {String defaultValue}) async {
-    if (await legacy()) {
-      return await getEncrypted(key);
+    if (kIsWeb) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      return prefs.getString(key);
+    } else {
+      if (await legacy()) {
+        return await getEncrypted(key);
+      }
+      return await secureStorage.read(key: key) ?? defaultValue;
     }
-    return await secureStorage.read(key: key) ?? defaultValue;
   }
 
   Future<void> deleteAll() async {
-    if (await legacy()) {
+    if (kIsWeb || await legacy()) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove(encryptionKey);
       await prefs.remove(seedKey);

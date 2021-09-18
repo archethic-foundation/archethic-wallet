@@ -13,7 +13,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:root_checker/root_checker.dart';
+import 'package:safe_device/safe_device.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -77,7 +77,6 @@ class _AppState extends State<App> {
           dialogBackgroundColor:
               StateContainer.of(context).curTheme.backgroundDark,
           primaryColor: StateContainer.of(context).curTheme.primary,
-          accentColor: StateContainer.of(context).curTheme.primary10,
           backgroundColor: StateContainer.of(context).curTheme.background,
           fontFamily: 'Montserrat',
           brightness: Brightness.dark,
@@ -263,10 +262,10 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
   Future<void> checkLoggedIn() async {
     // Update session key
     await sl.get<Vault>().updateSessionKey();
-    if (!kIsWeb) {
+    if (!kIsWeb && !Platform.isMacOS && !Platform.isWindows && !Platform.isLinux) {
       // Check if device is rooted or jailbroken, show user a warning informing them of the risks if so
       if (!(await sl.get<SharedPrefsUtil>().getHasSeenRootWarning()) &&
-          (await RootChecker.isDeviceRooted)) {
+          (await SafeDevice.isJailBroken || await SafeDevice.isSafeDevice)) {
         AppDialogs.showConfirmDialog(
             context,
             CaseChange.toUpperCase(
