@@ -78,7 +78,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
         Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
         setState(() {
           StateContainer.of(context)
-              .requestUpdate(StateContainer.of(context).selectedAccount);
+              .requestUpdate(StateContainer.of(context).selectedAccount, null);
         });
         Sheets.showAppHeightNineSheet(
             context: context,

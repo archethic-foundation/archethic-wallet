@@ -31,7 +31,6 @@ import 'package:archethic_mobile_wallet/ui/widgets/balance.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/line_chart.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/qr_code.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/reactive_refresh.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/tx_list.dart';
 import 'package:archethic_mobile_wallet/util/caseconverter.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
@@ -66,23 +65,12 @@ class _AppHomePageState extends State<AppHomePage>
   ColorTween colorTween;
   CurvedAnimation curvedAnimation;
 
-  bool _isRefreshing = false;
-
   // Refresh list
+  // TODO ... Supp
   Future<void> _refresh() async {
-    setState(() {
-      _isRefreshing = true;
-    });
     sl.get<HapticUtil>().feedback(FeedbackType.light);
     StateContainer.of(context)
         .updateWallet(account: StateContainer.of(context).selectedAccount);
-
-    // Hide refresh indicator after 1 second if no server response
-    Future<void>.delayed(const Duration(seconds: 1), () {
-      setState(() {
-        _isRefreshing = false;
-      });
-    });
   }
 
   Future<void> _checkVersionApp() async {
@@ -184,13 +172,13 @@ class _AppHomePageState extends State<AppHomePage>
         .registerTo<AccountChangedEvent>()
         .listen((AccountChangedEvent event) {
       setState(() {
-        StateContainer.of(context).wallet.transactionChainLoading = true;
+        StateContainer.of(context).wallet.recentTransactionsLoading = true;
 
         _startAnimation();
         StateContainer.of(context).updateWallet(account: event.account);
         _disposeAnimation();
 
-        StateContainer.of(context).wallet.transactionChainLoading = false;
+        StateContainer.of(context).wallet.recentTransactionsLoading = false;
       });
 
       paintQrCode(event.account.lastAddress);
@@ -390,15 +378,10 @@ class _AppHomePageState extends State<AppHomePage>
                 child: _getTopCards(context),
               ),
               Expanded(
-                child: ReactiveRefreshIndicator(
-                  onRefresh: _refresh,
-                  isRefreshing: _isRefreshing,
-                  backgroundColor:
-                      StateContainer.of(context).curTheme.backgroundDark,
-                  child: KeyboardAvoider(
+                child: KeyboardAvoider(
                     duration: const Duration(milliseconds: 0),
                     autoScroll: true,
-                    focusPadding: 40,
+                    focusPadding: 80,
                     child: Stack(
                       alignment: Alignment.topCenter,
                       children: <Widget>[
@@ -435,15 +418,14 @@ class _AppHomePageState extends State<AppHomePage>
                             if (StateContainer.of(context).wallet == null)
                               const SizedBox()
                             else
-                              TxListWidget.buildTxList(
-                                  context,
-                                  StateContainer.of(context).wallet.history,
+                              TxListWidget(
+                                  
                                   _opacityAnimation),
                           ],
                         ),
                       ],
                     ),
-                  ),
+                  
                 ),
               ),
             ],

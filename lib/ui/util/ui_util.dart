@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:event_taxi/event_taxi.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -451,18 +451,8 @@ class UIUtil {
   }
 
   static Widget showWebview(BuildContext context, String url, String title) {
-    return WebviewScaffold(
-      url: url,
-      appBar: AppBar(
-        title: Text(
-          title,
-          style: AppStyles.textStyleSize28W700Primary(context),
-        ),
-        backgroundColor: StateContainer.of(context).curTheme.backgroundDark,
-        brightness: StateContainer.of(context).curTheme.brightness,
-        iconTheme:
-            IconThemeData(color: StateContainer.of(context).curTheme.primary),
-      ),
+    return WebView(
+      initialUrl: url,
     );
   }
 }

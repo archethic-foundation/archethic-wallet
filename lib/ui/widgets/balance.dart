@@ -18,7 +18,7 @@ class BalanceDisplay {
   static Widget buildBalanceUCODisplay(
       BuildContext context, Animation<double> _opacityAnimation) {
     return StateContainer.of(context).wallet == null ||
-            StateContainer.of(context).wallet.transactionChainLoading == true
+            StateContainer.of(context).wallet.recentTransactionsLoading == true
         ? Stack(
             children: <Widget>[
               AspectRatio(

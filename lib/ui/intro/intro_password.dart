@@ -300,7 +300,7 @@ class _IntroPasswordState extends State<IntroPassword> {
       await sl.get<DBHelper>().dropAccounts();
       await AppUtil().loginAccount(widget.seed, context);
       StateContainer.of(context)
-          .requestUpdate(StateContainer.of(context).selectedAccount);
+          .requestUpdate(StateContainer.of(context).selectedAccount, null);
       final String pin = await Navigator.of(context)
           .push(MaterialPageRoute(builder: (BuildContext context) {
         return const PinScreen(PinOverlayType.NEW_PIN);
@@ -322,7 +322,7 @@ class _IntroPasswordState extends State<IntroPassword> {
           .loginAccount(await StateContainer.of(context).getSeed(), context)
           .then((_) {
         StateContainer.of(context)
-            .requestUpdate(StateContainer.of(context).selectedAccount);
+            .requestUpdate(StateContainer.of(context).selectedAccount, null);
         Navigator.of(context).pushNamed('/intro_backup_safety');
       });
     }

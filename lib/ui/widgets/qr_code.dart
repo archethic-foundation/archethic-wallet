@@ -1,6 +1,7 @@
 // @dart=2.9
 
 // Flutter imports:
+import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -178,6 +179,7 @@ class QRcodeDisplay {
                       onPressed: () {
                         Clipboard.setData(ClipboardData(
                             text: StateContainer.of(context).wallet.address));
+                        UIUtil.showSnackbar('Address copied', context);
                       },
                       child: FaIcon(FontAwesomeIcons.solidCopy,
                           color: StateContainer.of(context).curTheme.primary),

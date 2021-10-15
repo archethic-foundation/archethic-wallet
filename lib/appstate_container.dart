@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +36,6 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
         Balance,
         SimplePriceResponse,
         CoinsPriceResponse,
-        Transaction,
         CoinsCurrentDataResponse;
 
 class _InheritedStateContainer extends InheritedWidget {
@@ -158,16 +158,16 @@ class StateContainerState extends State<StateContainer> {
 
       // Iterate list in reverse (oldest to newest block)
       if (event != null && event.transaction != null) {
-        for (Transaction transactionChain in event.transaction) {
+        for (RecentTransaction recentTransaction in event.transaction) {
           setState(() {
-            wallet.history.add(transactionChain);
+            wallet.history.add(recentTransaction);
           });
         }
         wallet.history.reversed.toList();
       }
 
       setState(() {
-        wallet.transactionChainLoading = false;
+        wallet.recentTransactionsLoading = false;
       });
     });
 
@@ -227,9 +227,9 @@ class StateContainerState extends State<StateContainer> {
   }
 
   // Update the global wallet instance
-  Future<void> updateWallet({Account account}) async {
+  Future<void> updateWallet({Account account, int page}) async {
     setState(() {
-      requestUpdate(account);
+      requestUpdate(account, page);
     });
   }
 
@@ -279,15 +279,15 @@ class StateContainerState extends State<StateContainer> {
     EventTaxiImpl.singleton().fire(PriceEvent(response: simplePriceResponse));
   }
 
-  Future<void> requestUpdateRecentTransactions() async {
+  Future<void> requestUpdateRecentTransactions(int page) async {
     setState(() {
-      wallet.transactionChainLoading = true;
+      wallet.recentTransactionsLoading = true;
     });
-    final List<Transaction> transactionChain = await sl
+    final List<RecentTransaction> recentTransactions = await sl
         .get<AppService>()
-        .getTransactionChain(selectedAccount.lastAddress);
+        .getRecentTransactions(selectedAccount.genesisAddress, selectedAccount.lastAddress, page);
     EventTaxiImpl.singleton()
-        .fire(TransactionsListEvent(transaction: transactionChain));
+        .fire(TransactionsListEvent(transaction: recentTransactions));
   }
 
   Future<void> requestUpdateCoinsChart() async {
@@ -348,11 +348,11 @@ class StateContainerState extends State<StateContainer> {
     });
   }
 
-  Future<void> requestUpdate(Account account) async {
+  Future<void> requestUpdate(Account account, int page) async {
     await requestUpdateLastAddress(account);
     await requestUpdateBalance();
     await requestUpdatePrice();
-    await requestUpdateRecentTransactions();
+    await requestUpdateRecentTransactions(page);
     await requestUpdateCoinsChart();
   }
 

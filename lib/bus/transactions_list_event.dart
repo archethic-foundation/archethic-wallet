@@ -1,9 +1,9 @@
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show Transaction;
+import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
 import 'package:event_taxi/event_taxi.dart';
 
 class TransactionsListEvent implements Event {
   TransactionsListEvent({this.transaction});
 
-  final List<Transaction>? transaction;
+  final List<RecentTransaction>? transaction;
 }

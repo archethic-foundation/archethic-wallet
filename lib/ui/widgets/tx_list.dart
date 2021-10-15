@@ -1,9 +1,13 @@
 // Flutter imports:
+import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
+import 'package:archethic_mobile_wallet/service_locator.dart';
+import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:intl/intl.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -11,11 +15,50 @@ import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/address.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 
-class TxListWidget {
-  static Widget buildTxList(BuildContext context,
-      List<Transaction> transactions, Animation<double> _opacityAnimation) {
+class TxListWidget extends StatefulWidget {
+  const TxListWidget(this._opacityAnimation);
+  final Animation<double> _opacityAnimation;
+  @override
+  _TxListWidgetState createState() => _TxListWidgetState();
+}
+
+class _TxListWidgetState extends State<TxListWidget> {
+  static const _pageSize = 20;
+  final PagingController<int, RecentTransaction> _pagingController =
+      PagingController(firstPageKey: 0);
+
+  @override
+  void initState() {
+    _pagingController.addPageRequestListener((pageKey) {
+      _fetchPage(pageKey);
+    });
+    super.initState();
+  }
+
+  Future<void> _fetchPage(int pageKey) async {
+    try {
+      final newItems = StateContainer.of(context).wallet.history;
+      final isLastPage = newItems.length < _pageSize;
+      if (isLastPage) {
+        _pagingController.appendLastPage(newItems);
+      } else {
+        final nextPageKey = pageKey + newItems.length;
+        _pagingController.appendPage(newItems, nextPageKey);
+      }
+    } catch (error) {
+      _pagingController.error = error;
+    }
+  }
+
+  @override
+  void dispose() {
+    _pagingController.dispose();
+    super.dispose();
+  }
+
+  Widget build(BuildContext context) {
     return StateContainer.of(context).wallet == null ||
-            StateContainer.of(context).wallet.transactionChainLoading == true
+            StateContainer.of(context).wallet.recentTransactionsLoading == true
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -41,19 +84,19 @@ class TxListWidget {
                           child: Column(
                             children: <Widget>[
                               displayTxDetailSearching(
-                                  context, _opacityAnimation),
+                                  context, widget._opacityAnimation),
                               displayTxDetailSearching(
-                                  context, _opacityAnimation),
+                                  context, widget._opacityAnimation),
                               displayTxDetailSearching(
-                                  context, _opacityAnimation),
+                                  context, widget._opacityAnimation),
                               displayTxDetailSearching(
-                                  context, _opacityAnimation),
+                                  context, widget._opacityAnimation),
                               displayTxDetailSearching(
-                                  context, _opacityAnimation),
+                                  context, widget._opacityAnimation),
                               displayTxDetailSearching(
-                                  context, _opacityAnimation),
+                                  context, widget._opacityAnimation),
                               displayTxDetailSearching(
-                                  context, _opacityAnimation),
+                                  context, widget._opacityAnimation),
                             ],
                           )),
                     ),
@@ -67,7 +110,7 @@ class TxListWidget {
             children: <Widget>[
               Padding(
                   padding: const EdgeInsets.only(left: 5.0),
-                  child: transactions.isNotEmpty
+                  child: StateContainer.of(context).wallet.history.isNotEmpty
                       ? Text(
                           AppLocalization.of(context)!.recentTransactionsHeader,
                           style: AppStyles.textStyleSize14W600BackgroundDarkest(
@@ -87,35 +130,39 @@ class TxListWidget {
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Padding(
                       padding: const EdgeInsets.only(
-                          left: 6, right: 6, top: 6, bottom: 6),
-                      child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        itemCount: transactions.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (transactions[index].type == 'transfer') {
+                          left: 6, right: 6, top: 6, bottom: 100),
+                      child: RefreshIndicator(
+                        backgroundColor:
+                            StateContainer.of(context).curTheme.backgroundDark,
+                        onRefresh: () => Future.sync(() {
+                          sl.get<HapticUtil>().feedback(FeedbackType.light);
+                          StateContainer.of(context).updateWallet(
+                              account:
+                                  StateContainer.of(context).selectedAccount);
+                          _pagingController.refresh();
+                        }),
+                        child: PagedListView<int, RecentTransaction>(
+                          pagingController: _pagingController,
+                          builderDelegate:
+                              PagedChildBuilderDelegate<RecentTransaction>(
+                                  itemBuilder: (BuildContext context,
+                                      RecentTransaction recentTransaction,
+                                      int index) {
                             return displayTxDetailTransfer(
-                                context, transactions[index]);
-                          } else {
-                            if (transactions[index].type == 'nft') {
-                              return displayTxDetailNFT(
-                                  context, transactions[index]);
-                            } else {
-                              return const SizedBox();
-                            }
-                          }
-                        },
+                                context, recentTransaction);
+                          }),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           );
   }
 
   static Container displayTxDetailTransfer(
-      BuildContext context, Transaction transaction) {
+      BuildContext context, RecentTransaction transaction) {
     return Container(
         padding: const EdgeInsets.all(3.5),
         width: MediaQuery.of(context).size.width * 0.9,
@@ -126,45 +173,75 @@ class TxListWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Text(transaction.type!,
+                    Text(getTypeTransactionLabel(context, transaction.typeTx!),
                         style: AppStyles.textStyleSize14W700Primary(context)),
                   ],
                 ),
-                Text(
-                    transaction.data!.ledger!.uco!.transfers![0].amount
-                            .toString() +
-                        ' UCO',
-                    style: AppStyles.textStyleSize14W600Primary(context)),
+                transaction.amount == null
+                    ? Text('')
+                    : Text(transaction.amount!.toString() + ' UCO',
+                        style: AppStyles.textStyleSize14W600Primary(context)),
               ],
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              Text(
-                  'To: ' +
-                      Address(transaction.data!.ledger!.uco!.transfers![0].to!)
-                          .getShortString3(),
-                  style: AppStyles.textStyleSize10W100Primary(context))
-            ]),
+            transaction.typeTx == RecentTransaction.NFT_CREATION &&
+                    transaction.content != null
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                        Text(transaction.content!,
+                            style:
+                                AppStyles.textStyleSize10W100Primary(context))
+                      ])
+                : const SizedBox(),
+            transaction.typeTx == RecentTransaction.TRANSFER_OUTPUT ||
+                    transaction.typeTx == RecentTransaction.NFT_CREATION
+                ? const SizedBox()
+                : Row(mainAxisAlignment: MainAxisAlignment.start, children: <
+                    Widget>[
+                    transaction.from == null
+                        ? Text('')
+                        : Text(
+                            'From: ' +
+                                Address(transaction.from!).getShortString3(),
+                            style:
+                                AppStyles.textStyleSize10W100Primary(context))
+                  ]),
+            transaction.typeTx == RecentTransaction.TRANSFER_INPUT ||
+                    transaction.typeTx == RecentTransaction.NFT_CREATION
+                ? const SizedBox()
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                        transaction.recipient == null
+                            ? Text('')
+                            : Text(
+                                'To: ' +
+                                    Address(transaction.recipient!)
+                                        .getShortString3(),
+                                style: AppStyles.textStyleSize10W100Primary(
+                                    context))
+                      ]),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
               Text(
                   'Date: ' +
                       DateFormat.yMEd(
                               Localizations.localeOf(context).languageCode)
-                          .add_Hm()
+                          .add_Hms()
                           .format(DateTime.fromMillisecondsSinceEpoch(
-                                  transaction.validationStamp!.timestamp! *
-                                      1000)
+                                  transaction.timestamp! * 1000)
                               .toLocal())
                           .toString(),
                   style: AppStyles.textStyleSize10W100Primary(context)),
             ]),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              Text(
-                  'Fees: ' +
-                      transaction.validationStamp!.ledgerOperations!.fee
-                          .toString() +
-                      ' UCO',
-                  style: AppStyles.textStyleSize10W100Primary(context)),
-            ]),
+            transaction.typeTx == RecentTransaction.TRANSFER_INPUT
+                ? const SizedBox()
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                        Text('Fees: ' + transaction.fee.toString() + ' UCO',
+                            style:
+                                AppStyles.textStyleSize10W100Primary(context)),
+                      ]),
             const SizedBox(height: 6),
             Divider(
                 height: 4,
@@ -175,7 +252,7 @@ class TxListWidget {
   }
 
   static Container displayTxDetailNFT(
-      BuildContext context, Transaction transaction) {
+      BuildContext context, RecentTransaction transaction) {
     return Container(
         padding: const EdgeInsets.all(3.5),
         width: MediaQuery.of(context).size.width * 0.9,
@@ -186,28 +263,22 @@ class TxListWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Text(transaction.type!,
+                    Text(getTypeTransactionLabel(context, transaction.typeTx!),
                         style: AppStyles.textStyleSize14W700Primary(context)),
                   ],
                 ),
-                Text(
-                    transaction.inputs![1].amount.toString() +
-                        ' ' +
-                        transaction.data!.contentDisplay!.substring(transaction
-                                .data!.contentDisplay!
-                                .indexOf('name: ') +
-                            'name: '.length),
+                Text(transaction.amount.toString() + ' ' + transaction.nftName!,
                     style: AppStyles.textStyleSize14W600Primary(context)),
               ],
             ),
-            transaction.inputs![1].nftAddress == null
+            transaction.nftAddress == null
                 ? const SizedBox()
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                         Text(
                             'Address: ' +
-                                Address(transaction.inputs![1].nftAddress!)
+                                Address(transaction.nftAddress!)
                                     .getShortString3(),
                             style:
                                 AppStyles.textStyleSize10W100Primary(context)),
@@ -219,8 +290,7 @@ class TxListWidget {
                               Localizations.localeOf(context).languageCode)
                           .add_Hm()
                           .format(DateTime.fromMillisecondsSinceEpoch(
-                                  transaction.validationStamp!.timestamp! *
-                                      1000)
+                                  transaction.timestamp! * 1000)
                               .toLocal())
                           .toString(),
                   style: AppStyles.textStyleSize10W100Primary(context)),
@@ -358,5 +428,18 @@ class TxListWidget {
             const SizedBox(height: 6),
           ],
         ));
+  }
+
+  static String getTypeTransactionLabel(BuildContext context, int typeTx) {
+    switch (typeTx) {
+      case RecentTransaction.NFT_CREATION:
+        return 'New NFT';
+      case RecentTransaction.TRANSFER_INPUT:
+        return 'Receive';
+      case RecentTransaction.TRANSFER_OUTPUT:
+        return 'Send';
+      default:
+        return '';
+    }
   }
 }

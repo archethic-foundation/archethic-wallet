@@ -299,7 +299,7 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
 
       await AppUtil().loginAccount(genesisAddress, context);
       StateContainer.of(context)
-          .requestUpdate(StateContainer.of(context).selectedAccount);
+          .requestUpdate(StateContainer.of(context).selectedAccount, null);
       final String pin = await Navigator.of(context)
           .push(MaterialPageRoute(builder: (BuildContext context) {
         return const PinScreen(

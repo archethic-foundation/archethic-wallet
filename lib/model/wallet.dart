@@ -2,7 +2,8 @@
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show Transaction, Balance;
+    show Balance;
+import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
 
 // Package imports:
 import 'package:decimal/decimal.dart';
@@ -19,22 +20,22 @@ class AppWallet {
       Balance accountBalance,
       String localCurrencyPrice,
       String btcPrice,
-      List<Transaction> history,
-      bool transactionChainLoading}) {
+      List<RecentTransaction> history,
+      bool recentTransactionsLoading}) {
     _address = address;
     _accountBalance = accountBalance ?? Balance(uco: 0, nft: null);
     _localCurrencyPrice = localCurrencyPrice ?? '0';
     _btcPrice = btcPrice ?? '0';
-    _history = history ?? List<Transaction>.empty(growable: true);
-    _transactionChainLoading = transactionChainLoading ?? true;
+    _history = history ?? List<RecentTransaction>.empty(growable: true);
+    _recentTransactionsLoading = recentTransactionsLoading ?? true;
   }
 
-  bool _transactionChainLoading;
+  bool _recentTransactionsLoading;
   String _address;
   Balance _accountBalance;
   String _localCurrencyPrice;
   String _btcPrice;
-  List<Transaction> _history;
+  List<RecentTransaction> _history;
 
   String get address => _address;
 
@@ -115,16 +116,16 @@ class AppWallet {
     _btcPrice = value;
   }
 
-  List<Transaction> get history => _history;
+  List<RecentTransaction> get history => _history;
 
-  set history(List<Transaction> value) {
+  set history(List<RecentTransaction> value) {
     _history = value;
   }
 
-  bool get transactionChainLoading =>
-      _transactionChainLoading == null ? true : _transactionChainLoading;
+  bool get recentTransactionsLoading =>
+      _recentTransactionsLoading == null ? true : _recentTransactionsLoading;
 
-  set transactionChainLoading(bool value) {
-    _transactionChainLoading = value;
+  set recentTransactionsLoading(bool value) {
+    _recentTransactionsLoading = value;
   }
 }

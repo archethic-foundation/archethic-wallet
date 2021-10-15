@@ -40,7 +40,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
           .loginAccount(await StateContainer.of(context).getSeed(), context);
     }
     StateContainer.of(context)
-        .requestUpdate(StateContainer.of(context).selectedAccount);
+        .requestUpdate(StateContainer.of(context).selectedAccount, null);
     Navigator.of(context).pushNamedAndRemoveUntil(
       '/home_transition',
       (Route<dynamic> route) => false,

@@ -1,6 +1,8 @@
 // @dart=2.9
 
 // Flutter imports:
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -12,23 +14,27 @@ class BiometricUtil {
   ///
   /// @returns [true] if device has fingerprint/faceID available and registered, [false] otherwise
   Future<bool> hasBiometrics() async {
-    final LocalAuthentication localAuth = LocalAuthentication();
-    final bool canCheck = await localAuth.canCheckBiometrics;
-    if (canCheck) {
-      final List<BiometricType> availableBiometrics =
-          await localAuth.getAvailableBiometrics();
-      //for (BiometricType type in availableBiometrics) {
-      //sl.get<Logger>().i(type.toString());
-      //sl.get<Logger>().i("${type == BiometricType.face ? 'face' : type == BiometricType.iris ? 'iris' : type == BiometricType.fingerprint ? 'fingerprint' : 'unknown'}");
-      //}
+    if (Platform.isIOS || Platform.isAndroid) {
+      final LocalAuthentication localAuth = LocalAuthentication();
+      final bool canCheck = await localAuth.canCheckBiometrics;
+      if (canCheck) {
+        final List<BiometricType> availableBiometrics =
+            await localAuth.getAvailableBiometrics();
+        //for (BiometricType type in availableBiometrics) {
+        //sl.get<Logger>().i(type.toString());
+        //sl.get<Logger>().i("${type == BiometricType.face ? 'face' : type == BiometricType.iris ? 'iris' : type == BiometricType.fingerprint ? 'fingerprint' : 'unknown'}");
+        //}
 
-      if (availableBiometrics.contains(BiometricType.face)) {
-        return true;
-      } else if (availableBiometrics.contains(BiometricType.fingerprint)) {
-        return true;
+        if (availableBiometrics.contains(BiometricType.face)) {
+          return true;
+        } else if (availableBiometrics.contains(BiometricType.fingerprint)) {
+          return true;
+        }
       }
+      return false;
+    } else {
+      return false;
     }
-    return false;
   }
 
   ///
