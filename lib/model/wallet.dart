@@ -1,16 +1,13 @@
 // @dart=2.9
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show Balance;
-import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
-
-// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show Balance;
 import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/model/available_currency.dart';
+import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
 import 'package:archethic_mobile_wallet/util/numberutil.dart';
 
 /// Main wallet object that's passed around the app via state

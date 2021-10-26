@@ -45,7 +45,7 @@ class RecentTransaction {
 
   /// Content: free zone for data hosting (string or hexadecimal)
   String? content;
-  
+
   /// Type: UCO/NFT/Call
   String? type;
 

@@ -190,16 +190,16 @@ class _CircularParticleState extends State<CircularParticle>
             .animate(CurvedAnimation(
                 parent: awayAnimationController!,
                 curve: widget.awayAnimationCurve!))
-              ..addListener(() {
-                if (distance[index] < widget.awayRadius!)
-                  setState(() {
-                    offsets[index] = awayAnimation[index].value;
-                  });
-                if (awayAnimationController!.isCompleted &&
-                    index == offsets.length - 1) {
-                  awayAnimationController!.dispose();
-                }
-              }));
+          ..addListener(() {
+            if (distance[index] < widget.awayRadius!)
+              setState(() {
+                offsets[index] = awayAnimation[index].value;
+              });
+            if (awayAnimationController!.isCompleted &&
+                index == offsets.length - 1) {
+              awayAnimationController!.dispose();
+            }
+          }));
       }
     } else {
       for (int index = 0; index < offsets.length; index++) {

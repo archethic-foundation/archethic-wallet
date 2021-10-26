@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show UCOTransfer, toBigInt;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:decimal/decimal.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -32,6 +31,11 @@ import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 import 'package:archethic_mobile_wallet/util/numberutil.dart';
 import 'package:archethic_mobile_wallet/util/user_data_util.dart';
+
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show UCOTransfer, toBigInt;
+
 
 class TransferUcoSheet extends StatefulWidget {
   const TransferUcoSheet({

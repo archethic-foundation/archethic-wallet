@@ -1,7 +1,6 @@
 // @dart=2.9
 
 // Flutter imports:
-import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,6 +12,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 
 class QRcodeDisplay {
   static Widget buildQRCodeDisplay(

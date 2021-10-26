@@ -160,14 +160,20 @@ class LineChartWidget {
         bottomTitles: SideTitles(
           showTitles: false,
           reservedSize: 10,
-          getTextStyles: (BuildContext context, double value) => const TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),
+          getTextStyles: (BuildContext context, double value) =>
+              const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 10),
           margin: 8,
         ),
         leftTitles: SideTitles(
           showTitles: false,
-          getTextStyles: (BuildContext context,double value) => const TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),
+          getTextStyles: (BuildContext context, double value) =>
+              const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 10),
           reservedSize: 10,
           margin: 12,
         ),

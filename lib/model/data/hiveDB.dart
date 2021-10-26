@@ -26,7 +26,7 @@ class Account extends HiveObject {
       this.selected = false,
       this.lastAddress,
       this.balance});
-      
+
   /// Genesis Address - Primary Key
   @HiveField(0)
   String? genesisAddress;

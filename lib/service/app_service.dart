@@ -61,7 +61,10 @@ class AppService {
             .contains('initial supply:')) {
           recentTransaction.nftAddress = transaction.address;
           recentTransaction.typeTx = RecentTransaction.NFT_CREATION;
-          recentTransaction.content = transaction.data!.contentDisplay!.substring(transaction.data!.contentDisplay!.toLowerCase().indexOf('initial supply: '));
+          recentTransaction.content = transaction.data!.contentDisplay!
+              .substring(transaction.data!.contentDisplay!
+                  .toLowerCase()
+                  .indexOf('initial supply: '));
         } else {
           recentTransaction.typeTx = RecentTransaction.TRANSFER_OUTPUT;
           recentTransaction.content = '';
@@ -74,7 +77,7 @@ class AppService {
           recentTransaction.nftName = '';
         }
         recentTransaction.fee =
-                transaction.validationStamp!.ledgerOperations!.fee;
+            transaction.validationStamp!.ledgerOperations!.fee;
         recentTransactions.add(recentTransaction);
       } else {
         if (transaction.type! == 'transfer') {

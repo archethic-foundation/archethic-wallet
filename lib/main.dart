@@ -262,7 +262,12 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
   Future<void> checkLoggedIn() async {
     // Update session key
     await sl.get<Vault>().updateSessionKey();
-    if (!kIsWeb && !Platform.isMacOS && !Platform.isWindows && !Platform.isLinux) {
+    bool isRealDevice = await SafeDevice.isRealDevice;
+    if (!kIsWeb &&
+        !Platform.isMacOS &&
+        !Platform.isWindows &&
+        !Platform.isLinux &&
+        isRealDevice) {
       // Check if device is rooted or jailbroken, show user a warning informing them of the risks if so
       if (!(await sl.get<SharedPrefsUtil>().getHasSeenRootWarning()) &&
           (await SafeDevice.isJailBroken || await SafeDevice.isSafeDevice)) {

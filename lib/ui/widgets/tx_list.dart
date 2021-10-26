@@ -1,19 +1,19 @@
 // Flutter imports:
-import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Package imports:
-import 'package:intl/intl.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:intl/intl.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/address.dart';
+import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
+import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 
 class TxListWidget extends StatefulWidget {
   const TxListWidget(this._opacityAnimation);

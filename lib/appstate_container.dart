@@ -4,7 +4,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +18,7 @@ import 'package:archethic_mobile_wallet/model/available_language.dart';
 import 'package:archethic_mobile_wallet/model/chart_infos.dart';
 import 'package:archethic_mobile_wallet/model/data/appdb.dart';
 import 'package:archethic_mobile_wallet/model/data/hiveDB.dart';
+import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/model/wallet.dart';
 import 'package:archethic_mobile_wallet/service/app_service.dart';
@@ -285,7 +285,8 @@ class StateContainerState extends State<StateContainer> {
     });
     final List<RecentTransaction> recentTransactions = await sl
         .get<AppService>()
-        .getRecentTransactions(selectedAccount.genesisAddress, selectedAccount.lastAddress, page);
+        .getRecentTransactions(
+            selectedAccount.genesisAddress, selectedAccount.lastAddress, page);
     EventTaxiImpl.singleton()
         .fire(TransactionsListEvent(transaction: recentTransactions));
   }
