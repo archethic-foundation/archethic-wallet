@@ -131,8 +131,5 @@ android/secret/api-5373400179997468599-215172-2a68660d069f.json
 CMakeCache.txt
 CMakeFiles
 cmake_install.cmake
-update_g_cmd.txt
-update_translation.txt
 android/fastlane/report.xml
 ios/fastlane/report.xml
-preparePackage.txt
