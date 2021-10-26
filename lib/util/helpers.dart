@@ -90,16 +90,6 @@ class AppHelpers {
     return true;
   }
 
-  // Convert an integer to a byte array
-  static Uint8List intToBytes(int integer, int length) {
-    final Uint8List ret = Uint8List(length);
-    for (int i = 0; i < length; i++) {
-      ret[i] = integer & 0xff;
-      integer = (integer - ret[i]) ~/ 256;
-    }
-    return AppHelpers.reverse(ret);
-  }
-
   /// Convert string to byte array
   static Uint8List stringToBytesUtf8(String str) {
     return utf8.encode(str);

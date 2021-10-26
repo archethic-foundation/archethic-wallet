@@ -159,18 +159,6 @@ flutter:
     - assets/searchseedmanual_animation_seedonly.flr
     - assets/pulltosend_animation.flr
     - assets/sheethandle_animation.flr
-    - assets/auth_type/2fa.png
-    - assets/auth_type/biometric.png
-    - assets/auth_type/foot_print.png
-    - assets/auth_type/nerves_1.png
-    - assets/auth_type/nerves_2.png
-    - assets/auth_type/nerves_3.png
-    - assets/auth_type/nerves_4.png
-    - assets/auth_type/nerves_5.png
-    - assets/auth_type/password.png
-    - assets/auth_type/pin.png
-    - assets/auth_type/qr-code.png
-    
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
