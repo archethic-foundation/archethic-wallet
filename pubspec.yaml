@@ -3,7 +3,7 @@ description: ArchEthic Wallet app (iOS/Android).
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.0.21+21
+version: 0.0.22+22
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -28,7 +28,7 @@ dependencies:
   event_taxi: ^1.0.0
 
   # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart
-  fl_chart: ^0.40.0
+  fl_chart: ^0.40.2
 
   # Vector design and runtime animation for Flutter
   flare_flutter: ^3.0.2
@@ -48,7 +48,7 @@ dependencies:
   flutter_slidable: ^1.0.0-dev.9
 
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files
-  flutter_svg: ^0.22.0
+  flutter_svg: ^0.23.0+1
 
   # A Flutter plugin to vibrate the device
   flutter_vibrate: ^1.3.0
@@ -74,13 +74,7 @@ dependencies:
 
   # Localization
   intl: ^0.17.0 
-
-  # A lightweight alternative to the Scaffold widget for avoiding the on-screen software keyboard. Automatically scrolls obscured TextField child widgets into view on focus
-  keyboard_avoider: 
-    git:
-      url: https://github.com/redDwarf03/keyboard_avoider.git
-      ref: master
-
+  
   # Flutter plugin for Android and iOS devices to allow local authentication via fingerprint, touch ID, face ID, passcode, pin, or pattern
   local_auth: ^1.1.8
 
@@ -97,7 +91,7 @@ dependencies:
   quiver: ^3.0.1
   
   # With the Flutter safe_device package, you can easily implement security steps such as Jailbroken, root, emulator and fake location detection.
-  safe_device: ^1.0.8
+  safe_device: ^1.0.9
 
   # Flutter plugin for reading and writing simple key-value pairs. Wraps NSUserDefaults on iOS and SharedPreferences on Android
   shared_preferences: ^2.0.8
