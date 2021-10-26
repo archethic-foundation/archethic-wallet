@@ -36,7 +36,6 @@ import 'package:archethic_mobile_wallet/util/user_data_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show UCOTransfer, toBigInt;
 
-
 class TransferUcoSheet extends StatefulWidget {
   const TransferUcoSheet({
     @required this.localCurrency,

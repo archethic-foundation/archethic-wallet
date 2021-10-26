@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:keyboard_avoider/keyboard_avoider.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -158,63 +157,58 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
               style: AppStyles.textStyleSize14W100Primary(context)),
           const SizedBox(height: 30),
           Expanded(
-            child: KeyboardAvoider(
-              duration: const Duration(milliseconds: 0),
-              autoScroll: true,
-              focusPadding: 40,
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    AppLocalization.of(context)!.nftNameHint,
-                    style: AppStyles.textStyleSize16W200Primary(context),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  AppLocalization.of(context)!.nftNameHint,
+                  style: AppStyles.textStyleSize16W200Primary(context),
+                ),
+                AppTextField(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  focusNode: _nameFocusNode,
+                  controller: _nameController,
+                  textInputAction: TextInputAction.next,
+                  hintText: _showNameHint!
+                      ? AppLocalization.of(context)!.nftNameHint
+                      : '',
+                  keyboardType: TextInputType.text,
+                  style: AppStyles.textStyleSize16W600Primary(context),
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(100),
+                  ],
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 5, bottom: 5),
+                  child: Text(_nameValidationText!,
+                      style: AppStyles.textStyleSize14W600Primary(context)),
+                ),
+                const SizedBox(height: 30),
+                Text(
+                  AppLocalization.of(context)!.nftInitialSupplyHint,
+                  style: AppStyles.textStyleSize16W200Primary(context),
+                ),
+                AppTextField(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  focusNode: _initialSupplyFocusNode,
+                  controller: _initialSupplyController,
+                  textInputAction: TextInputAction.done,
+                  hintText: _showInitialSupplyHint!
+                      ? AppLocalization.of(context)!.nftInitialSupplyHint
+                      : '',
+                  keyboardType: TextInputType.number,
+                  style: AppStyles.textStyleSize16W600Primary(context),
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(10),
+                  ],
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 5, bottom: 5),
+                  child: Text(
+                    _initialSupplyValidationText!,
+                    style: AppStyles.textStyleSize14W600Primary(context),
                   ),
-                  AppTextField(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    focusNode: _nameFocusNode,
-                    controller: _nameController,
-                    textInputAction: TextInputAction.next,
-                    hintText: _showNameHint!
-                        ? AppLocalization.of(context)!.nftNameHint
-                        : '',
-                    keyboardType: TextInputType.text,
-                    style: AppStyles.textStyleSize16W600Primary(context),
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(100),
-                    ],
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 5, bottom: 5),
-                    child: Text(_nameValidationText!,
-                        style: AppStyles.textStyleSize14W600Primary(context)),
-                  ),
-                  const SizedBox(height: 30),
-                  Text(
-                    AppLocalization.of(context)!.nftInitialSupplyHint,
-                    style: AppStyles.textStyleSize16W200Primary(context),
-                  ),
-                  AppTextField(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    focusNode: _initialSupplyFocusNode,
-                    controller: _initialSupplyController,
-                    textInputAction: TextInputAction.done,
-                    hintText: _showInitialSupplyHint!
-                        ? AppLocalization.of(context)!.nftInitialSupplyHint
-                        : '',
-                    keyboardType: TextInputType.number,
-                    style: AppStyles.textStyleSize16W600Primary(context),
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(10),
-                    ],
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 5, bottom: 5),
-                    child: Text(
-                      _initialSupplyValidationText!,
-                      style: AppStyles.textStyleSize14W600Primary(context),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           Container(

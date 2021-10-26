@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:keyboard_avoider/keyboard_avoider.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -172,118 +171,112 @@ class _AddContactSheetState extends State<AddContactSheet> {
 
           // The main container that holds "Enter Name" and "Enter Address" text fields
           Expanded(
-            child: KeyboardAvoider(
-              duration: const Duration(milliseconds: 0),
-              autoScroll: true,
-              focusPadding: 40,
-              child: Column(
-                children: <Widget>[
-                  // Enter Name Container
-                  AppTextField(
-                    topMargin: MediaQuery.of(context).size.height * 0.14,
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    focusNode: _nameFocusNode,
-                    controller: _nameController,
-                    textInputAction: widget.address != null
-                        ? TextInputAction.done
-                        : TextInputAction.next,
-                    hintText: _showNameHint!
-                        ? AppLocalization.of(context)!.contactNameHint
-                        : '',
-                    keyboardType: TextInputType.text,
-                    style: AppStyles.textStyleSize16W600Primary(context),
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(20),
-                      ContactInputFormatter()
-                    ],
-                    onSubmitted: (String text) {
-                      if (widget.address == null) {
-                        if (!Address(_addressController!.text).isValid()) {
-                          FocusScope.of(context)
-                              .requestFocus(_addressFocusNode);
-                        } else {
-                          FocusScope.of(context).unfocus();
-                        }
+            child: Column(
+              children: <Widget>[
+                // Enter Name Container
+                AppTextField(
+                  topMargin: MediaQuery.of(context).size.height * 0.14,
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  focusNode: _nameFocusNode,
+                  controller: _nameController,
+                  textInputAction: widget.address != null
+                      ? TextInputAction.done
+                      : TextInputAction.next,
+                  hintText: _showNameHint!
+                      ? AppLocalization.of(context)!.contactNameHint
+                      : '',
+                  keyboardType: TextInputType.text,
+                  style: AppStyles.textStyleSize16W600Primary(context),
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(20),
+                    ContactInputFormatter()
+                  ],
+                  onSubmitted: (String text) {
+                    if (widget.address == null) {
+                      if (!Address(_addressController!.text).isValid()) {
+                        FocusScope.of(context).requestFocus(_addressFocusNode);
                       } else {
                         FocusScope.of(context).unfocus();
                       }
+                    } else {
+                      FocusScope.of(context).unfocus();
+                    }
+                  },
+                ),
+                // Enter Name Error Container
+                Container(
+                  margin: const EdgeInsets.only(top: 5, bottom: 5),
+                  child: Text(_nameValidationText!,
+                      style: AppStyles.textStyleSize14W600Primary(context)),
+                ),
+                // Enter Address container
+                AppTextField(
+                  padding: !_shouldShowTextField()
+                      ? const EdgeInsets.symmetric(
+                          horizontal: 25.0, vertical: 15.0)
+                      : EdgeInsets.zero,
+                  focusNode: _addressFocusNode,
+                  controller: _addressController,
+                  style: _addressValid!
+                      ? AppStyles.textStyleSize14W100Primary(context)
+                      : AppStyles.textStyleSize14W100Text60(context),
+                  inputFormatters: <LengthLimitingTextInputFormatter>[
+                    LengthLimitingTextInputFormatter(66),
+                  ],
+                  textInputAction: TextInputAction.done,
+                  maxLines: null,
+                  autocorrect: false,
+                  hintText: _showAddressHint!
+                      ? AppLocalization.of(context)!.addressHint
+                      : '',
+                  prefixButton: TextFieldButton(
+                      icon: FontAwesomeIcons.qrcode,
+                      onPressed: () async {
+                        UIUtil.cancelLockEvent();
+                        final String scanResult = await UserDataUtil.getQRData(
+                            DataType.ADDRESS, context);
+                        if (!QRScanErrs.ERROR_LIST.contains(scanResult)) {
+                          if (mounted) {
+                            setState(() {
+                              _addressController!.text = scanResult;
+                              _addressValidationText = '';
+                              _addressValid = true;
+                              _addressValidAndUnfocused = true;
+                            });
+                            _addressFocusNode!.unfocus();
+                          }
+                        }
+                      }),
+                  fadePrefixOnCondition: true,
+                  prefixShowFirstCondition: _showPasteButton,
+                  suffixButton: TextFieldButton(
+                    icon: FontAwesomeIcons.paste,
+                    onPressed: () async {
+                      if (!_showPasteButton!) {
+                        return;
+                      }
+                      final String data =
+                          await UserDataUtil.getClipboardText(DataType.ADDRESS);
+                      if (data != null) {
+                        setState(() {
+                          _addressValid = true;
+                          _showPasteButton = false;
+                          _addressController!.text = data;
+                          _addressValidAndUnfocused = true;
+                        });
+                        _addressFocusNode!.unfocus();
+                      } else {
+                        setState(() {
+                          _showPasteButton = true;
+                          _addressValid = false;
+                        });
+                      }
                     },
                   ),
-                  // Enter Name Error Container
-                  Container(
-                    margin: const EdgeInsets.only(top: 5, bottom: 5),
-                    child: Text(_nameValidationText!,
-                        style: AppStyles.textStyleSize14W600Primary(context)),
-                  ),
-                  // Enter Address container
-                  AppTextField(
-                    padding: !_shouldShowTextField()
-                        ? const EdgeInsets.symmetric(
-                            horizontal: 25.0, vertical: 15.0)
-                        : EdgeInsets.zero,
-                    focusNode: _addressFocusNode,
-                    controller: _addressController,
-                    style: _addressValid!
-                        ? AppStyles.textStyleSize14W100Primary(context)
-                        : AppStyles.textStyleSize14W100Text60(context),
-                    inputFormatters: <LengthLimitingTextInputFormatter>[
-                      LengthLimitingTextInputFormatter(66),
-                    ],
-                    textInputAction: TextInputAction.done,
-                    maxLines: null,
-                    autocorrect: false,
-                    hintText: _showAddressHint!
-                        ? AppLocalization.of(context)!.addressHint
-                        : '',
-                    prefixButton: TextFieldButton(
-                        icon: FontAwesomeIcons.qrcode,
-                        onPressed: () async {
-                          UIUtil.cancelLockEvent();
-                          final String scanResult =
-                              await UserDataUtil.getQRData(
-                                  DataType.ADDRESS, context);
-                          if (!QRScanErrs.ERROR_LIST.contains(scanResult)) {
-                            if (mounted) {
-                              setState(() {
-                                _addressController!.text = scanResult;
-                                _addressValidationText = '';
-                                _addressValid = true;
-                                _addressValidAndUnfocused = true;
-                              });
-                              _addressFocusNode!.unfocus();
-                            }
-                          }
-                        }),
-                    fadePrefixOnCondition: true,
-                    prefixShowFirstCondition: _showPasteButton,
-                    suffixButton: TextFieldButton(
-                      icon: FontAwesomeIcons.paste,
-                      onPressed: () async {
-                        if (!_showPasteButton!) {
-                          return;
-                        }
-                        final String data = await UserDataUtil.getClipboardText(
-                            DataType.ADDRESS);
-                        if (data != null) {
-                          setState(() {
-                            _addressValid = true;
-                            _showPasteButton = false;
-                            _addressController!.text = data;
-                            _addressValidAndUnfocused = true;
-                          });
-                          _addressFocusNode!.unfocus();
-                        } else {
-                          setState(() {
-                            _showPasteButton = true;
-                            _addressValid = false;
-                          });
-                        }
-                      },
-                    ),
-                    fadeSuffixOnCondition: true,
-                    suffixShowFirstCondition: _showPasteButton,
-                    onChanged: (String text) {
-                      /*Address address = Address(text);
+                  fadeSuffixOnCondition: true,
+                  suffixShowFirstCondition: _showPasteButton,
+                  onChanged: (String text) {
+                    /*Address address = Address(text);
                       if (address.isValid()) {
                             setState(() {
                               _addressValid = true;
@@ -298,39 +291,38 @@ class _AddContactSheetState extends State<AddContactSheet> {
                               _addressValid = false;
                             });
                           }*/
-                      setState(() {
-                        _showPasteButton = true;
-                        _addressValid = false;
-                      });
-                    },
-                    overrideTextFieldWidget: !_shouldShowTextField()
-                        ? GestureDetector(
-                            onTap: () {
-                              if (widget.address != null) {
-                                return;
-                              }
-                              setState(() {
-                                _addressValidAndUnfocused = false;
-                              });
-                              Future<void>.delayed(
-                                  const Duration(milliseconds: 50), () {
-                                FocusScope.of(context)
-                                    .requestFocus(_addressFocusNode);
-                              });
-                            },
-                            child: UIUtil.threeLinetextStyleSmallestW400Text(
-                                context,
-                                widget.address ?? _addressController!.text))
-                        : null,
-                  ),
-                  // Enter Address Error Container
-                  Container(
-                    margin: const EdgeInsets.only(top: 5, bottom: 5),
-                    child: Text(_addressValidationText!,
-                        style: AppStyles.textStyleSize14W600Primary(context)),
-                  ),
-                ],
-              ),
+                    setState(() {
+                      _showPasteButton = true;
+                      _addressValid = false;
+                    });
+                  },
+                  overrideTextFieldWidget: !_shouldShowTextField()
+                      ? GestureDetector(
+                          onTap: () {
+                            if (widget.address != null) {
+                              return;
+                            }
+                            setState(() {
+                              _addressValidAndUnfocused = false;
+                            });
+                            Future<void>.delayed(
+                                const Duration(milliseconds: 50), () {
+                              FocusScope.of(context)
+                                  .requestFocus(_addressFocusNode);
+                            });
+                          },
+                          child: UIUtil.threeLinetextStyleSmallestW400Text(
+                              context,
+                              widget.address ?? _addressController!.text))
+                      : null,
+                ),
+                // Enter Address Error Container
+                Container(
+                  margin: const EdgeInsets.only(top: 5, bottom: 5),
+                  child: Text(_addressValidationText!,
+                      style: AppStyles.textStyleSize14W600Primary(context)),
+                ),
+              ],
             ),
           ),
           //A column with "Add Contact" and "Close" buttons

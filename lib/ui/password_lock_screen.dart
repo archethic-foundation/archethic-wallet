@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' show uint8ListToHex;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:keyboard_avoider/keyboard_avoider.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -182,54 +181,45 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                           margin: const EdgeInsets.only(top: 10),
                         ),
                         Expanded(
-                            child: KeyboardAvoider(
-                                duration: const Duration(milliseconds: 0),
-                                autoScroll: true,
-                                focusPadding: 40,
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      // Enter your password Text Field
-                                      AppTextField(
-                                          topMargin: 30,
-                                          padding:
-                                              const EdgeInsetsDirectional.only(
-                                                  start: 16, end: 16),
-                                          focusNode: enterPasswordFocusNode,
-                                          controller: enterPasswordController,
-                                          textInputAction: TextInputAction.go,
-                                          autofocus: true,
-                                          onChanged: (String newText) {
-                                            if (passwordError != null) {
-                                              setState(() {
-                                                passwordError = null;
-                                              });
-                                            }
-                                          },
-                                          onSubmitted: (_) async {
-                                            FocusScope.of(context).unfocus();
-                                            await validateAndDecrypt();
-                                          },
-                                          hintText: AppLocalization.of(context)
-                                              .enterPasswordHint,
-                                          keyboardType: TextInputType.text,
-                                          obscureText: true,
-                                          textAlign: TextAlign.center,
-                                          style: AppStyles
-                                              .textStyleSize16W700Primary(
-                                                  context)),
-                                      // Error Container
-                                      Container(
-                                        alignment:
-                                            const AlignmentDirectional(0, 0),
-                                        margin: const EdgeInsets.only(top: 3),
-                                        child: Text(passwordError ?? '',
-                                            style: AppStyles
-                                                .textStyleSize14W600Primary(
-                                                    context)),
-                                      ),
-                                    ])))
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                              // Enter your password Text Field
+                              AppTextField(
+                                  topMargin: 30,
+                                  padding: const EdgeInsetsDirectional.only(
+                                      start: 16, end: 16),
+                                  focusNode: enterPasswordFocusNode,
+                                  controller: enterPasswordController,
+                                  textInputAction: TextInputAction.go,
+                                  autofocus: true,
+                                  onChanged: (String newText) {
+                                    if (passwordError != null) {
+                                      setState(() {
+                                        passwordError = null;
+                                      });
+                                    }
+                                  },
+                                  onSubmitted: (_) async {
+                                    FocusScope.of(context).unfocus();
+                                    await validateAndDecrypt();
+                                  },
+                                  hintText: AppLocalization.of(context)
+                                      .enterPasswordHint,
+                                  keyboardType: TextInputType.text,
+                                  obscureText: true,
+                                  textAlign: TextAlign.center,
+                                  style: AppStyles.textStyleSize16W700Primary(
+                                      context)),
+                              // Error Container
+                              Container(
+                                alignment: const AlignmentDirectional(0, 0),
+                                margin: const EdgeInsets.only(top: 3),
+                                child: Text(passwordError ?? '',
+                                    style: AppStyles.textStyleSize14W600Primary(
+                                        context)),
+                              ),
+                            ]))
                       ],
                     )),
                     Row(

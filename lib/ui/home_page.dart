@@ -13,7 +13,6 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -378,54 +377,44 @@ class _AppHomePageState extends State<AppHomePage>
                 child: _getTopCards(context),
               ),
               Expanded(
-                child: KeyboardAvoider(
-                    duration: const Duration(milliseconds: 0),
-                    autoScroll: true,
-                    focusPadding: 80,
-                    child: Stack(
-                      alignment: Alignment.topCenter,
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: <Widget>[
+                    CircularParticle(
+                      awayRadius: 80,
+                      numberOfParticles: 80,
+                      speedOfParticles: 0.5,
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      onTapAnimation: true,
+                      particleColor: StateContainer.of(context)
+                          .curTheme
+                          .primary10
+                          .withAlpha(150)
+                          .withOpacity(0.2),
+                      awayAnimationDuration: const Duration(milliseconds: 600),
+                      maxParticleSize: 8,
+                      isRandSize: true,
+                      isRandomColor: false,
+                      awayAnimationCurve: Curves.easeInOutBack,
+                      enableHover: true,
+                      hoverColor: StateContainer.of(context).curTheme.primary30,
+                      hoverRadius: 90,
+                      connectDots: true,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        CircularParticle(
-                          awayRadius: 80,
-                          numberOfParticles: 80,
-                          speedOfParticles: 0.5,
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                          onTapAnimation: true,
-                          particleColor: StateContainer.of(context)
-                              .curTheme
-                              .primary10
-                              .withAlpha(150)
-                              .withOpacity(0.2),
-                          awayAnimationDuration:
-                              const Duration(milliseconds: 600),
-                          maxParticleSize: 8,
-                          isRandSize: true,
-                          isRandomColor: false,
-                          awayAnimationCurve: Curves.easeInOutBack,
-                          enableHover: true,
-                          hoverColor:
-                              StateContainer.of(context).curTheme.primary30,
-                          hoverRadius: 90,
-                          connectDots: true,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            //const SizedBox(height: 20),
-                            //NftListWidget.buildNftList(context),
-                            //const SizedBox(height: 20),
-                            if (StateContainer.of(context).wallet == null)
-                              const SizedBox()
-                            else
-                              TxListWidget(
-                                  
-                                  _opacityAnimation),
-                          ],
-                        ),
+                        //const SizedBox(height: 20),
+                        //NftListWidget.buildNftList(context),
+                        //const SizedBox(height: 20),
+                        if (StateContainer.of(context).wallet == null)
+                          const SizedBox()
+                        else
+                          TxListWidget(_opacityAnimation),
                       ],
                     ),
-                  
+                  ],
                 ),
               ),
             ],

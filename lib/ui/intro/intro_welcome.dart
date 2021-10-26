@@ -76,39 +76,40 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                   children: <Widget>[
                     Expanded(
                       child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            //
-                            width: double.infinity,
-                            height: MediaQuery.of(context).size.width * 5 / 8,
-                            child: Center(
-                              child: Container(
-                                child: SizedBox(
-                                  height: 300,
-                                  child: kIsWeb
-                                      ? SizedBox()
-                                      : SvgPicture.asset(
-                                          'assets/archethic_logo.svg',
-                                          height: 200,
-                                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              //
+                              width: double.infinity,
+                              height: MediaQuery.of(context).size.width * 5 / 8,
+                              child: Center(
+                                child: Container(
+                                  child: SizedBox(
+                                    height: 300,
+                                    child: kIsWeb
+                                        ? SizedBox()
+                                        : SvgPicture.asset(
+                                            'assets/archethic_logo.svg',
+                                            height: 200,
+                                          ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: smallScreen(context) ? 30 : 40,
-                                vertical: 20),
-                            child: Text(
-                              AppLocalization.of(context).welcomeText,
-                              style:
-                                  AppStyles.textStyleSize14W600Primary(context),
+                            Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: smallScreen(context) ? 30 : 40,
+                                  vertical: 20),
+                              child: Text(
+                                AppLocalization.of(context).welcomeText,
+                                style: AppStyles.textStyleSize14W600Primary(
+                                    context),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),),
+                          ],
+                        ),
+                      ),
                     ),
 
                     //A column with "New Wallet" and "Import Wallet" buttons

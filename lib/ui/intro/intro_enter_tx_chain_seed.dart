@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' show AddressService;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:keyboard_avoider/keyboard_avoider.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -148,120 +147,104 @@ class _IntroEnterTxChainSeedState extends State<IntroEnterTxChainSeed> {
                           ),
                         ),
                         Expanded(
-                            child: KeyboardAvoider(
-                                duration: const Duration(milliseconds: 0),
-                                autoScroll: true,
-                                focusPadding: 40,
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      AppTextField(
-                                        padding: EdgeInsets.zero,
-                                        focusNode: enterTxChainSeedFocusNode,
-                                        controller: enterTxChainSeedController,
-                                        style: AppStyles
-                                            .textStyleSize14W100Primary(
-                                                context),
-                                        inputFormatters: <
-                                            LengthLimitingTextInputFormatter>[
-                                          LengthLimitingTextInputFormatter(255),
-                                        ],
-                                        textInputAction: TextInputAction.done,
-                                        maxLines: null,
-                                        autocorrect: false,
-                                        hintText: AppLocalization.of(context)
-                                            .enterTxChainSeedHint,
-                                        prefixButton: TextFieldButton(
-                                            icon: FontAwesomeIcons.qrcode,
-                                            onPressed: () async {
-                                              UIUtil.cancelLockEvent();
-                                              final String scanResult =
-                                                  await UserDataUtil.getQRData(
-                                                      DataType.ADDRESS,
-                                                      context);
-                                              if (!QRScanErrs.ERROR_LIST
-                                                  .contains(scanResult)) {
-                                                if (mounted) {
-                                                  setState(() {
-                                                    enterTxChainSeedController
-                                                        .text = scanResult;
-                                                  });
-                                                  enterTxChainSeedFocusNode
-                                                      .unfocus();
-                                                }
-                                              }
-                                            }),
-                                        fadePrefixOnCondition: true,
-                                        prefixShowFirstCondition: true,
-                                        suffixButton: TextFieldButton(
-                                          icon: FontAwesomeIcons.paste,
-                                          onPressed: () async {
-                                            final String data =
-                                                await UserDataUtil
-                                                    .getClipboardText(
-                                                        DataType.ADDRESS);
-                                            if (data != null) {
-                                              setState(() {
-                                                enterTxChainSeedController
-                                                    .text = data;
-                                              });
-                                            } else {}
-                                          },
-                                        ),
-                                        fadeSuffixOnCondition: true,
-                                        suffixShowFirstCondition: true,
-                                        onChanged: (String text) {},
-                                      ),
-                                      const SizedBox(height: 40),
-                                      Container(
-                                        margin: EdgeInsets.symmetric(
-                                          horizontal:
-                                              smallScreen(context) ? 30 : 40,
-                                        ),
-                                        child: AutoSizeText(
-                                          AppLocalization.of(context)
-                                              .enterEndpoint,
-                                          style: AppStyles
-                                              .textStyleSize16W200Primary(
-                                                  context),
-                                          maxLines: 4,
-                                          stepGranularity: 0.5,
-                                        ),
-                                      ),
-                                      AppTextField(
-                                        padding: EdgeInsets.zero,
-                                        focusNode: enterEndpointFocusNode,
-                                        controller: enterEndpointController,
-                                        cursorColor: StateContainer.of(context)
-                                            .curTheme
-                                            .primary,
-                                        style: AppStyles
-                                            .textStyleSize14W100Primary(
-                                                context),
-                                        inputFormatters: <
-                                            LengthLimitingTextInputFormatter>[
-                                          LengthLimitingTextInputFormatter(150)
-                                        ],
-                                        onChanged: (String text) {
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                              AppTextField(
+                                padding: EdgeInsets.zero,
+                                focusNode: enterTxChainSeedFocusNode,
+                                controller: enterTxChainSeedController,
+                                style: AppStyles.textStyleSize14W100Primary(
+                                    context),
+                                inputFormatters: <
+                                    LengthLimitingTextInputFormatter>[
+                                  LengthLimitingTextInputFormatter(255),
+                                ],
+                                textInputAction: TextInputAction.done,
+                                maxLines: null,
+                                autocorrect: false,
+                                hintText: AppLocalization.of(context)
+                                    .enterTxChainSeedHint,
+                                prefixButton: TextFieldButton(
+                                    icon: FontAwesomeIcons.qrcode,
+                                    onPressed: () async {
+                                      UIUtil.cancelLockEvent();
+                                      final String scanResult =
+                                          await UserDataUtil.getQRData(
+                                              DataType.ADDRESS, context);
+                                      if (!QRScanErrs.ERROR_LIST
+                                          .contains(scanResult)) {
+                                        if (mounted) {
                                           setState(() {
-                                            enterEndpointValidationText = '';
+                                            enterTxChainSeedController.text =
+                                                scanResult;
                                           });
-                                        },
-                                        textInputAction: TextInputAction.next,
-                                        maxLines: null,
-                                        autocorrect: false,
-                                        hintText: enterEndpointHint == null
-                                            ? ''
-                                            : AppLocalization.of(context)
-                                                .enterEndpoint,
-                                        keyboardType: TextInputType.multiline,
-                                        textAlign: TextAlign.left,
-                                        onSubmitted: (String text) {
-                                          FocusScope.of(context).unfocus();
-                                        },
-                                      ),
-                                    ]))),
+                                          enterTxChainSeedFocusNode.unfocus();
+                                        }
+                                      }
+                                    }),
+                                fadePrefixOnCondition: true,
+                                prefixShowFirstCondition: true,
+                                suffixButton: TextFieldButton(
+                                  icon: FontAwesomeIcons.paste,
+                                  onPressed: () async {
+                                    final String data =
+                                        await UserDataUtil.getClipboardText(
+                                            DataType.ADDRESS);
+                                    if (data != null) {
+                                      setState(() {
+                                        enterTxChainSeedController.text = data;
+                                      });
+                                    } else {}
+                                  },
+                                ),
+                                fadeSuffixOnCondition: true,
+                                suffixShowFirstCondition: true,
+                                onChanged: (String text) {},
+                              ),
+                              const SizedBox(height: 40),
+                              Container(
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: smallScreen(context) ? 30 : 40,
+                                ),
+                                child: AutoSizeText(
+                                  AppLocalization.of(context).enterEndpoint,
+                                  style: AppStyles.textStyleSize16W200Primary(
+                                      context),
+                                  maxLines: 4,
+                                  stepGranularity: 0.5,
+                                ),
+                              ),
+                              AppTextField(
+                                padding: EdgeInsets.zero,
+                                focusNode: enterEndpointFocusNode,
+                                controller: enterEndpointController,
+                                cursorColor:
+                                    StateContainer.of(context).curTheme.primary,
+                                style: AppStyles.textStyleSize14W100Primary(
+                                    context),
+                                inputFormatters: <
+                                    LengthLimitingTextInputFormatter>[
+                                  LengthLimitingTextInputFormatter(150)
+                                ],
+                                onChanged: (String text) {
+                                  setState(() {
+                                    enterEndpointValidationText = '';
+                                  });
+                                },
+                                textInputAction: TextInputAction.next,
+                                maxLines: null,
+                                autocorrect: false,
+                                hintText: enterEndpointHint == null
+                                    ? ''
+                                    : AppLocalization.of(context).enterEndpoint,
+                                keyboardType: TextInputType.multiline,
+                                textAlign: TextAlign.left,
+                                onSubmitted: (String text) {
+                                  FocusScope.of(context).unfocus();
+                                },
+                              ),
+                            ])),
                       ],
                     )),
                     Row(
