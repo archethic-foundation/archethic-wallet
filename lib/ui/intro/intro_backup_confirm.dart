@@ -23,22 +23,25 @@ class IntroBackupConfirm extends StatefulWidget {
 }
 
 class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
-  @override
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+@override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: <Color>[
-            StateContainer.of(context).curTheme.backgroundDark,
-            StateContainer.of(context).curTheme.background
-          ],
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      key: _scaffoldKey,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: <Color>[
+              StateContainer.of(context).curTheme.backgroundDark,
+              StateContainer.of(context).curTheme.background
+            ],
+          ),
         ),
-      ),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: LayoutBuilder(
+        child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) =>
               SafeArea(
             minimum: EdgeInsets.only(
@@ -46,14 +49,12 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                 top: MediaQuery.of(context).size.height * 0.075),
             child: Column(
               children: <Widget>[
-                //A widget that holds the header, the paragraph and Back Button
                 Expanded(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          // Back Button
                           Container(
                             margin: EdgeInsetsDirectional.only(
                                 start: smallScreen(context) ? 15 : 20),
@@ -71,7 +72,17 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           ),
                         ],
                       ),
-                      // The header
+                      Container(
+                        margin: EdgeInsetsDirectional.only(
+                          start: smallScreen(context) ? 30 : 40,
+                          top: 15,
+                        ),
+                        child: FaIcon(
+                          FontAwesomeIcons.fileSignature,
+                          size: 60,
+                          color: StateContainer.of(context).curTheme.primary,
+                        ),
+                      ),
                       Container(
                         margin: EdgeInsetsDirectional.only(
                           start: smallScreen(context) ? 30 : 40,
@@ -86,7 +97,6 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           style: AppStyles.textStyleSize28W700Primary(context),
                         ),
                       ),
-                      // The paragraph
                       Container(
                         margin: EdgeInsetsDirectional.only(
                             start: smallScreen(context) ? 30 : 40,
@@ -94,7 +104,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                             top: 15.0),
                         child: AutoSizeText(
                           AppLocalization.of(context).secretWarning,
-                          style: AppStyles.textStyleSize16W200Primary(context),
+                          style: AppStyles.textStyleSize16W600Primary(context),
                           maxLines: 5,
                           stepGranularity: 0.5,
                         ),
@@ -102,17 +112,14 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                     ],
                   ),
                 ),
-
-                //A column with YES and NO buttons
                 Column(
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        // YES Button
                         AppButton.buildAppButton(
                             context,
                             AppButtonType.PRIMARY,
-                            AppLocalization.of(context).yes.toUpperCase(),
+                            AppLocalization.of(context).yes,
                             Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
                           final String pin = await Navigator.of(context).push(
                               MaterialPageRoute(
@@ -129,11 +136,10 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                     ),
                     Row(
                       children: <Widget>[
-                        // NO BUTTON
                         AppButton.buildAppButton(
                             context,
                             AppButtonType.PRIMARY_OUTLINE,
-                            AppLocalization.of(context).no.toUpperCase(),
+                            AppLocalization.of(context).no,
                             Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                           Navigator.of(context).pop();
                         }),

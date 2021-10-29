@@ -33,7 +33,7 @@ class AppLocalization {
 
   String get welcomeText {
     return Intl.message(
-        'Welcome to Internet of Trust.\n\nJoin the Internet of Trust with ArchEthic Public Blockchain by Uniris and be the only key.\n\nTo begin, you may connect to your decentralized wallet with your transaction chain seed.',
+        'Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.',
         desc: '',
         name: 'welcomeText');
   }
@@ -61,12 +61,12 @@ class AppLocalization {
   }
 
   String get no {
-    return Intl.message('No', desc: 'intro_new_wallet_backup_no', name: 'no');
+    return Intl.message('No', desc: '', name: 'no');
   }
 
   String get yes {
     return Intl.message('Yes',
-        desc: 'intro_new_wallet_backup_yes', name: 'yes');
+        desc: '', name: 'yes');
   }
 
   String get send {
@@ -641,27 +641,27 @@ class AppLocalization {
 
   String get secretInfo {
     return Intl.message(
-        'In the next screen, you will see your secret phrase. It is a password to access your funds. It is crucial that you back it up and never share it with anyone.',
-        desc: 'Description for seed',
+        'In the next screen, you will see your recovery phrase. A recovery phrase is essentially a human readable form of your crypto\'s wallet private key, and is displayed as 24 mnemonic words. After mastering the mnemonic words, you can restore your wallet at will. Please keep the words properly and don\'t leak them to anyone.',
+        desc: '',
         name: 'secretInfo');
   }
 
   String get secretWarning {
     return Intl.message(
-        'If you lose your device or uninstall the application, you\'ll need your secret phrase or seed to recover your funds!',
+        'If you lose your device or uninstall the application, you\'ll need your secret phrase to recover your funds!',
         desc: 'Secret warning',
         name: 'secretWarning');
   }
 
-  String get gotItButton {
-    return Intl.message('Got It!',
-        desc: 'Got It! Acknowledgement button', name: 'gotItButton');
+  String get understandButton {
+    return Intl.message('I understand',
+        desc: '', name: 'understandButton');
   }
 
   String get ackBackedUp {
     return Intl.message(
-        'Are you sure that you\'ve backed up your secret phrase or seed?',
-        desc: 'Ack backed up',
+        'Are you sure that you\'ve backed up your secret phrase ?',
+        desc: '',
         name: 'ackBackedUp');
   }
 

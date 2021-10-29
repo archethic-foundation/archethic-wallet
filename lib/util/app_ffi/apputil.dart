@@ -4,7 +4,6 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/data/appdb.dart';
 import 'package:archethic_mobile_wallet/model/data/hiveDB.dart';
@@ -12,8 +11,7 @@ import 'package:archethic_mobile_wallet/service_locator.dart';
 
 class AppUtil {
   Future<void> loginAccount(String genesisAddress, BuildContext context) async {
-    Account selectedAcct =
-        await sl.get<DBHelper>().getSelectedAccount(genesisAddress);
+    Account selectedAcct = await sl.get<DBHelper>().getSelectedAccount();
     if (selectedAcct == null) {
       selectedAcct = Account(
           index: 0,
@@ -23,6 +21,5 @@ class AppUtil {
           selected: true);
       await sl.get<DBHelper>().saveAccount(selectedAcct);
     }
-    StateContainer.of(context).updateWallet(account: selectedAcct);
   }
 }

@@ -1,987 +1,1158 @@
 {
-  "@@last_modified": "2021-08-06T18:02:15.968166",
-  "welcomeText": "Welcome to Internet of Trust.\n\nJoin the Internet of Trust with ArchEthic Public Blockchain by Uniris and be the only key.\n\nTo begin, you may connect to your decentralized wallet with your transaction chain seed.",
+  "@@last_modified": "2021-10-29T22:35:58.515668",
+  "welcomeText": "Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "connectWallet": "Connect to my wallet",
   "@connectWallet": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "enterTxChainSeedText": "Please, enter a transaction chain seed",
   "@enterTxChainSeedText": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "cancel": "Cancel",
   "@cancel": {
     "description": "dialog_cancel",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "close": "Close",
   "@close": {
     "description": "dialog_close",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "confirm": "Confirm",
   "@confirm": {
     "description": "dialog_confirm",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "no": "No",
   "@no": {
     "description": "intro_new_wallet_backup_no",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "yes": "Yes",
   "@yes": {
     "description": "intro_new_wallet_backup_yes",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "send": "Send",
   "@send": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "add": "Add",
   "@add": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "update": "Update",
   "@update": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "transferUCO": "Transfer UCO",
   "@transferUCO": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "transferNFT": "Transfer NFT",
   "@transferNFT": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "transferNFTName": "Transfer %1",
   "@transferNFTName": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "sent": "Sent",
   "@sent": {
     "description": "history_sent",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "received": "Received",
   "@received": {
     "description": "history_received",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "transactionHeader": "Transaction",
   "@transactionHeader": {
     "description": "transaction_header",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "recentTransactionsHeader": "Recent transactions",
   "@recentTransactionsHeader": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "recentTransactionsNoTransactionYet": "No transaction yet",
+  "@recentTransactionsNoTransactionYet": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "addressCopied": "Address Copied",
   "@addressCopied": {
     "description": "receive_copied",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "copyAddress": "Copy Address",
   "@copyAddress": {
     "description": "receive_copy_cta",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "addressHint": "Enter Address",
   "@addressHint": {
     "description": "send_address_hint",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "scanQrCode": "Scan QR Code",
   "@scanQrCode": {
     "description": "send_scan_qr",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "qrInvalidAddress": "QR code does not contain a valid destination",
   "@qrInvalidAddress": {
     "description": "qr_invalid_address",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "qrInvalidPermissions": "Please Grant Camera Permissions to scan QR Codes",
   "@qrInvalidPermissions": {
     "description": "User did not grant camera permissions to the app",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "qrUnknownError": "Could not Read QR Code",
   "@qrUnknownError": {
     "description": "An unknown error occurred with the QR scanner",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "customUrlHeader": "Custom Urls",
   "@customUrlHeader": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "customUrlDesc": "Define the endpoint",
   "@customUrlDesc": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "walletFAQHeader": "Wallet FAQ",
   "@walletFAQHeader": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "walletFAQDesc": "Have a question? Check here first!",
   "@walletFAQDesc": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "enterEndpoint": "Enter an endpoint",
   "@enterEndpoint": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "removeContact": "Remove Contact",
   "@removeContact": {
     "description": "contact_remove_btn",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "removeContactConfirmation": "Are you sure you want to delete %1?",
   "@removeContactConfirmation": {
     "description": "contact_remove_sure",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "addressBookHeader": "Address book",
   "@addressBookHeader": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "contactHeader": "Contact",
   "@contactHeader": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "addressBookDesc": "Create and manage frequently-used addresses",
   "@addressBookDesc": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "addContact": "Add Contact",
   "@addContact": {
     "description": "contact_add_button",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "contactNameHint": "Enter a Name @",
   "@contactNameHint": {
     "description": "contact_name_hint",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "contactInvalid": "Invalid Contact Name",
   "@contactInvalid": {
     "description": "contact_invalid_name",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "contactAdded": "%1 added to address book.",
   "@contactAdded": {
     "description": "contact_added",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "contactRemoved": "%1 has been removed from address book!",
   "@contactRemoved": {
     "description": "contact_removed",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "contactNameMissing": "Choose a Name for this contact",
   "@contactNameMissing": {
     "description": "contact_name_missing",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "contactExists": "Contact Already Exists",
   "@contactExists": {
     "description": "contact_name_exists",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "sentTo": "Sent To",
   "@sentTo": {
     "description": "sent_to",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "transferSuccess": "The transaction was sent successfully",
   "@transferSuccess": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "transfering": "Transfering",
   "@transfering": {
     "description": "send_sending",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "to": "To",
   "@to": {
     "description": "send_to",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "getOption": "Get",
   "@getOption": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "deleteOption": "Delete",
   "@deleteOption": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "sendAmountConfirm": "Send %1 UCO",
   "@sendAmountConfirm": {
     "description": "send_pin_description",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "transferAmountConfirm": "Transfer %1 UCO",
   "@transferAmountConfirm": {
     "description": "send_pin_description",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "sendError": "An error occurred. Try again later.",
   "@sendError": {
     "description": "send_generic_error",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "enterAmount": "Enter Amount",
   "@enterAmount": {
     "description": "send_amount_hint",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "enterAddress": "Enter Address",
   "@enterAddress": {
     "description": "enter_address",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "invalidAddress": "Address entered was invalid",
   "@invalidAddress": {
     "description": "send_invalid_address",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "addressMissing": "Please Enter an Address",
   "@addressMissing": {
     "description": "send_enter_address",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "amountMissing": "Please Enter an Amount",
   "@amountMissing": {
     "description": "send_enter_amount",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "minimumSend": "Minimum send amount is %1 UCO",
   "@minimumSend": {
     "description": "send_minimum_error",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "insufficientBalance": "Insufficient Balance",
   "@insufficientBalance": {
     "description": "send_insufficient_balance",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "fees": "Fees",
   "@fees": {
     "description": "fees",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "pinCreateTitle": "Create a 6-digit pin",
   "@pinCreateTitle": {
     "description": "pin_create_title",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "pinConfirmTitle": "Confirm your pin",
   "@pinConfirmTitle": {
     "description": "pin_confirm_title",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "pinEnterTitle": "Enter pin",
   "@pinEnterTitle": {
     "description": "pin_enter_title",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "pinConfirmError": "Pins do not match",
   "@pinConfirmError": {
     "description": "pin_confirm_error",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "pinInvalid": "Invalid pin entered",
   "@pinInvalid": {
     "description": "pin_error",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "authMethod": "Auth. Method",
   "@authMethod": {
     "description": "settings_disable_fingerprint",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "pinMethod": "PIN",
   "@pinMethod": {
     "description": "settings_pin_method",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "biometricsMethod": "Biometrics",
   "@biometricsMethod": {
     "description": "settings_fingerprint_method",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "currency": "Currency",
   "@currency": {
     "description": "A settings menu item for changing currency",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "changeCurrencyHeader": "Currency",
   "@changeCurrencyHeader": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "changeCurrencyDesc": "Select the fiat currency you would like to display alongside UCO",
   "@changeCurrencyDesc": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "language": "Language",
   "@language": {
     "description": "settings_change_language",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "logout": "Logout",
   "@logout": {
     "description": "settings_logout",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "rootWarning": "It appears your device is \"rooted\", \"jailbroken\", or modified in a way that compromises security. It is recommended that you reset your device to its original state before proceeding.",
   "@rootWarning": {
     "description": "Shown to users if they have a rooted Android device or jailbroken iOS device",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "iUnderstandTheRisks": "I Understand the Risks",
   "@iUnderstandTheRisks": {
     "description": "Shown to users if they have a rooted Android device or jailbroken iOS device",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "exit": "Exit",
   "@exit": {
     "description": "Exit action, like a button",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "warning": "Warning",
   "@warning": {
     "description": "settings_logout_alert_title",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "logoutDetail": "Logging out will remove all ArchEthic Wallet-related data from this device. If your password is not backed up, you will never be able to access your wallet again",
   "@logoutDetail": {
     "description": "settings_logout_alert_message",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "logoutAction": "Delete Infos and Logout",
   "@logoutAction": {
     "description": "settings_logout_alert_confirm_cta",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "logoutAreYouSure": "Are you sure?",
   "@logoutAreYouSure": {
     "description": "settings_logout_warning_title",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "logoutReassurance": "As long as you've backed up your seed you have nothing to worry about.",
   "@logoutReassurance": {
     "description": "settings_logout_warning_message",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "preferences": "Preferences",
   "@preferences": {
     "description": "settings_preferences_header",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "manage": "Manage",
   "@manage": {
     "description": "settings_manage_header",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "backupSeed": "Backup Seed",
   "@backupSeed": {
     "description": "settings_backup_seed",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "fingerprintSeedBackup": "Authenticate to backup seed.",
   "@fingerprintSeedBackup": {
     "description": "settings_fingerprint_title",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "pinSeedBackup": "Enter PIN to Backup Seed",
   "@pinSeedBackup": {
     "description": "settings_pin_title",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "systemDefault": "System Default",
   "@systemDefault": {
     "description": "settings_default_language_string",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "unlockPin": "Enter PIN to Unlock",
   "@unlockPin": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "unlockBiometrics": "Authenticate to Unlock",
   "@unlockBiometrics": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "confirmBiometrics": "Authenticate to Confirm",
   "@confirmBiometrics": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "lockAppSetting": "Auth. on Launch",
   "@lockAppSetting": {
     "description": "authenticate_on_launch",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "locked": "Locked",
   "@locked": {
     "description": "lockedtxt",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "unlock": "Unlock",
   "@unlock": {
     "description": "unlocktxt",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "tooManyFailedAttempts": "Too many failed unlock attempts.",
   "@tooManyFailedAttempts": {
     "description": "fail_toomany_attempts",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "securityHeader": "Security",
   "@securityHeader": {
     "description": "security_header",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "aboutHeader": "About",
   "@aboutHeader": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "aboutGeneralTermsAndConditions": "General Terms & Conditions",
   "@aboutGeneralTermsAndConditions": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "aboutWalletServiceTerms": "Wallet Service Terms",
   "@aboutWalletServiceTerms": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "aboutPrivacyPolicy": "Privacy Policy",
   "@aboutPrivacyPolicy": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "autoLockHeader": "Auto Lock",
   "@autoLockHeader": {
     "description": "auto_lock_header",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "xMinutes": "After %1 minutes",
   "@xMinutes": {
     "description": "after_minutes",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "xMinute": "After %1 minute",
   "@xMinute": {
     "description": "after_minute",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "instantly": "Instantly",
   "@instantly": {
     "description": "insantly",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "setWalletPassword": "Set Wallet Password",
   "@setWalletPassword": {
     "description": "Allows user to encrypt wallet with a password",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "setPassword": "Set Password",
   "@setPassword": {
     "description": "A button that sets the wallet password",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "disableWalletPassword": "Disable Wallet Password",
   "@disableWalletPassword": {
     "description": "Allows user to deencrypt wallet with a password",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "encryptionFailedError": "Failed to set a wallet password",
   "@encryptionFailedError": {
     "description": "If encrypting a wallet raised an error",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "setPasswordSuccess": "Password has been set successfully",
   "@setPasswordSuccess": {
     "description": "Setting a Wallet Password was successful",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "disablePasswordSuccess": "Password has been disabled",
   "@disablePasswordSuccess": {
     "description": "Disabling a Wallet Password was successful",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "defaultAccountName": "Main Account",
   "@defaultAccountName": {
     "description": "Default account name",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "defaultNewAccountName": "Account %1",
   "@defaultNewAccountName": {
     "description": "Default new account name - e.g. Account 1",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "account": "Account",
   "@account": {
     "description": "Account text",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "accounts": "Accounts",
   "@accounts": {
     "description": "Accounts header",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "addAccount": "Add Account",
   "@addAccount": {
     "description": "Default new account name - e.g. Account 1",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "hideAccountHeader": "Hide Account?",
   "@hideAccountHeader": {
     "description": "Confirmation dialog header",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "removeAccountText": "Are you sure you want to hide this account? You can re-add it later by tapping the '%1' button.",
   "@removeAccountText": {
     "description": "Remove account dialog body",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "tapToReveal": "Tap to reveal",
   "@tapToReveal": {
     "description": "Tap to reveal hidden content",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "tapToHide": "Tap to hide",
   "@tapToHide": {
     "description": "Tap to hide content",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "copied": "Copied",
   "@copied": {
     "description": "Copied (to clipboard)",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "pinPadShuffle": "PIN Pad Shuffle",
   "@pinPadShuffle": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "copy": "Copy",
   "@copy": {
     "description": "Copy (to clipboard)",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "seedDescription": "A seed bears the same information as a secret phrase, but in a machine-readable way. As long as you have one of them backed up, you'll have access to your funds.",
   "@seedDescription": {
     "description": "Describing what a seed is",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "secretInfoHeader": "Safety First!",
   "@secretInfoHeader": {
     "description": "secret info header",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
-  "secretInfo": "In the next screen, you will see your secret phrase. It is a password to access your funds. It is crucial that you back it up and never share it with anyone.",
+  "secretInfo": "In the next screen, you will see your recovery phrase. A recovery phrase is essentially a human readable form of your crypto's wallet private key, and is displayed as 24 mnemonic words. After mastering the mnemonic words, you can restore your wallet at will. Please keep the words properly and don't leak them to anyone.",
   "@secretInfo": {
-    "description": "Description for seed",
+    "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
-  "secretWarning": "If you lose your device or uninstall the application, you'll need your secret phrase or seed to recover your funds!",
+  "secretWarning": "If you lose your device or uninstall the application, you'll need your secret phrase to recover your funds!",
   "@secretWarning": {
     "description": "Secret warning",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
-  "gotItButton": "Got It!",
-  "@gotItButton": {
-    "description": "Got It! Acknowledgement button",
+  "understandButton": "I understand",
+  "@understandButton": {
+    "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
-  "ackBackedUp": "Are you sure that you've backed up your secret phrase or seed?",
+  "ackBackedUp": "Are you sure that you've backed up your secret phrase ?",
   "@ackBackedUp": {
-    "description": "Ack backed up",
+    "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "backupSecretPhrase": "Backup Secret Phrase",
   "@backupSecretPhrase": {
     "description": "backup seed",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "createPasswordHint": "Create a password",
   "@createPasswordHint": {
     "description": "A text field hint that tells the user to create a password",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "confirmPasswordHint": "Confirm the password",
   "@confirmPasswordHint": {
     "description": "A text field hint that tells the user to confirm the password",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "enterPasswordHint": "Enter your password",
   "@enterPasswordHint": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "enterTxAddressHint": "Enter a transaction address",
   "@enterTxAddressHint": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "enterTxChainSeedHint": "Enter a transaction chain seed",
   "@enterTxChainSeedHint": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "passwordsDontMatch": "Passwords do not match",
   "@passwordsDontMatch": {
     "description": "An error indicating a password has been confirmed incorrectly",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "passwordBlank": "Password cannot be empty",
   "@passwordBlank": {
     "description": "An error indicating a password has been entered incorrectly",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "invalidPassword": "Invalid Password",
   "@invalidPassword": {
     "description": "An error indicating a password has been entered incorrectly",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "passwordWillBeRequiredToOpenParagraph": "This password will be required to open your Wallet.",
   "@passwordWillBeRequiredToOpenParagraph": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "passwordNoLongerRequiredToOpenParagraph": "You will not need a password to open your Wallet anymore.",
   "@passwordNoLongerRequiredToOpenParagraph": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "createPasswordFirstParagraph": "You can create a password to add additional security to your wallet.",
   "@createPasswordFirstParagraph": {
     "description": "A paragraph that tells the users that they can create a password for additional security.",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "createPasswordSecondParagraph": "Password is optional, and your wallet will be protected with your PIN or biometrics regardless",
   "@createPasswordSecondParagraph": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "createAPasswordHeader": "Create a password.",
   "@createAPasswordHeader": {
     "description": "A paragraph that tells the users to create a password.",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "createPasswordSheetHeader": "Create",
   "@createPasswordSheetHeader": {
     "description": "Prompt user to create a new password",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "disablePasswordSheetHeader": "Disable",
   "@disablePasswordSheetHeader": {
     "description": "Prompt user to disable their password",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "requireAPasswordToOpenHeader": "Require a password to open ArchEthic Wallet ?",
   "@requireAPasswordToOpenHeader": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "releaseNoteHeader": "What's new",
   "@releaseNoteHeader": {
     "description": "What's new",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "ok": "Ok",
   "@ok": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "noSkipButton": "No, Skip",
   "@noSkipButton": {
     "description": "A button that declines and skips the mentioned process.",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "nextButton": "Next",
   "@nextButton": {
     "description": "A button that goes to the next screen.",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "goBackButton": "Go Back",
   "@goBackButton": {
     "description": "A button that goes to the previous screen.",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "addressInfos": "Address informations",
   "@addressInfos": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "informations": "Informations",
   "@informations": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "nodesHeader": "Nodes",
   "@nodesHeader": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "nodesHeaderDesc": "Nodes informations",
   "@nodesHeaderDesc": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "addNFT": "Add NFT",
   "@addNFT": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "addNFTHeader": "Add NFT",
   "@addNFTHeader": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "addNFTConfirmationMessage": "Do you confirm the creation of the following NFT ?",
   "@addNFTConfirmationMessage": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "nftHeader": "NFT",
   "@nftHeader": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "nftHeaderDesc": "Manage your Non Financial Tokens",
   "@nftHeaderDesc": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "nftNameHint": "Enter a name",
   "@nftNameHint": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "nftName": "Name: ",
   "@nftName": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "nftInitialSupplyHint": "Enter an initial supply",
   "@nftInitialSupplyHint": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "nftNameMissing": "Choose a Name for the NFT",
   "@nftNameMissing": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "nftInitialSupply": "Initial supply: ",
   "@nftInitialSupply": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "nftInitialSupplyMissing": "Choose an initial supply for the NFT",
   "@nftInitialSupplyMissing": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   },
   "nftInitialSupplyPositive": "The initial supply should be > 0",
   "@nftInitialSupplyPositive": {
     "description": "",
     "type": "text",
+    "placeholders_order": [],
     "placeholders": {}
   }
 }

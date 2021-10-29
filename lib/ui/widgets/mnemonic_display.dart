@@ -1,11 +1,7 @@
 // @dart=2.9
 
-// Dart imports:
-import 'dart:async';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
@@ -17,14 +13,10 @@ import 'package:archethic_mobile_wallet/styles.dart';
 
 /// A widget for displaying a mnemonic phrase
 class MnemonicDisplay extends StatefulWidget {
-  const MnemonicDisplay(
-      {@required this.wordList,
-      this.obscureSeed = false,
-      this.showButton = true});
+  const MnemonicDisplay({@required this.wordList, this.obscureSeed = false});
 
   final List<String> wordList;
   final bool obscureSeed;
-  final bool showButton;
 
   @override
   _MnemonicDisplayState createState() => _MnemonicDisplayState();
@@ -32,14 +24,11 @@ class MnemonicDisplay extends StatefulWidget {
 
 class _MnemonicDisplayState extends State<MnemonicDisplay> {
   static final List<String> _obscuredSeed = List<String>.filled(24, '•' * 6);
-  bool _seedCopied;
   bool _seedObscured;
-  Timer _seedCopiedTimer;
 
   @override
   void initState() {
     super.initState();
-    _seedCopied = false;
     _seedObscured = true;
   }
 
@@ -77,9 +66,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                   text: _seedObscured && widget.obscureSeed
                       ? _obscuredSeed[curWord]
                       : widget.wordList[curWord],
-                  style: _seedCopied
-                      ? AppStyles.textStyleSmallTextW100Success(context)
-                      : AppStyles.textStyleSmallTextW100Primary(context),
+                  style: AppStyles.textStyleSmallTextW100Primary(context),
                 )
               ]),
             ),
@@ -147,41 +134,6 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
           ],
         ),
       ),
-      if (widget.showButton)
-        Container(
-          margin: const EdgeInsetsDirectional.only(top: 5),
-          padding: const EdgeInsets.all(0.0),
-          child: OutlinedButton(
-            onPressed: () {
-              Clipboard.setData(ClipboardData(text: widget.wordList.join(' ')));
-              //UserDataUtil.setSecureClipboardItem(widget.wordList.join(' '));
-              setState(() {
-                _seedCopied = true;
-              });
-              if (_seedCopiedTimer != null) {
-                _seedCopiedTimer.cancel();
-              }
-              _seedCopiedTimer = Timer(const Duration(milliseconds: 1500), () {
-                setState(() {
-                  _seedCopied = false;
-                });
-              });
-            },
-            child: AutoSizeText(
-              _seedCopied
-                  ? AppLocalization.of(context).copied
-                  : AppLocalization.of(context).copy,
-              textAlign: TextAlign.center,
-              style: _seedCopied
-                  ? AppStyles.textStyleSize14W700Success(context)
-                  : AppStyles.textStyleSize14W700Primary(context),
-              maxLines: 1,
-              stepGranularity: 0.5,
-            ),
-          ),
-        )
-      else
-        const SizedBox(),
     ]);
   }
 }

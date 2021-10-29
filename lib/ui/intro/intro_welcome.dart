@@ -5,15 +5,21 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show uint8ListToHex;
 import 'package:flutter_svg/svg.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
+import 'package:archethic_mobile_wallet/model/vault.dart';
+import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/util/particles/particles_flutter.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
+import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
+import 'package:archethic_mobile_wallet/util/app_ffi/keys/seeds.dart';
 
 class IntroWelcomePage extends StatefulWidget {
   @override
@@ -88,7 +94,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                                   child: SizedBox(
                                     height: 300,
                                     child: kIsWeb
-                                        ? SizedBox()
+                                        ? const SizedBox()
                                         : SvgPicture.asset(
                                             'assets/archethic_logo.svg',
                                             height: 200,
@@ -115,19 +121,39 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                     //A column with "New Wallet" and "Import Wallet" buttons
                     Column(
                       children: <Widget>[
-                        /*Row(
-                    children: <Widget>[
-                      // New Wallet Button
-                      AppButton.buildAppButton(
-                          context,
-                          AppButtonType.PRIMARY,
-                          AppLocalization.of(context)!.newWallet,
-                          Dimens.BUTTON_TOP_DIMENS, onPressed: () {
-                        Navigator.of(context)
-                            .pushNamed('/intro_password_on_launch');
-                      }),
-                    ],
-                  ),*/
+                        Row(
+                          children: <Widget>[
+                            // New Wallet Button
+                            AppButton.buildAppButton(
+                                context,
+                                AppButtonType.PRIMARY,
+                                'New Wallet',
+                                Dimens.BUTTON_TOP_DIMENS, onPressed: () {
+                              sl
+                                  .get<Vault>()
+                                  .setSeed(AppSeeds.generateSeed())
+                                  .then((String result) {
+                                StateContainer.of(context)
+                                    .getSeed()
+                                    .then((String seed) async {
+                                  StateContainer.of(context).setEncryptedSecret(
+                                      uint8ListToHex(AppCrypt.encrypt(
+                                          seed,
+                                          await sl
+                                              .get<Vault>()
+                                              .getSessionKey())));
+                                  AppUtil()
+                                      .loginAccount(seed, context)
+                                      .then((_) {
+                                    Navigator.of(context).pushNamed(
+                                      '/intro_backup_safety',
+                                    );
+                                  });
+                                });
+                              });
+                            }),
+                          ],
+                        ),
                         Row(
                           children: <Widget>[
                             // Import Wallet Button

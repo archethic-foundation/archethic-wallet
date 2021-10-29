@@ -71,16 +71,20 @@ class AppButton {
             height: 55,
             margin: EdgeInsetsDirectional.fromSTEB(
                 dimens[0], dimens[1], dimens[2], dimens[3]),
-            child: OutlinedButton(
-              child: AutoSizeText(
-                buttonText,
-                textAlign: TextAlign.center,
-                style: disabled
-                    ? AppStyles.textStyleSize14W700Primary60(context)
-                    : AppStyles.textStyleSize20W700Primary(context),
-                maxLines: 1,
-                stepGranularity: 0.5,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: disabled
+                    ? StateContainer.of(context).curTheme.background40
+                    : StateContainer.of(context).curTheme.background,
+                elevation: 5.0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
               ),
+              child: AutoSizeText(buttonText,
+                  textAlign: TextAlign.center,
+                  style: AppStyles.textStyleSize20W700Primary(context),
+                  maxLines: 1,
+                  stepGranularity: 0.5),
               onPressed: () {
                 if (onPressed != null && !disabled) {
                   onPressed();

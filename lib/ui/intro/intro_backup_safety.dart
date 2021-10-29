@@ -53,7 +53,6 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          // Back Button
                           Container(
                             margin: EdgeInsetsDirectional.only(
                                 start: smallScreen(context) ? 15 : 20),
@@ -71,14 +70,13 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                           ),
                         ],
                       ),
-                      // Safety icon
                       Container(
                         margin: EdgeInsetsDirectional.only(
                           start: smallScreen(context) ? 30 : 40,
                           top: 15,
                         ),
                         child: FaIcon(
-                          FontAwesomeIcons.shieldAlt,
+                          FontAwesomeIcons.exclamationTriangle,
                           size: 60,
                           color: StateContainer.of(context).curTheme.primary,
                         ),
@@ -92,38 +90,77 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                         ),
                         alignment: const AlignmentDirectional(-1, 0),
                         child: AutoSizeText(
-                          AppLocalization.of(context).secretInfoHeader,
+                          'Warning',
                           style: AppStyles.textStyleSize28W700Primary(context),
                           stepGranularity: 0.1,
                           maxLines: 1,
                           minFontSize: 12,
                         ),
                       ),
-                      // The paragraph
                       Container(
                         margin: EdgeInsetsDirectional.only(
                             start: smallScreen(context) ? 30 : 40,
                             end: smallScreen(context) ? 30 : 40,
                             top: 15.0),
-                        alignment: Alignment.centerLeft,
+                        alignment: Alignment.bottomLeft,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            AutoSizeText(
-                              AppLocalization.of(context).secretInfo,
+                            Text(
+                              'In the next screen, you will see your recovery phrase.',
                               style:
-                                  AppStyles.textStyleSize16W200Primary(context),
-                              maxLines: 5,
-                              stepGranularity: 0.5,
+                                  AppStyles.textStyleSize16W600Primary(context),
                             ),
-                            Container(
-                              margin: const EdgeInsetsDirectional.only(top: 15),
-                              child: AutoSizeText(
-                                AppLocalization.of(context).secretWarning,
-                                style: AppStyles.textStyleSize16W700Primary(
-                                    context),
-                                maxLines: 4,
-                                stepGranularity: 0.5,
-                              ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Text(
+                              'What is a recovery phrase ?',
+                              style:
+                                  AppStyles.textStyleSize16W700Primary(context),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            AutoSizeText(
+                              'A recovery phrase is essentially a human readable form of your crypto\'s wallet private key, and is displayed as 24 mnemonic words. After mastering the mnemonic words, you can restore your wallet at will. Please keep the words properly and don\'t leak them to anyone.',
+                              style:
+                                  AppStyles.textStyleSize16W600Primary(context),
+                              maxLines: 5,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'How to back up ?',
+                              style:
+                                  AppStyles.textStyleSize16W700Primary(context),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            AutoSizeText(
+                              'Write down the mnemonic words in the correct order on a piece of papier and store them in a safe place.\nPlease don\'t store the recovery phrase on electronic devices in any form, including sreenshot.\nRemember the safety of the recovery phrase is relevant to the safety of your digital assets',
+                              style:
+                                  AppStyles.textStyleSize16W600Primary(context),
+                              maxLines: 5,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Insecure ways of backup',
+                              style:
+                                  AppStyles.textStyleSize16W700Primary(context),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              '1. Screenshot\n2. Take a photo',
+                              style:
+                                  AppStyles.textStyleSize12W600Primary(context),
                             ),
                           ],
                         ),
@@ -139,7 +176,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                     AppButton.buildAppButton(
                         context,
                         AppButtonType.PRIMARY,
-                        AppLocalization.of(context).gotItButton,
+                        AppLocalization.of(context).understandButton,
                         Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                       Navigator.of(context).pushNamed('/intro_backup',
                           arguments:
