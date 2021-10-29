@@ -10,15 +10,12 @@
 // ignore_for_file:comment_references
 // ignore_for_file:avoid_catches_without_on_clauses
 
-// Dart imports:
 import 'dart:async';
 
-// Package imports:
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 import 'package:intl/src/intl_helpers.dart';
 
-// Project imports:
 import 'messages_messages.dart' as messages_messages;
 
 typedef Future<dynamic> LibraryLoader();
@@ -38,8 +35,9 @@ MessageLookupByLibrary? _findExact(String localeName) {
 /// User programs should call this before using [localeName] for messages.
 Future<bool> initializeMessages(String localeName) async {
   final availableLocale = Intl.verifiedLocale(
-      localeName, (locale) => _deferredLibraries[locale] != null,
-      onFailure: (_) => null);
+    localeName,
+    (locale) => _deferredLibraries[locale] != null,
+    onFailure: (_) => null);
   if (availableLocale == null) {
     return Future.value(false);
   }
@@ -59,8 +57,8 @@ bool _messagesExistFor(String locale) {
 }
 
 MessageLookupByLibrary? _findGeneratedMessagesFor(String locale) {
-  final actualLocale =
-      Intl.verifiedLocale(locale, _messagesExistFor, onFailure: (_) => null);
+  final actualLocale = Intl.verifiedLocale(locale, _messagesExistFor,
+      onFailure: (_) => null);
   if (actualLocale == null) return null;
   return _findExact(actualLocale);
 }
