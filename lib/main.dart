@@ -149,9 +149,9 @@ class _AppState extends State<App> {
           Locale('sk', 'SK'),
           Locale('sl', 'SI'),
           Locale('es', 'ES'),
-          Locale('ar', 'AE'), 
-          Locale('ar', 'SA'), 
-          Locale('ar', 'KW'), 
+          Locale('ar', 'AE'),
+          Locale('ar', 'SA'),
+          Locale('ar', 'KW'),
         ],
         initialRoute: '/',
         onGenerateRoute: (RouteSettings settings) {

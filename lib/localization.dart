@@ -65,8 +65,7 @@ class AppLocalization {
   }
 
   String get yes {
-    return Intl.message('Yes',
-        desc: '', name: 'yes');
+    return Intl.message('Yes', desc: '', name: 'yes');
   }
 
   String get send {
@@ -619,8 +618,7 @@ class AppLocalization {
   }
 
   String get understandButton {
-    return Intl.message('I understand',
-        desc: '', name: 'understandButton');
+    return Intl.message('I understand', desc: '', name: 'understandButton');
   }
 
   String get ackBackedUp {

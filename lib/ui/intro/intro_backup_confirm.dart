@@ -25,7 +25,7 @@ class IntroBackupConfirm extends StatefulWidget {
 class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,

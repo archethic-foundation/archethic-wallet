@@ -37,7 +37,8 @@ class _TxListWidgetState extends State<TxListWidget> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final List<RecentTransaction> newItems = StateContainer.of(context).wallet.history;
+      final List<RecentTransaction> newItems =
+          StateContainer.of(context).wallet.history;
       final bool isLastPage = newItems.length < _pageSize;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems);
@@ -83,9 +84,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                           padding: const EdgeInsets.only(
                               left: 6, right: 6, top: 6, bottom: 6),
                           child: Column(
-                            children: <Widget>[
-                             
-                            ],
+                            children: <Widget>[],
                           )),
                     ),
                   ),
@@ -379,7 +378,6 @@ class _TxListWidgetState extends State<TxListWidget> {
                 ),
               ),
             ]),
-            
             const SizedBox(height: 6),
             Divider(
                 height: 4,

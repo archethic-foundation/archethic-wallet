@@ -38,7 +38,6 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
         CoinsPriceResponse,
         CoinsCurrentDataResponse;
 
-
 class _InheritedStateContainer extends InheritedWidget {
   const _InheritedStateContainer({
     Key key,

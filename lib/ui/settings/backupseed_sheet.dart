@@ -1,23 +1,28 @@
 // @dart=2.9
-import 'package:archethic_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
+
+// Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/mnemonic_display.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/mnemonic_display.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
 import 'package:archethic_mobile_wallet/util/app_ffi/keys/mnemonics.dart';
 
 class AppSeedBackupSheet extends StatefulWidget {
   AppSeedBackupSheet(this.seed);
 
   final String seed;
-  
+
   @override
   _AppSeedBackupSheetState createState() => _AppSeedBackupSheetState();
 }
 
 class _AppSeedBackupSheetState extends State<AppSeedBackupSheet> {
-
   List<String> _mnemonic;
   List<String> mnemonic;
 
@@ -66,16 +71,16 @@ class _AppSeedBackupSheetState extends State<AppSeedBackupSheet> {
                     ),
                   ),
                   Expanded(
-                        child: Container(
-                            child: Column(
-                          children: <Widget>[
-                            MnemonicDisplay(
-                              wordList: _mnemonic,
-                              obscureSeed: true,
-                            )
-                          ],
-                        )),
-                      ),
+                    child: Container(
+                        child: Column(
+                      children: <Widget>[
+                        MnemonicDisplay(
+                          wordList: _mnemonic,
+                          obscureSeed: true,
+                        )
+                      ],
+                    )),
+                  ),
                 ],
               ),
             ),

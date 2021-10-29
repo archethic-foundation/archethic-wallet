@@ -137,8 +137,10 @@ class DBHelper {
   }
 
   Future<void> dropAll() async {
-    final Box<Account> boxAccounts = await Hive.openBox<Account>(_accountsTable);
-    final Box<Contact> boxContacts = await Hive.openBox<Contact>(_contactsTable);
+    final Box<Account> boxAccounts =
+        await Hive.openBox<Account>(_accountsTable);
+    final Box<Contact> boxContacts =
+        await Hive.openBox<Contact>(_contactsTable);
     boxAccounts.clear();
     boxContacts.clear();
   }

@@ -4,13 +4,10 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_mobile_wallet/model/data/appdb.dart';
-import 'package:archethic_mobile_wallet/ui/settings/backupseed_sheet.dart';
-import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Package imports:
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -20,12 +17,14 @@ import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/authentication_method.dart';
 import 'package:archethic_mobile_wallet/model/available_currency.dart';
 import 'package:archethic_mobile_wallet/model/available_language.dart';
+import 'package:archethic_mobile_wallet/model/data/appdb.dart';
 import 'package:archethic_mobile_wallet/model/device_lock_timeout.dart';
 import 'package:archethic_mobile_wallet/model/device_unlock_option.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/nft/add_nft.dart';
+import 'package:archethic_mobile_wallet/ui/settings/backupseed_sheet.dart';
 import 'package:archethic_mobile_wallet/ui/settings/contacts_widget.dart';
 import 'package:archethic_mobile_wallet/ui/settings/custom_url_widget.dart';
 import 'package:archethic_mobile_wallet/ui/settings/nodes_widget.dart';
@@ -38,6 +37,7 @@ import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 import 'package:archethic_mobile_wallet/util/biometrics.dart';
 import 'package:archethic_mobile_wallet/util/caseconverter.dart';
+import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 import '../../appstate_container.dart';
 import '../../util/sharedprefsutil.dart';
