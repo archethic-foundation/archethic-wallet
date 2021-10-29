@@ -86,7 +86,6 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Container(
-                              //
                               width: double.infinity,
                               height: MediaQuery.of(context).size.width * 5 / 8,
                               child: Center(
@@ -117,13 +116,10 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                         ),
                       ),
                     ),
-
-                    //A column with "New Wallet" and "Import Wallet" buttons
                     Column(
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            // New Wallet Button
                             AppButton.buildAppButton(
                                 context,
                                 AppButtonType.PRIMARY,
@@ -154,19 +150,18 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                             }),
                           ],
                         ),
-                        Row(
+                        /*Row(
                           children: <Widget>[
-                            // Import Wallet Button
                             AppButton.buildAppButton(
                                 context,
-                                AppButtonType.PRIMARY,
-                                AppLocalization.of(context).nextButton,
+                                AppButtonType.PRIMARY_OUTLINE,
+                                'Access seed \'tesnet\'',
                                 Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                               Navigator.of(context).pushNamed(
                                   '/intro_enter_transaction_chain_seed');
                             }),
                           ],
-                        ),
+                        ),*/
                       ],
                     ),
                   ],
