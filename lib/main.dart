@@ -29,7 +29,6 @@ import 'package:archethic_mobile_wallet/ui/home_page.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_backup_confirm.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_backup_safety.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_backup_seed.dart';
-import 'package:archethic_mobile_wallet/ui/intro/intro_enter_tx_chain_seed.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_welcome.dart';
 import 'package:archethic_mobile_wallet/ui/lock_screen.dart';
 import 'package:archethic_mobile_wallet/ui/util/routes.dart';
@@ -150,9 +149,9 @@ class _AppState extends State<App> {
           Locale('sk', 'SK'),
           Locale('sl', 'SI'),
           Locale('es', 'ES'),
-          Locale('ar', 'AE'), // UAE
-          Locale('ar', 'SA'), // Saudi Arabia
-          Locale('ar', 'KW'), // Kuwait
+          Locale('ar', 'AE'), 
+          Locale('ar', 'SA'), 
+          Locale('ar', 'KW'), 
         ],
         initialRoute: '/',
         onGenerateRoute: (RouteSettings settings) {
@@ -191,11 +190,6 @@ class _AppState extends State<App> {
             case '/intro_backup_confirm':
               return MaterialPageRoute<IntroBackupConfirm>(
                 builder: (_) => IntroBackupConfirm(),
-                settings: settings,
-              );
-            case '/intro_enter_transaction_chain_seed':
-              return MaterialPageRoute<IntroEnterTxChainSeed>(
-                builder: (_) => IntroEnterTxChainSeed(),
                 settings: settings,
               );
             case '/lock_screen':

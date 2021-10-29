@@ -150,18 +150,6 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                             }),
                           ],
                         ),
-                        /*Row(
-                          children: <Widget>[
-                            AppButton.buildAppButton(
-                                context,
-                                AppButtonType.PRIMARY_OUTLINE,
-                                'Access seed \'tesnet\'',
-                                Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
-                              Navigator.of(context).pushNamed(
-                                  '/intro_enter_transaction_chain_seed');
-                            }),
-                          ],
-                        ),*/
                       ],
                     ),
                   ],
