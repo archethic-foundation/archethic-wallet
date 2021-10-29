@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:archethic_mobile_wallet/model/data/appdb.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -814,6 +815,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                             CaseChange.toUpperCase(
                                 AppLocalization.of(context).yes, context), () {
                           // Delete all data
+                          sl.get<DBHelper>().dropAll();
                           sl.get<Vault>().deleteAll().then((_) {
                             sl.get<SharedPrefsUtil>().deleteAll().then((_) {
                               StateContainer.of(context).logOut();
