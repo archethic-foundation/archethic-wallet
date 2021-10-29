@@ -119,8 +119,7 @@ class AppWallet {
     _history = value;
   }
 
-  bool get recentTransactionsLoading =>
-      _recentTransactionsLoading == null ? true : _recentTransactionsLoading;
+  bool get recentTransactionsLoading => _recentTransactionsLoading ?? true;
 
   set recentTransactionsLoading(bool value) {
     _recentTransactionsLoading = value;

@@ -101,6 +101,14 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.success);
   }
 
+  static TextStyle textStyleSize14W700SuccessDark(BuildContext context) {
+    return TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: AppFontSizes.size14,
+        fontWeight: FontWeight.w700,
+        color: StateContainer.of(context).curTheme.successDark);
+  }
+
   static TextStyle textStyleSize20W700Primary60(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
@@ -325,6 +333,15 @@ class AppStyles {
       fontSize: AppFontSizes.smallText(context),
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.success,
+    );
+  }
+
+  static TextStyle textStyleSmallTextW400SuccessDark(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.smallText(context),
+      fontWeight: FontWeight.w400,
+      color: StateContainer.of(context).curTheme.successDark,
     );
   }
 

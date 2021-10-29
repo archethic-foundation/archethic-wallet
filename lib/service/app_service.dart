@@ -26,9 +26,7 @@ class AppService {
 
   Future<List<Transaction>> getTransactionChain(
       String address, int? page) async {
-    if (page == null) {
-      page = 1;
-    }
+    page ??= 1;
     final List<Transaction> transactionChain =
         await sl.get<ApiService>().getTransactionChain(address, page);
     return transactionChain;
@@ -40,7 +38,7 @@ class AppService {
     return transactionInputs;
   }
 
-  Future<List> getRecentTransactions(
+  Future<List<RecentTransaction>> getRecentTransactions(
       String genesisAddress, String lastAddress, int page) async {
     final List<Transaction> transactionChain =
         await getTransactionChain(lastAddress, page);
@@ -51,9 +49,9 @@ class AppService {
     final List<RecentTransaction> recentTransactions =
         List<RecentTransaction>.empty(growable: true);
 
-    transactionChain.forEach((transaction) {
+    for (Transaction transaction in transactionChain) {
       if (transaction.type! == 'nft') {
-        RecentTransaction recentTransaction = RecentTransaction();
+        final RecentTransaction recentTransaction = RecentTransaction();
         recentTransaction.fee = 0;
         recentTransaction.timestamp = transaction.validationStamp!.timestamp!;
         if (transaction.data!.contentDisplay!
@@ -84,7 +82,7 @@ class AppService {
           for (int i = 0;
               i < transaction.data!.ledger!.uco!.transfers!.length;
               i++) {
-            RecentTransaction recentTransaction = RecentTransaction();
+            final RecentTransaction recentTransaction = RecentTransaction();
             recentTransaction.typeTx = RecentTransaction.TRANSFER_OUTPUT;
             recentTransaction.amount =
                 transaction.data!.ledger!.uco!.transfers![i].amount! /
@@ -100,11 +98,11 @@ class AppService {
           }
         }
       }
-    });
+    }
 
     // Transaction inputs for genesisAddress
-    transactionInputsGenesisAddress.forEach((transaction) {
-      RecentTransaction recentTransaction = RecentTransaction();
+    for (TransactionInput transaction in transactionInputsGenesisAddress) {
+      final RecentTransaction recentTransaction = RecentTransaction();
       if (transaction.type! == 'NFT') {
         recentTransaction.nftAddress = transaction.nftAddress!;
       } else {
@@ -118,11 +116,11 @@ class AppService {
       recentTransaction.type = 'TransactionInput';
       recentTransaction.fee = 0;
       recentTransactions.add(recentTransaction);
-    });
+    }
 
-    transactionInputs.forEach((transaction) {
+    for (TransactionInput transaction in transactionInputs) {
       if (transaction.spent == true) {
-        RecentTransaction recentTransaction = RecentTransaction();
+        final RecentTransaction recentTransaction = RecentTransaction();
         if (transaction.type! == 'NFT') {
           recentTransaction.nftAddress = transaction.nftAddress!;
         } else {
@@ -137,7 +135,7 @@ class AppService {
         recentTransaction.fee = 0;
         recentTransactions.add(recentTransaction);
       }
-    });
+    }
     // Sort by date (desc)
     recentTransactions.sort((RecentTransaction a, RecentTransaction b) =>
         a.timestamp!.compareTo(b.timestamp!));

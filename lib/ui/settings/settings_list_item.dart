@@ -309,7 +309,7 @@ class AppSettings {
                       style: AppStyles.textStyleSize16W600Primary(context),
                     ),
                     Switch(
-                        value: _isSwitched == null ? false : _isSwitched,
+                        value: _isSwitched ?? false,
                         onChanged: (bool value) {
                           if (onChanged != null) {
                             _isSwitched = value;

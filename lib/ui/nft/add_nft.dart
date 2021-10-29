@@ -173,7 +173,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                       : '',
                   keyboardType: TextInputType.text,
                   style: AppStyles.textStyleSize16W600Primary(context),
-                  inputFormatters: [
+                  inputFormatters: <LengthLimitingTextInputFormatter>[
                     LengthLimitingTextInputFormatter(100),
                   ],
                 ),
@@ -197,7 +197,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                       : '',
                   keyboardType: TextInputType.number,
                   style: AppStyles.textStyleSize16W600Primary(context),
-                  inputFormatters: [
+                  inputFormatters: <LengthLimitingTextInputFormatter>[
                     LengthLimitingTextInputFormatter(10),
                   ],
                 ),

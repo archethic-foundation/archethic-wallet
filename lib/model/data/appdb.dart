@@ -32,11 +32,11 @@ class DBHelper {
     final List<Contact> contactsList = box.values.toList();
     final List<Contact> contactsListSelected =
         List<Contact>.empty(growable: true);
-    contactsList.forEach((Contact _contact) {
+    for (Contact _contact in contactsList) {
       if (_contact.name!.contains(pattern)) {
         contactsListSelected.add(_contact);
       }
-    });
+    }
     return contactsListSelected;
   }
 
@@ -45,15 +45,15 @@ class DBHelper {
     final List<Contact> contactsList = box.values.toList();
 
     Contact? contactSelected;
-    contactsList.forEach((Contact _contact) {
+    for (Contact _contact in contactsList) {
       if (_contact.address!.toLowerCase().contains(address.toLowerCase())) {
         contactSelected = _contact;
       }
-    });
+    }
     if (contactSelected == null) {
       throw Exception();
     } else {
-      return contactSelected!;
+      return contactSelected;
     }
   }
 
@@ -61,15 +61,15 @@ class DBHelper {
     final Box<Contact> box = await Hive.openBox<Contact>(_contactsTable);
     final List<Contact> contactsList = box.values.toList();
     Contact? contactSelected;
-    contactsList.forEach((Contact _contact) {
+    for (Contact _contact in contactsList) {
       if (_contact.name!.toLowerCase() == name.toLowerCase()) {
         contactSelected = _contact;
       }
-    });
+    }
     if (contactSelected == null) {
       throw Exception();
     } else {
-      return contactSelected!;
+      return contactSelected;
     }
   }
 
@@ -77,11 +77,11 @@ class DBHelper {
     final Box<Contact> box = await Hive.openBox<Contact>(_contactsTable);
     final List<Contact> contactsList = box.values.toList();
     bool contactExists = false;
-    contactsList.forEach((Contact _contact) {
+    for (Contact _contact in contactsList) {
       if (_contact.name!.toLowerCase() == name.toLowerCase()) {
         contactExists = true;
       }
-    });
+    }
     return contactExists;
   }
 
@@ -89,11 +89,11 @@ class DBHelper {
     final Box<Contact> box = await Hive.openBox<Contact>(_contactsTable);
     final List<Contact> contactsList = box.values.toList();
     bool contactExists = false;
-    contactsList.forEach((Contact _contact) {
+    for (Contact _contact in contactsList) {
       if (_contact.address!.toLowerCase().contains(address.toLowerCase())) {
         contactExists = true;
       }
-    });
+    }
     return contactExists;
   }
 
@@ -119,15 +119,15 @@ class DBHelper {
     box.put(account.genesisAddress!, account);
   }
 
-  Future<Account?> getSelectedAccount(String genesisAddress) async {
+  Future<Account?> getSelectedAccount() async {
     final Box<Account> box = await Hive.openBox<Account>(_accountsTable);
     final List<Account> accountsList = box.values.toList();
     Account? accountSelected;
-    accountsList.forEach((Account _account) {
+    for (Account _account in accountsList) {
       if (_account.selected!) {
         accountSelected = _account;
       }
-    });
+    }
     return accountSelected;
   }
 

@@ -28,12 +28,10 @@ import 'package:archethic_mobile_wallet/ui/before_scan_screen.dart';
 import 'package:archethic_mobile_wallet/ui/home_page.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_backup_confirm.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_backup_safety.dart';
+import 'package:archethic_mobile_wallet/ui/intro/intro_backup_seed.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_enter_tx_chain_seed.dart';
-import 'package:archethic_mobile_wallet/ui/intro/intro_password.dart';
-import 'package:archethic_mobile_wallet/ui/intro/intro_password_on_launch.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_welcome.dart';
 import 'package:archethic_mobile_wallet/ui/lock_screen.dart';
-import 'package:archethic_mobile_wallet/ui/password_lock_screen.dart';
 import 'package:archethic_mobile_wallet/ui/util/routes.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
@@ -81,6 +79,7 @@ class _AppState extends State<App> {
           fontFamily: 'Montserrat',
           brightness: Brightness.dark,
         ),
+        // ignore: always_specify_types
         localizationsDelegates: [
           AppLocalizationsDelegate(StateContainer.of(context).curLanguage),
           GlobalMaterialLocalizations.delegate,
@@ -178,14 +177,10 @@ class _AppState extends State<App> {
                 builder: (_) => IntroWelcomePage(),
                 settings: settings,
               );
-            case '/intro_password_on_launch':
-              return MaterialPageRoute<IntroPasswordOnLaunch>(
-                builder: (_) => IntroPasswordOnLaunch(seed: settings.arguments),
-                settings: settings,
-              );
-            case '/intro_password':
-              return MaterialPageRoute<IntroPassword>(
-                builder: (_) => IntroPassword(seed: settings.arguments),
+            case '/intro_backup':
+              return MaterialPageRoute(
+                builder: (_) =>
+                    IntroBackupSeedPage(encryptedSeed: settings.arguments),
                 settings: settings,
               );
             case '/intro_backup_safety':
@@ -211,11 +206,6 @@ class _AppState extends State<App> {
             case '/lock_screen_transition':
               return MaterialPageRoute<AppLockScreen>(
                 builder: (_) => AppLockScreen(),
-                settings: settings,
-              );
-            case '/password_lock_screen':
-              return NoTransitionRoute<AppPasswordLockScreen>(
-                builder: (_) => AppPasswordLockScreen(),
                 settings: settings,
               );
             case '/before_scan_screen':

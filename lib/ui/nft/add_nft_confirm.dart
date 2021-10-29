@@ -91,15 +91,6 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
     });
   }
 
-  void _destroyBus() {
-    if (_authSub != null) {
-      _authSub!.cancel();
-    }
-    if (_addNFTSub != null) {
-      _addNFTSub!.cancel();
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -109,7 +100,12 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
 
   @override
   void dispose() {
-    _destroyBus();
+    if (_authSub != null) {
+      _authSub!.cancel();
+    }
+    if (_addNFTSub != null) {
+      _addNFTSub!.cancel();
+    }
     super.dispose();
   }
 

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show UCOTransfer;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:decimal/decimal.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -31,10 +32,6 @@ import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 import 'package:archethic_mobile_wallet/util/numberutil.dart';
 import 'package:archethic_mobile_wallet/util/user_data_util.dart';
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show UCOTransfer, toBigInt;
 
 class TransferUcoSheet extends StatefulWidget {
   const TransferUcoSheet({
@@ -443,7 +440,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                           if (_to.startsWith('@') &&
                                               validRequest) {
                                             try {
-                                              Contact contact = await sl
+                                              final Contact contact = await sl
                                                   .get<DBHelper>()
                                                   .getContactWithName(
                                                       _sendAddressController!
@@ -488,9 +485,9 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                                   i++) {
                                                 if (ucoTransferList[i].to! ==
                                                     _to) {
-                                                  _amount = (_amount! +
+                                                  _amount = _amount! +
                                                       ucoTransferList[i]
-                                                          .amount!);
+                                                          .amount!;
                                                   ucoTransferList.removeAt(i);
                                                   break;
                                                 }
@@ -975,6 +972,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
       cursorColor: StateContainer.of(context).curTheme.primary,
       style: AppStyles.textStyleSize16W700Primary(context),
       inputFormatters: _rawAmount == null
+          // ignore: always_specify_types
           ? [
               LengthLimitingTextInputFormatter(16),
               if (_localCurrencyMode)
@@ -1127,7 +1125,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
               final Address address = Address(data.text!);
               if (address.isValid()) {
                 try {
-                  Contact contact = await sl
+                  final Contact contact = await sl
                       .get<DBHelper>()
                       .getContactWithAddress(address.address);
 
@@ -1191,7 +1189,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
           } else {
             setState(() {
               _isContact = false;
-              _contacts = [];
+              _contacts = <Contact>[];
             });
           }
           // Always reset the error message to be less annoying

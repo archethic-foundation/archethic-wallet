@@ -99,31 +99,30 @@ class _NodesListState extends State<NodesList> {
                   ],
                 ),
               ),
-              _nodes == null
-                  ? const SizedBox()
-                  : Container(
-                      margin: const EdgeInsetsDirectional.only(start: 20.0),
-                      alignment: Alignment.bottomLeft,
-                      child: Text('Nb of nodes : ' + _nodes.length.toString(),
-                          style: AppStyles.textStyleSize12W100Primary(context)),
-                    ),
+              if (_nodes == null)
+                const SizedBox()
+              else
+                Container(
+                  margin: const EdgeInsetsDirectional.only(start: 20.0),
+                  alignment: Alignment.bottomLeft,
+                  child: Text('Nb of nodes : ' + _nodes.length.toString(),
+                      style: AppStyles.textStyleSize12W100Primary(context)),
+                ),
               // Nodes list + top and bottom gradients
               Expanded(
                 child: Stack(
                   children: <Widget>[
-                    _nodes == null
-                        ? const SizedBox()
-                        :
-                        // Nodes list
-                        ListView.builder(
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            padding:
-                                const EdgeInsets.only(top: 15.0, bottom: 15),
-                            itemCount: _nodes.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return buildSingleNode(context, _nodes[index]);
-                            },
-                          ),
+                    if (_nodes == null)
+                      const SizedBox()
+                    else
+                      ListView.builder(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        padding: const EdgeInsets.only(top: 15.0, bottom: 15),
+                        itemCount: _nodes.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return buildSingleNode(context, _nodes[index]);
+                        },
+                      ),
                     //List Top Gradient End
                     Align(
                       alignment: Alignment.topCenter,

@@ -23,13 +23,13 @@ class TxListWidget extends StatefulWidget {
 }
 
 class _TxListWidgetState extends State<TxListWidget> {
-  static const _pageSize = 20;
+  static const int _pageSize = 20;
   final PagingController<int, RecentTransaction> _pagingController =
       PagingController(firstPageKey: 0);
 
   @override
   void initState() {
-    _pagingController.addPageRequestListener((pageKey) {
+    _pagingController.addPageRequestListener((int pageKey) {
       _fetchPage(pageKey);
     });
     super.initState();
@@ -37,12 +37,12 @@ class _TxListWidgetState extends State<TxListWidget> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems = StateContainer.of(context).wallet.history;
-      final isLastPage = newItems.length < _pageSize;
+      final List<RecentTransaction> newItems = StateContainer.of(context).wallet.history;
+      final bool isLastPage = newItems.length < _pageSize;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems);
       } else {
-        final nextPageKey = pageKey + newItems.length;
+        final int nextPageKey = pageKey + newItems.length;
         _pagingController.appendPage(newItems, nextPageKey);
       }
     } catch (error) {
@@ -56,6 +56,7 @@ class _TxListWidgetState extends State<TxListWidget> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return StateContainer.of(context).wallet == null ||
             StateContainer.of(context).wallet.recentTransactionsLoading == true
@@ -177,50 +178,50 @@ class _TxListWidgetState extends State<TxListWidget> {
                         style: AppStyles.textStyleSize14W700Primary(context)),
                   ],
                 ),
-                transaction.amount == null
-                    ? Text('')
-                    : Text(transaction.amount!.toString() + ' UCO',
-                        style: AppStyles.textStyleSize14W600Primary(context)),
+                if (transaction.amount == null)
+                  const Text('')
+                else
+                  Text(transaction.amount!.toString() + ' UCO',
+                      style: AppStyles.textStyleSize14W600Primary(context)),
               ],
             ),
-            transaction.typeTx == RecentTransaction.NFT_CREATION &&
-                    transaction.content != null
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                        Text(transaction.content!,
-                            style:
-                                AppStyles.textStyleSize10W100Primary(context))
-                      ])
-                : const SizedBox(),
-            transaction.typeTx == RecentTransaction.TRANSFER_OUTPUT ||
-                    transaction.typeTx == RecentTransaction.NFT_CREATION
-                ? const SizedBox()
-                : Row(mainAxisAlignment: MainAxisAlignment.start, children: <
-                    Widget>[
-                    transaction.from == null
-                        ? Text('')
-                        : Text(
-                            'From: ' +
-                                Address(transaction.from!).getShortString3(),
-                            style:
-                                AppStyles.textStyleSize10W100Primary(context))
+            if (transaction.typeTx == RecentTransaction.NFT_CREATION &&
+                transaction.content != null)
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text(transaction.content!,
+                        style: AppStyles.textStyleSize10W100Primary(context))
+                  ])
+            else
+              const SizedBox(),
+            if (transaction.typeTx == RecentTransaction.TRANSFER_OUTPUT ||
+                transaction.typeTx == RecentTransaction.NFT_CREATION)
+              const SizedBox()
+            else
+              Row(mainAxisAlignment: MainAxisAlignment.start, children: <
+                  Widget>[
+                if (transaction.from == null)
+                  const Text('')
+                else
+                  Text('From: ' + Address(transaction.from!).getShortString3(),
+                      style: AppStyles.textStyleSize10W100Primary(context))
+              ]),
+            if (transaction.typeTx == RecentTransaction.TRANSFER_INPUT ||
+                transaction.typeTx == RecentTransaction.NFT_CREATION)
+              const SizedBox()
+            else
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    if (transaction.recipient == null)
+                      const Text('')
+                    else
+                      Text(
+                          'To: ' +
+                              Address(transaction.recipient!).getShortString3(),
+                          style: AppStyles.textStyleSize10W100Primary(context))
                   ]),
-            transaction.typeTx == RecentTransaction.TRANSFER_INPUT ||
-                    transaction.typeTx == RecentTransaction.NFT_CREATION
-                ? const SizedBox()
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                        transaction.recipient == null
-                            ? Text('')
-                            : Text(
-                                'To: ' +
-                                    Address(transaction.recipient!)
-                                        .getShortString3(),
-                                style: AppStyles.textStyleSize10W100Primary(
-                                    context))
-                      ]),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
               Text(
                   'Date: ' +
@@ -233,15 +234,15 @@ class _TxListWidgetState extends State<TxListWidget> {
                           .toString(),
                   style: AppStyles.textStyleSize10W100Primary(context)),
             ]),
-            transaction.typeTx == RecentTransaction.TRANSFER_INPUT
-                ? const SizedBox()
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                        Text('Fees: ' + transaction.fee.toString() + ' UCO',
-                            style:
-                                AppStyles.textStyleSize10W100Primary(context)),
-                      ]),
+            if (transaction.typeTx == RecentTransaction.TRANSFER_INPUT)
+              const SizedBox()
+            else
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text('Fees: ' + transaction.fee.toString() + ' UCO',
+                        style: AppStyles.textStyleSize10W100Primary(context)),
+                  ]),
             const SizedBox(height: 6),
             Divider(
                 height: 4,
@@ -271,18 +272,17 @@ class _TxListWidgetState extends State<TxListWidget> {
                     style: AppStyles.textStyleSize14W600Primary(context)),
               ],
             ),
-            transaction.nftAddress == null
-                ? const SizedBox()
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                        Text(
-                            'Address: ' +
-                                Address(transaction.nftAddress!)
-                                    .getShortString3(),
-                            style:
-                                AppStyles.textStyleSize10W100Primary(context)),
-                      ]),
+            if (transaction.nftAddress == null)
+              const SizedBox()
+            else
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                        'Address: ' +
+                            Address(transaction.nftAddress!).getShortString3(),
+                        style: AppStyles.textStyleSize10W100Primary(context)),
+                  ]),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
               Text(
                   'Date: ' +

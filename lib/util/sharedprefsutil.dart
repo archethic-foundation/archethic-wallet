@@ -45,6 +45,7 @@ class SharedPrefsUtil {
   static const String pinPadShuffle = 'farchethic_pinPadShuffle';
 
   // For plain-text data
+  // ignore: always_specify_types
   Future<void> set(String key, value) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
