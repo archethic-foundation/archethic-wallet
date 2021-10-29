@@ -84,20 +84,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                               left: 6, right: 6, top: 6, bottom: 6),
                           child: Column(
                             children: <Widget>[
-                              displayTxDetailSearching(
-                                  context, widget._opacityAnimation),
-                              displayTxDetailSearching(
-                                  context, widget._opacityAnimation),
-                              displayTxDetailSearching(
-                                  context, widget._opacityAnimation),
-                              displayTxDetailSearching(
-                                  context, widget._opacityAnimation),
-                              displayTxDetailSearching(
-                                  context, widget._opacityAnimation),
-                              displayTxDetailSearching(
-                                  context, widget._opacityAnimation),
-                              displayTxDetailSearching(
-                                  context, widget._opacityAnimation),
+                             
                             ],
                           )),
                     ),
@@ -324,7 +311,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                           borderRadius: BorderRadius.circular(100),
                         ),
                         child: const Text(
-                          'Transfer',
+                          'XXXXXXXXXXXX',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontFamily: 'Montserrat',
@@ -366,15 +353,11 @@ class _TxListWidgetState extends State<TxListWidget> {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: Text(
-                    'To: ' +
+                    'From: ' +
                         Address('123456789012345678901234567890123456789012345678901234567890123456')
                             .getShortString3(),
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: AppFontSizes.size10 - 3,
-                        fontWeight: FontWeight.w100,
-                        color: Colors.transparent),
+                    style: AppStyles.textStyleSize10W100Transparent(context),
                   ),
                 ),
               ),
@@ -388,39 +371,15 @@ class _TxListWidgetState extends State<TxListWidget> {
                     color: StateContainer.of(context).curTheme.primary60,
                     borderRadius: BorderRadius.circular(100),
                   ),
-                  child: const Text(
-                    'Date: Mon. 01/01/2021',
+                  child: Text(
+                    'Date: Mon. 01/01/2021 00:00:00',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: AppFontSizes.size10 - 3,
-                        fontWeight: FontWeight.w100,
-                        color: Colors.transparent),
+                    style: AppStyles.textStyleSize10W100Transparent(context),
                   ),
                 ),
               ),
             ]),
-            const SizedBox(height: 4),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              Opacity(
-                opacity: _opacityAnimation.value,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: StateContainer.of(context).curTheme.primary60,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: const Text(
-                    'Fees: 1234567 UCO',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: AppFontSizes.size10 - 3,
-                        fontWeight: FontWeight.w100,
-                        color: Colors.transparent),
-                  ),
-                ),
-              ),
-            ]),
+            
             const SizedBox(height: 6),
             Divider(
                 height: 4,
