@@ -407,7 +407,7 @@ class AppLocalization {
 
   String get logoutDetail {
     return Intl.message(
-        'Logging out will remove all ArchEthic Wallet-related data from this device. If your password is not backed up, you will never be able to access your wallet again',
+        'Logging out will remove all ArchEthic Wallet-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again',
         desc: 'settings_logout_alert_message',
         name: 'logoutDetail');
   }
@@ -449,9 +449,9 @@ class AppLocalization {
         desc: 'settings_fingerprint_title', name: 'fingerprintSeedBackup');
   }
 
-  String get pinSeedBackup {
-    return Intl.message('Enter PIN to Backup Seed',
-        desc: 'settings_pin_title', name: 'pinSeedBackup');
+  String get pinSecretPhraseBackup {
+    return Intl.message('Enter PIN to Backup Secret Phrase',
+        desc: '', name: 'pinSecretPhraseBackup');
   }
 
   String get systemDefault {
@@ -531,41 +531,6 @@ class AppLocalization {
 
   String get instantly {
     return Intl.message('Instantly', desc: 'insantly', name: 'instantly');
-  }
-
-  String get setWalletPassword {
-    return Intl.message('Set Wallet Password',
-        desc: 'Allows user to encrypt wallet with a password',
-        name: 'setWalletPassword');
-  }
-
-  String get setPassword {
-    return Intl.message('Set Password',
-        desc: 'A button that sets the wallet password', name: 'setPassword');
-  }
-
-  String get disableWalletPassword {
-    return Intl.message('Disable Wallet Password',
-        desc: 'Allows user to deencrypt wallet with a password',
-        name: 'disableWalletPassword');
-  }
-
-  String get encryptionFailedError {
-    return Intl.message('Failed to set a wallet password',
-        desc: 'If encrypting a wallet raised an error',
-        name: 'encryptionFailedError');
-  }
-
-  String get setPasswordSuccess {
-    return Intl.message('Password has been set successfully',
-        desc: 'Setting a Wallet Password was successful',
-        name: 'setPasswordSuccess');
-  }
-
-  String get disablePasswordSuccess {
-    return Intl.message('Password has been disabled',
-        desc: 'Disabling a Wallet Password was successful',
-        name: 'disablePasswordSuccess');
   }
 
   String get defaultAccountName {
@@ -670,23 +635,6 @@ class AppLocalization {
         desc: 'backup seed', name: 'backupSecretPhrase');
   }
 
-  String get createPasswordHint {
-    return Intl.message('Create a password',
-        desc: 'A text field hint that tells the user to create a password',
-        name: 'createPasswordHint');
-  }
-
-  String get confirmPasswordHint {
-    return Intl.message('Confirm the password',
-        desc: 'A text field hint that tells the user to confirm the password',
-        name: 'confirmPasswordHint');
-  }
-
-  String get enterPasswordHint {
-    return Intl.message('Enter your password',
-        desc: '', name: 'enterPasswordHint');
-  }
-
   String get enterTxAddressHint {
     return Intl.message('Enter a transaction address',
         desc: '', name: 'enterTxAddressHint');
@@ -695,74 +643,6 @@ class AppLocalization {
   String get enterTxChainSeedHint {
     return Intl.message('Enter a transaction chain seed',
         desc: '', name: 'enterTxChainSeedHint');
-  }
-
-  String get passwordsDontMatch {
-    return Intl.message('Passwords do not match',
-        desc: 'An error indicating a password has been confirmed incorrectly',
-        name: 'passwordsDontMatch');
-  }
-
-  String get passwordBlank {
-    return Intl.message('Password cannot be empty',
-        desc: 'An error indicating a password has been entered incorrectly',
-        name: 'passwordBlank');
-  }
-
-  String get invalidPassword {
-    return Intl.message('Invalid Password',
-        desc: 'An error indicating a password has been entered incorrectly',
-        name: 'invalidPassword');
-  }
-
-  String get passwordWillBeRequiredToOpenParagraph {
-    return Intl.message('This password will be required to open your Wallet.',
-        desc: '', name: 'passwordWillBeRequiredToOpenParagraph');
-  }
-
-  String get passwordNoLongerRequiredToOpenParagraph {
-    return Intl.message(
-        'You will not need a password to open your Wallet anymore.',
-        desc: '',
-        name: 'passwordNoLongerRequiredToOpenParagraph');
-  }
-
-  String get createPasswordFirstParagraph {
-    return Intl.message(
-        'You can create a password to add additional security to your wallet.',
-        desc:
-            'A paragraph that tells the users that they can create a password for additional security.',
-        name: 'createPasswordFirstParagraph');
-  }
-
-  String get createPasswordSecondParagraph {
-    return Intl.message(
-        'Password is optional, and your wallet will be protected with your PIN or biometrics regardless',
-        desc: '',
-        name: 'createPasswordSecondParagraph');
-  }
-
-  String get createAPasswordHeader {
-    return Intl.message('Create a password.',
-        desc: 'A paragraph that tells the users to create a password.',
-        name: 'createAPasswordHeader');
-  }
-
-  String get createPasswordSheetHeader {
-    return Intl.message('Create',
-        desc: 'Prompt user to create a new password',
-        name: 'createPasswordSheetHeader');
-  }
-
-  String get disablePasswordSheetHeader {
-    return Intl.message('Disable',
-        desc: 'Prompt user to disable their password',
-        name: 'disablePasswordSheetHeader');
-  }
-
-  String get requireAPasswordToOpenHeader {
-    return Intl.message('Require a password to open ArchEthic Wallet ?',
-        desc: '', name: 'requireAPasswordToOpenHeader');
   }
 
   String get releaseNoteHeader {

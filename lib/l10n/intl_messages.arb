@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2021-10-29T22:35:58.515668",
+  "@@last_modified": "2021-10-29T23:54:46.415847",
   "welcomeText": "Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "description": "",
@@ -44,14 +44,14 @@
   },
   "no": "No",
   "@no": {
-    "description": "intro_new_wallet_backup_no",
+    "description": "",
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
   "yes": "Yes",
   "@yes": {
-    "description": "intro_new_wallet_backup_yes",
+    "description": "",
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -539,7 +539,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "logoutDetail": "Logging out will remove all ArchEthic Wallet-related data from this device. If your password is not backed up, you will never be able to access your wallet again",
+  "logoutDetail": "Logging out will remove all ArchEthic Wallet-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again",
   "@logoutDetail": {
     "description": "settings_logout_alert_message",
     "type": "text",
@@ -595,9 +595,9 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "pinSeedBackup": "Enter PIN to Backup Seed",
-  "@pinSeedBackup": {
-    "description": "settings_pin_title",
+  "pinSecretPhraseBackup": "Enter PIN to Backup Secret Phrase",
+  "@pinSecretPhraseBackup": {
+    "description": "",
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -717,48 +717,6 @@
   "instantly": "Instantly",
   "@instantly": {
     "description": "insantly",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "setWalletPassword": "Set Wallet Password",
-  "@setWalletPassword": {
-    "description": "Allows user to encrypt wallet with a password",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "setPassword": "Set Password",
-  "@setPassword": {
-    "description": "A button that sets the wallet password",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "disableWalletPassword": "Disable Wallet Password",
-  "@disableWalletPassword": {
-    "description": "Allows user to deencrypt wallet with a password",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "encryptionFailedError": "Failed to set a wallet password",
-  "@encryptionFailedError": {
-    "description": "If encrypting a wallet raised an error",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "setPasswordSuccess": "Password has been set successfully",
-  "@setPasswordSuccess": {
-    "description": "Setting a Wallet Password was successful",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "disablePasswordSuccess": "Password has been disabled",
-  "@disablePasswordSuccess": {
-    "description": "Disabling a Wallet Password was successful",
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -896,27 +854,6 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "createPasswordHint": "Create a password",
-  "@createPasswordHint": {
-    "description": "A text field hint that tells the user to create a password",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "confirmPasswordHint": "Confirm the password",
-  "@confirmPasswordHint": {
-    "description": "A text field hint that tells the user to confirm the password",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "enterPasswordHint": "Enter your password",
-  "@enterPasswordHint": {
-    "description": "",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
   "enterTxAddressHint": "Enter a transaction address",
   "@enterTxAddressHint": {
     "description": "",
@@ -926,83 +863,6 @@
   },
   "enterTxChainSeedHint": "Enter a transaction chain seed",
   "@enterTxChainSeedHint": {
-    "description": "",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "passwordsDontMatch": "Passwords do not match",
-  "@passwordsDontMatch": {
-    "description": "An error indicating a password has been confirmed incorrectly",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "passwordBlank": "Password cannot be empty",
-  "@passwordBlank": {
-    "description": "An error indicating a password has been entered incorrectly",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "invalidPassword": "Invalid Password",
-  "@invalidPassword": {
-    "description": "An error indicating a password has been entered incorrectly",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "passwordWillBeRequiredToOpenParagraph": "This password will be required to open your Wallet.",
-  "@passwordWillBeRequiredToOpenParagraph": {
-    "description": "",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "passwordNoLongerRequiredToOpenParagraph": "You will not need a password to open your Wallet anymore.",
-  "@passwordNoLongerRequiredToOpenParagraph": {
-    "description": "",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "createPasswordFirstParagraph": "You can create a password to add additional security to your wallet.",
-  "@createPasswordFirstParagraph": {
-    "description": "A paragraph that tells the users that they can create a password for additional security.",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "createPasswordSecondParagraph": "Password is optional, and your wallet will be protected with your PIN or biometrics regardless",
-  "@createPasswordSecondParagraph": {
-    "description": "",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "createAPasswordHeader": "Create a password.",
-  "@createAPasswordHeader": {
-    "description": "A paragraph that tells the users to create a password.",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "createPasswordSheetHeader": "Create",
-  "@createPasswordSheetHeader": {
-    "description": "Prompt user to create a new password",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "disablePasswordSheetHeader": "Disable",
-  "@disablePasswordSheetHeader": {
-    "description": "Prompt user to disable their password",
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "requireAPasswordToOpenHeader": "Require a password to open ArchEthic Wallet ?",
-  "@requireAPasswordToOpenHeader": {
     "description": "",
     "type": "text",
     "placeholders_order": [],

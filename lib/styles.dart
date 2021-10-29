@@ -226,6 +226,15 @@ class AppStyles {
     );
   }
 
+  static TextStyle textStyleSize10W100Transparent(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      color: Colors.transparent,
+      fontSize: AppFontSizes.size10,
+      fontWeight: FontWeight.w100,
+    );
+  }
+
   static TextStyle textStyleSize12W100Text60(BuildContext context) {
     return TextStyle(
       fontSize: AppFontSizes.size12,
