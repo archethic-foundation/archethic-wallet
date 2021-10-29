@@ -74,7 +74,6 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                     top: MediaQuery.of(context).size.height * 0.075),
                 child: Column(
                   children: <Widget>[
-                    //A widget that holds the header, the paragraph, the seed, "seed copied" text and the back button
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,7 +81,6 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              // Back Button
                               Container(
                                 margin: EdgeInsetsDirectional.only(
                                     start: smallScreen(context) ? 15 : 20),
@@ -100,7 +98,6 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                               ),
                             ],
                           ),
-                          // The header
                           Container(
                             margin: EdgeInsetsDirectional.only(
                               start: smallScreen(context) ? 30 : 40,

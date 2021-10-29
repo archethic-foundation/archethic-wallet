@@ -5,7 +5,10 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:archethic_mobile_wallet/model/data/appdb.dart';
+import 'package:archethic_mobile_wallet/ui/settings/backupseed_sheet.dart';
+import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -25,9 +28,7 @@ import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/nft/add_nft.dart';
 import 'package:archethic_mobile_wallet/ui/settings/contacts_widget.dart';
 import 'package:archethic_mobile_wallet/ui/settings/custom_url_widget.dart';
-import 'package:archethic_mobile_wallet/ui/settings/disable_password_sheet.dart';
 import 'package:archethic_mobile_wallet/ui/settings/nodes_widget.dart';
-import 'package:archethic_mobile_wallet/ui/settings/set_password_sheet.dart';
 import 'package:archethic_mobile_wallet/ui/settings/settings_list_item.dart';
 import 'package:archethic_mobile_wallet/ui/settings/wallet_faq_widget.dart';
 import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
@@ -1010,35 +1011,46 @@ class _SettingsSheetState extends State<SettingsSheet>
                       disabled: _curUnlockSetting.setting == UnlockOption.NO &&
                           StateContainer.of(context).encryptedSecret == null,
                     ),
-                    // Encrypt option
-                    if (StateContainer.of(context).encryptedSecret == null)
-                      Column(children: <Widget>[
-                        Divider(
-                            height: 2,
-                            color:
-                                StateContainer.of(context).curTheme.primary15),
-                        AppSettings.buildSettingsListItemSingleLine(
-                            context,
-                            AppLocalization.of(context).setWalletPassword,
-                            FontAwesomeIcons.lockOpen, onPressed: () {
-                          Sheets.showAppHeightNineSheet(
-                              context: context, widget: SetPasswordSheet());
-                        })
-                      ])
-                    else
-                      Column(children: <Widget>[
-                        Divider(
-                            height: 2,
-                            color:
-                                StateContainer.of(context).curTheme.primary15),
-                        AppSettings.buildSettingsListItemSingleLine(
-                            context,
-                            AppLocalization.of(context).disableWalletPassword,
-                            FontAwesomeIcons.lock, onPressed: () {
-                          Sheets.showAppHeightNineSheet(
-                              context: context, widget: DisablePasswordSheet());
-                        }),
-                      ]),
+                    Column(children: <Widget>[
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.primary15,
+                      ),
+                      AppSettings.buildSettingsListItemSingleLine(
+                          context,
+                          AppLocalization.of(context).backupSecretPhrase,
+                          FontAwesomeIcons.fileSignature, onPressed: () async {
+                        AuthenticationMethod authMethod =
+                            await sl.get<SharedPrefsUtil>().getAuthMethod();
+                        bool hasBiometrics =
+                            await sl.get<BiometricUtil>().hasBiometrics();
+                        if (authMethod.method == AuthMethod.BIOMETRICS &&
+                            hasBiometrics) {
+                          try {
+                            bool authenticated = await sl
+                                .get<BiometricUtil>()
+                                .authenticateWithBiometrics(
+                                    context,
+                                    AppLocalization.of(context)
+                                        .fingerprintSeedBackup);
+                            if (authenticated) {
+                              sl
+                                  .get<HapticUtil>()
+                                  .feedback(FeedbackType.success);
+                              StateContainer.of(context).getSeed().then((seed) {
+                                Sheets.showAppHeightNineSheet(
+                                    context: context,
+                                    widget: AppSeedBackupSheet(seed));
+                              });
+                            }
+                          } catch (e) {
+                            await authenticateWithPin();
+                          }
+                        } else {
+                          await authenticateWithPin();
+                        }
+                      }),
+                    ]),
                     Divider(
                         height: 2,
                         color: StateContainer.of(context).curTheme.primary15),
@@ -1094,7 +1106,6 @@ class _SettingsSheetState extends State<SettingsSheet>
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      //Back button
                       Container(
                         height: 40,
                         width: 40,
@@ -1329,12 +1340,15 @@ class _SettingsSheetState extends State<SettingsSheet>
       return PinScreen(
         PinOverlayType.ENTER_PIN,
         expectedPin: expectedPin,
-        description: AppLocalization.of(context).pinSeedBackup,
+        description: AppLocalization.of(context).pinSecretPhraseBackup,
       );
     })) as bool;
     if (auth != null && auth) {
       await Future<void>.delayed(const Duration(milliseconds: 200));
-      Navigator.of(context).pop();
+      StateContainer.of(context).getSeed().then((seed) {
+        Sheets.showAppHeightNineSheet(
+            context: context, widget: AppSeedBackupSheet(seed));
+      });
     }
   }
 }
