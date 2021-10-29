@@ -41,7 +41,7 @@ class ContactDetailsSheet {
   // Timer reference so we can cancel repeated events
   Timer _addressCopiedTimer;
 
-  Widget mainBottomSheet(BuildContext context) {
+  void mainBottomSheet(BuildContext context) {
     AppSheets.showAppHeightEightSheet(
         context: context,
         builder: (BuildContext context) {
