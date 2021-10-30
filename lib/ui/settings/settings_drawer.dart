@@ -1037,7 +1037,9 @@ class _SettingsSheetState extends State<SettingsSheet>
                               sl
                                   .get<HapticUtil>()
                                   .feedback(FeedbackType.success);
-                              StateContainer.of(context).getSeed().then((String seed) {
+                              StateContainer.of(context)
+                                  .getSeed()
+                                  .then((String seed) {
                                 Sheets.showAppHeightNineSheet(
                                     context: context,
                                     widget: AppSeedBackupSheet(seed));

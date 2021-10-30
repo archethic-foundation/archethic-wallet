@@ -57,7 +57,8 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
           ),
           Container(
             child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
+              builder: (BuildContext context, BoxConstraints constraints) =>
+                  SafeArea(
                 minimum: EdgeInsets.only(
                     bottom: MediaQuery.of(context).size.height * 0.035,
                     top: MediaQuery.of(context).size.height * 0.075),
@@ -272,13 +273,16 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                     }
                                   },
                                 ),
-                                if (_mnemonicError != null) Container(
-                                        margin: const EdgeInsets.only(top: 5),
-                                        child: Text(_mnemonicError,
-                                            style: AppStyles
-                                                .textStyleSize16W200Primary(
-                                                    context)),
-                                      ) else const SizedBox(),
+                                if (_mnemonicError != null)
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 5),
+                                    child: Text(_mnemonicError,
+                                        style: AppStyles
+                                            .textStyleSize16W200Primary(
+                                                context)),
+                                  )
+                                else
+                                  const SizedBox(),
                               ]))
                         ],
                       ),
