@@ -166,7 +166,7 @@ class _CircularParticleState extends State<CircularParticle>
     awayAnimationController!.reset();
     double directiondx;
     double directiondy;
-    final List<double> distance = [];
+    final List<double> distance = <double>[];
     double noAnimationDistance = 0;
 
     if (widget.onTapAnimation!) {

@@ -1020,14 +1020,14 @@ class _SettingsSheetState extends State<SettingsSheet>
                           context,
                           AppLocalization.of(context).backupSecretPhrase,
                           FontAwesomeIcons.fileSignature, onPressed: () async {
-                        AuthenticationMethod authMethod =
+                        final AuthenticationMethod authMethod =
                             await sl.get<SharedPrefsUtil>().getAuthMethod();
-                        bool hasBiometrics =
+                        final bool hasBiometrics =
                             await sl.get<BiometricUtil>().hasBiometrics();
                         if (authMethod.method == AuthMethod.BIOMETRICS &&
                             hasBiometrics) {
                           try {
-                            bool authenticated = await sl
+                            final bool authenticated = await sl
                                 .get<BiometricUtil>()
                                 .authenticateWithBiometrics(
                                     context,
@@ -1037,7 +1037,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                               sl
                                   .get<HapticUtil>()
                                   .feedback(FeedbackType.success);
-                              StateContainer.of(context).getSeed().then((seed) {
+                              StateContainer.of(context).getSeed().then((String seed) {
                                 Sheets.showAppHeightNineSheet(
                                     context: context,
                                     widget: AppSeedBackupSheet(seed));
@@ -1345,7 +1345,7 @@ class _SettingsSheetState extends State<SettingsSheet>
     })) as bool;
     if (auth != null && auth) {
       await Future<void>.delayed(const Duration(milliseconds: 200));
-      StateContainer.of(context).getSeed().then((seed) {
+      StateContainer.of(context).getSeed().then((String seed) {
         Sheets.showAppHeightNineSheet(
             context: context, widget: AppSeedBackupSheet(seed));
       });

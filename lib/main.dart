@@ -29,6 +29,7 @@ import 'package:archethic_mobile_wallet/ui/home_page.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_backup_confirm.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_backup_safety.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_backup_seed.dart';
+import 'package:archethic_mobile_wallet/ui/intro/intro_import_seed.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_welcome.dart';
 import 'package:archethic_mobile_wallet/ui/lock_screen.dart';
 import 'package:archethic_mobile_wallet/ui/util/routes.dart';
@@ -185,6 +186,11 @@ class _AppState extends State<App> {
             case '/intro_backup_safety':
               return MaterialPageRoute<IntroBackupSafetyPage>(
                 builder: (_) => IntroBackupSafetyPage(),
+                settings: settings,
+              );
+            case '/intro_import':
+              return MaterialPageRoute(
+                builder: (_) => IntroImportSeedPage(),
                 settings: settings,
               );
             case '/intro_backup_confirm':

@@ -143,7 +143,6 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                         ],
                       ),
                     ),
-                    // Next Screen Button
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -153,7 +152,6 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                           'I\'ve Backed It Up',
                           Dimens.BUTTON_BOTTOM_DIMENS,
                           onPressed: () {
-                            // Update wallet
                             sl.get<DBHelper>().dropAccounts().then((_) {
                               StateContainer.of(context)
                                   .getSeed()

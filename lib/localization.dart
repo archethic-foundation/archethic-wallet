@@ -617,6 +617,37 @@ class AppLocalization {
         name: 'secretWarning');
   }
 
+  String get importSecretPhrase {
+    return Intl.message("Import Secret Phrase",
+        desc: '', name: 'importSecretPhrase');
+  }
+
+  String get importSecretPhraseHint {
+    return Intl.message(
+        'Please enter your 24-word secret phrase below. Each word should be separated by a space.',
+        desc: '',
+        name: 'importSecretPhraseHint');
+  }
+
+  String get qrMnemonicError {
+    return Intl.message('QR does not contain a valid secret phrase',
+        desc: '', name: 'qrMnemonicError');
+  }
+
+  String get mnemonicInvalidWord {
+    return Intl.message('%1 is not a valid word',
+        desc: '', name: 'mnemonicInvalidWord');
+  }
+
+  String get mnemonicSizeError {
+    return Intl.message('Secret phrase may only contain 24 words',
+        desc: '', name: 'mnemonicSizeError');
+  }
+
+  String get importWallet {
+    return Intl.message("Import Wallet", desc: '', name: 'importWallet');
+  }
+
   String get understandButton {
     return Intl.message('I understand', desc: '', name: 'understandButton');
   }

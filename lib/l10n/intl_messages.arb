@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2021-10-30T00:16:46.122117",
+  "@@last_modified": "2021-10-30T10:41:39.343587",
   "welcomeText": "Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "description": "",
@@ -829,6 +829,48 @@
   "secretWarning": "If you lose your device or uninstall the application, you'll need your secret phrase to recover your funds!",
   "@secretWarning": {
     "description": "Secret warning",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "importSecretPhrase": "Import Secret Phrase",
+  "@importSecretPhrase": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "importSecretPhraseHint": "Please enter your 24-word secret phrase below. Each word should be separated by a space.",
+  "@importSecretPhraseHint": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "qrMnemonicError": "QR does not contain a valid secret phrase",
+  "@qrMnemonicError": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "mnemonicInvalidWord": "%1 is not a valid word",
+  "@mnemonicInvalidWord": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "mnemonicSizeError": "Secret phrase may only contain 24 words",
+  "@mnemonicSizeError": {
+    "description": "",
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "importWallet": "Import Wallet",
+  "@importWallet": {
+    "description": "",
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

@@ -150,6 +150,18 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                             }),
                           ],
                         ),
+                        Row(
+                          children: <Widget>[
+                            // Import Wallet Button
+                            AppButton.buildAppButton(
+                                context,
+                                AppButtonType.PRIMARY_OUTLINE,
+                                AppLocalization.of(context).importWallet,
+                                Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
+                              Navigator.of(context).pushNamed('/intro_import');
+                            }),
+                          ],
+                        ),
                       ],
                     ),
                   ],

@@ -9,6 +9,7 @@
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
 // ignore_for_file:unused_import, file_names, always_declare_return_types
 
+// Package imports:
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
@@ -82,6 +83,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "goBackButton" : MessageLookupByLibrary.simpleMessage("Go Back"),
     "hideAccountHeader" : MessageLookupByLibrary.simpleMessage("Hide Account?"),
     "iUnderstandTheRisks" : MessageLookupByLibrary.simpleMessage("I Understand the Risks"),
+    "importSecretPhrase" : MessageLookupByLibrary.simpleMessage("Import Secret Phrase"),
+    "importSecretPhraseHint" : MessageLookupByLibrary.simpleMessage("Please enter your 24-word secret phrase below. Each word should be separated by a space."),
+    "importWallet" : MessageLookupByLibrary.simpleMessage("Import Wallet"),
     "informations" : MessageLookupByLibrary.simpleMessage("Informations"),
     "instantly" : MessageLookupByLibrary.simpleMessage("Instantly"),
     "insufficientBalance" : MessageLookupByLibrary.simpleMessage("Insufficient Balance"),
@@ -96,6 +100,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "logoutReassurance" : MessageLookupByLibrary.simpleMessage("As long as you\'ve backed up your seed you have nothing to worry about."),
     "manage" : MessageLookupByLibrary.simpleMessage("Manage"),
     "minimumSend" : MessageLookupByLibrary.simpleMessage("Minimum send amount is %1 UCO"),
+    "mnemonicInvalidWord" : MessageLookupByLibrary.simpleMessage("%1 is not a valid word"),
+    "mnemonicSizeError" : MessageLookupByLibrary.simpleMessage("Secret phrase may only contain 24 words"),
     "nextButton" : MessageLookupByLibrary.simpleMessage("Next"),
     "nftHeader" : MessageLookupByLibrary.simpleMessage("NFT"),
     "nftHeaderDesc" : MessageLookupByLibrary.simpleMessage("Manage your Non Financial Tokens"),
@@ -122,6 +128,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "preferences" : MessageLookupByLibrary.simpleMessage("Preferences"),
     "qrInvalidAddress" : MessageLookupByLibrary.simpleMessage("QR code does not contain a valid destination"),
     "qrInvalidPermissions" : MessageLookupByLibrary.simpleMessage("Please Grant Camera Permissions to scan QR Codes"),
+    "qrMnemonicError" : MessageLookupByLibrary.simpleMessage("QR does not contain a valid secret phrase"),
     "qrUnknownError" : MessageLookupByLibrary.simpleMessage("Could not Read QR Code"),
     "received" : MessageLookupByLibrary.simpleMessage("Received"),
     "recentTransactionsHeader" : MessageLookupByLibrary.simpleMessage("Recent transactions"),
