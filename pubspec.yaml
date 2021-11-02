@@ -159,6 +159,7 @@ flutter:
     - assets/searchseedmanual_animation_seedonly.flr
     - assets/pulltosend_animation.flr
     - assets/sheethandle_animation.flr
+    - assets/icons/pin-code.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

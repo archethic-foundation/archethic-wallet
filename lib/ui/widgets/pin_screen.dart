@@ -4,6 +4,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -85,7 +86,7 @@ class _PinScreenState extends State<PinScreen>
     } else {
       _header = pinCreateTitle;
     }
-    _dotStates = List<IconData>.filled(_pinLength, FontAwesomeIcons.circle);
+    _dotStates = List<IconData>.filled(_pinLength, FontAwesomeIcons.minus);
     _awaitingConfirmation = false;
     _pin = '';
     _pinConfirmed = '';
@@ -119,8 +120,8 @@ class _PinScreenState extends State<PinScreen>
                 setState(() {
                   _pin = '';
                   _header = AppLocalization.of(context).pinInvalid;
-                  _dotStates = List<IconData>.filled(
-                      _pinLength, FontAwesomeIcons.circle);
+                  _dotStates =
+                      List<IconData>.filled(_pinLength, FontAwesomeIcons.minus);
                   _controller.value = 0;
                 });
               }
@@ -129,7 +130,7 @@ class _PinScreenState extends State<PinScreen>
             setState(() {
               _awaitingConfirmation = false;
               _dotStates =
-                  List<IconData>.filled(_pinLength, FontAwesomeIcons.circle);
+                  List<IconData>.filled(_pinLength, FontAwesomeIcons.minus);
               _pin = '';
               _pinConfirmed = '';
               _header = AppLocalization.of(context).pinConfirmError;
@@ -164,7 +165,7 @@ class _PinScreenState extends State<PinScreen>
       });
     }
     for (int i = 0; i < _dotStates.length; i++) {
-      if (_dotStates[i] == FontAwesomeIcons.circle) {
+      if (_dotStates[i] == FontAwesomeIcons.minus) {
         setState(() {
           _dotStates[i] = FontAwesomeIcons.solidCircle;
         });
@@ -178,19 +179,19 @@ class _PinScreenState extends State<PinScreen>
   }
 
   void _backSpace() {
-    if (_dotStates[0] != FontAwesomeIcons.circle) {
+    if (_dotStates[0] != FontAwesomeIcons.minus) {
       int lastFilledIndex;
       for (int i = 0; i < _dotStates.length; i++) {
         if (_dotStates[i] == FontAwesomeIcons.solidCircle) {
           if (i == _dotStates.length ||
-              _dotStates[i + 1] == FontAwesomeIcons.circle) {
+              _dotStates[i + 1] == FontAwesomeIcons.minus) {
             lastFilledIndex = i;
             break;
           }
         }
       }
       setState(() {
-        _dotStates[lastFilledIndex] = FontAwesomeIcons.circle;
+        _dotStates[lastFilledIndex] = FontAwesomeIcons.minus;
         if (_awaitingConfirmation) {
           _pinConfirmed = _pinConfirmed.substring(0, _pinConfirmed.length - 1);
         } else {
@@ -205,59 +206,67 @@ class _PinScreenState extends State<PinScreen>
       height: smallScreen(context) ? buttonSize - 15 : buttonSize,
       width: smallScreen(context) ? buttonSize - 15 : buttonSize,
       child: InkWell(
-        borderRadius: BorderRadius.circular(200),
-        highlightColor: StateContainer.of(context).curTheme.primary15,
-        splashColor: StateContainer.of(context).curTheme.primary30,
-        onTap: () {},
-        onTapDown: (TapDownDetails details) {
-          if (_controller.status == AnimationStatus.forward ||
-              _controller.status == AnimationStatus.reverse) {
-            return;
-          }
-          if (_setCharacter(buttonText)) {
-            // Mild delay so they can actually see the last dot get filled
-            Future<void>.delayed(const Duration(milliseconds: 50), () {
-              if (widget.type == PinOverlayType.ENTER_PIN) {
-                // Pin is not what was expected
-                if (_pin != widget.expectedPin) {
-                  sl.get<HapticUtil>().feedback(FeedbackType.error);
-                  _controller.forward();
-                } else {
-                  sl.get<SharedPrefsUtil>().resetLockAttempts().then((_) {
-                    Navigator.of(context).pop(true);
-                  });
-                }
-              } else {
-                if (!_awaitingConfirmation) {
-                  // Switch to confirm pin
-                  setState(() {
-                    _awaitingConfirmation = true;
-                    _dotStates = List<IconData>.filled(
-                        _pinLength, FontAwesomeIcons.circle);
-                    _header = AppLocalization.of(context).pinConfirmTitle;
-                  });
-                } else {
-                  // First and second pins match
-                  if (_pin == _pinConfirmed) {
-                    Navigator.of(context).pop(_pin);
-                  } else {
+          borderRadius: BorderRadius.circular(200),
+          highlightColor: StateContainer.of(context).curTheme.primary15,
+          splashColor: StateContainer.of(context).curTheme.primary30,
+          onTap: () {},
+          onTapDown: (TapDownDetails details) {
+            if (_controller.status == AnimationStatus.forward ||
+                _controller.status == AnimationStatus.reverse) {
+              return;
+            }
+            if (_setCharacter(buttonText)) {
+              // Mild delay so they can actually see the last dot get filled
+              Future<void>.delayed(const Duration(milliseconds: 50), () {
+                if (widget.type == PinOverlayType.ENTER_PIN) {
+                  // Pin is not what was expected
+                  if (_pin != widget.expectedPin) {
                     sl.get<HapticUtil>().feedback(FeedbackType.error);
                     _controller.forward();
+                  } else {
+                    sl.get<SharedPrefsUtil>().resetLockAttempts().then((_) {
+                      Navigator.of(context).pop(true);
+                    });
+                  }
+                } else {
+                  if (!_awaitingConfirmation) {
+                    // Switch to confirm pin
+                    setState(() {
+                      _awaitingConfirmation = true;
+                      _dotStates = List<IconData>.filled(
+                          _pinLength, FontAwesomeIcons.minus);
+                      _header = AppLocalization.of(context).pinConfirmTitle;
+                    });
+                  } else {
+                    // First and second pins match
+                    if (_pin == _pinConfirmed) {
+                      Navigator.of(context).pop(_pin);
+                    } else {
+                      sl.get<HapticUtil>().feedback(FeedbackType.error);
+                      _controller.forward();
+                    }
                   }
                 }
-              }
-            });
-          }
-        },
-        child: Container(
-          alignment: const AlignmentDirectional(0, 0),
-          child: Text(
-            buttonText,
-            textAlign: TextAlign.center,
-            style: AppStyles.textStyleSize20W700Primary(context),
-          ),
-        ),
-      ),
+              });
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: StateContainer.of(context).curTheme.background40,
+                    blurRadius: 15,
+                    spreadRadius: -15),
+              ],
+            ),
+            alignment: const AlignmentDirectional(0, 0),
+            child: Text(
+              buttonText,
+              textAlign: TextAlign.center,
+              style: AppStyles.textStyleSize20W700Primary(context),
+            ),
+          )),
     );
   }
 
@@ -311,18 +320,18 @@ class _PinScreenState extends State<PinScreen>
                     top: MediaQuery.of(context).size.height * 0.1),
                 child: Column(
                   children: <Widget>[
-                    // Header
+                    buildIconWidget(context, 'assets/icons/pin-code.png'),
+                    const SizedBox(height: 30,),
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 40),
                       child: AutoSizeText(
                         _header,
-                        style: AppStyles.textStyleSize20W700Primary(context),
+                        style: AppStyles.textStyleSize16W400Primary(context),
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         stepGranularity: 0.1,
                       ),
                     ),
-                    // Descripttion
                     Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 40, vertical: 10),
@@ -334,7 +343,6 @@ class _PinScreenState extends State<PinScreen>
                         stepGranularity: 0.1,
                       ),
                     ),
-                    // Dots
                     Container(
                       margin: EdgeInsetsDirectional.only(
                         start: MediaQuery.of(context).size.width * 0.25 +
@@ -442,26 +450,36 @@ class _PinScreenState extends State<PinScreen>
                                   ? buttonSize - 15
                                   : buttonSize,
                               child: InkWell(
-                                borderRadius: BorderRadius.circular(200),
-                                highlightColor: StateContainer.of(context)
-                                    .curTheme
-                                    .primary15,
-                                splashColor: StateContainer.of(context)
-                                    .curTheme
-                                    .primary30,
-                                onTap: () {},
-                                onTapDown: (TapDownDetails details) {
-                                  _backSpace();
-                                },
-                                child: Container(
-                                  alignment: const AlignmentDirectional(0, 0),
-                                  child: FaIcon(Icons.backspace,
-                                      color: StateContainer.of(context)
-                                          .curTheme
-                                          .primary,
-                                      size: 20.0),
-                                ),
-                              ),
+                                  borderRadius: BorderRadius.circular(200),
+                                  highlightColor: StateContainer.of(context)
+                                      .curTheme
+                                      .primary15,
+                                  splashColor: StateContainer.of(context)
+                                      .curTheme
+                                      .primary30,
+                                  onTap: () {},
+                                  onTapDown: (TapDownDetails details) {
+                                    _backSpace();
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      boxShadow: <BoxShadow>[
+                                        BoxShadow(
+                                            color: StateContainer.of(context)
+                                                .curTheme
+                                                .background40,
+                                            blurRadius: 15,
+                                            spreadRadius: -15),
+                                      ],
+                                    ),
+                                    alignment: const AlignmentDirectional(0, 0),
+                                    child: FaIcon(Icons.backspace,
+                                        color: StateContainer.of(context)
+                                            .curTheme
+                                            .primary,
+                                        size: 20.0),
+                                  )),
                             ),
                           ],
                         ),
