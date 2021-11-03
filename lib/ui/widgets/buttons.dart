@@ -38,7 +38,7 @@ class AppButton {
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: disabled
-                    ? StateContainer.of(context).curTheme.primary60
+                    ? StateContainer.of(context).curTheme.primary
                     : StateContainer.of(context).curTheme.primary,
                 elevation: 5.0,
                 shape: RoundedRectangleBorder(

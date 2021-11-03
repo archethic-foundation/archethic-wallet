@@ -1,6 +1,7 @@
 // @dart=2.9
 
 // Flutter imports:
+import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -216,138 +217,146 @@ class _AppLockScreenState extends State<AppLockScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: <Color>[
-            StateContainer.of(context).curTheme.backgroundDark,
-            StateContainer.of(context).curTheme.background
-          ],
-        ),
-      ),
-      child: Scaffold(
-        body: Container(
-          width: double.infinity,
-          child: SafeArea(
-            minimum: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height * 0.035,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: StateContainer.of(context).curTheme.backgroundDarkest,
+      body: Stack(
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[
+                  StateContainer.of(context).curTheme.backgroundDark,
+                  StateContainer.of(context).curTheme.background
+                ],
+              ),
             ),
-            child: Column(
-              children: <Widget>[
-                // Logout button
-                Container(
-                  margin: const EdgeInsetsDirectional.only(start: 16, top: 12),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      TextButton(
-                        onPressed: () {
-                          AppDialogs.showConfirmDialog(
-                              context,
-                              CaseChange.toUpperCase(
-                                  AppLocalization.of(context).warning, context),
-                              AppLocalization.of(context).logoutDetail,
-                              AppLocalization.of(context)
-                                  .logoutAction
-                                  .toUpperCase(), () {
-                            // Show another confirm dialog
-                            AppDialogs.showConfirmDialog(
-                                context,
-                                AppLocalization.of(context).logoutAreYouSure,
-                                AppLocalization.of(context).logoutReassurance,
-                                CaseChange.toUpperCase(
-                                    AppLocalization.of(context).yes, context),
-                                () {});
-                          });
-                        },
-                        child: Container(
-                          child: Row(
+          ),
+          Container(
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) =>
+                  SafeArea(
+                minimum: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).size.height * 0.035,
+                    top: MediaQuery.of(context).size.height * 0.075),
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              FaIcon(FontAwesomeIcons.signOutAlt,
-                                  size: 16,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .primary),
                               Container(
-                                margin:
-                                    const EdgeInsetsDirectional.only(start: 4),
-                                child: Text(AppLocalization.of(context).logout,
-                                    style: AppStyles.textStyleSize14W600Primary(
-                                        context)),
+                                margin: EdgeInsetsDirectional.only(
+                                    start: smallScreen(context) ? 15 : 20),
+                                height: 50,
+                                width: 150,
+                                child: TextButton(
+                                  onPressed: () {
+                                    AppDialogs.showConfirmDialog(
+                                        context,
+                                        CaseChange.toUpperCase(
+                                            AppLocalization.of(context).warning,
+                                            context),
+                                        AppLocalization.of(context)
+                                            .logoutDetail,
+                                        AppLocalization.of(context)
+                                            .logoutAction
+                                            .toUpperCase(), () {
+                                      // Show another confirm dialog
+                                      AppDialogs.showConfirmDialog(
+                                          context,
+                                          AppLocalization.of(context)
+                                              .logoutAreYouSure,
+                                          AppLocalization.of(context)
+                                              .logoutReassurance,
+                                          CaseChange.toUpperCase(
+                                              AppLocalization.of(context).yes,
+                                              context),
+                                          () {});
+                                    });
+                                  },
+                                  child: Container(
+                                    child: Row(
+                                      children: <Widget>[
+                                        FaIcon(FontAwesomeIcons.signOutAlt,
+                                            size: 16,
+                                            color: StateContainer.of(context)
+                                                .curTheme
+                                                .primary),
+                                        Container(
+                                          margin:
+                                              const EdgeInsetsDirectional.only(
+                                                  start: 4),
+                                          child: Text(
+                                              AppLocalization.of(context)
+                                                  .logout,
+                                              style: AppStyles
+                                                  .textStyleSize14W600Primary(
+                                                      context)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: _showLock
-                      ? Column(
-                          children: <Widget>[
-                            Container(
-                              child: FaIcon(
-                                FontAwesomeIcons.lock,
-                                size: 80,
-                                color:
-                                    StateContainer.of(context).curTheme.primary,
-                              ),
-                              margin: EdgeInsets.only(
-                                  top:
-                                      MediaQuery.of(context).size.height * 0.1),
+                          buildIconWidget(
+                              context, 'assets/icons/lock.png', 90, 90),
+                          Container(
+                            child: Text(
+                              CaseChange.toUpperCase(
+                                  AppLocalization.of(context).locked, context),
+                              style:
+                                  AppStyles.textStyleSize28W700Primary(context),
                             ),
+                            margin: const EdgeInsets.only(top: 10),
+                          ),
+                          if (!_lockedOut)
                             Container(
+                              width: MediaQuery.of(context).size.width - 100,
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 50, vertical: 20),
                               child: Text(
-                                CaseChange.toUpperCase(
-                                    AppLocalization.of(context).locked,
+                                AppLocalization.of(context)
+                                    .tooManyFailedAttempts,
+                                style: AppStyles.textStyleSize14W600Primary(
                                     context),
-                                style: AppStyles.textStyleSize28W700Primary(
-                                    context),
+                                textAlign: TextAlign.center,
                               ),
-                              margin: const EdgeInsets.only(top: 10),
-                            ),
-                          ],
-                        )
-                      : const SizedBox(),
-                ),
-                if (_lockedOut)
-                  Container(
-                    width: MediaQuery.of(context).size.width - 100,
-                    margin: const EdgeInsets.symmetric(horizontal: 50),
-                    child: Text(
-                      AppLocalization.of(context).tooManyFailedAttempts,
-                      style: AppStyles.textStyleSize14W600Primary(context),
-                      textAlign: TextAlign.center,
+                            )
+                          else
+                            const SizedBox(),
+                        ],
+                      ),
                     ),
-                  )
-                else
-                  const SizedBox(),
-                if (_showUnlockButton)
-                  Row(
-                    children: <Widget>[
-                      AppButton.buildAppButton(
-                          context,
-                          AppButtonType.PRIMARY,
-                          _lockedOut
-                              ? _countDownTxt
-                              : AppLocalization.of(context).unlock,
-                          Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
-                        if (!_lockedOut) {
-                          _authenticate(transitions: true);
-                        }
-                      }, disabled: _lockedOut),
-                    ],
-                  )
-                else
-                  const SizedBox(),
-              ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        AppButton.buildAppButton(
+                            context,
+                            AppButtonType.PRIMARY,
+                            _lockedOut
+                                ? _countDownTxt
+                                : AppLocalization.of(context).unlock,
+                            Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
+                          if (!_lockedOut) {
+                            _authenticate(transitions: true);
+                          }
+                        }, disabled: _lockedOut),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
