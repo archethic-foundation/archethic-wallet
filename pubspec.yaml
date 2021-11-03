@@ -3,7 +3,7 @@ description: ArchEthic Wallet app (iOS/Android).
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.0.25+25
+version: 0.0.26+26
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
