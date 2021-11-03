@@ -4,7 +4,6 @@
 import 'dart:math';
 
 // Flutter imports:
-import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -17,6 +16,7 @@ import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
@@ -320,8 +320,11 @@ class _PinScreenState extends State<PinScreen>
                     top: MediaQuery.of(context).size.height * 0.1),
                 child: Column(
                   children: <Widget>[
-                    buildIconWidget(context, 'assets/icons/pin-code.png'),
-                    const SizedBox(height: 30,),
+                    buildIconWidget(
+                        context, 'assets/icons/pin-code.png', 90, 90),
+                    const SizedBox(
+                      height: 30,
+                    ),
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 40),
                       child: AutoSizeText(

@@ -1,10 +1,14 @@
-import 'package:archethic_mobile_wallet/appstate_container.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-Widget buildIconWidget(BuildContext context, String icon) {
+// Project imports:
+import 'package:archethic_mobile_wallet/appstate_container.dart';
+
+Widget buildIconWidget(
+    BuildContext context, String icon, double width, double height) {
   return Container(
-    width: 90,
-    height: 90,
+    width: width,
+    height: height,
     decoration: BoxDecoration(
       shape: BoxShape.circle,
       boxShadow: <BoxShadow>[

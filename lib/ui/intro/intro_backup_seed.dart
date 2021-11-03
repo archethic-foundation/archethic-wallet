@@ -16,6 +16,7 @@ import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/mnemonic_display.dart';
 import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
 import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
@@ -76,7 +77,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                   children: <Widget>[
                     Expanded(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,11 +102,19 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                           Container(
                             margin: EdgeInsetsDirectional.only(
                               start: smallScreen(context) ? 30 : 40,
+                              top: 15,
+                            ),
+                            child: buildIconWidget(
+                                context, 'assets/icons/key-word.png', 90, 90),
+                          ),
+                          Container(
+                            margin: EdgeInsetsDirectional.only(
+                              start: smallScreen(context) ? 30 : 40,
                               end: smallScreen(context) ? 30 : 40,
                               top: 10,
                             ),
                             alignment: const AlignmentDirectional(-1, 0),
-                            child: Row(
+                            child: Column(
                               children: <Widget>[
                                 Container(
                                   constraints: BoxConstraints(
@@ -120,17 +129,6 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                     stepGranularity: 0.1,
                                     minFontSize: 12.0,
                                     maxLines: 1,
-                                  ),
-                                ),
-                                Container(
-                                  margin: const EdgeInsetsDirectional.only(
-                                      start: 10, end: 10),
-                                  child: FaIcon(
-                                    FontAwesomeIcons.key,
-                                    size: 36,
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .primary,
                                   ),
                                 ),
                               ],

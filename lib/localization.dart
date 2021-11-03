@@ -618,7 +618,7 @@ class AppLocalization {
   }
 
   String get importSecretPhrase {
-    return Intl.message("Import Secret Phrase",
+    return Intl.message('Import Secret Phrase',
         desc: '', name: 'importSecretPhrase');
   }
 
@@ -645,7 +645,7 @@ class AppLocalization {
   }
 
   String get importWallet {
-    return Intl.message("Import Wallet", desc: '', name: 'importWallet');
+    return Intl.message('Import Wallet', desc: '', name: 'importWallet');
   }
 
   String get understandButton {

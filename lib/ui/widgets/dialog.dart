@@ -3,9 +3,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:flare_flutter/flare_actor.dart';
-
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
@@ -61,42 +58,10 @@ class AppDialogs {
       },
     );
   }
-
-  static void showInfoDialog(
-      BuildContext context, String title, String content) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AppAlertDialog(
-          title: Text(
-            title,
-            style: AppStyles.textStyleSize20W700Primary(context),
-          ),
-          content: Text(content,
-              style: AppStyles.textStyleSize16W200Primary(context)),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                AppLocalization.of(context).cancel.toUpperCase(),
-                style: AppStyles.textStyleSize12W600Primary(context),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 }
 
 enum AnimationType {
   SEND,
-  GENERIC,
-  TRANSFER_SEARCHING_QR,
-  TRANSFER_SEARCHING_MANUAL,
-  TRANSFER_TRANSFERRING
 }
 
 class AnimationLoadingOverlay extends ModalRoute<void> {
@@ -119,11 +84,6 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
 
   @override
   Color get barrierColor {
-    if (type == AnimationType.TRANSFER_TRANSFERRING ||
-        type == AnimationType.TRANSFER_SEARCHING_QR ||
-        type == AnimationType.TRANSFER_SEARCHING_MANUAL) {
-      return overlay85;
-    }
     return overlay70;
   }
 
@@ -159,72 +119,6 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
     switch (type) {
       case AnimationType.SEND:
         return const Center();
-      case AnimationType.TRANSFER_SEARCHING_QR:
-        return Stack(
-          children: <Widget>[
-            const Center(
-              child: FlareActor(
-                'assets/searchseedqr_animation_qronly.flr',
-                animation: 'main',
-                fit: BoxFit.contain,
-              ),
-            ),
-            const Center(
-              child: FlareActor(
-                'assets/searchseedqr_animation_glassonly.flr',
-                animation: 'main',
-                fit: BoxFit.contain,
-              ),
-            ),
-            Center(
-              child: FlareActor(
-                'assets/searchseedqr_animation_magnifyingglassonly.flr',
-                animation: 'main',
-                fit: BoxFit.contain,
-                color: StateContainer.of(context).curTheme.primary,
-              ),
-            ),
-          ],
-        );
-      case AnimationType.TRANSFER_SEARCHING_MANUAL:
-        return Stack(
-          children: <Widget>[
-            Center(
-              child: FlareActor(
-                'assets/searchseedmanual_animation_seedonly.flr',
-                animation: 'main',
-                fit: BoxFit.contain,
-                color: StateContainer.of(context).curTheme.primary30,
-              ),
-            ),
-            const Center(
-              child: FlareActor(
-                'assets/searchseedmanual_animation_glassonly.flr',
-                animation: 'main',
-                fit: BoxFit.contain,
-              ),
-            ),
-            Center(
-              child: FlareActor(
-                'assets/searchseedmanual_animation_magnifyingglassonly.flr',
-                animation: 'main',
-                fit: BoxFit.contain,
-                color: StateContainer.of(context).curTheme.primary,
-              ),
-            ),
-          ],
-        );
-      case AnimationType.TRANSFER_TRANSFERRING:
-        return Stack(
-          children: const <Widget>[
-            FlareActor(
-              'assets/transfer_animation_paperwalletonly.flr',
-              animation: 'main',
-              fit: BoxFit.contain,
-            ),
-          ],
-        );
-      case AnimationType.GENERIC:
       default:
         return CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(

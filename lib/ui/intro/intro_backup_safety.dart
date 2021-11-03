@@ -13,6 +13,7 @@ import 'package:archethic_mobile_wallet/dimens.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
 
 class IntroBackupSafetyPage extends StatefulWidget {
   @override
@@ -46,7 +47,6 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                 top: MediaQuery.of(context).size.height * 0.075),
             child: Column(
               children: <Widget>[
-                //A widget that holds the header, the paragraph, the seed, "seed copied" text and the back button
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,13 +75,9 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                           start: smallScreen(context) ? 30 : 40,
                           top: 15,
                         ),
-                        child: FaIcon(
-                          FontAwesomeIcons.exclamationTriangle,
-                          size: 60,
-                          color: StateContainer.of(context).curTheme.primary,
-                        ),
+                        child: buildIconWidget(
+                            context, 'assets/icons/warning.png', 90, 90),
                       ),
-                      // The header
                       Container(
                         margin: EdgeInsetsDirectional.only(
                           start: smallScreen(context) ? 30 : 40,

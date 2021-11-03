@@ -661,7 +661,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         context,
                         AppLocalization.of(context).nftHeader,
                         AppLocalization.of(context).nftHeaderDesc,
-                        FontAwesomeIcons.stamp, onPressed: () {
+                        icon: 'assets/icons/nft.png', onPressed: () {
                       setState(() {
                         _nftOpen = true;
                       });
@@ -675,7 +675,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         context,
                         AppLocalization.of(context).nodesHeader,
                         AppLocalization.of(context).nodesHeaderDesc,
-                        FontAwesomeIcons.projectDiagram, onPressed: () {
+                        icon: 'assets/icons/nodes.png', onPressed: () {
                       setState(() {
                         _nodesOpen = true;
                       });
@@ -689,7 +689,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         context,
                         AppLocalization.of(context).walletFAQHeader,
                         AppLocalization.of(context).walletFAQDesc,
-                        FontAwesomeIcons.questionCircle, onPressed: () {
+                        icon: 'assets/icons/faq.png', onPressed: () {
                       setState(() {
                         _walletFAQOpen = true;
                       });
@@ -702,7 +702,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context).aboutHeader,
-                        FontAwesomeIcons.infoCircle, onPressed: () {
+                        'assets/icons/help.png', onPressed: () {
                       setState(() {
                         _aboutOpen = true;
                       });
@@ -727,7 +727,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         context,
                         AppLocalization.of(context).addressBookHeader,
                         AppLocalization.of(context).addressBookDesc,
-                        FontAwesomeIcons.addressBook, onPressed: () {
+                        icon: 'assets/icons/address-book.png', onPressed: () {
                       setState(() {
                         _contactsOpen = true;
                       });
@@ -741,7 +741,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         context,
                         AppLocalization.of(context).customUrlHeader,
                         AppLocalization.of(context).customUrlDesc,
-                        FontAwesomeIcons.plug, onPressed: () {
+                        icon: 'assets/icons/url.png', onPressed: () {
                       setState(() {
                         _customUrlOpen = true;
                       });
@@ -767,7 +767,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         AppLocalization.of(context).changeCurrencyHeader,
                         AppLocalization.of(context).changeCurrencyDesc,
                         StateContainer.of(context).curCurrency,
-                        FontAwesomeIcons.funnelDollar,
+                        'assets/icons/money-currency.png',
                         _currencyDialog),
                     Divider(
                       height: 2,
@@ -777,7 +777,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         context,
                         AppLocalization.of(context).language,
                         StateContainer.of(context).curLanguage,
-                        FontAwesomeIcons.language,
+                        'assets/icons/languages.png',
                         _languageDialog),
                     Divider(
                       height: 2,
@@ -786,7 +786,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context).securityHeader,
-                        FontAwesomeIcons.shieldAlt, onPressed: () {
+                        'assets/icons/encrypted.png', onPressed: () {
                       setState(() {
                         _securityOpen = true;
                       });
@@ -799,7 +799,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context).logout,
-                        FontAwesomeIcons.signOutAlt, onPressed: () {
+                        'assets/icons/logout.png', onPressed: () {
                       AppDialogs.showConfirmDialog(
                           context,
                           CaseChange.toUpperCase(
@@ -960,7 +960,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                           context,
                           AppLocalization.of(context).authMethod,
                           _curAuthMethod,
-                          FontAwesomeIcons.fingerprint,
+                          'assets/icons/authentLaunch.png',
                           _authMethodDialog)
                     else
                       null,
@@ -975,7 +975,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                             context,
                             AppLocalization.of(context).lockAppSetting,
                             _curUnlockSetting,
-                            FontAwesomeIcons.lock,
+                            'assets/icons/authentLaunch.png',
                             _lockDialog),
                       ])
                     else
@@ -988,7 +988,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemSwitch(
                         context,
                         AppLocalization.of(context).pinPadShuffle,
-                        FontAwesomeIcons.random,
+                        'assets/icons/shuffle.png',
                         _pinPadShuffleActive, onChanged: (bool _isSwitched) {
                       setState(() {
                         _pinPadShuffleActive = _isSwitched;
@@ -1006,7 +1006,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       context,
                       AppLocalization.of(context).autoLockHeader,
                       _curTimeoutSetting,
-                      FontAwesomeIcons.stopwatch,
+                      'assets/icons/autoLock.png',
                       _lockTimeoutDialog,
                       disabled: _curUnlockSetting.setting == UnlockOption.NO &&
                           StateContainer.of(context).encryptedSecret == null,
@@ -1019,7 +1019,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       AppSettings.buildSettingsListItemSingleLine(
                           context,
                           AppLocalization.of(context).backupSecretPhrase,
-                          FontAwesomeIcons.fileSignature, onPressed: () async {
+                          'assets/icons/key-word.png', onPressed: () async {
                         final AuthenticationMethod authMethod =
                             await sl.get<SharedPrefsUtil>().getAuthMethod();
                         final bool hasBiometrics =
@@ -1157,7 +1157,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         context,
                         AppLocalization.of(context)
                             .aboutGeneralTermsAndConditions,
-                        FontAwesomeIcons.infoCircle, onPressed: () {
+                        'assets/icons/terms-and-conditions.png', onPressed: () {
                       Sheets.showAppHeightNineSheet(
                           context: context,
                           widget: UIUtil.showWebview(
@@ -1172,7 +1172,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context).aboutWalletServiceTerms,
-                        FontAwesomeIcons.infoCircle, onPressed: () {
+                        'assets/icons/walletServiceTerms.png', onPressed: () {
                       Sheets.showAppHeightNineSheet(
                           context: context,
                           widget: UIUtil.showWebview(
@@ -1187,7 +1187,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context).aboutPrivacyPolicy,
-                        FontAwesomeIcons.infoCircle, onPressed: () {
+                        'assets/icons/privacyPolicy.png', onPressed: () {
                       Sheets.showAppHeightNineSheet(
                           context: context,
                           widget: UIUtil.showWebview(
@@ -1285,7 +1285,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context).addNFTHeader,
-                        FontAwesomeIcons.plusSquare, onPressed: () {
+                        'assets/icons/addNft.png', onPressed: () {
                       Sheets.showAppHeightNineSheet(
                           context: context, widget: const AddNFTSheet());
                     }),
@@ -1295,7 +1295,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context).transferNFT,
-                        FontAwesomeIcons.share, onPressed: () {
+                        'assets/icons/transferNft.png', onPressed: () {
                       /*Sheets.showAppHeightNineSheet(
                           context: context,
                           widget: TransferNftSheet(

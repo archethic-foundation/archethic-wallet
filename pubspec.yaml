@@ -35,9 +35,6 @@ dependencies:
   # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart
   fl_chart: ^0.40.2
 
-  # Vector design and runtime animation for Flutter
-  flare_flutter: ^3.0.2
-
   # A component that provides flip card animation. It could be used for hide and show details of a product
   flip_card: ^0.5.0
 
@@ -146,20 +143,10 @@ flutter:
         - asset: fonts/Montserrat-SemiBold.ttf
         - asset: fonts/Montserrat-SemiBoldItalic.ttf
   assets:
-    - assets/QR.svg
     - assets/archethic_icon.png
     - assets/archethic_logo.svg
     - assets/archethic_logo_alone.svg
-    - assets/send_animation.flr
-    - assets/searchseedqr_animation_magnifyingglassonly.flr
-    - assets/searchseedqr_animation_glassonly.flr
-    - assets/searchseedqr_animation_qronly.flr
-    - assets/searchseedmanual_animation_magnifyingglassonly.flr
-    - assets/searchseedmanual_animation_glassonly.flr
-    - assets/searchseedmanual_animation_seedonly.flr
-    - assets/pulltosend_animation.flr
-    - assets/sheethandle_animation.flr
-    - assets/icons/pin-code.png
+    - assets/icons/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

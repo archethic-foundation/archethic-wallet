@@ -15,6 +15,7 @@ import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
 
 class IntroBackupConfirm extends StatefulWidget {
@@ -77,11 +78,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           start: smallScreen(context) ? 30 : 40,
                           top: 15,
                         ),
-                        child: FaIcon(
-                          FontAwesomeIcons.fileSignature,
-                          size: 60,
-                          color: StateContainer.of(context).curTheme.primary,
-                        ),
+                        child: buildIconWidget(
+                            context, 'assets/icons/writing.png', 90, 90),
                       ),
                       Container(
                         margin: EdgeInsetsDirectional.only(

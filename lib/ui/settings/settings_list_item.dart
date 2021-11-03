@@ -12,6 +12,7 @@ import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/model/setting_item.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
 
 class AppSettings {
   //Settings item with a dropdown option
@@ -19,7 +20,7 @@ class AppSettings {
       BuildContext context,
       String heading,
       SettingSelectionItem defaultMethod,
-      IconData icon,
+      String icon,
       Function onPressed,
       {bool disabled = false}) {
     return IgnorePointer(
@@ -29,23 +30,18 @@ class AppSettings {
           onPressed();
         },
         child: Container(
-          height: 30.0,
-          margin: const EdgeInsetsDirectional.only(start: 10.0),
+          height: 40.0,
+          margin: const EdgeInsetsDirectional.only(start: 7.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                margin: const EdgeInsetsDirectional.only(end: 13.0),
                 child: Container(
                   child: Row(
                     children: <Widget>[
-                      FaIcon(icon,
-                          color: disabled
-                              ? StateContainer.of(context).curTheme.icon45
-                              : StateContainer.of(context).curTheme.icon,
-                          size: 24),
-                      const SizedBox(width: 16),
+                      Container(child: buildIconWidget(context, icon, 30, 30)),
+                      const SizedBox(width: 13),
                       AutoSizeText(
                         heading,
                         style: disabled
@@ -82,7 +78,7 @@ class AppSettings {
       String heading,
       String info,
       SettingSelectionItem defaultMethod,
-      IconData icon,
+      String icon,
       Function onPressed,
       {bool disabled = false}) {
     return TextButton(
@@ -99,27 +95,16 @@ class AppSettings {
         child: Row(
           children: <Widget>[
             Container(
-              margin: const EdgeInsetsDirectional.only(end: 7.0),
               child: Container(
-                child: FaIcon(
-                  icon,
-                  color: StateContainer.of(context).curTheme.icon,
-                  size: 24,
-                ),
-                margin: const EdgeInsetsDirectional.only(
-                  top: 3,
-                  start: 3,
-                  bottom: 3,
-                  end: 3,
-                ),
-              ),
+                  margin: const EdgeInsetsDirectional.only(end: 13.0),
+                  child: buildIconWidget(context, icon, 30, 30)),
             ),
             Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                      width: UIUtil.drawerWidth(context) - 69,
+                      width: UIUtil.drawerWidth(context) - 70,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -138,7 +123,7 @@ class AppSettings {
                         ],
                       )),
                   Container(
-                    width: UIUtil.drawerWidth(context) - 100,
+                    width: UIUtil.drawerWidth(context) - 80,
                     child: AutoSizeText(
                       info,
                       maxLines: 5,
@@ -155,8 +140,8 @@ class AppSettings {
   }
 
   static Widget buildSettingsListItemSingleLineWithInfos(
-      BuildContext context, String heading, String info, IconData settingIcon,
-      {Function onPressed}) {
+      BuildContext context, String heading, String info,
+      {Function onPressed, String icon}) {
     return TextButton(
       onPressed: () {
         if (onPressed != null) {
@@ -171,21 +156,8 @@ class AppSettings {
         child: Row(
           children: <Widget>[
             Container(
-              margin: const EdgeInsetsDirectional.only(end: 13.0),
-              child: Container(
-                child: FaIcon(
-                  settingIcon,
-                  color: StateContainer.of(context).curTheme.icon,
-                  size: 24,
-                ),
-                margin: const EdgeInsetsDirectional.only(
-                  top: 3,
-                  start: 3,
-                  bottom: 3,
-                  end: 3,
-                ),
-              ),
-            ),
+                margin: const EdgeInsetsDirectional.only(end: 13.0),
+                child: buildIconWidget(context, icon, 30, 30)),
             Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -223,7 +195,7 @@ class AppSettings {
 
   //Settings item without any dropdown option but rather a direct functionality
   static Widget buildSettingsListItemSingleLine(
-      BuildContext context, String heading, IconData settingIcon,
+      BuildContext context, String heading, String icon,
       {Function onPressed}) {
     return TextButton(
       onPressed: () {
@@ -240,19 +212,7 @@ class AppSettings {
           children: <Widget>[
             Container(
               margin: const EdgeInsetsDirectional.only(end: 13.0),
-              child: Container(
-                child: FaIcon(
-                  settingIcon,
-                  color: StateContainer.of(context).curTheme.icon,
-                  size: 24,
-                ),
-                margin: const EdgeInsetsDirectional.only(
-                  top: 3,
-                  start: 3,
-                  bottom: 3,
-                  end: 3,
-                ),
-              ),
+              child: Container(child: buildIconWidget(context, icon, 30, 30)),
             ),
             Container(
               width: UIUtil.drawerWidth(context) - 100,
@@ -274,8 +234,8 @@ class AppSettings {
     );
   }
 
-  static Widget buildSettingsListItemSwitch(BuildContext context,
-      String heading, IconData settingIcon, bool _isSwitched,
+  static Widget buildSettingsListItemSwitch(
+      BuildContext context, String heading, String icon, bool _isSwitched,
       {Function onChanged}) {
     return TextButton(
       onPressed: () {},
@@ -285,28 +245,20 @@ class AppSettings {
         child: Row(
           children: <Widget>[
             Container(
-              margin: const EdgeInsetsDirectional.only(end: 13.0),
               child: Container(
-                child: FaIcon(
-                  settingIcon,
-                  color: StateContainer.of(context).curTheme.icon,
-                  size: 24,
-                ),
-                margin: const EdgeInsetsDirectional.only(
-                  top: 3,
-                  start: 3,
-                  bottom: 3,
-                  end: 3,
-                ),
-              ),
+                  margin: const EdgeInsetsDirectional.only(end: 13.0),
+                  child: buildIconWidget(context, icon, 30, 30)),
             ),
             Container(
-                width: UIUtil.drawerWidth(context) - 100,
+                width: UIUtil.drawerWidth(context) - 70,
                 child: Row(
                   children: <Widget>[
                     Text(
                       heading,
                       style: AppStyles.textStyleSize16W600Primary(context),
+                    ),
+                    const SizedBox(
+                      width: 60,
                     ),
                     Switch(
                         value: _isSwitched ?? false,

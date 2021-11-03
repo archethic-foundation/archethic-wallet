@@ -12,6 +12,7 @@ import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/transfer/transfer_uco_sheet.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 
 class BalanceDisplay {
@@ -137,7 +138,7 @@ class BalanceDisplay {
               ),
               SizedBox(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 165.0, top: 90.0),
+                  padding: const EdgeInsets.only(left: 175.0, top: 90.0),
                   child: Container(
                     height: 36,
                     width: 36,
@@ -155,8 +156,8 @@ class BalanceDisplay {
                                 localCurrency:
                                     StateContainer.of(context).curCurrency));
                       },
-                      child: FaIcon(FontAwesomeIcons.share,
-                          color: StateContainer.of(context).curTheme.primary),
+                      child: buildIconWidget(
+                          context, 'assets/icons/send.png', 30, 30),
                     ),
                   ),
                 ),
@@ -269,7 +270,7 @@ class BalanceDisplay {
               ),
               SizedBox(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 165.0, top: 90.0),
+                  padding: const EdgeInsets.only(left: 175.0, top: 90.0),
                   child: Container(
                     height: 36,
                     width: 36,
@@ -287,8 +288,8 @@ class BalanceDisplay {
                                 localCurrency:
                                     StateContainer.of(context).curCurrency));
                       },
-                      child: FaIcon(FontAwesomeIcons.share,
-                          color: StateContainer.of(context).curTheme.primary),
+                      child: buildIconWidget(
+                          context, 'assets/icons/send.png', 30, 30),
                     ),
                   ),
                 ),
