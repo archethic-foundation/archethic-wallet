@@ -143,7 +143,6 @@ flutter:
         - asset: fonts/Montserrat-SemiBold.ttf
         - asset: fonts/Montserrat-SemiBoldItalic.ttf
   assets:
-    - assets/archethic_icon.png
     - assets/archethic_logo.svg
     - assets/archethic_logo_alone.svg
     - assets/icons/
