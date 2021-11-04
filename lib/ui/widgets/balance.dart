@@ -268,6 +268,9 @@ class BalanceDisplay {
                   ),
                 ),
               ),
+              StateContainer.of(context).wallet != null && StateContainer.of(context).wallet.accountBalance != null &&
+              StateContainer.of(context).wallet.accountBalance.uco != null && 
+              StateContainer.of(context).wallet.accountBalance.uco > 0 ?
               SizedBox(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 175.0, top: 90.0),
@@ -293,7 +296,7 @@ class BalanceDisplay {
                     ),
                   ),
                 ),
-              ),
+              ) : const SizedBox(),
               SizedBox(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 5.0, top: 5.0),
