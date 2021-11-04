@@ -98,7 +98,7 @@ dependencies:
 
   # A Flutter plugin that provides a WebView widget
   webview_flutter: ^2.1.2
- 
+
 dev_dependencies:
   # A build system for Dart code generation and modular compilation
   hive_generator: ^1.1.1
