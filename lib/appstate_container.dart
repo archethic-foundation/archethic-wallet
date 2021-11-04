@@ -340,7 +340,6 @@ class StateContainerState extends State<StateContainer> {
   Future<void> requestUpdate({Account account, int page}) async {
     await requestUpdateLastAddress(account);
     setState(() {
-      recentTransactionsLoading = true;
       balanceLoading = true;
     });
     await requestUpdateBalance();
