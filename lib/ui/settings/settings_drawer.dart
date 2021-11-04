@@ -653,20 +653,49 @@ class _SettingsSheetState extends State<SettingsSheet>
                           style:
                               AppStyles.textStyleSize16W100Primary60(context)),
                     ),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
-                    ),
-                    AppSettings.buildSettingsListItemSingleLineWithInfos(
-                        context,
-                        AppLocalization.of(context).nftHeader,
-                        AppLocalization.of(context).nftHeaderDesc,
-                        icon: 'assets/icons/nft.png', onPressed: () {
-                      setState(() {
-                        _nftOpen = true;
-                      });
-                      _nftController.forward();
-                    }),
+                    StateContainer.of(context).wallet != null &&
+                            StateContainer.of(context).wallet.accountBalance !=
+                                null &&
+                            StateContainer.of(context)
+                                    .wallet
+                                    .accountBalance
+                                    .uco !=
+                                null &&
+                            StateContainer.of(context)
+                                    .wallet
+                                    .accountBalance
+                                    .uco >
+                                0
+                        ? Divider(
+                            height: 2,
+                            color:
+                                StateContainer.of(context).curTheme.primary15,
+                          )
+                        : const SizedBox(),
+                    StateContainer.of(context).wallet != null &&
+                            StateContainer.of(context).wallet.accountBalance !=
+                                null &&
+                            StateContainer.of(context)
+                                    .wallet
+                                    .accountBalance
+                                    .uco !=
+                                null &&
+                            StateContainer.of(context)
+                                    .wallet
+                                    .accountBalance
+                                    .uco >
+                                0
+                        ? AppSettings.buildSettingsListItemSingleLineWithInfos(
+                            context,
+                            AppLocalization.of(context).nftHeader,
+                            AppLocalization.of(context).nftHeaderDesc,
+                            icon: 'assets/icons/nft.png', onPressed: () {
+                            setState(() {
+                              _nftOpen = true;
+                            });
+                            _nftController.forward();
+                          })
+                        : const SizedBox(),
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
