@@ -24,7 +24,6 @@ import 'package:archethic_mobile_wallet/model/data/appdb.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/before_scan_screen.dart';
 import 'package:archethic_mobile_wallet/ui/home_page.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_backup_confirm.dart';
 import 'package:archethic_mobile_wallet/ui/intro/intro_backup_safety.dart';
@@ -206,11 +205,6 @@ class _AppState extends State<App> {
             case '/lock_screen_transition':
               return MaterialPageRoute<AppLockScreen>(
                 builder: (_) => AppLockScreen(),
-                settings: settings,
-              );
-            case '/before_scan_screen':
-              return NoTransitionRoute<BeforeScanScreen>(
-                builder: (_) => BeforeScanScreen(),
                 settings: settings,
               );
             default:
