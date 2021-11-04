@@ -13,7 +13,8 @@ import 'package:archethic_mobile_wallet/styles.dart';
 
 class NftListWidget {
   static Widget buildNftList(BuildContext context) {
-    return StateContainer.of(context).wallet.recentTransactionsLoading == true
+    return StateContainer.of(context).wallet == null ||
+            StateContainer.of(context).recentTransactionsLoading == true
         ? const Center(child: CircularProgressIndicator())
         : Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
             Widget>[

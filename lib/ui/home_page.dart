@@ -69,7 +69,7 @@ class _AppHomePageState extends State<AppHomePage>
   Future<void> _refresh() async {
     sl.get<HapticUtil>().feedback(FeedbackType.light);
     StateContainer.of(context)
-        .updateWallet(account: StateContainer.of(context).selectedAccount);
+        .requestUpdate(account: StateContainer.of(context).selectedAccount);
   }
 
   Future<void> _checkVersionApp() async {
@@ -171,13 +171,13 @@ class _AppHomePageState extends State<AppHomePage>
         .registerTo<AccountChangedEvent>()
         .listen((AccountChangedEvent event) {
       setState(() {
-        StateContainer.of(context).wallet.recentTransactionsLoading = true;
+        StateContainer.of(context).recentTransactionsLoading = true;
 
         _startAnimation();
-        StateContainer.of(context).updateWallet(account: event.account);
+        StateContainer.of(context).requestUpdate(account: event.account);
         _disposeAnimation();
 
-        StateContainer.of(context).wallet.recentTransactionsLoading = false;
+        StateContainer.of(context).recentTransactionsLoading = false;
       });
 
       paintQrCode(event.account.lastAddress);

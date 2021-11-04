@@ -60,16 +60,11 @@ class _TxListWidgetState extends State<TxListWidget> {
   @override
   Widget build(BuildContext context) {
     return StateContainer.of(context).wallet == null ||
-            StateContainer.of(context).wallet.recentTransactionsLoading == true
+            StateContainer.of(context).recentTransactionsLoading == true
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.only(left: 5.0),
-                  child: Text(
-                      AppLocalization.of(context)!.recentTransactionsHeader,
-                      style: AppStyles.textStyleSize14W600BackgroundDarkest(
-                          context))),
+              
               SizedBox(
                 child: Container(
                   child: Padding(
@@ -123,7 +118,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                             StateContainer.of(context).curTheme.backgroundDark,
                         onRefresh: () => Future.sync(() {
                           sl.get<HapticUtil>().feedback(FeedbackType.light);
-                          StateContainer.of(context).updateWallet(
+                          StateContainer.of(context).requestUpdate(
                               account:
                                   StateContainer.of(context).selectedAccount);
                           _pagingController.refresh();

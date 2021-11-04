@@ -1,7 +1,6 @@
 // @dart=2.9
 
 // Flutter imports:
-import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -18,6 +17,7 @@ import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/util/routes.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
 import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
 import 'package:archethic_mobile_wallet/util/biometrics.dart';
@@ -41,7 +41,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
           .loginAccount(await StateContainer.of(context).getSeed(), context);
     }
     StateContainer.of(context)
-        .requestUpdate(StateContainer.of(context).selectedAccount, null);
+        .requestUpdate(account: StateContainer.of(context).selectedAccount);
     Navigator.of(context).pushNamedAndRemoveUntil(
       '/home_transition',
       (Route<dynamic> route) => false,

@@ -156,9 +156,9 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                   .then((String seed) {
                                 AppUtil().loginAccount(seed, context).then((_) {
                                   StateContainer.of(context).requestUpdate(
-                                      StateContainer.of(context)
-                                          .selectedAccount,
-                                      null);
+                                    account: StateContainer.of(context)
+                                        .selectedAccount,
+                                  );
                                   Navigator.of(context)
                                       .pushNamed('/intro_backup_confirm');
                                 });

@@ -90,7 +90,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         Navigator.of(context).pop();
       } else {
         StateContainer.of(context)
-            .updateWallet(account: StateContainer.of(context).selectedAccount);
+            .requestUpdate(account: StateContainer.of(context).selectedAccount);
         Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
         Sheets.showAppHeightNineSheet(
             context: context,

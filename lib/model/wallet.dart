@@ -17,17 +17,14 @@ class AppWallet {
       Balance accountBalance,
       String localCurrencyPrice,
       String btcPrice,
-      List<RecentTransaction> history,
-      bool recentTransactionsLoading}) {
+      List<RecentTransaction> history}) {
     _address = address;
     _accountBalance = accountBalance ?? Balance(uco: 0, nft: null);
     _localCurrencyPrice = localCurrencyPrice ?? '0';
     _btcPrice = btcPrice ?? '0';
     _history = history ?? List<RecentTransaction>.empty(growable: true);
-    _recentTransactionsLoading = recentTransactionsLoading ?? true;
   }
 
-  bool _recentTransactionsLoading;
   String _address;
   Balance _accountBalance;
   String _localCurrencyPrice;
@@ -117,11 +114,5 @@ class AppWallet {
 
   set history(List<RecentTransaction> value) {
     _history = value;
-  }
-
-  bool get recentTransactionsLoading => _recentTransactionsLoading ?? true;
-
-  set recentTransactionsLoading(bool value) {
-    _recentTransactionsLoading = value;
   }
 }

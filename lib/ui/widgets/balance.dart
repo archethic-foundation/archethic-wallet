@@ -19,7 +19,7 @@ class BalanceDisplay {
   static Widget buildBalanceUCODisplay(
       BuildContext context, Animation<double> _opacityAnimation) {
     return StateContainer.of(context).wallet == null ||
-            StateContainer.of(context).wallet.recentTransactionsLoading == true
+            StateContainer.of(context).balanceLoading == true
         ? Stack(
             children: <Widget>[
               AspectRatio(
@@ -138,32 +138,6 @@ class BalanceDisplay {
               ),
               SizedBox(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 175.0, top: 90.0),
-                  child: Container(
-                    height: 36,
-                    width: 36,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        Sheets.showAppHeightNineSheet(
-                            context: context,
-                            widget: TransferUcoSheet(
-                                contactsRef:
-                                    StateContainer.of(context).contactsRef,
-                                title: AppLocalization.of(context).transferUCO,
-                                localCurrency:
-                                    StateContainer.of(context).curCurrency));
-                      },
-                      child: buildIconWidget(
-                          context, 'assets/icons/send.png', 30, 30),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                child: Padding(
                   padding: const EdgeInsets.only(left: 5.0, top: 5.0),
                   child: Text(
                     'Balance',
@@ -268,35 +242,40 @@ class BalanceDisplay {
                   ),
                 ),
               ),
-              StateContainer.of(context).wallet != null && StateContainer.of(context).wallet.accountBalance != null &&
-              StateContainer.of(context).wallet.accountBalance.uco != null && 
-              StateContainer.of(context).wallet.accountBalance.uco > 0 ?
-              SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 175.0, top: 90.0),
-                  child: Container(
-                    height: 36,
-                    width: 36,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        Sheets.showAppHeightNineSheet(
-                            context: context,
-                            widget: TransferUcoSheet(
-                                contactsRef:
-                                    StateContainer.of(context).contactsRef,
-                                title: AppLocalization.of(context).transferUCO,
-                                localCurrency:
-                                    StateContainer.of(context).curCurrency));
-                      },
-                      child: buildIconWidget(
-                          context, 'assets/icons/send.png', 30, 30),
-                    ),
-                  ),
-                ),
-              ) : const SizedBox(),
+              StateContainer.of(context).wallet != null &&
+                      StateContainer.of(context).wallet.accountBalance !=
+                          null &&
+                      StateContainer.of(context).wallet.accountBalance.uco !=
+                          null &&
+                      StateContainer.of(context).wallet.accountBalance.uco > 0
+                  ? SizedBox(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 175.0, top: 90.0),
+                        child: Container(
+                          height: 36,
+                          width: 36,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: TextButton(
+                            onPressed: () {
+                              Sheets.showAppHeightNineSheet(
+                                  context: context,
+                                  widget: TransferUcoSheet(
+                                      contactsRef: StateContainer.of(context)
+                                          .contactsRef,
+                                      title: AppLocalization.of(context)
+                                          .transferUCO,
+                                      localCurrency: StateContainer.of(context)
+                                          .curCurrency));
+                            },
+                            child: buildIconWidget(
+                                context, 'assets/icons/send.png', 30, 30),
+                          ),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
               SizedBox(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 5.0, top: 5.0),

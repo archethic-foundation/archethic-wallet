@@ -71,6 +71,8 @@ class StateContainerState extends State<StateContainer> {
   String receiveThreshold = BigInt.from(10).pow(24).toString();
 
   AppWallet wallet;
+  bool recentTransactionsLoading = false;
+  bool balanceLoading = false;
   String currencyLocale;
   Locale deviceLocale = const Locale('en', 'US');
   AvailableCurrency curCurrency = AvailableCurrency(AvailableCurrencyEnum.USD);
@@ -165,10 +167,6 @@ class StateContainerState extends State<StateContainer> {
         }
         wallet.history.reversed.toList();
       }
-
-      setState(() {
-        wallet.recentTransactionsLoading = false;
-      });
     });
 
     _priceEventSub = EventTaxiImpl.singleton()
@@ -226,13 +224,6 @@ class StateContainerState extends State<StateContainer> {
     });
   }
 
-  // Update the global wallet instance
-  Future<void> updateWallet({Account account, int page}) async {
-    setState(() {
-      requestUpdate(account, page);
-    });
-  }
-
   // Change language
   void updateLanguage(LanguageSetting language) {
     setState(() {
@@ -280,9 +271,6 @@ class StateContainerState extends State<StateContainer> {
   }
 
   Future<void> requestUpdateRecentTransactions(int page) async {
-    setState(() {
-      wallet.recentTransactionsLoading = true;
-    });
     final List<RecentTransaction> recentTransactions = await sl
         .get<AppService>()
         .getRecentTransactions(
@@ -349,11 +337,24 @@ class StateContainerState extends State<StateContainer> {
     });
   }
 
-  Future<void> requestUpdate(Account account, int page) async {
+  Future<void> requestUpdate({Account account, int page}) async {
     await requestUpdateLastAddress(account);
+    setState(() {
+      recentTransactionsLoading = true;
+      balanceLoading = true;
+    });
     await requestUpdateBalance();
+    setState(() {
+      balanceLoading = false;
+    });
     await requestUpdatePrice();
+    setState(() {
+      recentTransactionsLoading = true;
+    });
     await requestUpdateRecentTransactions(page);
+    setState(() {
+      recentTransactionsLoading = false;
+    });
     await requestUpdateCoinsChart();
   }
 
