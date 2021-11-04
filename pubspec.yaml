@@ -10,7 +10,7 @@ environment:
 
 dependencies:
   # ArchEthic dart library for Flutter based on Official ArchEthic Javascript library for Node and Browser
-  archethic_lib_dart: 
+  archethic_lib_dart:
     git:
       url: https://github.com/archethic-foundation/libdart.git
       ref: master
@@ -23,7 +23,7 @@ dependencies:
 
   # Dart implementation of Bitcoin BIP39 Mnemonic code for generating deterministic keys
   bip39: ^1.0.6
-  
+
   # Utilities for converting between data representations. Provides a number of Sink, Codec, Decoder, and Encoder types
   convert: ^3.0.1
 
@@ -46,7 +46,7 @@ dependencies:
 
   # Flutter Secure Storage provides API to store data in secure storage. Keychain is used in iOS, KeyStore based solution is used in Android
   flutter_secure_storage: ^5.0.0-beta.5
- 
+
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files
   flutter_svg: ^0.23.0+1
 
@@ -55,7 +55,7 @@ dependencies:
 
   # The Font Awesome Icon pack available as set of Flutter Icons.
   font_awesome_flutter: ^9.1.0
-  
+
   # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
   get_it: ^7.2.0
 
@@ -70,8 +70,8 @@ dependencies:
   infinite_scroll_pagination: ^3.1.0
 
   # Localization
-  intl: ^0.17.0 
-  
+  intl: ^0.17.0
+
   # Flutter plugin for Android and iOS devices to allow local authentication via fingerprint, touch ID, face ID, passcode, pin, or pattern
   local_auth: ^1.1.8
 
@@ -86,7 +86,7 @@ dependencies:
 
   # Quiver is a set of utility libraries for Dart that makes using many Dart libraries easier and more convenient, or adds additional functionality
   quiver: ^3.0.1+1
-  
+
   # With the Flutter safe_device package, you can easily implement security steps such as Jailbroken, root, emulator and fake location detection.
   safe_device: ^1.0.9
 
@@ -98,7 +98,7 @@ dependencies:
 
   # A Flutter plugin that provides a WebView widget
   webview_flutter: ^2.1.2
-  
+ 
 dev_dependencies:
   # A build system for Dart code generation and modular compilation
   hive_generator: ^1.1.1
@@ -111,8 +111,6 @@ dev_dependencies:
   intl_generator: ^0.2.1
   # Automatically generate code for converting to and from JSON by annotating Dart classes.
   json_serializable: ^6.0.1
-
-
 
 flutter_icons:
   android: true
@@ -149,5 +147,3 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
-  
