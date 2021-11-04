@@ -406,7 +406,7 @@ class AppLocalization {
 
   String get logoutDetail {
     return Intl.message(
-        'Logging out will remove all ArchEthic Wallet-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again',
+        'Logging out will remove all ARCHEthic Wallet-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again',
         desc: 'settings_logout_alert_message',
         name: 'logoutDetail');
   }

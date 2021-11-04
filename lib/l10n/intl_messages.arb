@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2021-10-30T10:41:39.343587",
+  "@@last_modified": "2021-11-04T21:43:02.965835",
   "welcomeText": "Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "description": "",
@@ -539,7 +539,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "logoutDetail": "Logging out will remove all ArchEthic Wallet-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again",
+  "logoutDetail": "Logging out will remove all ARCHEthic Wallet-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again",
   "@logoutDetail": {
     "description": "settings_logout_alert_message",
     "type": "text",

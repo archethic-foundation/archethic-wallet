@@ -69,7 +69,7 @@ class _AppState extends State<App> {
       backgroundColor: StateContainer.of(context).curTheme.background,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'ArchEthic Wallet',
+        title: 'ARCHEthic Wallet',
         theme: ThemeData(
           dialogBackgroundColor:
               StateContainer.of(context).curTheme.backgroundDark,

@@ -1,4 +1,4 @@
-# ArchEthic Wallet
+# ARCHEthic Wallet
 
 WIP
 
