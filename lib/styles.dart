@@ -478,7 +478,7 @@ class AppFontSizes {
 }
 
 bool smallScreen(BuildContext context) {
-  if (MediaQuery.of(context).size.height < 667)
+  if (MediaQuery.of(context).size.height < 800)
     return true;
   else
     return false;
