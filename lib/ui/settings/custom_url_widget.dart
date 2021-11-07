@@ -1,4 +1,4 @@
-// @dart=2.9
+// ignore_for_file: must_be_immutable
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -16,29 +16,27 @@ import 'package:archethic_mobile_wallet/ui/widgets/app_text_field.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 class CustomUrl extends StatefulWidget {
-  CustomUrl(this.tokensListController, this.tokensListOpen);
+  CustomUrl(this.customUrlController, this.customUrlOpen);
 
-  final AnimationController tokensListController;
-  bool tokensListOpen;
+  final AnimationController customUrlController;
+  bool customUrlOpen;
 
   @override
   _CustomUrlState createState() => _CustomUrlState();
 }
 
 class _CustomUrlState extends State<CustomUrl> {
-  FocusNode _endpointFocusNode;
-  TextEditingController _endpointController;
-  bool useCustomEndpoint;
+  FocusNode? _endpointFocusNode;
+  TextEditingController? _endpointController;
 
-  String _endpointHint = '';
   String _endpointValidationText = '';
 
   Future<void> initControllerText() async {
-    _endpointController.text = await sl.get<SharedPrefsUtil>().getEndpoint();
+    _endpointController!.text = await sl.get<SharedPrefsUtil>().getEndpoint();
   }
 
   Future<void> updateEndpoint() async {
-    await sl.get<SharedPrefsUtil>().setEndpoint(_endpointController.text);
+    await sl.get<SharedPrefsUtil>().setEndpoint(_endpointController!.text);
     await setupServiceLocator();
     setState(() {});
   }
@@ -46,24 +44,11 @@ class _CustomUrlState extends State<CustomUrl> {
   @override
   void initState() {
     super.initState();
-    useCustomEndpoint = false;
 
     _endpointFocusNode = FocusNode();
     _endpointController = TextEditingController();
 
     initControllerText();
-
-    _endpointFocusNode.addListener(() {
-      if (_endpointFocusNode.hasFocus) {
-        setState(() {
-          _endpointHint = null;
-        });
-      } else {
-        setState(() {
-          _endpointHint = '';
-        });
-      }
-    });
   }
 
   @override
@@ -74,7 +59,7 @@ class _CustomUrlState extends State<CustomUrl> {
         color: StateContainer.of(context).curTheme.backgroundDark,
         boxShadow: <BoxShadow>[
           BoxShadow(
-              color: StateContainer.of(context).curTheme.overlay30,
+              color: StateContainer.of(context).curTheme.overlay30!,
               offset: const Offset(-5, 0),
               blurRadius: 20),
         ],
@@ -100,18 +85,17 @@ class _CustomUrlState extends State<CustomUrl> {
                       child: TextButton(
                           onPressed: () {
                             setState(() {
-                              widget.tokensListOpen = false;
+                              widget.customUrlOpen = false;
                             });
-                            widget.tokensListController.reverse();
+                            widget.customUrlController.reverse();
                           },
                           child: FaIcon(FontAwesomeIcons.chevronLeft,
                               color:
                                   StateContainer.of(context).curTheme.primary,
                               size: 24)),
                     ),
-                    // Header Text
                     Text(
-                      AppLocalization.of(context).customUrlHeader,
+                      AppLocalization.of(context)!.customUrlHeader,
                       style: AppStyles.textStyleSize28W700Primary(context),
                     ),
                   ]),
@@ -163,7 +147,7 @@ class _CustomUrlState extends State<CustomUrl> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              AppLocalization.of(context).enterEndpoint,
+              AppLocalization.of(context)!.enterEndpoint,
               style: AppStyles.textStyleSize16W200Primary(context),
             ),
           ],
@@ -181,7 +165,6 @@ class _CustomUrlState extends State<CustomUrl> {
           ],
           onChanged: (String text) {
             updateEndpoint();
-            // Always reset the error message to be less annoying
             setState(() {
               _endpointValidationText = '';
             });
@@ -189,9 +172,7 @@ class _CustomUrlState extends State<CustomUrl> {
           textInputAction: TextInputAction.next,
           maxLines: null,
           autocorrect: false,
-          hintText: _endpointHint == null
-              ? ''
-              : AppLocalization.of(context).enterEndpoint,
+          hintText: AppLocalization.of(context)!.enterEndpoint,
           keyboardType: TextInputType.multiline,
           textAlign: TextAlign.left,
           onSubmitted: (String text) {

@@ -11,6 +11,7 @@ import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/address.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 
+// ignore: avoid_classes_with_only_static_members
 class NftListWidget {
   static Widget buildNftList(BuildContext context) {
     return StateContainer.of(context).wallet == null ||
@@ -37,7 +38,7 @@ class NftListWidget {
                         child: ListView.builder(
                           padding: const EdgeInsets.symmetric(vertical: 20),
                           itemCount: StateContainer.of(context)
-                              .wallet
+                              .wallet!
                               .accountBalance
                               .nft!
                               .length,
@@ -45,7 +46,7 @@ class NftListWidget {
                             return displayNftDetail(
                                 context,
                                 StateContainer.of(context)
-                                    .wallet
+                                    .wallet!
                                     .accountBalance
                                     .nft![index]);
                           },

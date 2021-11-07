@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -15,6 +13,7 @@ import 'package:archethic_mobile_wallet/ui/transfer/transfer_uco_sheet.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 
+// ignore: avoid_classes_with_only_static_members
 class BalanceDisplay {
   static Widget buildBalanceUCODisplay(
       BuildContext context, Animation<double> _opacityAnimation) {
@@ -35,7 +34,7 @@ class BalanceDisplay {
                       BoxShadow(
                         color: StateContainer.of(context)
                             .curTheme
-                            .backgroundDarkest,
+                            .backgroundDarkest!,
                         blurRadius: 5.0,
                         spreadRadius: 0.0,
                         offset: const Offset(
@@ -80,7 +79,7 @@ class BalanceDisplay {
                                 constraints: BoxConstraints(
                                     maxWidth:
                                         MediaQuery.of(context).size.width -
-                                            205),
+                                            225),
                                 child: Opacity(
                                   opacity: _opacityAnimation.value,
                                   child: Container(
@@ -162,7 +161,7 @@ class BalanceDisplay {
                       BoxShadow(
                         color: StateContainer.of(context)
                             .curTheme
-                            .backgroundDarkest,
+                            .backgroundDarkest!,
                         blurRadius: 5.0,
                         spreadRadius: 0.0,
                         offset: const Offset(
@@ -178,11 +177,11 @@ class BalanceDisplay {
                       children: <Widget>[
                         Text(
                             StateContainer.of(context)
-                                .wallet
+                                .wallet!
                                 .getLocalCurrencyPrice(
                                     StateContainer.of(context).curCurrency,
                                     locale: StateContainer.of(context)
-                                        .currencyLocale),
+                                        .currencyLocale!),
                             textAlign: TextAlign.center,
                             style:
                                 AppStyles.textStyleSize14W600Text60(context)),
@@ -197,14 +196,14 @@ class BalanceDisplay {
                                 constraints: BoxConstraints(
                                     maxWidth:
                                         MediaQuery.of(context).size.width -
-                                            205),
+                                            225),
                                 child: AutoSizeText.rich(
                                   TextSpan(
                                     children: <TextSpan>[
                                       // Main balance text
                                       TextSpan(
                                         text: StateContainer.of(context)
-                                                .wallet
+                                                .wallet!
                                                 .getAccountBalanceUCODisplay() +
                                             ' UCO',
                                         style: AppStyles
@@ -231,7 +230,7 @@ class BalanceDisplay {
                                     .curTheme
                                     .primary60,
                                 size: 14),
-                            Text(StateContainer.of(context).wallet.btcPrice,
+                            Text(StateContainer.of(context).wallet!.btcPrice,
                                 textAlign: TextAlign.center,
                                 style: AppStyles.textStyleSize14W600Text60(
                                     context)),
@@ -242,40 +241,39 @@ class BalanceDisplay {
                   ),
                 ),
               ),
-              StateContainer.of(context).wallet != null &&
-                      StateContainer.of(context).wallet.accountBalance !=
-                          null &&
-                      StateContainer.of(context).wallet.accountBalance.uco !=
-                          null &&
-                      StateContainer.of(context).wallet.accountBalance.uco > 0
-                  ? SizedBox(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 175.0, top: 90.0),
-                        child: Container(
-                          height: 36,
-                          width: 36,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: TextButton(
-                            onPressed: () {
-                              Sheets.showAppHeightNineSheet(
-                                  context: context,
-                                  widget: TransferUcoSheet(
-                                      contactsRef: StateContainer.of(context)
-                                          .contactsRef,
-                                      title: AppLocalization.of(context)
-                                          .transferUCO,
-                                      localCurrency: StateContainer.of(context)
-                                          .curCurrency));
-                            },
-                            child: buildIconWidget(
-                                context, 'assets/icons/send.png', 30, 30),
-                          ),
-                        ),
+              if (StateContainer.of(context).wallet != null &&
+                  StateContainer.of(context).wallet!.accountBalance.uco !=
+                      null &&
+                  StateContainer.of(context).wallet!.accountBalance.uco! > 0)
+                SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 175.0, top: 90.0),
+                    child: Container(
+                      height: 36,
+                      width: 36,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
                       ),
-                    )
-                  : const SizedBox(),
+                      child: TextButton(
+                        onPressed: () {
+                          Sheets.showAppHeightNineSheet(
+                              context: context,
+                              widget: TransferUcoSheet(
+                                  contactsRef:
+                                      StateContainer.of(context).contactsRef,
+                                  title:
+                                      AppLocalization.of(context)!.transferUCO,
+                                  localCurrency:
+                                      StateContainer.of(context).curCurrency));
+                        },
+                        child: buildIconWidget(
+                            context, 'assets/icons/send.png', 30, 30),
+                      ),
+                    ),
+                  ),
+                )
+              else
+                const SizedBox(),
               SizedBox(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 5.0, top: 5.0),

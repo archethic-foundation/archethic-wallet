@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' show Balance;
 import 'package:decimal/decimal.dart';
@@ -13,11 +11,11 @@ import 'package:archethic_mobile_wallet/util/numberutil.dart';
 /// Main wallet object that's passed around the app via state
 class AppWallet {
   AppWallet(
-      {String address,
-      Balance accountBalance,
-      String localCurrencyPrice,
-      String btcPrice,
-      List<RecentTransaction> history}) {
+      {String? address,
+      Balance? accountBalance,
+      String? localCurrencyPrice,
+      String? btcPrice,
+      List<RecentTransaction>? history}) {
     _address = address;
     _accountBalance = accountBalance ?? Balance(uco: 0, nft: null);
     _localCurrencyPrice = localCurrencyPrice ?? '0';
@@ -25,19 +23,19 @@ class AppWallet {
     _history = history ?? List<RecentTransaction>.empty(growable: true);
   }
 
-  String _address;
-  Balance _accountBalance;
-  String _localCurrencyPrice;
-  String _btcPrice;
-  List<RecentTransaction> _history;
+  String? _address;
+  Balance? _accountBalance;
+  String? _localCurrencyPrice;
+  String? _btcPrice;
+  List<RecentTransaction>? _history;
 
-  String get address => _address;
+  String get address => _address!;
 
   set address(String address) {
     _address = address;
   }
 
-  Balance get accountBalance => _accountBalance;
+  Balance get accountBalance => _accountBalance!;
 
   set accountBalance(Balance accountBalance) {
     _accountBalance = accountBalance;
@@ -45,28 +43,28 @@ class AppWallet {
 
   // Get pretty account balance version
   String getAccountBalanceUCODisplay() {
-    if (accountBalance == null || accountBalance.uco == null) {
+    if (accountBalance.uco == null) {
       return '0';
     }
-    return NumberUtil.getRawAsUsableString(_accountBalance.uco.toString());
+    return NumberUtil.getRawAsUsableString(_accountBalance!.uco.toString());
   }
 
   // Get pretty account balance version
   String getAccountBalanceMoinsFeesDisplay(double estimationFees) {
-    if (accountBalance == null) {
+    if (accountBalance.uco == null) {
       return '0';
     }
-    final double value = _accountBalance.uco - estimationFees;
+    final double value = _accountBalance!.uco! - estimationFees;
     return NumberUtil.getRawAsUsableString(value.toString());
   }
 
   String getLocalCurrencyPrice(AvailableCurrency currency,
       {String locale = 'en_US'}) {
-    final Decimal converted = Decimal.parse(_localCurrencyPrice) *
+    final Decimal converted = Decimal.parse(_localCurrencyPrice!) *
         NumberUtil.getRawAsUsableDecimal(
-            _accountBalance == null || _accountBalance.uco == null
+            _accountBalance == null || _accountBalance!.uco == null
                 ? '0'
-                : _accountBalance.uco.toString());
+                : _accountBalance!.uco.toString());
     return NumberFormat.currency(
             locale: locale, symbol: currency.getCurrencySymbol())
         .format(converted.toDouble());
@@ -75,8 +73,8 @@ class AppWallet {
   String getLocalCurrencyPriceMoinsFees(
       AvailableCurrency currency, double estimationFees,
       {String locale = 'en_US'}) {
-    final double value = _accountBalance.uco - estimationFees;
-    final Decimal converted = Decimal.parse(_localCurrencyPrice) *
+    final double value = _accountBalance!.uco! - estimationFees;
+    final Decimal converted = Decimal.parse(_localCurrencyPrice!) *
         NumberUtil.getRawAsUsableDecimal(value.toString());
     return NumberFormat.currency(
             locale: locale,
@@ -90,13 +88,14 @@ class AppWallet {
   }
 
   String get localCurrencyConversion {
-    return _localCurrencyPrice;
+    return _localCurrencyPrice!;
   }
 
   String get btcPrice {
-    final Decimal converted = Decimal.parse(_btcPrice) *
-        NumberUtil.getRawAsUsableDecimal(
-            _accountBalance.uco == null ? '0' : _accountBalance.uco.toString());
+    final Decimal converted = Decimal.parse(_btcPrice!) *
+        NumberUtil.getRawAsUsableDecimal(_accountBalance!.uco == null
+            ? '0'
+            : _accountBalance!.uco.toString());
     // Show 4 decimal places for BTC price if its >= 0.0001 BTC, otherwise 6 decimals
     if (converted >= Decimal.parse('0.0001')) {
       return NumberFormat('#,##0.0000', 'en_US').format(converted.toDouble());
@@ -110,7 +109,7 @@ class AppWallet {
     _btcPrice = value;
   }
 
-  List<RecentTransaction> get history => _history;
+  List<RecentTransaction> get history => _history!;
 
   set history(List<RecentTransaction> value) {
     _history = value;

@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -23,16 +21,16 @@ import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
 import 'package:archethic_mobile_wallet/util/app_ffi/keys/mnemonics.dart';
 
 class IntroBackupSeedPage extends StatefulWidget {
-  final String encryptedSeed;
-
   const IntroBackupSeedPage({this.encryptedSeed}) : super();
+
+  final String? encryptedSeed;
 
   @override
   _IntroBackupSeedState createState() => _IntroBackupSeedState();
 }
 
 class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
-  List<String> _mnemonic;
+  List<String>? _mnemonic;
 
   @override
   void initState() {
@@ -60,8 +58,8 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: <Color>[
-                  StateContainer.of(context).curTheme.backgroundDark,
-                  StateContainer.of(context).curTheme.background
+                  StateContainer.of(context).curTheme.backgroundDark!,
+                  StateContainer.of(context).curTheme.background!
                 ],
               ),
             ),
@@ -135,7 +133,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                             ),
                           ),
                           if (_mnemonic != null)
-                            MnemonicDisplay(wordList: _mnemonic)
+                            MnemonicDisplay(wordList: _mnemonic!)
                           else
                             const Text('')
                         ],

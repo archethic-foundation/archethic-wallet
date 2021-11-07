@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:math';
 
@@ -39,7 +37,7 @@ class PinScreen extends StatefulWidget {
   final PinOverlayType type;
   final String expectedPin;
   final String description;
-  final Color pinScreenBackgroundColor;
+  final Color? pinScreenBackgroundColor;
 
   @override
   _PinScreenState createState() => _PinScreenState();
@@ -56,18 +54,18 @@ class _PinScreenState extends State<PinScreen>
   String pinCreateTitle = '';
 
   // Stateful data
-  List<IconData> _dotStates;
-  String _pin;
-  String _pinConfirmed;
-  bool
+  List<IconData>? _dotStates;
+  String? _pin;
+  String? _pinConfirmed;
+  bool?
       _awaitingConfirmation; // true if pin has been entered once, false if not entered once
-  String _header;
+  String? _header;
   int _failedAttempts = 0;
   final List<int> _listPinNumber = <int>[1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
   // Invalid animation
-  AnimationController _controller;
-  Animation<double> _animation;
+  AnimationController? _controller;
+  Animation<double>? _animation;
 
   @override
   void initState() {
@@ -99,8 +97,8 @@ class _PinScreenState extends State<PinScreen>
     // Set animation
     _controller = AnimationController(
         duration: const Duration(milliseconds: 350), vsync: this);
-    final Animation curve =
-        CurvedAnimation(parent: _controller, curve: ShakeCurve());
+    final Animation<double> curve =
+        CurvedAnimation(parent: _controller!, curve: ShakeCurve());
     _animation = Tween<double>(begin: 0.0, end: 25.0).animate(curve)
       ..addStatusListener((AnimationStatus status) {
         if (status == AnimationStatus.completed) {
@@ -109,7 +107,7 @@ class _PinScreenState extends State<PinScreen>
               _failedAttempts++;
               if (_failedAttempts >= MAX_ATTEMPTS) {
                 setState(() {
-                  _controller.value = 0;
+                  _controller!.value = 0;
                 });
                 sl.get<SharedPrefsUtil>().updateLockDate().then((_) {
                   Navigator.of(context).pushNamedAndRemoveUntil(
@@ -119,10 +117,10 @@ class _PinScreenState extends State<PinScreen>
               } else {
                 setState(() {
                   _pin = '';
-                  _header = AppLocalization.of(context).pinInvalid;
+                  _header = AppLocalization.of(context)!.pinInvalid;
                   _dotStates =
                       List<IconData>.filled(_pinLength, FontAwesomeIcons.minus);
-                  _controller.value = 0;
+                  _controller!.value = 0;
                 });
               }
             });
@@ -133,8 +131,8 @@ class _PinScreenState extends State<PinScreen>
                   List<IconData>.filled(_pinLength, FontAwesomeIcons.minus);
               _pin = '';
               _pinConfirmed = '';
-              _header = AppLocalization.of(context).pinConfirmError;
-              _controller.value = 0;
+              _header = AppLocalization.of(context)!.pinConfirmError;
+              _controller!.value = 0;
             });
           }
         }
@@ -148,54 +146,55 @@ class _PinScreenState extends State<PinScreen>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
   /// Set next character in the pin set
   /// return true if all characters entered
   bool _setCharacter(String character) {
-    if (_awaitingConfirmation) {
+    if (_awaitingConfirmation!) {
       setState(() {
-        _pinConfirmed = _pinConfirmed + character;
+        _pinConfirmed = _pinConfirmed! + character;
       });
     } else {
       setState(() {
-        _pin = _pin + character;
+        _pin = _pin! + character;
       });
     }
-    for (int i = 0; i < _dotStates.length; i++) {
-      if (_dotStates[i] == FontAwesomeIcons.minus) {
+    for (int i = 0; i < _dotStates!.length; i++) {
+      if (_dotStates![i] == FontAwesomeIcons.minus) {
         setState(() {
-          _dotStates[i] = FontAwesomeIcons.solidCircle;
+          _dotStates![i] = FontAwesomeIcons.solidCircle;
         });
         break;
       }
     }
-    if (_dotStates.last == FontAwesomeIcons.solidCircle) {
+    if (_dotStates!.last == FontAwesomeIcons.solidCircle) {
       return true;
     }
     return false;
   }
 
   void _backSpace() {
-    if (_dotStates[0] != FontAwesomeIcons.minus) {
-      int lastFilledIndex;
-      for (int i = 0; i < _dotStates.length; i++) {
-        if (_dotStates[i] == FontAwesomeIcons.solidCircle) {
-          if (i == _dotStates.length ||
-              _dotStates[i + 1] == FontAwesomeIcons.minus) {
+    if (_dotStates![0] != FontAwesomeIcons.minus) {
+      int lastFilledIndex = 0;
+      for (int i = 0; i < _dotStates!.length; i++) {
+        if (_dotStates![i] == FontAwesomeIcons.solidCircle) {
+          if (i == _dotStates!.length ||
+              _dotStates![i + 1] == FontAwesomeIcons.minus) {
             lastFilledIndex = i;
             break;
           }
         }
       }
       setState(() {
-        _dotStates[lastFilledIndex] = FontAwesomeIcons.minus;
-        if (_awaitingConfirmation) {
-          _pinConfirmed = _pinConfirmed.substring(0, _pinConfirmed.length - 1);
+        _dotStates![lastFilledIndex] = FontAwesomeIcons.minus;
+        if (_awaitingConfirmation!) {
+          _pinConfirmed =
+              _pinConfirmed!.substring(0, _pinConfirmed!.length - 1);
         } else {
-          _pin = _pin.substring(0, _pin.length - 1);
+          _pin = _pin!.substring(0, _pin!.length - 1);
         }
       });
     }
@@ -211,8 +210,8 @@ class _PinScreenState extends State<PinScreen>
           splashColor: StateContainer.of(context).curTheme.primary30,
           onTap: () {},
           onTapDown: (TapDownDetails details) {
-            if (_controller.status == AnimationStatus.forward ||
-                _controller.status == AnimationStatus.reverse) {
+            if (_controller!.status == AnimationStatus.forward ||
+                _controller!.status == AnimationStatus.reverse) {
               return;
             }
             if (_setCharacter(buttonText)) {
@@ -222,20 +221,20 @@ class _PinScreenState extends State<PinScreen>
                   // Pin is not what was expected
                   if (_pin != widget.expectedPin) {
                     sl.get<HapticUtil>().feedback(FeedbackType.error);
-                    _controller.forward();
+                    _controller!.forward();
                   } else {
                     sl.get<SharedPrefsUtil>().resetLockAttempts().then((_) {
                       Navigator.of(context).pop(true);
                     });
                   }
                 } else {
-                  if (!_awaitingConfirmation) {
+                  if (!_awaitingConfirmation!) {
                     // Switch to confirm pin
                     setState(() {
                       _awaitingConfirmation = true;
                       _dotStates = List<IconData>.filled(
                           _pinLength, FontAwesomeIcons.minus);
-                      _header = AppLocalization.of(context).pinConfirmTitle;
+                      _header = AppLocalization.of(context)!.pinConfirmTitle;
                     });
                   } else {
                     // First and second pins match
@@ -243,7 +242,7 @@ class _PinScreenState extends State<PinScreen>
                       Navigator.of(context).pop(_pin);
                     } else {
                       sl.get<HapticUtil>().feedback(FeedbackType.error);
-                      _controller.forward();
+                      _controller!.forward();
                     }
                   }
                 }
@@ -255,7 +254,7 @@ class _PinScreenState extends State<PinScreen>
               shape: BoxShape.circle,
               boxShadow: <BoxShadow>[
                 BoxShadow(
-                    color: StateContainer.of(context).curTheme.background40,
+                    color: StateContainer.of(context).curTheme.background40!,
                     blurRadius: 15,
                     spreadRadius: -15),
               ],
@@ -273,7 +272,7 @@ class _PinScreenState extends State<PinScreen>
   List<Widget> _buildPinDots() {
     final List<Widget> ret = List<Widget>.empty(growable: true);
     for (int i = 0; i < _pinLength; i++) {
-      ret.add(FaIcon(_dotStates[i],
+      ret.add(FaIcon(_dotStates![i],
           color: StateContainer.of(context).curTheme.primary, size: 15.0));
     }
     return ret;
@@ -283,7 +282,7 @@ class _PinScreenState extends State<PinScreen>
   Widget build(BuildContext context) {
     if (pinEnterTitle.isEmpty) {
       setState(() {
-        pinEnterTitle = AppLocalization.of(context).pinEnterTitle;
+        pinEnterTitle = AppLocalization.of(context)!.pinEnterTitle;
         if (widget.type == PinOverlayType.ENTER_PIN) {
           _header = pinEnterTitle;
         }
@@ -291,7 +290,7 @@ class _PinScreenState extends State<PinScreen>
     }
     if (pinCreateTitle.isEmpty) {
       setState(() {
-        pinCreateTitle = AppLocalization.of(context).pinCreateTitle;
+        pinCreateTitle = AppLocalization.of(context)!.pinCreateTitle;
         if (widget.type == PinOverlayType.NEW_PIN) {
           _header = pinCreateTitle;
         }
@@ -306,8 +305,8 @@ class _PinScreenState extends State<PinScreen>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: <Color>[
-              StateContainer.of(context).curTheme.backgroundDark,
-              StateContainer.of(context).curTheme.background
+              StateContainer.of(context).curTheme.backgroundDark!,
+              StateContainer.of(context).curTheme.background!
             ],
           ),
         ),
@@ -328,7 +327,7 @@ class _PinScreenState extends State<PinScreen>
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 40),
                       child: AutoSizeText(
-                        _header,
+                        _header!,
                         style: AppStyles.textStyleSize16W400Primary(context),
                         textAlign: TextAlign.center,
                         maxLines: 1,
@@ -349,9 +348,9 @@ class _PinScreenState extends State<PinScreen>
                     Container(
                       margin: EdgeInsetsDirectional.only(
                         start: MediaQuery.of(context).size.width * 0.25 +
-                            _animation.value,
+                            _animation!.value,
                         end: MediaQuery.of(context).size.width * 0.25 -
-                            _animation.value,
+                            _animation!.value,
                         top: MediaQuery.of(context).size.height * 0.02,
                       ),
                       child: Row(
@@ -471,7 +470,7 @@ class _PinScreenState extends State<PinScreen>
                                         BoxShadow(
                                             color: StateContainer.of(context)
                                                 .curTheme
-                                                .background40,
+                                                .background40!,
                                             blurRadius: 15,
                                             spreadRadius: -15),
                                       ],

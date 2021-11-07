@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:typed_data';
 
@@ -16,12 +14,12 @@ import 'package:archethic_mobile_wallet/util/helpers.dart';
 class Sha256KDF extends KDF {
   /// Gets the key and iv
   @override
-  KeyIV deriveKey(String password, {Uint8List salt}) {
-    final Uint8List pwBytes = AppHelpers.stringToBytesUtf8(password);
+  KeyIV deriveKey(String password, {Uint8List? salt}) {
+    final Uint8List? pwBytes = AppHelpers.stringToBytesUtf8(password);
     final Uint8List saltBytes = salt ?? Uint8List(1);
 
     // Key = sha256 (password + salt);
-    final Uint8List key = Sha.sha256(<Uint8List>[pwBytes, saltBytes]);
+    final Uint8List key = Sha.sha256(<Uint8List>[pwBytes!, saltBytes]);
     // iv = sha256 (KEY + password + salt);
     final Uint8List iv =
         Sha.sha256(<Uint8List>[key, pwBytes, saltBytes]).sublist(0, 16);

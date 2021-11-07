@@ -122,7 +122,8 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
         if (_rawAmount != null) {
           setState(() {
             _sendAmountController!.text =
-                NumberUtil.getRawAsUsableString(_rawAmount).replaceAll(',', '');
+                NumberUtil.getRawAsUsableString(_rawAmount!)
+                    .replaceAll(',', '');
             _rawAmount = null;
           });
         }
@@ -184,7 +185,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     // Set quick send amount
     if (quickSendAmount != null) {
       _sendAmountController!.text =
-          NumberUtil.getRawAsUsableString(quickSendAmount).replaceAll(',', '');
+          NumberUtil.getRawAsUsableString(quickSendAmount!).replaceAll(',', '');
     }
   }
 
@@ -294,16 +295,16 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                             TextSpan(
                                                 text: _localCurrencyMode
                                                     ? StateContainer.of(context)
-                                                        .wallet
+                                                        .wallet!
                                                         .getLocalCurrencyPrice(
                                                             StateContainer.of(
                                                                     context)
                                                                 .curCurrency,
                                                             locale: StateContainer
                                                                     .of(context)
-                                                                .currencyLocale)
+                                                                .currencyLocale!)
                                                     : StateContainer.of(context)
-                                                        .wallet
+                                                        .wallet!
                                                         .getAccountBalanceUCODisplay(),
                                                 style: AppStyles
                                                     .textStyleSize14W700Primary(
@@ -600,7 +601,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                           AppLocalization.of(context)!.scanQrCode,
                           Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () async {
                         UIUtil.cancelLockEvent();
-                        final String scanResult = await UserDataUtil.getQRData(
+                        final String? scanResult = await UserDataUtil.getQRData(
                             DataType.ADDRESS, context);
                         if (scanResult == null) {
                           UIUtil.showSnackbar(
@@ -647,62 +648,56 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                             }
                           }
 
-                          // If amount is present, fill it and go to SendConfirm
-                          if (address.amount != null) {
-                            bool hasError = false;
-                            final BigInt amountBigInt =
-                                BigInt.tryParse(address.amount)!;
-                            if (amountBigInt != null &&
-                                amountBigInt < BigInt.from(10).pow(24)) {
-                              hasError = true;
-                              UIUtil.showSnackbar(
-                                  AppLocalization.of(context)!
-                                      .minimumSend
-                                      .replaceAll('%1', '0.000001'),
-                                  context);
-                            } else if (_localCurrencyMode && mounted) {
-                              toggleLocalCurrency();
-                              _sendAmountController!.text =
-                                  NumberUtil.getRawAsUsableString(
-                                      address.amount);
-                            } else if (mounted) {
-                              setState(() {
-                                _rawAmount = address.amount;
-                                // If raw amount has more precision than we support show a special indicator
-                                if (NumberUtil.getRawAsUsableString(_rawAmount)
-                                        .replaceAll(',', '') ==
-                                    NumberUtil.getRawAsUsableDecimal(_rawAmount)
-                                        .toString()) {
-                                  _sendAmountController!.text =
-                                      NumberUtil.getRawAsUsableString(
-                                              _rawAmount)
-                                          .replaceAll(',', '');
-                                } else {
-                                  _sendAmountController!
-                                      .text = NumberUtil.truncateDecimal(
-                                              NumberUtil.getRawAsUsableDecimal(
-                                                  address.amount),
-                                              digits: 6)
-                                          .toStringAsFixed(6) +
-                                      '~';
-                                }
-                              });
-                              _sendAddressFocusNode!.unfocus();
-                            }
+                          bool hasError = false;
+                          final BigInt amountBigInt =
+                              BigInt.tryParse(address.amount)!;
+                          if (amountBigInt < BigInt.from(10).pow(24)) {
+                            hasError = true;
+                            UIUtil.showSnackbar(
+                                AppLocalization.of(context)!
+                                    .minimumSend
+                                    .replaceAll('%1', '0.000001'),
+                                context);
+                          } else if (_localCurrencyMode && mounted) {
+                            toggleLocalCurrency();
+                            _sendAmountController!.text =
+                                NumberUtil.getRawAsUsableString(address.amount);
+                          } else if (mounted) {
+                            setState(() {
+                              _rawAmount = address.amount;
+                              // If raw amount has more precision than we support show a special indicator
+                              if (NumberUtil.getRawAsUsableString(_rawAmount!)
+                                      .replaceAll(',', '') ==
+                                  NumberUtil.getRawAsUsableDecimal(_rawAmount!)
+                                      .toString()) {
+                                _sendAmountController!.text =
+                                    NumberUtil.getRawAsUsableString(_rawAmount!)
+                                        .replaceAll(',', '');
+                              } else {
+                                _sendAmountController!
+                                    .text = NumberUtil.truncateDecimal(
+                                            NumberUtil.getRawAsUsableDecimal(
+                                                address.amount),
+                                            digits: 6)
+                                        .toStringAsFixed(6) +
+                                    '~';
+                              }
+                            });
+                            _sendAddressFocusNode!.unfocus();
+                          }
 
-                            if (!hasError) {
-                              // Go to confirm sheet
-                              Sheets.showAppHeightNineSheet(
-                                  context: context,
-                                  widget: TransferConfirmSheet(
-                                      ucoTransferList: ucoTransferList,
-                                      contactsRef: widget.contactsRef,
-                                      title: widget.title,
-                                      typeTransfer: 'UCO',
-                                      localCurrency: _localCurrencyMode
-                                          ? _sendAmountController!.text
-                                          : null));
-                            }
+                          if (!hasError) {
+                            // Go to confirm sheet
+                            Sheets.showAppHeightNineSheet(
+                                context: context,
+                                widget: TransferConfirmSheet(
+                                    ucoTransferList: ucoTransferList,
+                                    contactsRef: widget.contactsRef,
+                                    title: widget.title,
+                                    typeTransfer: 'UCO',
+                                    localCurrency: _localCurrencyMode
+                                        ? _sendAmountController!.text
+                                        : null));
                           }
                         }
                       })
@@ -723,7 +718,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     }
     final Decimal valueLocal = Decimal.parse(convertedAmt);
     final Decimal conversion = Decimal.parse(
-        StateContainer.of(context).wallet.localCurrencyConversion);
+        StateContainer.of(context).wallet!.localCurrencyConversion);
     return NumberUtil.truncateDecimal(valueLocal / conversion).toString();
   }
 
@@ -735,7 +730,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     }
     final Decimal valueCrypto = Decimal.parse(convertedAmt);
     final Decimal conversion = Decimal.parse(
-        StateContainer.of(context).wallet.localCurrencyConversion);
+        StateContainer.of(context).wallet!.localCurrencyConversion);
     convertedAmt =
         NumberUtil.truncateDecimal(valueCrypto * conversion, digits: 2)
             .toString();
@@ -754,7 +749,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     }
     final Decimal valueCrypto = Decimal.parse(convertedAmt);
     final Decimal conversion = Decimal.parse(
-        StateContainer.of(context).wallet.localCurrencyConversion);
+        StateContainer.of(context).wallet!.localCurrencyConversion);
     convertedAmt =
         NumberUtil.truncateDecimal(valueCrypto * conversion, digits: 5)
             .toString();
@@ -775,12 +770,12 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
 
       String balance;
       if (_localCurrencyMode) {
-        balance = StateContainer.of(context).wallet.getLocalCurrencyPrice(
+        balance = StateContainer.of(context).wallet!.getLocalCurrencyPrice(
             StateContainer.of(context).curCurrency,
-            locale: StateContainer.of(context).currencyLocale);
+            locale: StateContainer.of(context).currencyLocale!);
       } else {
         balance = StateContainer.of(context)
-            .wallet
+            .wallet!
             .getAccountBalanceUCODisplay()
             .replaceAll(r',', '');
       }
@@ -923,9 +918,9 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
           ? _convertLocalCurrencyToCrypto()
           : _rawAmount == null
               ? _sendAmountController!.text
-              : NumberUtil.getRawAsUsableString(_rawAmount);
+              : NumberUtil.getRawAsUsableString(_rawAmount!);
       final double balanceRaw =
-          StateContainer.of(context).wallet.accountBalance.uco!;
+          StateContainer.of(context).wallet!.accountBalance.uco!;
       final double sendAmount = double.tryParse(amount)!;
       if (sendAmount == null) {
         isValid = false;
@@ -1019,7 +1014,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
             final double estimationFees =
                 sl.get<AppService>().getFeesEstimation();
             _sendAmountController!.text = StateContainer.of(context)
-                .wallet
+                .wallet!
                 .getAccountBalanceMoinsFeesDisplay(estimationFees)
                 .replaceAll(r',', '');
             _sendAddressController!.selection = TextSelection.fromPosition(
@@ -1034,11 +1029,11 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                 .replaceAll('.', _localCurrencyFormat!.symbols.DECIMAL_SEP);
 
             String localAmount = StateContainer.of(context)
-                .wallet
+                .wallet!
                 .getLocalCurrencyPriceMoinsFees(
                     StateContainer.of(context).curCurrency,
-                    double.tryParse(feeString),
-                    locale: StateContainer.of(context).currencyLocale);
+                    double.tryParse(feeString)!,
+                    locale: StateContainer.of(context).currencyLocale!);
             localAmount = localAmount.replaceAll(
                 _localCurrencyFormat!.symbols.GROUP_SEP, '');
             localAmount = localAmount.replaceAll(

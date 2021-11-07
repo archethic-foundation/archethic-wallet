@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 
+// ignore: avoid_classes_with_only_static_members
 class AppStyles {
   static TextStyle textStyleSize16W200Primary(BuildContext context) {
     return TextStyle(
@@ -235,7 +236,7 @@ class AppStyles {
   }
 
   static TextStyle textStyleSize10W100Transparent(BuildContext context) {
-    return TextStyle(
+    return const TextStyle(
       fontFamily: 'Montserrat',
       color: Colors.transparent,
       fontSize: AppFontSizes.size10,
@@ -444,6 +445,7 @@ class AppStyles {
   }
 }
 
+// ignore: avoid_classes_with_only_static_members
 class AppFontSizes {
   static const double size10 = 10.0;
   static const double size12 = 12.0;

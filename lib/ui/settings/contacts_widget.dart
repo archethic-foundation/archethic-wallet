@@ -1,4 +1,4 @@
-// @dart=2.9
+// ignore_for_file: cancel_subscriptions, must_be_immutable
 
 // Dart imports:
 import 'dart:async';
@@ -37,8 +37,8 @@ class ContactsList extends StatefulWidget {
 }
 
 class _ContactsListState extends State<ContactsList> {
-  List<Contact> _contacts;
-  String documentsDirectory;
+  List<Contact>? _contacts;
+  String? documentsDirectory;
   @override
   void initState() {
     super.initState();
@@ -57,16 +57,16 @@ class _ContactsListState extends State<ContactsList> {
   @override
   void dispose() {
     if (_contactAddedSub != null) {
-      _contactAddedSub.cancel();
+      _contactAddedSub!.cancel();
     }
     if (_contactRemovedSub != null) {
-      _contactRemovedSub.cancel();
+      _contactRemovedSub!.cancel();
     }
     super.dispose();
   }
 
-  StreamSubscription<ContactAddedEvent> _contactAddedSub;
-  StreamSubscription<ContactRemovedEvent> _contactRemovedSub;
+  StreamSubscription<ContactAddedEvent>? _contactAddedSub;
+  StreamSubscription<ContactRemovedEvent>? _contactRemovedSub;
 
   void _registerBus() {
     // Contact added bus event
@@ -74,10 +74,10 @@ class _ContactsListState extends State<ContactsList> {
         .registerTo<ContactAddedEvent>()
         .listen((ContactAddedEvent event) {
       setState(() {
-        _contacts.add(event.contact);
+        _contacts!.add(event.contact!);
         //Sort by name
-        _contacts.sort((Contact a, Contact b) =>
-            a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+        _contacts!.sort((Contact a, Contact b) =>
+            a.name!.toLowerCase().compareTo(b.name!.toLowerCase()));
         StateContainer.of(context).updateContacts();
       });
       // Full update
@@ -88,7 +88,7 @@ class _ContactsListState extends State<ContactsList> {
         .registerTo<ContactRemovedEvent>()
         .listen((ContactRemovedEvent event) {
       setState(() {
-        _contacts.remove(event.contact);
+        _contacts!.remove(event.contact);
       });
     });
   }
@@ -96,16 +96,16 @@ class _ContactsListState extends State<ContactsList> {
   void _updateContacts() {
     sl.get<DBHelper>().getContacts().then((List<Contact> contacts) {
       for (Contact c in contacts) {
-        if (!_contacts.contains(c)) {
+        if (!_contacts!.contains(c)) {
           setState(() {
-            _contacts.add(c);
+            _contacts!.add(c);
           });
         }
       }
       // Re-sort list
       setState(() {
-        _contacts.sort((Contact a, Contact b) =>
-            a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+        _contacts!.sort((Contact a, Contact b) =>
+            a.name!.toLowerCase().compareTo(b.name!.toLowerCase()));
       });
     });
   }
@@ -117,7 +117,7 @@ class _ContactsListState extends State<ContactsList> {
           color: StateContainer.of(context).curTheme.backgroundDark,
           boxShadow: <BoxShadow>[
             BoxShadow(
-                color: StateContainer.of(context).curTheme.overlay30,
+                color: StateContainer.of(context).curTheme.overlay30!,
                 offset: const Offset(-5, 0),
                 blurRadius: 20),
           ],
@@ -157,7 +157,7 @@ class _ContactsListState extends State<ContactsList> {
                         ),
                         //Contacts Header Text
                         Text(
-                          AppLocalization.of(context).addressBookHeader,
+                          AppLocalization.of(context)!.addressBookHeader,
                           style: AppStyles.textStyleSize28W700Primary(context),
                         ),
                       ],
@@ -173,10 +173,10 @@ class _ContactsListState extends State<ContactsList> {
                     ListView.builder(
                       physics: const AlwaysScrollableScrollPhysics(),
                       padding: const EdgeInsets.only(top: 15.0, bottom: 15),
-                      itemCount: _contacts.length,
+                      itemCount: _contacts!.length,
                       itemBuilder: (BuildContext context, int index) {
                         // Build contact
-                        return buildSingleContact(context, _contacts[index]);
+                        return buildSingleContact(context, _contacts![index]);
                       },
                     ),
                     //List Top Gradient End
@@ -190,10 +190,10 @@ class _ContactsListState extends State<ContactsList> {
                             colors: <Color>[
                               StateContainer.of(context)
                                   .curTheme
-                                  .backgroundDark,
+                                  .backgroundDark!,
                               StateContainer.of(context)
                                   .curTheme
-                                  .backgroundDark00
+                                  .backgroundDark00!
                             ],
                             begin: const AlignmentDirectional(0.5, -1.0),
                             end: const AlignmentDirectional(0.5, 1.0),
@@ -212,10 +212,10 @@ class _ContactsListState extends State<ContactsList> {
                             colors: <Color>[
                               StateContainer.of(context)
                                   .curTheme
-                                  .backgroundDark00,
+                                  .backgroundDark00!,
                               StateContainer.of(context)
                                   .curTheme
-                                  .backgroundDark,
+                                  .backgroundDark!,
                             ],
                             begin: const AlignmentDirectional(0.5, -1.0),
                             end: const AlignmentDirectional(0.5, 1.0),
@@ -233,7 +233,7 @@ class _ContactsListState extends State<ContactsList> {
                     AppButton.buildAppButton(
                         context,
                         AppButtonType.PRIMARY,
-                        AppLocalization.of(context).addContact,
+                        AppLocalization.of(context)!.addContact,
                         Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                       Sheets.showAppHeightNineSheet(
                           context: context, widget: const AddContactSheet());
@@ -249,7 +249,7 @@ class _ContactsListState extends State<ContactsList> {
   Widget buildSingleContact(BuildContext context, Contact contact) {
     return TextButton(
       onPressed: () {
-        ContactDetailsSheet(contact, documentsDirectory)
+        ContactDetailsSheet(contact, documentsDirectory!)
             .mainBottomSheet(context);
       },
       child: Column(children: <Widget>[
@@ -274,11 +274,11 @@ class _ContactsListState extends State<ContactsList> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       //Contact name
-                      Text(contact.name,
+                      Text(contact.name!,
                           style: AppStyles.textStyleSize16W600Primary(context)),
                       //Contact address
                       Text(
-                        contact.address,
+                        contact.address!,
                         style: AppStyles.textStyleSize12W100Text60(context),
                       ),
                     ],

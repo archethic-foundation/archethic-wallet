@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:convert';
 import 'dart:typed_data';
@@ -26,7 +24,7 @@ class IntSink extends ChunkedConversionSink<List<int>> {
   IntSink(this._outSink) : _converter = const IntConverter();
 
   final IntConverter _converter;
-  // fales when this type is used
+  // fail when this type is used
   // final ChunkedConversionSink<List<int>> _outSink;
   final _outSink;
 

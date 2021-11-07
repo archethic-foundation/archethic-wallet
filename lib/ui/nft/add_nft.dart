@@ -139,7 +139,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                   ),
                   TextSpan(
                       text: StateContainer.of(context)
-                          .wallet
+                          .wallet!
                           .getAccountBalanceUCODisplay(),
                       style: AppStyles.textStyleSize14W700Primary(context)),
                   TextSpan(

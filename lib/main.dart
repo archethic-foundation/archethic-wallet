@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:async';
 import 'dart:io';
@@ -63,7 +61,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-        StateContainer.of(context).curTheme.statusBar);
+        StateContainer.of(context).curTheme.statusBar!);
     return OKToast(
       textStyle: AppStyles.textStyleSize14W700Background(context),
       backgroundColor: StateContainer.of(context).curTheme.background,
@@ -85,9 +83,8 @@ class _AppState extends State<App> {
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate
         ],
-        locale: StateContainer.of(context).curLanguage == null ||
-                StateContainer.of(context).curLanguage.language ==
-                    AvailableLanguage.DEFAULT
+        locale: StateContainer.of(context).curLanguage.language ==
+                AvailableLanguage.DEFAULT
             ? null
             : StateContainer.of(context).curLanguage.getLocale(),
         supportedLocales: const <Locale>[
@@ -177,9 +174,9 @@ class _AppState extends State<App> {
                 settings: settings,
               );
             case '/intro_backup':
-              return MaterialPageRoute(
-                builder: (_) =>
-                    IntroBackupSeedPage(encryptedSeed: settings.arguments),
+              return MaterialPageRoute<IntroBackupSeedPage>(
+                builder: (_) => IntroBackupSeedPage(
+                    encryptedSeed: settings.arguments.toString()),
                 settings: settings,
               );
             case '/intro_backup_safety':
@@ -224,13 +221,10 @@ class Splash extends StatefulWidget {
 }
 
 class SplashState extends State<Splash> with WidgetsBindingObserver {
-  bool _hasCheckedLoggedIn;
-  bool _retried;
+  bool? _hasCheckedLoggedIn;
+  bool? _retried;
 
   bool seedIsEncrypted(String seed) {
-    if (seed == null) {
-      return false;
-    }
     try {
       final String salted = AppHelpers.bytesToUtf8String(AppHelpers.hexToBytes(
           seed.length >= 16 ? seed.substring(0, 16) : seed));
@@ -257,14 +251,14 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
         AppDialogs.showConfirmDialog(
             context,
             CaseChange.toUpperCase(
-                AppLocalization.of(context).warning, context),
-            AppLocalization.of(context).rootWarning,
-            AppLocalization.of(context).iUnderstandTheRisks.toUpperCase(),
+                AppLocalization.of(context)!.warning, context),
+            AppLocalization.of(context)!.rootWarning,
+            AppLocalization.of(context)!.iUnderstandTheRisks.toUpperCase(),
             () async {
               await sl.get<SharedPrefsUtil>().setHasSeenRootWarning();
               checkLoggedIn();
             },
-            cancelText: AppLocalization.of(context).exit.toUpperCase(),
+            cancelText: AppLocalization.of(context)!.exit.toUpperCase(),
             cancelAction: () {
               if (!kIsWeb && Platform.isIOS) {
                 exit(0);
@@ -276,7 +270,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       }
     }
 
-    if (!_hasCheckedLoggedIn) {
+    if (!_hasCheckedLoggedIn!) {
       _hasCheckedLoggedIn = true;
     } else {
       return;
@@ -292,8 +286,8 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       // See if logged in already
       bool isLoggedIn = false;
       bool isEncrypted = false;
-      final String seed = await sl.get<Vault>().getSeed();
-      final String pin = await sl.get<Vault>().getPin();
+      final String? seed = await sl.get<Vault>().getSeed();
+      final String? pin = await sl.get<Vault>().getPin();
       // If we have a seed set, but not a pin - or vice versa
       // Then delete the seed and pin from device and start over.
       // This would mean user did not complete the intro screen completely.
@@ -313,7 +307,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
             await sl.get<SharedPrefsUtil>().shouldLock()) {
           Navigator.of(context).pushReplacementNamed('/lock_screen');
         } else {
-          await AppUtil().loginAccount(seed, context);
+          await AppUtil().loginAccount(seed!, context);
           Navigator.of(context).pushReplacementNamed('/home');
         }
       } else {
@@ -339,7 +333,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
         await sl.get<DBHelper>().dropAll();
         await sl.get<Vault>().deleteAll();
         await sl.get<SharedPrefsUtil>().deleteAll();
-        if (!_retried) {
+        if (!_retried!) {
           _retried = true;
           _hasCheckedLoggedIn = false;
           checkLoggedIn();
@@ -351,18 +345,18 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
     _hasCheckedLoggedIn = false;
     _retried = false;
-    if (SchedulerBinding.instance.schedulerPhase ==
+    if (SchedulerBinding.instance!.schedulerPhase ==
         SchedulerPhase.persistentCallbacks) {
-      SchedulerBinding.instance.addPostFrameCallback((_) => checkLoggedIn());
+      SchedulerBinding.instance!.addPostFrameCallback((_) => checkLoggedIn());
     }
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 

@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:convert';
 import 'dart:typed_data';
@@ -8,6 +6,7 @@ import 'dart:typed_data';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show uint8ListToHex, hexToUint8List;
 
+// ignore: avoid_classes_with_only_static_members
 class AppHelpers {
   static List<String> hexArray = '0123456789ABCDEF'.split('');
 
@@ -91,8 +90,8 @@ class AppHelpers {
   }
 
   /// Convert string to byte array
-  static Uint8List stringToBytesUtf8(String str) {
-    return utf8.encode(str);
+  static Uint8List? stringToBytesUtf8(String str) {
+    return Uint8List.fromList(utf8.encode(str));
   }
 
   /// Convert byte array to string utf-8

@@ -89,7 +89,7 @@ class _ContextMenuState extends State<ContextMenu> {
     getOffset();
     await Navigator.push(
         context,
-        PageRouteBuilder(
+        PageRouteBuilder<dynamic>(
             transitionDuration:
                 widget.duration ?? const Duration(milliseconds: 100),
             pageBuilder: (BuildContext context, Animation<double> animation,

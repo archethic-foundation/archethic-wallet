@@ -1,14 +1,13 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:math';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' show isHex;
 
+// ignore: avoid_classes_with_only_static_members
 class AppSeeds {
   static bool isValidSeed(String seed) {
-    if (seed == null || seed.length != 64) {
+    if (seed.length != 64) {
       return false;
     }
     // Ensure seed only contains hex characters, 0-9;A-F

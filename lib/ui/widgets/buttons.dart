@@ -17,6 +17,7 @@ enum AppButtonType {
   TEXT_OUTLINE
 }
 
+// ignore: avoid_classes_with_only_static_members
 class AppButton {
   // Primary button builder
   static Widget buildAppButton(BuildContext context, AppButtonType type,
@@ -50,7 +51,7 @@ class AppButton {
                   maxLines: 1,
                   stepGranularity: 0.5),
               onPressed: () {
-                if (onPressed != null && !disabled) {
+                if (!disabled) {
                   onPressed();
                 }
                 return;
@@ -86,7 +87,7 @@ class AppButton {
                   maxLines: 1,
                   stepGranularity: 0.5),
               onPressed: () {
-                if (onPressed != null && !disabled) {
+                if (!disabled) {
                   onPressed();
                 }
                 return;
@@ -123,7 +124,7 @@ class AppButton {
                 stepGranularity: 0.5,
               ),
               onPressed: () {
-                if (onPressed != null && !disabled) {
+                if (!disabled) {
                   onPressed();
                 }
                 return;
@@ -153,9 +154,7 @@ class AppButton {
                 stepGranularity: 0.5,
               ),
               onPressed: () {
-                if (onPressed != null) {
-                  onPressed();
-                }
+                onPressed();
                 return;
               },
             ),
@@ -183,9 +182,7 @@ class AppButton {
                 stepGranularity: 0.5,
               ),
               onPressed: () {
-                if (onPressed != null) {
-                  onPressed();
-                }
+                onPressed();
                 return;
               },
             ),

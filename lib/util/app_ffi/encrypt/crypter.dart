@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:math';
 import 'dart:typed_data';
@@ -11,11 +9,12 @@ import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/kdf/sha256_kdf.dart
 import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/model/keyiv.dart';
 import 'package:archethic_mobile_wallet/util/helpers.dart';
 
+// ignore: avoid_classes_with_only_static_members
 /// Utility for encrypting and decrypting
 class AppCrypt {
   /// Decrypts a value with a password using AES/CBC/PKCS7
   /// KDF is Sha256KDF if not specified
-  static Uint8List decrypt(dynamic value, String password, {KDF kdf}) {
+  static Uint8List decrypt(dynamic value, String password, {KDF? kdf}) {
     kdf = kdf ?? Sha256KDF();
     Uint8List valBytes;
     if (value is String) {
@@ -37,7 +36,7 @@ class AppCrypt {
 
   /// Encrypts a value using AES/CBC/PKCS7
   /// KDF is Sha256KDF if not specified
-  static Uint8List encrypt(dynamic value, String password, {KDF kdf}) {
+  static Uint8List? encrypt(dynamic value, String password, {KDF? kdf}) {
     kdf = kdf ?? Sha256KDF();
     Uint8List valBytes;
     if (value is String) {
@@ -61,7 +60,7 @@ class AppCrypt {
         AesCbcPkcs7.encrypt(valBytes, key: keyInfo.key, iv: keyInfo.iv);
 
     return AppHelpers.concat(<Uint8List>[
-      AppHelpers.stringToBytesUtf8('Salted__'),
+      AppHelpers.stringToBytesUtf8('Salted__')!,
       salt,
       seedEncrypted
     ]);

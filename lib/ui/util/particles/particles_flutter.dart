@@ -23,7 +23,7 @@ class CircularParticle extends StatefulWidget {
     this.awayAnimationDuration = const Duration(milliseconds: 600),
     this.maxParticleSize = 4,
     this.isRandSize = false,
-    this.randColorList = const [
+    this.randColorList = const <Color>[
       Colors.black,
       Colors.blue,
       Colors.white,
@@ -64,19 +64,19 @@ class _CircularParticleState extends State<CircularParticle>
 
   Animation<double>? animation;
   AnimationController? controller;
-  List<Offset> offsets = [];
-  List<bool> randDirection = [];
+  List<Offset> offsets = <Offset>[];
+  List<bool> randDirection = <bool>[];
   double speedOfparticle = 0;
   Random rng = Random();
   double randValue = 0;
   double? dx;
   double? dy;
-  List<double> randomDouble = [];
+  List<double> randomDouble = <double>[];
   AnimationController? awayAnimationController;
 
-  List<double> randomSize = [];
-  List<int> hoverIndex = [];
-  List<List> lineOffset = [];
+  List<double> randomSize = <double>[];
+  List<int> hoverIndex = <int>[];
+  List<List> lineOffset = <List>[];
 
   void initailizeOffsets(_) {
     for (int index = 0; index < widget.numberOfParticles!; index++) {

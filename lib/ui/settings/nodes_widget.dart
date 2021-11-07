@@ -1,4 +1,4 @@
-// @dart=2.9
+// ignore_for_file: must_be_immutable
 
 // Dart imports:
 import 'dart:async';
@@ -31,7 +31,7 @@ class NodesList extends StatefulWidget {
 }
 
 class _NodesListState extends State<NodesList> {
-  List<Node> _nodes;
+  List<Node>? _nodes;
 
   @override
   void initState() {
@@ -51,7 +51,7 @@ class _NodesListState extends State<NodesList> {
           color: StateContainer.of(context).curTheme.backgroundDark,
           boxShadow: <BoxShadow>[
             BoxShadow(
-                color: StateContainer.of(context).curTheme.overlay30,
+                color: StateContainer.of(context).curTheme.overlay30!,
                 offset: const Offset(-5, 0),
                 blurRadius: 20),
           ],
@@ -91,7 +91,7 @@ class _NodesListState extends State<NodesList> {
                         ),
                         //Nodes Header Text
                         Text(
-                          AppLocalization.of(context).nodesHeader,
+                          AppLocalization.of(context)!.nodesHeader,
                           style: AppStyles.textStyleSize28W700Primary(context),
                         ),
                       ],
@@ -105,7 +105,7 @@ class _NodesListState extends State<NodesList> {
                 Container(
                   margin: const EdgeInsetsDirectional.only(start: 20.0),
                   alignment: Alignment.bottomLeft,
-                  child: Text('Nb of nodes : ' + _nodes.length.toString(),
+                  child: Text('Nb of nodes : ' + _nodes!.length.toString(),
                       style: AppStyles.textStyleSize12W100Primary(context)),
                 ),
               // Nodes list + top and bottom gradients
@@ -118,9 +118,9 @@ class _NodesListState extends State<NodesList> {
                       ListView.builder(
                         physics: const AlwaysScrollableScrollPhysics(),
                         padding: const EdgeInsets.only(top: 15.0, bottom: 15),
-                        itemCount: _nodes.length,
+                        itemCount: _nodes!.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return buildSingleNode(context, _nodes[index]);
+                          return buildSingleNode(context, _nodes![index]);
                         },
                       ),
                     //List Top Gradient End
@@ -134,10 +134,10 @@ class _NodesListState extends State<NodesList> {
                             colors: <Color>[
                               StateContainer.of(context)
                                   .curTheme
-                                  .backgroundDark,
+                                  .backgroundDark!,
                               StateContainer.of(context)
                                   .curTheme
-                                  .backgroundDark00
+                                  .backgroundDark00!
                             ],
                             begin: const AlignmentDirectional(0.5, -1.0),
                             end: const AlignmentDirectional(0.5, 1.0),
@@ -156,10 +156,10 @@ class _NodesListState extends State<NodesList> {
                             colors: <Color>[
                               StateContainer.of(context)
                                   .curTheme
-                                  .backgroundDark00,
+                                  .backgroundDark00!,
                               StateContainer.of(context)
                                   .curTheme
-                                  .backgroundDark,
+                                  .backgroundDark!,
                             ],
                             begin: const AlignmentDirectional(0.5, -1.0),
                             end: const AlignmentDirectional(0.5, 1.0),
@@ -200,7 +200,7 @@ class _NodesListState extends State<NodesList> {
                     children: <Widget>[
                       Text('First public key : ',
                           style: AppStyles.textStyleSize12W600Primary(context)),
-                      Text(Address(node.firstPublicKey).getShortString2(),
+                      Text(Address(node.firstPublicKey!).getShortString2(),
                           style: AppStyles.textStyleSize12W100Primary(context)),
                       const SizedBox(
                         height: 10,
@@ -210,7 +210,7 @@ class _NodesListState extends State<NodesList> {
                         style: AppStyles.textStyleSize12W600Primary(context),
                       ),
                       Text(
-                        Address(node.lastPublicKey).getShortString2(),
+                        Address(node.lastPublicKey!).getShortString2(),
                         style: AppStyles.textStyleSize12W100Primary(context),
                       ),
                       const SizedBox(
@@ -221,7 +221,7 @@ class _NodesListState extends State<NodesList> {
                           Text('IP : ',
                               style: AppStyles.textStyleSize12W600Primary(
                                   context)),
-                          Text(node.ip + ':' + node.port.toString(),
+                          Text(node.ip! + ':' + node.port.toString(),
                               style: AppStyles.textStyleSize12W100Primary(
                                   context)),
                         ],
@@ -234,13 +234,13 @@ class _NodesListState extends State<NodesList> {
                           Text('Geo patch : ',
                               style: AppStyles.textStyleSize12W600Primary(
                                   context)),
-                          Text(node.geoPatch,
+                          Text(node.geoPatch!,
                               style: AppStyles.textStyleSize12W100Primary(
                                   context)),
                           Text(' - Network patch : ',
                               style: AppStyles.textStyleSize12W600Primary(
                                   context)),
-                          Text(node.networkPatch,
+                          Text(node.networkPatch!,
                               style: AppStyles.textStyleSize12W100Primary(
                                   context)),
                         ],
@@ -276,7 +276,7 @@ class _NodesListState extends State<NodesList> {
                       ),
                       Text('Reward address : ',
                           style: AppStyles.textStyleSize12W600Primary(context)),
-                      Text(Address(node.rewardAddress).getShortString2(),
+                      Text(Address(node.rewardAddress!).getShortString2(),
                           style: AppStyles.textStyleSize12W100Primary(context)),
                     ],
                   ),

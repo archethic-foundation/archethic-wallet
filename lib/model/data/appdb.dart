@@ -30,8 +30,8 @@ class DBHelper {
   Future<List<Contact>> getContactsWithNameLike(String pattern) async {
     final Box<Contact> box = await Hive.openBox<Contact>(_contactsTable);
     final List<Contact> contactsList = box.values.toList();
-    final List<Contact> contactsListSelected =
-        List<Contact>.empty(growable: true);
+    // ignore: prefer_final_locals
+    List<Contact> contactsListSelected = List<Contact>.empty(growable: true);
     for (Contact _contact in contactsList) {
       if (_contact.name!.contains(pattern)) {
         contactsListSelected.add(_contact);
@@ -98,23 +98,27 @@ class DBHelper {
   }
 
   Future<void> saveContact(Contact contact) async {
-    final Box<Contact> box = await Hive.openBox<Contact>(_contactsTable);
+    // ignore: prefer_final_locals
+    Box<Contact> box = await Hive.openBox<Contact>(_contactsTable);
     box.put(contact.address, contact);
   }
 
   Future<void> deleteContact(Contact contact) async {
-    final Box<Contact> box = await Hive.openBox<Contact>(_contactsTable);
+    // ignore: prefer_final_locals
+    Box<Contact> box = await Hive.openBox<Contact>(_contactsTable);
     box.delete(contact.address);
   }
 
   // Accounts
   Future<void> saveAccount(Account account) async {
-    final Box<Account> box = await Hive.openBox<Account>(_accountsTable);
+    // ignore: prefer_final_locals
+    Box<Account> box = await Hive.openBox<Account>(_accountsTable);
     box.put(account.genesisAddress, account);
   }
 
   Future<void> updateAccountBalance(Account account, String balance) async {
-    final Box<Account> box = await Hive.openBox<Account>(_accountsTable);
+    // ignore: prefer_final_locals
+    Box<Account> box = await Hive.openBox<Account>(_accountsTable);
     account.balance = balance;
     box.put(account.genesisAddress!, account);
   }
@@ -132,15 +136,16 @@ class DBHelper {
   }
 
   Future<void> dropAccounts() async {
-    final Box<Account> box = await Hive.openBox<Account>(_accountsTable);
+    // ignore: prefer_final_locals
+    Box<Account> box = await Hive.openBox<Account>(_accountsTable);
     box.clear();
   }
 
   Future<void> dropAll() async {
-    final Box<Account> boxAccounts =
-        await Hive.openBox<Account>(_accountsTable);
-    final Box<Contact> boxContacts =
-        await Hive.openBox<Contact>(_contactsTable);
+    // ignore: prefer_final_locals
+    Box<Account> boxAccounts = await Hive.openBox<Account>(_accountsTable);
+    // ignore: prefer_final_locals
+    Box<Contact> boxContacts = await Hive.openBox<Contact>(_contactsTable);
     boxAccounts.clear();
     boxContacts.clear();
   }

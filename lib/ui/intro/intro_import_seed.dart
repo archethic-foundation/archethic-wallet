@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,7 +32,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   final TextEditingController _mnemonicController = TextEditingController();
 
   bool _mnemonicIsValid = false;
-  String _mnemonicError;
+  String _mnemonicError = '';
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +47,8 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: <Color>[
-                  StateContainer.of(context).curTheme.backgroundDark,
-                  StateContainer.of(context).curTheme.background
+                  StateContainer.of(context).curTheme.backgroundDark!,
+                  StateContainer.of(context).curTheme.background!
                 ],
               ),
             ),
@@ -96,7 +94,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             ),
                             alignment: const AlignmentDirectional(-1, 0),
                             child: AutoSizeText(
-                              AppLocalization.of(context).importSecretPhrase,
+                              AppLocalization.of(context)!.importSecretPhrase,
                               style:
                                   AppStyles.textStyleSize28W700Primary(context),
                               maxLines: 1,
@@ -111,7 +109,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                 top: 15.0),
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              AppLocalization.of(context)
+                              AppLocalization.of(context)!
                                   .importSecretPhraseHint,
                               style:
                                   AppStyles.textStyleSize16W600Primary(context),
@@ -147,31 +145,30 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                         return;
                                       }
                                       UIUtil.cancelLockEvent();
-                                      final String scanResult =
+                                      final String? scanResult =
                                           await UserDataUtil.getQRData(
                                               DataType.ADDRESS, context);
                                       if (scanResult == null) {
                                         UIUtil.showSnackbar(
-                                            AppLocalization.of(context)
+                                            AppLocalization.of(context)!
                                                 .qrInvalidAddress,
                                             context);
                                       } else if (QRScanErrs.ERROR_LIST
                                           .contains(scanResult)) {
                                         return;
                                       } else {
-                                        if (scanResult != null &&
-                                            AppMnemomics.validateMnemonic(
-                                                scanResult.split(' '))) {
+                                        if (AppMnemomics.validateMnemonic(
+                                            scanResult.split(' '))) {
                                           _mnemonicController.text = scanResult;
                                           setState(() {
                                             _mnemonicIsValid = true;
                                           });
-                                        } else if (scanResult != null &&
-                                            AppSeeds.isValidSeed(scanResult)) {
+                                        } else if (AppSeeds.isValidSeed(
+                                            scanResult)) {
                                           _mnemonicFocusNode.unfocus();
                                         } else {
                                           UIUtil.showSnackbar(
-                                              AppLocalization.of(context)
+                                              AppLocalization.of(context)!
                                                   .qrMnemonicError,
                                               context);
                                         }
@@ -191,18 +188,18 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                         return;
                                       }
                                       Clipboard.getData('text/plain')
-                                          .then((ClipboardData data) {
+                                          .then((ClipboardData? data) {
                                         if (data == null || data.text == null) {
                                           return;
                                         } else if (AppMnemomics
                                             .validateMnemonic(
-                                                data.text.split(' '))) {
-                                          _mnemonicController.text = data.text;
+                                                data.text!.split(' '))) {
+                                          _mnemonicController.text = data.text!;
                                           setState(() {
                                             _mnemonicIsValid = true;
                                           });
                                         } else if (AppSeeds.isValidSeed(
-                                            data.text)) {
+                                            data.text!)) {
                                           _mnemonicFocusNode.unfocus();
                                         }
                                       });
@@ -221,13 +218,13 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                   onChanged: (String text) {
                                     if (text.length < 3) {
                                       setState(() {
-                                        _mnemonicError = null;
+                                        _mnemonicError = '';
                                       });
-                                    } else if (_mnemonicError != null) {
+                                    } else if (_mnemonicError.isNotEmpty) {
                                       if (!text.contains(
                                           _mnemonicError.split(' ')[0])) {
                                         setState(() {
-                                          _mnemonicError = null;
+                                          _mnemonicError = '';
                                         });
                                       }
                                     }
@@ -237,7 +234,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                       _mnemonicFocusNode.unfocus();
                                       setState(() {
                                         _mnemonicIsValid = true;
-                                        _mnemonicError = null;
+                                        _mnemonicError = '';
                                       });
                                     } else {
                                       setState(() {
@@ -262,7 +259,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                             _mnemonicIsValid = false;
                                             setState(() {
                                               _mnemonicError =
-                                                  AppLocalization.of(context)
+                                                  AppLocalization.of(context)!
                                                       .mnemonicInvalidWord
                                                       .replaceAll(
                                                           '%1', lastWord);
@@ -273,7 +270,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                     }
                                   },
                                 ),
-                                if (_mnemonicError != null)
+                                if (_mnemonicError != '')
                                   Container(
                                     margin: const EdgeInsets.only(top: 5),
                                     child: Text(_mnemonicError,
@@ -306,7 +303,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                   PinOverlayType.NEW_PIN,
                                 );
                               }));
-                              if (pin != null && pin.length > 5) {
+                              if (pin.length > 5) {
                                 _pinEnteredCallback(pin);
                               }
                             } else {
@@ -314,7 +311,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                   24) {
                                 setState(() {
                                   _mnemonicIsValid = false;
-                                  _mnemonicError = AppLocalization.of(context)
+                                  _mnemonicError = AppLocalization.of(context)!
                                       .mnemonicSizeError;
                                 });
                               } else {
@@ -325,7 +322,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                     setState(() {
                                       _mnemonicIsValid = false;
                                       _mnemonicError =
-                                          AppLocalization.of(context)
+                                          AppLocalization.of(context)!
                                               .mnemonicInvalidWord
                                               .replaceAll('%1', word);
                                     });

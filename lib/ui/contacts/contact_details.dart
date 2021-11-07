@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:async';
 
@@ -26,7 +24,6 @@ import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/sheets.dart';
 import 'package:archethic_mobile_wallet/util/caseconverter.dart';
 
 // Contact Details Sheet
@@ -39,10 +36,10 @@ class ContactDetailsSheet {
   // State variables
   bool _addressCopied = false;
   // Timer reference so we can cancel repeated events
-  Timer _addressCopiedTimer;
+  Timer? _addressCopiedTimer;
 
   void mainBottomSheet(BuildContext context) {
-    AppSheets.showAppHeightEightSheet(
+    Sheets.showAppHeightEightSheet(
         context: context,
         builder: (BuildContext context) {
           return StatefulBuilder(
@@ -66,31 +63,32 @@ class ContactDetailsSheet {
                             onPressed: () {
                               AppDialogs.showConfirmDialog(
                                   context,
-                                  AppLocalization.of(context).removeContact,
-                                  AppLocalization.of(context)
+                                  AppLocalization.of(context)!.removeContact,
+                                  AppLocalization.of(context)!
                                       .removeContactConfirmation
-                                      .replaceAll('%1', contact.name),
+                                      .replaceAll('%1', contact.name!),
                                   CaseChange.toUpperCase(
-                                      AppLocalization.of(context).yes, context),
-                                  () {
+                                      AppLocalization.of(context)!.yes,
+                                      context), () {
                                 sl
                                     .get<DBHelper>()
                                     .deleteContact(contact)
-                                    .then((value) {
+                                    .then((_) {
                                   EventTaxiImpl.singleton().fire(
                                       ContactRemovedEvent(contact: contact));
                                   EventTaxiImpl.singleton().fire(
                                       ContactModifiedEvent(contact: contact));
                                   UIUtil.showSnackbar(
-                                      AppLocalization.of(context)
+                                      AppLocalization.of(context)!
                                           .contactRemoved
-                                          .replaceAll('%1', contact.name),
+                                          .replaceAll('%1', contact.name!),
                                       context);
                                   Navigator.of(context).pop();
                                 });
                               },
                                   cancelText: CaseChange.toUpperCase(
-                                      AppLocalization.of(context).no, context));
+                                      AppLocalization.of(context)!.no,
+                                      context));
                             },
                             child: FaIcon(FontAwesomeIcons.trash,
                                 size: 24,
@@ -108,7 +106,7 @@ class ContactDetailsSheet {
                           child: Column(
                             children: <Widget>[
                               AutoSizeText(
-                                AppLocalization.of(context).contactHeader,
+                                AppLocalization.of(context)!.contactHeader,
                                 style: AppStyles.textStyleSize24W700Primary(
                                     context),
                                 textAlign: TextAlign.center,
@@ -153,7 +151,7 @@ class ContactDetailsSheet {
                                   BoxShadow(
                                     color: StateContainer.of(context)
                                         .curTheme
-                                        .backgroundDarkest,
+                                        .backgroundDarkest!,
                                     blurRadius: 5.0,
                                     spreadRadius: 0.0,
                                     offset: const Offset(5.0,
@@ -161,7 +159,7 @@ class ContactDetailsSheet {
                                   )
                                 ],
                               ),
-                              child: Text(contact.name,
+                              child: Text(contact.name!,
                                   textAlign: TextAlign.center,
                                   style: AppStyles.textStyleSize16W600Primary(
                                       context)),
@@ -175,7 +173,7 @@ class ContactDetailsSheet {
                                   _addressCopied = true;
                                 });
                                 if (_addressCopiedTimer != null) {
-                                  _addressCopiedTimer.cancel();
+                                  _addressCopiedTimer!.cancel();
                                 }
                                 _addressCopiedTimer = Timer(
                                     const Duration(milliseconds: 800), () {
@@ -203,7 +201,7 @@ class ContactDetailsSheet {
                                     BoxShadow(
                                       color: StateContainer.of(context)
                                           .curTheme
-                                          .backgroundDarkest,
+                                          .backgroundDarkest!,
                                       blurRadius: 5.0,
                                       spreadRadius: 0.0,
                                       offset: const Offset(5.0,
@@ -213,7 +211,7 @@ class ContactDetailsSheet {
                                 ),
                                 child:
                                     UIUtil.threeLinetextStyleSmallestW400Text(
-                                        context, contact.address,
+                                        context, contact.address!,
                                         type: _addressCopied
                                             ? ThreeLineAddressTextType
                                                 .SUCCESS_FULL
@@ -225,7 +223,7 @@ class ContactDetailsSheet {
                               margin: const EdgeInsets.only(top: 5, bottom: 5),
                               child: Text(
                                   _addressCopied
-                                      ? AppLocalization.of(context)
+                                      ? AppLocalization.of(context)!
                                           .addressCopied
                                       : '',
                                   style: AppStyles.textStyleSize14W600Success(
@@ -236,34 +234,36 @@ class ContactDetailsSheet {
                       ),
                     ),
 
-                    // A column with "Send" and "Close" buttons
                     Container(
                       child: Column(
                         children: <Widget>[
                           Row(
                             children: <Widget>[
                               // Send Button
-                              AppButton.buildAppButton(
-                                  context,
-                                  AppButtonType.PRIMARY,
-                                  AppLocalization.of(context).send,
-                                  Dimens.BUTTON_TOP_DIMENS,
-                                  disabled: StateContainer.of(context)
-                                          .wallet
-                                          .accountBalance
-                                          .uco ==
-                                      0, onPressed: () {
-                                Navigator.of(context).pop();
-                                Sheets.showAppHeightNineSheet(
-                                    context: context,
-                                    widget: TransferUcoSheet(
-                                        contactsRef: StateContainer.of(context)
-                                            .contactsRef,
-                                        localCurrency:
-                                            StateContainer.of(context)
-                                                .curCurrency,
-                                        contact: contact));
-                              }),
+                              if (StateContainer.of(context)
+                                      .wallet!
+                                      .accountBalance
+                                      .uco! >
+                                  0)
+                                AppButton.buildAppButton(
+                                    context,
+                                    AppButtonType.PRIMARY,
+                                    AppLocalization.of(context)!.send,
+                                    Dimens.BUTTON_TOP_DIMENS, onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Sheets.showAppHeightNineSheet(
+                                      context: context,
+                                      widget: TransferUcoSheet(
+                                          contactsRef:
+                                              StateContainer.of(context)
+                                                  .contactsRef,
+                                          localCurrency:
+                                              StateContainer.of(context)
+                                                  .curCurrency,
+                                          contact: contact));
+                                })
+                              else
+                                const SizedBox(),
                             ],
                           ),
                           Row(
@@ -272,7 +272,7 @@ class ContactDetailsSheet {
                               AppButton.buildAppButton(
                                   context,
                                   AppButtonType.PRIMARY,
-                                  AppLocalization.of(context).close,
+                                  AppLocalization.of(context)!.close,
                                   Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                                 Navigator.pop(context);
                               }),

@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:async';
 import 'dart:typed_data';
@@ -19,21 +17,21 @@ import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
 class ReceiveSheet extends StatefulWidget {
   const ReceiveSheet({this.qrWidget}) : super();
 
-  final Widget qrWidget;
+  final Widget? qrWidget;
 
   @override
   _ReceiveSheetStateState createState() => _ReceiveSheetStateState();
 }
 
 class _ReceiveSheetStateState extends State<ReceiveSheet> {
-  GlobalKey shareCardKey;
-  ByteData shareImageData;
+  GlobalKey? shareCardKey;
+  ByteData? shareImageData;
 
   // Address copied items
   // Current state references
-  bool _addressCopied;
+  bool? _addressCopied;
   // Timer reference so we can cancel repeated events
-  Timer _addressCopiedTimer;
+  Timer? _addressCopiedTimer;
 
   @override
   void initState() {
@@ -77,10 +75,8 @@ class _ReceiveSheetStateState extends State<ReceiveSheet> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 15.0),
-                      child: UIUtil.threeLinetextStyleSmallestW400Text(context,
-                          '05A2525C9C4FDDC02BA97554980A0CFFADA2AEB0650E3EAD05796275F05DDA85',
-                          // TODO:
-                          //context, StateContainer.of(context).wallet.address,
+                      child: UIUtil.threeLinetextStyleSmallestW400Text(
+                          context, StateContainer.of(context).wallet!.address,
                           type: ThreeLineAddressTextType.PRIMARY60),
                     ),
                   ],
@@ -145,21 +141,21 @@ class _ReceiveSheetStateState extends State<ReceiveSheet> {
                     AppButton.buildAppButton(
                         context,
                         // Share Address Button
-                        _addressCopied
+                        _addressCopied!
                             ? AppButtonType.SUCCESS
                             : AppButtonType.PRIMARY,
-                        _addressCopied
-                            ? AppLocalization.of(context).addressCopied
-                            : AppLocalization.of(context).copyAddress,
+                        _addressCopied!
+                            ? AppLocalization.of(context)!.addressCopied
+                            : AppLocalization.of(context)!.copyAddress,
                         Dimens.BUTTON_TOP_DIMENS, onPressed: () {
                       Clipboard.setData(ClipboardData(
-                          text: StateContainer.of(context).wallet.address));
+                          text: StateContainer.of(context).wallet!.address));
                       setState(() {
                         // Set copied style
                         _addressCopied = true;
                       });
                       if (_addressCopiedTimer != null) {
-                        _addressCopiedTimer.cancel();
+                        _addressCopiedTimer!.cancel();
                       }
                       _addressCopiedTimer =
                           Timer(const Duration(milliseconds: 800), () {

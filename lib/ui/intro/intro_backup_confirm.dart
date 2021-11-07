@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -37,8 +35,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: <Color>[
-              StateContainer.of(context).curTheme.backgroundDark,
-              StateContainer.of(context).curTheme.background
+              StateContainer.of(context).curTheme.backgroundDark!,
+              StateContainer.of(context).curTheme.background!
             ],
           ),
         ),
@@ -89,7 +87,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                         ),
                         alignment: const AlignmentDirectional(-1, 0),
                         child: AutoSizeText(
-                          AppLocalization.of(context).ackBackedUp,
+                          AppLocalization.of(context)!.ackBackedUp,
                           maxLines: 4,
                           stepGranularity: 0.5,
                           style: AppStyles.textStyleSize28W700Primary(context),
@@ -101,7 +99,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                             end: smallScreen(context) ? 30 : 40,
                             top: 15.0),
                         child: AutoSizeText(
-                          AppLocalization.of(context).secretWarning,
+                          AppLocalization.of(context)!.secretWarning,
                           style: AppStyles.textStyleSize16W600Primary(context),
                           maxLines: 5,
                           stepGranularity: 0.5,
@@ -117,7 +115,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                         AppButton.buildAppButton(
                             context,
                             AppButtonType.PRIMARY,
-                            AppLocalization.of(context).yes,
+                            AppLocalization.of(context)!.yes,
                             Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
                           final String pin = await Navigator.of(context).push(
                               MaterialPageRoute(
@@ -126,7 +124,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                               PinOverlayType.NEW_PIN,
                             );
                           }));
-                          if (pin != null && pin.length > 5) {
+                          if (pin.length > 5) {
                             _pinEnteredCallback(pin);
                           }
                         }),
@@ -137,7 +135,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                         AppButton.buildAppButton(
                             context,
                             AppButtonType.PRIMARY_OUTLINE,
-                            AppLocalization.of(context).no,
+                            AppLocalization.of(context)!.no,
                             Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                           Navigator.of(context).pop();
                         }),

@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -34,8 +32,8 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: <Color>[
-              StateContainer.of(context).curTheme.backgroundDark,
-              StateContainer.of(context).curTheme.background
+              StateContainer.of(context).curTheme.backgroundDark!,
+              StateContainer.of(context).curTheme.background!
             ],
           ),
         ),
@@ -172,7 +170,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                     AppButton.buildAppButton(
                         context,
                         AppButtonType.PRIMARY,
-                        AppLocalization.of(context).understandButton,
+                        AppLocalization.of(context)!.understandButton,
                         Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                       Navigator.of(context).pushNamed('/intro_backup',
                           arguments:

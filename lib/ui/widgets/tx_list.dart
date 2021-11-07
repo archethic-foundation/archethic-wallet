@@ -16,8 +16,8 @@ import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 
 class TxListWidget extends StatefulWidget {
-  const TxListWidget(this._opacityAnimation);
-  final Animation<double> _opacityAnimation;
+  const TxListWidget();
+
   @override
   _TxListWidgetState createState() => _TxListWidgetState();
 }
@@ -25,7 +25,7 @@ class TxListWidget extends StatefulWidget {
 class _TxListWidgetState extends State<TxListWidget> {
   static const int _pageSize = 20;
   final PagingController<int, RecentTransaction> _pagingController =
-      PagingController(firstPageKey: 0);
+      PagingController<int, RecentTransaction>(firstPageKey: 0);
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _TxListWidgetState extends State<TxListWidget> {
   Future<void> _fetchPage(int pageKey) async {
     try {
       final List<RecentTransaction> newItems =
-          StateContainer.of(context).wallet.history;
+          StateContainer.of(context).wallet!.history;
       final bool isLastPage = newItems.length < _pageSize;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems);
@@ -64,7 +64,6 @@ class _TxListWidgetState extends State<TxListWidget> {
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              
               SizedBox(
                 child: Container(
                   child: Padding(
@@ -79,7 +78,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                           padding: const EdgeInsets.only(
                               left: 6, right: 6, top: 6, bottom: 6),
                           child: Column(
-                            children: <Widget>[],
+                            children: const <Widget>[],
                           )),
                     ),
                   ),
@@ -92,7 +91,7 @@ class _TxListWidgetState extends State<TxListWidget> {
             children: <Widget>[
               Padding(
                   padding: const EdgeInsets.only(left: 5.0),
-                  child: StateContainer.of(context).wallet.history.isNotEmpty
+                  child: StateContainer.of(context).wallet!.history.isNotEmpty
                       ? Text(
                           AppLocalization.of(context)!.recentTransactionsHeader,
                           style: AppStyles.textStyleSize14W600BackgroundDarkest(
@@ -116,7 +115,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                       child: RefreshIndicator(
                         backgroundColor:
                             StateContainer.of(context).curTheme.backgroundDark,
-                        onRefresh: () => Future.sync(() {
+                        onRefresh: () => Future<void>.sync(() {
                           sl.get<HapticUtil>().feedback(FeedbackType.light);
                           StateContainer.of(context).requestUpdate(
                               account:
@@ -224,155 +223,6 @@ class _TxListWidgetState extends State<TxListWidget> {
                     Text('Fees: ' + transaction.fee.toString() + ' UCO',
                         style: AppStyles.textStyleSize10W100Primary(context)),
                   ]),
-            const SizedBox(height: 6),
-            Divider(
-                height: 4,
-                color: StateContainer.of(context).curTheme.backgroundDark),
-            const SizedBox(height: 6),
-          ],
-        ));
-  }
-
-  static Container displayTxDetailNFT(
-      BuildContext context, RecentTransaction transaction) {
-    return Container(
-        padding: const EdgeInsets.all(3.5),
-        width: MediaQuery.of(context).size.width * 0.9,
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text(getTypeTransactionLabel(context, transaction.typeTx!),
-                        style: AppStyles.textStyleSize14W700Primary(context)),
-                  ],
-                ),
-                Text(transaction.amount.toString() + ' ' + transaction.nftName!,
-                    style: AppStyles.textStyleSize14W600Primary(context)),
-              ],
-            ),
-            if (transaction.nftAddress == null)
-              const SizedBox()
-            else
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                        'Address: ' +
-                            Address(transaction.nftAddress!).getShortString3(),
-                        style: AppStyles.textStyleSize10W100Primary(context)),
-                  ]),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              Text(
-                  'Date: ' +
-                      DateFormat.yMEd(
-                              Localizations.localeOf(context).languageCode)
-                          .add_Hm()
-                          .format(DateTime.fromMillisecondsSinceEpoch(
-                                  transaction.timestamp! * 1000)
-                              .toLocal())
-                          .toString(),
-                  style: AppStyles.textStyleSize10W100Primary(context)),
-            ]),
-            const SizedBox(height: 6),
-            Divider(
-                height: 4,
-                color: StateContainer.of(context).curTheme.backgroundDark),
-            const SizedBox(height: 6),
-          ],
-        ));
-  }
-
-  static Container displayTxDetailSearching(
-      BuildContext context, Animation<double> _opacityAnimation) {
-    return Container(
-        padding: const EdgeInsets.all(3.5),
-        width: MediaQuery.of(context).size.width * 0.9,
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Opacity(
-                      opacity: _opacityAnimation.value,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: StateContainer.of(context).curTheme.primary,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: const Text(
-                          'XXXXXXXXXXXX',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: AppFontSizes.size14 - 3,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.transparent),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Opacity(
-                  opacity: _opacityAnimation.value,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: StateContainer.of(context).curTheme.primary,
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: const Text(
-                      '1234567 UCO',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: AppFontSizes.size14 - 3,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.transparent),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 4),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              Opacity(
-                opacity: _opacityAnimation.value,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: StateContainer.of(context).curTheme.primary60,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: Text(
-                    'From: ' +
-                        Address('123456789012345678901234567890123456789012345678901234567890123456')
-                            .getShortString3(),
-                    textAlign: TextAlign.center,
-                    style: AppStyles.textStyleSize10W100Transparent(context),
-                  ),
-                ),
-              ),
-            ]),
-            const SizedBox(height: 4),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              Opacity(
-                opacity: _opacityAnimation.value,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: StateContainer.of(context).curTheme.primary60,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: Text(
-                    'Date: Mon. 01/01/2021 00:00:00',
-                    textAlign: TextAlign.center,
-                    style: AppStyles.textStyleSize10W100Transparent(context),
-                  ),
-                ),
-              ),
-            ]),
             const SizedBox(height: 6),
             Divider(
                 height: 4,

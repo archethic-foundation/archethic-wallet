@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -13,7 +11,7 @@ import 'package:archethic_mobile_wallet/styles.dart';
 
 /// A widget for displaying a mnemonic phrase
 class MnemonicDisplay extends StatefulWidget {
-  const MnemonicDisplay({@required this.wordList, this.obscureSeed = false});
+  const MnemonicDisplay({required this.wordList, this.obscureSeed = false});
 
   final List<String> wordList;
   final bool obscureSeed;
@@ -24,7 +22,7 @@ class MnemonicDisplay extends StatefulWidget {
 
 class _MnemonicDisplayState extends State<MnemonicDisplay> {
   static final List<String> _obscuredSeed = List<String>.filled(24, '•' * 6);
-  bool _seedObscured;
+  bool? _seedObscured;
 
   @override
   void initState() {
@@ -63,7 +61,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                   style: AppStyles.textStyleSmallTextW100Text30(context),
                 ),
                 TextSpan(
-                  text: _seedObscured && widget.obscureSeed
+                  text: _seedObscured! && widget.obscureSeed
                       ? _obscuredSeed[curWord]
                       : widget.wordList[curWord],
                   style: AppStyles.textStyleSmallTextW100Primary(context),
@@ -103,7 +101,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
         onTap: () {
           if (widget.obscureSeed) {
             setState(() {
-              _seedObscured = !_seedObscured;
+              _seedObscured = !_seedObscured!;
             });
           }
         },
@@ -119,13 +117,13 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
             if (widget.obscureSeed)
               Container(
                 margin: const EdgeInsetsDirectional.only(top: 8),
-                child: _seedObscured
+                child: _seedObscured!
                     ? AutoSizeText(
-                        AppLocalization.of(context).tapToReveal,
+                        AppLocalization.of(context)!.tapToReveal,
                         style: AppStyles.textStyleSize14W600Primary(context),
                       )
                     : Text(
-                        AppLocalization.of(context).tapToHide,
+                        AppLocalization.of(context)!.tapToHide,
                         style: AppStyles.textStyleSize14W600Primary(context),
                       ),
               )

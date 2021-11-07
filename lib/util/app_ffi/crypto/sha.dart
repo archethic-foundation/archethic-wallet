@@ -1,11 +1,10 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:typed_data';
 
 // Package imports:
 import 'package:pointycastle/pointycastle.dart';
 
+// ignore: avoid_classes_with_only_static_members
 class Sha {
   /// Calculates the sha256 hash from the given buffers.
   ///

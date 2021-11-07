@@ -1,3 +1,5 @@
+// ignore_for_file: cancel_subscriptions
+
 // Dart imports:
 import 'dart:async';
 
@@ -113,8 +115,8 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
     animationOpen = true;
     Navigator.of(context).push(AnimationLoadingOverlay(
         AnimationType.SEND,
-        StateContainer.of(context).curTheme.animationOverlayStrong,
-        StateContainer.of(context).curTheme.animationOverlayMedium,
+        StateContainer.of(context).curTheme.animationOverlayStrong!,
+        StateContainer.of(context).curTheme.animationOverlayMedium!,
         onPoppedCallback: () => animationOpen = false));
   }
 
@@ -164,7 +166,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                           ),
                           TextSpan(
                               text: StateContainer.of(context)
-                                  .wallet
+                                  .wallet!
                                   .getAccountBalanceUCODisplay(),
                               style: AppStyles.textStyleSize14W700Primary(
                                   context)),
@@ -317,12 +319,12 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
         .push(MaterialPageRoute(builder: (BuildContext context) {
       return PinScreen(
         PinOverlayType.ENTER_PIN,
-        expectedPin: expectedPin,
+        expectedPin: expectedPin!,
         description: '',
       );
     })) as bool;
     if (auth) {
-      await Future<Duration>.delayed(const Duration(milliseconds: 200));
+      await Future<void>.delayed(const Duration(milliseconds: 200));
       EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
     }
   }

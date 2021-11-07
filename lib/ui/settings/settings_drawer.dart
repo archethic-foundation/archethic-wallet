@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:async';
 
@@ -49,20 +47,20 @@ class SettingsSheet extends StatefulWidget {
 
 class _SettingsSheetState extends State<SettingsSheet>
     with TickerProviderStateMixin, WidgetsBindingObserver {
-  AnimationController _contactsController;
-  Animation<Offset> _contactsOffsetFloat;
-  AnimationController _securityController;
-  Animation<Offset> _securityOffsetFloat;
-  AnimationController _nodesController;
-  Animation<Offset> _nodesOffsetFloat;
-  AnimationController _nftController;
-  Animation<Offset> _nftOffsetFloat;
-  AnimationController _customUrlController;
-  Animation<Offset> _customUrlOffsetFloat;
-  AnimationController _walletFAQController;
-  Animation<Offset> _walletFAQOffsetFloat;
-  AnimationController _aboutController;
-  Animation<Offset> _aboutOffsetFloat;
+  AnimationController? _contactsController;
+  Animation<Offset>? _contactsOffsetFloat;
+  AnimationController? _securityController;
+  Animation<Offset>? _securityOffsetFloat;
+  AnimationController? _nodesController;
+  Animation<Offset>? _nodesOffsetFloat;
+  AnimationController? _nftController;
+  Animation<Offset>? _nftOffsetFloat;
+  AnimationController? _customUrlController;
+  Animation<Offset>? _customUrlOffsetFloat;
+  AnimationController? _walletFAQController;
+  Animation<Offset>? _walletFAQOffsetFloat;
+  AnimationController? _aboutController;
+  Animation<Offset>? _aboutOffsetFloat;
 
   String versionString = '';
 
@@ -73,15 +71,15 @@ class _SettingsSheetState extends State<SettingsSheet>
   LockTimeoutSetting _curTimeoutSetting =
       LockTimeoutSetting(LockTimeoutOption.ONE);
 
-  bool _securityOpen;
-  bool _aboutOpen;
-  bool _contactsOpen;
-  bool _nodesOpen;
-  bool _customUrlOpen;
-  bool _walletFAQOpen;
-  bool _nftOpen;
+  bool? _securityOpen;
+  bool? _aboutOpen;
+  bool? _contactsOpen;
+  bool? _nodesOpen;
+  bool? _customUrlOpen;
+  bool? _walletFAQOpen;
+  bool? _nftOpen;
 
-  bool _pinPadShuffleActive;
+  bool _pinPadShuffleActive = false;
 
   bool notNull(Object o) => o != null;
 
@@ -162,25 +160,25 @@ class _SettingsSheetState extends State<SettingsSheet>
     );
     _contactsOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
-            .animate(_contactsController);
+            .animate(_contactsController!);
     _securityOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
-            .animate(_securityController);
+            .animate(_securityController!);
     _aboutOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
-            .animate(_aboutController);
+            .animate(_aboutController!);
     _nodesOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
-            .animate(_nodesController);
+            .animate(_nodesController!);
     _customUrlOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
-            .animate(_customUrlController);
+            .animate(_customUrlController!);
     _walletFAQOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
-            .animate(_walletFAQController);
+            .animate(_walletFAQController!);
     _nftOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
-            .animate(_nftController);
+            .animate(_nftController!);
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
         versionString = 'Version: ${packageInfo.version}';
@@ -190,13 +188,13 @@ class _SettingsSheetState extends State<SettingsSheet>
 
   @override
   void dispose() {
-    _contactsController.dispose();
-    _securityController.dispose();
-    _aboutController.dispose();
-    _customUrlController.dispose();
-    _nodesController.dispose();
-    _walletFAQController.dispose();
-    _nftController.dispose();
+    _contactsController!.dispose();
+    _securityController!.dispose();
+    _aboutController!.dispose();
+    _customUrlController!.dispose();
+    _nodesController!.dispose();
+    _walletFAQController!.dispose();
+    _nftController!.dispose();
     super.dispose();
   }
 
@@ -221,7 +219,7 @@ class _SettingsSheetState extends State<SettingsSheet>
         builder: (BuildContext context) {
           return AppSimpleDialog(
             title: Text(
-              AppLocalization.of(context).authMethod,
+              AppLocalization.of(context)!.authMethod,
               style: AppStyles.textStyleSize20W700Primary(context),
             ),
             children: <Widget>[
@@ -232,7 +230,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
-                    AppLocalization.of(context).biometricsMethod,
+                    AppLocalization.of(context)!.biometricsMethod,
                     style: AppStyles.textStyleSize16W600Primary(context),
                   ),
                 ),
@@ -244,7 +242,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
-                    AppLocalization.of(context).pinMethod,
+                    AppLocalization.of(context)!.pinMethod,
                     style: AppStyles.textStyleSize16W600Primary(context),
                   ),
                 ),
@@ -272,6 +270,16 @@ class _SettingsSheetState extends State<SettingsSheet>
           });
         });
         break;
+      default:
+        sl
+            .get<SharedPrefsUtil>()
+            .setAuthMethod(AuthenticationMethod(AuthMethod.PIN))
+            .then((_) {
+          setState(() {
+            _curAuthMethod = AuthenticationMethod(AuthMethod.PIN);
+          });
+        });
+        break;
     }
   }
 
@@ -281,7 +289,7 @@ class _SettingsSheetState extends State<SettingsSheet>
         builder: (BuildContext context) {
           return AppSimpleDialog(
             title: Text(
-              AppLocalization.of(context).lockAppSetting,
+              AppLocalization.of(context)!.lockAppSetting,
               style: AppStyles.textStyleSize20W700Primary(context),
             ),
             children: <Widget>[
@@ -292,7 +300,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
-                    AppLocalization.of(context).no,
+                    AppLocalization.of(context)!.no,
                     style: AppStyles.textStyleSize16W600Primary(context),
                   ),
                 ),
@@ -304,7 +312,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
-                    AppLocalization.of(context).yes,
+                    AppLocalization.of(context)!.yes,
                     style: AppStyles.textStyleSize16W600Primary(context),
                   ),
                 ),
@@ -320,6 +328,13 @@ class _SettingsSheetState extends State<SettingsSheet>
         });
         break;
       case UnlockOption.NO:
+        sl.get<SharedPrefsUtil>().setLock(false).then((_) {
+          setState(() {
+            _curUnlockSetting = UnlockSetting(UnlockOption.NO);
+          });
+        });
+        break;
+      default:
         sl.get<SharedPrefsUtil>().setLock(false).then((_) {
           setState(() {
             _curUnlockSetting = UnlockSetting(UnlockOption.NO);
@@ -376,28 +391,26 @@ class _SettingsSheetState extends State<SettingsSheet>
                 title: Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
                   child: Text(
-                    AppLocalization.of(context).currency,
+                    AppLocalization.of(context)!.currency,
                     style: AppStyles.textStyleSize20W700Primary(context),
                   ),
                 ),
                 children: _buildCurrencyOptions(),
               );
             });
-    if (selection != null) {
-      sl
-          .get<SharedPrefsUtil>()
-          .setCurrency(AvailableCurrency(selection))
-          .then((_) {
-        if (StateContainer.of(context).curCurrency.currency != selection) {
-          setState(() {
-            StateContainer.of(context).curCurrency =
-                AvailableCurrency(selection);
-            StateContainer.of(context)
-                .updateCurrency(AvailableCurrency(selection));
-          });
-        }
-      });
-    }
+
+    sl
+        .get<SharedPrefsUtil>()
+        .setCurrency(AvailableCurrency(selection))
+        .then((_) {
+      if (StateContainer.of(context).curCurrency.currency != selection) {
+        setState(() {
+          StateContainer.of(context).curCurrency = AvailableCurrency(selection);
+          StateContainer.of(context)
+              .updateCurrency(AvailableCurrency(selection));
+        });
+      }
+    });
   }
 
   List<Widget> _buildLanguageOptions() {
@@ -447,26 +460,21 @@ class _SettingsSheetState extends State<SettingsSheet>
             title: Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
-                AppLocalization.of(context).language,
+                AppLocalization.of(context)!.language,
                 style: AppStyles.textStyleSize20W700Primary(context),
               ),
             ),
             children: _buildLanguageOptions(),
           );
         });
-    if (selection != null) {
-      sl
-          .get<SharedPrefsUtil>()
-          .setLanguage(LanguageSetting(selection))
-          .then((_) {
-        if (StateContainer.of(context).curLanguage.language != selection) {
-          setState(() {
-            StateContainer.of(context)
-                .updateLanguage(LanguageSetting(selection));
-          });
-        }
-      });
-    }
+
+    sl.get<SharedPrefsUtil>().setLanguage(LanguageSetting(selection)).then((_) {
+      if (StateContainer.of(context).curLanguage.language != selection) {
+        setState(() {
+          StateContainer.of(context).updateLanguage(LanguageSetting(selection));
+        });
+      }
+    });
   }
 
   List<Widget> _buildLockTimeoutOptions() {
@@ -512,7 +520,7 @@ class _SettingsSheetState extends State<SettingsSheet>
             title: Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
-                AppLocalization.of(context).autoLockHeader,
+                AppLocalization.of(context)!.autoLockHeader,
                 style: AppStyles.textStyleSize20W700Primary(context),
               ),
             ),
@@ -537,47 +545,47 @@ class _SettingsSheetState extends State<SettingsSheet>
   }
 
   Future<bool> _onBackButtonPressed() async {
-    if (_contactsOpen) {
+    if (_contactsOpen!) {
       setState(() {
         _contactsOpen = false;
       });
-      _contactsController.reverse();
+      _contactsController!.reverse();
       return false;
-    } else if (_securityOpen) {
+    } else if (_securityOpen!) {
       setState(() {
         _securityOpen = false;
       });
-      _securityController.reverse();
+      _securityController!.reverse();
       return false;
-    } else if (_aboutOpen) {
+    } else if (_aboutOpen!) {
       setState(() {
         _aboutOpen = false;
       });
-      _aboutController.reverse();
+      _aboutController!.reverse();
       return false;
-    } else if (_customUrlOpen) {
+    } else if (_customUrlOpen!) {
       setState(() {
         _customUrlOpen = false;
       });
-      _customUrlController.reverse();
+      _customUrlController!.reverse();
       return false;
-    } else if (_nodesOpen) {
+    } else if (_nodesOpen!) {
       setState(() {
         _nodesOpen = false;
       });
-      _nodesController.reverse();
+      _nodesController!.reverse();
       return false;
-    } else if (_walletFAQOpen) {
+    } else if (_walletFAQOpen!) {
       setState(() {
         _walletFAQOpen = false;
       });
-      _walletFAQController.reverse();
+      _walletFAQController!.reverse();
       return false;
-    } else if (_nftOpen) {
+    } else if (_nftOpen!) {
       setState(() {
         _nftOpen = false;
       });
-      _nftController.reverse();
+      _nftController!.reverse();
       return false;
     }
     return true;
@@ -596,24 +604,24 @@ class _SettingsSheetState extends State<SettingsSheet>
             ),
             buildMainSettings(context),
             SlideTransition(
-                position: _contactsOffsetFloat,
-                child: ContactsList(_contactsController, _contactsOpen)),
+                position: _contactsOffsetFloat!,
+                child: ContactsList(_contactsController!, _contactsOpen!)),
             SlideTransition(
-                position: _securityOffsetFloat,
+                position: _securityOffsetFloat!,
                 child: buildSecurityMenu(context)),
             SlideTransition(
-                position: _aboutOffsetFloat, child: buildAboutMenu(context)),
+                position: _aboutOffsetFloat!, child: buildAboutMenu(context)),
             SlideTransition(
-                position: _nodesOffsetFloat,
-                child: NodesList(_nodesController, _nodesOpen)),
+                position: _nodesOffsetFloat!,
+                child: NodesList(_nodesController!, _nodesOpen!)),
             SlideTransition(
-                position: _customUrlOffsetFloat,
-                child: CustomUrl(_customUrlController, _customUrlOpen)),
+                position: _customUrlOffsetFloat!,
+                child: CustomUrl(_customUrlController!, _customUrlOpen!)),
             SlideTransition(
-                position: _walletFAQOffsetFloat,
-                child: WalletFAQ(_walletFAQController, _walletFAQOpen)),
+                position: _walletFAQOffsetFloat!,
+                child: WalletFAQ(_walletFAQController!, _walletFAQOpen!)),
             SlideTransition(
-                position: _nftOffsetFloat, child: buildNFTMenu(context)),
+                position: _nftOffsetFloat!, child: buildNFTMenu(context)),
           ],
         ),
       ),
@@ -649,66 +657,51 @@ class _SettingsSheetState extends State<SettingsSheet>
                     Container(
                       margin: const EdgeInsetsDirectional.only(
                           start: 30.0, bottom: 10.0),
-                      child: Text(AppLocalization.of(context).informations,
+                      child: Text(AppLocalization.of(context)!.informations,
                           style:
                               AppStyles.textStyleSize16W100Primary60(context)),
                     ),
-                    StateContainer.of(context).wallet != null &&
-                            StateContainer.of(context).wallet.accountBalance !=
-                                null &&
-                            StateContainer.of(context)
-                                    .wallet
-                                    .accountBalance
-                                    .uco !=
-                                null &&
-                            StateContainer.of(context)
-                                    .wallet
-                                    .accountBalance
-                                    .uco >
-                                0
-                        ? Divider(
-                            height: 2,
-                            color:
-                                StateContainer.of(context).curTheme.primary15,
-                          )
-                        : const SizedBox(),
-                    StateContainer.of(context).wallet != null &&
-                            StateContainer.of(context).wallet.accountBalance !=
-                                null &&
-                            StateContainer.of(context)
-                                    .wallet
-                                    .accountBalance
-                                    .uco !=
-                                null &&
-                            StateContainer.of(context)
-                                    .wallet
-                                    .accountBalance
-                                    .uco >
-                                0
-                        ? AppSettings.buildSettingsListItemSingleLineWithInfos(
-                            context,
-                            AppLocalization.of(context).nftHeader,
-                            AppLocalization.of(context).nftHeaderDesc,
-                            icon: 'assets/icons/nft.png', onPressed: () {
-                            setState(() {
-                              _nftOpen = true;
-                            });
-                            _nftController.forward();
-                          })
-                        : const SizedBox(),
+                    if (StateContainer.of(context).wallet != null &&
+                        StateContainer.of(context).wallet!.accountBalance.uco !=
+                            null &&
+                        StateContainer.of(context).wallet!.accountBalance.uco! >
+                            0)
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.primary15,
+                      )
+                    else
+                      const SizedBox(),
+                    if (StateContainer.of(context).wallet != null &&
+                        StateContainer.of(context).wallet!.accountBalance.uco !=
+                            null &&
+                        StateContainer.of(context).wallet!.accountBalance.uco! >
+                            0)
+                      AppSettings.buildSettingsListItemSingleLineWithInfos(
+                          context,
+                          AppLocalization.of(context)!.nftHeader,
+                          AppLocalization.of(context)!.nftHeaderDesc,
+                          icon: 'assets/icons/nft.png', onPressed: () {
+                        setState(() {
+                          _nftOpen = true;
+                        });
+                        _nftController!.forward();
+                      })
+                    else
+                      const SizedBox(),
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
                     ),
                     AppSettings.buildSettingsListItemSingleLineWithInfos(
                         context,
-                        AppLocalization.of(context).nodesHeader,
-                        AppLocalization.of(context).nodesHeaderDesc,
+                        AppLocalization.of(context)!.nodesHeader,
+                        AppLocalization.of(context)!.nodesHeaderDesc,
                         icon: 'assets/icons/nodes.png', onPressed: () {
                       setState(() {
                         _nodesOpen = true;
                       });
-                      _nodesController.forward();
+                      _nodesController!.forward();
                     }),
                     Divider(
                       height: 2,
@@ -716,13 +709,13 @@ class _SettingsSheetState extends State<SettingsSheet>
                     ),
                     AppSettings.buildSettingsListItemSingleLineWithInfos(
                         context,
-                        AppLocalization.of(context).walletFAQHeader,
-                        AppLocalization.of(context).walletFAQDesc,
+                        AppLocalization.of(context)!.walletFAQHeader,
+                        AppLocalization.of(context)!.walletFAQDesc,
                         icon: 'assets/icons/faq.png', onPressed: () {
                       setState(() {
                         _walletFAQOpen = true;
                       });
-                      _walletFAQController.forward();
+                      _walletFAQController!.forward();
                     }),
                     Divider(
                       height: 2,
@@ -730,12 +723,12 @@ class _SettingsSheetState extends State<SettingsSheet>
                     ),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
-                        AppLocalization.of(context).aboutHeader,
+                        AppLocalization.of(context)!.aboutHeader,
                         'assets/icons/help.png', onPressed: () {
                       setState(() {
                         _aboutOpen = true;
                       });
-                      _aboutController.forward();
+                      _aboutController!.forward();
                     }),
                     Divider(
                       height: 2,
@@ -744,7 +737,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     Container(
                       margin: const EdgeInsetsDirectional.only(
                           start: 30.0, top: 20.0, bottom: 10.0),
-                      child: Text(AppLocalization.of(context).manage,
+                      child: Text(AppLocalization.of(context)!.manage,
                           style:
                               AppStyles.textStyleSize16W100Primary60(context)),
                     ),
@@ -754,13 +747,13 @@ class _SettingsSheetState extends State<SettingsSheet>
                     ),
                     AppSettings.buildSettingsListItemSingleLineWithInfos(
                         context,
-                        AppLocalization.of(context).addressBookHeader,
-                        AppLocalization.of(context).addressBookDesc,
+                        AppLocalization.of(context)!.addressBookHeader,
+                        AppLocalization.of(context)!.addressBookDesc,
                         icon: 'assets/icons/address-book.png', onPressed: () {
                       setState(() {
                         _contactsOpen = true;
                       });
-                      _contactsController.forward();
+                      _contactsController!.forward();
                     }),
                     Divider(
                       height: 2,
@@ -768,13 +761,13 @@ class _SettingsSheetState extends State<SettingsSheet>
                     ),
                     AppSettings.buildSettingsListItemSingleLineWithInfos(
                         context,
-                        AppLocalization.of(context).customUrlHeader,
-                        AppLocalization.of(context).customUrlDesc,
+                        AppLocalization.of(context)!.customUrlHeader,
+                        AppLocalization.of(context)!.customUrlDesc,
                         icon: 'assets/icons/url.png', onPressed: () {
                       setState(() {
                         _customUrlOpen = true;
                       });
-                      _customUrlController.forward();
+                      _customUrlController!.forward();
                     }),
                     Divider(
                       height: 2,
@@ -783,7 +776,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     Container(
                       margin: const EdgeInsetsDirectional.only(
                           start: 30.0, top: 20.0, bottom: 10.0),
-                      child: Text(AppLocalization.of(context).preferences,
+                      child: Text(AppLocalization.of(context)!.preferences,
                           style:
                               AppStyles.textStyleSize16W100Primary60(context)),
                     ),
@@ -793,8 +786,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                     ),
                     AppSettings.buildSettingsListItemWithDefaultValueWithInfos(
                         context,
-                        AppLocalization.of(context).changeCurrencyHeader,
-                        AppLocalization.of(context).changeCurrencyDesc,
+                        AppLocalization.of(context)!.changeCurrencyHeader,
+                        AppLocalization.of(context)!.changeCurrencyDesc,
                         StateContainer.of(context).curCurrency,
                         'assets/icons/money-currency.png',
                         _currencyDialog),
@@ -804,7 +797,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     ),
                     AppSettings.buildSettingsListItemWithDefaultValue(
                         context,
-                        AppLocalization.of(context).language,
+                        AppLocalization.of(context)!.language,
                         StateContainer.of(context).curLanguage,
                         'assets/icons/languages.png',
                         _languageDialog),
@@ -814,12 +807,12 @@ class _SettingsSheetState extends State<SettingsSheet>
                     ),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
-                        AppLocalization.of(context).securityHeader,
+                        AppLocalization.of(context)!.securityHeader,
                         'assets/icons/encrypted.png', onPressed: () {
                       setState(() {
                         _securityOpen = true;
                       });
-                      _securityController.forward();
+                      _securityController!.forward();
                     }),
                     Divider(
                       height: 2,
@@ -827,23 +820,23 @@ class _SettingsSheetState extends State<SettingsSheet>
                     ),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
-                        AppLocalization.of(context).logout,
+                        AppLocalization.of(context)!.logout,
                         'assets/icons/logout.png', onPressed: () {
                       AppDialogs.showConfirmDialog(
                           context,
                           CaseChange.toUpperCase(
-                              AppLocalization.of(context).warning, context),
-                          AppLocalization.of(context).logoutDetail,
-                          AppLocalization.of(context)
+                              AppLocalization.of(context)!.warning, context),
+                          AppLocalization.of(context)!.logoutDetail,
+                          AppLocalization.of(context)!
                               .logoutAction
                               .toUpperCase(), () {
                         // Show another confirm dialog
                         AppDialogs.showConfirmDialog(
                             context,
-                            AppLocalization.of(context).logoutAreYouSure,
-                            AppLocalization.of(context).logoutReassurance,
+                            AppLocalization.of(context)!.logoutAreYouSure,
+                            AppLocalization.of(context)!.logoutReassurance,
                             CaseChange.toUpperCase(
-                                AppLocalization.of(context).yes, context), () {
+                                AppLocalization.of(context)!.yes, context), () {
                           // Delete all data
                           sl.get<DBHelper>().dropAll();
                           sl.get<Vault>().deleteAll().then((_) {
@@ -872,8 +865,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: <Color>[
-                          StateContainer.of(context).curTheme.backgroundDark,
-                          StateContainer.of(context).curTheme.backgroundDark00
+                          StateContainer.of(context).curTheme.backgroundDark!,
+                          StateContainer.of(context).curTheme.backgroundDark00!
                         ],
                         begin: const AlignmentDirectional(0.5, -1.0),
                         end: const AlignmentDirectional(0.5, 1.0),
@@ -890,8 +883,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: <Color>[
-                          StateContainer.of(context).curTheme.backgroundDark00,
-                          StateContainer.of(context).curTheme.backgroundDark
+                          StateContainer.of(context).curTheme.backgroundDark00!,
+                          StateContainer.of(context).curTheme.backgroundDark!
                         ],
                         begin: const AlignmentDirectional(0.5, -1),
                         end: const AlignmentDirectional(0.5, 0.5),
@@ -913,7 +906,7 @@ class _SettingsSheetState extends State<SettingsSheet>
         color: StateContainer.of(context).curTheme.backgroundDark,
         boxShadow: <BoxShadow>[
           BoxShadow(
-              color: StateContainer.of(context).curTheme.overlay30,
+              color: StateContainer.of(context).curTheme.overlay30!,
               offset: const Offset(-5, 0),
               blurRadius: 20),
         ],
@@ -942,7 +935,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                               setState(() {
                                 _securityOpen = false;
                               });
-                              _securityController.reverse();
+                              _securityController!.reverse();
                             },
                             child: FaIcon(FontAwesomeIcons.chevronLeft,
                                 color:
@@ -951,7 +944,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       ),
                       //Security Header Text
                       Text(
-                        AppLocalization.of(context).securityHeader,
+                        AppLocalization.of(context)!.securityHeader,
                         style: AppStyles.textStyleSize28W700Primary(context),
                       ),
                     ],
@@ -968,7 +961,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     Container(
                       margin: const EdgeInsetsDirectional.only(
                           start: 30.0, bottom: 10),
-                      child: Text(AppLocalization.of(context).preferences,
+                      child: Text(AppLocalization.of(context)!.preferences,
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w100,
@@ -983,16 +976,16 @@ class _SettingsSheetState extends State<SettingsSheet>
                         color: StateContainer.of(context).curTheme.primary15,
                       )
                     else
-                      null,
+                      const SizedBox(),
                     if (_hasBiometrics)
                       AppSettings.buildSettingsListItemWithDefaultValue(
                           context,
-                          AppLocalization.of(context).authMethod,
+                          AppLocalization.of(context)!.authMethod,
                           _curAuthMethod,
                           'assets/icons/authentLaunch.png',
                           _authMethodDialog)
                     else
-                      null,
+                      const SizedBox(),
                     // Authenticate on Launch
                     if (StateContainer.of(context).encryptedSecret == null)
                       Column(children: <Widget>[
@@ -1002,7 +995,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                                 StateContainer.of(context).curTheme.primary15),
                         AppSettings.buildSettingsListItemWithDefaultValue(
                             context,
-                            AppLocalization.of(context).lockAppSetting,
+                            AppLocalization.of(context)!.lockAppSetting,
                             _curUnlockSetting,
                             'assets/icons/authentLaunch.png',
                             _lockDialog),
@@ -1016,7 +1009,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     ),
                     AppSettings.buildSettingsListItemSwitch(
                         context,
-                        AppLocalization.of(context).pinPadShuffle,
+                        AppLocalization.of(context)!.pinPadShuffle,
                         'assets/icons/shuffle.png',
                         _pinPadShuffleActive, onChanged: (bool _isSwitched) {
                       setState(() {
@@ -1033,7 +1026,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                     // Authentication Timer
                     AppSettings.buildSettingsListItemWithDefaultValue(
                       context,
-                      AppLocalization.of(context).autoLockHeader,
+                      AppLocalization.of(context)!.autoLockHeader,
                       _curTimeoutSetting,
                       'assets/icons/autoLock.png',
                       _lockTimeoutDialog,
@@ -1047,7 +1040,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       ),
                       AppSettings.buildSettingsListItemSingleLine(
                           context,
-                          AppLocalization.of(context).backupSecretPhrase,
+                          AppLocalization.of(context)!.backupSecretPhrase,
                           'assets/icons/key-word.png', onPressed: () async {
                         final AuthenticationMethod authMethod =
                             await sl.get<SharedPrefsUtil>().getAuthMethod();
@@ -1060,7 +1053,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                                 .get<BiometricUtil>()
                                 .authenticateWithBiometrics(
                                     context,
-                                    AppLocalization.of(context)
+                                    AppLocalization.of(context)!
                                         .fingerprintSeedBackup);
                             if (authenticated) {
                               sl
@@ -1096,8 +1089,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: <Color>[
-                          StateContainer.of(context).curTheme.backgroundDark,
-                          StateContainer.of(context).curTheme.backgroundDark00
+                          StateContainer.of(context).curTheme.backgroundDark!,
+                          StateContainer.of(context).curTheme.backgroundDark00!
                         ],
                         begin: const AlignmentDirectional(0.5, -1.0),
                         end: const AlignmentDirectional(0.5, 1.0),
@@ -1119,7 +1112,7 @@ class _SettingsSheetState extends State<SettingsSheet>
         color: StateContainer.of(context).curTheme.backgroundDark,
         boxShadow: <BoxShadow>[
           BoxShadow(
-              color: StateContainer.of(context).curTheme.overlay30,
+              color: StateContainer.of(context).curTheme.overlay30!,
               offset: const Offset(-5, 0),
               blurRadius: 20),
         ],
@@ -1146,7 +1139,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                               setState(() {
                                 _aboutOpen = false;
                               });
-                              _aboutController.reverse();
+                              _aboutController!.reverse();
                             },
                             child: FaIcon(FontAwesomeIcons.chevronLeft,
                                 color:
@@ -1154,7 +1147,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                                 size: 24)),
                       ),
                       Text(
-                        AppLocalization.of(context).aboutHeader,
+                        AppLocalization.of(context)!.aboutHeader,
                         style: AppStyles.textStyleSize28W700Primary(context),
                       ),
                     ],
@@ -1184,7 +1177,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         color: StateContainer.of(context).curTheme.primary15),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
-                        AppLocalization.of(context)
+                        AppLocalization.of(context)!
                             .aboutGeneralTermsAndConditions,
                         'assets/icons/terms-and-conditions.png', onPressed: () {
                       Sheets.showAppHeightNineSheet(
@@ -1192,7 +1185,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                           widget: UIUtil.showWebview(
                               context,
                               'https://archethic.net',
-                              AppLocalization.of(context)
+                              AppLocalization.of(context)!
                                   .aboutGeneralTermsAndConditions));
                     }),
                     Divider(
@@ -1200,14 +1193,14 @@ class _SettingsSheetState extends State<SettingsSheet>
                         color: StateContainer.of(context).curTheme.primary15),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
-                        AppLocalization.of(context).aboutWalletServiceTerms,
+                        AppLocalization.of(context)!.aboutWalletServiceTerms,
                         'assets/icons/walletServiceTerms.png', onPressed: () {
                       Sheets.showAppHeightNineSheet(
                           context: context,
                           widget: UIUtil.showWebview(
                               context,
                               'https://archethic.net',
-                              AppLocalization.of(context)
+                              AppLocalization.of(context)!
                                   .aboutWalletServiceTerms));
                     }),
                     Divider(
@@ -1215,14 +1208,14 @@ class _SettingsSheetState extends State<SettingsSheet>
                         color: StateContainer.of(context).curTheme.primary15),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
-                        AppLocalization.of(context).aboutPrivacyPolicy,
+                        AppLocalization.of(context)!.aboutPrivacyPolicy,
                         'assets/icons/privacyPolicy.png', onPressed: () {
                       Sheets.showAppHeightNineSheet(
                           context: context,
                           widget: UIUtil.showWebview(
                               context,
                               'https://archethic.net',
-                              AppLocalization.of(context).aboutPrivacyPolicy));
+                              AppLocalization.of(context)!.aboutPrivacyPolicy));
                     }),
                   ].where(notNull).toList(),
                 ),
@@ -1235,8 +1228,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: <Color>[
-                          StateContainer.of(context).curTheme.backgroundDark,
-                          StateContainer.of(context).curTheme.backgroundDark00
+                          StateContainer.of(context).curTheme.backgroundDark!,
+                          StateContainer.of(context).curTheme.backgroundDark00!
                         ],
                         begin: const AlignmentDirectional(0.5, -1.0),
                         end: const AlignmentDirectional(0.5, 1.0),
@@ -1258,7 +1251,7 @@ class _SettingsSheetState extends State<SettingsSheet>
         color: StateContainer.of(context).curTheme.backgroundDark,
         boxShadow: <BoxShadow>[
           BoxShadow(
-              color: StateContainer.of(context).curTheme.overlay30,
+              color: StateContainer.of(context).curTheme.overlay30!,
               offset: const Offset(-5, 0),
               blurRadius: 20),
         ],
@@ -1286,7 +1279,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                               setState(() {
                                 _nftOpen = false;
                               });
-                              _nftController.reverse();
+                              _nftController!.reverse();
                             },
                             child: FaIcon(FontAwesomeIcons.chevronLeft,
                                 color:
@@ -1294,7 +1287,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                                 size: 24)),
                       ),
                       Text(
-                        AppLocalization.of(context).nftHeader,
+                        AppLocalization.of(context)!.nftHeader,
                         style: AppStyles.textStyleSize28W700Primary(context),
                       ),
                     ],
@@ -1313,7 +1306,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         color: StateContainer.of(context).curTheme.primary15),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
-                        AppLocalization.of(context).addNFTHeader,
+                        AppLocalization.of(context)!.addNFTHeader,
                         'assets/icons/addNft.png', onPressed: () {
                       Sheets.showAppHeightNineSheet(
                           context: context, widget: const AddNFTSheet());
@@ -1323,7 +1316,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         color: StateContainer.of(context).curTheme.primary15),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
-                        AppLocalization.of(context).transferNFT,
+                        AppLocalization.of(context)!.transferNFT,
                         'assets/icons/transferNft.png', onPressed: () {
                       /*Sheets.showAppHeightNineSheet(
                           context: context,
@@ -1346,8 +1339,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: <Color>[
-                          StateContainer.of(context).curTheme.backgroundDark,
-                          StateContainer.of(context).curTheme.backgroundDark00
+                          StateContainer.of(context).curTheme.backgroundDark!,
+                          StateContainer.of(context).curTheme.backgroundDark00!
                         ],
                         begin: const AlignmentDirectional(0.5, -1.0),
                         end: const AlignmentDirectional(0.5, 1.0),
@@ -1365,16 +1358,16 @@ class _SettingsSheetState extends State<SettingsSheet>
 
   Future<void> authenticateWithPin() async {
     // PIN Authentication
-    final String expectedPin = await sl.get<Vault>().getPin();
+    final String? expectedPin = await sl.get<Vault>().getPin();
     final bool auth = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
       return PinScreen(
         PinOverlayType.ENTER_PIN,
-        expectedPin: expectedPin,
-        description: AppLocalization.of(context).pinSecretPhraseBackup,
+        expectedPin: expectedPin!,
+        description: AppLocalization.of(context)!.pinSecretPhraseBackup,
       );
     })) as bool;
-    if (auth != null && auth) {
+    if (auth) {
       await Future<void>.delayed(const Duration(milliseconds: 200));
       StateContainer.of(context).getSeed().then((String seed) {
         Sheets.showAppHeightNineSheet(

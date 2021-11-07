@@ -1,8 +1,7 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:math';
 
+// ignore: avoid_classes_with_only_static_members
 class RandomUtil {
   static String generateEncryptionSecret(int length) {
     String result = ''; // Resulting passcode

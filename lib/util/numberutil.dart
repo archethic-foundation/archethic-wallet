@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:math';
 
@@ -7,6 +5,7 @@ import 'dart:math';
 import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
 
+// ignore: avoid_classes_with_only_static_members
 class NumberUtil {
   static const int maxDecimalDigits = 6; // Max digits after decimal
 
@@ -27,7 +26,8 @@ class NumberUtil {
   ///
   static double truncateDecimal(Decimal input,
       {int digits = maxDecimalDigits}) {
-    return (input * Decimal.fromInt(pow(10, digits))).truncateToDouble() /
+    return (input * Decimal.fromInt(pow(10, digits).toInt()))
+            .truncateToDouble() /
         pow(10, digits);
   }
 

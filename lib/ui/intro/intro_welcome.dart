@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -42,8 +40,8 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: <Color>[
-                  StateContainer.of(context).curTheme.backgroundDark,
-                  StateContainer.of(context).curTheme.background
+                  StateContainer.of(context).curTheme.backgroundDark!,
+                  StateContainer.of(context).curTheme.background!
                 ],
               ),
             ),
@@ -56,7 +54,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
               onTapAnimation: true,
               particleColor: StateContainer.of(context)
                   .curTheme
-                  .primary10
+                  .primary10!
                   .withAlpha(150)
                   .withOpacity(0.2),
               awayAnimationDuration: const Duration(milliseconds: 600),
@@ -107,7 +105,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                                   horizontal: smallScreen(context) ? 30 : 40,
                                   vertical: 20),
                               child: Text(
-                                AppLocalization.of(context).welcomeText,
+                                AppLocalization.of(context)!.welcomeText,
                                 style: AppStyles.textStyleSize14W600Primary(
                                     context),
                               ),
@@ -137,9 +135,10 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                                           seed,
                                           await sl
                                               .get<Vault>()
-                                              .getSessionKey())));
+                                              .getSessionKey())!));
                                   AppUtil()
-                                      .loginAccount(seed, context)
+                                      .loginAccount(seed, context,
+                                          forceNewAccount: true)
                                       .then((_) {
                                     Navigator.of(context).pushNamed(
                                       '/intro_backup_safety',
@@ -156,7 +155,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                             AppButton.buildAppButton(
                                 context,
                                 AppButtonType.PRIMARY_OUTLINE,
-                                AppLocalization.of(context).importWallet,
+                                AppLocalization.of(context)!.importWallet,
                                 Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                               Navigator.of(context).pushNamed('/intro_import');
                             }),

@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -14,6 +12,7 @@ import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
 
+// ignore: avoid_classes_with_only_static_members
 class AppSettings {
   //Settings item with a dropdown option
   static Widget buildSettingsListItemWithDefaultValue(
@@ -83,11 +82,7 @@ class AppSettings {
       {bool disabled = false}) {
     return TextButton(
       onPressed: () {
-        if (onPressed != null) {
-          onPressed();
-        } else {
-          return;
-        }
+        onPressed();
       },
       child: Container(
         height: 60.0,
@@ -141,7 +136,7 @@ class AppSettings {
 
   static Widget buildSettingsListItemSingleLineWithInfos(
       BuildContext context, String heading, String info,
-      {Function onPressed, String icon}) {
+      {Function? onPressed, String? icon}) {
     return TextButton(
       onPressed: () {
         if (onPressed != null) {
@@ -157,7 +152,7 @@ class AppSettings {
           children: <Widget>[
             Container(
                 margin: const EdgeInsetsDirectional.only(end: 13.0),
-                child: buildIconWidget(context, icon, 30, 30)),
+                child: buildIconWidget(context, icon!, 30, 30)),
             Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -196,7 +191,7 @@ class AppSettings {
   //Settings item without any dropdown option but rather a direct functionality
   static Widget buildSettingsListItemSingleLine(
       BuildContext context, String heading, String icon,
-      {Function onPressed}) {
+      {Function? onPressed}) {
     return TextButton(
       onPressed: () {
         if (onPressed != null) {
@@ -236,7 +231,7 @@ class AppSettings {
 
   static Widget buildSettingsListItemSwitch(
       BuildContext context, String heading, String icon, bool _isSwitched,
-      {Function onChanged}) {
+      {Function? onChanged}) {
     return TextButton(
       onPressed: () {},
       child: Container(
@@ -261,7 +256,7 @@ class AppSettings {
                       width: 60,
                     ),
                     Switch(
-                        value: _isSwitched ?? false,
+                        value: _isSwitched,
                         onChanged: (bool value) {
                           if (onChanged != null) {
                             _isSwitched = value;

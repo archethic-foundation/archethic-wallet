@@ -18,7 +18,7 @@ class LineChartWidget {
 
   static Widget buildTinyCoinsChart(BuildContext context) {
     if (StateContainer.of(context).chartInfos != null &&
-        StateContainer.of(context).chartInfos.data != null) {
+        StateContainer.of(context).chartInfos!.data != null) {
       return Stack(
         children: <Widget>[
           AspectRatio(
@@ -60,14 +60,14 @@ class LineChartWidget {
             child: Padding(
                 padding: const EdgeInsets.only(left: 5.0, top: 100.0),
                 child: StateContainer.of(context)
-                            .chartInfos
+                            .chartInfos!
                             .priceChangePercentage24h! >=
                         0
                     ? Row(
                         children: <Widget>[
                           Text(
                             StateContainer.of(context)
-                                    .chartInfos
+                                    .chartInfos!
                                     .priceChangePercentage24h!
                                     .toStringAsFixed(2) +
                                 '%',
@@ -84,7 +84,7 @@ class LineChartWidget {
                         children: <Widget>[
                           Text(
                             StateContainer.of(context)
-                                    .chartInfos
+                                    .chartInfos!
                                     .priceChangePercentage24h!
                                     .toStringAsFixed(2) +
                                 '%',
@@ -181,13 +181,13 @@ class LineChartWidget {
       borderData: FlBorderData(
           show: false,
           border: Border.all(color: const Color(0xff37434d), width: 1)),
-      minX: StateContainer.of(context).chartInfos.minX,
-      maxX: StateContainer.of(context).chartInfos.maxX,
-      minY: StateContainer.of(context).chartInfos.minY,
-      maxY: StateContainer.of(context).chartInfos.maxY,
+      minX: StateContainer.of(context).chartInfos!.minX,
+      maxX: StateContainer.of(context).chartInfos!.maxX,
+      minY: StateContainer.of(context).chartInfos!.minY,
+      maxY: StateContainer.of(context).chartInfos!.maxY,
       lineBarsData: <LineChartBarData>[
         LineChartBarData(
-          spots: StateContainer.of(context).chartInfos.data,
+          spots: StateContainer.of(context).chartInfos!.data,
           isCurved: true,
           colors: gradientColors,
           barWidth: 1,

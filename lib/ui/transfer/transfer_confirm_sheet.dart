@@ -1,3 +1,5 @@
+// ignore_for_file: cancel_subscriptions
+
 // Dart imports:
 import 'dart:async';
 
@@ -129,8 +131,8 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     animationOpen = true;
     Navigator.of(context).push(AnimationLoadingOverlay(
         AnimationType.SEND,
-        StateContainer.of(context).curTheme.animationOverlayStrong,
-        StateContainer.of(context).curTheme.animationOverlayMedium,
+        StateContainer.of(context).curTheme.animationOverlayStrong!,
+        StateContainer.of(context).curTheme.animationOverlayMedium!,
         onPoppedCallback: () => animationOpen = false));
   }
 
@@ -290,12 +292,12 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         .push(MaterialPageRoute(builder: (BuildContext context) {
       return PinScreen(
         PinOverlayType.ENTER_PIN,
-        expectedPin: expectedPin,
+        expectedPin: expectedPin!,
         description: '',
       );
     })) as bool;
     if (auth) {
-      await Future<Duration>.delayed(const Duration(milliseconds: 200));
+      await Future<void>.delayed(const Duration(milliseconds: 200));
       EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
     }
   }

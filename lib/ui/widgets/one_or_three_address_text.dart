@@ -1,4 +1,4 @@
-// @dart=2.9
+// ignore_for_file: must_be_immutable
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -12,17 +12,17 @@ class OneOrThreeLineAddressText extends StatelessWidget {
   OneOrThreeLineAddressText(
       {@required this.address, @required this.type, this.contactName});
 
-  String address;
-  String contactName;
-  AddressTextType type;
+  String? address;
+  String? contactName;
+  AddressTextType? type;
 
   @override
   Widget build(BuildContext context) {
     // One line for small displays
     if (MediaQuery.of(context).size.height < 667) {
-      final String stringPartOne = address.substring(0, 12);
-      final String stringPartFive = address.substring(36);
-      switch (type) {
+      final String stringPartOne = address!.substring(0, 12);
+      final String stringPartFive = address!.substring(36);
+      switch (type!) {
         case AddressTextType.PRIMARY60:
           return Column(
             children: <Widget>[
@@ -106,36 +106,36 @@ class OneOrThreeLineAddressText extends StatelessWidget {
     String stringPartThree = '';
     String stringPartFour = '';
     String stringPartFive = '';
-    if (address.length >= 12) {
-      stringPartOne = address.substring(0, 12);
+    if (address!.length >= 12) {
+      stringPartOne = address!.substring(0, 12);
     } else {
-      stringPartOne = address.substring(0, address.length);
+      stringPartOne = address!.substring(0, address!.length);
     }
-    if (address.length >= 22) {
-      stringPartTwo = address.substring(12, 22);
+    if (address!.length >= 22) {
+      stringPartTwo = address!.substring(12, 22);
     } else {
-      if (address.length > 22) {
-        stringPartTwo = address.substring(12, address.length);
+      if (address!.length > 22) {
+        stringPartTwo = address!.substring(12, address!.length);
       }
     }
-    if (address.length >= 44) {
-      stringPartThree = address.substring(22, 44);
+    if (address!.length >= 44) {
+      stringPartThree = address!.substring(22, 44);
     } else {
-      if (address.length > 22) {
-        stringPartThree = address.substring(22, address.length);
+      if (address!.length > 22) {
+        stringPartThree = address!.substring(22, address!.length);
       }
     }
-    if (address.length >= 59) {
-      stringPartFour = address.substring(44, 59);
+    if (address!.length >= 59) {
+      stringPartFour = address!.substring(44, 59);
     } else {
-      if (address.length > 44) {
-        stringPartFour = address.substring(44, address.length);
+      if (address!.length > 44) {
+        stringPartFour = address!.substring(44, address!.length);
       } else {}
     }
-    if (address.length >= 60) {
-      stringPartFive = address.substring(59);
+    if (address!.length >= 60) {
+      stringPartFive = address!.substring(59);
     }
-    switch (type) {
+    switch (type!) {
       case AddressTextType.PRIMARY60:
         return Column(
           children: <Widget>[

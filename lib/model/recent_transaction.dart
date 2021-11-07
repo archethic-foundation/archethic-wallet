@@ -14,6 +14,20 @@ class RecentTransaction {
     this.type,
   });
 
+  factory RecentTransaction.fromJson(Map<String, dynamic> json) =>
+      RecentTransaction(
+        typeTx: json['typeTx'] == null ? null : json['typeTx'].toInt(),
+        recipient: json['recipient'],
+        amount: json['amount'] == null ? null : json['amount'].toDouble(),
+        fee: json['fee'] == null ? null : json['fee'].toDouble(),
+        from: json['from'],
+        nftAddress: json['nftAddress'],
+        nftName: json['nftName'],
+        content: json['content'],
+        timestamp: json['timestamp'],
+        type: json['type'],
+      );
+
   /// Types of transaction
   static const int TRANSFER_INPUT = 1;
   static const int TRANSFER_OUTPUT = 2;
@@ -49,21 +63,7 @@ class RecentTransaction {
   /// Type: UCO/NFT/Call
   String? type;
 
-  factory RecentTransaction.fromJson(Map<String, dynamic> json) =>
-      RecentTransaction(
-        typeTx: json['typeTx'] == null ? null : json['typeTx'].toInt(),
-        recipient: json['recipient'],
-        amount: json['amount'] == null ? null : json['amount'].toDouble(),
-        fee: json['fee'] == null ? null : json['fee'].toDouble(),
-        from: json['from'],
-        nftAddress: json['nftAddress'],
-        nftName: json['nftName'],
-        content: json['content'],
-        timestamp: json['timestamp'],
-        type: json['type'],
-      );
-
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => <String, dynamic>{
         'typeTx': typeTx,
         'recipient': recipient,
         'amount': amount,

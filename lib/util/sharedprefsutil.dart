@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Dart imports:
 import 'dart:async';
 import 'dart:ui';
@@ -69,7 +67,7 @@ class SharedPrefsUtil {
   // For encrypted data
   Future<void> setEncrypted(String key, String value) async {
     // Retrieve/Generate encryption password
-    String secret = await sl.get<Vault>().getEncryptionPhrase();
+    String? secret = await sl.get<Vault>().getEncryptionPhrase();
     if (secret == null) {
       secret = RandomUtil.generateEncryptionSecret(16) +
           ':' +
@@ -83,8 +81,8 @@ class SharedPrefsUtil {
     prefs.setString(key, encrypter.encrypt(value));
   }
 
-  Future<String> getEncrypted(String key) async {
-    final String secret = await sl.get<Vault>().getEncryptionPhrase();
+  Future<String?> getEncrypted(String key) async {
+    final String? secret = await sl.get<Vault>().getEncryptionPhrase();
     if (secret == null) {
       return null;
     }
@@ -92,7 +90,7 @@ class SharedPrefsUtil {
     final Salsa20Encryptor encrypter =
         Salsa20Encryptor(secret.split(':')[0], secret.split(':')[1]);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String encrypted = prefs.get(key);
+    final String? encrypted = prefs.get(key).toString();
     if (encrypted == null) {
       return null;
     }
@@ -247,11 +245,8 @@ class SharedPrefsUtil {
     }
   }
 
-  Future<DateTime> getLockDate() async {
+  Future<DateTime?> getLockDate() async {
     final String lockDateStr = await get(pin_lock_until);
-    if (lockDateStr == null) {
-      return null;
-    }
     return DateFormat.yMd().add_jms().parseUtc(lockDateStr);
   }
 

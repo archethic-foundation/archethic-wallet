@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,11 +12,11 @@ import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 
+// ignore: avoid_classes_with_only_static_members
 class QRcodeDisplay {
   static Widget buildQRCodeDisplay(
       BuildContext context, Animation<double> _opacityAnimation) {
-    return StateContainer.of(context).selectedAccount == null ||
-            StateContainer.of(context).selectedAccount.lastAddress == null
+    return StateContainer.of(context).selectedAccount.lastAddress == null
         ? const SizedBox()
         : Stack(
             children: <Widget>[
@@ -34,7 +32,7 @@ class QRcodeDisplay {
                       BoxShadow(
                         color: StateContainer.of(context)
                             .curTheme
-                            .backgroundDarkest,
+                            .backgroundDarkest!,
                         blurRadius: 5.0,
                         spreadRadius: 0.0,
                         offset: const Offset(
@@ -56,7 +54,7 @@ class QRcodeDisplay {
                               child: QrImage(
                                 data: StateContainer.of(context)
                                     .selectedAccount
-                                    .lastAddress,
+                                    .lastAddress!,
                                 version: QrVersions.auto,
                                 size: 100.0,
                               ),
@@ -72,7 +70,7 @@ class QRcodeDisplay {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 5.0, top: 5.0),
                   child: Text(
-                    AppLocalization.of(context).addressInfos,
+                    AppLocalization.of(context)!.addressInfos,
                     style: AppStyles.textStyleSize12W100Primary60(context),
                   ),
                 ),
@@ -83,8 +81,7 @@ class QRcodeDisplay {
 
   static Widget buildAddressDisplay(
       BuildContext context, Animation<double> _opacityAnimation) {
-    return StateContainer.of(context).selectedAccount == null ||
-            StateContainer.of(context).selectedAccount.lastAddress == null ||
+    return StateContainer.of(context).selectedAccount.lastAddress == null ||
             StateContainer.of(context).selectedAccount.lastAddress == ''
         ? const SizedBox()
         : Stack(
@@ -101,7 +98,7 @@ class QRcodeDisplay {
                       BoxShadow(
                         color: StateContainer.of(context)
                             .curTheme
-                            .backgroundDarkest,
+                            .backgroundDarkest!,
                         blurRadius: 5.0,
                         spreadRadius: 0.0,
                         offset: const Offset(
@@ -123,29 +120,29 @@ class QRcodeDisplay {
                                 Text(
                                     StateContainer.of(context)
                                         .selectedAccount
-                                        .lastAddress
+                                        .lastAddress!
                                         .substring(0, 16),
                                     style: AppStyles.textStyleSize14W100Primary(
                                         context)),
                                 Text(
                                     StateContainer.of(context)
                                         .selectedAccount
-                                        .lastAddress
+                                        .lastAddress!
                                         .substring(16, 32),
                                     style: AppStyles.textStyleSize14W100Primary(
                                         context)),
                                 Text(
                                     StateContainer.of(context)
                                         .selectedAccount
-                                        .lastAddress
+                                        .lastAddress!
                                         .substring(32, 48),
                                     style: AppStyles.textStyleSize14W100Primary(
                                         context)),
                                 Text(
                                     StateContainer.of(context)
                                         .selectedAccount
-                                        .lastAddress
-                                        .substring(48, 64),
+                                        .lastAddress!
+                                        .substring(48),
                                     style: AppStyles.textStyleSize14W100Primary(
                                         context)),
                               ],
@@ -161,7 +158,7 @@ class QRcodeDisplay {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 5.0, top: 5.0),
                   child: Text(
-                    'Address informations',
+                    AppLocalization.of(context)!.addressInfos,
                     style: AppStyles.textStyleSize12W100Primary(context),
                   ),
                 ),
@@ -178,7 +175,7 @@ class QRcodeDisplay {
                     child: TextButton(
                       onPressed: () {
                         Clipboard.setData(ClipboardData(
-                            text: StateContainer.of(context).wallet.address));
+                            text: StateContainer.of(context).wallet!.address));
                         UIUtil.showSnackbar('Address copied', context);
                       },
                       child: FaIcon(FontAwesomeIcons.solidCopy,

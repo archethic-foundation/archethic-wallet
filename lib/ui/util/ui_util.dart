@@ -1,3 +1,5 @@
+// ignore_for_file: cancel_subscriptions
+
 // Dart imports:
 import 'dart:async';
 
@@ -18,6 +20,7 @@ import 'package:archethic_mobile_wallet/ui/util/exceptions.dart';
 enum ThreeLineAddressTextType { PRIMARY60, PRIMARY, SUCCESS, SUCCESS_FULL }
 enum OneLineAddressTextType { PRIMARY60, PRIMARY, SUCCESS }
 
+// ignore: avoid_classes_with_only_static_members
 class UIUtil {
   static Widget threeLinetextStyleSmallestW400Text(
       BuildContext context, String address,

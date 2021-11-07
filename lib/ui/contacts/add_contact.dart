@@ -187,7 +187,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                       : '',
                   keyboardType: TextInputType.text,
                   style: AppStyles.textStyleSize16W600Primary(context),
-                  inputFormatters: [
+                  inputFormatters: <TextInputFormatter>[
                     LengthLimitingTextInputFormatter(20),
                     ContactInputFormatter()
                   ],
@@ -233,12 +233,12 @@ class _AddContactSheetState extends State<AddContactSheet> {
                       icon: FontAwesomeIcons.qrcode,
                       onPressed: () async {
                         UIUtil.cancelLockEvent();
-                        final String scanResult = await UserDataUtil.getQRData(
+                        final String? scanResult = await UserDataUtil.getQRData(
                             DataType.ADDRESS, context);
                         if (!QRScanErrs.ERROR_LIST.contains(scanResult)) {
                           if (mounted) {
                             setState(() {
-                              _addressController!.text = scanResult;
+                              _addressController!.text = scanResult!;
                               _addressValidationText = '';
                               _addressValid = true;
                               _addressValidAndUnfocused = true;
@@ -255,7 +255,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                       if (!_showPasteButton!) {
                         return;
                       }
-                      final String data =
+                      final String? data =
                           await UserDataUtil.getClipboardText(DataType.ADDRESS);
                       if (data != null) {
                         setState(() {

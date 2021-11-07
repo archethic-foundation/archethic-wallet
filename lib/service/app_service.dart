@@ -50,7 +50,7 @@ class AppService {
         List<RecentTransaction>.empty(growable: true);
 
     for (Transaction transaction in transactionChain) {
-      if (transaction.type! == 'nft') {
+      if (transaction.type!.toUpperCase() == 'NFT') {
         final RecentTransaction recentTransaction = RecentTransaction();
         recentTransaction.fee = 0;
         recentTransaction.timestamp = transaction.validationStamp!.timestamp!;
@@ -103,7 +103,7 @@ class AppService {
     // Transaction inputs for genesisAddress
     for (TransactionInput transaction in transactionInputsGenesisAddress) {
       final RecentTransaction recentTransaction = RecentTransaction();
-      if (transaction.type! == 'NFT') {
+      if (transaction.type!.toUpperCase() == 'NFT') {
         recentTransaction.nftAddress = transaction.nftAddress!;
       } else {
         recentTransaction.nftAddress = '';
@@ -121,7 +121,7 @@ class AppService {
     for (TransactionInput transaction in transactionInputs) {
       if (transaction.spent == true) {
         final RecentTransaction recentTransaction = RecentTransaction();
-        if (transaction.type! == 'NFT') {
+        if (transaction.type!.toUpperCase() == 'NFT') {
           recentTransaction.nftAddress = transaction.nftAddress!;
         } else {
           recentTransaction.nftAddress = '';

@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -9,11 +7,12 @@ import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/app_simpledialog.dart';
 
+// ignore: avoid_classes_with_only_static_members
 class AppDialogs {
   static void showConfirmDialog(BuildContext context, String title,
       String content, String buttonText, Function onPressed,
-      {String cancelText, Function cancelAction}) {
-    cancelText ??= AppLocalization.of(context).cancel.toUpperCase();
+      {String? cancelText, Function? cancelAction}) {
+    cancelText ??= AppLocalization.of(context)!.cancel.toUpperCase();
     showAppDialog(
       context: context,
       builder: (BuildContext context) {
@@ -29,7 +28,7 @@ class AppDialogs {
               child: Container(
                 constraints: const BoxConstraints(maxWidth: 100),
                 child: Text(
-                  cancelText,
+                  cancelText!,
                   style: AppStyles.textStyleSize12W600Primary(context),
                 ),
               ),
@@ -69,7 +68,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
       {this.onPoppedCallback});
 
   AnimationType type;
-  Function onPoppedCallback;
+  Function? onPoppedCallback;
   Color overlay85;
   Color overlay70;
 
@@ -88,7 +87,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   }
 
   @override
-  String get barrierLabel => null;
+  String? get barrierLabel => null;
 
   @override
   bool get maintainState => false;
@@ -96,7 +95,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   @override
   void didComplete(void result) {
     if (onPoppedCallback != null) {
-      onPoppedCallback();
+      onPoppedCallback!();
     }
     super.didComplete(result);
   }
@@ -122,7 +121,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
       default:
         return CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(
-                StateContainer.of(context).curTheme.primary60));
+                StateContainer.of(context).curTheme.primary60!));
     }
   }
 

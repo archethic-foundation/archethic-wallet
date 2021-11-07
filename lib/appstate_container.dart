@@ -1,4 +1,4 @@
-// @dart=2.9
+// ignore_for_file: cancel_subscriptions
 
 // Dart imports:
 import 'dart:async';
@@ -40,9 +40,9 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
 
 class _InheritedStateContainer extends InheritedWidget {
   const _InheritedStateContainer({
-    Key key,
-    @required this.data,
-    @required Widget child,
+    Key? key,
+    required this.data,
+    required Widget child,
   }) : super(key: key, child: child);
 
   final StateContainerState data;
@@ -52,13 +52,13 @@ class _InheritedStateContainer extends InheritedWidget {
 }
 
 class StateContainer extends StatefulWidget {
-  const StateContainer({@required this.child});
+  const StateContainer({required this.child});
 
   final Widget child;
 
   static StateContainerState of(BuildContext context) {
     return context
-        .dependOnInheritedWidgetOfExactType<_InheritedStateContainer>()
+        .dependOnInheritedWidgetOfExactType<_InheritedStateContainer>()!
         .data;
   }
 
@@ -70,10 +70,10 @@ class StateContainerState extends State<StateContainer> {
   // Minimum receive = 0.000001
   String receiveThreshold = BigInt.from(10).pow(24).toString();
 
-  AppWallet wallet;
+  AppWallet? wallet;
   bool recentTransactionsLoading = false;
   bool balanceLoading = false;
-  String currencyLocale;
+  String? currencyLocale;
   Locale deviceLocale = const Locale('en', 'US');
   AvailableCurrency curCurrency = AvailableCurrency(AvailableCurrencyEnum.USD);
   LanguageSetting curLanguage = LanguageSetting(AvailableLanguage.DEFAULT);
@@ -82,13 +82,13 @@ class StateContainerState extends State<StateContainer> {
   Account selectedAccount = Account(
       name: 'AB', index: 0, lastAccess: 0, selected: true, genesisAddress: '0');
   // Two most recently used accounts
-  Account recentLast;
-  Account recentSecondLast;
+  Account? recentLast;
+  Account? recentSecondLast;
 
   // When wallet is encrypted
-  String encryptedSecret;
+  String? encryptedSecret;
 
-  ChartInfos chartInfos;
+  ChartInfos? chartInfos;
 
   List<Contact> contactsRef = List<Contact>.empty(growable: true);
 
@@ -122,10 +122,10 @@ class StateContainerState extends State<StateContainer> {
   }
 
   // Subscriptions
-  StreamSubscription<BalanceGetEvent> _balanceGetEventSub;
-  StreamSubscription<PriceEvent> _priceEventSub;
-  StreamSubscription<ChartEvent> _chartEventSub;
-  StreamSubscription<TransactionsListEvent> _transactionsListEventSub;
+  StreamSubscription<BalanceGetEvent>? _balanceGetEventSub;
+  StreamSubscription<PriceEvent>? _priceEventSub;
+  StreamSubscription<ChartEvent>? _chartEventSub;
+  StreamSubscription<TransactionsListEvent>? _transactionsListEventSub;
 
   void _registerBus() {
     _balanceGetEventSub = EventTaxiImpl.singleton()
@@ -142,13 +142,9 @@ class StateContainerState extends State<StateContainer> {
       });
       setState(() {
         if (wallet != null) {
-          if (event == null) {
-            wallet.accountBalance = Balance(nft: null, uco: 0);
-          } else {
-            wallet.accountBalance = event.response;
-            sl.get<DBHelper>().updateAccountBalance(
-                selectedAccount, wallet.accountBalance.toString());
-          }
+          wallet!.accountBalance = event.response!;
+          sl.get<DBHelper>().updateAccountBalance(
+              selectedAccount, wallet!.accountBalance.toString());
         }
       });
     });
@@ -156,16 +152,16 @@ class StateContainerState extends State<StateContainer> {
     _transactionsListEventSub = EventTaxiImpl.singleton()
         .registerTo<TransactionsListEvent>()
         .listen((TransactionsListEvent event) {
-      wallet.history.clear();
+      wallet!.history.clear();
 
       // Iterate list in reverse (oldest to newest block)
-      if (event != null && event.transaction != null) {
-        for (RecentTransaction recentTransaction in event.transaction) {
+      if (event.transaction != null) {
+        for (RecentTransaction recentTransaction in event.transaction!) {
           setState(() {
-            wallet.history.add(recentTransaction);
+            wallet!.history.add(recentTransaction);
           });
         }
-        wallet.history.reversed.toList();
+        wallet!.history.reversed.toList();
       }
     });
 
@@ -173,16 +169,14 @@ class StateContainerState extends State<StateContainer> {
         .registerTo<PriceEvent>()
         .listen((PriceEvent event) {
       setState(() {
-        wallet.btcPrice = event == null ||
-                event.response == null ||
-                event.response.btcPrice == null
-            ? '0'
-            : event.response.btcPrice.toString();
-        wallet.localCurrencyPrice = event == null ||
-                event.response == null ||
-                event.response.localCurrencyPrice == null
-            ? '0'
-            : event.response.localCurrencyPrice.toString();
+        wallet!.btcPrice =
+            event.response == null || event.response!.btcPrice == null
+                ? '0'
+                : event.response!.btcPrice.toString();
+        wallet!.localCurrencyPrice =
+            event.response == null || event.response!.localCurrencyPrice == null
+                ? '0'
+                : event.response!.localCurrencyPrice.toString();
       });
     });
 
@@ -203,16 +197,16 @@ class StateContainerState extends State<StateContainer> {
 
   void _destroyBus() {
     if (_balanceGetEventSub != null) {
-      _balanceGetEventSub.cancel();
+      _balanceGetEventSub!.cancel();
     }
     if (_priceEventSub != null) {
-      _priceEventSub.cancel();
+      _priceEventSub!.cancel();
     }
     if (_chartEventSub != null) {
-      _chartEventSub.cancel();
+      _chartEventSub!.cancel();
     }
     if (_transactionsListEventSub != null) {
-      _transactionsListEventSub.cancel();
+      _transactionsListEventSub!.cancel();
     }
   }
 
@@ -259,7 +253,7 @@ class StateContainerState extends State<StateContainer> {
   Future<void> requestUpdateBalance() async {
     final Balance balance = await sl
         .get<AppService>()
-        .getBalanceGetResponse(selectedAccount.lastAddress);
+        .getBalanceGetResponse(selectedAccount.lastAddress!);
     EventTaxiImpl.singleton().fire(BalanceGetEvent(response: balance));
   }
 
@@ -273,8 +267,8 @@ class StateContainerState extends State<StateContainer> {
   Future<void> requestUpdateRecentTransactions(int page) async {
     final List<RecentTransaction> recentTransactions = await sl
         .get<AppService>()
-        .getRecentTransactions(
-            selectedAccount.genesisAddress, selectedAccount.lastAddress, page);
+        .getRecentTransactions(selectedAccount.genesisAddress!,
+            selectedAccount.lastAddress!, page);
     EventTaxiImpl.singleton()
         .fire(TransactionsListEvent(transaction: recentTransactions));
   }
@@ -284,37 +278,40 @@ class StateContainerState extends State<StateContainer> {
         .get<ApiCoinsService>()
         .getCoinsChart(curCurrency.getIso4217Code(), 1);
     chartInfos = ChartInfos();
-    chartInfos.minY = 9999999;
-    chartInfos.maxY = 0;
+    chartInfos!.minY = 9999999;
+    chartInfos!.maxY = 0;
     final CoinsCurrentDataResponse coinsCurrentDataResponse =
         await sl.get<ApiCoinsService>().getCoinsCurrentData();
-    if (coinsCurrentDataResponse.marketData.priceChangePercentage24HInCurrency[
+    if (coinsCurrentDataResponse
+                .marketData!.priceChangePercentage24HInCurrency![
             curCurrency.getIso4217Code().toLowerCase()] !=
         null) {
-      chartInfos.priceChangePercentage24h = coinsCurrentDataResponse
-              .marketData.priceChangePercentage24HInCurrency[
+      chartInfos!.priceChangePercentage24h = coinsCurrentDataResponse
+              .marketData!.priceChangePercentage24HInCurrency![
           curCurrency.getIso4217Code().toLowerCase()];
     } else {
-      chartInfos.priceChangePercentage24h =
-          coinsCurrentDataResponse.marketData.priceChangePercentage24H;
+      chartInfos!.priceChangePercentage24h =
+          coinsCurrentDataResponse.marketData!.priceChangePercentage24H;
     }
     final List<FlSpot> data = List<FlSpot>.empty(growable: true);
-    for (int i = 0; i < coinsPriceResponse.prices.length; i = i + 1) {
-      final FlSpot chart = FlSpot(coinsPriceResponse.prices[i][0],
-          double.tryParse(coinsPriceResponse.prices[i][1].toStringAsFixed(5)));
+    for (int i = 0; i < coinsPriceResponse.prices!.length; i = i + 1) {
+      final FlSpot chart = FlSpot(
+          coinsPriceResponse.prices![i][0],
+          double.tryParse(
+              coinsPriceResponse.prices![i][1].toStringAsFixed(5))!);
       data.add(chart);
-      if (chartInfos.minY > coinsPriceResponse.prices[i][1]) {
-        chartInfos.minY = coinsPriceResponse.prices[i][1];
+      if (chartInfos!.minY! > coinsPriceResponse.prices![i][1]) {
+        chartInfos!.minY = coinsPriceResponse.prices![i][1];
       }
 
-      if (chartInfos.maxY < coinsPriceResponse.prices[i][1]) {
-        chartInfos.maxY = coinsPriceResponse.prices[i][1];
+      if (chartInfos!.maxY! < coinsPriceResponse.prices![i][1]) {
+        chartInfos!.maxY = coinsPriceResponse.prices![i][1];
       }
     }
-    chartInfos.data = data;
-    chartInfos.minX = coinsPriceResponse.prices[0][0];
-    chartInfos.maxX =
-        coinsPriceResponse.prices[coinsPriceResponse.prices.length - 1][0];
+    chartInfos!.data = data;
+    chartInfos!.minX = coinsPriceResponse.prices![0][0];
+    chartInfos!.maxX =
+        coinsPriceResponse.prices![coinsPriceResponse.prices!.length - 1][0];
     EventTaxiImpl.singleton().fire(ChartEvent(chartInfos: chartInfos));
   }
 
@@ -337,20 +334,18 @@ class StateContainerState extends State<StateContainer> {
     });
   }
 
-  Future<void> requestUpdate({Account account, int page}) async {
-    await requestUpdateLastAddress(account);
+  Future<void> requestUpdate({Account? account, int? page = 0}) async {
+    await requestUpdateLastAddress(account!);
     setState(() {
       balanceLoading = true;
+      recentTransactionsLoading = true;
     });
     await requestUpdateBalance();
     setState(() {
       balanceLoading = false;
     });
     await requestUpdatePrice();
-    setState(() {
-      recentTransactionsLoading = true;
-    });
-    await requestUpdateRecentTransactions(page);
+    await requestUpdateRecentTransactions(page!);
     setState(() {
       recentTransactionsLoading = false;
     });
@@ -371,7 +366,8 @@ class StateContainerState extends State<StateContainer> {
       seed = uint8ListToHex(AppCrypt.decrypt(
           encryptedSecret, await sl.get<Vault>().getSessionKey()));
     } else {
-      seed = await sl.get<Vault>().getSeed();
+      seed = (await sl.get<Vault>().getSeed())!;
+      print(seed);
     }
     return seed;
   }

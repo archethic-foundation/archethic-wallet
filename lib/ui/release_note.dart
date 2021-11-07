@@ -1,5 +1,3 @@
-// @dart=2.9
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -67,7 +65,7 @@ class _ReleaseNoteState extends State<ReleaseNote> {
                           shape: BoxShape.circle,
                           border: Border.all(
                               color:
-                                  StateContainer.of(context).curTheme.primary,
+                                  StateContainer.of(context).curTheme.primary!,
                               width: MediaQuery.of(context).size.width / 110),
                         ),
                       ),

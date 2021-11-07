@@ -1,4 +1,4 @@
-// @dart=2.9
+// ignore_for_file: cancel_subscriptions
 
 // Dart imports:
 import 'dart:async';
@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -32,7 +31,6 @@ import 'package:archethic_mobile_wallet/ui/widgets/line_chart.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/qr_code.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/tx_list.dart';
 import 'package:archethic_mobile_wallet/util/caseconverter.dart';
-import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 class AppHomePage extends StatefulWidget {
@@ -47,30 +45,22 @@ class _AppHomePageState extends State<AppHomePage>
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Controller for placeholder card animations
-  AnimationController _placeholderCardAnimationController;
-  Animation<double> _opacityAnimation;
-  bool _animationDisposed;
+  AnimationController? _placeholderCardAnimationController;
+  Animation<double>? _opacityAnimation;
+  bool? _animationDisposed;
 
-  bool _displayReleaseNote;
+  bool? _displayReleaseNote;
 
   // Receive card instance
-  ReceiveSheet receive;
+  ReceiveSheet? receive;
 
   bool _lockDisabled = false; // whether we should avoid locking the app
 
-  ScrollController _scrollController;
+  ScrollController? _scrollController;
 
-  AnimationController animationController;
-  ColorTween colorTween;
-  CurvedAnimation curvedAnimation;
-
-  // Refresh list
-  // TODO ... Supp
-  Future<void> _refresh() async {
-    sl.get<HapticUtil>().feedback(FeedbackType.light);
-    StateContainer.of(context)
-        .requestUpdate(account: StateContainer.of(context).selectedAccount);
-  }
+  AnimationController? animationController;
+  ColorTween? colorTween;
+  CurvedAnimation? curvedAnimation;
 
   Future<void> _checkVersionApp() async {
     final String versionAppCached =
@@ -93,7 +83,7 @@ class _AppHomePageState extends State<AppHomePage>
     _checkVersionApp();
 
     _registerBus();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
 
     // Setup placeholder animation and start
     _animationDisposed = false;
@@ -101,17 +91,17 @@ class _AppHomePageState extends State<AppHomePage>
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-    _placeholderCardAnimationController
+    _placeholderCardAnimationController!
         .addListener(_animationControllerListener);
     _opacityAnimation = Tween<double>(begin: 1.0, end: 0.4).animate(
       CurvedAnimation(
-        parent: _placeholderCardAnimationController,
+        parent: _placeholderCardAnimationController!,
         curve: Curves.easeIn,
         reverseCurve: Curves.easeOut,
       ),
     );
-    _opacityAnimation.addStatusListener(_animationStatusListener);
-    _placeholderCardAnimationController.forward();
+    _opacityAnimation!.addStatusListener(_animationStatusListener);
+    _placeholderCardAnimationController!.forward();
 
     _scrollController = ScrollController();
   }
@@ -119,10 +109,10 @@ class _AppHomePageState extends State<AppHomePage>
   void _animationStatusListener(AnimationStatus status) {
     switch (status) {
       case AnimationStatus.dismissed:
-        _placeholderCardAnimationController.forward();
+        _placeholderCardAnimationController!.forward();
         break;
       case AnimationStatus.completed:
-        _placeholderCardAnimationController.reverse();
+        _placeholderCardAnimationController!.reverse();
         break;
       default:
         break;
@@ -134,37 +124,37 @@ class _AppHomePageState extends State<AppHomePage>
   }
 
   void _startAnimation() {
-    if (_animationDisposed) {
+    if (_animationDisposed!) {
       _animationDisposed = false;
-      _placeholderCardAnimationController
+      _placeholderCardAnimationController!
           .addListener(_animationControllerListener);
-      _opacityAnimation.addStatusListener(_animationStatusListener);
-      _placeholderCardAnimationController.forward();
+      _opacityAnimation!.addStatusListener(_animationStatusListener);
+      _placeholderCardAnimationController!.forward();
     }
   }
 
   void _disposeAnimation() {
-    if (!_animationDisposed) {
+    if (!_animationDisposed!) {
       _animationDisposed = true;
-      _opacityAnimation.removeStatusListener(_animationStatusListener);
-      _placeholderCardAnimationController
+      _opacityAnimation!.removeStatusListener(_animationStatusListener);
+      _placeholderCardAnimationController!
           .removeListener(_animationControllerListener);
-      _placeholderCardAnimationController.stop();
+      _placeholderCardAnimationController!.stop();
     }
   }
 
-  StreamSubscription<DisableLockTimeoutEvent> _disableLockSub;
-  StreamSubscription<AccountChangedEvent> _switchAccountSub;
+  StreamSubscription<DisableLockTimeoutEvent>? _disableLockSub;
+  StreamSubscription<AccountChangedEvent>? _switchAccountSub;
 
   void _registerBus() {
     // Hackish event to block auto-lock functionality
     _disableLockSub = EventTaxiImpl.singleton()
         .registerTo<DisableLockTimeoutEvent>()
         .listen((DisableLockTimeoutEvent event) {
-      if (event.disable) {
+      if (event.disable!) {
         cancelLockEvent();
       }
-      _lockDisabled = event.disable;
+      _lockDisabled = event.disable!;
     });
     // User changed account
     _switchAccountSub = EventTaxiImpl.singleton()
@@ -180,7 +170,7 @@ class _AppHomePageState extends State<AppHomePage>
         StateContainer.of(context).recentTransactionsLoading = false;
       });
 
-      paintQrCode(event.account.lastAddress);
+      paintQrCode(event.account!.lastAddress!);
       if (event.delayPop) {
         Future<void>.delayed(const Duration(milliseconds: 300), () {
           Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
@@ -194,18 +184,18 @@ class _AppHomePageState extends State<AppHomePage>
   @override
   void dispose() {
     _destroyBus();
-    WidgetsBinding.instance.removeObserver(this);
-    _placeholderCardAnimationController.dispose();
-    _scrollController.dispose();
+    WidgetsBinding.instance!.removeObserver(this);
+    _placeholderCardAnimationController!.dispose();
+    _scrollController!.dispose();
     super.dispose();
   }
 
   void _destroyBus() {
     if (_disableLockSub != null) {
-      _disableLockSub.cancel();
+      _disableLockSub!.cancel();
     }
     if (_switchAccountSub != null) {
-      _switchAccountSub.cancel();
+      _switchAccountSub!.cancel();
     }
   }
 
@@ -229,14 +219,14 @@ class _AppHomePageState extends State<AppHomePage>
   }
 
   // To lock and unlock the app
-  StreamSubscription<dynamic> lockStreamListener;
+  StreamSubscription<dynamic>? lockStreamListener;
 
   Future<void> setAppLockEvent() async {
     if (((await sl.get<SharedPrefsUtil>().getLock()) ||
             StateContainer.of(context).encryptedSecret != null) &&
         !_lockDisabled) {
       if (lockStreamListener != null) {
-        lockStreamListener.cancel();
+        lockStreamListener!.cancel();
       }
       final Future<dynamic> delayed = Future<void>.delayed(
           (await sl.get<SharedPrefsUtil>().getLockTimeout()).getDuration());
@@ -259,7 +249,7 @@ class _AppHomePageState extends State<AppHomePage>
 
   Future<void> cancelLockEvent() async {
     if (lockStreamListener != null) {
-      lockStreamListener.cancel();
+      lockStreamListener!.cancel();
     }
   }
 
@@ -272,12 +262,12 @@ class _AppHomePageState extends State<AppHomePage>
     );
     painter
         .toImageData(MediaQuery.of(context).size.width)
-        .then((ByteData byteData) {
+        .then((ByteData? byteData) {
       setState(() {
         receive = ReceiveSheet(
           qrWidget: Container(
               width: MediaQuery.of(context).size.width / 2.675,
-              child: Image.memory(byteData.buffer.asUint8List())),
+              child: Image.memory(byteData!.buffer.asUint8List())),
         );
       });
     });
@@ -303,15 +293,15 @@ class _AppHomePageState extends State<AppHomePage>
                         flipOnTouch: true,
                         direction: FlipDirection.HORIZONTAL,
                         front: BalanceDisplay.buildBalanceUCODisplay(
-                            context, _opacityAnimation),
+                            context, _opacityAnimation!),
                         back: LineChartWidget.buildTinyCoinsChart(context))
                     : FlipCard(
                         flipOnTouch: true,
                         direction: FlipDirection.HORIZONTAL,
                         front: QRcodeDisplay.buildAddressDisplay(
-                            context, _opacityAnimation),
+                            context, _opacityAnimation!),
                         back: QRcodeDisplay.buildQRCodeDisplay(
-                            context, _opacityAnimation))),
+                            context, _opacityAnimation!))),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
           ),
@@ -322,8 +312,9 @@ class _AppHomePageState extends State<AppHomePage>
 
   @override
   Widget build(BuildContext context) {
-    if (_displayReleaseNote)
-      WidgetsBinding.instance.addPostFrameCallback((_) => displayReleaseNote());
+    if (_displayReleaseNote!)
+      WidgetsBinding.instance!
+          .addPostFrameCallback((_) => displayReleaseNote());
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -361,8 +352,8 @@ class _AppHomePageState extends State<AppHomePage>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: <Color>[
-              StateContainer.of(context).curTheme.backgroundDark,
-              StateContainer.of(context).curTheme.background
+              StateContainer.of(context).curTheme.backgroundDark!,
+              StateContainer.of(context).curTheme.background!
             ],
           ),
         ),
@@ -389,7 +380,7 @@ class _AppHomePageState extends State<AppHomePage>
                       onTapAnimation: true,
                       particleColor: StateContainer.of(context)
                           .curTheme
-                          .primary10
+                          .primary10!
                           .withAlpha(150)
                           .withOpacity(0.2),
                       awayAnimationDuration: const Duration(milliseconds: 600),
@@ -411,7 +402,7 @@ class _AppHomePageState extends State<AppHomePage>
                         if (StateContainer.of(context).wallet == null)
                           const SizedBox()
                         else
-                          TxListWidget(_opacityAnimation),
+                          const TxListWidget(),
                       ],
                     ),
                   ],
@@ -429,11 +420,11 @@ class _AppHomePageState extends State<AppHomePage>
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       AppDialogs.showConfirmDialog(
           context,
-          AppLocalization.of(context).releaseNoteHeader +
+          AppLocalization.of(context)!.releaseNoteHeader +
               ' ' +
               packageInfo.version,
           '',
-          CaseChange.toUpperCase(AppLocalization.of(context).ok, context),
+          CaseChange.toUpperCase(AppLocalization.of(context)!.ok, context),
           () async {
         await sl.get<SharedPrefsUtil>().setVersionApp(packageInfo.version);
       });
