@@ -86,8 +86,8 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
             context: context,
             closeOnTap: true,
             removeUntilHome: true,
-            widget: const TransferCompleteSheet(
-              title: 'NFT Created',
+            widget: TransferCompleteSheet(
+              title: AppLocalization.of(context)!.nftCreated,
             ));
       }
     });

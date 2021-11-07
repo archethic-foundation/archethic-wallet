@@ -290,7 +290,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                         AppButton.buildAppButton(
                           context,
                           AppButtonType.PRIMARY,
-                          'Go !',
+                          AppLocalization.of(context)!.go,
                           Dimens.BUTTON_BOTTOM_DIMENS,
                           onPressed: () async {
                             _mnemonicFocusNode.unfocus();

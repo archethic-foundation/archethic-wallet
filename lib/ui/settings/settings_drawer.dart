@@ -181,7 +181,8 @@ class _SettingsSheetState extends State<SettingsSheet>
             .animate(_nftController!);
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
-        versionString = 'Version: ${packageInfo.version}';
+        versionString =
+            AppLocalization.of(context)!.version + ' ${packageInfo.version}';
       });
     });
   }
@@ -643,7 +644,7 @@ class _SettingsSheetState extends State<SettingsSheet>
               margin: const EdgeInsetsDirectional.only(
                   start: 26.0, end: 20, bottom: 15),
               child: Text(
-                'Settings',
+                AppLocalization.of(context)!.settings,
                 style: AppStyles.textStyleSize16W600Primary(context),
               ),
             ),

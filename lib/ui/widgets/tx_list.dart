@@ -179,14 +179,17 @@ class _TxListWidgetState extends State<TxListWidget> {
                 transaction.typeTx == RecentTransaction.NFT_CREATION)
               const SizedBox()
             else
-              Row(mainAxisAlignment: MainAxisAlignment.start, children: <
-                  Widget>[
-                if (transaction.from == null)
-                  const Text('')
-                else
-                  Text('From: ' + Address(transaction.from!).getShortString3(),
-                      style: AppStyles.textStyleSize10W100Primary(context))
-              ]),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    if (transaction.from == null)
+                      const Text('')
+                    else
+                      Text(
+                          AppLocalization.of(context)!.txListFrom +
+                              Address(transaction.from!).getShortString3(),
+                          style: AppStyles.textStyleSize10W100Primary(context))
+                  ]),
             if (transaction.typeTx == RecentTransaction.TRANSFER_INPUT ||
                 transaction.typeTx == RecentTransaction.NFT_CREATION)
               const SizedBox()
@@ -198,13 +201,13 @@ class _TxListWidgetState extends State<TxListWidget> {
                       const Text('')
                     else
                       Text(
-                          'To: ' +
+                          AppLocalization.of(context)!.txListTo +
                               Address(transaction.recipient!).getShortString3(),
                           style: AppStyles.textStyleSize10W100Primary(context))
                   ]),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
               Text(
-                  'Date: ' +
+                  AppLocalization.of(context)!.txListDate +
                       DateFormat.yMEd(
                               Localizations.localeOf(context).languageCode)
                           .add_Hms()
@@ -220,7 +223,10 @@ class _TxListWidgetState extends State<TxListWidget> {
               Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Text('Fees: ' + transaction.fee.toString() + ' UCO',
+                    Text(
+                        AppLocalization.of(context)!.txListFees +
+                            transaction.fee.toString() +
+                            ' UCO',
                         style: AppStyles.textStyleSize10W100Primary(context)),
                   ]),
             const SizedBox(height: 6),
@@ -235,11 +241,11 @@ class _TxListWidgetState extends State<TxListWidget> {
   static String getTypeTransactionLabel(BuildContext context, int typeTx) {
     switch (typeTx) {
       case RecentTransaction.NFT_CREATION:
-        return 'New NFT';
+        return AppLocalization.of(context)!.txListTypeTransactionLabelNewNFT;
       case RecentTransaction.TRANSFER_INPUT:
-        return 'Receive';
+        return AppLocalization.of(context)!.txListTypeTransactionLabelReceive;
       case RecentTransaction.TRANSFER_OUTPUT:
-        return 'Send';
+        return AppLocalization.of(context)!.txListTypeTransactionLabelSend;
       default:
         return '';
     }

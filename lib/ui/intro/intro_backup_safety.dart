@@ -84,7 +84,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                         ),
                         alignment: const AlignmentDirectional(-1, 0),
                         child: AutoSizeText(
-                          'Warning',
+                          AppLocalization.of(context)!.warning,
                           style: AppStyles.textStyleSize28W700Primary(context),
                           stepGranularity: 0.1,
                           maxLines: 1,
@@ -102,7 +102,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'In the next screen, you will see your recovery phrase.',
+                              AppLocalization.of(context)!.backupSafetyLabel1,
                               style:
                                   AppStyles.textStyleSize16W600Primary(context),
                             ),
@@ -110,7 +110,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               height: 30,
                             ),
                             Text(
-                              'What is a recovery phrase ?',
+                              AppLocalization.of(context)!.backupSafetyLabel2,
                               style:
                                   AppStyles.textStyleSize16W700Primary(context),
                             ),
@@ -118,7 +118,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               height: 5,
                             ),
                             AutoSizeText(
-                              'A recovery phrase is essentially a human readable form of your crypto\'s wallet private key, and is displayed as 24 mnemonic words. After mastering the mnemonic words, you can restore your wallet at will. Please keep the words properly and don\'t leak them to anyone.',
+                              AppLocalization.of(context)!.backupSafetyLabel3,
                               style:
                                   AppStyles.textStyleSize16W600Primary(context),
                               maxLines: 5,
@@ -127,7 +127,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               height: 10,
                             ),
                             Text(
-                              'How to back up ?',
+                              AppLocalization.of(context)!.backupSafetyLabel4,
                               style:
                                   AppStyles.textStyleSize16W700Primary(context),
                             ),
@@ -135,7 +135,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               height: 5,
                             ),
                             AutoSizeText(
-                              'Write down the mnemonic words in the correct order on a piece of papier and store them in a safe place.\nPlease don\'t store the recovery phrase on electronic devices in any form, including sreenshot.\nRemember the safety of the recovery phrase is relevant to the safety of your digital assets',
+                              AppLocalization.of(context)!.backupSafetyLabel5,
                               style:
                                   AppStyles.textStyleSize16W600Primary(context),
                               maxLines: 5,
@@ -144,7 +144,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               height: 10,
                             ),
                             Text(
-                              'Insecure ways of backup',
+                              AppLocalization.of(context)!.backupSafetyLabel6,
                               style:
                                   AppStyles.textStyleSize16W700Primary(context),
                             ),
@@ -152,7 +152,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               height: 5,
                             ),
                             Text(
-                              '1. Screenshot\n2. Take a photo',
+                              AppLocalization.of(context)!.backupSafetyLabel7,
                               style:
                                   AppStyles.textStyleSize12W600Primary(context),
                             ),

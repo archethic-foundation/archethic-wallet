@@ -6,6 +6,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/mnemonic_display.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
@@ -58,7 +59,7 @@ class _AppSeedBackupSheetState extends State<AppSeedBackupSheet> {
                     child: Column(
                       children: <Widget>[
                         AutoSizeText(
-                          'Recovery Phrase',
+                          AppLocalization.of(context)!.recoveryPhrase,
                           style: AppStyles.textStyleSize24W700Primary(context),
                           minFontSize: 12,
                           stepGranularity: 0.1,

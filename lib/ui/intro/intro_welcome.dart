@@ -121,7 +121,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                             AppButton.buildAppButton(
                                 context,
                                 AppButtonType.PRIMARY,
-                                'New Wallet',
+                                AppLocalization.of(context)!.newWallet,
                                 Dimens.BUTTON_TOP_DIMENS, onPressed: () {
                               sl
                                   .get<Vault>()

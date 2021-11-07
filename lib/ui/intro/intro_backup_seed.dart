@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/dimens.dart';
+import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/data/appdb.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
@@ -121,7 +122,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                               .width -
                                           (smallScreen(context) ? 120 : 140)),
                                   child: AutoSizeText(
-                                    'Recovery Phrase',
+                                    AppLocalization.of(context)!.recoveryPhrase,
                                     style: AppStyles.textStyleSize28W700Primary(
                                         context),
                                     stepGranularity: 0.1,
@@ -145,7 +146,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                         AppButton.buildAppButton(
                           context,
                           AppButtonType.PRIMARY,
-                          'I\'ve Backed It Up',
+                          AppLocalization.of(context)!.iveBackedItUp,
                           Dimens.BUTTON_BOTTOM_DIMENS,
                           onPressed: () {
                             sl.get<DBHelper>().dropAccounts().then((_) {

@@ -105,7 +105,9 @@ class _NodesListState extends State<NodesList> {
                 Container(
                   margin: const EdgeInsetsDirectional.only(start: 20.0),
                   alignment: Alignment.bottomLeft,
-                  child: Text('Nb of nodes : ' + _nodes!.length.toString(),
+                  child: Text(
+                      AppLocalization.of(context)!.nodeNumber +
+                          _nodes!.length.toString(),
                       style: AppStyles.textStyleSize12W100Primary(context)),
                 ),
               // Nodes list + top and bottom gradients
@@ -198,7 +200,7 @@ class _NodesListState extends State<NodesList> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text('First public key : ',
+                      Text(AppLocalization.of(context)!.nodeFirstPublicKey,
                           style: AppStyles.textStyleSize12W600Primary(context)),
                       Text(Address(node.firstPublicKey!).getShortString2(),
                           style: AppStyles.textStyleSize12W100Primary(context)),
@@ -206,7 +208,7 @@ class _NodesListState extends State<NodesList> {
                         height: 10,
                       ),
                       Text(
-                        'Last public key : ',
+                        AppLocalization.of(context)!.nodeLastPublicKey,
                         style: AppStyles.textStyleSize12W600Primary(context),
                       ),
                       Text(
@@ -218,7 +220,7 @@ class _NodesListState extends State<NodesList> {
                       ),
                       Row(
                         children: <Widget>[
-                          Text('IP : ',
+                          Text(AppLocalization.of(context)!.nodeIP,
                               style: AppStyles.textStyleSize12W600Primary(
                                   context)),
                           Text(node.ip! + ':' + node.port.toString(),
@@ -231,13 +233,15 @@ class _NodesListState extends State<NodesList> {
                       ),
                       Row(
                         children: <Widget>[
-                          Text('Geo patch : ',
+                          Text(AppLocalization.of(context)!.nodeGeoPatch,
                               style: AppStyles.textStyleSize12W600Primary(
                                   context)),
                           Text(node.geoPatch!,
                               style: AppStyles.textStyleSize12W100Primary(
                                   context)),
-                          Text(' - Network patch : ',
+                          Text(
+                              ' - ' +
+                                  AppLocalization.of(context)!.nodeNetworkPatch,
                               style: AppStyles.textStyleSize12W600Primary(
                                   context)),
                           Text(node.networkPatch!,
@@ -250,7 +254,9 @@ class _NodesListState extends State<NodesList> {
                       ),
                       Row(
                         children: <Widget>[
-                          Text('Average availability : ',
+                          Text(
+                              AppLocalization.of(context)!
+                                  .nodeAverageAvailability,
                               style: AppStyles.textStyleSize12W600Primary(
                                   context)),
                           Text(node.averageAvailability.toString(),
@@ -263,7 +269,7 @@ class _NodesListState extends State<NodesList> {
                       ),
                       Row(
                         children: <Widget>[
-                          Text('Authorized : ',
+                          Text(AppLocalization.of(context)!.nodeAuthorized,
                               style: AppStyles.textStyleSize12W600Primary(
                                   context)),
                           Text(node.authorized.toString(),
@@ -274,7 +280,7 @@ class _NodesListState extends State<NodesList> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Text('Reward address : ',
+                      Text(AppLocalization.of(context)!.nodeRewardAddress,
                           style: AppStyles.textStyleSize12W600Primary(context)),
                       Text(Address(node.rewardAddress!).getShortString2(),
                           style: AppStyles.textStyleSize12W100Primary(context)),

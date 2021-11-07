@@ -34,741 +34,673 @@ class AppLocalization {
   String get welcomeText {
     return Intl.message(
         'Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.',
-        desc: '',
         name: 'welcomeText');
   }
 
-  String get connectWallet {
-    return Intl.message('Connect to my wallet',
-        desc: '', name: 'connectWallet');
-  }
-
-  String get enterTxChainSeedText {
-    return Intl.message('Please, enter a transaction chain seed',
-        desc: '', name: 'enterTxChainSeedText');
-  }
-
   String get cancel {
-    return Intl.message('Cancel', desc: 'dialog_cancel', name: 'cancel');
+    return Intl.message('Cancel', name: 'cancel');
   }
 
   String get close {
-    return Intl.message('Close', desc: 'dialog_close', name: 'close');
+    return Intl.message('Close', name: 'close');
   }
 
   String get confirm {
-    return Intl.message('Confirm', desc: 'dialog_confirm', name: 'confirm');
+    return Intl.message('Confirm', name: 'confirm');
   }
 
   String get no {
-    return Intl.message('No', desc: '', name: 'no');
+    return Intl.message('No', name: 'no');
   }
 
   String get yes {
-    return Intl.message('Yes', desc: '', name: 'yes');
+    return Intl.message('Yes', name: 'yes');
   }
 
   String get send {
-    return Intl.message('Send', desc: '', name: 'send');
+    return Intl.message('Send', name: 'send');
   }
 
   String get add {
-    return Intl.message('Add', desc: '', name: 'add');
+    return Intl.message('Add', name: 'add');
   }
 
   String get update {
-    return Intl.message('Update', desc: '', name: 'update');
+    return Intl.message('Update', name: 'update');
   }
 
   String get transferUCO {
-    return Intl.message('Transfer UCO', desc: '', name: 'transferUCO');
+    return Intl.message('Transfer UCO', name: 'transferUCO');
   }
 
   String get transferNFT {
-    return Intl.message('Transfer NFT', desc: '', name: 'transferNFT');
+    return Intl.message('Transfer NFT', name: 'transferNFT');
   }
 
   String get transferNFTName {
-    return Intl.message('Transfer %1', desc: '', name: 'transferNFTName');
-  }
-
-  String get sent {
-    return Intl.message('Sent', desc: 'history_sent', name: 'sent');
-  }
-
-  String get received {
-    return Intl.message('Received', desc: 'history_received', name: 'received');
-  }
-
-  String get transactionHeader {
-    return Intl.message('Transaction',
-        desc: 'transaction_header', name: 'transactionHeader');
+    return Intl.message('Transfer %1', name: 'transferNFTName');
   }
 
   String get recentTransactionsHeader {
     return Intl.message('Recent transactions',
-        desc: '', name: 'recentTransactionsHeader');
+        name: 'recentTransactionsHeader');
   }
 
   String get recentTransactionsNoTransactionYet {
     return Intl.message('No transaction yet',
-        desc: '', name: 'recentTransactionsNoTransactionYet');
+        name: 'recentTransactionsNoTransactionYet');
   }
 
   String get addressCopied {
-    return Intl.message('Address Copied',
-        desc: 'receive_copied', name: 'addressCopied');
+    return Intl.message('Address Copied', name: 'addressCopied');
   }
 
   String get copyAddress {
-    return Intl.message('Copy Address',
-        desc: 'receive_copy_cta', name: 'copyAddress');
+    return Intl.message('Copy Address', name: 'copyAddress');
   }
 
   String get addressHint {
-    return Intl.message('Enter Address',
-        desc: 'send_address_hint', name: 'addressHint');
+    return Intl.message('Enter Address', name: 'addressHint');
   }
 
   String get scanQrCode {
-    return Intl.message('Scan QR Code',
-        desc: 'send_scan_qr', name: 'scanQrCode');
+    return Intl.message('Scan QR Code', name: 'scanQrCode');
   }
 
   String get qrInvalidAddress {
     return Intl.message('QR code does not contain a valid destination',
-        desc: 'qr_invalid_address', name: 'qrInvalidAddress');
+        name: 'qrInvalidAddress');
   }
 
   String get qrInvalidPermissions {
     return Intl.message('Please Grant Camera Permissions to scan QR Codes',
-        desc: 'User did not grant camera permissions to the app',
         name: 'qrInvalidPermissions');
   }
 
   String get qrUnknownError {
-    return Intl.message('Could not Read QR Code',
-        desc: 'An unknown error occurred with the QR scanner',
-        name: 'qrUnknownError');
+    return Intl.message('Could not Read QR Code', name: 'qrUnknownError');
   }
 
   String get customUrlHeader {
-    return Intl.message('Custom Urls', desc: '', name: 'customUrlHeader');
+    return Intl.message('Custom Urls', name: 'customUrlHeader');
   }
 
   String get customUrlDesc {
-    return Intl.message('Define the endpoint', desc: '', name: 'customUrlDesc');
+    return Intl.message('Define the endpoint', name: 'customUrlDesc');
   }
 
   String get walletFAQHeader {
-    return Intl.message('Wallet FAQ', desc: '', name: 'walletFAQHeader');
+    return Intl.message('Wallet FAQ', name: 'walletFAQHeader');
   }
 
   String get walletFAQDesc {
     return Intl.message('Have a question? Check here first!',
-        desc: '', name: 'walletFAQDesc');
+        name: 'walletFAQDesc');
   }
 
   String get enterEndpoint {
-    return Intl.message('Enter an endpoint', desc: '', name: 'enterEndpoint');
+    return Intl.message('Enter an endpoint', name: 'enterEndpoint');
   }
 
   String get removeContact {
-    return Intl.message('Remove Contact',
-        desc: 'contact_remove_btn', name: 'removeContact');
+    return Intl.message('Remove Contact', name: 'removeContact');
   }
 
   String get removeContactConfirmation {
     return Intl.message('Are you sure you want to delete %1?',
-        desc: 'contact_remove_sure', name: 'removeContactConfirmation');
+        name: 'removeContactConfirmation');
   }
 
   String get addressBookHeader {
-    return Intl.message('Address book', desc: '', name: 'addressBookHeader');
+    return Intl.message('Address book', name: 'addressBookHeader');
   }
 
   String get contactHeader {
-    return Intl.message('Contact', desc: '', name: 'contactHeader');
+    return Intl.message('Contact', name: 'contactHeader');
   }
 
   String get addressBookDesc {
     return Intl.message('Create and manage frequently-used addresses',
-        desc: '', name: 'addressBookDesc');
+        name: 'addressBookDesc');
   }
 
   String get addContact {
-    return Intl.message('Add Contact',
-        desc: 'contact_add_button', name: 'addContact');
+    return Intl.message('Add Contact', name: 'addContact');
   }
 
   String get contactNameHint {
-    return Intl.message('Enter a Name @',
-        desc: 'contact_name_hint', name: 'contactNameHint');
+    return Intl.message('Enter a Name @', name: 'contactNameHint');
   }
 
   String get contactInvalid {
-    return Intl.message('Invalid Contact Name',
-        desc: 'contact_invalid_name', name: 'contactInvalid');
+    return Intl.message('Invalid Contact Name', name: 'contactInvalid');
   }
 
   String get contactAdded {
-    return Intl.message('%1 added to address book.',
-        desc: 'contact_added', name: 'contactAdded');
+    return Intl.message('%1 added to address book.', name: 'contactAdded');
   }
 
   String get contactRemoved {
     return Intl.message('%1 has been removed from address book!',
-        desc: 'contact_removed', name: 'contactRemoved');
+        name: 'contactRemoved');
   }
 
   String get contactNameMissing {
     return Intl.message('Choose a Name for this contact',
-        desc: 'contact_name_missing', name: 'contactNameMissing');
+        name: 'contactNameMissing');
   }
 
   String get contactExists {
-    return Intl.message('Contact Already Exists',
-        desc: 'contact_name_exists', name: 'contactExists');
-  }
-
-  String get sentTo {
-    return Intl.message('Sent To', desc: 'sent_to', name: 'sentTo');
+    return Intl.message('Contact Already Exists', name: 'contactExists');
   }
 
   String get transferSuccess {
     return Intl.message('The transaction was sent successfully',
-        desc: '', name: 'transferSuccess');
+        name: 'transferSuccess');
   }
 
   String get transfering {
-    return Intl.message('Transfering',
-        desc: 'send_sending', name: 'transfering');
-  }
-
-  String get to {
-    return Intl.message('To', desc: 'send_to', name: 'to');
+    return Intl.message('Transfering', name: 'transfering');
   }
 
   String get getOption {
-    return Intl.message('Get', desc: '', name: 'getOption');
+    return Intl.message('Get', name: 'getOption');
   }
 
   String get deleteOption {
-    return Intl.message('Delete', desc: '', name: 'deleteOption');
-  }
-
-  String get sendAmountConfirm {
-    return Intl.message('Send %1 UCO',
-        desc: 'send_pin_description', name: 'sendAmountConfirm');
-  }
-
-  String get transferAmountConfirm {
-    return Intl.message('Transfer %1 UCO',
-        desc: 'send_pin_description', name: 'transferAmountConfirm');
-  }
-
-  String get transferAmountConfirmPin {
-    return transferAmountConfirm;
+    return Intl.message('Delete', name: 'deleteOption');
   }
 
   String get sendError {
     return Intl.message('An error occurred. Try again later.',
-        desc: 'send_generic_error', name: 'sendError');
+        name: 'sendError');
   }
 
   String get enterAmount {
-    return Intl.message('Enter Amount',
-        desc: 'send_amount_hint', name: 'enterAmount');
+    return Intl.message('Enter Amount', name: 'enterAmount');
   }
 
   String get enterAddress {
-    return Intl.message('Enter Address',
-        desc: 'enter_address', name: 'enterAddress');
+    return Intl.message('Enter Address', name: 'enterAddress');
   }
 
   String get invalidAddress {
-    return Intl.message('Address entered was invalid',
-        desc: 'send_invalid_address', name: 'invalidAddress');
+    return Intl.message('Address entered was invalid', name: 'invalidAddress');
   }
 
   String get addressMissing {
-    return Intl.message('Please Enter an Address',
-        desc: 'send_enter_address', name: 'addressMissing');
+    return Intl.message('Please Enter an Address', name: 'addressMissing');
   }
 
   String get amountMissing {
-    return Intl.message('Please Enter an Amount',
-        desc: 'send_enter_amount', name: 'amountMissing');
+    return Intl.message('Please Enter an Amount', name: 'amountMissing');
   }
 
   String get minimumSend {
-    return Intl.message('Minimum send amount is %1 UCO',
-        desc: 'send_minimum_error', name: 'minimumSend');
+    return Intl.message('Minimum send amount is %1 UCO', name: 'minimumSend');
   }
 
   String get insufficientBalance {
-    return Intl.message('Insufficient Balance',
-        desc: 'send_insufficient_balance', name: 'insufficientBalance');
+    return Intl.message('Insufficient Balance', name: 'insufficientBalance');
   }
 
   String get fees {
-    return Intl.message('Fees', desc: 'fees', name: 'fees');
+    return Intl.message('Fees', name: 'fees');
   }
 
   String get pinCreateTitle {
-    return Intl.message('Create a 6-digit pin',
-        desc: 'pin_create_title', name: 'pinCreateTitle');
+    return Intl.message('Create a 6-digit pin', name: 'pinCreateTitle');
   }
 
   String get pinConfirmTitle {
-    return Intl.message('Confirm your pin',
-        desc: 'pin_confirm_title', name: 'pinConfirmTitle');
+    return Intl.message('Confirm your pin', name: 'pinConfirmTitle');
   }
 
   String get pinEnterTitle {
-    return Intl.message('Enter pin',
-        desc: 'pin_enter_title', name: 'pinEnterTitle');
+    return Intl.message('Enter pin', name: 'pinEnterTitle');
   }
 
   String get pinConfirmError {
-    return Intl.message('Pins do not match',
-        desc: 'pin_confirm_error', name: 'pinConfirmError');
+    return Intl.message('Pins do not match', name: 'pinConfirmError');
   }
 
   String get pinInvalid {
-    return Intl.message('Invalid pin entered',
-        desc: 'pin_error', name: 'pinInvalid');
+    return Intl.message('Invalid pin entered', name: 'pinInvalid');
   }
 
   String get authMethod {
-    return Intl.message('Auth. Method',
-        desc: 'settings_disable_fingerprint', name: 'authMethod');
+    return Intl.message('Auth. Method', name: 'authMethod');
   }
 
   String get pinMethod {
-    return Intl.message('PIN', desc: 'settings_pin_method', name: 'pinMethod');
+    return Intl.message('PIN', name: 'pinMethod');
   }
 
   String get biometricsMethod {
-    return Intl.message('Biometrics',
-        desc: 'settings_fingerprint_method', name: 'biometricsMethod');
+    return Intl.message('Biometrics', name: 'biometricsMethod');
   }
 
   String get currency {
-    return Intl.message('Currency',
-        desc: 'A settings menu item for changing currency', name: 'currency');
+    return Intl.message('Currency', name: 'currency');
   }
 
   String get changeCurrencyHeader {
-    return Intl.message('Currency', desc: '', name: 'changeCurrencyHeader');
+    return Intl.message('Currency', name: 'changeCurrencyHeader');
   }
 
   String get changeCurrencyDesc {
     return Intl.message(
         'Select the fiat currency you would like to display alongside UCO',
-        desc: '',
         name: 'changeCurrencyDesc');
   }
 
   String get language {
-    return Intl.message('Language',
-        desc: 'settings_change_language', name: 'language');
+    return Intl.message('Language', name: 'language');
   }
 
   String get logout {
-    return Intl.message('Logout', desc: 'settings_logout', name: 'logout');
+    return Intl.message('Logout', name: 'logout');
   }
 
   String get rootWarning {
     return Intl.message(
         'It appears your device is "rooted", "jailbroken", or modified in a way that compromises security. It is recommended that you reset your device to its original state before proceeding.',
-        desc:
-            'Shown to users if they have a rooted Android device or jailbroken iOS device',
         name: 'rootWarning');
   }
 
   String get iUnderstandTheRisks {
-    return Intl.message('I Understand the Risks',
-        desc:
-            'Shown to users if they have a rooted Android device or jailbroken iOS device',
-        name: 'iUnderstandTheRisks');
+    return Intl.message('I Understand the Risks', name: 'iUnderstandTheRisks');
   }
 
   String get exit {
-    return Intl.message('Exit',
-        desc: 'Exit action, like a button', name: 'exit');
+    return Intl.message('Exit', name: 'exit');
   }
 
   String get warning {
-    return Intl.message('Warning',
-        desc: 'settings_logout_alert_title', name: 'warning');
+    return Intl.message('Warning', name: 'warning');
   }
 
   String get logoutDetail {
     return Intl.message(
         'Logging out will remove all ARCHEthic Wallet-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again',
-        desc: 'settings_logout_alert_message',
         name: 'logoutDetail');
   }
 
   String get logoutAction {
-    return Intl.message('Delete Infos and Logout',
-        desc: 'settings_logout_alert_confirm_cta', name: 'logoutAction');
+    return Intl.message('Delete Infos and Logout', name: 'logoutAction');
   }
 
   String get logoutAreYouSure {
-    return Intl.message('Are you sure?',
-        desc: 'settings_logout_warning_title', name: 'logoutAreYouSure');
+    return Intl.message('Are you sure?', name: 'logoutAreYouSure');
   }
 
   String get logoutReassurance {
     return Intl.message(
         'As long as you\'ve backed up your seed you have nothing to worry about.',
-        desc: 'settings_logout_warning_message',
         name: 'logoutReassurance');
   }
 
   String get preferences {
-    return Intl.message('Preferences',
-        desc: 'settings_preferences_header', name: 'preferences');
+    return Intl.message('Preferences', name: 'preferences');
   }
 
   String get manage {
-    return Intl.message('Manage',
-        desc: 'settings_manage_header', name: 'manage');
-  }
-
-  String get backupSeed {
-    return Intl.message('Backup Seed',
-        desc: 'settings_backup_seed', name: 'backupSeed');
+    return Intl.message('Manage', name: 'manage');
   }
 
   String get fingerprintSeedBackup {
     return Intl.message('Authenticate to backup seed.',
-        desc: 'settings_fingerprint_title', name: 'fingerprintSeedBackup');
+        name: 'fingerprintSeedBackup');
   }
 
   String get pinSecretPhraseBackup {
     return Intl.message('Enter PIN to Backup Secret Phrase',
-        desc: '', name: 'pinSecretPhraseBackup');
+        name: 'pinSecretPhraseBackup');
   }
 
   String get systemDefault {
-    return Intl.message('System Default',
-        desc: 'settings_default_language_string', name: 'systemDefault');
+    return Intl.message('System Default', name: 'systemDefault');
   }
 
   String get unlockPin {
-    return Intl.message('Enter PIN to Unlock', desc: '', name: 'unlockPin');
+    return Intl.message('Enter PIN to Unlock', name: 'unlockPin');
   }
 
   String get unlockBiometrics {
-    return Intl.message('Authenticate to Unlock',
-        desc: '', name: 'unlockBiometrics');
+    return Intl.message('Authenticate to Unlock', name: 'unlockBiometrics');
   }
 
   String get confirmBiometrics {
-    return Intl.message('Authenticate to Confirm',
-        desc: '', name: 'confirmBiometrics');
+    return Intl.message('Authenticate to Confirm', name: 'confirmBiometrics');
   }
 
   String get lockAppSetting {
-    return Intl.message('Auth. on Launch',
-        desc: 'authenticate_on_launch', name: 'lockAppSetting');
+    return Intl.message('Auth. on Launch', name: 'lockAppSetting');
   }
 
   String get locked {
-    return Intl.message('Locked', desc: 'lockedtxt', name: 'locked');
+    return Intl.message('Locked', name: 'locked');
   }
 
   String get unlock {
-    return Intl.message('Unlock', desc: 'unlocktxt', name: 'unlock');
+    return Intl.message('Unlock', name: 'unlock');
   }
 
   String get tooManyFailedAttempts {
     return Intl.message('Too many failed unlock attempts.',
-        desc: 'fail_toomany_attempts', name: 'tooManyFailedAttempts');
+        name: 'tooManyFailedAttempts');
   }
 
   String get securityHeader {
-    return Intl.message('Security',
-        desc: 'security_header', name: 'securityHeader');
+    return Intl.message('Security', name: 'securityHeader');
   }
 
   String get aboutHeader {
-    return Intl.message('About', desc: '', name: 'aboutHeader');
+    return Intl.message('About', name: 'aboutHeader');
   }
 
   String get aboutGeneralTermsAndConditions {
     return Intl.message('General Terms & Conditions',
-        desc: '', name: 'aboutGeneralTermsAndConditions');
+        name: 'aboutGeneralTermsAndConditions');
   }
 
   String get aboutWalletServiceTerms {
     return Intl.message('Wallet Service Terms',
-        desc: '', name: 'aboutWalletServiceTerms');
+        name: 'aboutWalletServiceTerms');
   }
 
   String get aboutPrivacyPolicy {
-    return Intl.message('Privacy Policy', desc: '', name: 'aboutPrivacyPolicy');
+    return Intl.message('Privacy Policy', name: 'aboutPrivacyPolicy');
   }
 
   String get autoLockHeader {
-    return Intl.message('Auto Lock',
-        desc: 'auto_lock_header', name: 'autoLockHeader');
+    return Intl.message('Auto Lock', name: 'autoLockHeader');
   }
 
   String get xMinutes {
-    return Intl.message('After %1 minutes',
-        desc: 'after_minutes', name: 'xMinutes');
+    return Intl.message('After %1 minutes', name: 'xMinutes');
   }
 
   String get xMinute {
-    return Intl.message('After %1 minute',
-        desc: 'after_minute', name: 'xMinute');
+    return Intl.message('After %1 minute', name: 'xMinute');
   }
 
   String get instantly {
-    return Intl.message('Instantly', desc: 'insantly', name: 'instantly');
+    return Intl.message('Instantly', name: 'instantly');
   }
 
   String get defaultAccountName {
-    return Intl.message('Main Account',
-        desc: 'Default account name', name: 'defaultAccountName');
-  }
-
-  String get defaultNewAccountName {
-    return Intl.message('Account %1',
-        desc: 'Default new account name - e.g. Account 1',
-        name: 'defaultNewAccountName');
-  }
-
-  String get account {
-    return Intl.message('Account', desc: 'Account text', name: 'account');
-  }
-
-  String get accounts {
-    return Intl.message('Accounts', desc: 'Accounts header', name: 'accounts');
-  }
-
-  String get addAccount {
-    return Intl.message('Add Account',
-        desc: 'Default new account name - e.g. Account 1', name: 'addAccount');
-  }
-
-  String get hideAccountHeader {
-    return Intl.message('Hide Account?',
-        desc: 'Confirmation dialog header', name: 'hideAccountHeader');
-  }
-
-  String get removeAccountText {
-    return Intl.message(
-        'Are you sure you want to hide this account? You can re-add it later by tapping the \'%1\' button.',
-        desc: 'Remove account dialog body',
-        name: 'removeAccountText');
+    return Intl.message('Main Account', name: 'defaultAccountName');
   }
 
   String get tapToReveal {
-    return Intl.message('Tap to reveal',
-        desc: 'Tap to reveal hidden content', name: 'tapToReveal');
+    return Intl.message('Tap to reveal', name: 'tapToReveal');
   }
 
   String get tapToHide {
-    return Intl.message('Tap to hide',
-        desc: 'Tap to hide content', name: 'tapToHide');
-  }
-
-  String get copied {
-    return Intl.message('Copied',
-        desc: 'Copied (to clipboard)', name: 'copied');
+    return Intl.message('Tap to hide', name: 'tapToHide');
   }
 
   String get pinPadShuffle {
-    return Intl.message('PIN Pad Shuffle', desc: '', name: 'pinPadShuffle');
+    return Intl.message('PIN Pad Shuffle', name: 'pinPadShuffle');
   }
 
   String get copy {
-    return Intl.message('Copy', desc: 'Copy (to clipboard)', name: 'copy');
-  }
-
-  String get seedDescription {
-    return Intl.message(
-        'A seed bears the same information as a secret phrase, but in a machine-readable way. As long as you have one of them backed up, you\'ll have access to your funds.',
-        desc: 'Describing what a seed is',
-        name: 'seedDescription');
-  }
-
-  String get secretInfoHeader {
-    return Intl.message('Safety First!',
-        desc: 'secret info header', name: 'secretInfoHeader');
-  }
-
-  String get secretInfo {
-    return Intl.message(
-        'In the next screen, you will see your recovery phrase. A recovery phrase is essentially a human readable form of your crypto\'s wallet private key, and is displayed as 24 mnemonic words. After mastering the mnemonic words, you can restore your wallet at will. Please keep the words properly and don\'t leak them to anyone.',
-        desc: '',
-        name: 'secretInfo');
+    return Intl.message('Copy', name: 'copy');
   }
 
   String get secretWarning {
     return Intl.message(
         'If you lose your device or uninstall the application, you\'ll need your secret phrase to recover your funds!',
-        desc: 'Secret warning',
         name: 'secretWarning');
   }
 
   String get importSecretPhrase {
-    return Intl.message('Import Secret Phrase',
-        desc: '', name: 'importSecretPhrase');
+    return Intl.message('Import Secret Phrase', name: 'importSecretPhrase');
   }
 
   String get importSecretPhraseHint {
     return Intl.message(
         'Please enter your 24-word secret phrase below. Each word should be separated by a space.',
-        desc: '',
         name: 'importSecretPhraseHint');
   }
 
   String get qrMnemonicError {
     return Intl.message('QR does not contain a valid secret phrase',
-        desc: '', name: 'qrMnemonicError');
+        name: 'qrMnemonicError');
   }
 
   String get mnemonicInvalidWord {
-    return Intl.message('%1 is not a valid word',
-        desc: '', name: 'mnemonicInvalidWord');
+    return Intl.message('%1 is not a valid word', name: 'mnemonicInvalidWord');
   }
 
   String get mnemonicSizeError {
     return Intl.message('Secret phrase may only contain 24 words',
-        desc: '', name: 'mnemonicSizeError');
+        name: 'mnemonicSizeError');
   }
 
   String get importWallet {
-    return Intl.message('Import Wallet', desc: '', name: 'importWallet');
+    return Intl.message('Import Wallet', name: 'importWallet');
+  }
+
+  String get newWallet {
+    return Intl.message('New Wallet', name: 'newWallet');
   }
 
   String get understandButton {
-    return Intl.message('I understand', desc: '', name: 'understandButton');
+    return Intl.message('I understand', name: 'understandButton');
   }
 
   String get ackBackedUp {
     return Intl.message(
         'Are you sure that you\'ve backed up your secret phrase ?',
-        desc: '',
         name: 'ackBackedUp');
   }
 
   String get backupSecretPhrase {
-    return Intl.message('Backup Secret Phrase',
-        desc: 'backup seed', name: 'backupSecretPhrase');
-  }
-
-  String get enterTxAddressHint {
-    return Intl.message('Enter a transaction address',
-        desc: '', name: 'enterTxAddressHint');
-  }
-
-  String get enterTxChainSeedHint {
-    return Intl.message('Enter a transaction chain seed',
-        desc: '', name: 'enterTxChainSeedHint');
+    return Intl.message('Backup Secret Phrase', name: 'backupSecretPhrase');
   }
 
   String get releaseNoteHeader {
-    return Intl.message('What\'s new',
-        desc: 'What\'s new', name: 'releaseNoteHeader');
+    return Intl.message('What\'s new', name: 'releaseNoteHeader');
   }
 
   String get ok {
-    return Intl.message('Ok', desc: '', name: 'ok');
-  }
-
-  String get noSkipButton {
-    return Intl.message('No, Skip',
-        desc: 'A button that declines and skips the mentioned process.',
-        name: 'noSkipButton');
-  }
-
-  String get nextButton {
-    return Intl.message('Next',
-        desc: 'A button that goes to the next screen.', name: 'nextButton');
-  }
-
-  String get goBackButton {
-    return Intl.message('Go Back',
-        desc: 'A button that goes to the previous screen.',
-        name: 'goBackButton');
+    return Intl.message('Ok', name: 'ok');
   }
 
   String get addressInfos {
-    return Intl.message('Address informations', desc: '', name: 'addressInfos');
+    return Intl.message('Address informations', name: 'addressInfos');
   }
 
   String get informations {
-    return Intl.message('Informations', desc: '', name: 'informations');
+    return Intl.message('Informations', name: 'informations');
   }
 
   String get nodesHeader {
-    return Intl.message('Nodes', desc: '', name: 'nodesHeader');
+    return Intl.message('Nodes', name: 'nodesHeader');
   }
 
   String get nodesHeaderDesc {
-    return Intl.message('Nodes informations',
-        desc: '', name: 'nodesHeaderDesc');
+    return Intl.message('Nodes informations', name: 'nodesHeaderDesc');
   }
 
   String get addNFT {
-    return Intl.message('Add NFT', desc: '', name: 'addNFT');
+    return Intl.message('Add NFT', name: 'addNFT');
   }
 
   String get addNFTHeader {
-    return Intl.message('Add NFT', desc: '', name: 'addNFTHeader');
+    return Intl.message('Add NFT', name: 'addNFTHeader');
   }
 
   String get addNFTConfirmationMessage {
     return Intl.message('Do you confirm the creation of the following NFT ?',
-        desc: '', name: 'addNFTConfirmationMessage');
+        name: 'addNFTConfirmationMessage');
   }
 
   String get nftHeader {
-    return Intl.message('NFT', desc: '', name: 'nftHeader');
+    return Intl.message('NFT', name: 'nftHeader');
   }
 
   String get nftHeaderDesc {
     return Intl.message('Manage your Non Financial Tokens',
-        desc: '', name: 'nftHeaderDesc');
+        name: 'nftHeaderDesc');
   }
 
   String get nftNameHint {
-    return Intl.message('Enter a name', desc: '', name: 'nftNameHint');
+    return Intl.message('Enter a name', name: 'nftNameHint');
   }
 
   String get nftName {
-    return Intl.message('Name: ', desc: '', name: 'nftName');
+    return Intl.message('Name: ', name: 'nftName');
   }
 
   String get nftInitialSupplyHint {
     return Intl.message('Enter an initial supply',
-        desc: '', name: 'nftInitialSupplyHint');
+        name: 'nftInitialSupplyHint');
   }
 
   String get nftNameMissing {
-    return Intl.message('Choose a Name for the NFT',
-        desc: '', name: 'nftNameMissing');
+    return Intl.message('Choose a Name for the NFT', name: 'nftNameMissing');
   }
 
   String get nftInitialSupply {
-    return Intl.message('Initial supply: ', desc: '', name: 'nftInitialSupply');
+    return Intl.message('Initial supply: ', name: 'nftInitialSupply');
   }
 
   String get nftInitialSupplyMissing {
     return Intl.message('Choose an initial supply for the NFT',
-        desc: '', name: 'nftInitialSupplyMissing');
+        name: 'nftInitialSupplyMissing');
   }
 
   String get nftInitialSupplyPositive {
     return Intl.message('The initial supply should be > 0',
-        desc: '', name: 'nftInitialSupplyPositive');
+        name: 'nftInitialSupplyPositive');
+  }
+
+  String get nodeNumber {
+    return Intl.message('Nb of nodes : ', name: 'nodeNumber');
+  }
+
+  String get nodeFirstPublicKey {
+    return Intl.message('First public key : ', name: 'nodeFirstPublicKey');
+  }
+
+  String get nodeLastPublicKey {
+    return Intl.message('Last public key : ', name: 'nodeLastPublicKey');
+  }
+
+  String get nodeIP {
+    return Intl.message('IP : ', name: 'nodeIP');
+  }
+
+  String get nodeGeoPatch {
+    return Intl.message('Geo patch : ', name: 'nodeGeoPatch');
+  }
+
+  String get nodeNetworkPatch {
+    return Intl.message('Network patch : ', name: 'nodeNetworkPatch');
+  }
+
+  String get nodeAverageAvailability {
+    return Intl.message('Average availability : ',
+        name: 'nodeAverageAvailability');
+  }
+
+  String get nodeAuthorized {
+    return Intl.message('Authorized : ', name: 'nodeAuthorized');
+  }
+
+  String get nodeRewardAddress {
+    return Intl.message('Reward address : ', name: 'nodeRewardAddress');
+  }
+
+  String get txListFrom {
+    return Intl.message('From : ', name: 'txListFrom');
+  }
+
+  String get txListTo {
+    return Intl.message('To : ', name: 'txListTo');
+  }
+
+  String get txListDate {
+    return Intl.message('Date : ', name: 'txListDate');
+  }
+
+  String get txListFees {
+    return Intl.message('Fees : ', name: 'txListFees');
+  }
+
+  String get txListTypeTransactionLabelNewNFT {
+    return Intl.message('New NFT', name: 'txListTypeTransactionLabelNewNFT');
+  }
+
+  String get txListTypeTransactionLabelReceive {
+    return Intl.message('Receive', name: 'txListTypeTransactionLabelReceive');
+  }
+
+  String get txListTypeTransactionLabelSend {
+    return Intl.message('Send', name: 'txListTypeTransactionLabelSend');
+  }
+
+  String get recoveryPhrase {
+    return Intl.message('Recovery Phrase', name: 'recoveryPhrase');
+  }
+
+  String get iveBackedItUp {
+    return Intl.message('I\'ve Backed It Up', name: 'iveBackedItUp');
+  }
+
+  String get backupSafetyLabel1 {
+    return Intl.message(
+        'In the next screen, you will see your recovery phrase.',
+        name: 'backupSafetyLabel1');
+  }
+
+  String get backupSafetyLabel2 {
+    return Intl.message('What is a recovery phrase ?',
+        name: 'backupSafetyLabel2');
+  }
+
+  String get backupSafetyLabel3 {
+    return Intl.message(
+        'A recovery phrase is essentially a human readable form of your crypto\'s wallet private key, and is displayed as 24 mnemonic words. After mastering the mnemonic words, you can restore your wallet at will. Please keep the words properly and don\'t leak them to anyone.',
+        name: 'backupSafetyLabel3');
+  }
+
+  String get backupSafetyLabel4 {
+    return Intl.message('How to back up ?', name: 'backupSafetyLabel4');
+  }
+
+  String get backupSafetyLabel5 {
+    return Intl.message(
+        'Write down the mnemonic words in the correct order on a piece of papier and store them in a safe place.\nPlease don\'t store the recovery phrase on electronic devices in any form, including sreenshot.\nRemember the safety of the recovery phrase is relevant to the safety of your digital assets',
+        name: 'backupSafetyLabel5');
+  }
+
+  String get backupSafetyLabel6 {
+    return Intl.message('Insecure ways of backup', name: 'backupSafetyLabel6');
+  }
+
+  String get backupSafetyLabel7 {
+    return Intl.message('1. Screenshot\n2. Take a photo',
+        name: 'backupSafetyLabel7');
+  }
+
+  String get go {
+    return Intl.message('Go !', name: 'go');
+  }
+
+  String get nftCreated {
+    return Intl.message('NFT Created', name: 'nftCreated');
+  }
+
+  String get version {
+    return Intl.message('Version :', name: 'version');
+  }
+
+  String get settings {
+    return Intl.message('Settings', name: 'settings');
   }
 }
 
