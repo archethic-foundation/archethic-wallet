@@ -1,0 +1,939 @@
+{
+	"@@last_modified": "2021-11-07T17:33:43.139040",
+	"welcomeText": "インターネットオブトラストへようこそ。\n\nARCHEthicは、テクノロジーに対する人類の管理と、各個人のアイデンティティに対する管理に恩返しをします。",
+	"@welcomeText": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"cancel": "キャンセル",
+	"@cancel": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"close": "閉じる",
+	"@close": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"confirm": "確認",
+	"@confirm": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"no": "いいえ",
+	"@no": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"yes": "はい",
+	"@yes": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"send": "送信",
+	"@send": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"add": "追加",
+	"@add": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"update": "更新",
+	"@update": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transferUCO": "UCOを転送する",
+	"@transferUCO": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transferNFT": "NFTを転送する",
+	"@transferNFT": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transferNFTName": "転送%1",
+	"@transferNFTName": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"recentTransactionsHeader": "最近の取引",
+	"@recentTransactionsHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"recentTransactionsNoTransactionYet": "まだ取引はありません",
+	"@recentTransactionsNoTransactionYet": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"addressCopied": "コピーされたアドレス",
+	"@addressCopied": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"copyAddress": "コピーアドレス",
+	"@copyAddress": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"addressHint": "住所を入力してください",
+	"@addressHint": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"scanQrCode": "QRコードをスキャン",
+	"@scanQrCode": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"qrInvalidAddress": "QRコードに有効な宛先が含まれていません",
+	"@qrInvalidAddress": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"qrInvalidPermissions": "QRコードをスキャンするためのカメラ権限を付与してください",
+	"@qrInvalidPermissions": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"qrUnknownError": "QRコードを読み取れませんでした",
+	"@qrUnknownError": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"customUrlHeader": "カスタムURL",
+	"@customUrlHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"customUrlDesc": "Define the endpoint",
+	"@customUrlDesc": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"walletFAQHeader": "ウォレットに関するFAQ",
+	"@walletFAQHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"walletFAQDesc": "質問があります？最初にここをチェックしてください！",
+	"@walletFAQDesc": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"enterEndpoint": "Enter an endpoint",
+	"@enterEndpoint": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"removeContact": "連絡先を削除します",
+	"@removeContact": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"removeContactConfirmation": "%1を削除してもよろしいですか？",
+	"@removeContactConfirmation": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"addressBookHeader": "住所録",
+	"@addressBookHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"contactHeader": "接触",
+	"@contactHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"addressBookDesc": "頻繁に使用するアドレスを作成および管理する",
+	"@addressBookDesc": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"addContact": "連絡先を追加",
+	"@addContact": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"contactNameHint": "名前を入力@",
+	"@contactNameHint": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"contactInvalid": "連絡先名が無効です",
+	"@contactInvalid": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"contactAdded": "%1が名簿に追加されました。",
+	"@contactAdded": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"contactRemoved": "%1が名簿から削除されました！",
+	"@contactRemoved": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"contactNameMissing": "この連絡先の名前を選択してください",
+	"@contactNameMissing": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"contactExists": "連絡先は既に存在します",
+	"@contactExists": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transferSuccess": "トランザクションは正常に送信されました",
+	"@transferSuccess": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transfering": "転送",
+	"@transfering": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"getOption": "Get",
+	"@getOption": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"deleteOption": "削除",
+	"@deleteOption": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"sendError": "エラーが発生しました。後でもう一度お試しください。",
+	"@sendError": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"enterAmount": "金額を入力します",
+	"@enterAmount": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"enterAddress": "住所を入力してください",
+	"@enterAddress": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"invalidAddress": "入力した住所が無効でした",
+	"@invalidAddress": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"addressMissing": "住所を入力してください",
+	"@addressMissing": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"amountMissing": "金額を入力してください",
+	"@amountMissing": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"minimumSend": "最小送信量は%1UCOです",
+	"@minimumSend": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"insufficientBalance": "残高不足",
+	"@insufficientBalance": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"fees": "Fees",
+	"@fees": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"pinCreateTitle": "Create a 6-digit pin",
+	"@pinCreateTitle": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"pinConfirmTitle": "Confirm your pin",
+	"@pinConfirmTitle": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"pinEnterTitle": "Enter pin",
+	"@pinEnterTitle": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"pinConfirmError": "Pins do not match",
+	"@pinConfirmError": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"pinInvalid": "Invalid PIN entered",
+	"@pinInvalid": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"authMethod": "Auth. Method",
+	"@authMethod": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"pinMethod": "PIN",
+	"@pinMethod": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"biometricsMethod": "生体認証",
+	"@biometricsMethod": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"currency": "Currency",
+	"@currency": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"changeCurrencyHeader": "通貨",
+	"@changeCurrencyHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"changeCurrencyDesc": "UCOと一緒に表示する法定通貨を選択します",
+	"@changeCurrencyDesc": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"language": "Language",
+	"@language": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"logout": "Logout",
+	"@logout": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"rootWarning": "お使いのデバイスが「ルート化」、「ジェイルブレイク」、またはセキュリティを危険にさらすような方法で変更されているようです。続行する前に、デバイスを元の状態にリセットすることをお勧めします。",
+	"@rootWarning": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"iUnderstandTheRisks": "私はリスクを理解している",
+	"@iUnderstandTheRisks": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"exit": "出口",
+	"@exit": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"warning": "警告",
+	"@warning": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"logoutDetail": "ログアウトすると、このデバイスからすべてのARCHEthicWallet関連のデータが削除されます。あなたの秘密のフレーズがバックアップされていない場合、あなたはあなたの財布に二度とアクセスすることができなくなります",
+	"@logoutDetail": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"logoutAction": "情報の削除とログアウト",
+	"@logoutAction": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"logoutAreYouSure": "本気ですか？",
+	"@logoutAreYouSure": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"logoutReassurance": "シードをバックアップしている限り、心配する必要はありません。",
+	"@logoutReassurance": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"preferences": "設定",
+	"@preferences": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"manage": "管理する",
+	"@manage": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"fingerprintSeedBackup": "Authenticate to backup seed.",
+	"@fingerprintSeedBackup": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"pinSecretPhraseBackup": "秘密のフレーズをバックアップするためにPINを入力してください",
+	"@pinSecretPhraseBackup": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"systemDefault": "システムのデフォルト",
+	"@systemDefault": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"unlockPin": "PINを入力してロックを解除します",
+	"@unlockPin": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"unlockBiometrics": "ロックを解除するための認証",
+	"@unlockBiometrics": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"confirmBiometrics": "確認のために認証する",
+	"@confirmBiometrics": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"lockAppSetting": "Auth. on Launch",
+	"@lockAppSetting": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"locked": "Locked",
+	"@locked": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"unlock": "ロック解除",
+	"@unlock": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"tooManyFailedAttempts": "ロック解除の試行に失敗した回数が多すぎます。",
+	"@tooManyFailedAttempts": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"securityHeader": "Security",
+	"@securityHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"aboutHeader": "About",
+	"@aboutHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"aboutGeneralTermsAndConditions": "一般利用規約",
+	"@aboutGeneralTermsAndConditions": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"aboutWalletServiceTerms": "ウォレットサービス規約",
+	"@aboutWalletServiceTerms": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"aboutPrivacyPolicy": "個人情報保護方針",
+	"@aboutPrivacyPolicy": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"autoLockHeader": "オートロック",
+	"@autoLockHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"xMinutes": "%1分後",
+	"@xMinutes": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"xMinute": "%1分後",
+	"@xMinute": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"instantly": "瞬時に",
+	"@instantly": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"defaultAccountName": "メインアカウント",
+	"@defaultAccountName": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"tapToReveal": "タップで表示",
+	"@tapToReveal": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"tapToHide": "タップして隠す",
+	"@tapToHide": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"pinPadShuffle": "PINパッドシャッフル",
+	"@pinPadShuffle": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"copy": "Copy",
+	"@copy": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"secretWarning": "デバイスを紛失したり、アプリケーションをアンインストールしたりした場合は、資金を回収するために秘密のフレーズが必要になります。",
+	"@secretWarning": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"importSecretPhrase": "シークレットフレーズのインポート",
+	"@importSecretPhrase": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"importSecretPhraseHint": "以下に24語の秘密のフレーズを入力してください。各単語はスペースで区切る必要があります。",
+	"@importSecretPhraseHint": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"qrMnemonicError": "QRに有効な秘密のフレーズが含まれていません",
+	"@qrMnemonicError": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"mnemonicInvalidWord": "%1は有効な単語ではありません",
+	"@mnemonicInvalidWord": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"mnemonicSizeError": "秘密のフレーズには24語しか含めることができません",
+	"@mnemonicSizeError": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"importWallet": "ウォレットをインポートする",
+	"@importWallet": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"newWallet": "新しいウォレット",
+	"@newWallet": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"understandButton": "了解しました。",
+	"@understandButton": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"ackBackedUp": "あなたはあなたの秘密のフレーズをバックアップしたと確信していますか？",
+	"@ackBackedUp": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"backupSecretPhrase": "バックアップの秘密のフレーズ",
+	"@backupSecretPhrase": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"releaseNoteHeader": "新着情報",
+	"@releaseNoteHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"ok": "Ok",
+	"@ok": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"addressInfos": "住所情報",
+	"@addressInfos": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"informations": "Informations",
+	"@informations": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nodesHeader": "ノード",
+	"@nodesHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nodesHeaderDesc": "ノード情報",
+	"@nodesHeaderDesc": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"addNFT": "NFTを追加する",
+	"@addNFT": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"addNFTHeader": "NFTを追加する",
+	"@addNFTHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"addNFTConfirmationMessage": "次のNFTの作成を確認しますか？",
+	"@addNFTConfirmationMessage": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nftHeader": "NFT",
+	"@nftHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nftHeaderDesc": "非財務トークンを管理する",
+	"@nftHeaderDesc": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nftNameHint": "名前を入力してください",
+	"@nftNameHint": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nftName": "Name: ",
+	"@nftName": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nftInitialSupplyHint": "初期供給を入力してください",
+	"@nftInitialSupplyHint": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nftNameMissing": "NFTの名前を選択してください",
+	"@nftNameMissing": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nftInitialSupply": "初期供給：",
+	"@nftInitialSupply": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nftInitialSupplyMissing": "NFTの初期供給を選択します",
+	"@nftInitialSupplyMissing": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nftInitialSupplyPositive": "初期供給は> 0である必要があります",
+	"@nftInitialSupplyPositive": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nodeNumber": "ノードの数：",
+	"@nodeNumber": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nodeFirstPublicKey": "最初の公開鍵：",
+	"@nodeFirstPublicKey": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nodeLastPublicKey": "Last public key : ",
+	"@nodeLastPublicKey": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nodeIP": "IP : ",
+	"@nodeIP": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nodeGeoPatch": "Geo patch : ",
+	"@nodeGeoPatch": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nodeNetworkPatch": "Network patch : ",
+	"@nodeNetworkPatch": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nodeAverageAvailability": "平均可用性：",
+	"@nodeAverageAvailability": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nodeAuthorized": "承認済み：",
+	"@nodeAuthorized": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nodeRewardAddress": "特典アドレス：",
+	"@nodeRewardAddress": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"txListFrom": "から ：",
+	"@txListFrom": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"txListTo": "に ：",
+	"@txListTo": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"txListDate": "Date : ",
+	"@txListDate": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"txListFees": "料金：",
+	"@txListFees": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"txListTypeTransactionLabelNewNFT": "New NFT",
+	"@txListTypeTransactionLabelNewNFT": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"txListTypeTransactionLabelReceive": "受信",
+	"@txListTypeTransactionLabelReceive": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"txListTypeTransactionLabelSend": "送信",
+	"@txListTypeTransactionLabelSend": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"recoveryPhrase": "回復フレーズ",
+	"@recoveryPhrase": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"iveBackedItUp": "私はそれをバックアップしました",
+	"@iveBackedItUp": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"backupSafetyLabel1": "次の画面に、回復フレーズが表示されます。",
+	"@backupSafetyLabel1": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"backupSafetyLabel2": "回復フレーズとは何ですか？",
+	"@backupSafetyLabel2": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"backupSafetyLabel3": "A recovery phrase is essentially a human readable form of your crypto's wallet private key, and is displayed as 24 mnemonic words. After mastering the mnemonic words, you can restore your wallet at will. Please keep the words properly and don't leak them to anyone.",
+	"@backupSafetyLabel3": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"backupSafetyLabel4": "バックアップする方法は？",
+	"@backupSafetyLabel4": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"backupSafetyLabel5": "Write down the mnemonic words in the correct order on a piece of papier and store them in a safe place.\nPlease don't store the recovery phrase on electronic devices in any form, including sreenshot.\nRemember the safety of the recovery phrase is relevant to the safety of your digital assets",
+	"@backupSafetyLabel5": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"backupSafetyLabel6": "安全でないバックアップ方法",
+	"@backupSafetyLabel6": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"backupSafetyLabel7": "1.スクリーンショット\n2.写真を撮る",
+	"@backupSafetyLabel7": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"go": "Go !",
+	"@go": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"nftCreated": "NFT Created",
+	"@nftCreated": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"version": "バージョン ：",
+	"@version": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"settings": "設定",
+	"@settings": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	}
+}

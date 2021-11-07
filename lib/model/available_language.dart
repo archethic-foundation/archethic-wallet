@@ -13,7 +13,8 @@ enum AvailableLanguage {
   INDONESIAN,
   DUTCH,
   SPANISH,
-  ITALIAN
+  ITALIAN,
+  JAPANESE
 }
 
 /// Represent the available languages our app supports
@@ -39,6 +40,8 @@ class LanguageSetting extends SettingSelectionItem {
         return 'Español (es)';
       case AvailableLanguage.ITALIAN:
         return 'Italiano (it)';
+      case AvailableLanguage.JAPANESE:
+        return 'Japanese (ja)';
       default:
         return AppLocalization.of(context)!.systemDefault;
     }
@@ -60,6 +63,8 @@ class LanguageSetting extends SettingSelectionItem {
         return 'es';
       case AvailableLanguage.ITALIAN:
         return 'it';
+      case AvailableLanguage.JAPANESE:
+        return 'ja';
       default:
         return 'DEFAULT';
     }
