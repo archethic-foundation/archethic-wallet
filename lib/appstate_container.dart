@@ -367,7 +367,6 @@ class StateContainerState extends State<StateContainer> {
           encryptedSecret, await sl.get<Vault>().getSessionKey()));
     } else {
       seed = (await sl.get<Vault>().getSeed())!;
-      print(seed);
     }
     return seed;
   }

@@ -15,9 +15,9 @@ class DBHelper {
   static Future<void> setupDatabase() async {
     if (!kIsWeb) {
       await Hive.initFlutter();
-      Hive.registerAdapter(ContactAdapter());
-      Hive.registerAdapter(AccountAdapter());
     }
+    Hive.registerAdapter(ContactAdapter());
+    Hive.registerAdapter(AccountAdapter());
   }
 
   // Contacts
