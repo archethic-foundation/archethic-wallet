@@ -1,2 +1,3 @@
 dart format lib
 flutter pub run import_sorter:main
+flutter build apk --split-per-abi
