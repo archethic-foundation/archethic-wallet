@@ -4,12 +4,9 @@
 
 // Dart imports:
 import 'dart:async';
-import 'dart:ui';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 // Examples can assume:
 // enum Department { treasury, state }

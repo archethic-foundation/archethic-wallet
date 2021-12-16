@@ -1,10 +1,8 @@
 // Dart imports:
 import 'dart:async';
-import 'dart:typed_data';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
 // Project imports:
