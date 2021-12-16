@@ -372,13 +372,13 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"language": "Language",
+	"language": "Langue",
 	"@language": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"logout": "Logout",
+	"logout": "Déconnexion",
 	"@logout": {
 		"type": "text",
 		"placeholders_order": [],
@@ -420,7 +420,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"logoutAreYouSure": "Êtes-vous sûr?",
+	"logoutAreYouSure": "Êtes-vous sûr(e) ?",
 	"@logoutAreYouSure": {
 		"type": "text",
 		"placeholders_order": [],
@@ -504,13 +504,13 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"securityHeader": "Security",
+	"securityHeader": "Sécurité",
 	"@securityHeader": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"aboutHeader": "About",
+	"aboutHeader": "A propos",
 	"@aboutHeader": {
 		"type": "text",
 		"placeholders_order": [],
