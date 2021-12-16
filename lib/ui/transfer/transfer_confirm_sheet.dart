@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:archethic_mobile_wallet/ui/widgets/yubikey_screen.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -240,7 +241,12 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                             await authenticateWithPin();
                           }
                         } else {
-                          await authenticateWithPin();
+                          if (authMethod.method ==
+                              AuthMethod.YUBIKEY_WITH_YUBICLOUD) {
+                            await authenticateWithYubikey();
+                          } else {
+                            await authenticateWithPin();
+                          }
                         }
                       })
                     ],
@@ -295,6 +301,20 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         expectedPin: expectedPin!,
         description: '',
       );
+    })) as bool;
+    if (auth) {
+      await Future<void>.delayed(const Duration(milliseconds: 200));
+      EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
+    }
+  }
+
+  Future<void> authenticateWithYubikey() async {
+    // Yubikey Authentication
+    final bool auth = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) {
+      return YubikeyScreen(
+          yubikeyScreenBackgroundColor:
+              StateContainer.of(context).curTheme.backgroundDark);
     })) as bool;
     if (auth) {
       await Future<void>.delayed(const Duration(milliseconds: 200));

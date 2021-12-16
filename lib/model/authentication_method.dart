@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/setting_item.dart';
 
-enum AuthMethod { PIN, BIOMETRICS }
+enum AuthMethod { PIN, BIOMETRICS, YUBIKEY_WITH_YUBICLOUD }
 
 /// Represent the available authentication methods our app supports
 class AuthenticationMethod extends SettingSelectionItem {
@@ -20,6 +20,8 @@ class AuthenticationMethod extends SettingSelectionItem {
         return AppLocalization.of(context)!.biometricsMethod;
       case AuthMethod.PIN:
         return AppLocalization.of(context)!.pinMethod;
+      case AuthMethod.YUBIKEY_WITH_YUBICLOUD:
+        return AppLocalization.of(context)!.yubikeyWithYubiCloudMethod;
       default:
         return AppLocalization.of(context)!.pinMethod;
     }

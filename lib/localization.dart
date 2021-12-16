@@ -216,6 +216,67 @@ class AppLocalization {
         name: 'sendError');
   }
 
+  // ignore: non_constant_identifier_names
+  String get yubikeyError_BAD_OTP {
+    return Intl.message('The OTP is invalid format.',
+        name: 'yubikeyError_BAD_OTP');
+  }
+
+  // ignore: non_constant_identifier_names
+  String get yubikeyError_REPLAYED_OTP {
+    return Intl.message('The OTP has already been seen by the service.',
+        name: 'yubikeyError_REPLAYED_OTP');
+  }
+
+  // ignore: non_constant_identifier_names
+  String get yubikeyError_BAD_SIGNATURE {
+    return Intl.message('The HMAC signature verification failed.',
+        name: 'yubikeyError_BAD_SIGNATURE');
+  }
+
+  // ignore: non_constant_identifier_names
+  String get yubikeyError_MISSING_PARAMETER {
+    return Intl.message('The request lacks a parameter.',
+        name: 'yubikeyError_MISSING_PARAMETER');
+  }
+
+  // ignore: non_constant_identifier_names
+  String get yubikeyError_NO_SUCH_CLIENT {
+    return Intl.message('The request id does not exist.',
+        name: 'yubikeyError_NO_SUCH_CLIENT');
+  }
+
+  // ignore: non_constant_identifier_names
+  String get yubikeyError_OPERATION_NOT_ALLOWED {
+    return Intl.message('The request id is not allowed to verify OTPs.',
+        name: 'yubikeyError_OPERATION_NOT_ALLOWED');
+  }
+
+  // ignore: non_constant_identifier_names
+  String get yubikeyError_BACKEND_ERROR {
+    return Intl.message('Unexpected error in the yubicloud server.',
+        name: 'yubikeyError_BACKEND_ERROR');
+  }
+
+  // ignore: non_constant_identifier_names
+  String get yubikeyError_NOT_ENOUGH_ANSWERS {
+    return Intl.message(
+        'Server could not get requested number of syncs during before timeout.',
+        name: 'yubikeyError_NOT_ENOUGH_ANSWERS');
+  }
+
+  // ignore: non_constant_identifier_names
+  String get yubikeyError_REPLAYED_REQUEST {
+    return Intl.message('Server has seen the OTP/Nonce combination before',
+        name: 'yubikeyError_REPLAYED_REQUEST');
+  }
+
+  // ignore: non_constant_identifier_names
+  String get yubikeyError_RESPONSE_KO {
+    return Intl.message('An error occurred. Try again later.',
+        name: 'yubikeyError_RESPONSE_KO');
+  }
+
   String get enterAmount {
     return Intl.message('Enter Amount', name: 'enterAmount');
   }
@@ -274,6 +335,11 @@ class AppLocalization {
 
   String get pinMethod {
     return Intl.message('PIN', name: 'pinMethod');
+  }
+
+  String get yubikeyWithYubiCloudMethod {
+    return Intl.message("Yubikey with YubiCloud",
+        name: 'yubikeyWithYubiCloudMethod');
   }
 
   String get biometricsMethod {

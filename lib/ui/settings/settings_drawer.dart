@@ -248,6 +248,18 @@ class _SettingsSheetState extends State<SettingsSheet>
                   ),
                 ),
               ),
+              AppSimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, AuthMethod.YUBIKEY_WITH_YUBICLOUD);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    AppLocalization.of(context)!.yubikeyWithYubiCloudMethod,
+                    style: AppStyles.textStyleSize16W600Primary(context),
+                  ),
+                ),
+              ),
             ],
           );
         })) {
@@ -268,6 +280,18 @@ class _SettingsSheetState extends State<SettingsSheet>
             .then((_) {
           setState(() {
             _curAuthMethod = AuthenticationMethod(AuthMethod.BIOMETRICS);
+          });
+        });
+        break;
+      case AuthMethod.YUBIKEY_WITH_YUBICLOUD:
+        sl
+            .get<SharedPrefsUtil>()
+            .setAuthMethod(
+                AuthenticationMethod(AuthMethod.YUBIKEY_WITH_YUBICLOUD))
+            .then((_) {
+          setState(() {
+            _curAuthMethod =
+                AuthenticationMethod(AuthMethod.YUBIKEY_WITH_YUBICLOUD);
           });
         });
         break;

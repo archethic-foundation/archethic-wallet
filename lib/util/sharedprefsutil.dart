@@ -246,8 +246,12 @@ class SharedPrefsUtil {
   }
 
   Future<DateTime?> getLockDate() async {
-    final String lockDateStr = await get(pin_lock_until);
-    return DateFormat.yMd().add_jms().parseUtc(lockDateStr);
+    final String? lockDateStr = await get(pin_lock_until);
+    if (lockDateStr != null) {
+      return DateFormat.yMd().add_jms().parseUtc(lockDateStr);
+    } else {
+      return null;
+    }
   }
 
   Future<bool> useLegacyStorage() async {

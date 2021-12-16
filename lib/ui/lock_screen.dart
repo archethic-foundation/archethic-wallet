@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:archethic_mobile_wallet/ui/widgets/yubikey_screen.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -49,6 +50,12 @@ class _AppLockScreenState extends State<AppLockScreen> {
         expectedPin: expectedPin,
         description: AppLocalization.of(context)!.unlockPin,
         pinScreenBackgroundColor:
+            StateContainer.of(context).curTheme.backgroundDark);
+  }
+
+  Widget _buildYubikeyScreen(BuildContext context) {
+    return YubikeyScreen(
+        yubikeyScreenBackgroundColor:
             StateContainer.of(context).curTheme.backgroundDark);
   }
 
@@ -157,10 +164,31 @@ class _AppLockScreenState extends State<AppLockScreen> {
     }
   }
 
+  Future<void> authenticateWithYubikey({bool transitions = false}) async {
+    bool auth = false;
+    if (transitions) {
+      auth = await Navigator.of(context).push(
+        MaterialPageRoute(builder: (BuildContext context) {
+          return _buildYubikeyScreen(context);
+        }),
+      ) as bool;
+    } else {
+      auth = await Navigator.of(context).push(
+        NoPushTransitionRoute(builder: (BuildContext context) {
+          return _buildYubikeyScreen(context);
+        }),
+      );
+    }
+    await Future<void>.delayed(const Duration(milliseconds: 200));
+    if (mounted && auth) {
+      _goHome();
+    }
+  }
+
   Future<void> _authenticate({bool transitions = false}) async {
     // Test if user is locked out
     // Get duration of lockout
-    final DateTime? lockUntil = await sl.get<SharedPrefsUtil>().getLockDate();
+    var lockUntil = await sl.get<SharedPrefsUtil>().getLockDate();
     if (lockUntil == null) {
       await sl.get<SharedPrefsUtil>().resetLockAttempts();
     } else {
@@ -185,7 +213,11 @@ class _AppLockScreenState extends State<AppLockScreen> {
         await authenticateWithPin(transitions: transitions);
       }
     } else {
-      await authenticateWithPin(transitions: transitions);
+      if (authMethod.method == AuthMethod.YUBIKEY_WITH_YUBICLOUD) {
+        return authenticateWithYubikey(transitions: transitions);
+      } else {
+        await authenticateWithPin(transitions: transitions);
+      }
     }
   }
 
