@@ -18,7 +18,7 @@ ARCHEthic Wallet have features that are implemented:
 - Support for transactions (Sending and Receiving UCO Tokens)
 - Upcoming Support for NFTs and Many More
 
-![Application Initial Screen](screenshots/gkFFY7ML/App-Init.jpg)
+![Application Initial Screen](/screenshots/gkFFY7ML/App-Init.jpg)
 * Application Initial Screen
 
 - Screenshot of Wallet Application 
