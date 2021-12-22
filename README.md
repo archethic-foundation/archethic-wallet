@@ -18,18 +18,18 @@ ARCHEthic Wallet have features that are implemented:
 - Support for transactions (Sending and Receiving UCO Tokens)
 - Upcoming Support for NFTs and Many More
 
-![Application Initial Screen](https://i.postimg.cc/gkFFY7ML/App-Init.jpg)
+![Application Initial Screen](screenshots/gkFFY7ML/App-Init.jpg)
 * Application Initial Screen
 
 - Screenshot of Wallet Application 
-    - [Address View](https://i.postimg.cc/t4zHvzNZ/Address-Copied.jpg)
-    - [Application Initial](https://i.postimg.cc/gkFFY7ML/App-Init.jpg)
-    - [Confirm UCO Transfer](https://i.postimg.cc/gJ19Ltm5/Confirm-Transfer-UCOs.jpg)
-    - [Application Dashboard](https://i.postimg.cc/3rDQQhZH/Dashboard.jpg)
-    - [Application Dashboard with UCOs](https://i.postimg.cc/L5Pctkss/Dashboard-UCOs.jpg)
-    - [Transaction Sent Successful](https://i.postimg.cc/8CKgNP3T/Transaction-Send.jpg)
-    - [Transaction to Transfer UCOs](https://i.postimg.cc/zByZBYZK/Transfer-UCOs.jpg)
-    - [Transaction Final Confirmation](https://i.postimg.cc/rpF2Btfh/Transfer-UCOs-Final.jpg)
+    - [Address View](screenshots/Address-Copied.jpg)
+    - [Application Initial](screenshots/App-Init.jpg)
+    - [Confirm UCO Transfer](screenshots/Confirm-Transfer-UCOs.jpg)
+    - [Application Dashboard](screenshots/Dashboard.jpg)
+    - [Application Dashboard with UCOs](screenshots/Dashboard-UCOs.jpg)
+    - [Transaction Sent Successful](screenshots/Transaction-Send.jpg)
+    - [Transaction to Transfer UCOs](screenshots/Transfer-UCOs.jpg)
+    - [Transaction Final Confirmation](screenshots/Transfer-UCOs-Final.jpg)
 
 
 ## How to install ARCHEthic Wallet
