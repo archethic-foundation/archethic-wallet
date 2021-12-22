@@ -2,4 +2,61 @@
 
 # ARCHEthic Wallet
 
+Similar to a bank account for fiat currency, a crypto wallet is a personal interface for a cryptocurrency network that provides reliable storage and enables transactions. Whether a cryptocurrency is securely stored or not, much depends on the wallet, which is only as secure as its private keys.
 
+Software wallets come in many forms, each with its own set of unique characteristics. Most are somehow connected to the internet and are hot in nature. Wallets are distinguished by a set of supported cryptocurrencies and software platforms such as Windows, Mac and other operating systems. Software wallets are available in three forms — desktop, mobile and online:
+- Desktop wallets are computer programs that store cryptocurrencies on a PC so that its information is not accessible to anyone but the user, whose private keys are kept only on the desktop.
+- Mobile wallets come in the form of a smartphone app and are easily accessible to their users at any time, considering most people don’t leave their homes without their phones. However, it is worth remembering that mobile devices are vulnerable to various malware and can be easily lost.
+- Online wallets are web wallets that can be accessed from anywhere and any device, making them more convenient, but the private keys are stored by website owners rather than locally on user devices.
+
+Archethic Wallet uses the standard bip44 protocol and uses a 24 words mneumonics for deriving private and public keys. If you are familiar with Metamask then Archethic wallet is similar application for ARCHEthic blockchain.
+
+ARCHEthic wallet have features that are implemented:
+- Use of 24 Words Mneumonics.
+- Support for Multiple Languages
+- Support for Multiple Currency (Only views not as in multiple cryptocurrency)
+- Support for transactions (Sending and Recieving UCO Tokens)
+- Upcoming Support for NFTs and Many More
+
+![Application Initial Screen](https://i.postimg.cc/gkFFY7ML/App-Init.jpg)
+* Application Initial Screen
+
+- Screenshot of Wallet Application 
+    - [Address View](https://i.postimg.cc/t4zHvzNZ/Address-Copied.jpg)
+    - [Application Initial](https://i.postimg.cc/gkFFY7ML/App-Init.jpg)
+    - [Confirm UCO Transfer](https://i.postimg.cc/gJ19Ltm5/Confirm-Transfer-UCOs.jpg)
+    - [Application Dashboard](https://i.postimg.cc/3rDQQhZH/Dashboard.jpg)
+    - [Application Dashboard with UCOs](https://i.postimg.cc/L5Pctkss/Dashboard-UCOs.jpg)
+    - [Transaction Sent Successful](https://i.postimg.cc/8CKgNP3T/Transaction-Send.jpg)
+    - [Transaction to Transfer UCOs](https://i.postimg.cc/zByZBYZK/Transfer-UCOs.jpg)
+    - [Transaction Final Confirmation](https://i.postimg.cc/rpF2Btfh/Transfer-UCOs-Final.jpg)
+
+
+## How to install Archethic Wallet
+
+\# Currently Archethic wallet is supported on Android Devices for Testnet \#
+
+To Install Archethic Wallet in Android Devices:
+- Download the APK file for application for your platform from [releases](https://github.com/archethic-foundation/archethic_mobile_wallet/releases).
+- Click on the downloaded file and Click on Install
+    - If asks for permission to install from unknown sources
+        - Goto Setttings and Allow Installation from unknown sources for browser or file manager.
+- Once installed open the application and proceed as per instructions the application.
+
+
+## Setup this Application for developers
+
+### Pre-requisites
+- Flutter 2.5+
+- Dart 2.14+
+
+### Instructions
+- Download the repo into a folder
+- Goto the folder and from terminal run `flutter pub get` to get the packages
+- Once packages are installed 
+    - You can build and run the program for emulator from VSCode Flutter SDK Tools
+    - You can build for android emulator if already installed.
+- Once the packages and installed and application is built
+- Run the program with `flutter run`
+
+*** This Application is currently in active development so it might fail to build. Please refer to issues or create new issues if you find any. Contributions are welcomed.
