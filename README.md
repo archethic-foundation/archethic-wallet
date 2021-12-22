@@ -42,6 +42,12 @@ To Install ARCHEthic Wallet in Android Devices:
         - Goto Settings and Allow Installation from unknown sources for browser or file manager.
 - Once installed open the application and proceed as per instructions the application.
 
+To test ARCHEthic Wallet with Testnet:
+- Copy your address from the wallet and paste on the [ARCHEthic Testnet Faucet](https://testnet.archethic.net/faucet) 
+- Click on 'Transfer 100 UCO'
+- Refresh your dashboard
+Now, you can send some UCO and see your transactions
+
 ## Setup this Application for developers
 
 ### Pre-requisites
