@@ -8,7 +8,7 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw new FileNotFoundException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
@@ -34,7 +34,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 31
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -47,7 +47,7 @@ android {
     defaultConfig {
         applicationId "io.reddwarf.archethic_mobile_wallet"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
         multiDexEnabled true
@@ -93,4 +93,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.bottlerocketstudios:vault:1.4.2"
     implementation 'androidx.multidex:multidex:2.0.1'
+    // Low-level communication with YubiKey (core is also automatically pulled in)
+    implementation 'com.yubico.yubikit:android:2.0.0'
+    // Application specific classes
+    implementation 'com.yubico.yubikit:piv:2.0.0'
+    implementation 'com.yubico.yubikit:management:2.0.0'
 }
