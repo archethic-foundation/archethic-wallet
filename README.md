@@ -9,13 +9,13 @@ Software wallets come in many forms, each with its own set of unique characteris
 - Mobile wallets come in the form of a smartphone app and are easily accessible to their users at any time, considering most people don’t leave their homes without their phones. However, it is worth remembering that mobile devices are vulnerable to various malware and can be easily lost.
 - Online wallets are web wallets that can be accessed from anywhere and any device, making them more convenient, but the private keys are stored by website owners rather than locally on user devices.
 
-Archethic Wallet uses the standard bip44 protocol and uses a 24 words mneumonics for deriving private and public keys. If you are familiar with Metamask then Archethic wallet is similar application for ARCHEthic blockchain.
+ARCHEthic Wallet uses the standard bip32 protocol and uses a 24 words mneumonics for deriving private and public keys. If you are familiar with Metamask then ARCHEthic Wallet is similar application for ARCHEthic blockchain.
 
-ARCHEthic wallet have features that are implemented:
-- Use of 24 Words Mneumonics.
+ARCHEthic Wallet have features that are implemented:
+- Use of 24 Words Mnemonics.
 - Support for Multiple Languages
-- Support for Multiple Currency (Only views not as in multiple cryptocurrency)
-- Support for transactions (Sending and Recieving UCO Tokens)
+- Support for Multiple Currencies (Only views not as in multiple cryptocurrencies)
+- Support for transactions (Sending and Receiving UCO Tokens)
 - Upcoming Support for NFTs and Many More
 
 ![Application Initial Screen](https://i.postimg.cc/gkFFY7ML/App-Init.jpg)
@@ -32,23 +32,22 @@ ARCHEthic wallet have features that are implemented:
     - [Transaction Final Confirmation](https://i.postimg.cc/rpF2Btfh/Transfer-UCOs-Final.jpg)
 
 
-## How to install Archethic Wallet
+## How to install ARCHEthic Wallet
 
-\# Currently Archethic wallet is supported on Android Devices for Testnet \#
+\# Currently ARCHEthic Wallet is supported on Android and iOS Devices for Testnet \#
 
-To Install Archethic Wallet in Android Devices:
+To Install ARCHEthic Wallet in Android Devices:
 - Download the APK file for application for your platform from [releases](https://github.com/archethic-foundation/archethic_mobile_wallet/releases).
 - Click on the downloaded file and Click on Install
     - If asks for permission to install from unknown sources
-        - Goto Setttings and Allow Installation from unknown sources for browser or file manager.
+        - Goto Settings and Allow Installation from unknown sources for browser or file manager.
 - Once installed open the application and proceed as per instructions the application.
-
 
 ## Setup this Application for developers
 
 ### Pre-requisites
-- Flutter 2.5+
-- Dart 2.14+
+- Flutter 2.8+
+- Dart 2.15+
 
 ### Instructions
 - Download the repo into a folder
