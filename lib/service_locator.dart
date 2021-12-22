@@ -11,6 +11,7 @@ import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service/app_service.dart';
 import 'package:archethic_mobile_wallet/util/biometrics.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
+import 'package:archethic_mobile_wallet/util/nfc.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 
 GetIt sl = GetIt.instance;
@@ -45,6 +46,11 @@ Future<void> setupServiceLocator() async {
     sl.unregister<BiometricUtil>();
   }
   sl.registerLazySingleton<BiometricUtil>(() => BiometricUtil());
+
+  if (sl.isRegistered<NFCUtil>()) {
+    sl.unregister<NFCUtil>();
+  }
+  sl.registerLazySingleton<NFCUtil>(() => NFCUtil());
 
   if (sl.isRegistered<Vault>()) {
     sl.unregister<Vault>();

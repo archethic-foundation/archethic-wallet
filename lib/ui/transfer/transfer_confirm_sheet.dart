@@ -4,7 +4,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_mobile_wallet/ui/widgets/yubikey_screen.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -32,6 +31,7 @@ import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/yubikey_screen.dart';
 import 'package:archethic_mobile_wallet/util/biometrics.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
@@ -312,9 +312,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     // Yubikey Authentication
     final bool auth = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
-      return YubikeyScreen(
-          yubikeyScreenBackgroundColor:
-              StateContainer.of(context).curTheme.backgroundDark);
+      return YubikeyScreen();
     })) as bool;
     if (auth) {
       await Future<void>.delayed(const Duration(milliseconds: 200));

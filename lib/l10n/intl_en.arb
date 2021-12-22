@@ -935,5 +935,107 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "yubikeyWithYubiCloudMethod": "Yubikey",
+  	"@yubikeyWithYubiCloudMethod": {
+    	"type": "text",
+    	"placeholders_order": [],
+    	"placeholders": {}
+  	},
+	"unlockNFCYubikey": "Authenticate to Unlock",
+  	"@unlockNFCYubikey": {
+    	"type": "text",
+    	"placeholders_order": [],
+    	"placeholders": {}
+  	},
+"yubikeyError_BAD_OTP": "The OTP is invalid format.",
+  "@yubikeyError_BAD_OTP": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "yubikeyError_REPLAYED_OTP": "The OTP has already been seen by the service.",
+  "@yubikeyError_REPLAYED_OTP": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "yubikeyError_BAD_SIGNATURE": "The HMAC signature verification failed.",
+  "@yubikeyError_BAD_SIGNATURE": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "yubikeyError_MISSING_PARAMETER": "The request lacks a parameter.",
+  "@yubikeyError_MISSING_PARAMETER": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "yubikeyError_NO_SUCH_CLIENT": "The request id does not exist.",
+  "@yubikeyError_NO_SUCH_CLIENT": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "yubikeyError_OPERATION_NOT_ALLOWED": "The request id is not allowed to verify OTPs.",
+  "@yubikeyError_OPERATION_NOT_ALLOWED": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "yubikeyError_BACKEND_ERROR": "Unexpected error in the yubicloud server.",
+  "@yubikeyError_BACKEND_ERROR": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "yubikeyError_NOT_ENOUGH_ANSWERS": "Server could not get requested number of syncs during before timeout.",
+  "@yubikeyError_NOT_ENOUGH_ANSWERS": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "yubikeyError_REPLAYED_REQUEST": "Server has seen the OTP/Nonce combination before",
+  "@yubikeyError_REPLAYED_REQUEST": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "yubikeyError_RESPONSE_KO": "An error occurred with Yubkey Authentification. Try again later.",
+  "@yubikeyError_RESPONSE_KO": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "yubikeyError_OTP_NOT_FOUND": "The OTP is empty",
+  "@yubikeyError_OTP_NOT_FOUND": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "enterYubikeyClientID": "Enter the client ID",
+  "@enterYubikeyClientID": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "enterYubikeyClientAPIKey": "Enter the client API Key",
+  "@enterYubikeyClientAPIKey": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "yubikeyParamsHeader": "Yubikey Params",
+  "@yubikeyParamsHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "yubikeyParamsDesc": "Setting up Yubicloud access",
+  "@yubikeyParamsDesc": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

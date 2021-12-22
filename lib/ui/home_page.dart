@@ -402,9 +402,8 @@ class _AppHomePageState extends State<AppHomePage>
                         if (StateContainer.of(context).wallet == null)
                           const SizedBox()
                         else
-                       const TxListWidget(),
-                      
-                          ],
+                          const TxListWidget(),
+                      ],
                     ),
                   ],
                 ),

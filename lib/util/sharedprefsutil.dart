@@ -42,6 +42,10 @@ class SharedPrefsUtil {
   static const String endpoint = 'farchethic_endpoint';
   static const String pinPadShuffle = 'farchethic_pinPadShuffle';
 
+  // Yubikey
+  static const String yubikeyClientID = 'farchethic_yubikeyClientID';
+  static const String yubikeyClientAPIKey = 'farchethic_yubikeyClientAPIKey';
+
   // For plain-text data
   // ignore: always_specify_types
   Future<void> set(String key, value) async {
@@ -164,6 +168,22 @@ class SharedPrefsUtil {
 
   Future<String> getEndpoint() async {
     return await get(endpoint, defaultValue: glovalVarEndPointDev);
+  }
+
+  Future<void> setYubikeyClientAPIKey(String v) async {
+    return await set(yubikeyClientAPIKey, v);
+  }
+
+  Future<String> getYubikeyClientAPIKey() async {
+    return await get(yubikeyClientAPIKey, defaultValue: '');
+  }
+
+  Future<void> setYubikeyClientID(String v) async {
+    return await set(yubikeyClientID, v);
+  }
+
+  Future<String> getYubikeyClientID() async {
+    return await get(yubikeyClientID, defaultValue: '');
   }
 
   Future<void> setLock(bool value) async {

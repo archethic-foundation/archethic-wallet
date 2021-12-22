@@ -142,6 +142,24 @@ class AppLocalization {
     return Intl.message('Enter an endpoint', name: 'enterEndpoint');
   }
 
+  String get enterYubikeyClientID {
+    return Intl.message('Enter the client ID', name: 'enterYubikeyClientID');
+  }
+
+  String get enterYubikeyClientAPIKey {
+    return Intl.message('Enter the client API Key',
+        name: 'enterYubikeyClientAPIKey');
+  }
+
+  String get yubikeyParamsHeader {
+    return Intl.message('Yubikey Params', name: 'yubikeyParamsHeader');
+  }
+
+  String get yubikeyParamsDesc {
+    return Intl.message('Setting up Yubicloud access',
+        name: 'yubikeyParamsDesc');
+  }
+
   String get removeContact {
     return Intl.message('Remove Contact', name: 'removeContact');
   }
@@ -273,8 +291,14 @@ class AppLocalization {
 
   // ignore: non_constant_identifier_names
   String get yubikeyError_RESPONSE_KO {
-    return Intl.message('An error occurred. Try again later.',
+    return Intl.message(
+        'An error occurred with Yubkey Authentification. Try again later.',
         name: 'yubikeyError_RESPONSE_KO');
+  }
+
+  // ignore: non_constant_identifier_names
+  String get yubikeyError_OTP_NOT_FOUND {
+    return Intl.message('The OTP is empty', name: 'yubikeyError_OTP_NOT_FOUND');
   }
 
   String get enterAmount {
@@ -338,8 +362,7 @@ class AppLocalization {
   }
 
   String get yubikeyWithYubiCloudMethod {
-    return Intl.message("Yubikey with YubiCloud",
-        name: 'yubikeyWithYubiCloudMethod');
+    return Intl.message("Yubikey", name: 'yubikeyWithYubiCloudMethod');
   }
 
   String get biometricsMethod {
@@ -434,6 +457,10 @@ class AppLocalization {
 
   String get unlockBiometrics {
     return Intl.message('Authenticate to Unlock', name: 'unlockBiometrics');
+  }
+
+  String get unlockNFCYubikey {
+    return Intl.message('Authenticate to Unlock', name: 'unlockNFCYubikey');
   }
 
   String get confirmBiometrics {

@@ -72,6 +72,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "enterAddress" : MessageLookupByLibrary.simpleMessage("Entrer l\'adresse"),
     "enterAmount" : MessageLookupByLibrary.simpleMessage("Entrer le montant"),
     "enterEndpoint" : MessageLookupByLibrary.simpleMessage("Enter an endpoint"),
+    "enterYubikeyClientAPIKey" : MessageLookupByLibrary.simpleMessage("Enter the client API Key"),
+    "enterYubikeyClientID" : MessageLookupByLibrary.simpleMessage("Enter the client ID"),
     "exit" : MessageLookupByLibrary.simpleMessage("Sortie"),
     "fees" : MessageLookupByLibrary.simpleMessage("Fees"),
     "fingerprintSeedBackup" : MessageLookupByLibrary.simpleMessage("Authenticate to backup seed."),
@@ -167,6 +169,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "understandButton" : MessageLookupByLibrary.simpleMessage("Je comprends"),
     "unlock" : MessageLookupByLibrary.simpleMessage("Ouvrir"),
     "unlockBiometrics" : MessageLookupByLibrary.simpleMessage("Authentifier pour déverrouiller"),
+    "unlockNFCYubikey" : MessageLookupByLibrary.simpleMessage("Authenticate to Unlock"),
     "unlockPin" : MessageLookupByLibrary.simpleMessage("Entrez le code PIN pour déverrouiller"),
     "update" : MessageLookupByLibrary.simpleMessage("Mettre à jour"),
     "version" : MessageLookupByLibrary.simpleMessage("Version :"),
@@ -176,6 +179,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "welcomeText" : MessageLookupByLibrary.simpleMessage("Bienvenue sur Internet de confiance.\n\nARCHEthic redonne à l\'humanité la maîtrise de la technologie, et à chaque individu la maîtrise de son identité."),
     "xMinute" : MessageLookupByLibrary.simpleMessage("Après %1 minute"),
     "xMinutes" : MessageLookupByLibrary.simpleMessage("Après %1 minutes"),
-    "yes" : MessageLookupByLibrary.simpleMessage("Oui")
+    "yes" : MessageLookupByLibrary.simpleMessage("Oui"),
+    "yubikeyError_BACKEND_ERROR" : MessageLookupByLibrary.simpleMessage("Unexpected error in the yubicloud server."),
+    "yubikeyError_BAD_OTP" : MessageLookupByLibrary.simpleMessage("The OTP is invalid format."),
+    "yubikeyError_BAD_SIGNATURE" : MessageLookupByLibrary.simpleMessage("The HMAC signature verification failed."),
+    "yubikeyError_MISSING_PARAMETER" : MessageLookupByLibrary.simpleMessage("The request lacks a parameter."),
+    "yubikeyError_NOT_ENOUGH_ANSWERS" : MessageLookupByLibrary.simpleMessage("Server could not get requested number of syncs during before timeout."),
+    "yubikeyError_NO_SUCH_CLIENT" : MessageLookupByLibrary.simpleMessage("The request id does not exist."),
+    "yubikeyError_OPERATION_NOT_ALLOWED" : MessageLookupByLibrary.simpleMessage("The request id is not allowed to verify OTPs."),
+    "yubikeyError_OTP_NOT_FOUND" : MessageLookupByLibrary.simpleMessage("The OTP is empty"),
+    "yubikeyError_REPLAYED_OTP" : MessageLookupByLibrary.simpleMessage("The OTP has already been seen by the service."),
+    "yubikeyError_REPLAYED_REQUEST" : MessageLookupByLibrary.simpleMessage("Server has seen the OTP/Nonce combination before"),
+    "yubikeyError_RESPONSE_KO" : MessageLookupByLibrary.simpleMessage("An error occurred with Yubkey Authentification. Try again later."),
+    "yubikeyParamsDesc" : MessageLookupByLibrary.simpleMessage("Setting up Yubicloud access"),
+    "yubikeyParamsHeader" : MessageLookupByLibrary.simpleMessage("Yubikey Params"),
+    "yubikeyWithYubiCloudMethod" : MessageLookupByLibrary.simpleMessage("Yubikey")
   };
 }

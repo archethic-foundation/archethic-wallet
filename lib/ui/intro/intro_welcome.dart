@@ -91,7 +91,10 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                                   child: SizedBox(
                                     height: 300,
                                     child: kIsWeb
-                                        ? Image.network('assets/archethic_logo.svg', height: 200,)
+                                        ? Image.network(
+                                            'assets/archethic_logo.svg',
+                                            height: 200,
+                                          )
                                         : SvgPicture.asset(
                                             'assets/archethic_logo.svg',
                                             height: 200,

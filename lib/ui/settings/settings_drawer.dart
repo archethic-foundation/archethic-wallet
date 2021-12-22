@@ -28,11 +28,13 @@ import 'package:archethic_mobile_wallet/ui/settings/custom_url_widget.dart';
 import 'package:archethic_mobile_wallet/ui/settings/nodes_widget.dart';
 import 'package:archethic_mobile_wallet/ui/settings/settings_list_item.dart';
 import 'package:archethic_mobile_wallet/ui/settings/wallet_faq_widget.dart';
+import 'package:archethic_mobile_wallet/ui/settings/yubikey_params_widget.dart';
 import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/app_simpledialog.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/yubikey_screen.dart';
 import 'package:archethic_mobile_wallet/util/biometrics.dart';
 import 'package:archethic_mobile_wallet/util/caseconverter.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
@@ -61,6 +63,8 @@ class _SettingsSheetState extends State<SettingsSheet>
   Animation<Offset>? _walletFAQOffsetFloat;
   AnimationController? _aboutController;
   Animation<Offset>? _aboutOffsetFloat;
+  AnimationController? _yubikeyParamsController;
+  Animation<Offset>? _yubikeyParamsOffsetFloat;
 
   String versionString = '';
 
@@ -78,6 +82,7 @@ class _SettingsSheetState extends State<SettingsSheet>
   bool? _customUrlOpen;
   bool? _walletFAQOpen;
   bool? _nftOpen;
+  bool? _yubikeyParamsOpen;
 
   bool _pinPadShuffleActive = false;
 
@@ -93,6 +98,7 @@ class _SettingsSheetState extends State<SettingsSheet>
     _customUrlOpen = false;
     _walletFAQOpen = false;
     _nftOpen = false;
+    _yubikeyParamsOpen = false;
 
     // Determine if they have face or fingerprint enrolled, if not hide the setting
     sl.get<BiometricUtil>().hasBiometrics().then((bool hasBiometrics) {
@@ -158,6 +164,10 @@ class _SettingsSheetState extends State<SettingsSheet>
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
+    _yubikeyParamsController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 220),
+    );
     _contactsOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_contactsController!);
@@ -179,6 +189,9 @@ class _SettingsSheetState extends State<SettingsSheet>
     _nftOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_nftController!);
+    _yubikeyParamsOffsetFloat =
+        Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
+            .animate(_yubikeyParamsController!);
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
         versionString =
@@ -196,6 +209,7 @@ class _SettingsSheetState extends State<SettingsSheet>
     _nodesController!.dispose();
     _walletFAQController!.dispose();
     _nftController!.dispose();
+    _yubikeyParamsController!.dispose();
     super.dispose();
   }
 
@@ -224,18 +238,19 @@ class _SettingsSheetState extends State<SettingsSheet>
               style: AppStyles.textStyleSize20W700Primary(context),
             ),
             children: <Widget>[
-              AppSimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, AuthMethod.BIOMETRICS);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(
-                    AppLocalization.of(context)!.biometricsMethod,
-                    style: AppStyles.textStyleSize16W600Primary(context),
+              if (_hasBiometrics)
+                AppSimpleDialogOption(
+                  onPressed: () {
+                    Navigator.pop(context, AuthMethod.BIOMETRICS);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text(
+                      AppLocalization.of(context)!.biometricsMethod,
+                      style: AppStyles.textStyleSize16W600Primary(context),
+                    ),
                   ),
                 ),
-              ),
               AppSimpleDialogOption(
                 onPressed: () {
                   Navigator.pop(context, AuthMethod.PIN);
@@ -612,6 +627,12 @@ class _SettingsSheetState extends State<SettingsSheet>
       });
       _nftController!.reverse();
       return false;
+    } else if (_yubikeyParamsOpen!) {
+      setState(() {
+        _yubikeyParamsOpen = false;
+      });
+      _yubikeyParamsController!.reverse();
+      return false;
     }
     return true;
   }
@@ -647,6 +668,10 @@ class _SettingsSheetState extends State<SettingsSheet>
                 child: WalletFAQ(_walletFAQController!, _walletFAQOpen!)),
             SlideTransition(
                 position: _nftOffsetFloat!, child: buildNFTMenu(context)),
+            SlideTransition(
+                position: _yubikeyParamsOffsetFloat!,
+                child: YubikeyParams(
+                    _yubikeyParamsController!, _yubikeyParamsOpen!)),
           ],
         ),
       ),
@@ -995,22 +1020,16 @@ class _SettingsSheetState extends State<SettingsSheet>
                                   .primary60)),
                     ),
                     // Authentication Method
-                    if (_hasBiometrics)
-                      Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.primary15,
-                      )
-                    else
-                      const SizedBox(),
-                    if (_hasBiometrics)
-                      AppSettings.buildSettingsListItemWithDefaultValue(
-                          context,
-                          AppLocalization.of(context)!.authMethod,
-                          _curAuthMethod,
-                          'assets/icons/authentLaunch.png',
-                          _authMethodDialog)
-                    else
-                      const SizedBox(),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
+                    AppSettings.buildSettingsListItemWithDefaultValue(
+                        context,
+                        AppLocalization.of(context)!.authMethod,
+                        _curAuthMethod,
+                        'assets/icons/authentLaunch.png',
+                        _authMethodDialog),
                     // Authenticate on Launch
                     if (StateContainer.of(context).encryptedSecret == null)
                       Column(children: <Widget>[
@@ -1027,23 +1046,6 @@ class _SettingsSheetState extends State<SettingsSheet>
                       ])
                     else
                       const SizedBox(),
-
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
-                    ),
-                    AppSettings.buildSettingsListItemSwitch(
-                        context,
-                        AppLocalization.of(context)!.pinPadShuffle,
-                        'assets/icons/shuffle.png',
-                        _pinPadShuffleActive, onChanged: (bool _isSwitched) {
-                      setState(() {
-                        _pinPadShuffleActive = _isSwitched;
-                        _isSwitched
-                            ? sl.get<SharedPrefsUtil>().setPinPadShuffle(true)
-                            : sl.get<SharedPrefsUtil>().setPinPadShuffle(false);
-                      });
-                    }),
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
@@ -1071,6 +1073,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                             await sl.get<SharedPrefsUtil>().getAuthMethod();
                         final bool hasBiometrics =
                             await sl.get<BiometricUtil>().hasBiometrics();
+
                         if (authMethod.method == AuthMethod.BIOMETRICS &&
                             hasBiometrics) {
                           try {
@@ -1096,8 +1099,45 @@ class _SettingsSheetState extends State<SettingsSheet>
                             await authenticateWithPin();
                           }
                         } else {
-                          await authenticateWithPin();
+                          if (authMethod.method ==
+                              AuthMethod.YUBIKEY_WITH_YUBICLOUD) {
+                            return authenticateWithYubikey();
+                          } else {
+                            await authenticateWithPin();
+                          }
                         }
+                      }),
+                    ]),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
+                    AppSettings.buildSettingsListItemSwitch(
+                        context,
+                        AppLocalization.of(context)!.pinPadShuffle,
+                        'assets/icons/shuffle.png',
+                        _pinPadShuffleActive, onChanged: (bool _isSwitched) {
+                      setState(() {
+                        _pinPadShuffleActive = _isSwitched;
+                        _isSwitched
+                            ? sl.get<SharedPrefsUtil>().setPinPadShuffle(true)
+                            : sl.get<SharedPrefsUtil>().setPinPadShuffle(false);
+                      });
+                    }),
+                    Column(children: <Widget>[
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.primary15,
+                      ),
+                      AppSettings.buildSettingsListItemSingleLineWithInfos(
+                          context,
+                          AppLocalization.of(context)!.yubikeyParamsHeader,
+                          AppLocalization.of(context)!.yubikeyParamsDesc,
+                          icon: 'assets/icons/digital-key.png', onPressed: () {
+                        setState(() {
+                          _yubikeyParamsOpen = true;
+                        });
+                        _yubikeyParamsController!.forward();
                       }),
                     ]),
                     Divider(
@@ -1379,6 +1419,21 @@ class _SettingsSheetState extends State<SettingsSheet>
         ),
       ),
     );
+  }
+
+  Future<void> authenticateWithYubikey() async {
+    // Yubikey Authentication
+    final bool auth = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) {
+      return YubikeyScreen();
+    })) as bool;
+    if (auth) {
+      await Future<void>.delayed(const Duration(milliseconds: 200));
+      StateContainer.of(context).getSeed().then((String seed) {
+        Sheets.showAppHeightNineSheet(
+            context: context, widget: AppSeedBackupSheet(seed));
+      });
+    }
   }
 
   Future<void> authenticateWithPin() async {

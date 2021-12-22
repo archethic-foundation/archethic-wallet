@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:archethic_mobile_wallet/ui/widgets/yubikey_screen.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -18,6 +17,7 @@ import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/yubikey_screen.dart';
 import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
 import 'package:archethic_mobile_wallet/util/biometrics.dart';
 import 'package:archethic_mobile_wallet/util/caseconverter.dart';
