@@ -22,14 +22,14 @@ ARCHEthic Wallet have features that are implemented:
 * Application Initial Screen
 
 - Screenshot of Wallet Application 
-    - [Address View](blob/master/screenshots/Address-Copied.jpg?raw=true)
-    - [Application Initial](blob/master/screenshots/App-Init.jpg?raw=true)
-    - [Confirm UCO Transfer](blob/master/screenshots/Confirm-Transfer-UCOs.jpg?raw=true)
-    - [Application Dashboard](blob/master/screenshots/Dashboard.jpg?raw=true)
-    - [Application Dashboard with UCOs](blob/master/screenshots/Dashboard-UCOs.jpg?raw=true)
-    - [Transaction Sent Successful](blob/master/screenshots/Transaction-Send.jpg?raw=true)
-    - [Transaction to Transfer UCOs](blob/master/screenshots/Transfer-UCOs.jpg?raw=true)
-    - [Transaction Final Confirmation](blob/master/screenshots/Transfer-UCOs-Final.jpg?raw=true)
+    - [Address View](screenshots/Address-Copied.jpg?raw=true)
+    - [Application Initial](screenshots/App-Init.jpg?raw=true)
+    - [Confirm UCO Transfer](screenshots/Confirm-Transfer-UCOs.jpg?raw=true)
+    - [Application Dashboard](screenshots/Dashboard.jpg?raw=true)
+    - [Application Dashboard with UCOs](screenshots/Dashboard-UCOs.jpg?raw=true)
+    - [Transaction Sent Successful](screenshots/Transaction-Send.jpg?raw=true)
+    - [Transaction to Transfer UCOs](screenshots/Transfer-UCOs.jpg?raw=true)
+    - [Transaction Final Confirmation](screenshots/Transfer-UCOs-Final.jpg?raw=true)
 
 ## How to install ARCHEthic Wallet
 
