@@ -21,19 +21,29 @@ ARCHEthic Wallet have features that are implemented:
 ![Application Initial Screen](screenshots/App-Init.jpg)
 * Application Initial Screen
 
-- Screenshot of Wallet Application 
+- Screenshots of Wallet Application 
+
+    Application
     - [Application Initial](screenshots/App-Init.jpg?raw=true)
     - [Application Dashboard](screenshots/Dashboard.jpg?raw=true)
     - [Application Dashboard with UCOs](screenshots/Dashboard-UCOs.jpg?raw=true)
     - [UCO Chart](screenshots/UCO-Chart.png?raw=true)
     - [Address View](screenshots/Address-Copied.jpg?raw=true)
     - [Address QR Code](screenshots/Address-qrCode.png?raw=true)
+    - [Nodes list](screenshots/Nodes-list.png?raw=true)
+    
+    Transfer UCO Process
     - [Transaction to Transfer UCOs](screenshots/Transfer-UCOs.jpg?raw=true)
     - [Confirm UCO Transfer](screenshots/Confirm-Transfer-UCOs.jpg?raw=true)
     - [Transaction Final Confirmation](screenshots/Transfer-UCOs-Final.jpg?raw=true)
     - [Transaction Sent Successful](screenshots/Transaction-Send.jpg?raw=true)
-    - [Nodes list](screenshots/Nodes-list.png?raw=true)
     
+    Themes
+    - [Uniris Theme - First page](screenshots/theme-uniris-first-page.png?raw=true)
+    - [Uniris Theme - Dashboard](screenshots/theme-uniris-dashboard.png?raw=true)
+    - [ARCHEthic Theme - First page](screenshots/theme-archethic-first-page.png?raw=true)
+    - [ARCHEthic Theme - Dashboard](screenshots/theme-archethic-dashboard.png?raw=true)    
+
 ## How to install ARCHEthic Wallet
 
 \# Currently ARCHEthic Wallet is supported on Android and iOS Devices for Testnet \#
