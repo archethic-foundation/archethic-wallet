@@ -26,7 +26,8 @@ class QRcodeDisplay {
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width - 185,
                   decoration: BoxDecoration(
-                    color: StateContainer.of(context).curTheme.background,
+                    color:
+                        StateContainer.of(context).curTheme.backgroundDarkest,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
@@ -52,6 +53,7 @@ class QRcodeDisplay {
                             Padding(
                               padding: const EdgeInsets.only(top: 10.0),
                               child: QrImage(
+                                foregroundColor: Colors.white,
                                 data: StateContainer.of(context)
                                     .selectedAccount
                                     .lastAddress!,
@@ -92,7 +94,8 @@ class QRcodeDisplay {
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width - 185,
                   decoration: BoxDecoration(
-                    color: StateContainer.of(context).curTheme.background,
+                    color:
+                        StateContainer.of(context).curTheme.backgroundDarkest,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                     boxShadow: <BoxShadow>[
                       BoxShadow(

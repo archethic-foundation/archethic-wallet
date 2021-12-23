@@ -45,28 +45,9 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                 ],
               ),
             ),
-            child: CircularParticle(
-              awayRadius: 80,
-              numberOfParticles: 80,
-              speedOfParticles: 0.5,
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              onTapAnimation: true,
-              particleColor: StateContainer.of(context)
-                  .curTheme
-                  .primary10!
-                  .withAlpha(150)
-                  .withOpacity(0.2),
-              awayAnimationDuration: const Duration(milliseconds: 600),
-              maxParticleSize: 8,
-              isRandSize: true,
-              isRandomColor: false,
-              awayAnimationCurve: Curves.easeInOutBack,
-              enableHover: true,
-              hoverColor: StateContainer.of(context).curTheme.primary30,
-              hoverRadius: 90,
-              connectDots: true,
-            ),
+            child: StateContainer.of(context)
+                .curTheme
+                .getBackgroundScreen(context)!,
           ),
           Container(
             child: LayoutBuilder(
@@ -92,11 +73,21 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                                     height: 300,
                                     child: kIsWeb
                                         ? Image.network(
-                                            'assets/archethic_logo.svg',
+                                            StateContainer.of(context)
+                                                    .curTheme
+                                                    .assetsFolder! +
+                                                StateContainer.of(context)
+                                                    .curTheme
+                                                    .logo!,
                                             height: 200,
                                           )
                                         : SvgPicture.asset(
-                                            'assets/archethic_logo.svg',
+                                            StateContainer.of(context)
+                                                    .curTheme
+                                                    .assetsFolder! +
+                                                StateContainer.of(context)
+                                                    .curTheme
+                                                    .logo!,
                                             height: 200,
                                           ),
                                   ),
@@ -157,7 +148,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                             // Import Wallet Button
                             AppButton.buildAppButton(
                                 context,
-                                AppButtonType.PRIMARY_OUTLINE,
+                                AppButtonType.PRIMARY,
                                 AppLocalization.of(context)!.importWallet,
                                 Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                               Navigator.of(context).pushNamed('/intro_import');

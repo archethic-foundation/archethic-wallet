@@ -322,11 +322,13 @@ class _AppHomePageState extends State<AppHomePage>
         title: Container(
             child: kIsWeb
                 ? Image.network(
-                    'assets/archethic_logo_alone.svg',
+                    StateContainer.of(context).curTheme.assetsFolder! +
+                        StateContainer.of(context).curTheme.logoAlone!,
                     height: 40,
                   )
                 : SvgPicture.asset(
-                    'assets/archethic_logo_alone.svg',
+                    StateContainer.of(context).curTheme.assetsFolder! +
+                        StateContainer.of(context).curTheme.logoAlone!,
                     height: 40,
                   )),
         backgroundColor: Colors.transparent,
@@ -371,28 +373,9 @@ class _AppHomePageState extends State<AppHomePage>
                 child: Stack(
                   alignment: Alignment.topCenter,
                   children: <Widget>[
-                    CircularParticle(
-                      awayRadius: 80,
-                      numberOfParticles: 80,
-                      speedOfParticles: 0.5,
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      onTapAnimation: true,
-                      particleColor: StateContainer.of(context)
-                          .curTheme
-                          .primary10!
-                          .withAlpha(150)
-                          .withOpacity(0.2),
-                      awayAnimationDuration: const Duration(milliseconds: 600),
-                      maxParticleSize: 8,
-                      isRandSize: true,
-                      isRandomColor: false,
-                      awayAnimationCurve: Curves.easeInOutBack,
-                      enableHover: true,
-                      hoverColor: StateContainer.of(context).curTheme.primary30,
-                      hoverRadius: 90,
-                      connectDots: true,
-                    ),
+                    StateContainer.of(context)
+                        .curTheme
+                        .getBackgroundScreen(context)!,
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[

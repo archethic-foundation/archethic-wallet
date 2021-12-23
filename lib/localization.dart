@@ -492,6 +492,10 @@ class AppLocalization {
     return Intl.message('About', name: 'aboutHeader');
   }
 
+  String get themeHeader {
+    return Intl.message("Theme", name: 'themeHeader');
+  }
+
   String get aboutGeneralTermsAndConditions {
     return Intl.message('General Terms & Conditions',
         name: 'aboutGeneralTermsAndConditions');

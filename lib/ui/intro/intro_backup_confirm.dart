@@ -134,7 +134,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                       children: <Widget>[
                         AppButton.buildAppButton(
                             context,
-                            AppButtonType.PRIMARY_OUTLINE,
+                            AppButtonType.PRIMARY,
                             AppLocalization.of(context)!.no,
                             Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
                           Navigator.of(context).pop();

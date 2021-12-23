@@ -1037,5 +1037,11 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "themeHeader": "Theme",
+  "@themeHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

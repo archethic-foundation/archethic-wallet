@@ -11,6 +11,7 @@ import 'package:archethic_mobile_wallet/global_var.dart';
 import 'package:archethic_mobile_wallet/model/authentication_method.dart';
 import 'package:archethic_mobile_wallet/model/available_currency.dart';
 import 'package:archethic_mobile_wallet/model/available_language.dart';
+import 'package:archethic_mobile_wallet/model/available_themes.dart';
 import 'package:archethic_mobile_wallet/model/device_lock_timeout.dart';
 import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
@@ -280,6 +281,15 @@ class SharedPrefsUtil {
 
   Future<void> setUseLegacyStorage() async {
     await set(use_legacy_storage, true);
+  }
+
+  Future<void> setTheme(ThemeSetting theme) async {
+    return await set(cur_theme, theme.getIndex());
+  }
+
+  Future<ThemeSetting> getTheme() async {
+    return ThemeSetting(ThemeOptions
+        .values[await get(cur_theme, defaultValue: ThemeOptions.UNIRIS.index)]);
   }
 
   // For logging out

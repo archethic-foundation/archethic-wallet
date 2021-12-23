@@ -153,6 +153,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "systemDefault" : MessageLookupByLibrary.simpleMessage("システムのデフォルト"),
     "tapToHide" : MessageLookupByLibrary.simpleMessage("タップして隠す"),
     "tapToReveal" : MessageLookupByLibrary.simpleMessage("タップで表示"),
+    "themeHeader" : MessageLookupByLibrary.simpleMessage("Theme"),
     "tooManyFailedAttempts" : MessageLookupByLibrary.simpleMessage("ロック解除の試行に失敗した回数が多すぎます。"),
     "transferNFT" : MessageLookupByLibrary.simpleMessage("NFTを転送する"),
     "transferNFTName" : MessageLookupByLibrary.simpleMessage("転送%1"),

@@ -153,6 +153,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "systemDefault" : MessageLookupByLibrary.simpleMessage("Système par défaut"),
     "tapToHide" : MessageLookupByLibrary.simpleMessage("Tapez pour cacher"),
     "tapToReveal" : MessageLookupByLibrary.simpleMessage("Tapez pour révéler"),
+    "themeHeader" : MessageLookupByLibrary.simpleMessage("Thème"),
     "tooManyFailedAttempts" : MessageLookupByLibrary.simpleMessage("Trop de tentatives de déverrouillage échouées."),
     "transferNFT" : MessageLookupByLibrary.simpleMessage("Transfert NFT"),
     "transferNFTName" : MessageLookupByLibrary.simpleMessage("Transfert %1"),

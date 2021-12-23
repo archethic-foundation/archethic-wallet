@@ -14,6 +14,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:archethic_mobile_wallet/bus/events.dart';
 import 'package:archethic_mobile_wallet/model/available_currency.dart';
 import 'package:archethic_mobile_wallet/model/available_language.dart';
+import 'package:archethic_mobile_wallet/model/available_themes.dart';
 import 'package:archethic_mobile_wallet/model/chart_infos.dart';
 import 'package:archethic_mobile_wallet/model/data/appdb.dart';
 import 'package:archethic_mobile_wallet/model/data/hiveDB.dart';
@@ -22,7 +23,8 @@ import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/model/wallet.dart';
 import 'package:archethic_mobile_wallet/service/app_service.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/themes.dart';
+import 'package:archethic_mobile_wallet/ui/themes/theme_uniris.dart';
+import 'package:archethic_mobile_wallet/ui/themes/themes.dart';
 import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
 import 'util/sharedprefsutil.dart';
@@ -76,7 +78,8 @@ class StateContainerState extends State<StateContainer> {
   Locale deviceLocale = const Locale('en', 'US');
   AvailableCurrency curCurrency = AvailableCurrency(AvailableCurrencyEnum.USD);
   LanguageSetting curLanguage = LanguageSetting(AvailableLanguage.DEFAULT);
-  BaseTheme curTheme = ArchEthicTheme();
+  BaseTheme curTheme = UnirisTheme();
+
   // Currently selected account
   Account selectedAccount = Account(
       name: 'AB', index: 0, lastAccess: 0, selected: true, genesisAddress: '0');
@@ -117,6 +120,10 @@ class StateContainerState extends State<StateContainer> {
       setState(() {
         curLanguage = language;
       });
+    });
+    // Get theme default
+    sl.get<SharedPrefsUtil>().getTheme().then((theme) {
+      updateTheme(theme);
     });
   }
 
@@ -246,6 +253,13 @@ class StateContainerState extends State<StateContainer> {
   void resetEncryptedSecret() {
     setState(() {
       encryptedSecret = null;
+    });
+  }
+
+  // Change theme
+  void updateTheme(ThemeSetting theme) {
+    setState(() {
+      curTheme = theme.getTheme();
     });
   }
 

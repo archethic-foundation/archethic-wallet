@@ -28,7 +28,7 @@ class AppButton {
         return Expanded(
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: BorderRadius.circular(10),
               boxShadow: <BoxShadow>[
                 StateContainer.of(context).curTheme.boxShadowButton!
               ],
@@ -64,7 +64,7 @@ class AppButton {
           child: Container(
             decoration: BoxDecoration(
               color: StateContainer.of(context).curTheme.backgroundDark,
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: BorderRadius.circular(10),
               boxShadow: <BoxShadow>[
                 StateContainer.of(context).curTheme.boxShadowButton!
               ],
@@ -99,7 +99,7 @@ class AppButton {
         return Expanded(
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: BorderRadius.circular(10),
               boxShadow: <BoxShadow>[
                 StateContainer.of(context).curTheme.boxShadowButton!
               ],
@@ -137,7 +137,7 @@ class AppButton {
           child: Container(
             decoration: BoxDecoration(
               color: StateContainer.of(context).curTheme.backgroundDark,
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: BorderRadius.circular(10),
               boxShadow: <BoxShadow>[
                 StateContainer.of(context).curTheme.boxShadowButton!
               ],
@@ -165,7 +165,7 @@ class AppButton {
           child: Container(
             decoration: BoxDecoration(
               color: StateContainer.of(context).curTheme.backgroundDark,
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: BorderRadius.circular(10),
               boxShadow: <BoxShadow>[
                 StateContainer.of(context).curTheme.boxShadowButton!
               ],

@@ -15,6 +15,7 @@ import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/model/authentication_method.dart';
 import 'package:archethic_mobile_wallet/model/available_currency.dart';
 import 'package:archethic_mobile_wallet/model/available_language.dart';
+import 'package:archethic_mobile_wallet/model/available_themes.dart';
 import 'package:archethic_mobile_wallet/model/data/appdb.dart';
 import 'package:archethic_mobile_wallet/model/device_lock_timeout.dart';
 import 'package:archethic_mobile_wallet/model/device_unlock_option.dart';
@@ -74,6 +75,7 @@ class _SettingsSheetState extends State<SettingsSheet>
   UnlockSetting _curUnlockSetting = UnlockSetting(UnlockOption.NO);
   LockTimeoutSetting _curTimeoutSetting =
       LockTimeoutSetting(LockTimeoutOption.ONE);
+  ThemeSetting _curThemeSetting = ThemeSetting(ThemeOptions.UNIRIS);
 
   bool? _securityOpen;
   bool? _aboutOpen;
@@ -126,6 +128,12 @@ class _SettingsSheetState extends State<SettingsSheet>
         _curUnlockSetting = lock
             ? UnlockSetting(UnlockOption.YES)
             : UnlockSetting(UnlockOption.NO);
+      });
+    });
+    // Get default theme settings
+    sl.get<SharedPrefsUtil>().getTheme().then((theme) {
+      setState(() {
+        _curThemeSetting = theme;
       });
     });
     sl
@@ -584,6 +592,68 @@ class _SettingsSheetState extends State<SettingsSheet>
     });
   }
 
+  List<Widget> _buildThemeOptions() {
+    List<Widget> ret = List<Widget>.empty(growable: true);
+    ThemeOptions.values.forEach((ThemeOptions value) {
+      ret.add(SimpleDialogOption(
+        onPressed: () {
+          Navigator.pop(context, value);
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Row(
+            children: <Widget>[
+              Text(ThemeSetting(value).getDisplayName(context),
+                  style: StateContainer.of(context).curTheme.displayName ==
+                          ThemeSetting(value).getDisplayName(context)
+                      ? AppStyles.textStyleSize16W600ChoiceOption(context)
+                      : AppStyles.textStyleSize16W600Primary(context)),
+              const SizedBox(width: 20),
+              if (StateContainer.of(context).curTheme.displayName ==
+                  ThemeSetting(value).getDisplayName(context))
+                FaIcon(
+                  FontAwesomeIcons.check,
+                  color: StateContainer.of(context).curTheme.choiceOption,
+                  size: 16,
+                )
+              else
+                const SizedBox(),
+            ],
+          ),
+        ),
+      ));
+    });
+    return ret;
+  }
+
+  Future<void> _themeDialog() async {
+    ThemeOptions selection = await showAppDialog<ThemeOptions>(
+        context: context,
+        builder: (BuildContext context) {
+          return AppSimpleDialog(
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: Text(
+                AppLocalization.of(context)!.themeHeader,
+                style: AppStyles.textStyleSize20W700Primary(context),
+              ),
+            ),
+            children: _buildThemeOptions(),
+          );
+        });
+    if (_curThemeSetting != ThemeSetting(selection)) {
+      sl
+          .get<SharedPrefsUtil>()
+          .setTheme(ThemeSetting(selection))
+          .then((result) {
+        setState(() {
+          StateContainer.of(context).updateTheme(ThemeSetting(selection));
+          _curThemeSetting = ThemeSetting(selection);
+        });
+      });
+    }
+  }
+
   Future<bool> _onBackButtonPressed() async {
     if (_contactsOpen!) {
       setState(() {
@@ -851,6 +921,16 @@ class _SettingsSheetState extends State<SettingsSheet>
                         StateContainer.of(context).curLanguage,
                         'assets/icons/languages.png',
                         _languageDialog),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
+                    AppSettings.buildSettingsListItemWithDefaultValue(
+                        context,
+                        AppLocalization.of(context)!.themeHeader,
+                        _curThemeSetting,
+                        'assets/icons/themes.png',
+                        _themeDialog),
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
