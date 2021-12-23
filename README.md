@@ -22,15 +22,18 @@ ARCHEthic Wallet have features that are implemented:
 * Application Initial Screen
 
 - Screenshot of Wallet Application 
-    - [Address View](screenshots/Address-Copied.jpg?raw=true)
     - [Application Initial](screenshots/App-Init.jpg?raw=true)
-    - [Confirm UCO Transfer](screenshots/Confirm-Transfer-UCOs.jpg?raw=true)
     - [Application Dashboard](screenshots/Dashboard.jpg?raw=true)
     - [Application Dashboard with UCOs](screenshots/Dashboard-UCOs.jpg?raw=true)
-    - [Transaction Sent Successful](screenshots/Transaction-Send.jpg?raw=true)
+    - [UCO Chart](screenshots/UCO-Chart.png?raw=true)
+    - [Address View](screenshots/Address-Copied.jpg?raw=true)
+    - [Address QR Code](screenshots/Address-qrCode.png?raw=true)
     - [Transaction to Transfer UCOs](screenshots/Transfer-UCOs.jpg?raw=true)
+    - [Confirm UCO Transfer](screenshots/Confirm-Transfer-UCOs.jpg?raw=true)
     - [Transaction Final Confirmation](screenshots/Transfer-UCOs-Final.jpg?raw=true)
-
+    - [Transaction Sent Successful](screenshots/Transaction-Send.jpg?raw=true)
+    - [Nodes list](screenshots/Nodes-list.png?raw=true)
+    
 ## How to install ARCHEthic Wallet
 
 \# Currently ARCHEthic Wallet is supported on Android and iOS Devices for Testnet \#
