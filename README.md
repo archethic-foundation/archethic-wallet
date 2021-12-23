@@ -9,7 +9,7 @@ Software wallets come in many forms, each with its own set of unique characteris
 - Mobile wallets come in the form of a smartphone app and are easily accessible to their users at any time, considering most people don’t leave their homes without their phones. However, it is worth remembering that mobile devices are vulnerable to various malware and can be easily lost.
 - Online wallets are web wallets that can be accessed from anywhere and any device, making them more convenient, but the private keys are stored by website owners rather than locally on user devices.
 
-ARCHEthic Wallet uses the standard bip32 protocol and uses a 24 words mneumonics for deriving private and public keys. If you are familiar with Metamask then ARCHEthic Wallet is similar application for ARCHEthic blockchain.
+ARCHEthic Wallet uses the standard bip39 protocol and uses a 24 words mneumonics for deriving private and public keys. If you are familiar with Metamask then ARCHEthic Wallet is similar application for ARCHEthic blockchain.
 
 ARCHEthic Wallet have features that are implemented:
 - Use of 24 Words Mnemonics.
