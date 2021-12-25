@@ -674,13 +674,12 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                     NumberUtil.getRawAsUsableString(_rawAmount!)
                                         .replaceAll(',', '');
                               } else {
-                                _sendAmountController!
-                                    .text = NumberUtil.truncateDecimal(
-                                            NumberUtil.getRawAsUsableDecimal(
-                                                address.amount),
-                                            digits: 6)
-                                        .toStringAsFixed(6) +
-                                    '~';
+                                _sendAmountController!.text =
+                                    NumberUtil.getRawAsUsableDecimal(
+                                                address.amount)
+                                            .truncate(scale: 6)
+                                            .toStringAsFixed(6) +
+                                        '~';
                               }
                             });
                             _sendAddressFocusNode!.unfocus();
@@ -719,7 +718,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     final Decimal valueLocal = Decimal.parse(convertedAmt);
     final Decimal conversion = Decimal.parse(
         StateContainer.of(context).wallet!.localCurrencyConversion);
-    return NumberUtil.truncateDecimal(valueLocal / conversion).toString();
+    return (valueLocal / conversion).truncate().toString();
   }
 
   String _convertCryptoToLocalCurrency() {
@@ -731,9 +730,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     final Decimal valueCrypto = Decimal.parse(convertedAmt);
     final Decimal conversion = Decimal.parse(
         StateContainer.of(context).wallet!.localCurrencyConversion);
-    convertedAmt =
-        NumberUtil.truncateDecimal(valueCrypto * conversion, digits: 2)
-            .toString();
+    convertedAmt = (valueCrypto * conversion).truncate(scale: 2).toString();
     convertedAmt =
         convertedAmt.replaceAll('.', _localCurrencyFormat!.symbols.DECIMAL_SEP);
     convertedAmt = _localCurrencyFormat!.currencySymbol + convertedAmt;
@@ -750,9 +747,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     final Decimal valueCrypto = Decimal.parse(convertedAmt);
     final Decimal conversion = Decimal.parse(
         StateContainer.of(context).wallet!.localCurrencyConversion);
-    convertedAmt =
-        NumberUtil.truncateDecimal(valueCrypto * conversion, digits: 5)
-            .toString();
+    convertedAmt = (valueCrypto * conversion).truncate(scale: 5).toString();
     convertedAmt =
         convertedAmt.replaceAll('.', _localCurrencyFormat!.symbols.DECIMAL_SEP);
     convertedAmt = _localCurrencyFormat!.currencySymbol + convertedAmt;
@@ -790,26 +785,20 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
             balance.replaceAll(_localCurrencyFormat!.symbols.GROUP_SEP, '');
         balance = balance.replaceAll(',', '.');
         final String sanitizedBalance = NumberUtil.sanitizeNumber(balance);
-        textFieldInt = (Decimal.parse(sanitizedTextField) *
-                Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits).toInt()))
-            .toInt();
-        balanceInt = (Decimal.parse(sanitizedBalance) *
-                Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits).toInt()))
-            .toInt();
+        textFieldInt = (int.tryParse(sanitizedTextField)! *
+            pow(10, NumberUtil.maxDecimalDigits).toInt());
+        balanceInt = (int.tryParse(sanitizedBalance)! *
+            pow(10, NumberUtil.maxDecimalDigits).toInt());
       } else {
         textField = textField.replaceAll(',', '');
-        textFieldInt = (Decimal.parse(textField) *
-                Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits).toInt()))
-            .toInt();
-        balanceInt = (Decimal.parse(balance) *
-                Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits).toInt()))
-            .toInt();
+        textFieldInt = (int.tryParse(textField)! *
+            pow(10, NumberUtil.maxDecimalDigits).toInt());
+        balanceInt = (int.tryParse(balance)! *
+            pow(10, NumberUtil.maxDecimalDigits).toInt());
       }
-
       final int estimationFeesInt =
-          (Decimal.parse(sl.get<AppService>().getFeesEstimation().toString()) *
-                  Decimal.fromInt(pow(10, NumberUtil.maxDecimalDigits).toInt()))
-              .toInt();
+          (int.tryParse(sl.get<AppService>().getFeesEstimation().toString())! *
+              pow(10, NumberUtil.maxDecimalDigits).toInt());
 
       return textFieldInt + estimationFeesInt == balanceInt;
     } catch (e) {

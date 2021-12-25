@@ -19,18 +19,6 @@ class NumberUtil {
     return amount;
   }
 
-  /// Truncate a Decimal to a specific amount of digits
-  ///
-  /// @param input 1.059
-  /// @return double value 1.05
-  ///
-  static double truncateDecimal(Decimal input,
-      {int digits = maxDecimalDigits}) {
-    return (input * Decimal.fromInt(pow(10, digits).toInt()))
-            .truncateToDouble() /
-        pow(10, digits);
-  }
-
   /// Return raw as a normal amount.
   ///
   /// @param raw 100000000000000000000000000000
@@ -39,7 +27,7 @@ class NumberUtil {
   static String getRawAsUsableString(String raw) {
     final NumberFormat nf = NumberFormat.currency(
         locale: 'en_US', decimalDigits: maxDecimalDigits, symbol: '');
-    String asString = nf.format(truncateDecimal(getRawAsUsableDecimal(raw)));
+    String asString = nf.format(getRawAsUsableDecimal(raw).truncate());
     final List<String> split = asString.split('.');
     if (split.length > 1) {
       // Remove trailing 0s from this
