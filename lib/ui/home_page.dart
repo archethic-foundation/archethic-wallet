@@ -368,9 +368,24 @@ class _AppHomePageState extends State<AppHomePage>
                 height: 150.0,
                 child: _getTopCards(context),
               ),
-              StateContainer.of(context).wallet == null
-                  ? const SizedBox()
-                  : const TxListWidget(),
+              Expanded(
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: <Widget>[
+                    StateContainer.of(context)
+                        .curTheme
+                        .getBackgroundScreen(context)!,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        StateContainer.of(context).wallet == null
+                            ? const SizedBox()
+                            : const TxListWidget(),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
