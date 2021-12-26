@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:nfc_manager/nfc_manager.dart';
 import 'package:yubidart/yubidart.dart';
 
 // Project imports:
@@ -88,85 +87,79 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
   }
 
   Future<void> _verifyOTP(String otp) async {
-    if (verificationResponse.status != 'OK') {
-      if (!isNFCAvailable) {
-        String yubikeyClientAPIKey =
-            await sl.get<SharedPrefsUtil>().getYubikeyClientAPIKey();
-        String yubikeyClientID =
-            await sl.get<SharedPrefsUtil>().getYubikeyClientID();
-        verificationResponse = await YubicoService()
-            .verifyYubiCloudOTP(otp, yubikeyClientAPIKey, yubikeyClientID);
-      }
-      switch (verificationResponse.status) {
-        case 'BAD_OTP':
-          UIUtil.showSnackbar(
-              AppLocalization.of(context)!.yubikeyError_BAD_OTP, context);
-          Navigator.of(context).pop();
-          break;
-        case 'BACKEND_ERROR':
-          UIUtil.showSnackbar(
-              AppLocalization.of(context)!.yubikeyError_BACKEND_ERROR, context);
-          Navigator.of(context).pop();
-          break;
-        case 'BAD_SIGNATURE':
-          UIUtil.showSnackbar(
-              AppLocalization.of(context)!.yubikeyError_BAD_SIGNATURE, context);
-          Navigator.of(context).pop();
-          break;
-        case 'MISSING_PARAMETER':
-          UIUtil.showSnackbar(
-              AppLocalization.of(context)!.yubikeyError_MISSING_PARAMETER,
-              context);
-          Navigator.of(context).pop();
-          break;
-        case 'NOT_ENOUGH_ANSWERS':
-          UIUtil.showSnackbar(
-              AppLocalization.of(context)!.yubikeyError_NOT_ENOUGH_ANSWERS,
-              context);
-          Navigator.of(context).pop();
-          break;
-        case 'NO_SUCH_CLIENT':
-          UIUtil.showSnackbar(
-              AppLocalization.of(context)!.yubikeyError_NO_SUCH_CLIENT,
-              context);
-          Navigator.of(context).pop();
-          break;
-        case 'OPERATION_NOT_ALLOWED':
-          UIUtil.showSnackbar(
-              AppLocalization.of(context)!.yubikeyError_OPERATION_NOT_ALLOWED,
-              context);
-          Navigator.of(context).pop();
-          break;
-        case 'REPLAYED_OTP':
-          UIUtil.showSnackbar(
-              AppLocalization.of(context)!.yubikeyError_REPLAYED_OTP, context);
-          Navigator.of(context).pop();
-          break;
-        case 'REPLAYED_REQUEST':
-          UIUtil.showSnackbar(
-              AppLocalization.of(context)!.yubikeyError_REPLAYED_REQUEST,
-              context);
-          Navigator.of(context).pop();
-          break;
-        case 'RESPONSE_KO':
-          UIUtil.showSnackbar(
-              AppLocalization.of(context)!.yubikeyError_RESPONSE_KO, context);
-          Navigator.of(context).pop();
-          break;
-        case 'OK':
-          await sl.get<SharedPrefsUtil>().resetLockAttempts();
-          Navigator.of(context).pop(true);
-          break;
-        default:
-          UIUtil.showSnackbar(verificationResponse.status, context);
-          Navigator.of(context).pop();
-          break;
-      }
-      setState(() {});
-    } else {
-      await sl.get<SharedPrefsUtil>().resetLockAttempts();
-      Navigator.of(context).pop(true);
+    UIUtil.showSnackbar(otp, context);
+    String yubikeyClientAPIKey =
+        await sl.get<SharedPrefsUtil>().getYubikeyClientAPIKey();
+    String yubikeyClientID =
+        await sl.get<SharedPrefsUtil>().getYubikeyClientID();
+    verificationResponse = await YubicoService()
+        .verifyYubiCloudOTP(otp, yubikeyClientAPIKey, yubikeyClientID);
+    switch (verificationResponse.status) {
+      case 'BAD_OTP':
+        UIUtil.showSnackbar(
+            AppLocalization.of(context)!.yubikeyError_BAD_OTP, context);
+        Navigator.of(context).pop();
+        break;
+      case 'BACKEND_ERROR':
+        UIUtil.showSnackbar(
+            AppLocalization.of(context)!.yubikeyError_BACKEND_ERROR, context);
+        Navigator.of(context).pop();
+        break;
+      case 'BAD_SIGNATURE':
+        UIUtil.showSnackbar(
+            AppLocalization.of(context)!.yubikeyError_BAD_SIGNATURE, context);
+        Navigator.of(context).pop();
+        break;
+      case 'MISSING_PARAMETER':
+        UIUtil.showSnackbar(
+            AppLocalization.of(context)!.yubikeyError_MISSING_PARAMETER,
+            context);
+        Navigator.of(context).pop();
+        break;
+      case 'NOT_ENOUGH_ANSWERS':
+        UIUtil.showSnackbar(
+            AppLocalization.of(context)!.yubikeyError_NOT_ENOUGH_ANSWERS,
+            context);
+        Navigator.of(context).pop();
+        break;
+      case 'NO_SUCH_CLIENT':
+        UIUtil.showSnackbar(
+            AppLocalization.of(context)!.yubikeyError_NO_SUCH_CLIENT, context);
+        Navigator.of(context).pop();
+        break;
+      case 'OPERATION_NOT_ALLOWED':
+        UIUtil.showSnackbar(
+            AppLocalization.of(context)!.yubikeyError_OPERATION_NOT_ALLOWED,
+            context);
+        Navigator.of(context).pop();
+        break;
+      case 'REPLAYED_OTP':
+        UIUtil.showSnackbar(
+            AppLocalization.of(context)!.yubikeyError_REPLAYED_OTP, context);
+        Navigator.of(context).pop();
+        break;
+      case 'REPLAYED_REQUEST':
+        UIUtil.showSnackbar(
+            AppLocalization.of(context)!.yubikeyError_REPLAYED_REQUEST,
+            context);
+        Navigator.of(context).pop();
+        break;
+      case 'RESPONSE_KO':
+        UIUtil.showSnackbar(
+            AppLocalization.of(context)!.yubikeyError_RESPONSE_KO, context);
+        Navigator.of(context).pop();
+        break;
+      case 'OK':
+        UIUtil.showSnackbar(verificationResponse.status, context);
+        await sl.get<SharedPrefsUtil>().resetLockAttempts();
+        Navigator.of(context).pop(true);
+        break;
+      default:
+        UIUtil.showSnackbar(verificationResponse.status, context);
+        Navigator.of(context).pop();
+        break;
     }
+    setState(() {});
   }
 
   @override
@@ -302,19 +295,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
     );
   }
 
-  void _tagRead() {
-    NfcManager.instance.startSession(
-        onDiscovered: (NfcTag tag) async {
-          String yubikeyClientAPIKey =
-              await sl.get<SharedPrefsUtil>().getYubikeyClientAPIKey();
-          String yubikeyClientID =
-              await sl.get<SharedPrefsUtil>().getYubikeyClientID();
-          verificationResponse = await YubicoService().verifyOTPFromYubiKeyNFC(
-              tag, yubikeyClientAPIKey, yubikeyClientID);
-          EventTaxiImpl.singleton()
-              .fire(OTPReceiveEvent(otp: verificationResponse.otp));
-          NfcManager.instance.stopSession();
-        },
-        alertMessage: 'Yubikey OTP Validation');
+  void _tagRead() async {
+    await sl.get<NFCUtil>().authenticateWithNFCYubikey(context);
   }
 }

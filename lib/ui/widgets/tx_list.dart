@@ -59,8 +59,7 @@ class _TxListWidgetState extends State<TxListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return StateContainer.of(context).wallet == null ||
-            StateContainer.of(context).recentTransactionsLoading == true
+    return StateContainer.of(context).wallet == null
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -90,7 +89,13 @@ class _TxListWidgetState extends State<TxListWidget> {
             children: <Widget>[
               Padding(
                   padding: const EdgeInsets.only(left: 5.0),
-                  child: StateContainer.of(context).wallet!.history.isNotEmpty
+                  child: StateContainer.of(context)
+                              .wallet!
+                              .history
+                              .isNotEmpty ||
+                          StateContainer.of(context)
+                                  .recentTransactionsLoading ==
+                              true
                       ? Text(
                           AppLocalization.of(context)!.recentTransactionsHeader,
                           style: AppStyles.textStyleSize14W600BackgroundDarkest(

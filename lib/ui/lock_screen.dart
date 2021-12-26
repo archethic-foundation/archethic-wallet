@@ -171,7 +171,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
         MaterialPageRoute(builder: (BuildContext context) {
           return _buildYubikeyScreen(context);
         }),
-      ) as bool;
+      );
     } else {
       auth = await Navigator.of(context).push(
         NoPushTransitionRoute(builder: (BuildContext context) {
