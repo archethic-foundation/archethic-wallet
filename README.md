@@ -76,4 +76,6 @@ Now, you can send some UCO and see your transactions
 - Once the packages and installed and application is built
 - Run the program with `flutter run`
 
+By default, the endpoint is testnet.archethic.net but you can change it in 'Custom Urls' menu. (You can specify local node with http://localhost:4000 if you want for example.)
+
 *** This Application is currently in active development so it might fail to build. Please refer to issues or create new issues if you find any. Contributions are welcomed.
