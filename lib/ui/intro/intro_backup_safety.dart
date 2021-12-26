@@ -46,120 +46,123 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
             child: Column(
               children: <Widget>[
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsetsDirectional.only(
-                                start: smallScreen(context) ? 15 : 20),
-                            height: 50,
-                            width: 50,
-                            child: TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: FaIcon(FontAwesomeIcons.chevronLeft,
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .primary,
-                                    size: 24)),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        margin: EdgeInsetsDirectional.only(
-                          start: smallScreen(context) ? 30 : 40,
-                          top: 15,
-                        ),
-                        child: buildIconWidget(
-                            context, 'assets/icons/warning.png', 90, 90),
-                      ),
-                      Container(
-                        margin: EdgeInsetsDirectional.only(
-                          start: smallScreen(context) ? 30 : 40,
-                          end: smallScreen(context) ? 30 : 40,
-                          top: 10,
-                        ),
-                        alignment: const AlignmentDirectional(-1, 0),
-                        child: AutoSizeText(
-                          AppLocalization.of(context)!.warning,
-                          style: AppStyles.textStyleSize28W700Primary(context),
-                          stepGranularity: 0.1,
-                          maxLines: 1,
-                          minFontSize: 12,
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsetsDirectional.only(
-                            start: smallScreen(context) ? 30 : 40,
-                            end: smallScreen(context) ? 30 : 40,
-                            top: 15.0),
-                        alignment: Alignment.bottomLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
                           children: <Widget>[
-                            Text(
-                              AppLocalization.of(context)!.backupSafetyLabel1,
-                              style:
-                                  AppStyles.textStyleSize16W600Primary(context),
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Text(
-                              AppLocalization.of(context)!.backupSafetyLabel2,
-                              style:
-                                  AppStyles.textStyleSize16W700Primary(context),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            AutoSizeText(
-                              AppLocalization.of(context)!.backupSafetyLabel3,
-                              style:
-                                  AppStyles.textStyleSize16W600Primary(context),
-                              maxLines: 5,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              AppLocalization.of(context)!.backupSafetyLabel4,
-                              style:
-                                  AppStyles.textStyleSize16W700Primary(context),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            AutoSizeText(
-                              AppLocalization.of(context)!.backupSafetyLabel5,
-                              style:
-                                  AppStyles.textStyleSize16W600Primary(context),
-                              maxLines: 5,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              AppLocalization.of(context)!.backupSafetyLabel6,
-                              style:
-                                  AppStyles.textStyleSize16W700Primary(context),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              AppLocalization.of(context)!.backupSafetyLabel7,
-                              style:
-                                  AppStyles.textStyleSize12W600Primary(context),
+                            Container(
+                              margin: EdgeInsetsDirectional.only(
+                                  start: smallScreen(context) ? 15 : 20),
+                              height: 50,
+                              width: 50,
+                              child: TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: FaIcon(FontAwesomeIcons.chevronLeft,
+                                      color: StateContainer.of(context)
+                                          .curTheme
+                                          .primary,
+                                      size: 24)),
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                        Container(
+                          margin: EdgeInsetsDirectional.only(
+                            start: smallScreen(context) ? 30 : 40,
+                            top: 15,
+                          ),
+                          child: buildIconWidget(
+                              context, 'assets/icons/warning.png', 90, 90),
+                        ),
+                        Container(
+                          margin: EdgeInsetsDirectional.only(
+                            start: smallScreen(context) ? 30 : 40,
+                            end: smallScreen(context) ? 30 : 40,
+                            top: 10,
+                          ),
+                          alignment: const AlignmentDirectional(-1, 0),
+                          child: AutoSizeText(
+                            AppLocalization.of(context)!.warning,
+                            style:
+                                AppStyles.textStyleSize28W700Primary(context),
+                            stepGranularity: 0.1,
+                            maxLines: 1,
+                            minFontSize: 12,
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsetsDirectional.only(
+                              start: smallScreen(context) ? 30 : 40,
+                              end: smallScreen(context) ? 30 : 40,
+                              top: 15.0),
+                          alignment: Alignment.bottomLeft,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                AppLocalization.of(context)!.backupSafetyLabel1,
+                                style: AppStyles.textStyleSize16W600Primary(
+                                    context),
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              Text(
+                                AppLocalization.of(context)!.backupSafetyLabel2,
+                                style: AppStyles.textStyleSize16W700Primary(
+                                    context),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              AutoSizeText(
+                                AppLocalization.of(context)!.backupSafetyLabel3,
+                                style: AppStyles.textStyleSize16W600Primary(
+                                    context),
+                                maxLines: 5,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                AppLocalization.of(context)!.backupSafetyLabel4,
+                                style: AppStyles.textStyleSize16W700Primary(
+                                    context),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              AutoSizeText(
+                                AppLocalization.of(context)!.backupSafetyLabel5,
+                                style: AppStyles.textStyleSize16W600Primary(
+                                    context),
+                                maxLines: 5,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                AppLocalization.of(context)!.backupSafetyLabel6,
+                                style: AppStyles.textStyleSize16W700Primary(
+                                    context),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                AppLocalization.of(context)!.backupSafetyLabel7,
+                                style: AppStyles.textStyleSize12W600Primary(
+                                    context),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
 

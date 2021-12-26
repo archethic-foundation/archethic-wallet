@@ -316,7 +316,7 @@ class _PinScreenState extends State<PinScreen>
             children: <Widget>[
               Container(
                 margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.1),
+                    top: MediaQuery.of(context).size.height * 0.06),
                 child: Column(
                   children: <Widget>[
                     buildIconWidget(

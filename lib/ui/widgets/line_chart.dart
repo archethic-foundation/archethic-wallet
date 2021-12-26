@@ -33,9 +33,9 @@ class LineChartWidget {
                   BoxShadow(
                     color:
                         StateContainer.of(context).curTheme.backgroundDarkest!,
-                    blurRadius: 5.0,
+                    blurRadius: 3.0,
                     spreadRadius: 0.0,
-                    offset: const Offset(5.0, 5.0),
+                    offset: const Offset(0.0, 3.0),
                   ),
                 ],
               ),
@@ -116,9 +116,9 @@ class LineChartWidget {
                       color: StateContainer.of(context)
                           .curTheme
                           .backgroundDarkest!,
-                      blurRadius: 5.0,
+                      blurRadius: 3.0,
                       spreadRadius: 0.0,
-                      offset: const Offset(5.0, 5.0),
+                      offset: const Offset(0.0, 3.0),
                     ),
                   ],
                 ),

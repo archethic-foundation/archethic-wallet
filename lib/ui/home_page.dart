@@ -22,7 +22,6 @@ import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/ui/receive/receive_sheet.dart';
 import 'package:archethic_mobile_wallet/ui/settings/settings_drawer.dart';
-import 'package:archethic_mobile_wallet/ui/util/particles/particles_flutter.dart';
 import 'package:archethic_mobile_wallet/ui/util/routes.dart';
 import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/balance.dart';
@@ -369,28 +368,9 @@ class _AppHomePageState extends State<AppHomePage>
                 height: 150.0,
                 child: _getTopCards(context),
               ),
-              Expanded(
-                child: Stack(
-                  alignment: Alignment.topCenter,
-                  children: <Widget>[
-                    StateContainer.of(context)
-                        .curTheme
-                        .getBackgroundScreen(context)!,
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        //const SizedBox(height: 20),
-                        //NftListWidget.buildNftList(context),
-                        //const SizedBox(height: 20),
-                        if (StateContainer.of(context).wallet == null)
-                          const SizedBox()
-                        else
-                          const TxListWidget(),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              StateContainer.of(context).wallet == null
+                  ? const SizedBox()
+                  : const TxListWidget(),
             ],
           ),
         ),

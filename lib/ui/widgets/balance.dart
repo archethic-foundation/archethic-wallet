@@ -27,18 +27,17 @@ class BalanceDisplay {
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width - 185,
                   decoration: BoxDecoration(
-                    color:
-                        StateContainer.of(context).curTheme.backgroundDarkest,
+                    color: StateContainer.of(context).curTheme.backgroundDark,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
                         color: StateContainer.of(context)
                             .curTheme
                             .backgroundDarkest!,
-                        blurRadius: 5.0,
+                        blurRadius: 3.0,
                         spreadRadius: 0.0,
                         offset: const Offset(
-                            5.0, 5.0), // shadow direction: bottom right
+                            0.0, 3.0), // shadow direction: bottom right
                       )
                     ],
                   ),
@@ -154,18 +153,16 @@ class BalanceDisplay {
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width - 185,
                   decoration: BoxDecoration(
-                    color:
-                        StateContainer.of(context).curTheme.backgroundDarkest,
+                    color: StateContainer.of(context).curTheme.backgroundDark,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
                         color: StateContainer.of(context)
                             .curTheme
                             .backgroundDarkest!,
-                        blurRadius: 5.0,
+                        blurRadius: 3.0,
                         spreadRadius: 0.0,
-                        offset: const Offset(
-                            5.0, 5.0), // shadow direction: bottom right
+                        offset: const Offset(0.0, 3.0),
                       )
                     ],
                   ),
