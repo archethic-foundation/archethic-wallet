@@ -27,7 +27,8 @@ class NumberUtil {
   static String getRawAsUsableString(String raw) {
     final NumberFormat nf = NumberFormat.currency(
         locale: 'en_US', decimalDigits: maxDecimalDigits, symbol: '');
-    String asString = nf.format(getRawAsUsableDecimal(raw).truncate());
+    String asString = nf.format(
+        double.tryParse(getRawAsUsableDecimal(raw).truncate().toString()));
     final List<String> split = asString.split('.');
     if (split.length > 1) {
       // Remove trailing 0s from this

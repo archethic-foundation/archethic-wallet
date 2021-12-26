@@ -274,7 +274,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
       });
     } else {
       if (int.tryParse(_initialSupplyController!.text) == null ||
-          int.tryParse(_initialSupplyController!.text)!.isNegative) {
+          int.tryParse(_initialSupplyController!.text)! < 0) {
         isValid = false;
         setState(() {
           _initialSupplyValidationText =
