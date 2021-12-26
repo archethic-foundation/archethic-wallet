@@ -29,42 +29,36 @@ class AppSettings {
           onPressed();
         },
         child: Container(
-          height: 40.0,
-          margin: const EdgeInsetsDirectional.only(start: 7.0),
+          height: 50.0,
+          margin: const EdgeInsetsDirectional.only(start: 10.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                child: Container(
-                  child: Row(
-                    children: <Widget>[
-                      Container(child: buildIconWidget(context, icon, 30, 30)),
-                      const SizedBox(width: 13),
-                      AutoSizeText(
+                  margin: const EdgeInsetsDirectional.only(end: 13.0),
+                  child: buildIconWidget(context, icon, 30, 30)),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      width: UIUtil.drawerWidth(context) - 100,
+                      child: Text(
                         heading,
                         style: disabled
                             ? AppStyles.textStyleSize16W600Primary30(context)
                             : AppStyles.textStyleSize16W600Primary(context),
-                        maxLines: 1,
-                        stepGranularity: 0.1,
-                        minFontSize: 8,
                       ),
-                    ],
-                  ),
-                  margin: const EdgeInsets.only(
-                      top: 3, left: 3, bottom: 3, right: 3),
-                ),
-              ),
-              AutoSizeText(
-                defaultMethod.getDisplayName(context),
-                style: disabled
-                    ? AppStyles.textStyleSize12W100Primary30(context)
-                    : AppStyles.textStyleSize12W100Primary(context),
-                maxLines: 1,
-                stepGranularity: 0.1,
-                minFontSize: 8,
-              ),
+                    ),
+                    AutoSizeText(
+                      defaultMethod.getDisplayName(context),
+                      style: disabled
+                          ? AppStyles.textStyleSize12W100Primary30(context)
+                          : AppStyles.textStyleSize12W100Primary(context),
+                      maxLines: 1,
+                      stepGranularity: 0.1,
+                      minFontSize: 8,
+                    ),
+                  ]),
             ],
           ),
         ),
@@ -85,7 +79,7 @@ class AppSettings {
         onPressed();
       },
       child: Container(
-        height: 60.0,
+        height: 65.0,
         margin: const EdgeInsetsDirectional.only(start: 10.0),
         child: Row(
           children: <Widget>[
@@ -201,7 +195,7 @@ class AppSettings {
         }
       },
       child: Container(
-        height: 30.0,
+        height: 50.0,
         margin: const EdgeInsetsDirectional.only(start: 10.0),
         child: Row(
           children: <Widget>[
@@ -235,7 +229,7 @@ class AppSettings {
     return TextButton(
       onPressed: () {},
       child: Container(
-        height: 30.0,
+        height: 50.0,
         margin: const EdgeInsetsDirectional.only(start: 10.0),
         child: Row(
           children: <Widget>[
@@ -245,32 +239,27 @@ class AppSettings {
                   child: buildIconWidget(context, icon, 30, 30)),
             ),
             Container(
-                width: UIUtil.drawerWidth(context) - 70,
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      heading,
-                      style: AppStyles.textStyleSize16W600Primary(context),
-                    ),
-                    const SizedBox(
-                      width: 60,
-                    ),
-                    Switch(
-                        value: _isSwitched,
-                        onChanged: (bool value) {
-                          if (onChanged != null) {
-                            _isSwitched = value;
-                            onChanged(_isSwitched);
-                          } else {
-                            return;
-                          }
-                        },
-                        activeTrackColor: StateContainer.of(context)
-                            .curTheme
-                            .backgroundDarkest,
-                        activeColor: Colors.green),
-                  ],
-                )),
+              width: UIUtil.drawerWidth(context) - 130,
+              child: Text(
+                heading,
+                style: AppStyles.textStyleSize16W600Primary(context),
+              ),
+            ),
+            Container(
+              child: Switch(
+                  value: _isSwitched,
+                  onChanged: (bool value) {
+                    if (onChanged != null) {
+                      _isSwitched = value;
+                      onChanged(_isSwitched);
+                    } else {
+                      return;
+                    }
+                  },
+                  activeTrackColor:
+                      StateContainer.of(context).curTheme.backgroundDarkest,
+                  activeColor: Colors.green),
+            )
           ],
         ),
       ),
