@@ -39,13 +39,11 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
 
   double buttonSize = 100.0;
 
-  int _failedAttempts = 0;
-
   VerificationResponse verificationResponse = VerificationResponse();
 
   FocusNode? enterOTPFocusNode;
   TextEditingController? enterOTPController;
-
+  String buttonNFCLabel = 'get my OTP via NFC';
   bool isNFCAvailable = false;
 
   @override
@@ -55,13 +53,6 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
 
     this.enterOTPFocusNode = FocusNode();
     this.enterOTPController = TextEditingController();
-
-    // Get adjusted failed attempts
-    sl.get<SharedPrefsUtil>().getLockAttempts().then((int attempts) {
-      setState(() {
-        _failedAttempts = attempts % MAX_ATTEMPTS;
-      });
-    });
 
     sl.get<NFCUtil>().hasNFC().then((bool hasNFC) {
       setState(() {
@@ -74,6 +65,9 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
     _otpReceiveSub = EventTaxiImpl.singleton()
         .registerTo<OTPReceiveEvent>()
         .listen((OTPReceiveEvent event) {
+      setState(() {
+        buttonNFCLabel = 'get my OTP via NFC';
+      });
       _verifyOTP(event.otp!);
     });
   }
@@ -214,11 +208,17 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                             ),
                             isNFCAvailable
                                 ? ElevatedButton(
-                                    child: Text('get my OTP via NFC',
+                                    child: Text(buttonNFCLabel,
                                         style: AppStyles
                                             .textStyleSize16W200Primary(
                                                 context)),
-                                    onPressed: _tagRead)
+                                    onPressed: () {
+                                      setState(() {
+                                        buttonNFCLabel =
+                                            'Hold your device near the Yubikey';
+                                      });
+                                      _tagRead();
+                                    })
                                 : Container(
                                     margin: const EdgeInsets.symmetric(
                                         horizontal: 40, vertical: 10),
