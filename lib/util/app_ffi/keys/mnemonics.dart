@@ -25,6 +25,9 @@ class AppMnemomics {
 
   /// Validate a mnemonic word list
   static bool validateMnemonic(List<String> words) {
+    if (words.length != 24) {
+      return false;
+    }
     return bip39.validateMnemonic(words.join(' '));
   }
 
