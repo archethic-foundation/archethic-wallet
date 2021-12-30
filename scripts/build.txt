@@ -1,0 +1,6 @@
+# iod
+flutter build ios
+# android
+flutter build apk --split-per-abi
+# web
+flutter build web --web-renderer canvaskit --release
