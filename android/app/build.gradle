@@ -93,9 +93,4 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.bottlerocketstudios:vault:1.4.2"
     implementation 'androidx.multidex:multidex:2.0.1'
-    // Low-level communication with YubiKey (core is also automatically pulled in)
-    implementation 'com.yubico.yubikit:android:2.0.0'
-    // Application specific classes
-    implementation 'com.yubico.yubikit:piv:2.0.0'
-    implementation 'com.yubico.yubikit:management:2.0.0'
 }
