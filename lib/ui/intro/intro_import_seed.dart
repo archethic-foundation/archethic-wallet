@@ -265,6 +265,11 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                                           '%1', lastWord);
                                             });
                                           });
+                                        } else {
+                                          setState(() {
+                                            _mnemonicIsValid = true;
+                                            _mnemonicError = '';
+                                          });
                                         }
                                       }
                                     }
