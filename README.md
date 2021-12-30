@@ -46,7 +46,7 @@ ARCHEthic Wallet have features that are implemented:
 
 ## How to install ARCHEthic Wallet
 
-\# Currently ARCHEthic Wallet is supported on Android and iOS Devices for Testnet \#
+\# Currently ARCHEthic Wallet is supported on Android Devices for Testnet \#
 
 To Install ARCHEthic Wallet in Android Devices:
 - Download the APK file for application for your platform from [releases](https://github.com/archethic-foundation/archethic_mobile_wallet/releases).
