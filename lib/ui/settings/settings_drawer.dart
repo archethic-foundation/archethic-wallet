@@ -870,6 +870,22 @@ class _SettingsSheetState extends State<SettingsSheet>
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
                     ),
+                    AppSettings.buildSettingsListItemSingleLineWithInfos(
+                        context,
+                        AppLocalization.of(context)!.labLinkHeader,
+                        AppLocalization.of(context)!.labLinkDesc,
+                        icon: 'assets/icons/microscope.png', onPressed: () {
+                      Sheets.showAppHeightNineSheet(
+                          context: context,
+                          widget: UIUtil.showWebview(
+                              context,
+                              'https://www.archethic.net/lab.html',
+                              AppLocalization.of(context)!.labLinkHeader));
+                    }),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutHeader,
@@ -880,9 +896,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                       _aboutController!.forward();
                     }),
                     Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
-                    ),
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.primary15),
                     Container(
                       margin: const EdgeInsetsDirectional.only(
                           start: 30.0, top: 20.0, bottom: 10.0),
