@@ -510,6 +510,16 @@ class AppLocalization {
     return Intl.message('Privacy Policy', name: 'aboutPrivacyPolicy');
   }
 
+  String get labLinkHeader {
+    return Intl.message('Lab', name: 'labLinkHeader');
+  }
+
+  String get labLinkDesc {
+    return Intl.message(
+        'Latest tech and product updates on the Archethic ecosystem',
+        name: 'labLinkDesc');
+  }
+
   String get autoLockHeader {
     return Intl.message('Auto Lock', name: 'autoLockHeader');
   }
