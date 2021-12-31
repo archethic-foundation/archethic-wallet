@@ -238,39 +238,6 @@ class BalanceDisplay {
                   ),
                 ),
               ),
-              if (StateContainer.of(context).wallet != null &&
-                  StateContainer.of(context).wallet!.accountBalance.uco !=
-                      null &&
-                  StateContainer.of(context).wallet!.accountBalance.uco! > 0)
-                SizedBox(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 175.0, top: 90.0),
-                    child: Container(
-                      height: 36,
-                      width: 36,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: TextButton(
-                        onPressed: () {
-                          Sheets.showAppHeightNineSheet(
-                              context: context,
-                              widget: TransferUcoSheet(
-                                  contactsRef:
-                                      StateContainer.of(context).contactsRef,
-                                  title:
-                                      AppLocalization.of(context)!.transferUCO,
-                                  localCurrency:
-                                      StateContainer.of(context).curCurrency));
-                        },
-                        child: buildIconWidget(
-                            context, 'assets/icons/send.png', 30, 30),
-                      ),
-                    ),
-                  ),
-                )
-              else
-                const SizedBox(),
               SizedBox(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 5.0, top: 5.0),
