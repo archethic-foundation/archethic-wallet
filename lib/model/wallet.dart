@@ -70,6 +70,13 @@ class AppWallet {
         .format(converted.toDouble());
   }
 
+  String getLocalPrice(AvailableCurrency currency, {String locale = 'en_US'}) {
+    final Decimal converted = Decimal.parse(_localCurrencyPrice!);
+    return NumberFormat.currency(
+            locale: locale, symbol: currency.getCurrencySymbol())
+        .format(converted.toDouble());
+  }
+
   String getLocalCurrencyPriceMoinsFees(
       AvailableCurrency currency, double estimationFees,
       {String locale = 'en_US'}) {
