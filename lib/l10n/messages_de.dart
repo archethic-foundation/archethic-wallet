@@ -88,6 +88,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "insufficientBalance" : MessageLookupByLibrary.simpleMessage("Solde insuffisant"),
     "invalidAddress" : MessageLookupByLibrary.simpleMessage("L\'adresse saisie n\'était pas valide"),
     "iveBackedItUp" : MessageLookupByLibrary.simpleMessage("Je l\'ai sauvegardé"),
+    "labLinkDesc" : MessageLookupByLibrary.simpleMessage("Latest tech and product updates on the Archethic ecosystem"),
+    "labLinkHeader" : MessageLookupByLibrary.simpleMessage("Lab"),
     "language" : MessageLookupByLibrary.simpleMessage("Language"),
     "lockAppSetting" : MessageLookupByLibrary.simpleMessage("Auth. on Launch"),
     "locked" : MessageLookupByLibrary.simpleMessage("Locked"),

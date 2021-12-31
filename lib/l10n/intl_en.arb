@@ -534,6 +534,18 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+    "labLinkHeader": "Lab",
+  "@labLinkHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "labLinkDesc": "Latest tech and product updates on the Archethic ecosystem",
+  "@labLinkDesc": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "autoLockHeader": "Auto Lock",
   "@autoLockHeader": {
     "type": "text",

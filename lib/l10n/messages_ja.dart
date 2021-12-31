@@ -88,6 +88,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "insufficientBalance" : MessageLookupByLibrary.simpleMessage("残高不足"),
     "invalidAddress" : MessageLookupByLibrary.simpleMessage("入力した住所が無効でした"),
     "iveBackedItUp" : MessageLookupByLibrary.simpleMessage("私はそれをバックアップしました"),
+    "labLinkDesc" : MessageLookupByLibrary.simpleMessage("Latest tech and product updates on the Archethic ecosystem"),
+    "labLinkHeader" : MessageLookupByLibrary.simpleMessage("Lab"),
     "language" : MessageLookupByLibrary.simpleMessage("Language"),
     "lockAppSetting" : MessageLookupByLibrary.simpleMessage("Auth. on Launch"),
     "locked" : MessageLookupByLibrary.simpleMessage("Locked"),
