@@ -131,8 +131,8 @@ class SharedPrefsUtil {
   }
 
   Future<AuthenticationMethod> getAuthMethod() async {
-    return AuthenticationMethod(AuthMethod.values[
-        await get(auth_method, defaultValue: AuthMethod.BIOMETRICS.index)]);
+    return AuthenticationMethod(AuthMethod
+        .values[await get(auth_method, defaultValue: AuthMethod.PIN.index)]);
   }
 
   Future<void> setCurrency(AvailableCurrency currency) async {
