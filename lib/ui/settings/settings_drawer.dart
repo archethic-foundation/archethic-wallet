@@ -759,14 +759,6 @@ class _SettingsSheetState extends State<SettingsSheet>
         ),
         child: Column(
           children: <Widget>[
-            Container(
-              margin: const EdgeInsetsDirectional.only(
-                  start: 26.0, end: 20, bottom: 15),
-              child: Text(
-                AppLocalization.of(context)!.settings,
-                style: AppStyles.textStyleSize16W600Primary(context),
-              ),
-            ),
             // Settings items
             Expanded(
                 child: Stack(
@@ -776,10 +768,9 @@ class _SettingsSheetState extends State<SettingsSheet>
                   children: <Widget>[
                     Container(
                       margin: const EdgeInsetsDirectional.only(
-                          start: 30.0, bottom: 10.0),
-                      child: Text(AppLocalization.of(context)!.informations,
-                          style:
-                              AppStyles.textStyleSize16W100Primary60(context)),
+                          start: 30.0, top: 10.0, bottom: 10.0),
+                      child: Text(AppLocalization.of(context)!.manage,
+                          style: AppStyles.textStyleSize20W700Primary(context)),
                     ),
                     if (StateContainer.of(context).wallet != null &&
                         StateContainer.of(context).wallet!.accountBalance.uco !=
@@ -809,6 +800,44 @@ class _SettingsSheetState extends State<SettingsSheet>
                       })
                     else
                       const SizedBox(),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
+                    AppSettings.buildSettingsListItemSingleLineWithInfos(
+                        context,
+                        AppLocalization.of(context)!.addressBookHeader,
+                        AppLocalization.of(context)!.addressBookDesc,
+                        icon: 'assets/icons/address-book.png', onPressed: () {
+                      setState(() {
+                        _contactsOpen = true;
+                      });
+                      _contactsController!.forward();
+                    }),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
+                    AppSettings.buildSettingsListItemSingleLineWithInfos(
+                        context,
+                        AppLocalization.of(context)!.customUrlHeader,
+                        AppLocalization.of(context)!.customUrlDesc,
+                        icon: 'assets/icons/url.png', onPressed: () {
+                      setState(() {
+                        _customUrlOpen = true;
+                      });
+                      _customUrlController!.forward();
+                    }),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
+                    Container(
+                      margin: const EdgeInsetsDirectional.only(
+                          start: 30.0, top: 20.0, bottom: 10.0),
+                      child: Text(AppLocalization.of(context)!.informations,
+                          style: AppStyles.textStyleSize20W700Primary(context)),
+                    ),
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
@@ -857,48 +886,8 @@ class _SettingsSheetState extends State<SettingsSheet>
                     Container(
                       margin: const EdgeInsetsDirectional.only(
                           start: 30.0, top: 20.0, bottom: 10.0),
-                      child: Text(AppLocalization.of(context)!.manage,
-                          style:
-                              AppStyles.textStyleSize16W100Primary60(context)),
-                    ),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
-                    ),
-                    AppSettings.buildSettingsListItemSingleLineWithInfos(
-                        context,
-                        AppLocalization.of(context)!.addressBookHeader,
-                        AppLocalization.of(context)!.addressBookDesc,
-                        icon: 'assets/icons/address-book.png', onPressed: () {
-                      setState(() {
-                        _contactsOpen = true;
-                      });
-                      _contactsController!.forward();
-                    }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
-                    ),
-                    AppSettings.buildSettingsListItemSingleLineWithInfos(
-                        context,
-                        AppLocalization.of(context)!.customUrlHeader,
-                        AppLocalization.of(context)!.customUrlDesc,
-                        icon: 'assets/icons/url.png', onPressed: () {
-                      setState(() {
-                        _customUrlOpen = true;
-                      });
-                      _customUrlController!.forward();
-                    }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
-                    ),
-                    Container(
-                      margin: const EdgeInsetsDirectional.only(
-                          start: 30.0, top: 20.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context)!.preferences,
-                          style:
-                              AppStyles.textStyleSize16W100Primary60(context)),
+                          style: AppStyles.textStyleSize20W700Primary(context)),
                     ),
                     Divider(
                       height: 2,
