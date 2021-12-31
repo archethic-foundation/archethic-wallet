@@ -24,6 +24,10 @@ class Vault {
     return await sl.get<SharedPrefsUtil>().useLegacyStorage();
   }
 
+  AndroidOptions _getAndroidOptions() => const AndroidOptions(
+        encryptedSharedPreferences: true,
+      );
+
   // Re-usable
   Future<String> _write(String key, String value) async {
     if (kIsWeb) {
@@ -33,7 +37,8 @@ class Vault {
       if (await legacy()) {
         await setEncrypted(key, value);
       } else {
-        await secureStorage.write(key: key, value: value);
+        await secureStorage.write(
+            key: key, value: value, aOptions: _getAndroidOptions());
       }
     }
 
@@ -48,7 +53,9 @@ class Vault {
       if (await legacy()) {
         return await getEncrypted(key);
       }
-      return await secureStorage.read(key: key) ?? defaultValue;
+      return await secureStorage.read(
+              key: key, aOptions: _getAndroidOptions()) ??
+          defaultValue;
     }
   }
 
@@ -61,7 +68,7 @@ class Vault {
       await prefs.remove(sessionKey);
       return;
     }
-    return await secureStorage.deleteAll();
+    return await secureStorage.deleteAll(aOptions: _getAndroidOptions());
   }
 
   // Specific keys
@@ -78,7 +85,8 @@ class Vault {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove(seedKey);
     }
-    return await secureStorage.delete(key: seedKey);
+    return await secureStorage.delete(
+        key: seedKey, aOptions: _getAndroidOptions());
   }
 
   Future<String?> getEncryptionPhrase() async {
@@ -111,7 +119,8 @@ class Vault {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove(encryptionKey);
     }
-    return await secureStorage.delete(key: encryptionKey);
+    return await secureStorage.delete(
+        key: encryptionKey, aOptions: _getAndroidOptions());
   }
 
   Future<String?> getPin() async {
@@ -127,7 +136,8 @@ class Vault {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove(pinKey);
     }
-    return await secureStorage.delete(key: pinKey);
+    return await secureStorage.delete(
+        key: pinKey, aOptions: _getAndroidOptions());
   }
 
   // For encrypted data
