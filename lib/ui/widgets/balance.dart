@@ -47,26 +47,6 @@ class BalanceDisplay {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Opacity(
-                          opacity: _opacityAnimation.value,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color:
-                                  StateContainer.of(context).curTheme.primary60,
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            child: const Text(
-                              '1234567',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: AppFontSizes.size14 - 3,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.transparent),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 7),
                         Container(
                           margin: const EdgeInsetsDirectional.only(
                               start: 10, end: 10),
@@ -101,6 +81,26 @@ class BalanceDisplay {
                                 ),
                               ),
                             ],
+                          ),
+                        ),
+                        const SizedBox(height: 7),
+                        Opacity(
+                          opacity: _opacityAnimation.value,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color:
+                                  StateContainer.of(context).curTheme.primary60,
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            child: const Text(
+                              '1234567',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: AppFontSizes.size14 - 3,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.transparent),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 7),
@@ -139,7 +139,6 @@ class BalanceDisplay {
                   padding: const EdgeInsets.only(left: 5.0, top: 5.0),
                   child: Text(
                     'Balance',
-                    style: AppStyles.textStyleSize12W100Primary(context),
                   ),
                 ),
               ),
@@ -172,16 +171,6 @@ class BalanceDisplay {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text(
-                            StateContainer.of(context)
-                                .wallet!
-                                .getLocalCurrencyPrice(
-                                    StateContainer.of(context).curCurrency,
-                                    locale: StateContainer.of(context)
-                                        .currencyLocale!),
-                            textAlign: TextAlign.center,
-                            style:
-                                AppStyles.textStyleSize14W600Text60(context)),
                         Container(
                           margin: const EdgeInsetsDirectional.only(
                               start: 10, end: 10),
@@ -219,20 +208,54 @@ class BalanceDisplay {
                             ],
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            FaIcon(FontAwesomeIcons.btc,
-                                color: StateContainer.of(context)
-                                    .curTheme
-                                    .primary60,
-                                size: 14),
-                            Text(StateContainer.of(context).wallet!.btcPrice,
-                                textAlign: TextAlign.center,
-                                style: AppStyles.textStyleSize14W600Text60(
-                                    context)),
-                          ],
+                        Container(
+                          margin: const EdgeInsetsDirectional.only(
+                              start: 10, end: 10),
+                          child: Text(
+                              StateContainer.of(context)
+                                  .wallet!
+                                  .getLocalCurrencyPrice(
+                                      StateContainer.of(context).curCurrency,
+                                      locale: StateContainer.of(context)
+                                          .currencyLocale!),
+                              textAlign: TextAlign.center,
+                              style:
+                                  AppStyles.textStyleSize14W600Text60(context)),
                         ),
+                        Container(
+                          margin: const EdgeInsetsDirectional.only(
+                              start: 10, end: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              FaIcon(FontAwesomeIcons.btc,
+                                  color: StateContainer.of(context)
+                                      .curTheme
+                                      .primary60,
+                                  size: 14),
+                              Text(StateContainer.of(context).wallet!.btcPrice,
+                                  textAlign: TextAlign.center,
+                                  style: AppStyles.textStyleSize14W600Text60(
+                                      context)),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsetsDirectional.only(
+                              start: 10, end: 10),
+                          child: Text(
+                            '1 UCO = ' +
+                                StateContainer.of(context)
+                                    .wallet!
+                                    .getLocalPrice(
+                                        StateContainer.of(context).curCurrency,
+                                        locale: StateContainer.of(context)
+                                            .currencyLocale!),
+                            style:
+                                AppStyles.textStyleSize12W100Primary(context),
+                          ),
+                        ),
+                        Container()
                       ],
                     ),
                   ),
