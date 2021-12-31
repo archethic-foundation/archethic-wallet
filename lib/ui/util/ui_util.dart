@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:event_taxi/event_taxi.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
@@ -453,9 +453,8 @@ class UIUtil {
       return false;
   }
 
-  static Widget showWebview(BuildContext context, String url, String title) {
-    return WebView(
-      initialUrl: url,
-    );
+  static void showWebview(
+      BuildContext context, String url, String title) async {
+    await launch(url);
   }
 }

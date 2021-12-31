@@ -874,13 +874,12 @@ class _SettingsSheetState extends State<SettingsSheet>
                         context,
                         AppLocalization.of(context)!.labLinkHeader,
                         AppLocalization.of(context)!.labLinkDesc,
-                        icon: 'assets/icons/microscope.png', onPressed: () {
-                      Sheets.showAppHeightNineSheet(
-                          context: context,
-                          widget: UIUtil.showWebview(
-                              context,
-                              'https://www.archethic.net/lab.html',
-                              AppLocalization.of(context)!.labLinkHeader));
+                        icon: 'assets/icons/microscope.png',
+                        onPressed: () async {
+                      UIUtil.showWebview(
+                          context,
+                          'https://www.archethic.net/lab.html',
+                          AppLocalization.of(context)!.labLinkHeader);
                     }),
                     Divider(
                       height: 2,
@@ -1328,14 +1327,13 @@ class _SettingsSheetState extends State<SettingsSheet>
                         context,
                         AppLocalization.of(context)!
                             .aboutGeneralTermsAndConditions,
-                        'assets/icons/terms-and-conditions.png', onPressed: () {
-                      Sheets.showAppHeightNineSheet(
-                          context: context,
-                          widget: UIUtil.showWebview(
-                              context,
-                              'https://archethic.net',
-                              AppLocalization.of(context)!
-                                  .aboutGeneralTermsAndConditions));
+                        'assets/icons/terms-and-conditions.png',
+                        onPressed: () async {
+                      UIUtil.showWebview(
+                          context,
+                          'https://archethic.net',
+                          AppLocalization.of(context)!
+                              .aboutGeneralTermsAndConditions);
                     }),
                     Divider(
                         height: 2,
@@ -1343,14 +1341,10 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutWalletServiceTerms,
-                        'assets/icons/walletServiceTerms.png', onPressed: () {
-                      Sheets.showAppHeightNineSheet(
-                          context: context,
-                          widget: UIUtil.showWebview(
-                              context,
-                              'https://archethic.net',
-                              AppLocalization.of(context)!
-                                  .aboutWalletServiceTerms));
+                        'assets/icons/walletServiceTerms.png',
+                        onPressed: () async {
+                      UIUtil.showWebview(context, 'https://archethic.net',
+                          AppLocalization.of(context)!.aboutWalletServiceTerms);
                     }),
                     Divider(
                         height: 2,
@@ -1358,13 +1352,9 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutPrivacyPolicy,
-                        'assets/icons/privacyPolicy.png', onPressed: () {
-                      Sheets.showAppHeightNineSheet(
-                          context: context,
-                          widget: UIUtil.showWebview(
-                              context,
-                              'https://archethic.net',
-                              AppLocalization.of(context)!.aboutPrivacyPolicy));
+                        'assets/icons/privacyPolicy.png', onPressed: () async {
+                      UIUtil.showWebview(context, 'https://archethic.net',
+                          AppLocalization.of(context)!.aboutPrivacyPolicy);
                     }),
                   ].where(notNull).toList(),
                 ),
