@@ -292,14 +292,16 @@ class _AppHomePageState extends State<AppHomePage>
       appBar: AppBar(
         title: Container(
             child: kIsWeb
-                ? Image.network(
+                ? Image.asset(
                     StateContainer.of(context).curTheme.assetsFolder! +
-                        StateContainer.of(context).curTheme.logoAlone!,
+                        StateContainer.of(context).curTheme.logoAlone! +
+                        '.png',
                     height: 40,
                   )
                 : SvgPicture.asset(
                     StateContainer.of(context).curTheme.assetsFolder! +
-                        StateContainer.of(context).curTheme.logoAlone!,
+                        StateContainer.of(context).curTheme.logoAlone! +
+                        '.svg',
                     height: 40,
                   )),
         backgroundColor: Colors.transparent,

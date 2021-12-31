@@ -72,13 +72,14 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                                   child: SizedBox(
                                     height: 300,
                                     child: kIsWeb
-                                        ? Image.network(
+                                        ? Image.asset(
                                             StateContainer.of(context)
                                                     .curTheme
                                                     .assetsFolder! +
                                                 StateContainer.of(context)
                                                     .curTheme
-                                                    .logo!,
+                                                    .logo! +
+                                                '.png',
                                             height: 200,
                                           )
                                         : SvgPicture.asset(
@@ -87,7 +88,8 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                                                     .assetsFolder! +
                                                 StateContainer.of(context)
                                                     .curTheme
-                                                    .logo!,
+                                                    .logo! +
+                                                '.svg',
                                             height: 200,
                                           ),
                                   ),

@@ -128,9 +128,9 @@ class UnirisTheme implements BaseTheme {
   @override
   String? assetsFolder = 'assets/themes/uniris/';
   @override
-  String? logo = 'logo.svg';
+  String? logo = 'logo';
   @override
-  String? logoAlone = 'logo_alone.svg';
+  String? logoAlone = 'logo_alone';
 
   @override
   Widget? getBackgroundScreen(BuildContext context) {
