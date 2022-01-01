@@ -248,7 +248,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                             await authenticateWithPin();
                           }
                         }
-                      })
+                      }),
                     ],
                   ),
                   // A row for CANCEL Button

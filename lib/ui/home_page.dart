@@ -402,9 +402,7 @@ class _AppHomePageState extends State<AppHomePage>
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        StateContainer.of(context).wallet!.history.isEmpty
-                            ? const SizedBox()
-                            : const TxListWidget(),
+                        const TxListWidget(),
                       ],
                     ),
                   ],
