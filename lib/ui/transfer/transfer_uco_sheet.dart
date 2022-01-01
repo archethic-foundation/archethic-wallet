@@ -458,9 +458,10 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
 
                                             if (validRequest) {
                                               final BigInt? _amount =
-                                                  BigInt.tryParse(
-                                                      _sendAmountController!
-                                                          .text);
+                                                  BigInt.from(double.tryParse(
+                                                          _sendAmountController!
+                                                              .text)! *
+                                                      100000000);
 
                                               for (int i = 0;
                                                   i < ucoTransferList.length;
@@ -478,8 +479,11 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                             }
                                           } else {
                                             if (validRequest) {
-                                              BigInt? _amount = BigInt.tryParse(
-                                                  _sendAmountController!.text);
+                                              BigInt? _amount = BigInt.from(
+                                                  double.tryParse(
+                                                          _sendAmountController!
+                                                              .text)! *
+                                                      100000000);
 
                                               for (int i = 0;
                                                   i < ucoTransferList.length;

@@ -492,37 +492,45 @@ class _QrCodePopupCard extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: 150,
+                        width: 200,
                         alignment: Alignment.center,
                         margin: const EdgeInsets.all(8),
                         child: Column(
                           children: <Widget>[
                             AutoSizeText(
-                                StateContainer.of(context)
-                                    .selectedAccount
-                                    .lastAddress!
-                                    .substring(0, 16),
+                                CaseChange.toUpperCase(
+                                    StateContainer.of(context)
+                                        .selectedAccount
+                                        .lastAddress!
+                                        .substring(0, 16),
+                                    context),
                                 style: AppStyles.textStyleSize14W100Primary(
                                     context)),
                             AutoSizeText(
-                                StateContainer.of(context)
-                                    .selectedAccount
-                                    .lastAddress!
-                                    .substring(16, 32),
+                                CaseChange.toUpperCase(
+                                    StateContainer.of(context)
+                                        .selectedAccount
+                                        .lastAddress!
+                                        .substring(16, 32),
+                                    context),
                                 style: AppStyles.textStyleSize14W100Primary(
                                     context)),
                             AutoSizeText(
-                                StateContainer.of(context)
-                                    .selectedAccount
-                                    .lastAddress!
-                                    .substring(32, 48),
+                                CaseChange.toUpperCase(
+                                    StateContainer.of(context)
+                                        .selectedAccount
+                                        .lastAddress!
+                                        .substring(32, 48),
+                                    context),
                                 style: AppStyles.textStyleSize14W100Primary(
                                     context)),
                             AutoSizeText(
-                                StateContainer.of(context)
-                                    .selectedAccount
-                                    .lastAddress!
-                                    .substring(48),
+                                CaseChange.toUpperCase(
+                                    StateContainer.of(context)
+                                        .selectedAccount
+                                        .lastAddress!
+                                        .substring(48),
+                                    context),
                                 style: AppStyles.textStyleSize14W100Primary(
                                     context)),
                           ],

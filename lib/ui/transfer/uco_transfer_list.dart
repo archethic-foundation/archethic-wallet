@@ -162,7 +162,9 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                     style: AppStyles.textStyleSize14W100Primary(context)),
               ],
             ),
-            Text(ucoTransfer.amount!.toString() + ' UCO',
+            Text(
+                (ucoTransfer.amount! / BigInt.from(100000000)).toString() +
+                    ' UCO',
                 style: AppStyles.textStyleSize14W100Primary(context)),
           ],
         ),

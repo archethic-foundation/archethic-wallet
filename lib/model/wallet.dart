@@ -46,7 +46,7 @@ class AppWallet {
     if (accountBalance.uco == null) {
       return '0';
     }
-    return NumberUtil.getRawAsUsableString(_accountBalance!.uco.toString());
+    return _accountBalance!.uco.toString();
   }
 
   // Get pretty account balance version

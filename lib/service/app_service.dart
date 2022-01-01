@@ -84,9 +84,10 @@ class AppService {
               i++) {
             final RecentTransaction recentTransaction = RecentTransaction();
             recentTransaction.typeTx = RecentTransaction.TRANSFER_OUTPUT;
-            recentTransaction.amount =
-                transaction.data!.ledger!.uco!.transfers![i].amount! /
-                    BigInt.from(100000000);
+            recentTransaction.amount = transaction
+                    .data!.ledger!.uco!.transfers![i].amount!
+                    .toDouble() /
+                100000000;
             recentTransaction.recipient =
                 transaction.data!.ledger!.uco!.transfers![i].to!;
             recentTransaction.fee =
@@ -169,7 +170,7 @@ class AppService {
     final Transaction transaction =
         Transaction(type: 'transfer', data: Transaction.initData());
     for (UCOTransfer transfer in listUcoTransfer) {
-      transaction.addUCOTransfer(transfer.to, transfer.amount!.toDouble());
+      transaction.addUCOTransfer(transfer.to, transfer.amount!);
     }
     TransactionStatus transactionStatus = TransactionStatus();
     transaction
