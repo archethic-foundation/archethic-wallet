@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,7 +14,7 @@ class BiometricUtil {
   ///
   /// @returns [true] if device has fingerprint/faceID available and registered, [false] otherwise
   Future<bool> hasBiometrics() async {
-    if (Platform.isIOS || Platform.isAndroid) {
+    if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
       final LocalAuthentication localAuth = LocalAuthentication();
       final bool canCheck = await localAuth.canCheckBiometrics;
       if (canCheck) {
