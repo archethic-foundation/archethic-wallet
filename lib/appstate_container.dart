@@ -37,7 +37,8 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
         Balance,
         SimplePriceResponse,
         CoinsPriceResponse,
-        CoinsCurrentDataResponse;
+        CoinsCurrentDataResponse,
+        NftBalance;
 
 class _InheritedStateContainer extends InheritedWidget {
   const _InheritedStateContainer({
@@ -72,6 +73,7 @@ class StateContainerState extends State<StateContainer> {
   String receiveThreshold = BigInt.from(10).pow(24).toString();
 
   AppWallet? wallet;
+  AppWallet? localWallet;
   bool recentTransactionsLoading = false;
   bool balanceLoading = false;
   String? currencyLocale;
@@ -97,11 +99,22 @@ class StateContainerState extends State<StateContainer> {
   @override
   void initState() {
     super.initState();
+
     // Setup Service Provide
     setupServiceLocator();
 
     // Register RxBus
     _registerBus();
+
+    wallet = AppWallet();
+    localWallet = AppWallet();
+    sl.get<DBHelper>().getSelectedAccount().then((Account? account) {
+      localWallet!.accountBalance = Balance(
+          nft: List<NftBalance>.empty(growable: true),
+          uco:
+              account!.balance == null ? 0 : double.tryParse(account.balance!));
+      localWallet!.address = account.lastAddress!;
+    });
 
     updateContacts();
 
@@ -150,7 +163,7 @@ class StateContainerState extends State<StateContainer> {
         if (wallet != null) {
           wallet!.accountBalance = event.response!;
           sl.get<DBHelper>().updateAccountBalance(
-              selectedAccount, wallet!.accountBalance.toString());
+              selectedAccount, wallet!.accountBalance.uco.toString());
         }
       });
     });
@@ -179,7 +192,15 @@ class StateContainerState extends State<StateContainer> {
             event.response == null || event.response!.btcPrice == null
                 ? '0'
                 : event.response!.btcPrice.toString();
+        localWallet!.btcPrice =
+            event.response == null || event.response!.btcPrice == null
+                ? '0'
+                : event.response!.btcPrice.toString();
         wallet!.localCurrencyPrice =
+            event.response == null || event.response!.localCurrencyPrice == null
+                ? '0'
+                : event.response!.localCurrencyPrice.toString();
+        localWallet!.localCurrencyPrice =
             event.response == null || event.response!.localCurrencyPrice == null
                 ? '0'
                 : event.response!.localCurrencyPrice.toString();
@@ -363,6 +384,13 @@ class StateContainerState extends State<StateContainer> {
       recentTransactionsLoading = false;
     });
     await requestUpdateCoinsChart();
+
+    sl.get<DBHelper>().getSelectedAccount().then((Account? account) {
+      localWallet!.accountBalance = Balance(
+          nft: List<NftBalance>.empty(growable: true),
+          uco: double.tryParse(account!.balance!));
+      localWallet!.address = account.lastAddress!;
+    });
   }
 
   void logOut() {

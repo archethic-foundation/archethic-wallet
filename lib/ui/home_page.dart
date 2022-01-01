@@ -308,9 +308,11 @@ class _AppHomePageState extends State<AppHomePage>
         elevation: 0.0,
         centerTitle: true,
         actions: <Widget>[
-          if (StateContainer.of(context).wallet != null &&
-              StateContainer.of(context).wallet!.accountBalance.uco != null &&
-              StateContainer.of(context).wallet!.accountBalance.uco! > 0)
+          if ((StateContainer.of(context).wallet != null &&
+                  StateContainer.of(context).wallet!.accountBalance.uco !=
+                      null &&
+                  StateContainer.of(context).wallet!.accountBalance.uco! > 0) ||
+              StateContainer.of(context).localWallet!.accountBalance.uco! > 0)
             Padding(
               padding: EdgeInsets.only(right: 0.0),
               child: TextButton(
@@ -400,7 +402,7 @@ class _AppHomePageState extends State<AppHomePage>
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        StateContainer.of(context).wallet == null
+                        StateContainer.of(context).wallet!.history.isEmpty
                             ? const SizedBox()
                             : const TxListWidget(),
                       ],

@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:math';
-
 // Package imports:
 import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';

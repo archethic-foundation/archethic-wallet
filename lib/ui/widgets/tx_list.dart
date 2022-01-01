@@ -59,86 +59,51 @@ class _TxListWidgetState extends State<TxListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return StateContainer.of(context).wallet == null
-        ? Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.height - 301,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 0.0),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height - 120,
-                    padding: const EdgeInsets.only(
-                        top: 3.5, left: 3.5, right: 3.5, bottom: 3.5),
-                    color: Colors.transparent,
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 6, right: 6, top: 6, bottom: 6),
-                        child: Column(
-                          children: const <Widget>[],
-                        )),
-                  ),
-                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: StateContainer.of(context).wallet!.history.isNotEmpty ||
+                    StateContainer.of(context).recentTransactionsLoading == true
+                ? Text(AppLocalization.of(context)!.recentTransactionsHeader,
+                    style:
+                        AppStyles.textStyleSize14W600BackgroundDarkest(context))
+                : Text(
+                    AppLocalization.of(context)!
+                        .recentTransactionsNoTransactionYet,
+                    style: AppStyles.textStyleSize14W600Primary(context))),
+        Container(
+          height: MediaQuery.of(context).size.height - 301,
+          padding: const EdgeInsets.only(
+              top: 3.5, left: 3.5, right: 3.5, bottom: 3.5),
+          color: Colors.transparent,
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: Padding(
+            padding:
+                const EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 0),
+            child: RefreshIndicator(
+              backgroundColor:
+                  StateContainer.of(context).curTheme.backgroundDark,
+              onRefresh: () => Future<void>.sync(() {
+                sl.get<HapticUtil>().feedback(FeedbackType.light);
+                StateContainer.of(context).requestUpdate(
+                    account: StateContainer.of(context).selectedAccount);
+                _pagingController.refresh();
+              }),
+              child: PagedListView<int, RecentTransaction>(
+                pagingController: _pagingController,
+                builderDelegate: PagedChildBuilderDelegate<RecentTransaction>(
+                    itemBuilder: (BuildContext context,
+                        RecentTransaction recentTransaction, int index) {
+                  return displayTxDetailTransfer(context, recentTransaction);
+                }),
               ),
-            ],
-          )
-        : Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.only(left: 5.0),
-                  child: StateContainer.of(context)
-                              .wallet!
-                              .history
-                              .isNotEmpty ||
-                          StateContainer.of(context)
-                                  .recentTransactionsLoading ==
-                              true
-                      ? Text(
-                          AppLocalization.of(context)!.recentTransactionsHeader,
-                          style: AppStyles.textStyleSize14W600BackgroundDarkest(
-                              context))
-                      : Text(
-                          AppLocalization.of(context)!
-                              .recentTransactionsNoTransactionYet,
-                          style:
-                              AppStyles.textStyleSize14W600Primary(context))),
-              Container(
-                height: MediaQuery.of(context).size.height - 301,
-                padding: const EdgeInsets.only(
-                    top: 3.5, left: 3.5, right: 3.5, bottom: 3.5),
-                color: Colors.transparent,
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 6, right: 6, top: 6, bottom: 0),
-                  child: RefreshIndicator(
-                    backgroundColor:
-                        StateContainer.of(context).curTheme.backgroundDark,
-                    onRefresh: () => Future<void>.sync(() {
-                      sl.get<HapticUtil>().feedback(FeedbackType.light);
-                      StateContainer.of(context).requestUpdate(
-                          account: StateContainer.of(context).selectedAccount);
-                      _pagingController.refresh();
-                    }),
-                    child: PagedListView<int, RecentTransaction>(
-                      pagingController: _pagingController,
-                      builderDelegate:
-                          PagedChildBuilderDelegate<RecentTransaction>(
-                              itemBuilder: (BuildContext context,
-                                  RecentTransaction recentTransaction,
-                                  int index) {
-                        return displayTxDetailTransfer(
-                            context, recentTransaction);
-                      }),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          );
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   static Container displayTxDetailTransfer(
