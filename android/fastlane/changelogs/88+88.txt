@@ -4,7 +4,6 @@
 
 👷‍♂️ Enhancements
 - Improve refresh management of the tx list (Web app + Mobile)
-- Security - Manage EncryptedSharedPreferences (Mobile)
 - Make the UCO send button more readable (Web app + Mobile)
 - Fix Menu section title who was too bright ((Web app + Mobile)
 - Menu changes order (Web app + Mobile)
