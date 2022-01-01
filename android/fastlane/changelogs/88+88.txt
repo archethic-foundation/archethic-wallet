@@ -1,0 +1,18 @@
+
+🚀 Features
+- Add "Lab" page access (Web app + Mobile)
+
+👷‍♂️ Enhancements
+- Improve refresh management of the tx list (Web app + Mobile)
+- Security - Manage EncryptedSharedPreferences (Mobile)
+- Make the UCO send button more readable (Web app + Mobile)
+- Fix Menu section title who was too bright ((Web app + Mobile)
+- Menu changes order (Web app + Mobile)
+- Display the price of the UCO without going on the chart (Web app + Mobile)
+
+🐛 Bugfixes
+- The transactions list doesn't refresh correctly (Web app + Mobile)
+- Add refresh button to refresh transactions list (Web app)
+- Add ARCHEthic icons (Web app)
+- Fix error when sending UCO with decimals (Web app + Mobile)
+- Fix sending UCO process (Web app)

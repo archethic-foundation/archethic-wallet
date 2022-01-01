@@ -4,19 +4,14 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/transfer/transfer_uco_sheet.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/custom_rect_tween.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/hero_dialog_route.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flip_card/flip_card.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -26,12 +21,17 @@ import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/bus/events.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
+import 'package:archethic_mobile_wallet/styles.dart';
 import 'package:archethic_mobile_wallet/ui/settings/settings_drawer.dart';
+import 'package:archethic_mobile_wallet/ui/transfer/transfer_uco_sheet.dart';
 import 'package:archethic_mobile_wallet/ui/util/routes.dart';
 import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/balance.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/custom_rect_tween.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/hero_dialog_route.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/line_chart.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/tx_list.dart';
 import 'package:archethic_mobile_wallet/util/caseconverter.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
