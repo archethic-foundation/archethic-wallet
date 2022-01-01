@@ -65,6 +65,35 @@ class LineChartWidget {
                         0
                     ? Row(
                         children: <Widget>[
+                          Container(
+                            margin: const EdgeInsetsDirectional.only(
+                                start: 10, end: 10),
+                            child: Text(
+                              StateContainer.of(context)
+                                          .wallet!
+                                          .accountBalance
+                                          .uco ==
+                                      0
+                                  ? '1 UCO = ' +
+                                      StateContainer.of(context)
+                                          .localWallet!
+                                          .getLocalPrice(
+                                              StateContainer.of(context)
+                                                  .curCurrency,
+                                              locale: StateContainer.of(context)
+                                                  .currencyLocale!)
+                                  : '1 UCO = ' +
+                                      StateContainer.of(context)
+                                          .wallet!
+                                          .getLocalPrice(
+                                              StateContainer.of(context)
+                                                  .curCurrency,
+                                              locale: StateContainer.of(context)
+                                                  .currencyLocale!),
+                              style:
+                                  AppStyles.textStyleSize12W100Primary(context),
+                            ),
+                          ),
                           Text(
                             StateContainer.of(context)
                                     .chartInfos!
@@ -82,6 +111,35 @@ class LineChartWidget {
                       )
                     : Row(
                         children: <Widget>[
+                          Container(
+                            margin: const EdgeInsetsDirectional.only(
+                                start: 10, end: 10),
+                            child: Text(
+                              StateContainer.of(context)
+                                          .wallet!
+                                          .accountBalance
+                                          .uco ==
+                                      0
+                                  ? '1 UCO = ' +
+                                      StateContainer.of(context)
+                                          .localWallet!
+                                          .getLocalPrice(
+                                              StateContainer.of(context)
+                                                  .curCurrency,
+                                              locale: StateContainer.of(context)
+                                                  .currencyLocale!)
+                                  : '1 UCO = ' +
+                                      StateContainer.of(context)
+                                          .wallet!
+                                          .getLocalPrice(
+                                              StateContainer.of(context)
+                                                  .curCurrency,
+                                              locale: StateContainer.of(context)
+                                                  .currencyLocale!),
+                              style:
+                                  AppStyles.textStyleSize12W100Primary(context),
+                            ),
+                          ),
                           Text(
                             StateContainer.of(context)
                                     .chartInfos!

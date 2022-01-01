@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -62,19 +63,37 @@ class _TxListWidgetState extends State<TxListWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Padding(
-            padding: const EdgeInsets.only(left: 5.0),
-            child: StateContainer.of(context).wallet!.history.isNotEmpty ||
-                    StateContainer.of(context).recentTransactionsLoading == true
-                ? Text(AppLocalization.of(context)!.recentTransactionsHeader,
-                    style:
-                        AppStyles.textStyleSize14W600BackgroundDarkest(context))
-                : Text(
-                    AppLocalization.of(context)!
-                        .recentTransactionsNoTransactionYet,
-                    style: AppStyles.textStyleSize14W600Primary(context))),
+        Row(
+          children: [
+            Padding(
+                padding: const EdgeInsets.only(left: 5.0),
+                child: StateContainer.of(context).wallet!.history.isNotEmpty ||
+                        StateContainer.of(context).recentTransactionsLoading ==
+                            true
+                    ? Text(
+                        AppLocalization.of(context)!.recentTransactionsHeader,
+                        style: AppStyles.textStyleSize14W600BackgroundDarkest(
+                            context))
+                    : Text(
+                        AppLocalization.of(context)!
+                            .recentTransactionsNoTransactionYet,
+                        style: AppStyles.textStyleSize14W600Primary(context))),
+            kIsWeb
+                ? IconButton(
+                    icon: Icon(Icons.refresh),
+                    color:
+                        StateContainer.of(context).curTheme.backgroundDarkest,
+                    onPressed: () async {
+                      StateContainer.of(context).requestUpdate(
+                          account: StateContainer.of(context).selectedAccount);
+                      _pagingController.refresh();
+                    },
+                  )
+                : const SizedBox(),
+          ],
+        ),
         Container(
-          height: MediaQuery.of(context).size.height - 301,
+          height: MediaQuery.of(context).size.height - 332,
           padding: const EdgeInsets.only(
               top: 3.5, left: 3.5, right: 3.5, bottom: 3.5),
           color: Colors.transparent,

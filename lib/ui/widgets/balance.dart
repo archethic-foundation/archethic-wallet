@@ -149,7 +149,6 @@ class BalanceDisplay {
                       style: AppStyles.textStyleSize12W100Primary(context),
                     ),
                   ),
-                  Container()
                 ],
               ),
             ),
