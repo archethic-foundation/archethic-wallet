@@ -39,8 +39,7 @@ class BalanceDisplay {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    margin:
-                        const EdgeInsetsDirectional.only(start: 10, end: 10),
+                    margin: const EdgeInsetsDirectional.only(start: 0, end: 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,31 +48,23 @@ class BalanceDisplay {
                           constraints: BoxConstraints(
                               maxWidth:
                                   MediaQuery.of(context).size.width - 225),
-                          child: AutoSizeText.rich(
-                            TextSpan(
-                              children: <TextSpan>[
-                                // Main balance text
-                                TextSpan(
-                                  text: StateContainer.of(context)
-                                              .wallet!
-                                              .accountBalance
-                                              .uco ==
-                                          0
-                                      ? StateContainer.of(context)
-                                              .localWallet!
-                                              .getAccountBalanceUCODisplay() +
-                                          ' UCO'
-                                      : StateContainer.of(context)
-                                              .wallet!
-                                              .getAccountBalanceUCODisplay() +
-                                          ' UCO',
-                                  style: AppStyles.textStyleSize28W900Primary(
-                                      context),
-                                ),
-                              ],
-                            ),
+                          child: AutoSizeText(
+                            StateContainer.of(context)
+                                        .wallet!
+                                        .accountBalance
+                                        .uco ==
+                                    0
+                                ? StateContainer.of(context)
+                                        .localWallet!
+                                        .getAccountBalanceUCODisplay() +
+                                    ' UCO'
+                                : StateContainer.of(context)
+                                        .wallet!
+                                        .getAccountBalanceUCODisplay() +
+                                    ' UCO',
+                            style:
+                                AppStyles.textStyleSize28W900Primary(context),
                             maxLines: 1,
-                            style: const TextStyle(fontSize: 24),
                             stepGranularity: 0.1,
                             minFontSize: 1,
                             maxFontSize: 24,
