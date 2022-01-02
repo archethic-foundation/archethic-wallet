@@ -109,11 +109,19 @@ class StateContainerState extends State<StateContainer> {
     wallet = AppWallet();
     localWallet = AppWallet();
     sl.get<DBHelper>().getSelectedAccount().then((Account? account) {
-      localWallet!.accountBalance = Balance(
-          nft: List<NftBalance>.empty(growable: true),
-          uco:
-              account!.balance == null ? 0 : double.tryParse(account.balance!));
-      localWallet!.address = account.lastAddress!;
+      if (account != null) {
+        localWallet!.accountBalance = Balance(
+            nft: List<NftBalance>.empty(growable: true),
+            uco: account.balance == null
+                ? 0
+                : double.tryParse(account.balance!));
+        localWallet!.address =
+            account.lastAddress == null ? '' : account.lastAddress!;
+      } else {
+        localWallet!.accountBalance =
+            Balance(nft: List<NftBalance>.empty(growable: true), uco: 0.0);
+        localWallet!.address = '';
+      }
     });
 
     updateContacts();
@@ -188,14 +196,6 @@ class StateContainerState extends State<StateContainer> {
         .registerTo<PriceEvent>()
         .listen((PriceEvent event) {
       setState(() {
-        wallet!.btcPrice =
-            event.response == null || event.response!.btcPrice == null
-                ? '0'
-                : event.response!.btcPrice.toString();
-        localWallet!.btcPrice =
-            event.response == null || event.response!.btcPrice == null
-                ? '0'
-                : event.response!.btcPrice.toString();
         wallet!.localCurrencyPrice =
             event.response == null || event.response!.localCurrencyPrice == null
                 ? '0'
@@ -386,10 +386,17 @@ class StateContainerState extends State<StateContainer> {
     await requestUpdateCoinsChart();
 
     sl.get<DBHelper>().getSelectedAccount().then((Account? account) {
-      localWallet!.accountBalance = Balance(
-          nft: List<NftBalance>.empty(growable: true),
-          uco: double.tryParse(account!.balance!));
-      localWallet!.address = account.lastAddress!;
+      if (account != null) {
+        localWallet!.accountBalance = Balance(
+            nft: List<NftBalance>.empty(growable: true),
+            uco: double.tryParse(account.balance!));
+        localWallet!.address =
+            account.lastAddress == null ? '' : account.lastAddress!;
+      } else {
+        localWallet!.accountBalance =
+            Balance(nft: List<NftBalance>.empty(growable: true), uco: 0.0);
+        localWallet!.address = '';
+      }
     });
   }
 
