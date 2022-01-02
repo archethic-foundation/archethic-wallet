@@ -760,7 +760,7 @@ class AppLocalization {
 
   String get backupSafetyLabel1 {
     return Intl.message(
-        'In the next screen, you will see your recovery phrase.',
+        'On the next screen, you will see your recovery phrase.',
         name: 'backupSafetyLabel1');
   }
 
@@ -781,7 +781,7 @@ class AppLocalization {
 
   String get backupSafetyLabel5 {
     return Intl.message(
-        'Write down the mnemonic words in the correct order on a piece of papier and store them in a safe place.\nPlease don\'t store the recovery phrase on electronic devices in any form, including sreenshot.\nRemember the safety of the recovery phrase is relevant to the safety of your digital assets',
+        'Write down the mnemonic words in the correct order on a piece of paper and store them in a safe place.\nPlease don\'t store the recovery phrase on electronic devices in any form, including sreenshot.\nRemember the safety of the recovery phrase is relevant to the safety of your digital assets',
         name: 'backupSafetyLabel5');
   }
 
