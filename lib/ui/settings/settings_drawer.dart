@@ -520,7 +520,7 @@ class _SettingsSheetState extends State<SettingsSheet>
     if (selection != null) {
       sl
           .get<SharedPrefsUtil>()
-          .setLanguage(LanguageSetting(selection!))
+          .setLanguage(LanguageSetting(selection))
           .then((_) {
         if (StateContainer.of(context).curLanguage.language != selection) {
           setState(() {
