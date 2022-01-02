@@ -1,3 +1,4 @@
+Version beta 0.0.89
 
 🚀 Features
 - Add "Lab" page access (Web app + Mobile)
@@ -15,3 +16,7 @@
 - Add ARCHEthic icons (Web app)
 - Fix error when sending UCO with decimals (Web app + Mobile)
 - Fix sending UCO process (Web app)
+
+Link to android version : https://github.com/archethic-foundation/archethic_mobile_wallet/releases/tag/beta_channel
+Link to Web app : https://reddwarf03.github.io/archethic_web/index.html
+Link to iOS version : Soon
