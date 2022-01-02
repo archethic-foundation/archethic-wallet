@@ -431,7 +431,7 @@ class _SettingsSheetState extends State<SettingsSheet>
   }
 
   Future<void> _currencyDialog() async {
-    final AvailableCurrencyEnum selection =
+    final AvailableCurrencyEnum? selection =
         await showAppDialog<AvailableCurrencyEnum>(
             context: context,
             builder: (BuildContext context) {
@@ -446,19 +446,21 @@ class _SettingsSheetState extends State<SettingsSheet>
                 children: _buildCurrencyOptions(),
               );
             });
-
-    sl
-        .get<SharedPrefsUtil>()
-        .setCurrency(AvailableCurrency(selection))
-        .then((_) {
-      if (StateContainer.of(context).curCurrency.currency != selection) {
-        setState(() {
-          StateContainer.of(context).curCurrency = AvailableCurrency(selection);
-          StateContainer.of(context)
-              .updateCurrency(AvailableCurrency(selection));
-        });
-      }
-    });
+    if (selection != null) {
+      sl
+          .get<SharedPrefsUtil>()
+          .setCurrency(AvailableCurrency(selection))
+          .then((_) {
+        if (StateContainer.of(context).curCurrency.currency != selection) {
+          setState(() {
+            StateContainer.of(context).curCurrency =
+                AvailableCurrency(selection);
+            StateContainer.of(context)
+                .updateCurrency(AvailableCurrency(selection));
+          });
+        }
+      });
+    }
   }
 
   List<Widget> _buildLanguageOptions() {
@@ -501,7 +503,7 @@ class _SettingsSheetState extends State<SettingsSheet>
   }
 
   Future<void> _languageDialog() async {
-    final AvailableLanguage selection = await showAppDialog<AvailableLanguage>(
+    final AvailableLanguage? selection = await showAppDialog<AvailableLanguage>(
         context: context,
         builder: (BuildContext context) {
           return AppSimpleDialog(
@@ -515,14 +517,19 @@ class _SettingsSheetState extends State<SettingsSheet>
             children: _buildLanguageOptions(),
           );
         });
-
-    sl.get<SharedPrefsUtil>().setLanguage(LanguageSetting(selection)).then((_) {
-      if (StateContainer.of(context).curLanguage.language != selection) {
-        setState(() {
-          StateContainer.of(context).updateLanguage(LanguageSetting(selection));
-        });
-      }
-    });
+    if (selection != null) {
+      sl
+          .get<SharedPrefsUtil>()
+          .setLanguage(LanguageSetting(selection!))
+          .then((_) {
+        if (StateContainer.of(context).curLanguage.language != selection) {
+          setState(() {
+            StateContainer.of(context)
+                .updateLanguage(LanguageSetting(selection));
+          });
+        }
+      });
+    }
   }
 
   List<Widget> _buildLockTimeoutOptions() {
