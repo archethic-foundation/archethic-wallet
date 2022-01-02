@@ -1,6 +1,6 @@
 {
 	"@@last_modified": "2021-11-07T17:33:43.139040",
-	"welcomeText": "Bienvenue sur Internet de confiance.\n\nARCHEthic redonne à l'humanité la maîtrise de la technologie, et à chaque individu la maîtrise de son identité.",
+	"welcomeText": "Bienvenue sur l'Internet de confiance.\n\nARCHEthic redonne à l'humanité la maîtrise de la technologie, et à chaque individu la maîtrise de son identité.",
 	"@welcomeText": {
 		"type": "text",
 		"placeholders_order": [],
@@ -102,25 +102,25 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"scanQrCode": "Scannez le code QR",
+	"scanQrCode": "Scannez le QR code",
 	"@scanQrCode": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"qrInvalidAddress": "Le code QR ne contient pas de destination valide",
+	"qrInvalidAddress": "Le QR code ne contient pas de destination valide",
 	"@qrInvalidAddress": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"qrInvalidPermissions": "Veuillez accorder des autorisations à l'appareil photo pour scanner les codes QR",
+	"qrInvalidPermissions": "Veuillez accorder des autorisations à l'appareil photo pour scanner les QR codes",
 	"@qrInvalidPermissions": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"qrUnknownError": "Impossible de lire le code QR",
+	"qrUnknownError": "Impossible de lire le QR code",
 	"@qrUnknownError": {
 		"type": "text",
 		"placeholders_order": [],
@@ -132,7 +132,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"customUrlDesc": "Define the endpoint",
+	"customUrlDesc": "Definir le endpoint",
 	"@customUrlDesc": {
 		"type": "text",
 		"placeholders_order": [],
@@ -144,13 +144,13 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"walletFAQDesc": "Avoir une question? Vérifiez ici d'abord!",
+	"walletFAQDesc": "Une question ? Vérifiez ici en premier !",
 	"@walletFAQDesc": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"enterEndpoint": "Enter an endpoint",
+	"enterEndpoint": "Entrer un endpoint",
 	"@enterEndpoint": {
 		"type": "text",
 		"placeholders_order": [],
@@ -162,7 +162,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"removeContactConfirmation": "Êtes-vous sûr de vouloir supprimer %1 ?",
+	"removeContactConfirmation": "Êtes-vous sûr(e) de vouloir supprimer %1 ?",
 	"@removeContactConfirmation": {
 		"type": "text",
 		"placeholders_order": [],
@@ -252,7 +252,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"sendError": "Une erreur s'est produite. Essayez à nouveau plus tard.",
+	"sendError": "Une erreur s'est produite. Essayer à nouveau plus tard.",
 	"@sendError": {
 		"type": "text",
 		"placeholders_order": [],
@@ -276,7 +276,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"addressMissing": "Entrez une adresse s'il vous plait",
+	"addressMissing": "Entrez une adresse s'il vous plaît",
 	"@addressMissing": {
 		"type": "text",
 		"placeholders_order": [],
@@ -306,37 +306,37 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"pinCreateTitle": "Create a 6-digit pin",
+	"pinCreateTitle": "Créer un code à 6 chiffres (PIN)",
 	"@pinCreateTitle": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"pinConfirmTitle": "Confirm your pin",
+	"pinConfirmTitle": "Confirmer votre PIN",
 	"@pinConfirmTitle": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"pinEnterTitle": "Enter pin",
+	"pinEnterTitle": "Entrer le PIN",
 	"@pinEnterTitle": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"pinConfirmError": "Pins do not match",
+	"pinConfirmError": "Les PINs ne correspondent pas",
 	"@pinConfirmError": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"pinInvalid": "PIN non valide saisi",
+	"pinInvalid": "PIN saisi non valide",
 	"@pinInvalid": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"authMethod": "Auth. Method",
+	"authMethod": "Méthode d'authentification",
 	"@authMethod": {
 		"type": "text",
 		"placeholders_order": [],
@@ -354,7 +354,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"currency": "Currency",
+	"currency": "Devise",
 	"@currency": {
 		"type": "text",
 		"placeholders_order": [],
@@ -366,7 +366,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"changeCurrencyDesc": "Sélectionnez la monnaie fiduciaire que vous souhaitez afficher aux côtés de l'UCO",
+	"changeCurrencyDesc": "Sélectionner la monnaie fiduciaire que vous souhaitez afficher aux côtés de l'UCO",
 	"@changeCurrencyDesc": {
 		"type": "text",
 		"placeholders_order": [],
@@ -426,7 +426,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"logoutReassurance": "Tant que vous avez sauvegardé votre graine, vous n'avez rien à craindre.",
+	"logoutReassurance": "Tant que vous avez sauvegardé votre phrase secrète, vous n'avez rien à craindre.",
 	"@logoutReassurance": {
 		"type": "text",
 		"placeholders_order": [],
@@ -444,13 +444,13 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"fingerprintSeedBackup": "Authenticate to backup seed.",
+	"fingerprintSeedBackup": "S'authentifier pour sauvegarder la phrase secrète.",
 	"@fingerprintSeedBackup": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"pinSecretPhraseBackup": "Entrez le code PIN pour sauvegarder la phrase secrète",
+	"pinSecretPhraseBackup": "Entrer le code PIN pour sauvegarder la phrase secrète",
 	"@pinSecretPhraseBackup": {
 		"type": "text",
 		"placeholders_order": [],
@@ -462,7 +462,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"unlockPin": "Entrez le code PIN pour déverrouiller",
+	"unlockPin": "Entrer le code PIN pour déverrouiller",
 	"@unlockPin": {
 		"type": "text",
 		"placeholders_order": [],
@@ -480,13 +480,13 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"lockAppSetting": "Auth. on Launch",
+	"lockAppSetting": "Auth. au lancement",
 	"@lockAppSetting": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"locked": "Locked",
+	"locked": "Bloqué",
 	"@locked": {
 		"type": "text",
 		"placeholders_order": [],
@@ -540,7 +540,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "labLinkDesc": "Latest tech and product updates on the Archethic ecosystem",
+  "labLinkDesc": "Dernières nouvelles sur l'écosystème Archethic",
   "@labLinkDesc": {
     "type": "text",
     "placeholders_order": [],
@@ -618,7 +618,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"qrMnemonicError": "Le QR ne contient pas de phrase secrète valide",
+	"qrMnemonicError": "Le QR code ne contient pas de phrase secrète valide",
 	"@qrMnemonicError": {
 		"type": "text",
 		"placeholders_order": [],
@@ -654,7 +654,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"ackBackedUp": "Êtes-vous sûr d'avoir sauvegardé votre phrase secrète ?",
+	"ackBackedUp": "Êtes-vous sûr(e) d'avoir sauvegardé votre phrase secrète ?",
 	"@ackBackedUp": {
 		"type": "text",
 		"placeholders_order": [],
@@ -786,7 +786,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"nodeLastPublicKey": "Last public key : ",
+	"nodeLastPublicKey": "Dernière clé publique  :",
 	"@nodeLastPublicKey": {
 		"type": "text",
 		"placeholders_order": [],
@@ -840,7 +840,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"txListDate": "Date : ",
+	"txListDate": "Date :",
 	"@txListDate": {
 		"type": "text",
 		"placeholders_order": [],
@@ -870,7 +870,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"recoveryPhrase": "Phrase de récupération",
+	"recoveryPhrase": "Phrase secrète",
 	"@recoveryPhrase": {
 		"type": "text",
 		"placeholders_order": [],
@@ -882,19 +882,19 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"backupSafetyLabel1": "Dans l'écran suivant, vous verrez votre phrase de récupération.",
+	"backupSafetyLabel1": "Dans l'écran suivant, vous verrez votre phrase secrète.",
 	"@backupSafetyLabel1": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"backupSafetyLabel2": "Qu'est-ce qu'une phrase de récupération ?",
+	"backupSafetyLabel2": "Qu'est-ce qu'une phrase secrète ?",
 	"@backupSafetyLabel2": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"backupSafetyLabel3": "A recovery phrase is essentially a human readable form of your crypto's wallet private key, and is displayed as 24 mnemonic words. After mastering the mnemonic words, you can restore your wallet at will. Please keep the words properly and don't leak them to anyone.",
+	"backupSafetyLabel3": "Une phrase secrète est une forme humainement lisible de la clé privée de votre portefeuille, affichée comme une suite de 24 mots. Avec ces 24 mots, vous pouvez restaurer votre portefeuille à volonté. Gardez cette liste en sécurité et ne la communiquez à personne.",
 	"@backupSafetyLabel3": {
 		"type": "text",
 		"placeholders_order": [],
@@ -906,7 +906,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"backupSafetyLabel5": "Write down the mnemonic words in the correct order on a piece of paper and store them in a safe place.\nPlease don't store the recovery phrase on electronic devices in any form, including sreenshot.\nRemember the safety of the recovery phrase is relevant to the safety of your digital assets",
+	"backupSafetyLabel5": "Ecrivez cette liste de mots dans le bon ordre sur un support non informatique, que vous placez en sécurité.\nNe stockez pas cette phrase sur un équipement électronique sous quelle forme que ce soit (texte, image, ...).\nLa sécurité du contenu de votre portefeuille dépend de celle de cette phrase secrète",
 	"@backupSafetyLabel5": {
 		"type": "text",
 		"placeholders_order": [],
@@ -918,7 +918,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"backupSafetyLabel7": "1. Capture d'écran\n2. Prenez une photo",
+	"backupSafetyLabel7": "1. Capture d'écran\n2. Prendre une photo",
 	"@backupSafetyLabel7": {
 		"type": "text",
 		"placeholders_order": [],
@@ -930,7 +930,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"nftCreated": "NFT Created",
+	"nftCreated": "NFT créé",
 	"@nftCreated": {
 		"type": "text",
 		"placeholders_order": [],
@@ -954,97 +954,97 @@
     	"placeholders_order": [],
     	"placeholders": {}
   	},
-	"unlockNFCYubikey": "Authenticate to Unlock",
+	"unlockNFCYubikey": "S'authentifier pour débloquer",
   	"@unlockNFCYubikey": {
     	"type": "text",
     	"placeholders_order": [],
     	"placeholders": {}
   	},
-"yubikeyError_BAD_OTP": "The OTP is invalid format.",
+"yubikeyError_BAD_OTP": "Le mot de passe saisi a un format invalide.",
   "@yubikeyError_BAD_OTP": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_REPLAYED_OTP": "The OTP has already been seen by the service.",
+  "yubikeyError_REPLAYED_OTP": "Le mot de passe saisi a déjà été utilisé.",
   "@yubikeyError_REPLAYED_OTP": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_BAD_SIGNATURE": "The HMAC signature verification failed.",
+  "yubikeyError_BAD_SIGNATURE": "La vérification de signature HMAC a échoué.",
   "@yubikeyError_BAD_SIGNATURE": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_MISSING_PARAMETER": "The request lacks a parameter.",
+  "yubikeyError_MISSING_PARAMETER": "Il manque un paramètre à la requête.",
   "@yubikeyError_MISSING_PARAMETER": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_NO_SUCH_CLIENT": "The request id does not exist.",
+  "yubikeyError_NO_SUCH_CLIENT": "L'ID de la requpête n'existe pas.",
   "@yubikeyError_NO_SUCH_CLIENT": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_OPERATION_NOT_ALLOWED": "The request id is not allowed to verify OTPs.",
+  "yubikeyError_OPERATION_NOT_ALLOWED": "L'ID de la requête n'a pas l'autorisation de vérifier les OTPs.",
   "@yubikeyError_OPERATION_NOT_ALLOWED": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_BACKEND_ERROR": "Unexpected error in the yubicloud server.",
+  "yubikeyError_BACKEND_ERROR": "Erreur inattendue dans le serveur yubicloud.",
   "@yubikeyError_BACKEND_ERROR": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_NOT_ENOUGH_ANSWERS": "Server could not get requested number of syncs during before timeout.",
+  "yubikeyError_NOT_ENOUGH_ANSWERS": "Le serveur n'a pu se synchroniser à temps.",
   "@yubikeyError_NOT_ENOUGH_ANSWERS": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_REPLAYED_REQUEST": "Server has seen the OTP/Nonce combination before",
+  "yubikeyError_REPLAYED_REQUEST": "Le serveur a déjà vu cette combinaison OTP/Nonce",
   "@yubikeyError_REPLAYED_REQUEST": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_RESPONSE_KO": "An error occurred with Yubkey Authentification. Try again later.",
+  "yubikeyError_RESPONSE_KO": "Une erreur s'est produite lors de l'authent. Yubkey. Réessayer ultérieurement.",
   "@yubikeyError_RESPONSE_KO": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_OTP_NOT_FOUND": "The OTP is empty",
+  "yubikeyError_OTP_NOT_FOUND": "Le mot de passe OTP est vide",
   "@yubikeyError_OTP_NOT_FOUND": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "enterYubikeyClientID": "Enter the client ID",
+  "enterYubikeyClientID": "Entrer l'ID client",
   "@enterYubikeyClientID": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "enterYubikeyClientAPIKey": "Enter the client API Key",
+  "enterYubikeyClientAPIKey": "Entrer la clé client de l'API",
   "@enterYubikeyClientAPIKey": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyParamsHeader": "Yubikey Params",
+  "yubikeyParamsHeader": "Paramètres Yubikey",
   "@yubikeyParamsHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyParamsDesc": "Setting up Yubicloud access",
+  "yubikeyParamsDesc": "Configuration de l'accès Yubicloud",
   "@yubikeyParamsDesc": {
     "type": "text",
     "placeholders_order": [],
