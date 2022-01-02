@@ -9,6 +9,7 @@ enum AvailableCurrencyEnum {
   ARS,
   AUD,
   BRL,
+  BTC,
   CAD,
   CHF,
   CLP,
@@ -133,6 +134,8 @@ class AvailableCurrency extends SettingSelectionItem {
         return 'Venezuelan Bolivar';
       case 'ZAR':
         return 'South African Rand';
+      case 'BTC':
+        return 'Bitcoin';
       case 'USD':
       default:
         return 'US Dollar';
@@ -213,6 +216,8 @@ class AvailableCurrency extends SettingSelectionItem {
         return 'VES';
       case 'ZAR':
         return 'R\$';
+      case 'BTC':
+        return 'BTC';
       case 'USD':
       default:
         return '\$';

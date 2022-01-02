@@ -14,19 +14,16 @@ class AppWallet {
       {String? address,
       Balance? accountBalance,
       String? localCurrencyPrice,
-      String? btcPrice,
       List<RecentTransaction>? history}) {
     _address = address;
     _accountBalance = accountBalance ?? Balance(uco: 0, nft: null);
     _localCurrencyPrice = localCurrencyPrice ?? '0';
-    _btcPrice = btcPrice ?? '0';
     _history = history ?? List<RecentTransaction>.empty(growable: true);
   }
 
   String? _address;
   Balance? _accountBalance;
   String? _localCurrencyPrice;
-  String? _btcPrice;
   List<RecentTransaction>? _history;
 
   String get address => _address!;
@@ -60,21 +57,29 @@ class AppWallet {
 
   String getLocalCurrencyPrice(AvailableCurrency currency,
       {String locale = 'en_US'}) {
-    final Decimal converted = Decimal.parse(_localCurrencyPrice!) *
-        NumberUtil.getRawAsUsableDecimal(
-            _accountBalance == null || _accountBalance!.uco == null
-                ? '0'
-                : _accountBalance!.uco.toString());
-    return NumberFormat.currency(
-            locale: locale, symbol: currency.getCurrencySymbol())
-        .format(converted.toDouble());
+    if (currency.getIso4217Code() == 'BTC') {
+      return currency.getCurrencySymbol() + _localCurrencyPrice!;
+    } else {
+      final Decimal converted = Decimal.parse(_localCurrencyPrice!) *
+          NumberUtil.getRawAsUsableDecimal(
+              _accountBalance == null || _accountBalance!.uco == null
+                  ? '0'
+                  : _accountBalance!.uco.toString());
+      return NumberFormat.currency(
+              locale: locale, symbol: currency.getCurrencySymbol())
+          .format(converted.toDouble());
+    }
   }
 
   String getLocalPrice(AvailableCurrency currency, {String locale = 'en_US'}) {
-    final Decimal converted = Decimal.parse(_localCurrencyPrice!);
-    return NumberFormat.currency(
-            locale: locale, symbol: currency.getCurrencySymbol())
-        .format(converted.toDouble());
+    if (currency.getIso4217Code() == 'BTC') {
+      return currency.getCurrencySymbol() + _localCurrencyPrice!;
+    } else {
+      final Decimal converted = Decimal.parse(_localCurrencyPrice!);
+      return NumberFormat.currency(
+              locale: locale, symbol: currency.getCurrencySymbol())
+          .format(converted.toDouble());
+    }
   }
 
   String getLocalCurrencyPriceMoinsFees(
@@ -96,24 +101,6 @@ class AppWallet {
 
   String get localCurrencyConversion {
     return _localCurrencyPrice!;
-  }
-
-  String get btcPrice {
-    final Decimal converted = Decimal.parse(_btcPrice!) *
-        NumberUtil.getRawAsUsableDecimal(_accountBalance!.uco == null
-            ? '0'
-            : _accountBalance!.uco.toString());
-    // Show 4 decimal places for BTC price if its >= 0.0001 BTC, otherwise 6 decimals
-    if (converted >= Decimal.parse('0.0001')) {
-      return NumberFormat('#,##0.0000', 'en_US').format(converted.toDouble());
-    } else {
-      return NumberFormat('#,##0.000000000', 'en_US')
-          .format(converted.toDouble());
-    }
-  }
-
-  set btcPrice(String value) {
-    _btcPrice = value;
   }
 
   List<RecentTransaction> get history => _history!;
