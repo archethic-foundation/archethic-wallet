@@ -1,6 +1,6 @@
 {
 	"@@last_modified": "2021-11-07T17:33:43.139040",
-	"welcomeText": "Bienvenue sur Internet de confiance.\n\nARCHEthic redonne à l'humanité la maîtrise de la technologie, et à chaque individu la maîtrise de son identité.",
+	"welcomeText": "Bienvenue sur l'Internet de confiance.\n\nARCHEthic redonne à l'humanité la maîtrise de la technologie, et à chaque individu la maîtrise de son identité.",
 	"@welcomeText": {
 		"type": "text",
 		"placeholders_order": [],
@@ -108,7 +108,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"qrInvalidAddress": "Le code QR ne contient pas de destination valide",
+	"qrInvalidAddress": "Le QR code ne contient pas de destination valide",
 	"@qrInvalidAddress": {
 		"type": "text",
 		"placeholders_order": [],
@@ -144,13 +144,13 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"walletFAQDesc": "Avoir une question? Vérifiez ici d'abord!",
+	"walletFAQDesc": "Une question? Vérifiez ici d'abord !",
 	"@walletFAQDesc": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"enterEndpoint": "Enter an endpoint",
+	"enterEndpoint": "Entrer un endpoint",
 	"@enterEndpoint": {
 		"type": "text",
 		"placeholders_order": [],
@@ -276,7 +276,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"addressMissing": "Entrez une adresse s'il vous plait",
+	"addressMissing": "Entrez une adresse s'il vous plaît",
 	"@addressMissing": {
 		"type": "text",
 		"placeholders_order": [],
@@ -336,7 +336,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"authMethod": "Auth. Method",
+	"authMethod": "Méthode d'authent.",
 	"@authMethod": {
 		"type": "text",
 		"placeholders_order": [],
@@ -366,7 +366,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"changeCurrencyDesc": "Sélectionnez la monnaie fiduciaire que vous souhaitez afficher aux côtés de l'UCO",
+	"changeCurrencyDesc": "Sélectionner la monnaie fiduciaire que vous souhaitez afficher aux côtés de l'UCO",
 	"@changeCurrencyDesc": {
 		"type": "text",
 		"placeholders_order": [],
@@ -426,7 +426,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"logoutReassurance": "Tant que vous avez sauvegardé votre graine, vous n'avez rien à craindre.",
+	"logoutReassurance": "Tant que vous avez sauvegardé votre seed, vous n'avez rien à craindre.",
 	"@logoutReassurance": {
 		"type": "text",
 		"placeholders_order": [],
@@ -444,13 +444,13 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"fingerprintSeedBackup": "Authenticate to backup seed.",
+	"fingerprintSeedBackup": "S'authentifier pour sauvegarder la seed.",
 	"@fingerprintSeedBackup": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"pinSecretPhraseBackup": "Entrez le code PIN pour sauvegarder la phrase secrète",
+	"pinSecretPhraseBackup": "Entrer le code PIN pour sauvegarder la phrase secrète",
 	"@pinSecretPhraseBackup": {
 		"type": "text",
 		"placeholders_order": [],
@@ -462,7 +462,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"unlockPin": "Entrez le code PIN pour déverrouiller",
+	"unlockPin": "Entrer le code PIN pour déverrouiller",
 	"@unlockPin": {
 		"type": "text",
 		"placeholders_order": [],
@@ -480,7 +480,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"lockAppSetting": "Auth. on Launch",
+	"lockAppSetting": "Auth. au lancement",
 	"@lockAppSetting": {
 		"type": "text",
 		"placeholders_order": [],
@@ -540,7 +540,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "labLinkDesc": "Latest tech and product updates on the Archethic ecosystem",
+  "labLinkDesc": "Dernières nouvelles sur l'écosystème Archethic",
   "@labLinkDesc": {
     "type": "text",
     "placeholders_order": [],
@@ -618,7 +618,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"qrMnemonicError": "Le QR ne contient pas de phrase secrète valide",
+	"qrMnemonicError": "Le QR code ne contient pas de phrase secrète valide",
 	"@qrMnemonicError": {
 		"type": "text",
 		"placeholders_order": [],
@@ -786,7 +786,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"nodeLastPublicKey": "Last public key : ",
+	"nodeLastPublicKey": "Dernière clé publique  :",
 	"@nodeLastPublicKey": {
 		"type": "text",
 		"placeholders_order": [],
@@ -894,7 +894,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"backupSafetyLabel3": "A recovery phrase is essentially a human readable form of your crypto's wallet private key, and is displayed as 24 mnemonic words. After mastering the mnemonic words, you can restore your wallet at will. Please keep the words properly and don't leak them to anyone.",
+	"backupSafetyLabel3": "Une phrase de récupération est une forme humainement lisible de la clé privée de votre portefeuille, affichée comme une suite de 24 mots. Avec ces 24 mots, vous pouvez restaurer votre portefeuille à volonté. Gardez cette liste en sécurité et ne la communiquez à personne.",
 	"@backupSafetyLabel3": {
 		"type": "text",
 		"placeholders_order": [],
@@ -906,7 +906,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"backupSafetyLabel5": "Write down the mnemonic words in the correct order on a piece of paper and store them in a safe place.\nPlease don't store the recovery phrase on electronic devices in any form, including sreenshot.\nRemember the safety of the recovery phrase is relevant to the safety of your digital assets",
+	"backupSafetyLabel5": "Ecrivez cette liste de mots dans le bon ordre sur un support non informatique, que vous placez en sécurité.\nNe stockez pas cette phrase sur un équipement électronique sous quelle forme que ce soit (texte, image, ...).\nLa sécurité du contenu de votre portefeuille dépend de celle de cette phrase sauvegardée",
 	"@backupSafetyLabel5": {
 		"type": "text",
 		"placeholders_order": [],
@@ -954,25 +954,25 @@
     	"placeholders_order": [],
     	"placeholders": {}
   	},
-	"unlockNFCYubikey": "Authenticate to Unlock",
+	"unlockNFCYubikey": "S'authentifier pour débloquer",
   	"@unlockNFCYubikey": {
     	"type": "text",
     	"placeholders_order": [],
     	"placeholders": {}
   	},
-"yubikeyError_BAD_OTP": "The OTP is invalid format.",
+"yubikeyError_BAD_OTP": "Le mot de passe saisi a un format invalide.",
   "@yubikeyError_BAD_OTP": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_REPLAYED_OTP": "The OTP has already been seen by the service.",
+  "yubikeyError_REPLAYED_OTP": "Le mot de passe saisi a déjà été utilisé.",
   "@yubikeyError_REPLAYED_OTP": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_BAD_SIGNATURE": "The HMAC signature verification failed.",
+  "yubikeyError_BAD_SIGNATURE": "La vérification de signature HMAC a échoué.",
   "@yubikeyError_BAD_SIGNATURE": {
     "type": "text",
     "placeholders_order": [],
