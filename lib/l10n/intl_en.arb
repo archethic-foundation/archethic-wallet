@@ -906,7 +906,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "backupSafetyLabel5": "Write down the mnemonic words in the correct order on a piece of papier and store them in a safe place.\nPlease don't store the recovery phrase on electronic devices in any form, including sreenshot.\nRemember the safety of the recovery phrase is relevant to the safety of your digital assets",
+  "backupSafetyLabel5": "Write down the mnemonic words in the correct order on a piece of paper and store them in a safe place.\nPlease don't store the recovery phrase on electronic devices in any form, including sreenshot.\nRemember the safety of the recovery phrase is relevant to the safety of your digital assets",
   "@backupSafetyLabel5": {
     "type": "text",
     "placeholders_order": [],

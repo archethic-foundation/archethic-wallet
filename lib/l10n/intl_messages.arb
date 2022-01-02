@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-01-01T14:00:42.978256",
+  "@@last_modified": "2022-01-02T13:14:35.097980",
   "welcomeText": "Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -990,7 +990,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "backupSafetyLabel1": "In the next screen, you will see your recovery phrase.",
+  "backupSafetyLabel1": "On the next screen, you will see your recovery phrase.",
   "@backupSafetyLabel1": {
     "type": "text",
     "placeholders_order": [],
@@ -1014,7 +1014,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "backupSafetyLabel5": "Write down the mnemonic words in the correct order on a piece of papier and store them in a safe place.\nPlease don't store the recovery phrase on electronic devices in any form, including sreenshot.\nRemember the safety of the recovery phrase is relevant to the safety of your digital assets",
+  "backupSafetyLabel5": "Write down the mnemonic words in the correct order on a piece of paper and store them in a safe place.\nPlease don't store the recovery phrase on electronic devices in any form, including sreenshot.\nRemember the safety of the recovery phrase is relevant to the safety of your digital assets",
   "@backupSafetyLabel5": {
     "type": "text",
     "placeholders_order": [],
