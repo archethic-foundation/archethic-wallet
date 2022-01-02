@@ -327,6 +327,15 @@ class AppStyles {
     );
   }
 
+  static TextStyle textStyleSize60W700Primary15(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: 60,
+      fontWeight: FontWeight.w700,
+      color: StateContainer.of(context).curTheme.primary15,
+    );
+  }
+
   static TextStyle textStyleSize16W600Text45(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',

@@ -66,7 +66,7 @@ class _TxListWidgetState extends State<TxListWidget> {
         Row(
           children: [
             Padding(
-                padding: const EdgeInsets.only(left: 5.0),
+                padding: const EdgeInsets.only(left: 10.0),
                 child: StateContainer.of(context).wallet!.history.isNotEmpty ||
                         StateContainer.of(context).recentTransactionsLoading ==
                             true
@@ -93,9 +93,9 @@ class _TxListWidgetState extends State<TxListWidget> {
           ],
         ),
         Container(
-          height: MediaQuery.of(context).size.height - 332,
-          padding: const EdgeInsets.only(
-              top: 3.5, left: 3.5, right: 3.5, bottom: 3.5),
+          height: MediaQuery.of(context).size.height * 0.68,
+          padding:
+              const EdgeInsets.only(top: 3.5, left: 5, right: 3.5, bottom: 3.5),
           color: Colors.transparent,
           width: MediaQuery.of(context).size.width * 0.9,
           child: Padding(

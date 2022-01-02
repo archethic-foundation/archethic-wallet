@@ -58,7 +58,7 @@ class AppWallet {
   String getLocalCurrencyPrice(AvailableCurrency currency,
       {String locale = 'en_US'}) {
     if (currency.getIso4217Code() == 'BTC') {
-      return currency.getCurrencySymbol() + _localCurrencyPrice!;
+      return _localCurrencyPrice! + ' ' + currency.getCurrencySymbol();
     } else {
       final Decimal converted = Decimal.parse(_localCurrencyPrice!) *
           NumberUtil.getRawAsUsableDecimal(
@@ -73,7 +73,7 @@ class AppWallet {
 
   String getLocalPrice(AvailableCurrency currency, {String locale = 'en_US'}) {
     if (currency.getIso4217Code() == 'BTC') {
-      return currency.getCurrencySymbol() + _localCurrencyPrice!;
+      return _localCurrencyPrice! + ' ' + currency.getCurrencySymbol();
     } else {
       final Decimal converted = Decimal.parse(_localCurrencyPrice!);
       return NumberFormat.currency(

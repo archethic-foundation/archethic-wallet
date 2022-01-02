@@ -11,7 +11,6 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
-import 'package:flip_card/flip_card.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -26,11 +25,10 @@ import 'package:archethic_mobile_wallet/ui/settings/settings_drawer.dart';
 import 'package:archethic_mobile_wallet/ui/transfer/transfer_uco_sheet.dart';
 import 'package:archethic_mobile_wallet/ui/util/routes.dart';
 import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/balance.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/custom_rect_tween.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/hero_dialog_route.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/line_chart.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/balance_infos.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
 import 'package:archethic_mobile_wallet/ui/widgets/tx_list.dart';
 import 'package:archethic_mobile_wallet/util/caseconverter.dart';
@@ -252,35 +250,6 @@ class _AppHomePageState extends State<AppHomePage>
     }
   }
 
-  Widget _getTopCards(BuildContext context) {
-    return ListView.builder(
-      physics: const AlwaysScrollableScrollPhysics(),
-      itemCount: 1,
-      controller: _scrollController,
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Card(
-            color: StateContainer.of(context).curTheme.backgroundDark,
-            child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                height: 120,
-                curve: Curves.easeInOut,
-                child: FlipCard(
-                    flipOnTouch: true,
-                    direction: FlipDirection.HORIZONTAL,
-                    front: BalanceDisplay.buildBalanceUCODisplay(
-                        context, _opacityAnimation!),
-                    back: LineChartWidget.buildTinyCoinsChart(context))),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     if (_displayReleaseNote!)
@@ -388,10 +357,8 @@ class _AppHomePageState extends State<AppHomePage>
               bottom: MediaQuery.of(context).size.height * 0.035),
           child: Column(
             children: <Widget>[
-              Container(
-                height: 150.0,
-                child: _getTopCards(context),
-              ),
+              BalanceInfosWidget.buildInfos(context),
+              Divider(),
               Expanded(
                 child: Stack(
                   alignment: Alignment.topCenter,
