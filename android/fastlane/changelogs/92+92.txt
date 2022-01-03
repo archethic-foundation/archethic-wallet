@@ -10,6 +10,7 @@ Version beta 0.0.90
 - Improve the language selection screen UX (Web app + Mobile)
 - Remove BTC from balance and add in currency list UX (Web app + Mobile)
 - Change QR Code Scan on send UCO menu (Web app + Mobile)
+- Improve responsive screen (Web app)
 
 🐛 Bugfixes
 - Some stuffs
