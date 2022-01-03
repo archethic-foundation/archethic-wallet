@@ -403,6 +403,17 @@ class _SettingsSheetState extends State<SettingsSheet>
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Row(
             children: <Widget>[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15.0),
+                child: Image.asset(
+                  'assets/icons/currency/${AvailableCurrency(value).getIso4217Code().toLowerCase()}.png',
+                  width: 30,
+                  height: 20,
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
               Text(AvailableCurrency(value).getDisplayName(context),
                   style: StateContainer.of(context)
                               .curCurrency
@@ -474,6 +485,23 @@ class _SettingsSheetState extends State<SettingsSheet>
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Row(
             children: <Widget>[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15.0),
+                child: LanguageSetting(value).getLocaleString().toLowerCase() ==
+                        'default'
+                    ? const SizedBox(
+                        width: 30,
+                        height: 20,
+                      )
+                    : Image.asset(
+                        'assets/icons/country/${LanguageSetting(value).getLocaleString().toLowerCase()}.png',
+                        width: 30,
+                        height: 20,
+                      ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
               Text(LanguageSetting(value).getDisplayName(context),
                   style: StateContainer.of(context)
                               .curLanguage

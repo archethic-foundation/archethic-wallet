@@ -3,7 +3,7 @@ description: ARCHEthic Wallet app (iOS/Android).
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.0.88+88
+version: 0.0.90+90
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -35,9 +35,6 @@ dependencies:
 
   # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart
   fl_chart: ^0.40.6
-
-  # A component that provides flip card animation. It could be used for hide and show details of a product
-  flip_card: ^0.5.0
 
   flutter:
     sdk: flutter
@@ -148,6 +145,8 @@ flutter:
     - assets/themes/archethic/
     - assets/themes/uniris/
     - assets/icons/
+    - assets/icons/currency/
+    - assets/icons/country/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

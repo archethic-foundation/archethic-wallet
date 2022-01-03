@@ -112,7 +112,7 @@ class UnirisTheme implements BaseTheme {
   Color? contextMenuTextRed = Colors.red[300];
 
   @override
-  Color? choiceOption = Colors.lightGreenAccent[400];
+  Color? choiceOption = blueDarktest;
 
   @override
   Brightness? brightness = Brightness.dark;

@@ -41,7 +41,6 @@ enum AvailableCurrencyEnum {
   TRY,
   TWD,
   AED,
-  VES,
   ZAR
 }
 
@@ -130,8 +129,6 @@ class AvailableCurrency extends SettingSelectionItem {
         return 'Taiwan Dollar';
       case 'AED':
         return 'UAE Dirham';
-      case 'VES':
-        return 'Venezuelan Bolivar';
       case 'ZAR':
         return 'South African Rand';
       case 'BTC':
@@ -212,8 +209,6 @@ class AvailableCurrency extends SettingSelectionItem {
         return 'NT\$';
       case 'AED':
         return 'د.إ';
-      case 'VES':
-        return 'VES';
       case 'ZAR':
         return 'R\$';
       case 'BTC':
