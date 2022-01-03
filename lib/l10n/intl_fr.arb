@@ -1014,7 +1014,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_RESPONSE_KO": "Une erreur s'est produite lors de l'authent. Yubkey. Réessayer ultérieurement.",
+  "yubikeyError_RESPONSE_KO": "Une erreur s'est produite lors de l'authent. Yubkiey. Réessayer ultérieurement.",
   "@yubikeyError_RESPONSE_KO": {
     "type": "text",
     "placeholders_order": [],
