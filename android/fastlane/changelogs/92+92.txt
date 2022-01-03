@@ -1,4 +1,4 @@
-Version beta 0.0.90
+ARCHEThic Wallet - Version beta 0.0.92
 
 🚀 Features
 - Add Transactions informations details
@@ -21,3 +21,5 @@ Version beta 0.0.90
 Link to android version : https://github.com/archethic-foundation/archethic_mobile_wallet/releases/tag/beta_channel
 Link to Web app : https://reddwarf03.github.io/archethic_web/index.html
 Link to iOS version : Soon
+
+This app is under development and works on testnet only. Community feedback helps improve the app
