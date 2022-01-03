@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
+import 'package:archethic_mobile_wallet/model/transaction_infos.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 
 // Package imports:
@@ -16,6 +17,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
         NFTService,
         TransactionStatus,
         TransactionInput;
+import 'package:intl/intl.dart';
 
 class AppService {
   double getFeesEstimation() {
@@ -52,6 +54,7 @@ class AppService {
     for (Transaction transaction in transactionChain) {
       if (transaction.type!.toUpperCase() == 'NFT') {
         final RecentTransaction recentTransaction = RecentTransaction();
+        recentTransaction.address = transaction.address;
         recentTransaction.fee = 0;
         recentTransaction.timestamp = transaction.validationStamp!.timestamp!;
         if (transaction.data!.contentDisplay!
@@ -83,6 +86,7 @@ class AppService {
               i < transaction.data!.ledger!.uco!.transfers!.length;
               i++) {
             final RecentTransaction recentTransaction = RecentTransaction();
+            recentTransaction.address = transaction.address;
             recentTransaction.typeTx = RecentTransaction.TRANSFER_OUTPUT;
             recentTransaction.amount = transaction
                     .data!.ledger!.uco!.transfers![i].amount!
@@ -104,6 +108,7 @@ class AppService {
     // Transaction inputs for genesisAddress
     for (TransactionInput transaction in transactionInputsGenesisAddress) {
       final RecentTransaction recentTransaction = RecentTransaction();
+      recentTransaction.address = transaction.from;
       if (transaction.type!.toUpperCase() == 'NFT') {
         recentTransaction.nftAddress = transaction.nftAddress!;
       } else {
@@ -122,6 +127,7 @@ class AppService {
     for (TransactionInput transaction in transactionInputs) {
       if (transaction.spent == true) {
         final RecentTransaction recentTransaction = RecentTransaction();
+        recentTransaction.address = transaction.from;
         if (transaction.type!.toUpperCase() == 'NFT') {
           recentTransaction.nftAddress = transaction.nftAddress!;
         } else {
@@ -209,5 +215,162 @@ class AppService {
     }
 
     return transactionStatus;
+  }
+
+  Future<List<TransactionInfos>> getTransactionAllInfos(
+      String address, DateFormat dateFormat) async {
+    List<TransactionInfos> transactionsInfos =
+        List<TransactionInfos>.empty(growable: true);
+
+    Transaction transaction =
+        await sl.get<ApiService>().getTransactionAllInfos(address);
+    if (transaction.address != null) {
+      transactionsInfos.add(TransactionInfos(
+          domain: '', titleInfo: 'Address', valueInfo: transaction.address!));
+    }
+    if (transaction.type != null) {
+      transactionsInfos.add(TransactionInfos(
+          domain: '', titleInfo: 'Type', valueInfo: transaction.type!));
+    }
+    if (transaction.version != null) {
+      transactionsInfos.add(TransactionInfos(
+          domain: '',
+          titleInfo: 'Version',
+          valueInfo: transaction.version!.toString()));
+    }
+    if (transaction.previousPublicKey != null) {
+      transactionsInfos.add(TransactionInfos(
+          domain: '',
+          titleInfo: 'PreviousPublicKey',
+          valueInfo: transaction.previousPublicKey!));
+    }
+    if (transaction.previousSignature != null) {
+      transactionsInfos.add(TransactionInfos(
+          domain: '',
+          titleInfo: 'PreviousSignature',
+          valueInfo: transaction.previousSignature!));
+    }
+    if (transaction.originSignature != null) {
+      transactionsInfos.add(TransactionInfos(
+          domain: '',
+          titleInfo: 'OriginSignature',
+          valueInfo: transaction.originSignature!));
+    }
+    if (transaction.data != null) {
+      transactionsInfos
+          .add(TransactionInfos(domain: 'Data', titleInfo: '', valueInfo: ''));
+      if (transaction.data!.content != null) {
+        transactionsInfos.add(TransactionInfos(
+            domain: 'Data',
+            titleInfo: 'Content',
+            valueInfo: transaction.data!.contentDisplay == ''
+                ? 'N/A'
+                : transaction.data!.contentDisplay!));
+      }
+      if (transaction.data!.code != null) {
+        transactionsInfos.add(TransactionInfos(
+            domain: 'Data',
+            titleInfo: 'Code',
+            valueInfo: transaction.data!.code!));
+      }
+      if (transaction.data!.ledger != null &&
+          transaction.data!.ledger!.uco != null &&
+          transaction.data!.ledger!.uco!.transfers != null &&
+          transaction.data!.ledger!.uco!.transfers!.length > 0) {
+        transactionsInfos.add(TransactionInfos(
+            domain: 'UCOLedger', titleInfo: '', valueInfo: ''));
+        for (int i = 0;
+            i < transaction.data!.ledger!.uco!.transfers!.length;
+            i++) {
+          if (transaction.data!.ledger!.uco!.transfers![i].to != null) {
+            transactionsInfos.add(TransactionInfos(
+                domain: 'UCOLedger',
+                titleInfo: 'To',
+                valueInfo: transaction.data!.ledger!.uco!.transfers![i].to!));
+          }
+          if (transaction.data!.ledger!.uco!.transfers![i].amount != null) {
+            transactionsInfos.add(TransactionInfos(
+                domain: 'UCOLedger',
+                titleInfo: 'Amount',
+                valueInfo:
+                    (transaction.data!.ledger!.uco!.transfers![i].amount! /
+                                BigInt.from(100000000))
+                            .toString() +
+                        ' UCO'));
+          }
+        }
+      }
+      if (transaction.data!.ledger != null &&
+          transaction.data!.ledger!.nft != null &&
+          transaction.data!.ledger!.nft!.transfers != null &&
+          transaction.data!.ledger!.nft!.transfers!.length > 0) {
+        transactionsInfos.add(TransactionInfos(
+            domain: 'NFTLedger', titleInfo: '', valueInfo: ''));
+        for (int i = 0;
+            i < transaction.data!.ledger!.nft!.transfers!.length;
+            i++) {
+          if (transaction.data!.ledger!.nft!.transfers![i].nft != null) {
+            transactionsInfos.add(TransactionInfos(
+                domain: 'NFTLedger',
+                titleInfo: 'Nft',
+                valueInfo: transaction.data!.ledger!.nft!.transfers![i].nft!));
+          }
+          if (transaction.data!.ledger!.nft!.transfers![i].to != null) {
+            transactionsInfos.add(TransactionInfos(
+                domain: 'NFTLedger',
+                titleInfo: 'To',
+                valueInfo: transaction.data!.ledger!.nft!.transfers![i].to!));
+          }
+          if (transaction.data!.ledger!.nft!.transfers![i].amount != null) {
+            transactionsInfos.add(TransactionInfos(
+                domain: 'NFTLedger',
+                titleInfo: 'Amount',
+                valueInfo:
+                    (transaction.data!.ledger!.nft!.transfers![i].amount!)
+                        .toString()));
+          }
+        }
+      }
+    }
+    if (transaction.validationStamp != null) {
+      transactionsInfos.add(TransactionInfos(
+          domain: 'ValidationStamp', titleInfo: '', valueInfo: ''));
+      if (transaction.validationStamp!.proofOfWork != null) {
+        transactionsInfos.add(TransactionInfos(
+            domain: 'ValidationStamp',
+            titleInfo: 'ProofOfWork',
+            valueInfo: transaction.validationStamp!.proofOfWork!));
+      }
+      if (transaction.validationStamp!.proofOfIntegrity != null) {
+        transactionsInfos.add(TransactionInfos(
+            domain: 'ValidationStamp',
+            titleInfo: 'ProofOfIntegrity',
+            valueInfo: transaction.validationStamp!.proofOfIntegrity!));
+      }
+      if (transaction.validationStamp!.timestamp != null) {
+        transactionsInfos.add(TransactionInfos(
+            domain: 'ValidationStamp',
+            titleInfo: 'TimeStamp',
+            valueInfo: dateFormat
+                .add_Hms()
+                .format(DateTime.fromMillisecondsSinceEpoch(
+                        transaction.validationStamp!.timestamp! * 1000)
+                    .toLocal())
+                .toString()));
+      }
+    }
+    if (transaction.crossValidationStamps != null) {
+      transactionsInfos.add(TransactionInfos(
+          domain: 'CrossValidationStamps', titleInfo: '', valueInfo: ''));
+      for (int i = 0; i < transaction.crossValidationStamps!.length; i++) {
+        if (transaction.crossValidationStamps![i].signature != null) {
+          transactionsInfos.add(TransactionInfos(
+              domain: 'CrossValidationStamps',
+              titleInfo: 'Signature',
+              valueInfo: transaction.crossValidationStamps![i].signature!));
+        }
+      }
+    }
+    return transactionsInfos;
   }
 }

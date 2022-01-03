@@ -1,0 +1,22 @@
+Version beta 0.0.90
+
+🚀 Features
+- Add Transactions informations details
+
+👷‍♂️ Enhancements
+- New dashboard (Web app + Mobile)
+- Refresh list of transactions clearer (Web app + Mobile)
+- Improve the currency selection screen UX (Web app + Mobile)
+- Improve the language selection screen UX (Web app + Mobile)
+- Remove BTC from balance and add in currency list UX (Web app + Mobile)
+- Change QR Code Scan on send UCO menu (Web app + Mobile)
+
+🐛 Bugfixes
+- Some stuffs
+
+🌐 Translations
+- French (Thx @Bravooooh)
+
+Link to android version : https://github.com/archethic-foundation/archethic_mobile_wallet/releases/tag/beta_channel
+Link to Web app : https://reddwarf03.github.io/archethic_web/index.html
+Link to iOS version : Soon

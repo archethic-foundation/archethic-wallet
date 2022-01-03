@@ -70,7 +70,7 @@ class AppLocalization {
   }
 
   String get transferUCO {
-    return Intl.message('Transfer UCO', name: 'transferUCO');
+    return Intl.message('Send UCO', name: 'transferUCO');
   }
 
   String get transferNFT {
@@ -808,6 +808,98 @@ class AppLocalization {
 
   String get settings {
     return Intl.message('Settings', name: 'settings');
+  }
+
+  String get transactionInfosHeader {
+    return Intl.message('Transaction informations',
+        name: 'transactionInfosHeader');
+  }
+
+  String get transactionInfosKeyAddress {
+    return Intl.message('Address', name: 'transactionInfosKeyAddress');
+  }
+
+  String get transactionInfosKeyType {
+    return Intl.message('Type', name: 'transactionInfosKeyType');
+  }
+
+  String get transactionInfosKeyVersion {
+    return Intl.message('Version', name: 'transactionInfosKeyVersion');
+  }
+
+  String get transactionInfosKeyPreviousPublicKey {
+    return Intl.message('Previous Public Key',
+        name: 'transactionInfosKeyPreviousPublicKey');
+  }
+
+  String get transactionInfosKeyPreviousSignature {
+    return Intl.message('Previous Signature',
+        name: 'transactionInfosKeyPreviousSignature');
+  }
+
+  String get transactionInfosKeyOriginSignature {
+    return Intl.message('Origin Signature',
+        name: 'transactionInfosKeyOriginSignature');
+  }
+
+  String get transactionInfosKeyData {
+    return Intl.message('Data', name: 'transactionInfosKeyData');
+  }
+
+  String get transactionInfosKeyContent {
+    return Intl.message('Content', name: 'transactionInfosKeyContent');
+  }
+
+  String get transactionInfosKeyCode {
+    return Intl.message('Code', name: 'transactionInfosKeyCode');
+  }
+
+  String get transactionInfosKeyUCOLedger {
+    return Intl.message('UCO Ledger', name: 'transactionInfosKeyUCOLedger');
+  }
+
+  String get transactionInfosKeyTo {
+    return Intl.message('To', name: 'transactionInfosKeyTo');
+  }
+
+  String get transactionInfosKeyAmount {
+    return Intl.message('Amount', name: 'transactionInfosKeyAmount');
+  }
+
+  String get transactionInfosKeyNFTLedger {
+    return Intl.message('NFT Ledger', name: 'transactionInfosKeyNFTLedger');
+  }
+
+  String get transactionInfosKeyNft {
+    return Intl.message('NFT', name: 'transactionInfosKeyNft');
+  }
+
+  String get transactionInfosKeyValidationStamp {
+    return Intl.message('Validation Stamp',
+        name: 'transactionInfosKeyValidationStamp');
+  }
+
+  String get transactionInfosKeyProofOfWork {
+    return Intl.message('Proof of work',
+        name: 'transactionInfosKeyProofOfWork');
+  }
+
+  String get transactionInfosKeyProofOfIntegrity {
+    return Intl.message('Proof of integrity',
+        name: 'transactionInfosKeyProofOfIntegrity');
+  }
+
+  String get transactionInfosKeyTimeStamp {
+    return Intl.message('Timestamp', name: 'transactionInfosKeyTimeStamp');
+  }
+
+  String get transactionInfosKeyCrossValidationStamps {
+    return Intl.message('Cross Validation Stamp',
+        name: 'transactionInfosKeyCrossValidationStamps');
+  }
+
+  String get transactionInfosKeySignature {
+    return Intl.message('Signature', name: 'transactionInfosKeySignature');
   }
 }
 

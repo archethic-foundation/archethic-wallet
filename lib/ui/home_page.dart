@@ -280,8 +280,9 @@ class _AppHomePageState extends State<AppHomePage>
           if ((StateContainer.of(context).wallet != null &&
                   StateContainer.of(context).wallet!.accountBalance.uco !=
                       null &&
-                  StateContainer.of(context).wallet!.accountBalance.uco! > 0) ||
-              StateContainer.of(context).localWallet!.accountBalance.uco! > 0)
+                  (StateContainer.of(context).wallet!.accountBalance.uco! >
+                      0) ||
+              StateContainer.of(context).localWallet!.accountBalance.uco! > 0))
             Padding(
               padding: EdgeInsets.only(right: 0.0),
               child: TextButton(
@@ -295,8 +296,8 @@ class _AppHomePageState extends State<AppHomePage>
                               StateContainer.of(context).curCurrency));
                 },
                 child: Container(
-                    width: 20,
-                    height: 20,
+                    width: 30,
+                    height: 30,
                     child: Image.asset('assets/icons/send.png',
                         color: Colors.white)),
               ),
@@ -352,9 +353,6 @@ class _AppHomePageState extends State<AppHomePage>
           ),
         ),
         child: SafeArea(
-          minimum: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.045,
-              bottom: MediaQuery.of(context).size.height * 0.035),
           child: Column(
             children: <Widget>[
               BalanceInfosWidget.buildInfos(context),

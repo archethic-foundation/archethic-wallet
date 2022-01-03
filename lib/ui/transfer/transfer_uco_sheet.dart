@@ -78,7 +78,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
   // Set to true when a contact is being entered
   bool _isContact = false;
   // Buttons States (Used because we hide the buttons under certain conditions)
-  bool _pasteButtonVisible = true;
+  bool _qrCodeButtonVisible = true;
   bool _showContactButton = true;
   // Local currency mode/fiat conversion
   bool _localCurrencyMode = false;
@@ -106,13 +106,13 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
       _sendAddressController!.text = widget.contact!.name!;
       _isContact = true;
       _showContactButton = false;
-      _pasteButtonVisible = false;
+      _qrCodeButtonVisible = false;
       _sendAddressStyle = AddressStyle.PRIMARY;
     } else if (widget.address != null) {
       // Setup initial state with prefilled address
       _sendAddressController!.text = widget.address!;
       _showContactButton = false;
-      _pasteButtonVisible = false;
+      _qrCodeButtonVisible = false;
       _sendAddressStyle = AddressStyle.TEXT90;
       _addressValidAndUnfocused = true;
     }
@@ -596,116 +596,6 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                       }),
                     ],
                   ),
-                  Row(
-                    children: <Widget>[
-                      // Scan QR Code Button
-                      AppButton.buildAppButton(
-                          context,
-                          AppButtonType.PRIMARY,
-                          AppLocalization.of(context)!.scanQrCode,
-                          Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () async {
-                        UIUtil.cancelLockEvent();
-                        final String? scanResult = await UserDataUtil.getQRData(
-                            DataType.ADDRESS, context);
-                        if (scanResult == null) {
-                          UIUtil.showSnackbar(
-                              AppLocalization.of(context)!.qrInvalidAddress,
-                              context);
-                        } else if (QRScanErrs.ERROR_LIST.contains(scanResult)) {
-                          return;
-                        } else {
-                          // Is a URI
-                          final Address address = Address(scanResult);
-                          // See if this address belongs to a contact
-                          final Contact? contact;
-                          try {
-                            contact = await sl
-                                .get<DBHelper>()
-                                .getContactWithAddress(address.address);
-
-                            // Is a contact
-                            if (mounted) {
-                              setState(() {
-                                _isContact = true;
-                                _addressValidationText = '';
-                                _sendAddressStyle = AddressStyle.PRIMARY;
-                                _pasteButtonVisible = false;
-                                _showContactButton = false;
-                              });
-                              _sendAddressController!.text = contact.name!;
-                            }
-                          } on Exception {
-                            // Not a contact
-                            if (mounted) {
-                              setState(() {
-                                _isContact = false;
-                                _addressValidationText = '';
-                                _sendAddressStyle = AddressStyle.TEXT90;
-                                _pasteButtonVisible = false;
-                                _showContactButton = false;
-                              });
-                              _sendAddressController!.text = address.address;
-                              _sendAddressFocusNode!.unfocus();
-                              setState(() {
-                                _addressValidAndUnfocused = true;
-                              });
-                            }
-                          }
-
-                          bool hasError = false;
-                          final BigInt amountBigInt =
-                              BigInt.tryParse(address.amount)!;
-                          if (amountBigInt < BigInt.from(10).pow(24)) {
-                            hasError = true;
-                            UIUtil.showSnackbar(
-                                AppLocalization.of(context)!
-                                    .minimumSend
-                                    .replaceAll('%1', '0.000001'),
-                                context);
-                          } else if (_localCurrencyMode && mounted) {
-                            toggleLocalCurrency();
-                            _sendAmountController!.text =
-                                NumberUtil.getRawAsUsableString(address.amount);
-                          } else if (mounted) {
-                            setState(() {
-                              _rawAmount = address.amount;
-                              // If raw amount has more precision than we support show a special indicator
-                              if (NumberUtil.getRawAsUsableString(_rawAmount!)
-                                      .replaceAll(',', '') ==
-                                  NumberUtil.getRawAsUsableDecimal(_rawAmount!)
-                                      .toString()) {
-                                _sendAmountController!.text =
-                                    NumberUtil.getRawAsUsableString(_rawAmount!)
-                                        .replaceAll(',', '');
-                              } else {
-                                _sendAmountController!.text =
-                                    NumberUtil.getRawAsUsableDecimal(
-                                                address.amount)
-                                            .truncate(scale: 6)
-                                            .toStringAsFixed(6) +
-                                        '~';
-                              }
-                            });
-                            _sendAddressFocusNode!.unfocus();
-                          }
-
-                          if (!hasError) {
-                            // Go to confirm sheet
-                            Sheets.showAppHeightNineSheet(
-                                context: context,
-                                widget: TransferConfirmSheet(
-                                    ucoTransferList: ucoTransferList,
-                                    contactsRef: widget.contactsRef,
-                                    title: widget.title,
-                                    typeTransfer: 'UCO',
-                                    localCurrency: _localCurrencyMode
-                                        ? _sendAmountController!.text
-                                        : null));
-                          }
-                        }
-                      })
-                    ],
-                  ),
                 ],
               ),
             ),
@@ -764,9 +654,10 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     if (_sendAmountController!.text.isEmpty) {
       return false;
     }
-    try {
-      String textField = _sendAmountController!.text;
-
+    double? _sendAmount = double.tryParse(_sendAmountController!.text);
+    if (_sendAmount == null) {
+      return false;
+    } else {
       String balance;
       if (_localCurrencyMode) {
         balance = StateContainer.of(context).wallet!.getLocalCurrencyPrice(
@@ -778,35 +669,19 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
             .getAccountBalanceUCODisplay()
             .replaceAll(r',', '');
       }
-      // Convert to Integer representations
-      int textFieldInt;
-      int balanceInt;
-      if (_localCurrencyMode) {
-        // Sanitize currency values into plain integer representations
-        textField = textField.replaceAll(',', '.');
-        final String sanitizedTextField = NumberUtil.sanitizeNumber(textField);
-        balance =
-            balance.replaceAll(_localCurrencyFormat!.symbols.GROUP_SEP, '');
-        balance = balance.replaceAll(',', '.');
-        final String sanitizedBalance = NumberUtil.sanitizeNumber(balance);
-        textFieldInt = (int.tryParse(sanitizedTextField)! *
-            pow(10, NumberUtil.maxDecimalDigits).toInt());
-        balanceInt = (int.tryParse(sanitizedBalance)! *
-            pow(10, NumberUtil.maxDecimalDigits).toInt());
+      double? _balanceDouble;
+      double? _feesDouble;
+      _balanceDouble = double.tryParse(balance);
+      _feesDouble = sl.get<AppService>().getFeesEstimation();
+      if (_balanceDouble == null) {
+        return false;
       } else {
-        textField = textField.replaceAll(',', '');
-        textFieldInt = (int.tryParse(textField)! *
-            pow(10, NumberUtil.maxDecimalDigits).toInt());
-        balanceInt = (int.tryParse(balance)! *
-            pow(10, NumberUtil.maxDecimalDigits).toInt());
+        if (_balanceDouble == _sendAmount + _feesDouble) {
+          return true;
+        } else {
+          return false;
+        }
       }
-      final int estimationFeesInt =
-          (int.tryParse(sl.get<AppService>().getFeesEstimation().toString())! *
-              pow(10, NumberUtil.maxDecimalDigits).toInt());
-
-      return textFieldInt + estimationFeesInt == balanceInt;
-    } catch (e) {
-      return false;
     }
   }
 
@@ -869,7 +744,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
               setState(() {
                 _isContact = true;
                 _showContactButton = false;
-                _pasteButtonVisible = false;
+                _qrCodeButtonVisible = false;
                 _sendAddressStyle = AddressStyle.PRIMARY;
               });
             },
@@ -934,18 +809,18 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
       isValid = false;
       setState(() {
         _addressValidationText = AppLocalization.of(context)!.addressMissing;
-        _pasteButtonVisible = true;
+        _qrCodeButtonVisible = true;
       });
     } else if (!isContact && !Address(_sendAddressController!.text).isValid()) {
       isValid = false;
       setState(() {
         _addressValidationText = AppLocalization.of(context)!.invalidAddress;
-        _pasteButtonVisible = true;
+        _qrCodeButtonVisible = true;
       });
     } else if (!isContact) {
       setState(() {
         _addressValidationText = '';
-        _pasteButtonVisible = false;
+        _qrCodeButtonVisible = false;
       });
       _sendAddressFocusNode!.unfocus();
     }
@@ -1101,50 +976,112 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
         fadePrefixOnCondition: true,
         prefixShowFirstCondition: _showContactButton && _contacts!.isEmpty,
         suffixButton: TextFieldButton(
-          icon: FontAwesomeIcons.paste,
-          onPressed: () {
-            if (!_pasteButtonVisible) {
+          icon: FontAwesomeIcons.qrcode,
+          onPressed: () async {
+            if (!_qrCodeButtonVisible) {
               return;
             }
-            Clipboard.getData('text/plain').then((ClipboardData? data) async {
-              if (data == null || data.text == null) {
-                return;
-              }
-              final Address address = Address(data.text!);
-              if (address.isValid()) {
-                try {
-                  final Contact contact = await sl
-                      .get<DBHelper>()
-                      .getContactWithAddress(address.address);
 
+            UIUtil.cancelLockEvent();
+            final String? scanResult =
+                await UserDataUtil.getQRData(DataType.ADDRESS, context);
+            if (scanResult == null) {
+              UIUtil.showSnackbar(
+                  AppLocalization.of(context)!.qrInvalidAddress, context);
+            } else if (QRScanErrs.ERROR_LIST.contains(scanResult)) {
+              return;
+            } else {
+              // Is a URI
+              final Address address = Address(scanResult);
+              // See if this address belongs to a contact
+              final Contact? contact;
+              try {
+                contact = await sl
+                    .get<DBHelper>()
+                    .getContactWithAddress(address.address);
+
+                // Is a contact
+                if (mounted) {
                   setState(() {
                     _isContact = true;
                     _addressValidationText = '';
                     _sendAddressStyle = AddressStyle.PRIMARY;
-                    _pasteButtonVisible = false;
+                    _qrCodeButtonVisible = false;
                     _showContactButton = false;
                   });
                   _sendAddressController!.text = contact.name!;
-                } on Exception {
+                }
+              } on Exception {
+                // Not a contact
+                if (mounted) {
                   setState(() {
                     _isContact = false;
                     _addressValidationText = '';
                     _sendAddressStyle = AddressStyle.TEXT90;
-                    _pasteButtonVisible = false;
+                    _qrCodeButtonVisible = false;
                     _showContactButton = false;
                   });
                   _sendAddressController!.text = address.address;
-                  //_sendAddressFocusNode.unfocus();
+                  _sendAddressFocusNode!.unfocus();
                   setState(() {
-                    //_addressValidAndUnfocused = true;
+                    _addressValidAndUnfocused = true;
                   });
                 }
               }
-            });
+
+              bool hasError = false;
+              final BigInt amountBigInt = BigInt.tryParse(address.amount)!;
+              if (amountBigInt < BigInt.from(10).pow(24)) {
+                hasError = true;
+                UIUtil.showSnackbar(
+                    AppLocalization.of(context)!
+                        .minimumSend
+                        .replaceAll('%1', '0.000001'),
+                    context);
+              } else if (_localCurrencyMode && mounted) {
+                toggleLocalCurrency();
+                _sendAmountController!.text =
+                    NumberUtil.getRawAsUsableString(address.amount);
+              } else if (mounted) {
+                setState(() {
+                  _rawAmount = address.amount;
+                  // If raw amount has more precision than we support show a special indicator
+                  if (NumberUtil.getRawAsUsableString(_rawAmount!)
+                          .replaceAll(',', '') ==
+                      NumberUtil.getRawAsUsableDecimal(_rawAmount!)
+                          .toString()) {
+                    _sendAmountController!.text =
+                        NumberUtil.getRawAsUsableString(_rawAmount!)
+                            .replaceAll(',', '');
+                  } else {
+                    _sendAmountController!.text =
+                        NumberUtil.getRawAsUsableDecimal(address.amount)
+                                .truncate(scale: 6)
+                                .toStringAsFixed(6) +
+                            '~';
+                  }
+                });
+                _sendAddressFocusNode!.unfocus();
+              }
+
+              if (!hasError) {
+                // Go to confirm sheet
+                Sheets.showAppHeightNineSheet(
+                    context: context,
+                    widget: TransferConfirmSheet(
+                        ucoTransferList: ucoTransferList,
+                        contactsRef: widget.contactsRef,
+                        title: widget.title,
+                        typeTransfer: 'UCO',
+                        localCurrency: _localCurrencyMode
+                            ? _sendAmountController!.text
+                            : null));
+              }
+            }
           },
         ),
         fadeSuffixOnCondition: true,
-        suffixShowFirstCondition: _pasteButtonVisible,
+        suffixShowFirstCondition: _qrCodeButtonVisible,
         style: _sendAddressStyle == AddressStyle.TEXT60
             ? AppStyles.textStyleSize14W100Text60(context)
             : _sendAddressStyle == AddressStyle.TEXT90
@@ -1189,18 +1126,18 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
             setState(() {
               _sendAddressStyle = AddressStyle.TEXT90;
               _addressValidationText = '';
-              _pasteButtonVisible = true;
+              _qrCodeButtonVisible = true;
             });
           } else if (!isContact) {
             setState(() {
               _sendAddressStyle = AddressStyle.TEXT60;
-              _pasteButtonVisible = true;
+              _qrCodeButtonVisible = true;
             });
           } else {
             try {
               await sl.get<DBHelper>().getContactWithName(text);
               setState(() {
-                _pasteButtonVisible = false;
+                _qrCodeButtonVisible = false;
                 _addressValidationText = '';
                 _sendAddressStyle = AddressStyle.PRIMARY;
               });

@@ -52,7 +52,7 @@ class AppWallet {
       return '0';
     }
     final double value = _accountBalance!.uco! - estimationFees;
-    return NumberUtil.getRawAsUsableString(value.toString());
+    return value.toString();
   }
 
   String getLocalCurrencyPrice(AvailableCurrency currency,

@@ -1055,5 +1055,131 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "transactionInfosHeader": "Informations de la transaction",
+  "@transactionInfosHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyAddress": "Adresse",
+  "@transactionInfosKeyAddress": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyType": "Type",
+  "@transactionInfosKeyType": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyVersion": "Version",
+  "@transactionInfosKeyVersion": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyPreviousPublicKey": "Clé publique de la transaction précédente",
+  "@transactionInfosKeyPreviousPublicKey": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyPreviousSignature": "Signature à partir de la clé privée associée à la clé publique",
+  "@transactionInfosKeyPreviousSignature": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyOriginSignature": "Signature à partir de la clé privée associée au dispositif",
+  "@transactionInfosKeyOriginSignature": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyData": "Données",
+  "@transactionInfosKeyData": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyContent": "Contenu",
+  "@transactionInfosKeyContent": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyCode": "Code",
+  "@transactionInfosKeyCode": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyUCOLedger": "Opérations sur les registres - UCO",
+  "@transactionInfosKeyUCOLedger": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyTo": "A",
+  "@transactionInfosKeyTo": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyAmount": "Montant",
+  "@transactionInfosKeyAmount": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyNFTLedger": "Opérations sur les registres - NFT",
+  "@transactionInfosKeyNFTLedger": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyNft": "NFT",
+  "@transactionInfosKeyNft": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyValidationStamp": "Estampille de Validation",
+  "@transactionInfosKeyValidationStamp": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyProofOfWork": "Preuve de Travail",
+  "@transactionInfosKeyProofOfWork": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyProofOfIntegrity": "Preuve d'intégrité",
+  "@transactionInfosKeyProofOfIntegrity": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyTimeStamp": "Date de la génération de la transaction",
+  "@transactionInfosKeyTimeStamp": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyCrossValidationStamps": "Estampille(s) de contre-validation",
+  "@transactionInfosKeyCrossValidationStamps": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeySignature": "Signature",
+  "@transactionInfosKeySignature": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

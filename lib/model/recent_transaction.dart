@@ -2,6 +2,7 @@
 
 class RecentTransaction {
   RecentTransaction({
+    this.address,
     this.typeTx,
     this.amount,
     this.recipient,
@@ -16,6 +17,7 @@ class RecentTransaction {
 
   factory RecentTransaction.fromJson(Map<String, dynamic> json) =>
       RecentTransaction(
+        address: json['address'],
         typeTx: json['typeTx'] == null ? null : json['typeTx'].toInt(),
         recipient: json['recipient'],
         amount: json['amount'] == null ? null : json['amount'].toDouble(),
@@ -32,6 +34,9 @@ class RecentTransaction {
   static const int TRANSFER_INPUT = 1;
   static const int TRANSFER_OUTPUT = 2;
   static const int NFT_CREATION = 3;
+
+  /// Address of transaction
+  String? address;
 
   /// Type of transaction : 1=Transfer/Input, 2=Transfer/Output, 3=NFT creation
   int? typeTx;
@@ -64,6 +69,7 @@ class RecentTransaction {
   String? type;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
+        'address': address,
         'typeTx': typeTx,
         'recipient': recipient,
         'amount': amount,

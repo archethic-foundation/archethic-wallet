@@ -46,6 +46,14 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.primary);
   }
 
+  static TextStyle textStyleSize24W600Primary(BuildContext context) {
+    return TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: AppFontSizes.size24,
+        fontWeight: FontWeight.w600,
+        color: StateContainer.of(context).curTheme.primary);
+  }
+
   static TextStyle textStyleSize14W600BackgroundDarkest(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
@@ -168,6 +176,14 @@ class AppStyles {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size28,
+        fontWeight: FontWeight.w900,
+        color: StateContainer.of(context).curTheme.primary);
+  }
+
+  static TextStyle textStyleSize40W900Primary(BuildContext context) {
+    return TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: 40,
         fontWeight: FontWeight.w900,
         color: StateContainer.of(context).curTheme.primary);
   }
@@ -327,10 +343,10 @@ class AppStyles {
     );
   }
 
-  static TextStyle textStyleSize60W700Primary15(BuildContext context) {
+  static TextStyle textStyleSize80W700Primary15(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      fontSize: 60,
+      fontSize: 80,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.primary15,
     );

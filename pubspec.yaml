@@ -3,7 +3,7 @@ description: ARCHEthic Wallet app (iOS/Android).
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.0.90+90
+version: 0.0.92+92
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -147,6 +147,7 @@ flutter:
     - assets/icons/
     - assets/icons/currency/
     - assets/icons/country/
+    - assets/icons/txInfos/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

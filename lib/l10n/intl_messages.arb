@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-01-03T14:35:46.588300",
+  "@@last_modified": "2022-01-03T23:53:55.742759",
   "welcomeText": "Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -54,7 +54,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transferUCO": "Transfer UCO",
+  "transferUCO": "Send UCO",
   "@transferUCO": {
     "type": "text",
     "placeholders_order": [],
@@ -1052,6 +1052,132 @@
   },
   "settings": "Settings",
   "@settings": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosHeader": "Transaction informations",
+  "@transactionInfosHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyAddress": "Address",
+  "@transactionInfosKeyAddress": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyType": "Type",
+  "@transactionInfosKeyType": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyVersion": "Version",
+  "@transactionInfosKeyVersion": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyPreviousPublicKey": "Previous Public Key",
+  "@transactionInfosKeyPreviousPublicKey": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyPreviousSignature": "Previous Signature",
+  "@transactionInfosKeyPreviousSignature": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyOriginSignature": "Origin Signature",
+  "@transactionInfosKeyOriginSignature": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyData": "Data",
+  "@transactionInfosKeyData": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyContent": "Content",
+  "@transactionInfosKeyContent": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyCode": "Code",
+  "@transactionInfosKeyCode": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyUCOLedger": "UCO Ledger",
+  "@transactionInfosKeyUCOLedger": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyTo": "To",
+  "@transactionInfosKeyTo": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyAmount": "Amount",
+  "@transactionInfosKeyAmount": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyNFTLedger": "NFT Ledger",
+  "@transactionInfosKeyNFTLedger": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyNft": "NFT",
+  "@transactionInfosKeyNft": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyValidationStamp": "Validation Stamp",
+  "@transactionInfosKeyValidationStamp": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyProofOfWork": "Proof of work",
+  "@transactionInfosKeyProofOfWork": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyProofOfIntegrity": "Proof of integrity",
+  "@transactionInfosKeyProofOfIntegrity": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyTimeStamp": "Timestamp",
+  "@transactionInfosKeyTimeStamp": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeyCrossValidationStamps": "Cross Validation Stamp",
+  "@transactionInfosKeyCrossValidationStamps": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInfosKeySignature": "Signature",
+  "@transactionInfosKeySignature": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
