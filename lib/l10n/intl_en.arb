@@ -1181,5 +1181,17 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "transactionBuyHeader": "Buy UCO here",
+  "@transactionBuyHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionsAllListHeader": "Transactions",
+  "@transactionsAllListHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

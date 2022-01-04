@@ -25,3 +25,29 @@ Widget buildIconWidget(
     ),
   );
 }
+
+Widget buildIconDataWidget(
+    BuildContext context, IconData icon, double width, double height) {
+  return Container(
+    width: width,
+    height: height,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      boxShadow: <BoxShadow>[
+        BoxShadow(
+          color: StateContainer.of(context).curTheme.background40!,
+        ),
+      ],
+    ),
+    alignment: const AlignmentDirectional(0, 0),
+    child: Container(
+      child: SizedBox(
+        child: Icon(
+          icon,
+          color: Colors.white,
+          size: width,
+        ),
+      ),
+    ),
+  );
+}

@@ -901,6 +901,14 @@ class AppLocalization {
   String get transactionInfosKeySignature {
     return Intl.message('Signature', name: 'transactionInfosKeySignature');
   }
+
+  String get transactionBuyHeader {
+    return Intl.message('Buy UCO here', name: 'transactionBuyHeader');
+  }
+
+  String get transactionsAllListHeader {
+    return Intl.message('Transactions', name: 'transactionsAllListHeader');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {

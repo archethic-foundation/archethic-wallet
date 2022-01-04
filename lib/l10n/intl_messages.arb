@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-01-03T23:53:55.742759",
+  "@@last_modified": "2022-01-04T23:02:12.209959",
   "welcomeText": "Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -1178,6 +1178,18 @@
   },
   "transactionInfosKeySignature": "Signature",
   "@transactionInfosKeySignature": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionBuyHeader": "Buy UCO here",
+  "@transactionBuyHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionsAllListHeader": "Transactions",
+  "@transactionsAllListHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

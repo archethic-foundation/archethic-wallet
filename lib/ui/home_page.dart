@@ -4,6 +4,8 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:archethic_mobile_wallet/ui/widgets/buy_sheet.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -276,58 +278,6 @@ class _AppHomePageState extends State<AppHomePage>
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
-        actions: <Widget>[
-          if ((StateContainer.of(context).wallet != null &&
-                  StateContainer.of(context).wallet!.accountBalance.uco !=
-                      null &&
-                  (StateContainer.of(context).wallet!.accountBalance.uco! >
-                      0) ||
-              StateContainer.of(context).localWallet!.accountBalance.uco! > 0))
-            Padding(
-              padding: EdgeInsets.only(right: 0.0),
-              child: TextButton(
-                onPressed: () {
-                  Sheets.showAppHeightNineSheet(
-                      context: context,
-                      widget: TransferUcoSheet(
-                          contactsRef: StateContainer.of(context).contactsRef,
-                          title: AppLocalization.of(context)!.transferUCO,
-                          localCurrency:
-                              StateContainer.of(context).curCurrency));
-                },
-                child: Container(
-                    width: 30,
-                    height: 30,
-                    child: Image.asset('assets/icons/send.png',
-                        color: Colors.white)),
-              ),
-            )
-          else
-            const SizedBox(),
-          StateContainer.of(context).selectedAccount.lastAddress == null
-              ? const SizedBox()
-              : Padding(
-                  padding: EdgeInsets.only(right: 0.0),
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        HeroDialogRoute(
-                          builder: (context) => Center(
-                            child: _QrCodePopupCard(),
-                          ),
-                        ),
-                      );
-                    },
-                    child: Container(
-                        width: 20,
-                        height: 20,
-                        child: Hero(
-                            tag: 'qrcode',
-                            child: Image.asset('assets/icons/barcode.png',
-                                color: Colors.white))),
-                  ),
-                ),
-        ],
         iconTheme:
             IconThemeData(color: StateContainer.of(context).curTheme.primary),
       ),
@@ -367,7 +317,68 @@ class _AppHomePageState extends State<AppHomePage>
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        const TxListWidget(),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                                child: InkWell(
+                                    onTap: () {
+                                      Sheets.showAppHeightNineSheet(
+                                          context: context,
+                                          widget: TransferUcoSheet(
+                                              contactsRef:
+                                                  StateContainer.of(context)
+                                                      .contactsRef,
+                                              title:
+                                                  AppLocalization.of(context)!
+                                                      .transferUCO,
+                                              localCurrency:
+                                                  StateContainer.of(context)
+                                                      .curCurrency));
+                                    },
+                                    child: buildIconDataWidget(
+                                        context,
+                                        Icons.arrow_circle_up_outlined,
+                                        40,
+                                        40))),
+                            Container(
+                                child: InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        HeroDialogRoute(
+                                          builder: (context) => Center(
+                                            child: _QrCodePopupCard(),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Hero(
+                                        tag: 'qrcode',
+                                        child: buildIconDataWidget(
+                                            context,
+                                            Icons.arrow_circle_down_outlined,
+                                            40,
+                                            40)))),
+                            Container(
+                                child: InkWell(
+                                    onTap: () {
+                                      Sheets.showAppHeightNineSheet(
+                                          context: context, widget: BuySheet());
+                                    },
+                                    child: buildIconDataWidget(
+                                        context,
+                                        Icons.add_circle_outline_outlined,
+                                        40,
+                                        40))),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TxListWidget(),
                       ],
                     ),
                   ],

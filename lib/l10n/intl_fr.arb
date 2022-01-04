@@ -786,7 +786,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"nodeLastPublicKey": "Dernière clé publique  :",
+	"nodeLastPublicKey": "Dernière clé publique :",
 	"@nodeLastPublicKey": {
 		"type": "text",
 		"placeholders_order": [],
@@ -810,43 +810,43 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"nodeAverageAvailability": "Disponibilité moyenne :",
+	"nodeAverageAvailability": "Disponibilité moyenne : ",
 	"@nodeAverageAvailability": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"nodeAuthorized": "Autorisé :",
+	"nodeAuthorized": "Autorisé : ",
 	"@nodeAuthorized": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"nodeRewardAddress": "Adresse de récompense :",
+	"nodeRewardAddress": "Adresse de récompense : ",
 	"@nodeRewardAddress": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"txListFrom": "De :",
+	"txListFrom": "De : ",
 	"@txListFrom": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"txListTo": "À :",
+	"txListTo": "À : ",
 	"@txListTo": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"txListDate": "Date :",
+	"txListDate": "Date : ",
 	"@txListDate": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"txListFees": "Frais :",
+	"txListFees": "Frais : ",
 	"@txListFees": {
 		"type": "text",
 		"placeholders_order": [],
@@ -1056,7 +1056,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transactionInfosHeader": "Informations de la transaction",
+  "transactionInfosHeader": "Infos de la transaction",
   "@transactionInfosHeader": {
     "type": "text",
     "placeholders_order": [],
@@ -1178,6 +1178,18 @@
   },
   "transactionInfosKeySignature": "Signature",
   "@transactionInfosKeySignature": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionBuyHeader": "Acheter des UCO ici",
+  "@transactionBuyHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionsAllListHeader": "Transactions",
+  "@transactionsAllListHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
