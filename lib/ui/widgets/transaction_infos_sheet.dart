@@ -73,10 +73,15 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        AppLocalization.of(context)!.transactionInfosHeader,
-                        style: AppStyles.textStyleSize24W700Primary(context),
+                      Container(
+                        padding: EdgeInsets.only(
+                            top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
+                        child: AutoSizeText(
+                          AppLocalization.of(context)!.transactionInfosHeader,
+                          style: AppStyles.textStyleSize24W700Primary(context),
+                        ),
                       ),
                     ],
                   ),
@@ -84,7 +89,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                     child: Center(
                       child: Stack(children: <Widget>[
                         Container(
-                            height: 500,
+                            height: MediaQuery.of(context).size.height * 0.8,
                             child: SafeArea(
                               minimum: EdgeInsets.only(
                                 bottom:
@@ -146,17 +151,13 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                         50)),
             transactionInfo.titleInfo == ''
                 ? Container(
-                    padding: EdgeInsets.only(left: 15.0, top: 10),
+                    padding: EdgeInsets.only(left: 15.0, top: 15, bottom: 0),
                     child: Column(
                       children: <Widget>[
-                        Divider(
-                          height: 2,
-                          color: StateContainer.of(context).curTheme.primary15,
-                        ),
                         // Main Container
                         Container(
-                          padding:
-                              EdgeInsets.only(top: 10, bottom: 0, right: 5),
+                          padding: EdgeInsets.only(
+                              left: 45.0, top: 0, right: 5, bottom: 5),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
@@ -188,21 +189,21 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  )
-                : Container(
-                    padding: EdgeInsets.only(left: 15.0, top: 10),
-                    child: Column(
-                      children: <Widget>[
                         Divider(
                           height: 2,
                           color: StateContainer.of(context).curTheme.primary15,
                         ),
+                      ],
+                    ),
+                  )
+                : Container(
+                    padding: EdgeInsets.only(left: 15.0, top: 15, bottom: 0),
+                    child: Column(
+                      children: <Widget>[
                         // Main Container
                         Container(
-                          padding:
-                              EdgeInsets.only(left: 45.0, top: 5, right: 5),
+                          padding: EdgeInsets.only(
+                              left: 45.0, top: 0, right: 5, bottom: 5),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
@@ -226,6 +227,10 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                               ),
                             ],
                           ),
+                        ),
+                        Divider(
+                          height: 2,
+                          color: StateContainer.of(context).curTheme.primary15,
                         ),
                       ],
                     ),
