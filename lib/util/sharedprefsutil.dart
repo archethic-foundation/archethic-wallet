@@ -289,7 +289,7 @@ class SharedPrefsUtil {
 
   Future<ThemeSetting> getTheme() async {
     return ThemeSetting(ThemeOptions
-        .values[await get(cur_theme, defaultValue: ThemeOptions.UNIRIS.index)]);
+        .values[await get(cur_theme, defaultValue: ThemeOptions.DARK.index)]);
   }
 
   // For logging out

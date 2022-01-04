@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/model/setting_item.dart';
-import 'package:archethic_mobile_wallet/ui/themes/theme_archethic.dart';
-import 'package:archethic_mobile_wallet/ui/themes/theme_uniris.dart';
+import 'package:archethic_mobile_wallet/ui/themes/theme_dark.dart';
+import 'package:archethic_mobile_wallet/ui/themes/theme_light.dart';
 import 'package:archethic_mobile_wallet/ui/themes/themes.dart';
 
-enum ThemeOptions { UNIRIS, ARCHETHIC }
+enum ThemeOptions { LIGHT, DARK }
 
 /// Represent notification on/off setting
 class ThemeSetting extends SettingSelectionItem {
@@ -17,23 +17,23 @@ class ThemeSetting extends SettingSelectionItem {
 
   String getDisplayName(BuildContext context) {
     switch (theme) {
-      case ThemeOptions.UNIRIS:
-        return "Uniris";
-      case ThemeOptions.ARCHETHIC:
-        return "Archethic";
+      case ThemeOptions.LIGHT:
+        return "Light";
+      case ThemeOptions.DARK:
+        return "Dark";
       default:
-        return "Uniris";
+        return "Dark";
     }
   }
 
   BaseTheme getTheme() {
     switch (theme) {
-      case ThemeOptions.UNIRIS:
-        return UnirisTheme();
-      case ThemeOptions.ARCHETHIC:
-        return ArchEthicTheme();
+      case ThemeOptions.LIGHT:
+        return LightTheme();
+      case ThemeOptions.DARK:
+        return DarkTheme();
       default:
-        return UnirisTheme();
+        return DarkTheme();
     }
   }
 

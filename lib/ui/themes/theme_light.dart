@@ -7,9 +7,9 @@ import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/ui/themes/themes.dart';
 import 'package:archethic_mobile_wallet/ui/util/particles/particles_flutter.dart';
 
-class UnirisTheme implements BaseTheme {
+class LightTheme implements BaseTheme {
   @override
-  String? displayName = 'Uniris';
+  String? displayName = 'Light';
 
   static const Color orange = Color(0xFFfc9034);
 
@@ -126,7 +126,7 @@ class UnirisTheme implements BaseTheme {
   BoxShadow? boxShadowButton = const BoxShadow(color: Colors.transparent);
 
   @override
-  String? assetsFolder = 'assets/themes/uniris/';
+  String? assetsFolder = 'assets/themes/light/';
   @override
   String? logo = 'logo';
   @override

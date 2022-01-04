@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 // Project imports:
 import 'package:archethic_mobile_wallet/ui/themes/themes.dart';
 
-class ArchEthicTheme implements BaseTheme {
+class DarkTheme implements BaseTheme {
   @override
-  String? displayName = 'Archethic';
+  String? displayName = 'Dark';
 
   static const Color orange = Color(0xFFfc9034);
 
@@ -124,7 +124,7 @@ class ArchEthicTheme implements BaseTheme {
   BoxShadow? boxShadowButton = const BoxShadow(color: Colors.transparent);
 
   @override
-  String? assetsFolder = 'assets/themes/archethic/';
+  String? assetsFolder = 'assets/themes/dark/';
   @override
   String? logo = 'logo';
   @override
@@ -135,7 +135,7 @@ class ArchEthicTheme implements BaseTheme {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/themes/archethic/background.jpg'),
+            image: AssetImage('assets/themes/dark/background.jpg'),
             fit: BoxFit.cover),
       ),
     );

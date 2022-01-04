@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:archethic_mobile_wallet/ui/themes/theme_dark.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -23,7 +24,7 @@ import 'package:archethic_mobile_wallet/model/vault.dart';
 import 'package:archethic_mobile_wallet/model/wallet.dart';
 import 'package:archethic_mobile_wallet/service/app_service.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/ui/themes/theme_uniris.dart';
+import 'package:archethic_mobile_wallet/ui/themes/theme_light.dart';
 import 'package:archethic_mobile_wallet/ui/themes/themes.dart';
 import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
 import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
@@ -80,7 +81,7 @@ class StateContainerState extends State<StateContainer> {
   Locale deviceLocale = const Locale('en', 'US');
   AvailableCurrency curCurrency = AvailableCurrency(AvailableCurrencyEnum.USD);
   LanguageSetting curLanguage = LanguageSetting(AvailableLanguage.DEFAULT);
-  BaseTheme curTheme = UnirisTheme();
+  BaseTheme curTheme = DarkTheme();
 
   // Currently selected account
   Account selectedAccount = Account(
