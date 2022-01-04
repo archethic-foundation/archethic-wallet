@@ -121,9 +121,8 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               ),
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel3,
-                                style: AppStyles.textStyleSize16W600Primary(
+                                style: AppStyles.textStyleSize12W600Primary(
                                     context),
-                                maxLines: 5,
                               ),
                               const SizedBox(
                                 height: 10,
@@ -138,9 +137,8 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               ),
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel5,
-                                style: AppStyles.textStyleSize16W600Primary(
+                                style: AppStyles.textStyleSize12W600Primary(
                                     context),
-                                maxLines: 5,
                               ),
                               const SizedBox(
                                 height: 10,
