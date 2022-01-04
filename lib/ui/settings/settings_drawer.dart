@@ -853,20 +853,6 @@ class _SettingsSheetState extends State<SettingsSheet>
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
                     ),
-                    AppSettings.buildSettingsListItemSingleLineWithInfos(
-                        context,
-                        AppLocalization.of(context)!.customUrlHeader,
-                        AppLocalization.of(context)!.customUrlDesc,
-                        icon: 'assets/icons/url.png', onPressed: () {
-                      setState(() {
-                        _customUrlOpen = true;
-                      });
-                      _customUrlController!.forward();
-                    }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
-                    ),
                     Container(
                       margin: const EdgeInsetsDirectional.only(
                           start: 30.0, top: 20.0, bottom: 10.0),
@@ -969,6 +955,20 @@ class _SettingsSheetState extends State<SettingsSheet>
                         _curThemeSetting,
                         'assets/icons/themes.png',
                         _themeDialog),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
+                    AppSettings.buildSettingsListItemSingleLineWithInfos(
+                        context,
+                        AppLocalization.of(context)!.customUrlHeader,
+                        AppLocalization.of(context)!.customUrlDesc,
+                        icon: 'assets/icons/url.png', onPressed: () {
+                      setState(() {
+                        _customUrlOpen = true;
+                      });
+                      _customUrlController!.forward();
+                    }),
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
