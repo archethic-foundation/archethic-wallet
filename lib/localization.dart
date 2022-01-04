@@ -743,11 +743,12 @@ class AppLocalization {
   }
 
   String get txListTypeTransactionLabelReceive {
-    return Intl.message('Receive', name: 'txListTypeTransactionLabelReceive');
+    return Intl.message('Received the ',
+        name: 'txListTypeTransactionLabelReceive');
   }
 
   String get txListTypeTransactionLabelSend {
-    return Intl.message('Send', name: 'txListTypeTransactionLabelSend');
+    return Intl.message('Sent the ', name: 'txListTypeTransactionLabelSend');
   }
 
   String get recoveryPhrase {

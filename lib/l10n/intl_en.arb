@@ -858,13 +858,13 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "txListTypeTransactionLabelReceive": "Receive",
+  "txListTypeTransactionLabelReceive": "Received the ",
   "@txListTypeTransactionLabelReceive": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "txListTypeTransactionLabelSend": "Send",
+  "txListTypeTransactionLabelSend": "Sent the ",
   "@txListTypeTransactionLabelSend": {
     "type": "text",
     "placeholders_order": [],

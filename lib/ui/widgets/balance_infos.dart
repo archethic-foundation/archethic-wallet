@@ -24,7 +24,7 @@ class BalanceInfosWidget {
         child: Ink(
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: MediaQuery.of(context).size.height * 0.11,
             child: Stack(
               children: <Widget>[
                 Container(
@@ -37,7 +37,7 @@ class BalanceInfosWidget {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.1,
+                  height: MediaQuery.of(context).size.height * 0.11,
                   alignment: Alignment.centerRight,
                   child: Padding(
                     padding: const EdgeInsets.only(

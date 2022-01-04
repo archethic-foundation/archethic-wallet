@@ -378,7 +378,7 @@ class _AppHomePageState extends State<AppHomePage>
                         const SizedBox(
                           height: 20,
                         ),
-                        TxListWidget(),
+                        const TxListWidget(),
                       ],
                     ),
                   ],

@@ -858,13 +858,13 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"txListTypeTransactionLabelReceive": "受信",
+	"txListTypeTransactionLabelReceive": "Received the ",
 	"@txListTypeTransactionLabelReceive": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"txListTypeTransactionLabelSend": "送信",
+	"txListTypeTransactionLabelSend": "Sent the ",
 	"@txListTypeTransactionLabelSend": {
 		"type": "text",
 		"placeholders_order": [],

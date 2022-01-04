@@ -105,6 +105,14 @@ class AppWallet {
 
   List<RecentTransaction> get history => _history!;
 
+  List<RecentTransaction> get recentHistory {
+    if (_history != null && _history!.length >= 3) {
+      return _history!.sublist(0, 3);
+    } else {
+      return _history!;
+    }
+  }
+
   set history(List<RecentTransaction> value) {
     _history = value;
   }

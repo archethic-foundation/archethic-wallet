@@ -1,130 +1,117 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
+import 'package:archethic_mobile_wallet/model/address.dart';
+import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/transaction_infos_sheet.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/tx_list.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
 import 'package:archethic_mobile_wallet/appstate_container.dart';
 import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/address.dart';
-import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/transaction_infos_sheet.dart';
-import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 
-class TxListWidget extends StatefulWidget {
-  const TxListWidget();
-  @override
-  _TxListWidgetState createState() => _TxListWidgetState();
+class TxAllListWidget extends StatefulWidget {
+  TxAllListWidget() : super();
+
+  _TxAllListWidgetState createState() => _TxAllListWidgetState();
 }
 
-class _TxListWidgetState extends State<TxListWidget> {
-  static const int _pageSize = 20;
-  final PagingController<int, RecentTransaction> _pagingController =
-      PagingController<int, RecentTransaction>(firstPageKey: 0);
-
-  @override
-  void initState() {
-    _pagingController.addPageRequestListener((int pageKey) {
-      _fetchPage(pageKey);
-    });
-    super.initState();
-  }
-
-  Future<void> _fetchPage(int pageKey) async {
-    try {
-      final List<RecentTransaction> newItems =
-          StateContainer.of(context).wallet!.recentHistory;
-      final bool isLastPage = newItems.length < _pageSize;
-      if (isLastPage) {
-        _pagingController.appendLastPage(newItems);
-      } else {
-        final int nextPageKey = pageKey + newItems.length;
-        _pagingController.appendPage(newItems, nextPageKey);
-      }
-    } catch (error) {}
-  }
-
-  @override
-  void dispose() {
-    _pagingController.dispose();
-    super.dispose();
-  }
-
+class _TxAllListWidgetState extends State<TxAllListWidget> {
   @override
   Widget build(BuildContext context) {
-    _pagingController.refresh();
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        // A row for the address text and close button
         Row(
-          children: [
-            Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: StateContainer.of(context)
-                            .wallet!
-                            .recentHistory
-                            .isNotEmpty ||
-                        StateContainer.of(context).recentTransactionsLoading ==
-                            true
-                    ? Text(
-                        AppLocalization.of(context)!.recentTransactionsHeader,
-                        style: AppStyles.textStyleSize14W600BackgroundDarkest(
-                            context))
-                    : Text(
-                        AppLocalization.of(context)!
-                            .recentTransactionsNoTransactionYet,
-                        style: AppStyles.textStyleSize14W600Primary(context))),
-            kIsWeb
-                ? IconButton(
-                    icon: Icon(Icons.refresh),
-                    color:
-                        StateContainer.of(context).curTheme.backgroundDarkest,
-                    onPressed: () async {
-                      StateContainer.of(context).requestUpdate(
-                          account: StateContainer.of(context).selectedAccount);
-                      _pagingController.refresh();
-                    },
-                  )
-                : const SizedBox(),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            //Empty SizedBox
+            SizedBox(
+              width: 60,
+              height: 40,
+            ),
+            Column(
+              children: <Widget>[
+                // Sheet handle
+                Container(
+                  margin: EdgeInsets.only(top: 10),
+                  height: 5,
+                  width: MediaQuery.of(context).size.width * 0.15,
+                  decoration: BoxDecoration(
+                    color: StateContainer.of(context).curTheme.primary10,
+                    borderRadius: BorderRadius.circular(100.0),
+                  ),
+                ),
+              ],
+            ),
+            //Empty SizedBox
+            SizedBox(
+              width: 60,
+              height: 40,
+            ),
           ],
         ),
-        Container(
-          height: MediaQuery.of(context).size.height * 0.58,
-          color: Colors.transparent,
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding:
-                const EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 0),
-            child: RefreshIndicator(
-              backgroundColor:
-                  StateContainer.of(context).curTheme.backgroundDark,
-              onRefresh: () => Future<void>.sync(() {
-                sl.get<HapticUtil>().feedback(FeedbackType.light);
-                StateContainer.of(context).requestUpdate(
-                    account: StateContainer.of(context).selectedAccount);
-                _pagingController.refresh();
-              }),
-              child: PagedListView<int, RecentTransaction>(
-                pagingController: _pagingController,
-                builderDelegate: PagedChildBuilderDelegate<RecentTransaction>(
-                    animateTransitions: true,
-                    transitionDuration: const Duration(milliseconds: 600),
-                    noItemsFoundIndicatorBuilder: (_) => const SizedBox(),
-                    itemBuilder: (BuildContext context,
-                        RecentTransaction recentTransaction, int index) {
-                      return displayTxDetailTransfer(
-                          context, recentTransaction);
-                    }),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: EdgeInsets.only(
+                  top: 0.0, bottom: 20.0, left: 10.0, right: 10.0),
+              child: AutoSizeText(
+                AppLocalization.of(context)!.transactionsAllListHeader,
+                style: AppStyles.textStyleSize24W700Primary(context),
               ),
             ),
+          ],
+        ),
+        Expanded(
+          child: Center(
+            child: Stack(children: <Widget>[
+              Container(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  child: SafeArea(
+                    minimum: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.035,
+                      top: 0,
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        // list
+                        Expanded(
+                          child: Stack(
+                            children: <Widget>[
+                              //  list
+                              ListView.builder(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                padding: EdgeInsets.only(
+                                    left: 15, right: 15, top: 15.0, bottom: 15),
+                                itemCount: StateContainer.of(context)
+                                    .wallet!
+                                    .history
+                                    .length,
+                                itemBuilder: (context, index) {
+                                  // Build
+                                  return displayTxDetailTransfer(
+                                      context,
+                                      StateContainer.of(context)
+                                          .wallet!
+                                          .history[index]);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
+            ]),
           ),
         ),
       ],
@@ -250,8 +237,9 @@ class _TxListWidgetState extends State<TxListWidget> {
                   ),
                   Divider(
                       height: 4,
-                      color:
-                          StateContainer.of(context).curTheme.backgroundDark),
+                      color: StateContainer.of(context)
+                          .curTheme
+                          .backgroundDarkest),
                 ],
               ),
             ],
