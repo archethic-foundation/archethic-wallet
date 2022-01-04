@@ -1,8 +1,8 @@
 // Flutter imports:
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -70,6 +70,21 @@ class BalanceInfosWidget {
                           0
                       ? Row(
                           children: <Widget>[
+                            AutoSizeText(
+                                StateContainer.of(context)
+                                        .wallet!
+                                        .getLocalCurrencyPrice(
+                                            StateContainer.of(context)
+                                                .curCurrency,
+                                            locale: StateContainer.of(context)
+                                                .currencyLocale!) +
+                                    ' UCO',
+                                textAlign: TextAlign.center,
+                                style: AppStyles.textStyleSize12W100Primary(
+                                    context)),
+                            const SizedBox(
+                              width: 10,
+                            ),
                             AutoSizeText(
                               StateContainer.of(context)
                                           .wallet!

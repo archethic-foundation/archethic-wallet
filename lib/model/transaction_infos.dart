@@ -1,5 +1,8 @@
-import 'package:archethic_mobile_wallet/localization.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:archethic_mobile_wallet/localization.dart';
 
 class TransactionInfos {
   TransactionInfos(

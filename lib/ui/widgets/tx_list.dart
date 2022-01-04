@@ -1,11 +1,9 @@
 // Flutter imports:
-import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/transaction_infos_sheet.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
@@ -17,6 +15,8 @@ import 'package:archethic_mobile_wallet/model/address.dart';
 import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
 import 'package:archethic_mobile_wallet/service_locator.dart';
 import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_mobile_wallet/ui/widgets/transaction_infos_sheet.dart';
 import 'package:archethic_mobile_wallet/util/hapticutil.dart';
 
 class TxListWidget extends StatefulWidget {
