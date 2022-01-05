@@ -1,6 +1,6 @@
 {
   "@@last_modified": "2021-12-07T12:33:16.270871",
-  "welcomeText": "Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
+  "welcomeText": "Welcome to the Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
     "placeholders_order": [],
@@ -126,7 +126,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "customUrlHeader": "Custom Urls",
+  "customUrlHeader": "Custom URLs",
   "@customUrlHeader": {
     "type": "text",
     "placeholders_order": [],
@@ -654,7 +654,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "ackBackedUp": "Are you sure that you've backed up your secret phrase ?",
+  "ackBackedUp": "Are you sure that you've backed up your secret phrase?",
   "@ackBackedUp": {
     "type": "text",
     "placeholders_order": [],
@@ -714,7 +714,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addNFTConfirmationMessage": "Do you confirm the creation of the following NFT ?",
+  "addNFTConfirmationMessage": "Do you confirm the creation of the following NFT?",
   "@addNFTConfirmationMessage": {
     "type": "text",
     "placeholders_order": [],
@@ -882,25 +882,25 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "backupSafetyLabel1": "In the next screen, you will see your recovery phrase.",
+  "backupSafetyLabel1": "On the next screen, you will see your recovery phrase.",
   "@backupSafetyLabel1": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "backupSafetyLabel2": "What is a recovery phrase ?",
+  "backupSafetyLabel2": "What is a recovery phrase?",
   "@backupSafetyLabel2": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "backupSafetyLabel3": "A recovery phrase is essentially a human readable form of your crypto's wallet private key, and is displayed as 24 mnemonic words. After mastering the mnemonic words, you can restore your wallet at will. Please keep the words properly and don't leak them to anyone.",
+  "backupSafetyLabel3": "A recovery phrase is essentially a human-readable form of your crypto's wallet private key and is displayed as 24 mnemonic words. After mastering the mnemonic words, you can restore your wallet at will. Please keep the words properly and don't leak them to anyone.",
   "@backupSafetyLabel3": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "backupSafetyLabel4": "How to back up ?",
+  "backupSafetyLabel4": "How to back up?",
   "@backupSafetyLabel4": {
     "type": "text",
     "placeholders_order": [],
@@ -924,7 +924,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "go": "Go !",
+  "go": "Go!",
   "@go": {
     "type": "text",
     "placeholders_order": [],
@@ -984,13 +984,13 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_NO_SUCH_CLIENT": "The request id does not exist.",
+  "yubikeyError_NO_SUCH_CLIENT": "The request ID does not exist.",
   "@yubikeyError_NO_SUCH_CLIENT": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_OPERATION_NOT_ALLOWED": "The request id is not allowed to verify OTPs.",
+  "yubikeyError_OPERATION_NOT_ALLOWED": "The request ID is not allowed to verify OTPs.",
   "@yubikeyError_OPERATION_NOT_ALLOWED": {
     "type": "text",
     "placeholders_order": [],
@@ -1014,7 +1014,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "yubikeyError_RESPONSE_KO": "An error occurred with Yubkey Authentification. Try again later.",
+  "yubikeyError_RESPONSE_KO": "An error occurred with Yubikey Authentification. Try again later.",
   "@yubikeyError_RESPONSE_KO": {
     "type": "text",
     "placeholders_order": [],

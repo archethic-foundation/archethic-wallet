@@ -122,7 +122,7 @@ class AppLocalization {
   }
 
   String get customUrlHeader {
-    return Intl.message('Custom Urls', name: 'customUrlHeader');
+    return Intl.message('Custom URLs', name: 'customUrlHeader');
   }
 
   String get customUrlDesc {
@@ -260,13 +260,13 @@ class AppLocalization {
 
   // ignore: non_constant_identifier_names
   String get yubikeyError_NO_SUCH_CLIENT {
-    return Intl.message('The request id does not exist.',
+    return Intl.message('The request ID does not exist.',
         name: 'yubikeyError_NO_SUCH_CLIENT');
   }
 
   // ignore: non_constant_identifier_names
   String get yubikeyError_OPERATION_NOT_ALLOWED {
-    return Intl.message('The request id is not allowed to verify OTPs.',
+    return Intl.message('The request ID is not allowed to verify OTPs.',
         name: 'yubikeyError_OPERATION_NOT_ALLOWED');
   }
 
@@ -292,7 +292,7 @@ class AppLocalization {
   // ignore: non_constant_identifier_names
   String get yubikeyError_RESPONSE_KO {
     return Intl.message(
-        'An error occurred with Yubkey Authentification. Try again later.',
+        'An error occurred with Yubikey Authentification. Try again later.',
         name: 'yubikeyError_RESPONSE_KO');
   }
 
@@ -641,7 +641,7 @@ class AppLocalization {
   }
 
   String get addNFTConfirmationMessage {
-    return Intl.message('Do you confirm the creation of the following NFT ?',
+    return Intl.message('Do you confirm the creation of the following NFT?',
         name: 'addNFTConfirmationMessage');
   }
 
@@ -766,18 +766,18 @@ class AppLocalization {
   }
 
   String get backupSafetyLabel2 {
-    return Intl.message('What is a recovery phrase ?',
+    return Intl.message('What is a recovery phrase?',
         name: 'backupSafetyLabel2');
   }
 
   String get backupSafetyLabel3 {
     return Intl.message(
-        'A recovery phrase is essentially a human readable form of your crypto\'s wallet private key, and is displayed as 24 mnemonic words. After mastering the mnemonic words, you can restore your wallet at will. Please keep the words properly and don\'t leak them to anyone.',
+        'A recovery phrase is essentially a human-readable form of your crypto\'s wallet private key, and is displayed as 24 mnemonic words. After mastering the mnemonic words, you can restore your wallet at will. Please keep the words properly and don\'t leak them to anyone.',
         name: 'backupSafetyLabel3');
   }
 
   String get backupSafetyLabel4 {
-    return Intl.message('How to back up ?', name: 'backupSafetyLabel4');
+    return Intl.message('How to back up?', name: 'backupSafetyLabel4');
   }
 
   String get backupSafetyLabel5 {
@@ -796,7 +796,7 @@ class AppLocalization {
   }
 
   String get go {
-    return Intl.message('Go !', name: 'go');
+    return Intl.message('Go!', name: 'go');
   }
 
   String get nftCreated {
