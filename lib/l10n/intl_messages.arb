@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-01-05T00:13:39.765913",
+  "@@last_modified": "2022-01-06T13:12:57.015321",
   "welcomeText": "Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -762,7 +762,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "ackBackedUp": "Are you sure that you've backed up your secret phrase?",
+  "ackBackedUp": "Are you sure that you've backed up your secret phrase ?",
   "@ackBackedUp": {
     "type": "text",
     "placeholders_order": [],

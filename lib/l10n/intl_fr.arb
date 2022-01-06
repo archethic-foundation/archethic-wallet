@@ -132,7 +132,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"customUrlDesc": "Definir le endpoint",
+	"customUrlDesc": "Définir le endpoint",
 	"@customUrlDesc": {
 		"type": "text",
 		"placeholders_order": [],
@@ -510,7 +510,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"aboutHeader": "A propos",
+	"aboutHeader": "À propos",
 	"@aboutHeader": {
 		"type": "text",
 		"placeholders_order": [],
@@ -906,13 +906,13 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"backupSafetyLabel5": "Ecrivez cette liste de mots dans le bon ordre sur un support non informatique, que vous placez en sécurité.\nNe stockez pas cette phrase sur un équipement électronique sous quelle forme que ce soit (texte, image, ...).\nLa sécurité du contenu de votre portefeuille dépend de celle de cette phrase secrète",
+	"backupSafetyLabel5": "Ecrivez cette liste de mots dans le bon ordre sur un support non informatique, que vous placez en sécurité.\nNe stockez pas cette phrase sur un équipement électronique sous quelque forme que ce soit (texte, image,...).\nLa sécurité du contenu de votre portefeuille dépend de celle de cette phrase secrète.",
 	"@backupSafetyLabel5": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"backupSafetyLabel6": "Moyens de sauvegarde non sécurisés",
+	"backupSafetyLabel6": "Moyens de sauvegarde non sécurisés.",
 	"@backupSafetyLabel6": {
 		"type": "text",
 		"placeholders_order": [],

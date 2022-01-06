@@ -912,7 +912,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"backupSafetyLabel6": "Moyens de sauvegarde non sécurisés",
+	"backupSafetyLabel6": "Moyens de sauvegarde non sécurisés.",
 	"@backupSafetyLabel6": {
 		"type": "text",
 		"placeholders_order": [],
