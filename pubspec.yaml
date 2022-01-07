@@ -1,14 +1,17 @@
-name: archethic_mobile_wallet
-description: ARCHEthic Wallet app (iOS/Android).
+name: archethic_wallet
+description: ARCHEthic Wallet app (iOS/Android/MacOS/Windows/Web).
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.0.94+94
+version: 0.0.96+96
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
+  # Beautiful animations inspired on Animate.css, every animation is a widget that contains default but customizable values that look attractive.
+  animate_do: ^2.0.0
+
   # ArchEthic dart library for Flutter based on Official ArchEthic Javascript library for Node and Browser
   archethic_lib_dart: ^1.0.4
 
@@ -87,6 +90,9 @@ dependencies:
   # With the Flutter safe_device package, you can easily implement security steps such as Jailbroken, root, emulator and fake location detection.
   safe_device: ^1.0.9
 
+  # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
+  share_plus: ^3.0.4
+  
   # Flutter plugin for reading and writing simple key-value pairs. Wraps NSUserDefaults on iOS and SharedPreferences on Android
   shared_preferences: ^2.0.11
 
