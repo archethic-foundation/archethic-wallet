@@ -97,7 +97,7 @@ class _TxListWidgetState extends State<TxListWidget> {
           ],
         ),
         Container(
-          height: MediaQuery.of(context).size.height * 0.58,
+          height: MediaQuery.of(context).size.height * 0.45,
           color: Colors.transparent,
           width: MediaQuery.of(context).size.width,
           child: Padding(

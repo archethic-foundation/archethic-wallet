@@ -6,6 +6,7 @@ import 'dart:async';
 // Flutter imports:
 import 'package:archethic_wallet/ui/widgets/chart_sheet.dart';
 import 'package:archethic_wallet/ui/widgets/receive_sheet.dart';
+import 'package:archethic_wallet/ui/widgets/transaction_chain_explorer_sheet.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -424,8 +425,53 @@ class _AppHomePageState extends State<AppHomePage>
                           ],
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
+                        Divider(),
+                        InkWell(
+                          onTap: () {
+                            Sheets.showAppHeightNineSheet(
+                                context: context,
+                                widget: TransactionChainExplorerSheet());
+                          },
+                          child: Ink(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10.0, top: 10, bottom: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                          AppLocalization.of(context)!
+                                              .transactionChainExplorerHeader,
+                                          style: AppStyles
+                                              .textStyleSize16W700Primary(
+                                                  context)),
+                                      Text(
+                                          AppLocalization.of(context)!
+                                              .transactionChainExplorerDesc,
+                                          style: AppStyles
+                                              .textStyleSize12W100Primary(
+                                                  context)),
+                                    ],
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward_ios_rounded,
+                                    size: 18,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Divider(),
                         const TxListWidget(),
                       ],
                     ),

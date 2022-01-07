@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-01-07T18:04:43.114248",
+  "@@last_modified": "2022-01-07T22:42:09.731401",
   "welcomeText": "Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -1262,6 +1262,24 @@
   },
   "chartOptionLabel24h": "24h",
   "@chartOptionLabel24h": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionChainExplorerHeader": "Transaction Chain Explorer",
+  "@transactionChainExplorerHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionChainExplorerDesc": "Explore each transaction stored in your chain",
+  "@transactionChainExplorerDesc": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionChainExplorerLastAddress": "Last address",
+  "@transactionChainExplorerLastAddress": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

@@ -96,7 +96,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                           UIUtil.showSnackbar('Address copied', context);
                         },
                         child: Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(15.0),
                           child: Material(
                             color: StateContainer.of(context)
                                 .curTheme
@@ -104,7 +104,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                             borderRadius: BorderRadius.circular(16),
                             child: SizedBox(
                               child: Padding(
-                                padding: const EdgeInsets.all(16.0),
+                                padding: const EdgeInsets.all(5.0),
                                 child: SingleChildScrollView(
                                   child: Column(
                                     crossAxisAlignment:
@@ -158,7 +158,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                                         .substring(0, 16),
                                                     context),
                                                 style: AppStyles
-                                                    .textStyleSize14W100Primary(
+                                                    .textStyleSize12W100Primary(
                                                         context)),
                                             AutoSizeText(
                                                 CaseChange.toUpperCase(
@@ -168,7 +168,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                                         .substring(16, 32),
                                                     context),
                                                 style: AppStyles
-                                                    .textStyleSize14W100Primary(
+                                                    .textStyleSize12W100Primary(
                                                         context)),
                                             AutoSizeText(
                                                 CaseChange.toUpperCase(
@@ -178,7 +178,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                                         .substring(32, 48),
                                                     context),
                                                 style: AppStyles
-                                                    .textStyleSize14W100Primary(
+                                                    .textStyleSize12W100Primary(
                                                         context)),
                                             AutoSizeText(
                                                 CaseChange.toUpperCase(
@@ -188,7 +188,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                                         .substring(48),
                                                     context),
                                                 style: AppStyles
-                                                    .textStyleSize14W100Primary(
+                                                    .textStyleSize12W100Primary(
                                                         context)),
                                           ],
                                         ),

@@ -1265,5 +1265,23 @@
 	  "type": "text",
 	  "placeholders_order": [],
 	  "placeholders": {}
+	},
+	"transactionChainExplorerHeader": "Transaction Chain Explorer",
+	"@transactionChainExplorerHeader": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionChainExplorerDesc": "Explore each transaction stored in your chain",
+	"@transactionChainExplorerDesc": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionChainExplorerLastAddress": "Last address",
+	"@transactionChainExplorerLastAddress": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	}
 }

@@ -959,6 +959,21 @@ class AppLocalization {
   String get chartOptionLabel24h {
     return Intl.message('24h', name: 'chartOptionLabel24h');
   }
+
+  String get transactionChainExplorerHeader {
+    return Intl.message('Transaction Chain Explorer',
+        name: 'transactionChainExplorerHeader');
+  }
+
+  String get transactionChainExplorerDesc {
+    return Intl.message('Explore each transaction stored in your chain',
+        name: 'transactionChainExplorerDesc');
+  }
+
+  String get transactionChainExplorerLastAddress {
+    return Intl.message('Last address',
+        name: 'transactionChainExplorerLastAddress');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {

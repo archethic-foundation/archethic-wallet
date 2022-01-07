@@ -434,8 +434,6 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                                 : AppLocalization.of(context)!
                                                     .add,
                                             Dimens.BUTTON_TOP_DIMENS,
-                                            icon: Icon(Icons
-                                                .add_circle_outline_outlined),
                                             onPressed: () async {
                                           validRequest = _validateRequest();
                                           String _to =

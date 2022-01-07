@@ -96,6 +96,9 @@ dependencies:
   # Flutter plugin for reading and writing simple key-value pairs. Wraps NSUserDefaults on iOS and SharedPreferences on Android
   shared_preferences: ^2.0.11
 
+  # A package to help you build highly customisable timelines with Flutter.
+  timeline_tile: ^2.0.0
+
   # String validation and sanitization for Dart
   validators: ^3.0.0
 

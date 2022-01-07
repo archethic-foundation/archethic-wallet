@@ -1,0 +1,19 @@
+ARCHEThic Wallet - Version beta 0.0.95
+
+🚀 Features
+- Add chart sheet (first version... lot of works yet) (Web app + Mobile)
+- Add Transaction Chain Explorer (first version... lot of works yet) (Web app + Mobile)
+
+👷‍♂️ Enhancements
+- Some stuffs with UI (thank you Cryptomage for all the comments and proposals) (Web app + Mobile)
+- Receive sheet : add copy and share buttons
+
+🐛 Bugfixes
+- Fix French Text (Thx Kevin Bennar & Roman Ingardeniana)
+- Notarize macOS app
+
+Link to android and macOS version : https://github.com/archethic-foundation/archethic_mobile_wallet/releases/tag/beta_channel
+Link to Web app : https://reddwarf03.github.io/archethic_web/index.html
+Link to iOS version : Soon
+
+This app is under development and works on testnet only. Community feedback helps improve the app
