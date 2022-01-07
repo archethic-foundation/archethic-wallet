@@ -1,6 +1,12 @@
-# iod
+# ios
+cd ios
 flutter build ios
+fastlane beta
 # android
 flutter build apk --split-per-abi
 # web
 flutter build web --web-renderer canvaskit --release
+# macos
+cd macos
+flutter build macos
+Xcode : notarize App : Archive/Distribute app/Deveoper ID/Upload/Automatically signfastlan
