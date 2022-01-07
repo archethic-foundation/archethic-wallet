@@ -6,8 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/ui/util/routes.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/ui/util/routes.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class Sheets {

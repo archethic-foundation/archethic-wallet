@@ -6,10 +6,10 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart' show NftBalance;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/address.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/model/address.dart';
+import 'package:archethic_wallet/styles.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class NftListWidget {

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_wallet/appstate_container.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppStyles {
@@ -205,10 +205,28 @@ class AppStyles {
     );
   }
 
+  static TextStyle textStyleSize16W100PositiveValue(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.size16,
+      fontWeight: FontWeight.w800,
+      color: StateContainer.of(context).curTheme.positiveValue,
+    );
+  }
+
   static TextStyle textStyleSize12W100NegativeValue(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size12,
+      fontWeight: FontWeight.w800,
+      color: StateContainer.of(context).curTheme.negativeValue,
+    );
+  }
+
+  static TextStyle textStyleSize16W100NegativeValue(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w800,
       color: StateContainer.of(context).curTheme.negativeValue,
     );

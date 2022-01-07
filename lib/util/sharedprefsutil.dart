@@ -7,16 +7,16 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/global_var.dart';
-import 'package:archethic_mobile_wallet/model/authentication_method.dart';
-import 'package:archethic_mobile_wallet/model/available_currency.dart';
-import 'package:archethic_mobile_wallet/model/available_language.dart';
-import 'package:archethic_mobile_wallet/model/available_themes.dart';
-import 'package:archethic_mobile_wallet/model/device_lock_timeout.dart';
-import 'package:archethic_mobile_wallet/model/vault.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/util/encrypt.dart';
-import 'package:archethic_mobile_wallet/util/random_util.dart';
+import 'package:archethic_wallet/global_var.dart';
+import 'package:archethic_wallet/model/authentication_method.dart';
+import 'package:archethic_wallet/model/available_currency.dart';
+import 'package:archethic_wallet/model/available_language.dart';
+import 'package:archethic_wallet/model/available_themes.dart';
+import 'package:archethic_wallet/model/device_lock_timeout.dart';
+import 'package:archethic_wallet/model/vault.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/util/encrypt.dart';
+import 'package:archethic_wallet/util/random_util.dart';
 
 /// Singleton wrapper for shared preferences
 class SharedPrefsUtil {

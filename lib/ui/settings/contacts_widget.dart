@@ -13,18 +13,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/bus/events.dart';
-import 'package:archethic_mobile_wallet/dimens.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/data/appdb.dart';
-import 'package:archethic_mobile_wallet/model/data/hiveDB.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/contacts/add_contact.dart';
-import 'package:archethic_mobile_wallet/ui/contacts/contact_details.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/bus/events.dart';
+import 'package:archethic_wallet/dimens.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/model/data/appdb.dart';
+import 'package:archethic_wallet/model/data/hiveDB.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/contacts/add_contact.dart';
+import 'package:archethic_wallet/ui/contacts/contact_details.dart';
+import 'package:archethic_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
 
 class ContactsList extends StatefulWidget {
   ContactsList(this.contactsController, this.contactsOpen);

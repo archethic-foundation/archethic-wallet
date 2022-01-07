@@ -6,11 +6,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/model/setting_item.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/model/setting_item.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/util/ui_util.dart';
+import 'package:archethic_wallet/ui/widgets/icon_widget.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppSettings {

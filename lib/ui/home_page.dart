@@ -4,37 +4,34 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_mobile_wallet/ui/widgets/buy_sheet.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
+import 'package:archethic_wallet/ui/widgets/chart_sheet.dart';
+import 'package:archethic_wallet/ui/widgets/receive_sheet.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/bus/events.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/settings/settings_drawer.dart';
-import 'package:archethic_mobile_wallet/ui/transfer/transfer_uco_sheet.dart';
-import 'package:archethic_mobile_wallet/ui/util/routes.dart';
-import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/balance_infos.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/custom_rect_tween.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/hero_dialog_route.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/tx_list.dart';
-import 'package:archethic_mobile_wallet/util/caseconverter.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/bus/events.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/settings/settings_drawer.dart';
+import 'package:archethic_wallet/ui/transfer/transfer_uco_sheet.dart';
+import 'package:archethic_wallet/ui/util/routes.dart';
+import 'package:archethic_wallet/ui/util/ui_util.dart';
+import 'package:archethic_wallet/ui/widgets/balance_infos.dart';
+import 'package:archethic_wallet/ui/widgets/buy_sheet.dart';
+import 'package:archethic_wallet/ui/widgets/dialog.dart';
+import 'package:archethic_wallet/ui/widgets/icon_widget.dart';
+import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/ui/widgets/tx_list.dart';
+import 'package:archethic_wallet/util/caseconverter.dart';
+import 'package:archethic_wallet/util/sharedprefsutil.dart';
 
 class AppHomePage extends StatefulWidget {
   const AppHomePage() : super();
@@ -75,13 +72,17 @@ class _AppHomePageState extends State<AppHomePage>
     });
   }
 
+  Future<void> _checkUsb() async {
+    if (kIsWeb) {}
+  }
+
   @override
   void initState() {
     super.initState();
 
     _displayReleaseNote = false;
     _checkVersionApp();
-
+    _checkUsb();
     _registerBus();
     WidgetsBinding.instance!.addObserver(this);
 
@@ -164,6 +165,7 @@ class _AppHomePageState extends State<AppHomePage>
         StateContainer.of(context).recentTransactionsLoading = true;
 
         _startAnimation();
+
         StateContainer.of(context).requestUpdate(account: event.account);
         _disposeAnimation();
 
@@ -278,6 +280,12 @@ class _AppHomePageState extends State<AppHomePage>
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
+        actions: [
+          Text(AppLocalization.of(context)!.environment,
+              style: TextStyle(
+                  color: Colors.red[900], fontWeight: FontWeight.w900)),
+          const SizedBox(width: 20),
+        ],
         iconTheme:
             IconThemeData(color: StateContainer.of(context).curTheme.primary),
       ),
@@ -339,40 +347,80 @@ class _AppHomePageState extends State<AppHomePage>
                                                   StateContainer.of(context)
                                                       .curCurrency));
                                     },
-                                    child: buildIconDataWidget(
-                                        context,
-                                        Icons.arrow_circle_up_outlined,
-                                        40,
-                                        40))),
-                            Container(
-                                child: InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        HeroDialogRoute(
-                                          builder: (context) => Center(
-                                            child: _QrCodePopupCard(),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: Hero(
-                                        tag: 'qrcode',
-                                        child: buildIconDataWidget(
+                                    child: Column(
+                                      children: [
+                                        buildIconDataWidget(
                                             context,
-                                            Icons.arrow_circle_down_outlined,
+                                            Icons.arrow_circle_up_outlined,
                                             40,
-                                            40)))),
+                                            40),
+                                        SizedBox(height: 5),
+                                        Text(AppLocalization.of(context)!.send,
+                                            style: AppStyles
+                                                .textStyleSize10W100Primary(
+                                                    context)),
+                                      ],
+                                    ))),
+                            Container(
+                              child: InkWell(
+                                onTap: () {
+                                  Sheets.showAppHeightNineSheet(
+                                      context: context, widget: ReceiveSheet());
+                                },
+                                child: Column(
+                                  children: [
+                                    buildIconDataWidget(
+                                        context,
+                                        Icons.arrow_circle_down_outlined,
+                                        40,
+                                        40),
+                                    SizedBox(height: 5),
+                                    Text(AppLocalization.of(context)!.receive,
+                                        style: AppStyles
+                                            .textStyleSize10W100Primary(
+                                                context)),
+                                  ],
+                                ),
+                              ),
+                            ),
                             Container(
                                 child: InkWell(
                                     onTap: () {
                                       Sheets.showAppHeightNineSheet(
                                           context: context, widget: BuySheet());
                                     },
-                                    child: buildIconDataWidget(
-                                        context,
-                                        Icons.add_circle_outline_outlined,
-                                        40,
-                                        40))),
+                                    child: Column(
+                                      children: [
+                                        buildIconDataWidget(
+                                            context,
+                                            Icons.add_circle_outline_outlined,
+                                            40,
+                                            40),
+                                        SizedBox(height: 5),
+                                        Text(AppLocalization.of(context)!.buy,
+                                            style: AppStyles
+                                                .textStyleSize10W100Primary(
+                                                    context)),
+                                      ],
+                                    ))),
+                            Container(
+                                child: InkWell(
+                                    onTap: () {
+                                      Sheets.showAppHeightNineSheet(
+                                          context: context,
+                                          widget: ChartSheet());
+                                    },
+                                    child: Column(
+                                      children: [
+                                        buildIconDataWidget(
+                                            context, Icons.show_chart, 40, 40),
+                                        SizedBox(height: 5),
+                                        Text(AppLocalization.of(context)!.chart,
+                                            style: AppStyles
+                                                .textStyleSize10W100Primary(
+                                                    context)),
+                                      ],
+                                    ))),
                           ],
                         ),
                         const SizedBox(
@@ -405,121 +453,5 @@ class _AppHomePageState extends State<AppHomePage>
         await sl.get<SharedPrefsUtil>().setVersionApp(packageInfo.version);
       });
     });
-  }
-}
-
-class _QrCodePopupCard extends StatelessWidget {
-  const _QrCodePopupCard({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Hero(
-      tag: 'qrcode',
-      createRectTween: (begin, end) {
-        return CustomRectTween(begin: begin!, end: end!);
-      },
-      child: TextButton(
-        onPressed: () {
-          Clipboard.setData(
-              ClipboardData(text: StateContainer.of(context).wallet!.address));
-          UIUtil.showSnackbar('Address copied', context);
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Material(
-            color: StateContainer.of(context).curTheme.backgroundDarkest,
-            borderRadius: BorderRadius.circular(16),
-            child: SizedBox(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 200,
-                        margin: const EdgeInsets.all(8),
-                        alignment: Alignment.center,
-                        child: Text(
-                          AppLocalization.of(context)!.addressInfos,
-                          style: AppStyles.textStyleSize16W700Primary(context),
-                        ),
-                      ),
-                      Container(
-                        width: 150,
-                        height: 150,
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: StateContainer.of(context)
-                              .curTheme
-                              .backgroundDarkest,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: QrImage(
-                          foregroundColor: Colors.white,
-                          data: StateContainer.of(context)
-                              .selectedAccount
-                              .lastAddress!,
-                          version: QrVersions.auto,
-                          size: 150.0,
-                          gapless: false,
-                        ),
-                      ),
-                      Container(
-                        width: 200,
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.all(8),
-                        child: Column(
-                          children: <Widget>[
-                            AutoSizeText(
-                                CaseChange.toUpperCase(
-                                    StateContainer.of(context)
-                                        .selectedAccount
-                                        .lastAddress!
-                                        .substring(0, 16),
-                                    context),
-                                style: AppStyles.textStyleSize14W100Primary(
-                                    context)),
-                            AutoSizeText(
-                                CaseChange.toUpperCase(
-                                    StateContainer.of(context)
-                                        .selectedAccount
-                                        .lastAddress!
-                                        .substring(16, 32),
-                                    context),
-                                style: AppStyles.textStyleSize14W100Primary(
-                                    context)),
-                            AutoSizeText(
-                                CaseChange.toUpperCase(
-                                    StateContainer.of(context)
-                                        .selectedAccount
-                                        .lastAddress!
-                                        .substring(32, 48),
-                                    context),
-                                style: AppStyles.textStyleSize14W100Primary(
-                                    context)),
-                            AutoSizeText(
-                                CaseChange.toUpperCase(
-                                    StateContainer.of(context)
-                                        .selectedAccount
-                                        .lastAddress!
-                                        .substring(48),
-                                    context),
-                                style: AppStyles.textStyleSize14W100Primary(
-                                    context)),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }

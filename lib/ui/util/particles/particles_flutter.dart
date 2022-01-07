@@ -7,7 +7,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/ui/util/particles/painter.dart';
+import 'package:archethic_wallet/ui/util/particles/painter.dart';
 
 class CircularParticle extends StatefulWidget {
   const CircularParticle({

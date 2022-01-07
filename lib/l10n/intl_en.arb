@@ -678,7 +678,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addressInfos": "Address informations",
+  "addressInfos": "My public address to receive funds",
   "@addressInfos": {
     "type": "text",
     "placeholders_order": [],
@@ -1193,5 +1193,77 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
-  }
+  },
+  "receive": "Receive",
+  "@receive": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "buy": "Buy",
+  "@buy": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+	"chart": "Chart",
+	"@chart": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"environment": "TESTNET",
+	"@environment": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"share": "Share",
+	"@share": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"chartOptionLabel14d": "14d",
+	"@chartOptionLabel14d": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"chartOptionLabel1y": "1y",
+	"@chartOptionLabel1y": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"chartOptionLabel200d": "200d",
+	"@chartOptionLabel200d": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"chartOptionLabel30d": "30d",
+	"@chartOptionLabel30d": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"chartOptionLabel60d": "60d",
+	"@chartOptionLabel60d": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"chartOptionLabel7d": "7d",
+	"@chartOptionLabel7d": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"chartOptionLabel24h": "24h",
+	"@chartOptionLabel24h": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	}
 }

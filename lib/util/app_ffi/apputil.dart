@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/data/appdb.dart';
-import 'package:archethic_mobile_wallet/model/data/hiveDB.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/model/data/appdb.dart';
+import 'package:archethic_wallet/model/data/hiveDB.dart';
+import 'package:archethic_wallet/service_locator.dart';
 
 class AppUtil {
   Future<void> loginAccount(String seed, BuildContext context,

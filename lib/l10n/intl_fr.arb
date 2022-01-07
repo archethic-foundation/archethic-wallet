@@ -594,7 +594,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"copy": "Copy",
+	"copy": "Copier",
 	"@copy": {
 		"type": "text",
 		"placeholders_order": [],
@@ -678,7 +678,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"addressInfos": "Informations sur l'adresse",
+	"addressInfos": "Mon adresse publique pour recevoir des fonds",
 	"@addressInfos": {
 		"type": "text",
 		"placeholders_order": [],
@@ -1193,5 +1193,77 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "receive": "Recevoir",
+  "@receive": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "buy": "Acheter",
+  "@buy": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "chart": "Cours",
+  "@chart": {
+	"type": "text",
+	"placeholders_order": [],
+	"placeholders": {}
+  },
+  "environment": "TESTNET",
+  "@environment": {
+	"type": "text",
+	"placeholders_order": [],
+	"placeholders": {}
+  },
+  "share": "Partager",
+  "@share": {
+	"type": "text",
+	"placeholders_order": [],
+	"placeholders": {}
+  },
+  "chartOptionLabel14d": "14j",
+  "@chartOptionLabel14d": {
+	"type": "text",
+	"placeholders_order": [],
+	"placeholders": {}
+  },
+  "chartOptionLabel1y": "1a",
+  "@chartOptionLabel1y": {
+	"type": "text",
+	"placeholders_order": [],
+	"placeholders": {}
+  },
+  "chartOptionLabel200d": "200j",
+  "@chartOptionLabel200d": {
+	"type": "text",
+	"placeholders_order": [],
+	"placeholders": {}
+  },
+  "chartOptionLabel30d": "30j",
+  "@chartOptionLabel30d": {
+	"type": "text",
+	"placeholders_order": [],
+	"placeholders": {}
+  },
+  "chartOptionLabel60d": "60j",
+  "@chartOptionLabel60d": {
+	"type": "text",
+	"placeholders_order": [],
+	"placeholders": {}
+  },
+  "chartOptionLabel7d": "7j",
+  "@chartOptionLabel7d": {
+	"type": "text",
+	"placeholders_order": [],
+	"placeholders": {}
+  },
+  "chartOptionLabel24h": "24h",
+  "@chartOptionLabel24h": {
+	"type": "text",
+	"placeholders_order": [],
+	"placeholders": {}
   }
 }

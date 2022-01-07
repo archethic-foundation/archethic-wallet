@@ -7,19 +7,19 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/dimens.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/data/appdb.dart';
-import 'package:archethic_mobile_wallet/model/vault.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/mnemonic_display.dart';
-import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
-import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
-import 'package:archethic_mobile_wallet/util/app_ffi/keys/mnemonics.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/dimens.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/model/data/appdb.dart';
+import 'package:archethic_wallet/model/vault.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_wallet/ui/widgets/icon_widget.dart';
+import 'package:archethic_wallet/ui/widgets/mnemonic_display.dart';
+import 'package:archethic_wallet/util/app_ffi/apputil.dart';
+import 'package:archethic_wallet/util/app_ffi/encrypt/crypter.dart';
+import 'package:archethic_wallet/util/app_ffi/keys/mnemonics.dart';
 
 class IntroBackupSeedPage extends StatefulWidget {
   const IntroBackupSeedPage({this.encryptedSeed}) : super();

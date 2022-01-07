@@ -5,23 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/dimens.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/authentication_method.dart';
-import 'package:archethic_mobile_wallet/model/vault.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/util/routes.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/yubikey_screen.dart';
-import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
-import 'package:archethic_mobile_wallet/util/biometrics.dart';
-import 'package:archethic_mobile_wallet/util/caseconverter.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/dimens.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/model/authentication_method.dart';
+import 'package:archethic_wallet/model/vault.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/util/routes.dart';
+import 'package:archethic_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_wallet/ui/widgets/dialog.dart';
+import 'package:archethic_wallet/ui/widgets/icon_widget.dart';
+import 'package:archethic_wallet/ui/widgets/pin_screen.dart';
+import 'package:archethic_wallet/ui/widgets/yubikey_screen.dart';
+import 'package:archethic_wallet/util/app_ffi/apputil.dart';
+import 'package:archethic_wallet/util/biometrics.dart';
+import 'package:archethic_wallet/util/caseconverter.dart';
+import 'package:archethic_wallet/util/sharedprefsutil.dart';
 
 class AppLockScreen extends StatefulWidget {
   @override

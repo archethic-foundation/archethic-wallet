@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/ui/themes/themes.dart';
+import 'package:archethic_wallet/ui/themes/themes.dart';
 
 class DarkTheme implements BaseTheme {
   @override

@@ -6,13 +6,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/transaction_infos.dart';
-import 'package:archethic_mobile_wallet/service/app_service.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/model/transaction_infos.dart';
+import 'package:archethic_wallet/service/app_service.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/widgets/icon_widget.dart';
 
 class TransactionInfosSheet extends StatefulWidget {
   final String txAddress;

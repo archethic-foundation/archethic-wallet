@@ -6,13 +6,13 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/model/data/appdb.dart';
-import 'package:archethic_mobile_wallet/model/vault.dart';
-import 'package:archethic_mobile_wallet/service/app_service.dart';
-import 'package:archethic_mobile_wallet/util/biometrics.dart';
-import 'package:archethic_mobile_wallet/util/hapticutil.dart';
-import 'package:archethic_mobile_wallet/util/nfc.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:archethic_wallet/model/data/appdb.dart';
+import 'package:archethic_wallet/model/vault.dart';
+import 'package:archethic_wallet/service/app_service.dart';
+import 'package:archethic_wallet/util/biometrics.dart';
+import 'package:archethic_wallet/util/hapticutil.dart';
+import 'package:archethic_wallet/util/nfc.dart';
+import 'package:archethic_wallet/util/sharedprefsutil.dart';
 
 GetIt sl = GetIt.instance;
 

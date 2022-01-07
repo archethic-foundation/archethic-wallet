@@ -13,25 +13,25 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/dimens.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/address.dart';
-import 'package:archethic_mobile_wallet/model/available_currency.dart';
-import 'package:archethic_mobile_wallet/model/data/appdb.dart';
-import 'package:archethic_mobile_wallet/model/data/hiveDB.dart';
-import 'package:archethic_mobile_wallet/service/app_service.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/transfer/transfer_confirm_sheet.dart';
-import 'package:archethic_mobile_wallet/ui/transfer/uco_transfer_list.dart';
-import 'package:archethic_mobile_wallet/ui/util/formatters.dart';
-import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/app_text_field.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
-import 'package:archethic_mobile_wallet/util/numberutil.dart';
-import 'package:archethic_mobile_wallet/util/user_data_util.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/dimens.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/model/address.dart';
+import 'package:archethic_wallet/model/available_currency.dart';
+import 'package:archethic_wallet/model/data/appdb.dart';
+import 'package:archethic_wallet/model/data/hiveDB.dart';
+import 'package:archethic_wallet/service/app_service.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/transfer/transfer_confirm_sheet.dart';
+import 'package:archethic_wallet/ui/transfer/uco_transfer_list.dart';
+import 'package:archethic_wallet/ui/util/formatters.dart';
+import 'package:archethic_wallet/ui/util/ui_util.dart';
+import 'package:archethic_wallet/ui/widgets/app_text_field.dart';
+import 'package:archethic_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/util/numberutil.dart';
+import 'package:archethic_wallet/util/user_data_util.dart';
 
 class TransferUcoSheet extends StatefulWidget {
   const TransferUcoSheet({
@@ -434,6 +434,8 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                                 : AppLocalization.of(context)!
                                                     .add,
                                             Dimens.BUTTON_TOP_DIMENS,
+                                            icon: Icon(Icons
+                                                .add_circle_outline_outlined),
                                             onPressed: () async {
                                           validRequest = _validateRequest();
                                           String _to =

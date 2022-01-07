@@ -2,7 +2,7 @@
 import 'package:bip39/bip39.dart' as bip39;
 
 // Project imports:
-import 'package:archethic_mobile_wallet/util/app_ffi/keys/seeds.dart';
+import 'package:archethic_wallet/util/app_ffi/keys/seeds.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppMnemomics {

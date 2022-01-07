@@ -9,15 +9,15 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/address.dart';
-import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/transaction_infos_sheet.dart';
-import 'package:archethic_mobile_wallet/util/hapticutil.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/model/address.dart';
+import 'package:archethic_wallet/model/recent_transaction.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/ui/widgets/transaction_infos_sheet.dart';
+import 'package:archethic_wallet/util/hapticutil.dart';
 
 class TxListWidget extends StatefulWidget {
   const TxListWidget();

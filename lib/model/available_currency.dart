@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/model/setting_item.dart';
+import 'package:archethic_wallet/model/setting_item.dart';
 
 enum AvailableCurrencyEnum {
   USD,

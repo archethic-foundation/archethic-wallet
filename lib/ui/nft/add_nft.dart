@@ -9,17 +9,17 @@ import 'package:flutter/services.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/dimens.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/service/app_service.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/nft/add_nft_confirm.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/app_text_field.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/dimens.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/service/app_service.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/nft/add_nft_confirm.dart';
+import 'package:archethic_wallet/ui/widgets/app_text_field.dart';
+import 'package:archethic_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/ui/widgets/tap_outside_unfocus.dart';
 
 class AddNFTSheet extends StatefulWidget {
   const AddNFTSheet({this.address}) : super();

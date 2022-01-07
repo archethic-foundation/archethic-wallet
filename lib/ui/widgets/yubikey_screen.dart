@@ -12,16 +12,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yubidart/yubidart.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/bus/otp_event.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/app_text_field.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
-import 'package:archethic_mobile_wallet/util/nfc.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/bus/otp_event.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/util/ui_util.dart';
+import 'package:archethic_wallet/ui/widgets/app_text_field.dart';
+import 'package:archethic_wallet/ui/widgets/icon_widget.dart';
+import 'package:archethic_wallet/util/nfc.dart';
+import 'package:archethic_wallet/util/sharedprefsutil.dart';
 
 class YubikeyScreen extends StatefulWidget {
   const YubikeyScreen({this.yubikeyScreenBackgroundColor});

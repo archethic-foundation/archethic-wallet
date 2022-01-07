@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_wallet/appstate_container.dart';
 
 Widget buildIconWidget(
     BuildContext context, String icon, double width, double height) {

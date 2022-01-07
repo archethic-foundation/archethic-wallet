@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/l10n/messages_all.dart';
-import 'package:archethic_mobile_wallet/model/available_language.dart';
+import 'package:archethic_wallet/l10n/messages_all.dart';
+import 'package:archethic_wallet/model/available_language.dart';
 
 /// Localization
 class AppLocalization {
@@ -617,7 +617,8 @@ class AppLocalization {
   }
 
   String get addressInfos {
-    return Intl.message('Address informations', name: 'addressInfos');
+    return Intl.message('My public address to receive funds',
+        name: 'addressInfos');
   }
 
   String get informations {
@@ -909,6 +910,54 @@ class AppLocalization {
 
   String get transactionsAllListHeader {
     return Intl.message('Transactions', name: 'transactionsAllListHeader');
+  }
+
+  String get receive {
+    return Intl.message('Receive', name: 'receive');
+  }
+
+  String get buy {
+    return Intl.message('Buy', name: 'buy');
+  }
+
+  String get chart {
+    return Intl.message('Chart', name: 'chart');
+  }
+
+  String get environment {
+    return Intl.message('TESTNET', name: 'environment');
+  }
+
+  String get share {
+    return Intl.message('Share', name: 'share');
+  }
+
+  String get chartOptionLabel14d {
+    return Intl.message('14d', name: 'chartOptionLabel14d');
+  }
+
+  String get chartOptionLabel1y {
+    return Intl.message('1y', name: 'chartOptionLabel1y');
+  }
+
+  String get chartOptionLabel200d {
+    return Intl.message('200d', name: 'chartOptionLabel200d');
+  }
+
+  String get chartOptionLabel30d {
+    return Intl.message('30d', name: 'chartOptionLabel30d');
+  }
+
+  String get chartOptionLabel60d {
+    return Intl.message('60d', name: 'chartOptionLabel60d');
+  }
+
+  String get chartOptionLabel7d {
+    return Intl.message('7d', name: 'chartOptionLabel7d');
+  }
+
+  String get chartOptionLabel24h {
+    return Intl.message('24h', name: 'chartOptionLabel24h');
   }
 }
 

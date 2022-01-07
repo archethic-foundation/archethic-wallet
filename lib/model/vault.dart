@@ -7,10 +7,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/util/encrypt.dart';
-import 'package:archethic_mobile_wallet/util/random_util.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/util/encrypt.dart';
+import 'package:archethic_wallet/util/random_util.dart';
+import 'package:archethic_wallet/util/sharedprefsutil.dart';
 
 // Singleton for keystore access methods in android/iOS
 class Vault {

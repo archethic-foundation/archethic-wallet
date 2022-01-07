@@ -7,7 +7,7 @@ import 'package:pointycastle/api.dart' show ParametersWithIV, KeyParameter;
 import 'package:pointycastle/stream/salsa20.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/util/helpers.dart';
+import 'package:archethic_wallet/util/helpers.dart';
 
 /*
  * Encryption using Salsa20 from pointycastle

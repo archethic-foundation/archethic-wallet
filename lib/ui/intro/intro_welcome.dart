@@ -7,16 +7,16 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart' show uint8ListToHex;
 import 'package:flutter_svg/svg.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/dimens.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/vault.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
-import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
-import 'package:archethic_mobile_wallet/util/app_ffi/keys/seeds.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/dimens.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/model/vault.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_wallet/util/app_ffi/apputil.dart';
+import 'package:archethic_wallet/util/app_ffi/encrypt/crypter.dart';
+import 'package:archethic_wallet/util/app_ffi/keys/seeds.dart';
 
 class IntroWelcomePage extends StatefulWidget {
   @override
@@ -52,24 +52,20 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
             child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) =>
                   SafeArea(
-                minimum: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.035,
-                  top: MediaQuery.of(context).size.height * 0.10,
-                ),
                 child: Column(
                   children: <Widget>[
                     Expanded(
                       child: SingleChildScrollView(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Container(
-                              width: double.infinity,
-                              height: MediaQuery.of(context).size.width * 5 / 8,
                               child: Center(
                                 child: Container(
+                                  padding: EdgeInsets.only(
+                                    top: 30.0,
+                                  ),
                                   child: SizedBox(
-                                    height: 300,
+                                    height: 200,
                                     child: kIsWeb
                                         ? Image.asset(
                                             StateContainer.of(context)
@@ -95,10 +91,12 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                                 ),
                               ),
                             ),
+                            const SizedBox(
+                              height: 30,
+                            ),
                             Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: smallScreen(context) ? 30 : 40,
-                                  vertical: 20),
+                              margin:
+                                  EdgeInsets.only(top: 20, right: 20, left: 20),
                               child: Text(
                                 AppLocalization.of(context)!.welcomeText,
                                 style: AppStyles.textStyleSize14W600Primary(

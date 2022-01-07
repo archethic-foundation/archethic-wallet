@@ -1,1197 +1,1269 @@
 {
-	"@@last_modified": "2021-11-07T17:33:43.139040",
-	"welcomeText": "インターネットオブトラストへようこそ。\n\nARCHEthicは、テクノロジーに対する人類の管理と、各個人のアイデンティティに対する管理に恩返しをします。",
+	"@@last_modified": "2021-12-07T12:33:16.270871",
+	"welcomeText": "Welcome to the Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
 	"@welcomeText": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"cancel": "キャンセル",
+	"cancel": "Cancel",
 	"@cancel": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"close": "閉じる",
+	"close": "Close",
 	"@close": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"confirm": "確認",
+	"confirm": "Confirm",
 	"@confirm": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"no": "いいえ",
+	"no": "No",
 	"@no": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"yes": "はい",
+	"yes": "Yes",
 	"@yes": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"send": "送信",
+	"send": "Send",
 	"@send": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"add": "追加",
+	"add": "Add",
 	"@add": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"update": "更新",
+	"update": "Update",
 	"@update": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"transferUCO": "UCOを転送する",
+	"transferUCO": "Send UCO",
 	"@transferUCO": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"transferNFT": "NFTを転送する",
+	"transferNFT": "Transfer NFT",
 	"@transferNFT": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"transferNFTName": "転送%1",
+	"transferNFTName": "Transfer %1",
 	"@transferNFTName": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"recentTransactionsHeader": "最近の取引",
+	"recentTransactionsHeader": "Recent transactions",
 	"@recentTransactionsHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"recentTransactionsNoTransactionYet": "まだ取引はありません",
+	"recentTransactionsNoTransactionYet": "No transaction yet",
 	"@recentTransactionsNoTransactionYet": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"addressCopied": "コピーされたアドレス",
+	"addressCopied": "Address Copied",
 	"@addressCopied": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"copyAddress": "コピーアドレス",
+	"copyAddress": "Copy Address",
 	"@copyAddress": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"addressHint": "住所を入力してください",
+	"addressHint": "Enter Address",
 	"@addressHint": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"scanQrCode": "QRコードをスキャン",
+	"scanQrCode": "Scan QR Code",
 	"@scanQrCode": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"qrInvalidAddress": "QRコードに有効な宛先が含まれていません",
+	"qrInvalidAddress": "QR code does not contain a valid destination",
 	"@qrInvalidAddress": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"qrInvalidPermissions": "QRコードをスキャンするためのカメラ権限を付与してください",
+	"qrInvalidPermissions": "Please Grant Camera Permissions to scan QR Codes",
 	"@qrInvalidPermissions": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"qrUnknownError": "QRコードを読み取れませんでした",
+	"qrUnknownError": "Could not Read QR Code",
 	"@qrUnknownError": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"customUrlHeader": "カスタムURL",
+	"customUrlHeader": "Custom URLs",
 	"@customUrlHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"customUrlDesc": "Define the endpoint",
 	"@customUrlDesc": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"walletFAQHeader": "ウォレットに関するFAQ",
+	"walletFAQHeader": "Wallet FAQ",
 	"@walletFAQHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"walletFAQDesc": "質問があります？最初にここをチェックしてください！",
+	"walletFAQDesc": "Have a question? Check here first!",
 	"@walletFAQDesc": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"enterEndpoint": "Enter an endpoint",
 	"@enterEndpoint": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"removeContact": "連絡先を削除します",
+	"removeContact": "Remove Contact",
 	"@removeContact": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"removeContactConfirmation": "%1を削除してもよろしいですか？",
+	"removeContactConfirmation": "Are you sure you want to delete %1?",
 	"@removeContactConfirmation": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"addressBookHeader": "住所録",
+	"addressBookHeader": "Address book",
 	"@addressBookHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"contactHeader": "接触",
+	"contactHeader": "Contact",
 	"@contactHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"addressBookDesc": "頻繁に使用するアドレスを作成および管理する",
+	"addressBookDesc": "Create and manage frequently-used addresses",
 	"@addressBookDesc": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"addContact": "連絡先を追加",
+	"addContact": "Add Contact",
 	"@addContact": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"contactNameHint": "名前を入力@",
+	"contactNameHint": "Enter a Name @",
 	"@contactNameHint": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"contactInvalid": "連絡先名が無効です",
+	"contactInvalid": "Invalid Contact Name",
 	"@contactInvalid": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"contactAdded": "%1が名簿に追加されました。",
+	"contactAdded": "%1 added to address book.",
 	"@contactAdded": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"contactRemoved": "%1が名簿から削除されました！",
+	"contactRemoved": "%1 has been removed from address book!",
 	"@contactRemoved": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"contactNameMissing": "この連絡先の名前を選択してください",
+	"contactNameMissing": "Choose a Name for this contact",
 	"@contactNameMissing": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"contactExists": "連絡先は既に存在します",
+	"contactExists": "Contact Already Exists",
 	"@contactExists": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"transferSuccess": "トランザクションは正常に送信されました",
+	"transferSuccess": "The transaction was sent successfully",
 	"@transferSuccess": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"transfering": "転送",
+	"transfering": "Transfering",
 	"@transfering": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"getOption": "Get",
 	"@getOption": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"deleteOption": "削除",
+	"deleteOption": "Delete",
 	"@deleteOption": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"sendError": "エラーが発生しました。後でもう一度お試しください。",
+	"sendError": "An error occurred. Try again later.",
 	"@sendError": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"enterAmount": "金額を入力します",
+	"enterAmount": "Enter Amount",
 	"@enterAmount": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"enterAddress": "住所を入力してください",
+	"enterAddress": "Enter Address",
 	"@enterAddress": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"invalidAddress": "入力した住所が無効でした",
+	"invalidAddress": "Address entered was invalid",
 	"@invalidAddress": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"addressMissing": "住所を入力してください",
+	"addressMissing": "Please Enter an Address",
 	"@addressMissing": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"amountMissing": "金額を入力してください",
+	"amountMissing": "Please Enter an Amount",
 	"@amountMissing": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"minimumSend": "最小送信量は%1UCOです",
+	"minimumSend": "Minimum send amount is %1 UCO",
 	"@minimumSend": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"insufficientBalance": "残高不足",
+	"insufficientBalance": "Insufficient Balance",
 	"@insufficientBalance": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"fees": "Fees",
 	"@fees": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"pinCreateTitle": "Create a 6-digit pin",
 	"@pinCreateTitle": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"pinConfirmTitle": "Confirm your pin",
 	"@pinConfirmTitle": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"pinEnterTitle": "Enter pin",
 	"@pinEnterTitle": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"pinConfirmError": "Pins do not match",
 	"@pinConfirmError": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"pinInvalid": "Invalid PIN entered",
+	"pinInvalid": "Invalid pin entered",
 	"@pinInvalid": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"authMethod": "Auth. Method",
 	"@authMethod": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"pinMethod": "PIN",
 	"@pinMethod": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"biometricsMethod": "生体認証",
+	"biometricsMethod": "Biometrics",
 	"@biometricsMethod": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"currency": "Currency",
 	"@currency": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"changeCurrencyHeader": "通貨",
+	"changeCurrencyHeader": "Currency",
 	"@changeCurrencyHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"changeCurrencyDesc": "UCOと一緒に表示する法定通貨を選択します",
+	"changeCurrencyDesc": "Select the fiat currency you would like to display alongside UCO",
 	"@changeCurrencyDesc": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"language": "Language",
 	"@language": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"logout": "Logout",
 	"@logout": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"rootWarning": "お使いのデバイスが「ルート化」、「ジェイルブレイク」、またはセキュリティを危険にさらすような方法で変更されているようです。続行する前に、デバイスを元の状態にリセットすることをお勧めします。",
+	"rootWarning": "It appears your device is \"rooted\", \"jailbroken\", or modified in a way that compromises security. It is recommended that you reset your device to its original state before proceeding.",
 	"@rootWarning": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"iUnderstandTheRisks": "私はリスクを理解している",
+	"iUnderstandTheRisks": "I Understand the Risks",
 	"@iUnderstandTheRisks": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"exit": "出口",
+	"exit": "Exit",
 	"@exit": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"warning": "警告",
+	"warning": "Warning",
 	"@warning": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"logoutDetail": "ログアウトすると、このデバイスからすべてのARCHEthicWallet関連のデータが削除されます。あなたの秘密のフレーズがバックアップされていない場合、あなたはあなたの財布に二度とアクセスすることができなくなります",
+	"logoutDetail": "Logging out will remove all ARCHEthic Wallet-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again",
 	"@logoutDetail": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"logoutAction": "情報の削除とログアウト",
+	"logoutAction": "Delete Infos and Logout",
 	"@logoutAction": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"logoutAreYouSure": "本気ですか？",
+	"logoutAreYouSure": "Are you sure?",
 	"@logoutAreYouSure": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"logoutReassurance": "シードをバックアップしている限り、心配する必要はありません。",
+	"logoutReassurance": "As long as you've backed up your seed you have nothing to worry about.",
 	"@logoutReassurance": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"preferences": "設定",
+	"preferences": "Preferences",
 	"@preferences": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"manage": "管理する",
+	"manage": "Manage",
 	"@manage": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"fingerprintSeedBackup": "Authenticate to backup seed.",
 	"@fingerprintSeedBackup": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"pinSecretPhraseBackup": "秘密のフレーズをバックアップするためにPINを入力してください",
+	"pinSecretPhraseBackup": "Enter PIN to Backup Secret Phrase",
 	"@pinSecretPhraseBackup": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"systemDefault": "システムのデフォルト",
+	"systemDefault": "System Default",
 	"@systemDefault": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"unlockPin": "PINを入力してロックを解除します",
+	"unlockPin": "Enter PIN to Unlock",
 	"@unlockPin": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"unlockBiometrics": "ロックを解除するための認証",
+	"unlockBiometrics": "Authenticate to Unlock",
 	"@unlockBiometrics": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"confirmBiometrics": "確認のために認証する",
+	"confirmBiometrics": "Authenticate to Confirm",
 	"@confirmBiometrics": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"lockAppSetting": "Auth. on Launch",
 	"@lockAppSetting": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"locked": "Locked",
 	"@locked": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"unlock": "ロック解除",
+	"unlock": "Unlock",
 	"@unlock": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"tooManyFailedAttempts": "ロック解除の試行に失敗した回数が多すぎます。",
+	"tooManyFailedAttempts": "Too many failed unlock attempts.",
 	"@tooManyFailedAttempts": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"securityHeader": "Security",
 	"@securityHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"aboutHeader": "About",
 	"@aboutHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"aboutGeneralTermsAndConditions": "一般利用規約",
+	"aboutGeneralTermsAndConditions": "General Terms & Conditions",
 	"@aboutGeneralTermsAndConditions": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"aboutWalletServiceTerms": "ウォレットサービス規約",
+	"aboutWalletServiceTerms": "Wallet Service Terms",
 	"@aboutWalletServiceTerms": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"aboutPrivacyPolicy": "個人情報保護方針",
+	"aboutPrivacyPolicy": "Privacy Policy",
 	"@aboutPrivacyPolicy": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-  "labLinkHeader": "Lab",
-  "@labLinkHeader": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "labLinkDesc": "Latest tech and product updates on the Archethic ecosystem",
-  "@labLinkDesc": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-	"autoLockHeader": "オートロック",
+	  "labLinkHeader": "Lab",
+	"@labLinkHeader": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"labLinkDesc": "Latest tech and product updates on the Archethic ecosystem",
+	"@labLinkDesc": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"autoLockHeader": "Auto Lock",
 	"@autoLockHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"xMinutes": "%1分後",
+	"xMinutes": "After %1 minutes",
 	"@xMinutes": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"xMinute": "%1分後",
+	"xMinute": "After %1 minute",
 	"@xMinute": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"instantly": "瞬時に",
+	"instantly": "Instantly",
 	"@instantly": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"defaultAccountName": "メインアカウント",
+	"defaultAccountName": "Main Account",
 	"@defaultAccountName": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"tapToReveal": "タップで表示",
+	"tapToReveal": "Tap to reveal",
 	"@tapToReveal": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"tapToHide": "タップして隠す",
+	"tapToHide": "Tap to hide",
 	"@tapToHide": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"pinPadShuffle": "PINパッドシャッフル",
+	"pinPadShuffle": "PIN Pad Shuffle",
 	"@pinPadShuffle": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"copy": "Copy",
 	"@copy": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"secretWarning": "デバイスを紛失したり、アプリケーションをアンインストールしたりした場合は、資金を回収するために秘密のフレーズが必要になります。",
+	"secretWarning": "If you lose your device or uninstall the application, you'll need your secret phrase to recover your funds!",
 	"@secretWarning": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"importSecretPhrase": "シークレットフレーズのインポート",
+	"importSecretPhrase": "Import Secret Phrase",
 	"@importSecretPhrase": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"importSecretPhraseHint": "以下に24語の秘密のフレーズを入力してください。各単語はスペースで区切る必要があります。",
+	"importSecretPhraseHint": "Please enter your 24-word secret phrase below. Each word should be separated by a space.",
 	"@importSecretPhraseHint": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"qrMnemonicError": "QRに有効な秘密のフレーズが含まれていません",
+	"qrMnemonicError": "QR does not contain a valid secret phrase",
 	"@qrMnemonicError": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"mnemonicInvalidWord": "%1は有効な単語ではありません",
+	"mnemonicInvalidWord": "%1 is not a valid word",
 	"@mnemonicInvalidWord": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"mnemonicSizeError": "秘密のフレーズには24語しか含めることができません",
+	"mnemonicSizeError": "Secret phrase may only contain 24 words",
 	"@mnemonicSizeError": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"importWallet": "ウォレットをインポートする",
+	"importWallet": "Import Wallet",
 	"@importWallet": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"newWallet": "新しいウォレット",
+	"newWallet": "New Wallet",
 	"@newWallet": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"understandButton": "了解しました。",
+	"understandButton": "I understand",
 	"@understandButton": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"ackBackedUp": "あなたはあなたの秘密のフレーズをバックアップしたと確信していますか？",
+	"ackBackedUp": "Are you sure that you've backed up your secret phrase?",
 	"@ackBackedUp": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"backupSecretPhrase": "バックアップの秘密のフレーズ",
+	"backupSecretPhrase": "Backup Secret Phrase",
 	"@backupSecretPhrase": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"releaseNoteHeader": "新着情報",
+	"releaseNoteHeader": "What's new",
 	"@releaseNoteHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"ok": "Ok",
 	"@ok": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"addressInfos": "住所情報",
+	"addressInfos": "My public address to receive funds",
 	"@addressInfos": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"informations": "Informations",
 	"@informations": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"nodesHeader": "ノード",
+	"nodesHeader": "Nodes",
 	"@nodesHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"nodesHeaderDesc": "ノード情報",
+	"nodesHeaderDesc": "Nodes informations",
 	"@nodesHeaderDesc": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"addNFT": "NFTを追加する",
+	"addNFT": "Add NFT",
 	"@addNFT": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"addNFTHeader": "NFTを追加する",
+	"addNFTHeader": "Add NFT",
 	"@addNFTHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"addNFTConfirmationMessage": "次のNFTの作成を確認しますか？",
+	"addNFTConfirmationMessage": "Do you confirm the creation of the following NFT?",
 	"@addNFTConfirmationMessage": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"nftHeader": "NFT",
 	"@nftHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"nftHeaderDesc": "非財務トークンを管理する",
+	"nftHeaderDesc": "Manage your Non Financial Tokens",
 	"@nftHeaderDesc": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"nftNameHint": "名前を入力してください",
+	"nftNameHint": "Enter a name",
 	"@nftNameHint": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"nftName": "Name: ",
 	"@nftName": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"nftInitialSupplyHint": "初期供給を入力してください",
+	"nftInitialSupplyHint": "Enter an initial supply",
 	"@nftInitialSupplyHint": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"nftNameMissing": "NFTの名前を選択してください",
+	"nftNameMissing": "Choose a Name for the NFT",
 	"@nftNameMissing": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"nftInitialSupply": "初期供給：",
+	"nftInitialSupply": "Initial supply: ",
 	"@nftInitialSupply": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"nftInitialSupplyMissing": "NFTの初期供給を選択します",
+	"nftInitialSupplyMissing": "Choose an initial supply for the NFT",
 	"@nftInitialSupplyMissing": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"nftInitialSupplyPositive": "初期供給は> 0である必要があります",
+	"nftInitialSupplyPositive": "The initial supply should be > 0",
 	"@nftInitialSupplyPositive": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"nodeNumber": "ノードの数：",
+	"nodeNumber": "Nb of nodes : ",
 	"@nodeNumber": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"nodeFirstPublicKey": "最初の公開鍵：",
+	"nodeFirstPublicKey": "First public key : ",
 	"@nodeFirstPublicKey": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"nodeLastPublicKey": "Last public key : ",
 	"@nodeLastPublicKey": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"nodeIP": "IP : ",
 	"@nodeIP": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"nodeGeoPatch": "Geo patch : ",
 	"@nodeGeoPatch": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"nodeNetworkPatch": "Network patch : ",
 	"@nodeNetworkPatch": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"nodeAverageAvailability": "平均可用性：",
+	"nodeAverageAvailability": "Average availability : ",
 	"@nodeAverageAvailability": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"nodeAuthorized": "承認済み：",
+	"nodeAuthorized": "Authorized : ",
 	"@nodeAuthorized": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"nodeRewardAddress": "特典アドレス：",
+	"nodeRewardAddress": "Reward address : ",
 	"@nodeRewardAddress": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"txListFrom": "から ：",
+	"txListFrom": "From : ",
 	"@txListFrom": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"txListTo": "に ：",
+	"txListTo": "To : ",
 	"@txListTo": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"txListDate": "Date : ",
 	"@txListDate": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"txListFees": "料金：",
+	"txListFees": "Fees : ",
 	"@txListFees": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"txListTypeTransactionLabelNewNFT": "New NFT",
 	"@txListTypeTransactionLabelNewNFT": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"txListTypeTransactionLabelReceive": "Received the ",
 	"@txListTypeTransactionLabelReceive": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"txListTypeTransactionLabelSend": "Sent the ",
 	"@txListTypeTransactionLabelSend": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"recoveryPhrase": "回復フレーズ",
+	"recoveryPhrase": "Recovery Phrase",
 	"@recoveryPhrase": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"iveBackedItUp": "私はそれをバックアップしました",
+	"iveBackedItUp": "I've Backed It Up",
 	"@iveBackedItUp": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"backupSafetyLabel1": "次の画面に、回復フレーズが表示されます。",
+	"backupSafetyLabel1": "On the next screen, you will see your recovery phrase.",
 	"@backupSafetyLabel1": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"backupSafetyLabel2": "回復フレーズとは何ですか？",
+	"backupSafetyLabel2": "What is a recovery phrase?",
 	"@backupSafetyLabel2": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"backupSafetyLabel3": "A recovery phrase is essentially a human-readable form of your crypto's wallet private key, and is displayed as 24 mnemonic words. After mastering the mnemonic words, you can restore your wallet at will. Please keep the words properly and don't leak them to anyone.",
+	"backupSafetyLabel3": "A recovery phrase is essentially a human-readable form of your crypto's wallet private key and is displayed as 24 mnemonic words. After mastering the mnemonic words, you can restore your wallet at will. Please keep the words properly and don't leak them to anyone.",
 	"@backupSafetyLabel3": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"backupSafetyLabel4": "バックアップする方法は？",
+	"backupSafetyLabel4": "How to back up?",
 	"@backupSafetyLabel4": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"backupSafetyLabel5": "Write down the mnemonic words in the correct order on a piece of paper and store them in a safe place.\nPlease don't store the recovery phrase on electronic devices in any form, including sreenshot.\nRemember the safety of the recovery phrase is relevant to the safety of your digital assets",
 	"@backupSafetyLabel5": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"backupSafetyLabel6": "安全でないバックアップ方法",
+	"backupSafetyLabel6": "Insecure ways of backup",
 	"@backupSafetyLabel6": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"backupSafetyLabel7": "1.スクリーンショット\n2.写真を撮る",
+	"backupSafetyLabel7": "1. Screenshot\n2. Take a photo",
 	"@backupSafetyLabel7": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"go": "Go!",
 	"@go": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"nftCreated": "NFT Created",
 	"@nftCreated": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"version": "バージョン ：",
+	"version": "Version :",
 	"@version": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
-	"settings": "設定",
+	"settings": "Settings",
 	"@settings": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	},
 	"yubikeyWithYubiCloudMethod": "Yubikey",
-  	"@yubikeyWithYubiCloudMethod": {
-    	"type": "text",
-    	"placeholders_order": [],
-    	"placeholders": {}
-  	},
-	"unlockNFCYubikey": "Authenticate to Unlock",
-  	"@unlockNFCYubikey": {
-    	"type": "text",
-    	"placeholders_order": [],
-    	"placeholders": {}
-  	},
-"yubikeyError_BAD_OTP": "The OTP is invalid format.",
-  "@yubikeyError_BAD_OTP": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_REPLAYED_OTP": "The OTP has already been seen by the service.",
-  "@yubikeyError_REPLAYED_OTP": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_BAD_SIGNATURE": "The HMAC signature verification failed.",
-  "@yubikeyError_BAD_SIGNATURE": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_MISSING_PARAMETER": "The request lacks a parameter.",
-  "@yubikeyError_MISSING_PARAMETER": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_NO_SUCH_CLIENT": "The request ID does not exist.",
-  "@yubikeyError_NO_SUCH_CLIENT": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_OPERATION_NOT_ALLOWED": "The request ID is not allowed to verify OTPs.",
-  "@yubikeyError_OPERATION_NOT_ALLOWED": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_BACKEND_ERROR": "Unexpected error in the yubicloud server.",
-  "@yubikeyError_BACKEND_ERROR": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_NOT_ENOUGH_ANSWERS": "Server could not get requested number of syncs during before timeout.",
-  "@yubikeyError_NOT_ENOUGH_ANSWERS": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_REPLAYED_REQUEST": "Server has seen the OTP/Nonce combination before",
-  "@yubikeyError_REPLAYED_REQUEST": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_RESPONSE_KO": "An error occurred with Yubikey Authentification. Try again later.",
-  "@yubikeyError_RESPONSE_KO": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_OTP_NOT_FOUND": "The OTP is empty",
-  "@yubikeyError_OTP_NOT_FOUND": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "enterYubikeyClientID": "Enter the client ID",
-  "@enterYubikeyClientID": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "enterYubikeyClientAPIKey": "Enter the client API Key",
-  "@enterYubikeyClientAPIKey": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyParamsHeader": "Yubikey Params",
-  "@yubikeyParamsHeader": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyParamsDesc": "Setting up Yubicloud access",
-  "@yubikeyParamsDesc": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "themeHeader": "Theme",
-  "@themeHeader": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosHeader": "Transaction informations",
-  "@transactionInfosHeader": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyAddress": "Address",
-  "@transactionInfosKeyAddress": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyType": "Type",
-  "@transactionInfosKeyType": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyVersion": "Version",
-  "@transactionInfosKeyVersion": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyPreviousPublicKey": "Previous Public Key",
-  "@transactionInfosKeyPreviousPublicKey": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyPreviousSignature": "Previous Signature",
-  "@transactionInfosKeyPreviousSignature": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyOriginSignature": "Origin Signature",
-  "@transactionInfosKeyOriginSignature": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyData": "Data",
-  "@transactionInfosKeyData": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyContent": "Content",
-  "@transactionInfosKeyContent": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyCode": "Code",
-  "@transactionInfosKeyCode": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyUCOLedger": "UCO Ledger",
-  "@transactionInfosKeyUCOLedger": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyTo": "To",
-  "@transactionInfosKeyTo": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyAmount": "Amount",
-  "@transactionInfosKeyAmount": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyNFTLedger": "NFT Ledger",
-  "@transactionInfosKeyNFTLedger": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyNft": "NFT",
-  "@transactionInfosKeyNft": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyValidationStamp": "Validation Stamp",
-  "@transactionInfosKeyValidationStamp": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyProofOfWork": "Proof of work",
-  "@transactionInfosKeyProofOfWork": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyProofOfIntegrity": "Proof of integrity",
-  "@transactionInfosKeyProofOfIntegrity": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyTimeStamp": "Timestamp",
-  "@transactionInfosKeyTimeStamp": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyCrossValidationStamps": "Cross Validation Stamp",
-  "@transactionInfosKeyCrossValidationStamps": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeySignature": "Signature",
-  "@transactionInfosKeySignature": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionBuyHeader": "Buy UCO here",
-  "@transactionBuyHeader": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionsAllListHeader": "Transactions",
-  "@transactionsAllListHeader": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
+		"@yubikeyWithYubiCloudMethod": {
+		  "type": "text",
+		  "placeholders_order": [],
+		  "placeholders": {}
+		},
+	  "unlockNFCYubikey": "Authenticate to Unlock",
+		"@unlockNFCYubikey": {
+		  "type": "text",
+		  "placeholders_order": [],
+		  "placeholders": {}
+		},
+  "yubikeyError_BAD_OTP": "The OTP is invalid format.",
+	"@yubikeyError_BAD_OTP": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"yubikeyError_REPLAYED_OTP": "The OTP has already been seen by the service.",
+	"@yubikeyError_REPLAYED_OTP": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"yubikeyError_BAD_SIGNATURE": "The HMAC signature verification failed.",
+	"@yubikeyError_BAD_SIGNATURE": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"yubikeyError_MISSING_PARAMETER": "The request lacks a parameter.",
+	"@yubikeyError_MISSING_PARAMETER": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"yubikeyError_NO_SUCH_CLIENT": "The request ID does not exist.",
+	"@yubikeyError_NO_SUCH_CLIENT": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"yubikeyError_OPERATION_NOT_ALLOWED": "The request ID is not allowed to verify OTPs.",
+	"@yubikeyError_OPERATION_NOT_ALLOWED": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"yubikeyError_BACKEND_ERROR": "Unexpected error in the yubicloud server.",
+	"@yubikeyError_BACKEND_ERROR": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"yubikeyError_NOT_ENOUGH_ANSWERS": "Server could not get requested number of syncs during before timeout.",
+	"@yubikeyError_NOT_ENOUGH_ANSWERS": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"yubikeyError_REPLAYED_REQUEST": "Server has seen the OTP/Nonce combination before",
+	"@yubikeyError_REPLAYED_REQUEST": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"yubikeyError_RESPONSE_KO": "An error occurred with Yubikey Authentification. Try again later.",
+	"@yubikeyError_RESPONSE_KO": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"yubikeyError_OTP_NOT_FOUND": "The OTP is empty",
+	"@yubikeyError_OTP_NOT_FOUND": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"enterYubikeyClientID": "Enter the client ID",
+	"@enterYubikeyClientID": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"enterYubikeyClientAPIKey": "Enter the client API Key",
+	"@enterYubikeyClientAPIKey": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"yubikeyParamsHeader": "Yubikey Params",
+	"@yubikeyParamsHeader": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"yubikeyParamsDesc": "Setting up Yubicloud access",
+	"@yubikeyParamsDesc": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"themeHeader": "Theme",
+	"@themeHeader": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosHeader": "Transaction informations",
+	"@transactionInfosHeader": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyAddress": "Address",
+	"@transactionInfosKeyAddress": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyType": "Type",
+	"@transactionInfosKeyType": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyVersion": "Version",
+	"@transactionInfosKeyVersion": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyPreviousPublicKey": "Previous Public Key",
+	"@transactionInfosKeyPreviousPublicKey": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyPreviousSignature": "Previous Signature",
+	"@transactionInfosKeyPreviousSignature": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyOriginSignature": "Origin Signature",
+	"@transactionInfosKeyOriginSignature": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyData": "Data",
+	"@transactionInfosKeyData": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyContent": "Content",
+	"@transactionInfosKeyContent": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyCode": "Code",
+	"@transactionInfosKeyCode": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyUCOLedger": "UCO Ledger",
+	"@transactionInfosKeyUCOLedger": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyTo": "To",
+	"@transactionInfosKeyTo": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyAmount": "Amount",
+	"@transactionInfosKeyAmount": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyNFTLedger": "NFT Ledger",
+	"@transactionInfosKeyNFTLedger": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyNft": "NFT",
+	"@transactionInfosKeyNft": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyValidationStamp": "Validation Stamp",
+	"@transactionInfosKeyValidationStamp": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyProofOfWork": "Proof of work",
+	"@transactionInfosKeyProofOfWork": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyProofOfIntegrity": "Proof of integrity",
+	"@transactionInfosKeyProofOfIntegrity": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyTimeStamp": "Timestamp",
+	"@transactionInfosKeyTimeStamp": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeyCrossValidationStamps": "Cross Validation Stamp",
+	"@transactionInfosKeyCrossValidationStamps": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionInfosKeySignature": "Signature",
+	"@transactionInfosKeySignature": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionBuyHeader": "Buy UCO here",
+	"@transactionBuyHeader": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"transactionsAllListHeader": "Transactions",
+	"@transactionsAllListHeader": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"receive": "Receive",
+	"@receive": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"buy": "Buy",
+	"@buy": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"chart": "Chart",
+	"@chart": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"environment": "TESTNET",
+	"@environment": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"share": "Share",
+	"@share": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"chartOptionLabel14d": "14d",
+	"@chartOptionLabel14d": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"chartOptionLabel1y": "1y",
+	"@chartOptionLabel1y": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"chartOptionLabel200d": "200d",
+	"@chartOptionLabel200d": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"chartOptionLabel30d": "30d",
+	"@chartOptionLabel30d": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"chartOptionLabel60d": "60d",
+	"@chartOptionLabel60d": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"chartOptionLabel7d": "7d",
+	"@chartOptionLabel7d": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"chartOptionLabel24h": "24h",
+	"@chartOptionLabel24h": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	}
   }
-}

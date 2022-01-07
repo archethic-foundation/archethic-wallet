@@ -5,9 +5,9 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
-import 'package:archethic_mobile_wallet/model/transaction_infos.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
+import 'package:archethic_wallet/model/recent_transaction.dart';
+import 'package:archethic_wallet/model/transaction_infos.dart';
+import 'package:archethic_wallet/service_locator.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'

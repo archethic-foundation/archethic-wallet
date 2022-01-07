@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/app_simpledialog.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/widgets/app_simpledialog.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppDialogs {

@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_wallet/styles.dart';
 
 enum AddressTextType { PRIMARY60, PRIMARY, SUCCESS }
 

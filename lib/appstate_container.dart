@@ -4,7 +4,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_mobile_wallet/ui/themes/theme_dark.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -12,22 +11,22 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/bus/events.dart';
-import 'package:archethic_mobile_wallet/model/available_currency.dart';
-import 'package:archethic_mobile_wallet/model/available_language.dart';
-import 'package:archethic_mobile_wallet/model/available_themes.dart';
-import 'package:archethic_mobile_wallet/model/chart_infos.dart';
-import 'package:archethic_mobile_wallet/model/data/appdb.dart';
-import 'package:archethic_mobile_wallet/model/data/hiveDB.dart';
-import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
-import 'package:archethic_mobile_wallet/model/vault.dart';
-import 'package:archethic_mobile_wallet/model/wallet.dart';
-import 'package:archethic_mobile_wallet/service/app_service.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/ui/themes/theme_light.dart';
-import 'package:archethic_mobile_wallet/ui/themes/themes.dart';
-import 'package:archethic_mobile_wallet/util/app_ffi/encrypt/crypter.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:archethic_wallet/bus/events.dart';
+import 'package:archethic_wallet/model/available_currency.dart';
+import 'package:archethic_wallet/model/available_language.dart';
+import 'package:archethic_wallet/model/available_themes.dart';
+import 'package:archethic_wallet/model/chart_infos.dart';
+import 'package:archethic_wallet/model/data/appdb.dart';
+import 'package:archethic_wallet/model/data/hiveDB.dart';
+import 'package:archethic_wallet/model/recent_transaction.dart';
+import 'package:archethic_wallet/model/vault.dart';
+import 'package:archethic_wallet/model/wallet.dart';
+import 'package:archethic_wallet/service/app_service.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/ui/themes/theme_dark.dart';
+import 'package:archethic_wallet/ui/themes/themes.dart';
+import 'package:archethic_wallet/util/app_ffi/encrypt/crypter.dart';
+import 'package:archethic_wallet/util/sharedprefsutil.dart';
 import 'util/sharedprefsutil.dart';
 
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
@@ -94,6 +93,7 @@ class StateContainerState extends State<StateContainer> {
   String? encryptedSecret;
 
   ChartInfos? chartInfos;
+  String? idChartOption = '1d';
 
   List<Contact> contactsRef = List<Contact>.empty(growable: true);
 
@@ -258,6 +258,8 @@ class StateContainerState extends State<StateContainer> {
     final SimplePriceResponse simplePriceResponse = await sl
         .get<ApiCoinsService>()
         .getSimplePrice(currency.getIso4217Code());
+    await StateContainer.of(context).requestUpdateCoinsChart(
+        option: StateContainer.of(context).idChartOption!);
     EventTaxiImpl.singleton().fire(PriceEvent(response: simplePriceResponse));
     setState(() {
       curCurrency = currency;
@@ -308,10 +310,36 @@ class StateContainerState extends State<StateContainer> {
         .fire(TransactionsListEvent(transaction: recentTransactions));
   }
 
-  Future<void> requestUpdateCoinsChart() async {
+  Future<void> requestUpdateCoinsChart({String option = '24h'}) async {
+    int nbDays;
+    idChartOption = option;
+    switch (option) {
+      case '7d':
+        nbDays = 7;
+        break;
+      case '14d':
+        nbDays = 14;
+        break;
+      case '30d':
+        nbDays = 30;
+        break;
+      case '60d':
+        nbDays = 60;
+        break;
+      case '200d':
+        nbDays = 200;
+        break;
+      case '1y':
+        nbDays = 365;
+        break;
+      case '24h':
+      default:
+        nbDays = 1;
+        break;
+    }
     final CoinsPriceResponse coinsPriceResponse = await sl
         .get<ApiCoinsService>()
-        .getCoinsChart(curCurrency.getIso4217Code(), 1);
+        .getCoinsChart(curCurrency.getIso4217Code(), nbDays);
     chartInfos = ChartInfos();
     chartInfos!.minY = 9999999;
     chartInfos!.maxY = 0;
@@ -327,6 +355,70 @@ class StateContainerState extends State<StateContainer> {
     } else {
       chartInfos!.priceChangePercentage24h =
           coinsCurrentDataResponse.marketData!.priceChangePercentage24H;
+    }
+    if (coinsCurrentDataResponse
+                .marketData!.priceChangePercentage14DInCurrency![
+            curCurrency.getIso4217Code().toLowerCase()] !=
+        null) {
+      chartInfos!.priceChangePercentage14d = coinsCurrentDataResponse
+              .marketData!.priceChangePercentage14DInCurrency![
+          curCurrency.getIso4217Code().toLowerCase()];
+    } else {
+      chartInfos!.priceChangePercentage14d =
+          coinsCurrentDataResponse.marketData!.priceChangePercentage14D;
+    }
+    if (coinsCurrentDataResponse.marketData!.priceChangePercentage1YInCurrency![
+            curCurrency.getIso4217Code().toLowerCase()] !=
+        null) {
+      chartInfos!.priceChangePercentage1y = coinsCurrentDataResponse
+              .marketData!.priceChangePercentage1YInCurrency![
+          curCurrency.getIso4217Code().toLowerCase()];
+    } else {
+      chartInfos!.priceChangePercentage1y =
+          coinsCurrentDataResponse.marketData!.priceChangePercentage1Y;
+    }
+    if (coinsCurrentDataResponse
+                .marketData!.priceChangePercentage200DInCurrency![
+            curCurrency.getIso4217Code().toLowerCase()] !=
+        null) {
+      chartInfos!.priceChangePercentage200d = coinsCurrentDataResponse
+              .marketData!.priceChangePercentage200DInCurrency![
+          curCurrency.getIso4217Code().toLowerCase()];
+    } else {
+      chartInfos!.priceChangePercentage200d =
+          coinsCurrentDataResponse.marketData!.priceChangePercentage200D;
+    }
+    if (coinsCurrentDataResponse
+                .marketData!.priceChangePercentage30DInCurrency![
+            curCurrency.getIso4217Code().toLowerCase()] !=
+        null) {
+      chartInfos!.priceChangePercentage30d = coinsCurrentDataResponse
+              .marketData!.priceChangePercentage30DInCurrency![
+          curCurrency.getIso4217Code().toLowerCase()];
+    } else {
+      chartInfos!.priceChangePercentage30d =
+          coinsCurrentDataResponse.marketData!.priceChangePercentage30D;
+    }
+    if (coinsCurrentDataResponse
+                .marketData!.priceChangePercentage60DInCurrency![
+            curCurrency.getIso4217Code().toLowerCase()] !=
+        null) {
+      chartInfos!.priceChangePercentage60d = coinsCurrentDataResponse
+              .marketData!.priceChangePercentage60DInCurrency![
+          curCurrency.getIso4217Code().toLowerCase()];
+    } else {
+      chartInfos!.priceChangePercentage60d =
+          coinsCurrentDataResponse.marketData!.priceChangePercentage60D;
+    }
+    if (coinsCurrentDataResponse.marketData!.priceChangePercentage7DInCurrency![
+            curCurrency.getIso4217Code().toLowerCase()] !=
+        null) {
+      chartInfos!.priceChangePercentage7d = coinsCurrentDataResponse
+              .marketData!.priceChangePercentage7DInCurrency![
+          curCurrency.getIso4217Code().toLowerCase()];
+    } else {
+      chartInfos!.priceChangePercentage7d =
+          coinsCurrentDataResponse.marketData!.priceChangePercentage7D;
     }
     final List<FlSpot> data = List<FlSpot>.empty(growable: true);
     for (int i = 0; i < coinsPriceResponse.prices!.length; i = i + 1) {

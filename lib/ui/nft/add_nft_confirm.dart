@@ -11,26 +11,26 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/bus/events.dart';
-import 'package:archethic_mobile_wallet/dimens.dart';
-import 'package:archethic_mobile_wallet/global_var.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/authentication_method.dart';
-import 'package:archethic_mobile_wallet/model/vault.dart';
-import 'package:archethic_mobile_wallet/service/app_service.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/transfer/transfer_complete_sheet.dart';
-import 'package:archethic_mobile_wallet/ui/util/routes.dart';
-import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/buttons.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
-import 'package:archethic_mobile_wallet/util/biometrics.dart';
-import 'package:archethic_mobile_wallet/util/hapticutil.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/bus/events.dart';
+import 'package:archethic_wallet/dimens.dart';
+import 'package:archethic_wallet/global_var.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/model/authentication_method.dart';
+import 'package:archethic_wallet/model/vault.dart';
+import 'package:archethic_wallet/service/app_service.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/transfer/transfer_complete_sheet.dart';
+import 'package:archethic_wallet/ui/util/routes.dart';
+import 'package:archethic_wallet/ui/util/ui_util.dart';
+import 'package:archethic_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_wallet/ui/widgets/dialog.dart';
+import 'package:archethic_wallet/ui/widgets/pin_screen.dart';
+import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/util/biometrics.dart';
+import 'package:archethic_wallet/util/hapticutil.dart';
+import 'package:archethic_wallet/util/sharedprefsutil.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'

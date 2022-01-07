@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/mnemonic_display.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/tap_outside_unfocus.dart';
-import 'package:archethic_mobile_wallet/util/app_ffi/keys/mnemonics.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/widgets/mnemonic_display.dart';
+import 'package:archethic_wallet/ui/widgets/tap_outside_unfocus.dart';
+import 'package:archethic_wallet/util/app_ffi/keys/mnemonics.dart';
 
 class AppSeedBackupSheet extends StatefulWidget {
   const AppSeedBackupSheet(this.seed);

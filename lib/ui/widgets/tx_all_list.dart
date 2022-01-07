@@ -1,9 +1,4 @@
 // Flutter imports:
-import 'package:archethic_mobile_wallet/model/address.dart';
-import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/transaction_infos_sheet.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/tx_list.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -11,9 +6,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/model/address.dart';
+import 'package:archethic_wallet/model/recent_transaction.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/ui/widgets/transaction_infos_sheet.dart';
+import 'package:archethic_wallet/ui/widgets/tx_list.dart';
 
 class TxAllListWidget extends StatefulWidget {
   TxAllListWidget() : super();

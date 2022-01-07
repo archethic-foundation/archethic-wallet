@@ -14,27 +14,27 @@ import 'package:oktoast/oktoast.dart';
 import 'package:safe_device/safe_device.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/available_currency.dart';
-import 'package:archethic_mobile_wallet/model/available_language.dart';
-import 'package:archethic_mobile_wallet/model/data/appdb.dart';
-import 'package:archethic_mobile_wallet/model/vault.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/home_page.dart';
-import 'package:archethic_mobile_wallet/ui/intro/intro_backup_confirm.dart';
-import 'package:archethic_mobile_wallet/ui/intro/intro_backup_safety.dart';
-import 'package:archethic_mobile_wallet/ui/intro/intro_backup_seed.dart';
-import 'package:archethic_mobile_wallet/ui/intro/intro_import_seed.dart';
-import 'package:archethic_mobile_wallet/ui/intro/intro_welcome.dart';
-import 'package:archethic_mobile_wallet/ui/lock_screen.dart';
-import 'package:archethic_mobile_wallet/ui/util/routes.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
-import 'package:archethic_mobile_wallet/util/app_ffi/apputil.dart';
-import 'package:archethic_mobile_wallet/util/caseconverter.dart';
-import 'package:archethic_mobile_wallet/util/helpers.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/model/available_currency.dart';
+import 'package:archethic_wallet/model/available_language.dart';
+import 'package:archethic_wallet/model/data/appdb.dart';
+import 'package:archethic_wallet/model/vault.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/home_page.dart';
+import 'package:archethic_wallet/ui/intro/intro_backup_confirm.dart';
+import 'package:archethic_wallet/ui/intro/intro_backup_safety.dart';
+import 'package:archethic_wallet/ui/intro/intro_backup_seed.dart';
+import 'package:archethic_wallet/ui/intro/intro_import_seed.dart';
+import 'package:archethic_wallet/ui/intro/intro_welcome.dart';
+import 'package:archethic_wallet/ui/lock_screen.dart';
+import 'package:archethic_wallet/ui/util/routes.dart';
+import 'package:archethic_wallet/ui/widgets/dialog.dart';
+import 'package:archethic_wallet/util/app_ffi/apputil.dart';
+import 'package:archethic_wallet/util/caseconverter.dart';
+import 'package:archethic_wallet/util/helpers.dart';
+import 'package:archethic_wallet/util/sharedprefsutil.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/model/setting_item.dart';
-import 'package:archethic_mobile_wallet/ui/themes/theme_dark.dart';
-import 'package:archethic_mobile_wallet/ui/themes/theme_light.dart';
-import 'package:archethic_mobile_wallet/ui/themes/themes.dart';
+import 'package:archethic_wallet/model/setting_item.dart';
+import 'package:archethic_wallet/ui/themes/theme_dark.dart';
+import 'package:archethic_wallet/ui/themes/theme_light.dart';
+import 'package:archethic_wallet/ui/themes/themes.dart';
 
 enum ThemeOptions { LIGHT, DARK }
 

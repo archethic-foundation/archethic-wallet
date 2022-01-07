@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/model/data/hiveDB.dart';
+import 'package:archethic_wallet/model/data/hiveDB.dart';
 
 class DBHelper {
   static const String _contactsTable = 'contacts';

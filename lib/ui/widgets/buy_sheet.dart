@@ -1,20 +1,15 @@
 // Flutter imports:
-import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/transaction_infos.dart';
-import 'package:archethic_mobile_wallet/service/app_service.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/icon_widget.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/util/ui_util.dart';
 
 class BuySheet extends StatefulWidget {
   BuySheet() : super();
@@ -23,9 +18,6 @@ class BuySheet extends StatefulWidget {
 }
 
 class _BuySheetState extends State<BuySheet> {
-  List<TransactionInfos> transactionInfos =
-      List<TransactionInfos>.empty(growable: true);
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -153,20 +145,17 @@ class _BuySheetState extends State<BuySheet> {
                           ),
                         ),
                         const SizedBox(height: 30),
-                         InkWell(
+                        InkWell(
                           onTap: () async {
                             UIUtil.showWebview(
-                                context,
-                                'https://zebitex.com',
-                                'Zebitex');
+                                context, 'https://zebitex.com', 'Zebitex');
                           },
-                          child:     SvgPicture.asset(
-                          'assets/buy/Zebitex.svg',
-                          color: Colors.white,
-                          height: 40,
+                          child: SvgPicture.asset(
+                            'assets/buy/Zebitex.svg',
+                            color: Colors.white,
+                            height: 40,
+                          ),
                         ),
-                        ),
-                    
                       ],
                     ),
                   )),

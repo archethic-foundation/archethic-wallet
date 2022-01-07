@@ -4,9 +4,9 @@ import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/model/available_currency.dart';
-import 'package:archethic_mobile_wallet/model/recent_transaction.dart';
-import 'package:archethic_mobile_wallet/util/numberutil.dart';
+import 'package:archethic_wallet/model/available_currency.dart';
+import 'package:archethic_wallet/model/recent_transaction.dart';
+import 'package:archethic_wallet/util/numberutil.dart';
 
 /// Main wallet object that's passed around the app via state
 class AppWallet {

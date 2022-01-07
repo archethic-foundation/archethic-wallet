@@ -10,36 +10,36 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/localization.dart';
-import 'package:archethic_mobile_wallet/model/authentication_method.dart';
-import 'package:archethic_mobile_wallet/model/available_currency.dart';
-import 'package:archethic_mobile_wallet/model/available_language.dart';
-import 'package:archethic_mobile_wallet/model/available_themes.dart';
-import 'package:archethic_mobile_wallet/model/data/appdb.dart';
-import 'package:archethic_mobile_wallet/model/device_lock_timeout.dart';
-import 'package:archethic_mobile_wallet/model/device_unlock_option.dart';
-import 'package:archethic_mobile_wallet/model/vault.dart';
-import 'package:archethic_mobile_wallet/service_locator.dart';
-import 'package:archethic_mobile_wallet/styles.dart';
-import 'package:archethic_mobile_wallet/ui/nft/add_nft.dart';
-import 'package:archethic_mobile_wallet/ui/settings/backupseed_sheet.dart';
-import 'package:archethic_mobile_wallet/ui/settings/contacts_widget.dart';
-import 'package:archethic_mobile_wallet/ui/settings/custom_url_widget.dart';
-import 'package:archethic_mobile_wallet/ui/settings/nodes_widget.dart';
-import 'package:archethic_mobile_wallet/ui/settings/settings_list_item.dart';
-import 'package:archethic_mobile_wallet/ui/settings/wallet_faq_widget.dart';
-import 'package:archethic_mobile_wallet/ui/settings/yubikey_params_widget.dart';
-import 'package:archethic_mobile_wallet/ui/util/ui_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/app_simpledialog.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/dialog.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/pin_screen.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/sheet_util.dart';
-import 'package:archethic_mobile_wallet/ui/widgets/yubikey_screen.dart';
-import 'package:archethic_mobile_wallet/util/biometrics.dart';
-import 'package:archethic_mobile_wallet/util/caseconverter.dart';
-import 'package:archethic_mobile_wallet/util/hapticutil.dart';
-import 'package:archethic_mobile_wallet/util/sharedprefsutil.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/model/authentication_method.dart';
+import 'package:archethic_wallet/model/available_currency.dart';
+import 'package:archethic_wallet/model/available_language.dart';
+import 'package:archethic_wallet/model/available_themes.dart';
+import 'package:archethic_wallet/model/data/appdb.dart';
+import 'package:archethic_wallet/model/device_lock_timeout.dart';
+import 'package:archethic_wallet/model/device_unlock_option.dart';
+import 'package:archethic_wallet/model/vault.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/nft/add_nft.dart';
+import 'package:archethic_wallet/ui/settings/backupseed_sheet.dart';
+import 'package:archethic_wallet/ui/settings/contacts_widget.dart';
+import 'package:archethic_wallet/ui/settings/custom_url_widget.dart';
+import 'package:archethic_wallet/ui/settings/nodes_widget.dart';
+import 'package:archethic_wallet/ui/settings/settings_list_item.dart';
+import 'package:archethic_wallet/ui/settings/wallet_faq_widget.dart';
+import 'package:archethic_wallet/ui/settings/yubikey_params_widget.dart';
+import 'package:archethic_wallet/ui/util/ui_util.dart';
+import 'package:archethic_wallet/ui/widgets/app_simpledialog.dart';
+import 'package:archethic_wallet/ui/widgets/dialog.dart';
+import 'package:archethic_wallet/ui/widgets/pin_screen.dart';
+import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/ui/widgets/yubikey_screen.dart';
+import 'package:archethic_wallet/util/biometrics.dart';
+import 'package:archethic_wallet/util/caseconverter.dart';
+import 'package:archethic_wallet/util/hapticutil.dart';
+import 'package:archethic_wallet/util/sharedprefsutil.dart';
 import '../../appstate_container.dart';
 import '../../util/sharedprefsutil.dart';
 
@@ -955,7 +955,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         _curThemeSetting,
                         'assets/icons/themes.png',
                         _themeDialog),
-                    Divider(
+                    /*Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
                     ),
@@ -968,7 +968,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         _customUrlOpen = true;
                       });
                       _customUrlController!.forward();
-                    }),
+                    }),*/
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,

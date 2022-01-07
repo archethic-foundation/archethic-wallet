@@ -10,7 +10,7 @@ import 'package:nfc_manager/nfc_manager.dart';
 import 'package:yubidart/yubidart.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/bus/otp_event.dart';
+import 'package:archethic_wallet/bus/otp_event.dart';
 
 class NFCUtil {
   /// hasNFC()

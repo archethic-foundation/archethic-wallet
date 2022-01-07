@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
+import 'package:archethic_wallet/appstate_container.dart';
 
 /// TextField button
 class TextFieldButton extends StatelessWidget {

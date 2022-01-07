@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Project imports:
-import 'package:archethic_mobile_wallet/appstate_container.dart';
-import 'package:archethic_mobile_wallet/ui/themes/themes.dart';
-import 'package:archethic_mobile_wallet/ui/util/particles/particles_flutter.dart';
+import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/ui/themes/themes.dart';
+import 'package:archethic_wallet/ui/util/particles/particles_flutter.dart';
 
 class LightTheme implements BaseTheme {
   @override
