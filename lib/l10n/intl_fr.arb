@@ -1272,7 +1272,7 @@
 	"placeholders_order": [],
 	"placeholders": {}
   },
-  "transactionChainExplorerDesc": "Explorer chaque transaction contenu dans votre chaîne.",
+  "transactionChainExplorerDesc": "Explorer chaque transaction contenue dans votre chaîne.",
   "@transactionChainExplorerDesc": {
 	"type": "text",
 	"placeholders_order": [],

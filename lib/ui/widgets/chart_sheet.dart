@@ -14,22 +14,25 @@ import 'package:archethic_wallet/styles.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ChartSheet extends StatefulWidget {
-  ChartSheet() : super();
+  const ChartSheet({required this.optionChartList, required this.optionChart})
+      : super();
 
+  final List<OptionChart> optionChartList;
+  final OptionChart? optionChart;
   _ChartSheetState createState() => _ChartSheetState();
 }
 
 class _ChartSheetState extends State<ChartSheet> {
-  String _idChart = '24h';
+  OptionChart? optionChartSelected;
 
   @override
   void initState() {
+    optionChartSelected = widget.optionChart;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    _idChart = StateContainer.of(context).idChartOption!;
     return Column(
       children: <Widget>[
         // A row for the address text and close button
@@ -162,28 +165,39 @@ class _ChartSheetState extends State<ChartSheet> {
                   ),
                   child: Column(
                     children: <Widget>[
-                      AnimatedContainer(
-                          duration: Duration(milliseconds: 200),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              getOption('24h'),
-                              getOption('7d'),
-                              getOption('14d'),
-                              getOption('30d'),
-                            ],
-                          )),
-                      AnimatedContainer(
-                          duration: Duration(milliseconds: 500),
-                          padding: EdgeInsets.only(top: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              getOption('60d'),
-                              getOption('200d'),
-                              getOption('1y'),
-                            ],
-                          )),
+                      DropdownButton<OptionChart>(
+                        focusColor: Colors.white,
+                        isExpanded: false,
+                        value: optionChartSelected,
+                        style: TextStyle(
+                          color: StateContainer.of(context).curTheme.primary,
+                        ),
+                        underline: SizedBox(),
+                        iconEnabledColor: StateContainer.of(context)
+                            .curTheme
+                            .backgroundDarkest!,
+                        isDense: true,
+                        items: widget.optionChartList
+                            .map((OptionChart optionChart) {
+                          return DropdownMenuItem<OptionChart>(
+                            value: optionChart,
+                            child: Container(
+                              child: Text(
+                                optionChart.label,
+                                style: AppStyles.textStyleSize20W700Primary(
+                                    context),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (OptionChart? optionChart) async {
+                          await StateContainer.of(context)
+                              .requestUpdateCoinsChart(option: optionChart!.id);
+                          setState(() {
+                            optionChartSelected = optionChart;
+                          });
+                        },
+                      ),
                     ],
                   ),
                 )),
@@ -195,7 +209,7 @@ class _ChartSheetState extends State<ChartSheet> {
 
   LineChartData mainData(BuildContext context) {
     final List<Color> gradientColors = <Color>[
-      StateContainer.of(context).curTheme.backgroundDark!,
+      StateContainer.of(context).curTheme.backgroundDarkest!,
       StateContainer.of(context).curTheme.backgroundDarkest!,
     ];
     return LineChartData(
@@ -203,12 +217,11 @@ class _ChartSheetState extends State<ChartSheet> {
         show: false,
       ),
       titlesData: FlTitlesData(
-        show: false,
-        bottomTitles: SideTitles(showTitles: false),
-        leftTitles: SideTitles(
-          showTitles: false,
-        ),
-      ),
+          show: true,
+          bottomTitles: SideTitles(showTitles: false),
+          rightTitles: SideTitles(showTitles: false),
+          topTitles: SideTitles(showTitles: false),
+          leftTitles: SideTitles(showTitles: false)),
       borderData: FlBorderData(
         show: false,
       ),
@@ -249,32 +262,11 @@ class _ChartSheetState extends State<ChartSheet> {
       ],
     );
   }
+}
 
-  Widget getOption(String idChartOption) {
-    return GestureDetector(
-      onTap: () async {
-        _idChart = idChartOption;
-        await StateContainer.of(context)
-            .requestUpdateCoinsChart(option: _idChart);
-        setState(() {});
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: _idChart == idChartOption
-              ? StateContainer.of(context).curTheme.primary
-              : StateContainer.of(context).curTheme.backgroundDarkest,
-        ),
-        child: Text(
-          ChartInfos.getChartOptionLabel(context, idChartOption),
-          style: TextStyle(
-              color: _idChart == idChartOption
-                  ? StateContainer.of(context).curTheme.backgroundDarkest
-                  : StateContainer.of(context).curTheme.primary,
-              fontSize: AppFontSizes.size12),
-        ),
-      ),
-    );
-  }
+class OptionChart {
+  const OptionChart(this.id, this.label);
+
+  final String label;
+  final String id;
 }

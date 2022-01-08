@@ -3,7 +3,7 @@ description: ARCHEthic Wallet app (iOS/Android/MacOS/Windows/Web).
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.0.96+96
+version: 0.0.97+97
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -23,6 +23,8 @@ dependencies:
 
   # Dart implementation of Bitcoin BIP39 Mnemonic code for generating deterministic keys
   bip39: ^1.0.6
+
+  camera: ^0.9.4+5
 
   # Utilities for converting between data representations. Provides a number of Sink, Codec, Decoder, and Encoder types
   convert: ^3.0.1
