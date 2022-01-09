@@ -113,6 +113,28 @@ class _ChartSheetState extends State<ChartSheet> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
                       AutoSizeText(
+                        StateContainer.of(context).wallet!.accountBalance.uco ==
+                                0
+                            ? '1 UCO = ' +
+                                StateContainer.of(context)
+                                    .localWallet!
+                                    .getLocalPrice(
+                                        StateContainer.of(context).curCurrency,
+                                        locale: StateContainer.of(context)
+                                            .currencyLocale!)
+                            : '1 UCO = ' +
+                                StateContainer.of(context)
+                                    .wallet!
+                                    .getLocalPrice(
+                                        StateContainer.of(context).curCurrency,
+                                        locale: StateContainer.of(context)
+                                            .currencyLocale!),
+                        style: AppStyles.textStyleSize16W700Primary(context),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      AutoSizeText(
                         StateContainer.of(context)
                                 .chartInfos!
                                 .getPriceChangePercentage(
@@ -135,6 +157,28 @@ class _ChartSheetState extends State<ChartSheet> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
+                      AutoSizeText(
+                        StateContainer.of(context).wallet!.accountBalance.uco ==
+                                0
+                            ? '1 UCO = ' +
+                                StateContainer.of(context)
+                                    .localWallet!
+                                    .getLocalPrice(
+                                        StateContainer.of(context).curCurrency,
+                                        locale: StateContainer.of(context)
+                                            .currencyLocale!)
+                            : '1 UCO = ' +
+                                StateContainer.of(context)
+                                    .wallet!
+                                    .getLocalPrice(
+                                        StateContainer.of(context).curCurrency,
+                                        locale: StateContainer.of(context)
+                                            .currencyLocale!),
+                        style: AppStyles.textStyleSize16W700Primary(context),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
                       AutoSizeText(
                         StateContainer.of(context)
                                 .chartInfos!
@@ -165,38 +209,46 @@ class _ChartSheetState extends State<ChartSheet> {
                   ),
                   child: Column(
                     children: <Widget>[
-                      DropdownButton<OptionChart>(
-                        focusColor: Colors.white,
-                        isExpanded: false,
-                        value: optionChartSelected,
-                        style: TextStyle(
-                          color: StateContainer.of(context).curTheme.primary,
-                        ),
-                        underline: SizedBox(),
-                        iconEnabledColor: StateContainer.of(context)
-                            .curTheme
-                            .backgroundDarkest!,
-                        isDense: true,
-                        items: widget.optionChartList
-                            .map((OptionChart optionChart) {
-                          return DropdownMenuItem<OptionChart>(
-                            value: optionChart,
-                            child: Container(
-                              child: Text(
-                                optionChart.label,
-                                style: AppStyles.textStyleSize20W700Primary(
-                                    context),
+                      Theme(
+                        data: Theme.of(context).copyWith(
+                            canvasColor: StateContainer.of(context)
+                                .curTheme
+                                .backgroundDarkest),
+                        child: DropdownButton<OptionChart>(
+                          elevation: 2,
+                          focusColor: Colors.white,
+                          isExpanded: false,
+                          value: optionChartSelected,
+                          style: TextStyle(
+                            color: StateContainer.of(context).curTheme.primary,
+                          ),
+                          underline: SizedBox(),
+                          iconEnabledColor: StateContainer.of(context)
+                              .curTheme
+                              .backgroundDarkest!,
+                          isDense: true,
+                          items: widget.optionChartList
+                              .map((OptionChart optionChart) {
+                            return DropdownMenuItem<OptionChart>(
+                              value: optionChart,
+                              child: Container(
+                                child: Text(
+                                  optionChart.label,
+                                  style: AppStyles.textStyleSize20W700Primary(
+                                      context),
+                                ),
                               ),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (OptionChart? optionChart) async {
-                          await StateContainer.of(context)
-                              .requestUpdateCoinsChart(option: optionChart!.id);
-                          setState(() {
-                            optionChartSelected = optionChart;
-                          });
-                        },
+                            );
+                          }).toList(),
+                          onChanged: (OptionChart? optionChart) async {
+                            await StateContainer.of(context)
+                                .requestUpdateCoinsChart(
+                                    option: optionChart!.id);
+                            setState(() {
+                              optionChartSelected = optionChart;
+                            });
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -212,6 +264,11 @@ class _ChartSheetState extends State<ChartSheet> {
       StateContainer.of(context).curTheme.backgroundDarkest!,
       StateContainer.of(context).curTheme.backgroundDarkest!,
     ];
+    final List<Color> gradientColorsBar = <Color>[
+      StateContainer.of(context).curTheme.backgroundDarkest!.withOpacity(0.9),
+      StateContainer.of(context).curTheme.backgroundDarkest!.withOpacity(0.0),
+    ];
+
     return LineChartData(
       gridData: FlGridData(
         show: false,
@@ -219,9 +276,13 @@ class _ChartSheetState extends State<ChartSheet> {
       titlesData: FlTitlesData(
           show: true,
           bottomTitles: SideTitles(showTitles: false),
-          rightTitles: SideTitles(showTitles: false),
+          rightTitles: SideTitles(
+            showTitles: false,
+          ),
           topTitles: SideTitles(showTitles: false),
-          leftTitles: SideTitles(showTitles: false)),
+          leftTitles: SideTitles(
+            showTitles: false,
+          )),
       borderData: FlBorderData(
         show: false,
       ),
@@ -250,13 +311,16 @@ class _ChartSheetState extends State<ChartSheet> {
           spots: StateContainer.of(context).chartInfos!.data,
           isCurved: true,
           colors: gradientColors,
-          barWidth: 1,
+          barWidth: 2,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: false,
           ),
           belowBarData: BarAreaData(
-            show: false,
+            show: true,
+            gradientFrom: Offset(0, 0),
+            gradientTo: Offset(0, 1),
+            colors: gradientColorsBar,
           ),
         ),
       ],
