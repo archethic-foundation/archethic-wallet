@@ -84,119 +84,139 @@ class _ChartSheetState extends State<ChartSheet> {
         FadeIn(
           duration: Duration(milliseconds: 1000),
           child: Container(
-            height: 200,
+            height: MediaQuery.of(context).size.height * 0.35,
             padding:
                 EdgeInsets.only(top: 20.0, bottom: 0.0, left: 0.0, right: 0.0),
             child: Padding(
               padding: const EdgeInsets.only(
-                  right: 20.0, left: 0.0, top: 0.0, bottom: 0.0),
-              child: LineChart(
-                mainData(context),
-                swapAnimationCurve: Curves.decelerate,
-                swapAnimationDuration: Duration(milliseconds: 1000),
-              ),
+                  right: 5.0, left: 5.0, top: 0.0, bottom: 0.0),
+              child: StateContainer.of(context).chartInfos != null
+                  ? LineChart(
+                      mainData(context),
+                      swapAnimationCurve: Curves.decelerate,
+                      swapAnimationDuration: Duration(milliseconds: 1000),
+                    )
+                  : const SizedBox(),
             ),
           ),
         ),
-
-        Container(
-          width: MediaQuery.of(context).size.width * 0.9,
-          child: StateContainer.of(context)
-                      .chartInfos!
-                      .getPriceChangePercentage(
-                          StateContainer.of(context).idChartOption!)! >=
-                  0
-              ? FadeIn(
-                  duration: Duration(milliseconds: 1000),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      AutoSizeText(
-                        StateContainer.of(context).wallet!.accountBalance.uco ==
-                                0
-                            ? '1 UCO = ' +
-                                StateContainer.of(context)
-                                    .localWallet!
-                                    .getLocalPrice(
-                                        StateContainer.of(context).curCurrency,
-                                        locale: StateContainer.of(context)
-                                            .currencyLocale!)
-                            : '1 UCO = ' +
-                                StateContainer.of(context)
-                                    .wallet!
-                                    .getLocalPrice(
-                                        StateContainer.of(context).curCurrency,
-                                        locale: StateContainer.of(context)
-                                            .currencyLocale!),
-                        style: AppStyles.textStyleSize16W700Primary(context),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      AutoSizeText(
-                        StateContainer.of(context)
-                                .chartInfos!
-                                .getPriceChangePercentage(
-                                    StateContainer.of(context).idChartOption!)!
-                                .toStringAsFixed(2) +
-                            '%',
-                        style:
-                            AppStyles.textStyleSize16W100PositiveValue(context),
-                      ),
-                      FaIcon(FontAwesomeIcons.caretUp,
-                          color: StateContainer.of(context)
-                              .curTheme
-                              .positiveValue),
-                    ],
-                  ),
-                )
-              : FadeIn(
-                  duration: Duration(milliseconds: 1000),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      AutoSizeText(
-                        StateContainer.of(context).wallet!.accountBalance.uco ==
-                                0
-                            ? '1 UCO = ' +
-                                StateContainer.of(context)
-                                    .localWallet!
-                                    .getLocalPrice(
-                                        StateContainer.of(context).curCurrency,
-                                        locale: StateContainer.of(context)
-                                            .currencyLocale!)
-                            : '1 UCO = ' +
-                                StateContainer.of(context)
-                                    .wallet!
-                                    .getLocalPrice(
-                                        StateContainer.of(context).curCurrency,
-                                        locale: StateContainer.of(context)
-                                            .currencyLocale!),
-                        style: AppStyles.textStyleSize16W700Primary(context),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      AutoSizeText(
-                        StateContainer.of(context)
-                                .chartInfos!
-                                .getPriceChangePercentage(
-                                    StateContainer.of(context).idChartOption!)!
-                                .toStringAsFixed(2) +
-                            '%',
-                        style:
-                            AppStyles.textStyleSize16W100NegativeValue(context),
-                      ),
-                      FaIcon(FontAwesomeIcons.caretDown,
-                          color: StateContainer.of(context)
-                              .curTheme
-                              .negativeValue),
-                    ],
-                  ),
-                ),
+        const SizedBox(
+          height: 30,
         ),
+        StateContainer.of(context).chartInfos != null
+            ? Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: StateContainer.of(context)
+                            .chartInfos!
+                            .getPriceChangePercentage(
+                                StateContainer.of(context).idChartOption!)! >=
+                        0
+                    ? FadeIn(
+                        duration: Duration(milliseconds: 1000),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            AutoSizeText(
+                              StateContainer.of(context)
+                                          .wallet!
+                                          .accountBalance
+                                          .uco ==
+                                      0
+                                  ? '1 UCO = ' +
+                                      StateContainer.of(context)
+                                          .localWallet!
+                                          .getLocalPrice(
+                                              StateContainer.of(context)
+                                                  .curCurrency,
+                                              locale: StateContainer.of(context)
+                                                  .currencyLocale!)
+                                  : '1 UCO = ' +
+                                      StateContainer.of(context)
+                                          .wallet!
+                                          .getLocalPrice(
+                                              StateContainer.of(context)
+                                                  .curCurrency,
+                                              locale: StateContainer.of(context)
+                                                  .currencyLocale!),
+                              style:
+                                  AppStyles.textStyleSize16W700Primary(context),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            AutoSizeText(
+                              StateContainer.of(context)
+                                      .chartInfos!
+                                      .getPriceChangePercentage(
+                                          StateContainer.of(context)
+                                              .idChartOption!)!
+                                      .toStringAsFixed(2) +
+                                  '%',
+                              style: AppStyles.textStyleSize16W100PositiveValue(
+                                  context),
+                            ),
+                            FaIcon(FontAwesomeIcons.caretUp,
+                                color: StateContainer.of(context)
+                                    .curTheme
+                                    .positiveValue),
+                          ],
+                        ),
+                      )
+                    : FadeIn(
+                        duration: Duration(milliseconds: 1000),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            AutoSizeText(
+                              StateContainer.of(context)
+                                          .wallet!
+                                          .accountBalance
+                                          .uco ==
+                                      0
+                                  ? '1 UCO = ' +
+                                      StateContainer.of(context)
+                                          .localWallet!
+                                          .getLocalPrice(
+                                              StateContainer.of(context)
+                                                  .curCurrency,
+                                              locale: StateContainer.of(context)
+                                                  .currencyLocale!)
+                                  : '1 UCO = ' +
+                                      StateContainer.of(context)
+                                          .wallet!
+                                          .getLocalPrice(
+                                              StateContainer.of(context)
+                                                  .curCurrency,
+                                              locale: StateContainer.of(context)
+                                                  .currencyLocale!),
+                              style:
+                                  AppStyles.textStyleSize16W700Primary(context),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            AutoSizeText(
+                              StateContainer.of(context)
+                                      .chartInfos!
+                                      .getPriceChangePercentage(
+                                          StateContainer.of(context)
+                                              .idChartOption!)!
+                                      .toStringAsFixed(2) +
+                                  '%',
+                              style: AppStyles.textStyleSize16W100NegativeValue(
+                                  context),
+                            ),
+                            FaIcon(FontAwesomeIcons.caretDown,
+                                color: StateContainer.of(context)
+                                    .curTheme
+                                    .negativeValue),
+                          ],
+                        ),
+                      ),
+              )
+            : const SizedBox(),
 
         Expanded(
           child: Center(
