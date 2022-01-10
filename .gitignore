@@ -65,8 +65,6 @@ unlinked_spec.ds
 **/android/.gradle
 **/android/captures/
 **/android/app/.cxx/
-**/android/gradlew
-**/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
 **/android/key.properties
