@@ -1,6 +1,7 @@
 // Flutter imports:
 // ignore_for_file: always_specify_types
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 class ParticlePainter extends CustomPainter {

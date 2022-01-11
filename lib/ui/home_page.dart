@@ -4,15 +4,11 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_wallet/model/chart_infos.dart';
-import 'package:archethic_wallet/ui/widgets/chart_sheet.dart';
-import 'package:archethic_wallet/ui/widgets/receive_sheet.dart';
-import 'package:archethic_wallet/ui/widgets/transaction_chain_explorer_sheet.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -22,6 +18,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/bus/events.dart';
 import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/model/chart_infos.dart';
 import 'package:archethic_wallet/service_locator.dart';
 import 'package:archethic_wallet/styles.dart';
 import 'package:archethic_wallet/ui/settings/settings_drawer.dart';
@@ -30,9 +27,12 @@ import 'package:archethic_wallet/ui/util/routes.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
 import 'package:archethic_wallet/ui/widgets/balance_infos.dart';
 import 'package:archethic_wallet/ui/widgets/buy_sheet.dart';
+import 'package:archethic_wallet/ui/widgets/chart_sheet.dart';
 import 'package:archethic_wallet/ui/widgets/dialog.dart';
 import 'package:archethic_wallet/ui/widgets/icon_widget.dart';
+import 'package:archethic_wallet/ui/widgets/receive_sheet.dart';
 import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/ui/widgets/transaction_chain_explorer_sheet.dart';
 import 'package:archethic_wallet/ui/widgets/tx_list.dart';
 import 'package:archethic_wallet/util/caseconverter.dart';
 import 'package:archethic_wallet/util/sharedprefsutil.dart';

@@ -1,20 +1,20 @@
 // Flutter imports:
-import 'package:archethic_wallet/dimens.dart';
-import 'package:archethic_wallet/ui/widgets/buttons.dart';
-import 'package:archethic_wallet/util/caseconverter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/services.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/dimens.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/styles.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+import 'package:archethic_wallet/ui/widgets/buttons.dart';
+import 'package:archethic_wallet/util/caseconverter.dart';
 
 class ReceiveSheet extends StatefulWidget {
   const ReceiveSheet() : super();

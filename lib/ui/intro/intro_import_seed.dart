@@ -1,6 +1,7 @@
 // Flutter imports:
 // ignore_for_file: always_specify_types
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -128,7 +129,6 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                   topMargin: 20,
                                   focusNode: _mnemonicFocusNode,
                                   controller: _mnemonicController,
-                                  // ignore: always_specify_types
                                   inputFormatters: [
                                     SingleSpaceInputFormatter(),
                                     LowerCaseTextFormatter(),

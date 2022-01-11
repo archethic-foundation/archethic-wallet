@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:animate_do/animate_do.dart';
 
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';

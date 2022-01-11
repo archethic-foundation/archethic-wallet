@@ -1,19 +1,19 @@
 // Flutter imports:
-import 'package:animate_do/animate_do.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:archethic_wallet/service_locator.dart';
-import 'package:archethic_wallet/util/caseconverter.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:animate_do/animate_do.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:intl/intl.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/service_locator.dart';
 import 'package:archethic_wallet/styles.dart';
-import 'package:intl/intl.dart';
-import 'package:timeline_tile/timeline_tile.dart';
+import 'package:archethic_wallet/util/caseconverter.dart';
 
 class TransactionChainExplorerSheet extends StatefulWidget {
   const TransactionChainExplorerSheet(this.address) : super();

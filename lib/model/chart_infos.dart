@@ -1,7 +1,11 @@
-// Package imports:
-import 'package:archethic_wallet/localization.dart';
-import 'package:fl_chart/fl_chart.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:fl_chart/fl_chart.dart';
+
+// Project imports:
+import 'package:archethic_wallet/localization.dart';
 
 class ChartInfos {
   ChartInfos(

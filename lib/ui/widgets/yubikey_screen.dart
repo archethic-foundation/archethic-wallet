@@ -1,6 +1,7 @@
 // Dart imports:
 // ignore_for_file: always_specify_types
 
+// Dart imports:
 import 'dart:async';
 
 // Flutter imports:
@@ -84,9 +85,9 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
 
   Future<void> _verifyOTP(String otp) async {
     UIUtil.showSnackbar(otp, context);
-    String yubikeyClientAPIKey =
+    final String yubikeyClientAPIKey =
         await sl.get<SharedPrefsUtil>().getYubikeyClientAPIKey();
-    String yubikeyClientID =
+    final String yubikeyClientID =
         await sl.get<SharedPrefsUtil>().getYubikeyClientID();
     verificationResponse = await YubicoService()
         .verifyYubiCloudOTP(otp, yubikeyClientAPIKey, yubikeyClientID);
