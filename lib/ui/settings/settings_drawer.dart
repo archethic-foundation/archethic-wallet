@@ -785,8 +785,12 @@ class _SettingsSheetState extends State<SettingsSheet>
   Widget buildMainSettings(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: StateContainer.of(context).curTheme.backgroundDark,
-      ),
+          color: StateContainer.of(context).curTheme.backgroundDark,
+          border: Border(
+            right: BorderSide(
+                color: StateContainer.of(context).curTheme.primary30!,
+                width: 1),
+          )),
       child: SafeArea(
         minimum: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top + 30,
@@ -1071,6 +1075,10 @@ class _SettingsSheetState extends State<SettingsSheet>
     return Container(
       decoration: BoxDecoration(
         color: StateContainer.of(context).curTheme.backgroundDark,
+        border: Border(
+          right: BorderSide(
+              color: StateContainer.of(context).curTheme.primary30!, width: 1),
+        ),
         boxShadow: <BoxShadow>[
           BoxShadow(
               color: StateContainer.of(context).curTheme.overlay30!,
@@ -1291,6 +1299,10 @@ class _SettingsSheetState extends State<SettingsSheet>
   Widget buildAboutMenu(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        border: Border(
+          right: BorderSide(
+              color: StateContainer.of(context).curTheme.primary30!, width: 1),
+        ),
         color: StateContainer.of(context).curTheme.backgroundDark,
         boxShadow: <BoxShadow>[
           BoxShadow(
@@ -1421,6 +1433,10 @@ class _SettingsSheetState extends State<SettingsSheet>
   Widget buildNFTMenu(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        border: Border(
+          right: BorderSide(
+              color: StateContainer.of(context).curTheme.primary30!, width: 1),
+        ),
         color: StateContainer.of(context).curTheme.backgroundDark,
         boxShadow: <BoxShadow>[
           BoxShadow(

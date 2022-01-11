@@ -1,11 +1,9 @@
 // Flutter imports:
-import 'package:archethic_wallet/model/chart_infos.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:animate_do/animate_do.dart';
 
 // Project imports:
@@ -28,22 +26,12 @@ class BalanceInfosWidget {
             duration: const Duration(milliseconds: 1000),
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.11,
+              height: MediaQuery.of(context).size.height * 0.08,
               child: Stack(
                 children: <Widget>[
                   Container(
-                      child: Padding(
-                          padding: const EdgeInsets.only(
-                              right: 20.0, left: 0.0, top: 0.0, bottom: 0.0),
-                          child: LineChart(
-                            mainData(context),
-                            swapAnimationCurve: Curves.easeInOutCubic,
-                            swapAnimationDuration:
-                                const Duration(milliseconds: 1000),
-                          ))),
-                  Container(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.11,
+                    height: MediaQuery.of(context).size.height * 0.08,
                     alignment: Alignment.centerRight,
                     child: Padding(
                       padding: const EdgeInsets.only(
@@ -54,6 +42,16 @@ class BalanceInfosWidget {
                       ),
                     ),
                   ),
+                  Container(
+                      child: Padding(
+                          padding: const EdgeInsets.only(
+                              right: 20.0, left: 0.0, top: 0.0, bottom: 0.0),
+                          child: LineChart(
+                            mainData(context),
+                            swapAnimationCurve: Curves.easeInOutCubic,
+                            swapAnimationDuration:
+                                const Duration(milliseconds: 1000),
+                          ))),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     alignment: Alignment.centerLeft,
@@ -73,156 +71,6 @@ class BalanceInfosWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    alignment: Alignment.bottomLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          right: 0.0, left: 10.0, top: 0.0, bottom: 0.0),
-                      child: StateContainer.of(context)
-                                  .chartInfos!
-                                  .getPriceChangePercentage(
-                                      StateContainer.of(context)
-                                          .idChartOption!)! >=
-                              0
-                          ? Row(
-                              children: <Widget>[
-                                AutoSizeText(
-                                    StateContainer.of(context)
-                                        .wallet!
-                                        .getLocalCurrencyPrice(
-                                            StateContainer.of(context)
-                                                .curCurrency,
-                                            locale: StateContainer.of(context)
-                                                .currencyLocale!),
-                                    textAlign: TextAlign.center,
-                                    style: AppStyles.textStyleSize12W100Primary(
-                                        context)),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                AutoSizeText(
-                                  StateContainer.of(context)
-                                              .wallet!
-                                              .accountBalance
-                                              .uco ==
-                                          0
-                                      ? '1 UCO = ' +
-                                          StateContainer.of(context)
-                                              .localWallet!
-                                              .getLocalPrice(
-                                                  StateContainer.of(context)
-                                                      .curCurrency,
-                                                  locale:
-                                                      StateContainer.of(context)
-                                                          .currencyLocale!)
-                                      : '1 UCO = ' +
-                                          StateContainer.of(context)
-                                              .wallet!
-                                              .getLocalPrice(
-                                                  StateContainer.of(context)
-                                                      .curCurrency,
-                                                  locale:
-                                                      StateContainer.of(context)
-                                                          .currencyLocale!),
-                                  style: AppStyles.textStyleSize12W100Primary(
-                                      context),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                AutoSizeText(
-                                  StateContainer.of(context)
-                                          .chartInfos!
-                                          .getPriceChangePercentage(
-                                              StateContainer.of(context)
-                                                  .idChartOption!)!
-                                          .toStringAsFixed(2) +
-                                      '%',
-                                  style: AppStyles
-                                      .textStyleSize12W100PositiveValue(
-                                          context),
-                                ),
-                                FaIcon(FontAwesomeIcons.caretUp,
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .positiveValue),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                AutoSizeText(
-                                  ChartInfos.getChartOptionLabel(
-                                      context,
-                                      StateContainer.of(context)
-                                          .idChartOption!),
-                                  style: AppStyles.textStyleSize12W100Primary(
-                                      context),
-                                ),
-                              ],
-                            )
-                          : Row(
-                              children: <Widget>[
-                                Text(
-                                  StateContainer.of(context)
-                                              .wallet!
-                                              .accountBalance
-                                              .uco ==
-                                          0
-                                      ? '1 UCO = ' +
-                                          StateContainer.of(context)
-                                              .localWallet!
-                                              .getLocalPrice(
-                                                  StateContainer.of(context)
-                                                      .curCurrency,
-                                                  locale:
-                                                      StateContainer.of(context)
-                                                          .currencyLocale!)
-                                      : '1 UCO = ' +
-                                          StateContainer.of(context)
-                                              .wallet!
-                                              .getLocalPrice(
-                                                  StateContainer.of(context)
-                                                      .curCurrency,
-                                                  locale:
-                                                      StateContainer.of(context)
-                                                          .currencyLocale!),
-                                  style: AppStyles.textStyleSize12W100Primary(
-                                      context),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  StateContainer.of(context)
-                                          .chartInfos!
-                                          .getPriceChangePercentage(
-                                              StateContainer.of(context)
-                                                  .idChartOption!)!
-                                          .toStringAsFixed(2) +
-                                      '%',
-                                  style: AppStyles
-                                      .textStyleSize12W100NegativeValue(
-                                          context),
-                                ),
-                                FaIcon(FontAwesomeIcons.caretDown,
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .negativeValue),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                AutoSizeText(
-                                  ChartInfos.getChartOptionLabel(
-                                      context,
-                                      StateContainer.of(context)
-                                          .idChartOption!),
-                                  style: AppStyles.textStyleSize12W100Primary(
-                                      context),
-                                ),
-                              ],
-                            ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -234,7 +82,7 @@ class BalanceInfosWidget {
         children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.11,
+            height: MediaQuery.of(context).size.height * 0.08,
           ),
         ],
       );

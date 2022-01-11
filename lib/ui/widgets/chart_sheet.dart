@@ -155,6 +155,7 @@ class _ChartSheetState extends State<ChartSheet> {
                           style: AppStyles.textStyleSize16W100PositiveValue(
                               context),
                         ),
+                        const SizedBox(width: 5),
                         FaIcon(FontAwesomeIcons.caretUp,
                             color: StateContainer.of(context)
                                 .curTheme
@@ -206,6 +207,7 @@ class _ChartSheetState extends State<ChartSheet> {
                           style: AppStyles.textStyleSize16W100NegativeValue(
                               context),
                         ),
+                        const SizedBox(width: 5),
                         FaIcon(FontAwesomeIcons.caretDown,
                             color: StateContainer.of(context)
                                 .curTheme

@@ -1,35 +1,39 @@
-// ignore_for_file: must_be_immutable
-
-// Dart imports:
-import 'dart:async';
-
 // Flutter imports:
+import 'package:animate_do/animate_do.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/util/caseconverter.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
-import 'package:timeline_tile/timeline_tile.dart';
-import 'package:archethic_wallet/service_locator.dart';
 import 'package:archethic_wallet/styles.dart';
+import 'package:intl/intl.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show Transaction, ApiService;
+class TransactionChainExplorerSheet extends StatefulWidget {
+  const TransactionChainExplorerSheet(this.address) : super();
 
-class TransactionChainExplorer extends StatefulWidget {
+  final String? address;
+
   @override
-  _TransactionChainExplorerState createState() =>
-      _TransactionChainExplorerState();
+  _TransactionChainExplorerSheetState createState() =>
+      _TransactionChainExplorerSheetState();
 }
 
-class _TransactionChainExplorerState extends State<TransactionChainExplorer> {
+class _TransactionChainExplorerSheetState
+    extends State<TransactionChainExplorerSheet> {
+  int transactionsLength = 0;
+
   Future<List<Transaction>> _getTransactionChain() async {
-    await Future<Duration>.delayed(const Duration(seconds: 3));
     List<Transaction>? _transactions;
-    _transactions = await sl.get<ApiService>().getTransactionChain(
-        '007BCAA30EF42EEB507A0D47CAEE914C176525BF1E10CE5E53F7A5465421E7DE4B',
-        0);
+    _transactions =
+        await sl.get<ApiService>().getTransactionChain(widget.address!, 0);
+    transactionsLength = _transactions.length;
     return _transactions;
   }
 
@@ -41,208 +45,179 @@ class _TransactionChainExplorerState extends State<TransactionChainExplorer> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-          color: StateContainer.of(context).curTheme.backgroundDark,
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: StateContainer.of(context).curTheme.overlay30!,
-                offset: const Offset(-5, 0),
-                blurRadius: 20),
-          ],
-        ),
-        child: SafeArea(
-          minimum: EdgeInsets.only(
-            bottom: MediaQuery.of(context).size.height * 0.035,
-            top: 60,
-          ),
-          child: Column(
-            children: <Widget>[
-              // Back button
-              Container(
-                margin: const EdgeInsets.only(bottom: 10.0, top: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          AppLocalization.of(context)!
-                              .transactionChainExplorerHeader,
-                          style: AppStyles.textStyleSize28W700Primary(context),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              TimelineTile(
-                alignment: TimelineAlign.manual,
-                lineXY: 0.3,
-                isFirst: true,
-                indicatorStyle: IndicatorStyle(
-                  width: 30,
-                  height: 30,
-                  indicator: _Start(),
-                ),
-                beforeLineStyle:
-                    LineStyle(color: Colors.white.withOpacity(0.7)),
-                endChild: _ContainerHeader(),
-              ),
-              FutureBuilder<List<Transaction>>(
-                future: _getTransactionChain(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<Transaction>> transactions) {
-                  return Expanded(
-                    child: Stack(
-                      children: <Widget>[
-                        if (!transactions.hasData)
-                          const CircularProgressIndicator()
-                        else
-                          ListView.builder(
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            padding:
-                                const EdgeInsets.only(top: 15.0, bottom: 15),
-                            itemCount: transactions.data!.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return _buildTimelineTile(
-                                indicator: const _IconIndicator(
-                                  iconData: Icons.arrow_circle_down_outlined,
-                                  size: 25,
-                                ),
-                                hour: transactions
-                                    .data![index].validationStamp!.timestamp
-                                    .toString(),
-                                address: transactions.data![index].address,
-                                balance: transactions.data![index].balance!.uco
-                                    .toString(),
-                              );
-                            },
-                          ),
-                        //List Top Gradient End
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            height: 20.0,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: <Color>[
-                                  StateContainer.of(context)
-                                      .curTheme
-                                      .backgroundDark!,
-                                  StateContainer.of(context)
-                                      .curTheme
-                                      .backgroundDark00!
-                                ],
-                                begin: const AlignmentDirectional(0.5, -1.0),
-                                end: const AlignmentDirectional(0.5, 1.0),
-                              ),
-                            ),
-                          ),
-                        ),
-                        //List Bottom Gradient End
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            height: 15.0,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: <Color>[
-                                  StateContainer.of(context)
-                                      .curTheme
-                                      .backgroundDark00!,
-                                  StateContainer.of(context)
-                                      .curTheme
-                                      .backgroundDark!,
-                                ],
-                                begin: const AlignmentDirectional(0.5, -1.0),
-                                end: const AlignmentDirectional(0.5, 1.0),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ));
-  }
-
-  Widget buildSingleTransaction(BuildContext context, Transaction transaction) {
-    return Divider(
-      height: 2,
-      color: StateContainer.of(context).curTheme.primary15,
-    );
-  }
-}
-
-class _ContainerHeader extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minHeight: 120),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.end,
+    return Column(
+      children: <Widget>[
+        // A row for the address text and close button
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const Text(
-              'now - 17:30',
+            //Empty SizedBox
+            const SizedBox(
+              width: 60,
+              height: 40,
             ),
-            const Text(
-              'Sunny',
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: const <Widget>[
-                Expanded(
-                  child: Text(
-                    'Humidity 40%',
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.right,
+            Column(
+              children: <Widget>[
+                // Sheet handle
+                Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  height: 5,
+                  width: MediaQuery.of(context).size.width * 0.15,
+                  decoration: BoxDecoration(
+                    color: StateContainer.of(context).curTheme.primary60,
+                    borderRadius: BorderRadius.circular(100.0),
                   ),
                 ),
-                SizedBox(width: 20),
-                Text(
-                  '30°C',
-                ),
               ],
-            )
+            ),
+            //Empty SizedBox
+            const SizedBox(
+              width: 60,
+              height: 40,
+            ),
           ],
         ),
-      ),
-    );
-  }
-}
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.only(
+                  top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
+              child: AutoSizeText(
+                AppLocalization.of(context)!.transactionChainExplorerHeader,
+                style: AppStyles.textStyleSize24W700Primary(context),
+              ),
+            ),
+          ],
+        ),
+        Expanded(
+          child: Center(
+            child: Stack(children: <Widget>[
+              Container(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  child: SafeArea(
+                    minimum: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.035,
+                      top: 20,
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        _firstTimelineTile(
+                          context,
+                          const _IconIndicator(
+                            iconData: Icons.last_page,
+                            size: 25,
+                          ),
+                        ),
+                        FutureBuilder<List<Transaction>>(
+                          future: _getTransactionChain(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<List<Transaction>> transactions) {
+                            return Expanded(
+                              child: Stack(
+                                children: <Widget>[
+                                  if (!transactions.hasData)
+                                    const SizedBox()
+                                  else
+                                    FadeIn(
+                                      child: ListView.builder(
+                                        physics:
+                                            const AlwaysScrollableScrollPhysics(),
+                                        padding: const EdgeInsets.only(
+                                            top: 0.0, bottom: 0),
+                                        itemCount: transactions.data!.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return _buildTimelineTile(
+                                            context,
+                                            isLast: index ==
+                                                    transactions.data!.length -
+                                                        1
+                                                ? true
+                                                : false,
+                                            indicator: const _IconIndicator(
+                                              iconData: Icons
+                                                  .arrow_circle_down_outlined,
+                                              size: 25,
+                                            ),
+                                            dateTx: DateFormat.yMd(
+                                                    Localizations.localeOf(
+                                                            context)
+                                                        .languageCode)
+                                                .add_Hms()
+                                                .format(DateTime
+                                                        .fromMillisecondsSinceEpoch(
+                                                            transactions
+                                                                    .data![
+                                                                        index]
+                                                                    .validationStamp!
+                                                                    .timestamp! *
+                                                                1000)
+                                                    .toLocal())
+                                                .toString(),
+                                            address: transactions
+                                                .data![index].address,
+                                            balance: transactions
+                                                .data![index].balance!.uco
+                                                .toString(),
+                                          );
+                                        },
+                                      ),
+                                    ),
 
-class _Start extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.white,
-            blurRadius: 25,
-            spreadRadius: 20,
+                                  //List Bottom Gradient End
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Container(
+                                      height: 15.0,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: <Color>[
+                                            StateContainer.of(context)
+                                                .curTheme
+                                                .backgroundDark00!,
+                                            StateContainer.of(context)
+                                                .curTheme
+                                                .backgroundDark!,
+                                          ],
+                                          begin: const AlignmentDirectional(
+                                              0.5, -1.0),
+                                          end: const AlignmentDirectional(
+                                              0.5, 1.0),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  )),
+            ]),
           ),
-        ],
-        shape: BoxShape.circle,
-        color: Colors.white,
-      ),
+        ),
+      ],
     );
   }
 }
 
-TimelineTile _buildTimelineTile({
+Widget buildSingleTransaction(BuildContext context, Transaction transaction) {
+  return Divider(
+    height: 2,
+    color: StateContainer.of(context).curTheme.primary15,
+  );
+}
+
+TimelineTile _buildTimelineTile(
+  BuildContext context, {
   _IconIndicator? indicator,
-  String? hour,
+  String? dateTx,
   String? address,
   String? balance,
   bool isLast = false,
@@ -259,25 +234,65 @@ TimelineTile _buildTimelineTile({
       indicator: indicator,
     ),
     isLast: isLast,
-    startChild: Center(
-      child: Container(
-        alignment: const Alignment(0.0, -0.50),
-        child: Text(
-          hour!,
-        ),
+    startChild: Padding(
+      padding: const EdgeInsets.only(left: 20, right: 10, top: 0, bottom: 10),
+      child: Text(
+        dateTx!,
+        textAlign: TextAlign.right,
       ),
     ),
     endChild: Padding(
-      padding: const EdgeInsets.only(left: 16, right: 10, top: 10, bottom: 10),
+      padding: const EdgeInsets.only(left: 16, right: 10, top: 0, bottom: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
+          SelectableText(
             address!,
           ),
           const SizedBox(height: 4),
           Text(
-            balance!,
+            'UTXO: ' + balance! + ' UCO',
+          ),
+          const SizedBox(height: 4),
+        ],
+      ),
+    ),
+  );
+}
+
+TimelineTile _firstTimelineTile(
+    BuildContext context, _IconIndicator? indicator) {
+  return TimelineTile(
+    alignment: TimelineAlign.manual,
+    lineXY: 0.3,
+    beforeLineStyle: LineStyle(color: Colors.white.withOpacity(0.7)),
+    indicatorStyle: IndicatorStyle(
+      indicatorXY: 0.3,
+      drawGap: true,
+      width: 30,
+      height: 30,
+      indicator: indicator,
+    ),
+    isFirst: true,
+    startChild: Padding(
+      padding: const EdgeInsets.only(left: 20, right: 10, top: 0, bottom: 10),
+      child: Text(
+        AppLocalization.of(context)!.transactionChainExplorerLastAddress,
+        textAlign: TextAlign.right,
+      ),
+    ),
+    endChild: Padding(
+      padding: const EdgeInsets.only(left: 16, right: 10, top: 0, bottom: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SelectableText(
+            CaseChange.toUpperCase(
+                StateContainer.of(context).wallet!.address, context),
+          ),
+          const SizedBox(height: 4),
+          const Text(
+            '',
           ),
           const SizedBox(height: 4),
         ],
@@ -301,9 +316,16 @@ class _IconIndicator extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: Colors.white,
+                blurRadius: 5,
+                spreadRadius: 0,
+              ),
+            ],
             shape: BoxShape.circle,
-            color: Colors.white.withOpacity(0.7),
+            color: Colors.white,
           ),
         ),
         Positioned.fill(

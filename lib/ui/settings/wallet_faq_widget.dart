@@ -27,6 +27,10 @@ class _WalletFAQState extends State<WalletFAQ> {
     final double bottom = MediaQuery.of(context).viewInsets.bottom;
     return Container(
       decoration: BoxDecoration(
+        border: Border(
+          right: BorderSide(
+              color: StateContainer.of(context).curTheme.primary30!, width: 1),
+        ),
         color: StateContainer.of(context).curTheme.backgroundDark,
         boxShadow: <BoxShadow>[
           BoxShadow(

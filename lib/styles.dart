@@ -62,6 +62,14 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.backgroundDarkest);
   }
 
+  static TextStyle textStyleSize16W700BackgroundDarkest(BuildContext context) {
+    return TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: AppFontSizes.size16,
+        fontWeight: FontWeight.w700,
+        color: StateContainer.of(context).curTheme.backgroundDarkest);
+  }
+
   static TextStyle textStyleSize14W700Background(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',

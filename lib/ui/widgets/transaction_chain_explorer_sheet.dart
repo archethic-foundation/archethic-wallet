@@ -81,14 +81,17 @@ class _TransactionChainExplorerSheetState
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(
-                  top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
-              child: AutoSizeText(
-                AppLocalization.of(context)!.transactionChainExplorerHeader,
-                style: AppStyles.textStyleSize24W700Primary(context),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.only(
+                    top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
+                child: AutoSizeText(
+                  AppLocalization.of(context)!.transactionChainExplorerHeader,
+                  textAlign: TextAlign.center,
+                  style: AppStyles.textStyleSize24W700Primary(context),
+                ),
               ),
-            ),
+            )
           ],
         ),
         Expanded(
