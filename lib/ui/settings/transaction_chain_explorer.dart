@@ -6,9 +6,6 @@ import 'dart:async';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
@@ -28,7 +25,7 @@ class TransactionChainExplorer extends StatefulWidget {
 
 class _TransactionChainExplorerState extends State<TransactionChainExplorer> {
   Future<List<Transaction>> _getTransactionChain() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future<Duration>.delayed(const Duration(seconds: 3));
     List<Transaction>? _transactions;
     _transactions = await sl.get<ApiService>().getTransactionChain(
         '007BCAA30EF42EEB507A0D47CAEE914C176525BF1E10CE5E53F7A5465421E7DE4B',
@@ -195,15 +192,15 @@ class _ContainerHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            Text(
+            const Text(
               'now - 17:30',
             ),
-            Text(
+            const Text(
               'Sunny',
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
+              children: const <Widget>[
                 Expanded(
                   child: Text(
                     'Humidity 40%',
@@ -211,7 +208,7 @@ class _ContainerHeader extends StatelessWidget {
                     textAlign: TextAlign.right,
                   ),
                 ),
-                const SizedBox(width: 20),
+                SizedBox(width: 20),
                 Text(
                   '30°C',
                 ),
@@ -229,7 +226,7 @@ class _Start extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        boxShadow: [
+        boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.white,
             blurRadius: 25,
@@ -302,7 +299,7 @@ class _IconIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: [
+      children: <Widget>[
         Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,

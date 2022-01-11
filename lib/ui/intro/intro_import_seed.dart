@@ -1,4 +1,6 @@
 // Flutter imports:
+// ignore_for_file: always_specify_types
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

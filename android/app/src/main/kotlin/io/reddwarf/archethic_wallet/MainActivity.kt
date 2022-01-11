@@ -1,4 +1,4 @@
-package io.reddwarf.archethic_mobile_wallet
+package io.reddwarf.archethic_wallet
 
 import io.flutter.embedding.android.FlutterActivity
 

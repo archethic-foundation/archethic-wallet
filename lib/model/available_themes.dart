@@ -15,14 +15,15 @@ class ThemeSetting extends SettingSelectionItem {
 
   ThemeSetting(this.theme);
 
+  @override
   String getDisplayName(BuildContext context) {
     switch (theme) {
       case ThemeOptions.LIGHT:
-        return "Light";
+        return 'Light';
       case ThemeOptions.DARK:
-        return "Dark";
+        return 'Dark';
       default:
-        return "Dark";
+        return 'Dark';
     }
   }
 

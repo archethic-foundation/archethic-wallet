@@ -453,7 +453,7 @@ class UIUtil {
       return false;
   }
 
-  static void showWebview(
+  static Future<void> showWebview(
       BuildContext context, String url, String title) async {
     await launch(url);
   }

@@ -13,11 +13,11 @@ import 'package:archethic_wallet/model/recent_transaction.dart';
 import 'package:archethic_wallet/styles.dart';
 import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
 import 'package:archethic_wallet/ui/widgets/transaction_infos_sheet.dart';
-import 'package:archethic_wallet/ui/widgets/tx_list.dart';
 
 class TxAllListWidget extends StatefulWidget {
-  TxAllListWidget() : super();
+  const TxAllListWidget() : super();
 
+  @override
   _TxAllListWidgetState createState() => _TxAllListWidgetState();
 }
 
@@ -32,7 +32,7 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             //Empty SizedBox
-            SizedBox(
+            const SizedBox(
               width: 60,
               height: 40,
             ),
@@ -40,7 +40,7 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
               children: <Widget>[
                 // Sheet handle
                 Container(
-                  margin: EdgeInsets.only(top: 10),
+                  margin: const EdgeInsets.only(top: 10),
                   height: 5,
                   width: MediaQuery.of(context).size.width * 0.15,
                   decoration: BoxDecoration(
@@ -51,7 +51,7 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
               ],
             ),
             //Empty SizedBox
-            SizedBox(
+            const SizedBox(
               width: 60,
               height: 40,
             ),
@@ -60,9 +60,9 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Container(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                   top: 0.0, bottom: 20.0, left: 10.0, right: 10.0),
               child: AutoSizeText(
                 AppLocalization.of(context)!.transactionsAllListHeader,
@@ -90,13 +90,13 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                               //  list
                               ListView.builder(
                                 physics: const AlwaysScrollableScrollPhysics(),
-                                padding: EdgeInsets.only(
+                                padding: const EdgeInsets.only(
                                     left: 15, right: 15, top: 15.0, bottom: 15),
                                 itemCount: StateContainer.of(context)
                                     .wallet!
                                     .history
                                     .length,
-                                itemBuilder: (context, index) {
+                                itemBuilder: (BuildContext context, int index) {
                                   // Build
                                   return displayTxDetailTransfer(
                                       context,
@@ -149,18 +149,19 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                 ]),
               ),
               Column(
-                children: [
-                  transaction.typeTx! == RecentTransaction.NFT_CREATION
-                      ? Row(
-                          children: <Widget>[
-                            AutoSizeText(
-                                AppLocalization.of(context)!
-                                    .txListTypeTransactionLabelNewNFT,
-                                style: AppStyles.textStyleSize20W700Primary(
-                                    context)),
-                          ],
-                        )
-                      : const SizedBox(),
+                children: <Widget>[
+                  if (transaction.typeTx! == RecentTransaction.NFT_CREATION)
+                    Row(
+                      children: <Widget>[
+                        AutoSizeText(
+                            AppLocalization.of(context)!
+                                .txListTypeTransactionLabelNewNFT,
+                            style:
+                                AppStyles.textStyleSize20W700Primary(context)),
+                      ],
+                    )
+                  else
+                    const SizedBox(),
                   if (transaction.typeTx == RecentTransaction.NFT_CREATION &&
                       transaction.content != null)
                     Row(

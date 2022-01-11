@@ -15,17 +15,17 @@ import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
 import 'package:archethic_wallet/ui/widgets/tx_all_list.dart';
 
 class BalanceInfosWidget {
-  static Widget buildInfos(BuildContext context) {
+  Widget buildInfos(BuildContext context) {
     if (StateContainer.of(context).chartInfos != null &&
         StateContainer.of(context).chartInfos!.data != null) {
       return InkWell(
         onTap: () {
           Sheets.showAppHeightNineSheet(
-              context: context, widget: TxAllListWidget());
+              context: context, widget: const TxAllListWidget());
         },
         child: Ink(
           child: FadeIn(
-            duration: Duration(milliseconds: 1000),
+            duration: const Duration(milliseconds: 1000),
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.11,
@@ -38,7 +38,8 @@ class BalanceInfosWidget {
                           child: LineChart(
                             mainData(context),
                             swapAnimationCurve: Curves.easeInOutCubic,
-                            swapAnimationDuration: Duration(milliseconds: 1000),
+                            swapAnimationDuration:
+                                const Duration(milliseconds: 1000),
                           ))),
                   Container(
                     width: MediaQuery.of(context).size.width,
@@ -266,9 +267,9 @@ class BalanceInfosWidget {
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(
           tooltipPadding: const EdgeInsets.all(8),
-          tooltipBgColor: Color(0xff2e3747).withOpacity(0.8),
-          getTooltipItems: (touchedSpots) {
-            return touchedSpots.map((touchedSpot) {
+          tooltipBgColor: const Color(0xff2e3747).withOpacity(0.8),
+          getTooltipItems: (List<LineBarSpot> touchedSpots) {
+            return touchedSpots.map((LineBarSpot touchedSpot) {
               return LineTooltipItem(
                 '${touchedSpot.y}',
                 const TextStyle(color: Colors.white, fontSize: 12.0),

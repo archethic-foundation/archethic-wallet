@@ -61,7 +61,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                             Container(
                               child: Center(
                                 child: Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     top: 30.0,
                                   ),
                                   child: SizedBox(
@@ -95,8 +95,8 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                               height: 30,
                             ),
                             Container(
-                              margin:
-                                  EdgeInsets.only(top: 20, right: 20, left: 20),
+                              margin: const EdgeInsets.only(
+                                  top: 20, right: 20, left: 20),
                               child: Text(
                                 AppLocalization.of(context)!.welcomeText,
                                 style: AppStyles.textStyleSize14W600Primary(

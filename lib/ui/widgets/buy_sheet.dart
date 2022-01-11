@@ -12,8 +12,9 @@ import 'package:archethic_wallet/styles.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
 
 class BuySheet extends StatefulWidget {
-  BuySheet() : super();
+  const BuySheet() : super();
 
+  @override
   _BuySheetState createState() => _BuySheetState();
 }
 
@@ -28,7 +29,7 @@ class _BuySheetState extends State<BuySheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             //Empty SizedBox
-            SizedBox(
+            const SizedBox(
               width: 60,
               height: 40,
             ),
@@ -36,7 +37,7 @@ class _BuySheetState extends State<BuySheet> {
               children: <Widget>[
                 // Sheet handle
                 Container(
-                  margin: EdgeInsets.only(top: 10),
+                  margin: const EdgeInsets.only(top: 10),
                   height: 5,
                   width: MediaQuery.of(context).size.width * 0.15,
                   decoration: BoxDecoration(
@@ -47,7 +48,7 @@ class _BuySheetState extends State<BuySheet> {
               ],
             ),
             //Empty SizedBox
-            SizedBox(
+            const SizedBox(
               width: 60,
               height: 40,
             ),
@@ -56,9 +57,9 @@ class _BuySheetState extends State<BuySheet> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Container(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                   top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
               child: AutoSizeText(
                 AppLocalization.of(context)!.transactionBuyHeader,

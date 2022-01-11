@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.reddwarf.archethic_mobile_wallet">
+    package="io.reddwarf.archethic_wallet">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
     <uses-permission android:name="android.permission.CAMERA" />
@@ -12,7 +12,7 @@
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="false">
         <activity
-            android:name=".MainActivityArchEthicMobileWallet"
+            android:name=".MainActivityArchEthicWallet"
             android:launchMode="singleTop"
             android:exported="true"
             android:theme="@style/LaunchTheme"

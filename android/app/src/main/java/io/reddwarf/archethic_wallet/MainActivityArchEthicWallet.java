@@ -1,4 +1,4 @@
-package io.reddwarf.archethic_mobile_wallet;
+package io.reddwarf.archethic_wallet;
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterFragmentActivity;
@@ -6,7 +6,7 @@ import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 
-public class MainActivityArchEthicMobileWallet extends FlutterFragmentActivity {
+public class MainActivityArchEthicWallet extends FlutterFragmentActivity {
     private static final String CHANNEL = "fappchannel";
 
     @Override

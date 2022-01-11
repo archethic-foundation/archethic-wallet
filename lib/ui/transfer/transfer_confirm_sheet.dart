@@ -1,4 +1,4 @@
-// ignore_for_file: cancel_subscriptions
+// ignore_for_file: cancel_subscriptions, always_specify_types
 
 // Dart imports:
 import 'dart:async';
@@ -312,7 +312,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     // Yubikey Authentication
     final bool auth = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
-      return YubikeyScreen();
+      return const YubikeyScreen();
     })) as bool;
     if (auth) {
       await Future<void>.delayed(const Duration(milliseconds: 200));

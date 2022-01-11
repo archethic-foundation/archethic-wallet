@@ -1,4 +1,6 @@
 // Dart imports:
+// ignore_for_file: always_specify_types
+
 import 'dart:async';
 
 // Flutter imports:
@@ -131,7 +133,7 @@ class _SettingsSheetState extends State<SettingsSheet>
       });
     });
     // Get default theme settings
-    sl.get<SharedPrefsUtil>().getTheme().then((theme) {
+    sl.get<SharedPrefsUtil>().getTheme().then((ThemeSetting theme) {
       setState(() {
         _curThemeSetting = theme;
       });
@@ -677,10 +679,7 @@ class _SettingsSheetState extends State<SettingsSheet>
           );
         });
     if (_curThemeSetting != ThemeSetting(selection)) {
-      sl
-          .get<SharedPrefsUtil>()
-          .setTheme(ThemeSetting(selection))
-          .then((result) {
+      sl.get<SharedPrefsUtil>().setTheme(ThemeSetting(selection)).then((_) {
         setState(() {
           StateContainer.of(context).updateTheme(ThemeSetting(selection));
           _curThemeSetting = ThemeSetting(selection);
@@ -1534,7 +1533,7 @@ class _SettingsSheetState extends State<SettingsSheet>
     // Yubikey Authentication
     final bool auth = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
-      return YubikeyScreen();
+      return const YubikeyScreen();
     })) as bool;
     if (auth) {
       await Future<void>.delayed(const Duration(milliseconds: 200));

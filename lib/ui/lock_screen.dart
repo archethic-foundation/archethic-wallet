@@ -1,4 +1,6 @@
 // Flutter imports:
+// ignore_for_file: always_specify_types
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -188,7 +190,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
   Future<void> _authenticate({bool transitions = false}) async {
     // Test if user is locked out
     // Get duration of lockout
-    var lockUntil = await sl.get<SharedPrefsUtil>().getLockDate();
+    DateTime? lockUntil = await sl.get<SharedPrefsUtil>().getLockDate();
     if (lockUntil == null) {
       await sl.get<SharedPrefsUtil>().resetLockAttempts();
     } else {

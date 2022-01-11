@@ -284,7 +284,7 @@ class _AppHomePageState extends State<AppHomePage>
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
-        actions: [
+        actions: <Widget>[
           Text(AppLocalization.of(context)!.environment,
               style: TextStyle(
                   color: Colors.red[900], fontWeight: FontWeight.w900)),
@@ -317,8 +317,8 @@ class _AppHomePageState extends State<AppHomePage>
         child: SafeArea(
           child: Column(
             children: <Widget>[
-              BalanceInfosWidget.buildInfos(context),
-              Divider(),
+              BalanceInfosWidget().buildInfos(context),
+              const Divider(),
               Expanded(
                 child: Stack(
                   alignment: Alignment.topCenter,
@@ -334,7 +334,7 @@ class _AppHomePageState extends State<AppHomePage>
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
+                          children: <Widget>[
                             Container(
                                 child: InkWell(
                                     onTap: () {
@@ -352,13 +352,13 @@ class _AppHomePageState extends State<AppHomePage>
                                                       .curCurrency));
                                     },
                                     child: Column(
-                                      children: [
+                                      children: <Widget>[
                                         buildIconDataWidget(
                                             context,
                                             Icons.arrow_circle_up_outlined,
                                             40,
                                             40),
-                                        SizedBox(height: 5),
+                                        const SizedBox(height: 5),
                                         Text(AppLocalization.of(context)!.send,
                                             style: AppStyles
                                                 .textStyleSize10W100Primary(
@@ -369,16 +369,17 @@ class _AppHomePageState extends State<AppHomePage>
                               child: InkWell(
                                 onTap: () {
                                   Sheets.showAppHeightNineSheet(
-                                      context: context, widget: ReceiveSheet());
+                                      context: context,
+                                      widget: const ReceiveSheet());
                                 },
                                 child: Column(
-                                  children: [
+                                  children: <Widget>[
                                     buildIconDataWidget(
                                         context,
                                         Icons.arrow_circle_down_outlined,
                                         40,
                                         40),
-                                    SizedBox(height: 5),
+                                    const SizedBox(height: 5),
                                     Text(AppLocalization.of(context)!.receive,
                                         style: AppStyles
                                             .textStyleSize10W100Primary(
@@ -391,16 +392,17 @@ class _AppHomePageState extends State<AppHomePage>
                                 child: InkWell(
                                     onTap: () {
                                       Sheets.showAppHeightNineSheet(
-                                          context: context, widget: BuySheet());
+                                          context: context,
+                                          widget: const BuySheet());
                                     },
                                     child: Column(
-                                      children: [
+                                      children: <Widget>[
                                         buildIconDataWidget(
                                             context,
                                             Icons.add_circle_outline_outlined,
                                             40,
                                             40),
-                                        SizedBox(height: 5),
+                                        const SizedBox(height: 5),
                                         Text(AppLocalization.of(context)!.buy,
                                             style: AppStyles
                                                 .textStyleSize10W100Primary(
@@ -476,10 +478,10 @@ class _AppHomePageState extends State<AppHomePage>
                                           ));
                                     },
                                     child: Column(
-                                      children: [
+                                      children: <Widget>[
                                         buildIconDataWidget(
                                             context, Icons.show_chart, 40, 40),
-                                        SizedBox(height: 5),
+                                        const SizedBox(height: 5),
                                         Text(AppLocalization.of(context)!.chart,
                                             style: AppStyles
                                                 .textStyleSize10W100Primary(
@@ -491,12 +493,12 @@ class _AppHomePageState extends State<AppHomePage>
                         const SizedBox(
                           height: 10,
                         ),
-                        Divider(),
+                        const Divider(),
                         InkWell(
                           onTap: () {
                             Sheets.showAppHeightNineSheet(
                                 context: context,
-                                widget: TransactionChainExplorerSheet());
+                                widget: const TransactionChainExplorerSheet());
                           },
                           child: Ink(
                             child: Padding(
@@ -506,12 +508,12 @@ class _AppHomePageState extends State<AppHomePage>
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
+                                children: <Widget>[
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: [
+                                    children: <Widget>[
                                       Text(
                                           AppLocalization.of(context)!
                                               .transactionChainExplorerHeader,
@@ -526,7 +528,7 @@ class _AppHomePageState extends State<AppHomePage>
                                                   context)),
                                     ],
                                   ),
-                                  Icon(
+                                  const Icon(
                                     Icons.arrow_forward_ios_rounded,
                                     size: 18,
                                   ),
@@ -535,7 +537,7 @@ class _AppHomePageState extends State<AppHomePage>
                             ),
                           ),
                         ),
-                        Divider(),
+                        const Divider(),
                         const TxListWidget(),
                       ],
                     ),

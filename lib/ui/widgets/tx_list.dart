@@ -65,7 +65,7 @@ class _TxListWidgetState extends State<TxListWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Row(
-          children: [
+          children: <Widget>[
             Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: StateContainer.of(context)
@@ -82,18 +82,18 @@ class _TxListWidgetState extends State<TxListWidget> {
                         AppLocalization.of(context)!
                             .recentTransactionsNoTransactionYet,
                         style: AppStyles.textStyleSize14W600Primary(context))),
-            kIsWeb
-                ? IconButton(
-                    icon: Icon(Icons.refresh),
-                    color:
-                        StateContainer.of(context).curTheme.backgroundDarkest,
-                    onPressed: () async {
-                      StateContainer.of(context).requestUpdate(
-                          account: StateContainer.of(context).selectedAccount);
-                      _pagingController.refresh();
-                    },
-                  )
-                : const SizedBox(),
+            if (kIsWeb)
+              IconButton(
+                icon: const Icon(Icons.refresh),
+                color: StateContainer.of(context).curTheme.backgroundDarkest,
+                onPressed: () async {
+                  StateContainer.of(context).requestUpdate(
+                      account: StateContainer.of(context).selectedAccount);
+                  _pagingController.refresh();
+                },
+              )
+            else
+              const SizedBox(),
           ],
         ),
         Container(
@@ -162,18 +162,19 @@ class _TxListWidgetState extends State<TxListWidget> {
                 ]),
               ),
               Column(
-                children: [
-                  transaction.typeTx! == RecentTransaction.NFT_CREATION
-                      ? Row(
-                          children: <Widget>[
-                            AutoSizeText(
-                                AppLocalization.of(context)!
-                                    .txListTypeTransactionLabelNewNFT,
-                                style: AppStyles.textStyleSize20W700Primary(
-                                    context)),
-                          ],
-                        )
-                      : const SizedBox(),
+                children: <Widget>[
+                  if (transaction.typeTx! == RecentTransaction.NFT_CREATION)
+                    Row(
+                      children: <Widget>[
+                        AutoSizeText(
+                            AppLocalization.of(context)!
+                                .txListTypeTransactionLabelNewNFT,
+                            style:
+                                AppStyles.textStyleSize20W700Primary(context)),
+                      ],
+                    )
+                  else
+                    const SizedBox(),
                   if (transaction.typeTx == RecentTransaction.NFT_CREATION &&
                       transaction.content != null)
                     Row(

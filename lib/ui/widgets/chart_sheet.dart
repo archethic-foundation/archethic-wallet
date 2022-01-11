@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:animate_do/animate_do.dart';
-import 'package:archethic_wallet/model/chart_infos.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +18,7 @@ class ChartSheet extends StatefulWidget {
 
   final List<OptionChart> optionChartList;
   final OptionChart? optionChart;
+  @override
   _ChartSheetState createState() => _ChartSheetState();
 }
 
@@ -41,7 +41,7 @@ class _ChartSheetState extends State<ChartSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             //Empty SizedBox
-            SizedBox(
+            const SizedBox(
               width: 60,
               height: 40,
             ),
@@ -49,7 +49,7 @@ class _ChartSheetState extends State<ChartSheet> {
               children: <Widget>[
                 // Sheet handle
                 Container(
-                  margin: EdgeInsets.only(top: 10),
+                  margin: const EdgeInsets.only(top: 10),
                   height: 5,
                   width: MediaQuery.of(context).size.width * 0.15,
                   decoration: BoxDecoration(
@@ -60,7 +60,7 @@ class _ChartSheetState extends State<ChartSheet> {
               ],
             ),
             //Empty SizedBox
-            SizedBox(
+            const SizedBox(
               width: 60,
               height: 40,
             ),
@@ -69,9 +69,9 @@ class _ChartSheetState extends State<ChartSheet> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Container(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                   top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
               child: AutoSizeText(
                 AppLocalization.of(context)!.chart,
@@ -82,11 +82,11 @@ class _ChartSheetState extends State<ChartSheet> {
         ),
 
         FadeIn(
-          duration: Duration(milliseconds: 1000),
+          duration: const Duration(milliseconds: 1000),
           child: Container(
             height: MediaQuery.of(context).size.height * 0.35,
-            padding:
-                EdgeInsets.only(top: 20.0, bottom: 0.0, left: 0.0, right: 0.0),
+            padding: const EdgeInsets.only(
+                top: 20.0, bottom: 0.0, left: 0.0, right: 0.0),
             child: Padding(
               padding: const EdgeInsets.only(
                   right: 5.0, left: 5.0, top: 0.0, bottom: 0.0),
@@ -94,7 +94,7 @@ class _ChartSheetState extends State<ChartSheet> {
                   ? LineChart(
                       mainData(context),
                       swapAnimationCurve: Curves.decelerate,
-                      swapAnimationDuration: Duration(milliseconds: 1000),
+                      swapAnimationDuration: const Duration(milliseconds: 1000),
                     )
                   : const SizedBox(),
             ),
@@ -103,120 +103,119 @@ class _ChartSheetState extends State<ChartSheet> {
         const SizedBox(
           height: 30,
         ),
-        StateContainer.of(context).chartInfos != null
-            ? Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: StateContainer.of(context)
-                            .chartInfos!
-                            .getPriceChangePercentage(
-                                StateContainer.of(context).idChartOption!)! >=
-                        0
-                    ? FadeIn(
-                        duration: Duration(milliseconds: 1000),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            AutoSizeText(
-                              StateContainer.of(context)
-                                          .wallet!
-                                          .accountBalance
-                                          .uco ==
-                                      0
-                                  ? '1 UCO = ' +
-                                      StateContainer.of(context)
-                                          .localWallet!
-                                          .getLocalPrice(
-                                              StateContainer.of(context)
-                                                  .curCurrency,
-                                              locale: StateContainer.of(context)
-                                                  .currencyLocale!)
-                                  : '1 UCO = ' +
-                                      StateContainer.of(context)
-                                          .wallet!
-                                          .getLocalPrice(
-                                              StateContainer.of(context)
-                                                  .curCurrency,
-                                              locale: StateContainer.of(context)
-                                                  .currencyLocale!),
-                              style:
-                                  AppStyles.textStyleSize16W700Primary(context),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            AutoSizeText(
-                              StateContainer.of(context)
-                                      .chartInfos!
-                                      .getPriceChangePercentage(
+        if (StateContainer.of(context).chartInfos != null)
+          Container(
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: StateContainer.of(context)
+                        .chartInfos!
+                        .getPriceChangePercentage(
+                            StateContainer.of(context).idChartOption!)! >=
+                    0
+                ? FadeIn(
+                    duration: const Duration(milliseconds: 1000),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        AutoSizeText(
+                          StateContainer.of(context)
+                                      .wallet!
+                                      .accountBalance
+                                      .uco ==
+                                  0
+                              ? '1 UCO = ' +
+                                  StateContainer.of(context)
+                                      .localWallet!
+                                      .getLocalPrice(
                                           StateContainer.of(context)
-                                              .idChartOption!)!
-                                      .toStringAsFixed(2) +
-                                  '%',
-                              style: AppStyles.textStyleSize16W100PositiveValue(
-                                  context),
-                            ),
-                            FaIcon(FontAwesomeIcons.caretUp,
-                                color: StateContainer.of(context)
-                                    .curTheme
-                                    .positiveValue),
-                          ],
-                        ),
-                      )
-                    : FadeIn(
-                        duration: Duration(milliseconds: 1000),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            AutoSizeText(
-                              StateContainer.of(context)
-                                          .wallet!
-                                          .accountBalance
-                                          .uco ==
-                                      0
-                                  ? '1 UCO = ' +
-                                      StateContainer.of(context)
-                                          .localWallet!
-                                          .getLocalPrice(
-                                              StateContainer.of(context)
-                                                  .curCurrency,
-                                              locale: StateContainer.of(context)
-                                                  .currencyLocale!)
-                                  : '1 UCO = ' +
-                                      StateContainer.of(context)
-                                          .wallet!
-                                          .getLocalPrice(
-                                              StateContainer.of(context)
-                                                  .curCurrency,
-                                              locale: StateContainer.of(context)
-                                                  .currencyLocale!),
-                              style:
-                                  AppStyles.textStyleSize16W700Primary(context),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            AutoSizeText(
-                              StateContainer.of(context)
-                                      .chartInfos!
-                                      .getPriceChangePercentage(
+                                              .curCurrency,
+                                          locale: StateContainer.of(context)
+                                              .currencyLocale!)
+                              : '1 UCO = ' +
+                                  StateContainer.of(context)
+                                      .wallet!
+                                      .getLocalPrice(
                                           StateContainer.of(context)
-                                              .idChartOption!)!
-                                      .toStringAsFixed(2) +
-                                  '%',
-                              style: AppStyles.textStyleSize16W100NegativeValue(
-                                  context),
-                            ),
-                            FaIcon(FontAwesomeIcons.caretDown,
-                                color: StateContainer.of(context)
-                                    .curTheme
-                                    .negativeValue),
-                          ],
+                                              .curCurrency,
+                                          locale: StateContainer.of(context)
+                                              .currencyLocale!),
+                          style: AppStyles.textStyleSize16W700Primary(context),
                         ),
-                      ),
-              )
-            : const SizedBox(),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        AutoSizeText(
+                          StateContainer.of(context)
+                                  .chartInfos!
+                                  .getPriceChangePercentage(
+                                      StateContainer.of(context)
+                                          .idChartOption!)!
+                                  .toStringAsFixed(2) +
+                              '%',
+                          style: AppStyles.textStyleSize16W100PositiveValue(
+                              context),
+                        ),
+                        FaIcon(FontAwesomeIcons.caretUp,
+                            color: StateContainer.of(context)
+                                .curTheme
+                                .positiveValue),
+                      ],
+                    ),
+                  )
+                : FadeIn(
+                    duration: const Duration(milliseconds: 1000),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        AutoSizeText(
+                          StateContainer.of(context)
+                                      .wallet!
+                                      .accountBalance
+                                      .uco ==
+                                  0
+                              ? '1 UCO = ' +
+                                  StateContainer.of(context)
+                                      .localWallet!
+                                      .getLocalPrice(
+                                          StateContainer.of(context)
+                                              .curCurrency,
+                                          locale: StateContainer.of(context)
+                                              .currencyLocale!)
+                              : '1 UCO = ' +
+                                  StateContainer.of(context)
+                                      .wallet!
+                                      .getLocalPrice(
+                                          StateContainer.of(context)
+                                              .curCurrency,
+                                          locale: StateContainer.of(context)
+                                              .currencyLocale!),
+                          style: AppStyles.textStyleSize16W700Primary(context),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        AutoSizeText(
+                          StateContainer.of(context)
+                                  .chartInfos!
+                                  .getPriceChangePercentage(
+                                      StateContainer.of(context)
+                                          .idChartOption!)!
+                                  .toStringAsFixed(2) +
+                              '%',
+                          style: AppStyles.textStyleSize16W100NegativeValue(
+                              context),
+                        ),
+                        FaIcon(FontAwesomeIcons.caretDown,
+                            color: StateContainer.of(context)
+                                .curTheme
+                                .negativeValue),
+                      ],
+                    ),
+                  ),
+          )
+        else
+          const SizedBox(),
 
         Expanded(
           child: Center(
@@ -242,7 +241,7 @@ class _ChartSheetState extends State<ChartSheet> {
                           style: TextStyle(
                             color: StateContainer.of(context).curTheme.primary,
                           ),
-                          underline: SizedBox(),
+                          underline: const SizedBox(),
                           iconEnabledColor: StateContainer.of(context)
                               .curTheme
                               .backgroundDarkest!,
@@ -313,9 +312,9 @@ class _ChartSheetState extends State<ChartSheet> {
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(
           tooltipPadding: const EdgeInsets.all(8),
-          tooltipBgColor: Color(0xff2e3747).withOpacity(0.8),
-          getTooltipItems: (touchedSpots) {
-            return touchedSpots.map((touchedSpot) {
+          tooltipBgColor: const Color(0xff2e3747).withOpacity(0.8),
+          getTooltipItems: (List<LineBarSpot> touchedSpots) {
+            return touchedSpots.map((LineBarSpot touchedSpot) {
               return LineTooltipItem(
                 '${touchedSpot.y}',
                 const TextStyle(color: Colors.white, fontSize: 12.0),
@@ -338,8 +337,8 @@ class _ChartSheetState extends State<ChartSheet> {
           ),
           belowBarData: BarAreaData(
             show: true,
-            gradientFrom: Offset(0, 0),
-            gradientTo: Offset(0, 1),
+            gradientFrom: const Offset(0, 0),
+            gradientTo: const Offset(0, 1),
             colors: gradientColorsBar,
           ),
         ),

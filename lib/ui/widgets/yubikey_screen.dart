@@ -1,4 +1,6 @@
 // Dart imports:
+// ignore_for_file: always_specify_types
+
 import 'dart:async';
 
 // Flutter imports:
@@ -51,8 +53,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
     super.initState();
     _registerBus();
 
-    this.enterOTPFocusNode = FocusNode();
-    this.enterOTPController = TextEditingController();
+    enterOTPFocusNode = FocusNode();
+    enterOTPController = TextEditingController();
 
     sl.get<NFCUtil>().hasNFC().then((bool hasNFC) {
       setState(() {
@@ -206,81 +208,80 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                                 stepGranularity: 0.1,
                               ),
                             ),
-                            isNFCAvailable
-                                ? ElevatedButton(
-                                    child: Text(buttonNFCLabel,
-                                        style: AppStyles
-                                            .textStyleSize16W200Primary(
-                                                context)),
-                                    onPressed: () {
-                                      setState(() {
-                                        buttonNFCLabel =
-                                            'Hold your device near the Yubikey';
-                                      });
-                                      _tagRead();
-                                    })
-                                : Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 40, vertical: 10),
-                                    child: AutoSizeText(
-                                      'Please, connect your Yubikey',
+                            if (isNFCAvailable)
+                              ElevatedButton(
+                                  child: Text(buttonNFCLabel,
                                       style:
                                           AppStyles.textStyleSize16W200Primary(
-                                              context),
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      stepGranularity: 0.1,
-                                    ),
-                                  ),
-                            isNFCAvailable
-                                ? SizedBox(
-                                    width: MediaQuery.of(context).size.width,
-                                  )
-                                : AppTextField(
-                                    topMargin: 30,
-                                    maxLines: 3,
-                                    padding: EdgeInsetsDirectional.only(
-                                        start: 16, end: 16),
-                                    focusNode: enterOTPFocusNode,
-                                    controller: enterOTPController,
-                                    textInputAction: TextInputAction.go,
-                                    autofocus: true,
-                                    onSubmitted: (value) async {
-                                      FocusScope.of(context).unfocus();
-                                    },
-                                    onChanged: (value) async {
-                                      if (value.trim().length == 44) {
-                                        EventTaxiImpl.singleton()
-                                            .fire(OTPReceiveEvent(otp: value));
+                                              context)),
+                                  onPressed: () {
+                                    setState(() {
+                                      buttonNFCLabel =
+                                          'Hold your device near the Yubikey';
+                                    });
+                                    _tagRead();
+                                  })
+                            else
+                              Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 40, vertical: 10),
+                                child: AutoSizeText(
+                                  'Please, connect your Yubikey',
+                                  style: AppStyles.textStyleSize16W200Primary(
+                                      context),
+                                  textAlign: TextAlign.center,
+                                  maxLines: 1,
+                                  stepGranularity: 0.1,
+                                ),
+                              ),
+                            if (isNFCAvailable)
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                              )
+                            else
+                              AppTextField(
+                                topMargin: 30,
+                                maxLines: 3,
+                                padding: const EdgeInsetsDirectional.only(
+                                    start: 16, end: 16),
+                                focusNode: enterOTPFocusNode,
+                                controller: enterOTPController,
+                                textInputAction: TextInputAction.go,
+                                autofocus: true,
+                                onSubmitted: (value) async {
+                                  FocusScope.of(context).unfocus();
+                                },
+                                onChanged: (String value) async {
+                                  if (value.trim().length == 44) {
+                                    EventTaxiImpl.singleton()
+                                        .fire(OTPReceiveEvent(otp: value));
+                                  }
+                                },
+                                inputFormatters: <
+                                    LengthLimitingTextInputFormatter>[
+                                  LengthLimitingTextInputFormatter(45),
+                                ],
+                                keyboardType: TextInputType.text,
+                                obscureText: false,
+                                textAlign: TextAlign.center,
+                                style: AppStyles.textStyleSize16W600Primary(
+                                    context),
+                                suffixButton: TextFieldButton(
+                                  icon: FontAwesomeIcons.paste,
+                                  onPressed: () {
+                                    Clipboard.getData('text/plain')
+                                        .then((ClipboardData? data) async {
+                                      if (data == null || data.text == null) {
+                                        return;
                                       }
-                                    },
-                                    inputFormatters: <
-                                        LengthLimitingTextInputFormatter>[
-                                      LengthLimitingTextInputFormatter(45),
-                                    ],
-                                    keyboardType: TextInputType.text,
-                                    obscureText: false,
-                                    textAlign: TextAlign.center,
-                                    style: AppStyles.textStyleSize16W600Primary(
-                                        context),
-                                    suffixButton: TextFieldButton(
-                                      icon: FontAwesomeIcons.paste,
-                                      onPressed: () {
-                                        Clipboard.getData('text/plain')
-                                            .then((ClipboardData? data) async {
-                                          if (data == null ||
-                                              data.text == null) {
-                                            return;
-                                          }
-                                          enterOTPController!.text = data.text!;
-                                          EventTaxiImpl.singleton().fire(
-                                              OTPReceiveEvent(
-                                                  otp: enterOTPController!
-                                                      .text));
-                                        });
-                                      },
-                                    ),
-                                  )
+                                      enterOTPController!.text = data.text!;
+                                      EventTaxiImpl.singleton().fire(
+                                          OTPReceiveEvent(
+                                              otp: enterOTPController!.text));
+                                    });
+                                  },
+                                ),
+                              )
                           ],
                         ),
                       ),
@@ -295,7 +296,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
     );
   }
 
-  void _tagRead() async {
+  Future<void> _tagRead() async {
     await sl.get<NFCUtil>().authenticateWithNFCYubikey(context);
   }
 }

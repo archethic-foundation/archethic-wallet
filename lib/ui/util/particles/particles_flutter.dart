@@ -1,3 +1,5 @@
+// ignore_for_file: always_specify_types, duplicate_ignore
+
 library particles_flutter;
 
 // Dart imports:
@@ -58,6 +60,7 @@ class CircularParticle extends StatefulWidget {
   _CircularParticleState createState() => _CircularParticleState();
 }
 
+// ignore: duplicate_ignore, duplicate_ignore
 class _CircularParticleState extends State<CircularParticle>
     with TickerProviderStateMixin {
   _CircularParticleState();
@@ -76,6 +79,7 @@ class _CircularParticleState extends State<CircularParticle>
 
   List<double> randomSize = <double>[];
   List<int> hoverIndex = <int>[];
+  // ignore: always_specify_types
   List<List> lineOffset = <List>[];
 
   void initailizeOffsets(_) {

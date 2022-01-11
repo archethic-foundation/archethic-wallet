@@ -144,7 +144,7 @@ class StateContainerState extends State<StateContainer> {
       });
     });
     // Get theme default
-    sl.get<SharedPrefsUtil>().getTheme().then((theme) {
+    sl.get<SharedPrefsUtil>().getTheme().then((ThemeSetting theme) {
       updateTheme(theme);
     });
   }

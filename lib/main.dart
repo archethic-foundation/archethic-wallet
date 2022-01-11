@@ -185,7 +185,7 @@ class _AppState extends State<App> {
                 settings: settings,
               );
             case '/intro_import':
-              return MaterialPageRoute(
+              return MaterialPageRoute<IntroImportSeedPage>(
                 builder: (_) => IntroImportSeedPage(),
                 settings: settings,
               );

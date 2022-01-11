@@ -17,8 +17,9 @@ import 'package:archethic_wallet/ui/util/ui_util.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ReceiveSheet extends StatefulWidget {
-  ReceiveSheet() : super();
+  const ReceiveSheet() : super();
 
+  @override
   _ReceiveSheetState createState() => _ReceiveSheetState();
 }
 
@@ -36,7 +37,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               //Empty SizedBox
-              SizedBox(
+              const SizedBox(
                 width: 60,
                 height: 0,
               ),
@@ -72,7 +73,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                 ],
               ),
               //Empty SizedBox
-              SizedBox(
+              const SizedBox(
                 width: 60,
                 height: 0,
               ),
@@ -110,7 +111,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
+                                    children: <Widget>[
                                       Container(
                                         width: 200,
                                         margin: const EdgeInsets.all(8),
@@ -215,7 +216,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                         AppButtonType.PRIMARY,
                         AppLocalization.of(context)!.copy,
                         Dimens.BUTTON_TOP_DIMENS,
-                        icon: Icon(Icons.copy), onPressed: () async {
+                        icon: const Icon(Icons.copy), onPressed: () async {
                       Clipboard.setData(ClipboardData(
                           text: StateContainer.of(context).wallet!.address));
                       UIUtil.showSnackbar('Address copied', context);
@@ -229,8 +230,9 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                         AppButtonType.PRIMARY,
                         AppLocalization.of(context)!.share,
                         Dimens.BUTTON_BOTTOM_DIMENS,
-                        icon: Icon(Icons.share), onPressed: () {
-                      final box = context.findRenderObject() as RenderBox?;
+                        icon: const Icon(Icons.share), onPressed: () {
+                      final RenderBox? box =
+                          context.findRenderObject() as RenderBox?;
                       Share.share(
                           '${StateContainer.of(context).selectedAccount.lastAddress!} ',
                           sharePositionOrigin:

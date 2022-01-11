@@ -1,0 +1,9 @@
+ARCHEThic Wallet - Version beta 0.1.0
+
+new links
+
+Link to android and macOS version : https://github.com/archethic-foundation/archethic_wallet/releases/tag/v0.1.0
+Link to Web app : https://reddwarf03.github.io/archethic_web/index.html
+Link to iOS version : Soon
+
+This app is under development and works on testnet only. Community feedback helps improve the app

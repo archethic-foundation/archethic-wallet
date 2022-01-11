@@ -133,7 +133,7 @@ class DarkTheme implements BaseTheme {
   @override
   Widget? getBackgroundScreen(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
             image: AssetImage('assets/themes/dark/background.jpg'),
             fit: BoxFit.cover),

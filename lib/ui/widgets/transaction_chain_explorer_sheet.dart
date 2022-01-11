@@ -16,8 +16,9 @@ import 'package:intl/intl.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 class TransactionChainExplorerSheet extends StatefulWidget {
-  TransactionChainExplorerSheet() : super();
+  const TransactionChainExplorerSheet() : super();
 
+  @override
   _TransactionChainExplorerSheetState createState() =>
       _TransactionChainExplorerSheetState();
 }
@@ -51,7 +52,7 @@ class _TransactionChainExplorerSheetState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             //Empty SizedBox
-            SizedBox(
+            const SizedBox(
               width: 60,
               height: 40,
             ),
@@ -59,7 +60,7 @@ class _TransactionChainExplorerSheetState
               children: <Widget>[
                 // Sheet handle
                 Container(
-                  margin: EdgeInsets.only(top: 10),
+                  margin: const EdgeInsets.only(top: 10),
                   height: 5,
                   width: MediaQuery.of(context).size.width * 0.15,
                   decoration: BoxDecoration(
@@ -70,7 +71,7 @@ class _TransactionChainExplorerSheetState
               ],
             ),
             //Empty SizedBox
-            SizedBox(
+            const SizedBox(
               width: 60,
               height: 40,
             ),
@@ -79,9 +80,9 @@ class _TransactionChainExplorerSheetState
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Container(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                   top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
               child: AutoSizeText(
                 AppLocalization.of(context)!.transactionChainExplorerHeader,
@@ -289,7 +290,7 @@ TimelineTile _firstTimelineTile(
                 StateContainer.of(context).wallet!.address, context),
           ),
           const SizedBox(height: 4),
-          Text(
+          const Text(
             '',
           ),
           const SizedBox(height: 4),
@@ -312,10 +313,10 @@ class _IconIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: [
+      children: <Widget>[
         Container(
           decoration: const BoxDecoration(
-            boxShadow: [
+            boxShadow: <BoxShadow>[
               BoxShadow(
                 color: Colors.white,
                 blurRadius: 5,

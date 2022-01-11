@@ -362,7 +362,7 @@ class AppLocalization {
   }
 
   String get yubikeyWithYubiCloudMethod {
-    return Intl.message("Yubikey", name: 'yubikeyWithYubiCloudMethod');
+    return Intl.message('Yubikey', name: 'yubikeyWithYubiCloudMethod');
   }
 
   String get biometricsMethod {
@@ -493,7 +493,7 @@ class AppLocalization {
   }
 
   String get themeHeader {
-    return Intl.message("Theme", name: 'themeHeader');
+    return Intl.message('Theme', name: 'themeHeader');
   }
 
   String get aboutGeneralTermsAndConditions {
