@@ -116,46 +116,48 @@ class _AppTextFieldState extends State<AppTextField> {
         child: widget.overrideTextFieldWidget ??
             Stack(alignment: AlignmentDirectional.center, children: <Widget>[
               TextField(
-                  // User defined fields
-                  textAlign: widget.textAlign!,
-                  keyboardAppearance: widget.keyboardAppearance,
-                  autocorrect: widget.autocorrect!,
-                  maxLines: widget.maxLines,
-                  focusNode: widget.focusNode,
-                  controller: widget.controller,
-                  cursorColor: widget.cursorColor ??
-                      StateContainer.of(context).curTheme.primary,
-                  inputFormatters: widget.inputFormatters,
-                  textInputAction: widget.textInputAction,
-                  keyboardType: widget.keyboardType,
-                  obscureText: widget.obscureText!,
-                  autofocus: widget.autofocus!,
-                  onSubmitted: (String text) {
-                    if (widget.textInputAction == TextInputAction.done) {
-                      FocusScope.of(context).unfocus();
-                    }
-                  },
-                  onChanged: widget.onChanged,
-                  // Style
-                  style: widget.style,
-                  // Input decoration
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      // Hint
-                      hintText: widget.hintText ?? '',
-                      hintStyle: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w100,
-                        fontFamily: 'Montserrat',
-                        color: StateContainer.of(context).curTheme.primary20,
-                      ),
-                      // First button
-                      prefixIcon: widget.prefixButton == null
-                          ? Container(width: 0, height: 0)
-                          : Container(width: 48, height: 48),
-                      suffixIcon: widget.suffixButton == null
-                          ? Container(width: 0, height: 0)
-                          : Container(width: 48, height: 48))),
+                // User defined fields
+                textAlign: widget.textAlign!,
+                keyboardAppearance: widget.keyboardAppearance,
+                autocorrect: widget.autocorrect!,
+                maxLines: widget.maxLines,
+                focusNode: widget.focusNode,
+                controller: widget.controller,
+                cursorColor: widget.cursorColor ??
+                    StateContainer.of(context).curTheme.primary,
+                inputFormatters: widget.inputFormatters,
+                textInputAction: widget.textInputAction,
+                keyboardType: widget.keyboardType,
+                obscureText: widget.obscureText!,
+                autofocus: widget.autofocus!,
+                onSubmitted: (String text) {
+                  if (widget.textInputAction == TextInputAction.done) {
+                    FocusScope.of(context).unfocus();
+                  }
+                },
+                onChanged: widget.onChanged,
+                // Style
+                style: widget.style,
+                // Input decoration
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  // Hint
+                  hintText: widget.hintText ?? '',
+                  hintStyle: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Montserrat',
+                    color: StateContainer.of(context).curTheme.primary60,
+                  ),
+                  // First button
+                  prefixIcon: widget.prefixButton == null
+                      ? Container(width: 0, height: 0)
+                      : Container(width: 48, height: 48),
+                  suffixIcon: widget.suffixButton == null
+                      ? Container(width: 0, height: 0)
+                      : Container(width: 48, height: 48),
+                ),
+              ),
               // Buttons
               Column(
                 mainAxisSize: MainAxisSize.max,

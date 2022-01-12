@@ -2,39 +2,29 @@
 
 // Dart imports:
 import 'dart:async';
-import 'dart:io';
 
 // Flutter imports:
-import 'package:archethic_wallet/ui/sheets/ledger_sheet.dart';
+import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/widgets/menu_widget.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/bus/events.dart';
 import 'package:archethic_wallet/localization.dart';
-import 'package:archethic_wallet/model/chart_infos.dart';
 import 'package:archethic_wallet/service_locator.dart';
-import 'package:archethic_wallet/styles.dart';
 import 'package:archethic_wallet/ui/settings/settings_drawer.dart';
-import 'package:archethic_wallet/ui/transfer/transfer_uco_sheet.dart';
 import 'package:archethic_wallet/ui/util/routes.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
 import 'package:archethic_wallet/ui/widgets/balance_infos.dart';
-import 'package:archethic_wallet/ui/sheets/buy_sheet.dart';
-import 'package:archethic_wallet/ui/sheets/chart_sheet.dart';
 import 'package:archethic_wallet/ui/widgets/dialog.dart';
-import 'package:archethic_wallet/ui/widgets/icon_widget.dart';
-import 'package:archethic_wallet/ui/sheets/receive_sheet.dart';
-import 'package:archethic_wallet/ui/sheets/sheet_util.dart';
-import 'package:archethic_wallet/ui/widgets/transaction_chain_explorer_sheet.dart';
 import 'package:archethic_wallet/ui/widgets/tx_list.dart';
 import 'package:archethic_wallet/util/caseconverter.dart';
 import 'package:archethic_wallet/util/sharedprefsutil.dart';
@@ -64,8 +54,6 @@ class _AppHomePageState extends State<AppHomePage>
   AnimationController? animationController;
   ColorTween? colorTween;
   CurvedAnimation? curvedAnimation;
-
-  List<OptionChart> optionChartList = List<OptionChart>.empty(growable: true);
 
   Future<void> _checkVersionApp() async {
     final String versionAppCached =
@@ -307,433 +295,86 @@ class _AppHomePageState extends State<AppHomePage>
           child: SettingsSheet(),
         ),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: <Color>[
-              StateContainer.of(context).curTheme.backgroundDark!,
-              StateContainer.of(context).curTheme.background!
-            ],
+      body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[
+                StateContainer.of(context).curTheme.backgroundDark!,
+                StateContainer.of(context).curTheme.background!
+              ],
+            ),
           ),
-        ),
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              BalanceInfosWidget().buildInfos(context),
-              if (StateContainer.of(context).chartInfos != null &&
-                  StateContainer.of(context).chartInfos!.data != null)
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  alignment: Alignment.bottomLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        right: 0.0, left: 10.0, top: 5.0, bottom: 0.0),
-                    child: StateContainer.of(context)
-                                .chartInfos!
-                                .getPriceChangePercentage(
-                                    StateContainer.of(context)
-                                        .idChartOption!)! >=
-                            0
-                        ? Row(
-                            children: <Widget>[
-                              AutoSizeText(
-                                  StateContainer.of(context)
-                                      .wallet!
-                                      .getLocalCurrencyPrice(
-                                          StateContainer.of(context)
-                                              .curCurrency,
-                                          locale: StateContainer.of(context)
-                                              .currencyLocale!),
-                                  textAlign: TextAlign.center,
-                                  style: AppStyles.textStyleSize12W100Primary(
-                                      context)),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              AutoSizeText(
-                                StateContainer.of(context)
-                                            .wallet!
-                                            .accountBalance
-                                            .uco ==
-                                        0
-                                    ? '1 UCO = ' +
-                                        StateContainer.of(context)
-                                            .localWallet!
-                                            .getLocalPrice(
-                                                StateContainer.of(context)
-                                                    .curCurrency,
-                                                locale:
-                                                    StateContainer.of(context)
-                                                        .currencyLocale!)
-                                    : '1 UCO = ' +
-                                        StateContainer.of(context)
-                                            .wallet!
-                                            .getLocalPrice(
-                                                StateContainer.of(context)
-                                                    .curCurrency,
-                                                locale:
-                                                    StateContainer.of(context)
-                                                        .currencyLocale!),
-                                style: AppStyles.textStyleSize12W100Primary(
-                                    context),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              AutoSizeText(
-                                StateContainer.of(context)
-                                        .chartInfos!
-                                        .getPriceChangePercentage(
-                                            StateContainer.of(context)
-                                                .idChartOption!)!
-                                        .toStringAsFixed(2) +
-                                    '%',
-                                style:
-                                    AppStyles.textStyleSize12W100PositiveValue(
-                                        context),
-                              ),
-                              const SizedBox(width: 5),
-                              FaIcon(FontAwesomeIcons.caretUp,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .positiveValue),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              AutoSizeText(
-                                ChartInfos.getChartOptionLabel(context,
-                                    StateContainer.of(context).idChartOption!),
-                                style: AppStyles.textStyleSize12W100Primary(
-                                    context),
-                              ),
-                            ],
-                          )
-                        : Row(
-                            children: <Widget>[
-                              Text(
-                                StateContainer.of(context)
-                                            .wallet!
-                                            .accountBalance
-                                            .uco ==
-                                        0
-                                    ? '1 UCO = ' +
-                                        StateContainer.of(context)
-                                            .localWallet!
-                                            .getLocalPrice(
-                                                StateContainer.of(context)
-                                                    .curCurrency,
-                                                locale:
-                                                    StateContainer.of(context)
-                                                        .currencyLocale!)
-                                    : '1 UCO = ' +
-                                        StateContainer.of(context)
-                                            .wallet!
-                                            .getLocalPrice(
-                                                StateContainer.of(context)
-                                                    .curCurrency,
-                                                locale:
-                                                    StateContainer.of(context)
-                                                        .currencyLocale!),
-                                style: AppStyles.textStyleSize12W100Primary(
-                                    context),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                StateContainer.of(context)
-                                        .chartInfos!
-                                        .getPriceChangePercentage(
-                                            StateContainer.of(context)
-                                                .idChartOption!)!
-                                        .toStringAsFixed(2) +
-                                    '%',
-                                style:
-                                    AppStyles.textStyleSize12W100NegativeValue(
-                                        context),
-                              ),
-                              const SizedBox(width: 5),
-                              FaIcon(FontAwesomeIcons.caretDown,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .negativeValue),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              AutoSizeText(
-                                ChartInfos.getChartOptionLabel(context,
-                                    StateContainer.of(context).idChartOption!),
-                                style: AppStyles.textStyleSize12W100Primary(
-                                    context),
-                              ),
-                            ],
-                          ),
-                  ),
-                )
-              else
-                const SizedBox(),
-              Divider(
-                color: StateContainer.of(context).curTheme.primary30,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height -
-                    (MediaQuery.of(context).size.height * 0.08) -
-                    kToolbarHeight -
-                    kBottomNavigationBarHeight,
-                child: Stack(
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Column(
                   children: <Widget>[
-                    StateContainer.of(context)
-                        .curTheme
-                        .getBackgroundScreen(context)!,
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    Stack(
                       children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                                child: InkWell(
-                                    onTap: () {
-                                      Sheets.showAppHeightNineSheet(
-                                          context: context,
-                                          widget: TransferUcoSheet(
-                                              contactsRef:
-                                                  StateContainer.of(context)
-                                                      .contactsRef,
-                                              title:
-                                                  AppLocalization.of(context)!
-                                                      .transferUCO,
-                                              localCurrency:
-                                                  StateContainer.of(context)
-                                                      .curCurrency));
-                                    },
-                                    child: Column(
-                                      children: <Widget>[
-                                        buildIconDataWidget(
-                                            context,
-                                            Icons.arrow_circle_up_outlined,
-                                            50,
-                                            50),
-                                        const SizedBox(height: 5),
-                                        Text(AppLocalization.of(context)!.send,
-                                            style: AppStyles
-                                                .textStyleSize14W600Primary(
-                                                    context)),
-                                      ],
-                                    ))),
-                            Container(
-                              child: InkWell(
-                                onTap: () {
-                                  Sheets.showAppHeightNineSheet(
-                                      context: context,
-                                      widget: const ReceiveSheet());
-                                },
-                                child: Column(
-                                  children: <Widget>[
-                                    buildIconDataWidget(
-                                        context,
-                                        Icons.arrow_circle_down_outlined,
-                                        50,
-                                        50),
-                                    const SizedBox(height: 5),
-                                    Text(AppLocalization.of(context)!.receive,
-                                        style: AppStyles
-                                            .textStyleSize14W600Primary(
-                                                context)),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                                child: InkWell(
-                                    onTap: () {
-                                      Sheets.showAppHeightNineSheet(
-                                          context: context,
-                                          widget: const BuySheet());
-                                    },
-                                    child: Column(
-                                      children: <Widget>[
-                                        buildIconDataWidget(
-                                            context,
-                                            Icons.add_circle_outline_outlined,
-                                            50,
-                                            50),
-                                        const SizedBox(height: 5),
-                                        Text(AppLocalization.of(context)!.buy,
-                                            style: AppStyles
-                                                .textStyleSize14W600Primary(
-                                                    context)),
-                                      ],
-                                    ))),
-                            Container(
-                                child: InkWell(
-                                    onTap: () {
-                                      optionChartList = <OptionChart>[
-                                        OptionChart(
-                                            '24h',
-                                            ChartInfos.getChartOptionLabel(
-                                                context, '24h')),
-                                        OptionChart(
-                                            '7d',
-                                            ChartInfos.getChartOptionLabel(
-                                                context, '7d')),
-                                        OptionChart(
-                                            '14d',
-                                            ChartInfos.getChartOptionLabel(
-                                                context, '14d')),
-                                        OptionChart(
-                                            '30d',
-                                            ChartInfos.getChartOptionLabel(
-                                                context, '30d')),
-                                        OptionChart(
-                                            '60d',
-                                            ChartInfos.getChartOptionLabel(
-                                                context, '60d')),
-                                        OptionChart(
-                                            '200d',
-                                            ChartInfos.getChartOptionLabel(
-                                                context, '200d')),
-                                        OptionChart(
-                                            '1y',
-                                            ChartInfos.getChartOptionLabel(
-                                                context, '1y')),
-                                      ];
-                                      final OptionChart? optionChart;
-                                      String _idChartOption =
-                                          StateContainer.of(context)
-                                              .idChartOption!;
-                                      switch (_idChartOption) {
-                                        case '7d':
-                                          optionChart = optionChartList[1];
-                                          break;
-                                        case '14d':
-                                          optionChart = optionChartList[2];
-                                          break;
-                                        case '30d':
-                                          optionChart = optionChartList[3];
-                                          break;
-                                        case '60d':
-                                          optionChart = optionChartList[4];
-                                          break;
-                                        case '200d':
-                                          optionChart = optionChartList[5];
-                                          break;
-                                        case '1y':
-                                          optionChart = optionChartList[6];
-                                          break;
-                                        case '24h':
-                                        default:
-                                          optionChart = optionChartList[0];
-                                          break;
-                                      }
-                                      Sheets.showAppHeightNineSheet(
-                                          context: context,
-                                          widget: ChartSheet(
-                                            optionChartList: optionChartList,
-                                            optionChart: optionChart,
-                                          ));
-                                    },
-                                    child: Column(
-                                      children: <Widget>[
-                                        buildIconDataWidget(
-                                            context, Icons.show_chart, 50, 50),
-                                        const SizedBox(height: 5),
-                                        Text(AppLocalization.of(context)!.chart,
-                                            style: AppStyles
-                                                .textStyleSize14W600Primary(
-                                                    context)),
-                                      ],
-                                    ))),
-                            /* if (!kIsWeb && Platform.isMacOS)
-                              Container(
-                                  child: InkWell(
-                                      onTap: () {
-                                        Sheets.showAppHeightNineSheet(
-                                            context: context,
-                                            widget: const LedgerSheet());
-                                      },
-                                      child: Column(
-                                        children: <Widget>[
-                                          buildIconDataWidget(context,
-                                              Icons.vpn_key_outlined, 50, 50),
-                                          const SizedBox(height: 5),
-                                          Text('Ledger',
-                                              style: AppStyles
-                                                  .textStyleSize14W600Primary(
-                                                      context)),
-                                        ],
-                                      )))
-                            else
-                              const SizedBox(),*/
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Divider(
-                          height: 5,
-                          color: StateContainer.of(context).curTheme.primary30,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Sheets.showAppHeightNineSheet(
-                                context: context,
-                                widget: const TransactionChainExplorerSheet());
-                          },
-                          child: Ink(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10.0, right: 10.0, top: 10, bottom: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                          AppLocalization.of(context)!
-                                              .transactionChainExplorerHeader,
-                                          style: AppStyles
-                                              .textStyleSize16W700Primary(
-                                                  context)),
-                                      Text(
-                                          AppLocalization.of(context)!
-                                              .transactionChainExplorerDesc,
-                                          style: AppStyles
-                                              .textStyleSize12W100Primary(
-                                                  context)),
-                                    ],
-                                  ),
-                                  const Icon(
-                                    Icons.arrow_forward_ios_rounded,
-                                    size: 18,
-                                  ),
-                                ],
-                              ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.08,
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: AutoSizeText(
+                              'UCO',
+                              style: AppStyles.textStyleSize80W700Primary15(
+                                  context),
                             ),
                           ),
                         ),
-                        Divider(
-                          height: 5,
-                          color: StateContainer.of(context).curTheme.primary30,
-                        ),
-                        const TxListWidget(),
+                        BalanceInfosWidget().buildInfos(context),
                       ],
                     ),
                   ],
                 ),
-              ),
-            ],
+                BalanceInfosWidget().buildKPI(context),
+                Divider(
+                  height: 15,
+                  color: StateContainer.of(context).curTheme.primary30,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height -
+                      kToolbarHeight -
+                      kBottomNavigationBarHeight,
+                  child: Stack(
+                    children: <Widget>[
+                      StateContainer.of(context)
+                          .curTheme
+                          .getBackgroundScreen(context)!,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          MenuWidget().buildMenuIcons(context),
+                          Divider(
+                            height: 15,
+                            color:
+                                StateContainer.of(context).curTheme.primary30,
+                          ),
+                          MenuWidget().buildMenuTxExplorer(context),
+                          Divider(
+                            height: 15,
+                            color:
+                                StateContainer.of(context).curTheme.primary30,
+                          ),
+                          const Expanded(
+                            child: TxListWidget(),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
