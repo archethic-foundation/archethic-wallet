@@ -1,5 +1,7 @@
 // Flutter imports:
 import 'package:archethic_wallet/ui/widgets/app_text_field.dart';
+import 'package:archethic_wallet/ui/widgets/icon_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -80,11 +82,32 @@ class _LedgerSheetState extends State<LedgerSheet> {
                   ),
                 ],
               ),
-              //Empty SizedBox
-              const SizedBox(
-                width: 60,
-                height: 0,
-              ),
+              if (kIsWeb)
+                Stack(
+                  children: <Widget>[
+                    const SizedBox(
+                      width: 60,
+                      height: 40,
+                    ),
+                    Container(
+                        padding: const EdgeInsets.only(top: 10, right: 0),
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Column(
+                              children: <Widget>[
+                                buildIconDataWidget(
+                                    context, Icons.close_outlined, 30, 30),
+                              ],
+                            ))),
+                  ],
+                )
+              else
+                const SizedBox(
+                  width: 60,
+                  height: 40,
+                ),
             ],
           ),
 

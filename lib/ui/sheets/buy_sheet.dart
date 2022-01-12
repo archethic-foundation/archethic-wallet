@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:archethic_wallet/ui/widgets/icon_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -47,11 +49,32 @@ class _BuySheetState extends State<BuySheet> {
                 ),
               ],
             ),
-            //Empty SizedBox
-            const SizedBox(
-              width: 60,
-              height: 40,
-            ),
+            if (kIsWeb)
+              Stack(
+                children: <Widget>[
+                  const SizedBox(
+                    width: 60,
+                    height: 40,
+                  ),
+                  Container(
+                      padding: const EdgeInsets.only(top: 10, right: 0),
+                      child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Column(
+                            children: <Widget>[
+                              buildIconDataWidget(
+                                  context, Icons.close_outlined, 30, 30),
+                            ],
+                          ))),
+                ],
+              )
+            else
+              const SizedBox(
+                width: 60,
+                height: 40,
+              ),
           ],
         ),
         Row(

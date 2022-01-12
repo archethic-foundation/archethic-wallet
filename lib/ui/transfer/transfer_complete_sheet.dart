@@ -11,8 +11,6 @@ import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/styles.dart';
 import 'package:archethic_wallet/ui/widgets/buttons.dart';
 
-// Package imports:
-
 class TransferCompleteSheet extends StatefulWidget {
   const TransferCompleteSheet({this.title}) : super();
 
