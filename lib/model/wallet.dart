@@ -63,7 +63,7 @@ class AppWallet {
               _accountBalance == null || _accountBalance!.uco == null
                   ? '0'
                   : _accountBalance!.uco.toString());
-      return converted.toStringAsFixed(5) + ' ' + currency.getCurrencySymbol();
+      return converted.toStringAsFixed(8) + ' ' + currency.getCurrencySymbol();
     } else if (currency.getIso4217Code() == 'EUR') {
       final Decimal converted = Decimal.parse(_localCurrencyPrice!) *
           NumberUtil.getRawAsUsableDecimal(
