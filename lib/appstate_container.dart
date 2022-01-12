@@ -258,9 +258,8 @@ class StateContainerState extends State<StateContainer> {
     final SimplePriceResponse simplePriceResponse = await sl
         .get<ApiCoinsService>()
         .getSimplePrice(currency.getIso4217Code());
-    await StateContainer.of(context).requestUpdateCoinsChart(
-        option: StateContainer.of(context).idChartOption!);
     EventTaxiImpl.singleton().fire(PriceEvent(response: simplePriceResponse));
+    requestUpdateCoinsChart(option: idChartOption!);
     setState(() {
       curCurrency = currency;
     });
