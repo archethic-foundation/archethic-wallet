@@ -28,10 +28,9 @@ import 'package:archethic_wallet/util/caseconverter.dart';
 
 // Contact Details Sheet
 class ContactDetailsSheet {
-  ContactDetailsSheet(this.contact, this.documentsDirectory);
+  ContactDetailsSheet(this.contact);
 
   Contact contact;
-  String documentsDirectory;
 
   // State variables
   bool _addressCopied = false;
@@ -152,10 +151,6 @@ class ContactDetailsSheet {
                                     color: StateContainer.of(context)
                                         .curTheme
                                         .backgroundDarkest!,
-                                    blurRadius: 5.0,
-                                    spreadRadius: 0.0,
-                                    offset: const Offset(5.0,
-                                        5.0), // shadow direction: bottom right
                                   )
                                 ],
                               ),
@@ -202,10 +197,6 @@ class ContactDetailsSheet {
                                       color: StateContainer.of(context)
                                           .curTheme
                                           .backgroundDarkest!,
-                                      blurRadius: 5.0,
-                                      spreadRadius: 0.0,
-                                      offset: const Offset(5.0,
-                                          5.0), // shadow direction: bottom right
                                     )
                                   ],
                                 ),

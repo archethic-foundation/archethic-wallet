@@ -2,7 +2,6 @@
 
 // Dart imports:
 import 'dart:async';
-import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:event_taxi/event_taxi.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:path_provider/path_provider.dart';
 
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
@@ -38,20 +36,14 @@ class ContactsList extends StatefulWidget {
 
 class _ContactsListState extends State<ContactsList> {
   List<Contact>? _contacts;
-  String? documentsDirectory;
+
   @override
   void initState() {
     super.initState();
     _registerBus();
     // Initial contacts list
     _contacts = List<Contact>.empty(growable: true);
-    getApplicationDocumentsDirectory().then((Directory directory) {
-      documentsDirectory = directory.path;
-      setState(() {
-        documentsDirectory = directory.path;
-      });
-      _updateContacts();
-    });
+    _updateContacts();
   }
 
   @override
@@ -114,6 +106,11 @@ class _ContactsListState extends State<ContactsList> {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
+          border: Border(
+            right: BorderSide(
+                color: StateContainer.of(context).curTheme.primary30!,
+                width: 1),
+          ),
           color: StateContainer.of(context).curTheme.backgroundDark,
           boxShadow: <BoxShadow>[
             BoxShadow(
@@ -249,8 +246,7 @@ class _ContactsListState extends State<ContactsList> {
   Widget buildSingleContact(BuildContext context, Contact contact) {
     return TextButton(
       onPressed: () {
-        ContactDetailsSheet(contact, documentsDirectory!)
-            .mainBottomSheet(context);
+        ContactDetailsSheet(contact).mainBottomSheet(context);
       },
       child: Column(children: <Widget>[
         Divider(
