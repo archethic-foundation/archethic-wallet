@@ -2,8 +2,10 @@
 
 // Dart imports:
 import 'dart:async';
+import 'dart:io';
 
 // Flutter imports:
+import 'package:archethic_wallet/ui/sheets/ledger_sheet.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -26,12 +28,12 @@ import 'package:archethic_wallet/ui/transfer/transfer_uco_sheet.dart';
 import 'package:archethic_wallet/ui/util/routes.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
 import 'package:archethic_wallet/ui/widgets/balance_infos.dart';
-import 'package:archethic_wallet/ui/widgets/buy_sheet.dart';
-import 'package:archethic_wallet/ui/widgets/chart_sheet.dart';
+import 'package:archethic_wallet/ui/sheets/buy_sheet.dart';
+import 'package:archethic_wallet/ui/sheets/chart_sheet.dart';
 import 'package:archethic_wallet/ui/widgets/dialog.dart';
 import 'package:archethic_wallet/ui/widgets/icon_widget.dart';
-import 'package:archethic_wallet/ui/widgets/receive_sheet.dart';
-import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/ui/sheets/receive_sheet.dart';
+import 'package:archethic_wallet/ui/sheets/sheet_util.dart';
 import 'package:archethic_wallet/ui/widgets/transaction_chain_explorer_sheet.dart';
 import 'package:archethic_wallet/ui/widgets/tx_list.dart';
 import 'package:archethic_wallet/util/caseconverter.dart';
@@ -648,6 +650,27 @@ class _AppHomePageState extends State<AppHomePage>
                                                     context)),
                                       ],
                                     ))),
+                            /* if (!kIsWeb && Platform.isMacOS)
+                              Container(
+                                  child: InkWell(
+                                      onTap: () {
+                                        Sheets.showAppHeightNineSheet(
+                                            context: context,
+                                            widget: const LedgerSheet());
+                                      },
+                                      child: Column(
+                                        children: <Widget>[
+                                          buildIconDataWidget(context,
+                                              Icons.vpn_key_outlined, 50, 50),
+                                          const SizedBox(height: 5),
+                                          Text('Ledger',
+                                              style: AppStyles
+                                                  .textStyleSize14W600Primary(
+                                                      context)),
+                                        ],
+                                      )))
+                            else
+                              const SizedBox(),*/
                           ],
                         ),
                         const SizedBox(

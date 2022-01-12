@@ -30,7 +30,7 @@ import 'package:archethic_wallet/ui/util/ui_util.dart';
 import 'package:archethic_wallet/ui/widgets/buttons.dart';
 import 'package:archethic_wallet/ui/widgets/dialog.dart';
 import 'package:archethic_wallet/ui/widgets/pin_screen.dart';
-import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/ui/sheets/sheet_util.dart';
 import 'package:archethic_wallet/ui/widgets/yubikey_screen.dart';
 import 'package:archethic_wallet/util/biometrics.dart';
 import 'package:archethic_wallet/util/hapticutil.dart';

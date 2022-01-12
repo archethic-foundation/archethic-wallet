@@ -9,7 +9,7 @@ import 'package:fl_chart/fl_chart.dart';
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/styles.dart';
-import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/ui/sheets/sheet_util.dart';
 import 'package:archethic_wallet/ui/widgets/tx_all_list.dart';
 
 class BalanceInfosWidget {

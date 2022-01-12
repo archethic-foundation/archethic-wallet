@@ -23,7 +23,7 @@ import 'package:archethic_wallet/ui/transfer/transfer_uco_sheet.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
 import 'package:archethic_wallet/ui/widgets/buttons.dart';
 import 'package:archethic_wallet/ui/widgets/dialog.dart';
-import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/ui/sheets/sheet_util.dart';
 import 'package:archethic_wallet/util/caseconverter.dart';
 
 // Contact Details Sheet

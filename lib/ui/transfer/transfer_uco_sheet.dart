@@ -26,7 +26,7 @@ import 'package:archethic_wallet/ui/util/formatters.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
 import 'package:archethic_wallet/ui/widgets/app_text_field.dart';
 import 'package:archethic_wallet/ui/widgets/buttons.dart';
-import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/ui/sheets/sheet_util.dart';
 import 'package:archethic_wallet/util/numberutil.dart';
 import 'package:archethic_wallet/util/user_data_util.dart';
 

@@ -18,7 +18,7 @@ import 'package:archethic_wallet/styles.dart';
 import 'package:archethic_wallet/ui/nft/add_nft_confirm.dart';
 import 'package:archethic_wallet/ui/widgets/app_text_field.dart';
 import 'package:archethic_wallet/ui/widgets/buttons.dart';
-import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/ui/sheets/sheet_util.dart';
 import 'package:archethic_wallet/ui/widgets/tap_outside_unfocus.dart';
 
 class AddNFTSheet extends StatefulWidget {

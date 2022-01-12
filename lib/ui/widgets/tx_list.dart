@@ -15,7 +15,7 @@ import 'package:archethic_wallet/model/address.dart';
 import 'package:archethic_wallet/model/recent_transaction.dart';
 import 'package:archethic_wallet/service_locator.dart';
 import 'package:archethic_wallet/styles.dart';
-import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/ui/sheets/sheet_util.dart';
 import 'package:archethic_wallet/ui/widgets/transaction_infos_sheet.dart';
 import 'package:archethic_wallet/util/hapticutil.dart';
 

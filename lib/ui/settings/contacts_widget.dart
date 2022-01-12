@@ -24,7 +24,7 @@ import 'package:archethic_wallet/styles.dart';
 import 'package:archethic_wallet/ui/contacts/add_contact.dart';
 import 'package:archethic_wallet/ui/contacts/contact_details.dart';
 import 'package:archethic_wallet/ui/widgets/buttons.dart';
-import 'package:archethic_wallet/ui/widgets/sheet_util.dart';
+import 'package:archethic_wallet/ui/sheets/sheet_util.dart';
 
 class ContactsList extends StatefulWidget {
   ContactsList(this.contactsController, this.contactsOpen);
