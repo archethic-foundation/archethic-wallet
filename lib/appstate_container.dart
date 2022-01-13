@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:archethic_wallet/util/preferences.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -19,19 +20,15 @@ import 'package:archethic_wallet/model/chart_infos.dart';
 import 'package:archethic_wallet/model/data/appdb.dart';
 import 'package:archethic_wallet/model/data/hiveDB.dart';
 import 'package:archethic_wallet/model/recent_transaction.dart';
-import 'package:archethic_wallet/model/vault.dart';
+import 'package:archethic_wallet/util/vault.dart';
 import 'package:archethic_wallet/model/wallet.dart';
 import 'package:archethic_wallet/service/app_service.dart';
 import 'package:archethic_wallet/service_locator.dart';
 import 'package:archethic_wallet/ui/themes/theme_dark.dart';
 import 'package:archethic_wallet/ui/themes/themes.dart';
-import 'package:archethic_wallet/util/app_ffi/encrypt/crypter.dart';
-import 'package:archethic_wallet/util/sharedprefsutil.dart';
-import 'util/sharedprefsutil.dart';
 
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show
-        uint8ListToHex,
         AddressService,
         ApiCoinsService,
         Balance,
@@ -89,9 +86,6 @@ class StateContainerState extends State<StateContainer> {
   Account? recentLast;
   Account? recentSecondLast;
 
-  // When wallet is encrypted
-  String? encryptedSecret;
-
   ChartInfos? chartInfos;
   String? idChartOption = '1d';
 
@@ -127,25 +121,13 @@ class StateContainerState extends State<StateContainer> {
 
     updateContacts();
 
-    // Set currency locale here for the UI to access
-    sl
-        .get<SharedPrefsUtil>()
-        .getCurrency(deviceLocale)
-        .then((AvailableCurrency currency) {
+    Preferences.getInstance().then((Preferences _preferences) {
       setState(() {
-        currencyLocale = currency.getLocale().toString();
-        curCurrency = currency;
+        curCurrency = _preferences.getCurrency(deviceLocale);
+        currencyLocale = curCurrency.getLocale().toString();
+        curLanguage = _preferences.getLanguage();
       });
-    });
-    // Get default language setting
-    sl.get<SharedPrefsUtil>().getLanguage().then((LanguageSetting language) {
-      setState(() {
-        curLanguage = language;
-      });
-    });
-    // Get theme default
-    sl.get<SharedPrefsUtil>().getTheme().then((ThemeSetting theme) {
-      updateTheme(theme);
+      updateTheme(_preferences.getTheme());
     });
   }
 
@@ -159,15 +141,13 @@ class StateContainerState extends State<StateContainer> {
     _balanceGetEventSub = EventTaxiImpl.singleton()
         .registerTo<BalanceGetEvent>()
         .listen((BalanceGetEvent event) {
-      sl
-          .get<SharedPrefsUtil>()
-          .getCurrency(deviceLocale)
-          .then((AvailableCurrency currency) {
+      Preferences.getInstance().then((Preferences _preferences) {
         setState(() {
-          currencyLocale = currency.getLocale().toString();
-          curCurrency = currency;
+          curCurrency = _preferences.getCurrency(deviceLocale);
+          currencyLocale = curCurrency.getLocale().toString();
         });
       });
+
       setState(() {
         if (wallet != null) {
           wallet!.accountBalance = event.response!;
@@ -262,20 +242,6 @@ class StateContainerState extends State<StateContainer> {
     requestUpdateCoinsChart(option: idChartOption!);
     setState(() {
       curCurrency = currency;
-    });
-  }
-
-  // Set encrypted secret
-  void setEncryptedSecret(String secret) {
-    setState(() {
-      encryptedSecret = secret;
-    });
-  }
-
-  // Reset encrypted secret
-  void resetEncryptedSecret() {
-    setState(() {
-      encryptedSecret = null;
     });
   }
 
@@ -495,20 +461,12 @@ class StateContainerState extends State<StateContainer> {
   void logOut() {
     setState(() {
       wallet = AppWallet();
-      encryptedSecret = null;
     });
-    sl.get<DBHelper>().dropAccounts();
   }
 
   Future<String> getSeed() async {
-    String seed;
-    if (encryptedSecret != null) {
-      seed = uint8ListToHex(AppCrypt.decrypt(
-          encryptedSecret, await sl.get<Vault>().getSessionKey()));
-    } else {
-      seed = (await sl.get<Vault>().getSeed())!;
-    }
-    return seed;
+    final Vault _vault = await Vault.getInstance();
+    return _vault.getSeed()!;
   }
 
   /// Simple build method that just passes this state through

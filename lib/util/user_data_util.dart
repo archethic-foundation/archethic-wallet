@@ -2,10 +2,8 @@
 
 // Dart imports:
 import 'dart:async';
-import 'dart:io';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,7 +16,7 @@ import 'package:validators/validators.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/address.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
-import 'package:archethic_wallet/util/app_ffi/keys/seeds.dart';
+import 'package:archethic_wallet/util/seeds.dart';
 
 enum DataType { RAW, URL, ADDRESS, SEED }
 
@@ -35,7 +33,6 @@ class QRScanErrs {
 
 // ignore: avoid_classes_with_only_static_members
 class UserDataUtil {
-  static const MethodChannel _channel = MethodChannel('fappchannel');
   static StreamSubscription<dynamic>? setStream;
 
   static String? _parseData(String data, DataType type) {
@@ -94,38 +91,6 @@ class UserDataUtil {
     } catch (e) {
       print('Unknown QR Scan Error ${e.toString()}');
       return QRScanErrs.UNKNOWN_ERROR;
-    }
-  }
-
-  static Future<void> setSecureClipboardItem(String value) async {
-    if (!kIsWeb) {
-      if (Platform.isIOS) {
-        final Map<String, dynamic> params = <String, dynamic>{
-          'value': value,
-        };
-        await _channel.invokeMethod('setSecureClipboardItem', params);
-      } else {
-        // Set item in clipboard
-        await Clipboard.setData(ClipboardData(text: value));
-        // Auto clear it after 2 minutes
-        if (setStream != null) {
-          setStream!.cancel();
-        }
-        final Future<dynamic> delayed =
-            Future<void>.delayed(const Duration(minutes: 2));
-        delayed.then((_) {
-          return true;
-        });
-        setStream = delayed.asStream().listen((_) {
-          Clipboard.getData('text/plain').then((ClipboardData? data) {
-            if (data != null &&
-                data.text != null &&
-                AppSeeds.isValidSeed(data.text!)) {
-              Clipboard.setData(const ClipboardData(text: ''));
-            }
-          });
-        });
-      }
     }
   }
 }

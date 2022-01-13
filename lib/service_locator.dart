@@ -1,27 +1,21 @@
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show ApiCoinsService, ApiService, AddressService;
+import 'package:archethic_wallet/util/preferences.dart';
 
 // Package imports:
 import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:archethic_wallet/model/data/appdb.dart';
-import 'package:archethic_wallet/model/vault.dart';
 import 'package:archethic_wallet/service/app_service.dart';
-import 'package:archethic_wallet/util/biometrics.dart';
-import 'package:archethic_wallet/util/hapticutil.dart';
+import 'package:archethic_wallet/util/biometrics_util.dart';
+import 'package:archethic_wallet/util/haptic_util.dart';
 import 'package:archethic_wallet/util/nfc.dart';
-import 'package:archethic_wallet/util/sharedprefsutil.dart';
 
 GetIt sl = GetIt.instance;
 
 Future<void> setupServiceLocator() async {
-  if (sl.isRegistered<SharedPrefsUtil>()) {
-    sl.unregister<SharedPrefsUtil>();
-  }
-  sl.registerLazySingleton<SharedPrefsUtil>(() => SharedPrefsUtil());
-
   if (sl.isRegistered<AppService>()) {
     sl.unregister<AppService>();
   }
@@ -52,12 +46,8 @@ Future<void> setupServiceLocator() async {
   }
   sl.registerLazySingleton<NFCUtil>(() => NFCUtil());
 
-  if (sl.isRegistered<Vault>()) {
-    sl.unregister<Vault>();
-  }
-  sl.registerLazySingleton<Vault>(() => Vault());
-
-  final String endpoint = await sl.get<SharedPrefsUtil>().getEndpoint();
+  final Preferences preferences = await Preferences.getInstance();
+  final String endpoint = preferences.getEndpoint();
 
   if (sl.isRegistered<ApiService>()) {
     sl.unregister<ApiService>();

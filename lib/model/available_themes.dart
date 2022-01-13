@@ -7,13 +7,13 @@ import 'package:archethic_wallet/ui/themes/theme_dark.dart';
 import 'package:archethic_wallet/ui/themes/theme_light.dart';
 import 'package:archethic_wallet/ui/themes/themes.dart';
 
-enum ThemeOptions { LIGHT, DARK }
+enum ThemeOptions { DARK, LIGHT }
 
 /// Represent notification on/off setting
 class ThemeSetting extends SettingSelectionItem {
-  ThemeOptions theme;
-
   ThemeSetting(this.theme);
+
+  ThemeOptions theme;
 
   @override
   String getDisplayName(BuildContext context) {

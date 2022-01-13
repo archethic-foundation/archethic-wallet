@@ -15,11 +15,7 @@ public class MainActivityArchEthicWallet extends FlutterFragmentActivity {
         new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
             .setMethodCallHandler(
                 (call, result) -> {
-                    if (call.method.equals("getSecret")) {
-                        result.success(new LegacyStorage().getSecret());
-                    } else {
-                        result.notImplemented();
-                    }
+                      result.notImplemented();
                 }
             );
     }

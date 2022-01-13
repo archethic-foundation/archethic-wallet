@@ -3,6 +3,14 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
+import 'package:archethic_wallet/ui/views/home_page.dart';
+import 'package:archethic_wallet/ui/views/intro/intro_backup_confirm.dart';
+import 'package:archethic_wallet/ui/views/intro/intro_backup_safety.dart';
+import 'package:archethic_wallet/ui/views/intro/intro_backup_seed.dart';
+import 'package:archethic_wallet/ui/views/intro/intro_import_seed.dart';
+import 'package:archethic_wallet/ui/views/intro/intro_welcome.dart';
+import 'package:archethic_wallet/ui/views/lock_screen.dart';
+import 'package:archethic_wallet/util/preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -10,31 +18,21 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hive/hive.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:safe_device/safe_device.dart';
 
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
-import 'package:archethic_wallet/model/available_currency.dart';
 import 'package:archethic_wallet/model/available_language.dart';
 import 'package:archethic_wallet/model/data/appdb.dart';
-import 'package:archethic_wallet/model/vault.dart';
-import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/util/vault.dart';
 import 'package:archethic_wallet/styles.dart';
-import 'package:archethic_wallet/ui/home_page.dart';
-import 'package:archethic_wallet/ui/intro/intro_backup_confirm.dart';
-import 'package:archethic_wallet/ui/intro/intro_backup_safety.dart';
-import 'package:archethic_wallet/ui/intro/intro_backup_seed.dart';
-import 'package:archethic_wallet/ui/intro/intro_import_seed.dart';
-import 'package:archethic_wallet/ui/intro/intro_welcome.dart';
-import 'package:archethic_wallet/ui/lock_screen.dart';
 import 'package:archethic_wallet/ui/util/routes.dart';
-import 'package:archethic_wallet/ui/widgets/dialog.dart';
-import 'package:archethic_wallet/util/app_ffi/apputil.dart';
-import 'package:archethic_wallet/util/caseconverter.dart';
-import 'package:archethic_wallet/util/helpers.dart';
-import 'package:archethic_wallet/util/sharedprefsutil.dart';
+import 'package:archethic_wallet/ui/widgets/components/dialog.dart';
+import 'package:archethic_wallet/util/app_util.dart';
+import 'package:archethic_wallet/util/case_converter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,8 +51,9 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   @override
-  void initState() {
-    super.initState();
+  void dispose() {
+    Hive.close();
+    super.dispose();
   }
 
   // This widget is the root of the application.
@@ -175,8 +174,7 @@ class _AppState extends State<App> {
               );
             case '/intro_backup':
               return MaterialPageRoute<IntroBackupSeedPage>(
-                builder: (_) => IntroBackupSeedPage(
-                    encryptedSeed: settings.arguments.toString()),
+                builder: (_) => const IntroBackupSeedPage(),
                 settings: settings,
               );
             case '/intro_backup_safety':
@@ -222,31 +220,15 @@ class Splash extends StatefulWidget {
 
 class SplashState extends State<Splash> with WidgetsBindingObserver {
   bool? _hasCheckedLoggedIn;
-  bool? _retried;
-
-  bool seedIsEncrypted(String seed) {
-    try {
-      final String salted = AppHelpers.bytesToUtf8String(AppHelpers.hexToBytes(
-          seed.length >= 16 ? seed.substring(0, 16) : seed));
-      if (salted == 'Salted__') {
-        return true;
-      }
-      return false;
-    } catch (e) {
-      return false;
-    }
-  }
 
   Future<void> checkLoggedIn() async {
-    // Update session key
-    await sl.get<Vault>().updateSessionKey();
-
+    final Preferences _preferences = await Preferences.getInstance();
     if (!kIsWeb &&
         !Platform.isMacOS &&
         !Platform.isWindows &&
         !Platform.isLinux) {
       // Check if device is rooted or jailbroken, show user a warning informing them of the risks if so
-      if (!(await sl.get<SharedPrefsUtil>().getHasSeenRootWarning()) &&
+      if (!_preferences.getHasSeenRootWarning() &&
           (await SafeDevice.isJailBroken)) {
         AppDialogs.showConfirmDialog(
             context,
@@ -255,7 +237,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
             AppLocalization.of(context)!.rootWarning,
             AppLocalization.of(context)!.iUnderstandTheRisks.toUpperCase(),
             () async {
-              await sl.get<SharedPrefsUtil>().setHasSeenRootWarning();
+              _preferences.setHasSeenRootWarning();
               checkLoggedIn();
             },
             cancelText: AppLocalization.of(context)!.exit.toUpperCase(),
@@ -276,35 +258,25 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       return;
     }
     try {
-      // iOS key store is persistent, so if this is first launch then we will clear the keystore
-      final bool firstLaunch = await sl.get<SharedPrefsUtil>().getFirstLaunch();
-      if (firstLaunch) {
-        await sl.get<DBHelper>().dropAll();
-        await sl.get<Vault>().deleteAll();
-      }
-      await sl.get<SharedPrefsUtil>().setFirstLaunch();
       // See if logged in already
       bool isLoggedIn = false;
-      bool isEncrypted = false;
-      final String? seed = await sl.get<Vault>().getSeed();
-      final String? pin = await sl.get<Vault>().getPin();
+
+      final Vault _vault = await Vault.getInstance();
+      final String? seed = _vault.getSeed();
+      final String? pin = _vault.getPin();
       // If we have a seed set, but not a pin - or vice versa
       // Then delete the seed and pin from device and start over.
       // This would mean user did not complete the intro screen completely.
       if (seed != null && pin != null) {
         isLoggedIn = true;
-        isEncrypted = seedIsEncrypted(seed);
       } else if (seed != null && pin == null) {
-        await sl.get<Vault>().deleteSeed();
+        _vault.deleteSeed();
       } else if (pin != null && seed == null) {
-        await sl.get<Vault>().deletePin();
+        _vault.deletePin();
       }
 
       if (isLoggedIn) {
-        if (isEncrypted) {
-          Navigator.of(context).pushReplacementNamed('/password_lock_screen');
-        } else if (await sl.get<SharedPrefsUtil>().getLock() ||
-            await sl.get<SharedPrefsUtil>().shouldLock()) {
+        if (_preferences.getLock() || _preferences.shouldLock()) {
           Navigator.of(context).pushReplacementNamed('/lock_screen');
         } else {
           await AppUtil().loginAccount(seed!, context);
@@ -314,31 +286,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
         Navigator.of(context).pushReplacementNamed('/intro_welcome');
       }
     } catch (e) {
-      /// Fallback secure storage
-      /// A very small percentage of users are encountering issues writing to the
-      /// Android keyStore using the flutter_secure_storage plugin.
-      ///
-      /// Instead of telling them they are out of luck, this is an automatic "fallback"
-      /// It will generate a 64-byte secret using the native android "bottlerocketstudios" Vault
-      /// This secret is used to encrypt sensitive data and save it in SharedPreferences
-      if (kIsWeb ||
-          (!kIsWeb &&
-              Platform.isAndroid &&
-              e.toString().contains('flutter_secure'))) {
-        if (!(await sl.get<SharedPrefsUtil>().useLegacyStorage())) {
-          await sl.get<SharedPrefsUtil>().setUseLegacyStorage();
-          checkLoggedIn();
-        }
-      } else {
-        await sl.get<DBHelper>().dropAll();
-        await sl.get<Vault>().deleteAll();
-        await sl.get<SharedPrefsUtil>().deleteAll();
-        if (!_retried!) {
-          _retried = true;
-          _hasCheckedLoggedIn = false;
-          checkLoggedIn();
-        }
-      }
+      print(e);
     }
   }
 
@@ -347,7 +295,6 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
     _hasCheckedLoggedIn = false;
-    _retried = false;
     if (SchedulerBinding.instance!.schedulerPhase ==
         SchedulerPhase.persistentCallbacks) {
       SchedulerBinding.instance!.addPostFrameCallback((_) => checkLoggedIn());
@@ -381,9 +328,9 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
     setState(() {
       StateContainer.of(context).deviceLocale = Localizations.localeOf(context);
     });
-    sl.get<SharedPrefsUtil>().getLanguage().then((LanguageSetting setting) {
+    Preferences.getInstance().then((Preferences _preferences) {
       setState(() {
-        StateContainer.of(context).curLanguage = setting;
+        StateContainer.of(context).curLanguage = _preferences.getLanguage();
       });
     });
   }
@@ -391,11 +338,11 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     setLanguage();
-    sl
-        .get<SharedPrefsUtil>()
-        .getCurrency(StateContainer.of(context).deviceLocale)
-        .then((AvailableCurrency currency) {
-      StateContainer.of(context).curCurrency = currency;
+    Preferences.getInstance().then((Preferences _preferences) {
+      setState(() {
+        StateContainer.of(context).curCurrency =
+            _preferences.getCurrency(StateContainer.of(context).deviceLocale);
+      });
     });
     return Scaffold(
       backgroundColor: StateContainer.of(context).curTheme.background,

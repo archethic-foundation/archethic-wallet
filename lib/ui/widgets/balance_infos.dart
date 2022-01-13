@@ -1,18 +1,18 @@
 // Flutter imports:
-import 'package:archethic_wallet/model/chart_infos.dart';
+import 'package:archethic_wallet/ui/views/transaction_all_list.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
+import 'package:archethic_wallet/model/chart_infos.dart';
 import 'package:archethic_wallet/styles.dart';
-import 'package:archethic_wallet/ui/sheets/sheet_util.dart';
-import 'package:archethic_wallet/ui/widgets/tx_all_list.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 
 class BalanceInfosWidget {
   Widget buildInfos(BuildContext context) {

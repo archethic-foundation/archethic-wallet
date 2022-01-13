@@ -608,10 +608,6 @@ class AppLocalization {
     return Intl.message('Backup Secret Phrase', name: 'backupSecretPhrase');
   }
 
-  String get releaseNoteHeader {
-    return Intl.message('What\'s new', name: 'releaseNoteHeader');
-  }
-
   String get ok {
     return Intl.message('Ok', name: 'ok');
   }

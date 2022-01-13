@@ -3,14 +3,14 @@ description: ARCHEthic Wallet app (iOS/Android/MacOS/Windows/Web).
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.1.0+100
+version: 0.1.3+103
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   # Beautiful animations inspired on Animate.css, every animation is a widget that contains default but customizable values that look attractive.
-  animate_do: ^2.0.0
+  animate_do: ^2.1.0
 
   # ArchEthic dart library for Flutter based on Official ArchEthic Javascript library for Node and Browser
   archethic_lib_dart: ^1.0.4
@@ -34,7 +34,7 @@ dependencies:
   event_taxi: ^1.0.0
 
   # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart
-  fl_chart: ^0.40.6
+  fl_chart: ^0.41.0
 
   flutter:
     sdk: flutter
@@ -45,7 +45,7 @@ dependencies:
   flutter_secure_storage: ^5.0.2
 
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files
-  flutter_svg: ^1.0.0
+  flutter_svg: ^1.0.1
 
   # A Flutter plugin to vibrate the device
   flutter_vibrate: ^1.3.0
@@ -70,7 +70,7 @@ dependencies:
   intl: ^0.17.0
 
   # Flutter plugin for Android and iOS devices to allow local authentication via fingerprint, touch ID, face ID, passcode, pin, or pattern
-  local_auth: ^1.1.9
+  local_auth: ^1.1.10
 
   # Flutter plugin for accessing the NFC features on Android and iOS.
   nfc_manager: ^3.1.0
@@ -92,15 +92,12 @@ dependencies:
 
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
   share_plus: ^3.0.4
-  
-  # Flutter plugin for reading and writing simple key-value pairs. Wraps NSUserDefaults on iOS and SharedPreferences on Android
-  shared_preferences: ^2.0.11
 
   # A package to help you build highly customisable timelines with Flutter.
   timeline_tile: ^2.0.0
 
   # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes
-  url_launcher: ^6.0.17
+  url_launcher: ^6.0.18
   
   # String validation and sanitization for Dart
   validators: ^3.0.0
@@ -113,7 +110,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   # A build system for Dart code generation and modular compilation
-  hive_generator: ^1.1.1
+  hive_generator: ^1.1.2
   # Automatically organize your dart imports
   import_sorter: ^4.6.0
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.

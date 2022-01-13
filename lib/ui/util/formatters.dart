@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:archethic_wallet/util/numberutil.dart';
+import 'package:archethic_wallet/util/number_util.dart';
 
 /// Input formatter for Crpto/Fiat amounts
 class CurrencyFormatter extends TextInputFormatter {

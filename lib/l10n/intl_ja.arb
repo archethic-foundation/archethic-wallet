@@ -666,12 +666,6 @@
 	  "placeholders_order": [],
 	  "placeholders": {}
 	},
-	"releaseNoteHeader": "What's new",
-	"@releaseNoteHeader": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
 	"ok": "Ok",
 	"@ok": {
 	  "type": "text",
