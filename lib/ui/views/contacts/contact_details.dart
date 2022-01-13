@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_wallet/ui/views/transfer/transfer_uco_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,10 +19,11 @@ import 'package:archethic_wallet/model/data/appdb.dart';
 import 'package:archethic_wallet/model/data/hiveDB.dart';
 import 'package:archethic_wallet/service_locator.dart';
 import 'package:archethic_wallet/styles.dart';
-import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
+import 'package:archethic_wallet/ui/views/transfer/transfer_uco_sheet.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
 import 'package:archethic_wallet/ui/widgets/components/dialog.dart';
+import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_wallet/util/case_converter.dart';
 
 // Contact Details Sheet

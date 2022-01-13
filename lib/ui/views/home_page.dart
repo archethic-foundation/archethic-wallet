@@ -4,8 +4,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_wallet/ui/views/settings_drawer.dart';
-import 'package:archethic_wallet/util/preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -21,9 +19,11 @@ import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/styles.dart';
 import 'package:archethic_wallet/ui/util/routes.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
+import 'package:archethic_wallet/ui/views/settings_drawer.dart';
 import 'package:archethic_wallet/ui/widgets/balance_infos.dart';
 import 'package:archethic_wallet/ui/widgets/menu_widget.dart';
 import 'package:archethic_wallet/ui/widgets/transaction_recent_list.dart';
+import 'package:archethic_wallet/util/preferences.dart';
 
 class AppHomePage extends StatefulWidget {
   const AppHomePage() : super();

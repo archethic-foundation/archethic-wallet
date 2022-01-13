@@ -4,8 +4,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_wallet/ui/views/contacts/add_contact.dart';
-import 'package:archethic_wallet/ui/views/contacts/contact_details.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -21,8 +19,10 @@ import 'package:archethic_wallet/model/data/appdb.dart';
 import 'package:archethic_wallet/model/data/hiveDB.dart';
 import 'package:archethic_wallet/service_locator.dart';
 import 'package:archethic_wallet/styles.dart';
-import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
+import 'package:archethic_wallet/ui/views/contacts/add_contact.dart';
+import 'package:archethic_wallet/ui/views/contacts/contact_details.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
+import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 
 class ContactsList extends StatefulWidget {
   ContactsList(this.contactsController, this.contactsOpen);

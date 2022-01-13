@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_wallet/ui/views/nft/add_nft_confirm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,9 +15,10 @@ import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/service/app_service.dart';
 import 'package:archethic_wallet/service_locator.dart';
 import 'package:archethic_wallet/styles.dart';
-import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
+import 'package:archethic_wallet/ui/views/nft/add_nft_confirm.dart';
 import 'package:archethic_wallet/ui/widgets/components/app_text_field.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
+import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_wallet/ui/widgets/components/tap_outside_unfocus.dart';
 
 class AddNFTSheet extends StatefulWidget {

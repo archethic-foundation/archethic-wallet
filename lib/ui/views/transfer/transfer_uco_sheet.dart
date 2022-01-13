@@ -1,8 +1,7 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:io';
 
-import 'package:archethic_wallet/ui/views/transfer/transfer_confirm_sheet.dart';
-import 'package:archethic_wallet/ui/views/transfer/uco_transfer_list.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,12 +24,14 @@ import 'package:archethic_wallet/model/data/hiveDB.dart';
 import 'package:archethic_wallet/service/app_service.dart';
 import 'package:archethic_wallet/service_locator.dart';
 import 'package:archethic_wallet/styles.dart';
-import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_wallet/ui/util/formatters.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
+import 'package:archethic_wallet/ui/views/transfer/transfer_confirm_sheet.dart';
+import 'package:archethic_wallet/ui/views/transfer/uco_transfer_list.dart';
 import 'package:archethic_wallet/ui/widgets/components/app_text_field.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
 import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
+import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_wallet/util/number_util.dart';
 import 'package:archethic_wallet/util/user_data_util.dart';
 

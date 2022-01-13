@@ -6,8 +6,10 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_wallet/appstate_container.dart';
 import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:archethic_wallet/appstate_container.dart';
 
 // Examples can assume:
 // enum Department { treasury, state }

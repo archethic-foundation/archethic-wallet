@@ -3,14 +3,6 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
-import 'package:archethic_wallet/ui/views/home_page.dart';
-import 'package:archethic_wallet/ui/views/intro/intro_backup_confirm.dart';
-import 'package:archethic_wallet/ui/views/intro/intro_backup_safety.dart';
-import 'package:archethic_wallet/ui/views/intro/intro_backup_seed.dart';
-import 'package:archethic_wallet/ui/views/intro/intro_import_seed.dart';
-import 'package:archethic_wallet/ui/views/intro/intro_welcome.dart';
-import 'package:archethic_wallet/ui/views/lock_screen.dart';
-import 'package:archethic_wallet/util/preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -27,12 +19,20 @@ import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/available_language.dart';
 import 'package:archethic_wallet/model/data/appdb.dart';
-import 'package:archethic_wallet/util/vault.dart';
 import 'package:archethic_wallet/styles.dart';
 import 'package:archethic_wallet/ui/util/routes.dart';
+import 'package:archethic_wallet/ui/views/home_page.dart';
+import 'package:archethic_wallet/ui/views/intro/intro_backup_confirm.dart';
+import 'package:archethic_wallet/ui/views/intro/intro_backup_safety.dart';
+import 'package:archethic_wallet/ui/views/intro/intro_backup_seed.dart';
+import 'package:archethic_wallet/ui/views/intro/intro_import_seed.dart';
+import 'package:archethic_wallet/ui/views/intro/intro_welcome.dart';
+import 'package:archethic_wallet/ui/views/lock_screen.dart';
 import 'package:archethic_wallet/ui/widgets/components/dialog.dart';
 import 'package:archethic_wallet/util/app_util.dart';
 import 'package:archethic_wallet/util/case_converter.dart';
+import 'package:archethic_wallet/util/preferences.dart';
+import 'package:archethic_wallet/util/vault.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

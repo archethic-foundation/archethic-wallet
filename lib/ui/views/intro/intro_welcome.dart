@@ -9,12 +9,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/dimens.dart';
 import 'package:archethic_wallet/localization.dart';
-import 'package:archethic_wallet/util/vault.dart';
 import 'package:archethic_wallet/service_locator.dart';
 import 'package:archethic_wallet/styles.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
 import 'package:archethic_wallet/util/app_util.dart';
 import 'package:archethic_wallet/util/seeds.dart';
+import 'package:archethic_wallet/util/vault.dart';
 
 class IntroWelcomePage extends StatefulWidget {
   @override

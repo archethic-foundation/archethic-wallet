@@ -4,7 +4,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_wallet/util/preferences.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -20,12 +19,13 @@ import 'package:archethic_wallet/model/chart_infos.dart';
 import 'package:archethic_wallet/model/data/appdb.dart';
 import 'package:archethic_wallet/model/data/hiveDB.dart';
 import 'package:archethic_wallet/model/recent_transaction.dart';
-import 'package:archethic_wallet/util/vault.dart';
 import 'package:archethic_wallet/model/wallet.dart';
 import 'package:archethic_wallet/service/app_service.dart';
 import 'package:archethic_wallet/service_locator.dart';
 import 'package:archethic_wallet/ui/themes/theme_dark.dart';
 import 'package:archethic_wallet/ui/themes/themes.dart';
+import 'package:archethic_wallet/util/preferences.dart';
+import 'package:archethic_wallet/util/vault.dart';
 
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show

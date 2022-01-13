@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:archethic_wallet/ui/views/sheets/transaction_infos_sheet.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -12,6 +11,7 @@ import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/address.dart';
 import 'package:archethic_wallet/model/recent_transaction.dart';
 import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/views/sheets/transaction_infos_sheet.dart';
 import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 
 class TxAllListWidget extends StatefulWidget {

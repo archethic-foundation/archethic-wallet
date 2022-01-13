@@ -2,9 +2,6 @@
 // ignore_for_file: always_specify_types
 
 // Flutter imports:
-import 'package:archethic_wallet/ui/views/pin_screen.dart';
-import 'package:archethic_wallet/ui/views/yubikey_screen.dart';
-import 'package:archethic_wallet/util/preferences.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -15,16 +12,19 @@ import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/dimens.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/authentication_method.dart';
-import 'package:archethic_wallet/util/vault.dart';
 import 'package:archethic_wallet/service_locator.dart';
 import 'package:archethic_wallet/styles.dart';
 import 'package:archethic_wallet/ui/util/routes.dart';
+import 'package:archethic_wallet/ui/views/pin_screen.dart';
+import 'package:archethic_wallet/ui/views/yubikey_screen.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
 import 'package:archethic_wallet/ui/widgets/components/dialog.dart';
 import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
 import 'package:archethic_wallet/util/app_util.dart';
 import 'package:archethic_wallet/util/biometrics_util.dart';
 import 'package:archethic_wallet/util/case_converter.dart';
+import 'package:archethic_wallet/util/preferences.dart';
+import 'package:archethic_wallet/util/vault.dart';
 
 class AppLockScreen extends StatefulWidget {
   @override

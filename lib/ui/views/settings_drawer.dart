@@ -5,16 +5,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_wallet/ui/views/nft/add_nft.dart';
-import 'package:archethic_wallet/ui/views/pin_screen.dart';
-import 'package:archethic_wallet/ui/views/settings/backupseed_sheet.dart';
-import 'package:archethic_wallet/ui/views/settings/contacts_widget.dart';
-import 'package:archethic_wallet/ui/views/settings/custom_url_widget.dart';
-import 'package:archethic_wallet/ui/views/settings/nodes_widget.dart';
-import 'package:archethic_wallet/ui/views/settings/wallet_faq_widget.dart';
-import 'package:archethic_wallet/ui/views/settings/yubikey_params_widget.dart';
-import 'package:archethic_wallet/ui/views/yubikey_screen.dart';
-import 'package:archethic_wallet/util/preferences.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -32,17 +22,27 @@ import 'package:archethic_wallet/model/available_themes.dart';
 import 'package:archethic_wallet/model/data/appdb.dart';
 import 'package:archethic_wallet/model/device_lock_timeout.dart';
 import 'package:archethic_wallet/model/device_unlock_option.dart';
-import 'package:archethic_wallet/util/vault.dart';
 import 'package:archethic_wallet/service_locator.dart';
 import 'package:archethic_wallet/styles.dart';
 import 'package:archethic_wallet/ui/util/settings_list_item.dart';
-import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
+import 'package:archethic_wallet/ui/views/nft/add_nft.dart';
+import 'package:archethic_wallet/ui/views/pin_screen.dart';
+import 'package:archethic_wallet/ui/views/settings/backupseed_sheet.dart';
+import 'package:archethic_wallet/ui/views/settings/contacts_widget.dart';
+import 'package:archethic_wallet/ui/views/settings/custom_url_widget.dart';
+import 'package:archethic_wallet/ui/views/settings/nodes_widget.dart';
+import 'package:archethic_wallet/ui/views/settings/wallet_faq_widget.dart';
+import 'package:archethic_wallet/ui/views/settings/yubikey_params_widget.dart';
+import 'package:archethic_wallet/ui/views/yubikey_screen.dart';
 import 'package:archethic_wallet/ui/widgets/components/app_simpledialog.dart';
 import 'package:archethic_wallet/ui/widgets/components/dialog.dart';
+import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_wallet/util/biometrics_util.dart';
 import 'package:archethic_wallet/util/case_converter.dart';
 import 'package:archethic_wallet/util/haptic_util.dart';
+import 'package:archethic_wallet/util/preferences.dart';
+import 'package:archethic_wallet/util/vault.dart';
 
 class SettingsSheet extends StatefulWidget {
   @override

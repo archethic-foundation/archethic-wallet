@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:archethic_wallet/ui/views/mnemonic_display.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -11,13 +10,14 @@ import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/dimens.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/data/appdb.dart';
-import 'package:archethic_wallet/util/vault.dart';
 import 'package:archethic_wallet/service_locator.dart';
 import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/views/mnemonic_display.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
 import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
 import 'package:archethic_wallet/util/app_util.dart';
 import 'package:archethic_wallet/util/mnemonics.dart';
+import 'package:archethic_wallet/util/vault.dart';
 
 class IntroBackupSeedPage extends StatefulWidget {
   const IntroBackupSeedPage() : super();

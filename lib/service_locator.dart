@@ -1,7 +1,6 @@
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show ApiCoinsService, ApiService, AddressService;
-import 'package:archethic_wallet/util/preferences.dart';
 
 // Package imports:
 import 'package:get_it/get_it.dart';
@@ -12,6 +11,7 @@ import 'package:archethic_wallet/service/app_service.dart';
 import 'package:archethic_wallet/util/biometrics_util.dart';
 import 'package:archethic_wallet/util/haptic_util.dart';
 import 'package:archethic_wallet/util/nfc.dart';
+import 'package:archethic_wallet/util/preferences.dart';
 
 GetIt sl = GetIt.instance;
 

@@ -1,9 +1,4 @@
 // Flutter imports:
-import 'package:archethic_wallet/ui/views/sheets/buy_sheet.dart';
-import 'package:archethic_wallet/ui/views/sheets/chart_sheet.dart';
-import 'package:archethic_wallet/ui/views/sheets/receive_sheet.dart';
-import 'package:archethic_wallet/ui/views/sheets/transaction_chain_explorer_sheet.dart';
-import 'package:archethic_wallet/ui/views/transfer/transfer_uco_sheet.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -11,8 +6,13 @@ import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/chart_infos.dart';
 import 'package:archethic_wallet/styles.dart';
-import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
+import 'package:archethic_wallet/ui/views/sheets/buy_sheet.dart';
+import 'package:archethic_wallet/ui/views/sheets/chart_sheet.dart';
+import 'package:archethic_wallet/ui/views/sheets/receive_sheet.dart';
+import 'package:archethic_wallet/ui/views/sheets/transaction_chain_explorer_sheet.dart';
+import 'package:archethic_wallet/ui/views/transfer/transfer_uco_sheet.dart';
 import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
+import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 
 class MenuWidget {
   List<OptionChart> optionChartList = List<OptionChart>.empty(growable: true);

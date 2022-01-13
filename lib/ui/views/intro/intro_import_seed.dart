@@ -2,7 +2,6 @@
 // ignore_for_file: always_specify_types
 
 // Flutter imports:
-import 'package:archethic_wallet/ui/views/pin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,15 +13,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/dimens.dart';
 import 'package:archethic_wallet/localization.dart';
-import 'package:archethic_wallet/util/vault.dart';
 import 'package:archethic_wallet/styles.dart';
 import 'package:archethic_wallet/ui/util/formatters.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
+import 'package:archethic_wallet/ui/views/pin_screen.dart';
 import 'package:archethic_wallet/ui/widgets/components/app_text_field.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
 import 'package:archethic_wallet/util/mnemonics.dart';
 import 'package:archethic_wallet/util/seeds.dart';
 import 'package:archethic_wallet/util/user_data_util.dart';
+import 'package:archethic_wallet/util/vault.dart';
 
 class IntroImportSeedPage extends StatefulWidget {
   @override

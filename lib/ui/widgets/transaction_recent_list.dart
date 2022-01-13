@@ -1,7 +1,7 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:io';
 
-import 'package:archethic_wallet/ui/views/sheets/transaction_infos_sheet.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +18,7 @@ import 'package:archethic_wallet/model/address.dart';
 import 'package:archethic_wallet/model/recent_transaction.dart';
 import 'package:archethic_wallet/service_locator.dart';
 import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/views/sheets/transaction_infos_sheet.dart';
 import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_wallet/util/haptic_util.dart';
 

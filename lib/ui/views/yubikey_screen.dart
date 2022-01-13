@@ -5,7 +5,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_wallet/util/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -25,6 +24,7 @@ import 'package:archethic_wallet/ui/util/ui_util.dart';
 import 'package:archethic_wallet/ui/widgets/components/app_text_field.dart';
 import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
 import 'package:archethic_wallet/util/nfc.dart';
+import 'package:archethic_wallet/util/preferences.dart';
 
 class YubikeyScreen extends StatefulWidget {
   const YubikeyScreen({this.yubikeyScreenBackgroundColor});

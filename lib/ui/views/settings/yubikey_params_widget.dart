@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 // Flutter imports:
-import 'package:archethic_wallet/util/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,6 +13,7 @@ import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/styles.dart';
 import 'package:archethic_wallet/ui/widgets/components/app_text_field.dart';
+import 'package:archethic_wallet/util/preferences.dart';
 
 class YubikeyParams extends StatefulWidget {
   YubikeyParams(this.animationController, this.open);

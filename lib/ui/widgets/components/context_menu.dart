@@ -4,7 +4,6 @@ library focused_menu;
 import 'dart:ui';
 
 // Flutter imports:
-import 'package:archethic_wallet/ui/widgets/components/context_menu_item.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -12,6 +11,7 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Project imports:
 import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/ui/widgets/components/context_menu_item.dart';
 import 'package:archethic_wallet/util/haptic_util.dart';
 
 class ContextMenu extends StatefulWidget {

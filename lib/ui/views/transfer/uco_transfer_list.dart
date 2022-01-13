@@ -1,8 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 // Flutter imports:
-import 'package:archethic_wallet/ui/widgets/components/context_menu.dart';
-import 'package:archethic_wallet/ui/widgets/components/context_menu_item.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -14,6 +12,8 @@ import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/address.dart';
 import 'package:archethic_wallet/model/data/hiveDB.dart';
 import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/widgets/components/context_menu.dart';
+import 'package:archethic_wallet/ui/widgets/components/context_menu_item.dart';
 
 class UcoTransferListWidget extends StatefulWidget {
   UcoTransferListWidget(

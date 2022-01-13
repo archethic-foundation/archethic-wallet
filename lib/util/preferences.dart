@@ -1,13 +1,17 @@
+// Dart imports:
 import 'dart:ui';
 
+// Package imports:
+import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
+
+// Project imports:
 import 'package:archethic_wallet/global_var.dart';
 import 'package:archethic_wallet/model/authentication_method.dart';
 import 'package:archethic_wallet/model/available_currency.dart';
 import 'package:archethic_wallet/model/available_language.dart';
 import 'package:archethic_wallet/model/available_themes.dart';
 import 'package:archethic_wallet/model/device_lock_timeout.dart';
-import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 
 class Preferences {
   Preferences._(this._box);

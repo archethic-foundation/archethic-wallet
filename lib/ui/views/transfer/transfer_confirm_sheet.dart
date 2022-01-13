@@ -4,12 +4,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_wallet/ui/views/pin_screen.dart';
-import 'package:archethic_wallet/ui/views/transfer/nft_transfer_list.dart';
-import 'package:archethic_wallet/ui/views/transfer/transfer_complete_sheet.dart';
-import 'package:archethic_wallet/ui/views/transfer/uco_transfer_list.dart';
-import 'package:archethic_wallet/ui/views/yubikey_screen.dart';
-import 'package:archethic_wallet/util/preferences.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -24,17 +18,23 @@ import 'package:archethic_wallet/global_var.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/authentication_method.dart';
 import 'package:archethic_wallet/model/data/hiveDB.dart';
-import 'package:archethic_wallet/util/vault.dart';
 import 'package:archethic_wallet/service/app_service.dart';
 import 'package:archethic_wallet/service_locator.dart';
 import 'package:archethic_wallet/styles.dart';
-import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_wallet/ui/util/routes.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
+import 'package:archethic_wallet/ui/views/pin_screen.dart';
+import 'package:archethic_wallet/ui/views/transfer/nft_transfer_list.dart';
+import 'package:archethic_wallet/ui/views/transfer/transfer_complete_sheet.dart';
+import 'package:archethic_wallet/ui/views/transfer/uco_transfer_list.dart';
+import 'package:archethic_wallet/ui/views/yubikey_screen.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
 import 'package:archethic_wallet/ui/widgets/components/dialog.dart';
+import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_wallet/util/biometrics_util.dart';
 import 'package:archethic_wallet/util/haptic_util.dart';
+import 'package:archethic_wallet/util/preferences.dart';
+import 'package:archethic_wallet/util/vault.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
