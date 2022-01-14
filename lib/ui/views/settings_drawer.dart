@@ -568,8 +568,8 @@ class _SettingsSheetState extends State<SettingsSheet>
   }
 
   List<Widget> _buildThemeOptions() {
-    List<Widget> ret = List<Widget>.empty(growable: true);
-    ThemeOptions.values.forEach((ThemeOptions value) {
+    final List<Widget> ret = List<Widget>.empty(growable: true);
+    for (var value in ThemeOptions.values) {
       ret.add(SimpleDialogOption(
         onPressed: () {
           Navigator.pop(context, value);
@@ -597,7 +597,7 @@ class _SettingsSheetState extends State<SettingsSheet>
           ),
         ),
       ));
-    });
+    }
     return ret;
   }
 

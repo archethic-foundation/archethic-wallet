@@ -94,7 +94,7 @@ class MenuWidget {
                         '1y', ChartInfos.getChartOptionLabel(context, '1y')),
                   ];
                   final OptionChart? optionChart;
-                  String _idChartOption =
+                  final String _idChartOption =
                       StateContainer.of(context).idChartOption!;
                   switch (_idChartOption) {
                     case '7d':

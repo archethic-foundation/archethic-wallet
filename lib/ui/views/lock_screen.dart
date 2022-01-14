@@ -193,7 +193,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
     // Test if user is locked out
     // Get duration of lockout
     final Preferences _preferences = await Preferences.getInstance();
-    DateTime? lockUntil = _preferences.getLockDate();
+    final DateTime? lockUntil = _preferences.getLockDate();
     if (lockUntil == null) {
       _preferences.resetLockAttempts();
     } else {

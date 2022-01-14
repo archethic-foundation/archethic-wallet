@@ -221,9 +221,11 @@ class AppService {
 
   Future<List<TransactionInfos>> getTransactionAllInfos(
       String address, DateFormat dateFormat) async {
+    // ignore: prefer_final_locals
     List<TransactionInfos> transactionsInfos =
         List<TransactionInfos>.empty(growable: true);
 
+    // ignore: prefer_final_locals
     Transaction transaction =
         await sl.get<ApiService>().getTransactionAllInfos(address);
     if (transaction.address != null) {
@@ -278,7 +280,7 @@ class AppService {
       if (transaction.data!.ledger != null &&
           transaction.data!.ledger!.uco != null &&
           transaction.data!.ledger!.uco!.transfers != null &&
-          transaction.data!.ledger!.uco!.transfers!.length > 0) {
+          transaction.data!.ledger!.uco!.transfers!.isNotEmpty) {
         transactionsInfos.add(TransactionInfos(
             domain: 'UCOLedger', titleInfo: '', valueInfo: ''));
         for (int i = 0;
@@ -305,7 +307,7 @@ class AppService {
       if (transaction.data!.ledger != null &&
           transaction.data!.ledger!.nft != null &&
           transaction.data!.ledger!.nft!.transfers != null &&
-          transaction.data!.ledger!.nft!.transfers!.length > 0) {
+          transaction.data!.ledger!.nft!.transfers!.isNotEmpty) {
         transactionsInfos.add(TransactionInfos(
             domain: 'NFTLedger', titleInfo: '', valueInfo: ''));
         for (int i = 0;

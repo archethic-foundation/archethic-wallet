@@ -677,7 +677,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     if (_sendAmountController!.text.isEmpty) {
       return false;
     }
-    double? _sendAmount = double.tryParse(_sendAmountController!.text);
+    final double? _sendAmount = double.tryParse(_sendAmountController!.text);
     if (_sendAmount == null) {
       return false;
     } else {

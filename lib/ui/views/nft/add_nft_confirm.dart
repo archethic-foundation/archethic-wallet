@@ -319,7 +319,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
     final Vault _vault = await Vault.getInstance();
     final String? expectedPin = _vault.getPin();
     final bool auth = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) {
+        .push(MaterialPageRoute<PinScreen>(builder: (BuildContext context) {
       return PinScreen(
         PinOverlayType.ENTER_PIN,
         expectedPin: expectedPin!,
