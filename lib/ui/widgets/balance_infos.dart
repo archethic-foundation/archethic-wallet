@@ -10,7 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/model/chart_infos.dart';
-import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/views/transaction_all_list.dart';
 import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 

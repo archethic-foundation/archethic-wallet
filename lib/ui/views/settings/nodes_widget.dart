@@ -13,8 +13,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/address.dart';
-import 'package:archethic_wallet/service_locator.dart';
-import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/util/service_locator.dart';
+import 'package:archethic_wallet/ui/util/styles.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'

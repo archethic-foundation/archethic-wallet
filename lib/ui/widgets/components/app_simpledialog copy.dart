@@ -8,6 +8,9 @@ import 'dart:async';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
+import 'package:archethic_wallet/appstate_container.dart';
+
 // Examples can assume:
 // enum Department { treasury, state }
 // BuildContext context;
@@ -489,21 +492,57 @@ class AppSimpleDialog extends StatelessWidget {
         )));
 
     if (children != null) {
-      body.add(Flexible(
-          child: SingleChildScrollView(
-        padding: contentPadding,
-        child: ListBody(children: children!),
-      )));
+      body.add(Expanded(
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              padding: contentPadding,
+              child: ListBody(children: children!),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                height: 30.0,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: <Color>[
+                      StateContainer.of(context).curTheme.backgroundDark!,
+                      StateContainer.of(context).curTheme.backgroundDark00!
+                    ],
+                    begin: const AlignmentDirectional(0.5, -1.0),
+                    end: const AlignmentDirectional(0.5, 1.0),
+                  ),
+                ),
+              ),
+            ), //
+          ],
+        ),
+      ));
     }
 
     final Widget dialogChild = IntrinsicWidth(
       stepWidth: 56.0,
       child: ConstrainedBox(
         constraints: const BoxConstraints(minWidth: 280.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: body,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+                width: 2,
+                color: StateContainer.of(context).curTheme.primary30!),
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+          ),
+          child: Expanded(
+            child: Stack(
+              children: <Widget>[
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: body,
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

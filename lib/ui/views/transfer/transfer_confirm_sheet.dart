@@ -13,14 +13,14 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/bus/events.dart';
-import 'package:archethic_wallet/dimens.dart';
-import 'package:archethic_wallet/global_var.dart';
+import 'package:archethic_wallet/ui/util/dimens.dart';
+import 'package:archethic_wallet/util/global_var.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/authentication_method.dart';
 import 'package:archethic_wallet/model/data/hiveDB.dart';
 import 'package:archethic_wallet/service/app_service.dart';
-import 'package:archethic_wallet/service_locator.dart';
-import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/util/service_locator.dart';
+import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/util/routes.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
 import 'package:archethic_wallet/ui/views/pin_screen.dart';

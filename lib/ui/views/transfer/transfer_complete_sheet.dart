@@ -6,9 +6,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
-import 'package:archethic_wallet/dimens.dart';
+import 'package:archethic_wallet/ui/util/dimens.dart';
 import 'package:archethic_wallet/localization.dart';
-import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
 
 class TransferCompleteSheet extends StatefulWidget {

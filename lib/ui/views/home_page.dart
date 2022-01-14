@@ -16,7 +16,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/bus/events.dart';
 import 'package:archethic_wallet/localization.dart';
-import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/util/routes.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
 import 'package:archethic_wallet/ui/views/settings_drawer.dart';

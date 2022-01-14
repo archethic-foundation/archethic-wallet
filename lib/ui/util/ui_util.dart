@@ -14,7 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/bus/events.dart';
-import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/util/exceptions.dart';
 
 enum ThreeLineAddressTextType { PRIMARY60, PRIMARY, SUCCESS, SUCCESS_FULL }

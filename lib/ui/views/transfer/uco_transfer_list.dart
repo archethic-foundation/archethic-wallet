@@ -11,7 +11,7 @@ import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/address.dart';
 import 'package:archethic_wallet/model/data/hiveDB.dart';
-import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/widgets/components/context_menu.dart';
 import 'package:archethic_wallet/ui/widgets/components/context_menu_item.dart';
 

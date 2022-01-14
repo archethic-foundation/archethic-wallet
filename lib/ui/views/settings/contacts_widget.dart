@@ -13,12 +13,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/bus/events.dart';
-import 'package:archethic_wallet/dimens.dart';
+import 'package:archethic_wallet/ui/util/dimens.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/data/appdb.dart';
 import 'package:archethic_wallet/model/data/hiveDB.dart';
-import 'package:archethic_wallet/service_locator.dart';
-import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/util/service_locator.dart';
+import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/views/contacts/add_contact.dart';
 import 'package:archethic_wallet/ui/views/contacts/contact_details.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';

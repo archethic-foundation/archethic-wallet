@@ -7,7 +7,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
-import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/views/mnemonic_display.dart';
 import 'package:archethic_wallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:archethic_wallet/util/mnemonics.dart';

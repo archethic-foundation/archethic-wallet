@@ -1,0 +1,16 @@
+ARCHEThic Wallet - Version beta 0.1.4
+
+👷‍♂️ Enhancements
+- Adjust UI
+- Improve Security, performances and stability 
+Warning, this version contains an important internal restructuring
+It's made available to allow the community to help test with all mobile/device, all screen sizes and browser models.
+
+🐛 Bugfixes
+- Some stuffs
+
+Link to android and macOS version : https://github.com/archethic-foundation/archethic_wallet/releases/tag/v0.1.3
+Link to Web app : https://reddwarf03.github.io/archethic_web/index.html
+Link to iOS version : Soon
+
+This app is under development and works on TESTNET only. Community feedback helps improve the app

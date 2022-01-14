@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/chart_infos.dart';
-import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/views/sheets/buy_sheet.dart';
 import 'package:archethic_wallet/ui/views/sheets/chart_sheet.dart';
 import 'package:archethic_wallet/ui/views/sheets/receive_sheet.dart';

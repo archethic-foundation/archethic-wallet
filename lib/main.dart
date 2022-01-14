@@ -19,7 +19,7 @@ import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/available_language.dart';
 import 'package:archethic_wallet/model/data/appdb.dart';
-import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/util/routes.dart';
 import 'package:archethic_wallet/ui/views/home_page.dart';
 import 'package:archethic_wallet/ui/views/intro/intro_backup_confirm.dart';

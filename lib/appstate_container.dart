@@ -21,7 +21,7 @@ import 'package:archethic_wallet/model/data/hiveDB.dart';
 import 'package:archethic_wallet/model/recent_transaction.dart';
 import 'package:archethic_wallet/model/wallet.dart';
 import 'package:archethic_wallet/service/app_service.dart';
-import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/util/service_locator.dart';
 import 'package:archethic_wallet/ui/themes/theme_dark.dart';
 import 'package:archethic_wallet/ui/themes/themes.dart';
 import 'package:archethic_wallet/util/preferences.dart';

@@ -10,8 +10,8 @@ import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/transaction_infos.dart';
 import 'package:archethic_wallet/service/app_service.dart';
-import 'package:archethic_wallet/service_locator.dart';
-import 'package:archethic_wallet/styles.dart';
+import 'package:archethic_wallet/util/service_locator.dart';
+import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
 
 class TransactionInfosSheet extends StatefulWidget {

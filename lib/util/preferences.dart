@@ -6,7 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:archethic_wallet/global_var.dart';
+import 'package:archethic_wallet/util/global_var.dart';
 import 'package:archethic_wallet/model/authentication_method.dart';
 import 'package:archethic_wallet/model/available_currency.dart';
 import 'package:archethic_wallet/model/available_language.dart';

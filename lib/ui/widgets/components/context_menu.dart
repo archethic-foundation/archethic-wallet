@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Project imports:
-import 'package:archethic_wallet/service_locator.dart';
+import 'package:archethic_wallet/util/service_locator.dart';
 import 'package:archethic_wallet/ui/widgets/components/context_menu_item.dart';
 import 'package:archethic_wallet/util/haptic_util.dart';
 
