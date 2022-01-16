@@ -1,6 +1,6 @@
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show ApiCoinsService, ApiService, AddressService;
+    show ApiCoinsService, ApiService, AddressService, OracleService;
 
 // Package imports:
 import 'package:get_it/get_it.dart';
@@ -58,4 +58,9 @@ Future<void> setupServiceLocator() async {
     sl.unregister<AddressService>();
   }
   sl.registerLazySingleton<AddressService>(() => AddressService(endpoint));
+
+  if (sl.isRegistered<OracleService>()) {
+    sl.unregister<OracleService>();
+  }
+  sl.registerLazySingleton<OracleService>(() => OracleService(endpoint));
 }
