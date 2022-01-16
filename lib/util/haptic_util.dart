@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
+import 'dart:io';
 
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -8,7 +8,7 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 class HapticUtil {
   /// Feedback
   Future<void> feedback(FeedbackType feedbackType) async {
-    if (!kIsWeb && await Vibrate.canVibrate) {
+    if ((Platform.isIOS || Platform.isAndroid) && await Vibrate.canVibrate) {
       Vibrate.feedback(feedbackType);
     }
   }
