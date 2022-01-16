@@ -25,9 +25,22 @@ class MenuWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        StateContainer.of(context).wallet != null &&
-                StateContainer.of(context).wallet!.accountBalance.uco != null &&
-                StateContainer.of(context).wallet!.accountBalance.uco! > 0
+        (StateContainer.of(context).wallet != null &&
+                    StateContainer.of(context).wallet!.accountBalance.uco !=
+                        null &&
+                    StateContainer.of(context).wallet!.accountBalance.uco! >
+                        0) ||
+                (StateContainer.of(context).localWallet != null &&
+                    StateContainer.of(context)
+                            .localWallet!
+                            .accountBalance
+                            .uco !=
+                        null &&
+                    StateContainer.of(context)
+                            .localWallet!
+                            .accountBalance
+                            .uco! >
+                        0)
             ? Container(
                 child: InkWell(
                     onTap: () {
