@@ -11,7 +11,9 @@ import 'package:archethic_wallet/ui/util/styles.dart';
 
 /// A widget for displaying a mnemonic phrase
 class MnemonicDisplay extends StatefulWidget {
-  const MnemonicDisplay({required this.wordList, this.obscureSeed = false});
+  const MnemonicDisplay(
+      {Key? key, required this.wordList, this.obscureSeed = false})
+      : super(key: key);
 
   final List<String> wordList;
   final bool obscureSeed;
@@ -45,7 +47,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
       final List<Widget> items = <Widget>[];
       for (int j = 0; j < itemsPerRow; j++) {
         items.add(
-          Container(
+          SizedBox(
             width: (MediaQuery.of(context).size.width -
                     (smallScreen(context) ? 15 : 30)) /
                 itemsPerRow,

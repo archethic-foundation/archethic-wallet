@@ -19,7 +19,7 @@ import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
 import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
 
 class LedgerSheet extends StatefulWidget {
-  const LedgerSheet() : super();
+  const LedgerSheet(Key? key) : super(key: key);
 
   @override
   _LedgerSheetState createState() => _LedgerSheetState();
@@ -165,21 +165,16 @@ class _LedgerSheetState extends State<LedgerSheet> {
                   ),
                 )),
           ),
-          Container(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    AppButton.buildAppButton(
-                        context,
-                        AppButtonType.PRIMARY,
-                        AppLocalization.of(context)!.send,
-                        Dimens.BUTTON_TOP_DIMENS,
-                        onPressed: () async {}),
-                  ],
-                ),
-              ],
-            ),
+          Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  AppButton.buildAppButton(context, AppButtonType.primary,
+                      AppLocalization.of(context)!.send, Dimens.buttonTopDimens,
+                      onPressed: () async {}),
+                ],
+              ),
+            ],
           ),
         ],
       ),

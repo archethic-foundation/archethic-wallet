@@ -40,7 +40,7 @@ class AppSettings {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                       width: UIUtil.drawerWidth(context) - 100,
                       child: Text(
                         heading,
@@ -84,15 +84,13 @@ class AppSettings {
         child: Row(
           children: <Widget>[
             Container(
-              child: Container(
-                  margin: const EdgeInsetsDirectional.only(end: 13.0),
-                  child: buildIconWidget(context, icon, 30, 30)),
-            ),
+                margin: const EdgeInsetsDirectional.only(end: 13.0),
+                child: buildIconWidget(context, icon, 30, 30)),
             Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
+                  SizedBox(
                       width: UIUtil.drawerWidth(context) - 70,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,7 +109,7 @@ class AppSettings {
                           ),
                         ],
                       )),
-                  Container(
+                  SizedBox(
                     width: UIUtil.drawerWidth(context) - 80,
                     child: AutoSizeText(
                       info,
@@ -151,14 +149,14 @@ class AppSettings {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
+                  SizedBox(
                     width: UIUtil.drawerWidth(context) - 100,
                     child: Text(
                       heading,
                       style: AppStyles.textStyleSize16W600Primary(context),
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: UIUtil.drawerWidth(context) - 100,
                     child: AutoSizeText(
                       info,
@@ -169,12 +167,10 @@ class AppSettings {
                     ),
                   ),
                 ]),
-            Container(
-              child: FaIcon(
-                FontAwesomeIcons.chevronRight,
-                color: StateContainer.of(context).curTheme.icon,
-                size: 15,
-              ),
+            FaIcon(
+              FontAwesomeIcons.chevronRight,
+              color: StateContainer.of(context).curTheme.icon,
+              size: 15,
             ),
           ],
         ),
@@ -203,19 +199,17 @@ class AppSettings {
               margin: const EdgeInsetsDirectional.only(end: 13.0),
               child: Container(child: buildIconWidget(context, icon, 30, 30)),
             ),
-            Container(
+            SizedBox(
               width: UIUtil.drawerWidth(context) - 100,
               child: AutoSizeText(
                 heading,
                 style: AppStyles.textStyleSize16W600Primary(context),
               ),
             ),
-            Container(
-              child: FaIcon(
-                FontAwesomeIcons.chevronRight,
-                color: StateContainer.of(context).curTheme.icon,
-                size: 15,
-              ),
+            FaIcon(
+              FontAwesomeIcons.chevronRight,
+              color: StateContainer.of(context).curTheme.icon,
+              size: 15,
             ),
           ],
         ),
@@ -234,32 +228,28 @@ class AppSettings {
         child: Row(
           children: <Widget>[
             Container(
-              child: Container(
-                  margin: const EdgeInsetsDirectional.only(end: 13.0),
-                  child: buildIconWidget(context, icon, 30, 30)),
-            ),
-            Container(
+                margin: const EdgeInsetsDirectional.only(end: 13.0),
+                child: buildIconWidget(context, icon, 30, 30)),
+            SizedBox(
               width: UIUtil.drawerWidth(context) - 130,
               child: Text(
                 heading,
                 style: AppStyles.textStyleSize16W600Primary(context),
               ),
             ),
-            Container(
-              child: Switch(
-                  value: _isSwitched,
-                  onChanged: (bool value) {
-                    if (onChanged != null) {
-                      _isSwitched = value;
-                      onChanged(_isSwitched);
-                    } else {
-                      return;
-                    }
-                  },
-                  activeTrackColor:
-                      StateContainer.of(context).curTheme.backgroundDarkest,
-                  activeColor: Colors.green),
-            )
+            Switch(
+                value: _isSwitched,
+                onChanged: (bool value) {
+                  if (onChanged != null) {
+                    _isSwitched = value;
+                    onChanged(_isSwitched);
+                  } else {
+                    return;
+                  }
+                },
+                activeTrackColor:
+                    StateContainer.of(context).curTheme.backgroundDarkest,
+                activeColor: Colors.green)
           ],
         ),
       ),

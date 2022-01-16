@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 // Package imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 
@@ -39,7 +40,9 @@ class Vault {
           encryptionCipher: HiveAesCipher(encryptionKey));
       return Vault._(encryptedBox);
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       throw Exception();
     }
   }

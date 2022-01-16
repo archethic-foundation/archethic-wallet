@@ -17,14 +17,14 @@ import 'package:archethic_wallet/bus/events.dart';
 import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/util/exceptions.dart';
 
-enum ThreeLineAddressTextType { PRIMARY60, PRIMARY, SUCCESS, SUCCESS_FULL }
-enum OneLineAddressTextType { PRIMARY60, PRIMARY, SUCCESS }
+enum ThreeLineAddressTextType { primary60, primary, success, successFull }
+enum OneLineAddressTextType { primary60, primary, success }
 
 // ignore: avoid_classes_with_only_static_members
 class UIUtil {
   static Widget threeLinetextStyleSmallestW400Text(
       BuildContext context, String address,
-      {ThreeLineAddressTextType type = ThreeLineAddressTextType.PRIMARY,
+      {ThreeLineAddressTextType type = ThreeLineAddressTextType.primary,
       String? contactName}) {
     String stringPartOne = '';
     String stringPartTwo = '';
@@ -62,7 +62,7 @@ class UIUtil {
     }
 
     switch (type) {
-      case ThreeLineAddressTextType.PRIMARY60:
+      case ThreeLineAddressTextType.primary60:
         return Column(
           children: <Widget>[
             RichText(
@@ -110,7 +110,7 @@ class UIUtil {
             )
           ],
         );
-      case ThreeLineAddressTextType.PRIMARY:
+      case ThreeLineAddressTextType.primary:
         final Widget contactWidget = contactName != null
             ? RichText(
                 textAlign: TextAlign.center,
@@ -167,7 +167,7 @@ class UIUtil {
             )
           ],
         );
-      case ThreeLineAddressTextType.SUCCESS:
+      case ThreeLineAddressTextType.success:
         final Widget contactWidget = contactName != null
             ? RichText(
                 textAlign: TextAlign.center,
@@ -224,7 +224,7 @@ class UIUtil {
             )
           ],
         );
-      case ThreeLineAddressTextType.SUCCESS_FULL:
+      case ThreeLineAddressTextType.successFull:
         return Column(
           children: <Widget>[
             RichText(
@@ -280,11 +280,11 @@ class UIUtil {
 
   static Widget oneLinetextStyleSmallestW400Text(
       BuildContext context, String address,
-      {OneLineAddressTextType type = OneLineAddressTextType.PRIMARY}) {
+      {OneLineAddressTextType type = OneLineAddressTextType.primary}) {
     final String stringPartOne = address.substring(0, 12);
     final String stringPartFive = address.substring(59);
     switch (type) {
-      case OneLineAddressTextType.PRIMARY60:
+      case OneLineAddressTextType.primary60:
         return Column(
           children: <Widget>[
             RichText(
@@ -309,7 +309,7 @@ class UIUtil {
             ),
           ],
         );
-      case OneLineAddressTextType.PRIMARY:
+      case OneLineAddressTextType.primary:
         return Column(
           children: <Widget>[
             RichText(
@@ -334,7 +334,7 @@ class UIUtil {
             ),
           ],
         );
-      case OneLineAddressTextType.SUCCESS:
+      case OneLineAddressTextType.success:
         return Column(
           children: <Widget>[
             RichText(
@@ -389,10 +389,11 @@ class UIUtil {
   }
 
   static double drawerWidth(BuildContext context) {
-    if (MediaQuery.of(context).size.width < 375)
+    if (MediaQuery.of(context).size.width < 375) {
       return MediaQuery.of(context).size.width * 0.94;
-    else
+    } else {
       return MediaQuery.of(context).size.width * 0.85;
+    }
   }
 
   static void showSnackbar(String content, BuildContext context) {
@@ -447,10 +448,11 @@ class UIUtil {
   }
 
   static bool smallScreen(BuildContext context) {
-    if (MediaQuery.of(context).size.height < 667)
+    if (MediaQuery.of(context).size.height < 667) {
       return true;
-    else
+    } else {
       return false;
+    }
   }
 
   static Future<void> showWebview(

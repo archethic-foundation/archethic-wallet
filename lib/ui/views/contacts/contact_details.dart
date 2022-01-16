@@ -16,7 +16,7 @@ import 'package:archethic_wallet/bus/events.dart';
 import 'package:archethic_wallet/ui/util/dimens.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/data/appdb.dart';
-import 'package:archethic_wallet/model/data/hiveDB.dart';
+import 'package:archethic_wallet/model/data/hive_db.dart';
 import 'package:archethic_wallet/util/service_locator.dart';
 import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
@@ -205,8 +205,8 @@ class ContactDetailsSheet {
                                         context, contact.address!,
                                         type: _addressCopied
                                             ? ThreeLineAddressTextType
-                                                .SUCCESS_FULL
-                                            : ThreeLineAddressTextType.PRIMARY),
+                                                .successFull
+                                            : ThreeLineAddressTextType.primary),
                               ),
                             ),
                             // Address Copied text container
@@ -225,52 +225,49 @@ class ContactDetailsSheet {
                       ),
                     ),
 
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              // Send Button
-                              if (StateContainer.of(context)
-                                      .wallet!
-                                      .accountBalance
-                                      .uco! >
-                                  0)
-                                AppButton.buildAppButton(
-                                    context,
-                                    AppButtonType.PRIMARY,
-                                    AppLocalization.of(context)!.send,
-                                    Dimens.BUTTON_TOP_DIMENS, onPressed: () {
-                                  Navigator.of(context).pop();
-                                  Sheets.showAppHeightNineSheet(
-                                      context: context,
-                                      widget: TransferUcoSheet(
-                                          contactsRef:
-                                              StateContainer.of(context)
-                                                  .contactsRef,
-                                          localCurrency:
-                                              StateContainer.of(context)
-                                                  .curCurrency,
-                                          contact: contact));
-                                })
-                              else
-                                const SizedBox(),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              // Close Button
+                    Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            // Send Button
+                            if (StateContainer.of(context)
+                                    .wallet!
+                                    .accountBalance
+                                    .uco! >
+                                0)
                               AppButton.buildAppButton(
                                   context,
-                                  AppButtonType.PRIMARY,
-                                  AppLocalization.of(context)!.close,
-                                  Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
-                                Navigator.pop(context);
-                              }),
-                            ],
-                          ),
-                        ],
-                      ),
+                                  AppButtonType.primary,
+                                  AppLocalization.of(context)!.send,
+                                  Dimens.buttonTopDimens, onPressed: () {
+                                Navigator.of(context).pop();
+                                Sheets.showAppHeightNineSheet(
+                                    context: context,
+                                    widget: TransferUcoSheet(
+                                        contactsRef: StateContainer.of(context)
+                                            .contactsRef,
+                                        localCurrency:
+                                            StateContainer.of(context)
+                                                .curCurrency,
+                                        contact: contact));
+                              })
+                            else
+                              const SizedBox(),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            // Close Button
+                            AppButton.buildAppButton(
+                                context,
+                                AppButtonType.primary,
+                                AppLocalization.of(context)!.close,
+                                Dimens.buttonBottomDimens, onPressed: () {
+                              Navigator.pop(context);
+                            }),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 ));

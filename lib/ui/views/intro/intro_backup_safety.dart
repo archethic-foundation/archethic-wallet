@@ -14,6 +14,8 @@ import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
 import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
 
 class IntroBackupSafetyPage extends StatefulWidget {
+  const IntroBackupSafetyPage({Key? key}) : super(key: key);
+
   @override
   _IntroBackupSafetyState createState() => _IntroBackupSafetyState();
 }
@@ -75,7 +77,12 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                             top: 15,
                           ),
                           child: buildIconWidget(
-                              context, 'assets/icons/warning.png', 90, 90),
+                            context,
+                            'assets/icons/warning.png',
+                            90,
+                            90,
+                            color: StateContainer.of(context).curTheme.warning,
+                          ),
                         ),
                         Container(
                           margin: EdgeInsetsDirectional.only(
@@ -87,7 +94,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                           child: AutoSizeText(
                             AppLocalization.of(context)!.warning,
                             style:
-                                AppStyles.textStyleSize28W700Primary(context),
+                                AppStyles.textStyleSize28W700Warning(context),
                             stepGranularity: 0.1,
                             maxLines: 1,
                             minFontSize: 12,
@@ -103,58 +110,70 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
-                              Text(
+                              AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel1,
-                                style: AppStyles.textStyleSize16W600Primary(
+                                style: AppStyles.textStyleSize24W600Primary(
+                                    context),
+                              ),
+                              Divider(
+                                height: 30,
+                                color: StateContainer.of(context)
+                                    .curTheme
+                                    .primary60,
+                              ),
+                              AutoSizeText(
+                                AppLocalization.of(context)!.backupSafetyLabel2,
+                                style: AppStyles.textStyleSize28W700Primary(
                                     context),
                               ),
                               const SizedBox(
                                 height: 30,
                               ),
-                              Text(
-                                AppLocalization.of(context)!.backupSafetyLabel2,
-                                style: AppStyles.textStyleSize16W700Primary(
-                                    context),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel3,
-                                style: AppStyles.textStyleSize12W600Primary(
+                                style: AppStyles.textStyleSize24W600Primary(
                                     context),
                               ),
-                              const SizedBox(
-                                height: 10,
+                              Divider(
+                                height: 30,
+                                color: StateContainer.of(context)
+                                    .curTheme
+                                    .primary60,
                               ),
-                              Text(
+                              AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel4,
-                                style: AppStyles.textStyleSize16W700Primary(
+                                style: AppStyles.textStyleSize28W700Primary(
                                     context),
                               ),
                               const SizedBox(
-                                height: 5,
+                                height: 30,
                               ),
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel5,
-                                style: AppStyles.textStyleSize12W600Primary(
+                                style: AppStyles.textStyleSize24W600Primary(
                                     context),
                               ),
-                              const SizedBox(
-                                height: 10,
+                              Divider(
+                                height: 30,
+                                color: StateContainer.of(context)
+                                    .curTheme
+                                    .primary60,
                               ),
-                              Text(
+                              AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel6,
-                                style: AppStyles.textStyleSize16W700Primary(
+                                style: AppStyles.textStyleSize28W700Primary(
                                     context),
                               ),
                               const SizedBox(
-                                height: 5,
+                                height: 30,
                               ),
-                              Text(
+                              AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel7,
-                                style: AppStyles.textStyleSize12W600Primary(
+                                style: AppStyles.textStyleSize24W600Primary(
                                     context),
+                              ),
+                              const SizedBox(
+                                height: 30,
                               ),
                             ],
                           ),
@@ -170,9 +189,9 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                   children: <Widget>[
                     AppButton.buildAppButton(
                         context,
-                        AppButtonType.PRIMARY,
+                        AppButtonType.primary,
                         AppLocalization.of(context)!.understandButton,
-                        Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
+                        Dimens.buttonBottomDimens, onPressed: () {
                       Navigator.of(context).pushNamed(
                         '/intro_backup',
                       );

@@ -22,7 +22,7 @@ import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
 import 'package:archethic_wallet/util/case_converter.dart';
 
 class ReceiveSheet extends StatefulWidget {
-  const ReceiveSheet() : super();
+  const ReceiveSheet({Key? key}) : super(key: key);
 
   @override
   _ReceiveSheetState createState() => _ReceiveSheetState();
@@ -232,46 +232,40 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                   ),
                 )),
           ),
-          Container(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    AppButton.buildAppButton(
-                        context,
-                        AppButtonType.PRIMARY,
-                        AppLocalization.of(context)!.copy,
-                        Dimens.BUTTON_TOP_DIMENS,
-                        icon: const Icon(Icons.copy), onPressed: () async {
-                      Clipboard.setData(ClipboardData(
-                          text: StateContainer.of(context).wallet!.address));
-                      UIUtil.showSnackbar('Address copied', context);
-                    }),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    AppButton.buildAppButton(
-                        context,
-                        AppButtonType.PRIMARY,
-                        AppLocalization.of(context)!.share,
-                        Dimens.BUTTON_BOTTOM_DIMENS,
-                        icon: const Icon(Icons.share), onPressed: () {
-                      final RenderBox? box =
-                          context.findRenderObject() as RenderBox?;
-                      final String textToShare = StateContainer.of(context)
-                          .selectedAccount
-                          .lastAddress!
-                          .toUpperCase();
-                      Share.share(textToShare,
-                          subject: 'Look what I made!',
-                          sharePositionOrigin:
-                              box!.localToGlobal(Offset.zero) & box.size);
-                    }),
-                  ],
-                ),
-              ],
-            ),
+          Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  AppButton.buildAppButton(context, AppButtonType.primary,
+                      AppLocalization.of(context)!.copy, Dimens.buttonTopDimens,
+                      icon: const Icon(Icons.copy), onPressed: () async {
+                    Clipboard.setData(ClipboardData(
+                        text: StateContainer.of(context).wallet!.address));
+                    UIUtil.showSnackbar('Address copied', context);
+                  }),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  AppButton.buildAppButton(
+                      context,
+                      AppButtonType.primary,
+                      AppLocalization.of(context)!.share,
+                      Dimens.buttonBottomDimens,
+                      icon: const Icon(Icons.share), onPressed: () {
+                    final RenderBox? box =
+                        context.findRenderObject() as RenderBox?;
+                    final String textToShare = StateContainer.of(context)
+                        .selectedAccount
+                        .lastAddress!
+                        .toUpperCase();
+                    Share.share(textToShare,
+                        sharePositionOrigin:
+                            box!.localToGlobal(Offset.zero) & box.size);
+                  }),
+                ],
+              ),
+            ],
           ),
         ],
       ),

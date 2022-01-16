@@ -17,7 +17,7 @@ import 'package:archethic_wallet/model/available_language.dart';
 import 'package:archethic_wallet/model/available_themes.dart';
 import 'package:archethic_wallet/model/chart_infos.dart';
 import 'package:archethic_wallet/model/data/appdb.dart';
-import 'package:archethic_wallet/model/data/hiveDB.dart';
+import 'package:archethic_wallet/model/data/hive_db.dart';
 import 'package:archethic_wallet/model/recent_transaction.dart';
 import 'package:archethic_wallet/model/wallet.dart';
 import 'package:archethic_wallet/service/app_service.dart';
@@ -51,7 +51,7 @@ class _InheritedStateContainer extends InheritedWidget {
 }
 
 class StateContainer extends StatefulWidget {
-  const StateContainer({required this.child});
+  const StateContainer({Key? key, required this.child}) : super(key: key);
 
   final Widget child;
 

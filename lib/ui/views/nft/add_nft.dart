@@ -1,4 +1,6 @@
 // Dart imports:
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'dart:async';
 
 // Flutter imports:
@@ -22,7 +24,7 @@ import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_wallet/ui/widgets/components/tap_outside_unfocus.dart';
 
 class AddNFTSheet extends StatefulWidget {
-  const AddNFTSheet({this.address}) : super();
+  const AddNFTSheet({Key? key, this.address}) : super(key: key);
 
   final String? address;
 
@@ -219,9 +221,9 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                     // Add Contact Button
                     AppButton.buildAppButton(
                         context,
-                        AppButtonType.PRIMARY,
+                        AppButtonType.primary,
                         AppLocalization.of(context)!.addNFT,
-                        Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
+                        Dimens.buttonTopDimens, onPressed: () async {
                       if (await validateForm()) {
                         Sheets.showAppHeightNineSheet(
                             context: context,
@@ -239,9 +241,9 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                     // Close Button
                     AppButton.buildAppButton(
                         context,
-                        AppButtonType.PRIMARY,
+                        AppButtonType.primary,
                         AppLocalization.of(context)!.close,
-                        Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
+                        Dimens.buttonBottomDimens, onPressed: () {
                       Navigator.pop(context);
                     }),
                   ],

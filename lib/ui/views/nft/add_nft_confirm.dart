@@ -1,4 +1,4 @@
-// ignore_for_file: cancel_subscriptions
+// ignore_for_file: cancel_subscriptions, avoid_unnecessary_containers
 
 // Dart imports:
 import 'dart:async';
@@ -37,7 +37,8 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show TransactionStatus;
 
 class AddNFTConfirm extends StatefulWidget {
-  const AddNFTConfirm({this.nftName, this.nftInitialSupply}) : super();
+  const AddNFTConfirm({Key? key, this.nftName, this.nftInitialSupply})
+      : super(key: key);
 
   final String? nftName;
   final int? nftInitialSupply;
@@ -56,7 +57,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
         .listen((AuthenticatedEvent event) {
-      if (event.authType == AUTH_EVENT_TYPE.SEND) {
+      if (event.authType == AUTH_EVENT_TYPE.send) {
         _doAdd();
       }
     });
@@ -114,7 +115,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
   void _showSendingAnimation(BuildContext context) {
     animationOpen = true;
     Navigator.of(context).push(AnimationLoadingOverlay(
-        AnimationType.SEND,
+        AnimationType.send,
         StateContainer.of(context).curTheme.animationOverlayStrong!,
         StateContainer.of(context).curTheme.animationOverlayMedium!,
         onPoppedCallback: () => animationOpen = false));
@@ -239,9 +240,9 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                       // CONFIRM Button
                       AppButton.buildAppButton(
                           context,
-                          AppButtonType.PRIMARY,
+                          AppButtonType.primary,
                           AppLocalization.of(context)!.confirm,
-                          Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
+                          Dimens.buttonTopDimens, onPressed: () async {
                         // Authenticate
                         final Preferences preferences =
                             await Preferences.getInstance();
@@ -249,7 +250,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                             preferences.getAuthMethod();
                         final bool hasBiometrics =
                             await sl.get<BiometricUtil>().hasBiometrics();
-                        if (authMethod.method == AuthMethod.BIOMETRICS &&
+                        if (authMethod.method == AuthMethod.biometrics &&
                             hasBiometrics) {
                           try {
                             final bool authenticated = await sl
@@ -263,7 +264,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                                   .get<HapticUtil>()
                                   .feedback(FeedbackType.success);
                               EventTaxiImpl.singleton().fire(
-                                  AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
+                                  AuthenticatedEvent(AUTH_EVENT_TYPE.send));
                             }
                           } catch (e) {
                             await authenticateWithPin();
@@ -280,9 +281,9 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                       // CANCEL Button
                       AppButton.buildAppButton(
                           context,
-                          AppButtonType.PRIMARY,
+                          AppButtonType.primary,
                           AppLocalization.of(context)!.cancel,
-                          Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
+                          Dimens.buttonBottomDimens, onPressed: () {
                         Navigator.of(context).pop();
                       }),
                     ],
@@ -321,14 +322,14 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
     final bool auth = await Navigator.of(context)
         .push(MaterialPageRoute<PinScreen>(builder: (BuildContext context) {
       return PinScreen(
-        PinOverlayType.ENTER_PIN,
+        PinOverlayType.enterPin,
         expectedPin: expectedPin!,
         description: '',
       );
     })) as bool;
     if (auth) {
       await Future<void>.delayed(const Duration(milliseconds: 200));
-      EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
+      EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.send));
     }
   }
 }

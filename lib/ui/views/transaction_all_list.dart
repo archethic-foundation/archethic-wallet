@@ -15,7 +15,7 @@ import 'package:archethic_wallet/ui/views/sheets/transaction_infos_sheet.dart';
 import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 
 class TxAllListWidget extends StatefulWidget {
-  const TxAllListWidget() : super();
+  const TxAllListWidget({Key? key}) : super(key: key);
 
   @override
   _TxAllListWidgetState createState() => _TxAllListWidgetState();
@@ -74,7 +74,7 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
         Expanded(
           child: Center(
             child: Stack(children: <Widget>[
-              Container(
+              SizedBox(
                   height: MediaQuery.of(context).size.height * 0.8,
                   child: SafeArea(
                     minimum: EdgeInsets.only(
@@ -134,23 +134,19 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
           width: MediaQuery.of(context).size.width * 0.9,
           child: Stack(
             children: <Widget>[
-              Container(
-                child: Row(mainAxisAlignment: MainAxisAlignment.end, children: <
-                    Widget>[
-                  if (transaction.amount == null)
-                    const Text('')
-                  else
-                    transaction.typeTx == RecentTransaction.TRANSFER_OUTPUT
-                        ? AutoSizeText('-' + transaction.amount!.toString(),
-                            style:
-                                AppStyles.textStyleSize20W700Primary(context))
-                        : AutoSizeText(transaction.amount!.toString(),
-                            style: AppStyles.textStyleSize20W700Green(context)),
-                ]),
-              ),
+              Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+                if (transaction.amount == null)
+                  const Text('')
+                else
+                  transaction.typeTx == RecentTransaction.transferOutput
+                      ? AutoSizeText('-' + transaction.amount!.toString(),
+                          style: AppStyles.textStyleSize20W700Red(context))
+                      : AutoSizeText(transaction.amount!.toString(),
+                          style: AppStyles.textStyleSize20W700Green(context)),
+              ]),
               Column(
                 children: <Widget>[
-                  if (transaction.typeTx! == RecentTransaction.NFT_CREATION)
+                  if (transaction.typeTx! == RecentTransaction.nftCreation)
                     Row(
                       children: <Widget>[
                         AutoSizeText(
@@ -162,7 +158,7 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                     )
                   else
                     const SizedBox(),
-                  if (transaction.typeTx == RecentTransaction.NFT_CREATION &&
+                  if (transaction.typeTx == RecentTransaction.nftCreation &&
                       transaction.content != null)
                     Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -173,8 +169,8 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                         ])
                   else
                     const SizedBox(),
-                  if (transaction.typeTx == RecentTransaction.TRANSFER_OUTPUT ||
-                      transaction.typeTx == RecentTransaction.NFT_CREATION)
+                  if (transaction.typeTx == RecentTransaction.transferOutput ||
+                      transaction.typeTx == RecentTransaction.nftCreation)
                     const SizedBox()
                   else
                     Row(mainAxisAlignment: MainAxisAlignment.start, children: <
@@ -188,8 +184,8 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                             style:
                                 AppStyles.textStyleSize12W400Primary(context))
                     ]),
-                  if (transaction.typeTx == RecentTransaction.TRANSFER_INPUT ||
-                      transaction.typeTx == RecentTransaction.NFT_CREATION)
+                  if (transaction.typeTx == RecentTransaction.transferInput ||
+                      transaction.typeTx == RecentTransaction.nftCreation)
                     const SizedBox()
                   else
                     Row(
@@ -222,7 +218,7 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                             style:
                                 AppStyles.textStyleSize12W400Primary(context)),
                       ]),
-                  if (transaction.typeTx == RecentTransaction.TRANSFER_INPUT)
+                  if (transaction.typeTx == RecentTransaction.transferInput)
                     const SizedBox()
                   else
                     Row(mainAxisAlignment: MainAxisAlignment.start, children: <
@@ -253,9 +249,9 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
   static String getTypeTransactionLabelForDate(
       BuildContext context, int typeTx) {
     switch (typeTx) {
-      case RecentTransaction.TRANSFER_INPUT:
+      case RecentTransaction.transferInput:
         return AppLocalization.of(context)!.txListTypeTransactionLabelReceive;
-      case RecentTransaction.TRANSFER_OUTPUT:
+      case RecentTransaction.transferOutput:
         return AppLocalization.of(context)!.txListTypeTransactionLabelSend;
       default:
         return AppLocalization.of(context)!.txListDate;

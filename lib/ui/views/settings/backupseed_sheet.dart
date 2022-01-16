@@ -13,7 +13,7 @@ import 'package:archethic_wallet/ui/widgets/components/tap_outside_unfocus.dart'
 import 'package:archethic_wallet/util/mnemonics.dart';
 
 class AppSeedBackupSheet extends StatefulWidget {
-  const AppSeedBackupSheet(this.seed);
+  const AppSeedBackupSheet(this.seed, {Key? key}) : super(key: key);
 
   final String seed;
 
@@ -70,15 +70,14 @@ class _AppSeedBackupSheetState extends State<AppSeedBackupSheet> {
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                        child: Column(
+                    child: Column(
                       children: <Widget>[
                         MnemonicDisplay(
                           wordList: _mnemonic!,
                           obscureSeed: true,
                         )
                       ],
-                    )),
+                    ),
                   ),
                 ],
               ),

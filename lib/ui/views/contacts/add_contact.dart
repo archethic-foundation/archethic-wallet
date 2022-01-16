@@ -14,7 +14,7 @@ import 'package:archethic_wallet/ui/util/dimens.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/address.dart';
 import 'package:archethic_wallet/model/data/appdb.dart';
-import 'package:archethic_wallet/model/data/hiveDB.dart';
+import 'package:archethic_wallet/model/data/hive_db.dart';
 import 'package:archethic_wallet/util/service_locator.dart';
 import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/util/formatters.dart';
@@ -25,7 +25,7 @@ import 'package:archethic_wallet/ui/widgets/components/tap_outside_unfocus.dart'
 import 'package:archethic_wallet/util/user_data_util.dart';
 
 class AddContactSheet extends StatefulWidget {
-  const AddContactSheet({this.address}) : super();
+  const AddContactSheet({Key? key, this.address}) : super(key: key);
 
   final String? address;
 
@@ -234,8 +234,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
                       onPressed: () async {
                         UIUtil.cancelLockEvent();
                         final String? scanResult = await UserDataUtil.getQRData(
-                            DataType.ADDRESS, context);
-                        if (!QRScanErrs.ERROR_LIST.contains(scanResult)) {
+                            DataType.address, context);
+                        if (!QRScanErrs.errorList.contains(scanResult)) {
                           if (mounted) {
                             setState(() {
                               _addressController!.text = scanResult!;
@@ -256,7 +256,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                         return;
                       }
                       final String? data =
-                          await UserDataUtil.getClipboardText(DataType.ADDRESS);
+                          await UserDataUtil.getClipboardText(DataType.address);
                       if (data != null) {
                         setState(() {
                           _addressValid = true;
@@ -326,52 +326,49 @@ class _AddContactSheetState extends State<AddContactSheet> {
             ),
           ),
           //A column with "Add Contact" and "Close" buttons
-          Container(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    // Add Contact Button
-                    AppButton.buildAppButton(
-                        context,
-                        AppButtonType.PRIMARY,
-                        AppLocalization.of(context)!.addContact,
-                        Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
-                      if (await validateForm()) {
-                        final Contact newContact = Contact(
-                            name: _nameController!.text,
-                            address:
-                                widget.address ?? _addressController!.text);
-                        await sl.get<DBHelper>().saveContact(newContact);
+          Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  // Add Contact Button
+                  AppButton.buildAppButton(
+                      context,
+                      AppButtonType.primary,
+                      AppLocalization.of(context)!.addContact,
+                      Dimens.buttonTopDimens, onPressed: () async {
+                    if (await validateForm()) {
+                      final Contact newContact = Contact(
+                          name: _nameController!.text,
+                          address: widget.address ?? _addressController!.text);
+                      await sl.get<DBHelper>().saveContact(newContact);
 
-                        EventTaxiImpl.singleton()
-                            .fire(ContactAddedEvent(contact: newContact));
-                        UIUtil.showSnackbar(
-                            AppLocalization.of(context)!
-                                .contactAdded
-                                .replaceAll('%1', newContact.name!),
-                            context);
-                        EventTaxiImpl.singleton()
-                            .fire(ContactModifiedEvent(contact: newContact));
-                        Navigator.of(context).pop();
-                      }
-                    }),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    // Close Button
-                    AppButton.buildAppButton(
-                        context,
-                        AppButtonType.PRIMARY,
-                        AppLocalization.of(context)!.close,
-                        Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
-                      Navigator.pop(context);
-                    }),
-                  ],
-                ),
-              ],
-            ),
+                      EventTaxiImpl.singleton()
+                          .fire(ContactAddedEvent(contact: newContact));
+                      UIUtil.showSnackbar(
+                          AppLocalization.of(context)!
+                              .contactAdded
+                              .replaceAll('%1', newContact.name!),
+                          context);
+                      EventTaxiImpl.singleton()
+                          .fire(ContactModifiedEvent(contact: newContact));
+                      Navigator.of(context).pop();
+                    }
+                  }),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  // Close Button
+                  AppButton.buildAppButton(
+                      context,
+                      AppButtonType.primary,
+                      AppLocalization.of(context)!.close,
+                      Dimens.buttonBottomDimens, onPressed: () {
+                    Navigator.pop(context);
+                  }),
+                ],
+              ),
+            ],
           ),
         ],
       ),

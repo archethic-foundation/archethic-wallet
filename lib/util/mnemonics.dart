@@ -33,11 +33,11 @@ class AppMnemomics {
 
   /// Validate a specific menmonic word
   static bool isValidWord(String word) {
-    return WORDLIST.contains(word);
+    return wordlist.contains(word);
   }
 }
 
-const List<String> WORDLIST = <String>[
+const List<String> wordlist = <String>[
   'abandon',
   'ability',
   'able',

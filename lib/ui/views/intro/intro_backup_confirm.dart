@@ -19,6 +19,8 @@ import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
 import 'package:archethic_wallet/util/vault.dart';
 
 class IntroBackupConfirm extends StatefulWidget {
+  const IntroBackupConfirm({Key? key}) : super(key: key);
+
   @override
   _IntroBackupConfirmState createState() => _IntroBackupConfirmState();
 }
@@ -85,6 +87,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                         child: SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
                                 margin: EdgeInsetsDirectional.only(
@@ -108,9 +111,9 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                     top: 15.0),
                                 child: AutoSizeText(
                                   AppLocalization.of(context)!.secretWarning,
-                                  style: AppStyles.textStyleSize16W600Primary(
+                                  style: AppStyles.textStyleSize24W600Primary(
                                       context),
-                                  maxLines: 5,
+                                  maxLines: 6,
                                   stepGranularity: 0.5,
                                 ),
                               ),
@@ -127,14 +130,14 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                       children: <Widget>[
                         AppButton.buildAppButton(
                             context,
-                            AppButtonType.PRIMARY,
+                            AppButtonType.primary,
                             AppLocalization.of(context)!.yes,
-                            Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
+                            Dimens.buttonTopDimens, onPressed: () async {
                           final String pin = await Navigator.of(context).push(
                               MaterialPageRoute(
                                   builder: (BuildContext context) {
                             return const PinScreen(
-                              PinOverlayType.NEW_PIN,
+                              PinOverlayType.newPin,
                             );
                           }));
                           if (pin.length > 5) {
@@ -147,9 +150,9 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                       children: <Widget>[
                         AppButton.buildAppButton(
                             context,
-                            AppButtonType.PRIMARY,
+                            AppButtonType.primary,
                             AppLocalization.of(context)!.no,
-                            Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
+                            Dimens.buttonBottomDimens, onPressed: () {
                           Navigator.of(context).pop();
                         }),
                       ],

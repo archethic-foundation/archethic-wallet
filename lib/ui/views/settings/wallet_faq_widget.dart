@@ -12,7 +12,8 @@ import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/ui/util/styles.dart';
 
 class WalletFAQ extends StatefulWidget {
-  WalletFAQ(this.tokensListController, this.tokensListOpen);
+  WalletFAQ(this.tokensListController, this.tokensListOpen, {Key? key})
+      : super(key: key);
 
   final AnimationController tokensListController;
   bool tokensListOpen;

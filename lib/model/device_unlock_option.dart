@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/setting_item.dart';
 
-enum UnlockOption { YES, NO }
+enum UnlockOption { yes, no }
 
 /// Represent authenticate to open setting
 class UnlockSetting extends SettingSelectionItem {
@@ -16,9 +16,9 @@ class UnlockSetting extends SettingSelectionItem {
   @override
   String getDisplayName(BuildContext context) {
     switch (setting) {
-      case UnlockOption.YES:
+      case UnlockOption.yes:
         return AppLocalization.of(context)!.yes;
-      case UnlockOption.NO:
+      case UnlockOption.no:
       default:
         return AppLocalization.of(context)!.no;
     }

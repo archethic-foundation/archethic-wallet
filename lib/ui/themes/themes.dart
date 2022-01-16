@@ -54,6 +54,11 @@ abstract class BaseTheme {
 
   Color? choiceOption;
 
+  Color? warning;
+
+  Color? positiveAmount;
+  Color? negativeAmount;
+
   Brightness? brightness;
   SystemUiOverlayStyle? statusBar;
 

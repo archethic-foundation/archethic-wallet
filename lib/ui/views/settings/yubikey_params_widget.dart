@@ -16,7 +16,8 @@ import 'package:archethic_wallet/ui/widgets/components/app_text_field.dart';
 import 'package:archethic_wallet/util/preferences.dart';
 
 class YubikeyParams extends StatefulWidget {
-  YubikeyParams(this.animationController, this.open);
+  YubikeyParams(this.animationController, this.open, {Key? key})
+      : super(key: key);
 
   final AnimationController animationController;
   bool open;

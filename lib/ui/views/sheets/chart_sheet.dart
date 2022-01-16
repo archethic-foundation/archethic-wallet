@@ -18,8 +18,9 @@ import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
 
 class ChartSheet extends StatefulWidget {
-  const ChartSheet({required this.optionChartList, required this.optionChart})
-      : super();
+  const ChartSheet(
+      {Key? key, required this.optionChartList, required this.optionChart})
+      : super(key: key);
 
   final List<OptionChart> optionChartList;
   final OptionChart? optionChart;
@@ -130,7 +131,7 @@ class _ChartSheetState extends State<ChartSheet> {
           height: 30,
         ),
         if (StateContainer.of(context).chartInfos != null)
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width * 0.9,
             child: StateContainer.of(context)
                         .chartInfos!
@@ -247,7 +248,7 @@ class _ChartSheetState extends State<ChartSheet> {
 
         Expanded(
           child: Center(
-            child: Container(
+            child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.8,
                 child: SafeArea(
                   minimum: EdgeInsets.only(
@@ -278,12 +279,10 @@ class _ChartSheetState extends State<ChartSheet> {
                               .map((OptionChart optionChart) {
                             return DropdownMenuItem<OptionChart>(
                               value: optionChart,
-                              child: Container(
-                                child: Text(
-                                  optionChart.label,
-                                  style: AppStyles.textStyleSize20W700Primary(
-                                      context),
-                                ),
+                              child: Text(
+                                optionChart.label,
+                                style: AppStyles.textStyleSize20W700Primary(
+                                    context),
                               ),
                             );
                           }).toList(),

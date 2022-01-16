@@ -15,7 +15,7 @@ import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
 
 class TransactionInfosSheet extends StatefulWidget {
-  const TransactionInfosSheet(this.txAddress) : super();
+  const TransactionInfosSheet(this.txAddress, {Key? key}) : super(key: key);
 
   final String txAddress;
 
@@ -90,7 +90,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                     child: Center(
                       child: Stack(
                         children: <Widget>[
-                          Container(
+                          SizedBox(
                             height: MediaQuery.of(context).size.height * 0.8,
                             child: SafeArea(
                               minimum: EdgeInsets.only(

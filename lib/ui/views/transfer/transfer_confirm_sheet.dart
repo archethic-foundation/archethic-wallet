@@ -17,7 +17,7 @@ import 'package:archethic_wallet/ui/util/dimens.dart';
 import 'package:archethic_wallet/util/global_var.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/authentication_method.dart';
-import 'package:archethic_wallet/model/data/hiveDB.dart';
+import 'package:archethic_wallet/model/data/hive_db.dart';
 import 'package:archethic_wallet/service/app_service.dart';
 import 'package:archethic_wallet/util/service_locator.dart';
 import 'package:archethic_wallet/ui/util/styles.dart';
@@ -42,13 +42,14 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
 
 class TransferConfirmSheet extends StatefulWidget {
   const TransferConfirmSheet(
-      {this.typeTransfer,
+      {Key? key,
+      this.typeTransfer,
       this.localCurrency,
       this.contactsRef,
       this.title,
       this.ucoTransferList,
       this.nftTransferList})
-      : super();
+      : super(key: key);
 
   final String? typeTransfer;
   final String? localCurrency;
@@ -71,7 +72,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
         .listen((AuthenticatedEvent event) {
-      if (event.authType == AUTH_EVENT_TYPE.SEND) {
+      if (event.authType == AUTH_EVENT_TYPE.send) {
         _doSend();
       }
     });
@@ -131,7 +132,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   void _showSendingAnimation(BuildContext context) {
     animationOpen = true;
     Navigator.of(context).push(AnimationLoadingOverlay(
-        AnimationType.SEND,
+        AnimationType.send,
         StateContainer.of(context).curTheme.animationOverlayStrong!,
         StateContainer.of(context).curTheme.animationOverlayMedium!,
         onPoppedCallback: () => animationOpen = false));
@@ -182,7 +183,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
+                  SizedBox(
                     height: 300,
                     child: widget.typeTransfer == 'UCO'
                         ? UcoTransferListWidget(
@@ -213,9 +214,9 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       // CONFIRM Button
                       AppButton.buildAppButton(
                           context,
-                          AppButtonType.PRIMARY,
+                          AppButtonType.primary,
                           AppLocalization.of(context)!.confirm,
-                          Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
+                          Dimens.buttonTopDimens, onPressed: () async {
                         final Preferences _preferences =
                             await Preferences.getInstance();
                         // Authenticate
@@ -223,7 +224,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                             _preferences.getAuthMethod();
                         final bool hasBiometrics =
                             await sl.get<BiometricUtil>().hasBiometrics();
-                        if (authMethod.method == AuthMethod.BIOMETRICS &&
+                        if (authMethod.method == AuthMethod.biometrics &&
                             hasBiometrics) {
                           try {
                             final bool authenticated = await sl
@@ -237,14 +238,14 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                                   .get<HapticUtil>()
                                   .feedback(FeedbackType.success);
                               EventTaxiImpl.singleton().fire(
-                                  AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
+                                  AuthenticatedEvent(AUTH_EVENT_TYPE.send));
                             }
                           } catch (e) {
                             await authenticateWithPin();
                           }
                         } else {
                           if (authMethod.method ==
-                              AuthMethod.YUBIKEY_WITH_YUBICLOUD) {
+                              AuthMethod.yubikeyWithYubicloud) {
                             await authenticateWithYubikey();
                           } else {
                             await authenticateWithPin();
@@ -259,9 +260,9 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       // CANCEL Button
                       AppButton.buildAppButton(
                           context,
-                          AppButtonType.PRIMARY,
+                          AppButtonType.primary,
                           AppLocalization.of(context)!.cancel,
-                          Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
+                          Dimens.buttonBottomDimens, onPressed: () {
                         Navigator.of(context).pop();
                       }),
                     ],
@@ -300,14 +301,14 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     final bool auth = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
       return PinScreen(
-        PinOverlayType.ENTER_PIN,
+        PinOverlayType.enterPin,
         expectedPin: expectedPin!,
         description: '',
       );
     })) as bool;
     if (auth) {
       await Future<void>.delayed(const Duration(milliseconds: 200));
-      EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
+      EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.send));
     }
   }
 
@@ -319,7 +320,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     })) as bool;
     if (auth) {
       await Future<void>.delayed(const Duration(milliseconds: 200));
-      EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.SEND));
+      EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.send));
     }
   }
 }

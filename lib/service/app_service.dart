@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Package imports:
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
@@ -23,8 +24,8 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
 
 class AppService {
   double getFeesEstimation() {
-    const double FEE_BASE = 0.01;
-    const double fees = FEE_BASE;
+    const double feeBase = 0.01;
+    const double fees = feeBase;
     return fees;
   }
 
@@ -63,13 +64,13 @@ class AppService {
             .toLowerCase()
             .contains('initial supply:')) {
           recentTransaction.nftAddress = transaction.address;
-          recentTransaction.typeTx = RecentTransaction.NFT_CREATION;
+          recentTransaction.typeTx = RecentTransaction.nftCreation;
           recentTransaction.content = transaction.data!.contentDisplay!
               .substring(transaction.data!.contentDisplay!
                   .toLowerCase()
                   .indexOf('initial supply: '));
         } else {
-          recentTransaction.typeTx = RecentTransaction.TRANSFER_OUTPUT;
+          recentTransaction.typeTx = RecentTransaction.transferOutput;
           recentTransaction.content = '';
         }
         if (transaction.data!.contentDisplay!.toLowerCase().contains('name:')) {
@@ -89,7 +90,7 @@ class AppService {
               i++) {
             final RecentTransaction recentTransaction = RecentTransaction();
             recentTransaction.address = transaction.address;
-            recentTransaction.typeTx = RecentTransaction.TRANSFER_OUTPUT;
+            recentTransaction.typeTx = RecentTransaction.transferOutput;
             recentTransaction.amount = transaction
                     .data!.ledger!.uco!.transfers![i].amount!
                     .toDouble() /
@@ -117,7 +118,7 @@ class AppService {
         recentTransaction.nftAddress = '';
       }
       recentTransaction.amount = transaction.amount!;
-      recentTransaction.typeTx = RecentTransaction.TRANSFER_INPUT;
+      recentTransaction.typeTx = RecentTransaction.transferInput;
       recentTransaction.from = transaction.from;
       recentTransaction.recipient = lastAddress;
       recentTransaction.timestamp = transaction.timestamp!;
@@ -136,7 +137,7 @@ class AppService {
           recentTransaction.nftAddress = '';
         }
         recentTransaction.amount = transaction.amount!;
-        recentTransaction.typeTx = RecentTransaction.TRANSFER_INPUT;
+        recentTransaction.typeTx = RecentTransaction.transferInput;
         recentTransaction.from = transaction.from;
         recentTransaction.recipient = lastAddress;
         recentTransaction.timestamp = transaction.timestamp!;
@@ -187,7 +188,9 @@ class AppService {
     try {
       transactionStatus = await sl.get<ApiService>().sendTx(transaction);
     } catch (e) {
-      print('error: ' + e.toString());
+      if (kDebugMode) {
+        print('error: ' + e.toString());
+      }
       transactionStatus.status = e.toString();
     }
     return transactionStatus;
@@ -212,7 +215,9 @@ class AppService {
     try {
       transactionStatus = await sl.get<ApiService>().sendTx(transaction);
     } catch (e) {
-      print('error: ' + e.toString());
+      if (kDebugMode) {
+        print('error: ' + e.toString());
+      }
       transactionStatus.status = e.toString();
     }
 

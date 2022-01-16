@@ -27,7 +27,8 @@ import 'package:archethic_wallet/util/nfc.dart';
 import 'package:archethic_wallet/util/preferences.dart';
 
 class YubikeyScreen extends StatefulWidget {
-  const YubikeyScreen({this.yubikeyScreenBackgroundColor});
+  const YubikeyScreen({this.yubikeyScreenBackgroundColor, Key? key})
+      : super(key: key);
 
   final Color? yubikeyScreenBackgroundColor;
 
@@ -36,8 +37,6 @@ class YubikeyScreen extends StatefulWidget {
 }
 
 class _YubikeyScreenState extends State<YubikeyScreen> {
-  static const int MAX_ATTEMPTS = 5;
-
   StreamSubscription<OTPReceiveEvent>? _otpReceiveSub;
 
   double buttonSize = 100.0;
@@ -177,118 +176,114 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
               ),
             ),
           ),
-          Container(
-            child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) =>
-                  SafeArea(
-                minimum: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.035,
-                  top: MediaQuery.of(context).size.height * 0.10,
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            buildIconWidget(
-                                context, 'assets/icons/key-ring.png', 90, 90),
-                            const SizedBox(
-                              height: 30,
+          LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) =>
+                SafeArea(
+              minimum: EdgeInsets.only(
+                bottom: MediaQuery.of(context).size.height * 0.035,
+                top: MediaQuery.of(context).size.height * 0.10,
+              ),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          buildIconWidget(
+                              context, 'assets/icons/key-ring.png', 90, 90),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 40),
+                            child: AutoSizeText(
+                              'OTP',
+                              style:
+                                  AppStyles.textStyleSize16W400Primary(context),
+                              textAlign: TextAlign.center,
+                              maxLines: 1,
+                              stepGranularity: 0.1,
                             ),
+                          ),
+                          if (isNFCAvailable)
+                            ElevatedButton(
+                                child: Text(buttonNFCLabel,
+                                    style: AppStyles.textStyleSize16W200Primary(
+                                        context)),
+                                onPressed: () {
+                                  setState(() {
+                                    buttonNFCLabel =
+                                        'Hold your device near the Yubikey';
+                                  });
+                                  _tagRead();
+                                })
+                          else
                             Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 40),
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 10),
                               child: AutoSizeText(
-                                'OTP',
-                                style: AppStyles.textStyleSize16W400Primary(
+                                'Please, connect your Yubikey',
+                                style: AppStyles.textStyleSize16W200Primary(
                                     context),
                                 textAlign: TextAlign.center,
                                 maxLines: 1,
                                 stepGranularity: 0.1,
                               ),
                             ),
-                            if (isNFCAvailable)
-                              ElevatedButton(
-                                  child: Text(buttonNFCLabel,
-                                      style:
-                                          AppStyles.textStyleSize16W200Primary(
-                                              context)),
-                                  onPressed: () {
-                                    setState(() {
-                                      buttonNFCLabel =
-                                          'Hold your device near the Yubikey';
-                                    });
-                                    _tagRead();
-                                  })
-                            else
-                              Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 40, vertical: 10),
-                                child: AutoSizeText(
-                                  'Please, connect your Yubikey',
-                                  style: AppStyles.textStyleSize16W200Primary(
-                                      context),
-                                  textAlign: TextAlign.center,
-                                  maxLines: 1,
-                                  stepGranularity: 0.1,
-                                ),
+                          if (isNFCAvailable)
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                            )
+                          else
+                            AppTextField(
+                              topMargin: 30,
+                              maxLines: 3,
+                              padding: const EdgeInsetsDirectional.only(
+                                  start: 16, end: 16),
+                              focusNode: enterOTPFocusNode,
+                              controller: enterOTPController,
+                              textInputAction: TextInputAction.go,
+                              autofocus: true,
+                              onSubmitted: (value) async {
+                                FocusScope.of(context).unfocus();
+                              },
+                              onChanged: (String value) async {
+                                if (value.trim().length == 44) {
+                                  EventTaxiImpl.singleton()
+                                      .fire(OTPReceiveEvent(otp: value));
+                                }
+                              },
+                              inputFormatters: <
+                                  LengthLimitingTextInputFormatter>[
+                                LengthLimitingTextInputFormatter(45),
+                              ],
+                              keyboardType: TextInputType.text,
+                              obscureText: false,
+                              textAlign: TextAlign.center,
+                              style:
+                                  AppStyles.textStyleSize16W600Primary(context),
+                              suffixButton: TextFieldButton(
+                                icon: FontAwesomeIcons.paste,
+                                onPressed: () {
+                                  Clipboard.getData('text/plain')
+                                      .then((ClipboardData? data) async {
+                                    if (data == null || data.text == null) {
+                                      return;
+                                    }
+                                    enterOTPController!.text = data.text!;
+                                    EventTaxiImpl.singleton().fire(
+                                        OTPReceiveEvent(
+                                            otp: enterOTPController!.text));
+                                  });
+                                },
                               ),
-                            if (isNFCAvailable)
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                              )
-                            else
-                              AppTextField(
-                                topMargin: 30,
-                                maxLines: 3,
-                                padding: const EdgeInsetsDirectional.only(
-                                    start: 16, end: 16),
-                                focusNode: enterOTPFocusNode,
-                                controller: enterOTPController,
-                                textInputAction: TextInputAction.go,
-                                autofocus: true,
-                                onSubmitted: (value) async {
-                                  FocusScope.of(context).unfocus();
-                                },
-                                onChanged: (String value) async {
-                                  if (value.trim().length == 44) {
-                                    EventTaxiImpl.singleton()
-                                        .fire(OTPReceiveEvent(otp: value));
-                                  }
-                                },
-                                inputFormatters: <
-                                    LengthLimitingTextInputFormatter>[
-                                  LengthLimitingTextInputFormatter(45),
-                                ],
-                                keyboardType: TextInputType.text,
-                                obscureText: false,
-                                textAlign: TextAlign.center,
-                                style: AppStyles.textStyleSize16W600Primary(
-                                    context),
-                                suffixButton: TextFieldButton(
-                                  icon: FontAwesomeIcons.paste,
-                                  onPressed: () {
-                                    Clipboard.getData('text/plain')
-                                        .then((ClipboardData? data) async {
-                                      if (data == null || data.text == null) {
-                                        return;
-                                      }
-                                      enterOTPController!.text = data.text!;
-                                      EventTaxiImpl.singleton().fire(
-                                          OTPReceiveEvent(
-                                              otp: enterOTPController!.text));
-                                    });
-                                  },
-                                ),
-                              )
-                          ],
-                        ),
+                            )
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

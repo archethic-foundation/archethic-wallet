@@ -16,7 +16,7 @@ import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/util/case_converter.dart';
 
 class TransactionChainExplorerSheet extends StatefulWidget {
-  const TransactionChainExplorerSheet() : super();
+  const TransactionChainExplorerSheet({Key? key}) : super(key: key);
 
   @override
   _TransactionChainExplorerSheetState createState() =>
@@ -97,7 +97,7 @@ class _TransactionChainExplorerSheetState
         Expanded(
           child: Center(
             child: Stack(children: <Widget>[
-              Container(
+              SizedBox(
                   height: MediaQuery.of(context).size.height * 0.8,
                   child: SafeArea(
                     minimum: EdgeInsets.only(

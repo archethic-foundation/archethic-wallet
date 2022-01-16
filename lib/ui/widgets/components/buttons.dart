@@ -10,11 +10,11 @@ import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/util/exceptions.dart';
 
 enum AppButtonType {
-  PRIMARY,
-  PRIMARY_OUTLINE,
-  SUCCESS,
-  SUCCESS_OUTLINE,
-  TEXT_OUTLINE
+  primary,
+  primaryOutline,
+  success,
+  successOutline,
+  textOutline
 }
 
 // ignore: avoid_classes_with_only_static_members
@@ -24,7 +24,7 @@ class AppButton {
       String buttonText, List<double> dimens,
       {required Function onPressed, bool disabled = false, Icon? icon}) {
     switch (type) {
-      case AppButtonType.PRIMARY:
+      case AppButtonType.primary:
         return Expanded(
           child: Container(
             decoration: BoxDecoration(
@@ -82,7 +82,7 @@ class AppButton {
                   ),
           ),
         );
-      case AppButtonType.PRIMARY_OUTLINE:
+      case AppButtonType.primaryOutline:
         return Expanded(
           child: Container(
             decoration: BoxDecoration(
@@ -141,7 +141,7 @@ class AppButton {
                   ),
           ),
         );
-      case AppButtonType.SUCCESS:
+      case AppButtonType.success:
         return Expanded(
           child: Container(
             decoration: BoxDecoration(
@@ -201,7 +201,7 @@ class AppButton {
                   ),
           ),
         );
-      case AppButtonType.SUCCESS_OUTLINE:
+      case AppButtonType.successOutline:
         return Expanded(
           child: Container(
             decoration: BoxDecoration(
@@ -229,7 +229,7 @@ class AppButton {
             ),
           ),
         );
-      case AppButtonType.TEXT_OUTLINE:
+      case AppButtonType.textOutline:
         return Expanded(
           child: Container(
             decoration: BoxDecoration(

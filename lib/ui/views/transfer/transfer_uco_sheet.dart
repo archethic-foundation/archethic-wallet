@@ -1,4 +1,6 @@
 // Dart imports:
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'dart:io';
 
 // Flutter imports:
@@ -20,7 +22,7 @@ import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/address.dart';
 import 'package:archethic_wallet/model/available_currency.dart';
 import 'package:archethic_wallet/model/data/appdb.dart';
-import 'package:archethic_wallet/model/data/hiveDB.dart';
+import 'package:archethic_wallet/model/data/hive_db.dart';
 import 'package:archethic_wallet/service/app_service.dart';
 import 'package:archethic_wallet/util/service_locator.dart';
 import 'package:archethic_wallet/ui/util/styles.dart';
@@ -36,15 +38,16 @@ import 'package:archethic_wallet/util/number_util.dart';
 import 'package:archethic_wallet/util/user_data_util.dart';
 
 class TransferUcoSheet extends StatefulWidget {
-  const TransferUcoSheet({
-    @required this.localCurrency,
-    this.contact,
-    this.address,
-    this.quickSendAmount,
-    this.title,
-    this.actionButtonTitle,
-    this.contactsRef,
-  }) : super();
+  const TransferUcoSheet(
+      {@required this.localCurrency,
+      this.contact,
+      this.address,
+      this.quickSendAmount,
+      this.title,
+      this.actionButtonTitle,
+      this.contactsRef,
+      Key? key})
+      : super(key: key);
 
   final List<Contact>? contactsRef;
   final AvailableCurrency? localCurrency;
@@ -58,7 +61,7 @@ class TransferUcoSheet extends StatefulWidget {
   _TransferUcoSheetState createState() => _TransferUcoSheetState();
 }
 
-enum AddressStyle { TEXT60, TEXT90, PRIMARY }
+enum AddressStyle { text60, text90, primary }
 
 class _TransferUcoSheetState extends State<TransferUcoSheet> {
   FocusNode? _sendAddressFocusNode;
@@ -99,7 +102,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     _sendAddressFocusNode = FocusNode();
     _sendAmountController = TextEditingController();
     _sendAddressController = TextEditingController();
-    _sendAddressStyle = AddressStyle.TEXT60;
+    _sendAddressStyle = AddressStyle.text60;
     _contacts = List<Contact>.empty(growable: true);
     quickSendAmount = widget.quickSendAmount;
     animationOpen = false;
@@ -109,13 +112,13 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
       _isContact = true;
       _showContactButton = false;
       _qrCodeButtonVisible = false;
-      _sendAddressStyle = AddressStyle.PRIMARY;
+      _sendAddressStyle = AddressStyle.primary;
     } else if (widget.address != null) {
       // Setup initial state with prefilled address
       _sendAddressController!.text = widget.address!;
       _showContactButton = false;
       _qrCodeButtonVisible = false;
-      _sendAddressStyle = AddressStyle.TEXT90;
+      _sendAddressStyle = AddressStyle.text90;
       _addressValidAndUnfocused = true;
     }
     // On amount focus change
@@ -450,13 +453,13 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                       children: <Widget>[
                                         AppButton.buildAppButton(
                                             context,
-                                            AppButtonType.PRIMARY,
+                                            AppButtonType.primary,
                                             isInUcoTransferList()
                                                 ? AppLocalization.of(context)!
                                                     .update
                                                 : AppLocalization.of(context)!
                                                     .add,
-                                            Dimens.BUTTON_TOP_DIMENS,
+                                            Dimens.buttonTopDimens,
                                             onPressed: () async {
                                           validRequest = _validateRequest();
                                           String _to =
@@ -575,11 +578,11 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                       AppButton.buildAppButton(
                           context,
                           ucoTransferList.isEmpty
-                              ? AppButtonType.PRIMARY_OUTLINE
-                              : AppButtonType.PRIMARY,
+                              ? AppButtonType.primaryOutline
+                              : AppButtonType.primary,
                           widget.actionButtonTitle ??
                               AppLocalization.of(context)!.transferUCO,
-                          Dimens.BUTTON_TOP_DIMENS, onPressed: () async {
+                          Dimens.buttonTopDimens, onPressed: () async {
                         if (ucoTransferList.isNotEmpty) {
                           validRequest = _validateRequest();
                           if (_sendAddressController!.text.startsWith('@') &&
@@ -757,7 +760,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 42,
           width: double.infinity - 5,
           child: TextButton(
@@ -768,7 +771,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                 _isContact = true;
                 _showContactButton = false;
                 _qrCodeButtonVisible = false;
-                _sendAddressStyle = AddressStyle.PRIMARY;
+                _sendAddressStyle = AddressStyle.primary;
               });
             },
             child: Text(contact.name!,
@@ -1007,11 +1010,11 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
 
             UIUtil.cancelLockEvent();
             final String? scanResult =
-                await UserDataUtil.getQRData(DataType.ADDRESS, context);
+                await UserDataUtil.getQRData(DataType.address, context);
             if (scanResult == null) {
               UIUtil.showSnackbar(
                   AppLocalization.of(context)!.qrInvalidAddress, context);
-            } else if (QRScanErrs.ERROR_LIST.contains(scanResult)) {
+            } else if (QRScanErrs.errorList.contains(scanResult)) {
               return;
             } else {
               // Is a URI
@@ -1028,7 +1031,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                   setState(() {
                     _isContact = true;
                     _addressValidationText = '';
-                    _sendAddressStyle = AddressStyle.PRIMARY;
+                    _sendAddressStyle = AddressStyle.primary;
                     _qrCodeButtonVisible = false;
                     _showContactButton = false;
                   });
@@ -1040,7 +1043,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                   setState(() {
                     _isContact = false;
                     _addressValidationText = '';
-                    _sendAddressStyle = AddressStyle.TEXT90;
+                    _sendAddressStyle = AddressStyle.text90;
                     _qrCodeButtonVisible = false;
                     _showContactButton = false;
                   });
@@ -1105,9 +1108,9 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
         ),
         fadeSuffixOnCondition: true,
         suffixShowFirstCondition: _qrCodeButtonVisible,
-        style: _sendAddressStyle == AddressStyle.TEXT60
+        style: _sendAddressStyle == AddressStyle.text60
             ? AppStyles.textStyleSize14W100Text60(context)
-            : _sendAddressStyle == AddressStyle.TEXT90
+            : _sendAddressStyle == AddressStyle.text90
                 ? AppStyles.textStyleSize14W100Primary(context)
                 : AppStyles.textStyleSize14W100Primary(context),
         onChanged: (String text) async {
@@ -1147,13 +1150,13 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
           if (!isContact && Address(text).isValid()) {
             //_sendAddressFocusNode.unfocus();
             setState(() {
-              _sendAddressStyle = AddressStyle.TEXT90;
+              _sendAddressStyle = AddressStyle.text90;
               _addressValidationText = '';
               _qrCodeButtonVisible = true;
             });
           } else if (!isContact) {
             setState(() {
-              _sendAddressStyle = AddressStyle.TEXT60;
+              _sendAddressStyle = AddressStyle.text60;
               _qrCodeButtonVisible = true;
             });
           } else {
@@ -1162,11 +1165,11 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
               setState(() {
                 _qrCodeButtonVisible = false;
                 _addressValidationText = '';
-                _sendAddressStyle = AddressStyle.PRIMARY;
+                _sendAddressStyle = AddressStyle.primary;
               });
             } on Exception {
               setState(() {
-                _sendAddressStyle = AddressStyle.TEXT60;
+                _sendAddressStyle = AddressStyle.text60;
               });
             }
           }

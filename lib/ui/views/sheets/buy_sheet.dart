@@ -17,7 +17,7 @@ import 'package:archethic_wallet/ui/util/ui_util.dart';
 import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
 
 class BuySheet extends StatefulWidget {
-  const BuySheet() : super();
+  const BuySheet({Key? key}) : super(key: key);
 
   @override
   _BuySheetState createState() => _BuySheetState();
@@ -97,7 +97,7 @@ class _BuySheetState extends State<BuySheet> {
         Expanded(
           child: Center(
             child: Stack(children: <Widget>[
-              Container(
+              SizedBox(
                   height: MediaQuery.of(context).size.height * 0.8,
                   child: SafeArea(
                     minimum: EdgeInsets.only(

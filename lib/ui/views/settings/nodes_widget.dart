@@ -21,7 +21,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show Node, ApiService;
 
 class NodesList extends StatefulWidget {
-  NodesList(this.nodesController, this.nodesOpen);
+  NodesList(this.nodesController, this.nodesOpen, {Key? key}) : super(key: key);
 
   final AnimationController nodesController;
   bool nodesOpen;

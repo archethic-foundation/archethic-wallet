@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,16 +19,16 @@ import 'package:archethic_wallet/model/address.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
 import 'package:archethic_wallet/util/seeds.dart';
 
-enum DataType { RAW, URL, ADDRESS, SEED }
+enum DataType { raw, url, address, seed }
 
 class QRScanErrs {
-  static const String PERMISSION_DENIED = 'qr_denied';
-  static const String UNKNOWN_ERROR = 'qr_unknown';
-  static const String CANCEL_ERROR = 'qr_cancel';
-  static const List<String> ERROR_LIST = <String>[
-    PERMISSION_DENIED,
-    UNKNOWN_ERROR,
-    CANCEL_ERROR
+  static const String permissionDenied = 'qr_denied';
+  static const String unknownError = 'qr_unknown';
+  static const String cancelError = 'qr_cancel';
+  static const List<String> errorList = <String>[
+    permissionDenied,
+    unknownError,
+    cancelError
   ];
 }
 
@@ -37,20 +38,20 @@ class UserDataUtil {
 
   static String? _parseData(String data, DataType type) {
     data = data.trim();
-    if (type == DataType.RAW) {
+    if (type == DataType.raw) {
       return data;
-    } else if (type == DataType.URL) {
+    } else if (type == DataType.url) {
       if (isIP(data)) {
         return data;
       } else if (isURL(data)) {
         return data;
       }
-    } else if (type == DataType.ADDRESS) {
+    } else if (type == DataType.address) {
       final Address address = Address(data);
       if (address.isValid()) {
         return address.address;
       }
-    } else if (type == DataType.SEED) {
+    } else if (type == DataType.seed) {
       // Check if valid seed
       if (AppSeeds.isValidSeed(data)) {
         return data;
@@ -80,17 +81,19 @@ class UserDataUtil {
       if (e.code == BarcodeScanner.cameraAccessDenied) {
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.qrInvalidPermissions, context);
-        return QRScanErrs.PERMISSION_DENIED;
+        return QRScanErrs.permissionDenied;
       } else {
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.qrUnknownError, context);
-        return QRScanErrs.UNKNOWN_ERROR;
+        return QRScanErrs.unknownError;
       }
     } on FormatException {
-      return QRScanErrs.CANCEL_ERROR;
+      return QRScanErrs.cancelError;
     } catch (e) {
-      print('Unknown QR Scan Error ${e.toString()}');
-      return QRScanErrs.UNKNOWN_ERROR;
+      if (kDebugMode) {
+        print('Unknown QR Scan Error ${e.toString()}');
+      }
+      return QRScanErrs.unknownError;
     }
   }
 }

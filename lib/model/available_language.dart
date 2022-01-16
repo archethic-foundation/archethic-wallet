@@ -1,21 +1,13 @@
 // Flutter imports:
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/setting_item.dart';
 
-enum AvailableLanguage {
-  DEFAULT,
-  ENGLISH,
-  FRENCH,
-  GERMAN,
-  INDONESIAN,
-  DUTCH,
-  SPANISH,
-  ITALIAN,
-  JAPANESE
-}
+enum AvailableLanguage { DEFAULT, ENGLISH, FRENCH }
 
 /// Represent the available languages our app supports
 class LanguageSetting extends SettingSelectionItem {
@@ -30,18 +22,6 @@ class LanguageSetting extends SettingSelectionItem {
         return 'English (en)';
       case AvailableLanguage.FRENCH:
         return 'Français (fr)';
-      case AvailableLanguage.GERMAN:
-        return 'Deutsch (de)';
-      case AvailableLanguage.INDONESIAN:
-        return 'Bahasa Indonesia (id)';
-      case AvailableLanguage.DUTCH:
-        return 'Nederlands (nl)';
-      case AvailableLanguage.SPANISH:
-        return 'Español (es)';
-      case AvailableLanguage.ITALIAN:
-        return 'Italiano (it)';
-      case AvailableLanguage.JAPANESE:
-        return 'Japanese (ja)';
       default:
         return AppLocalization.of(context)!.systemDefault;
     }
@@ -53,18 +33,6 @@ class LanguageSetting extends SettingSelectionItem {
         return 'en';
       case AvailableLanguage.FRENCH:
         return 'fr';
-      case AvailableLanguage.GERMAN:
-        return 'de';
-      case AvailableLanguage.INDONESIAN:
-        return 'id';
-      case AvailableLanguage.DUTCH:
-        return 'nl';
-      case AvailableLanguage.SPANISH:
-        return 'es';
-      case AvailableLanguage.ITALIAN:
-        return 'it';
-      case AvailableLanguage.JAPANESE:
-        return 'ja';
       default:
         return 'DEFAULT';
     }

@@ -10,19 +10,20 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart' show NFTTransfer;
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/address.dart';
-import 'package:archethic_wallet/model/data/hiveDB.dart';
+import 'package:archethic_wallet/model/data/hive_db.dart';
 import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/widgets/components/context_menu.dart';
 import 'package:archethic_wallet/ui/widgets/components/context_menu_item.dart';
 
 class NftTransferListWidget extends StatefulWidget {
   NftTransferListWidget(
-      {this.listNftTransfer,
+      {Key? key,
+      this.listNftTransfer,
       this.onGet,
       this.onDelete,
       this.contacts,
       @required this.displayContextMenu})
-      : super();
+      : super(key: key);
 
   List<NFTTransfer>? listNftTransfer;
   final List<Contact>? contacts;

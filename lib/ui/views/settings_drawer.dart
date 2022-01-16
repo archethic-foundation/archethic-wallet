@@ -35,7 +35,6 @@ import 'package:archethic_wallet/ui/views/settings/nodes_widget.dart';
 import 'package:archethic_wallet/ui/views/settings/wallet_faq_widget.dart';
 import 'package:archethic_wallet/ui/views/settings/yubikey_params_widget.dart';
 import 'package:archethic_wallet/ui/views/yubikey_screen.dart';
-import 'package:archethic_wallet/ui/widgets/components/app_simpledialog.dart';
 import 'package:archethic_wallet/ui/widgets/components/dialog.dart';
 import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_wallet/util/biometrics_util.dart';
@@ -45,6 +44,8 @@ import 'package:archethic_wallet/util/preferences.dart';
 import 'package:archethic_wallet/util/vault.dart';
 
 class SettingsSheet extends StatefulWidget {
+  const SettingsSheet({Key? key}) : super(key: key);
+
   @override
   _SettingsSheetState createState() => _SettingsSheetState();
 }
@@ -71,11 +72,11 @@ class _SettingsSheetState extends State<SettingsSheet>
   String versionString = '';
 
   bool _hasBiometrics = false;
-  AuthenticationMethod _curAuthMethod = AuthenticationMethod(AuthMethod.PIN);
-  UnlockSetting _curUnlockSetting = UnlockSetting(UnlockOption.NO);
+  AuthenticationMethod _curAuthMethod = AuthenticationMethod(AuthMethod.pin);
+  UnlockSetting _curUnlockSetting = UnlockSetting(UnlockOption.no);
   LockTimeoutSetting _curTimeoutSetting =
-      LockTimeoutSetting(LockTimeoutOption.ONE);
-  ThemeSetting _curThemeSetting = ThemeSetting(ThemeOptions.DARK);
+      LockTimeoutSetting(LockTimeoutOption.one);
+  ThemeSetting _curThemeSetting = ThemeSetting(ThemeOptions.dark);
 
   bool? _securityOpen;
   bool? _aboutOpen;
@@ -113,8 +114,8 @@ class _SettingsSheetState extends State<SettingsSheet>
         _pinPadShuffleActive = _preferences.getPinPadShuffle();
         _curAuthMethod = _preferences.getAuthMethod();
         _curUnlockSetting = _preferences.getLock()
-            ? UnlockSetting(UnlockOption.YES)
-            : UnlockSetting(UnlockOption.NO);
+            ? UnlockSetting(UnlockOption.yes)
+            : UnlockSetting(UnlockOption.no);
         _curThemeSetting = _preferences.getTheme();
         _curTimeoutSetting = _preferences.getLockTimeout();
       });
@@ -217,16 +218,20 @@ class _SettingsSheetState extends State<SettingsSheet>
     switch (await showDialog<AuthMethod>(
         context: context,
         builder: (BuildContext context) {
-          return AppSimpleDialog(
+          return SimpleDialog(
             title: Text(
               AppLocalization.of(context)!.authMethod,
               style: AppStyles.textStyleSize20W700Primary(context),
             ),
+            shape: RoundedRectangleBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                side: BorderSide(
+                    color: StateContainer.of(context).curTheme.primary45!)),
             children: <Widget>[
               if (_hasBiometrics)
-                AppSimpleDialogOption(
+                SimpleDialogOption(
                   onPressed: () {
-                    Navigator.pop(context, AuthMethod.BIOMETRICS);
+                    Navigator.pop(context, AuthMethod.biometrics);
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -236,9 +241,9 @@ class _SettingsSheetState extends State<SettingsSheet>
                     ),
                   ),
                 ),
-              AppSimpleDialogOption(
+              SimpleDialogOption(
                 onPressed: () {
-                  Navigator.pop(context, AuthMethod.PIN);
+                  Navigator.pop(context, AuthMethod.pin);
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -248,9 +253,9 @@ class _SettingsSheetState extends State<SettingsSheet>
                   ),
                 ),
               ),
-              AppSimpleDialogOption(
+              SimpleDialogOption(
                 onPressed: () {
-                  Navigator.pop(context, AuthMethod.YUBIKEY_WITH_YUBICLOUD);
+                  Navigator.pop(context, AuthMethod.yubikeyWithYubicloud);
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -263,32 +268,32 @@ class _SettingsSheetState extends State<SettingsSheet>
             ],
           );
         })) {
-      case AuthMethod.PIN:
-        _preferences.setAuthMethod(AuthenticationMethod(AuthMethod.PIN));
+      case AuthMethod.pin:
+        _preferences.setAuthMethod(AuthenticationMethod(AuthMethod.pin));
         setState(() {
-          _curAuthMethod = AuthenticationMethod(AuthMethod.PIN);
+          _curAuthMethod = AuthenticationMethod(AuthMethod.pin);
         });
         break;
-      case AuthMethod.BIOMETRICS:
-        _preferences.setAuthMethod(AuthenticationMethod(AuthMethod.BIOMETRICS));
+      case AuthMethod.biometrics:
+        _preferences.setAuthMethod(AuthenticationMethod(AuthMethod.biometrics));
         setState(() {
-          _curAuthMethod = AuthenticationMethod(AuthMethod.BIOMETRICS);
+          _curAuthMethod = AuthenticationMethod(AuthMethod.biometrics);
         });
 
         break;
-      case AuthMethod.YUBIKEY_WITH_YUBICLOUD:
+      case AuthMethod.yubikeyWithYubicloud:
         _preferences.setAuthMethod(
-            AuthenticationMethod(AuthMethod.YUBIKEY_WITH_YUBICLOUD));
+            AuthenticationMethod(AuthMethod.yubikeyWithYubicloud));
         setState(() {
           _curAuthMethod =
-              AuthenticationMethod(AuthMethod.YUBIKEY_WITH_YUBICLOUD);
+              AuthenticationMethod(AuthMethod.yubikeyWithYubicloud);
         });
 
         break;
       default:
-        _preferences.setAuthMethod(AuthenticationMethod(AuthMethod.PIN));
+        _preferences.setAuthMethod(AuthenticationMethod(AuthMethod.pin));
         setState(() {
-          _curAuthMethod = AuthenticationMethod(AuthMethod.PIN);
+          _curAuthMethod = AuthenticationMethod(AuthMethod.pin);
         });
         break;
     }
@@ -299,15 +304,19 @@ class _SettingsSheetState extends State<SettingsSheet>
     switch (await showDialog<UnlockOption>(
         context: context,
         builder: (BuildContext context) {
-          return AppSimpleDialog(
+          return SimpleDialog(
             title: Text(
               AppLocalization.of(context)!.lockAppSetting,
               style: AppStyles.textStyleSize20W700Primary(context),
             ),
+            shape: RoundedRectangleBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                side: BorderSide(
+                    color: StateContainer.of(context).curTheme.primary45!)),
             children: <Widget>[
-              AppSimpleDialogOption(
+              SimpleDialogOption(
                 onPressed: () {
-                  Navigator.pop(context, UnlockOption.NO);
+                  Navigator.pop(context, UnlockOption.no);
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -317,9 +326,9 @@ class _SettingsSheetState extends State<SettingsSheet>
                   ),
                 ),
               ),
-              AppSimpleDialogOption(
+              SimpleDialogOption(
                 onPressed: () {
-                  Navigator.pop(context, UnlockOption.YES);
+                  Navigator.pop(context, UnlockOption.yes);
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -332,17 +341,17 @@ class _SettingsSheetState extends State<SettingsSheet>
             ],
           );
         })) {
-      case UnlockOption.YES:
+      case UnlockOption.yes:
         _preferences.setLock(true);
-        _curUnlockSetting = UnlockSetting(UnlockOption.YES);
+        _curUnlockSetting = UnlockSetting(UnlockOption.yes);
         break;
-      case UnlockOption.NO:
+      case UnlockOption.no:
         _preferences.setLock(false);
-        _curUnlockSetting = UnlockSetting(UnlockOption.NO);
+        _curUnlockSetting = UnlockSetting(UnlockOption.no);
         break;
       default:
         _preferences.setLock(false);
-        _curUnlockSetting = UnlockSetting(UnlockOption.NO);
+        _curUnlockSetting = UnlockSetting(UnlockOption.no);
         break;
     }
   }
@@ -399,10 +408,10 @@ class _SettingsSheetState extends State<SettingsSheet>
   Future<void> _currencyDialog() async {
     final Preferences _preferences = await Preferences.getInstance();
     final AvailableCurrencyEnum? selection =
-        await showAppDialog<AvailableCurrencyEnum>(
+        await showDialog<AvailableCurrencyEnum>(
             context: context,
             builder: (BuildContext context) {
-              return AppSimpleDialog(
+              return SimpleDialog(
                 title: Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
                   child: Text(
@@ -410,6 +419,10 @@ class _SettingsSheetState extends State<SettingsSheet>
                     style: AppStyles.textStyleSize20W700Primary(context),
                   ),
                 ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                    side: BorderSide(
+                        color: StateContainer.of(context).curTheme.primary45!)),
                 children: _buildCurrencyOptions(),
               );
             });
@@ -483,10 +496,10 @@ class _SettingsSheetState extends State<SettingsSheet>
 
   Future<void> _languageDialog() async {
     final Preferences _preferences = await Preferences.getInstance();
-    final AvailableLanguage? selection = await showAppDialog<AvailableLanguage>(
+    final AvailableLanguage? selection = await showDialog<AvailableLanguage>(
         context: context,
         builder: (BuildContext context) {
-          return AppSimpleDialog(
+          return SimpleDialog(
             title: Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
@@ -494,6 +507,10 @@ class _SettingsSheetState extends State<SettingsSheet>
                 style: AppStyles.textStyleSize20W700Primary(context),
               ),
             ),
+            shape: RoundedRectangleBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                side: BorderSide(
+                    color: StateContainer.of(context).curTheme.primary45!)),
             children: _buildLanguageOptions(),
           );
         });
@@ -544,10 +561,10 @@ class _SettingsSheetState extends State<SettingsSheet>
 
   Future<void> _lockTimeoutDialog() async {
     final Preferences _preferences = await Preferences.getInstance();
-    final LockTimeoutOption selection = await showAppDialog<LockTimeoutOption>(
+    final LockTimeoutOption? selection = await showDialog<LockTimeoutOption>(
         context: context,
         builder: (BuildContext context) {
-          return AppSimpleDialog(
+          return SimpleDialog(
             title: Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
@@ -555,12 +572,16 @@ class _SettingsSheetState extends State<SettingsSheet>
                 style: AppStyles.textStyleSize20W700Primary(context),
               ),
             ),
+            shape: RoundedRectangleBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                side: BorderSide(
+                    color: StateContainer.of(context).curTheme.primary45!)),
             children: _buildLockTimeoutOptions(),
           );
         });
 
     if (_curTimeoutSetting.setting != selection) {
-      _preferences.setLockTimeout(LockTimeoutSetting(selection));
+      _preferences.setLockTimeout(LockTimeoutSetting(selection!));
       setState(() {
         _curTimeoutSetting = LockTimeoutSetting(selection);
       });
@@ -603,10 +624,10 @@ class _SettingsSheetState extends State<SettingsSheet>
 
   Future<void> _themeDialog() async {
     final Preferences _preferences = await Preferences.getInstance();
-    final ThemeOptions selection = await showAppDialog<ThemeOptions>(
+    final ThemeOptions? selection = await showDialog<ThemeOptions>(
         context: context,
         builder: (BuildContext context) {
-          return AppSimpleDialog(
+          return SimpleDialog(
             title: Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
@@ -614,10 +635,14 @@ class _SettingsSheetState extends State<SettingsSheet>
                 style: AppStyles.textStyleSize20W700Primary(context),
               ),
             ),
+            shape: RoundedRectangleBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                side: BorderSide(
+                    color: StateContainer.of(context).curTheme.primary45!)),
             children: _buildThemeOptions(),
           );
         });
-    if (_curThemeSetting != ThemeSetting(selection)) {
+    if (_curThemeSetting != ThemeSetting(selection!)) {
       _preferences.setTheme(ThemeSetting(selection));
       setState(() {
         StateContainer.of(context).updateTheme(ThemeSetting(selection));
@@ -1120,7 +1145,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       _curTimeoutSetting,
                       'assets/icons/autoLock.png',
                       _lockTimeoutDialog,
-                      disabled: _curUnlockSetting.setting == UnlockOption.NO,
+                      disabled: _curUnlockSetting.setting == UnlockOption.no,
                     ),
                     Column(children: <Widget>[
                       Divider(
@@ -1138,7 +1163,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         final bool hasBiometrics =
                             await sl.get<BiometricUtil>().hasBiometrics();
 
-                        if (authMethod.method == AuthMethod.BIOMETRICS &&
+                        if (authMethod.method == AuthMethod.biometrics &&
                             hasBiometrics) {
                           try {
                             final bool authenticated = await sl
@@ -1164,7 +1189,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                           }
                         } else {
                           if (authMethod.method ==
-                              AuthMethod.YUBIKEY_WITH_YUBICLOUD) {
+                              AuthMethod.yubikeyWithYubicloud) {
                             return authenticateWithYubikey();
                           } else {
                             await authenticateWithPin();
@@ -1509,7 +1534,7 @@ class _SettingsSheetState extends State<SettingsSheet>
     final bool auth = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
       return PinScreen(
-        PinOverlayType.ENTER_PIN,
+        PinOverlayType.enterPin,
         expectedPin: expectedPin!,
         description: AppLocalization.of(context)!.pinSecretPhraseBackup,
       );

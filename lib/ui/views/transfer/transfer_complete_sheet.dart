@@ -12,7 +12,7 @@ import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
 
 class TransferCompleteSheet extends StatefulWidget {
-  const TransferCompleteSheet({this.title}) : super();
+  const TransferCompleteSheet({this.title, Key? key}) : super(key: key);
 
   final String? title;
 
@@ -61,22 +61,20 @@ class _TransferCompleteSheetState extends State<TransferCompleteSheet> {
             ),
 
             // CLOSE Button
-            Container(
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      AppButton.buildAppButton(
-                          context,
-                          AppButtonType.PRIMARY,
-                          AppLocalization.of(context)!.close,
-                          Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
-                        Navigator.of(context).pop();
-                      }),
-                    ],
-                  ),
-                ],
-              ),
+            Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    AppButton.buildAppButton(
+                        context,
+                        AppButtonType.primary,
+                        AppLocalization.of(context)!.close,
+                        Dimens.buttonBottomDimens, onPressed: () {
+                      Navigator.of(context).pop();
+                    }),
+                  ],
+                ),
+              ],
             ),
           ],
         ));

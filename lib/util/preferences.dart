@@ -1,4 +1,6 @@
 // Dart imports:
+// ignore_for_file: constant_identifier_names
+
 import 'dart:ui';
 
 // Package imports:
@@ -63,7 +65,7 @@ class Preferences {
       _setValue(_auth_method, method.getIndex());
 
   AuthenticationMethod getAuthMethod() => AuthenticationMethod(AuthMethod
-      .values[_getValue(_auth_method, defaultValue: AuthMethod.PIN.index)]);
+      .values[_getValue(_auth_method, defaultValue: AuthMethod.pin.index)]);
 
   Future<void> setCurrency(AvailableCurrency currency) =>
       _setValue(_cur_currency, currency.getIndex());
@@ -112,7 +114,7 @@ class Preferences {
 
   LockTimeoutSetting getLockTimeout() =>
       LockTimeoutSetting(LockTimeoutOption.values[
-          _getValue(_lock_timeout, defaultValue: LockTimeoutOption.ONE.index)]);
+          _getValue(_lock_timeout, defaultValue: LockTimeoutOption.one.index)]);
 
   int getLockAttempts() => _getValue(_pin_attempts, defaultValue: 0);
 
@@ -176,7 +178,7 @@ class Preferences {
       _setValue(_cur_theme, theme.getIndex());
 
   ThemeSetting getTheme() => ThemeSetting(ThemeOptions
-      .values[_getValue(_cur_theme, defaultValue: ThemeOptions.DARK.index)]);
+      .values[_getValue(_cur_theme, defaultValue: ThemeOptions.dark.index)]);
 
   Future<void> deleteAll() => _box.deleteFromDisk();
 }

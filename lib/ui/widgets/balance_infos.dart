@@ -24,28 +24,25 @@ class BalanceInfosWidget {
       child: Ink(
         child: FadeIn(
           duration: const Duration(milliseconds: 1000),
-          child: Container(
+          child: SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.08,
             child: Stack(
               children: <Widget>[
                 FadeIn(
                   duration: const Duration(milliseconds: 1000),
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          right: 20.0, left: 0.0, top: 0.0, bottom: 0.0),
-                      child: StateContainer.of(context).chartInfos != null &&
-                              StateContainer.of(context).chartInfos!.data !=
-                                  null
-                          ? LineChart(
-                              mainData(context),
-                              swapAnimationCurve: Curves.easeInOutCubic,
-                              swapAnimationDuration:
-                                  const Duration(milliseconds: 1000),
-                            )
-                          : const SizedBox(),
-                    ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        right: 20.0, left: 0.0, top: 0.0, bottom: 0.0),
+                    child: StateContainer.of(context).chartInfos != null &&
+                            StateContainer.of(context).chartInfos!.data != null
+                        ? LineChart(
+                            mainData(context),
+                            swapAnimationCurve: Curves.easeInOutCubic,
+                            swapAnimationDuration:
+                                const Duration(milliseconds: 1000),
+                          )
+                        : const SizedBox(),
                   ),
                 ),
                 Container(
@@ -76,7 +73,7 @@ class BalanceInfosWidget {
 
   Widget buildKPI(BuildContext context) {
     if (StateContainer.of(context).chartInfos != null &&
-        StateContainer.of(context).chartInfos!.data != null)
+        StateContainer.of(context).chartInfos!.data != null) {
       return FadeIn(
         duration: const Duration(milliseconds: 1000),
         child: Container(
@@ -204,10 +201,11 @@ class BalanceInfosWidget {
           ),
         ),
       );
-    else
+    } else {
       return const SizedBox(
         height: 30,
       );
+    }
   }
 
   static LineChartData mainData(BuildContext context) {

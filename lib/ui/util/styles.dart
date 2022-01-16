@@ -115,7 +115,15 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size20,
         fontWeight: FontWeight.w700,
-        color: Colors.greenAccent[400]);
+        color: StateContainer.of(context).curTheme.positiveAmount);
+  }
+
+  static TextStyle textStyleSize20W700Red(BuildContext context) {
+    return TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: AppFontSizes.size20,
+        fontWeight: FontWeight.w700,
+        color: StateContainer.of(context).curTheme.negativeAmount);
   }
 
   static TextStyle textStyleSize14W700Primary(BuildContext context) {
@@ -377,6 +385,15 @@ class AppStyles {
     );
   }
 
+  static TextStyle textStyleSize28W700Warning(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.size28,
+      fontWeight: FontWeight.w700,
+      color: StateContainer.of(context).curTheme.warning,
+    );
+  }
+
   static TextStyle textStyleSize80W700Primary15(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
@@ -539,8 +556,9 @@ class AppFontSizes {
 }
 
 bool smallScreen(BuildContext context) {
-  if (MediaQuery.of(context).size.height < 800)
+  if (MediaQuery.of(context).size.height < 800) {
     return true;
-  else
+  } else {
     return false;
+  }
 }

@@ -8,7 +8,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/data/appdb.dart';
-import 'package:archethic_wallet/model/data/hiveDB.dart';
+import 'package:archethic_wallet/model/data/hive_db.dart';
 import 'package:archethic_wallet/util/service_locator.dart';
 
 class AppUtil {

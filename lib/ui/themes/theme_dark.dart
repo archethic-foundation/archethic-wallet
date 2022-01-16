@@ -105,6 +105,14 @@ class DarkTheme implements BaseTheme {
   Color? negativeValue = Colors.red[300];
 
   @override
+  Color? positiveAmount = Colors.greenAccent[400];
+  @override
+  Color? negativeAmount = Colors.redAccent[400];
+
+  @override
+  Color? warning = Colors.yellow[600];
+
+  @override
   Color? contextMenuText = blue;
   @override
   Color? contextMenuTextRed = Colors.red[300];

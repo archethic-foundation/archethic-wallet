@@ -4,12 +4,11 @@
 // function name.
 
 // Ignore issues from commonly used lints in this file.
-// ignore_for_file:unnecessary_brace_in_string_interps
+// ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_string_escapes
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
 // ignore_for_file:unused_import, file_names, always_declare_return_types
 
-// Package imports:
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
@@ -60,11 +59,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "backupSafetyLabel2": MessageLookupByLibrary.simpleMessage(
             "Qu\'est-ce qu\'une phrase secrète ?"),
         "backupSafetyLabel3": MessageLookupByLibrary.simpleMessage(
-            "Une phrase secrète est une forme humainement lisible de la clé privée de votre portefeuille, affichée comme une suite de 24 mots. Avec ces 24 mots, vous pouvez restaurer votre portefeuille à volonté. Gardez cette liste en sécurité et ne la communiquez à personne."),
+            "Une phrase secrète est une forme humainement lisible de la clé privée de votre portefeuille, affichée comme une suite de 24 mots.\n\nAvec ces 24 mots, vous pouvez restaurer votre portefeuille à volonté.\n\nGardez cette liste en sécurité et ne la communiquez à personne."),
         "backupSafetyLabel4":
             MessageLookupByLibrary.simpleMessage("Comment sauvegarder ?"),
         "backupSafetyLabel5": MessageLookupByLibrary.simpleMessage(
-            "Ecrivez cette liste de mots dans le bon ordre sur un support non informatique, que vous placez en sécurité.\nNe stockez pas cette phrase sur un équipement électronique sous quelque forme que ce soit (texte, image,...).\nLa sécurité du contenu de votre portefeuille dépend de celle de cette phrase secrète."),
+            "Ecrivez cette liste de mots dans le bon ordre sur un support non informatique, que vous placez en sécurité.\n\nNe stockez pas cette phrase sur un équipement électronique sous quelque forme que ce soit (texte, image,...).\n\nLa sécurité du contenu de votre portefeuille dépend de celle de cette phrase secrète."),
         "backupSafetyLabel6": MessageLookupByLibrary.simpleMessage(
             "Moyens de sauvegarde non sécurisés."),
         "backupSafetyLabel7": MessageLookupByLibrary.simpleMessage(
@@ -346,7 +345,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("FAQ sur le portefeuille"),
         "warning": MessageLookupByLibrary.simpleMessage("Attention"),
         "welcomeText": MessageLookupByLibrary.simpleMessage(
-            "Bienvenue sur l\'Internet de confiance.\n\nARCHEthic redonne à l\'humanité la maîtrise de la technologie, et à chaque individu la maîtrise de son identité."),
+            "Bienvenue sur l\'internet de confiance.\n\nARCHEthic redonne à l\'humanité la maîtrise de la technologie et à chaque individu la maîtrise de son identité."),
         "xMinute": MessageLookupByLibrary.simpleMessage("Après %1 minute"),
         "xMinutes": MessageLookupByLibrary.simpleMessage("Après %1 minutes"),
         "yes": MessageLookupByLibrary.simpleMessage("Oui"),

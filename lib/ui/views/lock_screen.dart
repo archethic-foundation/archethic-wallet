@@ -1,7 +1,4 @@
 // Flutter imports:
-// ignore_for_file: always_specify_types
-
-// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -27,6 +24,8 @@ import 'package:archethic_wallet/util/preferences.dart';
 import 'package:archethic_wallet/util/vault.dart';
 
 class AppLockScreen extends StatefulWidget {
+  const AppLockScreen({Key? key}) : super(key: key);
+
   @override
   _AppLockScreenState createState() => _AppLockScreenState();
 }
@@ -49,7 +48,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
   }
 
   Widget _buildPinScreen(BuildContext context, String expectedPin) {
-    return PinScreen(PinOverlayType.ENTER_PIN,
+    return PinScreen(PinOverlayType.enterPin,
         expectedPin: expectedPin,
         description: AppLocalization.of(context)!.unlockPin,
         pinScreenBackgroundColor:
@@ -210,14 +209,14 @@ class _AppLockScreenState extends State<AppLockScreen> {
     });
     final AuthenticationMethod authMethod = _preferences.getAuthMethod();
     final bool hasBiometrics = await sl.get<BiometricUtil>().hasBiometrics();
-    if (authMethod.method == AuthMethod.BIOMETRICS && hasBiometrics) {
+    if (authMethod.method == AuthMethod.biometrics && hasBiometrics) {
       try {
         await authenticateWithBiometrics();
       } catch (e) {
         await authenticateWithPin(transitions: transitions);
       }
     } else {
-      if (authMethod.method == AuthMethod.YUBIKEY_WITH_YUBICLOUD) {
+      if (authMethod.method == AuthMethod.yubikeyWithYubicloud) {
         return authenticateWithYubikey(transitions: transitions);
       } else {
         await authenticateWithPin(transitions: transitions);
@@ -250,126 +249,118 @@ class _AppLockScreenState extends State<AppLockScreen> {
               ),
             ),
           ),
-          Container(
-            child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) =>
-                  SafeArea(
-                minimum: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).size.height * 0.035,
-                    top: MediaQuery.of(context).size.height * 0.075),
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsetsDirectional.only(
-                                    start: smallScreen(context) ? 15 : 20),
-                                height: 50,
-                                width: 150,
-                                child: TextButton(
-                                  onPressed: () {
+          LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) =>
+                SafeArea(
+              minimum: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.035,
+                  top: MediaQuery.of(context).size.height * 0.075),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsetsDirectional.only(
+                                  start: smallScreen(context) ? 15 : 20),
+                              height: 50,
+                              width: 150,
+                              child: TextButton(
+                                onPressed: () {
+                                  AppDialogs.showConfirmDialog(
+                                      context,
+                                      CaseChange.toUpperCase(
+                                          AppLocalization.of(context)!.warning,
+                                          context),
+                                      AppLocalization.of(context)!.logoutDetail,
+                                      AppLocalization.of(context)!
+                                          .logoutAction
+                                          .toUpperCase(), () {
+                                    // Show another confirm dialog
                                     AppDialogs.showConfirmDialog(
                                         context,
+                                        AppLocalization.of(context)!
+                                            .logoutAreYouSure,
+                                        AppLocalization.of(context)!
+                                            .logoutReassurance,
                                         CaseChange.toUpperCase(
-                                            AppLocalization.of(context)!
-                                                .warning,
+                                            AppLocalization.of(context)!.yes,
                                             context),
-                                        AppLocalization.of(context)!
-                                            .logoutDetail,
-                                        AppLocalization.of(context)!
-                                            .logoutAction
-                                            .toUpperCase(), () {
-                                      // Show another confirm dialog
-                                      AppDialogs.showConfirmDialog(
-                                          context,
-                                          AppLocalization.of(context)!
-                                              .logoutAreYouSure,
-                                          AppLocalization.of(context)!
-                                              .logoutReassurance,
-                                          CaseChange.toUpperCase(
-                                              AppLocalization.of(context)!.yes,
-                                              context),
-                                          () {});
-                                    });
-                                  },
-                                  child: Container(
-                                    child: Row(
-                                      children: <Widget>[
-                                        FaIcon(FontAwesomeIcons.signOutAlt,
-                                            size: 16,
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .primary),
-                                        Container(
-                                          margin:
-                                              const EdgeInsetsDirectional.only(
-                                                  start: 4),
-                                          child: Text(
-                                              AppLocalization.of(context)!
-                                                  .logout,
-                                              style: AppStyles
-                                                  .textStyleSize14W600Primary(
-                                                      context)),
-                                        ),
-                                      ],
+                                        () {});
+                                  });
+                                },
+                                child: Row(
+                                  children: <Widget>[
+                                    FaIcon(FontAwesomeIcons.signOutAlt,
+                                        size: 16,
+                                        color: StateContainer.of(context)
+                                            .curTheme
+                                            .primary),
+                                    Container(
+                                      margin: const EdgeInsetsDirectional.only(
+                                          start: 4),
+                                      child: Text(
+                                          AppLocalization.of(context)!.logout,
+                                          style: AppStyles
+                                              .textStyleSize14W600Primary(
+                                                  context)),
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                          buildIconWidget(
-                              context, 'assets/icons/lock.png', 90, 90),
-                          Container(
-                            child: Text(
-                              CaseChange.toUpperCase(
-                                  AppLocalization.of(context)!.locked, context),
-                              style:
-                                  AppStyles.textStyleSize28W700Primary(context),
                             ),
-                            margin: const EdgeInsets.only(top: 10),
+                          ],
+                        ),
+                        buildIconWidget(
+                            context, 'assets/icons/lock.png', 90, 90),
+                        Container(
+                          child: Text(
+                            CaseChange.toUpperCase(
+                                AppLocalization.of(context)!.locked, context),
+                            style:
+                                AppStyles.textStyleSize28W700Primary(context),
                           ),
-                          if (!_lockedOut)
-                            Container(
-                              width: MediaQuery.of(context).size.width - 100,
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 50, vertical: 20),
-                              child: Text(
-                                AppLocalization.of(context)!
-                                    .tooManyFailedAttempts,
-                                style: AppStyles.textStyleSize14W600Primary(
-                                    context),
-                                textAlign: TextAlign.center,
-                              ),
-                            )
-                          else
-                            const SizedBox(),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        AppButton.buildAppButton(
-                            context,
-                            AppButtonType.PRIMARY,
-                            _lockedOut
-                                ? _countDownTxt
-                                : AppLocalization.of(context)!.unlock,
-                            Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
-                          if (!_lockedOut) {
-                            _authenticate(transitions: true);
-                          }
-                        }, disabled: _lockedOut),
+                          margin: const EdgeInsets.only(top: 10),
+                        ),
+                        if (!_lockedOut)
+                          Container(
+                            width: MediaQuery.of(context).size.width - 100,
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 50, vertical: 20),
+                            child: Text(
+                              AppLocalization.of(context)!
+                                  .tooManyFailedAttempts,
+                              style:
+                                  AppStyles.textStyleSize14W600Primary(context),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        else
+                          const SizedBox(),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      AppButton.buildAppButton(
+                          context,
+                          AppButtonType.primary,
+                          _lockedOut
+                              ? _countDownTxt
+                              : AppLocalization.of(context)!.unlock,
+                          Dimens.buttonBottomDimens, onPressed: () {
+                        if (!_lockedOut) {
+                          _authenticate(transitions: true);
+                        }
+                      }, disabled: _lockedOut),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),

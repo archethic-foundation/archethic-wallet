@@ -16,7 +16,8 @@ import 'package:archethic_wallet/ui/widgets/components/app_text_field.dart';
 import 'package:archethic_wallet/util/preferences.dart';
 
 class CustomUrl extends StatefulWidget {
-  CustomUrl(this.customUrlController, this.customUrlOpen);
+  CustomUrl(this.customUrlController, this.customUrlOpen, {Key? key})
+      : super(key: key);
 
   final AnimationController customUrlController;
   bool customUrlOpen;

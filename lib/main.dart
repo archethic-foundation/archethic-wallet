@@ -40,11 +40,13 @@ Future<void> main() async {
   // Run app
   SystemChrome.setPreferredOrientations(
       <DeviceOrientation>[DeviceOrientation.portraitUp]).then((_) {
-    runApp(StateContainer(child: App()));
+    runApp(const StateContainer(child: App()));
   });
 }
 
 class App extends StatefulWidget {
+  const App({Key? key}) : super(key: key);
+
   @override
   _AppState createState() => _AppState();
 }
@@ -154,7 +156,7 @@ class _AppState extends State<App> {
           switch (settings.name) {
             case '/':
               return NoTransitionRoute<Splash>(
-                builder: (_) => Splash(),
+                builder: (_) => const Splash(),
                 settings: settings,
               );
             case '/home':
@@ -169,7 +171,7 @@ class _AppState extends State<App> {
               );
             case '/intro_welcome':
               return NoTransitionRoute<IntroWelcomePage>(
-                builder: (_) => IntroWelcomePage(),
+                builder: (_) => const IntroWelcomePage(),
                 settings: settings,
               );
             case '/intro_backup':
@@ -179,27 +181,27 @@ class _AppState extends State<App> {
               );
             case '/intro_backup_safety':
               return MaterialPageRoute<IntroBackupSafetyPage>(
-                builder: (_) => IntroBackupSafetyPage(),
+                builder: (_) => const IntroBackupSafetyPage(),
                 settings: settings,
               );
             case '/intro_import':
               return MaterialPageRoute<IntroImportSeedPage>(
-                builder: (_) => IntroImportSeedPage(),
+                builder: (_) => const IntroImportSeedPage(),
                 settings: settings,
               );
             case '/intro_backup_confirm':
               return MaterialPageRoute<IntroBackupConfirm>(
-                builder: (_) => IntroBackupConfirm(),
+                builder: (_) => const IntroBackupConfirm(),
                 settings: settings,
               );
             case '/lock_screen':
               return NoTransitionRoute<AppLockScreen>(
-                builder: (_) => AppLockScreen(),
+                builder: (_) => const AppLockScreen(),
                 settings: settings,
               );
             case '/lock_screen_transition':
               return MaterialPageRoute<AppLockScreen>(
-                builder: (_) => AppLockScreen(),
+                builder: (_) => const AppLockScreen(),
                 settings: settings,
               );
             default:
@@ -214,6 +216,8 @@ class _AppState extends State<App> {
 /// Splash
 /// Default page route that determines if user is logged in and routes them appropriately.
 class Splash extends StatefulWidget {
+  const Splash({Key? key}) : super(key: key);
+
   @override
   SplashState createState() => SplashState();
 }
@@ -286,7 +290,9 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
         Navigator.of(context).pushReplacementNamed('/intro_welcome');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 

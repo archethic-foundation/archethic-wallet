@@ -10,14 +10,15 @@ import 'package:archethic_wallet/appstate_container.dart';
 
 /// TextField button
 class TextFieldButton extends StatelessWidget {
-  const TextFieldButton({@required this.icon, this.onPressed});
+  const TextFieldButton({@required this.icon, this.onPressed, Key? key})
+      : super(key: key);
 
   final IconData? icon;
   final Function? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: 48,
         width: 48,
         child: TextButton(
@@ -62,7 +63,9 @@ class AppTextField extends StatefulWidget {
       this.padding = EdgeInsets.zero,
       this.buttonFadeDurationMs = 100,
       this.topMargin = 0,
-      this.autofocus = false});
+      this.autofocus = false,
+      Key? key})
+      : super(key: key);
 
   final TextAlign? textAlign;
   final FocusNode? focusNode;
@@ -151,11 +154,11 @@ class _AppTextFieldState extends State<AppTextField> {
                   ),
                   // First button
                   prefixIcon: widget.prefixButton == null
-                      ? Container(width: 0, height: 0)
-                      : Container(width: 48, height: 48),
+                      ? const SizedBox(width: 0, height: 0)
+                      : const SizedBox(width: 48, height: 48),
                   suffixIcon: widget.suffixButton == null
-                      ? Container(width: 0, height: 0)
-                      : Container(width: 48, height: 48),
+                      ? const SizedBox(width: 0, height: 0)
+                      : const SizedBox(width: 48, height: 48),
                 ),
               ),
               // Buttons

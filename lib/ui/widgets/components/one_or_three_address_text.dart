@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:archethic_wallet/ui/util/styles.dart';
 
-enum AddressTextType { PRIMARY60, PRIMARY, SUCCESS }
+enum AddressTextType { primary60, primary, success }
 
 class OneOrThreeLineAddressText extends StatelessWidget {
   OneOrThreeLineAddressText(
-      {@required this.address, @required this.type, this.contactName});
+      {Key? key, @required this.address, @required this.type, this.contactName})
+      : super(key: key);
 
   String? address;
   String? contactName;
@@ -23,7 +24,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
       final String stringPartOne = address!.substring(0, 12);
       final String stringPartFive = address!.substring(36);
       switch (type!) {
-        case AddressTextType.PRIMARY60:
+        case AddressTextType.primary60:
           return Column(
             children: <Widget>[
               RichText(
@@ -48,7 +49,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
               ),
             ],
           );
-        case AddressTextType.PRIMARY:
+        case AddressTextType.primary:
           return Column(
             children: <Widget>[
               RichText(
@@ -73,7 +74,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
               ),
             ],
           );
-        case AddressTextType.SUCCESS:
+        case AddressTextType.success:
           return Column(
             children: <Widget>[
               RichText(
@@ -136,7 +137,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
       stringPartFive = address!.substring(59);
     }
     switch (type!) {
-      case AddressTextType.PRIMARY60:
+      case AddressTextType.primary60:
         return Column(
           children: <Widget>[
             RichText(
@@ -184,7 +185,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
             )
           ],
         );
-      case AddressTextType.PRIMARY:
+      case AddressTextType.primary:
         final Widget contactWidget = contactName != null
             ? RichText(
                 textAlign: TextAlign.center,
@@ -241,7 +242,7 @@ class OneOrThreeLineAddressText extends StatelessWidget {
             )
           ],
         );
-      case AddressTextType.SUCCESS:
+      case AddressTextType.success:
         final Widget contactWidget = contactName != null
             ? RichText(
                 textAlign: TextAlign.center,

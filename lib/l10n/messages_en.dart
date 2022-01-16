@@ -4,12 +4,11 @@
 // function name.
 
 // Ignore issues from commonly used lints in this file.
-// ignore_for_file:unnecessary_brace_in_string_interps
+// ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_string_escapes
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
 // ignore_for_file:unused_import, file_names, always_declare_return_types
 
-// Package imports:
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
@@ -56,11 +55,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "backupSafetyLabel2":
             MessageLookupByLibrary.simpleMessage("What is a recovery phrase?"),
         "backupSafetyLabel3": MessageLookupByLibrary.simpleMessage(
-            "A recovery phrase is essentially a human-readable form of your crypto\'s wallet private key and is displayed as 24 mnemonic words. After mastering the mnemonic words, you can restore your wallet at will. Please keep the words properly and don\'t leak them to anyone."),
+            "A recovery phrase is essentially a human-readable form of your crypto\'s wallet private key and is displayed as 24 mnemonic words.\n\nAfter mastering the mnemonic words, you can restore your wallet at will.\n\nPlease keep the words properly and don\'t leak them to anyone."),
         "backupSafetyLabel4":
             MessageLookupByLibrary.simpleMessage("How to back up?"),
         "backupSafetyLabel5": MessageLookupByLibrary.simpleMessage(
-            "Write down the mnemonic words in the correct order on a piece of paper and store them in a safe place.\nPlease don\'t store the recovery phrase on electronic devices in any form, including sreenshot.\nRemember the safety of the recovery phrase is relevant to the safety of your digital assets"),
+            "Write down the mnemonic words in the correct order on a piece of paper and store them in a safe place.\n\nPlease don\'t store the recovery phrase on electronic devices in any form, including sreenshot.\n\nRemember the safety of the recovery phrase is relevant to the safety of your digital assets"),
         "backupSafetyLabel6":
             MessageLookupByLibrary.simpleMessage("Insecure ways of backup"),
         "backupSafetyLabel7": MessageLookupByLibrary.simpleMessage(

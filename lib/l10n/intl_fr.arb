@@ -1,6 +1,6 @@
 {
 	"@@last_modified": "2021-11-07T17:33:43.139040",
-	"welcomeText": "Bienvenue sur l'Internet de confiance.\n\nARCHEthic redonne à l'humanité la maîtrise de la technologie, et à chaque individu la maîtrise de son identité.",
+	"welcomeText": "Bienvenue sur l'internet de confiance.\n\nARCHEthic redonne à l'humanité la maîtrise de la technologie et à chaque individu la maîtrise de son identité.",
 	"@welcomeText": {
 		"type": "text",
 		"placeholders_order": [],
@@ -888,7 +888,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"backupSafetyLabel3": "Une phrase secrète est une forme humainement lisible de la clé privée de votre portefeuille, affichée comme une suite de 24 mots. Avec ces 24 mots, vous pouvez restaurer votre portefeuille à volonté. Gardez cette liste en sécurité et ne la communiquez à personne.",
+	"backupSafetyLabel3": "Une phrase secrète est une forme humainement lisible de la clé privée de votre portefeuille, affichée comme une suite de 24 mots.\n\nAvec ces 24 mots, vous pouvez restaurer votre portefeuille à volonté.\n\nGardez cette liste en sécurité et ne la communiquez à personne.",
 	"@backupSafetyLabel3": {
 		"type": "text",
 		"placeholders_order": [],
@@ -900,7 +900,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"backupSafetyLabel5": "Ecrivez cette liste de mots dans le bon ordre sur un support non informatique, que vous placez en sécurité.\nNe stockez pas cette phrase sur un équipement électronique sous quelque forme que ce soit (texte, image,...).\nLa sécurité du contenu de votre portefeuille dépend de celle de cette phrase secrète.",
+	"backupSafetyLabel5": "Ecrivez cette liste de mots dans le bon ordre sur un support non informatique, que vous placez en sécurité.\n\nNe stockez pas cette phrase sur un équipement électronique sous quelque forme que ce soit (texte, image,...).\n\nLa sécurité du contenu de votre portefeuille dépend de celle de cette phrase secrète.",
 	"@backupSafetyLabel5": {
 		"type": "text",
 		"placeholders_order": [],

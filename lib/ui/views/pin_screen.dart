@@ -18,7 +18,7 @@ import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
 import 'package:archethic_wallet/util/haptic_util.dart';
 import 'package:archethic_wallet/util/preferences.dart';
 
-enum PinOverlayType { NEW_PIN, ENTER_PIN }
+enum PinOverlayType { newPin, enterPin }
 
 class ShakeCurve extends Curve {
   @override
@@ -32,7 +32,9 @@ class PinScreen extends StatefulWidget {
   const PinScreen(this.type,
       {this.description = '',
       this.expectedPin = '',
-      this.pinScreenBackgroundColor});
+      this.pinScreenBackgroundColor,
+      Key? key})
+      : super(key: key);
 
   final PinOverlayType type;
   final String expectedPin;
@@ -45,7 +47,7 @@ class PinScreen extends StatefulWidget {
 
 class _PinScreenState extends State<PinScreen>
     with SingleTickerProviderStateMixin {
-  static const int MAX_ATTEMPTS = 5;
+  static const int maxAttempts = 5;
 
   int _pinLength = 6;
   double buttonSize = 100.0;
@@ -72,7 +74,7 @@ class _PinScreenState extends State<PinScreen>
     super.initState();
 
     // Initialize list all empty
-    if (widget.type == PinOverlayType.ENTER_PIN) {
+    if (widget.type == PinOverlayType.enterPin) {
       _header = pinEnterTitle;
       _pinLength = widget.expectedPin.length;
     } else {
@@ -89,7 +91,7 @@ class _PinScreenState extends State<PinScreen>
       }
       setState(() {
         // Get adjusted failed attempts
-        _failedAttempts = _preferences.getLockAttempts() % MAX_ATTEMPTS;
+        _failedAttempts = _preferences.getLockAttempts() % maxAttempts;
       });
     });
 
@@ -101,12 +103,12 @@ class _PinScreenState extends State<PinScreen>
     _animation = Tween<double>(begin: 0.0, end: 25.0).animate(curve)
       ..addStatusListener((AnimationStatus status) {
         if (status == AnimationStatus.completed) {
-          if (widget.type == PinOverlayType.ENTER_PIN) {
+          if (widget.type == PinOverlayType.enterPin) {
             Preferences.getInstance().then((Preferences _preferences) {
               _preferences.incrementLockAttempts();
 
               _failedAttempts++;
-              if (_failedAttempts >= MAX_ATTEMPTS) {
+              if (_failedAttempts >= maxAttempts) {
                 setState(() {
                   _controller!.value = 0;
                 });
@@ -200,7 +202,7 @@ class _PinScreenState extends State<PinScreen>
   }
 
   Widget _buildPinScreenButton(String buttonText, BuildContext context) {
-    return Container(
+    return SizedBox(
       height: smallScreen(context) ? buttonSize - 15 : buttonSize,
       width: smallScreen(context) ? buttonSize - 15 : buttonSize,
       child: InkWell(
@@ -216,7 +218,7 @@ class _PinScreenState extends State<PinScreen>
             if (_setCharacter(buttonText)) {
               // Mild delay so they can actually see the last dot get filled
               Future<void>.delayed(const Duration(milliseconds: 50), () {
-                if (widget.type == PinOverlayType.ENTER_PIN) {
+                if (widget.type == PinOverlayType.enterPin) {
                   // Pin is not what was expected
                   if (_pin != widget.expectedPin) {
                     sl.get<HapticUtil>().feedback(FeedbackType.error);
@@ -283,7 +285,7 @@ class _PinScreenState extends State<PinScreen>
     if (pinEnterTitle.isEmpty) {
       setState(() {
         pinEnterTitle = AppLocalization.of(context)!.pinEnterTitle;
-        if (widget.type == PinOverlayType.ENTER_PIN) {
+        if (widget.type == PinOverlayType.enterPin) {
           _header = pinEnterTitle;
         }
       });
@@ -291,7 +293,7 @@ class _PinScreenState extends State<PinScreen>
     if (pinCreateTitle.isEmpty) {
       setState(() {
         pinCreateTitle = AppLocalization.of(context)!.pinCreateTitle;
-        if (widget.type == PinOverlayType.NEW_PIN) {
+        if (widget.type == PinOverlayType.newPin) {
           _header = pinCreateTitle;
         }
       });
@@ -444,7 +446,7 @@ class _PinScreenState extends State<PinScreen>
                             _buildPinScreenButton(
                                 _listPinNumber.elementAt(9).toString(),
                                 context),
-                            Container(
+                            SizedBox(
                               height: smallScreen(context)
                                   ? buttonSize - 15
                                   : buttonSize,

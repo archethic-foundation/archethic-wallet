@@ -26,7 +26,7 @@ import 'package:archethic_wallet/ui/widgets/transaction_recent_list.dart';
 import 'package:archethic_wallet/util/preferences.dart';
 
 class AppHomePage extends StatefulWidget {
-  const AppHomePage() : super();
+  const AppHomePage({Key? key}) : super(key: key);
 
   @override
   _AppHomePageState createState() => _AppHomePageState();
@@ -253,7 +253,7 @@ class _AppHomePageState extends State<AppHomePage>
       backgroundColor: StateContainer.of(context).curTheme.background,
       drawer: SizedBox(
         width: UIUtil.drawerWidth(context),
-        child: Drawer(
+        child: const Drawer(
           child: SettingsSheet(),
         ),
       ),
@@ -298,11 +298,7 @@ class _AppHomePageState extends State<AppHomePage>
                   ],
                 ),
                 BalanceInfosWidget().buildKPI(context),
-                Divider(
-                  height: 15,
-                  color: StateContainer.of(context).curTheme.primary30,
-                ),
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height -
                       kToolbarHeight -
                       kBottomNavigationBarHeight,
@@ -315,6 +311,14 @@ class _AppHomePageState extends State<AppHomePage>
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
+                          Divider(
+                            height: 1,
+                            color:
+                                StateContainer.of(context).curTheme.primary30,
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
                           MenuWidget().buildMenuIcons(context),
                           Divider(
                             height: 15,

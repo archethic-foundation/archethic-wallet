@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:archethic_wallet/appstate_container.dart';
 
 Widget buildIconWidget(
-    BuildContext context, String icon, double width, double height) {
+    BuildContext context, String icon, double width, double height,
+    {Color? color}) {
   return Container(
     width: width,
     height: height,
@@ -18,10 +19,8 @@ Widget buildIconWidget(
       ],
     ),
     alignment: const AlignmentDirectional(0, 0),
-    child: Container(
-      child: SizedBox(
-        child: Image.asset(icon, color: Colors.white),
-      ),
+    child: SizedBox(
+      child: Image.asset(icon, color: color ?? Colors.white),
     ),
   );
 }
@@ -40,13 +39,11 @@ Widget buildIconDataWidget(
       ],
     ),
     alignment: const AlignmentDirectional(0, 0),
-    child: Container(
-      child: SizedBox(
-        child: Icon(
-          icon,
-          color: Colors.white,
-          size: width,
-        ),
+    child: SizedBox(
+      child: Icon(
+        icon,
+        color: Colors.white,
+        size: width,
       ),
     ),
   );

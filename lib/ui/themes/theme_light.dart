@@ -107,6 +107,14 @@ class LightTheme implements BaseTheme {
   Color? negativeValue = Colors.red[300];
 
   @override
+  Color? warning = Colors.yellow[600];
+
+  @override
+  Color? positiveAmount = Colors.greenAccent[400];
+  @override
+  Color? negativeAmount = Colors.red[800];
+
+  @override
   Color? contextMenuText = blue;
   @override
   Color? contextMenuTextRed = Colors.red[300];

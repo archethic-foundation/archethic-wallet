@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/ui/util/styles.dart';
-import 'package:archethic_wallet/ui/widgets/components/app_simpledialog.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppDialogs {
@@ -13,10 +12,10 @@ class AppDialogs {
       String content, String buttonText, Function onPressed,
       {String? cancelText, Function? cancelAction}) {
     cancelText ??= AppLocalization.of(context)!.cancel.toUpperCase();
-    showAppDialog(
+    showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AppAlertDialog(
+        return AlertDialog(
           title: Text(
             title,
             style: AppStyles.textStyleSize20W700Primary(context),
@@ -60,7 +59,7 @@ class AppDialogs {
 }
 
 enum AnimationType {
-  SEND,
+  send,
 }
 
 class AnimationLoadingOverlay extends ModalRoute<void> {
@@ -116,7 +115,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
 
   Widget _getAnimation(BuildContext context) {
     switch (type) {
-      case AnimationType.SEND:
+      case AnimationType.send:
         return const Center();
       default:
         return CircularProgressIndicator(
@@ -128,17 +127,17 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   Widget _buildOverlayContent(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: type == AnimationType.SEND
+      mainAxisAlignment: type == AnimationType.send
           ? MainAxisAlignment.end
           : MainAxisAlignment.center,
       children: <Widget>[
         Container(
-          margin: type == AnimationType.SEND
+          margin: type == AnimationType.send
               ? const EdgeInsets.only(bottom: 10.0, left: 90, right: 90)
               : EdgeInsets.zero,
           //Widgth/Height ratio is needed because BoxFit is not working as expected
-          width: type == AnimationType.SEND ? double.infinity : 100,
-          height: type == AnimationType.SEND
+          width: type == AnimationType.send ? double.infinity : 100,
+          height: type == AnimationType.send
               ? MediaQuery.of(context).size.width
               : 100,
           child: _getAnimation(context),

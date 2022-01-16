@@ -18,10 +18,10 @@ class RecentTransaction {
   factory RecentTransaction.fromJson(Map<String, dynamic> json) =>
       RecentTransaction(
         address: json['address'],
-        typeTx: json['typeTx'] == null ? null : json['typeTx'].toInt(),
+        typeTx: json['typeTx']?.toInt(),
         recipient: json['recipient'],
-        amount: json['amount'] == null ? null : json['amount'].toDouble(),
-        fee: json['fee'] == null ? null : json['fee'].toDouble(),
+        amount: json['amount']?.toDouble(),
+        fee: json['fee']?.toDouble(),
         from: json['from'],
         nftAddress: json['nftAddress'],
         nftName: json['nftName'],
@@ -31,9 +31,9 @@ class RecentTransaction {
       );
 
   /// Types of transaction
-  static const int TRANSFER_INPUT = 1;
-  static const int TRANSFER_OUTPUT = 2;
-  static const int NFT_CREATION = 3;
+  static const int transferInput = 1;
+  static const int transferOutput = 2;
+  static const int nftCreation = 3;
 
   /// Address of transaction
   String? address;

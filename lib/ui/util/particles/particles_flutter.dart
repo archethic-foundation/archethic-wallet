@@ -60,7 +60,7 @@ class CircularParticle extends StatefulWidget {
   _CircularParticleState createState() => _CircularParticleState();
 }
 
-// ignore: duplicate_ignore, duplicate_ignore
+// ignore: duplicate_ignore
 class _CircularParticleState extends State<CircularParticle>
     with TickerProviderStateMixin {
   _CircularParticleState();
@@ -195,10 +195,11 @@ class _CircularParticleState extends State<CircularParticle>
                 parent: awayAnimationController!,
                 curve: widget.awayAnimationCurve!))
           ..addListener(() {
-            if (distance[index] < widget.awayRadius!)
+            if (distance[index] < widget.awayRadius!) {
               setState(() {
                 offsets[index] = awayAnimation[index].value;
               });
+            }
             if (awayAnimationController!.isCompleted &&
                 index == offsets.length - 1) {
               awayAnimationController!.dispose();

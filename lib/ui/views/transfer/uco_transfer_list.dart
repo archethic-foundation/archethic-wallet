@@ -10,19 +10,20 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart' show UCOTransfer;
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/address.dart';
-import 'package:archethic_wallet/model/data/hiveDB.dart';
+import 'package:archethic_wallet/model/data/hive_db.dart';
 import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/widgets/components/context_menu.dart';
 import 'package:archethic_wallet/ui/widgets/components/context_menu_item.dart';
 
 class UcoTransferListWidget extends StatefulWidget {
   UcoTransferListWidget(
-      {this.listUcoTransfer,
+      {Key? key,
+      this.listUcoTransfer,
       this.onGet,
       this.onDelete,
       this.contacts,
       @required this.displayContextMenu})
-      : super();
+      : super(key: key);
 
   List<UCOTransfer>? listUcoTransfer;
   final List<Contact>? contacts;

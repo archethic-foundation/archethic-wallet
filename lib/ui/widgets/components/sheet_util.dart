@@ -75,27 +75,29 @@ class _AppHeightNineSheetLayout extends SingleChildLayoutDelegate {
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
-    if (constraints.maxHeight < 667)
+    if (constraints.maxHeight < 667) {
       return BoxConstraints(
           minWidth: constraints.maxWidth,
           maxWidth: constraints.maxWidth,
           minHeight: 0.0,
           maxHeight: constraints.maxHeight * 0.95);
+    }
     if ((constraints.maxHeight / constraints.maxWidth > 2.1 &&
             !kIsWeb &&
             Platform.isAndroid) ||
-        constraints.maxHeight > 812)
+        constraints.maxHeight > 812) {
       return BoxConstraints(
           minWidth: constraints.maxWidth,
           maxWidth: constraints.maxWidth,
           minHeight: 0.0,
           maxHeight: constraints.maxHeight * 0.8);
-    else
+    } else {
       return BoxConstraints(
           minWidth: constraints.maxWidth,
           maxWidth: constraints.maxWidth,
           minHeight: 0.0,
           maxHeight: constraints.maxHeight * 0.9);
+    }
   }
 
   @override
@@ -229,24 +231,26 @@ class _AppHeightEightSheetLayout extends SingleChildLayoutDelegate {
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
-    if (constraints.maxHeight < 667)
+    if (constraints.maxHeight < 667) {
       return BoxConstraints(
           minWidth: constraints.maxWidth,
           maxWidth: constraints.maxWidth,
           minHeight: 0.0,
           maxHeight: constraints.maxHeight * 0.9);
-    if (constraints.maxHeight / constraints.maxWidth > 2.1)
+    }
+    if (constraints.maxHeight / constraints.maxWidth > 2.1) {
       return BoxConstraints(
           minWidth: constraints.maxWidth,
           maxWidth: constraints.maxWidth,
           minHeight: 0.0,
           maxHeight: constraints.maxHeight * 0.7);
-    else
+    } else {
       return BoxConstraints(
           minWidth: constraints.maxWidth,
           maxWidth: constraints.maxWidth,
           minHeight: 0.0,
           maxHeight: constraints.maxHeight * 0.8);
+    }
   }
 
   @override

@@ -16,7 +16,7 @@ import 'package:archethic_wallet/bus/events.dart';
 import 'package:archethic_wallet/ui/util/dimens.dart';
 import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/model/data/appdb.dart';
-import 'package:archethic_wallet/model/data/hiveDB.dart';
+import 'package:archethic_wallet/model/data/hive_db.dart';
 import 'package:archethic_wallet/util/service_locator.dart';
 import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/views/contacts/add_contact.dart';
@@ -25,7 +25,8 @@ import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
 import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 
 class ContactsList extends StatefulWidget {
-  ContactsList(this.contactsController, this.contactsOpen);
+  ContactsList(this.contactsController, this.contactsOpen, {Key? key})
+      : super(key: key);
 
   final AnimationController contactsController;
   bool contactsOpen;
@@ -229,9 +230,9 @@ class _ContactsListState extends State<ContactsList> {
                   children: <Widget>[
                     AppButton.buildAppButton(
                         context,
-                        AppButtonType.PRIMARY,
+                        AppButtonType.primary,
                         AppLocalization.of(context)!.addContact,
-                        Dimens.BUTTON_BOTTOM_DIMENS, onPressed: () {
+                        Dimens.buttonBottomDimens, onPressed: () {
                       Sheets.showAppHeightNineSheet(
                           context: context, widget: const AddContactSheet());
                     }),
