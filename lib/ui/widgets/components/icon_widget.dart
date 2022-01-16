@@ -26,31 +26,48 @@ Widget buildIconWidget(
 }
 
 Widget buildIconDataWidget(
-    BuildContext context, IconData icon, double width, double height) {
-  return Container(
-    width: width,
-    height: height,
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      boxShadow: <BoxShadow>[
-        BoxShadow(
-          color: StateContainer.of(context).curTheme.primary10!,
-        ),
-      ],
-    ),
-    alignment: const AlignmentDirectional(0, 0),
-    child: ShaderMask(
-      child: SizedBox(
-        child: Icon(
-          icon,
-          color: Colors.white,
-          size: width,
-        ),
-      ),
-      shaderCallback: (Rect bounds) {
-        final Rect rect = Rect.fromLTRB(0, 0, width, width);
-        return StateContainer.of(context).curTheme.gradient!.createShader(rect);
-      },
-    ),
-  );
+    BuildContext context, IconData icon, double width, double height,
+    {bool enabled = true}) {
+  return enabled
+      ? Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: StateContainer.of(context).curTheme.primary10!,
+              ),
+            ],
+          ),
+          alignment: const AlignmentDirectional(0, 0),
+          child: ShaderMask(
+            child: SizedBox(
+              child: Icon(
+                icon,
+                color: Colors.white,
+                size: width,
+              ),
+            ),
+            shaderCallback: (Rect bounds) {
+              final Rect rect = Rect.fromLTRB(0, 0, width, width);
+              return StateContainer.of(context)
+                  .curTheme
+                  .gradient!
+                  .createShader(rect);
+            },
+          ),
+        )
+      : Container(
+          width: width,
+          height: height,
+          alignment: const AlignmentDirectional(0, 0),
+          child: SizedBox(
+            child: Icon(
+              icon,
+              color: Colors.white.withOpacity(0.3),
+              size: width,
+            ),
+          ),
+        );
 }

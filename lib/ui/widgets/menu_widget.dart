@@ -1,6 +1,7 @@
 // Flutter imports:
 // ignore_for_file: avoid_unnecessary_containers
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -24,26 +25,43 @@ class MenuWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Container(
-            child: InkWell(
-                onTap: () {
-                  Sheets.showAppHeightNineSheet(
-                      context: context,
-                      widget: TransferUcoSheet(
-                          contactsRef: StateContainer.of(context).contactsRef,
-                          title: AppLocalization.of(context)!.transferUCO,
-                          localCurrency:
-                              StateContainer.of(context).curCurrency));
-                },
+        StateContainer.of(context).wallet != null &&
+                StateContainer.of(context).wallet!.accountBalance.uco != null &&
+                StateContainer.of(context).wallet!.accountBalance.uco! > 0
+            ? Container(
+                child: InkWell(
+                    onTap: () {
+                      Sheets.showAppHeightNineSheet(
+                          context: context,
+                          widget: TransferUcoSheet(
+                              contactsRef:
+                                  StateContainer.of(context).contactsRef,
+                              title: AppLocalization.of(context)!.transferUCO,
+                              localCurrency:
+                                  StateContainer.of(context).curCurrency));
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        buildIconDataWidget(
+                            context, Icons.arrow_circle_up_outlined, 50, 50),
+                        const SizedBox(height: 5),
+                        Text(AppLocalization.of(context)!.send,
+                            style:
+                                AppStyles.textStyleSize14W600Primary(context)),
+                      ],
+                    )))
+            : Container(
                 child: Column(
-                  children: <Widget>[
-                    buildIconDataWidget(
-                        context, Icons.arrow_circle_up_outlined, 50, 50),
-                    const SizedBox(height: 5),
-                    Text(AppLocalization.of(context)!.send,
-                        style: AppStyles.textStyleSize14W600Primary(context)),
-                  ],
-                ))),
+                children: <Widget>[
+                  buildIconDataWidget(
+                      context, Icons.arrow_circle_up_outlined, 50, 50,
+                      enabled: false),
+                  const SizedBox(height: 5),
+                  Text(AppLocalization.of(context)!.send,
+                      style: AppStyles.textStyleSize14W600PrimaryDisabled(
+                          context)),
+                ],
+              )),
         Container(
           child: InkWell(
             onTap: () {
@@ -175,18 +193,23 @@ class MenuWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                      AppLocalization.of(context)!
-                          .transactionChainExplorerHeader,
-                      style: AppStyles.textStyleSize16W700Primary(context)),
-                  Text(
-                      AppLocalization.of(context)!.transactionChainExplorerDesc,
-                      style: AppStyles.textStyleSize12W100Primary(context)),
-                ],
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    AutoSizeText(
+                        AppLocalization.of(context)!
+                            .transactionChainExplorerHeader,
+                        maxLines: 2,
+                        style: AppStyles.textStyleSize16W700Primary(context)),
+                    AutoSizeText(
+                        AppLocalization.of(context)!
+                            .transactionChainExplorerDesc,
+                        maxLines: 2,
+                        style: AppStyles.textStyleSize12W100Primary(context)),
+                  ],
+                ),
               ),
               buildIconDataWidget(
                   context, Icons.arrow_forward_ios_rounded, 25, 25),
