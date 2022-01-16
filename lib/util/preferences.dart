@@ -89,7 +89,7 @@ class Preferences {
   Future<void> setEndpoint(String v) => _setValue(_endpoint, v);
 
   String getEndpoint() =>
-      _getValue(_endpoint, defaultValue: glovalVarEndPointDev);
+      _getValue(_endpoint, defaultValue: globalVarEndPointDev);
 
   Future<void> setYubikeyClientAPIKey(String v) =>
       _setValue(_yubikeyClientAPIKey, v);
