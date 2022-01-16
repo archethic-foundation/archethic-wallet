@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 // Flutter imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -79,29 +80,28 @@ class _CustomUrlState extends State<CustomUrl> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Row(children: <Widget>[
-                    //Back button
-                    Container(
-                      height: 40,
-                      width: 40,
-                      margin: const EdgeInsets.only(right: 10, left: 10),
-                      child: TextButton(
-                          onPressed: () {
-                            setState(() {
-                              widget.customUrlOpen = false;
-                            });
-                            widget.customUrlController.reverse();
-                          },
-                          child: FaIcon(FontAwesomeIcons.chevronLeft,
-                              color:
-                                  StateContainer.of(context).curTheme.primary,
-                              size: 24)),
-                    ),
-                    Text(
+                  Container(
+                    height: 40,
+                    width: 40,
+                    margin: const EdgeInsets.only(right: 10, left: 10),
+                    child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            widget.customUrlOpen = false;
+                          });
+                          widget.customUrlController.reverse();
+                        },
+                        child: FaIcon(FontAwesomeIcons.chevronLeft,
+                            color: StateContainer.of(context).curTheme.primary,
+                            size: 24)),
+                  ),
+                  Expanded(
+                    child: AutoSizeText(
                       AppLocalization.of(context)!.customUrlHeader,
                       style: AppStyles.textStyleSize28W700Primary(context),
+                      maxLines: 2,
                     ),
-                  ]),
+                  ),
                 ],
               ),
             ),

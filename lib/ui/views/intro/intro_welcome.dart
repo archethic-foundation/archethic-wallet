@@ -67,6 +67,8 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                           Container(
                             child: Center(
                               child: Container(
+                                padding: const EdgeInsets.only(
+                                    left: 20.0, right: 20.0),
                                 child: SizedBox(
                                   height: 200,
                                   child: kIsWeb

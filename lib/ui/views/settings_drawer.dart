@@ -5,6 +5,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -1289,29 +1290,27 @@ class _SettingsSheetState extends State<SettingsSheet>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        height: 40,
-                        width: 40,
-                        margin: const EdgeInsets.only(right: 10, left: 10),
-                        child: TextButton(
-                            onPressed: () {
-                              setState(() {
-                                _aboutOpen = false;
-                              });
-                              _aboutController!.reverse();
-                            },
-                            child: FaIcon(FontAwesomeIcons.chevronLeft,
-                                color:
-                                    StateContainer.of(context).curTheme.primary,
-                                size: 24)),
-                      ),
-                      Text(
-                        AppLocalization.of(context)!.aboutHeader,
-                        style: AppStyles.textStyleSize28W700Primary(context),
-                      ),
-                    ],
+                  Container(
+                    height: 40,
+                    width: 40,
+                    margin: const EdgeInsets.only(right: 10, left: 10),
+                    child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            _aboutOpen = false;
+                          });
+                          _aboutController!.reverse();
+                        },
+                        child: FaIcon(FontAwesomeIcons.chevronLeft,
+                            color: StateContainer.of(context).curTheme.primary,
+                            size: 24)),
+                  ),
+                  Expanded(
+                    child: AutoSizeText(
+                      AppLocalization.of(context)!.aboutHeader,
+                      style: AppStyles.textStyleSize28W700Primary(context),
+                      maxLines: 2,
+                    ),
                   ),
                 ],
               ),
@@ -1423,30 +1422,27 @@ class _SettingsSheetState extends State<SettingsSheet>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      //Back button
-                      Container(
-                        height: 40,
-                        width: 40,
-                        margin: const EdgeInsets.only(right: 10, left: 10),
-                        child: TextButton(
-                            onPressed: () {
-                              setState(() {
-                                _nftOpen = false;
-                              });
-                              _nftController!.reverse();
-                            },
-                            child: FaIcon(FontAwesomeIcons.chevronLeft,
-                                color:
-                                    StateContainer.of(context).curTheme.primary,
-                                size: 24)),
-                      ),
-                      Text(
-                        AppLocalization.of(context)!.nftHeader,
-                        style: AppStyles.textStyleSize28W700Primary(context),
-                      ),
-                    ],
+                  Container(
+                    height: 40,
+                    width: 40,
+                    margin: const EdgeInsets.only(right: 10, left: 10),
+                    child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            _nftOpen = false;
+                          });
+                          _nftController!.reverse();
+                        },
+                        child: FaIcon(FontAwesomeIcons.chevronLeft,
+                            color: StateContainer.of(context).curTheme.primary,
+                            size: 24)),
+                  ),
+                  Expanded(
+                    child: AutoSizeText(
+                      AppLocalization.of(context)!.nftHeader,
+                      style: AppStyles.textStyleSize28W700Primary(context),
+                      maxLines: 2,
+                    ),
                   ),
                 ],
               ),

@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -68,42 +69,38 @@ class _NodesListState extends State<NodesList> {
           ),
           child: Column(
             children: <Widget>[
-              // Back button and Nodes Text
               Container(
                 margin: const EdgeInsets.only(bottom: 10.0, top: 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        //Back button
-                        Container(
-                          height: 40,
-                          width: 40,
-                          margin: const EdgeInsets.only(right: 10, left: 10),
-                          child: TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  widget.nodesOpen = false;
-                                });
-                                widget.nodesController.reverse();
-                              },
-                              child: FaIcon(FontAwesomeIcons.chevronLeft,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .primary,
-                                  size: 24)),
-                        ),
-                        //Nodes Header Text
-                        Text(
-                          AppLocalization.of(context)!.nodesHeader,
-                          style: AppStyles.textStyleSize28W700Primary(context),
-                        ),
-                      ],
+                    Container(
+                      height: 40,
+                      width: 40,
+                      margin: const EdgeInsets.only(right: 10, left: 10),
+                      child: TextButton(
+                          onPressed: () {
+                            setState(() {
+                              widget.nodesOpen = false;
+                            });
+                            widget.nodesController.reverse();
+                          },
+                          child: FaIcon(FontAwesomeIcons.chevronLeft,
+                              color:
+                                  StateContainer.of(context).curTheme.primary,
+                              size: 24)),
+                    ),
+                    Expanded(
+                      child: AutoSizeText(
+                        AppLocalization.of(context)!.nodesHeader,
+                        style: AppStyles.textStyleSize28W700Primary(context),
+                        maxLines: 2,
+                      ),
                     ),
                   ],
                 ),
               ),
+
               if (_nodes == null)
                 const SizedBox()
               else

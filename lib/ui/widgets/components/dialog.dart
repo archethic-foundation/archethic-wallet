@@ -20,6 +20,10 @@ class AppDialogs {
             title,
             style: AppStyles.textStyleSize20W700Primary(context),
           ),
+          shape: RoundedRectangleBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+              side: BorderSide(
+                  color: StateContainer.of(context).curTheme.primary45!)),
           content: Text(content,
               style: AppStyles.textStyleSize16W200Primary(context)),
           actions: <Widget>[

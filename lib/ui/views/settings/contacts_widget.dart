@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -127,38 +128,33 @@ class _ContactsListState extends State<ContactsList> {
           ),
           child: Column(
             children: <Widget>[
-              // Back button and Contacts Text
               Container(
                 margin: const EdgeInsets.only(bottom: 10.0, top: 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        //Back button
-                        Container(
-                          height: 40,
-                          width: 40,
-                          margin: const EdgeInsets.only(right: 10, left: 10),
-                          child: TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  widget.contactsOpen = false;
-                                });
-                                widget.contactsController.reverse();
-                              },
-                              child: FaIcon(FontAwesomeIcons.chevronLeft,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .primary,
-                                  size: 24)),
-                        ),
-                        //Contacts Header Text
-                        Text(
-                          AppLocalization.of(context)!.addressBookHeader,
-                          style: AppStyles.textStyleSize28W700Primary(context),
-                        ),
-                      ],
+                    Container(
+                      height: 40,
+                      width: 40,
+                      margin: const EdgeInsets.only(right: 10, left: 10),
+                      child: TextButton(
+                          onPressed: () {
+                            setState(() {
+                              widget.contactsOpen = false;
+                            });
+                            widget.contactsController.reverse();
+                          },
+                          child: FaIcon(FontAwesomeIcons.chevronLeft,
+                              color:
+                                  StateContainer.of(context).curTheme.primary,
+                              size: 24)),
+                    ),
+                    Expanded(
+                      child: AutoSizeText(
+                        AppLocalization.of(context)!.addressBookHeader,
+                        style: AppStyles.textStyleSize28W700Primary(context),
+                        maxLines: 2,
+                      ),
                     ),
                   ],
                 ),

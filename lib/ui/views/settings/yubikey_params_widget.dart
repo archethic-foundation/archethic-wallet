@@ -95,29 +95,28 @@ class _YubikeyParamsState extends State<YubikeyParams> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Row(children: <Widget>[
-                    //Back button
-                    Container(
-                      height: 40,
-                      width: 40,
-                      margin: const EdgeInsets.only(right: 10, left: 10),
-                      child: TextButton(
-                          onPressed: () {
-                            setState(() {
-                              widget.open = false;
-                            });
-                            widget.animationController.reverse();
-                          },
-                          child: FaIcon(FontAwesomeIcons.chevronLeft,
-                              color:
-                                  StateContainer.of(context).curTheme.primary,
-                              size: 24)),
-                    ),
-                    Text(
+                  Container(
+                    height: 40,
+                    width: 40,
+                    margin: const EdgeInsets.only(right: 10, left: 10),
+                    child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            widget.open = false;
+                          });
+                          widget.animationController.reverse();
+                        },
+                        child: FaIcon(FontAwesomeIcons.chevronLeft,
+                            color: StateContainer.of(context).curTheme.primary,
+                            size: 24)),
+                  ),
+                  Expanded(
+                    child: AutoSizeText(
                       AppLocalization.of(context)!.yubikeyParamsHeader,
                       style: AppStyles.textStyleSize28W700Primary(context),
+                      maxLines: 2,
                     ),
-                  ]),
+                  ),
                 ],
               ),
             ),
