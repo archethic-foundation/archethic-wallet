@@ -5,6 +5,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
@@ -236,9 +237,31 @@ class _SettingsSheetState extends State<SettingsSheet>
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(
-                      AppLocalization.of(context)!.biometricsMethod,
-                      style: AppStyles.textStyleSize16W600Primary(context),
+                    child: Row(
+                      children: [
+                        Text(
+                          AppLocalization.of(context)!.biometricsMethod,
+                          style: _curAuthMethod.getIndex() ==
+                                  AuthenticationMethod(AuthMethod.biometrics)
+                                      .method
+                                      .index
+                              ? AppStyles.textStyleSize16W600ChoiceOption(
+                                  context)
+                              : AppStyles.textStyleSize16W600Primary(context),
+                        ),
+                        const SizedBox(width: 20),
+                        if (_curAuthMethod.getIndex() ==
+                            AuthenticationMethod(AuthMethod.biometrics)
+                                .method
+                                .index)
+                          FaIcon(
+                            FontAwesomeIcons.check,
+                            color: StateContainer.of(context)
+                                .curTheme
+                                .choiceOption,
+                            size: 16,
+                          )
+                      ],
                     ),
                   ),
                 ),
@@ -248,9 +271,27 @@ class _SettingsSheetState extends State<SettingsSheet>
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(
-                    AppLocalization.of(context)!.pinMethod,
-                    style: AppStyles.textStyleSize16W600Primary(context),
+                  child: Row(
+                    children: [
+                      Text(
+                        AppLocalization.of(context)!.pinMethod,
+                        style: _curAuthMethod.getIndex() ==
+                                AuthenticationMethod(AuthMethod.pin)
+                                    .method
+                                    .index
+                            ? AppStyles.textStyleSize16W600ChoiceOption(context)
+                            : AppStyles.textStyleSize16W600Primary(context),
+                      ),
+                      const SizedBox(width: 20),
+                      if (_curAuthMethod.getIndex() ==
+                          AuthenticationMethod(AuthMethod.pin).method.index)
+                        FaIcon(
+                          FontAwesomeIcons.check,
+                          color:
+                              StateContainer.of(context).curTheme.choiceOption,
+                          size: 16,
+                        )
+                    ],
                   ),
                 ),
               ),
@@ -260,9 +301,30 @@ class _SettingsSheetState extends State<SettingsSheet>
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(
-                    AppLocalization.of(context)!.yubikeyWithYubiCloudMethod,
-                    style: AppStyles.textStyleSize16W600Primary(context),
+                  child: Row(
+                    children: [
+                      Text(
+                        AppLocalization.of(context)!.yubikeyWithYubiCloudMethod,
+                        style: _curAuthMethod.getIndex() ==
+                                AuthenticationMethod(
+                                        AuthMethod.yubikeyWithYubicloud)
+                                    .method
+                                    .index
+                            ? AppStyles.textStyleSize16W600ChoiceOption(context)
+                            : AppStyles.textStyleSize16W600Primary(context),
+                      ),
+                      const SizedBox(width: 20),
+                      if (_curAuthMethod.getIndex() ==
+                          AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
+                              .method
+                              .index)
+                        FaIcon(
+                          FontAwesomeIcons.check,
+                          color:
+                              StateContainer.of(context).curTheme.choiceOption,
+                          size: 16,
+                        )
+                    ],
                   ),
                 ),
               ),
@@ -321,9 +383,25 @@ class _SettingsSheetState extends State<SettingsSheet>
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(
-                    AppLocalization.of(context)!.no,
-                    style: AppStyles.textStyleSize16W600Primary(context),
+                  child: Row(
+                    children: [
+                      Text(
+                        AppLocalization.of(context)!.no,
+                        style: _curUnlockSetting.setting.index ==
+                                UnlockSetting(UnlockOption.no).getIndex()
+                            ? AppStyles.textStyleSize16W600ChoiceOption(context)
+                            : AppStyles.textStyleSize16W600Primary(context),
+                      ),
+                      const SizedBox(width: 20),
+                      if (_curUnlockSetting.setting.index ==
+                          UnlockSetting(UnlockOption.no).getIndex())
+                        FaIcon(
+                          FontAwesomeIcons.check,
+                          color:
+                              StateContainer.of(context).curTheme.choiceOption,
+                          size: 16,
+                        )
+                    ],
                   ),
                 ),
               ),
@@ -333,9 +411,25 @@ class _SettingsSheetState extends State<SettingsSheet>
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(
-                    AppLocalization.of(context)!.yes,
-                    style: AppStyles.textStyleSize16W600Primary(context),
+                  child: Row(
+                    children: [
+                      Text(
+                        AppLocalization.of(context)!.yes,
+                        style: _curUnlockSetting.setting.index ==
+                                UnlockSetting(UnlockOption.yes).getIndex()
+                            ? AppStyles.textStyleSize16W600ChoiceOption(context)
+                            : AppStyles.textStyleSize16W600Primary(context),
+                      ),
+                      const SizedBox(width: 20),
+                      if (_curUnlockSetting.setting.index ==
+                          UnlockSetting(UnlockOption.yes).getIndex())
+                        FaIcon(
+                          FontAwesomeIcons.check,
+                          color:
+                              StateContainer.of(context).curTheme.choiceOption,
+                          size: 16,
+                        )
+                    ],
                   ),
                 ),
               ),
@@ -344,15 +438,21 @@ class _SettingsSheetState extends State<SettingsSheet>
         })) {
       case UnlockOption.yes:
         _preferences.setLock(true);
-        _curUnlockSetting = UnlockSetting(UnlockOption.yes);
+        setState(() {
+          _curUnlockSetting = UnlockSetting(UnlockOption.yes);
+        });
         break;
       case UnlockOption.no:
         _preferences.setLock(false);
-        _curUnlockSetting = UnlockSetting(UnlockOption.no);
+        setState(() {
+          _curUnlockSetting = UnlockSetting(UnlockOption.no);
+        });
         break;
       default:
         _preferences.setLock(false);
-        _curUnlockSetting = UnlockSetting(UnlockOption.no);
+        setState(() {
+          _curUnlockSetting = UnlockSetting(UnlockOption.no);
+        });
         break;
     }
   }
@@ -367,6 +467,8 @@ class _SettingsSheetState extends State<SettingsSheet>
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
@@ -386,6 +488,25 @@ class _SettingsSheetState extends State<SettingsSheet>
                           AvailableCurrency(value).getDisplayName(context)
                       ? AppStyles.textStyleSize16W600ChoiceOption(context)
                       : AppStyles.textStyleSize16W600Primary(context)),
+              if (AvailableCurrency(value).getIso4217Code() == 'EUR' ||
+                  AvailableCurrency(value).getIso4217Code() == 'USD')
+                const SizedBox(
+                  width: 10,
+                ),
+              if (AvailableCurrency(value).getIso4217Code() == 'EUR' ||
+                  AvailableCurrency(value).getIso4217Code() == 'USD')
+                buildIconWidget(
+                  context,
+                  'assets/icons/oracle.png',
+                  25,
+                  25,
+                  color: StateContainer.of(context)
+                              .curCurrency
+                              .getDisplayName(context) ==
+                          AvailableCurrency(value).getDisplayName(context)
+                      ? StateContainer.of(context).curTheme.choiceOption
+                      : StateContainer.of(context).curTheme.primary,
+                ),
               const SizedBox(width: 20),
               if (StateContainer.of(context)
                       .curCurrency
@@ -396,8 +517,6 @@ class _SettingsSheetState extends State<SettingsSheet>
                   color: StateContainer.of(context).curTheme.choiceOption,
                   size: 16,
                 )
-              else
-                const SizedBox(),
             ],
           ),
         ),
