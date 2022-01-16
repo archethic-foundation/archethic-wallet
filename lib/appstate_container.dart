@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:archethic_wallet/util/global_var.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -35,7 +36,9 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
         SimplePriceResponse,
         CoinsPriceResponse,
         CoinsCurrentDataResponse,
-        NftBalance;
+        NftBalance,
+        OracleService,
+        OracleUcoPrice;
 
 class _InheritedStateContainer extends InheritedWidget {
   const _InheritedStateContainer({
@@ -235,9 +238,37 @@ class StateContainerState extends State<StateContainer> {
 
   // Change curency
   Future<void> updateCurrency(AvailableCurrency currency) async {
-    final SimplePriceResponse simplePriceResponse = await sl
-        .get<ApiCoinsService>()
-        .getSimplePrice(currency.getIso4217Code());
+    SimplePriceResponse simplePriceResponse = SimplePriceResponse();
+    // if eur or usd, use ARCHEThic Oracle
+    if (currency.getIso4217Code() == 'EUR' ||
+        currency.getIso4217Code() == 'USD') {
+      try {
+        final OracleUcoPrice oracleUcoPrice = await sl
+            .get<OracleService>()
+            .getLastOracleUcoPrice(globalVarOracleUCOPriceAddress);
+        simplePriceResponse.currency = currency.getIso4217Code();
+        if (currency.getIso4217Code() == 'EUR') {
+          simplePriceResponse.localCurrencyPrice = oracleUcoPrice.uco!.eur;
+        } else {
+          if (currency.getIso4217Code() == 'USD') {
+            simplePriceResponse.localCurrencyPrice = oracleUcoPrice.uco!.usd;
+          } else {
+            simplePriceResponse = await sl
+                .get<ApiCoinsService>()
+                .getSimplePrice(currency.getIso4217Code());
+          }
+        }
+      } catch (e) {
+        simplePriceResponse = await sl
+            .get<ApiCoinsService>()
+            .getSimplePrice(currency.getIso4217Code());
+      }
+    } else {
+      simplePriceResponse = await sl
+          .get<ApiCoinsService>()
+          .getSimplePrice(currency.getIso4217Code());
+    }
+
     EventTaxiImpl.singleton().fire(PriceEvent(response: simplePriceResponse));
     requestUpdateCoinsChart(option: idChartOption!);
     setState(() {
