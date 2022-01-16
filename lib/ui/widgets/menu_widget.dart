@@ -211,6 +211,9 @@ class MenuWidget {
                   ],
                 ),
               ),
+              const SizedBox(
+                width: 5,
+              ),
               buildIconDataWidget(
                   context, Icons.arrow_forward_ios_rounded, 25, 25),
             ],

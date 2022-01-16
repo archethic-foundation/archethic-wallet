@@ -846,7 +846,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"txListTypeTransactionLabelNewNFT": "New NFT",
+	"txListTypeTransactionLabelNewNFT": "Nouveau NFT",
 	"@txListTypeTransactionLabelNewNFT": {
 		"type": "text",
 		"placeholders_order": [],
