@@ -384,7 +384,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "insufficientBalance": "Insufficient Balance",
+  "insufficientBalance": "You don't have enough UCO.",
   "@insufficientBalance": {
     "type": "text",
     "placeholders_order": [],

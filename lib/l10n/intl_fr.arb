@@ -294,7 +294,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"insufficientBalance": "Solde insuffisant",
+	"insufficientBalance": "Vous ne possédez pas assez de UCO.",
 	"@insufficientBalance": {
 		"type": "text",
 		"placeholders_order": [],

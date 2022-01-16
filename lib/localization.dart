@@ -326,7 +326,8 @@ class AppLocalization {
   }
 
   String get insufficientBalance {
-    return Intl.message('Insufficient Balance', name: 'insufficientBalance');
+    return Intl.message('You don\'t have enough UCO',
+        name: 'insufficientBalance');
   }
 
   String get fees {
