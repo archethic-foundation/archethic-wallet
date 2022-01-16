@@ -110,7 +110,7 @@ class LightTheme implements BaseTheme {
   Color? warning = Colors.yellow[600];
 
   @override
-  Color? positiveAmount = Colors.greenAccent[400];
+  Color? positiveAmount = Colors.lightGreenAccent[400];
   @override
   Color? negativeAmount = Colors.red[800];
 
@@ -165,4 +165,14 @@ class LightTheme implements BaseTheme {
       connectDots: true,
     );
   }
+
+  @override
+  Gradient? gradient = const LinearGradient(
+    colors: <Color>[
+      Color(0xFFFFFFFF),
+      Color(0xFFFFFFFF),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
 }

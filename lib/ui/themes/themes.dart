@@ -70,4 +70,6 @@ abstract class BaseTheme {
   String? logoAlone;
 
   Widget? getBackgroundScreen(BuildContext context);
+
+  Gradient? gradient;
 }

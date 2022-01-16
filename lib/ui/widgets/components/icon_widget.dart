@@ -39,12 +39,18 @@ Widget buildIconDataWidget(
       ],
     ),
     alignment: const AlignmentDirectional(0, 0),
-    child: SizedBox(
-      child: Icon(
-        icon,
-        color: Colors.white,
-        size: width,
+    child: ShaderMask(
+      child: SizedBox(
+        child: Icon(
+          icon,
+          color: Colors.white,
+          size: width,
+        ),
       ),
+      shaderCallback: (Rect bounds) {
+        final Rect rect = Rect.fromLTRB(0, 0, width, width);
+        return StateContainer.of(context).curTheme.gradient!.createShader(rect);
+      },
     ),
   );
 }

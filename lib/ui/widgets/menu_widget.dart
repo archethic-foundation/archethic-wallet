@@ -188,10 +188,8 @@ class MenuWidget {
                       style: AppStyles.textStyleSize12W100Primary(context)),
                 ],
               ),
-              const Icon(
-                Icons.arrow_forward_ios_rounded,
-                size: 18,
-              ),
+              buildIconDataWidget(
+                  context, Icons.arrow_forward_ios_rounded, 25, 25),
             ],
           ),
         ),

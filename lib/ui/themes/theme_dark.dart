@@ -1,4 +1,3 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -148,4 +147,17 @@ class DarkTheme implements BaseTheme {
       ),
     );
   }
+
+  @override
+  Gradient? gradient = const LinearGradient(
+    colors: <Color>[
+      Color(0xFF1594df),
+      Color(0xFF4270e5),
+      Color(0xFF833bf3),
+      Color(0xFFad19fa),
+      Color(0xFFad19fa),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
 }
