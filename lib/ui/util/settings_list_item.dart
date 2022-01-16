@@ -29,7 +29,7 @@ class AppSettings {
           onPressed();
         },
         child: Container(
-          height: 50.0,
+          height: 55.0,
           margin: const EdgeInsetsDirectional.only(start: 10.0),
           child: Row(
             children: <Widget>[
