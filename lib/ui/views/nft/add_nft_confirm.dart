@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:archethic_wallet/ui/views/yubikey_screen.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -23,10 +24,8 @@ import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/util/routes.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
 import 'package:archethic_wallet/ui/views/pin_screen.dart';
-import 'package:archethic_wallet/ui/views/transfer/transfer_complete_sheet.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
 import 'package:archethic_wallet/ui/widgets/components/dialog.dart';
-import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_wallet/util/biometrics_util.dart';
 import 'package:archethic_wallet/util/haptic_util.dart';
 import 'package:archethic_wallet/util/preferences.dart';
@@ -78,18 +77,14 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
             context);
         Navigator.of(context).pop();
       } else {
-        Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+        UIUtil.showSnackbar(
+            AppLocalization.of(context)!.transferSuccess, context,
+            duration: const Duration(milliseconds: 5000));
         setState(() {
           StateContainer.of(context).requestUpdate(
               account: StateContainer.of(context).selectedAccount);
         });
-        Sheets.showAppHeightNineSheet(
-            context: context,
-            closeOnTap: true,
-            removeUntilHome: true,
-            widget: TransferCompleteSheet(
-              title: AppLocalization.of(context)!.nftCreated,
-            ));
+        Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
       }
     });
   }
@@ -270,7 +265,12 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                             await authenticateWithPin();
                           }
                         } else {
-                          await authenticateWithPin();
+                          if (authMethod.method ==
+                              AuthMethod.yubikeyWithYubicloud) {
+                            await authenticateWithYubikey();
+                          } else {
+                            await authenticateWithPin();
+                          }
                         }
                       })
                     ],
@@ -320,12 +320,24 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
     final Vault _vault = await Vault.getInstance();
     final String? expectedPin = _vault.getPin();
     final bool auth = await Navigator.of(context)
-        .push(MaterialPageRoute<PinScreen>(builder: (BuildContext context) {
+        .push(MaterialPageRoute(builder: (BuildContext context) {
       return PinScreen(
         PinOverlayType.enterPin,
         expectedPin: expectedPin!,
         description: '',
       );
+    })) as bool;
+    if (auth) {
+      await Future<void>.delayed(const Duration(milliseconds: 200));
+      EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.send));
+    }
+  }
+
+  Future<void> authenticateWithYubikey() async {
+    // Yubikey Authentication
+    final bool auth = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) {
+      return const YubikeyScreen();
     })) as bool;
     if (auth) {
       await Future<void>.delayed(const Duration(milliseconds: 200));

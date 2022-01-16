@@ -25,12 +25,10 @@ import 'package:archethic_wallet/ui/util/routes.dart';
 import 'package:archethic_wallet/ui/util/ui_util.dart';
 import 'package:archethic_wallet/ui/views/pin_screen.dart';
 import 'package:archethic_wallet/ui/views/transfer/nft_transfer_list.dart';
-import 'package:archethic_wallet/ui/views/transfer/transfer_complete_sheet.dart';
 import 'package:archethic_wallet/ui/views/transfer/uco_transfer_list.dart';
 import 'package:archethic_wallet/ui/views/yubikey_screen.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
 import 'package:archethic_wallet/ui/widgets/components/dialog.dart';
-import 'package:archethic_wallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_wallet/util/biometrics_util.dart';
 import 'package:archethic_wallet/util/haptic_util.dart';
 import 'package:archethic_wallet/util/preferences.dart';
@@ -93,16 +91,14 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
             context);
         Navigator.of(context).pop();
       } else {
-        StateContainer.of(context)
-            .requestUpdate(account: StateContainer.of(context).selectedAccount);
+        UIUtil.showSnackbar(
+            AppLocalization.of(context)!.transferSuccess, context,
+            duration: const Duration(milliseconds: 5000));
+        setState(() {
+          StateContainer.of(context).requestUpdate(
+              account: StateContainer.of(context).selectedAccount);
+        });
         Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
-        Sheets.showAppHeightNineSheet(
-            context: context,
-            closeOnTap: true,
-            removeUntilHome: true,
-            widget: TransferCompleteSheet(
-              title: widget.title,
-            ));
       }
     });
   }
@@ -183,22 +179,25 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                   const SizedBox(
                     height: 20,
                   ),
-                  SizedBox(
-                    height: 300,
-                    child: widget.typeTransfer == 'UCO'
-                        ? UcoTransferListWidget(
-                            listUcoTransfer: widget.ucoTransferList,
-                            contacts: widget.contactsRef,
-                            displayContextMenu: false,
-                          )
-                        : widget.typeTransfer == 'NFT'
-                            ? NftTransferListWidget(
-                                listNftTransfer: widget.nftTransferList,
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: SizedBox(
+                        child: widget.typeTransfer == 'UCO'
+                            ? UcoTransferListWidget(
+                                listUcoTransfer: widget.ucoTransferList,
                                 contacts: widget.contactsRef,
                                 displayContextMenu: false,
                               )
-                            : const SizedBox(),
-                  )
+                            : widget.typeTransfer == 'NFT'
+                                ? NftTransferListWidget(
+                                    listNftTransfer: widget.nftTransferList,
+                                    contacts: widget.contactsRef,
+                                    displayContextMenu: false,
+                                  )
+                                : const SizedBox(),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
