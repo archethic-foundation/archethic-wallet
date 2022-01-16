@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-01-16T08:58:34.527907",
+  "@@last_modified": "2022-01-16T14:55:16.243713",
   "welcomeText": "Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -384,7 +384,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "insufficientBalance": "You don't have enough UCO.",
+  "insufficientBalance": "You don't have enough UCO",
   "@insufficientBalance": {
     "type": "text",
     "placeholders_order": [],

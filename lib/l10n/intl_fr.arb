@@ -54,7 +54,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"transferUCO": "Transfert UCO",
+	"transferUCO": "Envoyer des UCO",
 	"@transferUCO": {
 		"type": "text",
 		"placeholders_order": [],
