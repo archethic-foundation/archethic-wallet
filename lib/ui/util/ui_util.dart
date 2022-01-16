@@ -396,7 +396,8 @@ class UIUtil {
     }
   }
 
-  static void showSnackbar(String content, BuildContext context) {
+  static void showSnackbar(String content, BuildContext context,
+      {Duration duration = const Duration(milliseconds: 3500)}) {
     showToastWidget(
       Align(
         alignment: Alignment.topCenter,
@@ -425,7 +426,7 @@ class UIUtil {
         ),
       ),
       dismissOtherToast: true,
-      duration: const Duration(milliseconds: 3500),
+      duration: duration,
     );
   }
 
