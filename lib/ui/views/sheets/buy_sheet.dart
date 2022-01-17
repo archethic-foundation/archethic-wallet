@@ -52,7 +52,7 @@ class _BuySheetState extends State<BuySheet> {
                 ),
               ],
             ),
-            if (kIsWeb || Platform.isMacOS)
+            if (kIsWeb || Platform.isMacOS || Platform.isWindows)
               Stack(
                 children: <Widget>[
                   const SizedBox(

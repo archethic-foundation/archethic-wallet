@@ -85,7 +85,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                   ),
                 ],
               ),
-              if (kIsWeb || Platform.isMacOS)
+              if (kIsWeb || Platform.isMacOS || Platform.isWindows)
                 Stack(
                   children: <Widget>[
                     const SizedBox(

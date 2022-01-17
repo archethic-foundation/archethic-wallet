@@ -239,7 +239,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                     ),
                   ],
                 ),
-                if (kIsWeb || Platform.isMacOS)
+                if (kIsWeb || Platform.isMacOS || Platform.isWindows)
                   Stack(
                     children: <Widget>[
                       const SizedBox(

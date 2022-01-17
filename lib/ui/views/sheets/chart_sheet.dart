@@ -65,7 +65,7 @@ class _ChartSheetState extends State<ChartSheet> {
                 ),
               ],
             ),
-            if (kIsWeb || Platform.isMacOS)
+            if (kIsWeb || Platform.isMacOS || Platform.isWindows)
               Stack(
                 children: <Widget>[
                   const SizedBox(

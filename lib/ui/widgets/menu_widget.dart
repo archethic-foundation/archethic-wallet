@@ -168,7 +168,7 @@ class MenuWidget {
                         style: AppStyles.textStyleSize14W600Primary(context)),
                   ],
                 ))),
-        /* if (!kIsWeb && Platform.isMacOS)
+        /* if (!kIsWeb && (Platform.isMacOS || Platform.isWindows))
                               Container(
                                   child: InkWell(
                                       onTap: () {

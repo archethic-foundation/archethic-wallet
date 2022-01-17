@@ -77,7 +77,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                   ),
                 ],
               ),
-              if (kIsWeb || Platform.isMacOS)
+              if (kIsWeb || Platform.isMacOS || Platform.isWindows)
                 Stack(
                   children: <Widget>[
                     const SizedBox(

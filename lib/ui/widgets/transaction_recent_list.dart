@@ -85,7 +85,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                         AppLocalization.of(context)!
                             .recentTransactionsNoTransactionYet,
                         style: AppStyles.textStyleSize14W600Primary(context))),
-            if (kIsWeb || Platform.isMacOS)
+            if (kIsWeb || Platform.isMacOS || Platform.isWindows)
               IconButton(
                 icon: const Icon(Icons.refresh),
                 color: StateContainer.of(context).curTheme.backgroundDarkest,
