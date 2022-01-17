@@ -133,7 +133,9 @@ msix_config:
   display_name: ARCHEthic Wallet
   publisher_display_name: ARCHEthic Foundation
   identity_name: testnet.archethic.net
-  msix_version: 0.1.7.4
+  msix_version: 0.1.7.5
+  certificate_path: windows/certificate/archethic_wallet_testnet.pfx
+  certificate_password: 12345
   icons_background_color: "#000000"
   logo_path: windows/icons/Icon-512.png
   # See https://docs.microsoft.com/en-us/windows/uwp/packaging/app-capability-declarations
