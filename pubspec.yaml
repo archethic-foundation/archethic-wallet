@@ -129,6 +129,17 @@ flutter_icons:
   android: true
   ios: true
 
+msix_config:
+  display_name: ARCHEthic Wallet
+  publisher_display_name: ARCHEthic Foundation
+  identity_name: testnet.archethic.net
+  msix_version: 0.1.7.4
+  icons_background_color: "#000000"
+  logo_path: windows/icons/Icon-512.png
+  # See https://docs.microsoft.com/en-us/windows/uwp/packaging/app-capability-declarations
+  capabilities: "internetClient,webcam,USB,Bluetooth"
+  output_name: ARCHEthicWallet
+
 # The following section is specific to Flutter.
 flutter:
   fonts:
@@ -163,3 +174,4 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+

@@ -12,4 +12,4 @@ flutter build macos
 Xcode : notarize App : Archive/Distribute app/Deveoper ID/Upload/Automatically signfastlan
 # windows
 flutter build windows
-flutter pub run msix:create
+flutter pub run msix:create -c /XX/XX/CERTIFICATE.pfx -p kfmslmkd
