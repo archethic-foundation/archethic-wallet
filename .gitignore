@@ -131,3 +131,9 @@ CMakeFiles
 cmake_install.cmake
 android/fastlane/report.xml
 ios/fastlane/report.xml
+windows/certificates/archethic_wallet_testnet.crt
+windows/certificates/archethic_wallet_testnet.csr
+windows/certificates/archethic_wallet_testnet.key
+windows/certificates/archethic_wallet_testnet.pfx
+windows/certificates/mdp.txt
+windows/certificates/mykeyname.key
