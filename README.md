@@ -23,14 +23,49 @@ ARCHEthic Wallet have features that are implemented:
 
 ## How to install ARCHEthic Wallet
 
-\# Currently ARCHEthic Wallet is supported on Android Devices for Testnet \#
+### Android
 
-To Install ARCHEthic Wallet in Android Devices:
+To install ARCHEthic Wallet in Android Devices:
 - Download the APK file for application for your platform from [releases](https://github.com/archethic-foundation/archethic_mobile_wallet/releases).
 - Click on the downloaded file and Click on Install
     - If asks for permission to install from unknown sources
         - Goto Settings and Allow Installation from unknown sources for browser or file manager.
 - Once installed open the application and proceed as per instructions the application.
+
+### Windows
+
+To install ARCHEthic Wallet in Windows platforms:
+- Download the MSIX file from [releases](https://github.com/archethic-foundation/archethic_mobile_wallet/releases).
+- Install the certificate 
+    1) Right click on the MSIX file, click on Properties and then go to "Digital Signature" tab. Select the certificate from "Signature list" and then click "Details"
+    2) Click view certificate
+    3) Click "Install certificate" 
+    4) Select "Local Machine" and then click "Next"
+    5) Select "Place all certificates in the following store" and then click "Browse"
+    6) Browse to "Trusted Root Certification Authorities" and then click "OK"
+    7) Click "Next"
+    8) Click "Finish"
+    9) Click "OK"
+    The required certificate is imported now and you can begin installing the msix file
+- Install the MSIX file
+
+### MacOS
+
+To install ARCHEthic Wallet in MacOS platforms:
+- Download the app.zip file from [releases](https://github.com/archethic-foundation/archethic_mobile_wallet/releases).
+- Unzip the file
+- Launch the APP file
+
+### iOS
+
+To install ARCHEthic Wallet in iOS Devices:
+- Soon
+
+### WebApp
+
+- No installation. Just go to https://reddwarf03.github.io/archethic_web/index.html
+
+## How to test the ARCHEthic Wallet
 
 To test ARCHEthic Wallet with Testnet:
 - Copy your address from the wallet and paste on the [ARCHEthic Testnet Faucet](https://testnet.archethic.net/faucet) 
