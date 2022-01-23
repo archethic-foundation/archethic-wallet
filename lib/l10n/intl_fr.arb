@@ -312,25 +312,25 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"pinConfirmTitle": "Confirmer votre PIN",
+	"pinConfirmTitle": "Confirmer votre code PIN",
 	"@pinConfirmTitle": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"pinEnterTitle": "Entrer le PIN",
+	"pinEnterTitle": "Entrer le code PIN",
 	"@pinEnterTitle": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"pinConfirmError": "Les PINs ne correspondent pas",
+	"pinConfirmError": "Les codes PIN ne correspondent pas",
 	"@pinConfirmError": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"pinInvalid": "PIN saisi non valide",
+	"pinInvalid": "Le code PIN saisi est non valide",
 	"@pinInvalid": {
 		"type": "text",
 		"placeholders_order": [],
