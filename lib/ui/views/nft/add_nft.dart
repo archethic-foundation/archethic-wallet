@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:archethic_wallet/util/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -44,6 +45,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
   String? _initialSupplyValidationText;
 
   bool? animationOpen;
+  double feeEstimation = 0.0;
 
   @override
   void initState() {
@@ -151,12 +153,15 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
               ),
             ),
           ),
-          Text(
-              AppLocalization.of(context)!.fees +
-                  ': ' +
-                  sl.get<AppService>().getFeesEstimation().toStringAsFixed(5) +
-                  ' UCO',
-              style: AppStyles.textStyleSize14W100Primary(context)),
+          feeEstimation > 0
+              ? Text(
+                  AppLocalization.of(context)!.estimatedFees +
+                      ': ' +
+                      feeEstimation.toString() +
+                      ' UCO',
+                  style: AppStyles.textStyleSize14W100Primary(context))
+              : Text(AppLocalization.of(context)!.estimatedFeesAddNFTNote,
+                  style: AppStyles.textStyleSize14W100Primary(context)),
           const SizedBox(height: 30),
           Expanded(
             child: Column(
@@ -178,6 +183,13 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                   inputFormatters: <LengthLimitingTextInputFormatter>[
                     LengthLimitingTextInputFormatter(100),
                   ],
+                  onChanged: (_) async {
+                    double _fee = await getFee();
+                    // Always reset the error message to be less annoying
+                    setState(() {
+                      feeEstimation = _fee;
+                    });
+                  },
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 5, bottom: 5),
@@ -202,6 +214,13 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                   inputFormatters: <LengthLimitingTextInputFormatter>[
                     LengthLimitingTextInputFormatter(10),
                   ],
+                  onChanged: (_) async {
+                    double _fee = await getFee();
+                    // Always reset the error message to be less annoying
+                    setState(() {
+                      feeEstimation = _fee;
+                    });
+                  },
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 5, bottom: 5),
@@ -229,6 +248,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                             context: context,
                             widget: AddNFTConfirm(
                               nftName: _nameController!.text,
+                              feeEstimation: feeEstimation,
                               nftInitialSupply:
                                   int.tryParse(_initialSupplyController!.text),
                             ));
@@ -284,6 +304,30 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
         });
       }
     }
+    // Estimation of fees
+    feeEstimation = await getFee();
     return isValid;
+  }
+
+  Future<double> getFee() async {
+    double fee = 0;
+    if (_initialSupplyController!.text.isEmpty ||
+        _nameController!.text.isEmpty) {
+      return fee;
+    }
+    try {
+      final String transactionChainSeed =
+          await StateContainer.of(context).getSeed();
+
+      fee = await sl.get<AppService>().getFeesEstimationAddNFT(
+          globalVarOriginPrivateKey,
+          transactionChainSeed,
+          StateContainer.of(context).selectedAccount.lastAddress!,
+          _nameController!.text,
+          int.tryParse(_initialSupplyController!.text)!);
+    } catch (e) {
+      fee = 0;
+    }
+    return fee;
   }
 }

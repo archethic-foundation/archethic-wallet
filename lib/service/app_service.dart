@@ -20,15 +20,10 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
         NftBalance,
         NFTService,
         TransactionStatus,
-        TransactionInput;
+        TransactionInput,
+        TransactionFee;
 
 class AppService {
-  double getFeesEstimation() {
-    const double feeBase = 0.01;
-    const double fees = feeBase;
-    return fees;
-  }
-
   Future<List<Transaction>> getTransactionChain(
       String address, int? page) async {
     page ??= 1;
@@ -381,5 +376,61 @@ class AppService {
       }
     }
     return transactionsInfos;
+  }
+
+  Future<double> getFeesEstimationUCO(
+      String originPrivateKey,
+      String transactionChainSeed,
+      String address,
+      List<UCOTransfer> listUcoTransfer) async {
+    final Transaction lastTransaction =
+        await sl.get<ApiService>().getLastTransaction(address);
+    final Transaction transaction =
+        Transaction(type: 'transfer', data: Transaction.initData());
+    for (UCOTransfer transfer in listUcoTransfer) {
+      transaction.addUCOTransfer(transfer.to, transfer.amount!);
+    }
+    TransactionFee transactionFee = TransactionFee();
+    transaction
+        .build(transactionChainSeed, lastTransaction.chainLength!, 'P256')
+        .originSign(originPrivateKey);
+    try {
+      transactionFee =
+          await sl.get<ApiService>().getTransactionFee(transaction);
+    } catch (e) {
+      if (kDebugMode) {
+        print('error: ' + e.toString());
+      }
+    }
+    return transactionFee.fee!;
+  }
+
+  Future<double> getFeesEstimationAddNFT(
+      String originPrivateKey,
+      String transactionChainSeed,
+      String address,
+      String name,
+      int initialSupply) async {
+    final Transaction lastTransaction =
+        await sl.get<ApiService>().getLastTransaction(address);
+
+    final Transaction transaction = NFTService().prepareNewNFT(
+        initialSupply,
+        name,
+        transactionChainSeed,
+        lastTransaction.chainLength!,
+        'P256',
+        originPrivateKey);
+
+    TransactionFee transactionFee = TransactionFee();
+    try {
+      transactionFee =
+          await sl.get<ApiService>().getTransactionFee(transaction);
+    } catch (e) {
+      if (kDebugMode) {
+        print('error: ' + e.toString());
+      }
+    }
+    return transactionFee.fee!;
   }
 }

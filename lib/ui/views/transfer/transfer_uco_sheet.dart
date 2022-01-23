@@ -4,6 +4,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:archethic_wallet/util/global_var.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -85,6 +86,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
   NumberFormat? _localCurrencyFormat;
   String? _rawAmount;
   bool validRequest = true;
+  double feeEstimation = 0.0;
 
   List<UCOTransfer> ucoTransferList = List<UCOTransfer>.empty(growable: true);
 
@@ -409,19 +411,24 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                     Container(
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 30),
-                                      child: Text(
-                                        '+ ' +
-                                            AppLocalization.of(context)!.fees +
-                                            ': ' +
-                                            sl
-                                                .get<AppService>()
-                                                .getFeesEstimation()
-                                                .toStringAsFixed(5) +
-                                            ' UCO',
-                                        style: AppStyles
-                                            .textStyleSize14W100Primary(
-                                                context),
-                                      ),
+                                      child: feeEstimation > 0
+                                          ? Text(
+                                              '+ ' +
+                                                  AppLocalization.of(context)!
+                                                      .estimatedFees +
+                                                  ': ' +
+                                                  feeEstimation.toString() +
+                                                  ' UCO',
+                                              style: AppStyles
+                                                  .textStyleSize14W100Primary(
+                                                      context),
+                                            )
+                                          : Text(
+                                              AppLocalization.of(context)!
+                                                  .estimatedFeesNote,
+                                              style: AppStyles
+                                                  .textStyleSize14W100Primary(
+                                                      context)),
                                     ),
                                   ],
                                 ),
@@ -446,7 +453,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                           widget.actionButtonTitle ??
                               AppLocalization.of(context)!.send,
                           Dimens.buttonTopDimens, onPressed: () async {
-                        validRequest = _validateRequest();
+                        validRequest = await _validateRequest();
                         if (_sendAddressController!.text.startsWith('@') &&
                             validRequest) {
                           try {
@@ -456,11 +463,12 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                             Sheets.showAppHeightNineSheet(
                                 context: context,
                                 widget: TransferConfirmSheet(
-                                    ucoTransferList: ucoTransferList,
-                                    contactsRef: widget.contactsRef,
-                                    title: widget.title,
-                                    typeTransfer: 'UCO',
-                                    localCurrency: null));
+                                  ucoTransferList: ucoTransferList,
+                                  contactsRef: widget.contactsRef,
+                                  title: widget.title,
+                                  typeTransfer: 'UCO',
+                                  feeEstimation: feeEstimation,
+                                ));
                           } on Exception {
                             setState(() {
                               _addressValidationText =
@@ -471,11 +479,12 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                           Sheets.showAppHeightNineSheet(
                               context: context,
                               widget: TransferConfirmSheet(
-                                  ucoTransferList: ucoTransferList,
-                                  contactsRef: widget.contactsRef,
-                                  title: widget.title,
-                                  typeTransfer: 'UCO',
-                                  localCurrency: null));
+                                ucoTransferList: ucoTransferList,
+                                contactsRef: widget.contactsRef,
+                                title: widget.title,
+                                typeTransfer: 'UCO',
+                                feeEstimation: feeEstimation,
+                              ));
                         }
                       }),
                     ],
@@ -505,7 +514,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
       double? _balanceDouble;
       double? _feesDouble;
       _balanceDouble = double.tryParse(balance);
-      _feesDouble = sl.get<AppService>().getFeesEstimation();
+      _feesDouble = feeEstimation;
       if (_balanceDouble == null) {
         return false;
       } else {
@@ -553,7 +562,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
 
   /// Validate form data to see if valid
   /// @returns true if valid, false otherwise
-  bool _validateRequest() {
+  Future<bool> _validateRequest() async {
     bool isValid = true;
     UCOTransfer ucoTransfer = UCOTransfer();
     setState(() {
@@ -570,7 +579,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
       });
     } else {
       // Estimation of fees
-      final double estimationFees = sl.get<AppService>().getFeesEstimation();
+      feeEstimation = await getFee();
 
       final String amount = _rawAmount == null
           ? _sendAmountController!.text
@@ -583,7 +592,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
         setState(() {
           _amountValidationText = AppLocalization.of(context)!.amountMissing;
         });
-      } else if (sendAmount + estimationFees > balanceRaw) {
+      } else if (sendAmount + feeEstimation > balanceRaw) {
         isValid = false;
         setState(() {
           _amountValidationText =
@@ -641,9 +650,11 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
           : <LengthLimitingTextInputFormatter>[
               LengthLimitingTextInputFormatter(16)
             ],
-      onChanged: (String text) {
+      onChanged: (String text) async {
+        double _fee = await getFee();
         // Always reset the error message to be less annoying
         setState(() {
+          feeEstimation = _fee;
           _amountValidationText = '';
           // Reset the raw amount
           _rawAmount = null;
@@ -656,8 +667,11 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
           _amountHint == null ? '' : AppLocalization.of(context)!.enterAmount,
       suffixButton: TextFieldButton(
         icon: FontAwesomeIcons.angleDoubleUp,
-        onPressed: () {
+        onPressed: () async {
+          double _fee = await getFee(maxSend: true);
+
           setState(() {
+            feeEstimation = _fee;
             _amountValidationText = '';
             // Reset the raw amount
             _rawAmount = null;
@@ -666,11 +680,10 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
             return;
           }
 
-          final double estimationFees =
-              sl.get<AppService>().getFeesEstimation();
+          feeEstimation = await getFee();
           _sendAmountController!.text = StateContainer.of(context)
               .wallet!
-              .getAccountBalanceMoinsFeesDisplay(estimationFees)
+              .getAccountBalanceMoinsFeesDisplay(feeEstimation)
               .replaceAll(r',', '');
           _sendAddressController!.selection = TextSelection.fromPosition(
               TextPosition(offset: _sendAddressController!.text.length));
@@ -800,12 +813,15 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                 ? AppStyles.textStyleSize14W100Primary(context)
                 : AppStyles.textStyleSize14W100Primary(context),
         onChanged: (String text) async {
+          double _fee = await getFee();
           if (text.isNotEmpty) {
             setState(() {
+              feeEstimation = _fee;
               _showContactButton = false;
             });
           } else {
             setState(() {
+              feeEstimation = _fee;
               _showContactButton = true;
             });
           }
@@ -874,5 +890,34 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                 child: UIUtil.threeLinetextStyleSmallestW400Text(
                     context, _sendAddressController!.text))
             : null);
+  }
+
+  Future<double> getFee({maxSend = false}) async {
+    double fee = 0;
+    if (_sendAddressController!.text.isEmpty) {
+      return fee;
+    }
+    try {
+      final String transactionChainSeed =
+          await StateContainer.of(context).getSeed();
+      List<UCOTransfer> ucoTransferListForFee =
+          List<UCOTransfer>.empty(growable: true);
+      ucoTransferListForFee.add(UCOTransfer(
+          amount: maxSend
+              ? BigInt.from(
+                  StateContainer.of(context).wallet!.accountBalance.uco! *
+                      100000000)
+              : BigInt.from(
+                  double.tryParse(_sendAmountController!.text)! * 100000000),
+          to: _sendAddressController!.text.trim()));
+      fee = await sl.get<AppService>().getFeesEstimationUCO(
+          globalVarOriginPrivateKey,
+          transactionChainSeed,
+          StateContainer.of(context).selectedAccount.lastAddress!,
+          ucoTransferListForFee);
+    } catch (e) {
+      fee = 0;
+    }
+    return fee;
   }
 }

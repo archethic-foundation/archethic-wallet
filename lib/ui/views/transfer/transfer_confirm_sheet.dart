@@ -41,18 +41,18 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
 class TransferConfirmSheet extends StatefulWidget {
   const TransferConfirmSheet(
       {Key? key,
-      this.typeTransfer,
-      this.localCurrency,
+      required this.typeTransfer,
       this.contactsRef,
+      required this.feeEstimation,
       this.title,
       this.ucoTransferList,
       this.nftTransferList})
       : super(key: key);
 
   final String? typeTransfer;
-  final String? localCurrency;
   final String? title;
   final List<Contact>? contactsRef;
+  final double? feeEstimation;
   final List<UCOTransfer>? ucoTransferList;
   final List<NFTTransfer>? nftTransferList;
 
@@ -168,12 +168,9 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                     ),
                   ),
                   Text(
-                      AppLocalization.of(context)!.fees +
+                      AppLocalization.of(context)!.estimatedFees +
                           ': ' +
-                          sl
-                              .get<AppService>()
-                              .getFeesEstimation()
-                              .toStringAsFixed(5) +
+                          widget.feeEstimation.toString() +
                           ' UCO',
                       style: AppStyles.textStyleSize14W100Primary(context)),
                   const SizedBox(

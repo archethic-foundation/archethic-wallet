@@ -334,6 +334,22 @@ class AppLocalization {
     return Intl.message('Fees', name: 'fees');
   }
 
+  String get estimatedFees {
+    return Intl.message('Estimated fees', name: 'estimatedFees');
+  }
+
+  String get estimatedFeesNote {
+    return Intl.message(
+        'Note: The fees will be estimated when the address and the amount are specified.',
+        name: 'estimatedFeesNote');
+  }
+
+  String get estimatedFeesAddNFTNote {
+    return Intl.message(
+        'Note: The fees will be estimated when the name and the initial supply are specified.',
+        name: 'estimatedFeesAddNFTNote');
+  }
+
   String get pinCreateTitle {
     return Intl.message('Create a 6-digit pin', name: 'pinCreateTitle');
   }

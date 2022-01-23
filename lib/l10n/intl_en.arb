@@ -1277,5 +1277,23 @@
 	  "type": "text",
 	  "placeholders_order": [],
 	  "placeholders": {}
+	},
+  "estimatedFees": "Estimated fees",
+	"@estimatedFees": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+  "estimatedFeesNote": "Note: The fees will be estimated when the address and the amount are specified.",
+	"@estimatedFeesNote": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+  "estimatedFeesAddNFTNote": "Note: The fees will be estimated when the name and the initial supply are specified.",
+	"@estimatedFeesAddNFTNote": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
 	}
 }

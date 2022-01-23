@@ -1277,5 +1277,23 @@
 	"type": "text",
 	"placeholders_order": [],
 	"placeholders": {}
-  }
+  },
+  "estimatedFees": "Frais estimés",
+	"@estimatedFees": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+	"estimatedFeesNote": "Note: Les frais seront estimés quand l'adresse et le montant seront spécifiés.",
+	  "@estimatedFeesNote": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	  "estimatedFeesAddNFTNote": "Note: Les frais seront estimés quand le nom et l'approvisionnement initial seront spécifiés.",
+		"@estimatedFeesAddNFTNote": {
+		  "type": "text",
+		  "placeholders_order": [],
+		  "placeholders": {}
+	}
 }

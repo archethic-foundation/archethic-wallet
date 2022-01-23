@@ -36,11 +36,16 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show TransactionStatus;
 
 class AddNFTConfirm extends StatefulWidget {
-  const AddNFTConfirm({Key? key, this.nftName, this.nftInitialSupply})
+  const AddNFTConfirm(
+      {Key? key,
+      this.nftName,
+      this.nftInitialSupply,
+      required this.feeEstimation})
       : super(key: key);
 
   final String? nftName;
   final int? nftInitialSupply;
+  final double? feeEstimation;
 
   @override
   _AddNFTConfirmState createState() => _AddNFTConfirmState();
@@ -175,12 +180,9 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                     ),
                   ),
                   Text(
-                      AppLocalization.of(context)!.fees +
+                      AppLocalization.of(context)!.estimatedFees +
                           ': ' +
-                          sl
-                              .get<AppService>()
-                              .getFeesEstimation()
-                              .toStringAsFixed(5) +
+                          widget.feeEstimation.toString() +
                           ' UCO',
                       style: AppStyles.textStyleSize14W100Primary(context)),
                   const SizedBox(height: 30),
