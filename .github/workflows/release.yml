@@ -1,4 +1,4 @@
-name: RELEASE
+name: BUILD_ANDROID_RELEASE
 on:
   workflow_dispatch:
     branches:
