@@ -60,6 +60,41 @@ class AppDialogs {
       },
     );
   }
+
+  static void showInfoDialog(
+      BuildContext context, String title, String content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            title,
+            style: AppStyles.textStyleSize20W700Primary(context),
+          ),
+          shape: RoundedRectangleBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+              side: BorderSide(
+                  color: StateContainer.of(context).curTheme.primary45!)),
+          content: Text(content,
+              style: AppStyles.textStyleSize16W200Primary(context)),
+          actions: <Widget>[
+            TextButton(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 100),
+                child: Text(
+                  AppLocalization.of(context)!.ok,
+                  style: AppStyles.textStyleSize12W600Primary(context),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
 enum AnimationType {

@@ -74,6 +74,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "copy" : MessageLookupByLibrary.simpleMessage("Copier"),
     "copyAddress" : MessageLookupByLibrary.simpleMessage("Copier l\'adresse"),
     "currency" : MessageLookupByLibrary.simpleMessage("Devise"),
+    "currencyOracleInfo" : MessageLookupByLibrary.simpleMessage("Cet icône signifie que la conversion utilisera un oracle founrni par ARCHEthic."),
     "customUrlDesc" : MessageLookupByLibrary.simpleMessage("Définir le endpoint"),
     "customUrlHeader" : MessageLookupByLibrary.simpleMessage("URL personnalisées"),
     "defaultAccountName" : MessageLookupByLibrary.simpleMessage("Compte principal"),

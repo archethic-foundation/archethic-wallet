@@ -4,7 +4,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:archethic_wallet/util/global_var.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -91,6 +90,8 @@ class StateContainerState extends State<StateContainer> {
 
   ChartInfos? chartInfos;
   String? idChartOption = '1d';
+
+  bool useOracleUcoPrice = false;
 
   List<Contact> contactsRef = List<Contact>.empty(growable: true);
 
@@ -239,23 +240,31 @@ class StateContainerState extends State<StateContainer> {
   // Change curency
   Future<void> updateCurrency(AvailableCurrency currency) async {
     SimplePriceResponse simplePriceResponse = SimplePriceResponse();
+    useOracleUcoPrice = false;
     // if eur or usd, use ARCHEThic Oracle
     if (currency.getIso4217Code() == 'EUR' ||
         currency.getIso4217Code() == 'USD') {
       try {
-        final OracleUcoPrice oracleUcoPrice = await sl
-            .get<OracleService>()
-            .getLastOracleUcoPrice(globalVarOracleUCOPriceAddress);
-        simplePriceResponse.currency = currency.getIso4217Code();
-        if (currency.getIso4217Code() == 'EUR') {
-          simplePriceResponse.localCurrencyPrice = oracleUcoPrice.uco!.eur;
+        final OracleUcoPrice oracleUcoPrice =
+            await sl.get<OracleService>().getLastOracleUcoPrice();
+        if (oracleUcoPrice.uco == null || oracleUcoPrice.uco!.eur == 0) {
+          simplePriceResponse = await sl
+              .get<ApiCoinsService>()
+              .getSimplePrice(currency.getIso4217Code());
         } else {
-          if (currency.getIso4217Code() == 'USD') {
-            simplePriceResponse.localCurrencyPrice = oracleUcoPrice.uco!.usd;
+          simplePriceResponse.currency = currency.getIso4217Code();
+          if (currency.getIso4217Code() == 'EUR') {
+            simplePriceResponse.localCurrencyPrice = oracleUcoPrice.uco!.eur;
+            useOracleUcoPrice = true;
           } else {
-            simplePriceResponse = await sl
-                .get<ApiCoinsService>()
-                .getSimplePrice(currency.getIso4217Code());
+            if (currency.getIso4217Code() == 'USD') {
+              simplePriceResponse.localCurrencyPrice = oracleUcoPrice.uco!.usd;
+              useOracleUcoPrice = true;
+            } else {
+              simplePriceResponse = await sl
+                  .get<ApiCoinsService>()
+                  .getSimplePrice(currency.getIso4217Code());
+            }
           }
         }
       } catch (e) {
@@ -268,7 +277,9 @@ class StateContainerState extends State<StateContainer> {
           .get<ApiCoinsService>()
           .getSimplePrice(currency.getIso4217Code());
     }
-
+    simplePriceResponse = await sl
+        .get<ApiCoinsService>()
+        .getSimplePrice(currency.getIso4217Code());
     EventTaxiImpl.singleton().fire(PriceEvent(response: simplePriceResponse));
     requestUpdateCoinsChart(option: idChartOption!);
     setState(() {
@@ -291,9 +302,45 @@ class StateContainerState extends State<StateContainer> {
   }
 
   Future<void> requestUpdatePrice() async {
-    final SimplePriceResponse simplePriceResponse = await sl
-        .get<ApiCoinsService>()
-        .getSimplePrice(curCurrency.getIso4217Code());
+    SimplePriceResponse simplePriceResponse = SimplePriceResponse();
+    useOracleUcoPrice = false;
+    // if eur or usd, use ARCHEThic Oracle
+    if (curCurrency.getIso4217Code() == 'EUR' ||
+        curCurrency.getIso4217Code() == 'USD') {
+      try {
+        final OracleUcoPrice oracleUcoPrice =
+            await sl.get<OracleService>().getLastOracleUcoPrice();
+        if (oracleUcoPrice.uco == null || oracleUcoPrice.uco!.eur == 0) {
+          simplePriceResponse = await sl
+              .get<ApiCoinsService>()
+              .getSimplePrice(curCurrency.getIso4217Code());
+        } else {
+          simplePriceResponse.currency = curCurrency.getIso4217Code();
+          if (curCurrency.getIso4217Code() == 'EUR') {
+            simplePriceResponse.localCurrencyPrice = oracleUcoPrice.uco!.eur;
+            useOracleUcoPrice = true;
+          } else {
+            if (curCurrency.getIso4217Code() == 'USD') {
+              simplePriceResponse.localCurrencyPrice = oracleUcoPrice.uco!.usd;
+              useOracleUcoPrice = true;
+            } else {
+              simplePriceResponse = await sl
+                  .get<ApiCoinsService>()
+                  .getSimplePrice(curCurrency.getIso4217Code());
+            }
+          }
+        }
+      } catch (e) {
+        simplePriceResponse = await sl
+            .get<ApiCoinsService>()
+            .getSimplePrice(curCurrency.getIso4217Code());
+      }
+    } else {
+      simplePriceResponse = await sl
+          .get<ApiCoinsService>()
+          .getSimplePrice(curCurrency.getIso4217Code());
+    }
+
     EventTaxiImpl.singleton().fire(PriceEvent(response: simplePriceResponse));
   }
 

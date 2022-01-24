@@ -390,6 +390,12 @@ class AppLocalization {
     return Intl.message('Currency', name: 'currency');
   }
 
+  String get currencyOracleInfo {
+    return Intl.message(
+        'This icon means that the conversion will use an oracle provided by ARCHEthic.',
+        name: 'currencyOracleInfo');
+  }
+
   String get changeCurrencyHeader {
     return Intl.message('Currency', name: 'changeCurrencyHeader');
   }

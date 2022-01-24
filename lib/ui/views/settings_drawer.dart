@@ -533,12 +533,38 @@ class _SettingsSheetState extends State<SettingsSheet>
             builder: (BuildContext context) {
               return SimpleDialog(
                 title: Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: Text(
-                    AppLocalization.of(context)!.currency,
-                    style: AppStyles.textStyleSize20W700Primary(context),
-                  ),
-                ),
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          AppLocalization.of(context)!.currency,
+                          style: AppStyles.textStyleSize20W700Primary(context),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            buildIconWidget(
+                              context,
+                              'assets/icons/oracle.png',
+                              20,
+                              20,
+                            ),
+                            const SizedBox(width: 5),
+                            Expanded(
+                              child: Text(
+                                AppLocalization.of(context)!.currencyOracleInfo,
+                                style: AppStyles.textStyleSize12W100Primary(
+                                    context),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )),
                 shape: RoundedRectangleBorder(
                     borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                     side: BorderSide(

@@ -1,4 +1,7 @@
 // Flutter imports:
+import 'package:archethic_wallet/localization.dart';
+import 'package:archethic_wallet/ui/widgets/components/dialog.dart';
+import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -147,6 +150,27 @@ class BalanceInfosWidget {
                             context, StateContainer.of(context).idChartOption!),
                         style: AppStyles.textStyleSize12W100Primary(context),
                       ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      StateContainer.of(context).useOracleUcoPrice
+                          ? InkWell(
+                              onTap: () {
+                                AppDialogs.showInfoDialog(
+                                  context,
+                                  AppLocalization.of(context)!.informations,
+                                  AppLocalization.of(context)!
+                                      .currencyOracleInfo,
+                                );
+                              },
+                              child: buildIconWidget(
+                                context,
+                                'assets/icons/oracle.png',
+                                15,
+                                15,
+                              ),
+                            )
+                          : const SizedBox(),
                     ],
                   )
                 : Row(
@@ -196,6 +220,27 @@ class BalanceInfosWidget {
                             context, StateContainer.of(context).idChartOption!),
                         style: AppStyles.textStyleSize12W100Primary(context),
                       ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      StateContainer.of(context).useOracleUcoPrice
+                          ? InkWell(
+                              onTap: () {
+                                AppDialogs.showInfoDialog(
+                                  context,
+                                  AppLocalization.of(context)!.informations,
+                                  AppLocalization.of(context)!
+                                      .currencyOracleInfo,
+                                );
+                              },
+                              child: buildIconWidget(
+                                context,
+                                'assets/icons/oracle.png',
+                                15,
+                                15,
+                              ),
+                            )
+                          : const SizedBox(),
                     ],
                   ),
           ),
