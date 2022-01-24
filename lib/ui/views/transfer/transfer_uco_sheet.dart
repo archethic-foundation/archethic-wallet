@@ -808,10 +808,10 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
         fadeSuffixOnCondition: true,
         suffixShowFirstCondition: _qrCodeButtonVisible,
         style: _sendAddressStyle == AddressStyle.text60
-            ? AppStyles.textStyleSize14W100Text60(context)
+            ? AppStyles.textStyleSize14W700Text60(context)
             : _sendAddressStyle == AddressStyle.text90
-                ? AppStyles.textStyleSize14W100Primary(context)
-                : AppStyles.textStyleSize14W100Primary(context),
+                ? AppStyles.textStyleSize14W700Primary(context)
+                : AppStyles.textStyleSize14W700Primary(context),
         onChanged: (String text) async {
           double _fee = await getFee();
           if (text.isNotEmpty) {

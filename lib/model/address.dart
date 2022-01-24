@@ -2,7 +2,8 @@
 import 'dart:core';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show isHex;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show addressFormatControl;
 
 // Object to represent an account address or address URI, and provide useful utilities
 class Address {
@@ -57,6 +58,6 @@ class Address {
   }
 
   bool isValid() {
-    return _address == null ? false : isHex(_address!);
+    return addressFormatControl(_address);
   }
 }
