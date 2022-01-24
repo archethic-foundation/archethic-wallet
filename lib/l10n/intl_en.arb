@@ -1295,5 +1295,17 @@
 	  "type": "text",
 	  "placeholders_order": [],
 	  "placeholders": {}
-	}
+	},
+  "nodeAuthorizationDate": "Authorization date : ",
+	"@nodeAuthorizationDate": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+	},
+  "nodeEnrollmentDate": "Enrollment date : ",
+	"@nodeEnrollmentDate": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+  }
 }

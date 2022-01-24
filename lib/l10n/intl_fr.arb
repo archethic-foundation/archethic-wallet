@@ -768,55 +768,55 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"nodeNumber": "Nb de nœuds :",
+	"nodeNumber": "Nb de nœuds: ",
 	"@nodeNumber": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"nodeFirstPublicKey": "Première clé publique :",
+	"nodeFirstPublicKey": "Première clé publique: ",
 	"@nodeFirstPublicKey": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"nodeLastPublicKey": "Dernière clé publique :",
+	"nodeLastPublicKey": "Dernière clé publique: ",
 	"@nodeLastPublicKey": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"nodeIP": "IP : ",
+	"nodeIP": "IP: ",
 	"@nodeIP": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"nodeGeoPatch": "Geo patch : ",
+	"nodeGeoPatch": "Geo patch: ",
 	"@nodeGeoPatch": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"nodeNetworkPatch": "Network patch : ",
+	"nodeNetworkPatch": "Network patch: ",
 	"@nodeNetworkPatch": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"nodeAverageAvailability": "Disponibilité moyenne : ",
+	"nodeAverageAvailability": "Disponibilité moyenne: ",
 	"@nodeAverageAvailability": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"nodeAuthorized": "Autorisé : ",
+	"nodeAuthorized": "Autorisé: ",
 	"@nodeAuthorized": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"nodeRewardAddress": "Adresse de récompense : ",
+	"nodeRewardAddress": "Adresse de récompense: ",
 	"@nodeRewardAddress": {
 		"type": "text",
 		"placeholders_order": [],
@@ -1295,5 +1295,17 @@
 		  "type": "text",
 		  "placeholders_order": [],
 		  "placeholders": {}
+	},
+	"nodeAuthorizationDate": "Authorization date: ",
+	  "@nodeAuthorizationDate": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	  },
+	"nodeEnrollmentDate": "Enrollment date: ",
+	  "@nodeEnrollmentDate": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
 	}
 }

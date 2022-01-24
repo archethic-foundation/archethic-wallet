@@ -732,6 +732,14 @@ class AppLocalization {
     return Intl.message('Authorized : ', name: 'nodeAuthorized');
   }
 
+  String get nodeAuthorizationDate {
+    return Intl.message('Authorization date : ', name: 'nodeAuthorizationDate');
+  }
+
+  String get nodeEnrollmentDate {
+    return Intl.message('Enrollment date : ', name: 'nodeEnrollmentDate');
+  }
+
   String get nodeRewardAddress {
     return Intl.message('Reward address : ', name: 'nodeRewardAddress');
   }

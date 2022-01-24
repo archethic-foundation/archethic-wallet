@@ -20,6 +20,7 @@ import 'package:archethic_wallet/ui/util/styles.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show Node, ApiService;
+import 'package:intl/intl.dart';
 
 class NodesList extends StatefulWidget {
   NodesList(this.nodesController, this.nodesOpen, {Key? key}) : super(key: key);
@@ -180,12 +181,8 @@ class _NodesListState extends State<NodesList> {
   }
 
   Widget buildSingleNode(BuildContext context, Node node) {
-    return TextButton(
-      onPressed: () {
-        // NodeDetailsSheet(contact, documentsDirectory)
-        //     .mainBottomSheet(context);
-      },
-      child: Column(children: <Widget>[
+    return Column(
+      children: <Widget>[
         // Main Container
         Container(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -196,7 +193,6 @@ class _NodesListState extends State<NodesList> {
               // Node info
               Expanded(
                 child: Container(
-                  height: 220,
                   margin: const EdgeInsetsDirectional.only(start: 2.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -271,10 +267,55 @@ class _NodesListState extends State<NodesList> {
                       ),
                       Row(
                         children: <Widget>[
+                          Text(AppLocalization.of(context)!.nodeEnrollmentDate,
+                              style: AppStyles.textStyleSize12W600Primary(
+                                  context)),
+                          Text(
+                              DateFormat.yMMMEd(Localizations.localeOf(context)
+                                      .languageCode)
+                                  .add_Hms()
+                                  .format(DateTime.fromMillisecondsSinceEpoch(
+                                          node.enrollmentDate! * 1000)
+                                      .toLocal())
+                                  .toString(),
+                              style: AppStyles.textStyleSize12W100Primary(
+                                  context)),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                              AppLocalization.of(context)!
+                                  .nodeAuthorizationDate,
+                              style: AppStyles.textStyleSize12W600Primary(
+                                  context)),
+                          Text(
+                              DateFormat.yMMMEd(Localizations.localeOf(context)
+                                      .languageCode)
+                                  .add_Hms()
+                                  .format(DateTime.fromMillisecondsSinceEpoch(
+                                          node.authorizationDate! * 1000)
+                                      .toLocal())
+                                  .toString(),
+                              style: AppStyles.textStyleSize12W100Primary(
+                                  context)),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: <Widget>[
                           Text(AppLocalization.of(context)!.nodeAuthorized,
                               style: AppStyles.textStyleSize12W600Primary(
                                   context)),
-                          Text(node.authorized.toString(),
+                          Text(
+                              node.authorized!
+                                  ? AppLocalization.of(context)!.yes
+                                  : AppLocalization.of(context)!.no,
                               style: AppStyles.textStyleSize12W100Primary(
                                   context)),
                         ],
@@ -297,7 +338,7 @@ class _NodesListState extends State<NodesList> {
           height: 2,
           color: StateContainer.of(context).curTheme.primary15,
         ),
-      ]),
+      ],
     );
   }
 }
