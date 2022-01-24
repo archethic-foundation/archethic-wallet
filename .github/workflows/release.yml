@@ -22,7 +22,7 @@ jobs:
       - name: Build apk
         run: |
           flutter pub get
-          flutter build apk
+          flutter build apk --split-per-abi
       - name: Retrieve Release Version
         id: versionstep
         run: |
