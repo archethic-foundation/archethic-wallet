@@ -3,7 +3,7 @@ description: ARCHEthic Wallet app (iOS/Android/MacOS/Windows/Web).
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.1.8+108
+version: 0.1.9+109
 
 environment:
   sdk: ">=2.15.1 <3.0.0"
@@ -13,11 +13,11 @@ dependencies:
   animate_do: ^2.1.0
 
   # ArchEthic dart library for Flutter based on Official ArchEthic Javascript library for Node and Browser
-  archethic_lib_dart: ^1.0.4
-  #archethic_lib_dart: 
-  #  git:
-  #    url: https://github.com/archethic-foundation/libdart.git
-  #    ref: master
+  #archethic_lib_dart: ^1.0.4
+  archethic_lib_dart: 
+    git:
+      url: https://github.com/archethic-foundation/libdart.git
+      ref: master
       
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0
