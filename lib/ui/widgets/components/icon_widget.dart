@@ -14,7 +14,7 @@ Widget buildIconWidget(
       shape: BoxShape.circle,
       boxShadow: <BoxShadow>[
         BoxShadow(
-          color: StateContainer.of(context).curTheme.background40!,
+          color: StateContainer.of(context).curTheme.iconDrawerBackgroundColor!,
         ),
       ],
     ),

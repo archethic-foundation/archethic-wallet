@@ -939,7 +939,10 @@ class _SettingsSheetState extends State<SettingsSheet>
                           context,
                           AppLocalization.of(context)!.nftHeader,
                           AppLocalization.of(context)!.nftHeaderDesc,
-                          icon: 'assets/icons/nft.png', onPressed: () {
+                          icon: 'assets/icons/nft.png',
+                          iconColor: StateContainer.of(context)
+                              .curTheme
+                              .iconDrawerColor!, onPressed: () {
                         setState(() {
                           _nftOpen = true;
                         });
@@ -955,7 +958,10 @@ class _SettingsSheetState extends State<SettingsSheet>
                         context,
                         AppLocalization.of(context)!.addressBookHeader,
                         AppLocalization.of(context)!.addressBookDesc,
-                        icon: 'assets/icons/address-book.png', onPressed: () {
+                        icon: 'assets/icons/address-book.png',
+                        iconColor: StateContainer.of(context)
+                            .curTheme
+                            .iconDrawerColor!, onPressed: () {
                       setState(() {
                         _contactsOpen = true;
                       });
@@ -979,7 +985,10 @@ class _SettingsSheetState extends State<SettingsSheet>
                         context,
                         AppLocalization.of(context)!.nodesHeader,
                         AppLocalization.of(context)!.nodesHeaderDesc,
-                        icon: 'assets/icons/nodes.png', onPressed: () {
+                        icon: 'assets/icons/nodes.png',
+                        iconColor: StateContainer.of(context)
+                            .curTheme
+                            .iconDrawerColor!, onPressed: () {
                       setState(() {
                         _nodesOpen = true;
                       });
@@ -993,7 +1002,10 @@ class _SettingsSheetState extends State<SettingsSheet>
                         context,
                         AppLocalization.of(context)!.walletFAQHeader,
                         AppLocalization.of(context)!.walletFAQDesc,
-                        icon: 'assets/icons/faq.png', onPressed: () {
+                        icon: 'assets/icons/faq.png',
+                        iconColor: StateContainer.of(context)
+                            .curTheme
+                            .iconDrawerColor!, onPressed: () {
                       setState(() {
                         _walletFAQOpen = true;
                       });
@@ -1008,7 +1020,9 @@ class _SettingsSheetState extends State<SettingsSheet>
                         AppLocalization.of(context)!.labLinkHeader,
                         AppLocalization.of(context)!.labLinkDesc,
                         icon: 'assets/icons/microscope.png',
-                        onPressed: () async {
+                        iconColor: StateContainer.of(context)
+                            .curTheme
+                            .iconDrawerColor!, onPressed: () async {
                       UIUtil.showWebview(
                           context,
                           'https://www.archethic.net/lab.html',
@@ -1021,7 +1035,9 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutHeader,
-                        'assets/icons/help.png', onPressed: () {
+                        'assets/icons/help.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        onPressed: () {
                       setState(() {
                         _aboutOpen = true;
                       });
@@ -1046,6 +1062,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         AppLocalization.of(context)!.changeCurrencyDesc,
                         StateContainer.of(context).curCurrency,
                         'assets/icons/money-currency.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
                         _currencyDialog),
                     Divider(
                       height: 2,
@@ -1056,6 +1073,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         AppLocalization.of(context)!.language,
                         StateContainer.of(context).curLanguage,
                         'assets/icons/languages.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
                         _languageDialog),
                     Divider(
                       height: 2,
@@ -1066,6 +1084,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         AppLocalization.of(context)!.themeHeader,
                         _curThemeSetting,
                         'assets/icons/themes.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
                         _themeDialog),
                     /*Divider(
                       height: 2,
@@ -1088,7 +1107,9 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.securityHeader,
-                        'assets/icons/encrypted.png', onPressed: () {
+                        'assets/icons/encrypted.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        onPressed: () {
                       setState(() {
                         _securityOpen = true;
                       });
@@ -1101,7 +1122,9 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.logout,
-                        'assets/icons/logout.png', onPressed: () {
+                        'assets/icons/logout.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        onPressed: () {
                       AppDialogs.showConfirmDialog(
                           context,
                           CaseChange.toUpperCase(
@@ -1249,12 +1272,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       margin: const EdgeInsetsDirectional.only(
                           start: 30.0, bottom: 10),
                       child: Text(AppLocalization.of(context)!.preferences,
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w100,
-                              color: StateContainer.of(context)
-                                  .curTheme
-                                  .primary60)),
+                          style: AppStyles.textStyleSize20W700Primary(context)),
                     ),
                     // Authentication Method
                     Divider(
@@ -1266,6 +1284,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         AppLocalization.of(context)!.authMethod,
                         _curAuthMethod,
                         'assets/icons/authentLaunch.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
                         _authMethodDialog),
                     // Authenticate on Launch
 
@@ -1278,6 +1297,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                           AppLocalization.of(context)!.lockAppSetting,
                           _curUnlockSetting,
                           'assets/icons/authentication.png',
+                          StateContainer.of(context).curTheme.iconDrawerColor!,
                           _lockDialog),
                     ]),
                     Divider(
@@ -1290,6 +1310,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                       AppLocalization.of(context)!.autoLockHeader,
                       _curTimeoutSetting,
                       'assets/icons/autoLock.png',
+                      StateContainer.of(context).curTheme.iconDrawerColor!,
                       _lockTimeoutDialog,
                       disabled: _curUnlockSetting.setting == UnlockOption.no,
                     ),
@@ -1301,7 +1322,9 @@ class _SettingsSheetState extends State<SettingsSheet>
                       AppSettings.buildSettingsListItemSingleLine(
                           context,
                           AppLocalization.of(context)!.backupSecretPhrase,
-                          'assets/icons/key-word.png', onPressed: () async {
+                          'assets/icons/key-word.png',
+                          StateContainer.of(context).curTheme.iconDrawerColor!,
+                          onPressed: () async {
                         final Preferences _preferences =
                             await Preferences.getInstance();
                         final AuthenticationMethod authMethod =
@@ -1351,6 +1374,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         context,
                         AppLocalization.of(context)!.pinPadShuffle,
                         'assets/icons/shuffle.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
                         _pinPadShuffleActive,
                         onChanged: (bool _isSwitched) async {
                       final Preferences _preferences =
@@ -1371,7 +1395,10 @@ class _SettingsSheetState extends State<SettingsSheet>
                           context,
                           AppLocalization.of(context)!.yubikeyParamsHeader,
                           AppLocalization.of(context)!.yubikeyParamsDesc,
-                          icon: 'assets/icons/digital-key.png', onPressed: () {
+                          icon: 'assets/icons/digital-key.png',
+                          iconColor: StateContainer.of(context)
+                              .curTheme
+                              .iconDrawerColor!, onPressed: () {
                         setState(() {
                           _yubikeyParamsOpen = true;
                         });
@@ -1485,6 +1512,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         AppLocalization.of(context)!
                             .aboutGeneralTermsAndConditions,
                         'assets/icons/terms-and-conditions.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () async {
                       UIUtil.showWebview(
                           context,
@@ -1499,6 +1527,7 @@ class _SettingsSheetState extends State<SettingsSheet>
                         context,
                         AppLocalization.of(context)!.aboutWalletServiceTerms,
                         'assets/icons/walletServiceTerms.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () async {
                       UIUtil.showWebview(context, 'https://archethic.net',
                           AppLocalization.of(context)!.aboutWalletServiceTerms);
@@ -1509,7 +1538,9 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutPrivacyPolicy,
-                        'assets/icons/privacyPolicy.png', onPressed: () async {
+                        'assets/icons/privacyPolicy.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        onPressed: () async {
                       UIUtil.showWebview(context, 'https://archethic.net',
                           AppLocalization.of(context)!.aboutPrivacyPolicy);
                     }),
@@ -1604,7 +1635,9 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.addNFTHeader,
-                        'assets/icons/addNft.png', onPressed: () {
+                        'assets/icons/addNft.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        onPressed: () {
                       Sheets.showAppHeightNineSheet(
                           context: context, widget: const AddNFTSheet());
                     }),
@@ -1614,7 +1647,9 @@ class _SettingsSheetState extends State<SettingsSheet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.transferNFT,
-                        'assets/icons/transferNft.png', onPressed: () {
+                        'assets/icons/transferNft.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        onPressed: () {
                       /*Sheets.showAppHeightNineSheet(
                           context: context,
                           widget: TransferNftSheet(

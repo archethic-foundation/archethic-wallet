@@ -20,6 +20,7 @@ class AppSettings {
       String heading,
       SettingSelectionItem defaultMethod,
       String icon,
+      Color iconColor,
       Function onPressed,
       {bool disabled = false}) {
     return IgnorePointer(
@@ -35,7 +36,8 @@ class AppSettings {
             children: <Widget>[
               Container(
                   margin: const EdgeInsetsDirectional.only(end: 13.0),
-                  child: buildIconWidget(context, icon, 30, 30)),
+                  child:
+                      buildIconWidget(context, icon, 30, 30, color: iconColor)),
               Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,6 +74,7 @@ class AppSettings {
       String info,
       SettingSelectionItem defaultMethod,
       String icon,
+      Color iconColor,
       Function onPressed,
       {bool disabled = false}) {
     return TextButton(
@@ -85,7 +88,8 @@ class AppSettings {
           children: <Widget>[
             Container(
                 margin: const EdgeInsetsDirectional.only(end: 13.0),
-                child: buildIconWidget(context, icon, 30, 30)),
+                child:
+                    buildIconWidget(context, icon, 30, 30, color: iconColor)),
             Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,8 +131,13 @@ class AppSettings {
   }
 
   static Widget buildSettingsListItemSingleLineWithInfos(
-      BuildContext context, String heading, String info,
-      {Function? onPressed, String? icon}) {
+    BuildContext context,
+    String heading,
+    String info, {
+    Function? onPressed,
+    String? icon,
+    Color? iconColor,
+  }) {
     return TextButton(
       onPressed: () {
         if (onPressed != null) {
@@ -144,7 +153,8 @@ class AppSettings {
           children: <Widget>[
             Container(
                 margin: const EdgeInsetsDirectional.only(end: 13.0),
-                child: buildIconWidget(context, icon!, 30, 30)),
+                child:
+                    buildIconWidget(context, icon!, 30, 30, color: iconColor)),
             Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,7 +190,7 @@ class AppSettings {
 
   //Settings item without any dropdown option but rather a direct functionality
   static Widget buildSettingsListItemSingleLine(
-      BuildContext context, String heading, String icon,
+      BuildContext context, String heading, String icon, Color iconColor,
       {Function? onPressed}) {
     return TextButton(
       onPressed: () {
@@ -197,7 +207,9 @@ class AppSettings {
           children: <Widget>[
             Container(
               margin: const EdgeInsetsDirectional.only(end: 13.0),
-              child: Container(child: buildIconWidget(context, icon, 30, 30)),
+              child: Container(
+                  child:
+                      buildIconWidget(context, icon, 30, 30, color: iconColor)),
             ),
             SizedBox(
               width: UIUtil.drawerWidth(context) - 100,
@@ -217,8 +229,8 @@ class AppSettings {
     );
   }
 
-  static Widget buildSettingsListItemSwitch(
-      BuildContext context, String heading, String icon, bool _isSwitched,
+  static Widget buildSettingsListItemSwitch(BuildContext context,
+      String heading, String icon, Color iconColor, bool _isSwitched,
       {Function? onChanged}) {
     return TextButton(
       onPressed: () {},
@@ -229,7 +241,8 @@ class AppSettings {
           children: <Widget>[
             Container(
                 margin: const EdgeInsetsDirectional.only(end: 13.0),
-                child: buildIconWidget(context, icon, 30, 30)),
+                child:
+                    buildIconWidget(context, icon, 30, 30, color: iconColor)),
             SizedBox(
               width: UIUtil.drawerWidth(context) - 130,
               child: Text(

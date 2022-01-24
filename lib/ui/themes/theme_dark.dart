@@ -138,6 +138,12 @@ class DarkTheme implements BaseTheme {
   String? logoAlone = 'logo_alone';
 
   @override
+  Color? iconDrawerColor = blue;
+
+  @override
+  Color? iconDrawerBackgroundColor = white.withOpacity(0.1);
+
+  @override
   Widget? getBackgroundScreen(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(

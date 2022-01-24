@@ -141,6 +141,12 @@ class LightTheme implements BaseTheme {
   String? logoAlone = 'logo_alone';
 
   @override
+  Color? iconDrawerColor = white;
+
+  @override
+  Color? iconDrawerBackgroundColor = blue.withOpacity(0.4);
+
+  @override
   Widget? getBackgroundScreen(BuildContext context) {
     return CircularParticle(
       awayRadius: 80,

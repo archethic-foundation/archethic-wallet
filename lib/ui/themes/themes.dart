@@ -69,6 +69,9 @@ abstract class BaseTheme {
   String? logo;
   String? logoAlone;
 
+  Color? iconDrawerColor;
+  Color? iconDrawerBackgroundColor;
+
   Widget? getBackgroundScreen(BuildContext context);
 
   Gradient? gradient;
