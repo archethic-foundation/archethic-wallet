@@ -317,6 +317,11 @@ class AppLocalization {
     return Intl.message('Please Enter an Address', name: 'addressMissing');
   }
 
+  String get sendToMeError {
+    return Intl.message('You can\'t send UCO to your own wallet.',
+        name: 'sendToMeError');
+  }
+
   String get amountMissing {
     return Intl.message('Please Enter an Amount', name: 'amountMissing');
   }

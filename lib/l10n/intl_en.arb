@@ -1313,5 +1313,11 @@
 	  "type": "text",
 	  "placeholders_order": [],
 	  "placeholders": {}
+  },
+  "sendToMeError": "You can't send UCO to your own wallet.",
+	"@sendToMeError": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
   }
 }

@@ -10,7 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show UCOTransfer;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show UCOTransfer, AddressService;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -622,6 +623,19 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
         _qrCodeButtonVisible = false;
       });
       _sendAddressFocusNode!.unfocus();
+    }
+
+    //
+    String lastAddressRecipient = await sl
+        .get<AddressService>()
+        .lastAddressFromAddress(_sendAddressController!.text.trim());
+    if (lastAddressRecipient ==
+        StateContainer.of(context).selectedAccount.lastAddress!) {
+      isValid = false;
+      setState(() {
+        _addressValidationText = AppLocalization.of(context)!.sendToMeError;
+        _qrCodeButtonVisible = true;
+      });
     }
 
     if (isValid) {
