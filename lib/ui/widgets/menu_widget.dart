@@ -1,7 +1,11 @@
 // Flutter imports:
 // ignore_for_file: avoid_unnecessary_containers
 
+import 'dart:io';
+
+import 'package:archethic_wallet/ui/views/sheets/ledger_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -168,27 +172,24 @@ class MenuWidget {
                         style: AppStyles.textStyleSize14W600Primary(context)),
                   ],
                 ))),
-        /* if (!kIsWeb && (Platform.isMacOS || Platform.isWindows))
-                              Container(
-                                  child: InkWell(
-                                      onTap: () {
-                                        Sheets.showAppHeightNineSheet(
-                                            context: context,
-                                            widget: const LedgerSheet());
-                                      },
-                                      child: Column(
-                                        children: <Widget>[
-                                          buildIconDataWidget(context,
-                                              Icons.vpn_key_outlined, 50, 50),
-                                          const SizedBox(height: 5),
-                                          Text('Ledger',
-                                              style: AppStyles
-                                                  .textStyleSize14W600Primary(
-                                                      context)),
-                                        ],
-                                      )))
-                            else
-                              const SizedBox(),*/
+        if (kIsWeb || Platform.isMacOS || Platform.isWindows)
+          Container(
+              child: InkWell(
+                  onTap: () {
+                    Sheets.showAppHeightNineSheet(
+                        context: context, widget: const LedgerSheet());
+                  },
+                  child: Column(
+                    children: <Widget>[
+                      buildIconDataWidget(
+                          context, Icons.vpn_key_outlined, 50, 50),
+                      const SizedBox(height: 5),
+                      Text('Ledger',
+                          style: AppStyles.textStyleSize14W600Primary(context)),
+                    ],
+                  )))
+        else
+          const SizedBox(),
       ],
     );
   }

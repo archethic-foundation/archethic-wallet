@@ -1,7 +1,10 @@
 // Dart imports:
 import 'dart:io';
+import 'dart:math';
+import 'dart:typed_data';
 
 // Flutter imports:
+import 'package:convert/convert.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,8 +21,33 @@ import 'package:archethic_wallet/ui/widgets/components/app_text_field.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
 import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
 
+import 'package:web_usb/web_usb.dart';
+import 'package:collection/collection.dart';
+
+final ledgerDeviceIds = RequestOptionsFilter(
+  vendorId: 0x2c97,
+);
+
+const configurationValue = 1;
+const endpointNumber = 3;
+
+Uint8List transport(
+  int cla,
+  int ins,
+  int p1,
+  int p2, [
+  Uint8List? data,
+]) {
+  data ??= Uint8List.fromList([]);
+  return Uint8List.fromList([cla, ins, p1, p2, data.length, ...data]);
+}
+
+String parseResponse(Uint8List data) {
+  return hex.encode(data);
+}
+
 class LedgerSheet extends StatefulWidget {
-  const LedgerSheet(Key? key) : super(key: key);
+  const LedgerSheet({Key? key}) : super(key: key);
 
   @override
   _LedgerSheetState createState() => _LedgerSheetState();
@@ -28,6 +56,12 @@ class LedgerSheet extends StatefulWidget {
 class _LedgerSheetState extends State<LedgerSheet> {
   FocusNode? enterAPDUFocusNode;
   TextEditingController? enterAPDUController;
+  UsbDevice? _device;
+  UsbConfiguration? _configuration;
+  UsbInterface? _interface;
+  var response = '';
+  var labelResponse = '';
+  var info = '';
 
   @override
   void initState() {
@@ -35,6 +69,19 @@ class _LedgerSheetState extends State<LedgerSheet> {
 
     enterAPDUFocusNode = FocusNode();
     enterAPDUController = TextEditingController();
+    enterAPDUController!.text = 'e0c4000000';
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_device != null) {
+      _device?.close().then((value) {
+        print('device.close success');
+      }).catchError((error) {
+        print('device.close $error');
+      });
+    }
   }
 
   @override
@@ -118,60 +165,169 @@ class _LedgerSheetState extends State<LedgerSheet> {
             child: Container(
                 margin: const EdgeInsets.only(top: 60, bottom: 10),
                 child: SafeArea(
-                  minimum: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).size.height * 0.035,
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        'APDU',
-                        style: AppStyles.textStyleSize16W600Primary(context),
-                        textAlign: TextAlign.center,
-                      ),
-                      AppTextField(
-                        maxLines: 1,
-                        padding: const EdgeInsetsDirectional.only(
-                            start: 16, end: 16),
-                        focusNode: enterAPDUFocusNode,
-                        controller: enterAPDUController,
-                        textInputAction: TextInputAction.go,
-                        autofocus: true,
-                        onSubmitted: (_) async {
-                          FocusScope.of(context).unfocus();
-                        },
-                        onChanged: (String value) async {},
-                        inputFormatters: <LengthLimitingTextInputFormatter>[
-                          LengthLimitingTextInputFormatter(45),
+                    minimum: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.035,
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            'APDU',
+                            style:
+                                AppStyles.textStyleSize16W600Primary(context),
+                            textAlign: TextAlign.center,
+                          ),
+                          AppTextField(
+                            maxLines: 2,
+                            padding: const EdgeInsetsDirectional.only(
+                                start: 16, end: 16),
+                            focusNode: enterAPDUFocusNode,
+                            controller: enterAPDUController,
+                            textInputAction: TextInputAction.go,
+                            autofocus: true,
+                            onSubmitted: (_) async {
+                              FocusScope.of(context).unfocus();
+                            },
+                            onChanged: (String value) async {
+                              setState(() {});
+                            },
+                            inputFormatters: <LengthLimitingTextInputFormatter>[
+                              LengthLimitingTextInputFormatter(300),
+                            ],
+                            keyboardType: TextInputType.text,
+                            obscureText: false,
+                            textAlign: TextAlign.center,
+                            style:
+                                AppStyles.textStyleSize16W600Primary(context),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Response',
+                            style:
+                                AppStyles.textStyleSize16W600Primary(context),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          SelectableText(
+                            response,
+                            style:
+                                AppStyles.textStyleSize16W200Primary(context),
+                            textAlign: TextAlign.center,
+                          ),
+                          SelectableText(
+                            labelResponse,
+                            style:
+                                AppStyles.textStyleSize16W200Primary(context),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          SelectableText(
+                            'Info',
+                            style:
+                                AppStyles.textStyleSize16W600Primary(context),
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            info,
+                            style:
+                                AppStyles.textStyleSize16W200Primary(context),
+                            textAlign: TextAlign.center,
+                          ),
                         ],
-                        keyboardType: TextInputType.text,
-                        obscureText: false,
-                        textAlign: TextAlign.center,
-                        style: AppStyles.textStyleSize16W600Primary(context),
                       ),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      Text(
-                        'Response',
-                        style: AppStyles.textStyleSize16W600Primary(context),
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        'XXXXXXXXXXXXXXXXXXXXXX',
-                        style: AppStyles.textStyleSize16W200Primary(context),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                )),
+                    ))),
           ),
           Column(
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  AppButton.buildAppButton(context, AppButtonType.primary,
-                      AppLocalization.of(context)!.send, Dimens.buttonTopDimens,
-                      onPressed: () async {}),
+                  enterAPDUController!.text.isEmpty
+                      ? AppButton.buildAppButton(
+                          context,
+                          AppButtonType.textOutline,
+                          AppLocalization.of(context)!.send,
+                          Dimens.buttonTopDimens,
+                          onPressed: () async {})
+                      : AppButton.buildAppButton(
+                          context,
+                          AppButtonType.primary,
+                          AppLocalization.of(context)!.send,
+                          Dimens.buttonTopDimens, onPressed: () async {
+                          setState(() {
+                            info = '';
+                          });
+                          UsbDevice requestDevice;
+                          if (_device == null) {
+                            requestDevice =
+                                await usb.requestDevice(RequestOptions(
+                              filters: [ledgerDeviceIds],
+                            ));
+                            _device = requestDevice;
+                          }
+                          _device?.open().then((value) {
+                            addLog('Device session has started');
+                            _configuration = _device?.configuration;
+                            _interface = _configuration?.interfaces
+                                .firstWhereOrNull((i) {
+                              return i.alternates.firstWhereOrNull(
+                                      (a) => a.interfaceClass == 255) !=
+                                  null;
+                            });
+                            _device
+                                ?.claimInterface(_interface!.interfaceNumber)
+                                .then((value) async {
+                              addLog('Interface claimed for exclusive access');
+                              int? cla = int.tryParse(
+                                  enterAPDUController!.text.substring(0, 2),
+                                  radix: 16);
+                              int? ins = int.tryParse(
+                                  enterAPDUController!.text.substring(2, 4),
+                                  radix: 16);
+                              int? p1 = int.tryParse(
+                                  enterAPDUController!.text.substring(4, 6),
+                                  radix: 16);
+                              int? p2 = int.tryParse(
+                                  enterAPDUController!.text.substring(6, 8),
+                                  radix: 16);
+                              final apdu = transport(
+                                  cla!,
+                                  ins!,
+                                  p1!,
+                                  p2!,
+                                  Uint8List.fromList(hex.decode(
+                                      enterAPDUController!.text.substring(8))));
+                              var usbOutTransferResult =
+                                  await _device?.transferOut(
+                                      endpointNumber, makeBlock(apdu));
+                              addLog('usbOutTransferResult: ' +
+                                  usbOutTransferResult.toString());
+                              addLog('Command sent to Nano S');
+                              var usbInTransferResult = await _device!
+                                  .transferIn(endpointNumber, packetSize);
+                              addLog('usbInTransferResult.data: ' +
+                                  usbInTransferResult.data.buffer.toString());
+                              var data = parseBlock(usbInTransferResult.data);
+                              addLog('Result received from Nano S');
+                              addLog('data: ' + data.toString());
+                              setState(() {
+                                response = parseResponse(data);
+                              });
+                              getLabelError();
+                            }).catchError((error) {
+                              addLog('Claim Interface Error : $error');
+                            });
+                          }).catchError((error) {
+                            addLog(
+                                'Device session Error : $error. Please send again to reconnect.');
+                            _device = null;
+                          });
+                        }),
                 ],
               ),
             ],
@@ -180,4 +336,71 @@ class _LedgerSheetState extends State<LedgerSheet> {
       ),
     );
   }
+
+  void addLog(String log) {
+    setState(() {
+      info = info + '\n' + log;
+    });
+  }
+
+  void getLabelError() {
+    switch (response) {
+      case '6d00':
+        labelResponse = 'Invalid parameter received';
+        break;
+      case '670A':
+        labelResponse = 'Lc is 0x00 whereas an application name is required';
+        break;
+      case '6807':
+        labelResponse = 'The requested application is not present';
+        break;
+      case '9000':
+        labelResponse = 'Success of the operation';
+        break;
+      default:
+        labelResponse = '';
+    }
+    setState(() {});
+  }
+}
+
+const packetSize = 64;
+final channel = Random().nextInt(0xffff);
+const Tag = 0x05;
+
+///
+/// +---------+--------+------------+-----------+
+/// | channel |  Tag   | blockSeqId | blockData |
+/// +---------+--------+------------+-----------+
+/// | 2 bytes | 1 byte | 2 bytes    |       ... |
+/// +---------+--------+------------+-----------+
+Uint8List makeBlock(Uint8List apdu) {
+  // TODO Multiple blocks
+
+  var apduBuffer = WriteBuffer();
+  apduBuffer.putUint16(apdu.length, endian: Endian.big);
+  apduBuffer.putUint8List(apdu);
+  var blockSize = packetSize - 5;
+  var paddingLength = blockSize - apdu.length - 2;
+  apduBuffer.putUint8List(Uint8List.fromList(List.filled(paddingLength, 0)));
+  var apduData = apduBuffer.done();
+
+  var writeBuffer = WriteBuffer();
+  writeBuffer.putUint16(channel, endian: Endian.big);
+  writeBuffer.putUint8(Tag);
+  writeBuffer.putUint16(0, endian: Endian.big);
+  writeBuffer.putUint8List(apduData.buffer.asUint8List());
+  return writeBuffer.done().buffer.asUint8List();
+}
+
+Uint8List parseBlock(ByteData block) {
+  var readBuffer = ReadBuffer(block);
+  assert(readBuffer.getUint16(endian: Endian.big) == channel);
+  assert(readBuffer.getUint8() == Tag);
+  assert(readBuffer.getUint16(endian: Endian.big) == 0);
+
+  var dataLength = readBuffer.getUint16(endian: Endian.big);
+  var data = readBuffer.getUint8List(dataLength);
+
+  return Uint8List.fromList(data);
 }
