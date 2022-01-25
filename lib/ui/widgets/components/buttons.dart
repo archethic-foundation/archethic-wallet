@@ -246,7 +246,7 @@ class AppButton {
               child: AutoSizeText(
                 buttonText,
                 textAlign: TextAlign.center,
-                style: AppStyles.textStyleSize14W700Primary(context),
+                style: AppStyles.textStyleSize20W700Primary(context),
                 maxLines: 1,
                 stepGranularity: 0.5,
               ),
