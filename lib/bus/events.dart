@@ -1,4 +1,5 @@
 export 'account_changed_event.dart';
+export 'apdu_event.dart';
 export 'authenticated_event.dart';
 export 'balance_get_event.dart';
 export 'chart_event.dart';

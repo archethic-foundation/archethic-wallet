@@ -1,10 +1,17 @@
 // Dart imports:
+import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'dart:html' show EventListener;
+import 'dart:js' show allowInterop;
+import 'dart:js_util' show getProperty;
+
 // Flutter imports:
+import 'package:archethic_wallet/bus/events.dart';
 import 'package:convert/convert.dart';
+import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,15 +28,11 @@ import 'package:archethic_wallet/ui/widgets/components/app_text_field.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
 import 'package:archethic_wallet/ui/widgets/components/icon_widget.dart';
 
-import 'package:web_usb/web_usb.dart';
-import 'package:collection/collection.dart';
+import 'package:web_hid/web_hid.dart';
 
 final ledgerDeviceIds = RequestOptionsFilter(
   vendorId: 0x2c97,
 );
-
-const configurationValue = 1;
-const endpointNumber = 3;
 
 Uint8List transport(
   int cla,
@@ -54,19 +57,38 @@ class LedgerSheet extends StatefulWidget {
 }
 
 class _LedgerSheetState extends State<LedgerSheet> {
+  StreamSubscription<APDUReceiveEvent>? _apduReceiveSub;
+
   FocusNode? enterAPDUFocusNode;
   TextEditingController? enterAPDUController;
-  UsbDevice? _device;
-  UsbConfiguration? _configuration;
-  UsbInterface? _interface;
+  HidDevice? _device;
   var response = '';
   var labelResponse = '';
   var info = '';
 
+  final EventListener _handleInputReport = allowInterop((event) {
+    print("debut de _handleInputReport");
+    ByteData blockData = getProperty(event, 'data');
+    print("recup de blockdata" + blockData.elementSizeInBytes.toString());
+    var data = parseBlock(blockData);
+
+    EventTaxiImpl.singleton().fire(APDUReceiveEvent(apdu: parseResponse(data)));
+  });
+
+  void _registerBus() {
+    _apduReceiveSub = EventTaxiImpl.singleton()
+        .registerTo<APDUReceiveEvent>()
+        .listen((APDUReceiveEvent event) {
+      setState(() {
+        response = event.apdu!;
+      });
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-
+    _registerBus();
     enterAPDUFocusNode = FocusNode();
     enterAPDUController = TextEditingController();
     enterAPDUController!.text = 'e0c4000000';
@@ -75,6 +97,9 @@ class _LedgerSheetState extends State<LedgerSheet> {
   @override
   void dispose() {
     super.dispose();
+    if (_apduReceiveSub != null) {
+      _apduReceiveSub!.cancel();
+    }
     if (_device != null) {
       _device?.close().then((value) {
         print('device.close success');
@@ -262,70 +287,88 @@ class _LedgerSheetState extends State<LedgerSheet> {
                           setState(() {
                             info = '';
                           });
-                          UsbDevice requestDevice;
-                          if (_device == null) {
-                            requestDevice =
-                                await usb.requestDevice(RequestOptions(
-                              filters: [ledgerDeviceIds],
-                            ));
-                            _device = requestDevice;
+
+                          if (_device != null) {
+                            addLog('Device opened before started ? ' +
+                                _device!.opened.toString());
+                            if (_device!.opened) {
+                              if (_device != null) {
+                                _device?.close().then((value) {
+                                  print('device.close success');
+                                }).catchError((error) {
+                                  print('device.close $error');
+                                });
+                              }
+                            }
                           }
+
+                          List<HidDevice> requestDevice =
+                              await hid.requestDevice(RequestOptions(
+                            filters: [ledgerDeviceIds],
+                          ));
+                          print('requestDevice $requestDevice');
+                          _device = requestDevice[0];
+
                           _device?.open().then((value) {
                             addLog('Device session has started');
-                            _configuration = _device?.configuration;
-                            _interface = _configuration?.interfaces
-                                .firstWhereOrNull((i) {
-                              return i.alternates.firstWhereOrNull(
-                                      (a) => a.interfaceClass == 255) !=
-                                  null;
-                            });
-                            _device
-                                ?.claimInterface(_interface!.interfaceNumber)
-                                .then((value) async {
-                              addLog('Interface claimed for exclusive access');
-                              int? cla = int.tryParse(
-                                  enterAPDUController!.text.substring(0, 2),
-                                  radix: 16);
-                              int? ins = int.tryParse(
-                                  enterAPDUController!.text.substring(2, 4),
-                                  radix: 16);
-                              int? p1 = int.tryParse(
-                                  enterAPDUController!.text.substring(4, 6),
-                                  radix: 16);
-                              int? p2 = int.tryParse(
-                                  enterAPDUController!.text.substring(6, 8),
-                                  radix: 16);
-                              final apdu = transport(
-                                  cla!,
-                                  ins!,
-                                  p1!,
-                                  p2!,
-                                  Uint8List.fromList(hex.decode(
-                                      enterAPDUController!.text.substring(8))));
-                              var usbOutTransferResult =
-                                  await _device?.transferOut(
-                                      endpointNumber, makeBlock(apdu));
-                              addLog('usbOutTransferResult: ' +
-                                  usbOutTransferResult.toString());
-                              addLog('Command sent to Nano S');
-                              var usbInTransferResult = await _device!
-                                  .transferIn(endpointNumber, packetSize);
-                              addLog('usbInTransferResult.data: ' +
-                                  usbInTransferResult.data.buffer.toString());
-                              var data = parseBlock(usbInTransferResult.data);
+                            addLog('Device opened after started ? ' +
+                                _device!.opened.toString());
+                            int? cla = int.tryParse(
+                                enterAPDUController!.text.substring(0, 2),
+                                radix: 16);
+                            int? ins = int.tryParse(
+                                enterAPDUController!.text.substring(2, 4),
+                                radix: 16);
+                            int? p1 = int.tryParse(
+                                enterAPDUController!.text.substring(4, 6),
+                                radix: 16);
+                            int? p2 = int.tryParse(
+                                enterAPDUController!.text.substring(6, 8),
+                                radix: 16);
+                            final apdu = transport(
+                                cla!,
+                                ins!,
+                                p1!,
+                                p2!,
+                                Uint8List.fromList(hex.decode(
+                                    enterAPDUController!.text.substring(8))));
+                            var blockBytes = makeBlock(apdu);
+                            _device?.sendReport(0, blockBytes).then((value) {
+                              print(
+                                  'device.sendReport getAppAndVersion success');
+                              addLog('Command sent to Nano S ');
+
+                              _device?.subscribeInputReport(_handleInputReport);
                               addLog('Result received from Nano S');
-                              addLog('data: ' + data.toString());
-                              setState(() {
-                                response = parseResponse(data);
-                              });
+
+                              setState(() {});
+
                               getLabelError();
                             }).catchError((error) {
-                              addLog('Claim Interface Error : $error');
+                              print(
+                                  'device.sendReport getAppAndVersion $error');
+                              if (_device != null) {
+                                addLog('Device opened before close ? ' +
+                                    _device!.opened.toString());
+                                _device?.close().then((value) {
+                                  print('device.close success');
+                                }).catchError((error) {
+                                  print('device.close $error');
+                                });
+                              }
                             });
                           }).catchError((error) {
                             addLog(
                                 'Device session Error : $error. Please send again to reconnect.');
-                            _device = null;
+                            if (_device != null) {
+                              addLog('Device opened before close ? ' +
+                                  _device!.opened.toString());
+                              _device?.close().then((value) {
+                                print('device.close success');
+                              }).catchError((error) {
+                                print('device.close $error');
+                              });
+                            }
                           });
                         }),
                 ],

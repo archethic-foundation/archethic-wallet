@@ -27,8 +27,6 @@ dependencies:
 
   # Dart implementation of Bitcoin BIP39 Mnemonic code for generating deterministic keys
   bip39: ^1.0.6
-
-  collection: ^1.15.0
   
   # Utilities for converting between data representations. Provides a number of Sink, Codec, Decoder, and Encoder types
   convert: ^3.0.1
@@ -108,9 +106,9 @@ dependencies:
   # String validation and sanitization for Dart
   validators: ^3.0.0
 
-  web_usb:
+  web_hid:
     git:
-      url: https://github.com/woodemi/web_usb.dart.git
+      url: https://github.com/woodemi/web_hid.dart.git
       ref: master
 
   # Yubico dart library for Dart/Flutter
