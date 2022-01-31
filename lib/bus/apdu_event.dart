@@ -1,8 +1,11 @@
 // Package imports:
+import 'dart:typed_data';
+
 import 'package:event_taxi/event_taxi.dart';
 
 class APDUReceiveEvent implements Event {
-  APDUReceiveEvent({this.apdu});
+  APDUReceiveEvent({this.apdu, this.method});
 
-  final String? apdu;
+  final Uint8List? apdu;
+  final String? method;
 }

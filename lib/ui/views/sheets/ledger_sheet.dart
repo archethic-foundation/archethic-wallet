@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
@@ -9,6 +10,7 @@ import 'dart:js' show allowInterop;
 import 'dart:js_util' show getProperty;
 
 // Flutter imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet/bus/events.dart';
 import 'package:convert/convert.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -46,6 +48,7 @@ Uint8List transport(
 }
 
 String parseResponse(Uint8List data) {
+  print('parse' + utf8.decode(data));
   return hex.encode(data);
 }
 
@@ -66,13 +69,26 @@ class _LedgerSheetState extends State<LedgerSheet> {
   var labelResponse = '';
   var info = '';
 
+  final EventListener _handleConnect = allowInterop((event) {});
+
   final EventListener _handleInputReport = allowInterop((event) {
     print("debut de _handleInputReport");
     ByteData blockData = getProperty(event, 'data');
     print("recup de blockdata" + blockData.elementSizeInBytes.toString());
     var data = parseBlock(blockData);
 
-    EventTaxiImpl.singleton().fire(APDUReceiveEvent(apdu: parseResponse(data)));
+    EventTaxiImpl.singleton().fire(APDUReceiveEvent(apdu: data, method: ''));
+  });
+
+  final EventListener _handleInputReportGetAppAndVersion =
+      allowInterop((event) {
+    print("debut de _handleInputReport");
+    ByteData blockData = getProperty(event, 'data');
+    print("recup de blockdata" + blockData.elementSizeInBytes.toString());
+    var data = parseBlock(blockData);
+
+    EventTaxiImpl.singleton()
+        .fire(APDUReceiveEvent(apdu: data, method: 'getAppAndVersion'));
   });
 
   void _registerBus() {
@@ -80,7 +96,22 @@ class _LedgerSheetState extends State<LedgerSheet> {
         .registerTo<APDUReceiveEvent>()
         .listen((APDUReceiveEvent event) {
       setState(() {
-        response = event.apdu!;
+        if (event.method == 'getAppAndVersion') {
+          var readBuffer = ReadBuffer(event.apdu!.buffer.asByteData());
+          if (readBuffer.getUint8() != 1) {
+            throw ArgumentError('format');
+          }
+          var nameLength = readBuffer.getUint8();
+          var appName =
+              String.fromCharCodes(readBuffer.getUint8List(nameLength));
+          var versionLength = readBuffer.getUint8();
+          var version =
+              String.fromCharCodes(readBuffer.getUint8List(versionLength));
+
+          response = appName + ' ' + version;
+        } else {
+          response = parseResponse(event.apdu!);
+        }
       });
     });
   }
@@ -89,6 +120,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
   void initState() {
     super.initState();
     _registerBus();
+
     enterAPDUFocusNode = FocusNode();
     enterAPDUController = TextEditingController();
     enterAPDUController!.text = 'e0c4000000';
@@ -272,6 +304,82 @@ class _LedgerSheetState extends State<LedgerSheet> {
             children: <Widget>[
               Row(
                 children: <Widget>[
+                  AppButton.buildAppButton(
+                      context,
+                      AppButtonType.primary,
+                      'Get app and version',
+                      Dimens.buttonTopDimens, onPressed: () async {
+                    setState(() {
+                      info = '';
+                    });
+
+                    if (_device != null) {
+                      addLog('Device opened before started ? ' +
+                          _device!.opened.toString());
+                      if (_device!.opened) {
+                        if (_device != null) {
+                          _device?.close().then((value) {
+                            print('device.close success');
+                          }).catchError((error) {
+                            print('device.close $error');
+                          });
+                        }
+                      }
+                    }
+
+                    hid.subscribeConnect(_handleConnect);
+                    List<HidDevice> requestDevice =
+                        await hid.requestDevice(RequestOptions(
+                      filters: [ledgerDeviceIds],
+                    ));
+                    print('requestDevice $requestDevice');
+                    _device = requestDevice[0];
+
+                    _device?.open().then((value) {
+                      addLog('Device session has started');
+
+                      addLog('Device opened after started ? ' +
+                          _device!.opened.toString());
+                      _device?.subscribeInputReport(
+                          _handleInputReportGetAppAndVersion);
+                      addLog('device.subscribeInputReport success');
+
+                      final apdu = transport(0xb0, 0x01, 0, 0);
+                      var blockBytes = makeBlock(apdu);
+                      _device?.sendReport(0, blockBytes).then((value) {
+                        print('device.sendReport success');
+                        addLog('Command sent to Nano S ');
+
+                        setState(() {});
+                        addLog('Result received from Nano S');
+
+                        getLabelError();
+                      }).catchError((error) {
+                        print('device.sendReport $error');
+                        if (_device != null) {
+                          addLog('Device opened before close ? ' +
+                              _device!.opened.toString());
+                          _device?.close().then((value) {
+                            print('device.close success');
+                          }).catchError((error) {
+                            print('device.close $error');
+                          });
+                        }
+                      });
+                    }).catchError((error) {
+                      addLog(
+                          'Device session Error : $error. Please send again to reconnect.');
+                      if (_device != null) {
+                        addLog('Device opened before close ? ' +
+                            _device!.opened.toString());
+                        _device?.close().then((value) {
+                          print('device.close success');
+                        }).catchError((error) {
+                          print('device.close $error');
+                        });
+                      }
+                    });
+                  }),
                   enterAPDUController!.text.isEmpty
                       ? AppButton.buildAppButton(
                           context,
@@ -302,6 +410,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                             }
                           }
 
+                          hid.subscribeConnect(_handleConnect);
                           List<HidDevice> requestDevice =
                               await hid.requestDevice(RequestOptions(
                             filters: [ledgerDeviceIds],
@@ -311,8 +420,11 @@ class _LedgerSheetState extends State<LedgerSheet> {
 
                           _device?.open().then((value) {
                             addLog('Device session has started');
+
                             addLog('Device opened after started ? ' +
                                 _device!.opened.toString());
+                            _device?.subscribeInputReport(_handleInputReport);
+                            addLog('device.subscribeInputReport success');
                             int? cla = int.tryParse(
                                 enterAPDUController!.text.substring(0, 2),
                                 radix: 16);
@@ -334,19 +446,15 @@ class _LedgerSheetState extends State<LedgerSheet> {
                                     enterAPDUController!.text.substring(8))));
                             var blockBytes = makeBlock(apdu);
                             _device?.sendReport(0, blockBytes).then((value) {
-                              print(
-                                  'device.sendReport getAppAndVersion success');
+                              print('device.sendReport success');
                               addLog('Command sent to Nano S ');
 
-                              _device?.subscribeInputReport(_handleInputReport);
-                              addLog('Result received from Nano S');
-
                               setState(() {});
+                              addLog('Result received from Nano S');
 
                               getLabelError();
                             }).catchError((error) {
-                              print(
-                                  'device.sendReport getAppAndVersion $error');
+                              print('device.sendReport $error');
                               if (_device != null) {
                                 addLog('Device opened before close ? ' +
                                     _device!.opened.toString());
