@@ -438,9 +438,15 @@ Uint8List makeBlock(Uint8List apdu) {
 
 Uint8List parseBlock(ByteData block) {
   var readBuffer = ReadBuffer(block);
-  assert(readBuffer.getUint16(endian: Endian.big) == channel);
-  assert(readBuffer.getUint8() == Tag);
-  assert(readBuffer.getUint16(endian: Endian.big) == 0);
+  if (readBuffer.getUint16(endian: Endian.big) != channel) {
+    throw ArgumentError('channel');
+  }
+  if (readBuffer.getUint8() != Tag) {
+    throw ArgumentError('Tag');
+  }
+  if (readBuffer.getUint16(endian: Endian.big) != 0) {
+    throw ArgumentError('blockSeqId');
+  }
 
   var dataLength = readBuffer.getUint16(endian: Endian.big);
   var data = readBuffer.getUint8List(dataLength);
