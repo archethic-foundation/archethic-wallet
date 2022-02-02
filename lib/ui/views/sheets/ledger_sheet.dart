@@ -10,6 +10,7 @@ import 'dart:js' show allowInterop;
 import 'dart:js_util' show getProperty;
 
 // Flutter imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet/bus/events.dart';
 import 'package:convert/convert.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -23,7 +24,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
 import 'package:archethic_wallet/ui/util/dimens.dart';
-import 'package:archethic_wallet/localization.dart';
 import 'package:archethic_wallet/ui/util/styles.dart';
 import 'package:archethic_wallet/ui/widgets/components/app_text_field.dart';
 import 'package:archethic_wallet/ui/widgets/components/buttons.dart';
@@ -40,30 +40,35 @@ Uint8List transport(
   int ins,
   int p1,
   int p2, [
-  Uint8List? data,
+  Uint8List? payload,
 ]) {
-  data ??= Uint8List.fromList([]);
-  return Uint8List.fromList([cla, ins, p1, p2, data.length, ...data]);
+  payload ??= Uint8List.fromList([]);
+  return Uint8List.fromList([cla, ins, p1, p2, ...payload]);
 }
 
-String? payload;
 final getAppAndVersion = transport(0xb0, 0x01, 0x00, 0x00);
 final getAppVersion = transport(0xe0, 0x01, 0x00, 0x00);
-final getPubKey = transport(0xe0, 0x02, 0x00, 0x00);
-final getArchAddress = transport(
+final getPubKey =
+    transport(0xe0, 0x02, 0x00, 0x00, Uint8List.fromList(hex.decode('00')));
+/*final getArchAddress = transport(
     0xe0,
     0x04,
     0x00,
     0x00,
     Uint8List.fromList(hex.decode(
         '9C000000000401EC530D1BBDF3B1B3E18C6E2330E5CFD1BFD88EB6D84102184CB39EC271793578B469ACBD8EB4F684C41B5DA87712A203AAA910B7964218794E3D3F343835843C44AFFE281D750E6CA526C6FC265167FE37DB9E47828BF80964DAC837E1072CA9954FF1852FF71865B9043BC117BC001C47D76A326A2A2F7CF6B16AB49E9E57F9D5E6D8E1D00D7F1B7E2F986C711DCA060005B2C8F485')));
-final signTxn = transport(
+*/
+/*final signTxn = transport(
     0xe0,
     0x08,
     0x00,
     0x00,
     Uint8List.fromList(hex.decode(
         'C600000000020019CA33A6CA9E69B5C29E6E8497CC5AC9675952F847347709AD39C92C1B1B5313000000038407B7000401EC530D1BBDF3B1B3E18C6E2330E5CFD1BFD88EB6D84102184CB39EC271793578B469ACBD8EB4F684C41B5DA87712A203AAA910B7964218794E3D3F343835843C44AFFE281D750E6CA526C6FC265167FE37DB9E47828BF80964DAC837E1072CA9954FF1852FF71865B9043BC117BC001C47D76A326A2A2F7CF6B16AB49E9E57F9D5E6D8E1D00D7F1B7E2F986C711DCA060005B2C8F485')));
+*/
+List<int> data = List.empty(growable: true);
+int lastBlockSeqId = -1;
+int dataLength = -1;
 
 class LedgerSheet extends StatefulWidget {
   const LedgerSheet({Key? key}) : super(key: key);
@@ -75,8 +80,8 @@ class LedgerSheet extends StatefulWidget {
 class _LedgerSheetState extends State<LedgerSheet> {
   StreamSubscription<APDUReceiveEvent>? _apduReceiveSub;
 
-  FocusNode? enterAPDUFocusNode;
-  TextEditingController? enterAPDUController;
+  FocusNode? enterPayloadFocusNode;
+  TextEditingController? enterPayloadController;
   HidDevice? _device;
   String response = '';
   String labelResponse = '';
@@ -84,11 +89,21 @@ class _LedgerSheetState extends State<LedgerSheet> {
   String method = '';
 
   final EventListener _handleConnect = allowInterop((event) {});
+  final EventListener _handleDisconnect = allowInterop((event) {});
 
   final EventListener _handleInputReport = allowInterop((event) {
     ByteData blockData = getProperty(event, 'data');
-    var data = parseBlock(blockData);
-    EventTaxiImpl.singleton().fire(APDUReceiveEvent(apdu: data));
+    var _data = parseBlock(blockData);
+    //print('_data' + _data.toString());
+    //print('_data (length) = ' + _data.length.toString());
+
+    if (_data.length >= dataLength) {
+      EventTaxiImpl.singleton()
+          .fire(APDUReceiveEvent(apdu: Uint8List.fromList(_data)));
+      data = List.empty(growable: true);
+      lastBlockSeqId = -1;
+      dataLength = -1;
+    }
   });
 
   void _registerBus() {
@@ -112,16 +127,18 @@ class _LedgerSheetState extends State<LedgerSheet> {
             response = appName + ' ' + version;
             break;
           case 'getPubKey':
-            response = hex.encode(event.apdu!);
+            response = 'Public Key : ' + hex.encode(event.apdu!).toUpperCase();
             break;
           case 'getArchAddress':
-            response = hex.encode(event.apdu!);
+            response = 'Address : ' + hex.encode(event.apdu!).toUpperCase();
             break;
           case 'signTxn':
-            response = hex.encode(event.apdu!);
+            response = 'Transaction : ' + hex.encode(event.apdu!).toUpperCase();
             break;
           default:
         }
+        getLabel();
+        setState(() {});
       });
     });
   }
@@ -131,9 +148,9 @@ class _LedgerSheetState extends State<LedgerSheet> {
     super.initState();
     _registerBus();
 
-    enterAPDUFocusNode = FocusNode();
-    enterAPDUController = TextEditingController();
-    enterAPDUController!.text = 'e0c4000000';
+    enterPayloadFocusNode = FocusNode();
+    enterPayloadController = TextEditingController();
+    enterPayloadController!.text = '';
   }
 
   @override
@@ -235,17 +252,17 @@ class _LedgerSheetState extends State<LedgerSheet> {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            'APDU',
+                            'Payload',
                             style:
                                 AppStyles.textStyleSize16W600Primary(context),
                             textAlign: TextAlign.center,
                           ),
                           AppTextField(
-                            maxLines: 2,
+                            maxLines: 4,
                             padding: const EdgeInsetsDirectional.only(
                                 start: 16, end: 16),
-                            focusNode: enterAPDUFocusNode,
-                            controller: enterAPDUController,
+                            focusNode: enterPayloadFocusNode,
+                            controller: enterPayloadController,
                             textInputAction: TextInputAction.go,
                             autofocus: true,
                             onSubmitted: (_) async {
@@ -255,7 +272,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                               setState(() {});
                             },
                             inputFormatters: <LengthLimitingTextInputFormatter>[
-                              LengthLimitingTextInputFormatter(300),
+                              LengthLimitingTextInputFormatter(500),
                             ],
                             keyboardType: TextInputType.text,
                             obscureText: false,
@@ -275,20 +292,15 @@ class _LedgerSheetState extends State<LedgerSheet> {
                           const SizedBox(
                             height: 10,
                           ),
-                          SelectableText(
-                            response,
-                            style:
-                                AppStyles.textStyleSize16W200Primary(context),
-                            textAlign: TextAlign.center,
-                          ),
-                          SelectableText(
-                            labelResponse,
-                            style:
-                                AppStyles.textStyleSize16W200Primary(context),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(
-                            height: 10,
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 10.0, left: 10.0),
+                            child: SelectableText(
+                              response,
+                              style:
+                                  AppStyles.textStyleSize16W200Primary(context),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                           SelectableText(
                             'Info',
@@ -302,6 +314,15 @@ class _LedgerSheetState extends State<LedgerSheet> {
                                 AppStyles.textStyleSize16W200Primary(context),
                             textAlign: TextAlign.center,
                           ),
+                          SelectableText(
+                            labelResponse,
+                            style:
+                                AppStyles.textStyleSize16W200Primary(context),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
                         ],
                       ),
                     ))),
@@ -310,7 +331,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  AppButton.buildAppButton(
+                  /*AppButton.buildAppButton(
                       context,
                       AppButtonType.primary,
                       'Get app and version',
@@ -321,7 +342,11 @@ class _LedgerSheetState extends State<LedgerSheet> {
                     });
 
                     await sendAPDU(getAppAndVersion);
-                  }),
+                  }),*/
+                ],
+              ),
+              Row(
+                children: <Widget>[
                   AppButton.buildAppButton(
                       context,
                       AppButtonType.primary,
@@ -334,10 +359,6 @@ class _LedgerSheetState extends State<LedgerSheet> {
 
                     await sendAPDU(getPubKey);
                   }),
-                ],
-              ),
-              Row(
-                children: <Widget>[
                   AppButton.buildAppButton(
                       context,
                       AppButtonType.primary,
@@ -346,9 +367,21 @@ class _LedgerSheetState extends State<LedgerSheet> {
                     setState(() {
                       method = 'getArchAddress';
                       info = '';
+                      labelResponse = '';
                     });
-
-                    await sendAPDU(getArchAddress);
+                    if (enterPayloadController!.text.trim() == '' ||
+                        isHex(enterPayloadController!.text) == false) {
+                      info = 'The payload is not valid.';
+                    } else {
+                      Uint8List getArchAddress = transport(
+                          0xe0,
+                          0x04,
+                          0x00,
+                          0x00,
+                          Uint8List.fromList(
+                              hex.decode(enterPayloadController!.text)));
+                      await sendAPDU(getArchAddress);
+                    }
                   }),
                   AppButton.buildAppButton(
                       context,
@@ -358,114 +391,22 @@ class _LedgerSheetState extends State<LedgerSheet> {
                     setState(() {
                       method = 'signTxn';
                       info = '';
+                      labelResponse = '';
                     });
-
-                    await sendAPDU(signTxn);
+                    if (enterPayloadController!.text.trim() == '' ||
+                        isHex(enterPayloadController!.text) == false) {
+                      info = 'The payload is not valid.';
+                    } else {
+                      Uint8List signTxn = transport(
+                          0xe0,
+                          0x08,
+                          0x00,
+                          0x00,
+                          Uint8List.fromList(
+                              hex.decode(enterPayloadController!.text)));
+                      await sendAPDU(signTxn);
+                    }
                   }),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  enterAPDUController!.text.isEmpty
-                      ? AppButton.buildAppButton(
-                          context,
-                          AppButtonType.textOutline,
-                          AppLocalization.of(context)!.send,
-                          Dimens.buttonTopDimens,
-                          onPressed: () async {})
-                      : AppButton.buildAppButton(
-                          context,
-                          AppButtonType.primary,
-                          AppLocalization.of(context)!.send,
-                          Dimens.buttonTopDimens, onPressed: () async {
-                          setState(() {
-                            method = '';
-                            info = '';
-                          });
-
-                          if (_device != null) {
-                            addLog('Device opened before started ? ' +
-                                _device!.opened.toString());
-                            if (_device!.opened) {
-                              if (_device != null) {
-                                _device?.close().then((value) {
-                                  print('device.close success');
-                                }).catchError((error) {
-                                  print('device.close $error');
-                                });
-                              }
-                            }
-                          }
-
-                          hid.subscribeConnect(_handleConnect);
-                          List<HidDevice> requestDevice =
-                              await hid.requestDevice(RequestOptions(
-                            filters: [ledgerDeviceIds],
-                          ));
-                          print('requestDevice $requestDevice');
-                          _device = requestDevice[0];
-
-                          _device?.open().then((value) {
-                            addLog('Device session has started');
-
-                            addLog('Device opened after started ? ' +
-                                _device!.opened.toString());
-                            _device?.subscribeInputReport(_handleInputReport);
-                            addLog('device.subscribeInputReport success');
-                            int? cla = int.tryParse(
-                                enterAPDUController!.text.substring(0, 2),
-                                radix: 16);
-                            int? ins = int.tryParse(
-                                enterAPDUController!.text.substring(2, 4),
-                                radix: 16);
-                            int? p1 = int.tryParse(
-                                enterAPDUController!.text.substring(4, 6),
-                                radix: 16);
-                            int? p2 = int.tryParse(
-                                enterAPDUController!.text.substring(6, 8),
-                                radix: 16);
-                            final apdu = transport(
-                                cla!,
-                                ins!,
-                                p1!,
-                                p2!,
-                                Uint8List.fromList(hex.decode(
-                                    enterAPDUController!.text.substring(8))));
-                            var blockBytes = makeBlock(apdu);
-                            _device?.sendReport(0, blockBytes).then((value) {
-                              print('device.sendReport success');
-                              addLog('Command sent to Nano S ');
-
-                              setState(() {});
-                              addLog('Result received from Nano S');
-
-                              getLabelError();
-                            }).catchError((error) {
-                              print('device.sendReport $error');
-                              if (_device != null) {
-                                addLog('Device opened before close ? ' +
-                                    _device!.opened.toString());
-                                _device?.close().then((value) {
-                                  print('device.close success');
-                                }).catchError((error) {
-                                  print('device.close $error');
-                                });
-                              }
-                            });
-                          }).catchError((error) {
-                            addLog(
-                                'Device session Error : $error. Please send again to reconnect.');
-                            if (_device != null) {
-                              addLog('Device opened before close ? ' +
-                                  _device!.opened.toString());
-                              _device?.close().then((value) {
-                                print('device.close success');
-                              }).catchError((error) {
-                                print('device.close $error');
-                              });
-                            }
-                          });
-                        }),
                 ],
               ),
             ],
@@ -481,29 +422,43 @@ class _LedgerSheetState extends State<LedgerSheet> {
     });
   }
 
-  void getLabelError() {
-    switch (response) {
-      case '6d00':
-        labelResponse = 'Invalid parameter received';
-        break;
-      case '670A':
-        labelResponse = 'Lc is 0x00 whereas an application name is required';
-        break;
-      case '6807':
-        labelResponse = 'The requested application is not present';
-        break;
-      case '9000':
-        labelResponse = 'Success of the operation';
-        break;
-      default:
-        labelResponse = '';
+  void getLabel() {
+    if (response.length >= 4) {
+      switch (response.substring(response.length - 4)) {
+        case '6d00':
+          labelResponse = 'Invalid parameter received';
+          break;
+        case '670A':
+          labelResponse = 'Lc is 0x00 whereas an application name is required';
+          break;
+        case '6807':
+          labelResponse = 'The requested application is not present';
+          break;
+        case '6985':
+          labelResponse = 'Cancel the operation';
+          break;
+        case '9000':
+          labelResponse = 'Success of the operation';
+          break;
+        case '0000':
+          labelResponse = 'Success of the operation';
+          break;
+        default:
+          labelResponse = response.substring(response.length - 4);
+      }
+      response = response.substring(0, response.length - 4);
+      info = '';
     }
-    setState(() {});
   }
 
   Future<void> sendAPDU(Uint8List apdu) async {
+    labelResponse = '';
+    response = '';
+    info = '';
+    setState(() {});
+
     if (_device != null) {
-      addLog('Device opened before started ? ' + _device!.opened.toString());
+      //addLog('Device opened before started ? ' + _device!.opened.toString());
       if (_device!.opened) {
         if (_device != null) {
           _device?.close().then((value) {}).catchError((error) {});
@@ -520,14 +475,56 @@ class _LedgerSheetState extends State<LedgerSheet> {
 
     await _device?.open();
     if (_device != null && _device!.opened) {
-      addLog('Device session has started');
+      addLog('Please, approve the transaction on your ledger...');
       _device?.subscribeInputReport(_handleInputReport);
-      var blockBytes = makeBlock(apdu);
-      addLog('Command sent to Nano S ');
-      await _device?.sendReport(0, blockBytes);
+
+      List<int> _apduPart;
+      int remainingLength = apdu.length;
+      int blockSeqId = 0;
+
+      //print('apdu: ' + apdu.toString());
+      while (remainingLength > 0) {
+        _apduPart = List<int>.filled(64, 0, growable: false);
+        //print('remainingLength: ' + remainingLength.toString());
+
+        while (remainingLength > 0) {
+          if (blockSeqId == 0) {
+            if (apdu.length > 57) {
+              _apduPart = apdu.sublist(0, 57);
+            } else {
+              _apduPart = concatUint8List(<Uint8List>[
+                apdu.sublist(0, apdu.length),
+                Uint8List.fromList(List.filled(59 - remainingLength - 2, 0))
+              ]);
+            }
+          } else {
+            if (remainingLength > 59) {
+              _apduPart = apdu.sublist(
+                  57 + (59 * (blockSeqId - 1)), 57 + (59 * blockSeqId));
+            } else {
+              _apduPart = concatUint8List(<Uint8List>[
+                apdu.sublist(57 + (59 * (blockSeqId - 1)),
+                    57 + (59 * (blockSeqId - 1)) + remainingLength),
+                Uint8List.fromList(List.filled(59 - remainingLength, 0))
+              ]);
+            }
+          }
+
+          //print('apduPart: ' + _apduPart.toString());
+          //print('apduPartHex: ' + hex.encode(_apduPart));
+          //print('apduPartLength: ' + _apduPart.length.toString());
+          Uint8List blockBytes =
+              makeBlock(Uint8List.fromList(_apduPart), blockSeqId, apdu.length);
+          //print('blockBytes: ' + blockBytes.toString());
+          //print('blockBytes length: ' + blockBytes.length.toString());
+          await _device?.sendReport(0, blockBytes);
+          blockSeqId++;
+
+          remainingLength = remainingLength - _apduPart.length;
+        }
+      }
       setState(() {});
-      addLog('Result received from Nano S');
-      getLabelError();
+      hid.subscribeDisconnect(_handleDisconnect);
     }
   }
 }
@@ -542,39 +539,62 @@ const Tag = 0x05;
 /// +---------+--------+------------+-----------+
 /// | 2 bytes | 1 byte | 2 bytes    |       ... |
 /// +---------+--------+------------+-----------+
-Uint8List makeBlock(Uint8List apdu) {
-  // TODO Multiple blocks
-
+Uint8List makeBlock(Uint8List apdu, int blockSeqId, int totalLengthApdu) {
   var apduBuffer = WriteBuffer();
-  apduBuffer.putUint16(apdu.length, endian: Endian.big);
+  if (blockSeqId == 0) {
+    apduBuffer.putUint16(totalLengthApdu, endian: Endian.big);
+  }
   apduBuffer.putUint8List(apdu);
-  var blockSize = packetSize - 5;
-  var paddingLength = blockSize - apdu.length - 2;
-  apduBuffer.putUint8List(Uint8List.fromList(List.filled(paddingLength, 0)));
   var apduData = apduBuffer.done();
 
   var writeBuffer = WriteBuffer();
   writeBuffer.putUint16(channel, endian: Endian.big);
   writeBuffer.putUint8(Tag);
-  writeBuffer.putUint16(0, endian: Endian.big);
+  writeBuffer.putUint16(blockSeqId, endian: Endian.big);
   writeBuffer.putUint8List(apduData.buffer.asUint8List());
   return writeBuffer.done().buffer.asUint8List();
 }
 
 Uint8List parseBlock(ByteData block) {
+  //print('parse: ' + block.buffer.asUint8List().toString());
+  //print('parse (length): ' + block.buffer.asUint8List().length.toString());
   var readBuffer = ReadBuffer(block);
-  if (readBuffer.getUint16(endian: Endian.big) != channel) {
-    throw ArgumentError('channel');
+
+  int channelParse = readBuffer.getUint16(endian: Endian.big);
+  if (channelParse != channel) {
+    //print(channelParse.toString() + ' / ' + channel.toString());
+    //throw ArgumentError('channel');
   }
-  if (readBuffer.getUint8() != Tag) {
-    throw ArgumentError('Tag');
+  int tagParse = readBuffer.getUint8();
+  if (tagParse != Tag) {
+    //print(tagParse.toString() + ' / ' + Tag.toString());
+    //throw ArgumentError('Tag');
   }
-  if (readBuffer.getUint16(endian: Endian.big) != 0) {
-    throw ArgumentError('blockSeqId');
+  int blockSeqIdParse = readBuffer.getUint16(endian: Endian.big);
+  if (lastBlockSeqId + 1 != blockSeqIdParse) {
+    //print(blockSeqIdParse.toString() + ' / ' + (lastBlockSeqId + 1).toString());
+    //throw ArgumentError('blockSeqId');
+  }
+  lastBlockSeqId = blockSeqIdParse;
+
+  if (lastBlockSeqId == 0) {
+    dataLength = readBuffer.getUint16(endian: Endian.big);
+    //print('datalength = ' + dataLength.toString());
   }
 
-  var dataLength = readBuffer.getUint16(endian: Endian.big);
-  var data = readBuffer.getUint8List(dataLength);
-
+  if (lastBlockSeqId == 0) {
+    if (dataLength >= 57) {
+      data.addAll(readBuffer.getUint8List(57));
+    } else {
+      data.addAll(readBuffer.getUint8List(dataLength));
+    }
+  } else {
+    if (dataLength > (57 + (lastBlockSeqId) * 59)) {
+      data.addAll(readBuffer.getUint8List(59));
+    } else {
+      data.addAll(readBuffer
+          .getUint8List(dataLength - (57 + (lastBlockSeqId - 1) * 59)));
+    }
+  }
   return Uint8List.fromList(data);
 }
