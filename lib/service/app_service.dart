@@ -55,23 +55,22 @@ class AppService {
         recentTransaction.address = transaction.address;
         recentTransaction.fee = 0;
         recentTransaction.timestamp = transaction.validationStamp!.timestamp!;
-        if (transaction.data!.contentDisplay!
+        if (transaction.data!.content!
             .toLowerCase()
             .contains('initial supply:')) {
           recentTransaction.nftAddress = transaction.address;
           recentTransaction.typeTx = RecentTransaction.nftCreation;
-          recentTransaction.content = transaction.data!.contentDisplay!
-              .substring(transaction.data!.contentDisplay!
+          recentTransaction.content = transaction.data!.content!.substring(
+              transaction.data!.content!
                   .toLowerCase()
                   .indexOf('initial supply: '));
         } else {
           recentTransaction.typeTx = RecentTransaction.transferOutput;
           recentTransaction.content = '';
         }
-        if (transaction.data!.contentDisplay!.toLowerCase().contains('name:')) {
-          recentTransaction.nftName = transaction.data!.contentDisplay!
-              .substring(transaction.data!.contentDisplay!.indexOf('name: ') +
-                  'name: '.length);
+        if (transaction.data!.content!.toLowerCase().contains('name:')) {
+          recentTransaction.nftName = transaction.data!.content!.substring(
+              transaction.data!.content!.indexOf('name: ') + 'name: '.length);
         } else {
           recentTransaction.nftName = '';
         }
@@ -267,9 +266,9 @@ class AppService {
         transactionsInfos.add(TransactionInfos(
             domain: 'Data',
             titleInfo: 'Content',
-            valueInfo: transaction.data!.contentDisplay == ''
+            valueInfo: transaction.data!.content == ''
                 ? 'N/A'
-                : transaction.data!.contentDisplay!));
+                : transaction.data!.content!));
       }
       if (transaction.data!.code != null) {
         transactionsInfos.add(TransactionInfos(
