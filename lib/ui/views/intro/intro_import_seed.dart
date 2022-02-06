@@ -2,6 +2,9 @@
 // ignore_for_file: always_specify_types
 
 // Flutter imports:
+import 'package:archethic_wallet/model/data/appdb.dart';
+import 'package:archethic_wallet/util/app_util.dart';
+import 'package:archethic_wallet/util/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -296,6 +299,15 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                           _mnemonicFocusNode.unfocus();
                           if (AppMnemomics.validateMnemonic(
                               _mnemonicController.text.split(' '))) {
+                            String _seed = AppMnemomics.mnemonicListToSeed(
+                                _mnemonicController.text.split(' '));
+                            final Vault _vault = await Vault.getInstance();
+                            _vault.setSeed(_seed);
+                            await sl.get<DBHelper>().dropAccounts();
+                            await AppUtil().loginAccount(_seed, context);
+                            StateContainer.of(context).requestUpdate(
+                                account:
+                                    StateContainer.of(context).selectedAccount);
                             final String pin = await Navigator.of(context).push(
                                 MaterialPageRoute(
                                     builder: (BuildContext context) {
