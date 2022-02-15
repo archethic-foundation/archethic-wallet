@@ -13,6 +13,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:safe_device/safe_device.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 // Project imports:
 import 'package:archethic_wallet/appstate_container.dart';
@@ -35,8 +36,10 @@ import 'package:archethic_wallet/util/preferences.dart';
 import 'package:archethic_wallet/util/vault.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await DBHelper.setupDatabase();
+
   // Run app
   SystemChrome.setPreferredOrientations(
       <DeviceOrientation>[DeviceOrientation.portraitUp]).then((_) {
@@ -294,6 +297,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
         print(e);
       }
     }
+    FlutterNativeSplash.remove();
   }
 
   @override
