@@ -45,11 +45,14 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+  # Customize Flutter's default white native splash screen with background color and splash image. Supports dark mode, full screen, and more.
+  flutter_native_splash: ^2.0.4
+
   # Flutter Secure Storage provides API to store data in secure storage. Keychain is used in iOS, KeyStore based solution is used in Android
   flutter_secure_storage: ^5.0.2
 
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files
-  flutter_svg: ^1.0.1
+  flutter_svg: ^1.0.3
 
   # A Flutter plugin to vibrate the device
   flutter_vibrate: ^1.3.0
@@ -73,6 +76,13 @@ dependencies:
   # Localization
   intl: ^0.17.0
 
+  # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
+  ledger_dart_lib: ^0.1.2
+  #ledger_dart_lib: 
+  #  git:
+  #    url: https://github.com/redDwarf03/ledger_dart_lib.git
+  #    ref: main
+
   # Flutter plugin for Android and iOS devices to allow local authentication via fingerprint, touch ID, face ID, passcode, pin, or pattern
   local_auth: ^1.1.10
 
@@ -92,7 +102,7 @@ dependencies:
   quiver: ^3.0.1+1
 
   # With the Flutter safe_device package, you can easily implement security steps such as Jailbroken, root, emulator and fake location detection.
-  safe_device: ^1.0.9
+  safe_device: ^1.1.0
 
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
   share_plus: ^3.0.4
@@ -105,12 +115,7 @@ dependencies:
   
   # String validation and sanitization for Dart
   validators: ^3.0.0
-
-  web_hid:
-    git:
-      url: https://github.com/woodemi/web_hid.dart.git
-      ref: master
-
+  
   # Yubico dart library for Dart/Flutter
   yubidart: ^1.0.3
 
@@ -126,9 +131,9 @@ dev_dependencies:
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl_generator: ^0.2.1
   # Automatically generate code for converting to and from JSON by annotating Dart classes.
-  json_serializable: ^6.1.3
+  json_serializable: ^6.1.4
   # A command-line tool that create Msix installer from your flutter windows-build files.
-  msix: ^2.8.1
+  msix: ^2.8.15
 
 flutter_icons:
   android: true
