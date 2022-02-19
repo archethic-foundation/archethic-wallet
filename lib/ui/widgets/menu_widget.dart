@@ -1,8 +1,6 @@
 // Flutter imports:
 // ignore_for_file: avoid_unnecessary_containers
 
-import 'dart:io';
-
 import 'package:archethic_wallet/ui/views/sheets/ledger_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
@@ -172,7 +170,7 @@ class MenuWidget {
                         style: AppStyles.textStyleSize14W600Primary(context)),
                   ],
                 ))),
-        if (kIsWeb || Platform.isMacOS || Platform.isWindows)
+        if (kIsWeb)
           Container(
               child: InkWell(
                   onTap: () {

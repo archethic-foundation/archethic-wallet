@@ -12,6 +12,7 @@ import 'package:archethic_wallet/util/biometrics_util.dart';
 import 'package:archethic_wallet/util/haptic_util.dart';
 import 'package:archethic_wallet/util/nfc.dart';
 import 'package:archethic_wallet/util/preferences.dart';
+import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
 GetIt sl = GetIt.instance;
 
@@ -46,6 +47,11 @@ Future<void> setupServiceLocator() async {
   }
   sl.registerLazySingleton<NFCUtil>(() => NFCUtil());
 
+  if (sl.isRegistered<LedgerNanoSImpl>()) {
+    sl.unregister<LedgerNanoSImpl>();
+  }
+  sl.registerLazySingleton<LedgerNanoSImpl>(() => LedgerNanoSImpl());
+
   final Preferences preferences = await Preferences.getInstance();
   final String endpoint = preferences.getEndpoint();
 
@@ -59,8 +65,11 @@ Future<void> setupServiceLocator() async {
   }
   sl.registerLazySingleton<AddressService>(() => AddressService(endpoint));
 
+/*
+// TODO: 1.0.4
   if (sl.isRegistered<OracleService>()) {
     sl.unregister<OracleService>();
   }
   sl.registerLazySingleton<OracleService>(() => OracleService(endpoint));
+  */
 }
