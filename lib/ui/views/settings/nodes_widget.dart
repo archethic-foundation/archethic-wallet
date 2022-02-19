@@ -265,48 +265,63 @@ class _NodesListState extends State<NodesList> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        children: <Widget>[
-                          Text(AppLocalization.of(context)!.nodeEnrollmentDate,
-                              style: AppStyles.textStyleSize12W600Primary(
-                                  context)),
-                          Text(
-                              DateFormat.yMMMEd(Localizations.localeOf(context)
-                                      .languageCode)
-                                  .add_Hms()
-                                  .format(DateTime.fromMillisecondsSinceEpoch(
-                                          node.enrollmentDate! * 1000)
-                                      .toLocal())
-                                  .toString(),
-                              style: AppStyles.textStyleSize12W100Primary(
-                                  context)),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                              AppLocalization.of(context)!
-                                  .nodeAuthorizationDate,
-                              style: AppStyles.textStyleSize12W600Primary(
-                                  context)),
-                          Text(
-                              DateFormat.yMMMEd(Localizations.localeOf(context)
-                                      .languageCode)
-                                  .add_Hms()
-                                  .format(DateTime.fromMillisecondsSinceEpoch(
-                                          node.authorizationDate! * 1000)
-                                      .toLocal())
-                                  .toString(),
-                              style: AppStyles.textStyleSize12W100Primary(
-                                  context)),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      node.enrollmentDate == null
+                          ? const SizedBox()
+                          : Row(
+                              children: <Widget>[
+                                Text(
+                                    AppLocalization.of(context)!
+                                        .nodeEnrollmentDate,
+                                    style: AppStyles.textStyleSize12W600Primary(
+                                        context)),
+                                Text(
+                                    DateFormat.yMMMEd(
+                                            Localizations.localeOf(context)
+                                                .languageCode)
+                                        .add_Hms()
+                                        .format(
+                                            DateTime.fromMillisecondsSinceEpoch(
+                                                    node.enrollmentDate! * 1000)
+                                                .toLocal())
+                                        .toString(),
+                                    style: AppStyles.textStyleSize12W100Primary(
+                                        context)),
+                              ],
+                            ),
+                      node.enrollmentDate == null
+                          ? const SizedBox()
+                          : const SizedBox(
+                              height: 10,
+                            ),
+                      node.authorizationDate == null
+                          ? const SizedBox()
+                          : Row(
+                              children: <Widget>[
+                                Text(
+                                    AppLocalization.of(context)!
+                                        .nodeAuthorizationDate,
+                                    style: AppStyles.textStyleSize12W600Primary(
+                                        context)),
+                                Text(
+                                    DateFormat.yMMMEd(
+                                            Localizations.localeOf(context)
+                                                .languageCode)
+                                        .add_Hms()
+                                        .format(
+                                            DateTime.fromMillisecondsSinceEpoch(
+                                                    node.authorizationDate! *
+                                                        1000)
+                                                .toLocal())
+                                        .toString(),
+                                    style: AppStyles.textStyleSize12W100Primary(
+                                        context)),
+                              ],
+                            ),
+                      node.authorizationDate == null
+                          ? const SizedBox()
+                          : const SizedBox(
+                              height: 10,
+                            ),
                       Row(
                         children: <Widget>[
                           Text(AppLocalization.of(context)!.nodeAuthorized,
@@ -335,9 +350,7 @@ class _NodesListState extends State<NodesList> {
           ),
         ),
         Divider(
-          height: 2,
-          color: StateContainer.of(context).curTheme.primary15,
-        ),
+            height: 2, color: StateContainer.of(context).curTheme.primary60),
       ],
     );
   }
