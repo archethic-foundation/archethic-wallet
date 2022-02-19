@@ -27,10 +27,7 @@ import 'package:archethic_wallet/util/nfc.dart';
 import 'package:archethic_wallet/util/preferences.dart';
 
 class YubikeyScreen extends StatefulWidget {
-  const YubikeyScreen({this.yubikeyScreenBackgroundColor, Key? key})
-      : super(key: key);
-
-  final Color? yubikeyScreenBackgroundColor;
+  const YubikeyScreen({Key? key}) : super(key: key);
 
   @override
   _YubikeyScreenState createState() => _YubikeyScreenState();

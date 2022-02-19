@@ -56,9 +56,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
   }
 
   Widget _buildYubikeyScreen(BuildContext context) {
-    return YubikeyScreen(
-        yubikeyScreenBackgroundColor:
-            StateContainer.of(context).curTheme.backgroundDark);
+    return const YubikeyScreen();
   }
 
   String _formatCountDisplay(int count) {
