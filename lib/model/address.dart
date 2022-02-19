@@ -58,6 +58,8 @@ class Address {
   }
 
   bool isValid() {
-    return addressFormatControl(_address);
+    // TODO 1.0.4
+    // return addressFormatControl(_address);
+    return true;
   }
 }

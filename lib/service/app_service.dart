@@ -389,6 +389,8 @@ class AppService {
     for (UCOTransfer transfer in listUcoTransfer) {
       transaction.addUCOTransfer(transfer.to, transfer.amount!);
     }
+    // TODO 1.0.4
+    /*
     TransactionFee transactionFee = TransactionFee();
     transaction
         .build(transactionChainSeed, lastTransaction.chainLength!, 'P256')
@@ -401,7 +403,9 @@ class AppService {
         print('error: ' + e.toString());
       }
     }
-    return transactionFee.fee!;
+     return transactionFee.fee!;
+    */
+    return 0.1;
   }
 
   Future<double> getFeesEstimationAddNFT(
@@ -420,7 +424,8 @@ class AppService {
         lastTransaction.chainLength!,
         'P256',
         originPrivateKey);
-
+// TODO 1.0.4
+/*
     TransactionFee transactionFee = TransactionFee();
     try {
       transactionFee =
@@ -430,6 +435,7 @@ class AppService {
         print('error: ' + e.toString());
       }
     }
-    return transactionFee.fee!;
+    return transactionFee.fee!;*/
+    return 0.1;
   }
 }

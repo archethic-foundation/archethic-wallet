@@ -241,6 +241,9 @@ class StateContainerState extends State<StateContainer> {
   Future<void> updateCurrency(AvailableCurrency currency) async {
     SimplePriceResponse simplePriceResponse = SimplePriceResponse();
     useOracleUcoPrice = false;
+    // TODO 1.0.4
+
+    /*
     // if eur or usd, use ARCHEThic Oracle
     if (currency.getIso4217Code() == 'EUR' ||
         currency.getIso4217Code() == 'USD') {
@@ -276,7 +279,8 @@ class StateContainerState extends State<StateContainer> {
       simplePriceResponse = await sl
           .get<ApiCoinsService>()
           .getSimplePrice(currency.getIso4217Code());
-    }
+    
+    }*/
     simplePriceResponse = await sl
         .get<ApiCoinsService>()
         .getSimplePrice(currency.getIso4217Code());
@@ -305,10 +309,12 @@ class StateContainerState extends State<StateContainer> {
     SimplePriceResponse simplePriceResponse = SimplePriceResponse();
     useOracleUcoPrice = false;
     // if eur or usd, use ARCHEThic Oracle
-    if (curCurrency.getIso4217Code() == 'EUR' ||
+    /*if (curCurrency.getIso4217Code() == 'EUR' ||
         curCurrency.getIso4217Code() == 'USD') {
       try {
-        final OracleUcoPrice oracleUcoPrice =
+       // TODO 1.0.4
+       
+       final OracleUcoPrice oracleUcoPrice =
             await sl.get<OracleService>().getLastOracleUcoPrice();
         if (oracleUcoPrice.uco == null || oracleUcoPrice.uco!.eur == 0) {
           simplePriceResponse = await sl
@@ -340,7 +346,7 @@ class StateContainerState extends State<StateContainer> {
           .get<ApiCoinsService>()
           .getSimplePrice(curCurrency.getIso4217Code());
     }
-
+*/
     EventTaxiImpl.singleton().fire(PriceEvent(response: simplePriceResponse));
   }
 
