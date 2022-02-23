@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:archethic_wallet/util/seeds.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -106,7 +107,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                             top: 10,
                           ),
                           alignment: const AlignmentDirectional(-1, 0),
-                          child: Column(
+                          child: Row(
                             children: <Widget>[
                               Container(
                                 constraints: BoxConstraints(
@@ -122,6 +123,28 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                   maxLines: 1,
                                 ),
                               ),
+                              IconButton(
+                                icon: const Icon(Icons.refresh),
+                                color: StateContainer.of(context)
+                                    .curTheme
+                                    .backgroundDarkest,
+                                onPressed: () async {
+                                  Vault.getInstance().then((Vault _vault) {
+                                    final String _seed =
+                                        AppSeeds.generateSeed();
+                                    _vault.setSeed(_seed);
+                                    AppUtil()
+                                        .loginAccount(_seed, context,
+                                            forceNewAccount: true)
+                                        .then((_) {
+                                      _mnemonic = AppMnemomics.seedToMnemonic(
+                                          _vault.getSeed()!);
+                                    });
+                                  });
+
+                                  setState(() {});
+                                },
+                              )
                             ],
                           ),
                         ),
