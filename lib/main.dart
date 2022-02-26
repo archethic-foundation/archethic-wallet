@@ -9,31 +9,31 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:bin/ui/views/home_page.dart';
+import 'package:bin/ui/views/intro/intro_backup_confirm.dart';
+import 'package:bin/ui/views/intro/intro_backup_safety.dart';
+import 'package:bin/ui/views/intro/intro_backup_seed.dart';
+import 'package:bin/ui/views/intro/intro_import_seed.dart';
+import 'package:bin/ui/views/intro/intro_welcome.dart';
+import 'package:bin/ui/views/lock_screen.dart';
+import 'package:core/appstate_container.dart';
+import 'package:core/localization.dart';
+import 'package:core/model/available_language.dart';
+import 'package:core/model/data/appdb.dart';
+import 'package:core/ui/util/routes.dart';
+import 'package:core/ui/util/styles.dart';
+import 'package:core/ui/widgets/components/dialog.dart';
+import 'package:core/util/app_util.dart';
+import 'package:core/util/case_converter.dart';
+import 'package:core/util/preferences.dart';
+import 'package:core/util/vault.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive/hive.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:safe_device/safe_device.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 // Project imports:
-import 'package:archethic_wallet/appstate_container.dart';
-import 'package:archethic_wallet/localization.dart';
-import 'package:archethic_wallet/model/available_language.dart';
-import 'package:archethic_wallet/model/data/appdb.dart';
-import 'package:archethic_wallet/ui/util/styles.dart';
-import 'package:archethic_wallet/ui/util/routes.dart';
-import 'package:archethic_wallet/ui/views/home_page.dart';
-import 'package:archethic_wallet/ui/views/intro/intro_backup_confirm.dart';
-import 'package:archethic_wallet/ui/views/intro/intro_backup_safety.dart';
-import 'package:archethic_wallet/ui/views/intro/intro_backup_seed.dart';
-import 'package:archethic_wallet/ui/views/intro/intro_import_seed.dart';
-import 'package:archethic_wallet/ui/views/intro/intro_welcome.dart';
-import 'package:archethic_wallet/ui/views/lock_screen.dart';
-import 'package:archethic_wallet/ui/widgets/components/dialog.dart';
-import 'package:archethic_wallet/util/app_util.dart';
-import 'package:archethic_wallet/util/case_converter.dart';
-import 'package:archethic_wallet/util/preferences.dart';
-import 'package:archethic_wallet/util/vault.dart';
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();

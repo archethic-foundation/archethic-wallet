@@ -1,0 +1,104 @@
+
+aeweb generate-address --seed=archethicWallet --index=0
+
+
+
+aeweb deploy-folder --seed=archethicWallet --endpoint=https://testnet.archethic.net --folder=assets
+aeweb deploy-folder --seed=archethicWallet --endpoint=https://testnet.archethic.net --folder=canvaskit
+aeweb deploy-folder --seed=archethicWallet --endpoint=https://testnet.archethic.net --folder=icons
+
+
+aeweb deploy-file --seed=archethicWallet --endpoint=https://testnet.archethic.net --file=./favicon.png 
+aeweb deploy-file --seed=archethicWallet --endpoint=https://testnet.archethic.net --file=./flutter_service_worker.js
+aeweb deploy-file --seed=archethicWallet --endpoint=https://testnet.archethic.net --file=./index.html
+aeweb deploy-file --seed=archethicWallet --endpoint=https://testnet.archethic.net --file=./main.dart.js
+aeweb deploy-file --seed=archethicWallet --endpoint=https://testnet.archethic.net --file=./main.dart.js.map
+aeweb deploy-file --seed=archethicWallet --endpoint=https://testnet.archethic.net --file=./manifest.json
+aeweb deploy-file --seed=archethicWallet --endpoint=https://testnet.archethic.net --file=./version.json
+aeweb deploy-file --seed=archethicWallet --endpoint=https://testnet.archethic.net --file=./main.dart.js
+aeweb deploy-file --seed=archethicWallet --endpoint=https://testnet.archethic.net --file=./index.html
+aeweb deploy-file --seed=archethicWallet --endpoint=https://testnet.archethic.net --file=./main.dart.js
+aeweb deploy-file --seed=archethicWallet --endpoint=https://testnet.archethic.net --file=./index.html
+aeweb deploy-file --seed=archethicWallet --endpoint=https://testnet.archethic.net --file=./main.dart.js
+
+
+
+./assets:
+AssetManifest.json      NOTICES                 fonts
+FontManifest.json       assets                  packages
+
+./assets/assets:
+buy     fonts   icons   themes
+
+./assets/assets/buy:
+Bithumb.png     Pancake.png     Probit.png      Quickswap.png   Rubic.svg       Uniswap.svg     Zamio.png       Zebitex.svg
+
+./assets/assets/fonts:
+Montserrat-Black.ttf            Montserrat-ExtraBold.ttf        Montserrat-Italic.ttf           Montserrat-MediumItalic.ttf
+Montserrat-BlackItalic.ttf      Montserrat-ExtraBoldItalic.ttf  Montserrat-Light.ttf            Montserrat-Regular.ttf
+Montserrat-Bold.ttf             Montserrat-ExtraLight.ttf       Montserrat-LightItalic.ttf      Montserrat-SemiBold.ttf
+Montserrat-BoldItalic.ttf       Montserrat-ExtraLightItalic.ttf Montserrat-Medium.ttf           Montserrat-SemiBoldItalic.ttf
+
+./assets/assets/icons:
+addNft.png                      currency                        microscope.png                  themes.png
+address-book.png                digital-key.png                 money-currency.png              transferNft.png
+arrow1.png                      encrypted.png                   nft.png                         txInfos
+arrow2.png                      faq.png                         nodes.png                       url.png
+authentLaunch.png               help.png                        oracle.png                      walletServiceTerms.png
+authentication.png              key-ring.png                    pin-code.png                    warning.png
+autoLock.png                    key-word.png                    privacyPolicy.png               writing.png
+barcode.png                     languages.png                   send.png
+chains.png                      lock.png                        shuffle.png
+country                         logout.png                      terms-and-conditions.png
+
+./assets/assets/icons/country:
+de.png  en.png  es.png  fr.png  id.png  it.png  ja.png  nl.png
+
+./assets/assets/icons/currency:
+aed.png brl.png chf.png czk.png gbp.png idr.png jpy.png mxn.png nzd.png pln.png sek.png try.png zar.png
+ars.png btc.png clp.png dkk.png hkd.png ils.png krw.png myr.png php.png rub.png sgd.png twd.png
+aud.png cad.png cny.png eur.png huf.png inr.png kwd.png nok.png pkr.png sar.png thb.png usd.png
+
+./assets/assets/icons/txInfos:
+Address.png             Content.png             PreviousSignature.png   Signature.png           Type.png
+Amount.png              OriginSignature.png     ProofOfIntegrity.png    TimeStamp.png           Version.png
+Code.png                PreviousPublicKey.png   ProofOfWork.png         To.png
+
+./assets/assets/themes:
+dark    light
+
+./assets/assets/themes/dark:
+background.jpg  logo.png        logo.svg        logo_alone.png  logo_alone.svg
+
+./assets/assets/themes/light:
+logo.png        logo.svg        logo_alone.png  logo_alone.svg
+
+./assets/fonts:
+MaterialIcons-Regular.otf
+
+./assets/packages:
+cupertino_icons         font_awesome_flutter
+
+./assets/packages/cupertino_icons:
+assets
+
+./assets/packages/cupertino_icons/assets:
+CupertinoIcons.ttf
+
+./assets/packages/font_awesome_flutter:
+lib
+
+./assets/packages/font_awesome_flutter/lib:
+fonts
+
+./assets/packages/font_awesome_flutter/lib/fonts:
+fa-brands-400.ttf       fa-regular-400.ttf      fa-solid-900.ttf
+
+./canvaskit:
+canvaskit.js    canvaskit.wasm  profiling
+
+./canvaskit/profiling:
+canvaskit.js    canvaskit.wasm
+
+./icons:
+Icon-192.png            Icon-512.png            Icon-maskable-192.png   Icon-maskable-512.png
