@@ -16,7 +16,6 @@ import 'package:core/appstate_container.dart';
 import 'package:core/bus/account_changed_event.dart';
 import 'package:core/bus/disable_lock_timeout_event.dart';
 import 'package:core/localization.dart';
-import 'package:core/model/ae_apps.dart';
 import 'package:core/ui/util/routes.dart';
 import 'package:core/ui/util/styles.dart';
 import 'package:core/ui/util/ui_util.dart';
@@ -29,14 +28,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 // Project imports:
 import '../widgets/menu/menu_widget_bin.dart';
 
-class AppHomePage extends StatefulWidget {
-  const AppHomePage({Key? key}) : super(key: key);
+class AppHomePageBin extends StatefulWidget {
+  const AppHomePageBin({Key? key}) : super(key: key);
 
   @override
-  _AppHomePageState createState() => _AppHomePageState();
+  _AppHomePageBinState createState() => _AppHomePageBinState();
 }
 
-class _AppHomePageState extends State<AppHomePage>
+class _AppHomePageBinState extends State<AppHomePageBin>
     with WidgetsBindingObserver, TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -294,69 +293,22 @@ class _AppHomePageState extends State<AppHomePage>
                         height: MediaQuery.of(context).size.height,
                         child: Padding(
                           padding: const EdgeInsets.only(top: 180.0),
-                          child: StateContainer.of(context).currentAEApp ==
-                                  AEApps.bin
-                              ? MenuWidgetBin().buildContextMenu(context)
-                              : StateContainer.of(context).currentAEApp ==
-                                      AEApps.aewallet
-                                  ? MenuWidgetWallet().buildContextMenu(context)
-                                  : const SizedBox(),
+                          child: MenuWidgetBin().buildContextMenu(context),
                         ),
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Padding(
                             padding: const EdgeInsets.only(top: 20.0),
-                            child: StateContainer.of(context).currentAEApp ==
-                                    AEApps.bin
-                                ? MenuWidgetBin().buildMainMenuIcons(context)
-                                : MenuWidgetWallet()
-                                    .buildMainMenuIcons(context)),
+                            child: MenuWidgetBin().buildMainMenuIcons(context)),
                       ),
-                      StateContainer.of(context).currentAEApp == AEApps.bin
-                          ? SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              child: Padding(
-                                  padding: const EdgeInsets.only(top: 20.0),
-                                  child: MenuWidgetBin()
-                                      .buildSecondMenuIcons(context)),
-                            )
-                          : StateContainer.of(context).currentAEApp ==
-                                  AEApps.aewallet
-                              ? SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Padding(
-                                      padding: const EdgeInsets.only(top: 20.0),
-                                      child: MenuWidgetWallet()
-                                          .buildSecondMenuIcons(context)),
-                                )
-                              : const SizedBox(),
-                      StateContainer.of(context).currentAEApp == AEApps.aewallet
-                          ? SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 150.0,
-                                    left: MediaQuery.of(context).size.width *
-                                        0.2),
-                                child: Column(
-                                  children: [
-                                    MenuWidgetWallet()
-                                        .buildMenuTxExplorer(context),
-                                    Divider(
-                                      height: 15,
-                                      color: StateContainer.of(context)
-                                          .curTheme
-                                          .primary30,
-                                    ),
-                                    const Expanded(
-                                      child: TxListWidget(),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : const SizedBox(),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Padding(
+                            padding: const EdgeInsets.only(top: 20.0),
+                            child:
+                                MenuWidgetBin().buildSecondMenuIcons(context)),
+                      ),
                     ],
                   ),
                 ),

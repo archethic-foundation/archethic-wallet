@@ -5,6 +5,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:bin/ui/views/home_page_bin.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -220,6 +221,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
             child: InkWell(
               onTap: () {
                 StateContainer.of(context).currentAEApp = AEApps.bin;
+                Navigator.pop(context);
               },
               child: buildIconDataWidget(context, Icons.home, 20, 20),
             ),

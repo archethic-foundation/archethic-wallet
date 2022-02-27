@@ -9,13 +9,13 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:bin/ui/views/home_page.dart';
 import 'package:bin/ui/views/intro/intro_backup_confirm.dart';
 import 'package:bin/ui/views/intro/intro_backup_safety.dart';
 import 'package:bin/ui/views/intro/intro_backup_seed.dart';
 import 'package:bin/ui/views/intro/intro_import_seed.dart';
 import 'package:bin/ui/views/intro/intro_welcome.dart';
 import 'package:bin/ui/views/lock_screen.dart';
+import 'package:bin/ui/views/home_page_bin.dart';
 import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/available_language.dart';
@@ -163,13 +163,13 @@ class _AppState extends State<App> {
                 settings: settings,
               );
             case '/home':
-              return NoTransitionRoute<AppHomePage>(
-                builder: (_) => const AppHomePage(),
+              return NoTransitionRoute<AppHomePageBin>(
+                builder: (_) => const AppHomePageBin(),
                 settings: settings,
               );
             case '/home_transition':
-              return NoPopTransitionRoute<AppHomePage>(
-                builder: (_) => const AppHomePage(),
+              return NoPopTransitionRoute<AppHomePageBin>(
+                builder: (_) => const AppHomePageBin(),
                 settings: settings,
               );
             case '/intro_welcome':

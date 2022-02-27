@@ -42,6 +42,7 @@ Widget getLogo(BuildContext context) {
                 onTap: () {
                   if (AppUtil.isDesktopMode() == true) {
                     StateContainer.of(context).currentAEApp = AEApps.bin;
+                    Navigator.pop(context);
                   }
                 },
                 child: AppUtil.isDesktopMode()

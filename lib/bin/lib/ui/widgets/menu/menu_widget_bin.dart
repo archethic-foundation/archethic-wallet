@@ -2,6 +2,7 @@
 // ignore_for_file: unnecessary_const
 
 // Flutter imports:
+import 'package:aewallet/ui/views/home_page_aewallet.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -88,6 +89,15 @@ class MenuWidgetBin extends AbstractMenuWidget {
             child: InkWell(
               onTap: () {
                 StateContainer.of(context).currentAEApp = AEApps.aewallet;
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (c, a1, a2) => const AppHomePageAEWallet(),
+                    transitionsBuilder: (c, anim, a2, child) =>
+                        FadeTransition(opacity: anim, child: child),
+                    transitionDuration: const Duration(milliseconds: 500),
+                  ),
+                );
               },
               child: Column(
                 children: <Widget>[
