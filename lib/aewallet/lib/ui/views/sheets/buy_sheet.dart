@@ -114,7 +114,7 @@ class _BuySheetState extends State<BuySheet> {
                                   'Rubic');
                             },
                             child: SvgPicture.asset(
-                              'assets/buy/Rubic.svg',
+                              'packages/aewallet/assets/buy/Rubic.svg',
                               color: Colors.white,
                               height: 40,
                             ),
@@ -128,7 +128,7 @@ class _BuySheetState extends State<BuySheet> {
                                   'Quick');
                             },
                             child: Image.asset(
-                              'assets/buy/Quickswap.png',
+                              'packages/aewallet/assets/buy/Quickswap.png',
                               color: Colors.white,
                               height: 40,
                             ),
@@ -140,7 +140,7 @@ class _BuySheetState extends State<BuySheet> {
                                   'https://www.probit.com/en-us/', 'Probit');
                             },
                             child: Image.asset(
-                              'assets/buy/Probit.png',
+                              'packages/aewallet/assets/buy/Probit.png',
                               color: Colors.white,
                               height: 40,
                             ),
@@ -152,7 +152,7 @@ class _BuySheetState extends State<BuySheet> {
                                   'https://www.bitglobal.com/en-us', 'Bithumb');
                             },
                             child: Image.asset(
-                              'assets/buy/Bithumb.png',
+                              'packages/aewallet/assets/buy/Bithumb.png',
                               color: Colors.white,
                               height: 40,
                             ),
@@ -166,7 +166,7 @@ class _BuySheetState extends State<BuySheet> {
                                   'Bithumb');
                             },
                             child: SvgPicture.asset(
-                              'assets/buy/Uniswap.svg',
+                              'packages/aewallet/assets/buy/Uniswap.svg',
                               color: Colors.white,
                               height: 40,
                             ),
@@ -178,7 +178,7 @@ class _BuySheetState extends State<BuySheet> {
                                   context, 'https://zebitex.com', 'Zebitex');
                             },
                             child: SvgPicture.asset(
-                              'assets/buy/Zebitex.svg',
+                              'packages/aewallet/assets/buy/Zebitex.svg',
                               color: Colors.white,
                               height: 40,
                             ),
@@ -192,7 +192,7 @@ class _BuySheetState extends State<BuySheet> {
                                   'PancakeSwap');
                             },
                             child: Image.asset(
-                              'assets/buy/Pancake.png',
+                              'packages/aewallet/assets/buy/Pancake.png',
                               color: Colors.white,
                               height: 40,
                             ),
@@ -204,7 +204,7 @@ class _BuySheetState extends State<BuySheet> {
                                   'https://dapps.zam.io/bridge', 'Zamio');
                             },
                             child: Image.asset(
-                              'assets/buy/Zamio.png',
+                              'packages/aewallet/assets/buy/Zamio.png',
                               color: Colors.white,
                               height: 40,
                             ),

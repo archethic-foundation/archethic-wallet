@@ -190,7 +190,6 @@ flutter:
     - assets/icons/currency/
     - assets/icons/country/
     - assets/icons/txInfos/
-    - assets/buy/
     - assets/apps/
 
   # The following line ensures that the Material Icons font is

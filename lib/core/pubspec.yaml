@@ -177,12 +177,6 @@ flutter:
   assets:
     - ../../assets/themes/light/
     - ../../assets/themes/dark/
-    - ../../assets/icons/
-    - ../../assets/icons/currency/
-    - ../../assets/icons/country/
-    - ../../assets/icons/txInfos/
-    - ../../assets/buy/
-    - ../../assets/apps/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
