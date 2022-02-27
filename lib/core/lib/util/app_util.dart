@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -38,18 +35,15 @@ class AppUtil {
   }
 
   static bool isDesktopMode() {
-    if (!kIsWeb &&
-        (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
-      return true;
-    } else {
-      final isWebMobile = kIsWeb &&
-          (defaultTargetPlatform == TargetPlatform.iOS ||
-              defaultTargetPlatform == TargetPlatform.android);
-      if (!kIsWeb && (Platform.isAndroid || Platform.isIOS || isWebMobile)) {
+    if (kIsWeb) {
+      if ((defaultTargetPlatform == TargetPlatform.iOS ||
+          defaultTargetPlatform == TargetPlatform.android)) {
         return false;
       } else {
         return true;
       }
+    } else {
+      return false;
     }
   }
 }
