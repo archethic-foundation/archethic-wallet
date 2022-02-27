@@ -136,13 +136,6 @@ class MenuWidgetBin extends AbstractMenuWidget {
           Padding(
             padding: const EdgeInsets.only(left: 10.0, right: 10.0),
             child: InkWell(
-              onTap: () {},
-              child: buildIconDataWidget(context, Icons.settings, 20, 20),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-            child: InkWell(
               onTap: () {
                 AppDialogs.showConfirmDialog(
                     context,
