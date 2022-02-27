@@ -3,6 +3,7 @@
 
 // Flutter imports:
 import 'package:aewallet/ui/views/home_page_aewallet.dart';
+import 'package:aemail/ui/views/home_page_aemail.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -37,16 +38,29 @@ class MenuWidgetBin extends AbstractMenuWidget {
           Padding(
             padding: const EdgeInsets.only(left: 10.0, right: 10.0),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                StateContainer.of(context).currentAEApp = AEApps.aemail;
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (c, a1, a2) => const AppHomePageAEMail(),
+                    transitionsBuilder: (c, anim, a2, child) =>
+                        FadeTransition(opacity: anim, child: child),
+                    transitionDuration: const Duration(milliseconds: 500),
+                  ),
+                );
+              },
               child: Column(
                 children: <Widget>[
                   buildIconDataWidget(
-                      context, FontAwesomeIcons.envelope, 30, 30,
-                      enabled: false),
+                    context,
+                    FontAwesomeIcons.envelope,
+                    30,
+                    30,
+                  ),
                   const SizedBox(height: 5),
                   Text(AppLocalization.of(context)!.appAEMailTitle,
-                      style: AppStyles.textStyleSize14W600PrimaryDisabled(
-                          context)),
+                      style: AppStyles.textStyleSize14W600Primary(context)),
                 ],
               ),
             ),
