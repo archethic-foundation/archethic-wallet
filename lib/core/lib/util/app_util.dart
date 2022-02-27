@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +45,11 @@ class AppUtil {
         return true;
       }
     } else {
-      return false;
+      if (Platform.isMacOS || Platform.isLinux || Platform.isWindows) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 }
