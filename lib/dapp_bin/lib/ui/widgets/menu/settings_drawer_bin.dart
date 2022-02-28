@@ -9,12 +9,12 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bin/ui/views/pin_screen.dart';
-import 'package:bin/ui/views/settings/backupseed_sheet.dart';
-import 'package:bin/ui/views/settings/custom_url_widget.dart';
-import 'package:bin/ui/views/settings/nodes_widget.dart';
-import 'package:bin/ui/views/settings/yubikey_params_widget.dart';
-import 'package:bin/ui/views/yubikey_screen.dart';
+import 'package:dapp_bin/ui/views/pin_screen.dart';
+import 'package:dapp_bin/ui/views/settings/backupseed_sheet.dart';
+import 'package:dapp_bin/ui/views/settings/custom_url_widget.dart';
+import 'package:dapp_bin/ui/views/settings/nodes_widget.dart';
+import 'package:dapp_bin/ui/views/settings/yubikey_params_widget.dart';
+import 'package:dapp_bin/ui/views/yubikey_screen.dart';
 import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/localization.dart';
@@ -471,7 +471,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
               ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
                 child: Image.asset(
-                  'assets/icons/currency/${AvailableCurrency(value).getIso4217Code().toLowerCase()}.png',
+                  'packages/dapp_bin/assets/icons/currency/${AvailableCurrency(value).getIso4217Code().toLowerCase()}.png',
                   width: 30,
                   height: 20,
                 ),
@@ -495,7 +495,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                   AvailableCurrency(value).getIso4217Code() == 'USD')
                 buildIconWidget(
                   context,
-                  'assets/icons/oracle.png',
+                  'packages/dapp_bin/assets/icons/oracle.png',
                   25,
                   25,
                   color: StateContainer.of(context)
@@ -547,7 +547,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                           children: [
                             buildIconWidget(
                               context,
-                              'assets/icons/oracle.png',
+                              'packages/dapp_bin/assets/icons/oracle.png',
                               20,
                               20,
                             ),
@@ -602,7 +602,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                         height: 20,
                       )
                     : Image.asset(
-                        'assets/icons/country/${LanguageSetting(value).getLocaleString().toLowerCase()}.png',
+                        'packages/dapp_bin/assets/icons/country/${LanguageSetting(value).getLocaleString().toLowerCase()}.png',
                         width: 30,
                         height: 20,
                       ),
@@ -898,7 +898,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                         context,
                         AppLocalization.of(context)!.nodesHeader,
                         AppLocalization.of(context)!.nodesHeaderDesc,
-                        icon: 'assets/icons/nodes.png',
+                        icon: 'packages/dapp_bin/assets/icons/nodes.png',
                         iconColor: StateContainer.of(context)
                             .curTheme
                             .iconDrawerColor!, onPressed: () {
@@ -915,7 +915,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                         context,
                         AppLocalization.of(context)!.labLinkHeader,
                         AppLocalization.of(context)!.labLinkDesc,
-                        icon: 'assets/icons/microscope.png',
+                        icon: 'packages/dapp_bin/assets/icons/microscope.png',
                         iconColor: StateContainer.of(context)
                             .curTheme
                             .iconDrawerColor!, onPressed: () async {
@@ -931,7 +931,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutHeader,
-                        'assets/icons/help.png',
+                        'packages/dapp_bin/assets/icons/help.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () {
                       setState(() {
@@ -957,7 +957,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                         AppLocalization.of(context)!.changeCurrencyHeader,
                         AppLocalization.of(context)!.changeCurrencyDesc,
                         StateContainer.of(context).curCurrency,
-                        'assets/icons/money-currency.png',
+                        'packages/dapp_bin/assets/icons/money-currency.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         _currencyDialog),
                     Divider(
@@ -968,7 +968,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                         context,
                         AppLocalization.of(context)!.language,
                         StateContainer.of(context).curLanguage,
-                        'assets/icons/languages.png',
+                        'packages/dapp_bin/assets/icons/languages.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         _languageDialog),
                     Divider(
@@ -979,7 +979,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                         context,
                         AppLocalization.of(context)!.themeHeader,
                         _curThemeSetting,
-                        'assets/icons/themes.png',
+                        'packages/dapp_bin/assets/icons/themes.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         _themeDialog),
                     Divider(
@@ -990,7 +990,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                         context,
                         AppLocalization.of(context)!.customUrlHeader,
                         AppLocalization.of(context)!.customUrlDesc,
-                        icon: 'assets/icons/url.png',
+                        icon: 'packages/dapp_bin/assets/icons/url.png',
                         iconColor: StateContainer.of(context)
                             .curTheme
                             .iconDrawerColor!, onPressed: () {
@@ -1006,7 +1006,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.securityHeader,
-                        'assets/icons/encrypted.png',
+                        'packages/dapp_bin/assets/icons/encrypted.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () {
                       setState(() {
@@ -1021,7 +1021,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.logout,
-                        'assets/icons/logout.png',
+                        'packages/dapp_bin/assets/icons/logout.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () {
                       AppDialogs.showConfirmDialog(
@@ -1182,7 +1182,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                         context,
                         AppLocalization.of(context)!.authMethod,
                         _curAuthMethod,
-                        'assets/icons/authentLaunch.png',
+                        'packages/dapp_bin/assets/icons/authentLaunch.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         _authMethodDialog),
                     // Authenticate on Launch
@@ -1195,7 +1195,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                           context,
                           AppLocalization.of(context)!.lockAppSetting,
                           _curUnlockSetting,
-                          'assets/icons/authentication.png',
+                          'packages/dapp_bin/assets/icons/authentication.png',
                           StateContainer.of(context).curTheme.iconDrawerColor!,
                           _lockDialog),
                     ]),
@@ -1208,7 +1208,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                       context,
                       AppLocalization.of(context)!.autoLockHeader,
                       _curTimeoutSetting,
-                      'assets/icons/autoLock.png',
+                      'packages/dapp_bin/assets/icons/autoLock.png',
                       StateContainer.of(context).curTheme.iconDrawerColor!,
                       _lockTimeoutDialog,
                       disabled: _curUnlockSetting.setting == UnlockOption.no,
@@ -1221,7 +1221,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                       AppSettings.buildSettingsListItemSingleLine(
                           context,
                           AppLocalization.of(context)!.backupSecretPhrase,
-                          'assets/icons/key-word.png',
+                          'packages/dapp_bin/assets/icons/key-word.png',
                           StateContainer.of(context).curTheme.iconDrawerColor!,
                           onPressed: () async {
                         final Preferences _preferences =
@@ -1272,7 +1272,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                     AppSettings.buildSettingsListItemSwitch(
                         context,
                         AppLocalization.of(context)!.pinPadShuffle,
-                        'assets/icons/shuffle.png',
+                        'packages/dapp_bin/assets/icons/shuffle.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         _pinPadShuffleActive,
                         onChanged: (bool _isSwitched) async {
@@ -1294,7 +1294,8 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                           context,
                           AppLocalization.of(context)!.yubikeyParamsHeader,
                           AppLocalization.of(context)!.yubikeyParamsDesc,
-                          icon: 'assets/icons/digital-key.png',
+                          icon:
+                              'packages/dapp_bin/assets/icons/digital-key.png',
                           iconColor: StateContainer.of(context)
                               .curTheme
                               .iconDrawerColor!, onPressed: () {
@@ -1410,7 +1411,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                         context,
                         AppLocalization.of(context)!
                             .aboutGeneralTermsAndConditions,
-                        'assets/icons/terms-and-conditions.png',
+                        'packages/dapp_bin/assets/icons/terms-and-conditions.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () async {
                       UIUtil.showWebview(
@@ -1425,7 +1426,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutWalletServiceTerms,
-                        'assets/icons/walletServiceTerms.png',
+                        'packages/dapp_bin/assets/icons/walletServiceTerms.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () async {
                       UIUtil.showWebview(context, 'https://archethic.net',
@@ -1437,7 +1438,7 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutPrivacyPolicy,
-                        'assets/icons/privacyPolicy.png',
+                        'packages/dapp_bin/assets/icons/privacyPolicy.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () async {
                       UIUtil.showWebview(context, 'https://archethic.net',

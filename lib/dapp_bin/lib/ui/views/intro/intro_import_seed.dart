@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bin/ui/views/pin_screen.dart';
+import 'package:dapp_bin/ui/views/pin_screen.dart';
 import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/data/appdb.dart';

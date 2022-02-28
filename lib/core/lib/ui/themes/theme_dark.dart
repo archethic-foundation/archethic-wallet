@@ -132,7 +132,7 @@ class DarkTheme implements BaseTheme {
   BoxShadow? boxShadowButton = const BoxShadow(color: Colors.transparent);
 
   @override
-  String? assetsFolder = 'assets/themes/dark/';
+  String? assetsFolder = 'packages/core/assets/themes/dark/';
   @override
   String? logo = 'logo';
   @override
@@ -149,7 +149,8 @@ class DarkTheme implements BaseTheme {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/themes/dark/background.jpg'),
+            image:
+                AssetImage('packages/core/assets/themes/dark/background.jpg'),
             fit: BoxFit.cover),
       ),
     );

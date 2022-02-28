@@ -163,7 +163,7 @@ class BalanceInfosWidget {
                               },
                               child: buildIconWidget(
                                 context,
-                                'assets/icons/oracle.png',
+                                'packages/aewallet/assets/icons/oracle.png',
                                 15,
                                 15,
                               ),
@@ -233,7 +233,7 @@ class BalanceInfosWidget {
                               },
                               child: buildIconWidget(
                                 context,
-                                'assets/icons/oracle.png',
+                                'packages/aewallet/assets/icons/oracle.png',
                                 15,
                                 15,
                               ),

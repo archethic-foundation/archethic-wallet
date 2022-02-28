@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bin/ui/views/mnemonic_display.dart';
+import 'package:dapp_bin/ui/views/mnemonic_display.dart';
 import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/ui/util/styles.dart';

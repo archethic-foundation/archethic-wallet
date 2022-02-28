@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bin/ui/views/pin_screen.dart';
+import 'package:dapp_bin/ui/views/pin_screen.dart';
 import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/ui/util/dimens.dart';
@@ -79,7 +79,10 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           top: 15,
                         ),
                         child: buildIconWidget(
-                            context, 'assets/icons/writing.png', 90, 90),
+                            context,
+                            'packages/dapp_bin/assets/icons/writing.png',
+                            90,
+                            90),
                       ),
                       Expanded(
                         child: SingleChildScrollView(

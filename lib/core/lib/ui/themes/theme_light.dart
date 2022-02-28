@@ -134,7 +134,7 @@ class LightTheme implements BaseTheme {
   BoxShadow? boxShadowButton = const BoxShadow(color: Colors.transparent);
 
   @override
-  String? assetsFolder = 'assets/themes/light/';
+  String? assetsFolder = 'packages/core/assets/themes/light/';
   @override
   String? logo = 'logo';
   @override

@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:bin/ui/views/pin_screen.dart';
-import 'package:bin/ui/views/yubikey_screen.dart';
+import 'package:dapp_bin/ui/views/pin_screen.dart';
+import 'package:dapp_bin/ui/views/yubikey_screen.dart';
 import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
@@ -311,8 +311,8 @@ class _AppLockScreenState extends State<AppLockScreen> {
                             ),
                           ],
                         ),
-                        buildIconWidget(
-                            context, 'assets/icons/lock.png', 90, 90),
+                        buildIconWidget(context,
+                            'packages/dapp_bin/assets/icons/lock.png', 90, 90),
                         Container(
                           child: Text(
                             CaseChange.toUpperCase(

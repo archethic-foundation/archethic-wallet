@@ -142,7 +142,7 @@ class _AllAppsSheetState extends State<AllAppsSheet> {
                     backWidget: SizedBox(
                       height: 170,
                       child: Image.asset(
-                        'assets/apps/aeweb.png',
+                        'packages/dapp_bin/assets/apps/aeweb.png',
                       ),
                     ),
                   ),

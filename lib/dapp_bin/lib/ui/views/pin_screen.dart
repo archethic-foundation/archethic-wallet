@@ -319,8 +319,8 @@ class _PinScreenState extends State<PinScreen>
                     top: MediaQuery.of(context).size.height * 0.06),
                 child: Column(
                   children: <Widget>[
-                    buildIconWidget(
-                        context, 'assets/icons/pin-code.png', 90, 90),
+                    buildIconWidget(context,
+                        'packages/dapp_bin/assets/icons/pin-code.png', 90, 90),
                     const SizedBox(
                       height: 30,
                     ),

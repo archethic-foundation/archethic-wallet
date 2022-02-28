@@ -76,7 +76,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                           ),
                           child: buildIconWidget(
                             context,
-                            'assets/icons/warning.png',
+                            'packages/dapp_bin/assets/icons/warning.png',
                             90,
                             90,
                             color: StateContainer.of(context).curTheme.warning,

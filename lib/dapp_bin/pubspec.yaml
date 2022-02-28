@@ -1,5 +1,5 @@
-name: bin
-description: ARCHEthic bin app
+name: dapp_bin
+description: A place for all the DApps to live.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -52,14 +52,11 @@ msix_config:
 # The following section is specific to Flutter.
 flutter:
   assets:
-    - ../../assets/themes/light/
-    - ../../assets/themes/dark/
-    - ../../assets/icons/
-    - ../../assets/icons/currency/
-    - ../../assets/icons/country/
-    - ../../assets/icons/txInfos/
-    - ../../assets/apps/
-
+    - assets/icons/
+    - assets/icons/currency/
+    - assets/icons/country/
+    - assets/icons/txInfos/
+    - assets/apps/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

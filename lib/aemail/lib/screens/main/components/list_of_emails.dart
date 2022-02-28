@@ -1,6 +1,5 @@
 import 'package:aemail/components/side_menu.dart';
 import 'package:aemail/models/email.dart';
-import 'package:aemail/screens/email/email_screen.dart';
 import 'package:core/appstate_container.dart';
 import 'package:core/ui/util/styles.dart';
 import 'package:flutter/material.dart';

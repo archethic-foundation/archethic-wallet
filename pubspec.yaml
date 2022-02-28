@@ -15,8 +15,8 @@ dependencies:
   core:
     path: lib/core
 
-  bin:
-    path: lib/bin
+  dapp_bin:
+    path: lib/dapp_bin
 
   aewallet:
     path: lib/aewallet
@@ -164,33 +164,6 @@ msix_config:
 
 # The following section is specific to Flutter.
 flutter:
-  fonts:
-    - family: Montserrat
-      fonts:
-        - asset: assets/fonts/Montserrat-Black.ttf
-        - asset: assets/fonts/Montserrat-BlackItalic.ttf
-        - asset: assets/fonts/Montserrat-Bold.ttf
-        - asset: assets/fonts/Montserrat-BoldItalic.ttf
-        - asset: assets/fonts/Montserrat-ExtraBold.ttf
-        - asset: assets/fonts/Montserrat-ExtraBoldItalic.ttf
-        - asset: assets/fonts/Montserrat-ExtraLight.ttf
-        - asset: assets/fonts/Montserrat-ExtraLightItalic.ttf
-        - asset: assets/fonts/Montserrat-Italic.ttf
-        - asset: assets/fonts/Montserrat-Light.ttf
-        - asset: assets/fonts/Montserrat-LightItalic.ttf
-        - asset: assets/fonts/Montserrat-Medium.ttf
-        - asset: assets/fonts/Montserrat-MediumItalic.ttf
-        - asset: assets/fonts/Montserrat-Regular.ttf
-        - asset: assets/fonts/Montserrat-SemiBold.ttf
-        - asset: assets/fonts/Montserrat-SemiBoldItalic.ttf
-  assets:
-    - assets/themes/light/
-    - assets/themes/dark/
-    - assets/icons/
-    - assets/icons/currency/
-    - assets/icons/country/
-    - assets/icons/txInfos/
-    - assets/apps/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

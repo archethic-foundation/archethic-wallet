@@ -12,9 +12,9 @@ import 'package:aewallet/ui/views/nft/add_nft.dart';
 import 'package:aewallet/ui/views/settings/contacts_widget.dart';
 import 'package:aewallet/ui/views/settings/wallet_faq_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bin/ui/views/pin_screen.dart';
-import 'package:bin/ui/views/settings/backupseed_sheet.dart';
-import 'package:bin/ui/views/yubikey_screen.dart';
+import 'package:dapp_bin/ui/views/pin_screen.dart';
+import 'package:dapp_bin/ui/views/settings/backupseed_sheet.dart';
+import 'package:dapp_bin/ui/views/yubikey_screen.dart';
 import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/ui/util/settings_list_item.dart';
@@ -224,7 +224,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                           context,
                           AppLocalization.of(context)!.nftHeader,
                           AppLocalization.of(context)!.nftHeaderDesc,
-                          icon: 'assets/icons/nft.png',
+                          icon: 'packages/aewallet/assets/icons/nft.png',
                           iconColor: StateContainer.of(context)
                               .curTheme
                               .iconDrawerColor!, onPressed: () {
@@ -243,7 +243,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                         context,
                         AppLocalization.of(context)!.addressBookHeader,
                         AppLocalization.of(context)!.addressBookDesc,
-                        icon: 'assets/icons/address-book.png',
+                        icon: 'packages/aewallet/assets/icons/address-book.png',
                         iconColor: StateContainer.of(context)
                             .curTheme
                             .iconDrawerColor!, onPressed: () {
@@ -270,7 +270,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                         context,
                         AppLocalization.of(context)!.walletFAQHeader,
                         AppLocalization.of(context)!.walletFAQDesc,
-                        icon: 'assets/icons/faq.png',
+                        icon: 'packages/aewallet/assets/icons/faq.png',
                         iconColor: StateContainer.of(context)
                             .curTheme
                             .iconDrawerColor!, onPressed: () {
@@ -286,7 +286,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutHeader,
-                        'assets/icons/help.png',
+                        'packages/aewallet/assets/icons/help.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () {
                       setState(() {
@@ -419,7 +419,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                         context,
                         AppLocalization.of(context)!
                             .aboutGeneralTermsAndConditions,
-                        'assets/icons/terms-and-conditions.png',
+                        'packages/aewallet/assets/icons/terms-and-conditions.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () async {
                       UIUtil.showWebview(
@@ -434,7 +434,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutWalletServiceTerms,
-                        'assets/icons/walletServiceTerms.png',
+                        'packages/aewallet/assets/icons/walletServiceTerms.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () async {
                       UIUtil.showWebview(context, 'https://archethic.net',
@@ -446,7 +446,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutPrivacyPolicy,
-                        'assets/icons/privacyPolicy.png',
+                        'packages/aewallet/assets/icons/privacyPolicy.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () async {
                       UIUtil.showWebview(context, 'https://archethic.net',
@@ -543,7 +543,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.addNFTHeader,
-                        'assets/icons/addNft.png',
+                        'packages/aewallet/assets/icons/addNft.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () {
                       Sheets.showAppHeightNineSheet(
@@ -555,7 +555,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.transferNFT,
-                        'assets/icons/transferNft.png',
+                        'packages/aewallet/assets/icons/transferNft.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () {
                       /*Sheets.showAppHeightNineSheet(

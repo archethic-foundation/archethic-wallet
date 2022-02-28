@@ -5,7 +5,6 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:bin/ui/views/home_page_bin.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

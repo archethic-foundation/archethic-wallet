@@ -201,7 +201,7 @@ class _ChartSheetState extends State<ChartSheet> {
                                 },
                                 child: buildIconWidget(
                                   context,
-                                  'assets/icons/oracle.png',
+                                  'packages/aewallet/assets/icons/oracle.png',
                                   20,
                                   20,
                                 ),
@@ -274,7 +274,7 @@ class _ChartSheetState extends State<ChartSheet> {
                                 },
                                 child: buildIconWidget(
                                   context,
-                                  'assets/icons/oracle.png',
+                                  'packages/aewallet/assets/icons/oracle.png',
                                   20,
                                   20,
                                 ),

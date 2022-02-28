@@ -104,7 +104,10 @@ class _LedgerScreenState extends State<LedgerScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           buildIconWidget(
-                              context, 'assets/icons/key-ring.png', 90, 90),
+                              context,
+                              'packages/dapp_bin/assets/icons/key-ring.png',
+                              90,
+                              90),
                           const SizedBox(
                             height: 30,
                           ),

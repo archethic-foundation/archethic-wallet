@@ -12,8 +12,8 @@ dependencies:
   core:
     path: ../core
 
-  bin:
-    path: ../bin
+  dapp_bin:
+    path: ../dapp_bin
 
   # handle SVGs for Android, iOS, and Web.
   websafe_svg: ^2.1.1
@@ -55,9 +55,6 @@ msix_config:
 # The following section is specific to Flutter.
 flutter:
   assets:
-    - ../../assets/themes/light/
-    - ../../assets/themes/dark/
-    - ../../assets/apps/
     - assets/Icons/
     - assets/images/
 

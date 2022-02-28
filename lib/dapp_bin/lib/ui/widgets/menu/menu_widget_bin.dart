@@ -4,12 +4,12 @@
 // Flutter imports:
 import 'package:aewallet/ui/views/home_page_aewallet.dart';
 import 'package:aemail/ui/views/home_page_aemail.dart';
+import 'package:dapp_bin/ui/views/all_apps_sheet.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aewallet/ui/views/sheets/all_apps_sheet.dart';
 import 'package:aewallet/ui/views/sheets/chart_sheet.dart';
-import 'package:bin/ui/widgets/menu/settings_drawer_bin.dart';
+import 'package:dapp_bin/ui/widgets/menu/settings_drawer_bin.dart';
 import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/ae_apps.dart';

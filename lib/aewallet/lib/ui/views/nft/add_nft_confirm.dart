@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:aewallet/bus/nft_add_event.dart';
-import 'package:bin/ui/views/pin_screen.dart';
-import 'package:bin/ui/views/yubikey_screen.dart';
+import 'package:dapp_bin/ui/views/pin_screen.dart';
+import 'package:dapp_bin/ui/views/yubikey_screen.dart';
 import 'package:core/appstate_container.dart';
 import 'package:core/bus/authenticated_event.dart';
 import 'package:core/localization.dart';
