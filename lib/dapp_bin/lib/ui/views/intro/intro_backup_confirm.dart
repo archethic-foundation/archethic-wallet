@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:dapp_bin/ui/views/pin_screen.dart';
 import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/ui/util/dimens.dart';
@@ -14,6 +13,7 @@ import 'package:core/ui/util/styles.dart';
 import 'package:core/ui/widgets/components/buttons.dart';
 import 'package:core/ui/widgets/components/icon_widget.dart';
 import 'package:core/util/vault.dart';
+import 'package:dapp_bin/ui/views/pin_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class IntroBackupConfirm extends StatefulWidget {

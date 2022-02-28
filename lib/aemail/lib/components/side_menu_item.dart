@@ -1,7 +1,11 @@
-import 'package:core/appstate_container.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:core/appstate_container.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
+// Project imports:
 import '../constants.dart';
 import 'counter_badge.dart';
 

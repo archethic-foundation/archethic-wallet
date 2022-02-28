@@ -1,12 +1,16 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:aemail/models/email.dart';
 import 'package:core/appstate_container.dart';
 import 'package:core/ui/util/lorem_ipsum/lorem_ipsum.dart';
 import 'package:core/ui/util/styles.dart';
 import 'package:core/ui/widgets/components/icon_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
+// Project imports:
 import '../../constants.dart';
 import 'components/header.dart';
 

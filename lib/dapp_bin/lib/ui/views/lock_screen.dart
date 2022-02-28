@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:dapp_bin/ui/views/pin_screen.dart';
-import 'package:dapp_bin/ui/views/yubikey_screen.dart';
 import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
@@ -19,6 +17,8 @@ import 'package:core/util/case_converter.dart';
 import 'package:core/util/preferences.dart';
 import 'package:core/util/service_locator.dart';
 import 'package:core/util/vault.dart';
+import 'package:dapp_bin/ui/views/pin_screen.dart';
+import 'package:dapp_bin/ui/views/yubikey_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppLockScreen extends StatefulWidget {

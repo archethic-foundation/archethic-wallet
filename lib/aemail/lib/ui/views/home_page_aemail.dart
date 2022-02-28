@@ -4,18 +4,18 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:aemail/components/side_menu.dart';
 import 'package:aemail/screens/email/email_screen.dart';
 import 'package:aemail/screens/main/components/list_of_emails.dart';
 import 'package:aemail/widgets/menu/menu_widget_mail.dart';
-import 'package:core/ui/widgets/logo.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
 import 'package:core/appstate_container.dart';
 import 'package:core/bus/account_changed_event.dart';
 import 'package:core/bus/disable_lock_timeout_event.dart';
 import 'package:core/ui/util/routes.dart';
+import 'package:core/ui/widgets/logo.dart';
 import 'package:core/util/preferences.dart';
 import 'package:event_taxi/event_taxi.dart';
 

@@ -9,14 +9,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:dapp_bin/ui/views/pin_screen.dart';
-import 'package:dapp_bin/ui/views/settings/backupseed_sheet.dart';
-import 'package:dapp_bin/ui/views/settings/custom_url_widget.dart';
-import 'package:dapp_bin/ui/views/settings/nodes_widget.dart';
-import 'package:dapp_bin/ui/views/settings/yubikey_params_widget.dart';
-import 'package:dapp_bin/ui/views/yubikey_screen.dart';
 import 'package:core/appstate_container.dart';
-import 'package:core/localization.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/model/available_currency.dart';
@@ -37,6 +30,12 @@ import 'package:core/util/haptic_util.dart';
 import 'package:core/util/preferences.dart';
 import 'package:core/util/service_locator.dart';
 import 'package:core/util/vault.dart';
+import 'package:dapp_bin/ui/views/pin_screen.dart';
+import 'package:dapp_bin/ui/views/settings/backupseed_sheet.dart';
+import 'package:dapp_bin/ui/views/settings/custom_url_widget.dart';
+import 'package:dapp_bin/ui/views/settings/nodes_widget.dart';
+import 'package:dapp_bin/ui/views/settings/yubikey_params_widget.dart';
+import 'package:dapp_bin/ui/views/yubikey_screen.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';

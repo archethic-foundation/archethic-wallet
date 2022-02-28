@@ -1,6 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:websafe_svg/websafe_svg.dart';
 
+// Project imports:
 import '../constants.dart';
 
 class Tags extends StatelessWidget {

@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:dapp_bin/ui/views/pin_screen.dart';
 import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/data/appdb.dart';
@@ -23,6 +22,7 @@ import 'package:core/util/seeds.dart';
 import 'package:core/util/service_locator.dart';
 import 'package:core/util/user_data_util.dart';
 import 'package:core/util/vault.dart';
+import 'package:dapp_bin/ui/views/pin_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class IntroImportSeedPage extends StatefulWidget {

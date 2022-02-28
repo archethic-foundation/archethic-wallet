@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:dapp_bin/ui/views/mnemonic_display.dart';
 import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/data/appdb.dart';
@@ -16,6 +15,7 @@ import 'package:core/util/mnemonics.dart';
 import 'package:core/util/seeds.dart';
 import 'package:core/util/service_locator.dart';
 import 'package:core/util/vault.dart';
+import 'package:dapp_bin/ui/views/mnemonic_display.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class IntroBackupSeedPage extends StatefulWidget {

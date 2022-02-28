@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:typed_data';
-
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +13,6 @@ import 'package:core/util/global_var.dart';
 import 'package:core/util/ledger/archethic_ledger_util.dart';
 import 'package:core/util/service_locator.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
-import 'package:pointycastle/export.dart' as pc show Digest;
 
 class LedgerScreen extends StatefulWidget {
   const LedgerScreen(this.ucoTransferList, {Key? key}) : super(key: key);

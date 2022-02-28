@@ -1,5 +1,8 @@
-import 'package:core/ui/util/lorem_ipsum/lorem_ipsum.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:core/ui/util/lorem_ipsum/lorem_ipsum.dart';
 
 class Email {
   final String? image, name, subject, body, time;
