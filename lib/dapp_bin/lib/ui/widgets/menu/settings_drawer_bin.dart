@@ -9,33 +9,33 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/model/available_currency.dart';
 import 'package:core/model/available_language.dart';
-import 'package:core/model/available_themes.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/device_lock_timeout.dart';
 import 'package:core/model/device_unlock_option.dart';
-import 'package:core/ui/util/settings_list_item.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/util/ui_util.dart';
-import 'package:core/ui/widgets/components/dialog.dart';
-import 'package:core/ui/widgets/components/icon_widget.dart';
-import 'package:core/ui/widgets/components/sheet_util.dart';
 import 'package:core/util/biometrics_util.dart';
-import 'package:core/util/case_converter.dart';
+import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
-import 'package:core/util/preferences.dart';
-import 'package:core/util/service_locator.dart';
 import 'package:core/util/vault.dart';
+import 'package:core_ui/util/case_converter.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/model/available_themes.dart';
+import 'package:dapp_bin/ui/util/settings_list_item.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
+import 'package:dapp_bin/ui/util/ui_util.dart';
 import 'package:dapp_bin/ui/views/pin_screen.dart';
 import 'package:dapp_bin/ui/views/settings/backupseed_sheet.dart';
 import 'package:dapp_bin/ui/views/settings/custom_url_widget.dart';
 import 'package:dapp_bin/ui/views/settings/nodes_widget.dart';
 import 'package:dapp_bin/ui/views/settings/yubikey_params_widget.dart';
 import 'package:dapp_bin/ui/views/yubikey_screen.dart';
+import 'package:dapp_bin/ui/widgets/components/dialog.dart';
+import 'package:dapp_bin/ui/widgets/components/icon_widget.dart';
+import 'package:dapp_bin/ui/widgets/components/sheet_util.dart';
+import 'package:dapp_bin/util/preferences.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -1026,7 +1026,11 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                       AppDialogs.showConfirmDialog(
                           context,
                           CaseChange.toUpperCase(
-                              AppLocalization.of(context)!.warning, context),
+                              AppLocalization.of(context)!.warning,
+                              context,
+                              StateContainer.of(context)
+                                  .curLanguage
+                                  .getLocaleString()),
                           AppLocalization.of(context)!.logoutDetail,
                           AppLocalization.of(context)!
                               .logoutAction
@@ -1037,7 +1041,11 @@ class _SettingsSheetBinState extends State<SettingsSheetBin>
                             AppLocalization.of(context)!.logoutAreYouSure,
                             AppLocalization.of(context)!.logoutReassurance,
                             CaseChange.toUpperCase(
-                                AppLocalization.of(context)!.yes, context), () {
+                                AppLocalization.of(context)!.yes,
+                                context,
+                                StateContainer.of(context)
+                                    .curLanguage
+                                    .getLocaleString()), () {
                           // Delete all data
                           sl.get<DBHelper>().dropAll();
                           Vault.getInstance().then((Vault _vault) {

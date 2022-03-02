@@ -9,12 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/widgets/components/icon_widget.dart';
-import 'package:core/util/case_converter.dart';
-import 'package:core/util/service_locator.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core_ui/util/case_converter.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
+import 'package:dapp_bin/ui/widgets/components/icon_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
@@ -314,7 +314,9 @@ TimelineTile _firstTimelineTile(
         children: <Widget>[
           SelectableText(
             CaseChange.toUpperCase(
-                StateContainer.of(context).wallet!.address, context),
+                StateContainer.of(context).wallet!.address,
+                context,
+                StateContainer.of(context).curLanguage.getLocaleString()),
           ),
           const SizedBox(height: 4),
           const Text(

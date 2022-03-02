@@ -8,20 +8,20 @@ import 'package:flutter/material.dart';
 import 'package:aemail/ui/views/home_page_aemail.dart';
 import 'package:aewallet/ui/views/home_page_aewallet.dart';
 import 'package:aewallet/ui/views/sheets/chart_sheet.dart';
-import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/ae_apps.dart';
 import 'package:core/model/data/appdb.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/widgets/components/dialog.dart';
-import 'package:core/ui/widgets/components/icon_widget.dart';
-import 'package:core/ui/widgets/menu/abstract_menu_widget.dart';
-import 'package:core/util/case_converter.dart';
-import 'package:core/util/preferences.dart';
-import 'package:core/util/service_locator.dart';
+import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/vault.dart';
+import 'package:core_ui/ui/widgets/menu/abstract_menu_widget.dart';
+import 'package:core_ui/util/case_converter.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
 import 'package:dapp_bin/ui/views/all_apps_sheet.dart';
+import 'package:dapp_bin/ui/widgets/components/dialog.dart';
+import 'package:dapp_bin/ui/widgets/components/icon_widget.dart';
 import 'package:dapp_bin/ui/widgets/menu/settings_drawer_bin.dart';
+import 'package:dapp_bin/util/preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MenuWidgetBin extends AbstractMenuWidget {
@@ -164,7 +164,11 @@ class MenuWidgetBin extends AbstractMenuWidget {
                 AppDialogs.showConfirmDialog(
                     context,
                     CaseChange.toUpperCase(
-                        AppLocalization.of(context)!.warning, context),
+                        AppLocalization.of(context)!.warning,
+                        context,
+                        StateContainer.of(context)
+                            .curLanguage
+                            .getLocaleString()),
                     AppLocalization.of(context)!.logoutDetail,
                     AppLocalization.of(context)!.logoutAction.toUpperCase(),
                     () {
@@ -174,7 +178,11 @@ class MenuWidgetBin extends AbstractMenuWidget {
                       AppLocalization.of(context)!.logoutAreYouSure,
                       AppLocalization.of(context)!.logoutReassurance,
                       CaseChange.toUpperCase(
-                          AppLocalization.of(context)!.yes, context), () {
+                          AppLocalization.of(context)!.yes,
+                          context,
+                          StateContainer.of(context)
+                              .curLanguage
+                              .getLocaleString()), () {
                     // Delete all data
                     sl.get<DBHelper>().dropAll();
                     Vault.getInstance().then((Vault _vault) {

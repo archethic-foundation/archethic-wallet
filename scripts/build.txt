@@ -9,7 +9,7 @@ flutter build web --web-renderer canvaskit --release
 # macos
 cd macos
 flutter build macos
-Xcode : notarize App : Archive/Distribute app/Deveoper ID/Upload/Automatically signfastlan
+Xcode : notarize App : Archive/Distribute app/Deveoper ID/Upload/Automatically sign
 # windows
 flutter build windows
 flutter pub run msix:create -c /XX/XX/CERTIFICATE.pfx -p kfmslmkd

@@ -10,18 +10,18 @@ import 'package:aewallet/bus/contact_modified_event.dart';
 import 'package:aewallet/bus/contact_removed_event.dart';
 import 'package:aewallet/ui/views/transfer/transfer_uco_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
-import 'package:core/ui/util/dimens.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/util/ui_util.dart';
-import 'package:core/ui/widgets/components/buttons.dart';
-import 'package:core/ui/widgets/components/dialog.dart';
-import 'package:core/ui/widgets/components/sheet_util.dart';
-import 'package:core/util/case_converter.dart';
-import 'package:core/util/service_locator.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core_ui/ui/util/dimens.dart';
+import 'package:core_ui/util/case_converter.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
+import 'package:dapp_bin/ui/util/ui_util.dart';
+import 'package:dapp_bin/ui/widgets/components/buttons.dart';
+import 'package:dapp_bin/ui/widgets/components/dialog.dart';
+import 'package:dapp_bin/ui/widgets/components/sheet_util.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -67,7 +67,10 @@ class ContactDetailsSheet {
                                       .replaceAll('%1', contact.name!),
                                   CaseChange.toUpperCase(
                                       AppLocalization.of(context)!.yes,
-                                      context), () {
+                                      context,
+                                      StateContainer.of(context)
+                                          .curLanguage
+                                          .getLocaleString()), () {
                                 sl
                                     .get<DBHelper>()
                                     .deleteContact(contact)
@@ -80,13 +83,22 @@ class ContactDetailsSheet {
                                       AppLocalization.of(context)!
                                           .contactRemoved
                                           .replaceAll('%1', contact.name!),
-                                      context);
+                                      context,
+                                      StateContainer.of(context)
+                                          .curTheme
+                                          .primary!,
+                                      StateContainer.of(context)
+                                          .curTheme
+                                          .overlay80!);
                                   Navigator.of(context).pop();
                                 });
                               },
                                   cancelText: CaseChange.toUpperCase(
                                       AppLocalization.of(context)!.no,
-                                      context));
+                                      context,
+                                      StateContainer.of(context)
+                                          .curLanguage
+                                          .getLocaleString()));
                             },
                             child: FaIcon(FontAwesomeIcons.trash,
                                 size: 24,

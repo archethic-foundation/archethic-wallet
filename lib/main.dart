@@ -9,17 +9,16 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/available_language.dart';
 import 'package:core/model/data/appdb.dart';
-import 'package:core/ui/util/routes.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/widgets/components/dialog.dart';
-import 'package:core/util/app_util.dart';
-import 'package:core/util/case_converter.dart';
-import 'package:core/util/preferences.dart';
+import 'package:core/model/data/hive_db.dart';
 import 'package:core/util/vault.dart';
+import 'package:core_ui/ui/util/routes.dart';
+import 'package:core_ui/util/app_util.dart';
+import 'package:core_ui/util/case_converter.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
 import 'package:dapp_bin/ui/views/home_page_bin.dart';
 import 'package:dapp_bin/ui/views/intro/intro_backup_confirm.dart';
 import 'package:dapp_bin/ui/views/intro/intro_backup_safety.dart';
@@ -27,6 +26,8 @@ import 'package:dapp_bin/ui/views/intro/intro_backup_seed.dart';
 import 'package:dapp_bin/ui/views/intro/intro_import_seed.dart';
 import 'package:dapp_bin/ui/views/intro/intro_welcome.dart';
 import 'package:dapp_bin/ui/views/lock_screen.dart';
+import 'package:dapp_bin/ui/widgets/components/dialog.dart';
+import 'package:dapp_bin/util/preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive/hive.dart';
@@ -240,7 +241,9 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
         AppDialogs.showConfirmDialog(
             context,
             CaseChange.toUpperCase(
-                AppLocalization.of(context)!.warning, context),
+                AppLocalization.of(context)!.warning,
+                context,
+                StateContainer.of(context).curLanguage.getLocaleString()),
             AppLocalization.of(context)!.rootWarning,
             AppLocalization.of(context)!.iUnderstandTheRisks.toUpperCase(),
             () async {
@@ -286,7 +289,8 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
         if (_preferences.getLock() || _preferences.shouldLock()) {
           Navigator.of(context).pushReplacementNamed('/lock_screen');
         } else {
-          await AppUtil().loginAccount(seed!, context);
+          Account selectedAcct = await AppUtil().loginAccount(seed!, context);
+          StateContainer.of(context).requestUpdate(account: selectedAcct);
           Navigator.of(context).pushReplacementNamed('/home');
         }
       } else {

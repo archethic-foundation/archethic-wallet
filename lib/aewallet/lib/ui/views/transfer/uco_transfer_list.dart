@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' show UCOTransfer;
-import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
 import 'package:core/model/data/hive_db.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/widgets/components/context_menu.dart';
-import 'package:core/ui/widgets/components/context_menu_item.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
+import 'package:dapp_bin/ui/widgets/components/context_menu.dart';
+import 'package:dapp_bin/ui/widgets/components/context_menu_item.dart';
 
 class UcoTransferListWidget extends StatefulWidget {
   UcoTransferListWidget(

@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:aewallet/ui/views/sheets/chart_sheet.dart';
-import 'package:core/appstate_container.dart';
 import 'package:core/model/ae_apps.dart';
-import 'package:core/ui/widgets/components/icon_widget.dart';
-import 'package:core/ui/widgets/menu/abstract_menu_widget.dart';
+import 'package:core_ui/ui/widgets/menu/abstract_menu_widget.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/widgets/components/icon_widget.dart';
 
 class MenuWidgetMail extends AbstractMenuWidget {
   List<OptionChart> optionChartList = List<OptionChart>.empty(growable: true);

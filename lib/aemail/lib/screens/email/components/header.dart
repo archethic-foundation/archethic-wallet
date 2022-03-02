@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:core/ui/widgets/components/icon_widget.dart';
+import 'package:dapp_bin/ui/widgets/components/icon_widget.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 // Project imports:

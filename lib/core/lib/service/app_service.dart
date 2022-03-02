@@ -5,12 +5,10 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 // Package imports:
+import 'package:core/model/recent_transaction.dart';
+import 'package:core/model/transaction_infos.dart';
+import 'package:core/util/get_it_instance.dart';
 import 'package:intl/intl.dart';
-
-// Project imports:
-import '../model/recent_transaction.dart';
-import '../model/transaction_infos.dart';
-import '../util/service_locator.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
@@ -170,6 +168,10 @@ class AppService {
       String transactionChainSeed,
       String address,
       List<UCOTransfer> listUcoTransfer) async {
+    sl.get<ApiService>().waitConfirmations(address, (nbConfirmations) {
+      print('nbConfirmations: ' + nbConfirmations);
+    });
+
     final Transaction lastTransaction =
         await sl.get<ApiService>().getLastTransaction(address);
     final Transaction transaction =
@@ -179,7 +181,7 @@ class AppService {
     }
     TransactionStatus transactionStatus = TransactionStatus();
     transaction
-        .build(transactionChainSeed, lastTransaction.chainLength!, 'P256')
+        .build(transactionChainSeed, lastTransaction.chainLength!)
         .originSign(originPrivateKey);
     try {
       transactionStatus = await sl.get<ApiService>().sendTx(transaction);
@@ -393,7 +395,7 @@ class AppService {
     }
     TransactionFee transactionFee = TransactionFee();
     transaction
-        .build(transactionChainSeed, lastTransaction.chainLength!, 'P256')
+        .build(transactionChainSeed, lastTransaction.chainLength!)
         .originSign(originPrivateKey);
     try {
       transactionFee =

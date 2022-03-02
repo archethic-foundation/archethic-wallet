@@ -10,27 +10,27 @@ import 'package:flutter/material.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/ui/views/transfer/nft_transfer_list.dart';
 import 'package:aewallet/ui/views/transfer/uco_transfer_list.dart';
-import 'package:core/appstate_container.dart';
 import 'package:core/bus/authenticated_event.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/model/data/hive_db.dart';
 import 'package:core/service/app_service.dart';
-import 'package:core/ui/util/dimens.dart';
-import 'package:core/ui/util/routes.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/util/ui_util.dart';
-import 'package:core/ui/widgets/components/buttons.dart';
-import 'package:core/ui/widgets/components/dialog.dart';
 import 'package:core/util/biometrics_util.dart';
+import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/global_var.dart';
 import 'package:core/util/haptic_util.dart';
-import 'package:core/util/preferences.dart';
-import 'package:core/util/service_locator.dart';
 import 'package:core/util/vault.dart';
+import 'package:core_ui/ui/util/dimens.dart';
+import 'package:core_ui/ui/util/routes.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
+import 'package:dapp_bin/ui/util/ui_util.dart';
 import 'package:dapp_bin/ui/views/ledger_screen.dart';
 import 'package:dapp_bin/ui/views/pin_screen.dart';
 import 'package:dapp_bin/ui/views/yubikey_screen.dart';
+import 'package:dapp_bin/ui/widgets/components/buttons.dart';
+import 'package:dapp_bin/ui/widgets/components/dialog.dart';
+import 'package:dapp_bin/util/preferences.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
@@ -78,7 +78,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) {
-      if (event.response!.toUpperCase() != 'OK') {
+      if (event.response!.toUpperCase() != 'pending') {
         // Send failed
         if (animationOpen!) {
           Navigator.of(context).pop();
@@ -88,11 +88,16 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                 ' (' +
                 event.response! +
                 ')',
-            context);
+            context,
+            StateContainer.of(context).curTheme.primary!,
+            StateContainer.of(context).curTheme.overlay80!);
         Navigator.of(context).pop();
       } else {
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.transferSuccess, context,
+            AppLocalization.of(context)!.transferSuccess,
+            context,
+            StateContainer.of(context).curTheme.primary!,
+            StateContainer.of(context).curTheme.overlay80!,
             duration: const Duration(milliseconds: 5000));
         setState(() {
           StateContainer.of(context).requestUpdate(

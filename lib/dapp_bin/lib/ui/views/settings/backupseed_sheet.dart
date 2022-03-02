@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:core/util/mnemonics.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
 import 'package:dapp_bin/ui/views/mnemonic_display.dart';
+import 'package:dapp_bin/ui/widgets/components/tap_outside_unfocus.dart';
 
 class AppSeedBackupSheet extends StatefulWidget {
   const AppSeedBackupSheet(this.seed, {Key? key}) : super(key: key);

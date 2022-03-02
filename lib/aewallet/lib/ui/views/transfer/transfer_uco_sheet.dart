@@ -12,25 +12,25 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:aewallet/ui/views/transfer/transfer_confirm_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
 import 'package:core/model/available_currency.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
 import 'package:core/service/app_service.dart';
-import 'package:core/ui/util/dimens.dart';
-import 'package:core/ui/util/formatters.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/util/ui_util.dart';
-import 'package:core/ui/widgets/components/app_text_field.dart';
-import 'package:core/ui/widgets/components/buttons.dart';
-import 'package:core/ui/widgets/components/icon_widget.dart';
-import 'package:core/ui/widgets/components/sheet_util.dart';
+import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/global_var.dart';
 import 'package:core/util/number_util.dart';
-import 'package:core/util/service_locator.dart';
-import 'package:core/util/user_data_util.dart';
+import 'package:core_ui/ui/util/dimens.dart';
+import 'package:core_ui/ui/util/formatters.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
+import 'package:dapp_bin/ui/util/ui_util.dart';
+import 'package:dapp_bin/ui/widgets/components/app_text_field.dart';
+import 'package:dapp_bin/ui/widgets/components/buttons.dart';
+import 'package:dapp_bin/ui/widgets/components/icon_widget.dart';
+import 'package:dapp_bin/ui/widgets/components/sheet_util.dart';
+import 'package:dapp_bin/util/user_data_util.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
@@ -776,7 +776,10 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                 await UserDataUtil.getQRData(DataType.address, context);
             if (scanResult == null) {
               UIUtil.showSnackbar(
-                  AppLocalization.of(context)!.qrInvalidAddress, context);
+                  AppLocalization.of(context)!.qrInvalidAddress,
+                  context,
+                  StateContainer.of(context).curTheme.primary!,
+                  StateContainer.of(context).curTheme.overlay80!);
             } else if (QRScanErrs.errorList.contains(scanResult)) {
               return;
             } else {

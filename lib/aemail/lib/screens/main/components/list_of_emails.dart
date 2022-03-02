@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:aemail/components/side_menu.dart';
 import 'package:aemail/models/email.dart';
-import 'package:core/appstate_container.dart';
-import 'package:core/ui/util/styles.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 // Project imports:

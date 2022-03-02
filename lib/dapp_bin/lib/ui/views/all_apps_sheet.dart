@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:core/appstate_container.dart';
 import 'package:core/model/ae_apps.dart';
-import 'package:core/ui/util/lorem_ipsum/lorem_ipsum.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/widgets/components/icon_widget.dart';
+import 'package:core_ui/ui/util/lorem_ipsum/lorem_ipsum.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
+import 'package:dapp_bin/ui/widgets/components/icon_widget.dart';
 
 class AllAppsSheet extends StatefulWidget {
   const AllAppsSheet({Key? key}) : super(key: key);

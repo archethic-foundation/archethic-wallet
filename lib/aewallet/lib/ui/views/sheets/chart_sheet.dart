@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/widgets/components/dialog.dart';
-import 'package:core/ui/widgets/components/icon_widget.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
+import 'package:dapp_bin/ui/widgets/components/dialog.dart';
+import 'package:dapp_bin/ui/widgets/components/icon_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

@@ -10,16 +10,16 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/appstate_container.dart';
 import 'package:core/bus/otp_event.dart';
 import 'package:core/localization.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/util/ui_util.dart';
-import 'package:core/ui/widgets/components/app_text_field.dart';
-import 'package:core/ui/widgets/components/icon_widget.dart';
+import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/nfc.dart';
-import 'package:core/util/preferences.dart';
-import 'package:core/util/service_locator.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
+import 'package:dapp_bin/ui/util/ui_util.dart';
+import 'package:dapp_bin/ui/widgets/components/app_text_field.dart';
+import 'package:dapp_bin/ui/widgets/components/icon_widget.dart';
+import 'package:dapp_bin/util/preferences.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yubidart/yubidart.dart';
@@ -80,7 +80,11 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
   Future<void> _verifyOTP(String otp) async {
     final Preferences _preferences = await Preferences.getInstance();
 
-    UIUtil.showSnackbar(otp, context);
+    UIUtil.showSnackbar(
+        otp,
+        context,
+        StateContainer.of(context).curTheme.primary!,
+        StateContainer.of(context).curTheme.overlay80!);
     final String yubikeyClientAPIKey = _preferences.getYubikeyClientAPIKey();
     final String yubikeyClientID = _preferences.getYubikeyClientID();
     verificationResponse = await YubicoService()
@@ -88,65 +92,99 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
     switch (verificationResponse.status) {
       case 'BAD_OTP':
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.yubikeyError_BAD_OTP, context);
+            AppLocalization.of(context)!.yubikeyError_BAD_OTP,
+            context,
+            StateContainer.of(context).curTheme.primary!,
+            StateContainer.of(context).curTheme.overlay80!);
         Navigator.of(context).pop();
         break;
       case 'BACKEND_ERROR':
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.yubikeyError_BACKEND_ERROR, context);
+            AppLocalization.of(context)!.yubikeyError_BACKEND_ERROR,
+            context,
+            StateContainer.of(context).curTheme.primary!,
+            StateContainer.of(context).curTheme.overlay80!);
         Navigator.of(context).pop();
         break;
       case 'BAD_SIGNATURE':
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.yubikeyError_BAD_SIGNATURE, context);
+            AppLocalization.of(context)!.yubikeyError_BAD_SIGNATURE,
+            context,
+            StateContainer.of(context).curTheme.primary!,
+            StateContainer.of(context).curTheme.overlay80!);
         Navigator.of(context).pop();
         break;
       case 'MISSING_PARAMETER':
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.yubikeyError_MISSING_PARAMETER,
-            context);
+            context,
+            StateContainer.of(context).curTheme.primary!,
+            StateContainer.of(context).curTheme.overlay80!);
         Navigator.of(context).pop();
         break;
       case 'NOT_ENOUGH_ANSWERS':
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.yubikeyError_NOT_ENOUGH_ANSWERS,
-            context);
+            context,
+            StateContainer.of(context).curTheme.primary!,
+            StateContainer.of(context).curTheme.overlay80!);
         Navigator.of(context).pop();
         break;
       case 'NO_SUCH_CLIENT':
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.yubikeyError_NO_SUCH_CLIENT, context);
+            AppLocalization.of(context)!.yubikeyError_NO_SUCH_CLIENT,
+            context,
+            StateContainer.of(context).curTheme.primary!,
+            StateContainer.of(context).curTheme.overlay80!);
         Navigator.of(context).pop();
         break;
       case 'OPERATION_NOT_ALLOWED':
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.yubikeyError_OPERATION_NOT_ALLOWED,
-            context);
+            context,
+            StateContainer.of(context).curTheme.primary!,
+            StateContainer.of(context).curTheme.overlay80!);
         Navigator.of(context).pop();
         break;
       case 'REPLAYED_OTP':
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.yubikeyError_REPLAYED_OTP, context);
+            AppLocalization.of(context)!.yubikeyError_REPLAYED_OTP,
+            context,
+            StateContainer.of(context).curTheme.primary!,
+            StateContainer.of(context).curTheme.overlay80!);
         Navigator.of(context).pop();
         break;
       case 'REPLAYED_REQUEST':
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.yubikeyError_REPLAYED_REQUEST,
-            context);
+            context,
+            StateContainer.of(context).curTheme.primary!,
+            StateContainer.of(context).curTheme.overlay80!);
         Navigator.of(context).pop();
         break;
       case 'RESPONSE_KO':
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.yubikeyError_RESPONSE_KO, context);
+            AppLocalization.of(context)!.yubikeyError_RESPONSE_KO,
+            context,
+            StateContainer.of(context).curTheme.primary!,
+            StateContainer.of(context).curTheme.overlay80!);
         Navigator.of(context).pop();
         break;
       case 'OK':
-        UIUtil.showSnackbar(verificationResponse.status, context);
+        UIUtil.showSnackbar(
+            verificationResponse.status,
+            context,
+            StateContainer.of(context).curTheme.primary!,
+            StateContainer.of(context).curTheme.overlay80!);
         _preferences.resetLockAttempts();
         Navigator.of(context).pop(true);
         break;
       default:
-        UIUtil.showSnackbar(verificationResponse.status, context);
+        UIUtil.showSnackbar(
+            verificationResponse.status,
+            context,
+            StateContainer.of(context).curTheme.primary!,
+            StateContainer.of(context).curTheme.overlay80!);
         Navigator.of(context).pop();
         break;
     }

@@ -8,14 +8,14 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
-import 'package:core/ui/util/dimens.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/util/ui_util.dart';
-import 'package:core/ui/widgets/components/buttons.dart';
-import 'package:core/ui/widgets/components/icon_widget.dart';
-import 'package:core/util/case_converter.dart';
+import 'package:core_ui/ui/util/dimens.dart';
+import 'package:core_ui/util/case_converter.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
+import 'package:dapp_bin/ui/util/ui_util.dart';
+import 'package:dapp_bin/ui/widgets/components/buttons.dart';
+import 'package:dapp_bin/ui/widgets/components/icon_widget.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -122,7 +122,9 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                     .address));
                             UIUtil.showSnackbar(
                                 AppLocalization.of(context)!.addressCopied,
-                                context);
+                                context,
+                                StateContainer.of(context).curTheme.primary!,
+                                StateContainer.of(context).curTheme.overlay80!);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(15.0),
@@ -186,7 +188,10 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                                           .selectedAccount
                                                           .lastAddress!
                                                           .substring(0, 16),
-                                                      context),
+                                                      context,
+                                                      StateContainer.of(context)
+                                                          .curLanguage
+                                                          .getLocaleString()),
                                                   style: AppStyles
                                                       .textStyleSize12W100Primary(
                                                           context)),
@@ -196,7 +201,10 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                                           .selectedAccount
                                                           .lastAddress!
                                                           .substring(16, 32),
-                                                      context),
+                                                      context,
+                                                      StateContainer.of(context)
+                                                          .curLanguage
+                                                          .getLocaleString()),
                                                   style: AppStyles
                                                       .textStyleSize12W100Primary(
                                                           context)),
@@ -206,7 +214,10 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                                           .selectedAccount
                                                           .lastAddress!
                                                           .substring(32, 48),
-                                                      context),
+                                                      context,
+                                                      StateContainer.of(context)
+                                                          .curLanguage
+                                                          .getLocaleString()),
                                                   style: AppStyles
                                                       .textStyleSize12W100Primary(
                                                           context)),
@@ -216,7 +227,10 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                                           .selectedAccount
                                                           .lastAddress!
                                                           .substring(48),
-                                                      context),
+                                                      context,
+                                                      StateContainer.of(context)
+                                                          .curLanguage
+                                                          .getLocaleString()),
                                                   style: AppStyles
                                                       .textStyleSize12W100Primary(
                                                           context)),
@@ -246,7 +260,10 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                     Clipboard.setData(ClipboardData(
                         text: StateContainer.of(context).wallet!.address));
                     UIUtil.showSnackbar(
-                        AppLocalization.of(context)!.addressCopied, context);
+                        AppLocalization.of(context)!.addressCopied,
+                        context,
+                        StateContainer.of(context).curTheme.primary!,
+                        StateContainer.of(context).curTheme.overlay80!);
                   }),
                 ],
               ),

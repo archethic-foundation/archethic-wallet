@@ -2,23 +2,24 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
-import 'package:core/ui/util/dimens.dart';
-import 'package:core/ui/util/routes.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/widgets/components/buttons.dart';
-import 'package:core/ui/widgets/components/dialog.dart';
-import 'package:core/ui/widgets/components/icon_widget.dart';
-import 'package:core/util/app_util.dart';
+import 'package:core/model/data/hive_db.dart';
 import 'package:core/util/biometrics_util.dart';
-import 'package:core/util/case_converter.dart';
-import 'package:core/util/preferences.dart';
-import 'package:core/util/service_locator.dart';
+import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/vault.dart';
+import 'package:core_ui/ui/util/dimens.dart';
+import 'package:core_ui/ui/util/routes.dart';
+import 'package:core_ui/util/app_util.dart';
+import 'package:core_ui/util/case_converter.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
 import 'package:dapp_bin/ui/views/pin_screen.dart';
 import 'package:dapp_bin/ui/views/yubikey_screen.dart';
+import 'package:dapp_bin/ui/widgets/components/buttons.dart';
+import 'package:dapp_bin/ui/widgets/components/dialog.dart';
+import 'package:dapp_bin/ui/widgets/components/icon_widget.dart';
+import 'package:dapp_bin/util/preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppLockScreen extends StatefulWidget {
@@ -34,8 +35,9 @@ class _AppLockScreenState extends State<AppLockScreen> {
 
   Future<void> _goHome() async {
     if (StateContainer.of(context).wallet == null) {
-      await AppUtil()
+      Account selectedAcct = await AppUtil()
           .loginAccount(await StateContainer.of(context).getSeed(), context);
+      StateContainer.of(context).requestUpdate(account: selectedAcct);
     }
     StateContainer.of(context)
         .requestUpdate(account: StateContainer.of(context).selectedAccount);
@@ -271,7 +273,10 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                       context,
                                       CaseChange.toUpperCase(
                                           AppLocalization.of(context)!.warning,
-                                          context),
+                                          context,
+                                          StateContainer.of(context)
+                                              .curLanguage
+                                              .getLocaleString()),
                                       AppLocalization.of(context)!.logoutDetail,
                                       AppLocalization.of(context)!
                                           .logoutAction
@@ -285,7 +290,10 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                             .logoutReassurance,
                                         CaseChange.toUpperCase(
                                             AppLocalization.of(context)!.yes,
-                                            context),
+                                            context,
+                                            StateContainer.of(context)
+                                                .curLanguage
+                                                .getLocaleString()),
                                         () {});
                                   });
                                 },
@@ -316,7 +324,11 @@ class _AppLockScreenState extends State<AppLockScreen> {
                         Container(
                           child: Text(
                             CaseChange.toUpperCase(
-                                AppLocalization.of(context)!.locked, context),
+                                AppLocalization.of(context)!.locked,
+                                context,
+                                StateContainer.of(context)
+                                    .curLanguage
+                                    .getLocaleString()),
                             style:
                                 AppStyles.textStyleSize28W700Primary(context),
                           ),

@@ -3,19 +3,20 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/data/appdb.dart';
-import 'package:core/ui/util/dimens.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/widgets/components/buttons.dart';
-import 'package:core/ui/widgets/components/icon_widget.dart';
-import 'package:core/util/app_util.dart';
+import 'package:core/model/data/hive_db.dart';
+import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/mnemonics.dart';
 import 'package:core/util/seeds.dart';
-import 'package:core/util/service_locator.dart';
 import 'package:core/util/vault.dart';
+import 'package:core_ui/ui/util/dimens.dart';
+import 'package:core_ui/util/app_util.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
 import 'package:dapp_bin/ui/views/mnemonic_display.dart';
+import 'package:dapp_bin/ui/widgets/components/buttons.dart';
+import 'package:dapp_bin/ui/widgets/components/icon_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class IntroBackupSeedPage extends StatefulWidget {
@@ -137,7 +138,9 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                     AppUtil()
                                         .loginAccount(_seed, context,
                                             forceNewAccount: true)
-                                        .then((_) {
+                                        .then((Account selectedAcct) {
+                                      StateContainer.of(context)
+                                          .requestUpdate(account: selectedAcct);
                                       _mnemonic = AppMnemomics.seedToMnemonic(
                                           _vault.getSeed()!);
                                     });
@@ -173,7 +176,11 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                             StateContainer.of(context)
                                 .getSeed()
                                 .then((String seed) {
-                              AppUtil().loginAccount(seed, context).then((_) {
+                              AppUtil()
+                                  .loginAccount(seed, context)
+                                  .then((Account selectedAcct) {
+                                StateContainer.of(context)
+                                    .requestUpdate(account: selectedAcct);
                                 StateContainer.of(context).requestUpdate(
                                   account: StateContainer.of(context)
                                       .selectedAccount,

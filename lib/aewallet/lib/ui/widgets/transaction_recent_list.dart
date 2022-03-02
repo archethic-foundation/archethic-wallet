@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:aewallet/ui/views/sheets/transaction_infos_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
 import 'package:core/model/recent_transaction.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/widgets/components/sheet_util.dart';
+import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
-import 'package:core/util/service_locator.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
+import 'package:dapp_bin/ui/widgets/components/sheet_util.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';

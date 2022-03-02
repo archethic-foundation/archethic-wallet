@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:core/appstate_container.dart';
+import 'package:dapp_bin/appstate_container.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 // Project imports:

@@ -16,14 +16,14 @@ import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
 import 'package:aewallet/ui/views/sheets/transaction_chain_explorer_sheet.dart';
 import 'package:aewallet/ui/views/transfer/transfer_uco_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/appstate_container.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/ae_apps.dart';
-import 'package:core/model/chart_infos.dart';
-import 'package:core/ui/util/styles.dart';
-import 'package:core/ui/widgets/components/icon_widget.dart';
-import 'package:core/ui/widgets/components/sheet_util.dart';
-import 'package:core/ui/widgets/menu/abstract_menu_widget.dart';
+import 'package:core_ui/model/chart_infos.dart';
+import 'package:core_ui/ui/widgets/menu/abstract_menu_widget.dart';
+import 'package:dapp_bin/appstate_container.dart';
+import 'package:dapp_bin/ui/util/styles.dart';
+import 'package:dapp_bin/ui/widgets/components/icon_widget.dart';
+import 'package:dapp_bin/ui/widgets/components/sheet_util.dart';
 
 // Project imports:
 import 'settings_drawer_wallet.dart';
