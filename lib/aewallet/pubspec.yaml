@@ -18,6 +18,9 @@ dependencies:
   dapp_bin:
     path: ../dapp_bin
 
+dev_dependencies:
+  flutter_lints: ^1.0.4
+
 # The following section is specific to Flutter.
 flutter:
   assets:

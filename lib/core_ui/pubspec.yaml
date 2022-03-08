@@ -14,7 +14,7 @@ dependencies:
 
   # Beautiful animations inspired on Animate.css, every animation is a widget that contains default but customizable values that look attractive.
   animate_do: ^2.1.0
-  
+
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0
 

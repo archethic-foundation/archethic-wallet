@@ -18,6 +18,9 @@ dependencies:
   aewallet:
     path: ../aewallet
 
+  aeweb:
+    path: ../aeweb
+
   aemail:
     path: ../aemail
 
