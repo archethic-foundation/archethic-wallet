@@ -360,7 +360,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "invalidAddress": "Address entered was invalid",
+  "invalidAddress": "Address entered is invalid",
   "@invalidAddress": {
     "type": "text",
     "placeholders_order": [],

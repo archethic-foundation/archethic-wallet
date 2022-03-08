@@ -270,7 +270,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"invalidAddress": "L'adresse saisie n'était pas valide",
+	"invalidAddress": "L'adresse saisie n'est pas valide",
 	"@invalidAddress": {
 		"type": "text",
 		"placeholders_order": [],

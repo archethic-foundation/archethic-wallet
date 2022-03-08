@@ -310,7 +310,7 @@ class AppLocalization {
   }
 
   String get invalidAddress {
-    return Intl.message('Address entered was invalid', name: 'invalidAddress');
+    return Intl.message('Address entered is invalid', name: 'invalidAddress');
   }
 
   String get addressMissing {
