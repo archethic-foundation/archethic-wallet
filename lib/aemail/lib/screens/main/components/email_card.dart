@@ -116,10 +116,6 @@ class EmailCard extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: kBadgeColor,
                   ),
-                ).addNeumorphism(
-                  blurRadius: 4,
-                  borderRadius: 8,
-                  offset: const Offset(2, 2),
                 ),
               ),
             if (email!.tagColor != null)
