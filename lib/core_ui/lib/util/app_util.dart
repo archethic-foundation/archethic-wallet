@@ -23,8 +23,7 @@ class AppUtil {
     Account? selectedAcct = await sl.get<DBHelper>().getSelectedAccount();
 
     if (selectedAcct == null) {
-      final String genesisAddress =
-          sl.get<AddressService>().deriveAddress(seed, 0);
+      final String genesisAddress = deriveAddress(seed, 0);
       selectedAcct = Account(
           index: 0,
           lastAccess: 0,

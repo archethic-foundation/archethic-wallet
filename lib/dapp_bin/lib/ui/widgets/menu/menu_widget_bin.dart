@@ -2,6 +2,8 @@
 // ignore_for_file: unnecessary_const
 
 // Flutter imports:
+
+import 'package:aeweb/ui/views/home_page_aeweb.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -68,15 +70,29 @@ class MenuWidgetBin extends AbstractMenuWidget {
           Padding(
             padding: const EdgeInsets.only(left: 10.0, right: 10.0),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                StateContainer.of(context).currentAEApp = AEApps.aeweb;
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (c, a1, a2) => const AppHomePageAEWeb(),
+                    transitionsBuilder: (c, anim, a2, child) =>
+                        FadeTransition(opacity: anim, child: child),
+                    transitionDuration: const Duration(milliseconds: 500),
+                  ),
+                );
+              },
               child: Column(
                 children: <Widget>[
-                  buildIconDataWidget(context, FontAwesomeIcons.globe, 30, 30,
-                      enabled: false),
+                  buildIconDataWidget(
+                    context,
+                    FontAwesomeIcons.globe,
+                    30,
+                    30,
+                  ),
                   const SizedBox(height: 5),
                   Text(AppLocalization.of(context)!.appAEWebTitle,
-                      style: AppStyles.textStyleSize14W600PrimaryDisabled(
-                          context)),
+                      style: AppStyles.textStyleSize14W600Primary(context)),
                 ],
               ),
             ),

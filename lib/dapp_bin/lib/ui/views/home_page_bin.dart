@@ -7,7 +7,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aewallet/ui/widgets/balance_infos.dart';
+import 'package:dapp_bin/ui/widgets/balance_infos.dart';
 import 'package:aewallet/ui/widgets/menu/menu_widget_wallet.dart';
 import 'package:aewallet/ui/widgets/menu/settings_drawer_wallet.dart';
 import 'package:aewallet/ui/widgets/transaction_recent_list.dart';

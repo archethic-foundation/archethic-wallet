@@ -41,7 +41,8 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
         CoinsCurrentDataResponse,
         NftBalance,
         OracleService,
-        OracleUcoPrice;
+        OracleUcoPrice,
+        deriveAddress;
 
 class _InheritedStateContainer extends InheritedWidget {
   const _InheritedStateContainer({
@@ -496,8 +497,7 @@ class StateContainerState extends State<StateContainer> {
 
   Future<void> requestUpdateLastAddress(Account account) async {
     final String seed = await getSeed();
-    final String genesisAddress =
-        sl.get<AddressService>().deriveAddress(seed, 0);
+    final String genesisAddress = deriveAddress(seed, 0);
 
     String lastAddress =
         await sl.get<AddressService>().lastAddressFromAddress(genesisAddress);
