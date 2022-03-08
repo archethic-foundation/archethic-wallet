@@ -78,7 +78,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) {
-      if (event.response!.toUpperCase() != 'pending') {
+      if (event.response != 'pending') {
         // Send failed
         if (animationOpen!) {
           Navigator.of(context).pop();

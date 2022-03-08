@@ -732,7 +732,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
           if (_isContact)
             LengthLimitingTextInputFormatter(20)
           else
-            LengthLimitingTextInputFormatter(66),
+            LengthLimitingTextInputFormatter(68),
         ],
         textInputAction: TextInputAction.done,
         maxLines: null,
