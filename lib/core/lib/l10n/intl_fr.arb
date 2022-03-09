@@ -636,7 +636,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"importWallet": "Importer un portefeuille",
+	"importWallet": "J'ai déjà un portefeuille",
 	"@importWallet": {
 		"type": "text",
 		"placeholders_order": [],

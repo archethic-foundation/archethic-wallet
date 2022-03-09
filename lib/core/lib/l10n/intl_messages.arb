@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-01-24T22:26:50.851492",
+  "@@last_modified": "2022-03-09T22:45:54.902398",
   "welcomeText": "Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -372,6 +372,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "sendToMeError": "You can't send UCO to your own wallet.",
+  "@sendToMeError": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "amountMissing": "Please Enter an Amount",
   "@amountMissing": {
     "type": "text",
@@ -462,6 +468,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "ledgerMethod": "Ledger Nano S",
+  "@ledgerMethod": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "biometricsMethod": "Biometrics",
   "@biometricsMethod": {
     "type": "text",
@@ -528,7 +540,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "logoutDetail": "Logging out will remove all ARCHEthic related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again",
+  "logoutDetail": "Logging out will remove all ARCHEthic-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again",
   "@logoutDetail": {
     "type": "text",
     "placeholders_order": [],
@@ -768,13 +780,13 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "importWallet": "Import Wallet",
+  "importWallet": "I already have a wallet",
   "@importWallet": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "newWallet": "New Wallet",
+  "newWallet": "Get started",
   "@newWallet": {
     "type": "text",
     "placeholders_order": [],
@@ -1314,10 +1326,28 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "sendToMeError": "You can't send UCO to your own wallet.",
-	"@sendToMeError": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "appAEWebTitle": "AEWeb",
+  "@appAEWebTitle": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "appAEMailTitle": "AEMail",
+  "@appAEMailTitle": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "appAEWalletTitle": "AEWallet",
+  "@appAEWalletTitle": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "appAEStakingTitle": "AEStaking",
+  "@appAEStakingTitle": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

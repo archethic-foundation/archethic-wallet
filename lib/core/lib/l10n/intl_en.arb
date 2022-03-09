@@ -636,13 +636,13 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "importWallet": "Import Wallet",
+  "importWallet": "I already have a wallet",
   "@importWallet": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "newWallet": "New Wallet",
+  "newWallet": "Get started",
   "@newWallet": {
     "type": "text",
     "placeholders_order": [],

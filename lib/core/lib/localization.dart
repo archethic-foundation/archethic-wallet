@@ -619,11 +619,11 @@ class AppLocalization {
   }
 
   String get importWallet {
-    return Intl.message('Import Wallet', name: 'importWallet');
+    return Intl.message('I already have a wallet', name: 'importWallet');
   }
 
   String get newWallet {
-    return Intl.message('New Wallet', name: 'newWallet');
+    return Intl.message('Get started', name: 'newWallet');
   }
 
   String get understandButton {
