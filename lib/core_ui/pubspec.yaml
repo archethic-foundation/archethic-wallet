@@ -50,9 +50,6 @@ dependencies:
   # Lazily load and display pages of items as the user scrolls down your screen.
   infinite_scroll_pagination: ^3.1.0
 
-  # Localization
-  intl: ^0.17.0
-
   # Flutter plugin for Android and iOS devices to allow local authentication via fingerprint, touch ID, face ID, passcode, pin, or pattern
   local_auth: ^1.1.11
 
@@ -89,8 +86,6 @@ dev_dependencies:
   hive_generator: ^1.1.2
   # Automatically organize your dart imports
   import_sorter: ^4.6.0
-  # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
-  intl_generator: ^0.2.1
   # Automatically generate code for converting to and from JSON by annotating Dart classes.
   json_serializable: ^6.1.4
 
