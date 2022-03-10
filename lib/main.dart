@@ -9,6 +9,17 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/views/home_page_universe.dart';
+import 'package:aeuniverse/ui/views/intro/intro_backup_confirm.dart';
+import 'package:aeuniverse/ui/views/intro/intro_backup_safety.dart';
+import 'package:aeuniverse/ui/views/intro/intro_backup_seed.dart';
+import 'package:aeuniverse/ui/views/intro/intro_import_seed.dart';
+import 'package:aeuniverse/ui/views/intro/intro_welcome.dart';
+import 'package:aeuniverse/ui/views/lock_screen.dart';
+import 'package:aeuniverse/ui/widgets/components/dialog.dart';
+import 'package:aeuniverse/util/preferences.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/available_language.dart';
 import 'package:core/model/data/appdb.dart';
@@ -17,24 +28,11 @@ import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:core_ui/util/app_util.dart';
 import 'package:core_ui/util/case_converter.dart';
-import 'package:dapp_bin/appstate_container.dart';
-import 'package:dapp_bin/ui/util/styles.dart';
-import 'package:dapp_bin/ui/views/home_page_bin.dart';
-import 'package:dapp_bin/ui/views/intro/intro_backup_confirm.dart';
-import 'package:dapp_bin/ui/views/intro/intro_backup_safety.dart';
-import 'package:dapp_bin/ui/views/intro/intro_backup_seed.dart';
-import 'package:dapp_bin/ui/views/intro/intro_import_seed.dart';
-import 'package:dapp_bin/ui/views/intro/intro_welcome.dart';
-import 'package:dapp_bin/ui/views/lock_screen.dart';
-import 'package:dapp_bin/ui/widgets/components/dialog.dart';
-import 'package:dapp_bin/util/preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive/hive.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:safe_device/safe_device.dart';
-
-// Project imports:
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -164,13 +162,13 @@ class _AppState extends State<App> {
                 settings: settings,
               );
             case '/home':
-              return NoTransitionRoute<AppHomePageBin>(
-                builder: (_) => const AppHomePageBin(),
+              return NoTransitionRoute<AppHomePageUniverse>(
+                builder: (_) => const AppHomePageUniverse(),
                 settings: settings,
               );
             case '/home_transition':
-              return NoPopTransitionRoute<AppHomePageBin>(
-                builder: (_) => const AppHomePageBin(),
+              return NoPopTransitionRoute<AppHomePageUniverse>(
+                builder: (_) => const AppHomePageUniverse(),
                 settings: settings,
               );
             case '/intro_welcome':
