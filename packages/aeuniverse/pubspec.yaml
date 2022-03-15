@@ -38,7 +38,6 @@ dev_dependencies:
 flutter:
   assets:
     - assets/apps/
-    - assets/fonts/
     - assets/icons/
     - assets/icons/country/
     - assets/icons/currency/

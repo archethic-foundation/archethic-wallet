@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:aeuniverse/ui/widgets/balance_infos.dart';
 import 'package:aewallet/ui/widgets/menu/menu_widget_wallet.dart';
-import 'package:aewallet/ui/widgets/menu/settings_drawer_wallet.dart';
+import 'package:aewallet/ui/widgets/menu/settings_drawer_wallet_mobile.dart';
 import 'package:aewallet/ui/widgets/transaction_recent_list.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/bus/account_changed_event.dart';
@@ -344,7 +344,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
               width: UIUtil.drawerWidth(context),
               child: const Drawer(
                 // TODO: dependencies issue
-                child: SettingsSheetWallet(),
+                child: SettingsSheetWalletMobile(),
               ),
             ),
             body: SingleChildScrollView(
