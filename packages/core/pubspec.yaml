@@ -104,7 +104,7 @@ dependencies:
   safe_device: ^1.1.0
 
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
-  share_plus: ^3.1.0
+  share_plus: ^3.0.3
 
   # A package to help you build highly customisable timelines with Flutter.
   timeline_tile: ^2.0.0
