@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:core/util/global_var.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -107,7 +108,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
           Expanded(
             child: SingleChildScrollView(
               child: Container(
-                  margin: const EdgeInsets.only(top: 0, bottom: 10),
+                  margin: const EdgeInsets.only(top: 0, bottom: 0),
                   child: SafeArea(
                     minimum: EdgeInsets.only(
                       bottom: MediaQuery.of(context).size.height * 0.035,
@@ -251,19 +252,25 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
             ),
           ),
           Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  AppButton.buildAppButton(context, AppButtonType.primary,
-                      AppLocalization.of(context)!.copy, Dimens.buttonTopDimens,
-                      icon: const Icon(Icons.copy), onPressed: () async {
-                    Clipboard.setData(ClipboardData(
-                        text: StateContainer.of(context).wallet!.address));
-                    UIUtil.showSnackbar(
-                        AppLocalization.of(context)!.addressCopied,
+                  AppButton.buildAppButton(
+                      context,
+                      AppButtonType.primary,
+                      AppLocalization.of(context)!.viewExplorer,
+                      Dimens.buttonTopDimens,
+                      icon: const Icon(Icons.more_horiz), onPressed: () async {
+                    UIUtil.showWebview(
                         context,
-                        StateContainer.of(context).curTheme.primary!,
-                        StateContainer.of(context).curTheme.overlay80!);
+                        globalVarEndPointDev +
+                            '/explorer/transaction/' +
+                            StateContainer.of(context)
+                                .selectedAccount
+                                .lastAddress!,
+                        '');
                   }),
                 ],
               ),
@@ -281,7 +288,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                         .selectedAccount
                         .lastAddress!
                         .toUpperCase();
-                    Share.share(textToShare,
+                    Share.share(textToShare + ' ',
                         sharePositionOrigin:
                             box!.localToGlobal(Offset.zero) & box.size);
                   }),

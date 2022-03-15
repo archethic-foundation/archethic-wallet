@@ -588,6 +588,10 @@ class AppLocalization {
     return Intl.message('Copy', name: 'copy');
   }
 
+  String get viewExplorer {
+    return Intl.message('View on explorer', name: 'viewExplorer');
+  }
+
   String get secretWarning {
     return Intl.message(
         'If you lose your device or uninstall the application, you\'ll need your secret phrase to recover your funds!',

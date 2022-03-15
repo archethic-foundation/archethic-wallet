@@ -220,6 +220,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "unlockPin" : MessageLookupByLibrary.simpleMessage("Enter PIN to Unlock"),
     "update" : MessageLookupByLibrary.simpleMessage("Update"),
     "version" : MessageLookupByLibrary.simpleMessage("Version :"),
+    "viewExplorer" : MessageLookupByLibrary.simpleMessage("View on explorer"),
     "walletFAQDesc" : MessageLookupByLibrary.simpleMessage("Have a question? Check here first!"),
     "walletFAQHeader" : MessageLookupByLibrary.simpleMessage("Wallet FAQ"),
     "warning" : MessageLookupByLibrary.simpleMessage("Warning"),
