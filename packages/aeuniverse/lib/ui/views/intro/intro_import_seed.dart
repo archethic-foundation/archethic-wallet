@@ -1,22 +1,5 @@
 // Flutter imports:
-// ignore_for_file: always_specify_types
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/localization.dart';
-import 'package:core/model/data/appdb.dart';
-import 'package:core/model/data/hive_db.dart';
-import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/mnemonics.dart';
-import 'package:core/util/seeds.dart';
-import 'package:core/util/vault.dart';
-import 'package:core_ui/ui/util/dimens.dart';
-import 'package:core_ui/ui/util/formatters.dart';
-import 'package:core_ui/util/app_util.dart';
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
@@ -24,6 +7,20 @@ import 'package:aeuniverse/ui/views/pin_screen.dart';
 import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/util/user_data_util.dart';
+import 'package:core/localization.dart';
+import 'package:core/model/data/appdb.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/mnemonics.dart';
+import 'package:core/util/seeds.dart';
+import 'package:core/util/vault.dart';
+import 'package:core_ui/ui/util/dimens.dart';
+import 'package:core_ui/ui/util/formatters.dart';
+import 'package:core_ui/util/app_util.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class IntroImportSeedPage extends StatefulWidget {
@@ -34,14 +31,11 @@ class IntroImportSeedPage extends StatefulWidget {
 }
 
 class _IntroImportSeedState extends State<IntroImportSeedPage> {
-  final List<FocusNode> _mnemonicFocusNodeList =
-      List<FocusNode>.filled(24, FocusNode());
-  final List<TextEditingController> _mnemonicControllerList =
-      List<TextEditingController>.filled(24, TextEditingController());
+  final FocusNode _mnemonicFocusNode = FocusNode();
+  final TextEditingController _mnemonicController = TextEditingController();
 
-  List<bool> _mnemonicIsValidList = List<bool>.filled(24, false);
-  List<String> _mnemonicErrorList = List<String>.filled(24, '');
-  int wordNum = 0;
+  bool _mnemonicIsValid = false;
+  String _mnemonicError = '';
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +98,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                           child: AutoSizeText(
                             AppLocalization.of(context)!.importSecretPhrase,
                             style:
-                                AppStyles.textStyleSize20W700Primary(context),
+                                AppStyles.textStyleSize28W700Primary(context),
                             maxLines: 1,
                             minFontSize: 12,
                             stepGranularity: 0.1,
@@ -123,10 +117,153 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             textAlign: TextAlign.start,
                           ),
                         ),
-                        wordEnter(wordNum),
-                        wordEnter(wordNum + 1),
-                        wordEnter(wordNum + 2),
-                        wordEnter(wordNum + 4),
+                        Expanded(
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                              AppTextField(
+                                leftMargin: smallScreen(context) ? 30 : 40,
+                                rightMargin: smallScreen(context) ? 30 : 40,
+                                topMargin: 20,
+                                focusNode: _mnemonicFocusNode,
+                                controller: _mnemonicController,
+                                inputFormatters: [
+                                  SingleSpaceInputFormatter(),
+                                  LowerCaseTextFormatter(),
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('[a-zA-Z ]')),
+                                ],
+                                textInputAction: TextInputAction.done,
+                                maxLines: null,
+                                autocorrect: false,
+                                prefixButton: TextFieldButton(
+                                  icon: FontAwesomeIcons.qrcode,
+                                  onPressed: () async {
+                                    if (AppMnemomics.validateMnemonic(
+                                        _mnemonicController.text.split(' '))) {
+                                      return;
+                                    }
+                                    UIUtil.cancelLockEvent();
+                                    final String? scanResult =
+                                        await UserDataUtil.getQRData(
+                                            DataType.address, context);
+                                    if (scanResult == null) {
+                                      UIUtil.showSnackbar(
+                                          AppLocalization.of(context)!
+                                              .qrInvalidAddress,
+                                          context,
+                                          StateContainer.of(context)
+                                              .curTheme
+                                              .primary!,
+                                          StateContainer.of(context)
+                                              .curTheme
+                                              .overlay80!);
+                                    } else if (QRScanErrs.errorList
+                                        .contains(scanResult)) {
+                                      return;
+                                    } else {
+                                      if (AppMnemomics.validateMnemonic(
+                                          scanResult.split(' '))) {
+                                        _mnemonicController.text = scanResult;
+                                        setState(() {
+                                          _mnemonicIsValid = true;
+                                        });
+                                      } else if (AppSeeds.isValidSeed(
+                                          scanResult)) {
+                                        _mnemonicFocusNode.unfocus();
+                                      } else {
+                                        UIUtil.showSnackbar(
+                                            AppLocalization.of(context)!
+                                                .qrMnemonicError,
+                                            context,
+                                            StateContainer.of(context)
+                                                .curTheme
+                                                .primary!,
+                                            StateContainer.of(context)
+                                                .curTheme
+                                                .overlay80!);
+                                      }
+                                    }
+                                  },
+                                ),
+                                fadePrefixOnCondition: true,
+                                prefixShowFirstCondition:
+                                    !AppMnemomics.validateMnemonic(
+                                        _mnemonicController.text.split(' ')),
+                                keyboardType: TextInputType.text,
+                                style: _mnemonicIsValid
+                                    ? AppStyles.textStyleSize16W200Primary(
+                                        context)
+                                    : AppStyles.textStyleSize16W200Primary30(
+                                        context),
+                                onChanged: (String text) {
+                                  if (text.length < 3) {
+                                    setState(() {
+                                      _mnemonicError = '';
+                                    });
+                                  } else if (_mnemonicError.isNotEmpty) {
+                                    if (!text.contains(
+                                        _mnemonicError.split(' ')[0])) {
+                                      setState(() {
+                                        _mnemonicError = '';
+                                      });
+                                    }
+                                  }
+                                  // If valid mnemonic, clear focus/close keyboard
+                                  if (AppMnemomics.validateMnemonic(
+                                      text.split(' '))) {
+                                    _mnemonicFocusNode.unfocus();
+                                    setState(() {
+                                      _mnemonicIsValid = true;
+                                      _mnemonicError = '';
+                                    });
+                                  } else {
+                                    setState(() {
+                                      _mnemonicIsValid = false;
+                                    });
+                                    // Validate each mnemonic word
+                                    if (text.endsWith(' ') && text.length > 1) {
+                                      int lastSpaceIndex = text
+                                          .substring(0, text.length - 1)
+                                          .lastIndexOf(' ');
+                                      if (lastSpaceIndex == -1) {
+                                        lastSpaceIndex = 0;
+                                      } else {
+                                        lastSpaceIndex++;
+                                      }
+                                      final String lastWord = text.substring(
+                                          lastSpaceIndex, text.length - 1);
+                                      if (!AppMnemomics.isValidWord(lastWord)) {
+                                        setState(() {
+                                          _mnemonicIsValid = false;
+                                          setState(() {
+                                            _mnemonicError =
+                                                AppLocalization.of(context)!
+                                                    .mnemonicInvalidWord
+                                                    .replaceAll('%1', lastWord);
+                                          });
+                                        });
+                                      } else {
+                                        setState(() {
+                                          _mnemonicIsValid = true;
+                                          _mnemonicError = '';
+                                        });
+                                      }
+                                    }
+                                  }
+                                },
+                              ),
+                              if (_mnemonicError != '')
+                                Container(
+                                  margin: const EdgeInsets.only(top: 5),
+                                  child: Text(_mnemonicError,
+                                      style:
+                                          AppStyles.textStyleSize16W200Primary(
+                                              context)),
+                                )
+                              else
+                                const SizedBox(),
+                            ]))
                       ],
                     ),
                   ),
@@ -139,18 +276,15 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                         AppLocalization.of(context)!.go,
                         Dimens.buttonBottomDimens,
                         onPressed: () async {
-                          _mnemonicFocusNodeList[0].unfocus();
+                          _mnemonicFocusNode.unfocus();
                           if (AppMnemomics.validateMnemonic(
-                              _mnemonicControllerList[0].text.split(' '))) {
+                              _mnemonicController.text.split(' '))) {
                             String _seed = AppMnemomics.mnemonicListToSeed(
-                                _mnemonicControllerList[0].text.split(' '));
+                                _mnemonicController.text.split(' '));
                             final Vault _vault = await Vault.getInstance();
                             _vault.setSeed(_seed);
                             await sl.get<DBHelper>().dropAccounts();
-                            Account selectedAcct =
-                                await AppUtil().loginAccount(_seed, context);
-                            StateContainer.of(context)
-                                .requestUpdate(account: selectedAcct);
+                            await AppUtil().loginAccount(_seed, context);
                             StateContainer.of(context).requestUpdate(
                                 account:
                                     StateContainer.of(context).selectedAccount);
@@ -165,26 +299,21 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                               _pinEnteredCallback(pin);
                             }
                           } else {
-                            if (_mnemonicControllerList[0]
-                                    .text
-                                    .split(' ')
-                                    .length !=
+                            if (_mnemonicController.text.split(' ').length !=
                                 24) {
                               setState(() {
-                                _mnemonicIsValidList[wordNum] = false;
-                                _mnemonicErrorList[wordNum] =
-                                    AppLocalization.of(context)!
-                                        .mnemonicSizeError;
+                                _mnemonicIsValid = false;
+                                _mnemonicError = AppLocalization.of(context)!
+                                    .mnemonicSizeError;
                               });
                             } else {
-                              _mnemonicControllerList[0]
-                                  .text
+                              _mnemonicController.text
                                   .split(' ')
                                   .forEach((String word) {
                                 if (!AppMnemomics.isValidWord(word)) {
                                   setState(() {
-                                    _mnemonicIsValidList[wordNum] = false;
-                                    _mnemonicErrorList[wordNum] =
+                                    _mnemonicIsValid = false;
+                                    _mnemonicError =
                                         AppLocalization.of(context)!
                                             .mnemonicInvalidWord
                                             .replaceAll('%1', word);
@@ -204,94 +333,6 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
         ],
       ),
     );
-  }
-
-  Widget wordEnter(int wordNumber) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          AppTextField(
-            leftMargin: smallScreen(context) ? 30 : 40,
-            rightMargin: smallScreen(context) ? 30 : 40,
-            topMargin: 20,
-            focusNode: _mnemonicFocusNodeList[wordNumber],
-            controller: _mnemonicControllerList[wordNumber],
-            inputFormatters: [
-              SingleSpaceInputFormatter(),
-              LowerCaseTextFormatter(),
-              FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
-            ],
-            textInputAction: TextInputAction.done,
-            maxLines: 1,
-            autocorrect: false,
-            keyboardType: TextInputType.text,
-            style: _mnemonicIsValidList[wordNumber]
-                ? AppStyles.textStyleSize16W200Primary(context)
-                : AppStyles.textStyleSize16W200Primary30(context),
-            onChanged: (String text) {
-              if (text.length < 3) {
-                setState(() {
-                  _mnemonicErrorList[wordNumber] = '';
-                });
-              } else if (_mnemonicErrorList[wordNumber].isNotEmpty) {
-                if (!text
-                    .contains(_mnemonicErrorList[wordNumber].split(' ')[0])) {
-                  setState(() {
-                    _mnemonicErrorList[wordNumber] = '';
-                  });
-                }
-              }
-              // If valid mnemonic, clear focus/close keyboard
-              if (AppMnemomics.validateMnemonic(text.split(' '))) {
-                _mnemonicFocusNodeList[wordNumber].unfocus();
-                setState(() {
-                  _mnemonicIsValidList[wordNumber] = true;
-                  _mnemonicErrorList[wordNumber] = '';
-                });
-              } else {
-                setState(() {
-                  _mnemonicIsValidList[wordNumber] = false;
-                });
-                // Validate each mnemonic word
-                if (text.endsWith(' ') && text.length > 1) {
-                  int lastSpaceIndex =
-                      text.substring(0, text.length - 1).lastIndexOf(' ');
-                  if (lastSpaceIndex == -1) {
-                    lastSpaceIndex = 0;
-                  } else {
-                    lastSpaceIndex++;
-                  }
-                  final String lastWord =
-                      text.substring(lastSpaceIndex, text.length - 1);
-                  if (!AppMnemomics.isValidWord(lastWord)) {
-                    setState(() {
-                      _mnemonicIsValidList[wordNumber] = false;
-                      setState(() {
-                        _mnemonicErrorList[wordNumber] =
-                            AppLocalization.of(context)!
-                                .mnemonicInvalidWord
-                                .replaceAll('%1', lastWord);
-                      });
-                    });
-                  } else {
-                    setState(() {
-                      _mnemonicIsValidList[wordNumber] = true;
-                      _mnemonicErrorList[wordNumber] = '';
-                    });
-                  }
-                }
-              }
-            },
-          ),
-          if (_mnemonicErrorList[wordNumber] != '')
-            Container(
-              margin: const EdgeInsets.only(top: 5),
-              child: Text(_mnemonicErrorList[wordNumber],
-                  style: AppStyles.textStyleSize16W200Primary(context)),
-            )
-          else
-            const SizedBox(),
-        ]);
   }
 
   Future<void> _pinEnteredCallback(String pin) async {
