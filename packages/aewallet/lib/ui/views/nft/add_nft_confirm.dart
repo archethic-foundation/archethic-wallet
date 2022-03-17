@@ -68,7 +68,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
     _addNFTSub = EventTaxiImpl.singleton()
         .registerTo<NFTAddEvent>()
         .listen((NFTAddEvent event) {
-      if (event.response!.toUpperCase() != 'pending') {
+      if (event.response! != 'pending') {
         // Send failed
         if (animationOpen!) {
           Navigator.of(context).pop();
