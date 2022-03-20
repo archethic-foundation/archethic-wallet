@@ -247,6 +247,7 @@ class ContactDetailsSheet {
                                     .uco! >
                                 0)
                               AppButton.buildAppButton(
+                                  const Key('send'),
                                   context,
                                   AppButtonType.primary,
                                   AppLocalization.of(context)!.send,
@@ -270,6 +271,7 @@ class ContactDetailsSheet {
                           children: <Widget>[
                             // Close Button
                             AppButton.buildAppButton(
+                                const Key('close'),
                                 context,
                                 AppButtonType.primary,
                                 AppLocalization.of(context)!.close,

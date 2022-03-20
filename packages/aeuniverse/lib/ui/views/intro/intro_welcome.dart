@@ -115,6 +115,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                       Row(
                         children: <Widget>[
                           AppButton.buildAppButton(
+                              const Key('newWallet'),
                               context,
                               AppButtonType.primary,
                               AppLocalization.of(context)!.newWallet,
@@ -140,6 +141,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                         children: <Widget>[
                           // Import Wallet Button
                           AppButton.buildAppButton(
+                              const Key('importWallet'),
                               context,
                               AppButtonType.primary,
                               AppLocalization.of(context)!.importWallet,

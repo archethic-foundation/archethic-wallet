@@ -224,6 +224,7 @@ class _ContactsListState extends State<ContactsList> {
                 child: Row(
                   children: <Widget>[
                     AppButton.buildAppButton(
+                        const Key('addContact'),
                         context,
                         AppButtonType.primary,
                         AppLocalization.of(context)!.addContact,

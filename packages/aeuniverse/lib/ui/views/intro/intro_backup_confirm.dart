@@ -130,6 +130,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                     Row(
                       children: <Widget>[
                         AppButton.buildAppButton(
+                            const Key('yes'),
                             context,
                             AppButtonType.primary,
                             AppLocalization.of(context)!.yes,
@@ -150,6 +151,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                     Row(
                       children: <Widget>[
                         AppButton.buildAppButton(
+                            const Key('no'),
                             context,
                             AppButtonType.primary,
                             AppLocalization.of(context)!.no,

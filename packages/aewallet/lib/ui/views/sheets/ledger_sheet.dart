@@ -273,6 +273,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                     Row(
                       children: <Widget>[
                         AppButton.buildAppButton(
+                            const Key('getPubKey'),
                             context,
                             AppButtonType.primary,
                             'Get pubKey',
@@ -286,6 +287,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                               .connectLedger(getPubKeyAPDU());
                         }),
                         AppButton.buildAppButton(
+                            const Key('getArchAddress'),
                             context,
                             AppButtonType.primary,
                             'Get Arch Address',
@@ -314,6 +316,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                           }
                         }),
                         AppButton.buildAppButton(
+                            const Key('signTransaction'),
                             context,
                             AppButtonType.primary,
                             'Sign Transaction',

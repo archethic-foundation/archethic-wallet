@@ -18,8 +18,8 @@ enum AppButtonType {
 // ignore: avoid_classes_with_only_static_members
 class AppButton {
   // Primary button builder
-  static Widget buildAppButton(BuildContext context, AppButtonType type,
-      String buttonText, List<double> dimens,
+  static Widget buildAppButton(Key key, BuildContext context,
+      AppButtonType type, String buttonText, List<double> dimens,
       {required Function onPressed, bool disabled = false, Icon? icon}) {
     switch (type) {
       case AppButtonType.primary:
@@ -36,6 +36,7 @@ class AppButton {
                 dimens[0], dimens[1], dimens[2], dimens[3]),
             child: icon == null
                 ? TextButton(
+                    key: key,
                     style: TextButton.styleFrom(
                       backgroundColor: disabled
                           ? StateContainer.of(context).curTheme.primary
@@ -57,6 +58,7 @@ class AppButton {
                     },
                   )
                 : TextButton.icon(
+                    key: key,
                     style: TextButton.styleFrom(
                       backgroundColor: disabled
                           ? StateContainer.of(context).curTheme.primary
@@ -95,6 +97,7 @@ class AppButton {
                 dimens[0], dimens[1], dimens[2], dimens[3]),
             child: icon == null
                 ? TextButton(
+                    key: key,
                     style: TextButton.styleFrom(
                       backgroundColor: disabled
                           ? StateContainer.of(context).curTheme.background40
@@ -116,6 +119,7 @@ class AppButton {
                     },
                   )
                 : TextButton.icon(
+                    key: key,
                     style: TextButton.styleFrom(
                       backgroundColor: disabled
                           ? StateContainer.of(context).curTheme.background40
@@ -153,6 +157,7 @@ class AppButton {
                 dimens[0], dimens[1], dimens[2], dimens[3]),
             child: icon == null
                 ? TextButton(
+                    key: key,
                     style: TextButton.styleFrom(
                       backgroundColor: disabled
                           ? StateContainer.of(context).curTheme.primary60
@@ -176,6 +181,7 @@ class AppButton {
                     },
                   )
                 : TextButton.icon(
+                    key: key,
                     style: TextButton.styleFrom(
                       backgroundColor: disabled
                           ? StateContainer.of(context).curTheme.primary60
@@ -213,6 +219,7 @@ class AppButton {
             margin: EdgeInsetsDirectional.fromSTEB(
                 dimens[0], dimens[1], dimens[2], dimens[3]),
             child: OutlinedButton(
+              key: key,
               child: AutoSizeText(
                 buttonText,
                 textAlign: TextAlign.center,
@@ -241,6 +248,7 @@ class AppButton {
             margin: EdgeInsetsDirectional.fromSTEB(
                 dimens[0], dimens[1], dimens[2], dimens[3]),
             child: OutlinedButton(
+              key: key,
               child: AutoSizeText(
                 buttonText,
                 textAlign: TextAlign.center,

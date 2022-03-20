@@ -238,6 +238,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                   children: <Widget>[
                     // Add Contact Button
                     AppButton.buildAppButton(
+                        const Key('addNFT'),
                         context,
                         AppButtonType.primary,
                         AppLocalization.of(context)!.addNFT,
@@ -259,6 +260,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                   children: <Widget>[
                     // Close Button
                     AppButton.buildAppButton(
+                        const Key('close'),
                         context,
                         AppButtonType.primary,
                         AppLocalization.of(context)!.close,

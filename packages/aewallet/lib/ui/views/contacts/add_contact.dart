@@ -331,6 +331,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                 children: <Widget>[
                   // Add Contact Button
                   AppButton.buildAppButton(
+                      const Key('addContact'),
                       context,
                       AppButtonType.primary,
                       AppLocalization.of(context)!.addContact,
@@ -361,6 +362,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                 children: <Widget>[
                   // Close Button
                   AppButton.buildAppButton(
+                      const Key('close'),
                       context,
                       AppButtonType.primary,
                       AppLocalization.of(context)!.close,

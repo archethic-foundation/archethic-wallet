@@ -450,6 +450,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                   Row(
                     children: <Widget>[
                       AppButton.buildAppButton(
+                          const Key('send'),
                           context,
                           AppButtonType.primary,
                           widget.actionButtonTitle ??

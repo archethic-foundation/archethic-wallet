@@ -214,6 +214,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                     children: <Widget>[
                       // CONFIRM Button
                       AppButton.buildAppButton(
+                          const Key('confirm'),
                           context,
                           AppButtonType.primary,
                           AppLocalization.of(context)!.confirm,
@@ -264,6 +265,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                     children: <Widget>[
                       // CANCEL Button
                       AppButton.buildAppButton(
+                          const Key('cancel'),
                           context,
                           AppButtonType.primary,
                           AppLocalization.of(context)!.cancel,

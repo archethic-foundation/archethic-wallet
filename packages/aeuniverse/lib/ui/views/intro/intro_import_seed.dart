@@ -271,6 +271,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       AppButton.buildAppButton(
+                        const Key('go'),
                         context,
                         AppButtonType.primary,
                         AppLocalization.of(context)!.go,

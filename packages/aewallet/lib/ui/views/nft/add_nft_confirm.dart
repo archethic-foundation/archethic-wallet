@@ -241,6 +241,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                     children: <Widget>[
                       // CONFIRM Button
                       AppButton.buildAppButton(
+                          const Key('confirm'),
                           context,
                           AppButtonType.primary,
                           AppLocalization.of(context)!.confirm,
@@ -287,6 +288,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                     children: <Widget>[
                       // CANCEL Button
                       AppButton.buildAppButton(
+                          const Key('cancel'),
                           context,
                           AppButtonType.primary,
                           AppLocalization.of(context)!.cancel,

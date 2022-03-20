@@ -258,6 +258,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
               Row(
                 children: <Widget>[
                   AppButton.buildAppButton(
+                      const Key('viewExplorer'),
                       context,
                       AppButtonType.primary,
                       AppLocalization.of(context)!.viewExplorer,
@@ -277,6 +278,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
               Row(
                 children: <Widget>[
                   AppButton.buildAppButton(
+                      const Key('share'),
                       context,
                       AppButtonType.primary,
                       AppLocalization.of(context)!.share,

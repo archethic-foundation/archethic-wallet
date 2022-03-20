@@ -167,6 +167,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       AppButton.buildAppButton(
+                        const Key('iveBackedItUp'),
                         context,
                         AppButtonType.primary,
                         AppLocalization.of(context)!.iveBackedItUp,

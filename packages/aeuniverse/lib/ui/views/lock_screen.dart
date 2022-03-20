@@ -359,6 +359,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       AppButton.buildAppButton(
+                          const Key('unlock'),
                           context,
                           AppButtonType.primary,
                           _lockedOut

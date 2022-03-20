@@ -186,6 +186,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     AppButton.buildAppButton(
+                        const Key('understandButton'),
                         context,
                         AppButtonType.primary,
                         AppLocalization.of(context)!.understandButton,
