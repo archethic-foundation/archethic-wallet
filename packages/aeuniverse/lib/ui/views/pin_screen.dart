@@ -204,6 +204,7 @@ class _PinScreenState extends State<PinScreen>
       height: smallScreen(context) ? buttonSize - 15 : buttonSize,
       width: smallScreen(context) ? buttonSize - 15 : buttonSize,
       child: InkWell(
+          key: Key('pinButton' + buttonText),
           borderRadius: BorderRadius.circular(200),
           highlightColor: StateContainer.of(context).curTheme.primary15,
           splashColor: StateContainer.of(context).curTheme.primary30,
