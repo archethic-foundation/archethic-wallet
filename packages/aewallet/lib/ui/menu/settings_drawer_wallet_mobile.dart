@@ -43,8 +43,6 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-// Project imports:
-
 class SettingsSheetWalletMobile extends StatefulWidget {
   const SettingsSheetWalletMobile({Key? key}) : super(key: key);
 

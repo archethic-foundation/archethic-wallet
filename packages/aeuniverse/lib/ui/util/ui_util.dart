@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,9 +14,6 @@ import 'package:core_ui/util/app_util.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-// Project imports:
-import 'styles.dart';
 
 enum ThreeLineAddressTextType { primary60, primary, success, successFull }
 enum OneLineAddressTextType { primary60, primary, success }

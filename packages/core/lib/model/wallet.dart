@@ -6,8 +6,6 @@ import 'package:core/util/number_util.dart';
 import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
 
-// Project imports:
-
 /// Main wallet object that's passed around the app via state
 class AppWallet {
   AppWallet(

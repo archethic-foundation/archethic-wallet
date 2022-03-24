@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/setting_item.dart';
 
-// Project imports:
-
 enum LockTimeoutOption { zero, one, five, fifteen, thirty, sixty }
 
 /// Represent auto-lock delay when requiring auth to open

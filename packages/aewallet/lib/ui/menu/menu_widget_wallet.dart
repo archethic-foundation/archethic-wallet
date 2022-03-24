@@ -5,6 +5,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:aewallet/ui/menu/settings_drawer_wallet.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -24,9 +25,6 @@ import 'package:core/localization.dart';
 import 'package:core/model/ae_apps.dart';
 import 'package:core_ui/model/chart_infos.dart';
 import 'package:core_ui/ui/widgets/menu/abstract_menu_widget.dart';
-
-// Project imports:
-import 'settings_drawer_wallet.dart';
 
 class MenuWidgetWallet extends AbstractMenuWidget {
   List<OptionChart> optionChartList = List<OptionChart>.empty(growable: true);

@@ -2,8 +2,6 @@
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:core/util/seeds.dart';
 
-// Project imports:
-
 // ignore: avoid_classes_with_only_static_members
 class AppMnemomics {
   /// Converts a seed to a 24-word mnemonic word list

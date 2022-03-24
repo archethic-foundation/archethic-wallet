@@ -26,8 +26,6 @@ import 'package:core_ui/util/app_util.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-// Project imports:
-
 class AppHomePageUniverse extends StatefulWidget {
   const AppHomePageUniverse({Key? key}) : super(key: key);
 

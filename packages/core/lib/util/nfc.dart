@@ -11,10 +11,6 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:yubidart/yubidart.dart';
 
-// Project imports:
-
-// Project imports:
-
 class NFCUtil {
   /// hasNFC()
   /// @returns [true] if device has NFC available, [false] otherwise

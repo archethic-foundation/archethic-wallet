@@ -2,14 +2,12 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:core/l10n/messages_all.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:core/model/available_language.dart';
 import 'package:intl/intl.dart';
-
-// Project imports:
-import '/l10n/messages_all.dart';
 
 /// Localization
 class AppLocalization {
