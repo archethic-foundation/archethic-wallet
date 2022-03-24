@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:core/localization.dart';
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:core/localization.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppDialogs {

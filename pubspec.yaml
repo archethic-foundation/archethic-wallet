@@ -24,12 +24,15 @@ dependencies:
     sdk: flutter
 
   # Customize Flutter's default white native splash screen with background color and splash image. Supports dark mode, full screen, and more.
-  flutter_native_splash: ^2.0.5
+  flutter_native_splash: ^2.1.1
   
 dev_dependencies:
   flutter_lints: ^1.0.4
   # Automatically organize your dart imports
-  import_sorter: ^4.6.0
+  import_sorter: 
+    git:
+      url: https://github.com/redDwarf03/import_sorter.git
+      ref: master
   # Integration Tests
   integration_test:
     sdk: flutter

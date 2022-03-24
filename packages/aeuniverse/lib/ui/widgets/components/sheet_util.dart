@@ -6,8 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:core_ui/ui/util/routes.dart';
 import 'package:aeuniverse/appstate_container.dart';
+import 'package:core_ui/ui/util/routes.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class Sheets {

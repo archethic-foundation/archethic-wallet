@@ -3,15 +3,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:convert/convert.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/global_var.dart';
 import 'package:core/util/ledger/archethic_ledger_util.dart';
-import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
 class LedgerScreen extends StatefulWidget {

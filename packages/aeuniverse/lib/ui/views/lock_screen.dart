@@ -2,6 +2,14 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/views/pin_screen.dart';
+import 'package:aeuniverse/ui/views/yubikey_screen.dart';
+import 'package:aeuniverse/ui/widgets/components/buttons.dart';
+import 'package:aeuniverse/ui/widgets/components/dialog.dart';
+import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
+import 'package:aeuniverse/util/preferences.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/model/data/hive_db.dart';
@@ -12,14 +20,6 @@ import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:core_ui/util/app_util.dart';
 import 'package:core_ui/util/case_converter.dart';
-import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/views/pin_screen.dart';
-import 'package:aeuniverse/ui/views/yubikey_screen.dart';
-import 'package:aeuniverse/ui/widgets/components/buttons.dart';
-import 'package:aeuniverse/ui/widgets/components/dialog.dart';
-import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
-import 'package:aeuniverse/util/preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppLockScreen extends StatefulWidget {

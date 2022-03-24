@@ -7,9 +7,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:aeuniverse/ui/widgets/components/context_menu_item.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
-import 'package:aeuniverse/ui/widgets/components/context_menu_item.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class ContextMenu extends StatefulWidget {

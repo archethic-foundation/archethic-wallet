@@ -2,16 +2,16 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aewallet/ui/views/transaction_all_list.dart';
-import 'package:animate_do/animate_do.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/localization.dart';
-import 'package:core_ui/model/chart_infos.dart';
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
+import 'package:aewallet/ui/views/transactions/transaction_all_list.dart';
+import 'package:animate_do/animate_do.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:core/localization.dart';
+import 'package:core_ui/model/chart_infos.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

@@ -10,7 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:aewallet/ui/views/transfer/transfer_confirm_sheet.dart';
+import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/util/ui_util.dart';
+import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
+import 'package:aeuniverse/ui/widgets/components/buttons.dart';
+import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
+import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
+import 'package:aeuniverse/util/user_data_util.dart';
+import 'package:aewallet/ui/views/uco/transfer_confirm_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
@@ -23,14 +31,6 @@ import 'package:core/util/global_var.dart';
 import 'package:core/util/number_util.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/formatters.dart';
-import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/util/ui_util.dart';
-import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
-import 'package:aeuniverse/ui/widgets/components/buttons.dart';
-import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
-import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
-import 'package:aeuniverse/util/user_data_util.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
@@ -466,6 +466,9 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                             Sheets.showAppHeightNineSheet(
                                 context: context,
                                 widget: TransferConfirmSheet(
+                                  lastAddress: StateContainer.of(context)
+                                      .selectedAccount
+                                      .lastAddress!,
                                   ucoTransferList: ucoTransferList,
                                   contactsRef: widget.contactsRef,
                                   title: widget.title,
@@ -482,6 +485,9 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                           Sheets.showAppHeightNineSheet(
                               context: context,
                               widget: TransferConfirmSheet(
+                                lastAddress: StateContainer.of(context)
+                                    .selectedAccount
+                                    .lastAddress!,
                                 ucoTransferList: ucoTransferList,
                                 contactsRef: widget.contactsRef,
                                 title: widget.title,

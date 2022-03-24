@@ -1,161 +1,131 @@
+// Dart imports:
+import 'dart:io';
+
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aewallet/ui/views/sheets/transaction_infos_sheet.dart';
+import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
+import 'package:aewallet/ui/views/transactions/transaction_infos_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
 import 'package:core/model/recent_transaction.dart';
-import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 
-class TxAllListWidget extends StatefulWidget {
-  const TxAllListWidget({Key? key}) : super(key: key);
-
+class TxListWidget extends StatefulWidget {
+  const TxListWidget({Key? key}) : super(key: key);
   @override
-  _TxAllListWidgetState createState() => _TxAllListWidgetState();
+  _TxListWidgetState createState() => _TxListWidgetState();
 }
 
-class _TxAllListWidgetState extends State<TxAllListWidget> {
+class _TxListWidgetState extends State<TxListWidget> {
+  static const int _pageSize = 20;
+  final PagingController<int, RecentTransaction> _pagingController =
+      PagingController<int, RecentTransaction>(firstPageKey: 0);
+
+  @override
+  void initState() {
+    _pagingController.addPageRequestListener((int pageKey) {
+      _fetchPage(pageKey);
+    });
+    super.initState();
+  }
+
+  Future<void> _fetchPage(int pageKey) async {
+    try {
+      final List<RecentTransaction> newItems =
+          StateContainer.of(context).wallet!.recentHistory;
+      final bool isLastPage = newItems.length < _pageSize;
+      if (isLastPage) {
+        _pagingController.appendLastPage(newItems);
+      } else {
+        final int nextPageKey = pageKey + newItems.length;
+        _pagingController.appendPage(newItems, nextPageKey);
+      }
+    } catch (error) {}
+  }
+
+  @override
+  void dispose() {
+    _pagingController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    _pagingController.refresh();
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        // A row for the address text and close button
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            //Empty SizedBox
-            const SizedBox(
-              width: 60,
-              height: 40,
-            ),
-            Column(
-              children: <Widget>[
-                // Sheet handle
-                Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  height: 5,
-                  width: MediaQuery.of(context).size.width * 0.15,
-                  decoration: BoxDecoration(
-                    color: StateContainer.of(context).curTheme.primary10,
-                    borderRadius: BorderRadius.circular(100.0),
-                  ),
-                ),
-              ],
-            ),
-            //Empty SizedBox
-            const SizedBox(
-              width: 60,
-              height: 40,
-            ),
+            Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: StateContainer.of(context)
+                            .wallet!
+                            .recentHistory
+                            .isNotEmpty ||
+                        StateContainer.of(context).recentTransactionsLoading ==
+                            true
+                    ? Text(
+                        AppLocalization.of(context)!.recentTransactionsHeader,
+                        style: AppStyles.textStyleSize14W600BackgroundDarkest(
+                            context))
+                    : Text(
+                        AppLocalization.of(context)!
+                            .recentTransactionsNoTransactionYet,
+                        style: AppStyles.textStyleSize14W600Primary(context))),
+            if (kIsWeb || Platform.isMacOS || Platform.isWindows)
+              IconButton(
+                icon: const Icon(Icons.refresh),
+                color: StateContainer.of(context).curTheme.backgroundDarkest,
+                onPressed: () async {
+                  StateContainer.of(context).requestUpdate(
+                      account: StateContainer.of(context).selectedAccount);
+                  _pagingController.refresh();
+                },
+              )
+            else
+              const SizedBox(),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(
-                  top: 0.0, bottom: 20.0, left: 10.0, right: 10.0),
-              child: AutoSizeText(
-                AppLocalization.of(context)!.transactionsAllListHeader,
-                style: AppStyles.textStyleSize24W700Primary(context),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.45,
+          color: Colors.transparent,
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding:
+                const EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 0),
+            child: RefreshIndicator(
+              backgroundColor:
+                  StateContainer.of(context).curTheme.backgroundDark,
+              onRefresh: () => Future<void>.sync(() {
+                sl.get<HapticUtil>().feedback(FeedbackType.light);
+                StateContainer.of(context).requestUpdate(
+                    account: StateContainer.of(context).selectedAccount);
+                _pagingController.refresh();
+              }),
+              child: PagedListView<int, RecentTransaction>(
+                pagingController: _pagingController,
+                builderDelegate: PagedChildBuilderDelegate<RecentTransaction>(
+                    animateTransitions: true,
+                    transitionDuration: const Duration(milliseconds: 600),
+                    noItemsFoundIndicatorBuilder: (_) => const SizedBox(),
+                    itemBuilder: (BuildContext context,
+                        RecentTransaction recentTransaction, int index) {
+                      return displayTxDetailTransfer(
+                          context, recentTransaction);
+                    }),
               ),
             ),
-          ],
-        ),
-        Expanded(
-          child: Center(
-            child: Stack(children: <Widget>[
-              SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  child: SafeArea(
-                    minimum: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.height * 0.035,
-                      top: 0,
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        // list
-                        Expanded(
-                          child: Stack(
-                            children: <Widget>[
-                              //  list
-                              ListView.builder(
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                padding: const EdgeInsets.only(
-                                    left: 15, right: 15, top: 15.0, bottom: 15),
-                                itemCount: StateContainer.of(context)
-                                    .wallet!
-                                    .history
-                                    .length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  // Build
-                                  return displayTxDetailTransfer(
-                                      context,
-                                      StateContainer.of(context)
-                                          .wallet!
-                                          .history[index]);
-                                },
-                              ),
-                              //List Top Gradient End
-                              Align(
-                                alignment: Alignment.topCenter,
-                                child: Container(
-                                  height: 20.0,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: <Color>[
-                                        StateContainer.of(context)
-                                            .curTheme
-                                            .backgroundDark!,
-                                        StateContainer.of(context)
-                                            .curTheme
-                                            .backgroundDark00!
-                                      ],
-                                      begin:
-                                          const AlignmentDirectional(0.5, -1.0),
-                                      end: const AlignmentDirectional(0.5, 1.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              //List Bottom Gradient End
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Container(
-                                  height: 15.0,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: <Color>[
-                                        StateContainer.of(context)
-                                            .curTheme
-                                            .backgroundDark00!,
-                                        StateContainer.of(context)
-                                            .curTheme
-                                            .backgroundDark!,
-                                      ],
-                                      begin:
-                                          const AlignmentDirectional(0.5, -1.0),
-                                      end: const AlignmentDirectional(0.5, 1.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  )),
-            ]),
           ),
         ),
       ],
@@ -278,9 +248,8 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                   ),
                   Divider(
                       height: 4,
-                      color: StateContainer.of(context)
-                          .curTheme
-                          .backgroundDarkest),
+                      color:
+                          StateContainer.of(context).curTheme.backgroundDark),
                 ],
               ),
             ],

@@ -8,17 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
+import 'package:aeuniverse/ui/widgets/components/buttons.dart';
+import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:convert/convert.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/ledger/archethic_ledger_util.dart';
 import 'package:core_ui/ui/util/dimens.dart';
-import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
-import 'package:aeuniverse/ui/widgets/components/buttons.dart';
-import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
 /*final getArchAddress = transport(

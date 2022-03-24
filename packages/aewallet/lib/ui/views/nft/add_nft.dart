@@ -9,6 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
+import 'package:aeuniverse/ui/widgets/components/buttons.dart';
+import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
+import 'package:aeuniverse/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/ui/views/nft/add_nft_confirm.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
@@ -16,12 +22,6 @@ import 'package:core/service/app_service.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/global_var.dart';
 import 'package:core_ui/ui/util/dimens.dart';
-import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
-import 'package:aeuniverse/ui/widgets/components/buttons.dart';
-import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
-import 'package:aeuniverse/ui/widgets/components/tap_outside_unfocus.dart';
 
 class AddNFTSheet extends StatefulWidget {
   const AddNFTSheet({Key? key, this.address}) : super(key: key);

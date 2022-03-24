@@ -3,13 +3,13 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show ApiCoinsService, ApiService, AddressService, OracleService;
 
 // Package imports:
+import 'package:aeuniverse/util/preferences.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/service/app_service.dart';
 import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
 import 'package:core/util/nfc.dart';
-import 'package:aeuniverse/util/preferences.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
 Future<void> setupServiceLocator() async {

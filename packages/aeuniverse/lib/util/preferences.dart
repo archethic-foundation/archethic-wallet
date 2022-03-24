@@ -5,12 +5,12 @@
 import 'dart:ui';
 
 // Package imports:
+import 'package:aeuniverse/model/available_themes.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/model/available_currency.dart';
 import 'package:core/model/available_language.dart';
 import 'package:core/model/device_lock_timeout.dart';
 import 'package:core/util/global_var.dart';
-import 'package:aeuniverse/model/available_themes.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 

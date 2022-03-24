@@ -2,12 +2,12 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/model/setting_item.dart';
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:core/model/setting_item.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // ignore: avoid_classes_with_only_static_members

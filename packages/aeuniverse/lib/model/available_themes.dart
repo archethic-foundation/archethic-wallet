@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:core/model/setting_item.dart';
-import 'package:core_ui/ui/themes/themes.dart';
 import 'package:aeuniverse/ui/themes/theme_dark.dart';
 import 'package:aeuniverse/ui/themes/theme_light.dart';
+import 'package:core/model/setting_item.dart';
+import 'package:core_ui/ui/themes/themes.dart';
 
 enum ThemeOptions { dark, light }
 

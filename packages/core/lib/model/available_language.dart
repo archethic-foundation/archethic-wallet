@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:core/localization.dart';
-
-// Project imports:
 import 'package:core/model/setting_item.dart';
 
 enum AvailableLanguage { DEFAULT, ENGLISH, FRENCH }

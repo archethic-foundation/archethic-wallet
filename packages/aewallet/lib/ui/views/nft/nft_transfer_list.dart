@@ -4,47 +4,47 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show UCOTransfer;
-import 'package:core/localization.dart';
-import 'package:core/model/address.dart';
-import 'package:core/model/data/hive_db.dart';
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/components/context_menu.dart';
 import 'package:aeuniverse/ui/widgets/components/context_menu_item.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' show NFTTransfer;
+import 'package:core/localization.dart';
+import 'package:core/model/address.dart';
+import 'package:core/model/data/hive_db.dart';
 
-class UcoTransferListWidget extends StatefulWidget {
-  UcoTransferListWidget(
+class NftTransferListWidget extends StatefulWidget {
+  NftTransferListWidget(
       {Key? key,
-      this.listUcoTransfer,
+      this.listNftTransfer,
       this.onGet,
       this.onDelete,
       this.contacts,
       @required this.displayContextMenu})
       : super(key: key);
 
-  List<UCOTransfer>? listUcoTransfer;
+  List<NFTTransfer>? listNftTransfer;
   final List<Contact>? contacts;
-  final Function(UCOTransfer)? onGet;
+  final Function(NFTTransfer)? onGet;
   final Function()? onDelete;
   final bool? displayContextMenu;
 
   @override
-  _UcoTransferListWidgetState createState() => _UcoTransferListWidgetState();
+  _NftTransferListWidgetState createState() => _NftTransferListWidgetState();
 }
 
-class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
+class _NftTransferListWidgetState extends State<NftTransferListWidget> {
   @override
   Widget build(BuildContext context) {
-    widget.listUcoTransfer!
-        .sort((UCOTransfer a, UCOTransfer b) => a.to!.compareTo(b.to!));
+    widget.listNftTransfer!
+        .sort((NFTTransfer a, NFTTransfer b) => a.to!.compareTo(b.to!));
     return Stack(
       children: <Widget>[
         SizedBox(
           child: Padding(
             padding: const EdgeInsets.only(top: 0.0),
             child: Container(
-              height: widget.listUcoTransfer!.length * 45,
+              height: widget.listNftTransfer!.length * 50,
               padding: const EdgeInsets.only(left: 3.5, right: 3.5),
               width: MediaQuery.of(context).size.width * 0.9,
               decoration: BoxDecoration(
@@ -65,7 +65,8 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                 padding:
                     const EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
                 child: ListView.builder(
-                  itemCount: widget.listUcoTransfer!.length,
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  itemCount: widget.listNftTransfer!.length,
                   itemBuilder: (BuildContext context, int index) {
                     return widget.displayContextMenu == true
                         ? ContextMenu(
@@ -97,14 +98,14 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                                           .contextMenuText),
                                   onPressed: () {
                                     setState(() {
-                                      final UCOTransfer _ucoTransfer =
-                                          UCOTransfer(
+                                      final NFTTransfer _nftTransfer =
+                                          NFTTransfer(
                                               to: widget
-                                                  .listUcoTransfer![index].to,
+                                                  .listNftTransfer![index].to,
                                               amount: widget
-                                                  .listUcoTransfer![index]
+                                                  .listNftTransfer![index]
                                                   .amount);
-                                      widget.onGet!(_ucoTransfer);
+                                      widget.onGet!(_nftTransfer);
                                     });
                                   }),
                               ContextMenuItem(
@@ -122,16 +123,16 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                                   ),
                                   onPressed: () {
                                     setState(() {
-                                      widget.listUcoTransfer!.removeAt(index);
+                                      widget.listNftTransfer!.removeAt(index);
                                       widget.onDelete!();
                                     });
                                   }),
                             ],
                             onPressed: () {},
-                            child: displayUcoDetail(
-                                context, widget.listUcoTransfer![index]))
-                        : displayUcoDetail(
-                            context, widget.listUcoTransfer![index]);
+                            child: displayNftDetail(
+                                context, widget.listNftTransfer![index]))
+                        : displayNftDetail(
+                            context, widget.listNftTransfer![index]);
                   },
                 ),
               ),
@@ -142,14 +143,15 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
     );
   }
 
-  Widget displayUcoDetail(BuildContext context, UCOTransfer ucoTransfer) {
-    String displayName = Address(ucoTransfer.to!).getShortString3();
+  Widget displayNftDetail(BuildContext context, NFTTransfer nftTransfer) {
+    String displayName = Address(nftTransfer.to!).getShortString3();
 
     for (Contact contact in widget.contacts!) {
-      if (contact.address == ucoTransfer.to!) {
+      if (contact.address == nftTransfer.to!) {
         displayName = contact.name!;
       }
     }
+
     return Column(
       children: <Widget>[
         Row(
@@ -157,13 +159,22 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Text(displayName,
-                    style: AppStyles.textStyleSize14W100Primary(context)),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                        nftTransfer.nft == null
+                            ? 'NFT 1....'
+                            : nftTransfer.nft!,
+                        style: AppStyles.textStyleSize14W100Primary(context)),
+                    Text(Address(displayName).getShortString3(),
+                        style: AppStyles.textStyleSize10W100Primary60(context))
+                  ],
+                ),
               ],
             ),
-            Text(
-                (ucoTransfer.amount! / BigInt.from(100000000)).toString() +
-                    ' UCO',
+            Text(nftTransfer.amount!.toString(),
                 style: AppStyles.textStyleSize14W100Primary(context)),
           ],
         ),

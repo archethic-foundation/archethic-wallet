@@ -168,10 +168,6 @@ class AppService {
       String transactionChainSeed,
       String address,
       List<UCOTransfer> listUcoTransfer) async {
-    await sl.get<ApiService>().waitConfirmations(address, (nbConfirmations) {
-      print('nbConfirmations: ' + nbConfirmations);
-    });
-
     final Transaction lastTransaction =
         await sl.get<ApiService>().getLastTransaction(address);
     final Transaction transaction =

@@ -4,17 +4,17 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:aeuniverse/appstate_container.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
 import 'package:core/util/seeds.dart';
-import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:quiver/strings.dart';
 import 'package:validators/validators.dart';
 

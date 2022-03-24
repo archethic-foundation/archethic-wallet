@@ -7,6 +7,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/util/ui_util.dart';
+import 'package:aeuniverse/ui/views/pin_screen.dart';
+import 'package:aeuniverse/ui/views/yubikey_screen.dart';
+import 'package:aeuniverse/ui/widgets/components/buttons.dart';
+import 'package:aeuniverse/ui/widgets/components/dialog.dart';
+import 'package:aeuniverse/util/preferences.dart';
 import 'package:aewallet/bus/nft_add_event.dart';
 import 'package:core/bus/authenticated_event.dart';
 import 'package:core/localization.dart';
@@ -19,14 +27,6 @@ import 'package:core/util/haptic_util.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/routes.dart';
-import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/util/ui_util.dart';
-import 'package:aeuniverse/ui/views/pin_screen.dart';
-import 'package:aeuniverse/ui/views/yubikey_screen.dart';
-import 'package:aeuniverse/ui/widgets/components/buttons.dart';
-import 'package:aeuniverse/ui/widgets/components/dialog.dart';
-import 'package:aeuniverse/util/preferences.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 

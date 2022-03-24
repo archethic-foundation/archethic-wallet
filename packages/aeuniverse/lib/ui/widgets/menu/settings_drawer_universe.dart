@@ -5,23 +5,10 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:aeuniverse/appstate_container.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/localization.dart';
-import 'package:core/model/authentication_method.dart';
-import 'package:core/model/available_currency.dart';
-import 'package:core/model/available_language.dart';
-import 'package:core/model/data/appdb.dart';
-import 'package:core/model/device_lock_timeout.dart';
-import 'package:core/model/device_unlock_option.dart';
-import 'package:core/util/biometrics_util.dart';
-import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/haptic_util.dart';
-import 'package:core/util/vault.dart';
-import 'package:core_ui/util/case_converter.dart';
+import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/model/available_themes.dart';
 import 'package:aeuniverse/ui/util/settings_list_item.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
@@ -36,6 +23,19 @@ import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aeuniverse/util/preferences.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:core/localization.dart';
+import 'package:core/model/authentication_method.dart';
+import 'package:core/model/available_currency.dart';
+import 'package:core/model/available_language.dart';
+import 'package:core/model/data/appdb.dart';
+import 'package:core/model/device_lock_timeout.dart';
+import 'package:core/model/device_unlock_option.dart';
+import 'package:core/util/biometrics_util.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
+import 'package:core/util/vault.dart';
+import 'package:core_ui/util/case_converter.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';

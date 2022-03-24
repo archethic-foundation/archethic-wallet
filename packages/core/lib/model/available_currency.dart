@@ -4,7 +4,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
+// Package imports:
 import 'package:core/model/setting_item.dart';
 
 enum AvailableCurrencyEnum {

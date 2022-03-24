@@ -7,9 +7,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/util/ui_util.dart';
+import 'package:aeuniverse/ui/views/ledger_screen.dart';
+import 'package:aeuniverse/ui/views/pin_screen.dart';
+import 'package:aeuniverse/ui/views/yubikey_screen.dart';
+import 'package:aeuniverse/ui/widgets/components/buttons.dart';
+import 'package:aeuniverse/ui/widgets/components/dialog.dart';
+import 'package:aeuniverse/util/preferences.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/ui/views/transfer/nft_transfer_list.dart';
-import 'package:aewallet/ui/views/transfer/uco_transfer_list.dart';
+import 'package:aewallet/ui/views/nft/nft_transfer_list.dart';
+import 'package:aewallet/ui/views/uco/absinthe_socket.dart';
+import 'package:aewallet/ui/views/uco/uco_transfer_list.dart';
 import 'package:core/bus/authenticated_event.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
@@ -22,15 +32,6 @@ import 'package:core/util/haptic_util.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/routes.dart';
-import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/util/ui_util.dart';
-import 'package:aeuniverse/ui/views/ledger_screen.dart';
-import 'package:aeuniverse/ui/views/pin_screen.dart';
-import 'package:aeuniverse/ui/views/yubikey_screen.dart';
-import 'package:aeuniverse/ui/widgets/components/buttons.dart';
-import 'package:aeuniverse/ui/widgets/components/dialog.dart';
-import 'package:aeuniverse/util/preferences.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
@@ -41,6 +42,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
 class TransferConfirmSheet extends StatefulWidget {
   const TransferConfirmSheet(
       {Key? key,
+      required this.lastAddress,
       required this.typeTransfer,
       this.contactsRef,
       required this.feeEstimation,
@@ -49,6 +51,7 @@ class TransferConfirmSheet extends StatefulWidget {
       this.nftTransferList})
       : super(key: key);
 
+  final String? lastAddress;
   final String? typeTransfer;
   final String? title;
   final List<Contact>? contactsRef;
@@ -117,11 +120,50 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     }
   }
 
+  Map<String, String> transactionConfirmed = {};
+  String toto = 'nulllllll';
   @override
   void initState() {
     super.initState();
+    Absinthe.connect(globalVarEndPointDev);
+    _waitConfirmations(widget.lastAddress!);
     _registerBus();
+
     animationOpen = false;
+  }
+
+  _waitConfirmations(String lastAddress) async {
+    final String operation =
+        """subscription { transactionConfirmed(address: "$lastAddress") { nbConfirmations } }""";
+
+    return Absinthe.subscribe(
+      globalVarEndPointDev,
+      'transactionConfirmed',
+      operation,
+      onResult: (payload) async {
+        if (payload == null) {
+          print('nbConfirmations null');
+        } else {
+          print('nbConfirmations pas null');
+          setState(() {
+            toto = transactionConfirmed[payload['data']['transactionConfirmed']
+                ['nbConfirmations']]!;
+          });
+        }
+      },
+      onError: (error) {
+        print('Error ----> $error');
+      },
+      onCancel: () {
+        print("cancelled subscription");
+      },
+      onAbort: () {
+        print("subscription aborted");
+      },
+      onStart: () {
+        print("start subscription");
+      },
+    );
   }
 
   @override
@@ -172,6 +214,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       ],
                     ),
                   ),
+                  Text(toto),
                   Text(
                       AppLocalization.of(context)!.estimatedFees +
                           ': ' +

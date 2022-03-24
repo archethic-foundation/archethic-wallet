@@ -3,9 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:aeuniverse/appstate_container.dart';
 import 'package:core/model/ae_apps.dart';
 import 'package:core_ui/util/app_util.dart';
-import 'package:aeuniverse/appstate_container.dart';
 import 'package:flutter_svg/svg.dart';
 
 Widget getLogo(BuildContext context) {

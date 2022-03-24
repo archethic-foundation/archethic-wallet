@@ -1,9 +1,9 @@
 // Flutter imports:
-import 'package:core/model/setting_item.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:core/localization.dart';
+import 'package:core/model/setting_item.dart';
 
 // Project imports:
 

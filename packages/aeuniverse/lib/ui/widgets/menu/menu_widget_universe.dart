@@ -3,12 +3,17 @@
 
 // Flutter imports:
 
-import 'package:aeuniverse/ui/widgets/menu/settings_drawer_universe.dart';
-import 'package:aeweb/ui/views/home_page_aeweb.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aemail/ui/views/home_page_aemail.dart';
+import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/views/all_apps_sheet.dart';
+import 'package:aeuniverse/ui/widgets/components/dialog.dart';
+import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
+import 'package:aeuniverse/ui/widgets/menu/settings_drawer_universe.dart';
+import 'package:aeuniverse/util/preferences.dart';
 import 'package:aewallet/ui/views/home_page_aewallet.dart';
 import 'package:aewallet/ui/views/sheets/chart_sheet.dart';
 import 'package:core/localization.dart';
@@ -18,12 +23,6 @@ import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/widgets/menu/abstract_menu_widget.dart';
 import 'package:core_ui/util/case_converter.dart';
-import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/views/all_apps_sheet.dart';
-import 'package:aeuniverse/ui/widgets/components/dialog.dart';
-import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
-import 'package:aeuniverse/util/preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MenuWidgetUniverse extends AbstractMenuWidget {
@@ -37,83 +36,6 @@ class MenuWidgetUniverse extends AbstractMenuWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-            child: InkWell(
-              onTap: () {
-                StateContainer.of(context).currentAEApp = AEApps.aemail;
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (c, a1, a2) => const AppHomePageAEMail(),
-                    transitionsBuilder: (c, anim, a2, child) =>
-                        FadeTransition(opacity: anim, child: child),
-                    transitionDuration: const Duration(milliseconds: 500),
-                  ),
-                );
-              },
-              child: Column(
-                children: <Widget>[
-                  buildIconDataWidget(
-                    context,
-                    FontAwesomeIcons.envelope,
-                    30,
-                    30,
-                  ),
-                  const SizedBox(height: 5),
-                  Text(AppLocalization.of(context)!.appAEMailTitle,
-                      style: AppStyles.textStyleSize14W600Primary(context)),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-            child: InkWell(
-              onTap: () {
-                StateContainer.of(context).currentAEApp = AEApps.aeweb;
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (c, a1, a2) => const AppHomePageAEWeb(),
-                    transitionsBuilder: (c, anim, a2, child) =>
-                        FadeTransition(opacity: anim, child: child),
-                    transitionDuration: const Duration(milliseconds: 500),
-                  ),
-                );
-              },
-              child: Column(
-                children: <Widget>[
-                  buildIconDataWidget(
-                    context,
-                    FontAwesomeIcons.globe,
-                    30,
-                    30,
-                  ),
-                  const SizedBox(height: 5),
-                  Text(AppLocalization.of(context)!.appAEWebTitle,
-                      style: AppStyles.textStyleSize14W600Primary(context)),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-            child: InkWell(
-              onTap: () {},
-              child: Column(
-                children: <Widget>[
-                  buildIconDataWidget(
-                      context, FontAwesomeIcons.stackOverflow, 30, 30,
-                      enabled: false),
-                  const SizedBox(height: 5),
-                  Text(AppLocalization.of(context)!.appAEStakingTitle,
-                      style: AppStyles.textStyleSize14W600PrimaryDisabled(
-                          context)),
-                ],
-              ),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.only(left: 10.0, right: 10.0),
             child: InkWell(

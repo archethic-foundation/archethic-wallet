@@ -11,12 +11,6 @@ dependencies:
   aewallet:
     path: ../aewallet
 
-  aeweb:
-    path: ../aeweb
-
-  aemail:
-    path: ../aemail
-
   core:
     path: ../core
 
@@ -25,11 +19,6 @@ dependencies:
     
   flutter:
     sdk: flutter
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^1.0.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
