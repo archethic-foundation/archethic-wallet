@@ -124,7 +124,7 @@ class _BuySheetState extends State<BuySheet> {
                             onTap: () async {
                               UIUtil.showWebview(
                                   context,
-                                  'https://rubic.exchange/?fromChain=ETH&toChain=ETH&from=ETH&to=UCO',
+                                  'https://info.quickswap.exchange/#/pair/0x25bae75f6760ac30554cc62f9282307c3038c3a0',
                                   'Quick');
                             },
                             child: Image.asset(
