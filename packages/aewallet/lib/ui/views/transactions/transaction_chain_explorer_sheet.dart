@@ -130,13 +130,6 @@ class _TransactionChainExplorerSheetState
                     ),
                     child: Column(
                       children: <Widget>[
-                        _firstTimelineTile(
-                          context,
-                          const _IconIndicator(
-                            iconData: Icons.last_page,
-                            size: 25,
-                          ),
-                        ),
                         FutureBuilder<List<Transaction>>(
                           future: _getTransactionChain(),
                           builder: (BuildContext context,
@@ -158,16 +151,22 @@ class _TransactionChainExplorerSheetState
                                             (BuildContext context, int index) {
                                           return _buildTimelineTile(
                                             context,
+                                            isFirst: index == 0 ? true : false,
                                             isLast: index ==
                                                     transactions.data!.length -
                                                         1
                                                 ? true
                                                 : false,
-                                            indicator: const _IconIndicator(
-                                              iconData: Icons
-                                                  .arrow_circle_down_outlined,
-                                              size: 25,
-                                            ),
+                                            indicator: index == 0
+                                                ? const _IconIndicator(
+                                                    iconData: Icons.last_page,
+                                                    size: 25,
+                                                  )
+                                                : const _IconIndicator(
+                                                    iconData: Icons
+                                                        .arrow_circle_down_outlined,
+                                                    size: 25,
+                                                  ),
                                             dateTx: DateFormat.yMMMEd(
                                                     Localizations.localeOf(
                                                             context)
@@ -246,6 +245,7 @@ TimelineTile _buildTimelineTile(
   String? dateTx,
   String? address,
   String? balance,
+  bool isFirst = false,
   bool isLast = false,
 }) {
   return TimelineTile(
@@ -259,6 +259,7 @@ TimelineTile _buildTimelineTile(
       height: 30,
       indicator: indicator,
     ),
+    isFirst: isFirst,
     isLast: isLast,
     startChild: Padding(
       padding: const EdgeInsets.only(left: 20, right: 10, top: 0, bottom: 10),
@@ -278,49 +279,6 @@ TimelineTile _buildTimelineTile(
           const SizedBox(height: 4),
           Text(
             'UTXO: ' + balance! + ' UCO',
-          ),
-          const SizedBox(height: 4),
-        ],
-      ),
-    ),
-  );
-}
-
-TimelineTile _firstTimelineTile(
-    BuildContext context, _IconIndicator? indicator) {
-  return TimelineTile(
-    alignment: TimelineAlign.manual,
-    lineXY: 0.3,
-    beforeLineStyle: LineStyle(color: Colors.white.withOpacity(0.7)),
-    indicatorStyle: IndicatorStyle(
-      indicatorXY: 0.3,
-      drawGap: true,
-      width: 30,
-      height: 30,
-      indicator: indicator,
-    ),
-    isFirst: true,
-    startChild: Padding(
-      padding: const EdgeInsets.only(left: 20, right: 10, top: 0, bottom: 10),
-      child: Text(
-        AppLocalization.of(context)!.transactionChainExplorerLastAddress,
-        textAlign: TextAlign.right,
-      ),
-    ),
-    endChild: Padding(
-      padding: const EdgeInsets.only(left: 16, right: 10, top: 0, bottom: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SelectableText(
-            CaseChange.toUpperCase(
-                StateContainer.of(context).wallet!.address,
-                context,
-                StateContainer.of(context).curLanguage.getLocaleString()),
-          ),
-          const SizedBox(height: 4),
-          const Text(
-            '',
           ),
           const SizedBox(height: 4),
         ],
