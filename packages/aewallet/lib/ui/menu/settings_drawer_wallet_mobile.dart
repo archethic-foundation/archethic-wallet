@@ -59,8 +59,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   Animation<Offset>? _contactsOffsetFloat;
   AnimationController? _securityController;
   Animation<Offset>? _securityOffsetFloat;
-  AnimationController? _nodesController;
-  Animation<Offset>? _nodesOffsetFloat;
   AnimationController? _nftController;
   Animation<Offset>? _nftOffsetFloat;
   AnimationController? _walletFAQController;
@@ -84,7 +82,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   bool? _securityOpen;
   bool? _aboutOpen;
   bool? _contactsOpen;
-  bool? _nodesOpen;
   bool? _walletFAQOpen;
   bool? _nftOpen;
   bool? _yubikeyParamsOpen;
@@ -97,7 +94,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   void initState() {
     super.initState();
     _contactsOpen = false;
-    _nodesOpen = false;
     _securityOpen = false;
     _aboutOpen = false;
     _walletFAQOpen = false;
@@ -135,11 +131,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
-    _nodesController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 220),
-    );
-
     _walletFAQController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 220),
@@ -161,10 +152,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     _aboutOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_aboutController!);
-    _nodesOffsetFloat =
-        Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
-            .animate(_nodesController!);
-
     _walletFAQOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_walletFAQController!);
@@ -187,7 +174,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     _contactsController!.dispose();
     _securityController!.dispose();
     _aboutController!.dispose();
-    _nodesController!.dispose();
     _walletFAQController!.dispose();
     _nftController!.dispose();
     _yubikeyParamsController!.dispose();
@@ -925,12 +911,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       });
       _aboutController!.reverse();
       return false;
-    } else if (_nodesOpen!) {
-      setState(() {
-        _nodesOpen = false;
-      });
-      _nodesController!.reverse();
-      return false;
     } else if (_walletFAQOpen!) {
       setState(() {
         _walletFAQOpen = false;
@@ -973,9 +953,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                 child: buildSecurityMenu(context)),
             SlideTransition(
                 position: _aboutOffsetFloat!, child: buildAboutMenu(context)),
-            SlideTransition(
-                position: _nodesOffsetFloat!,
-                child: NodesList(_nodesController!, _nodesOpen!)),
             SlideTransition(
                 position: _walletFAQOffsetFloat!,
                 child: WalletFAQ(_walletFAQController!, _walletFAQOpen!)),
@@ -1077,23 +1054,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       child: Text(AppLocalization.of(context)!.informations,
                           style: AppStyles.textStyleSize20W700Primary(context)),
                     ),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
-                    ),
-                    AppSettings.buildSettingsListItemSingleLineWithInfos(
-                        context,
-                        AppLocalization.of(context)!.nodesHeader,
-                        AppLocalization.of(context)!.nodesHeaderDesc,
-                        icon: 'packages/aewallet/assets/icons/nodes.png',
-                        iconColor: StateContainer.of(context)
-                            .curTheme
-                            .iconDrawerColor!, onPressed: () {
-                      setState(() {
-                        _nodesOpen = true;
-                      });
-                      _nodesController!.forward();
-                    }),
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
