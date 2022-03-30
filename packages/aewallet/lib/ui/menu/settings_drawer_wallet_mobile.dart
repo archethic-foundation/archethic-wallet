@@ -16,7 +16,6 @@ import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/views/pin_screen.dart';
 import 'package:aeuniverse/ui/views/settings/backupseed_sheet.dart';
-import 'package:aeuniverse/ui/views/settings/nodes_widget.dart';
 import 'package:aeuniverse/ui/views/settings/yubikey_params_widget.dart';
 import 'package:aeuniverse/ui/views/yubikey_screen.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
@@ -1051,67 +1050,20 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     Container(
                       margin: const EdgeInsetsDirectional.only(
                           start: 30.0, top: 20.0, bottom: 10.0),
-                      child: Text(AppLocalization.of(context)!.informations,
-                          style: AppStyles.textStyleSize20W700Primary(context)),
-                    ),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
-                    ),
-                    AppSettings.buildSettingsListItemSingleLineWithInfos(
-                        context,
-                        AppLocalization.of(context)!.walletFAQHeader,
-                        AppLocalization.of(context)!.walletFAQDesc,
-                        icon: 'packages/aewallet/assets/icons/faq.png',
-                        iconColor: StateContainer.of(context)
-                            .curTheme
-                            .iconDrawerColor!, onPressed: () {
-                      setState(() {
-                        _walletFAQOpen = true;
-                      });
-                      _walletFAQController!.forward();
-                    }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
-                    ),
-                    AppSettings.buildSettingsListItemSingleLineWithInfos(
-                        context,
-                        AppLocalization.of(context)!.labLinkHeader,
-                        AppLocalization.of(context)!.labLinkDesc,
-                        icon: 'packages/aewallet/assets/icons/microscope.png',
-                        iconColor: StateContainer.of(context)
-                            .curTheme
-                            .iconDrawerColor!, onPressed: () async {
-                      UIUtil.showWebview(
-                          context,
-                          'https://www.archethic.net/lab.html',
-                          AppLocalization.of(context)!.labLinkHeader);
-                    }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
-                    ),
-                    AppSettings.buildSettingsListItemSingleLine(
-                        context,
-                        AppLocalization.of(context)!.aboutHeader,
-                        'packages/aewallet/assets/icons/help.png',
-                        StateContainer.of(context).curTheme.iconDrawerColor!,
-                        onPressed: () {
-                      setState(() {
-                        _aboutOpen = true;
-                      });
-                      _aboutController!.forward();
-                    }),
-                    Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.primary15),
-                    Container(
-                      margin: const EdgeInsetsDirectional.only(
-                          start: 30.0, top: 20.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context)!.preferences,
                           style: AppStyles.textStyleSize20W700Primary(context)),
                     ),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
+                    AppSettings.buildSettingsListItemWithDefaultValue(
+                        context,
+                        AppLocalization.of(context)!.networksHeader,
+                        _curNetworksSetting,
+                        'packages/aeuniverse/assets/icons/url.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        _networkDialog),
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
@@ -1146,17 +1098,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         'packages/aewallet/assets/icons/themes.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         _themeDialog),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
-                    ),
-                    AppSettings.buildSettingsListItemWithDefaultValue(
-                        context,
-                        AppLocalization.of(context)!.networksHeader,
-                        _curNetworksSetting,
-                        'packages/aeuniverse/assets/icons/url.png',
-                        StateContainer.of(context).curTheme.iconDrawerColor!,
-                        _networkDialog),
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
@@ -1224,6 +1165,64 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
                     ),
+                    Container(
+                      margin: const EdgeInsetsDirectional.only(
+                          start: 30.0, top: 20.0, bottom: 10.0),
+                      child: Text(AppLocalization.of(context)!.informations,
+                          style: AppStyles.textStyleSize20W700Primary(context)),
+                    ),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
+                    AppSettings.buildSettingsListItemSingleLineWithInfos(
+                        context,
+                        AppLocalization.of(context)!.walletFAQHeader,
+                        AppLocalization.of(context)!.walletFAQDesc,
+                        icon: 'packages/aewallet/assets/icons/faq.png',
+                        iconColor: StateContainer.of(context)
+                            .curTheme
+                            .iconDrawerColor!, onPressed: () {
+                      setState(() {
+                        _walletFAQOpen = true;
+                      });
+                      _walletFAQController!.forward();
+                    }),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
+                    AppSettings.buildSettingsListItemSingleLineWithInfos(
+                        context,
+                        AppLocalization.of(context)!.labLinkHeader,
+                        AppLocalization.of(context)!.labLinkDesc,
+                        icon: 'packages/aewallet/assets/icons/microscope.png',
+                        iconColor: StateContainer.of(context)
+                            .curTheme
+                            .iconDrawerColor!, onPressed: () async {
+                      UIUtil.showWebview(
+                          context,
+                          'https://www.archethic.net/lab.html',
+                          AppLocalization.of(context)!.labLinkHeader);
+                    }),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
+                    AppSettings.buildSettingsListItemSingleLine(
+                        context,
+                        AppLocalization.of(context)!.aboutHeader,
+                        'packages/aewallet/assets/icons/help.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        onPressed: () {
+                      setState(() {
+                        _aboutOpen = true;
+                      });
+                      _aboutController!.forward();
+                    }),
+                    Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.primary15),
                     const SizedBox(height: 30),
                   ].where(notNull).toList(),
                 ),
