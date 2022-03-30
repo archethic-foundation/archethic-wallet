@@ -31,7 +31,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
   }
 
   List<Widget> _buildMnemonicRows() {
-    const int nRows = 8;
+    const int nRows = 12;
     const int itemsPerRow = 24 ~/ nRows;
     int curWord = 0;
     final List<Widget> ret = <Widget>[];
@@ -54,17 +54,17 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
               text: TextSpan(children: <InlineSpan>[
                 TextSpan(
                   text: curWord < 9 ? ' ' : '',
-                  style: AppStyles.textStyleSmallTextW100Text30(context),
+                  style: AppStyles.textStyleSize16W100Primary60(context),
                 ),
                 TextSpan(
                   text: ' ${curWord + 1}) ',
-                  style: AppStyles.textStyleSmallTextW100Text30(context),
+                  style: AppStyles.textStyleSize16W100Primary60(context),
                 ),
                 TextSpan(
                   text: _seedObscured! && widget.obscureSeed
                       ? _obscuredSeed[curWord]
                       : widget.wordList[curWord],
-                  style: AppStyles.textStyleSmallTextW100Primary(context),
+                  style: AppStyles.textStyleSize16W200Primary(context),
                 )
               ]),
             ),
