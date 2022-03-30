@@ -13,9 +13,9 @@ class DarkTheme implements BaseTheme {
 
   static const Color orangeDark = Color(0xFFf9852b);
 
-  static const Color blue = Color(0xFF1ba5d9);
+  static const Color blue = Color(0xFF1BA5D9);
 
-  static const Color blackDark = Color(0xFF000000);
+  static const Color blackDark = Color(0xFF05212B);
 
   static const Color blueDarktest = Color(0xFF06347c);
 

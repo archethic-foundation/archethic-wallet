@@ -32,7 +32,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
   @override
   Widget buildMainMenuIcons(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         (StateContainer.of(context).wallet != null &&
@@ -199,8 +199,6 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                           style: AppStyles.textStyleSize14W600Primary(context)),
                     ],
                   )))
-        else
-          const SizedBox(),
       ],
     );
   }

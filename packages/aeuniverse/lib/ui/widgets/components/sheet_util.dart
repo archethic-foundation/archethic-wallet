@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:io';
+import 'dart:ui';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -194,15 +195,18 @@ class _AppHeightNineModalRoute<T> extends PopupRoute<T> {
               child: BottomSheet(
                 animationController: _animationController,
                 onClosing: () => Navigator.pop(context),
-                builder: (BuildContext context) => Container(
-                  decoration: BoxDecoration(
-                    color: color,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(radius!),
-                      topRight: Radius.circular(radius!),
+                builder: (BuildContext context) => BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: color!.withOpacity(0.7),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(radius!),
+                        topRight: Radius.circular(radius!),
+                      ),
                     ),
+                    child: Builder(builder: builder!),
                   ),
-                  child: Builder(builder: builder!),
                 ),
               ),
             ),
