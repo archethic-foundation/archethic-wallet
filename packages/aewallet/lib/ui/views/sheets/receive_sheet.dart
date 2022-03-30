@@ -18,6 +18,7 @@ import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/util/case_converter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ReceiveSheet extends StatefulWidget {
   const ReceiveSheet({Key? key}) : super(key: key);
@@ -97,9 +98,25 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                   ],
                 )
               else
-                const SizedBox(
+                Container(
                   width: 60,
-                  height: 40,
+                  height: 50,
+                  margin:
+                      const EdgeInsetsDirectional.only(top: 10.0, start: 10.0),
+                  child: TextButton(
+                    onPressed: () {
+                      Clipboard.setData(ClipboardData(
+                          text: StateContainer.of(context).wallet!.address));
+                      UIUtil.showSnackbar(
+                          AppLocalization.of(context)!.addressCopied,
+                          context,
+                          StateContainer.of(context).curTheme.primary!,
+                          StateContainer.of(context).curTheme.overlay80!);
+                    },
+                    child: FaIcon(FontAwesomeIcons.paste,
+                        size: 24,
+                        color: StateContainer.of(context).curTheme.primary),
+                  ),
                 ),
             ],
           ),
