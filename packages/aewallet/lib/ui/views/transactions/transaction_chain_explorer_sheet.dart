@@ -168,7 +168,7 @@ class _TransactionChainExplorerSheetState
                                                   .arrow_circle_down_outlined,
                                               size: 25,
                                             ),
-                                            dateTx: DateFormat.yMd(
+                                            dateTx: DateFormat.yMMMEd(
                                                     Localizations.localeOf(
                                                             context)
                                                         .languageCode)
