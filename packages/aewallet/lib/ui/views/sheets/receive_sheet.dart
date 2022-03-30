@@ -14,7 +14,6 @@ import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
-import 'package:core/util/global_var.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/util/case_converter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -266,7 +265,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                       icon: const Icon(Icons.more_horiz), onPressed: () async {
                     UIUtil.showWebview(
                         context,
-                        globalVarEndPointDev +
+                        StateContainer.of(context).curNetwork.getLink() +
                             '/explorer/transaction/' +
                             StateContainer.of(context)
                                 .selectedAccount

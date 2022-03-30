@@ -9,8 +9,8 @@ import 'package:aeuniverse/model/available_themes.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/model/available_currency.dart';
 import 'package:core/model/available_language.dart';
+import 'package:core/model/available_networks.dart';
 import 'package:core/model/device_lock_timeout.dart';
-import 'package:core/util/global_var.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
@@ -24,6 +24,7 @@ class Preferences {
   static const String _auth_method = 'archethic_auth_method';
   static const String _cur_currency = 'archethic_cur_currency';
   static const String _cur_language = 'archethic_cur_language';
+  static const String _cur_network = 'archethic_cur_network';
   static const String _cur_theme = 'archethic_cur_theme';
   static const String _lock = 'archethic_lock';
   static const String _lock_timeout = 'archethic_lock_timeout';
@@ -33,7 +34,6 @@ class Preferences {
   static const String _pin_lock_until = 'archethic_pin_lock_until';
   static const String _version_app = 'archethic_version_app';
 
-  static const String _endpoint = 'archethic_endpoint';
   static const String _pinPadShuffle = 'archethic_pinPadShuffle';
 
   // Yubikey
@@ -81,14 +81,16 @@ class Preferences {
   LanguageSetting getLanguage() => LanguageSetting(AvailableLanguage.values[
       _getValue(_cur_language, defaultValue: AvailableLanguage.DEFAULT.index)]);
 
+  Future<void> setNetwork(NetworksSetting network) =>
+      _setValue(_cur_network, network.getIndex());
+
+  NetworksSetting getNetwork() =>
+      NetworksSetting(AvailableNetworks.values[_getValue(_cur_network,
+          defaultValue: AvailableNetworks.AETestNet.index)]);
+
   Future<void> setVersionApp(String v) => _setValue(_version_app, v);
 
   String getVersionApp() => _getValue(_version_app, defaultValue: '');
-
-  Future<void> setEndpoint(String v) => _setValue(_endpoint, v);
-
-  String getEndpoint() =>
-      _getValue(_endpoint, defaultValue: globalVarEndPointDev);
 
   Future<void> setYubikeyClientAPIKey(String v) =>
       _setValue(_yubikeyClientAPIKey, v);

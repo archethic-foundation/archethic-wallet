@@ -49,20 +49,20 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton<LedgerNanoSImpl>(() => LedgerNanoSImpl());
 
   final Preferences preferences = await Preferences.getInstance();
-  final String endpoint = preferences.getEndpoint();
+  final String network = preferences.getNetwork().getLink();
 
   if (sl.isRegistered<ApiService>()) {
     sl.unregister<ApiService>();
   }
-  sl.registerLazySingleton<ApiService>(() => ApiService(endpoint));
+  sl.registerLazySingleton<ApiService>(() => ApiService(network));
 
   if (sl.isRegistered<AddressService>()) {
     sl.unregister<AddressService>();
   }
-  sl.registerLazySingleton<AddressService>(() => AddressService(endpoint));
+  sl.registerLazySingleton<AddressService>(() => AddressService(network));
 
   if (sl.isRegistered<OracleService>()) {
     sl.unregister<OracleService>();
   }
-  sl.registerLazySingleton<OracleService>(() => OracleService(endpoint));
+  sl.registerLazySingleton<OracleService>(() => OracleService(network));
 }

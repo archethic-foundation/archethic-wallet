@@ -125,19 +125,19 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   @override
   void initState() {
     super.initState();
-    Absinthe.connect(globalVarEndPointDev);
-    _waitConfirmations(widget.lastAddress!);
+    //Absinthe.connect(StateContainer.of(context).curNetwork.getLink());
+    //_waitConfirmations(widget.lastAddress!);
     _registerBus();
 
     animationOpen = false;
   }
 
-  _waitConfirmations(String lastAddress) async {
+  /* _waitConfirmations(String lastAddress) async {
     final String operation =
         """subscription { transactionConfirmed(address: "$lastAddress") { nbConfirmations } }""";
 
     return Absinthe.subscribe(
-      globalVarEndPointDev,
+      StateContainer.of(context).curNetwork.getLink(),
       'transactionConfirmed',
       operation,
       onResult: (payload) async {
@@ -164,7 +164,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         print("start subscription");
       },
     );
-  }
+  }*/
 
   @override
   void dispose() {

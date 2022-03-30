@@ -5,6 +5,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aeuniverse/util/service_locator.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -15,7 +16,6 @@ import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/views/pin_screen.dart';
 import 'package:aeuniverse/ui/views/settings/backupseed_sheet.dart';
-import 'package:aeuniverse/ui/views/settings/custom_url_widget.dart';
 import 'package:aeuniverse/ui/views/settings/nodes_widget.dart';
 import 'package:aeuniverse/ui/views/settings/yubikey_params_widget.dart';
 import 'package:aeuniverse/ui/views/yubikey_screen.dart';
@@ -27,6 +27,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/model/available_currency.dart';
+import 'package:core/model/available_networks.dart';
 import 'package:core/model/available_language.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/device_lock_timeout.dart';
@@ -39,6 +40,7 @@ import 'package:core_ui/util/case_converter.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SettingsSheetUniverse extends StatefulWidget {
   const SettingsSheetUniverse({Key? key}) : super(key: key);
@@ -53,8 +55,6 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
   Animation<Offset>? _securityOffsetFloat;
   AnimationController? _nodesController;
   Animation<Offset>? _nodesOffsetFloat;
-  AnimationController? _customUrlController;
-  Animation<Offset>? _customUrlOffsetFloat;
   AnimationController? _aboutController;
   Animation<Offset>? _aboutOffsetFloat;
   AnimationController? _yubikeyParamsController;
@@ -68,11 +68,12 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
   LockTimeoutSetting _curTimeoutSetting =
       LockTimeoutSetting(LockTimeoutOption.one);
   ThemeSetting _curThemeSetting = ThemeSetting(ThemeOptions.dark);
+  NetworksSetting _curNetworksSetting =
+      NetworksSetting(AvailableNetworks.AETestNet);
 
   bool? _securityOpen;
   bool? _aboutOpen;
   bool? _nodesOpen;
-  bool? _customUrlOpen;
   bool? _yubikeyParamsOpen;
 
   bool _pinPadShuffleActive = false;
@@ -85,7 +86,6 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
     _nodesOpen = false;
     _securityOpen = false;
     _aboutOpen = false;
-    _customUrlOpen = false;
     _yubikeyParamsOpen = false;
 
     // Determine if they have face or fingerprint enrolled, if not hide the setting
@@ -102,6 +102,7 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
             ? UnlockSetting(UnlockOption.yes)
             : UnlockSetting(UnlockOption.no);
         _curThemeSetting = _preferences.getTheme();
+        _curNetworksSetting = _preferences.getNetwork();
         _curTimeoutSetting = _preferences.getLockTimeout();
       });
     });
@@ -118,10 +119,6 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
-    _customUrlController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 220),
-    );
     _yubikeyParamsController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 220),
@@ -135,9 +132,6 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
     _nodesOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_nodesController!);
-    _customUrlOffsetFloat =
-        Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
-            .animate(_customUrlController!);
     _yubikeyParamsOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_yubikeyParamsController!);
@@ -153,7 +147,6 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
   void dispose() {
     _securityController!.dispose();
     _aboutController!.dispose();
-    _customUrlController!.dispose();
     _nodesController!.dispose();
     _yubikeyParamsController!.dispose();
     super.dispose();
@@ -722,12 +715,13 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
             children: _buildLockTimeoutOptions(),
           );
         });
-
-    if (_curTimeoutSetting.setting != selection) {
-      _preferences.setLockTimeout(LockTimeoutSetting(selection!));
-      setState(() {
-        _curTimeoutSetting = LockTimeoutSetting(selection);
-      });
+    if (selection != null) {
+      if (_curTimeoutSetting.setting != selection) {
+        _preferences.setLockTimeout(LockTimeoutSetting(selection));
+        setState(() {
+          _curTimeoutSetting = LockTimeoutSetting(selection);
+        });
+      }
     }
   }
 
@@ -785,12 +779,126 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
             children: _buildThemeOptions(),
           );
         });
-    if (_curThemeSetting != ThemeSetting(selection!)) {
-      _preferences.setTheme(ThemeSetting(selection));
-      setState(() {
-        StateContainer.of(context).updateTheme(ThemeSetting(selection));
-        _curThemeSetting = ThemeSetting(selection);
-      });
+    if (selection != null) {
+      if (_curThemeSetting != ThemeSetting(selection)) {
+        _preferences.setTheme(ThemeSetting(selection));
+        setState(() {
+          StateContainer.of(context).updateTheme(ThemeSetting(selection));
+          _curThemeSetting = ThemeSetting(selection);
+        });
+      }
+    }
+  }
+
+  List<Widget> _buildNetworkOptions() {
+    final List<Widget> ret = List<Widget>.empty(growable: true);
+    for (AvailableNetworks value in AvailableNetworks.values) {
+      ret.add(SimpleDialogOption(
+        onPressed: () {
+          if (value == AvailableNetworks.AEMainNet) {
+            UIUtil.showSnackbar(
+                'Soon...',
+                context,
+                StateContainer.of(context).curTheme.primary!,
+                StateContainer.of(context).curTheme.overlay80!);
+          } else {
+            Navigator.pop(context, value);
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Row(
+            children: <Widget>[
+              ClipRRect(
+                child: NetworksSetting(value).network.index ==
+                        AvailableNetworks.AETestNet.index
+                    ? SvgPicture.asset(
+                        'packages/core_ui/assets/themes/dark/logo_alone.svg',
+                        color: Colors.green,
+                        height: 15,
+                      )
+                    : NetworksSetting(value).network.index ==
+                            AvailableNetworks.AEDevNet.index
+                        ? SvgPicture.asset(
+                            'packages/core_ui/assets/themes/dark/logo_alone.svg',
+                            color: Colors.orange,
+                            height: 15,
+                          )
+                        : SvgPicture.asset(
+                            'packages/core_ui/assets/themes/dark/logo_alone.svg',
+                            height: 15,
+                          ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(NetworksSetting(value).getDisplayName(context),
+                      style: StateContainer.of(context)
+                                  .curNetwork
+                                  .getDisplayName(context) ==
+                              NetworksSetting(value).getDisplayName(context)
+                          ? AppStyles.textStyleSize16W600ChoiceOption(context)
+                          : AppStyles.textStyleSize16W600Primary(context)),
+                  Text(NetworksSetting(value).getLink(),
+                      style: AppStyles.textStyleSize12W100Primary(context)),
+                ],
+              ),
+              const SizedBox(width: 20),
+              if (StateContainer.of(context)
+                      .curNetwork
+                      .getDisplayName(context) ==
+                  NetworksSetting(value).getDisplayName(context))
+                FaIcon(
+                  FontAwesomeIcons.check,
+                  color: StateContainer.of(context).curTheme.choiceOption,
+                  size: 16,
+                )
+              else
+                const SizedBox(),
+            ],
+          ),
+        ),
+      ));
+    }
+
+    return ret;
+  }
+
+  Future<void> _networkDialog() async {
+    final Preferences _preferences = await Preferences.getInstance();
+    final AvailableNetworks? selection = await showDialog<AvailableNetworks>(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: Text(
+                AppLocalization.of(context)!.networksHeader,
+                style: AppStyles.textStyleSize20W700Primary(context),
+              ),
+            ),
+            shape: RoundedRectangleBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                side: BorderSide(
+                    color: StateContainer.of(context).curTheme.primary45!)),
+            children: _buildNetworkOptions(),
+          );
+        });
+    if (selection != null) {
+      if (StateContainer.of(context).curNetwork.network != selection) {
+        _preferences.setNetwork(NetworksSetting(selection));
+        setState(() {
+          _curNetworksSetting = NetworksSetting(selection);
+          StateContainer.of(context).curNetwork = _curNetworksSetting;
+        });
+        setupServiceLocator();
+        await StateContainer.of(context)
+            .requestUpdate(account: StateContainer.of(context).selectedAccount);
+      }
     }
   }
 
@@ -806,12 +914,6 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
         _aboutOpen = false;
       });
       _aboutController!.reverse();
-      return false;
-    } else if (_customUrlOpen!) {
-      setState(() {
-        _customUrlOpen = false;
-      });
-      _customUrlController!.reverse();
       return false;
     } else if (_nodesOpen!) {
       setState(() {
@@ -849,9 +951,6 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
             SlideTransition(
                 position: _nodesOffsetFloat!,
                 child: NodesList(_nodesController!, _nodesOpen!)),
-            SlideTransition(
-                position: _customUrlOffsetFloat!,
-                child: CustomUrl(_customUrlController!, _customUrlOpen!)),
             SlideTransition(
                 position: _yubikeyParamsOffsetFloat!,
                 child: YubikeyParams(
@@ -985,19 +1084,13 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
                     ),
-                    AppSettings.buildSettingsListItemSingleLineWithInfos(
+                    AppSettings.buildSettingsListItemWithDefaultValue(
                         context,
-                        AppLocalization.of(context)!.customUrlHeader,
-                        AppLocalization.of(context)!.customUrlDesc,
-                        icon: 'packages/aeuniverse/assets/icons/url.png',
-                        iconColor: StateContainer.of(context)
-                            .curTheme
-                            .iconDrawerColor!, onPressed: () {
-                      setState(() {
-                        _customUrlOpen = true;
-                      });
-                      _customUrlController!.forward();
-                    }),
+                        AppLocalization.of(context)!.networksHeader,
+                        _curNetworksSetting,
+                        'packages/aeuniverse/assets/icons/url.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        _networkDialog),
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,

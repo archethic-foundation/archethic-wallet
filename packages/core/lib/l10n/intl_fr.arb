@@ -126,14 +126,14 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"customUrlHeader": "URL personnalisées",
-	"@customUrlHeader": {
+	"networksHeader": "Réseaux",
+	"@networksHeader": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"customUrlDesc": "Définir le endpoint",
-	"@customUrlDesc": {
+	"networksDesc": "Définir le endpoint",
+	"@networksDesc": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
@@ -1202,12 +1202,6 @@
   },
   "chart": "Cours",
   "@chart": {
-	"type": "text",
-	"placeholders_order": [],
-	"placeholders": {}
-  },
-  "environment": "TESTNET",
-  "@environment": {
 	"type": "text",
 	"placeholders_order": [],
 	"placeholders": {}

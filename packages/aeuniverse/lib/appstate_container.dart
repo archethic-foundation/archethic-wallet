@@ -17,6 +17,7 @@ import 'package:core/bus/transactions_list_event.dart';
 import 'package:core/model/ae_apps.dart';
 import 'package:core/model/available_currency.dart';
 import 'package:core/model/available_language.dart';
+import 'package:core/model/available_networks.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
 import 'package:core/model/recent_transaction.dart';
@@ -84,6 +85,7 @@ class StateContainerState extends State<StateContainer> {
   Locale deviceLocale = const Locale('en', 'US');
   AvailableCurrency curCurrency = AvailableCurrency(AvailableCurrencyEnum.USD);
   LanguageSetting curLanguage = LanguageSetting(AvailableLanguage.DEFAULT);
+  NetworksSetting curNetwork = NetworksSetting(AvailableNetworks.AETestNet);
   BaseTheme curTheme = DarkTheme();
 
   AEApps currentAEApp = AEApps.bin;
@@ -143,6 +145,7 @@ class StateContainerState extends State<StateContainer> {
         curCurrency = _preferences.getCurrency(deviceLocale);
         currencyLocale = curCurrency.getLocale().toString();
         curLanguage = _preferences.getLanguage();
+        curNetwork = _preferences.getNetwork();
       });
       updateTheme(_preferences.getTheme());
     });

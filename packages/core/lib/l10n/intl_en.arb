@@ -126,14 +126,14 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "customUrlHeader": "Custom URLs",
-  "@customUrlHeader": {
+  "networksHeader": "Networks",
+  "@networksHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "customUrlDesc": "Define the endpoint",
-  "@customUrlDesc": {
+  "networksDesc": "Define the endpoint",
+  "@networksDesc": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1202,12 +1202,6 @@
   },
 	"chart": "Chart",
 	"@chart": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
-	"environment": "TESTNET",
-	"@environment": {
 	  "type": "text",
 	  "placeholders_order": [],
 	  "placeholders": {}

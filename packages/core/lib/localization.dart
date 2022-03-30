@@ -119,12 +119,12 @@ class AppLocalization {
     return Intl.message('Could not Read QR Code', name: 'qrUnknownError');
   }
 
-  String get customUrlHeader {
-    return Intl.message('Custom URLs', name: 'customUrlHeader');
+  String get networksHeader {
+    return Intl.message('Networks', name: 'networksHeader');
   }
 
-  String get customUrlDesc {
-    return Intl.message('Define the endpoint', name: 'customUrlDesc');
+  String get networksDesc {
+    return Intl.message('Define the endpoint', name: 'networksDesc');
   }
 
   String get walletFAQHeader {
@@ -960,10 +960,6 @@ class AppLocalization {
 
   String get chart {
     return Intl.message('Chart', name: 'chart');
-  }
-
-  String get environment {
-    return Intl.message('TESTNET', name: 'environment');
   }
 
   String get share {

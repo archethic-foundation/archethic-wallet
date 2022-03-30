@@ -19,7 +19,7 @@ import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/bus/account_changed_event.dart';
 import 'package:core/bus/disable_lock_timeout_event.dart';
-import 'package:core/localization.dart';
+import 'package:core/model/available_networks.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:core_ui/util/app_util.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -338,20 +338,50 @@ class _AppHomePageAEWalletState extends State<AppHomePageAEWallet>
         : Scaffold(
             extendBodyBehindAppBar: true,
             appBar: AppBar(
-              title: SvgPicture.asset(
-                  StateContainer.of(context).curTheme.assetsFolder! +
-                      StateContainer.of(context).curTheme.logoAlone! +
-                      '.svg',
-                  height: 40),
+              title: Column(
+                children: [
+                  StateContainer.of(context).curNetwork.getIndex() ==
+                          AvailableNetworks.AETestNet.index
+                      ? SvgPicture.asset(
+                          StateContainer.of(context).curTheme.assetsFolder! +
+                              StateContainer.of(context).curTheme.logoAlone! +
+                              '.svg',
+                          color: Colors.green,
+                          height: 15,
+                        )
+                      : StateContainer.of(context).curNetwork.getIndex() ==
+                              AvailableNetworks.AEDevNet.index
+                          ? SvgPicture.asset(
+                              StateContainer.of(context)
+                                      .curTheme
+                                      .assetsFolder! +
+                                  StateContainer.of(context)
+                                      .curTheme
+                                      .logoAlone! +
+                                  '.svg',
+                              color: Colors.orange,
+                              height: 15,
+                            )
+                          : SvgPicture.asset(
+                              StateContainer.of(context)
+                                      .curTheme
+                                      .assetsFolder! +
+                                  StateContainer.of(context)
+                                      .curTheme
+                                      .logoAlone! +
+                                  '.svg',
+                              height: 15,
+                            ),
+                  Text(
+                      StateContainer.of(context)
+                          .curNetwork
+                          .getLongDisplayName(context),
+                      style: AppStyles.textStyleSize10W100Primary(context)),
+                ],
+              ),
               backgroundColor: Colors.transparent,
               elevation: 0.0,
               centerTitle: true,
-              actions: <Widget>[
-                Text(AppLocalization.of(context)!.environment,
-                    style: TextStyle(
-                        color: Colors.red[900], fontWeight: FontWeight.w900)),
-                const SizedBox(width: 20),
-              ],
               iconTheme: IconThemeData(
                   color: StateContainer.of(context).curTheme.primary),
             ),
