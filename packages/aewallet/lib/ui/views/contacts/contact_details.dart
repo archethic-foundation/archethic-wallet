@@ -31,11 +31,6 @@ class ContactDetailsSheet {
 
   Contact contact;
 
-  // State variables
-  bool _addressCopied = false;
-  // Timer reference so we can cancel repeated events
-  Timer? _addressCopiedTimer;
-
   void mainBottomSheet(BuildContext context) {
     Sheets.showAppHeightEightSheet(
         context: context,
@@ -126,10 +121,29 @@ class ContactDetailsSheet {
                             ],
                           ),
                         ),
-
-                        const SizedBox(
+                        Container(
                           width: 50,
                           height: 50,
+                          margin: const EdgeInsetsDirectional.only(
+                              top: 10.0, start: 10.0),
+                          child: TextButton(
+                            onPressed: () {
+                              Clipboard.setData(
+                                  ClipboardData(text: contact.address));
+                              UIUtil.showSnackbar(
+                                  AppLocalization.of(context)!.addressCopied,
+                                  context,
+                                  StateContainer.of(context).curTheme.primary!,
+                                  StateContainer.of(context)
+                                      .curTheme
+                                      .overlay80!);
+                            },
+                            child: FaIcon(FontAwesomeIcons.paste,
+                                size: 24,
+                                color: StateContainer.of(context)
+                                    .curTheme
+                                    .primary),
+                          ),
                         ),
                       ],
                     ),
@@ -175,18 +189,15 @@ class ContactDetailsSheet {
                               onTap: () {
                                 Clipboard.setData(
                                     ClipboardData(text: contact.address));
-                                setState(() {
-                                  _addressCopied = true;
-                                });
-                                if (_addressCopiedTimer != null) {
-                                  _addressCopiedTimer!.cancel();
-                                }
-                                _addressCopiedTimer = Timer(
-                                    const Duration(milliseconds: 800), () {
-                                  setState(() {
-                                    _addressCopied = false;
-                                  });
-                                });
+                                UIUtil.showSnackbar(
+                                    AppLocalization.of(context)!.addressCopied,
+                                    context,
+                                    StateContainer.of(context)
+                                        .curTheme
+                                        .primary!,
+                                    StateContainer.of(context)
+                                        .curTheme
+                                        .overlay80!);
                               },
                               child: Container(
                                 width: double.infinity,
@@ -214,22 +225,8 @@ class ContactDetailsSheet {
                                 child:
                                     UIUtil.threeLinetextStyleSmallestW400Text(
                                         context, contact.address!,
-                                        type: _addressCopied
-                                            ? ThreeLineAddressTextType
-                                                .successFull
-                                            : ThreeLineAddressTextType.primary),
+                                        type: ThreeLineAddressTextType.primary),
                               ),
-                            ),
-                            // Address Copied text container
-                            Container(
-                              margin: const EdgeInsets.only(top: 5, bottom: 5),
-                              child: Text(
-                                  _addressCopied
-                                      ? AppLocalization.of(context)!
-                                          .addressCopied
-                                      : '',
-                                  style: AppStyles.textStyleSize14W600Success(
-                                      context)),
                             ),
                           ],
                         ),
