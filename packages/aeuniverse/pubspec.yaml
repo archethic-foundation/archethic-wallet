@@ -26,7 +26,6 @@ dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
-    - assets/apps/
     - assets/icons/
     - assets/icons/country/
     - assets/icons/currency/
