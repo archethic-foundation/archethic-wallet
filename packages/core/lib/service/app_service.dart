@@ -2,6 +2,8 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:core/model/data/appdb.dart';
+import 'package:core/model/data/hive_db.dart';
 import 'package:flutter/foundation.dart';
 
 // Package imports:
@@ -262,10 +264,26 @@ class AppService {
             i < transaction.data!.ledger!.uco!.transfers!.length;
             i++) {
           if (transaction.data!.ledger!.uco!.transfers![i].to != null) {
-            transactionsInfos.add(TransactionInfos(
-                domain: 'UCOLedger',
-                titleInfo: 'To',
-                valueInfo: transaction.data!.ledger!.uco!.transfers![i].to!));
+            String _recipientContactName = '';
+            try {
+              Contact _contact = await sl.get<DBHelper>().getContactWithAddress(
+                  transaction.data!.ledger!.uco!.transfers![i].to!);
+              _recipientContactName = _contact.name!;
+            } catch (e) {}
+
+            if (_recipientContactName.isEmpty) {
+              transactionsInfos.add(TransactionInfos(
+                  domain: 'UCOLedger',
+                  titleInfo: 'To',
+                  valueInfo: transaction.data!.ledger!.uco!.transfers![i].to!));
+            } else {
+              transactionsInfos.add(TransactionInfos(
+                  domain: 'UCOLedger',
+                  titleInfo: 'To',
+                  valueInfo: _recipientContactName +
+                      '\n' +
+                      transaction.data!.ledger!.uco!.transfers![i].to!));
+            }
           }
           if (transaction.data!.ledger!.uco!.transfers![i].amount != null) {
             transactionsInfos.add(TransactionInfos(

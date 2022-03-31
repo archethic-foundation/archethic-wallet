@@ -1,3 +1,7 @@
+import 'package:core/model/data/appdb.dart';
+import 'package:core/model/data/hive_db.dart';
+import 'package:core/util/get_it_instance.dart';
+
 /// [TransactionInput] represents the inputs from the transaction.
 
 class RecentTransaction {
@@ -46,6 +50,26 @@ class RecentTransaction {
 
   /// Recipients: For non asset transfers, the list of recipients of the transaction (e.g Smart contract interactions)
   String? recipient;
+  Future<String> getRecipientContactName() async {
+    try {
+      String _recipientContactName = '';
+      Contact _contact =
+          await sl.get<DBHelper>().getContactWithAddress(recipient!);
+      _recipientContactName = _contact.name!;
+      return _recipientContactName;
+    } catch (e) {
+      return '';
+    }
+  }
+
+  Future<String> get recipientDisplay async {
+    String _recipientDisplay = await getRecipientContactName();
+    if (_recipientDisplay != '') {
+      return _recipientDisplay;
+    } else {
+      return recipient!;
+    }
+  }
 
   /// Timestamp: Date time when the transaction was generated
   int? timestamp;
