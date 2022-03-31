@@ -393,109 +393,115 @@ class StateContainerState extends State<StateContainer> {
         nbDays = 1;
         break;
     }
-    final CoinsPriceResponse coinsPriceResponse = await sl
-        .get<ApiCoinsService>()
-        .getCoinsChart(curCurrency.getIso4217Code(), nbDays);
-    chartInfos = ChartInfos();
-    chartInfos!.minY = 9999999;
-    chartInfos!.maxY = 0;
-    final CoinsCurrentDataResponse coinsCurrentDataResponse =
-        await sl.get<ApiCoinsService>().getCoinsCurrentData();
-    if (coinsCurrentDataResponse
+    try {
+      final CoinsPriceResponse coinsPriceResponse = await sl
+          .get<ApiCoinsService>()
+          .getCoinsChart(curCurrency.getIso4217Code(), nbDays);
+      chartInfos = ChartInfos();
+      chartInfos!.minY = 9999999;
+      chartInfos!.maxY = 0;
+      final CoinsCurrentDataResponse coinsCurrentDataResponse =
+          await sl.get<ApiCoinsService>().getCoinsCurrentData();
+      if (coinsCurrentDataResponse
+                  .marketData!.priceChangePercentage24HInCurrency![
+              curCurrency.getIso4217Code().toLowerCase()] !=
+          null) {
+        chartInfos!.priceChangePercentage24h = coinsCurrentDataResponse
                 .marketData!.priceChangePercentage24HInCurrency![
-            curCurrency.getIso4217Code().toLowerCase()] !=
-        null) {
-      chartInfos!.priceChangePercentage24h = coinsCurrentDataResponse
-              .marketData!.priceChangePercentage24HInCurrency![
-          curCurrency.getIso4217Code().toLowerCase()];
-    } else {
-      chartInfos!.priceChangePercentage24h =
-          coinsCurrentDataResponse.marketData!.priceChangePercentage24H;
-    }
-    if (coinsCurrentDataResponse
+            curCurrency.getIso4217Code().toLowerCase()];
+      } else {
+        chartInfos!.priceChangePercentage24h =
+            coinsCurrentDataResponse.marketData!.priceChangePercentage24H;
+      }
+      if (coinsCurrentDataResponse
+                  .marketData!.priceChangePercentage14DInCurrency![
+              curCurrency.getIso4217Code().toLowerCase()] !=
+          null) {
+        chartInfos!.priceChangePercentage14d = coinsCurrentDataResponse
                 .marketData!.priceChangePercentage14DInCurrency![
-            curCurrency.getIso4217Code().toLowerCase()] !=
-        null) {
-      chartInfos!.priceChangePercentage14d = coinsCurrentDataResponse
-              .marketData!.priceChangePercentage14DInCurrency![
-          curCurrency.getIso4217Code().toLowerCase()];
-    } else {
-      chartInfos!.priceChangePercentage14d =
-          coinsCurrentDataResponse.marketData!.priceChangePercentage14D;
-    }
-    if (coinsCurrentDataResponse.marketData!.priceChangePercentage1YInCurrency![
-            curCurrency.getIso4217Code().toLowerCase()] !=
-        null) {
-      chartInfos!.priceChangePercentage1y = coinsCurrentDataResponse
-              .marketData!.priceChangePercentage1YInCurrency![
-          curCurrency.getIso4217Code().toLowerCase()];
-    } else {
-      chartInfos!.priceChangePercentage1y =
-          coinsCurrentDataResponse.marketData!.priceChangePercentage1Y;
-    }
-    if (coinsCurrentDataResponse
+            curCurrency.getIso4217Code().toLowerCase()];
+      } else {
+        chartInfos!.priceChangePercentage14d =
+            coinsCurrentDataResponse.marketData!.priceChangePercentage14D;
+      }
+      if (coinsCurrentDataResponse
+                  .marketData!.priceChangePercentage1YInCurrency![
+              curCurrency.getIso4217Code().toLowerCase()] !=
+          null) {
+        chartInfos!.priceChangePercentage1y = coinsCurrentDataResponse
+                .marketData!.priceChangePercentage1YInCurrency![
+            curCurrency.getIso4217Code().toLowerCase()];
+      } else {
+        chartInfos!.priceChangePercentage1y =
+            coinsCurrentDataResponse.marketData!.priceChangePercentage1Y;
+      }
+      if (coinsCurrentDataResponse
+                  .marketData!.priceChangePercentage200DInCurrency![
+              curCurrency.getIso4217Code().toLowerCase()] !=
+          null) {
+        chartInfos!.priceChangePercentage200d = coinsCurrentDataResponse
                 .marketData!.priceChangePercentage200DInCurrency![
-            curCurrency.getIso4217Code().toLowerCase()] !=
-        null) {
-      chartInfos!.priceChangePercentage200d = coinsCurrentDataResponse
-              .marketData!.priceChangePercentage200DInCurrency![
-          curCurrency.getIso4217Code().toLowerCase()];
-    } else {
-      chartInfos!.priceChangePercentage200d =
-          coinsCurrentDataResponse.marketData!.priceChangePercentage200D;
-    }
-    if (coinsCurrentDataResponse
+            curCurrency.getIso4217Code().toLowerCase()];
+      } else {
+        chartInfos!.priceChangePercentage200d =
+            coinsCurrentDataResponse.marketData!.priceChangePercentage200D;
+      }
+      if (coinsCurrentDataResponse
+                  .marketData!.priceChangePercentage30DInCurrency![
+              curCurrency.getIso4217Code().toLowerCase()] !=
+          null) {
+        chartInfos!.priceChangePercentage30d = coinsCurrentDataResponse
                 .marketData!.priceChangePercentage30DInCurrency![
-            curCurrency.getIso4217Code().toLowerCase()] !=
-        null) {
-      chartInfos!.priceChangePercentage30d = coinsCurrentDataResponse
-              .marketData!.priceChangePercentage30DInCurrency![
-          curCurrency.getIso4217Code().toLowerCase()];
-    } else {
-      chartInfos!.priceChangePercentage30d =
-          coinsCurrentDataResponse.marketData!.priceChangePercentage30D;
-    }
-    if (coinsCurrentDataResponse
+            curCurrency.getIso4217Code().toLowerCase()];
+      } else {
+        chartInfos!.priceChangePercentage30d =
+            coinsCurrentDataResponse.marketData!.priceChangePercentage30D;
+      }
+      if (coinsCurrentDataResponse
+                  .marketData!.priceChangePercentage60DInCurrency![
+              curCurrency.getIso4217Code().toLowerCase()] !=
+          null) {
+        chartInfos!.priceChangePercentage60d = coinsCurrentDataResponse
                 .marketData!.priceChangePercentage60DInCurrency![
-            curCurrency.getIso4217Code().toLowerCase()] !=
-        null) {
-      chartInfos!.priceChangePercentage60d = coinsCurrentDataResponse
-              .marketData!.priceChangePercentage60DInCurrency![
-          curCurrency.getIso4217Code().toLowerCase()];
-    } else {
-      chartInfos!.priceChangePercentage60d =
-          coinsCurrentDataResponse.marketData!.priceChangePercentage60D;
-    }
-    if (coinsCurrentDataResponse.marketData!.priceChangePercentage7DInCurrency![
-            curCurrency.getIso4217Code().toLowerCase()] !=
-        null) {
-      chartInfos!.priceChangePercentage7d = coinsCurrentDataResponse
-              .marketData!.priceChangePercentage7DInCurrency![
-          curCurrency.getIso4217Code().toLowerCase()];
-    } else {
-      chartInfos!.priceChangePercentage7d =
-          coinsCurrentDataResponse.marketData!.priceChangePercentage7D;
-    }
-    final List<FlSpot> data = List<FlSpot>.empty(growable: true);
-    for (int i = 0; i < coinsPriceResponse.prices!.length; i = i + 1) {
-      final FlSpot chart = FlSpot(
-          coinsPriceResponse.prices![i][0],
-          double.tryParse(
-              coinsPriceResponse.prices![i][1].toStringAsFixed(5))!);
-      data.add(chart);
-      if (chartInfos!.minY! > coinsPriceResponse.prices![i][1]) {
-        chartInfos!.minY = coinsPriceResponse.prices![i][1];
+            curCurrency.getIso4217Code().toLowerCase()];
+      } else {
+        chartInfos!.priceChangePercentage60d =
+            coinsCurrentDataResponse.marketData!.priceChangePercentage60D;
       }
+      if (coinsCurrentDataResponse
+                  .marketData!.priceChangePercentage7DInCurrency![
+              curCurrency.getIso4217Code().toLowerCase()] !=
+          null) {
+        chartInfos!.priceChangePercentage7d = coinsCurrentDataResponse
+                .marketData!.priceChangePercentage7DInCurrency![
+            curCurrency.getIso4217Code().toLowerCase()];
+      } else {
+        chartInfos!.priceChangePercentage7d =
+            coinsCurrentDataResponse.marketData!.priceChangePercentage7D;
+      }
+      final List<FlSpot> data = List<FlSpot>.empty(growable: true);
+      for (int i = 0; i < coinsPriceResponse.prices!.length; i = i + 1) {
+        final FlSpot chart = FlSpot(
+            coinsPriceResponse.prices![i][0],
+            double.tryParse(
+                coinsPriceResponse.prices![i][1].toStringAsFixed(5))!);
+        data.add(chart);
+        if (chartInfos!.minY! > coinsPriceResponse.prices![i][1]) {
+          chartInfos!.minY = coinsPriceResponse.prices![i][1];
+        }
 
-      if (chartInfos!.maxY! < coinsPriceResponse.prices![i][1]) {
-        chartInfos!.maxY = coinsPriceResponse.prices![i][1];
+        if (chartInfos!.maxY! < coinsPriceResponse.prices![i][1]) {
+          chartInfos!.maxY = coinsPriceResponse.prices![i][1];
+        }
       }
+      chartInfos!.data = data;
+      chartInfos!.minX = coinsPriceResponse.prices![0][0];
+      chartInfos!.maxX =
+          coinsPriceResponse.prices![coinsPriceResponse.prices!.length - 1][0];
+      EventTaxiImpl.singleton().fire(ChartEvent(chartInfos: chartInfos));
+    } catch (e) {
+      EventTaxiImpl.singleton().fire(ChartEvent(chartInfos: ChartInfos()));
     }
-    chartInfos!.data = data;
-    chartInfos!.minX = coinsPriceResponse.prices![0][0];
-    chartInfos!.maxX =
-        coinsPriceResponse.prices![coinsPriceResponse.prices!.length - 1][0];
-    EventTaxiImpl.singleton().fire(ChartEvent(chartInfos: chartInfos));
   }
 
   Future<void> requestUpdateLastAddress(Account account) async {
