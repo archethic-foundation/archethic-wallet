@@ -329,13 +329,23 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       _showSendingAnimation(context);
       final String transactionChainSeed =
           await StateContainer.of(context).getSeed();
+      List<UCOTransfer> _ucoTransferList = widget.ucoTransferList!;
+      for (int i = 0; i < _ucoTransferList.length; i++) {
+        if (_ucoTransferList[i].to!.startsWith('@')) {
+          for (int j = 0; j < widget.contactsRef!.length; j++) {
+            if (_ucoTransferList[i].to == widget.contactsRef![j].name) {
+              _ucoTransferList[i].to = widget.contactsRef![j].address;
+            }
+          }
+        }
+      }
       final TransactionStatus transactionStatus = await sl
           .get<AppService>()
           .sendUCO(
               globalVarOriginPrivateKey,
               transactionChainSeed,
               StateContainer.of(context).selectedAccount.lastAddress!,
-              widget.ucoTransferList!);
+              _ucoTransferList);
       EventTaxiImpl.singleton()
           .fire(TransactionSendEvent(response: transactionStatus.status));
     } catch (e) {

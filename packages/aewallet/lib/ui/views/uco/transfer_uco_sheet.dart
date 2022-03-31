@@ -36,7 +36,7 @@ import 'package:intl/intl.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show UCOTransfer, AddressService;
+    show UCOTransfer, AddressService, isHex;
 
 class TransferUcoSheet extends StatefulWidget {
   const TransferUcoSheet(
@@ -545,8 +545,9 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
           height: 42,
           width: double.infinity - 5,
           child: TextButton(
-            onPressed: () {
+            onPressed: () async {
               _sendAddressController!.text = contact.name!;
+              feeEstimation = await getFee();
               _sendAddressFocusNode!.unfocus();
               setState(() {
                 _isContact = true;
@@ -919,8 +920,29 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
 
   Future<double> getFee({maxSend = false}) async {
     double fee = 0;
-    if (_sendAddressController!.text.isEmpty) {
+
+    final bool isContact = _sendAddressController!.text.startsWith('@');
+    String _recipientAddress = '';
+    if (_sendAddressController!.text.isEmpty ||
+        (!isContact && !isHex(_sendAddressController!.text))) {
       return fee;
+    } else {
+      if (isContact) {
+        try {
+          Contact? contact = await sl
+              .get<DBHelper>()
+              .getContactWithName(_sendAddressController!.text);
+          if (contact.address != null) {
+            _recipientAddress = contact.address!;
+          } else {
+            return fee;
+          }
+        } catch (e) {
+          return fee;
+        }
+      } else {
+        _recipientAddress = _sendAddressController!.text.trim();
+      }
     }
     try {
       final String transactionChainSeed =
@@ -934,7 +956,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                       100000000)
               : BigInt.from(
                   double.tryParse(_sendAmountController!.text)! * 100000000),
-          to: _sendAddressController!.text.trim()));
+          to: _recipientAddress));
       fee = await sl.get<AppService>().getFeesEstimationUCO(
           globalVarOriginPrivateKey,
           transactionChainSeed,
