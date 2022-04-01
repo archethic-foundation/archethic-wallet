@@ -1,6 +1,6 @@
 name: core
 description: AE Core Lib
-version: 0.2.0+200
+version: 0.2.1+201
 publish_to: 'none'
 
 environment:
@@ -35,6 +35,9 @@ dependencies:
 
   # EventTaxi could be used to send events through different layers of the application decoupled from the architecture
   event_taxi: ^1.0.0
+
+  # A Flutter widget that can be expanded or collapsed by clicking on a header or an icon.
+  expandable: ^5.0.1
 
   # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart
   fl_chart: ^0.46.0

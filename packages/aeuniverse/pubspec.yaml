@@ -1,6 +1,6 @@
 name: aeuniverse
 description: AE Universe App
-version: 0.2.0+200
+version: 0.2.1+201
 publish_to: 'none'
 
 environment:
