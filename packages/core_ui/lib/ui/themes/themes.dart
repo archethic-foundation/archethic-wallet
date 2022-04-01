@@ -33,6 +33,9 @@ abstract class BaseTheme {
   Color? backgroundDark;
   Color? backgroundDark00;
 
+  Color? backgroundMainTop;
+  Color? backgroundMainBottom;
+
   Color? backgroundDarkest;
 
   Color? overlay20;

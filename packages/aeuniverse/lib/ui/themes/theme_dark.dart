@@ -80,6 +80,11 @@ class DarkTheme implements BaseTheme {
   Color? backgroundDarkest = blue;
 
   @override
+  Color? backgroundMainTop = black;
+  @override
+  Color? backgroundMainBottom = black;
+
+  @override
   Color? overlay90 = black.withOpacity(0.9);
   @override
   Color? overlay85 = black.withOpacity(0.85);

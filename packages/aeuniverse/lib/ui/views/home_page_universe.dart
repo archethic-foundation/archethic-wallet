@@ -235,8 +235,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: <Color>[
-                      StateContainer.of(context).curTheme.backgroundDark!,
-                      StateContainer.of(context).curTheme.background!
+                      StateContainer.of(context).curTheme.backgroundMainTop!,
+                      StateContainer.of(context).curTheme.backgroundMainBottom!
                     ],
                   ),
                 ),
@@ -383,8 +383,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: <Color>[
-                      StateContainer.of(context).curTheme.backgroundDark!,
-                      StateContainer.of(context).curTheme.background!
+                      StateContainer.of(context).curTheme.backgroundMainTop!,
+                      StateContainer.of(context).curTheme.backgroundMainBottom!
                     ],
                   ),
                 ),

@@ -82,6 +82,11 @@ class LightTheme implements BaseTheme {
   Color? backgroundDarkest = blueDarktest;
 
   @override
+  Color? backgroundMainTop = blueDark;
+  @override
+  Color? backgroundMainBottom = blue;
+
+  @override
   Color? overlay90 = black.withOpacity(0.9);
   @override
   Color? overlay85 = black.withOpacity(0.85);
