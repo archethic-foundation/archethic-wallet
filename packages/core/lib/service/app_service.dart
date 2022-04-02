@@ -329,69 +329,6 @@ class AppService {
         }
       }
     }
-    if (transaction.version != null) {
-      transactionsInfos.add(TransactionInfos(
-          domain: '',
-          titleInfo: 'Version',
-          valueInfo: transaction.version!.toString()));
-    }
-    if (transaction.previousPublicKey != null) {
-      transactionsInfos.add(TransactionInfos(
-          domain: '',
-          titleInfo: 'PreviousPublicKey',
-          valueInfo: transaction.previousPublicKey!));
-    }
-    if (transaction.previousSignature != null) {
-      transactionsInfos.add(TransactionInfos(
-          domain: '',
-          titleInfo: 'PreviousSignature',
-          valueInfo: transaction.previousSignature!));
-    }
-    if (transaction.originSignature != null) {
-      transactionsInfos.add(TransactionInfos(
-          domain: '',
-          titleInfo: 'OriginSignature',
-          valueInfo: transaction.originSignature!));
-    }
-    if (transaction.validationStamp != null) {
-      transactionsInfos.add(TransactionInfos(
-          domain: 'ValidationStamp', titleInfo: '', valueInfo: ''));
-      if (transaction.validationStamp!.timestamp != null) {
-        transactionsInfos.add(TransactionInfos(
-            domain: 'ValidationStamp',
-            titleInfo: 'TimeStamp',
-            valueInfo: dateFormat
-                .add_Hms()
-                .format(DateTime.fromMillisecondsSinceEpoch(
-                        transaction.validationStamp!.timestamp! * 1000)
-                    .toLocal())
-                .toString()));
-      }
-      if (transaction.validationStamp!.proofOfWork != null) {
-        transactionsInfos.add(TransactionInfos(
-            domain: 'ValidationStamp',
-            titleInfo: 'ProofOfWork',
-            valueInfo: transaction.validationStamp!.proofOfWork!));
-      }
-      if (transaction.validationStamp!.proofOfIntegrity != null) {
-        transactionsInfos.add(TransactionInfos(
-            domain: 'ValidationStamp',
-            titleInfo: 'ProofOfIntegrity',
-            valueInfo: transaction.validationStamp!.proofOfIntegrity!));
-      }
-    }
-    if (transaction.crossValidationStamps != null) {
-      transactionsInfos.add(TransactionInfos(
-          domain: 'CrossValidationStamps', titleInfo: '', valueInfo: ''));
-      for (int i = 0; i < transaction.crossValidationStamps!.length; i++) {
-        if (transaction.crossValidationStamps![i].signature != null) {
-          transactionsInfos.add(TransactionInfos(
-              domain: 'CrossValidationStamps',
-              titleInfo: 'Signature',
-              valueInfo: transaction.crossValidationStamps![i].signature!));
-        }
-      }
-    }
     return transactionsInfos;
   }
 

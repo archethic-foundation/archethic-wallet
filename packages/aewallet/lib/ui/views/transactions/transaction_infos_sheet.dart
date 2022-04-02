@@ -1,4 +1,7 @@
 // Flutter imports:
+import 'package:aeuniverse/ui/util/ui_util.dart';
+import 'package:aeuniverse/ui/widgets/components/buttons.dart';
+import 'package:core_ui/ui/util/dimens.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -121,10 +124,36 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                       ],
                                     ),
                                   ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      AppButton.buildAppButton(
+                                          const Key('viewExplorer'),
+                                          context,
+                                          AppButtonType.primary,
+                                          AppLocalization.of(context)!
+                                              .viewExplorer,
+                                          Dimens.buttonTopDimens,
+                                          icon: const Icon(Icons.more_horiz),
+                                          onPressed: () async {
+                                        UIUtil.showWebview(
+                                            context,
+                                            StateContainer.of(context)
+                                                    .curNetwork
+                                                    .getLink() +
+                                                '/explorer/transaction/' +
+                                                widget.txAddress,
+                                            '');
+                                      }),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),
                           ),
+
                           //List Top Gradient End
                           Align(
                             alignment: Alignment.topCenter,
