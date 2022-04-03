@@ -14,7 +14,6 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/util/get_it_instance.dart';
-import 'package:core_ui/util/case_converter.dart';
 import 'package:intl/intl.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
