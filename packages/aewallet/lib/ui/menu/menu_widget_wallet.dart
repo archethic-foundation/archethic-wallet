@@ -58,8 +58,6 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                       Sheets.showAppHeightNineSheet(
                           context: context,
                           widget: TransferUcoSheet(
-                              contactsRef:
-                                  StateContainer.of(context).contactsRef,
                               title: AppLocalization.of(context)!.transferUCO,
                               localCurrency:
                                   StateContainer.of(context).curCurrency));

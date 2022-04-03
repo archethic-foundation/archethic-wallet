@@ -1319,5 +1319,11 @@
 	  "type": "text",
 	  "placeholders_order": [],
 	  "placeholders": {}
+  },
+  "total": "Total",
+	"@total": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
   }
 }

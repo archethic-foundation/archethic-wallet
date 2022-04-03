@@ -4,6 +4,8 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aewallet/model/nft_transfer_wallet.dart';
+import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -37,14 +39,13 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show UCOTransfer, NFTTransfer, TransactionStatus;
+    show TransactionStatus;
 
 class TransferConfirmSheet extends StatefulWidget {
   const TransferConfirmSheet(
       {Key? key,
       required this.lastAddress,
       required this.typeTransfer,
-      this.contactsRef,
       required this.feeEstimation,
       this.title,
       this.ucoTransferList,
@@ -54,10 +55,9 @@ class TransferConfirmSheet extends StatefulWidget {
   final String? lastAddress;
   final String? typeTransfer;
   final String? title;
-  final List<Contact>? contactsRef;
   final double? feeEstimation;
-  final List<UCOTransfer>? ucoTransferList;
-  final List<NFTTransfer>? nftTransferList;
+  final List<UCOTransferWallet>? ucoTransferList;
+  final List<NFTTransferWallet>? nftTransferList;
 
   @override
   _TransferConfirmSheetState createState() => _TransferConfirmSheetState();
@@ -215,39 +215,25 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                     ),
                   ),
                   Text(toto),
-                  Text(
-                      AppLocalization.of(context)!.estimatedFees +
-                          ': ' +
-                          widget.feeEstimation.toString() +
-                          ' UCO',
-                      style: AppStyles.textStyleSize14W100Primary(context)),
                   const SizedBox(
                     height: 20,
                   ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: SizedBox(
-                        child: widget.typeTransfer == 'UCO'
-                            ? UcoTransferListWidget(
-                                listUcoTransfer: widget.ucoTransferList,
-                                contacts: widget.contactsRef,
-                                displayContextMenu: false,
+                  SizedBox(
+                    child: widget.typeTransfer == 'UCO'
+                        ? UcoTransferListWidget(
+                            listUcoTransfer: widget.ucoTransferList,
+                            feeEstimation: widget.feeEstimation,
+                          )
+                        : widget.typeTransfer == 'NFT'
+                            ? NftTransferListWidget(
+                                listNftTransfer: widget.nftTransferList,
                               )
-                            : widget.typeTransfer == 'NFT'
-                                ? NftTransferListWidget(
-                                    listNftTransfer: widget.nftTransferList,
-                                    contacts: widget.contactsRef,
-                                    displayContextMenu: false,
-                                  )
-                                : const SizedBox(),
-                      ),
-                    ),
+                            : const SizedBox(),
                   ),
                 ],
               ),
             ),
 
-            //A container for CONFIRM and CANCEL buttons
             Container(
               margin: const EdgeInsets.only(top: 10.0, bottom: 0),
               child: Column(
@@ -329,16 +315,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       _showSendingAnimation(context);
       final String transactionChainSeed =
           await StateContainer.of(context).getSeed();
-      List<UCOTransfer> _ucoTransferList = widget.ucoTransferList!;
-      for (int i = 0; i < _ucoTransferList.length; i++) {
-        if (_ucoTransferList[i].to!.startsWith('@')) {
-          for (int j = 0; j < widget.contactsRef!.length; j++) {
-            if (_ucoTransferList[i].to == widget.contactsRef![j].name) {
-              _ucoTransferList[i].to = widget.contactsRef![j].address;
-            }
-          }
-        }
-      }
+      List<UCOTransferWallet> _ucoTransferList = widget.ucoTransferList!;
       final TransactionStatus transactionStatus = await sl
           .get<AppService>()
           .sendUCO(

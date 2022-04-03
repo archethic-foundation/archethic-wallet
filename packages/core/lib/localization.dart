@@ -341,6 +341,10 @@ class AppLocalization {
     return Intl.message('Estimated fees', name: 'estimatedFees');
   }
 
+  String get total {
+    return Intl.message('Total', name: 'total');
+  }
+
   String get estimatedFeesNote {
     return Intl.message(
         'Note: The fees will be estimated when the address and the amount are specified.',

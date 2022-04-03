@@ -5,6 +5,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +37,7 @@ import 'package:intl/intl.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show UCOTransfer, AddressService, isHex;
+    show AddressService, isHex;
 
 class TransferUcoSheet extends StatefulWidget {
   const TransferUcoSheet(
@@ -46,11 +47,9 @@ class TransferUcoSheet extends StatefulWidget {
       this.quickSendAmount,
       this.title,
       this.actionButtonTitle,
-      this.contactsRef,
       Key? key})
       : super(key: key);
 
-  final List<Contact>? contactsRef;
   final AvailableCurrency? localCurrency;
   final Contact? contact;
   final String? address;
@@ -90,7 +89,8 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
   bool validRequest = true;
   double feeEstimation = 0.0;
 
-  List<UCOTransfer> ucoTransferList = List<UCOTransfer>.empty(growable: true);
+  List<UCOTransferWallet> ucoTransferList =
+      List<UCOTransferWallet>.empty(growable: true);
 
   @override
   void initState() {
@@ -457,31 +457,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                               AppLocalization.of(context)!.send,
                           Dimens.buttonTopDimens, onPressed: () async {
                         validRequest = await _validateRequest();
-                        if (_sendAddressController!.text.startsWith('@') &&
-                            validRequest) {
-                          try {
-                            await sl.get<DBHelper>().getContactWithName(
-                                _sendAddressController!.text);
-
-                            Sheets.showAppHeightNineSheet(
-                                context: context,
-                                widget: TransferConfirmSheet(
-                                  lastAddress: StateContainer.of(context)
-                                      .selectedAccount
-                                      .lastAddress!,
-                                  ucoTransferList: ucoTransferList,
-                                  contactsRef: widget.contactsRef,
-                                  title: widget.title,
-                                  typeTransfer: 'UCO',
-                                  feeEstimation: feeEstimation,
-                                ));
-                          } on Exception {
-                            setState(() {
-                              _addressValidationText =
-                                  AppLocalization.of(context)!.contactInvalid;
-                            });
-                          }
-                        } else if (validRequest) {
+                        if (validRequest) {
                           Sheets.showAppHeightNineSheet(
                               context: context,
                               widget: TransferConfirmSheet(
@@ -489,7 +465,6 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                     .selectedAccount
                                     .lastAddress!,
                                 ucoTransferList: ucoTransferList,
-                                contactsRef: widget.contactsRef,
                                 title: widget.title,
                                 typeTransfer: 'UCO',
                                 feeEstimation: feeEstimation,
@@ -574,7 +549,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
   /// @returns true if valid, false otherwise
   Future<bool> _validateRequest() async {
     bool isValid = true;
-    UCOTransfer ucoTransfer = UCOTransfer();
+    UCOTransferWallet ucoTransfer = UCOTransferWallet();
     setState(() {
       _sendAmountFocusNode!.unfocus();
       _sendAddressFocusNode!.unfocus();
@@ -614,6 +589,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     }
     // Validate address
     final bool isContact = _sendAddressController!.text.startsWith('@');
+    Contact? contact;
     if (_sendAddressController!.text.trim().isEmpty) {
       isValid = false;
       setState(() {
@@ -627,30 +603,55 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
         _qrCodeButtonVisible = true;
       });
     } else if (!isContact) {
+      try {
+        contact = await sl
+            .get<DBHelper>()
+            .getContactWithAddress(_sendAddressController!.text);
+        // ignore: empty_catches
+      } catch (e) {}
+
       setState(() {
         _addressValidationText = '';
         _qrCodeButtonVisible = false;
       });
       _sendAddressFocusNode!.unfocus();
-    }
-
-    //
-    String lastAddressRecipient = await sl
-        .get<AddressService>()
-        .lastAddressFromAddress(_sendAddressController!.text.trim());
-    if (lastAddressRecipient ==
-        StateContainer.of(context).selectedAccount.lastAddress!) {
-      isValid = false;
-      setState(() {
-        _addressValidationText = AppLocalization.of(context)!.sendToMeError;
-        _qrCodeButtonVisible = true;
-      });
+    } else {
+      // Get contact info
+      try {
+        contact = await sl
+            .get<DBHelper>()
+            .getContactWithName(_sendAddressController!.text);
+      } catch (e) {
+        isValid = false;
+        setState(() {
+          _addressValidationText = AppLocalization.of(context)!.contactInvalid;
+          _qrCodeButtonVisible = true;
+        });
+      }
     }
 
     if (isValid) {
       ucoTransferList.clear();
-      ucoTransfer.to = _sendAddressController!.text.trim();
-      ucoTransferList.add(ucoTransfer);
+      if (contact != null) {
+        ucoTransfer.toContactName = contact.name!;
+        ucoTransfer.to = contact.address!;
+      } else {
+        ucoTransfer.to = _sendAddressController!.text.trim();
+      }
+      //
+      String lastAddressRecipient = await sl
+          .get<AddressService>()
+          .lastAddressFromAddress(ucoTransfer.to!);
+      if (lastAddressRecipient ==
+          StateContainer.of(context).selectedAccount.lastAddress!) {
+        isValid = false;
+        setState(() {
+          _addressValidationText = AppLocalization.of(context)!.sendToMeError;
+          _qrCodeButtonVisible = true;
+        });
+      } else {
+        ucoTransferList.add(ucoTransfer);
+      }
     }
     return isValid;
   }
@@ -947,9 +948,9 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     try {
       final String transactionChainSeed =
           await StateContainer.of(context).getSeed();
-      List<UCOTransfer> ucoTransferListForFee =
-          List<UCOTransfer>.empty(growable: true);
-      ucoTransferListForFee.add(UCOTransfer(
+      List<UCOTransferWallet> ucoTransferListForFee =
+          List<UCOTransferWallet>.empty(growable: true);
+      ucoTransferListForFee.add(UCOTransferWallet(
           amount: maxSend
               ? BigInt.from(
                   StateContainer.of(context).wallet!.accountBalance.uco! *

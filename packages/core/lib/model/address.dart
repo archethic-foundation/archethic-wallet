@@ -57,6 +57,19 @@ class Address {
     }
   }
 
+  String getShortString4() {
+    if (_address == null) {
+      return '';
+    }
+    if (_address!.length < 21) {
+      return _address!;
+    } else {
+      return _address!.substring(0, 11) +
+          '...' +
+          _address!.substring(_address!.length - 2);
+    }
+  }
+
   bool isValid() {
     return addressFormatControl(_address);
   }

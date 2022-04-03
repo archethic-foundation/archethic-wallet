@@ -250,8 +250,6 @@ class ContactDetailsSheet {
                                 Sheets.showAppHeightNineSheet(
                                     context: context,
                                     widget: TransferUcoSheet(
-                                        contactsRef: StateContainer.of(context)
-                                            .contactsRef,
                                         localCurrency:
                                             StateContainer.of(context)
                                                 .curCurrency,

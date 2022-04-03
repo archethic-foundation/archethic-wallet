@@ -1,33 +1,25 @@
 // ignore_for_file: must_be_immutable
 
 // Flutter imports:
+import 'package:aewallet/model/nft_transfer_wallet.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/widgets/components/context_menu.dart';
-import 'package:aeuniverse/ui/widgets/components/context_menu_item.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show NFTTransfer;
-import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
-import 'package:core/model/data/hive_db.dart';
 
 class NftTransferListWidget extends StatefulWidget {
-  NftTransferListWidget(
-      {Key? key,
-      this.listNftTransfer,
-      this.onGet,
-      this.onDelete,
-      this.contacts,
-      @required this.displayContextMenu})
-      : super(key: key);
+  NftTransferListWidget({
+    Key? key,
+    this.listNftTransfer,
+    this.onGet,
+    this.onDelete,
+  }) : super(key: key);
 
-  List<NFTTransfer>? listNftTransfer;
-  final List<Contact>? contacts;
-  final Function(NFTTransfer)? onGet;
+  List<NFTTransferWallet>? listNftTransfer;
+  final Function(NFTTransferWallet)? onGet;
   final Function()? onDelete;
-  final bool? displayContextMenu;
 
   @override
   _NftTransferListWidgetState createState() => _NftTransferListWidgetState();
@@ -36,15 +28,15 @@ class NftTransferListWidget extends StatefulWidget {
 class _NftTransferListWidgetState extends State<NftTransferListWidget> {
   @override
   Widget build(BuildContext context) {
-    widget.listNftTransfer!
-        .sort((NFTTransfer a, NFTTransfer b) => a.to!.compareTo(b.to!));
+    widget.listNftTransfer!.sort(
+        (NFTTransferWallet a, NFTTransferWallet b) => a.to!.compareTo(b.to!));
     return Stack(
       children: <Widget>[
         SizedBox(
           child: Padding(
             padding: const EdgeInsets.only(top: 0.0),
             child: Container(
-              height: widget.listNftTransfer!.length * 50,
+              height: widget.listNftTransfer!.length * 100,
               padding: const EdgeInsets.only(left: 3.5, right: 3.5),
               width: MediaQuery.of(context).size.width * 0.9,
               decoration: BoxDecoration(
@@ -65,74 +57,10 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                 padding:
                     const EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
                 child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
                   itemCount: widget.listNftTransfer!.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return widget.displayContextMenu == true
-                        ? ContextMenu(
-                            menuWidth: MediaQuery.of(context).size.width * 0.50,
-                            blurSize: 5.0,
-                            menuItemExtent: 45,
-                            menuBoxDecoration: const BoxDecoration(
-                                color: Colors.grey,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15.0))),
-                            duration: const Duration(milliseconds: 100),
-                            animateMenuItems: true,
-                            blurBackgroundColor: Colors.black54,
-                            openWithTap:
-                                false, // Open Focused-Menu on Tap rather than Long Press
-                            menuOffset:
-                                10.0, // Offset value to show menuItem from the selected item
-                            bottomOffsetHeight: 200.0,
-                            menuItems: <ContextMenuItem>[
-                              ContextMenuItem(
-                                  title: Text(
-                                      AppLocalization.of(context)!.getOption,
-                                      style: AppStyles
-                                          .textStyleSize14W700ContextMenuPrimary(
-                                              context)),
-                                  trailingIcon: Icon(Icons.get_app,
-                                      color: StateContainer.of(context)
-                                          .curTheme
-                                          .contextMenuText),
-                                  onPressed: () {
-                                    setState(() {
-                                      final NFTTransfer _nftTransfer =
-                                          NFTTransfer(
-                                              to: widget
-                                                  .listNftTransfer![index].to,
-                                              amount: widget
-                                                  .listNftTransfer![index]
-                                                  .amount);
-                                      widget.onGet!(_nftTransfer);
-                                    });
-                                  }),
-                              ContextMenuItem(
-                                  title: Text(
-                                    AppLocalization.of(context)!.deleteOption,
-                                    style: AppStyles
-                                        .textStyleSize14W700ContextMenuTextRed(
-                                            context),
-                                  ),
-                                  trailingIcon: Icon(
-                                    Icons.delete,
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .contextMenuTextRed,
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      widget.listNftTransfer!.removeAt(index);
-                                      widget.onDelete!();
-                                    });
-                                  }),
-                            ],
-                            onPressed: () {},
-                            child: displayNftDetail(
-                                context, widget.listNftTransfer![index]))
-                        : displayNftDetail(
-                            context, widget.listNftTransfer![index]);
+                    return displayNftDetail(
+                        context, widget.listNftTransfer![index]);
                   },
                 ),
               ),
@@ -143,15 +71,7 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
     );
   }
 
-  Widget displayNftDetail(BuildContext context, NFTTransfer nftTransfer) {
-    String displayName = Address(nftTransfer.to!).getShortString3();
-
-    for (Contact contact in widget.contacts!) {
-      if (contact.address == nftTransfer.to!) {
-        displayName = contact.name!;
-      }
-    }
-
+  Widget displayNftDetail(BuildContext context, NFTTransferWallet nftTransfer) {
     return Column(
       children: <Widget>[
         Row(
@@ -168,7 +88,12 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                             ? 'NFT 1....'
                             : nftTransfer.nft!,
                         style: AppStyles.textStyleSize14W100Primary(context)),
-                    Text(Address(displayName).getShortString3(),
+                    Text(
+                        nftTransfer.toContactName == null
+                            ? Address(nftTransfer.to!).getShortString3()
+                            : nftTransfer.toContactName! +
+                                '\n' +
+                                Address(nftTransfer.to!).getShortString3(),
                         style: AppStyles.textStyleSize10W100Primary60(context))
                   ],
                 ),
