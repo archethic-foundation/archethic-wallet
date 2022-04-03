@@ -465,8 +465,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                               .curCurrency
                               .getDisplayName(context) ==
                           AvailableCurrency(value).getDisplayName(context)
-                      ? AppStyles.textStyleSize16W600ChoiceOption(context)
-                      : AppStyles.textStyleSize16W600Primary(context)),
+                      ? AppStyles.textStyleSize14W600ChoiceOption(context)
+                      : AppStyles.textStyleSize14W600Primary(context)),
               if (AvailableCurrency(value).getIso4217Code() == 'EUR' ||
                   AvailableCurrency(value).getIso4217Code() == 'USD')
                 const SizedBox(
@@ -1071,7 +1071,13 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     AppSettings.buildSettingsListItemWithDefaultValueWithInfos(
                         context,
                         AppLocalization.of(context)!.changeCurrencyHeader,
-                        AppLocalization.of(context)!.changeCurrencyDesc,
+                        AppLocalization.of(context)!
+                            .changeCurrencyDesc
+                            .replaceAll(
+                                '%1',
+                                StateContainer.of(context)
+                                    .curNetwork
+                                    .getNetworkCryptoCurrencyLabel()),
                         StateContainer.of(context).curCurrency,
                         'packages/aewallet/assets/icons/money-currency.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,

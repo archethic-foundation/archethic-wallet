@@ -15,7 +15,7 @@ ARCHEthic Wallet have features that are implemented:
 - Use of 24 Words Mnemonics.
 - Support for Multiple Languages
 - Support for Multiple Currencies (Only views not as in multiple cryptocurrencies)
-- Support for transactions (Sending and Receiving UCO Tokens)
+- Support for transactions (Sending and Receiving Tokens)
 - Upcoming Support for NFTs and Many More
 
 ![Application Initial Screen](assets/screenshots/AppInit.png?v=20220322)

@@ -476,8 +476,8 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                               .curCurrency
                               .getDisplayName(context) ==
                           AvailableCurrency(value).getDisplayName(context)
-                      ? AppStyles.textStyleSize16W600ChoiceOption(context)
-                      : AppStyles.textStyleSize16W600Primary(context)),
+                      ? AppStyles.textStyleSize14W600ChoiceOption(context)
+                      : AppStyles.textStyleSize14W600Primary(context)),
               if (AvailableCurrency(value).getIso4217Code() == 'EUR' ||
                   AvailableCurrency(value).getIso4217Code() == 'USD')
                 const SizedBox(
@@ -545,7 +545,7 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                             ),
                             const SizedBox(width: 5),
                             Expanded(
-                              child: Text(
+                              child: AutoSizeText(
                                 AppLocalization.of(context)!.currencyOracleInfo,
                                 style: AppStyles.textStyleSize12W100Primary(
                                     context),
@@ -1053,7 +1053,13 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                     AppSettings.buildSettingsListItemWithDefaultValueWithInfos(
                         context,
                         AppLocalization.of(context)!.changeCurrencyHeader,
-                        AppLocalization.of(context)!.changeCurrencyDesc,
+                        AppLocalization.of(context)!
+                            .changeCurrencyDesc
+                            .replaceAll(
+                                '%1',
+                                StateContainer.of(context)
+                                    .curNetwork
+                                    .getNetworkCryptoCurrencyLabel()),
                         StateContainer.of(context).curCurrency,
                         'packages/aeuniverse/assets/icons/money-currency.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,

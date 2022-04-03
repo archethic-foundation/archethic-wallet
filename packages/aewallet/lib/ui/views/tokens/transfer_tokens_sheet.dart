@@ -19,7 +19,7 @@ import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aeuniverse/util/user_data_util.dart';
-import 'package:aewallet/ui/views/uco/transfer_confirm_sheet.dart';
+import 'package:aewallet/ui/views/tokens/transfer_confirm_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
@@ -39,8 +39,8 @@ import 'package:intl/intl.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show AddressService, isHex;
 
-class TransferUcoSheet extends StatefulWidget {
-  const TransferUcoSheet(
+class TransferTokensSheet extends StatefulWidget {
+  const TransferTokensSheet(
       {@required this.localCurrency,
       this.contact,
       this.address,
@@ -58,12 +58,12 @@ class TransferUcoSheet extends StatefulWidget {
   final String? actionButtonTitle;
 
   @override
-  _TransferUcoSheetState createState() => _TransferUcoSheetState();
+  _TransferTokensSheetState createState() => _TransferTokensSheetState();
 }
 
 enum AddressStyle { text60, text90, primary }
 
-class _TransferUcoSheetState extends State<TransferUcoSheet> {
+class _TransferTokensSheetState extends State<TransferTokensSheet> {
   FocusNode? _sendAddressFocusNode;
   TextEditingController? _sendAddressController;
   FocusNode? _sendAmountFocusNode;
@@ -312,12 +312,16 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                             TextSpan(
                                                 text: StateContainer.of(context)
                                                     .wallet!
-                                                    .getAccountBalanceUCODisplay(),
+                                                    .getAccountBalanceDisplay(),
                                                 style: AppStyles
                                                     .textStyleSize14W700Primary(
                                                         context)),
                                             TextSpan(
-                                                text: ' UCO)',
+                                                text: ' ' +
+                                                    StateContainer.of(context)
+                                                        .curNetwork
+                                                        .getNetworkCryptoCurrencyLabel() +
+                                                    ')',
                                                 style: AppStyles
                                                     .textStyleSize14W100Primary(
                                                         context)),
@@ -420,7 +424,10 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                                       .estimatedFees +
                                                   ': ' +
                                                   feeEstimation.toString() +
-                                                  ' UCO',
+                                                  ' ' +
+                                                  StateContainer.of(context)
+                                                      .curNetwork
+                                                      .getNetworkCryptoCurrencyLabel(),
                                               style: AppStyles
                                                   .textStyleSize14W100Primary(
                                                       context),
@@ -466,7 +473,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
                                     .lastAddress!,
                                 ucoTransferList: ucoTransferList,
                                 title: widget.title,
-                                typeTransfer: 'UCO',
+                                typeTransfer: 'TOKEN',
                                 feeEstimation: feeEstimation,
                               ));
                         }
@@ -492,7 +499,7 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
     } else {
       String balance = StateContainer.of(context)
           .wallet!
-          .getAccountBalanceUCODisplay()
+          .getAccountBalanceDisplay()
           .replaceAll(r',', '');
 
       double? _balanceDouble;
@@ -580,8 +587,13 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
       } else if (sendAmount + feeEstimation > balanceRaw) {
         isValid = false;
         setState(() {
-          _amountValidationText =
-              AppLocalization.of(context)!.insufficientBalance;
+          _amountValidationText = AppLocalization.of(context)!
+              .insufficientBalance
+              .replaceAll(
+                  '%1',
+                  StateContainer.of(context)
+                      .curNetwork
+                      .getNetworkCryptoCurrencyLabel());
         });
       } else {
         ucoTransfer.amount = BigInt.from(sendAmount * 100000000);
@@ -646,7 +658,13 @@ class _TransferUcoSheetState extends State<TransferUcoSheet> {
           StateContainer.of(context).selectedAccount.lastAddress!) {
         isValid = false;
         setState(() {
-          _addressValidationText = AppLocalization.of(context)!.sendToMeError;
+          _addressValidationText = AppLocalization.of(context)!
+              .sendToMeError
+              .replaceAll(
+                  '%1',
+                  StateContainer.of(context)
+                      .curNetwork
+                      .getNetworkCryptoCurrencyLabel());
           _qrCodeButtonVisible = true;
         });
       } else {

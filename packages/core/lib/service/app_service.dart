@@ -220,7 +220,7 @@ class AppService {
   }
 
   Future<List<TransactionInfos>> getTransactionAllInfos(
-      String address, DateFormat dateFormat) async {
+      String address, DateFormat dateFormat, String cryptoCurrency) async {
     // ignore: prefer_final_locals
     List<TransactionInfos> transactionsInfos =
         List<TransactionInfos>.empty(growable: true);
@@ -292,7 +292,8 @@ class AppService {
                     (transaction.data!.ledger!.uco!.transfers![i].amount! /
                                 BigInt.from(100000000))
                             .toString() +
-                        ' UCO'));
+                        ' ' +
+                        cryptoCurrency));
           }
         }
       }

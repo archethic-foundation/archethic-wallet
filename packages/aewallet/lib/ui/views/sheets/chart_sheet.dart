@@ -149,7 +149,11 @@ class _ChartSheetState extends State<ChartSheet> {
                                       .accountBalance
                                       .uco ==
                                   0
-                              ? '1 UCO = ' +
+                              ? '1 ' +
+                                  StateContainer.of(context)
+                                      .curNetwork
+                                      .getNetworkCryptoCurrencyLabel() +
+                                  ' = ' +
                                   StateContainer.of(context)
                                       .localWallet!
                                       .getLocalPrice(
@@ -157,7 +161,11 @@ class _ChartSheetState extends State<ChartSheet> {
                                               .curCurrency,
                                           locale: StateContainer.of(context)
                                               .currencyLocale!)
-                              : '1 UCO = ' +
+                              : '1 ' +
+                                  StateContainer.of(context)
+                                      .curNetwork
+                                      .getNetworkCryptoCurrencyLabel() +
+                                  ' = ' +
                                   StateContainer.of(context)
                                       .wallet!
                                       .getLocalPrice(
@@ -222,7 +230,11 @@ class _ChartSheetState extends State<ChartSheet> {
                                       .accountBalance
                                       .uco ==
                                   0
-                              ? '1 UCO = ' +
+                              ? '1 ' +
+                                  StateContainer.of(context)
+                                      .curNetwork
+                                      .getNetworkCryptoCurrencyLabel() +
+                                  ' = ' +
                                   StateContainer.of(context)
                                       .localWallet!
                                       .getLocalPrice(
@@ -230,7 +242,11 @@ class _ChartSheetState extends State<ChartSheet> {
                                               .curCurrency,
                                           locale: StateContainer.of(context)
                                               .currencyLocale!)
-                              : '1 UCO = ' +
+                              : '1 ' +
+                                  StateContainer.of(context)
+                                      .curNetwork
+                                      .getNetworkCryptoCurrencyLabel() +
+                                  ' = ' +
                                   StateContainer.of(context)
                                       .wallet!
                                       .getLocalPrice(

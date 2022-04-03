@@ -173,11 +173,15 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                           TextSpan(
                               text: StateContainer.of(context)
                                   .wallet!
-                                  .getAccountBalanceUCODisplay(),
+                                  .getAccountBalanceDisplay(),
                               style: AppStyles.textStyleSize14W700Primary(
                                   context)),
                           TextSpan(
-                              text: ' UCO)',
+                              text: ' ' +
+                                  StateContainer.of(context)
+                                      .curNetwork
+                                      .getNetworkCryptoCurrencyLabel() +
+                                  ')',
                               style: AppStyles.textStyleSize14W100Primary(
                                   context)),
                         ],
@@ -188,7 +192,10 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                       AppLocalization.of(context)!.estimatedFees +
                           ': ' +
                           widget.feeEstimation.toString() +
-                          ' UCO',
+                          ' ' +
+                          StateContainer.of(context)
+                              .curNetwork
+                              .getNetworkCryptoCurrencyLabel(),
                       style: AppStyles.textStyleSize14W100Primary(context)),
                   const SizedBox(height: 30),
                   Padding(

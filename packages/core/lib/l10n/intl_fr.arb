@@ -54,8 +54,8 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"transferUCO": "Envoyer des UCO",
-	"@transferUCO": {
+	"transferTokens": "Envoyer des %1",
+	"@transferTokens": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
@@ -288,13 +288,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"minimumSend": "Le montant minimum d'envoi est de %1 UCO",
-	"@minimumSend": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
-	"insufficientBalance": "Vous ne possédez pas assez de UCO.",
+	"insufficientBalance": "Vous ne possédez pas assez de %1.",
 	"@insufficientBalance": {
 		"type": "text",
 		"placeholders_order": [],
@@ -366,7 +360,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"changeCurrencyDesc": "Sélectionner la monnaie fiduciaire que vous souhaitez afficher aux côtés de l'UCO",
+	"changeCurrencyDesc": "Sélectionner la monnaie fiduciaire que vous souhaitez afficher aux côtés de %1",
 	"@changeCurrencyDesc": {
 		"type": "text",
 		"placeholders_order": [],

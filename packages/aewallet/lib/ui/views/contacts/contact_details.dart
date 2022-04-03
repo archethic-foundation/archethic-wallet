@@ -11,7 +11,7 @@ import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/bus/contact_modified_event.dart';
 import 'package:aewallet/bus/contact_removed_event.dart';
-import 'package:aewallet/ui/views/uco/transfer_uco_sheet.dart';
+import 'package:aewallet/ui/views/tokens/transfer_tokens_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/data/appdb.dart';
@@ -249,7 +249,7 @@ class ContactDetailsSheet {
                                 Navigator.of(context).pop();
                                 Sheets.showAppHeightNineSheet(
                                     context: context,
-                                    widget: TransferUcoSheet(
+                                    widget: TransferTokensSheet(
                                         localCurrency:
                                             StateContainer.of(context)
                                                 .curCurrency,

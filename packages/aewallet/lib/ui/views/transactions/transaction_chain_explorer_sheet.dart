@@ -277,7 +277,12 @@ TimelineTile _buildTimelineTile(
           ),
           const SizedBox(height: 4),
           Text(
-            'UTXO: ' + balance! + ' UCO',
+            'UTXO: ' +
+                balance! +
+                ' ' +
+                StateContainer.of(context)
+                    .curNetwork
+                    .getNetworkCryptoCurrencyLabel(),
           ),
           const SizedBox(height: 4),
         ],

@@ -261,7 +261,10 @@ class _TxListWidgetState extends State<TxListWidget> {
                                 Text(
                                     AppLocalization.of(context)!.txListFees +
                                         transaction.fee.toString() +
-                                        ' UCO',
+                                        ' ' +
+                                        StateContainer.of(context)
+                                            .curNetwork
+                                            .getNetworkCryptoCurrencyLabel(),
                                     style: AppStyles.textStyleSize12W400Primary(
                                         context)),
                               ]),

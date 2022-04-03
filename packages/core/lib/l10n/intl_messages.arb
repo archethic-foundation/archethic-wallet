@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-04-03T13:30:11.809735",
+  "@@last_modified": "2022-04-03T16:05:47.095418",
   "welcomeText": "Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -54,8 +54,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transferUCO": "Send UCO",
-  "@transferUCO": {
+  "transferTokens": "Send %1",
+  "@transferTokens": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -372,7 +372,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "sendToMeError": "You can't send UCO to your own wallet.",
+  "sendToMeError": "You can't send %1 to your own wallet.",
   "@sendToMeError": {
     "type": "text",
     "placeholders_order": [],
@@ -384,13 +384,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "minimumSend": "Minimum send amount is %1 UCO",
-  "@minimumSend": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "insufficientBalance": "You don't have enough UCO",
+  "insufficientBalance": "You don't have enough %1",
   "@insufficientBalance": {
     "type": "text",
     "placeholders_order": [],
@@ -504,7 +498,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "changeCurrencyDesc": "Select the fiat currency you would like to display alongside UCO",
+  "changeCurrencyDesc": "Select the fiat currency you would like to display alongside %1",
   "@changeCurrencyDesc": {
     "type": "text",
     "placeholders_order": [],

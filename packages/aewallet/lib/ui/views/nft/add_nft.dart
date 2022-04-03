@@ -143,10 +143,14 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                   TextSpan(
                       text: StateContainer.of(context)
                           .wallet!
-                          .getAccountBalanceUCODisplay(),
+                          .getAccountBalanceDisplay(),
                       style: AppStyles.textStyleSize14W700Primary(context)),
                   TextSpan(
-                      text: ' UCO)',
+                      text: ' ' +
+                          StateContainer.of(context)
+                              .curNetwork
+                              .getNetworkCryptoCurrencyLabel() +
+                          ')',
                       style: AppStyles.textStyleSize14W100Primary(context)),
                 ],
               ),
@@ -157,7 +161,10 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                   AppLocalization.of(context)!.estimatedFees +
                       ': ' +
                       feeEstimation.toString() +
-                      ' UCO',
+                      ' ' +
+                      StateContainer.of(context)
+                          .curNetwork
+                          .getNetworkCryptoCurrencyLabel(),
                   style: AppStyles.textStyleSize14W100Primary(context))
               : Text(AppLocalization.of(context)!.estimatedFeesAddNFTNote,
                   style: AppStyles.textStyleSize14W100Primary(context)),

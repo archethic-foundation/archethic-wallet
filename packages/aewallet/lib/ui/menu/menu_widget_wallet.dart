@@ -19,7 +19,7 @@ import 'package:aewallet/ui/views/sheets/chart_sheet.dart';
 import 'package:aewallet/ui/views/sheets/ledger_sheet.dart';
 import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
 import 'package:aewallet/ui/views/transactions/transaction_chain_explorer_sheet.dart';
-import 'package:aewallet/ui/views/uco/transfer_uco_sheet.dart';
+import 'package:aewallet/ui/views/tokens/transfer_tokens_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/ae_apps.dart';
@@ -57,8 +57,14 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                     onTap: () {
                       Sheets.showAppHeightNineSheet(
                           context: context,
-                          widget: TransferUcoSheet(
-                              title: AppLocalization.of(context)!.transferUCO,
+                          widget: TransferTokensSheet(
+                              title: AppLocalization.of(context)!
+                                  .transferTokens
+                                  .replaceAll(
+                                      '%1',
+                                      StateContainer.of(context)
+                                          .curNetwork
+                                          .getNetworkCryptoCurrencyLabel()),
                               localCurrency:
                                   StateContainer.of(context).curCurrency));
                     },

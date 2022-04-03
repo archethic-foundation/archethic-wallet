@@ -37,7 +37,7 @@ class AppWallet {
   }
 
   // Get pretty account balance version
-  String getAccountBalanceUCODisplay() {
+  String getAccountBalanceDisplay() {
     if (accountBalance.uco == null) {
       return '0';
     }

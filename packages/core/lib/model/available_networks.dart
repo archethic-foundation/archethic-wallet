@@ -25,7 +25,7 @@ class NetworksSetting extends SettingSelectionItem {
     }
   }
 
-  String getLongDisplayName(BuildContext context) {
+  String getLongDisplayName() {
     switch (network) {
       case AvailableNetworks.AEMainNet:
         return 'ARCHEthic Main Network';
@@ -48,6 +48,19 @@ class NetworksSetting extends SettingSelectionItem {
         return 'http://localhost:4000';
       default:
         return '';
+    }
+  }
+
+  String getNetworkCryptoCurrencyLabel() {
+    switch (network) {
+      case AvailableNetworks.AEMainNet:
+        return 'UCO';
+      case AvailableNetworks.AETestNet:
+        return 'UCO';
+      case AvailableNetworks.AEDevNet:
+        return 'UCO';
+      default:
+        return 'Unknown Crypto Currency';
     }
   }
 

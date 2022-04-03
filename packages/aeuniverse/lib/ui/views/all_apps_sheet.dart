@@ -266,7 +266,7 @@ class AppList {
     AppModel(
         name: 'AE Wallet',
         description:
-            'Archethic Mobile Wallet is one of the ways you can interact with Archethic blockchain. It supports transactions and fund transfers of UCO Tokens and NFTs on Archethic Testnet. Also you can use your 24 words mneumonic to restore your wallet and use that on ARCHEthic blockchain. Upcoming feature includes NFTs support for wallet.',
+            'Archethic Mobile Wallet is one of the ways you can interact with Archethic blockchain. It supports transactions and fund transfers of Tokens and NFTs on Archethic Testnet. Also you can use your 24 words mneumonic to restore your wallet and use that on ARCHEthic blockchain. Upcoming feature includes NFTs support for wallet.',
         aeApp: AEApps.aewallet,
         tag1: 'Transactions',
         tag2: 'Transfer'),

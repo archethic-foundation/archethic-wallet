@@ -67,8 +67,8 @@ class AppLocalization {
     return Intl.message('Update', name: 'update');
   }
 
-  String get transferUCO {
-    return Intl.message('Send UCO', name: 'transferUCO');
+  String get transferTokens {
+    return Intl.message('Send %1', name: 'transferTokens');
   }
 
   String get transferNFT {
@@ -316,7 +316,7 @@ class AppLocalization {
   }
 
   String get sendToMeError {
-    return Intl.message('You can\'t send UCO to your own wallet.',
+    return Intl.message('You can\'t send %1 to your own wallet.',
         name: 'sendToMeError');
   }
 
@@ -324,12 +324,8 @@ class AppLocalization {
     return Intl.message('Please Enter an Amount', name: 'amountMissing');
   }
 
-  String get minimumSend {
-    return Intl.message('Minimum send amount is %1 UCO', name: 'minimumSend');
-  }
-
   String get insufficientBalance {
-    return Intl.message('You don\'t have enough UCO',
+    return Intl.message('You don\'t have enough %1',
         name: 'insufficientBalance');
   }
 
@@ -413,7 +409,7 @@ class AppLocalization {
 
   String get changeCurrencyDesc {
     return Intl.message(
-        'Select the fiat currency you would like to display alongside UCO',
+        'Select the fiat currency you would like to display alongside %1',
         name: 'changeCurrencyDesc');
   }
 

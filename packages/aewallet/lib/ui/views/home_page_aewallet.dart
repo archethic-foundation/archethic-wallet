@@ -267,7 +267,9 @@ class _AppHomePageAEWalletState extends State<AppHomePageAEWallet>
                                       padding:
                                           const EdgeInsets.only(right: 10.0),
                                       child: AutoSizeText(
-                                        'UCO',
+                                        StateContainer.of(context)
+                                            .curNetwork
+                                            .getNetworkCryptoCurrencyLabel(),
                                         style: AppStyles
                                             .textStyleSize80W700Primary15(
                                                 context),
@@ -375,7 +377,7 @@ class _AppHomePageAEWalletState extends State<AppHomePageAEWallet>
                   Text(
                       StateContainer.of(context)
                           .curNetwork
-                          .getLongDisplayName(context),
+                          .getLongDisplayName(),
                       style: AppStyles.textStyleSize10W100Primary(context)),
                 ],
               ),
@@ -426,7 +428,9 @@ class _AppHomePageAEWalletState extends State<AppHomePageAEWallet>
                                 child: Padding(
                                   padding: const EdgeInsets.only(right: 10.0),
                                   child: AutoSizeText(
-                                    'UCO',
+                                    StateContainer.of(context)
+                                        .curNetwork
+                                        .getNetworkCryptoCurrencyLabel(),
                                     style:
                                         AppStyles.textStyleSize80W700Primary15(
                                             context),

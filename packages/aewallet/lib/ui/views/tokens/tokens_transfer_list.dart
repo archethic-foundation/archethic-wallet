@@ -10,8 +10,8 @@ import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:core/model/address.dart';
 
-class UcoTransferListWidget extends StatefulWidget {
-  UcoTransferListWidget({
+class TokensTransferListWidget extends StatefulWidget {
+  TokensTransferListWidget({
     Key? key,
     required this.listUcoTransfer,
     required this.feeEstimation,
@@ -25,10 +25,11 @@ class UcoTransferListWidget extends StatefulWidget {
   final double? feeEstimation;
 
   @override
-  _UcoTransferListWidgetState createState() => _UcoTransferListWidgetState();
+  _TokensTransferListWidgetState createState() =>
+      _TokensTransferListWidgetState();
 }
 
-class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
+class _TokensTransferListWidgetState extends State<TokensTransferListWidget> {
   @override
   Widget build(BuildContext context) {
     widget.listUcoTransfer!.sort(
@@ -60,7 +61,12 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                         style: AppStyles.textStyleSize14W600Primary(context)),
                   ],
                 ),
-                Text(widget.feeEstimation.toString() + ' UCO',
+                Text(
+                    widget.feeEstimation.toString() +
+                        ' ' +
+                        StateContainer.of(context)
+                            .curNetwork
+                            .getNetworkCryptoCurrencyLabel(),
                     style: AppStyles.textStyleSize14W600Primary(context)),
               ],
             ),
@@ -78,7 +84,12 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
                         style: AppStyles.textStyleSize14W600Primary(context)),
                   ],
                 ),
-                Text((_getTotal()).toString() + ' UCO',
+                Text(
+                    (_getTotal()).toString() +
+                        ' ' +
+                        StateContainer.of(context)
+                            .curNetwork
+                            .getNetworkCryptoCurrencyLabel(),
                     style: AppStyles.textStyleSize14W600Primary(context)),
               ],
             ),
@@ -107,7 +118,10 @@ class _UcoTransferListWidgetState extends State<UcoTransferListWidget> {
             ),
             Text(
                 (ucoTransfer.amount! / BigInt.from(100000000)).toString() +
-                    ' UCO',
+                    ' ' +
+                    StateContainer.of(context)
+                        .curNetwork
+                        .getNetworkCryptoCurrencyLabel(),
                 style: AppStyles.textStyleSize14W600Primary(context)),
           ],
         ),

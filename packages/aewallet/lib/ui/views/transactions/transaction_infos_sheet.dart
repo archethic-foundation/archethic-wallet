@@ -36,7 +36,10 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
         child: FutureBuilder<List<TransactionInfos>>(
             future: sl.get<AppService>().getTransactionAllInfos(
                 widget.txAddress,
-                DateFormat.yMEd(Localizations.localeOf(context).languageCode)),
+                DateFormat.yMEd(Localizations.localeOf(context).languageCode),
+                StateContainer.of(context)
+                    .curNetwork
+                    .getNetworkCryptoCurrencyLabel()),
             builder: (BuildContext context,
                 AsyncSnapshot<List<TransactionInfos>> list) {
               return Column(

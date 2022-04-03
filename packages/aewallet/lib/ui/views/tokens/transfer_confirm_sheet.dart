@@ -20,8 +20,8 @@ import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/util/preferences.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/ui/views/nft/nft_transfer_list.dart';
-import 'package:aewallet/ui/views/uco/absinthe_socket.dart';
-import 'package:aewallet/ui/views/uco/uco_transfer_list.dart';
+import 'package:aewallet/ui/views/tokens/absinthe_socket.dart';
+import 'package:aewallet/ui/views/tokens/tokens_transfer_list.dart';
 import 'package:core/bus/authenticated_event.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
@@ -218,8 +218,8 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                     height: 20,
                   ),
                   SizedBox(
-                    child: widget.typeTransfer == 'UCO'
-                        ? UcoTransferListWidget(
+                    child: widget.typeTransfer == 'TOKEN'
+                        ? TokensTransferListWidget(
                             listUcoTransfer: widget.ucoTransferList,
                             feeEstimation: widget.feeEstimation,
                           )

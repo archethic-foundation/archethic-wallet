@@ -56,10 +56,10 @@ class BalanceInfosWidget {
                       StateContainer.of(context).wallet!.accountBalance.uco == 0
                           ? StateContainer.of(context)
                               .localWallet!
-                              .getAccountBalanceUCODisplay()
+                              .getAccountBalanceDisplay()
                           : StateContainer.of(context)
                               .wallet!
-                              .getAccountBalanceUCODisplay(),
+                              .getAccountBalanceDisplay(),
                       style: AppStyles.textStyleSize40W900Primary(context),
                     ),
                   ),
@@ -106,14 +106,22 @@ class BalanceInfosWidget {
                       AutoSizeText(
                         StateContainer.of(context).wallet!.accountBalance.uco ==
                                 0
-                            ? '1 UCO = ' +
+                            ? '1 ' +
+                                StateContainer.of(context)
+                                    .curNetwork
+                                    .getNetworkCryptoCurrencyLabel() +
+                                ' = ' +
                                 StateContainer.of(context)
                                     .localWallet!
                                     .getLocalPrice(
                                         StateContainer.of(context).curCurrency,
                                         locale: StateContainer.of(context)
                                             .currencyLocale!)
-                            : '1 UCO = ' +
+                            : '1 ' +
+                                StateContainer.of(context)
+                                    .curNetwork
+                                    .getNetworkCryptoCurrencyLabel() +
+                                ' = ' +
                                 StateContainer.of(context)
                                     .wallet!
                                     .getLocalPrice(
@@ -176,14 +184,22 @@ class BalanceInfosWidget {
                       Text(
                         StateContainer.of(context).wallet!.accountBalance.uco ==
                                 0
-                            ? '1 UCO = ' +
+                            ? '1 ' +
+                                StateContainer.of(context)
+                                    .curNetwork
+                                    .getNetworkCryptoCurrencyLabel() +
+                                ' = ' +
                                 StateContainer.of(context)
                                     .localWallet!
                                     .getLocalPrice(
                                         StateContainer.of(context).curCurrency,
                                         locale: StateContainer.of(context)
                                             .currencyLocale!)
-                            : '1 UCO = ' +
+                            : '1 ' +
+                                StateContainer.of(context)
+                                    .curNetwork
+                                    .getNetworkCryptoCurrencyLabel() +
+                                ' = ' +
                                 StateContainer.of(context)
                                     .wallet!
                                     .getLocalPrice(
