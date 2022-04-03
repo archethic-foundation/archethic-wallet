@@ -206,7 +206,6 @@ class AppService {
         name,
         transactionChainSeed,
         lastTransaction.chainLength!,
-        'P256',
         originPrivateKey);
     try {
       transactionStatus = await sl.get<ApiService>().sendTx(transaction);
@@ -373,7 +372,6 @@ class AppService {
         name,
         transactionChainSeed,
         lastTransaction.chainLength!,
-        'P256',
         originPrivateKey);
 
     TransactionFee transactionFee = TransactionFee();
