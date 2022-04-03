@@ -550,6 +550,15 @@ class AppLocalization {
         name: 'labLinkDesc');
   }
 
+  String get aeWebsiteLinkHeader {
+    return Intl.message('ARCHEthic Website', name: 'aeWebsiteLinkHeader');
+  }
+
+  String get aeWebsiteLinkDesc {
+    return Intl.message('Visit the ARCHEthic website',
+        name: 'aeWebsiteLinkDesc');
+  }
+
   String get autoLockHeader {
     return Intl.message('Auto Lock', name: 'autoLockHeader');
   }

@@ -37,6 +37,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "addressHint" : MessageLookupByLibrary.simpleMessage("Entrer l\'adresse"),
     "addressInfos" : MessageLookupByLibrary.simpleMessage("Mon adresse publique pour recevoir des fonds"),
     "addressMissing" : MessageLookupByLibrary.simpleMessage("Entrez une adresse s\'il vous plaît"),
+    "aeWebsiteLinkDesc" : MessageLookupByLibrary.simpleMessage("Visitez le site web d\'ARCHEthic"),
+    "aeWebsiteLinkHeader" : MessageLookupByLibrary.simpleMessage("Site web d\'ARCHEthic"),
     "amountMissing" : MessageLookupByLibrary.simpleMessage("Veuillez saisir un montant"),
     "authMethod" : MessageLookupByLibrary.simpleMessage("Méthode d\'authentification"),
     "autoLockHeader" : MessageLookupByLibrary.simpleMessage("Verrouillage automatique"),

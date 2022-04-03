@@ -37,6 +37,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "addressHint" : MessageLookupByLibrary.simpleMessage("Enter Address"),
     "addressInfos" : MessageLookupByLibrary.simpleMessage("My public address to receive funds"),
     "addressMissing" : MessageLookupByLibrary.simpleMessage("Please Enter an Address"),
+    "aeWebsiteLinkDesc" : MessageLookupByLibrary.simpleMessage("Visit the ARCHEthic website"),
+    "aeWebsiteLinkHeader" : MessageLookupByLibrary.simpleMessage("ARCHEthic Website"),
     "amountMissing" : MessageLookupByLibrary.simpleMessage("Please Enter an Amount"),
     "appAEMailTitle" : MessageLookupByLibrary.simpleMessage("AEMail"),
     "appAEStakingTitle" : MessageLookupByLibrary.simpleMessage("AEStaking"),

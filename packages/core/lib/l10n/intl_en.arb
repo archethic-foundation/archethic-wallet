@@ -528,7 +528,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-    "labLinkHeader": "Lab",
+  "labLinkHeader": "Lab",
   "@labLinkHeader": {
     "type": "text",
     "placeholders_order": [],
@@ -536,6 +536,18 @@
   },
   "labLinkDesc": "Latest tech and product updates on the Archethic ecosystem",
   "@labLinkDesc": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "aeWebsiteLinkHeader": "ARCHEthic Website",
+  "@aeWebsiteLinkHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "aeWebsiteLinkDesc": "Visit the ARCHEthic website",
+  "@aeWebsiteLinkDesc": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

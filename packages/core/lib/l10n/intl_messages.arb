@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-04-03T16:05:47.095418",
+  "@@last_modified": "2022-04-03T16:18:50.234764",
   "welcomeText": "Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -686,6 +686,18 @@
   },
   "labLinkDesc": "Latest tech and product updates on the Archethic ecosystem",
   "@labLinkDesc": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "aeWebsiteLinkHeader": "ARCHEthic Website",
+  "@aeWebsiteLinkHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "aeWebsiteLinkDesc": "Visit the ARCHEthic website",
+  "@aeWebsiteLinkDesc": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

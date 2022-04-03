@@ -1011,6 +1011,22 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                     ),
                     AppSettings.buildSettingsListItemSingleLineWithInfos(
                         context,
+                        AppLocalization.of(context)!.aeWebsiteLinkHeader,
+                        AppLocalization.of(context)!.aeWebsiteLinkDesc,
+                        icon:
+                            'packages/aeuniverse/assets/icons/world-wide-web.png',
+                        iconColor: StateContainer.of(context)
+                            .curTheme
+                            .iconDrawerColor!, onPressed: () async {
+                      UIUtil.showWebview(context, 'https://www.archethic.net',
+                          AppLocalization.of(context)!.aeWebsiteLinkHeader);
+                    }),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
+                    AppSettings.buildSettingsListItemSingleLineWithInfos(
+                        context,
                         AppLocalization.of(context)!.labLinkHeader,
                         AppLocalization.of(context)!.labLinkDesc,
                         icon: 'packages/aeuniverse/assets/icons/microscope.png',
