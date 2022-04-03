@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:aewallet/ui/views/transactions/transaction_all_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -122,7 +123,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                     itemBuilder: (BuildContext context,
                         RecentTransaction recentTransaction, int index) {
                       return displayTxDetailTransfer(
-                          context, recentTransaction);
+                          context, recentTransaction, index);
                     }),
               ),
             ),
@@ -133,7 +134,7 @@ class _TxListWidgetState extends State<TxListWidget> {
   }
 
   static Widget displayTxDetailTransfer(
-      BuildContext context, RecentTransaction transaction) {
+      BuildContext context, RecentTransaction transaction, int index) {
     return FutureBuilder<String>(
         future: transaction.recipientDisplay,
         builder:
@@ -146,7 +147,6 @@ class _TxListWidgetState extends State<TxListWidget> {
             },
             child: Ink(
               width: 100,
-              color: Colors.blue,
               child: Container(
                 padding: const EdgeInsets.all(3.5),
                 width: MediaQuery.of(context).size.width * 0.9,
@@ -276,6 +276,33 @@ class _TxListWidgetState extends State<TxListWidget> {
                             color: StateContainer.of(context)
                                 .curTheme
                                 .backgroundDark),
+                        if (index == 2)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              GestureDetector(
+                                onTap: () {
+                                  Sheets.showAppHeightNineSheet(
+                                      context: context,
+                                      widget: const TxAllListWidget());
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      19.0, 10.0, 19.0, 10.0),
+                                  decoration: ShapeDecoration(
+                                      gradient: StateContainer.of(context)
+                                          .curTheme
+                                          .gradient!,
+                                      shape: const StadiumBorder()),
+                                  child: Text(
+                                      AppLocalization.of(context)!.seeAll,
+                                      style:
+                                          AppStyles.textStyleSize14W600Primary(
+                                              context)),
+                                ),
+                              ),
+                            ],
+                          ),
                       ],
                     ),
                   ],

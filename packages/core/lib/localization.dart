@@ -1034,6 +1034,10 @@ class AppLocalization {
   String get appAEStakingTitle {
     return Intl.message('AEStaking', name: 'appAEStakingTitle');
   }
+
+  String get seeAll {
+    return Intl.message('See all', name: 'seeAll');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
