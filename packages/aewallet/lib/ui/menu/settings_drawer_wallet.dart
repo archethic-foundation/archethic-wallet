@@ -50,7 +50,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
   bool? _walletFAQOpen;
   bool? _nftOpen;
 
-  bool notNull(Object o) => o != null;
+  bool notNull(Object? o) => o != null;
 
   @override
   void initState() {

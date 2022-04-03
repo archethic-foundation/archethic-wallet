@@ -87,7 +87,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
 
   bool _pinPadShuffleActive = false;
 
-  bool notNull(Object o) => o != null;
+  bool notNull(Object? o) => o != null;
 
   @override
   void initState() {

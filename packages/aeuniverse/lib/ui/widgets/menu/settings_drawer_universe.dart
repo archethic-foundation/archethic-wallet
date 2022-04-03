@@ -78,7 +78,7 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
 
   bool _pinPadShuffleActive = false;
 
-  bool notNull(Object o) => o != null;
+  bool notNull(Object? o) => o != null;
 
   @override
   void initState() {
