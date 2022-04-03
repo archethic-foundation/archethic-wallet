@@ -187,8 +187,8 @@ class AppSettings {
   }
 
   //Settings item without any dropdown option but rather a direct functionality
-  static Widget buildSettingsListItemSingleLine(
-      BuildContext context, String heading, String icon, Color iconColor,
+  static Widget buildSettingsListItemSingleLine(BuildContext context,
+      String heading, TextStyle headingStyle, String icon, Color iconColor,
       {Function? onPressed}) {
     return TextButton(
       onPressed: () {
@@ -213,7 +213,7 @@ class AppSettings {
               width: UIUtil.drawerWidth(context) - 100,
               child: AutoSizeText(
                 heading,
-                style: AppStyles.textStyleSize16W600Primary(context),
+                style: headingStyle,
               ),
             ),
             FaIcon(

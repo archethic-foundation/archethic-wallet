@@ -372,8 +372,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "logout": "Logout",
-  "@logout": {
+  "removeWallet": "Remove Wallet",
+  "@removeWallet": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -402,26 +402,26 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "logoutDetail": "Logging out will remove all ARCHEthic-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again",
-  "@logoutDetail": {
+  "removeWalletDetail": "You are about to remove all ARCHEthic-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again",
+  "@removeWalletDetail": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "logoutAction": "Delete Infos and Logout",
-  "@logoutAction": {
+  "removeWalletAction": "Delete from this device your wallet",
+  "@removeWalletAction": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "logoutAreYouSure": "Are you sure?",
-  "@logoutAreYouSure": {
+  "removeWalletAreYouSure": "Are you sure?",
+  "@removeWalletAreYouSure": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "logoutReassurance": "As long as you've backed up your seed you have nothing to worry about.",
-  "@logoutReassurance": {
+  "removeWalletReassurance": "As long as you've backed up your seed you have nothing to worry about.",
+  "@removeWalletReassurance": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

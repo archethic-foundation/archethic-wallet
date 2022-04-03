@@ -372,8 +372,8 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"logout": "Déconnexion",
-	"@logout": {
+	"removeWallet": "Supprimer le wallet",
+	"@removeWallet": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
@@ -402,26 +402,26 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"logoutDetail": "La déconnexion supprimera toutes les données liées à ARCHEthic de cet appareil. Si votre phrase secrète n'est pas sauvegardée, vous ne pourrez plus jamais accéder à votre portefeuille",
-	"@logoutDetail": {
+	"removeWalletDetail": "Vous vous apprêtez à supprimer toutes les données liées à ARCHEthic de cet appareil. Si votre phrase secrète n'est pas sauvegardée, vous ne pourrez plus jamais accéder à votre portefeuille",
+	"@removeWalletDetail": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"logoutAction": "Supprimer les informations et se déconnecter",
-	"@logoutAction": {
+	"removeWalletAction": "Supprimer de votre appareil votre portefeuille",
+	"@removeWalletAction": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"logoutAreYouSure": "Êtes-vous sûr(e) ?",
-	"@logoutAreYouSure": {
+	"removeWalletAreYouSure": "Êtes-vous sûr(e) ?",
+	"@removeWalletAreYouSure": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"logoutReassurance": "Tant que vous avez sauvegardé votre phrase secrète, vous n'avez rien à craindre.",
-	"@logoutReassurance": {
+	"removeWalletReassurance": "Tant que vous avez sauvegardé votre phrase secrète, vous n'avez rien à craindre.",
+	"@removeWalletReassurance": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}

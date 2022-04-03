@@ -277,17 +277,18 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                           StateContainer.of(context)
                                               .curLanguage
                                               .getLocaleString()),
-                                      AppLocalization.of(context)!.logoutDetail,
                                       AppLocalization.of(context)!
-                                          .logoutAction
+                                          .removeWalletDetail,
+                                      AppLocalization.of(context)!
+                                          .removeWalletAction
                                           .toUpperCase(), () {
                                     // Show another confirm dialog
                                     AppDialogs.showConfirmDialog(
                                         context,
                                         AppLocalization.of(context)!
-                                            .logoutAreYouSure,
+                                            .removeWalletAreYouSure,
                                         AppLocalization.of(context)!
-                                            .logoutReassurance,
+                                            .removeWalletReassurance,
                                         CaseChange.toUpperCase(
                                             AppLocalization.of(context)!.yes,
                                             context,
@@ -308,7 +309,8 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                       margin: const EdgeInsetsDirectional.only(
                                           start: 4),
                                       child: Text(
-                                          AppLocalization.of(context)!.logout,
+                                          AppLocalization.of(context)!
+                                              .removeWallet,
                                           style: AppStyles
                                               .textStyleSize14W600Primary(
                                                   context)),

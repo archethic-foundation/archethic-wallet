@@ -107,14 +107,15 @@ class MenuWidgetUniverse extends AbstractMenuWidget {
                         StateContainer.of(context)
                             .curLanguage
                             .getLocaleString()),
-                    AppLocalization.of(context)!.logoutDetail,
-                    AppLocalization.of(context)!.logoutAction.toUpperCase(),
-                    () {
+                    AppLocalization.of(context)!.removeWalletDetail,
+                    AppLocalization.of(context)!
+                        .removeWalletAction
+                        .toUpperCase(), () {
                   // Show another confirm dialog
                   AppDialogs.showConfirmDialog(
                       context,
-                      AppLocalization.of(context)!.logoutAreYouSure,
-                      AppLocalization.of(context)!.logoutReassurance,
+                      AppLocalization.of(context)!.removeWalletAreYouSure,
+                      AppLocalization.of(context)!.removeWalletReassurance,
                       CaseChange.toUpperCase(
                           AppLocalization.of(context)!.yes,
                           context,

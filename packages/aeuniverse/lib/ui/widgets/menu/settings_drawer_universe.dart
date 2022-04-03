@@ -1045,6 +1045,7 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutHeader,
+                        AppStyles.textStyleSize16W600Primary(context),
                         'packages/aeuniverse/assets/icons/help.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () {
@@ -1120,6 +1121,7 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.securityHeader,
+                        AppStyles.textStyleSize16W600Primary(context),
                         'packages/aeuniverse/assets/icons/encrypted.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () {
@@ -1134,10 +1136,10 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                     ),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
-                        AppLocalization.of(context)!.logout,
-                        'packages/aeuniverse/assets/icons/logout.png',
-                        StateContainer.of(context).curTheme.iconDrawerColor!,
-                        onPressed: () {
+                        AppLocalization.of(context)!.removeContact,
+                        AppStyles.textStyleSize16W600Primary(context),
+                        'packages/aeuniverse/assets/icons/rubbish.png',
+                        Colors.red, onPressed: () {
                       AppDialogs.showConfirmDialog(
                           context,
                           CaseChange.toUpperCase(
@@ -1146,15 +1148,16 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                               StateContainer.of(context)
                                   .curLanguage
                                   .getLocaleString()),
-                          AppLocalization.of(context)!.logoutDetail,
+                          AppLocalization.of(context)!.removeWalletDetail,
                           AppLocalization.of(context)!
-                              .logoutAction
+                              .removeWalletAction
                               .toUpperCase(), () {
                         // Show another confirm dialog
                         AppDialogs.showConfirmDialog(
                             context,
-                            AppLocalization.of(context)!.logoutAreYouSure,
-                            AppLocalization.of(context)!.logoutReassurance,
+                            AppLocalization.of(context)!.removeWalletAreYouSure,
+                            AppLocalization.of(context)!
+                                .removeWalletReassurance,
                             CaseChange.toUpperCase(
                                 AppLocalization.of(context)!.yes,
                                 context,
@@ -1343,6 +1346,7 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                       AppSettings.buildSettingsListItemSingleLine(
                           context,
                           AppLocalization.of(context)!.backupSecretPhrase,
+                          AppStyles.textStyleSize16W600Primary(context),
                           'packages/aeuniverse/assets/icons/key-word.png',
                           StateContainer.of(context).curTheme.iconDrawerColor!,
                           onPressed: () async {
@@ -1533,6 +1537,7 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                         context,
                         AppLocalization.of(context)!
                             .aboutGeneralTermsAndConditions,
+                        AppStyles.textStyleSize16W600Primary(context),
                         'packages/aeuniverse/assets/icons/terms-and-conditions.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () async {
@@ -1548,6 +1553,7 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutWalletServiceTerms,
+                        AppStyles.textStyleSize16W600Primary(context),
                         'packages/aeuniverse/assets/icons/walletServiceTerms.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () async {
@@ -1560,6 +1566,7 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutPrivacyPolicy,
+                        AppStyles.textStyleSize16W600Primary(context),
                         'packages/aeuniverse/assets/icons/privacyPolicy.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () async {

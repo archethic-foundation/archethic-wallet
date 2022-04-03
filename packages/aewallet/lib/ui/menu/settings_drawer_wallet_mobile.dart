@@ -1111,6 +1111,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.securityHeader,
+                        AppStyles.textStyleSize16W600Primary(context),
                         'packages/aewallet/assets/icons/encrypted.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () {
@@ -1125,10 +1126,10 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     ),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
-                        AppLocalization.of(context)!.logout,
-                        'packages/aewallet/assets/icons/logout.png',
-                        StateContainer.of(context).curTheme.iconDrawerColor!,
-                        onPressed: () {
+                        AppLocalization.of(context)!.removeWallet,
+                        AppStyles.textStyleSize16W600Red(context),
+                        'packages/aewallet/assets/icons/rubbish.png',
+                        Colors.red, onPressed: () {
                       AppDialogs.showConfirmDialog(
                           context,
                           CaseChange.toUpperCase(
@@ -1137,15 +1138,16 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                               StateContainer.of(context)
                                   .curLanguage
                                   .getLocaleString()),
-                          AppLocalization.of(context)!.logoutDetail,
+                          AppLocalization.of(context)!.removeWalletDetail,
                           AppLocalization.of(context)!
-                              .logoutAction
+                              .removeWalletAction
                               .toUpperCase(), () {
                         // Show another confirm dialog
                         AppDialogs.showConfirmDialog(
                             context,
-                            AppLocalization.of(context)!.logoutAreYouSure,
-                            AppLocalization.of(context)!.logoutReassurance,
+                            AppLocalization.of(context)!.removeWalletAreYouSure,
+                            AppLocalization.of(context)!
+                                .removeWalletReassurance,
                             CaseChange.toUpperCase(
                                 AppLocalization.of(context)!.yes,
                                 context,
@@ -1234,6 +1236,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutHeader,
+                        AppStyles.textStyleSize16W600Primary(context),
                         'packages/aewallet/assets/icons/help.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () {
@@ -1408,6 +1411,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       AppSettings.buildSettingsListItemSingleLine(
                           context,
                           AppLocalization.of(context)!.backupSecretPhrase,
+                          AppStyles.textStyleSize16W600Primary(context),
                           'packages/aewallet/assets/icons/key-word.png',
                           StateContainer.of(context).curTheme.iconDrawerColor!,
                           onPressed: () async {
@@ -1598,6 +1602,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         context,
                         AppLocalization.of(context)!
                             .aboutGeneralTermsAndConditions,
+                        AppStyles.textStyleSize16W600Primary(context),
                         'packages/aewallet/assets/icons/terms-and-conditions.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () async {
@@ -1613,6 +1618,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutWalletServiceTerms,
+                        AppStyles.textStyleSize16W600Primary(context),
                         'packages/aewallet/assets/icons/walletServiceTerms.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () async {
@@ -1625,6 +1631,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutPrivacyPolicy,
+                        AppStyles.textStyleSize16W600Primary(context),
                         'packages/aewallet/assets/icons/privacyPolicy.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () async {
@@ -1722,6 +1729,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.addNFTHeader,
+                        AppStyles.textStyleSize16W600Primary(context),
                         'packages/aewallet/assets/icons/addNft.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () {
@@ -1734,6 +1742,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.transferNFT,
+                        AppStyles.textStyleSize16W600Primary(context),
                         'packages/aewallet/assets/icons/transferNft.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () {

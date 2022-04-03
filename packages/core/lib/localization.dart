@@ -417,8 +417,8 @@ class AppLocalization {
     return Intl.message('Language', name: 'language');
   }
 
-  String get logout {
-    return Intl.message('Logout', name: 'logout');
+  String get removeWallet {
+    return Intl.message('Remove Wallet', name: 'removeWallet');
   }
 
   String get rootWarning {
@@ -439,24 +439,25 @@ class AppLocalization {
     return Intl.message('Warning', name: 'warning');
   }
 
-  String get logoutDetail {
+  String get removeWalletDetail {
     return Intl.message(
-        'Logging out will remove all ARCHEthic-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again',
-        name: 'logoutDetail');
+        'You are about to remove all ARCHEthic-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again',
+        name: 'removeWalletDetail');
   }
 
-  String get logoutAction {
-    return Intl.message('Delete Infos and Logout', name: 'logoutAction');
+  String get removeWalletAction {
+    return Intl.message('Delete from this device your wallet',
+        name: 'removeWalletAction');
   }
 
-  String get logoutAreYouSure {
-    return Intl.message('Are you sure?', name: 'logoutAreYouSure');
+  String get removeWalletAreYouSure {
+    return Intl.message('Are you sure?', name: 'removeWalletAreYouSure');
   }
 
-  String get logoutReassurance {
+  String get removeWalletReassurance {
     return Intl.message(
         'As long as you\'ve backed up your seed you have nothing to worry about.',
-        name: 'logoutReassurance');
+        name: 'removeWalletReassurance');
   }
 
   String get preferences {
