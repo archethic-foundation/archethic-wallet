@@ -1,9 +1,7 @@
 // Dart imports:
 import 'dart:convert';
 import 'dart:typed_data';
-
-// Flutter imports:
-import 'package:flutter/foundation.dart';
+import 'dart:developer' as dev;
 
 // Package imports:
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -42,9 +40,7 @@ class Vault {
           encryptionCipher: HiveAesCipher(encryptionKey));
       return Vault._(encryptedBox);
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      dev.log(e.toString());
       throw Exception();
     }
   }

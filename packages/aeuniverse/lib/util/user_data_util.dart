@@ -4,7 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
+import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -95,9 +95,7 @@ class UserDataUtil {
     } on FormatException {
       return QRScanErrs.cancelError;
     } catch (e) {
-      if (kDebugMode) {
-        print('Unknown QR Scan Error ${e.toString()}');
-      }
+      dev.log('Unknown QR Scan Error ${e.toString()}');
       return QRScanErrs.unknownError;
     }
   }

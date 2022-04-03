@@ -1,8 +1,6 @@
 // Dart imports:
 import 'dart:async';
-
-// Flutter imports:
-import 'package:flutter/foundation.dart';
+import 'dart:developer' as dev;
 
 // Package imports:
 import 'package:core/model/data/appdb.dart';
@@ -184,9 +182,7 @@ class AppService {
     try {
       transactionStatus = await sl.get<ApiService>().sendTx(transaction);
     } catch (e) {
-      if (kDebugMode) {
-        print('error: ' + e.toString());
-      }
+      dev.log(e.toString());
       transactionStatus.status = e.toString();
     }
     return transactionStatus;
@@ -210,9 +206,7 @@ class AppService {
     try {
       transactionStatus = await sl.get<ApiService>().sendTx(transaction);
     } catch (e) {
-      if (kDebugMode) {
-        print('error: ' + e.toString());
-      }
+      dev.log(e.toString());
       transactionStatus.status = e.toString();
     }
 
@@ -352,9 +346,7 @@ class AppService {
       transactionFee =
           await sl.get<ApiService>().getTransactionFee(transaction);
     } catch (e) {
-      if (kDebugMode) {
-        print('error: ' + e.toString());
-      }
+      dev.log(e.toString());
     }
     return transactionFee.fee!;
   }
@@ -380,9 +372,7 @@ class AppService {
       transactionFee =
           await sl.get<ApiService>().getTransactionFee(transaction);
     } catch (e) {
-      if (kDebugMode) {
-        print('error: ' + e.toString());
-      }
+      dev.log(e.toString());
     }
     return transactionFee.fee!;
   }

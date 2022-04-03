@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:developer' as dev;
 import 'dart:io';
 
 // Flutter imports:
@@ -295,9 +296,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
         Navigator.of(context).pushReplacementNamed('/intro_welcome');
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      dev.log(e.toString());
     }
     FlutterNativeSplash.remove();
   }
