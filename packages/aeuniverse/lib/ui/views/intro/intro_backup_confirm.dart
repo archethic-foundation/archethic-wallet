@@ -112,7 +112,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                     top: 15.0),
                                 child: AutoSizeText(
                                   AppLocalization.of(context)!.secretWarning,
-                                  style: AppStyles.textStyleSize24W600Primary(
+                                  style: AppStyles.textStyleSize16W600Primary(
                                       context),
                                   maxLines: 6,
                                   stepGranularity: 0.5,

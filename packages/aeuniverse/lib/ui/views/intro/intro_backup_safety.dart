@@ -110,7 +110,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                             children: <Widget>[
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel1,
-                                style: AppStyles.textStyleSize24W600Primary(
+                                style: AppStyles.textStyleSize20W700Primary(
                                     context),
                               ),
                               Divider(
@@ -121,7 +121,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               ),
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel2,
-                                style: AppStyles.textStyleSize28W700Primary(
+                                style: AppStyles.textStyleSize20W700Primary(
                                     context),
                               ),
                               const SizedBox(
@@ -129,7 +129,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               ),
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel3,
-                                style: AppStyles.textStyleSize24W600Primary(
+                                style: AppStyles.textStyleSize16W600Primary(
                                     context),
                               ),
                               Divider(
@@ -140,7 +140,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               ),
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel4,
-                                style: AppStyles.textStyleSize28W700Primary(
+                                style: AppStyles.textStyleSize20W700Primary(
                                     context),
                               ),
                               const SizedBox(
@@ -148,7 +148,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               ),
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel5,
-                                style: AppStyles.textStyleSize24W600Primary(
+                                style: AppStyles.textStyleSize16W600Primary(
                                     context),
                               ),
                               Divider(
@@ -159,7 +159,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               ),
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel6,
-                                style: AppStyles.textStyleSize28W700Primary(
+                                style: AppStyles.textStyleSize20W700Primary(
                                     context),
                               ),
                               const SizedBox(
@@ -167,7 +167,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               ),
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel7,
-                                style: AppStyles.textStyleSize24W600Primary(
+                                style: AppStyles.textStyleSize16W600Primary(
                                     context),
                               ),
                               const SizedBox(
