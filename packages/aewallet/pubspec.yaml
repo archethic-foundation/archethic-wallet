@@ -1,6 +1,6 @@
 name: aewallet
 description: AE Wallet App
-version: 0.2.1+201
+version: 0.2.3+203
 publish_to: 'none'
 
 environment:
