@@ -1,12 +1,12 @@
 // ignore_for_file: must_be_immutable
 
 // Flutter imports:
-import 'package:aewallet/model/nft_transfer_wallet.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aewallet/model/nft_transfer_wallet.dart';
 import 'package:core/model/address.dart';
 
 class NftTransferListWidget extends StatefulWidget {

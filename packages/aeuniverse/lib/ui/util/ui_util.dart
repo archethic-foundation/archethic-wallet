@@ -4,10 +4,10 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:core/bus/disable_lock_timeout_event.dart';
 import 'package:core_ui/ui/util/exceptions.dart';
 import 'package:core_ui/util/app_util.dart';

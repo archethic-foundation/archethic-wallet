@@ -4,8 +4,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:aewallet/model/nft_transfer_wallet.dart';
-import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -19,6 +17,8 @@ import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/util/preferences.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
+import 'package:aewallet/model/nft_transfer_wallet.dart';
+import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:aewallet/ui/views/nft/nft_transfer_list.dart';
 import 'package:aewallet/ui/views/tokens/absinthe_socket.dart';
 import 'package:aewallet/ui/views/tokens/tokens_transfer_list.dart';

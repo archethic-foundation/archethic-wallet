@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-// Project imports:
+// Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 /// [UCOTransferWallet] represents the an asset transfer

@@ -5,7 +5,6 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +18,7 @@ import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aeuniverse/util/user_data_util.dart';
+import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:aewallet/ui/views/tokens/transfer_confirm_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';

@@ -2,11 +2,11 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:core/model/data/appdb.dart';
-import 'package:core/model/data/hive_db.dart';
 import 'package:flutter/foundation.dart';
 
 // Package imports:
+import 'package:core/model/data/appdb.dart';
+import 'package:core/model/data/hive_db.dart';
 import 'package:core/model/recent_transaction.dart';
 import 'package:core/model/transaction_infos.dart';
 import 'package:core/util/get_it_instance.dart';

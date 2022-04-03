@@ -5,7 +5,6 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:aewallet/ui/menu/settings_drawer_wallet.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -14,12 +13,13 @@ import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
+import 'package:aewallet/ui/menu/settings_drawer_wallet.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/sheets/chart_sheet.dart';
 import 'package:aewallet/ui/views/sheets/ledger_sheet.dart';
 import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
-import 'package:aewallet/ui/views/transactions/transaction_chain_explorer_sheet.dart';
 import 'package:aewallet/ui/views/tokens/transfer_tokens_sheet.dart';
+import 'package:aewallet/ui/views/transactions/transaction_chain_explorer_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/ae_apps.dart';

@@ -7,7 +7,6 @@ import 'package:core/model/setting_item.dart';
 
 // Package imports:
 
-
 enum AuthMethod { pin, biometrics, yubikeyWithYubicloud, ledger }
 
 /// Represent the available authentication methods our app supports
