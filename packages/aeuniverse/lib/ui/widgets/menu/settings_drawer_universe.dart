@@ -1136,8 +1136,8 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                     ),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
-                        AppLocalization.of(context)!.removeContact,
-                        AppStyles.textStyleSize16W600Primary(context),
+                        AppLocalization.of(context)!.removeWallet,
+                        AppStyles.textStyleSize16W600Red(context),
                         'packages/aeuniverse/assets/icons/rubbish.png',
                         Colors.red, onPressed: () {
                       AppDialogs.showConfirmDialog(
