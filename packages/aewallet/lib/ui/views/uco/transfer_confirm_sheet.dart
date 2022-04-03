@@ -25,7 +25,6 @@ import 'package:aewallet/ui/views/uco/uco_transfer_list.dart';
 import 'package:core/bus/authenticated_event.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
-import 'package:core/model/data/hive_db.dart';
 import 'package:core/service/app_service.dart';
 import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
