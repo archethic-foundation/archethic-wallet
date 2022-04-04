@@ -120,7 +120,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   }
 
   Map<String, String> transactionConfirmed = {};
-  String toto = 'nulllllll';
+
   @override
   void initState() {
     super.initState();
@@ -213,7 +213,6 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       ],
                     ),
                   ),
-                  Text(toto),
                   const SizedBox(
                     height: 20,
                   ),
