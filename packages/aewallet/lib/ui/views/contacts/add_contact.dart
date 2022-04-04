@@ -220,7 +220,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                       ? AppStyles.textStyleSize14W100Primary(context)
                       : AppStyles.textStyleSize14W100Text60(context),
                   inputFormatters: <LengthLimitingTextInputFormatter>[
-                    LengthLimitingTextInputFormatter(66),
+                    LengthLimitingTextInputFormatter(68),
                   ],
                   textInputAction: TextInputAction.done,
                   maxLines: null,
