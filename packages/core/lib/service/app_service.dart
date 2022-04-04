@@ -103,7 +103,7 @@ class AppService {
         if (transactionInput.from != transaction.address) {
           final RecentTransaction recentTransaction = RecentTransaction();
           recentTransaction.address = transactionInput.from;
-          if (transaction.type!.toUpperCase() == 'NFT') {
+          if (transactionInput.type!.toUpperCase() == 'NFT') {
             recentTransaction.nftAddress = transactionInput.nftAddress!;
           } else {
             recentTransaction.nftAddress = '';
@@ -111,7 +111,7 @@ class AppService {
           recentTransaction.amount = transactionInput.amount!;
           recentTransaction.typeTx = RecentTransaction.transferInput;
           recentTransaction.from = transactionInput.from;
-          recentTransaction.recipient = lastAddress;
+          recentTransaction.recipient = transaction.address;
           recentTransaction.timestamp = transactionInput.timestamp!;
           recentTransaction.type = 'TransactionInput';
           recentTransaction.fee = 0;
