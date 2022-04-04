@@ -1332,7 +1332,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"seeAll": "Voir tout",
+	"seeAll": "Voir toutes les transactions",
 	  "@seeAll": {
 		"type": "text",
 		"placeholders_order": [],

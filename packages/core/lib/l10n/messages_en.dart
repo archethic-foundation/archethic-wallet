@@ -165,7 +165,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "scanQrCode" : MessageLookupByLibrary.simpleMessage("Scan QR Code"),
     "secretWarning" : MessageLookupByLibrary.simpleMessage("If you lose your device or uninstall the application, you\'ll need your secret phrase to recover your funds!"),
     "securityHeader" : MessageLookupByLibrary.simpleMessage("Security"),
-    "seeAll" : MessageLookupByLibrary.simpleMessage("See All"),
+    "seeAll" : MessageLookupByLibrary.simpleMessage("See all transactions"),
     "send" : MessageLookupByLibrary.simpleMessage("Send"),
     "sendError" : MessageLookupByLibrary.simpleMessage("An error occurred. Try again later."),
     "sendToMeError" : MessageLookupByLibrary.simpleMessage("You can\'t send UCO to your own wallet."),

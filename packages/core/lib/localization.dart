@@ -1036,7 +1036,7 @@ class AppLocalization {
   }
 
   String get seeAll {
-    return Intl.message('See all', name: 'seeAll');
+    return Intl.message('See all transactions', name: 'seeAll');
   }
 }
 

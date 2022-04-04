@@ -31,179 +31,192 @@ class MenuWidgetWallet extends AbstractMenuWidget {
 
   @override
   Widget buildMainMenuIcons(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        (StateContainer.of(context).wallet != null &&
-                    StateContainer.of(context).wallet!.accountBalance.uco !=
-                        null &&
-                    StateContainer.of(context).wallet!.accountBalance.uco! >
-                        0) ||
-                (StateContainer.of(context).localWallet != null &&
-                    StateContainer.of(context)
-                            .localWallet!
-                            .accountBalance
-                            .uco !=
-                        null &&
-                    StateContainer.of(context)
-                            .localWallet!
-                            .accountBalance
-                            .uco! >
-                        0)
-            ? Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                child: InkWell(
-                    onTap: () {
-                      Sheets.showAppHeightNineSheet(
-                          context: context,
-                          widget: TransferTokensSheet(
-                              title: AppLocalization.of(context)!
-                                  .transferTokens
-                                  .replaceAll(
-                                      '%1',
-                                      StateContainer.of(context)
-                                          .curNetwork
-                                          .getNetworkCryptoCurrencyLabel()),
-                              localCurrency:
-                                  StateContainer.of(context).curCurrency));
-                    },
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      elevation: 0,
+      color: Colors.transparent,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.9,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            (StateContainer.of(context).wallet != null &&
+                        StateContainer.of(context).wallet!.accountBalance.uco !=
+                            null &&
+                        StateContainer.of(context).wallet!.accountBalance.uco! >
+                            0) ||
+                    (StateContainer.of(context).localWallet != null &&
+                        StateContainer.of(context)
+                                .localWallet!
+                                .accountBalance
+                                .uco !=
+                            null &&
+                        StateContainer.of(context)
+                                .localWallet!
+                                .accountBalance
+                                .uco! >
+                            0)
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                    child: InkWell(
+                        onTap: () {
+                          Sheets.showAppHeightNineSheet(
+                              context: context,
+                              widget: TransferTokensSheet(
+                                  title: AppLocalization.of(context)!
+                                      .transferTokens
+                                      .replaceAll(
+                                          '%1',
+                                          StateContainer.of(context)
+                                              .curNetwork
+                                              .getNetworkCryptoCurrencyLabel()),
+                                  localCurrency:
+                                      StateContainer.of(context).curCurrency));
+                        },
+                        child: Column(
+                          children: <Widget>[
+                            buildIconDataWidget(context,
+                                Icons.arrow_circle_up_outlined, 30, 30),
+                            const SizedBox(height: 5),
+                            Text(AppLocalization.of(context)!.send,
+                                style: AppStyles.textStyleSize14W600Primary(
+                                    context)),
+                          ],
+                        )))
+                : Container(
                     child: Column(
-                      children: <Widget>[
-                        buildIconDataWidget(
-                            context, Icons.arrow_circle_up_outlined, 30, 30),
-                        const SizedBox(height: 5),
-                        Text(AppLocalization.of(context)!.send,
-                            style:
-                                AppStyles.textStyleSize14W600Primary(context)),
-                      ],
-                    )))
-            : Container(
-                child: Column(
-                children: <Widget>[
-                  buildIconDataWidget(
-                      context, Icons.arrow_circle_up_outlined, 30, 30,
-                      enabled: false),
-                  const SizedBox(height: 5),
-                  Text(AppLocalization.of(context)!.send,
-                      style: AppStyles.textStyleSize14W600PrimaryDisabled(
-                          context)),
-                ],
-              )),
-        Padding(
-          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-          child: InkWell(
-            onTap: () {
-              Sheets.showAppHeightNineSheet(
-                  context: context, widget: const ReceiveSheet());
-            },
-            child: Column(
-              children: <Widget>[
-                buildIconDataWidget(
-                    context, Icons.arrow_circle_down_outlined, 30, 30),
-                const SizedBox(height: 5),
-                Text(AppLocalization.of(context)!.receive,
-                    style: AppStyles.textStyleSize14W600Primary(context)),
-              ],
-            ),
-          ),
-        ),
-        Padding(
-            padding: const EdgeInsets.only(left: 5.0, right: 10.0),
-            child: InkWell(
+                    children: <Widget>[
+                      buildIconDataWidget(
+                          context, Icons.arrow_circle_up_outlined, 30, 30,
+                          enabled: false),
+                      const SizedBox(height: 5),
+                      Text(AppLocalization.of(context)!.send,
+                          style: AppStyles.textStyleSize14W600PrimaryDisabled(
+                              context)),
+                    ],
+                  )),
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+              child: InkWell(
                 onTap: () {
                   Sheets.showAppHeightNineSheet(
-                      context: context, widget: const BuySheet());
+                      context: context, widget: const ReceiveSheet());
                 },
                 child: Column(
                   children: <Widget>[
                     buildIconDataWidget(
-                        context, Icons.add_circle_outline_outlined, 30, 30),
+                        context, Icons.arrow_circle_down_outlined, 30, 30),
                     const SizedBox(height: 5),
-                    Text(AppLocalization.of(context)!.buy,
+                    Text(AppLocalization.of(context)!.receive,
                         style: AppStyles.textStyleSize14W600Primary(context)),
                   ],
-                ))),
-        Padding(
-            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-            child: InkWell(
-                onTap: () {
-                  optionChartList = <OptionChart>[
-                    OptionChart(
-                        '24h', ChartInfos.getChartOptionLabel(context, '24h')),
-                    OptionChart(
-                        '7d', ChartInfos.getChartOptionLabel(context, '7d')),
-                    OptionChart(
-                        '14d', ChartInfos.getChartOptionLabel(context, '14d')),
-                    OptionChart(
-                        '30d', ChartInfos.getChartOptionLabel(context, '30d')),
-                    OptionChart(
-                        '60d', ChartInfos.getChartOptionLabel(context, '60d')),
-                    OptionChart('200d',
-                        ChartInfos.getChartOptionLabel(context, '200d')),
-                    OptionChart(
-                        '1y', ChartInfos.getChartOptionLabel(context, '1y')),
-                  ];
-                  final OptionChart? optionChart;
-                  final String _idChartOption =
-                      StateContainer.of(context).idChartOption!;
-                  switch (_idChartOption) {
-                    case '7d':
-                      optionChart = optionChartList[1];
-                      break;
-                    case '14d':
-                      optionChart = optionChartList[2];
-                      break;
-                    case '30d':
-                      optionChart = optionChartList[3];
-                      break;
-                    case '60d':
-                      optionChart = optionChartList[4];
-                      break;
-                    case '200d':
-                      optionChart = optionChartList[5];
-                      break;
-                    case '1y':
-                      optionChart = optionChartList[6];
-                      break;
-                    case '24h':
-                    default:
-                      optionChart = optionChartList[0];
-                      break;
-                  }
-                  Sheets.showAppHeightNineSheet(
-                      context: context,
-                      widget: ChartSheet(
-                        optionChartList: optionChartList,
-                        optionChart: optionChart,
-                      ));
-                },
-                child: Column(
-                  children: <Widget>[
-                    buildIconDataWidget(context, Icons.show_chart, 30, 30),
-                    const SizedBox(height: 5),
-                    Text(AppLocalization.of(context)!.chart,
-                        style: AppStyles.textStyleSize14W600Primary(context)),
-                  ],
-                ))),
-        if (kIsWeb || Platform.isMacOS)
-          Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: InkWell(
-                  onTap: () {
-                    Sheets.showAppHeightNineSheet(
-                        context: context, widget: const LedgerSheet());
-                  },
-                  child: Column(
-                    children: <Widget>[
-                      buildIconDataWidget(
-                          context, Icons.vpn_key_outlined, 30, 30),
-                      const SizedBox(height: 5),
-                      Text('Ledger',
-                          style: AppStyles.textStyleSize14W600Primary(context)),
-                    ],
-                  )))
-      ],
+                ),
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsets.only(left: 5.0, right: 10.0),
+                child: InkWell(
+                    onTap: () {
+                      Sheets.showAppHeightNineSheet(
+                          context: context, widget: const BuySheet());
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        buildIconDataWidget(
+                            context, Icons.add_circle_outline_outlined, 30, 30),
+                        const SizedBox(height: 5),
+                        Text(AppLocalization.of(context)!.buy,
+                            style:
+                                AppStyles.textStyleSize14W600Primary(context)),
+                      ],
+                    ))),
+            Padding(
+                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                child: InkWell(
+                    onTap: () {
+                      optionChartList = <OptionChart>[
+                        OptionChart('24h',
+                            ChartInfos.getChartOptionLabel(context, '24h')),
+                        OptionChart('7d',
+                            ChartInfos.getChartOptionLabel(context, '7d')),
+                        OptionChart('14d',
+                            ChartInfos.getChartOptionLabel(context, '14d')),
+                        OptionChart('30d',
+                            ChartInfos.getChartOptionLabel(context, '30d')),
+                        OptionChart('60d',
+                            ChartInfos.getChartOptionLabel(context, '60d')),
+                        OptionChart('200d',
+                            ChartInfos.getChartOptionLabel(context, '200d')),
+                        OptionChart('1y',
+                            ChartInfos.getChartOptionLabel(context, '1y')),
+                      ];
+                      final OptionChart? optionChart;
+                      final String _idChartOption =
+                          StateContainer.of(context).idChartOption!;
+                      switch (_idChartOption) {
+                        case '7d':
+                          optionChart = optionChartList[1];
+                          break;
+                        case '14d':
+                          optionChart = optionChartList[2];
+                          break;
+                        case '30d':
+                          optionChart = optionChartList[3];
+                          break;
+                        case '60d':
+                          optionChart = optionChartList[4];
+                          break;
+                        case '200d':
+                          optionChart = optionChartList[5];
+                          break;
+                        case '1y':
+                          optionChart = optionChartList[6];
+                          break;
+                        case '24h':
+                        default:
+                          optionChart = optionChartList[0];
+                          break;
+                      }
+                      Sheets.showAppHeightNineSheet(
+                          context: context,
+                          widget: ChartSheet(
+                            optionChartList: optionChartList,
+                            optionChart: optionChart,
+                          ));
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        buildIconDataWidget(context, Icons.show_chart, 30, 30),
+                        const SizedBox(height: 5),
+                        Text(AppLocalization.of(context)!.chart,
+                            style:
+                                AppStyles.textStyleSize14W600Primary(context)),
+                      ],
+                    ))),
+            if (kIsWeb || Platform.isMacOS)
+              Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                  child: InkWell(
+                      onTap: () {
+                        Sheets.showAppHeightNineSheet(
+                            context: context, widget: const LedgerSheet());
+                      },
+                      child: Column(
+                        children: <Widget>[
+                          buildIconDataWidget(
+                              context, Icons.vpn_key_outlined, 30, 30),
+                          const SizedBox(height: 5),
+                          Text('Ledger',
+                              style: AppStyles.textStyleSize14W600Primary(
+                                  context)),
+                        ],
+                      )))
+          ],
+        ),
+      ),
     );
   }
 
