@@ -42,8 +42,6 @@ class AppService {
       String genesisAddress, String lastAddress, int page) async {
     final List<Transaction> transactionChain =
         await getTransactionChain(lastAddress, page);
-    final List<TransactionInput> transactionInputs =
-        await getTransactionInputs(lastAddress);
     final List<TransactionInput> transactionInputsGenesisAddress =
         await getTransactionInputs(genesisAddress);
     final List<RecentTransaction> recentTransactions =
@@ -100,6 +98,26 @@ class AppService {
           }
         }
       }
+
+      for (TransactionInput transactionInput in transaction.inputs!) {
+        if (transactionInput.from != transaction.address) {
+          final RecentTransaction recentTransaction = RecentTransaction();
+          recentTransaction.address = transactionInput.from;
+          if (transaction.type!.toUpperCase() == 'NFT') {
+            recentTransaction.nftAddress = transactionInput.nftAddress!;
+          } else {
+            recentTransaction.nftAddress = '';
+          }
+          recentTransaction.amount = transactionInput.amount!;
+          recentTransaction.typeTx = RecentTransaction.transferInput;
+          recentTransaction.from = transactionInput.from;
+          recentTransaction.recipient = lastAddress;
+          recentTransaction.timestamp = transactionInput.timestamp!;
+          recentTransaction.type = 'TransactionInput';
+          recentTransaction.fee = 0;
+          recentTransactions.add(recentTransaction);
+        }
+      }
     }
 
     // Transaction inputs for genesisAddress
@@ -121,25 +139,6 @@ class AppService {
       recentTransactions.add(recentTransaction);
     }
 
-    for (TransactionInput transaction in transactionInputs) {
-      if (transaction.spent == true) {
-        final RecentTransaction recentTransaction = RecentTransaction();
-        recentTransaction.address = transaction.from;
-        if (transaction.type!.toUpperCase() == 'NFT') {
-          recentTransaction.nftAddress = transaction.nftAddress!;
-        } else {
-          recentTransaction.nftAddress = '';
-        }
-        recentTransaction.amount = transaction.amount!;
-        recentTransaction.typeTx = RecentTransaction.transferInput;
-        recentTransaction.from = transaction.from;
-        recentTransaction.recipient = lastAddress;
-        recentTransaction.timestamp = transaction.timestamp!;
-        recentTransaction.type = 'TransactionInput';
-        recentTransaction.fee = 0;
-        recentTransactions.add(recentTransaction);
-      }
-    }
     // Sort by date (desc)
     recentTransactions.sort((RecentTransaction a, RecentTransaction b) =>
         a.timestamp!.compareTo(b.timestamp!));
