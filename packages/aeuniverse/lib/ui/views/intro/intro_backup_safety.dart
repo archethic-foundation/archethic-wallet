@@ -123,6 +123,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                                 AppLocalization.of(context)!.backupSafetyLabel2,
                                 style: AppStyles.textStyleSize20W700Primary(
                                     context),
+                                textAlign: TextAlign.justify,
                               ),
                               const SizedBox(
                                 height: 30,
@@ -131,6 +132,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                                 AppLocalization.of(context)!.backupSafetyLabel3,
                                 style: AppStyles.textStyleSize16W600Primary(
                                     context),
+                                textAlign: TextAlign.justify,
                               ),
                               Divider(
                                 height: 30,
@@ -142,6 +144,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                                 AppLocalization.of(context)!.backupSafetyLabel4,
                                 style: AppStyles.textStyleSize20W700Primary(
                                     context),
+                                textAlign: TextAlign.justify,
                               ),
                               const SizedBox(
                                 height: 30,
@@ -150,6 +153,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                                 AppLocalization.of(context)!.backupSafetyLabel5,
                                 style: AppStyles.textStyleSize16W600Primary(
                                     context),
+                                textAlign: TextAlign.justify,
                               ),
                               Divider(
                                 height: 30,
@@ -161,6 +165,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                                 AppLocalization.of(context)!.backupSafetyLabel6,
                                 style: AppStyles.textStyleSize20W700Primary(
                                     context),
+                                textAlign: TextAlign.justify,
                               ),
                               const SizedBox(
                                 height: 30,
@@ -169,6 +174,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                                 AppLocalization.of(context)!.backupSafetyLabel7,
                                 style: AppStyles.textStyleSize16W600Primary(
                                     context),
+                                textAlign: TextAlign.justify,
                               ),
                               const SizedBox(
                                 height: 30,

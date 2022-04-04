@@ -103,6 +103,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                   stepGranularity: 0.5,
                                   style: AppStyles.textStyleSize20W700Primary(
                                       context),
+                                  textAlign: TextAlign.justify,
                                 ),
                               ),
                               Container(
@@ -114,6 +115,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                   AppLocalization.of(context)!.secretWarning,
                                   style: AppStyles.textStyleSize16W600Primary(
                                       context),
+                                  textAlign: TextAlign.justify,
                                   maxLines: 6,
                                   stepGranularity: 0.5,
                                 ),
