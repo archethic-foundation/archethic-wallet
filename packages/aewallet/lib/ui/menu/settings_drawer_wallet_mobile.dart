@@ -1204,8 +1204,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         context,
                         AppLocalization.of(context)!.aeWebsiteLinkHeader,
                         AppLocalization.of(context)!.aeWebsiteLinkDesc,
-                        icon:
-                            'packages/aeuniverse/assets/icons/world-wide-web.png',
+                        icon: 'packages/aewallet/assets/icons/home.png',
                         iconColor: StateContainer.of(context)
                             .curTheme
                             .iconDrawerColor!, onPressed: () async {
