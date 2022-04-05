@@ -180,8 +180,8 @@ class LightTheme implements BaseTheme {
   @override
   Gradient? gradient = const LinearGradient(
     colors: <Color>[
-      Color(0xFFFFFFFF),
-      Color(0xFFFFFFFF),
+      Color(0xFF06347c),
+      Color(0xFF06347c),
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,

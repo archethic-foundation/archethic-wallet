@@ -5,6 +5,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:core/model/available_networks.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,6 +35,7 @@ import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/formatters.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
@@ -210,7 +212,6 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                   height: 0,
                 ),
 
-                // Container for the header, address and balance text
                 Column(
                   children: <Widget>[
                     // Sheet handle
@@ -229,7 +230,59 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                           maxWidth: MediaQuery.of(context).size.width - 140),
                       child: Column(
                         children: <Widget>[
-                          // Header
+                          Column(
+                            children: [
+                              StateContainer.of(context)
+                                          .curNetwork
+                                          .getIndex() ==
+                                      AvailableNetworks.AETestNet.index
+                                  ? SvgPicture.asset(
+                                      StateContainer.of(context)
+                                              .curTheme
+                                              .assetsFolder! +
+                                          StateContainer.of(context)
+                                              .curTheme
+                                              .logoAlone! +
+                                          '.svg',
+                                      color: Colors.green,
+                                      height: 15,
+                                    )
+                                  : StateContainer.of(context)
+                                              .curNetwork
+                                              .getIndex() ==
+                                          AvailableNetworks.AEDevNet.index
+                                      ? SvgPicture.asset(
+                                          StateContainer.of(context)
+                                                  .curTheme
+                                                  .assetsFolder! +
+                                              StateContainer.of(context)
+                                                  .curTheme
+                                                  .logoAlone! +
+                                              '.svg',
+                                          color: Colors.orange,
+                                          height: 15,
+                                        )
+                                      : SvgPicture.asset(
+                                          StateContainer.of(context)
+                                                  .curTheme
+                                                  .assetsFolder! +
+                                              StateContainer.of(context)
+                                                  .curTheme
+                                                  .logoAlone! +
+                                              '.svg',
+                                          height: 15,
+                                        ),
+                              Text(
+                                  StateContainer.of(context)
+                                      .curNetwork
+                                      .getLongDisplayName(),
+                                  style: AppStyles.textStyleSize10W100Primary(
+                                      context)),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ), // Header
                           AutoSizeText(
                             widget.title ?? AppLocalization.of(context)!.send,
                             style:

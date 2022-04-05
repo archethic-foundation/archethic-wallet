@@ -279,7 +279,10 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                       AppButtonType.primary,
                       AppLocalization.of(context)!.viewExplorer,
                       Dimens.buttonTopDimens,
-                      icon: const Icon(Icons.more_horiz), onPressed: () async {
+                      icon: Icon(
+                        Icons.more_horiz,
+                        color: StateContainer.of(context).curTheme.primary,
+                      ), onPressed: () async {
                     UIUtil.showWebview(
                         context,
                         StateContainer.of(context).curNetwork.getLink() +
@@ -299,7 +302,10 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                       AppButtonType.primary,
                       AppLocalization.of(context)!.share,
                       Dimens.buttonBottomDimens,
-                      icon: const Icon(Icons.share), onPressed: () {
+                      icon: Icon(
+                        Icons.share,
+                        color: StateContainer.of(context).curTheme.primary,
+                      ), onPressed: () {
                     final RenderBox? box =
                         context.findRenderObject() as RenderBox?;
                     final String textToShare = StateContainer.of(context)

@@ -139,8 +139,12 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                           AppLocalization.of(context)!
                                               .viewExplorer,
                                           Dimens.buttonTopDimens,
-                                          icon: const Icon(Icons.more_horiz),
-                                          onPressed: () async {
+                                          icon: Icon(
+                                            Icons.more_horiz,
+                                            color: StateContainer.of(context)
+                                                .curTheme
+                                                .primary,
+                                          ), onPressed: () async {
                                         UIUtil.showWebview(
                                             context,
                                             StateContainer.of(context)
