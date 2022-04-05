@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -164,13 +166,11 @@ class DarkTheme implements BaseTheme {
   @override
   Gradient? gradient = const LinearGradient(
     colors: <Color>[
-      Color(0xFF1594df),
-      Color(0xFF4270e5),
-      Color(0xFF833bf3),
-      Color(0xFFad19fa),
-      Color(0xFFad19fa),
+      Color(0xFF00A4DB),
+      Color(0xFFCC00FF),
     ],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
+    begin: Alignment(-1.0, 0.0),
+    end: Alignment(1.0, 0.0),
+    transform: GradientRotation(pi / 9),
   );
 }
