@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -144,12 +145,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   border: InputBorder.none,
                   // Hint
                   hintText: widget.hintText ?? '',
-                  hintStyle: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Montserrat',
-                    color: StateContainer.of(context).curTheme.primary60,
-                  ),
+                  hintStyle: AppStyles.textStyleSize16W400Primary60(context),
                   // First button
                   prefixIcon: widget.prefixButton == null
                       ? const SizedBox(width: 0, height: 0)
