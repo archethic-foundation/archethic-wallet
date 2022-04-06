@@ -983,8 +983,9 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                 ListView(
                   children: <Widget>[
                     Container(
+                      alignment: Alignment.center,
                       margin: const EdgeInsetsDirectional.only(
-                          start: 30.0, top: 10.0, bottom: 10.0),
+                          top: 10.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context)!.informations,
                           style: AppStyles.textStyleSize20W700Primary(context)),
                     ),
@@ -1057,8 +1058,9 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                         height: 2,
                         color: StateContainer.of(context).curTheme.primary15),
                     Container(
+                      alignment: Alignment.center,
                       margin: const EdgeInsetsDirectional.only(
-                          start: 30.0, top: 20.0, bottom: 10.0),
+                          top: 20.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context)!.preferences,
                           style: AppStyles.textStyleSize20W700Primary(context)),
                     ),
@@ -1292,8 +1294,8 @@ class _SettingsSheetUniverseState extends State<SettingsSheetUniverse>
                   padding: const EdgeInsets.only(top: 15.0),
                   children: <Widget>[
                     Container(
-                      margin: const EdgeInsetsDirectional.only(
-                          start: 30.0, bottom: 10),
+                      alignment: Alignment.center,
+                      margin: const EdgeInsetsDirectional.only(bottom: 10),
                       child: Text(AppLocalization.of(context)!.preferences,
                           style: AppStyles.textStyleSize20W700Primary(context)),
                     ),

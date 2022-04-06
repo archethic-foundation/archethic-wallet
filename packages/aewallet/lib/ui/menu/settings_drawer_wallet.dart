@@ -199,8 +199,9 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                 ListView(
                   children: <Widget>[
                     Container(
+                      alignment: Alignment.center,
                       margin: const EdgeInsetsDirectional.only(
-                          start: 30.0, top: 10.0, bottom: 10.0),
+                          top: 10.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context)!.manage,
                           style: AppStyles.textStyleSize20W700Primary(context)),
                     ),
@@ -257,8 +258,9 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                       color: StateContainer.of(context).curTheme.primary15,
                     ),
                     Container(
+                      alignment: Alignment.center,
                       margin: const EdgeInsetsDirectional.only(
-                          start: 30.0, top: 20.0, bottom: 10.0),
+                          top: 20.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context)!.informations,
                           style: AppStyles.textStyleSize20W700Primary(context)),
                     ),
