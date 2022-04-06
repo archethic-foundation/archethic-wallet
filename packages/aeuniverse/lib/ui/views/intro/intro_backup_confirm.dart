@@ -52,13 +52,12 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
               children: <Widget>[
                 Expanded(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Row(
                         children: <Widget>[
                           Container(
-                            margin: EdgeInsetsDirectional.only(
-                                start: smallScreen(context) ? 15 : 20),
+                            margin: EdgeInsetsDirectional.only(start: 15),
                             height: 50,
                             width: 50,
                             child: TextButton(
@@ -74,10 +73,6 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                         ],
                       ),
                       Container(
-                        margin: EdgeInsetsDirectional.only(
-                          start: smallScreen(context) ? 30 : 40,
-                          top: 15,
-                        ),
                         child: buildIconWidget(
                             context,
                             'packages/aeuniverse/assets/icons/writing.png',
@@ -92,8 +87,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                             children: [
                               Container(
                                 margin: EdgeInsetsDirectional.only(
-                                  start: smallScreen(context) ? 30 : 40,
-                                  end: smallScreen(context) ? 30 : 40,
+                                  start: 20,
+                                  end: 20,
                                   top: 10,
                                 ),
                                 alignment: const AlignmentDirectional(-1, 0),
@@ -101,16 +96,14 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                   AppLocalization.of(context)!.ackBackedUp,
                                   maxLines: 4,
                                   stepGranularity: 0.5,
-                                  style: AppStyles.textStyleSize20W700Primary(
+                                  style: AppStyles.textStyleSize20W700Warning(
                                       context),
                                   textAlign: TextAlign.justify,
                                 ),
                               ),
                               Container(
                                 margin: EdgeInsetsDirectional.only(
-                                    start: smallScreen(context) ? 30 : 40,
-                                    end: smallScreen(context) ? 30 : 40,
-                                    top: 15.0),
+                                    start: 20, end: 20, top: 15.0),
                                 child: AutoSizeText(
                                   AppLocalization.of(context)!.secretWarning,
                                   style: AppStyles.textStyleSize16W600Primary(

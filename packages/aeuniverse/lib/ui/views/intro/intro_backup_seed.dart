@@ -69,14 +69,13 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                 children: <Widget>[
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(
-                              margin: EdgeInsetsDirectional.only(
-                                  start: smallScreen(context) ? 15 : 20),
+                              margin: EdgeInsetsDirectional.only(start: 15),
                               height: 50,
                               width: 50,
                               child: TextButton(
@@ -89,13 +88,38 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                           .primary,
                                       size: 24)),
                             ),
+                            Container(
+                              margin: EdgeInsetsDirectional.only(start: 15),
+                              height: 50,
+                              width: 50,
+                              child: TextButton(
+                                  onPressed: () async {
+                                    Vault.getInstance().then((Vault _vault) {
+                                      final String _seed =
+                                          AppSeeds.generateSeed();
+                                      _vault.setSeed(_seed);
+                                      AppUtil()
+                                          .loginAccount(_seed, context,
+                                              forceNewAccount: true)
+                                          .then((Account selectedAcct) {
+                                        StateContainer.of(context)
+                                            .requestUpdate(
+                                                account: selectedAcct);
+                                        _mnemonic = AppMnemomics.seedToMnemonic(
+                                            _vault.getSeed()!);
+                                      });
+                                    });
+                                    setState(() {});
+                                  },
+                                  child: FaIcon(FontAwesomeIcons.rotate,
+                                      color: StateContainer.of(context)
+                                          .curTheme
+                                          .primary,
+                                      size: 24)),
+                            ),
                           ],
                         ),
                         Container(
-                          margin: EdgeInsetsDirectional.only(
-                            start: smallScreen(context) ? 30 : 40,
-                            top: 15,
-                          ),
                           child: buildIconWidget(
                               context,
                               'packages/aeuniverse/assets/icons/key-word.png',
@@ -104,52 +128,12 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                         ),
                         Container(
                           margin: EdgeInsetsDirectional.only(
-                            start: smallScreen(context) ? 30 : 40,
-                            end: smallScreen(context) ? 30 : 40,
                             top: 10,
                           ),
-                          alignment: const AlignmentDirectional(-1, 0),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                constraints: BoxConstraints(
-                                    maxWidth:
-                                        MediaQuery.of(context).size.width -
-                                            (smallScreen(context) ? 120 : 140)),
-                                child: AutoSizeText(
-                                  AppLocalization.of(context)!.recoveryPhrase,
-                                  style: AppStyles.textStyleSize20W700Primary(
-                                      context),
-                                  stepGranularity: 0.1,
-                                  minFontSize: 12.0,
-                                  maxLines: 1,
-                                ),
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.refresh),
-                                color: StateContainer.of(context)
-                                    .curTheme
-                                    .backgroundDarkest,
-                                onPressed: () async {
-                                  Vault.getInstance().then((Vault _vault) {
-                                    final String _seed =
-                                        AppSeeds.generateSeed();
-                                    _vault.setSeed(_seed);
-                                    AppUtil()
-                                        .loginAccount(_seed, context,
-                                            forceNewAccount: true)
-                                        .then((Account selectedAcct) {
-                                      StateContainer.of(context)
-                                          .requestUpdate(account: selectedAcct);
-                                      _mnemonic = AppMnemomics.seedToMnemonic(
-                                          _vault.getSeed()!);
-                                    });
-                                  });
-
-                                  setState(() {});
-                                },
-                              )
-                            ],
+                          child: AutoSizeText(
+                            AppLocalization.of(context)!.recoveryPhrase,
+                            style:
+                                AppStyles.textStyleSize20W700Primary(context),
                           ),
                         ),
                         if (_mnemonic != null)

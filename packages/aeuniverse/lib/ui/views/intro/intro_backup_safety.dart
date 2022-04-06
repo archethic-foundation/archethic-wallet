@@ -48,7 +48,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Row(
                           children: <Widget>[
@@ -70,10 +70,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                           ],
                         ),
                         Container(
-                          margin: EdgeInsetsDirectional.only(
-                            start: smallScreen(context) ? 30 : 40,
-                            top: 15,
-                          ),
+                          margin: EdgeInsetsDirectional.only(),
                           child: buildIconWidget(
                             context,
                             'packages/aeuniverse/assets/icons/warning.png',
@@ -84,25 +81,17 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                         ),
                         Container(
                           margin: EdgeInsetsDirectional.only(
-                            start: smallScreen(context) ? 30 : 40,
-                            end: smallScreen(context) ? 30 : 40,
                             top: 10,
                           ),
-                          alignment: const AlignmentDirectional(-1, 0),
                           child: AutoSizeText(
                             AppLocalization.of(context)!.warning,
                             style:
                                 AppStyles.textStyleSize28W700Warning(context),
-                            stepGranularity: 0.1,
-                            maxLines: 1,
-                            minFontSize: 12,
                           ),
                         ),
                         Container(
                           margin: EdgeInsetsDirectional.only(
-                              start: smallScreen(context) ? 30 : 40,
-                              end: smallScreen(context) ? 30 : 40,
-                              top: 15.0),
+                              start: 20, end: 20, top: 15.0),
                           alignment: Alignment.bottomLeft,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,7 +99,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                             children: <Widget>[
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel1,
-                                style: AppStyles.textStyleSize20W700Primary(
+                                style: AppStyles.textStyleSize20W700Warning(
                                     context),
                               ),
                               Divider(
@@ -121,7 +110,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               ),
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel2,
-                                style: AppStyles.textStyleSize20W700Primary(
+                                style: AppStyles.textStyleSize20W700Warning(
                                     context),
                                 textAlign: TextAlign.justify,
                               ),
@@ -142,7 +131,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               ),
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel4,
-                                style: AppStyles.textStyleSize20W700Primary(
+                                style: AppStyles.textStyleSize20W700Warning(
                                     context),
                                 textAlign: TextAlign.justify,
                               ),
@@ -163,7 +152,7 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                               ),
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel6,
-                                style: AppStyles.textStyleSize20W700Primary(
+                                style: AppStyles.textStyleSize20W700Warning(
                                     context),
                                 textAlign: TextAlign.justify,
                               ),
