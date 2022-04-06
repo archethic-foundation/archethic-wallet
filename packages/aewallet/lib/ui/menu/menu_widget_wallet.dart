@@ -27,8 +27,6 @@ import 'package:core_ui/model/chart_infos.dart';
 import 'package:core_ui/ui/widgets/menu/abstract_menu_widget.dart';
 
 class MenuWidgetWallet extends AbstractMenuWidget {
-  List<OptionChart> optionChartList = List<OptionChart>.empty(growable: true);
-
   @override
   Widget buildMainMenuIcons(BuildContext context) {
     return Card(
@@ -79,7 +77,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                         child: Column(
                           children: <Widget>[
                             buildIconDataWidget(context,
-                                Icons.arrow_circle_up_outlined, 30, 30),
+                                Icons.arrow_circle_up_outlined, 40, 40),
                             const SizedBox(height: 5),
                             Text(AppLocalization.of(context)!.send,
                                 style: AppStyles.textStyleSize14W600Primary(
@@ -90,7 +88,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                     child: Column(
                     children: <Widget>[
                       buildIconDataWidget(
-                          context, Icons.arrow_circle_up_outlined, 30, 30,
+                          context, Icons.arrow_circle_up_outlined, 40, 40,
                           enabled: false),
                       const SizedBox(height: 5),
                       Text(AppLocalization.of(context)!.send,
@@ -108,7 +106,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                 child: Column(
                   children: <Widget>[
                     buildIconDataWidget(
-                        context, Icons.arrow_circle_down_outlined, 30, 30),
+                        context, Icons.arrow_circle_down_outlined, 40, 40),
                     const SizedBox(height: 5),
                     Text(AppLocalization.of(context)!.receive,
                         style: AppStyles.textStyleSize14W600Primary(context)),
@@ -126,72 +124,9 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                     child: Column(
                       children: <Widget>[
                         buildIconDataWidget(
-                            context, Icons.add_circle_outline_outlined, 30, 30),
+                            context, Icons.add_circle_outline_outlined, 40, 40),
                         const SizedBox(height: 5),
                         Text(AppLocalization.of(context)!.buy,
-                            style:
-                                AppStyles.textStyleSize14W600Primary(context)),
-                      ],
-                    ))),
-            Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                child: InkWell(
-                    onTap: () {
-                      optionChartList = <OptionChart>[
-                        OptionChart('24h',
-                            ChartInfos.getChartOptionLabel(context, '24h')),
-                        OptionChart('7d',
-                            ChartInfos.getChartOptionLabel(context, '7d')),
-                        OptionChart('14d',
-                            ChartInfos.getChartOptionLabel(context, '14d')),
-                        OptionChart('30d',
-                            ChartInfos.getChartOptionLabel(context, '30d')),
-                        OptionChart('60d',
-                            ChartInfos.getChartOptionLabel(context, '60d')),
-                        OptionChart('200d',
-                            ChartInfos.getChartOptionLabel(context, '200d')),
-                        OptionChart('1y',
-                            ChartInfos.getChartOptionLabel(context, '1y')),
-                      ];
-                      final OptionChart? optionChart;
-                      final String _idChartOption =
-                          StateContainer.of(context).idChartOption!;
-                      switch (_idChartOption) {
-                        case '7d':
-                          optionChart = optionChartList[1];
-                          break;
-                        case '14d':
-                          optionChart = optionChartList[2];
-                          break;
-                        case '30d':
-                          optionChart = optionChartList[3];
-                          break;
-                        case '60d':
-                          optionChart = optionChartList[4];
-                          break;
-                        case '200d':
-                          optionChart = optionChartList[5];
-                          break;
-                        case '1y':
-                          optionChart = optionChartList[6];
-                          break;
-                        case '24h':
-                        default:
-                          optionChart = optionChartList[0];
-                          break;
-                      }
-                      Sheets.showAppHeightNineSheet(
-                          context: context,
-                          widget: ChartSheet(
-                            optionChartList: optionChartList,
-                            optionChart: optionChart,
-                          ));
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        buildIconDataWidget(context, Icons.show_chart, 30, 30),
-                        const SizedBox(height: 5),
-                        Text(AppLocalization.of(context)!.chart,
                             style:
                                 AppStyles.textStyleSize14W600Primary(context)),
                       ],
@@ -207,7 +142,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                       child: Column(
                         children: <Widget>[
                           buildIconDataWidget(
-                              context, Icons.vpn_key_outlined, 30, 30),
+                              context, Icons.vpn_key_outlined, 40, 40),
                           const SizedBox(height: 5),
                           Text('Ledger',
                               style: AppStyles.textStyleSize14W600Primary(

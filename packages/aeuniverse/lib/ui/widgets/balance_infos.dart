@@ -14,13 +14,55 @@ import 'package:core/localization.dart';
 import 'package:core_ui/model/chart_infos.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:aewallet/ui/views/sheets/chart_sheet.dart';
 
 class BalanceInfosWidget {
+  List<OptionChart> optionChartList = List<OptionChart>.empty(growable: true);
+
   Widget buildInfos(BuildContext context) {
     return InkWell(
       onTap: () {
+        optionChartList = <OptionChart>[
+          OptionChart('24h', ChartInfos.getChartOptionLabel(context, '24h')),
+          OptionChart('7d', ChartInfos.getChartOptionLabel(context, '7d')),
+          OptionChart('14d', ChartInfos.getChartOptionLabel(context, '14d')),
+          OptionChart('30d', ChartInfos.getChartOptionLabel(context, '30d')),
+          OptionChart('60d', ChartInfos.getChartOptionLabel(context, '60d')),
+          OptionChart('200d', ChartInfos.getChartOptionLabel(context, '200d')),
+          OptionChart('1y', ChartInfos.getChartOptionLabel(context, '1y')),
+        ];
+        final OptionChart? optionChart;
+        final String _idChartOption = StateContainer.of(context).idChartOption!;
+        switch (_idChartOption) {
+          case '7d':
+            optionChart = optionChartList[1];
+            break;
+          case '14d':
+            optionChart = optionChartList[2];
+            break;
+          case '30d':
+            optionChart = optionChartList[3];
+            break;
+          case '60d':
+            optionChart = optionChartList[4];
+            break;
+          case '200d':
+            optionChart = optionChartList[5];
+            break;
+          case '1y':
+            optionChart = optionChartList[6];
+            break;
+          case '24h':
+          default:
+            optionChart = optionChartList[0];
+            break;
+        }
         Sheets.showAppHeightNineSheet(
-            context: context, widget: const TxAllListWidget());
+            context: context,
+            widget: ChartSheet(
+              optionChartList: optionChartList,
+              optionChart: optionChart,
+            ));
       },
       child: Ink(
         child: FadeIn(
