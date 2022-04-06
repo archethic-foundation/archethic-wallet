@@ -268,20 +268,19 @@ class BalanceInfosWidget {
   }
 
   static LineChartData mainData(BuildContext context) {
-    final List<Color> gradientColors = <Color>[
+    final Gradient gradientColors = LinearGradient(colors: <Color>[
       StateContainer.of(context).curTheme.backgroundDark!,
       StateContainer.of(context).curTheme.backgroundDarkest!,
-    ];
+    ]);
+
     return LineChartData(
       gridData: FlGridData(
         show: false,
       ),
       titlesData: FlTitlesData(
         show: false,
-        bottomTitles: SideTitles(showTitles: false),
-        leftTitles: SideTitles(
-          showTitles: false,
-        ),
+        bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
       ),
       borderData: FlBorderData(
         show: false,
@@ -310,7 +309,7 @@ class BalanceInfosWidget {
         LineChartBarData(
           spots: StateContainer.of(context).chartInfos!.data,
           isCurved: true,
-          colors: gradientColors,
+          gradient: gradientColors,
           barWidth: 1,
           isStrokeCapRound: true,
           dotData: FlDotData(

@@ -363,29 +363,30 @@ class _ChartSheetState extends State<ChartSheet> {
   }
 
   LineChartData mainData(BuildContext context) {
-    final List<Color> gradientColors = <Color>[
+    final Gradient gradientColors = LinearGradient(colors: <Color>[
       StateContainer.of(context).curTheme.backgroundDarkest!,
       StateContainer.of(context).curTheme.backgroundDarkest!,
-    ];
-    final List<Color> gradientColorsBar = <Color>[
-      StateContainer.of(context).curTheme.backgroundDarkest!.withOpacity(0.9),
-      StateContainer.of(context).curTheme.backgroundDarkest!.withOpacity(0.0),
-    ];
+    ]);
+    final Gradient gradientColorsBar = LinearGradient(
+      colors: <Color>[
+        StateContainer.of(context).curTheme.backgroundDarkest!.withOpacity(0.9),
+        StateContainer.of(context).curTheme.backgroundDarkest!.withOpacity(0.0),
+      ],
+      begin: const Alignment(0.0, 0.0),
+      end: const Alignment(0.0, 1.0),
+    );
 
     return LineChartData(
       gridData: FlGridData(
         show: false,
       ),
       titlesData: FlTitlesData(
-          show: true,
-          bottomTitles: SideTitles(showTitles: false),
-          rightTitles: SideTitles(
-            showTitles: false,
-          ),
-          topTitles: SideTitles(showTitles: false),
-          leftTitles: SideTitles(
-            showTitles: false,
-          )),
+        show: true,
+        bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+      ),
       borderData: FlBorderData(
         show: false,
       ),
@@ -413,7 +414,7 @@ class _ChartSheetState extends State<ChartSheet> {
         LineChartBarData(
           spots: StateContainer.of(context).chartInfos!.data,
           isCurved: true,
-          colors: gradientColors,
+          gradient: gradientColors,
           barWidth: 2,
           isStrokeCapRound: true,
           dotData: FlDotData(
@@ -421,9 +422,7 @@ class _ChartSheetState extends State<ChartSheet> {
           ),
           belowBarData: BarAreaData(
             show: true,
-            gradientFrom: const Offset(0, 0),
-            gradientTo: const Offset(0, 1),
-            colors: gradientColorsBar,
+            gradient: gradientColorsBar,
           ),
         ),
       ],

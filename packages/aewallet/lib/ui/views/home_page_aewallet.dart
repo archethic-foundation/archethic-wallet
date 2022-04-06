@@ -298,7 +298,7 @@ class _AppHomePageAEWalletState extends State<AppHomePageAEWallet>
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Padding(
-                            padding: const EdgeInsets.only(top: 20.0),
+                            padding: const EdgeInsets.only(top: 50.0),
                             child:
                                 MenuWidgetWallet().buildMainMenuIcons(context)),
                       ),
