@@ -1,3 +1,15 @@
+## 0.2.5
+👷‍♂️ Enhancements
+* Change access to Chart Sheet (Remove button in the main page. Just click on the balance)
+* Introduction pages : improve UI
+* Add sheet wave transition animation
+* Buttons : change style
+* Recent transactions : change style
+
+🐛 Bugfixes
+* Fix display of transactions (some transactions don't appear)
+* Fix address length in address book
+
 ## 0.2.3
 🚀 Features
 * Account management menu : Add ARCHEthic website access 
