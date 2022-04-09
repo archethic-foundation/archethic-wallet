@@ -5,6 +5,8 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +18,7 @@ import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/menu/settings_drawer_wallet.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/sheets/chart_sheet.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:aewallet/ui/views/sheets/ledger_sheet.dart';
 import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
 import 'package:aewallet/ui/views/tokens/transfer_tokens_sheet.dart';
@@ -61,6 +64,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                     padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                     child: InkWell(
                         onTap: () {
+                          sl.get<HapticUtil>().feedback(FeedbackType.light);
                           Sheets.showAppHeightNineSheet(
                               context: context,
                               widget: TransferTokensSheet(
@@ -100,6 +104,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: InkWell(
                 onTap: () {
+                  sl.get<HapticUtil>().feedback(FeedbackType.light);
                   Sheets.showAppHeightNineSheet(
                       context: context, widget: const ReceiveSheet());
                 },
@@ -118,6 +123,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                 padding: const EdgeInsets.only(left: 5.0, right: 10.0),
                 child: InkWell(
                     onTap: () {
+                      sl.get<HapticUtil>().feedback(FeedbackType.light);
                       Sheets.showAppHeightNineSheet(
                           context: context, widget: const BuySheet());
                     },
@@ -136,6 +142,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                   child: InkWell(
                       onTap: () {
+                        sl.get<HapticUtil>().feedback(FeedbackType.light);
                         Sheets.showAppHeightNineSheet(
                             context: context, widget: const LedgerSheet());
                       },
@@ -167,6 +174,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
             padding: const EdgeInsets.only(left: 10.0, right: 10.0),
             child: InkWell(
               onTap: () {
+                sl.get<HapticUtil>().feedback(FeedbackType.light);
                 StateContainer.of(context).currentAEApp = AEApps.bin;
                 Navigator.pop(context);
               },
@@ -186,6 +194,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
   Widget buildMenuTxExplorer(BuildContext context) {
     return InkWell(
       onTap: () {
+        sl.get<HapticUtil>().feedback(FeedbackType.light);
         Sheets.showAppHeightNineSheet(
             context: context, widget: const TransactionChainExplorerSheet());
       },
