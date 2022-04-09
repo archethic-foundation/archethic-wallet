@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -6,6 +8,7 @@ import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core_ui/ui/util/exceptions.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 enum AppButtonType {
   primary,
@@ -45,6 +48,7 @@ class AppButton {
                         stepGranularity: 0.5),
                     onPressed: () {
                       if (!disabled) {
+                        sl.get<HapticUtil>().feedback(FeedbackType.light);
                         onPressed();
                       }
                       return;
@@ -64,6 +68,7 @@ class AppButton {
                         stepGranularity: 0.5),
                     onPressed: () {
                       if (!disabled) {
+                        sl.get<HapticUtil>().feedback(FeedbackType.light);
                         onPressed();
                       }
                       return;
@@ -74,13 +79,9 @@ class AppButton {
       case AppButtonType.primaryOutline:
         return Expanded(
           child: Container(
-            decoration: BoxDecoration(
-              color: StateContainer.of(context).curTheme.backgroundDark,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: <BoxShadow>[
-                StateContainer.of(context).curTheme.boxShadowButton!
-              ],
-            ),
+            decoration: ShapeDecoration(
+                gradient: StateContainer.of(context).curTheme.gradient!,
+                shape: const StadiumBorder()),
             height: 55,
             margin: EdgeInsetsDirectional.fromSTEB(
                 dimens[0], dimens[1], dimens[2], dimens[3]),
@@ -88,20 +89,18 @@ class AppButton {
                 ? TextButton(
                     key: key,
                     style: TextButton.styleFrom(
-                      backgroundColor: disabled
-                          ? StateContainer.of(context).curTheme.background40
-                          : StateContainer.of(context).curTheme.background,
-                      elevation: 5.0,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
                     ),
                     child: AutoSizeText(buttonText,
                         textAlign: TextAlign.center,
-                        style: AppStyles.textStyleSize20W700Primary(context),
+                        style: AppStyles.textStyleSize18W600PrimaryDisabled(
+                            context),
                         maxLines: 1,
                         stepGranularity: 0.5),
                     onPressed: () {
                       if (!disabled) {
+                        sl.get<HapticUtil>().feedback(FeedbackType.light);
                         onPressed();
                       }
                       return;
@@ -110,21 +109,19 @@ class AppButton {
                 : TextButton.icon(
                     key: key,
                     style: TextButton.styleFrom(
-                      backgroundColor: disabled
-                          ? StateContainer.of(context).curTheme.background40
-                          : StateContainer.of(context).curTheme.background,
-                      elevation: 5.0,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
                     ),
                     icon: icon,
                     label: AutoSizeText(buttonText,
                         textAlign: TextAlign.center,
-                        style: AppStyles.textStyleSize20W700Primary(context),
+                        style: AppStyles.textStyleSize18W600PrimaryDisabled(
+                            context),
                         maxLines: 1,
                         stepGranularity: 0.5),
                     onPressed: () {
                       if (!disabled) {
+                        sl.get<HapticUtil>().feedback(FeedbackType.light);
                         onPressed();
                       }
                       return;
@@ -164,6 +161,7 @@ class AppButton {
                     ),
                     onPressed: () {
                       if (!disabled) {
+                        sl.get<HapticUtil>().feedback(FeedbackType.light);
                         onPressed();
                       }
                       return;
@@ -187,6 +185,7 @@ class AppButton {
                         stepGranularity: 0.5),
                     onPressed: () {
                       if (!disabled) {
+                        sl.get<HapticUtil>().feedback(FeedbackType.light);
                         onPressed();
                       }
                       return;
@@ -217,6 +216,7 @@ class AppButton {
                 stepGranularity: 0.5,
               ),
               onPressed: () {
+                sl.get<HapticUtil>().feedback(FeedbackType.light);
                 onPressed();
                 return;
               },
@@ -246,6 +246,7 @@ class AppButton {
                 stepGranularity: 0.5,
               ),
               onPressed: () {
+                sl.get<HapticUtil>().feedback(FeedbackType.light);
                 onPressed();
                 return;
               },
