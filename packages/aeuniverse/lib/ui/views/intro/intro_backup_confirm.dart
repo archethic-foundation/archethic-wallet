@@ -7,12 +7,14 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/views/pin_screen.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
+import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
-import 'package:core/util/vault.dart';
+import 'package:core/model/authentication_method.dart';
+import 'package:core/util/biometrics_util.dart';
+import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -94,11 +96,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                 alignment: const AlignmentDirectional(-1, 0),
                                 child: AutoSizeText(
                                   AppLocalization.of(context)!.ackBackedUp,
-                                  maxLines: 4,
-                                  stepGranularity: 0.5,
                                   style: AppStyles.textStyleSize20W700Warning(
                                       context),
-                                  textAlign: TextAlign.justify,
                                 ),
                               ),
                               Container(
@@ -130,16 +129,56 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                             AppButtonType.primary,
                             AppLocalization.of(context)!.yes,
                             Dimens.buttonTopDimens, onPressed: () async {
-                          final String pin = await Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                            return const PinScreen(
-                              PinOverlayType.newPin,
-                            );
-                          }));
-                          if (pin.length > 5) {
-                            _pinEnteredCallback(pin);
+                          bool biometricsAvalaible =
+                              await sl.get<BiometricUtil>().hasBiometrics();
+                          List<PickerItem> accessModes = [];
+                          accessModes.add(PickerItem(
+                              AppLocalization.of(context)!.pinMethod,
+                              AppLocalization.of(context)!
+                                  .configureSecurityExplanationPIN,
+                              AuthenticationMethod.getIcon(AuthMethod.pin),
+                              AuthMethod.pin,
+                              true));
+                          accessModes.add(PickerItem(
+                              AppLocalization.of(context)!.passwordMethod,
+                              AppLocalization.of(context)!
+                                  .configureSecurityExplanationPassword,
+                              AuthenticationMethod.getIcon(AuthMethod.password),
+                              AuthMethod.password,
+                              true));
+                          if (biometricsAvalaible) {
+                            accessModes.add(PickerItem(
+                                AppLocalization.of(context)!.biometricsMethod,
+                                AppLocalization.of(context)!
+                                    .configureSecurityExplanationBiometrics,
+                                AuthenticationMethod.getIcon(
+                                    AuthMethod.biometrics),
+                                AuthMethod.biometrics,
+                                true));
                           }
+
+                          accessModes.add(PickerItem(
+                              AppLocalization.of(context)!
+                                  .biometricsUnirisMethod,
+                              AppLocalization.of(context)!
+                                  .configureSecurityExplanationUnirisBiometrics,
+                              AuthenticationMethod.getIcon(
+                                  AuthMethod.biometricsUniris),
+                              AuthMethod.biometricsUniris,
+                              false));
+
+                          accessModes.add(PickerItem(
+                              AppLocalization.of(context)!
+                                  .yubikeyWithYubiCloudMethod,
+                              AppLocalization.of(context)!
+                                  .configureSecurityExplanationYubikey,
+                              AuthenticationMethod.getIcon(
+                                  AuthMethod.yubikeyWithYubicloud),
+                              AuthMethod.yubikeyWithYubicloud,
+                              true));
+                          Navigator.of(context).pushNamed(
+                              '/intro_configure_security',
+                              arguments: accessModes);
                         }),
                       ],
                     ),
@@ -162,15 +201,6 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
           ),
         ),
       ),
-    );
-  }
-
-  Future<void> _pinEnteredCallback(String pin) async {
-    final Vault _vault = await Vault.getInstance();
-    _vault.setPin(pin);
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      '/home',
-      (Route<dynamic> route) => false,
     );
   }
 }

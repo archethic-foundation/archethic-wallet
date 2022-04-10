@@ -33,6 +33,9 @@ dependencies:
   # The decimal package allows you to deal with decimal numbers without losing precision
   decimal: ^2.1.0
 
+  # A set of high-level APIs over PointyCastle for two-way cryptography.
+  encrypt: ^5.0.1
+  
   # EventTaxi could be used to send events through different layers of the application decoupled from the architecture
   event_taxi: ^1.0.0
 
@@ -111,6 +114,9 @@ dependencies:
 
   # A package to help you build highly customisable timelines with Flutter.
   timeline_tile: ^2.0.0
+
+  # Tuple data structure
+  tuple: ^2.0.0
 
   # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes
   url_launcher: ^6.0.20

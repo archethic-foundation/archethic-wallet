@@ -11,6 +11,7 @@ import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/views/ledger_screen.dart';
+import 'package:aeuniverse/ui/views/password_screen.dart';
 import 'package:aeuniverse/ui/views/pin_screen.dart';
 import 'package:aeuniverse/ui/views/yubikey_screen.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
@@ -280,7 +281,11 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                             if (authMethod.method == AuthMethod.ledger) {
                               await confirmationWithLedger();
                             } else {
-                              await authenticateWithPin();
+                              if (authMethod.method == AuthMethod.password) {
+                                await authenticateWithPassword();
+                              } else {
+                                await authenticateWithPin();
+                              }
                             }
                           }
                         }
@@ -352,6 +357,17 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     final bool auth = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
       return const YubikeyScreen();
+    })) as bool;
+    if (auth) {
+      await Future<void>.delayed(const Duration(milliseconds: 200));
+      EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.send));
+    }
+  }
+
+  Future<void> authenticateWithPassword() async {
+    final bool auth = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) {
+      return const PasswordScreen();
     })) as bool;
     if (auth) {
       await Future<void>.delayed(const Duration(milliseconds: 200));

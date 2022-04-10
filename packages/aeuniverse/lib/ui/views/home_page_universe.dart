@@ -11,8 +11,6 @@ import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/widgets/balance_infos.dart';
-import 'package:aeuniverse/ui/widgets/logo.dart';
-import 'package:aeuniverse/ui/widgets/menu/menu_widget_universe.dart';
 import 'package:aeuniverse/util/preferences.dart';
 import 'package:aewallet/ui/menu/menu_widget_wallet.dart';
 import 'package:aewallet/ui/menu/settings_drawer_wallet_mobile.dart';
@@ -22,7 +20,6 @@ import 'package:core/bus/account_changed_event.dart';
 import 'package:core/bus/disable_lock_timeout_event.dart';
 import 'package:core/model/available_networks.dart';
 import 'package:core_ui/ui/util/routes.dart';
-import 'package:core_ui/util/app_util.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -219,258 +216,145 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
 
   @override
   Widget build(BuildContext context) {
-    return AppUtil.isDesktopMode() == true
-        ? Scaffold(
-            extendBodyBehindAppBar: true,
-            drawerEdgeDragWidth: 0,
-            resizeToAvoidBottomInset: false,
-            key: _scaffoldKey,
-            backgroundColor: StateContainer.of(context).curTheme.background,
-            body: SingleChildScrollView(
-              physics: const NeverScrollableScrollPhysics(),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: <Color>[
-                      StateContainer.of(context).curTheme.backgroundMainTop!,
-                      StateContainer.of(context).curTheme.backgroundMainBottom!
-                    ],
-                  ),
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: Column(
+          children: [
+            StateContainer.of(context).curNetwork.getIndex() ==
+                    AvailableNetworks.AETestNet.index
+                ? SvgPicture.asset(
+                    StateContainer.of(context).curTheme.assetsFolder! +
+                        StateContainer.of(context).curTheme.logoAlone! +
+                        '.svg',
+                    color: Colors.green,
+                    height: 15,
+                  )
+                : StateContainer.of(context).curNetwork.getIndex() ==
+                        AvailableNetworks.AEDevNet.index
+                    ? SvgPicture.asset(
+                        StateContainer.of(context).curTheme.assetsFolder! +
+                            StateContainer.of(context).curTheme.logoAlone! +
+                            '.svg',
+                        color: Colors.orange,
+                        height: 15,
+                      )
+                    : SvgPicture.asset(
+                        StateContainer.of(context).curTheme.assetsFolder! +
+                            StateContainer.of(context).curTheme.logoAlone! +
+                            '.svg',
+                        height: 15,
+                      ),
+            Text(StateContainer.of(context).curNetwork.getLongDisplayName(),
+                style: AppStyles.textStyleSize10W100Primary(context)),
+          ],
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        centerTitle: true,
+        iconTheme:
+            IconThemeData(color: StateContainer.of(context).curTheme.primary),
+      ),
+      drawerEdgeDragWidth: 0,
+      resizeToAvoidBottomInset: false,
+      key: _scaffoldKey,
+      backgroundColor: StateContainer.of(context).curTheme.background,
+      drawer: SizedBox(
+        width: UIUtil.drawerWidth(context),
+        child: const Drawer(
+          // TODO: dependencies issue
+          child: SettingsSheetWalletMobile(),
+        ),
+      ),
+      body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[
+                StateContainer.of(context).curTheme.backgroundMainTop!,
+                StateContainer.of(context).curTheme.backgroundMainBottom!
+              ],
+            ),
+          ),
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Stack(
+                      children: <Widget>[
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.08,
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: AutoSizeText(
+                              StateContainer.of(context)
+                                  .curNetwork
+                                  .getNetworkCryptoCurrencyLabel(),
+                              style: AppStyles.textStyleSize80W700Primary15(
+                                  context),
+                            ),
+                          ),
+                        ),
+                        BalanceInfosWidget().buildInfos(context),
+                      ],
+                    ),
+                  ],
                 ),
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height,
+                BalanceInfosWidget().buildKPI(context),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height -
+                      kToolbarHeight -
+                      kBottomNavigationBarHeight,
                   child: Stack(
                     children: <Widget>[
                       StateContainer.of(context)
                           .curTheme
                           .getBackgroundScreen(context)!,
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.2,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 20.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              getLogo(context),
-                              const SizedBox(height: 20),
-                              Stack(
-                                children: <Widget>[
-                                  Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.08,
-                                    alignment: Alignment.centerRight,
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 10.0),
-                                      child: AutoSizeText(
-                                        StateContainer.of(context)
-                                            .curNetwork
-                                            .getNetworkCryptoCurrencyLabel(),
-                                        style: AppStyles
-                                            .textStyleSize80W700Primary15(
-                                                context),
-                                      ),
-                                    ),
-                                  ),
-                                  BalanceInfosWidget().buildInfos(context),
-                                ],
-                              ),
-                              BalanceInfosWidget().buildKPI(context),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.2,
-                        height: MediaQuery.of(context).size.height,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 180.0),
-                          child: MenuWidgetUniverse().buildContextMenu(context),
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Padding(
-                            padding: const EdgeInsets.only(top: 20.0),
-                            child: MenuWidgetUniverse()
-                                .buildMainMenuIcons(context)),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Padding(
-                            padding: const EdgeInsets.only(top: 20.0),
-                            child: MenuWidgetUniverse()
-                                .buildSecondMenuIcons(context)),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          )
-        : Scaffold(
-            extendBodyBehindAppBar: true,
-            appBar: AppBar(
-              title: Column(
-                children: [
-                  StateContainer.of(context).curNetwork.getIndex() ==
-                          AvailableNetworks.AETestNet.index
-                      ? SvgPicture.asset(
-                          StateContainer.of(context).curTheme.assetsFolder! +
-                              StateContainer.of(context).curTheme.logoAlone! +
-                              '.svg',
-                          color: Colors.green,
-                          height: 15,
-                        )
-                      : StateContainer.of(context).curNetwork.getIndex() ==
-                              AvailableNetworks.AEDevNet.index
-                          ? SvgPicture.asset(
-                              StateContainer.of(context)
-                                      .curTheme
-                                      .assetsFolder! +
-                                  StateContainer.of(context)
-                                      .curTheme
-                                      .logoAlone! +
-                                  '.svg',
-                              color: Colors.orange,
-                              height: 15,
-                            )
-                          : SvgPicture.asset(
-                              StateContainer.of(context)
-                                      .curTheme
-                                      .assetsFolder! +
-                                  StateContainer.of(context)
-                                      .curTheme
-                                      .logoAlone! +
-                                  '.svg',
-                              height: 15,
-                            ),
-                  Text(
-                      StateContainer.of(context)
-                          .curNetwork
-                          .getLongDisplayName(),
-                      style: AppStyles.textStyleSize10W100Primary(context)),
-                ],
-              ),
-              backgroundColor: Colors.transparent,
-              elevation: 0.0,
-              centerTitle: true,
-              iconTheme: IconThemeData(
-                  color: StateContainer.of(context).curTheme.primary),
-            ),
-            drawerEdgeDragWidth: 0,
-            resizeToAvoidBottomInset: false,
-            key: _scaffoldKey,
-            backgroundColor: StateContainer.of(context).curTheme.background,
-            drawer: SizedBox(
-              width: UIUtil.drawerWidth(context),
-              child: const Drawer(
-                // TODO: dependencies issue
-                child: SettingsSheetWalletMobile(),
-              ),
-            ),
-            body: SingleChildScrollView(
-              physics: const NeverScrollableScrollPhysics(),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: <Color>[
-                      StateContainer.of(context).curTheme.backgroundMainTop!,
-                      StateContainer.of(context).curTheme.backgroundMainBottom!
-                    ],
-                  ),
-                ),
-                child: SafeArea(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
                       Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Stack(
-                            children: <Widget>[
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.08,
-                                alignment: Alignment.centerRight,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 10.0),
-                                  child: AutoSizeText(
-                                    StateContainer.of(context)
-                                        .curNetwork
-                                        .getNetworkCryptoCurrencyLabel(),
-                                    style:
-                                        AppStyles.textStyleSize80W700Primary15(
-                                            context),
-                                  ),
-                                ),
-                              ),
-                              BalanceInfosWidget().buildInfos(context),
-                            ],
+                          Divider(
+                            height: 1,
+                            color:
+                                StateContainer.of(context).curTheme.primary30,
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          MenuWidgetWallet().buildMainMenuIcons(context),
+                          Divider(
+                            height: 15,
+                            color:
+                                StateContainer.of(context).curTheme.primary30,
+                          ),
+                          MenuWidgetWallet().buildMenuTxExplorer(context),
+                          Divider(
+                            height: 15,
+                            color:
+                                StateContainer.of(context).curTheme.primary30,
+                          ),
+                          const Expanded(
+                            child: TxListWidget(),
                           ),
                         ],
                       ),
-                      BalanceInfosWidget().buildKPI(context),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height -
-                            kToolbarHeight -
-                            kBottomNavigationBarHeight,
-                        child: Stack(
-                          children: <Widget>[
-                            StateContainer.of(context)
-                                .curTheme
-                                .getBackgroundScreen(context)!,
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Divider(
-                                  height: 1,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .primary30,
-                                ),
-                                const SizedBox(
-                                  height: 7,
-                                ),
-                                MenuWidgetWallet().buildMainMenuIcons(context),
-                                Divider(
-                                  height: 15,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .primary30,
-                                ),
-                                MenuWidgetWallet().buildMenuTxExplorer(context),
-                                Divider(
-                                  height: 15,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .primary30,
-                                ),
-                                const Expanded(
-                                  child: TxListWidget(),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
                     ],
                   ),
                 ),
-              ),
+              ],
             ),
-          );
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -1,12 +1,12 @@
 // Flutter imports:
-import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
 import 'package:core_ui/ui/util/exceptions.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 

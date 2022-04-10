@@ -7,7 +7,14 @@ import 'package:core/model/setting_item.dart';
 
 // Package imports:
 
-enum AuthMethod { pin, biometrics, yubikeyWithYubicloud, ledger }
+enum AuthMethod {
+  pin,
+  biometrics,
+  biometricsUniris,
+  yubikeyWithYubicloud,
+  ledger,
+  password
+}
 
 /// Represent the available authentication methods our app supports
 class AuthenticationMethod extends SettingSelectionItem {
@@ -20,14 +27,35 @@ class AuthenticationMethod extends SettingSelectionItem {
     switch (method) {
       case AuthMethod.biometrics:
         return AppLocalization.of(context)!.biometricsMethod;
+      case AuthMethod.biometricsUniris:
+        return AppLocalization.of(context)!.biometricsUnirisMethod;
       case AuthMethod.pin:
         return AppLocalization.of(context)!.pinMethod;
       case AuthMethod.yubikeyWithYubicloud:
         return AppLocalization.of(context)!.yubikeyWithYubiCloudMethod;
       case AuthMethod.ledger:
         return AppLocalization.of(context)!.ledgerMethod;
+      case AuthMethod.password:
+        return AppLocalization.of(context)!.passwordMethod;
       default:
         return AppLocalization.of(context)!.pinMethod;
+    }
+  }
+
+  static String getIcon(AuthMethod _method) {
+    switch (_method) {
+      case AuthMethod.biometrics:
+        return 'packages/aeuniverse/assets/icons/biometrics.png';
+      case AuthMethod.biometricsUniris:
+        return 'packages/aeuniverse/assets/icons/biometrics-uniris.png';
+      case AuthMethod.pin:
+        return 'packages/aeuniverse/assets/icons/pin-code.png';
+      case AuthMethod.yubikeyWithYubicloud:
+        return 'packages/aeuniverse/assets/icons/key-ring.png';
+      case AuthMethod.password:
+        return 'packages/aeuniverse/assets/icons/password.png';
+      default:
+        return 'packages/aeuniverse/assets/icons/password.png';
     }
   }
 

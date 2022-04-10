@@ -8,13 +8,15 @@ import 'package:flutter/services.dart';
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
-import 'package:aeuniverse/ui/views/pin_screen.dart';
 import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
+import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 import 'package:aeuniverse/util/user_data_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
+import 'package:core/model/authentication_method.dart';
 import 'package:core/model/data/appdb.dart';
+import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/mnemonics.dart';
 import 'package:core/util/seeds.dart';
@@ -272,11 +274,11 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       AppButton.buildAppButton(
-                        const Key('go'),
+                        const Key('yes'),
                         context,
                         AppButtonType.primary,
-                        AppLocalization.of(context)!.go,
-                        Dimens.buttonBottomDimens,
+                        AppLocalization.of(context)!.yes,
+                        Dimens.buttonTopDimens,
                         onPressed: () async {
                           _mnemonicFocusNode.unfocus();
                           if (AppMnemomics.validateMnemonic(
@@ -290,16 +292,57 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             StateContainer.of(context).requestUpdate(
                                 account:
                                     StateContainer.of(context).selectedAccount);
-                            final String pin = await Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) {
-                              return const PinScreen(
-                                PinOverlayType.newPin,
-                              );
-                            }));
-                            if (pin.length > 5) {
-                              _pinEnteredCallback(pin);
+                            bool biometricsAvalaible =
+                                await sl.get<BiometricUtil>().hasBiometrics();
+                            List<PickerItem> accessModes = [];
+                            accessModes.add(PickerItem(
+                                AppLocalization.of(context)!.pinMethod,
+                                AppLocalization.of(context)!
+                                    .configureSecurityExplanationPIN,
+                                AuthenticationMethod.getIcon(AuthMethod.pin),
+                                AuthMethod.pin,
+                                true));
+                            accessModes.add(PickerItem(
+                                AppLocalization.of(context)!.passwordMethod,
+                                AppLocalization.of(context)!
+                                    .configureSecurityExplanationPassword,
+                                AuthenticationMethod.getIcon(
+                                    AuthMethod.password),
+                                AuthMethod.password,
+                                true));
+                            if (biometricsAvalaible) {
+                              accessModes.add(PickerItem(
+                                  AppLocalization.of(context)!.biometricsMethod,
+                                  AppLocalization.of(context)!
+                                      .configureSecurityExplanationBiometrics,
+                                  AuthenticationMethod.getIcon(
+                                      AuthMethod.biometrics),
+                                  AuthMethod.biometrics,
+                                  true));
                             }
+
+                            accessModes.add(PickerItem(
+                                AppLocalization.of(context)!
+                                    .biometricsUnirisMethod,
+                                AppLocalization.of(context)!
+                                    .configureSecurityExplanationUnirisBiometrics,
+                                AuthenticationMethod.getIcon(
+                                    AuthMethod.biometricsUniris),
+                                AuthMethod.biometricsUniris,
+                                false));
+
+                            accessModes.add(PickerItem(
+                                AppLocalization.of(context)!
+                                    .yubikeyWithYubiCloudMethod,
+                                AppLocalization.of(context)!
+                                    .configureSecurityExplanationYubikey,
+                                AuthenticationMethod.getIcon(
+                                    AuthMethod.yubikeyWithYubicloud),
+                                AuthMethod.yubikeyWithYubicloud,
+                                true));
+                            Navigator.of(context).pushNamed(
+                                '/intro_configure_security',
+                                arguments: accessModes);
                           } else {
                             if (_mnemonicController.text.split(' ').length !=
                                 24) {

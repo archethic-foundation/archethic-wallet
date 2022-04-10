@@ -36,10 +36,6 @@ class Preferences {
 
   static const String _pinPadShuffle = 'archethic_pinPadShuffle';
 
-  // Yubikey
-  static const String _yubikeyClientID = 'archethic_yubikeyClientID';
-  static const String _yubikeyClientAPIKey = 'archethic_yubikeyClientAPIKey';
-
   // This doesn't have to be a singleton.
   // We just want to make sure that the box is open, before we start getting/setting objects on it
   static Future<Preferences> getInstance() async {
@@ -91,16 +87,6 @@ class Preferences {
   Future<void> setVersionApp(String v) => _setValue(_version_app, v);
 
   String getVersionApp() => _getValue(_version_app, defaultValue: '');
-
-  Future<void> setYubikeyClientAPIKey(String v) =>
-      _setValue(_yubikeyClientAPIKey, v);
-
-  String getYubikeyClientAPIKey() =>
-      _getValue(_yubikeyClientAPIKey, defaultValue: '');
-
-  Future<void> setYubikeyClientID(String v) => _setValue(_yubikeyClientID, v);
-
-  String getYubikeyClientID() => _getValue(_yubikeyClientID, defaultValue: '');
 
   Future<void> setLock(bool value) => _setValue(_lock, value);
 

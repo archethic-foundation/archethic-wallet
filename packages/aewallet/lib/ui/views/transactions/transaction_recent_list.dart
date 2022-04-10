@@ -2,7 +2,6 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:aewallet/ui/views/transactions/transaction_all_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
+import 'package:aewallet/ui/views/transactions/transaction_all_list.dart';
 import 'package:aewallet/ui/views/transactions/transaction_infos_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';

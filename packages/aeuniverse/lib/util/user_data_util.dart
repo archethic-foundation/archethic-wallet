@@ -2,9 +2,9 @@
 
 // Dart imports:
 import 'dart:async';
+import 'dart:developer' as dev;
 
 // Flutter imports:
-import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/views/password_screen.dart';
 import 'package:aeuniverse/ui/views/pin_screen.dart';
 import 'package:aeuniverse/ui/views/yubikey_screen.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
@@ -12,6 +13,7 @@ import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/util/preferences.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
+import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
 import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
@@ -45,18 +47,6 @@ class _AppLockScreenState extends State<AppLockScreen> {
       '/home_transition',
       (Route<dynamic> route) => false,
     );
-  }
-
-  Widget _buildPinScreen(BuildContext context, String expectedPin) {
-    return PinScreen(PinOverlayType.enterPin,
-        expectedPin: expectedPin,
-        description: AppLocalization.of(context)!.unlockPin,
-        pinScreenBackgroundColor:
-            StateContainer.of(context).curTheme.backgroundDark);
-  }
-
-  Widget _buildYubikeyScreen(BuildContext context) {
-    return const YubikeyScreen();
   }
 
   String _formatCountDisplay(int count) {
@@ -149,13 +139,21 @@ class _AppLockScreenState extends State<AppLockScreen> {
     if (transitions) {
       auth = await Navigator.of(context).push(
         MaterialPageRoute(builder: (BuildContext context) {
-          return _buildPinScreen(context, expectedPin!);
+          return PinScreen(PinOverlayType.enterPin,
+              expectedPin: expectedPin!,
+              description: AppLocalization.of(context)!.unlockPin,
+              pinScreenBackgroundColor:
+                  StateContainer.of(context).curTheme.backgroundDark);
         }),
       ) as bool;
     } else {
       auth = await Navigator.of(context).push(
         NoPushTransitionRoute(builder: (BuildContext context) {
-          return _buildPinScreen(context, expectedPin!);
+          return PinScreen(PinOverlayType.enterPin,
+              expectedPin: expectedPin!,
+              description: AppLocalization.of(context)!.unlockPin,
+              pinScreenBackgroundColor:
+                  StateContainer.of(context).curTheme.backgroundDark);
         }),
       );
     }
@@ -170,13 +168,34 @@ class _AppLockScreenState extends State<AppLockScreen> {
     if (transitions) {
       auth = await Navigator.of(context).push(
         MaterialPageRoute(builder: (BuildContext context) {
-          return _buildYubikeyScreen(context);
+          return const YubikeyScreen();
         }),
       );
     } else {
       auth = await Navigator.of(context).push(
         NoPushTransitionRoute(builder: (BuildContext context) {
-          return _buildYubikeyScreen(context);
+          return const YubikeyScreen();
+        }),
+      );
+    }
+    await Future<void>.delayed(const Duration(milliseconds: 200));
+    if (mounted && auth) {
+      _goHome();
+    }
+  }
+
+  Future<void> authenticateWithPassword({bool transitions = false}) async {
+    bool auth = false;
+    if (transitions) {
+      auth = await Navigator.of(context).push(
+        MaterialPageRoute(builder: (BuildContext context) {
+          return const PasswordScreen();
+        }),
+      );
+    } else {
+      auth = await Navigator.of(context).push(
+        NoPushTransitionRoute(builder: (BuildContext context) {
+          return const PasswordScreen();
         }),
       );
     }
@@ -215,9 +234,13 @@ class _AppLockScreenState extends State<AppLockScreen> {
       }
     } else {
       if (authMethod.method == AuthMethod.yubikeyWithYubicloud) {
-        return authenticateWithYubikey(transitions: transitions);
+        await authenticateWithYubikey(transitions: transitions);
       } else {
-        await authenticateWithPin(transitions: transitions);
+        if (authMethod.method == AuthMethod.password) {
+          await authenticateWithPassword(transitions: transitions);
+        } else {
+          await authenticateWithPin(transitions: transitions);
+        }
       }
     }
   }
@@ -294,8 +317,23 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                             context,
                                             StateContainer.of(context)
                                                 .curLanguage
-                                                .getLocaleString()),
-                                        () {});
+                                                .getLocaleString()), () {
+                                      // Delete all data
+                                      sl.get<DBHelper>().dropAll();
+                                      Vault.getInstance().then((Vault _vault) {
+                                        _vault.deleteAll();
+                                      });
+                                      Preferences.getInstance()
+                                          .then((Preferences _preferences) {
+                                        _preferences.deleteAll();
+                                        StateContainer.of(context).logOut();
+                                        Navigator.of(context)
+                                            .pushNamedAndRemoveUntil(
+                                                '/',
+                                                (Route<dynamic> route) =>
+                                                    false);
+                                      });
+                                    });
                                   });
                                 },
                                 child: Row(

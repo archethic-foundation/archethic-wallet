@@ -8,9 +8,9 @@ import 'package:flutter/services.dart';
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
-import 'package:aeuniverse/util/preferences.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
+import 'package:core/util/vault.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class YubikeyParams extends StatefulWidget {
@@ -35,20 +35,20 @@ class _YubikeyParamsState extends State<YubikeyParams> {
   String _clientAPIKeyValidationText = '';
 
   Future<void> initControllerText() async {
-    final Preferences _preferences = await Preferences.getInstance();
-    _clientIDController!.text = _preferences.getYubikeyClientID();
-    _clientAPIKeyController!.text = _preferences.getYubikeyClientAPIKey();
+    final Vault _vault = await Vault.getInstance();
+    _clientIDController!.text = _vault.getYubikeyClientID();
+    _clientAPIKeyController!.text = _vault.getYubikeyClientAPIKey();
   }
 
   Future<void> updateClientID() async {
-    final Preferences _preferences = await Preferences.getInstance();
-    _preferences.setYubikeyClientID(_clientIDController!.text);
+    final Vault _vault = await Vault.getInstance();
+    _vault.setYubikeyClientID(_clientIDController!.text);
     setState(() {});
   }
 
   Future<void> updateClientAPIKey() async {
-    final Preferences _preferences = await Preferences.getInstance();
-    _preferences.setYubikeyClientAPIKey(_clientAPIKeyController!.text);
+    final Vault _vault = await Vault.getInstance();
+    _vault.setYubikeyClientAPIKey(_clientAPIKeyController!.text);
     setState(() {});
   }
 

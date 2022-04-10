@@ -5,7 +5,6 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:core/model/available_networks.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,6 +24,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
 import 'package:core/model/available_currency.dart';
+import 'package:core/model/available_networks.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
 import 'package:core/service/app_service.dart';
@@ -33,9 +33,9 @@ import 'package:core/util/global_var.dart';
 import 'package:core/util/number_util.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/formatters.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'

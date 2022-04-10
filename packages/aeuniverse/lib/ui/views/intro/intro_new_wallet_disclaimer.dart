@@ -11,14 +11,15 @@ import 'package:core/localization.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class IntroBackupSafetyPage extends StatefulWidget {
-  const IntroBackupSafetyPage({Key? key}) : super(key: key);
+class IntroNewWalletDisclaimer extends StatefulWidget {
+  const IntroNewWalletDisclaimer({Key? key}) : super(key: key);
 
   @override
-  _IntroBackupSafetyState createState() => _IntroBackupSafetyState();
+  _IntroNewWalletDisclaimerState createState() =>
+      _IntroNewWalletDisclaimerState();
 }
 
-class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
+class _IntroNewWalletDisclaimerState extends State<IntroNewWalletDisclaimer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -112,7 +113,6 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                                 AppLocalization.of(context)!.backupSafetyLabel2,
                                 style: AppStyles.textStyleSize20W700Warning(
                                     context),
-                                textAlign: TextAlign.justify,
                               ),
                               const SizedBox(
                                 height: 30,
@@ -133,7 +133,6 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                                 AppLocalization.of(context)!.backupSafetyLabel4,
                                 style: AppStyles.textStyleSize20W700Warning(
                                     context),
-                                textAlign: TextAlign.justify,
                               ),
                               const SizedBox(
                                 height: 30,
@@ -154,7 +153,6 @@ class _IntroBackupSafetyState extends State<IntroBackupSafetyPage> {
                                 AppLocalization.of(context)!.backupSafetyLabel6,
                                 style: AppStyles.textStyleSize20W700Warning(
                                     context),
-                                textAlign: TextAlign.justify,
                               ),
                               const SizedBox(
                                 height: 30,

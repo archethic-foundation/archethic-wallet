@@ -14,12 +14,16 @@ import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/views/home_page_universe.dart';
 import 'package:aeuniverse/ui/views/intro/intro_backup_confirm.dart';
-import 'package:aeuniverse/ui/views/intro/intro_backup_safety.dart';
 import 'package:aeuniverse/ui/views/intro/intro_backup_seed.dart';
+import 'package:aeuniverse/ui/views/intro/intro_configure_security.dart';
 import 'package:aeuniverse/ui/views/intro/intro_import_seed.dart';
+import 'package:aeuniverse/ui/views/intro/intro_new_wallet_disclaimer.dart';
+import 'package:aeuniverse/ui/views/intro/intro_password.dart';
 import 'package:aeuniverse/ui/views/intro/intro_welcome.dart';
+import 'package:aeuniverse/ui/views/intro/intro_yubikey.dart';
 import 'package:aeuniverse/ui/views/lock_screen.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
+import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 import 'package:aeuniverse/util/preferences.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/available_language.dart';
@@ -173,8 +177,8 @@ class _AppState extends State<App> {
                 settings: settings,
               );
             case '/intro_welcome':
-              return NoTransitionRoute<IntroWelcomePage>(
-                builder: (_) => const IntroWelcomePage(),
+              return NoTransitionRoute<IntroWelcome>(
+                builder: (_) => const IntroWelcome(),
                 settings: settings,
               );
             case '/intro_backup':
@@ -183,8 +187,26 @@ class _AppState extends State<App> {
                 settings: settings,
               );
             case '/intro_backup_safety':
-              return MaterialPageRoute<IntroBackupSafetyPage>(
-                builder: (_) => const IntroBackupSafetyPage(),
+              return MaterialPageRoute<IntroNewWalletDisclaimer>(
+                builder: (_) => const IntroNewWalletDisclaimer(),
+                settings: settings,
+              );
+            case '/intro_configure_security':
+              return MaterialPageRoute<IntroConfigureSecurity>(
+                builder: (_) => IntroConfigureSecurity(
+                    accessModes: settings.arguments == null
+                        ? null
+                        : settings.arguments as List<PickerItem>),
+                settings: settings,
+              );
+            case '/intro_password':
+              return MaterialPageRoute(
+                builder: (_) => IntroPassword(),
+                settings: settings,
+              );
+            case '/intro_yubikey':
+              return MaterialPageRoute(
+                builder: (_) => IntroYubikey(),
                 settings: settings,
               );
             case '/intro_import':
@@ -272,16 +294,9 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
 
       final Vault _vault = await Vault.getInstance();
       final String? seed = _vault.getSeed();
-      final String? pin = _vault.getPin();
-      // If we have a seed set, but not a pin - or vice versa
-      // Then delete the seed and pin from device and start over.
-      // This would mean user did not complete the intro screen completely.
-      if (seed != null && pin != null) {
+
+      if (seed != null) {
         isLoggedIn = true;
-      } else if (seed != null && pin == null) {
-        _vault.deleteSeed();
-      } else if (pin != null && seed == null) {
-        _vault.deletePin();
       }
 
       if (isLoggedIn) {

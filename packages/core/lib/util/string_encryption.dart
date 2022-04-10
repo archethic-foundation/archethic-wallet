@@ -1,9 +1,12 @@
+// Dart imports:
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:tuple/tuple.dart';
+
+// Package imports:
 import 'package:crypto/crypto.dart';
 import 'package:encrypt/encrypt.dart';
+import 'package:tuple/tuple.dart';
 
 Uint8List _genRandomWithNonZero(int seedLength) {
   final random = Random.secure();

@@ -62,6 +62,22 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.primary!.withOpacity(0.3));
   }
 
+  static TextStyle textStyleSize18W600PrimaryDisabled(BuildContext context) {
+    return TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: AppFontSizes.size18,
+        fontWeight: FontWeight.w600,
+        color: StateContainer.of(context).curTheme.primary!.withOpacity(0.3));
+  }
+
+  static TextStyle textStyleSize12W100PrimaryDisabled(BuildContext context) {
+    return TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: AppFontSizes.size12,
+        fontWeight: FontWeight.w100,
+        color: StateContainer.of(context).curTheme.primary!.withOpacity(0.3));
+  }
+
   static TextStyle textStyleSize24W600Primary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',

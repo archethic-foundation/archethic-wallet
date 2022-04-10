@@ -13,6 +13,7 @@ import 'package:aeuniverse/model/available_themes.dart';
 import 'package:aeuniverse/ui/util/settings_list_item.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
+import 'package:aeuniverse/ui/views/password_screen.dart';
 import 'package:aeuniverse/ui/views/pin_screen.dart';
 import 'package:aeuniverse/ui/views/settings/backupseed_sheet.dart';
 import 'package:aeuniverse/ui/views/settings/yubikey_params_widget.dart';
@@ -71,7 +72,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
 
   bool _hasBiometrics = false;
   AuthenticationMethod _curAuthMethod = AuthenticationMethod(AuthMethod.pin);
-  UnlockSetting _curUnlockSetting = UnlockSetting(UnlockOption.no);
+  UnlockSetting _curUnlockSetting = UnlockSetting(UnlockOption.yes);
   LockTimeoutSetting _curTimeoutSetting =
       LockTimeoutSetting(LockTimeoutOption.one);
   ThemeSetting _curThemeSetting = ThemeSetting(ThemeOptions.dark);
@@ -1453,7 +1454,11 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                               AuthMethod.yubikeyWithYubicloud) {
                             return authenticateWithYubikey();
                           } else {
-                            await authenticateWithPin();
+                            if (authMethod.method == AuthMethod.password) {
+                              return authenticateWithPassword();
+                            } else {
+                              await authenticateWithPin();
+                            }
                           }
                         }
                       }),
@@ -1791,6 +1796,21 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     final bool auth = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
       return const YubikeyScreen();
+    })) as bool;
+    if (auth) {
+      await Future<void>.delayed(const Duration(milliseconds: 200));
+      StateContainer.of(context).getSeed().then((String seed) {
+        Sheets.showAppHeightNineSheet(
+            context: context, widget: AppSeedBackupSheet(seed));
+      });
+    }
+  }
+
+  Future<void> authenticateWithPassword() async {
+    // Yubikey Authentication
+    final bool auth = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) {
+      return const PasswordScreen();
     })) as bool;
     if (auth) {
       await Future<void>.delayed(const Duration(milliseconds: 200));

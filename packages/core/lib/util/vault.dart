@@ -1,7 +1,7 @@
 // Dart imports:
 import 'dart:convert';
-import 'dart:typed_data';
 import 'dart:developer' as dev;
+import 'dart:typed_data';
 
 // Package imports:
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -16,6 +16,9 @@ class Vault {
   //
   static const String _seed = 'archethic_seed';
   static const String _pin = 'archethic_pin';
+  static const String _password = 'archethic_password';
+  static const String _yubikeyClientID = 'archethic_yubikeyClientID';
+  static const String _yubikeyClientAPIKey = 'archethic_yubikeyClientAPIKey';
 
   final List<int> secureKey = Hive.generateSecureKey();
 
@@ -67,6 +70,24 @@ class Vault {
   Future<void> deletePin() async {
     return await _removeValue(_pin);
   }
+
+  Future<void> setPassword(String v) => _setValue(_password, v);
+
+  String? getPassword() => _getValue(_password);
+
+  Future<void> deletePassword() async {
+    return await _removeValue(_password);
+  }
+
+  Future<void> setYubikeyClientAPIKey(String v) =>
+      _setValue(_yubikeyClientAPIKey, v);
+
+  String getYubikeyClientAPIKey() =>
+      _getValue(_yubikeyClientAPIKey, defaultValue: '');
+
+  Future<void> setYubikeyClientID(String v) => _setValue(_yubikeyClientID, v);
+
+  String getYubikeyClientID() => _getValue(_yubikeyClientID, defaultValue: '');
 
   Future<void> deleteAll() async {
     await deleteSecureKey();

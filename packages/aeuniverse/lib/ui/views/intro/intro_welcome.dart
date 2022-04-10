@@ -18,14 +18,14 @@ import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/util/app_util.dart';
 import 'package:flutter_svg/svg.dart';
 
-class IntroWelcomePage extends StatefulWidget {
-  const IntroWelcomePage({Key? key}) : super(key: key);
+class IntroWelcome extends StatefulWidget {
+  const IntroWelcome({Key? key}) : super(key: key);
 
   @override
-  _IntroWelcomePageState createState() => _IntroWelcomePageState();
+  _IntroWelcomeState createState() => _IntroWelcomeState();
 }
 
-class _IntroWelcomePageState extends State<IntroWelcomePage> {
+class _IntroWelcomeState extends State<IntroWelcome> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -71,27 +71,30 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                                     left: 20.0, right: 20.0),
                                 child: SizedBox(
                                   height: 200,
-                                  child: kIsWeb
-                                      ? Image.asset(
-                                          StateContainer.of(context)
-                                                  .curTheme
-                                                  .assetsFolder! +
-                                              StateContainer.of(context)
-                                                  .curTheme
-                                                  .logo! +
-                                              '.png',
-                                          height: 200,
-                                        )
-                                      : SvgPicture.asset(
-                                          StateContainer.of(context)
-                                                  .curTheme
-                                                  .assetsFolder! +
-                                              StateContainer.of(context)
-                                                  .curTheme
-                                                  .logo! +
-                                              '.svg',
-                                          height: 200,
-                                        ),
+                                  child: AspectRatio(
+                                    aspectRatio: 3 / 1,
+                                    child: kIsWeb
+                                        ? Image.asset(
+                                            StateContainer.of(context)
+                                                    .curTheme
+                                                    .assetsFolder! +
+                                                StateContainer.of(context)
+                                                    .curTheme
+                                                    .logo! +
+                                                '.png',
+                                            height: 200,
+                                          )
+                                        : SvgPicture.asset(
+                                            StateContainer.of(context)
+                                                    .curTheme
+                                                    .assetsFolder! +
+                                                StateContainer.of(context)
+                                                    .curTheme
+                                                    .logo! +
+                                                '.svg',
+                                            height: 200,
+                                          ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -103,7 +106,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                               AppLocalization.of(context)!.welcomeText,
                               maxLines: 5,
                               style:
-                                  AppStyles.textStyleSize24W600Primary(context),
+                                  AppStyles.textStyleSize20W700Primary(context),
                             ),
                           ),
                         ],

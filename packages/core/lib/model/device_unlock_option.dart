@@ -20,7 +20,7 @@ class UnlockSetting extends SettingSelectionItem {
         return AppLocalization.of(context)!.yes;
       case UnlockOption.no:
       default:
-        return AppLocalization.of(context)!.no;
+        return AppLocalization.of(context)!.yes;
     }
   }
 

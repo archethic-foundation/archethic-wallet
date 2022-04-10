@@ -12,16 +12,12 @@ import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/settings_list_item.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
-import 'package:aeuniverse/ui/views/pin_screen.dart';
-import 'package:aeuniverse/ui/views/settings/backupseed_sheet.dart';
-import 'package:aeuniverse/ui/views/yubikey_screen.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/views/contacts/contact_list.dart';
 import 'package:aewallet/ui/views/nft/add_nft.dart';
 import 'package:aewallet/ui/views/settings/wallet_faq_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
-import 'package:core/util/vault.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -602,41 +598,5 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
         ),
       ),
     );
-  }
-
-  Future<void> authenticateWithYubikey() async {
-    // Yubikey Authentication
-    final bool auth = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) {
-      return const YubikeyScreen();
-    })) as bool;
-    if (auth) {
-      await Future<void>.delayed(const Duration(milliseconds: 200));
-      StateContainer.of(context).getSeed().then((String seed) {
-        Sheets.showAppHeightNineSheet(
-            context: context, widget: AppSeedBackupSheet(seed));
-      });
-    }
-  }
-
-  Future<void> authenticateWithPin() async {
-    // PIN Authentication
-    final Vault _vault = await Vault.getInstance();
-    final String? expectedPin = _vault.getPin();
-    final bool auth = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) {
-      return PinScreen(
-        PinOverlayType.enterPin,
-        expectedPin: expectedPin!,
-        description: AppLocalization.of(context)!.pinSecretPhraseBackup,
-      );
-    })) as bool;
-    if (auth) {
-      await Future<void>.delayed(const Duration(milliseconds: 200));
-      StateContainer.of(context).getSeed().then((String seed) {
-        Sheets.showAppHeightNineSheet(
-            context: context, widget: AppSeedBackupSheet(seed));
-      });
-    }
   }
 }

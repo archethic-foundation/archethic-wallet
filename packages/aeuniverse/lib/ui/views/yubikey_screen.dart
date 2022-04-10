@@ -20,6 +20,7 @@ import 'package:core/bus/otp_event.dart';
 import 'package:core/localization.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/nfc.dart';
+import 'package:core/util/vault.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yubidart/yubidart.dart';
@@ -79,14 +80,15 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
 
   Future<void> _verifyOTP(String otp) async {
     final Preferences _preferences = await Preferences.getInstance();
+    final Vault _vault = await Vault.getInstance();
 
     UIUtil.showSnackbar(
         otp,
         context,
         StateContainer.of(context).curTheme.primary!,
         StateContainer.of(context).curTheme.overlay80!);
-    final String yubikeyClientAPIKey = _preferences.getYubikeyClientAPIKey();
-    final String yubikeyClientID = _preferences.getYubikeyClientID();
+    final String yubikeyClientAPIKey = _vault.getYubikeyClientAPIKey();
+    final String yubikeyClientID = _vault.getYubikeyClientID();
     verificationResponse = await YubicoService()
         .verifyYubiCloudOTP(otp, yubikeyClientAPIKey, yubikeyClientID);
     switch (verificationResponse.status) {

@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:core_ui/util/app_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -7,6 +6,7 @@ import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
+import 'package:core_ui/util/app_util.dart';
 
 /// A widget for displaying a mnemonic phrase
 class MnemonicDisplay extends StatefulWidget {
