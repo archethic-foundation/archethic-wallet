@@ -10,19 +10,23 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class PickerItem {
   String label;
-  String description;
-  String icon;
+  String? description;
+  String? icon;
+  Color? iconColor;
   Object value;
   bool enabled;
 
-  PickerItem(this.label, this.description, this.icon, this.value, this.enabled);
+  PickerItem(this.label, this.description, this.icon, this.iconColor,
+      this.value, this.enabled);
 }
 
 class PickerWidget extends StatefulWidget {
   final ValueChanged<PickerItem>? onSelected;
   final List<PickerItem>? pickerItems;
+  final int selectedIndex;
 
-  const PickerWidget({Key? key, this.pickerItems, this.onSelected})
+  const PickerWidget(
+      {Key? key, this.pickerItems, this.onSelected, this.selectedIndex = -1})
       : super(key: key);
 
   @override
@@ -35,99 +39,96 @@ class _PickerWidgetState extends State<PickerWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height,
-      child: SafeArea(
-        minimum: EdgeInsets.only(
-          top: MediaQuery.of(context).padding.top,
-        ),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Stack(
-                children: <Widget>[
-                  ListView.builder(
-                    itemBuilder: (context, index) {
-                      PickerItem pickerItem = widget.pickerItems![index];
-                      bool isItemSelected = index == selectedIndex;
-                      return InkWell(
-                        onTap: () {
-                          if (widget.pickerItems![index].enabled) {
-                            sl.get<HapticUtil>().feedback(FeedbackType.light);
-                            selectedIndex = index;
-                            widget.onSelected!(widget.pickerItems![index]);
-                            setState(() {});
-                          }
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 4),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: isItemSelected
-                                    ? Colors.green
-                                    : StateContainer.of(context)
-                                        .curTheme
-                                        .primary!),
-                            borderRadius: BorderRadius.all(Radius.circular(12)),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 24,
-                                      child: Image.asset(pickerItem.icon,
-                                          color:
-                                              widget.pickerItems![index].enabled
-                                                  ? StateContainer.of(context)
-                                                      .curTheme
-                                                      .icon
-                                                  : StateContainer.of(context)
-                                                      .curTheme
-                                                      .icon60),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Expanded(
-                                      child: Text(pickerItem.label,
-                                          style: widget
-                                                  .pickerItems![index].enabled
-                                              ? AppStyles
-                                                  .textStyleSize14W600Primary(
-                                                      context)
-                                              : AppStyles
-                                                  .textStyleSize14W600PrimaryDisabled(
-                                                      context)),
-                                    ),
-                                    isItemSelected
-                                        ? Icon(
-                                            Icons.check_circle,
-                                            size: 16,
-                                            color: Colors.green,
-                                          )
-                                        : Container(),
-                                  ],
-                                ),
-                                Text(
-                                  pickerItem.description,
-                                  style: AppStyles.textStyleSize12W100Primary(
-                                      context),
-                                ),
-                              ],
-                            ),
-                          ),
+      width: double.maxFinite,
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          PickerItem pickerItem = widget.pickerItems![index];
+          bool isItemSelected;
+          if (selectedIndex != -1) {
+            isItemSelected = index == selectedIndex;
+          } else {
+            isItemSelected = index == widget.selectedIndex;
+          }
+          return InkWell(
+            onTap: () {
+              if (widget.pickerItems![index].enabled) {
+                sl.get<HapticUtil>().feedback(FeedbackType.light);
+                selectedIndex = index;
+                widget.onSelected!(widget.pickerItems![index]);
+                setState(() {});
+              }
+            },
+            child: Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.symmetric(vertical: 4),
+              decoration: BoxDecoration(
+                border: Border.all(
+                    color: isItemSelected
+                        ? Colors.green
+                        : StateContainer.of(context).curTheme.primary!),
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        pickerItem.icon == null
+                            ? const SizedBox(
+                                width: 0,
+                                height: 24,
+                              )
+                            : Container(
+                                height: 24,
+                                child: widget.pickerItems![index].iconColor ==
+                                        null
+                                    ? Image.asset(pickerItem.icon!)
+                                    : Image.asset(pickerItem.icon!,
+                                        color:
+                                            widget.pickerItems![index].enabled
+                                                ? widget.pickerItems![index]
+                                                    .iconColor
+                                                : StateContainer.of(context)
+                                                    .curTheme
+                                                    .icon60),
+                              ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Text(pickerItem.label,
+                              style: widget.pickerItems![index].enabled
+                                  ? AppStyles.textStyleSize14W600Primary(
+                                      context)
+                                  : AppStyles
+                                      .textStyleSize14W600PrimaryDisabled(
+                                          context)),
                         ),
-                      );
-                    },
-                    itemCount: widget.pickerItems!.length,
-                  ),
-                ],
+                        isItemSelected
+                            ? Icon(
+                                Icons.check_circle,
+                                size: 16,
+                                color: Colors.green,
+                              )
+                            : Container(),
+                      ],
+                    ),
+                    if (pickerItem.description != null) SizedBox(height: 5),
+                    if (pickerItem.description != null)
+                      Text(
+                        pickerItem.description!,
+                        style: AppStyles.textStyleSize12W100Primary(context),
+                      ),
+                  ],
+                ),
               ),
             ),
-          ],
-        ),
+          );
+        },
+        itemCount: widget.pickerItems!.length,
       ),
     );
   }

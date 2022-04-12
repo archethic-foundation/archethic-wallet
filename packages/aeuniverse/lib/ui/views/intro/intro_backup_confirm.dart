@@ -133,47 +133,55 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                               await sl.get<BiometricUtil>().hasBiometrics();
                           List<PickerItem> accessModes = [];
                           accessModes.add(PickerItem(
-                              AppLocalization.of(context)!.pinMethod,
-                              AppLocalization.of(context)!
-                                  .configureSecurityExplanationPIN,
+                              AuthenticationMethod(AuthMethod.pin)
+                                  .getDisplayName(context),
+                              AuthenticationMethod(AuthMethod.pin)
+                                  .getDescription(context),
                               AuthenticationMethod.getIcon(AuthMethod.pin),
+                              StateContainer.of(context).curTheme.icon,
                               AuthMethod.pin,
                               true));
                           accessModes.add(PickerItem(
-                              AppLocalization.of(context)!.passwordMethod,
-                              AppLocalization.of(context)!
-                                  .configureSecurityExplanationPassword,
+                              AuthenticationMethod(AuthMethod.password)
+                                  .getDisplayName(context),
+                              AuthenticationMethod(AuthMethod.password)
+                                  .getDescription(context),
                               AuthenticationMethod.getIcon(AuthMethod.password),
+                              StateContainer.of(context).curTheme.icon,
                               AuthMethod.password,
                               true));
                           if (biometricsAvalaible) {
                             accessModes.add(PickerItem(
-                                AppLocalization.of(context)!.biometricsMethod,
-                                AppLocalization.of(context)!
-                                    .configureSecurityExplanationBiometrics,
+                                AuthenticationMethod(AuthMethod.biometrics)
+                                    .getDisplayName(context),
+                                AuthenticationMethod(AuthMethod.biometrics)
+                                    .getDescription(context),
                                 AuthenticationMethod.getIcon(
                                     AuthMethod.biometrics),
+                                StateContainer.of(context).curTheme.icon,
                                 AuthMethod.biometrics,
                                 true));
                           }
-
                           accessModes.add(PickerItem(
-                              AppLocalization.of(context)!
-                                  .biometricsUnirisMethod,
-                              AppLocalization.of(context)!
-                                  .configureSecurityExplanationUnirisBiometrics,
+                              AuthenticationMethod(AuthMethod.biometricsUniris)
+                                  .getDisplayName(context),
+                              AuthenticationMethod(AuthMethod.biometricsUniris)
+                                  .getDescription(context),
                               AuthenticationMethod.getIcon(
                                   AuthMethod.biometricsUniris),
+                              StateContainer.of(context).curTheme.icon,
                               AuthMethod.biometricsUniris,
                               false));
-
                           accessModes.add(PickerItem(
-                              AppLocalization.of(context)!
-                                  .yubikeyWithYubiCloudMethod,
-                              AppLocalization.of(context)!
-                                  .configureSecurityExplanationYubikey,
+                              AuthenticationMethod(
+                                      AuthMethod.yubikeyWithYubicloud)
+                                  .getDisplayName(context),
+                              AuthenticationMethod(
+                                      AuthMethod.yubikeyWithYubicloud)
+                                  .getDescription(context),
                               AuthenticationMethod.getIcon(
                                   AuthMethod.yubikeyWithYubicloud),
+                              StateContainer.of(context).curTheme.icon,
                               AuthMethod.yubikeyWithYubicloud,
                               true));
                           Navigator.of(context).pushNamed(

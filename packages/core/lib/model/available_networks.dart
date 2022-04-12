@@ -51,6 +51,19 @@ class NetworksSetting extends SettingSelectionItem {
     }
   }
 
+  Color? getColor() {
+    switch (network) {
+      case AvailableNetworks.AEMainNet:
+        return null;
+      case AvailableNetworks.AETestNet:
+        return Colors.green;
+      case AvailableNetworks.AEDevNet:
+        return Colors.orange;
+      default:
+        return null;
+    }
+  }
+
   String getNetworkCryptoCurrencyLabel() {
     switch (network) {
       case AvailableNetworks.AEMainNet:

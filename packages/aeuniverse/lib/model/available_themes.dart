@@ -38,7 +38,28 @@ class ThemeSetting extends SettingSelectionItem {
     }
   }
 
-  // For saving to shared prefs
+  String getLabel(BuildContext context) {
+    switch (theme) {
+      case ThemeOptions.light:
+        return 'A dynamic theme inspired by Uniris environment';
+      case ThemeOptions.dark:
+        return 'A beautiful theme from ARCHEthic eco-system';
+      default:
+        return 'A beautiful theme from ARCHEthic eco-system';
+    }
+  }
+
+  String getIcon() {
+    switch (theme) {
+      case ThemeOptions.light:
+        return 'packages/core_ui/assets/themes/light/logo_alone.png';
+      case ThemeOptions.dark:
+        return 'packages/core_ui/assets/themes/dark/logo_alone.png';
+      default:
+        return 'packages/core_ui/assets/themes/dark/logo_alone.png';
+    }
+  }
+
   int getIndex() {
     return theme.index;
   }

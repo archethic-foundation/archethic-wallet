@@ -300,6 +300,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                 AppLocalization.of(context)!
                                     .configureSecurityExplanationPIN,
                                 AuthenticationMethod.getIcon(AuthMethod.pin),
+                                StateContainer.of(context).curTheme.icon,
                                 AuthMethod.pin,
                                 true));
                             accessModes.add(PickerItem(
@@ -308,6 +309,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                     .configureSecurityExplanationPassword,
                                 AuthenticationMethod.getIcon(
                                     AuthMethod.password),
+                                StateContainer.of(context).curTheme.icon,
                                 AuthMethod.password,
                                 true));
                             if (biometricsAvalaible) {
@@ -317,6 +319,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                       .configureSecurityExplanationBiometrics,
                                   AuthenticationMethod.getIcon(
                                       AuthMethod.biometrics),
+                                  StateContainer.of(context).curTheme.icon,
                                   AuthMethod.biometrics,
                                   true));
                             }
@@ -328,6 +331,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                     .configureSecurityExplanationUnirisBiometrics,
                                 AuthenticationMethod.getIcon(
                                     AuthMethod.biometricsUniris),
+                                StateContainer.of(context).curTheme.icon,
                                 AuthMethod.biometricsUniris,
                                 false));
 
@@ -338,6 +342,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                     .configureSecurityExplanationYubikey,
                                 AuthenticationMethod.getIcon(
                                     AuthMethod.yubikeyWithYubicloud),
+                                StateContainer.of(context).curTheme.icon,
                                 AuthMethod.yubikeyWithYubicloud,
                                 true));
                             Navigator.of(context).pushNamed(

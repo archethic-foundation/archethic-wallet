@@ -5,6 +5,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -40,7 +41,6 @@ import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/util/case_converter.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -197,10 +197,27 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
 
   Future<void> _authMethodDialog() async {
     final Preferences _preferences = await Preferences.getInstance();
+    final List<PickerItem> pickerItemsList =
+        List<PickerItem>.empty(growable: true);
+    for (var value in AuthMethod.values) {
+      if (value != AuthMethod.ledger) {
+        if ((_hasBiometrics && value == AuthMethod.biometrics) ||
+            value != AuthMethod.biometrics) {
+          pickerItemsList.add(PickerItem(
+              AuthenticationMethod(value).getDisplayName(context),
+              AuthenticationMethod(value).getDescription(context),
+              AuthenticationMethod.getIcon(value),
+              StateContainer.of(context).curTheme.icon,
+              value,
+              value == AuthMethod.biometricsUniris ? false : true));
+        }
+      }
+    }
+
     switch (await showDialog<AuthMethod>(
         context: context,
         builder: (BuildContext context) {
-          return SimpleDialog(
+          return AlertDialog(
             title: Text(
               AppLocalization.of(context)!.authMethod,
               style: AppStyles.textStyleSize20W700Primary(context),
@@ -209,106 +226,15 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                 borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                 side: BorderSide(
                     color: StateContainer.of(context).curTheme.primary45!)),
-            children: <Widget>[
-              if (_hasBiometrics)
-                SimpleDialogOption(
-                  onPressed: () {
-                    Navigator.pop(context, AuthMethod.biometrics);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          AppLocalization.of(context)!.biometricsMethod,
-                          style: _curAuthMethod.getIndex() ==
-                                  AuthenticationMethod(AuthMethod.biometrics)
-                                      .method
-                                      .index
-                              ? AppStyles.textStyleSize16W600ChoiceOption(
-                                  context)
-                              : AppStyles.textStyleSize16W600Primary(context),
-                        ),
-                        const SizedBox(width: 20),
-                        if (_curAuthMethod.getIndex() ==
-                            AuthenticationMethod(AuthMethod.biometrics)
-                                .method
-                                .index)
-                          FaIcon(
-                            FontAwesomeIcons.check,
-                            color: StateContainer.of(context)
-                                .curTheme
-                                .choiceOption,
-                            size: 16,
-                          )
-                      ],
-                    ),
-                  ),
-                ),
-              SimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, AuthMethod.pin);
+            content: SingleChildScrollView(
+              child: PickerWidget(
+                pickerItems: pickerItemsList,
+                selectedIndex: _curAuthMethod.method.index,
+                onSelected: (value) {
+                  Navigator.pop(context, value.value);
                 },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    children: [
-                      Text(
-                        AppLocalization.of(context)!.pinMethod,
-                        style: _curAuthMethod.getIndex() ==
-                                AuthenticationMethod(AuthMethod.pin)
-                                    .method
-                                    .index
-                            ? AppStyles.textStyleSize16W600ChoiceOption(context)
-                            : AppStyles.textStyleSize16W600Primary(context),
-                      ),
-                      const SizedBox(width: 20),
-                      if (_curAuthMethod.getIndex() ==
-                          AuthenticationMethod(AuthMethod.pin).method.index)
-                        FaIcon(
-                          FontAwesomeIcons.check,
-                          color:
-                              StateContainer.of(context).curTheme.choiceOption,
-                          size: 16,
-                        )
-                    ],
-                  ),
-                ),
               ),
-              SimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, AuthMethod.yubikeyWithYubicloud);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    children: [
-                      Text(
-                        AppLocalization.of(context)!.yubikeyWithYubiCloudMethod,
-                        style: _curAuthMethod.getIndex() ==
-                                AuthenticationMethod(
-                                        AuthMethod.yubikeyWithYubicloud)
-                                    .method
-                                    .index
-                            ? AppStyles.textStyleSize16W600ChoiceOption(context)
-                            : AppStyles.textStyleSize16W600Primary(context),
-                      ),
-                      const SizedBox(width: 20),
-                      if (_curAuthMethod.getIndex() ==
-                          AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
-                              .method
-                              .index)
-                        FaIcon(
-                          FontAwesomeIcons.check,
-                          color:
-                              StateContainer.of(context).curTheme.choiceOption,
-                          size: 16,
-                        )
-                    ],
-                  ),
-                ),
-              ),
-            ],
+            ),
           );
         })) {
       case AuthMethod.pin:
@@ -344,10 +270,21 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
 
   Future<void> _lockDialog() async {
     final Preferences _preferences = await Preferences.getInstance();
+    final List<PickerItem> pickerItemsList =
+        List<PickerItem>.empty(growable: true);
+    for (var value in UnlockOption.values) {
+      pickerItemsList.add(PickerItem(
+          UnlockSetting(value).getDisplayName(context),
+          null,
+          null,
+          null,
+          value,
+          true));
+    }
     switch (await showDialog<UnlockOption>(
         context: context,
         builder: (BuildContext context) {
-          return SimpleDialog(
+          return AlertDialog(
             title: Text(
               AppLocalization.of(context)!.lockAppSetting,
               style: AppStyles.textStyleSize20W700Primary(context),
@@ -356,64 +293,15 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                 borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                 side: BorderSide(
                     color: StateContainer.of(context).curTheme.primary45!)),
-            children: <Widget>[
-              SimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, UnlockOption.no);
+            content: SingleChildScrollView(
+              child: PickerWidget(
+                pickerItems: pickerItemsList,
+                selectedIndex: _curUnlockSetting.setting.index,
+                onSelected: (value) {
+                  Navigator.pop(context, value.value);
                 },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    children: [
-                      Text(
-                        AppLocalization.of(context)!.no,
-                        style: _curUnlockSetting.setting.index ==
-                                UnlockSetting(UnlockOption.no).getIndex()
-                            ? AppStyles.textStyleSize16W600ChoiceOption(context)
-                            : AppStyles.textStyleSize16W600Primary(context),
-                      ),
-                      const SizedBox(width: 20),
-                      if (_curUnlockSetting.setting.index ==
-                          UnlockSetting(UnlockOption.no).getIndex())
-                        FaIcon(
-                          FontAwesomeIcons.check,
-                          color:
-                              StateContainer.of(context).curTheme.choiceOption,
-                          size: 16,
-                        )
-                    ],
-                  ),
-                ),
               ),
-              SimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, UnlockOption.yes);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    children: [
-                      Text(
-                        AppLocalization.of(context)!.yes,
-                        style: _curUnlockSetting.setting.index ==
-                                UnlockSetting(UnlockOption.yes).getIndex()
-                            ? AppStyles.textStyleSize16W600ChoiceOption(context)
-                            : AppStyles.textStyleSize16W600Primary(context),
-                      ),
-                      const SizedBox(width: 20),
-                      if (_curUnlockSetting.setting.index ==
-                          UnlockSetting(UnlockOption.yes).getIndex())
-                        FaIcon(
-                          FontAwesomeIcons.check,
-                          color:
-                              StateContainer.of(context).curTheme.choiceOption,
-                          size: 16,
-                        )
-                    ],
-                  ),
-                ),
-              ),
-            ],
+            ),
           );
         })) {
       case UnlockOption.yes:
@@ -437,119 +325,72 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     }
   }
 
-  List<Widget> _buildCurrencyOptions() {
-    final List<Widget> ret = List<Widget>.empty(growable: true);
-    for (AvailableCurrencyEnum value in AvailableCurrencyEnum.values) {
-      ret.add(SimpleDialogOption(
-        onPressed: () {
-          Navigator.pop(context, value);
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15.0),
-                child: Image.asset(
-                  'packages/aeuniverse/assets/icons/currency/${AvailableCurrency(value).getIso4217Code().toLowerCase()}.png',
-                  width: 30,
-                  height: 20,
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(AvailableCurrency(value).getDisplayName(context),
-                  style: StateContainer.of(context)
-                              .curCurrency
-                              .getDisplayName(context) ==
-                          AvailableCurrency(value).getDisplayName(context)
-                      ? AppStyles.textStyleSize14W600ChoiceOption(context)
-                      : AppStyles.textStyleSize14W600Primary(context)),
-              if (AvailableCurrency(value).getIso4217Code() == 'EUR' ||
-                  AvailableCurrency(value).getIso4217Code() == 'USD')
-                const SizedBox(
-                  width: 10,
-                ),
-              if (AvailableCurrency(value).getIso4217Code() == 'EUR' ||
-                  AvailableCurrency(value).getIso4217Code() == 'USD')
-                buildIconWidget(
-                  context,
-                  'packages/aewallet/assets/icons/oracle.png',
-                  25,
-                  25,
-                  color: StateContainer.of(context)
-                              .curCurrency
-                              .getDisplayName(context) ==
-                          AvailableCurrency(value).getDisplayName(context)
-                      ? StateContainer.of(context).curTheme.choiceOption
-                      : StateContainer.of(context).curTheme.primary,
-                ),
-              const SizedBox(width: 20),
-              if (StateContainer.of(context)
-                      .curCurrency
-                      .getDisplayName(context) ==
-                  AvailableCurrency(value).getDisplayName(context))
-                FaIcon(
-                  FontAwesomeIcons.check,
-                  color: StateContainer.of(context).curTheme.choiceOption,
-                  size: 16,
-                )
-            ],
-          ),
-        ),
-      ));
-    }
-    return ret;
-  }
-
   Future<void> _currencyDialog() async {
     final Preferences _preferences = await Preferences.getInstance();
+    final List<PickerItem> pickerItemsList =
+        List<PickerItem>.empty(growable: true);
+    for (var value in AvailableCurrencyEnum.values) {
+      pickerItemsList.add(PickerItem(
+          AvailableCurrency(value).getDisplayName(context),
+          null,
+          'packages/aeuniverse/assets/icons/currency/${AvailableCurrency(value).getIso4217Code().toLowerCase()}.png',
+          null,
+          value,
+          true));
+    }
     final AvailableCurrencyEnum? selection =
         await showDialog<AvailableCurrencyEnum>(
             context: context,
             builder: (BuildContext context) {
-              return SimpleDialog(
+              return AlertDialog(
                 title: Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppLocalization.of(context)!.currency,
-                          style: AppStyles.textStyleSize20W700Primary(context),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            buildIconWidget(
-                              context,
-                              'packages/aewallet/assets/icons/oracle.png',
-                              20,
-                              20,
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalization.of(context)!.currency,
+                        style: AppStyles.textStyleSize20W700Primary(context),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        children: [
+                          buildIconWidget(
+                            context,
+                            'packages/aewallet/assets/icons/oracle.png',
+                            20,
+                            20,
+                          ),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Text(
+                              AppLocalization.of(context)!.currencyOracleInfo,
+                              style:
+                                  AppStyles.textStyleSize12W100Primary(context),
                             ),
-                            const SizedBox(width: 5),
-                            Expanded(
-                              child: Text(
-                                AppLocalization.of(context)!.currencyOracleInfo,
-                                style: AppStyles.textStyleSize12W100Primary(
-                                    context),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
                 shape: RoundedRectangleBorder(
                     borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                     side: BorderSide(
                         color: StateContainer.of(context).curTheme.primary45!)),
-                children: _buildCurrencyOptions(),
+                content: SingleChildScrollView(
+                  child: PickerWidget(
+                    pickerItems: pickerItemsList,
+                    selectedIndex:
+                        StateContainer.of(context).curCurrency.getIndex(),
+                    onSelected: (value) {
+                      Navigator.pop(context, value.value);
+                    },
+                  ),
+                ),
               );
             });
     if (selection != null) {
@@ -564,68 +405,26 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     }
   }
 
-  List<Widget> _buildLanguageOptions() {
-    final List<Widget> ret = List<Widget>.empty(growable: true);
-    for (AvailableLanguage value in AvailableLanguage.values) {
-      ret.add(SimpleDialogOption(
-        onPressed: () {
-          Navigator.pop(context, value);
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Row(
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15.0),
-                child: LanguageSetting(value).getLocaleString().toLowerCase() ==
-                        'default'
-                    ? const SizedBox(
-                        width: 30,
-                        height: 20,
-                      )
-                    : Image.asset(
-                        'packages/aeuniverse/assets/icons/country/${LanguageSetting(value).getLocaleString().toLowerCase()}.png',
-                        width: 30,
-                        height: 20,
-                      ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(LanguageSetting(value).getDisplayName(context),
-                  style: StateContainer.of(context)
-                              .curLanguage
-                              .getDisplayName(context) ==
-                          LanguageSetting(value).getDisplayName(context)
-                      ? AppStyles.textStyleSize16W600ChoiceOption(context)
-                      : AppStyles.textStyleSize16W600Primary(context)),
-              const SizedBox(width: 20),
-              if (StateContainer.of(context)
-                      .curLanguage
-                      .getDisplayName(context) ==
-                  LanguageSetting(value).getDisplayName(context))
-                FaIcon(
-                  FontAwesomeIcons.check,
-                  color: StateContainer.of(context).curTheme.choiceOption,
-                  size: 16,
-                )
-              else
-                const SizedBox(),
-            ],
-          ),
-        ),
-      ));
-    }
-
-    return ret;
-  }
-
   Future<void> _languageDialog() async {
     final Preferences _preferences = await Preferences.getInstance();
+    final List<PickerItem> pickerItemsList =
+        List<PickerItem>.empty(growable: true);
+    for (var value in AvailableLanguage.values) {
+      pickerItemsList.add(PickerItem(
+          LanguageSetting(value).getDisplayName(context),
+          null,
+          LanguageSetting(value).getLocaleString().toLowerCase() == 'default'
+              ? null
+              : 'packages/aeuniverse/assets/icons/country/${LanguageSetting(value).getLocaleString().toLowerCase()}.png',
+          null,
+          value,
+          true));
+    }
+
     final AvailableLanguage? selection = await showDialog<AvailableLanguage>(
         context: context,
         builder: (BuildContext context) {
-          return SimpleDialog(
+          return AlertDialog(
             title: Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
@@ -637,7 +436,14 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                 borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                 side: BorderSide(
                     color: StateContainer.of(context).curTheme.primary45!)),
-            children: _buildLanguageOptions(),
+            content: PickerWidget(
+              pickerItems: pickerItemsList,
+              selectedIndex:
+                  StateContainer.of(context).curLanguage.language.index,
+              onSelected: (value) {
+                Navigator.pop(context, value.value);
+              },
+            ),
           );
         });
     if (selection != null) {
@@ -650,90 +456,24 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     }
   }
 
-  List<Widget> _buildNetworkOptions() {
-    final List<Widget> ret = List<Widget>.empty(growable: true);
-    for (AvailableNetworks value in AvailableNetworks.values) {
-      ret.add(SimpleDialogOption(
-        onPressed: () {
-          if (value == AvailableNetworks.AEMainNet) {
-            UIUtil.showSnackbar(
-                'Soon...',
-                context,
-                StateContainer.of(context).curTheme.primary!,
-                StateContainer.of(context).curTheme.overlay80!);
-          } else {
-            Navigator.pop(context, value);
-          }
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Row(
-            children: <Widget>[
-              ClipRRect(
-                child: NetworksSetting(value).network.index ==
-                        AvailableNetworks.AETestNet.index
-                    ? SvgPicture.asset(
-                        'packages/core_ui/assets/themes/dark/logo_alone.svg',
-                        color: Colors.green,
-                        height: 15,
-                      )
-                    : NetworksSetting(value).network.index ==
-                            AvailableNetworks.AEDevNet.index
-                        ? SvgPicture.asset(
-                            'packages/core_ui/assets/themes/dark/logo_alone.svg',
-                            color: Colors.orange,
-                            height: 15,
-                          )
-                        : SvgPicture.asset(
-                            'packages/core_ui/assets/themes/dark/logo_alone.svg',
-                            height: 15,
-                          ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(NetworksSetting(value).getDisplayName(context),
-                      style: StateContainer.of(context)
-                                  .curNetwork
-                                  .getDisplayName(context) ==
-                              NetworksSetting(value).getDisplayName(context)
-                          ? AppStyles.textStyleSize16W600ChoiceOption(context)
-                          : AppStyles.textStyleSize16W600Primary(context)),
-                  Text(NetworksSetting(value).getLink(),
-                      style: AppStyles.textStyleSize12W100Primary(context)),
-                ],
-              ),
-              const SizedBox(width: 20),
-              if (StateContainer.of(context)
-                      .curNetwork
-                      .getDisplayName(context) ==
-                  NetworksSetting(value).getDisplayName(context))
-                FaIcon(
-                  FontAwesomeIcons.check,
-                  color: StateContainer.of(context).curTheme.choiceOption,
-                  size: 16,
-                )
-              else
-                const SizedBox(),
-            ],
-          ),
-        ),
-      ));
-    }
-
-    return ret;
-  }
-
   Future<void> _networkDialog() async {
     final Preferences _preferences = await Preferences.getInstance();
+    final List<PickerItem> pickerItemsList =
+        List<PickerItem>.empty(growable: true);
+    for (var value in AvailableNetworks.values) {
+      pickerItemsList.add(PickerItem(
+          NetworksSetting(value).getLongDisplayName(),
+          NetworksSetting(value).getLink(),
+          'packages/core_ui/assets/themes/dark/logo_alone.png',
+          NetworksSetting(value).getColor(),
+          value,
+          value == AvailableNetworks.AEMainNet ? false : true));
+    }
+
     final AvailableNetworks? selection = await showDialog<AvailableNetworks>(
         context: context,
         builder: (BuildContext context) {
-          return SimpleDialog(
+          return AlertDialog(
             title: Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
@@ -745,7 +485,13 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                 borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                 side: BorderSide(
                     color: StateContainer.of(context).curTheme.primary45!)),
-            children: _buildNetworkOptions(),
+            content: PickerWidget(
+              pickerItems: pickerItemsList,
+              selectedIndex: _curNetworksSetting.getIndex(),
+              onSelected: (value) {
+                Navigator.pop(context, value.value);
+              },
+            ),
           );
         });
     if (selection != null) {
@@ -762,47 +508,23 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     }
   }
 
-  List<Widget> _buildLockTimeoutOptions() {
-    final List<Widget> ret = List<Widget>.empty(growable: true);
-    for (LockTimeoutOption value in LockTimeoutOption.values) {
-      ret.add(SimpleDialogOption(
-        onPressed: () {
-          Navigator.pop(context, value);
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Row(
-            children: <Widget>[
-              Text(LockTimeoutSetting(value).getDisplayName(context),
-                  style: _curUnlockSetting.getDisplayName(context) ==
-                          LockTimeoutSetting(value).getDisplayName(context)
-                      ? AppStyles.textStyleSize16W600ChoiceOption(context)
-                      : AppStyles.textStyleSize16W600Primary(context)),
-              const SizedBox(width: 20),
-              if (_curUnlockSetting.getDisplayName(context) ==
-                  LockTimeoutSetting(value).getDisplayName(context))
-                FaIcon(
-                  FontAwesomeIcons.check,
-                  color: StateContainer.of(context).curTheme.choiceOption,
-                  size: 16,
-                )
-              else
-                const SizedBox(),
-            ],
-          ),
-        ),
-      ));
-    }
-
-    return ret;
-  }
-
   Future<void> _lockTimeoutDialog() async {
     final Preferences _preferences = await Preferences.getInstance();
+    final List<PickerItem> pickerItemsList =
+        List<PickerItem>.empty(growable: true);
+    for (var value in LockTimeoutOption.values) {
+      pickerItemsList.add(PickerItem(
+          LockTimeoutSetting(value).getDisplayName(context),
+          null,
+          null,
+          null,
+          value,
+          true));
+    }
     final LockTimeoutOption? selection = await showDialog<LockTimeoutOption>(
         context: context,
         builder: (BuildContext context) {
-          return SimpleDialog(
+          return AlertDialog(
             title: Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
@@ -814,7 +536,15 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                 borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                 side: BorderSide(
                     color: StateContainer.of(context).curTheme.primary45!)),
-            children: _buildLockTimeoutOptions(),
+            content: SingleChildScrollView(
+              child: PickerWidget(
+                pickerItems: pickerItemsList,
+                selectedIndex: _curTimeoutSetting.setting.index,
+                onSelected: (value) {
+                  Navigator.pop(context, value.value);
+                },
+              ),
+            ),
           );
         });
     if (selection != null) {
@@ -827,46 +557,23 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     }
   }
 
-  List<Widget> _buildThemeOptions() {
-    final List<Widget> ret = List<Widget>.empty(growable: true);
-    for (var value in ThemeOptions.values) {
-      ret.add(SimpleDialogOption(
-        onPressed: () {
-          Navigator.pop(context, value);
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Row(
-            children: <Widget>[
-              Text(ThemeSetting(value).getDisplayName(context),
-                  style: StateContainer.of(context).curTheme.displayName ==
-                          ThemeSetting(value).getDisplayName(context)
-                      ? AppStyles.textStyleSize16W600ChoiceOption(context)
-                      : AppStyles.textStyleSize16W600Primary(context)),
-              const SizedBox(width: 20),
-              if (StateContainer.of(context).curTheme.displayName ==
-                  ThemeSetting(value).getDisplayName(context))
-                FaIcon(
-                  FontAwesomeIcons.check,
-                  color: StateContainer.of(context).curTheme.choiceOption,
-                  size: 16,
-                )
-              else
-                const SizedBox(),
-            ],
-          ),
-        ),
-      ));
-    }
-    return ret;
-  }
-
   Future<void> _themeDialog() async {
     final Preferences _preferences = await Preferences.getInstance();
+    final List<PickerItem> pickerItemsList =
+        List<PickerItem>.empty(growable: true);
+    for (var value in ThemeOptions.values) {
+      pickerItemsList.add(PickerItem(
+          value.name,
+          ThemeSetting(value).getLabel(context),
+          ThemeSetting(value).getIcon(),
+          null,
+          value,
+          true));
+    }
     final ThemeOptions? selection = await showDialog<ThemeOptions>(
         context: context,
         builder: (BuildContext context) {
-          return SimpleDialog(
+          return AlertDialog(
             title: Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
@@ -878,7 +585,13 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                 borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                 side: BorderSide(
                     color: StateContainer.of(context).curTheme.primary45!)),
-            children: _buildThemeOptions(),
+            content: PickerWidget(
+              pickerItems: pickerItemsList,
+              selectedIndex: _curThemeSetting.getIndex(),
+              onSelected: (value) {
+                Navigator.pop(context, value.value);
+              },
+            ),
           );
         });
     if (selection != null) {

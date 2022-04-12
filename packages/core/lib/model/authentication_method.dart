@@ -42,6 +42,28 @@ class AuthenticationMethod extends SettingSelectionItem {
     }
   }
 
+  String getDescription(BuildContext context) {
+    switch (method) {
+      case AuthMethod.biometrics:
+        return AppLocalization.of(context)!
+            .configureSecurityExplanationBiometrics;
+      case AuthMethod.biometricsUniris:
+        return AppLocalization.of(context)!
+            .configureSecurityExplanationUnirisBiometrics;
+      case AuthMethod.pin:
+        return AppLocalization.of(context)!.configureSecurityExplanationPIN;
+      case AuthMethod.yubikeyWithYubicloud:
+        return AppLocalization.of(context)!.configureSecurityExplanationYubikey;
+      case AuthMethod.ledger:
+        return '';
+      case AuthMethod.password:
+        return AppLocalization.of(context)!
+            .configureSecurityExplanationPassword;
+      default:
+        return AppLocalization.of(context)!.configureSecurityExplanationPIN;
+    }
+  }
+
   static String getIcon(AuthMethod _method) {
     switch (_method) {
       case AuthMethod.biometrics:

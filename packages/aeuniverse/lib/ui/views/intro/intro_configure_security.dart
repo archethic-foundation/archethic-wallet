@@ -54,143 +54,147 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
           builder: (BuildContext context, BoxConstraints constraints) =>
               SafeArea(
             minimum: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.035,
                 top: MediaQuery.of(context).size.height * 0.075),
             child: Column(
               children: <Widget>[
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsetsDirectional.only(start: 15),
-                            height: 50,
-                            width: 50,
-                            child: TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: FaIcon(FontAwesomeIcons.chevronLeft,
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .primary,
-                                    size: 24)),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsetsDirectional.only(start: 15),
+                              height: 50,
+                              width: 50,
+                              child: TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: FaIcon(FontAwesomeIcons.chevronLeft,
+                                      color: StateContainer.of(context)
+                                          .curTheme
+                                          .primary,
+                                      size: 24)),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          child: buildIconWidget(
+                              context,
+                              'packages/aeuniverse/assets/icons/finger-print.png',
+                              90,
+                              90),
+                        ),
+                        Container(
+                          margin: EdgeInsetsDirectional.only(
+                            start: 20,
+                            end: 20,
+                            top: 10,
                           ),
-                        ],
-                      ),
-                      Container(
-                        child: buildIconWidget(
-                            context,
-                            'packages/aeuniverse/assets/icons/finger-print.png',
-                            90,
-                            90),
-                      ),
-                      Container(
-                        margin: EdgeInsetsDirectional.only(
-                          start: 20,
-                          end: 20,
-                          top: 10,
+                          alignment: const AlignmentDirectional(-1, 0),
+                          child: AutoSizeText(
+                            AppLocalization.of(context)!.configureSecurityIntro,
+                            style:
+                                AppStyles.textStyleSize20W700Warning(context),
+                          ),
                         ),
-                        alignment: const AlignmentDirectional(-1, 0),
-                        child: AutoSizeText(
-                          AppLocalization.of(context)!.configureSecurityIntro,
-                          style: AppStyles.textStyleSize20W700Warning(context),
+                        Container(
+                          margin: EdgeInsetsDirectional.only(
+                              start: 20, end: 20, top: 15.0),
+                          child: AutoSizeText(
+                            AppLocalization.of(context)!
+                                .configureSecurityExplanation,
+                            style:
+                                AppStyles.textStyleSize16W600Primary(context),
+                            textAlign: TextAlign.justify,
+                            maxLines: 6,
+                            stepGranularity: 0.5,
+                          ),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsetsDirectional.only(
-                            start: 20, end: 20, top: 15.0),
-                        child: AutoSizeText(
-                          AppLocalization.of(context)!
-                              .configureSecurityExplanation,
-                          style: AppStyles.textStyleSize16W600Primary(context),
-                          textAlign: TextAlign.justify,
-                          maxLines: 6,
-                          stepGranularity: 0.5,
+                        const SizedBox(
+                          height: 20,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      if (widget.accessModes != null)
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                PickerWidget(
-                                  pickerItems: widget.accessModes,
-                                  onSelected: (value) {
-                                    setState(() {
-                                      _accessModesSelected = value;
-                                    });
+                        if (widget.accessModes != null)
+                          Container(
+                            margin:
+                                EdgeInsetsDirectional.only(start: 20, end: 20),
+                            child: PickerWidget(
+                              pickerItems: widget.accessModes,
+                              onSelected: (value) {
+                                setState(() {
+                                  _accessModesSelected = value;
+                                });
+                              },
+                            ),
+                          ),
+                        Column(
+                          children: <Widget>[
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              children: <Widget>[
+                                AppButton.buildAppButton(
+                                  const Key('confirm'),
+                                  context,
+                                  _accessModesSelected == null
+                                      ? AppButtonType.primaryOutline
+                                      : AppButtonType.primary,
+                                  AppLocalization.of(context)!.confirm,
+                                  Dimens.buttonTopDimens,
+                                  onPressed: () async {
+                                    if (_accessModesSelected == null) return;
+                                    final Preferences _preferences =
+                                        await Preferences.getInstance();
+                                    _preferences.setLock(true);
+                                    _preferences.setLockTimeout(
+                                        LockTimeoutSetting(
+                                            LockTimeoutOption.one));
+                                    AuthMethod _authMethod =
+                                        _accessModesSelected!.value
+                                            as AuthMethod;
+                                    _preferences.setAuthMethod(
+                                        AuthenticationMethod(_authMethod));
+                                    switch (_authMethod) {
+                                      case AuthMethod.biometrics:
+                                        await authenticateWithBiometrics();
+                                        break;
+                                      case AuthMethod.password:
+                                        Navigator.of(context)
+                                            .pushNamed('/intro_password');
+                                        break;
+                                      case AuthMethod.pin:
+                                        final String pin =
+                                            await Navigator.of(context).push(
+                                                MaterialPageRoute(builder:
+                                                    (BuildContext context) {
+                                          return const PinScreen(
+                                            PinOverlayType.newPin,
+                                          );
+                                        }));
+                                        if (pin.length > 5) {
+                                          _pinEnteredCallback(pin);
+                                        }
+                                        break;
+                                      case AuthMethod.yubikeyWithYubicloud:
+                                        Navigator.of(context)
+                                            .pushNamed('/intro_yubikey');
+                                        break;
+                                      default:
+                                        break;
+                                    }
                                   },
                                 ),
                               ],
                             ),
-                          ),
+                          ],
                         ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-                Column(children: <Widget>[
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      AppButton.buildAppButton(
-                        const Key('confirm'),
-                        context,
-                        _accessModesSelected == null
-                            ? AppButtonType.primaryOutline
-                            : AppButtonType.primary,
-                        AppLocalization.of(context)!.confirm,
-                        Dimens.buttonTopDimens,
-                        onPressed: () async {
-                          if (_accessModesSelected == null) return;
-                          final Preferences _preferences =
-                              await Preferences.getInstance();
-                          _preferences.setLock(true);
-                          _preferences.setLockTimeout(
-                              LockTimeoutSetting(LockTimeoutOption.one));
-                          AuthMethod _authMethod =
-                              _accessModesSelected!.value as AuthMethod;
-                          _preferences
-                              .setAuthMethod(AuthenticationMethod(_authMethod));
-                          switch (_authMethod) {
-                            case AuthMethod.biometrics:
-                              await authenticateWithBiometrics();
-                              break;
-                            case AuthMethod.password:
-                              Navigator.of(context)
-                                  .pushNamed('/intro_password');
-                              break;
-                            case AuthMethod.pin:
-                              final String pin = await Navigator.of(context)
-                                  .push(MaterialPageRoute(
-                                      builder: (BuildContext context) {
-                                return const PinScreen(
-                                  PinOverlayType.newPin,
-                                );
-                              }));
-                              if (pin.length > 5) {
-                                _pinEnteredCallback(pin);
-                              }
-                              break;
-                            case AuthMethod.yubikeyWithYubicloud:
-                              Navigator.of(context).pushNamed('/intro_yubikey');
-                              break;
-                            default:
-                              print('');
-                              break;
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                ])
               ],
             ),
           ),
