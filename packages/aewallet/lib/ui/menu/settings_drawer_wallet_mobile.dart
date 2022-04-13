@@ -214,7 +214,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       }
     }
 
-    switch (await showDialog<AuthMethod>(
+    await showDialog<AuthMethod>(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -230,42 +230,40 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
               child: PickerWidget(
                 pickerItems: pickerItemsList,
                 selectedIndex: _curAuthMethod.method.index,
-                onSelected: (value) {
-                  Navigator.pop(context, value.value);
+                onSelected: (value) async {
+                  _curAuthMethod =
+                      AuthenticationMethod(value.value as AuthMethod);
+                  _preferences.setAuthMethod(_curAuthMethod);
+                  switch (value.value) {
+                    case AuthMethod.biometrics:
+                      await authenticateWithBiometrics();
+                      break;
+                    case AuthMethod.pin:
+                      final String pin = await Navigator.of(context).push(
+                          MaterialPageRoute(builder: (BuildContext context) {
+                        return const PinScreen(
+                          PinOverlayType.newPin,
+                        );
+                      }));
+                      if (pin.length > 5) {
+                        _pinEnteredCallback(pin);
+                      }
+                      break;
+                    case AuthMethod.password:
+                      Navigator.of(context).pushNamed('/intro_password');
+                      break;
+                    case AuthMethod.yubikeyWithYubicloud:
+                      Navigator.of(context).pushNamed('/intro_yubikey');
+                      break;
+                    default:
+                      Navigator.pop(context, value.value);
+                      break;
+                  }
                 },
               ),
             ),
           );
-        })) {
-      case AuthMethod.pin:
-        _preferences.setAuthMethod(AuthenticationMethod(AuthMethod.pin));
-        setState(() {
-          _curAuthMethod = AuthenticationMethod(AuthMethod.pin);
         });
-        break;
-      case AuthMethod.biometrics:
-        _preferences.setAuthMethod(AuthenticationMethod(AuthMethod.biometrics));
-        setState(() {
-          _curAuthMethod = AuthenticationMethod(AuthMethod.biometrics);
-        });
-
-        break;
-      case AuthMethod.yubikeyWithYubicloud:
-        _preferences.setAuthMethod(
-            AuthenticationMethod(AuthMethod.yubikeyWithYubicloud));
-        setState(() {
-          _curAuthMethod =
-              AuthenticationMethod(AuthMethod.yubikeyWithYubicloud);
-        });
-
-        break;
-      default:
-        _preferences.setAuthMethod(AuthenticationMethod(AuthMethod.pin));
-        setState(() {
-          _curAuthMethod = AuthenticationMethod(AuthMethod.pin);
-        });
-        break;
-    }
   }
 
   Future<void> _lockDialog() async {
@@ -1552,6 +1550,28 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
         Sheets.showAppHeightNineSheet(
             context: context, widget: AppSeedBackupSheet(seed));
       });
+    }
+  }
+
+  Future<void> _pinEnteredCallback(String pin) async {
+    final Vault _vault = await Vault.getInstance();
+    _vault.setPin(pin);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      '/home',
+      (Route<dynamic> route) => false,
+    );
+  }
+
+  Future<void> authenticateWithBiometrics() async {
+    final bool authenticated = await sl
+        .get<BiometricUtil>()
+        .authenticateWithBiometrics(
+            context, AppLocalization.of(context)!.unlockBiometrics);
+    if (authenticated) {
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        '/home',
+        (Route<dynamic> route) => false,
+      );
     }
   }
 }
