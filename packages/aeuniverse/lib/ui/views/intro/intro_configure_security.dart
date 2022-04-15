@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/views/pin_screen.dart';
+import 'package:aeuniverse/ui/views/authenticate/pin_screen.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
@@ -122,75 +122,51 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                 EdgeInsetsDirectional.only(start: 20, end: 20),
                             child: PickerWidget(
                               pickerItems: widget.accessModes,
-                              onSelected: (value) {
+                              onSelected: (value) async {
                                 setState(() {
                                   _accessModesSelected = value;
                                 });
+                                if (_accessModesSelected == null) return;
+                                final Preferences _preferences =
+                                    await Preferences.getInstance();
+                                _preferences.setLock(true);
+                                _preferences.setLockTimeout(
+                                    LockTimeoutSetting(LockTimeoutOption.one));
+                                AuthMethod _authMethod =
+                                    _accessModesSelected!.value as AuthMethod;
+                                _preferences.setAuthMethod(
+                                    AuthenticationMethod(_authMethod));
+                                switch (_authMethod) {
+                                  case AuthMethod.biometrics:
+                                    await authenticateWithBiometrics();
+                                    break;
+                                  case AuthMethod.password:
+                                    Navigator.of(context)
+                                        .pushNamed('/intro_password');
+                                    break;
+                                  case AuthMethod.pin:
+                                    final String pin =
+                                        await Navigator.of(context).push(
+                                            MaterialPageRoute(builder:
+                                                (BuildContext context) {
+                                      return const PinScreen(
+                                        PinOverlayType.newPin,
+                                      );
+                                    }));
+                                    if (pin.length > 5) {
+                                      _pinEnteredCallback(pin);
+                                    }
+                                    break;
+                                  case AuthMethod.yubikeyWithYubicloud:
+                                    Navigator.of(context)
+                                        .pushNamed('/intro_yubikey');
+                                    break;
+                                  default:
+                                    break;
+                                }
                               },
                             ),
                           ),
-                        Column(
-                          children: <Widget>[
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              children: <Widget>[
-                                AppButton.buildAppButton(
-                                  const Key('confirm'),
-                                  context,
-                                  _accessModesSelected == null
-                                      ? AppButtonType.primaryOutline
-                                      : AppButtonType.primary,
-                                  AppLocalization.of(context)!.confirm,
-                                  Dimens.buttonTopDimens,
-                                  onPressed: () async {
-                                    if (_accessModesSelected == null) return;
-                                    final Preferences _preferences =
-                                        await Preferences.getInstance();
-                                    _preferences.setLock(true);
-                                    _preferences.setLockTimeout(
-                                        LockTimeoutSetting(
-                                            LockTimeoutOption.one));
-                                    AuthMethod _authMethod =
-                                        _accessModesSelected!.value
-                                            as AuthMethod;
-                                    _preferences.setAuthMethod(
-                                        AuthenticationMethod(_authMethod));
-                                    switch (_authMethod) {
-                                      case AuthMethod.biometrics:
-                                        await authenticateWithBiometrics();
-                                        break;
-                                      case AuthMethod.password:
-                                        Navigator.of(context)
-                                            .pushNamed('/intro_password');
-                                        break;
-                                      case AuthMethod.pin:
-                                        final String pin =
-                                            await Navigator.of(context).push(
-                                                MaterialPageRoute(builder:
-                                                    (BuildContext context) {
-                                          return const PinScreen(
-                                            PinOverlayType.newPin,
-                                          );
-                                        }));
-                                        if (pin.length > 5) {
-                                          _pinEnteredCallback(pin);
-                                        }
-                                        break;
-                                      case AuthMethod.yubikeyWithYubicloud:
-                                        Navigator.of(context)
-                                            .pushNamed('/intro_yubikey');
-                                        break;
-                                      default:
-                                        break;
-                                    }
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),

@@ -1,6 +1,6 @@
-import 'package:aeuniverse/ui/views/password_screen.dart';
-import 'package:aeuniverse/ui/views/pin_screen.dart';
-import 'package:aeuniverse/ui/views/yubikey_screen.dart';
+import 'package:aeuniverse/ui/views/authenticate/password_screen.dart';
+import 'package:aeuniverse/ui/views/authenticate/pin_screen.dart';
+import 'package:aeuniverse/ui/views/authenticate/yubikey_screen.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/util/biometrics_util.dart';

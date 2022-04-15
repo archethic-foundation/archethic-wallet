@@ -666,6 +666,29 @@ class AppLocalization {
         name: 'configureSecurityIntro');
   }
 
+  String get setPasswordHeader {
+    return Intl.message('Please, create a password.',
+        name: 'setPasswordHeader');
+  }
+
+  String get setPasswordDescription {
+    return Intl.message(
+        'In order to protect your account, make sure your password:\n\n- Is longer than 7 characters\n- Is not a member of the list of the most common passwords.\n- Is not a member of the "Have I been Pwned" breach database.',
+        name: 'setPasswordDescription');
+  }
+
+  String get seYubicloudHeader {
+    return Intl.message(
+        'Please, precise your client identity and client API key.',
+        name: 'seYubicloudHeader');
+  }
+
+  String get seYubicloudDescription {
+    return Intl.message(
+        'To use the Yubico OTP with your Yubikey, you need to get an API key from https://upgrade.yubico.com/getapikey. It\'s quick and free.\n\nAfter that, you can precise the given client identity and the client API key',
+        name: 'seYubicloudDescription');
+  }
+
   String get configureSecurityExplanation {
     return Intl.message(
         'To access to this application or to validate important manipulations, we offer several ways to protect yourself.',

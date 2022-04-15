@@ -14,7 +14,7 @@ import 'package:aeuniverse/model/available_themes.dart';
 import 'package:aeuniverse/ui/util/settings_list_item.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
-import 'package:aeuniverse/ui/views/pin_screen.dart';
+import 'package:aeuniverse/ui/views/authenticate/pin_screen.dart';
 import 'package:aeuniverse/ui/views/settings/backupseed_sheet.dart';
 import 'package:aeuniverse/ui/views/settings/yubikey_params_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
@@ -257,10 +257,10 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       }
                       break;
                     case AuthMethod.password:
-                      Navigator.of(context).pushNamed('/intro_password');
+                      Navigator.of(context).pushNamed('/update_password');
                       break;
                     case AuthMethod.yubikeyWithYubicloud:
-                      Navigator.of(context).pushNamed('/intro_yubikey');
+                      Navigator.of(context).pushNamed('/update_yubikey');
                       break;
                     default:
                       Navigator.pop(context, value.value);

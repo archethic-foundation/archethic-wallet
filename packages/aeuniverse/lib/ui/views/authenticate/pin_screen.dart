@@ -48,7 +48,7 @@ class _PinScreenState extends State<PinScreen>
   static const int maxAttempts = 5;
 
   int _pinLength = 6;
-  double buttonSize = 100.0;
+  double buttonSize = 70.0;
 
   String pinEnterTitle = '';
   String pinCreateTitle = '';
@@ -320,6 +320,24 @@ class _PinScreenState extends State<PinScreen>
                     top: MediaQuery.of(context).size.height * 0.06),
                 child: Column(
                   children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsetsDirectional.only(start: 15),
+                          height: 50,
+                          width: 50,
+                          child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop('');
+                              },
+                              child: FaIcon(FontAwesomeIcons.chevronLeft,
+                                  color: StateContainer.of(context)
+                                      .curTheme
+                                      .primary,
+                                  size: 24)),
+                        ),
+                      ],
+                    ),
                     buildIconWidget(
                         context,
                         'packages/aeuniverse/assets/icons/pin-code.png',

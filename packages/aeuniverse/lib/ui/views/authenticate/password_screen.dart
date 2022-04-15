@@ -19,6 +19,7 @@ import 'package:core/localization.dart';
 import 'package:core/util/string_encryption.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PasswordScreen extends StatefulWidget {
   const PasswordScreen({Key? key}) : super(key: key);
@@ -91,6 +92,24 @@ class _PasswordScreenState extends State<PasswordScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsetsDirectional.only(start: 15),
+                                height: 50,
+                                width: 50,
+                                child: TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: FaIcon(FontAwesomeIcons.chevronLeft,
+                                        color: StateContainer.of(context)
+                                            .curTheme
+                                            .primary,
+                                        size: 24)),
+                              ),
+                            ],
+                          ),
                           buildIconWidget(
                               context,
                               'packages/aeuniverse/assets/icons/password.png',

@@ -21,6 +21,8 @@ import 'package:aeuniverse/ui/views/intro/intro_new_wallet_disclaimer.dart';
 import 'package:aeuniverse/ui/views/intro/intro_password.dart';
 import 'package:aeuniverse/ui/views/intro/intro_welcome.dart';
 import 'package:aeuniverse/ui/views/intro/intro_yubikey.dart';
+import 'package:aeuniverse/ui/views/settings/update_password.dart';
+import 'package:aeuniverse/ui/views/settings/update_yubikey.dart';
 import 'package:aeuniverse/ui/views/lock_screen.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
@@ -201,12 +203,22 @@ class _AppState extends State<App> {
               );
             case '/intro_password':
               return MaterialPageRoute(
-                builder: (_) => IntroPassword(),
+                builder: (_) => const IntroPassword(),
                 settings: settings,
               );
             case '/intro_yubikey':
               return MaterialPageRoute(
-                builder: (_) => IntroYubikey(),
+                builder: (_) => const IntroYubikey(),
+                settings: settings,
+              );
+            case '/update_password':
+              return MaterialPageRoute(
+                builder: (_) => const UpdatePassword(),
+                settings: settings,
+              );
+            case '/update_yubikey':
+              return MaterialPageRoute(
+                builder: (_) => const UpdateYubikey(),
                 settings: settings,
               );
             case '/intro_import':

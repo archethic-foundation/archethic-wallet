@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:core/localization.dart';
 
-class IntroYubikey extends StatefulWidget {
-  const IntroYubikey({Key? key}) : super(key: key);
+class UpdateYubikey extends StatefulWidget {
+  const UpdateYubikey({Key? key}) : super(key: key);
   @override
-  _IntroYubikeyState createState() => _IntroYubikeyState();
+  _UpdateYubikeyState createState() => _UpdateYubikeyState();
 }
 
-class _IntroYubikeyState extends State<IntroYubikey> {
+class _UpdateYubikeyState extends State<UpdateYubikey> {
   @override
   Widget build(BuildContext context) {
     return SetYubikey(

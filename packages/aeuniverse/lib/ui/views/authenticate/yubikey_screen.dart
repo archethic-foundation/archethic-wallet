@@ -225,6 +225,20 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
+                          Container(
+                            margin: EdgeInsetsDirectional.only(start: 15),
+                            height: 50,
+                            width: 50,
+                            child: TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: FaIcon(FontAwesomeIcons.chevronLeft,
+                                    color: StateContainer.of(context)
+                                        .curTheme
+                                        .primary,
+                                    size: 24)),
+                          ),
                           buildIconWidget(
                               context,
                               'packages/aeuniverse/assets/icons/key-ring.png',
