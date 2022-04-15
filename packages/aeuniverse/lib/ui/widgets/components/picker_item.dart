@@ -15,9 +15,11 @@ class PickerItem {
   Color? iconColor;
   Object value;
   bool enabled;
+  bool displayed;
 
   PickerItem(this.label, this.description, this.icon, this.iconColor,
-      this.value, this.enabled);
+      this.value, this.enabled,
+      {this.displayed = true});
 }
 
 class PickerWidget extends StatefulWidget {
@@ -51,82 +53,86 @@ class _PickerWidgetState extends State<PickerWidget> {
           } else {
             isItemSelected = index == widget.selectedIndex;
           }
-          return InkWell(
-            onTap: () {
-              if (widget.pickerItems![index].enabled) {
-                sl.get<HapticUtil>().feedback(FeedbackType.light);
-                selectedIndex = index;
-                widget.onSelected!(widget.pickerItems![index]);
-                setState(() {});
-              }
-            },
-            child: Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(vertical: 4),
-              decoration: BoxDecoration(
-                border: Border.all(
-                    color: isItemSelected
-                        ? Colors.green
-                        : StateContainer.of(context).curTheme.primary!),
-                borderRadius: BorderRadius.all(Radius.circular(12)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        pickerItem.icon == null
-                            ? const SizedBox(
-                                width: 0,
-                                height: 24,
-                              )
-                            : Container(
-                                height: 24,
-                                child: widget.pickerItems![index].iconColor ==
-                                        null
-                                    ? Image.asset(pickerItem.icon!)
-                                    : Image.asset(pickerItem.icon!,
-                                        color:
-                                            widget.pickerItems![index].enabled
-                                                ? widget.pickerItems![index]
-                                                    .iconColor
-                                                : StateContainer.of(context)
-                                                    .curTheme
-                                                    .icon60),
-                              ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: Text(pickerItem.label,
-                              style: widget.pickerItems![index].enabled
-                                  ? AppStyles.textStyleSize14W600Primary(
-                                      context)
-                                  : AppStyles
-                                      .textStyleSize14W600PrimaryDisabled(
-                                          context)),
-                        ),
-                        isItemSelected
-                            ? Icon(
-                                Icons.check_circle,
-                                size: 16,
-                                color: Colors.green,
-                              )
-                            : Container(),
-                      ],
-                    ),
-                    if (pickerItem.description != null) SizedBox(height: 5),
-                    if (pickerItem.description != null)
-                      Text(
-                        pickerItem.description!,
-                        style: AppStyles.textStyleSize12W100Primary(context),
+          if (widget.pickerItems![index].displayed) {
+            return InkWell(
+              onTap: () {
+                if (widget.pickerItems![index].enabled) {
+                  sl.get<HapticUtil>().feedback(FeedbackType.light);
+                  selectedIndex = index;
+                  widget.onSelected!(widget.pickerItems![index]);
+                  setState(() {});
+                }
+              },
+              child: Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.symmetric(vertical: 4),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                      color: isItemSelected
+                          ? Colors.green
+                          : StateContainer.of(context).curTheme.primary30!),
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          pickerItem.icon == null
+                              ? const SizedBox(
+                                  width: 0,
+                                  height: 24,
+                                )
+                              : Container(
+                                  height: 24,
+                                  child: widget.pickerItems![index].iconColor ==
+                                          null
+                                      ? Image.asset(pickerItem.icon!)
+                                      : Image.asset(pickerItem.icon!,
+                                          color:
+                                              widget.pickerItems![index].enabled
+                                                  ? widget.pickerItems![index]
+                                                      .iconColor
+                                                  : StateContainer.of(context)
+                                                      .curTheme
+                                                      .icon60),
+                                ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Text(pickerItem.label,
+                                style: widget.pickerItems![index].enabled
+                                    ? AppStyles.textStyleSize14W600Primary(
+                                        context)
+                                    : AppStyles
+                                        .textStyleSize14W600PrimaryDisabled(
+                                            context)),
+                          ),
+                          isItemSelected
+                              ? Icon(
+                                  Icons.check_circle,
+                                  size: 16,
+                                  color: Colors.green,
+                                )
+                              : Container(),
+                        ],
                       ),
-                  ],
+                      if (pickerItem.description != null) SizedBox(height: 5),
+                      if (pickerItem.description != null)
+                        Text(
+                          pickerItem.description!,
+                          style: AppStyles.textStyleSize12W100Primary(context),
+                        ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
+            );
+          } else {
+            return SizedBox();
+          }
         },
         itemCount: widget.pickerItems!.length,
       ),

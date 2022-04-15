@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/views/password_screen.dart';
-import 'package:aeuniverse/ui/views/pin_screen.dart';
-import 'package:aeuniverse/ui/views/yubikey_screen.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
@@ -15,14 +12,13 @@ import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
-import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
-import 'package:core_ui/ui/util/routes.dart';
 import 'package:core_ui/util/app_util.dart';
 import 'package:core_ui/util/case_converter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 
 class AppLockScreen extends StatefulWidget {
   const AppLockScreen({Key? key}) : super(key: key);
@@ -122,92 +118,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
     }
   }
 
-  Future<void> authenticateWithBiometrics() async {
-    final bool authenticated = await sl
-        .get<BiometricUtil>()
-        .authenticateWithBiometrics(
-            context, AppLocalization.of(context)!.unlockBiometrics);
-    if (authenticated) {
-      _goHome();
-    }
-  }
-
-  Future<void> authenticateWithPin({bool transitions = false}) async {
-    final Vault _vault = await Vault.getInstance();
-    final String? expectedPin = _vault.getPin();
-    bool auth = false;
-    if (transitions) {
-      auth = await Navigator.of(context).push(
-        MaterialPageRoute(builder: (BuildContext context) {
-          return PinScreen(PinOverlayType.enterPin,
-              expectedPin: expectedPin!,
-              description: AppLocalization.of(context)!.unlockPin,
-              pinScreenBackgroundColor:
-                  StateContainer.of(context).curTheme.backgroundDark);
-        }),
-      ) as bool;
-    } else {
-      auth = await Navigator.of(context).push(
-        NoPushTransitionRoute(builder: (BuildContext context) {
-          return PinScreen(PinOverlayType.enterPin,
-              expectedPin: expectedPin!,
-              description: AppLocalization.of(context)!.unlockPin,
-              pinScreenBackgroundColor:
-                  StateContainer.of(context).curTheme.backgroundDark);
-        }),
-      );
-    }
-    await Future<void>.delayed(const Duration(milliseconds: 200));
-    if (mounted && auth) {
-      _goHome();
-    }
-  }
-
-  Future<void> authenticateWithYubikey({bool transitions = false}) async {
-    bool auth = false;
-    if (transitions) {
-      auth = await Navigator.of(context).push(
-        MaterialPageRoute(builder: (BuildContext context) {
-          return const YubikeyScreen();
-        }),
-      );
-    } else {
-      auth = await Navigator.of(context).push(
-        NoPushTransitionRoute(builder: (BuildContext context) {
-          return const YubikeyScreen();
-        }),
-      );
-    }
-    await Future<void>.delayed(const Duration(milliseconds: 200));
-    if (mounted && auth) {
-      _goHome();
-    }
-  }
-
-  Future<void> authenticateWithPassword({bool transitions = false}) async {
-    bool auth = false;
-    if (transitions) {
-      auth = await Navigator.of(context).push(
-        MaterialPageRoute(builder: (BuildContext context) {
-          return const PasswordScreen();
-        }),
-      );
-    } else {
-      auth = await Navigator.of(context).push(
-        NoPushTransitionRoute(builder: (BuildContext context) {
-          return const PasswordScreen();
-        }),
-      );
-    }
-    await Future<void>.delayed(const Duration(milliseconds: 200));
-    if (mounted && auth) {
-      _goHome();
-    }
-  }
-
   Future<void> _authenticate({bool transitions = false}) async {
-    // Test if user is locked out
-    // Get duration of lockout
     final Preferences _preferences = await Preferences.getInstance();
     final DateTime? lockUntil = _preferences.getLockDate();
     if (lockUntil == null) {
@@ -215,7 +126,6 @@ class _AppLockScreenState extends State<AppLockScreen> {
     } else {
       final int countDown =
           lockUntil.difference(DateTime.now().toUtc()).inSeconds;
-      // They're not allowed to attempt
       if (countDown > 0) {
         _runCountdown(countDown);
         return;
@@ -225,23 +135,10 @@ class _AppLockScreenState extends State<AppLockScreen> {
       _lockedOut = false;
     });
     final AuthenticationMethod authMethod = _preferences.getAuthMethod();
-    final bool hasBiometrics = await sl.get<BiometricUtil>().hasBiometrics();
-    if (authMethod.method == AuthMethod.biometrics && hasBiometrics) {
-      try {
-        await authenticateWithBiometrics();
-      } catch (e) {
-        await authenticateWithPin(transitions: transitions);
-      }
-    } else {
-      if (authMethod.method == AuthMethod.yubikeyWithYubicloud) {
-        await authenticateWithYubikey(transitions: transitions);
-      } else {
-        if (authMethod.method == AuthMethod.password) {
-          await authenticateWithPassword(transitions: transitions);
-        } else {
-          await authenticateWithPin(transitions: transitions);
-        }
-      }
+    bool auth = await AuthFactory.authenticate(context, authMethod,
+        transitions: transitions);
+    if (auth) {
+      _goHome();
     }
   }
 
@@ -338,7 +235,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                 },
                                 child: Row(
                                   children: <Widget>[
-                                    FaIcon(FontAwesomeIcons.signOutAlt,
+                                    FaIcon(FontAwesomeIcons.rightFromBracket,
                                         size: 16,
                                         color: StateContainer.of(context)
                                             .curTheme

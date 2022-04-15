@@ -10,10 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
-import 'package:aeuniverse/ui/views/ledger_screen.dart';
-import 'package:aeuniverse/ui/views/password_screen.dart';
-import 'package:aeuniverse/ui/views/pin_screen.dart';
-import 'package:aeuniverse/ui/views/yubikey_screen.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/util/preferences.dart';
@@ -22,20 +18,17 @@ import 'package:aewallet/model/nft_transfer_wallet.dart';
 import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:aewallet/ui/views/nft/nft_transfer_list.dart';
 import 'package:aewallet/ui/views/tokens/absinthe_socket.dart';
+import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/tokens/tokens_transfer_list.dart';
 import 'package:core/bus/authenticated_event.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/service/app_service.dart';
-import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/global_var.dart';
-import 'package:core/util/haptic_util.dart';
-import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:event_taxi/event_taxi.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
@@ -188,7 +181,6 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
             EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
         child: Column(
           children: <Widget>[
-            // Sheet handle
             Container(
               margin: const EdgeInsets.only(top: 10),
               height: 5,
@@ -232,70 +224,36 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                 ],
               ),
             ),
-
             Container(
               margin: const EdgeInsets.only(top: 10.0, bottom: 0),
               child: Column(
                 children: <Widget>[
-                  // A row for CONFIRM Button
                   Row(
                     children: <Widget>[
-                      // CONFIRM Button
                       AppButton.buildAppButton(
-                          const Key('confirm'),
-                          context,
-                          AppButtonType.primary,
-                          AppLocalization.of(context)!.confirm,
-                          Dimens.buttonTopDimens, onPressed: () async {
-                        final Preferences _preferences =
-                            await Preferences.getInstance();
-                        // Authenticate
-                        final AuthenticationMethod authMethod =
-                            _preferences.getAuthMethod();
-                        final bool hasBiometrics =
-                            await sl.get<BiometricUtil>().hasBiometrics();
-                        if (authMethod.method == AuthMethod.biometrics &&
-                            hasBiometrics) {
-                          try {
-                            final bool authenticated = await sl
-                                .get<BiometricUtil>()
-                                .authenticateWithBiometrics(
-                                    context,
-                                    AppLocalization.of(context)!
-                                        .confirmBiometrics);
-                            if (authenticated) {
-                              sl
-                                  .get<HapticUtil>()
-                                  .feedback(FeedbackType.success);
-                              EventTaxiImpl.singleton().fire(
-                                  AuthenticatedEvent(AUTH_EVENT_TYPE.send));
-                            }
-                          } catch (e) {
-                            await authenticateWithPin();
+                        const Key('confirm'),
+                        context,
+                        AppButtonType.primary,
+                        AppLocalization.of(context)!.confirm,
+                        Dimens.buttonTopDimens,
+                        onPressed: () async {
+                          final Preferences _preferences =
+                              await Preferences.getInstance();
+                          // Authenticate
+                          final AuthenticationMethod authMethod =
+                              _preferences.getAuthMethod();
+                          bool auth = await AuthFactory.authenticate(
+                              context, authMethod);
+                          if (auth) {
+                            EventTaxiImpl.singleton()
+                                .fire(AuthenticatedEvent(AUTH_EVENT_TYPE.send));
                           }
-                        } else {
-                          if (authMethod.method ==
-                              AuthMethod.yubikeyWithYubicloud) {
-                            await authenticateWithYubikey();
-                          } else {
-                            if (authMethod.method == AuthMethod.ledger) {
-                              await confirmationWithLedger();
-                            } else {
-                              if (authMethod.method == AuthMethod.password) {
-                                await authenticateWithPassword();
-                              } else {
-                                await authenticateWithPin();
-                              }
-                            }
-                          }
-                        }
-                      }),
+                        },
+                      ),
                     ],
                   ),
-                  // A row for CANCEL Button
                   Row(
                     children: <Widget>[
-                      // CANCEL Button
                       AppButton.buildAppButton(
                           const Key('cancel'),
                           context,
@@ -331,59 +289,6 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     } catch (e) {
       EventTaxiImpl.singleton()
           .fire(TransactionSendEvent(response: e.toString()));
-    }
-  }
-
-  Future<void> authenticateWithPin() async {
-    // PIN Authentication
-    final Vault _vault = await Vault.getInstance();
-    final String? expectedPin = _vault.getPin();
-    final bool auth = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) {
-      return PinScreen(
-        PinOverlayType.enterPin,
-        expectedPin: expectedPin!,
-        description: '',
-      );
-    })) as bool;
-    if (auth) {
-      await Future<void>.delayed(const Duration(milliseconds: 200));
-      EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.send));
-    }
-  }
-
-  Future<void> authenticateWithYubikey() async {
-    // Yubikey Authentication
-    final bool auth = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) {
-      return const YubikeyScreen();
-    })) as bool;
-    if (auth) {
-      await Future<void>.delayed(const Duration(milliseconds: 200));
-      EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.send));
-    }
-  }
-
-  Future<void> authenticateWithPassword() async {
-    final bool auth = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) {
-      return const PasswordScreen();
-    })) as bool;
-    if (auth) {
-      await Future<void>.delayed(const Duration(milliseconds: 200));
-      EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.send));
-    }
-  }
-
-  Future<void> confirmationWithLedger() async {
-    // Ledger confirmation
-    final bool auth = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) {
-      return LedgerScreen(widget.ucoTransferList);
-    })) as bool;
-    if (auth) {
-      await Future<void>.delayed(const Duration(milliseconds: 200));
-      EventTaxiImpl.singleton().fire(AuthenticatedEvent(AUTH_EVENT_TYPE.send));
     }
   }
 }

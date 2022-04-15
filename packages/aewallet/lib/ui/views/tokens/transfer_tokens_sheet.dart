@@ -761,7 +761,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
       hintText:
           _amountHint == null ? '' : AppLocalization.of(context)!.enterAmount,
       suffixButton: TextFieldButton(
-        icon: FontAwesomeIcons.angleDoubleUp,
+        icon: FontAwesomeIcons.anglesUp,
         onPressed: () async {
           double _fee = await getFee(maxSend: true);
 

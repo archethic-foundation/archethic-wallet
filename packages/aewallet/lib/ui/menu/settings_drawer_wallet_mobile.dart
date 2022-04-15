@@ -14,11 +14,9 @@ import 'package:aeuniverse/model/available_themes.dart';
 import 'package:aeuniverse/ui/util/settings_list_item.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
-import 'package:aeuniverse/ui/views/password_screen.dart';
 import 'package:aeuniverse/ui/views/pin_screen.dart';
 import 'package:aeuniverse/ui/views/settings/backupseed_sheet.dart';
 import 'package:aeuniverse/ui/views/settings/yubikey_params_widget.dart';
-import 'package:aeuniverse/ui/views/yubikey_screen.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
@@ -38,12 +36,11 @@ import 'package:core/model/device_lock_timeout.dart';
 import 'package:core/model/device_unlock_option.dart';
 import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/haptic_util.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/util/case_converter.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 
 class SettingsSheetWalletMobile extends StatefulWidget {
   const SettingsSheetWalletMobile({Key? key}) : super(key: key);
@@ -200,18 +197,21 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     final List<PickerItem> pickerItemsList =
         List<PickerItem>.empty(growable: true);
     for (var value in AuthMethod.values) {
+      bool _displayed = false;
       if (value != AuthMethod.ledger) {
         if ((_hasBiometrics && value == AuthMethod.biometrics) ||
             value != AuthMethod.biometrics) {
-          pickerItemsList.add(PickerItem(
-              AuthenticationMethod(value).getDisplayName(context),
-              AuthenticationMethod(value).getDescription(context),
-              AuthenticationMethod.getIcon(value),
-              StateContainer.of(context).curTheme.icon,
-              value,
-              value == AuthMethod.biometricsUniris ? false : true));
+          _displayed = true;
         }
       }
+      pickerItemsList.add(PickerItem(
+          AuthenticationMethod(value).getDisplayName(context),
+          AuthenticationMethod(value).getDescription(context),
+          AuthenticationMethod.getIcon(value),
+          StateContainer.of(context).curTheme.icon,
+          value,
+          value == AuthMethod.biometricsUniris ? false : true,
+          displayed: _displayed));
     }
 
     await showDialog<AuthMethod>(
@@ -236,7 +236,9 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                   _preferences.setAuthMethod(_curAuthMethod);
                   switch (value.value) {
                     case AuthMethod.biometrics:
-                      await authenticateWithBiometrics();
+                      await sl.get<BiometricUtil>().authenticateWithBiometrics(
+                          context,
+                          AppLocalization.of(context)!.unlockBiometrics);
                       break;
                     case AuthMethod.pin:
                       final String pin = await Navigator.of(context).push(
@@ -246,7 +248,12 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         );
                       }));
                       if (pin.length > 5) {
-                        _pinEnteredCallback(pin);
+                        final Vault _vault = await Vault.getInstance();
+                        _vault.setPin(pin);
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/home',
+                          (Route<dynamic> route) => false,
+                        );
                       }
                       break;
                     case AuthMethod.password:
@@ -1133,44 +1140,17 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                             await Preferences.getInstance();
                         final AuthenticationMethod authMethod =
                             _preferences.getAuthMethod();
-                        final bool hasBiometrics =
-                            await sl.get<BiometricUtil>().hasBiometrics();
 
-                        if (authMethod.method == AuthMethod.biometrics &&
-                            hasBiometrics) {
-                          try {
-                            final bool authenticated = await sl
-                                .get<BiometricUtil>()
-                                .authenticateWithBiometrics(
-                                    context,
-                                    AppLocalization.of(context)!
-                                        .fingerprintSeedBackup);
-                            if (authenticated) {
-                              sl
-                                  .get<HapticUtil>()
-                                  .feedback(FeedbackType.success);
-                              StateContainer.of(context)
-                                  .getSeed()
-                                  .then((String seed) {
-                                Sheets.showAppHeightNineSheet(
-                                    context: context,
-                                    widget: AppSeedBackupSheet(seed));
-                              });
-                            }
-                          } catch (e) {
-                            await authenticateWithPin();
-                          }
-                        } else {
-                          if (authMethod.method ==
-                              AuthMethod.yubikeyWithYubicloud) {
-                            return authenticateWithYubikey();
-                          } else {
-                            if (authMethod.method == AuthMethod.password) {
-                              return authenticateWithPassword();
-                            } else {
-                              await authenticateWithPin();
-                            }
-                          }
+                        bool auth =
+                            await AuthFactory.authenticate(context, authMethod);
+                        if (auth) {
+                          StateContainer.of(context)
+                              .getSeed()
+                              .then((String seed) {
+                            Sheets.showAppHeightNineSheet(
+                                context: context,
+                                widget: AppSeedBackupSheet(seed));
+                          });
                         }
                       }),
                     ]),
@@ -1500,78 +1480,5 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
         ),
       ),
     );
-  }
-
-  Future<void> authenticateWithYubikey() async {
-    // Yubikey Authentication
-    final bool auth = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) {
-      return const YubikeyScreen();
-    })) as bool;
-    if (auth) {
-      await Future<void>.delayed(const Duration(milliseconds: 200));
-      StateContainer.of(context).getSeed().then((String seed) {
-        Sheets.showAppHeightNineSheet(
-            context: context, widget: AppSeedBackupSheet(seed));
-      });
-    }
-  }
-
-  Future<void> authenticateWithPassword() async {
-    // Yubikey Authentication
-    final bool auth = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) {
-      return const PasswordScreen();
-    })) as bool;
-    if (auth) {
-      await Future<void>.delayed(const Duration(milliseconds: 200));
-      StateContainer.of(context).getSeed().then((String seed) {
-        Sheets.showAppHeightNineSheet(
-            context: context, widget: AppSeedBackupSheet(seed));
-      });
-    }
-  }
-
-  Future<void> authenticateWithPin() async {
-    // PIN Authentication
-    final Vault _vault = await Vault.getInstance();
-    final String? expectedPin = _vault.getPin();
-    final bool auth = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) {
-      return PinScreen(
-        PinOverlayType.enterPin,
-        expectedPin: expectedPin!,
-        description: AppLocalization.of(context)!.pinSecretPhraseBackup,
-      );
-    })) as bool;
-    if (auth) {
-      await Future<void>.delayed(const Duration(milliseconds: 200));
-      StateContainer.of(context).getSeed().then((String seed) {
-        Sheets.showAppHeightNineSheet(
-            context: context, widget: AppSeedBackupSheet(seed));
-      });
-    }
-  }
-
-  Future<void> _pinEnteredCallback(String pin) async {
-    final Vault _vault = await Vault.getInstance();
-    _vault.setPin(pin);
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      '/home',
-      (Route<dynamic> route) => false,
-    );
-  }
-
-  Future<void> authenticateWithBiometrics() async {
-    final bool authenticated = await sl
-        .get<BiometricUtil>()
-        .authenticateWithBiometrics(
-            context, AppLocalization.of(context)!.unlockBiometrics);
-    if (authenticated) {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        '/home',
-        (Route<dynamic> route) => false,
-      );
-    }
   }
 }
