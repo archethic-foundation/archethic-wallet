@@ -158,6 +158,21 @@ class AppLocalization {
         name: 'yubikeyParamsDesc');
   }
 
+  String get yubikeyConnectInvite {
+    return Intl.message('Please, connect your Yubikey',
+        name: 'yubikeyConnectInvite');
+  }
+
+  String get yubikeyConnectHoldNearDevice {
+    return Intl.message('Hold your device near the Yubikey',
+        name: 'yubikeyConnectHoldNearDevice');
+  }
+
+  String get passwordEnterInvite {
+    return Intl.message('Please, enter your password',
+        name: 'passwordEnterInvite');
+  }
+
   String get removeContact {
     return Intl.message('Remove Contact', name: 'removeContact');
   }

@@ -1337,5 +1337,143 @@
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
+	},
+	"yubikeyConnectInvite": "Svp, connectez votre Yubikey",
+	  "@yubikeyConnectInvite": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"yubikeyConnectHoldNearDevice": "Tennez votre appareil près de votre Yubikey",
+	  "@yubikeyConnectHoldNearDevice": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"passwordEnterInvite": "Svp, saisissez votre mot de passe",
+	  "@passwordEnterInvite": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"seYubicloudConfirmHeader": "Svp, confirmez votre identité client et la clé API client.",
+	  "@seYubicloudConfirmHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"setPasswordHeader": "Svp, créez un mot de passe.",
+	  "@setPasswordHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"setPasswordDescription": "Afin de protéger votre compte, assurez-vous que votre mot de passe :\n\n- Est plus long que 7 caractères\n- N'est pas présent dans la liste des mots de passe les plus courants.\n- N'est pas dans la liste de la base de données des violations de mot de passe \"Have I been Pwned\".",
+	  "@setPasswordDescription": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"seYubicloudHeader": "Svp, précisez votre identité client et la clé API client.",
+	  "@seYubicloudHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"seYubicloudDescription": "Pour utiliser le service d'OTP de Yubico avec votre Yubikey, vous devez obtenir une clé API sur https://upgrade.yubico.com/getapikey. C'est rapide et gratuit.\n\nAprès cela, vous pouvez préciser l'identité client donnée et la clé API client",
+	  "@seYubicloudDescription": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"passwordMethod": "Mot de passe",
+	  "@passwordMethod": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"biometricsUnirisMethod": "Biométrie d'Uniris (Prochainement...)",
+	  "@biometricsUnirisMethod": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"configureSecurityIntro": "C'est important de protéger l'accès à votre portefeuille !",
+	  "@configureSecurityIntro": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"configureSecurityExplanation": "Pour accéder à cette application ou pour valider des manipulations importantes, nous vous proposons plusieurs moyens de vous protéger.",
+	  "@configureSecurityExplanation": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"configureSecurityExplanationPIN": "Un numéro d'identification personnel (Code PIN) est un mot de passe numérique utilisé dans le processus d'authentification d'un utilisateur accédant à un système.",
+	  "@configureSecurityExplanationPIN": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"configureSecurityExplanationPassword": "Un mot de passe est une chaîne de caractères utilisée pour vérifier l'identité d'un utilisateur au cours du processus d'authentification. Évitez les mots trop faciles à trouver (date de naissance, prénom de vos enfants, etc...)",
+	  "@configureSecurityExplanationPassword": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"configureSecurityExplanationYubikey": "La YubiKey est un appareil qui rend l'authentification à deux facteurs aussi simple que possible. Au lieu qu'un code vous soit envoyé par SMS ou généré par une application sur votre téléphone, vous appuyez juste sur le bouton de votre YubiKey.",
+	  "@configureSecurityExplanationYubikey": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"configureSecurityExplanationBiometrics": "Il s'agit d'une méthode d'identification biométrique qui utilise les mesures corporelles, et dans ce cas, le visage ou le doigt, pour vérifier l'identité d'une personne grâce à son schéma et ses données biométriques.",
+	  "@configureSecurityExplanationBiometrics": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"configureSecurityExplanationUnirisBiometrics": "Embarquée dans la blockchain, la technologie biométrique fournie par Uniris permet à chacun de s'identifier sans difficulté et sans stocker aucune donnée biométrique. Il s'agit d'un contrôle d'accès infalsifiable et sans divulgation.",
+	  "@configureSecurityExplanationUnirisBiometrics": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"createPasswordHint": "Créer un mot de passe",
+	  "@createPasswordHint": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"confirmPasswordHint": "Confirmer le mot de passe",
+	  "@confirmPasswordHint": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"enterPasswordHint": "Saisissez votre mot de passe",
+	  "@enterPasswordHint": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"passwordsDontMatch": "Les mots de passe ne correspondent pas",
+	  "@passwordsDontMatch": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"passwordBlank": "Le mot de passe est obligatoire",
+	  "@passwordBlank": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"invalidPassword": "Le mot de passe est invalide",
+	  "@invalidPassword": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
 	}
 }
