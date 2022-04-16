@@ -103,20 +103,21 @@ class _AppTextFieldState extends State<AppTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(
-          left: widget.leftMargin ?? MediaQuery.of(context).size.width * 0.105,
-          right:
-              widget.rightMargin ?? MediaQuery.of(context).size.width * 0.105,
-          top: widget.topMargin!,
-        ),
-        padding: widget.padding,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: StateContainer.of(context).curTheme.backgroundDarkest,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: widget.overrideTextFieldWidget ??
-            Stack(alignment: AlignmentDirectional.center, children: <Widget>[
+      margin: EdgeInsets.only(
+        left: widget.leftMargin ?? MediaQuery.of(context).size.width * 0.105,
+        right: widget.rightMargin ?? MediaQuery.of(context).size.width * 0.105,
+        top: widget.topMargin!,
+      ),
+      padding: widget.padding,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: StateContainer.of(context).curTheme.backgroundDarkest,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: widget.overrideTextFieldWidget ??
+          Stack(
+            alignment: AlignmentDirectional.center,
+            children: <Widget>[
               TextField(
                 // User defined fields
                 textAlign: widget.textAlign!,
@@ -160,38 +161,41 @@ class _AppTextFieldState extends State<AppTextField> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        if (widget.fadePrefixOnCondition != null &&
-                            widget.prefixButton != null)
-                          AnimatedCrossFade(
-                            duration: Duration(
-                                milliseconds: widget.buttonFadeDurationMs!),
-                            firstChild: widget.prefixButton!,
-                            secondChild: const SizedBox(height: 48, width: 48),
-                            crossFadeState: widget.prefixShowFirstCondition!
-                                ? CrossFadeState.showFirst
-                                : CrossFadeState.showSecond,
-                          )
-                        else
-                          widget.prefixButton ?? const SizedBox(),
-                        // Second (suffix) button
-                        if (widget.fadeSuffixOnCondition != null &&
-                            widget.suffixButton != null)
-                          AnimatedCrossFade(
-                            duration: Duration(
-                                milliseconds: widget.buttonFadeDurationMs!),
-                            firstChild: widget.suffixButton!,
-                            secondChild: const SizedBox(height: 48, width: 48),
-                            crossFadeState: widget.suffixShowFirstCondition!
-                                ? CrossFadeState.showFirst
-                                : CrossFadeState.showSecond,
-                          )
-                        else
-                          widget.suffixButton ?? const SizedBox()
-                      ])
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      if (widget.fadePrefixOnCondition != null &&
+                          widget.prefixButton != null)
+                        AnimatedCrossFade(
+                          duration: Duration(
+                              milliseconds: widget.buttonFadeDurationMs!),
+                          firstChild: widget.prefixButton!,
+                          secondChild: const SizedBox(height: 48, width: 48),
+                          crossFadeState: widget.prefixShowFirstCondition!
+                              ? CrossFadeState.showFirst
+                              : CrossFadeState.showSecond,
+                        )
+                      else
+                        widget.prefixButton ?? const SizedBox(),
+                      // Second (suffix) button
+                      if (widget.fadeSuffixOnCondition != null &&
+                          widget.suffixButton != null)
+                        AnimatedCrossFade(
+                          duration: Duration(
+                              milliseconds: widget.buttonFadeDurationMs!),
+                          firstChild: widget.suffixButton!,
+                          secondChild: const SizedBox(height: 48, width: 48),
+                          crossFadeState: widget.suffixShowFirstCondition!
+                              ? CrossFadeState.showFirst
+                              : CrossFadeState.showSecond,
+                        )
+                      else
+                        widget.suffixButton ?? const SizedBox()
+                    ],
+                  ),
                 ],
-              )
-            ]));
+              ),
+            ],
+          ),
+    );
   }
 }

@@ -259,7 +259,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                                 onPressed: () {
                                   setState(() {
                                     buttonNFCLabel =
-                                        'Hold your device near the Yubikey';
+                                        AppLocalization.of(context)!
+                                            .yubikeyConnectHoldNearDevice;
                                   });
                                   _tagRead();
                                 })
@@ -268,7 +269,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 40, vertical: 10),
                               child: AutoSizeText(
-                                'Please, connect your Yubikey',
+                                AppLocalization.of(context)!
+                                    .passwordEnterInvite,
                                 style: AppStyles.textStyleSize16W200Primary(
                                     context),
                                 textAlign: TextAlign.center,
