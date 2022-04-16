@@ -330,7 +330,7 @@ class _PinScreenState extends State<PinScreen>
                             key: const Key('back'),
                             color: StateContainer.of(context).curTheme.primary,
                             onPressed: () {
-                              Navigator.pop(context);
+                              Navigator.pop(context, '');
                             },
                           ),
                         ),
