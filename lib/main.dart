@@ -1,3 +1,5 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+
 // Dart imports:
 import 'dart:async';
 import 'dart:developer' as dev;
@@ -21,9 +23,9 @@ import 'package:aeuniverse/ui/views/intro/intro_new_wallet_disclaimer.dart';
 import 'package:aeuniverse/ui/views/intro/intro_password.dart';
 import 'package:aeuniverse/ui/views/intro/intro_welcome.dart';
 import 'package:aeuniverse/ui/views/intro/intro_yubikey.dart';
+import 'package:aeuniverse/ui/views/lock_screen.dart';
 import 'package:aeuniverse/ui/views/settings/update_password.dart';
 import 'package:aeuniverse/ui/views/settings/update_yubikey.dart';
-import 'package:aeuniverse/ui/views/lock_screen.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 import 'package:aeuniverse/util/preferences.dart';

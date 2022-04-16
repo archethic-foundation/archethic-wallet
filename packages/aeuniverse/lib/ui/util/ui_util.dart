@@ -1,5 +1,7 @@
 // ignore_for_file: cancel_subscriptions
 
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+
 // Dart imports:
 import 'dart:async';
 

@@ -1,11 +1,10 @@
-// Dart imports:
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 // ignore_for_file: always_specify_types
 
 // Dart imports:
 import 'dart:async';
 
 // Flutter imports:
-import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -14,10 +13,12 @@ import 'package:aeuniverse/model/available_themes.dart';
 import 'package:aeuniverse/ui/util/settings_list_item.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
+import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 import 'package:aeuniverse/ui/views/authenticate/pin_screen.dart';
 import 'package:aeuniverse/ui/views/settings/backupseed_sheet.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
+import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aeuniverse/util/preferences.dart';
 import 'package:aeuniverse/util/service_locator.dart';
@@ -38,7 +39,6 @@ import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/util/case_converter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 
 class SettingsSheetWalletMobile extends StatefulWidget {
   const SettingsSheetWalletMobile({Key? key}) : super(key: key);

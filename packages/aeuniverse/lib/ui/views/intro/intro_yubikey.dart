@@ -1,8 +1,10 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+
 // Flutter imports:
-import 'package:aeuniverse/ui/views/intro/set_yubikey.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:aeuniverse/ui/views/intro/set_yubikey.dart';
 import 'package:core/localization.dart';
 
 class IntroYubikey extends StatefulWidget {

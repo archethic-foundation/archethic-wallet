@@ -1,5 +1,8 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 // Dart imports:
 // ignore_for_file: always_specify_types
+
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Dart imports:
 import 'dart:async';

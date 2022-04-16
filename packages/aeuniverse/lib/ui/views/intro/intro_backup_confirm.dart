@@ -1,4 +1,5 @@
-// Flutter imports:
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+
 // ignore_for_file: always_specify_types
 
 // Flutter imports:

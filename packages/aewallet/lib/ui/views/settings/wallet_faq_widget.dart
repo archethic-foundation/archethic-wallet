@@ -1,3 +1,5 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+
 // ignore_for_file: must_be_immutable
 
 // Flutter imports:

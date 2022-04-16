@@ -1,3 +1,9 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:aeuniverse/ui/views/authenticate/password_screen.dart';
 import 'package:aeuniverse/ui/views/authenticate/pin_screen.dart';
 import 'package:aeuniverse/ui/views/authenticate/yubikey_screen.dart';
@@ -8,7 +14,6 @@ import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/routes.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class AuthFactory {

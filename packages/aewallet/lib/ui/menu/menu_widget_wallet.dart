@@ -1,5 +1,6 @@
-// Flutter imports:
 // ignore_for_file: avoid_unnecessary_containers
+
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Dart imports:
 import 'dart:io';

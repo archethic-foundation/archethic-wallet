@@ -1,3 +1,5 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+
 enum AEApps { aeweb, aemail, aewallet, bin }
 
 /// Represent the available authentication methods our app supports

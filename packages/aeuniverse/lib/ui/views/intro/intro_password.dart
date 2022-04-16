@@ -1,8 +1,10 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+
 // Flutter imports:
-import 'package:aeuniverse/ui/views/intro/set_password.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:aeuniverse/ui/views/intro/set_password.dart';
 import 'package:core/localization.dart';
 
 class IntroPassword extends StatefulWidget {

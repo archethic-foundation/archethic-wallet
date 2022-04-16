@@ -1,5 +1,7 @@
 // ignore_for_file: cancel_subscriptions, always_specify_types
 
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+
 // Dart imports:
 import 'dart:async';
 
@@ -10,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
+import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/util/preferences.dart';
@@ -18,7 +21,6 @@ import 'package:aewallet/model/nft_transfer_wallet.dart';
 import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:aewallet/ui/views/nft/nft_transfer_list.dart';
 import 'package:aewallet/ui/views/tokens/absinthe_socket.dart';
-import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/tokens/tokens_transfer_list.dart';
 import 'package:core/bus/authenticated_event.dart';
 import 'package:core/localization.dart';

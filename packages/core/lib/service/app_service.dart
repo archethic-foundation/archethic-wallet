@@ -1,3 +1,5 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+
 // Dart imports:
 import 'dart:async';
 import 'dart:developer' as dev;
@@ -10,7 +12,6 @@ import 'package:core/model/transaction_infos.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:intl/intl.dart';
 
-// Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show
         ApiService,

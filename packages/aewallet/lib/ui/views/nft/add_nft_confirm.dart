@@ -1,5 +1,7 @@
 // ignore_for_file: cancel_subscriptions, avoid_unnecessary_containers
 
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+
 // Dart imports:
 import 'dart:async';
 
@@ -10,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
+import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/util/preferences.dart';
@@ -21,7 +24,6 @@ import 'package:core/service/app_service.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/global_var.dart';
 import 'package:core_ui/ui/util/dimens.dart';
-import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:event_taxi/event_taxi.dart';
 

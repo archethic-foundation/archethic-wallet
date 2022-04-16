@@ -1,4 +1,5 @@
 // ignore_for_file: must_be_immutable
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
 import 'package:flutter/material.dart';

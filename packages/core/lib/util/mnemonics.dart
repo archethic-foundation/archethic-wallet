@@ -1,3 +1,5 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+
 // Package imports:
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:core/util/seeds.dart';

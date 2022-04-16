@@ -1,4 +1,4 @@
-// Dart imports:
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 // ignore_for_file: avoid_unnecessary_containers
 
 // Dart imports:

@@ -1,3 +1,5 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+
 // Package imports:
 import 'package:absinthe_socket/absinthe_socket.dart';
 
