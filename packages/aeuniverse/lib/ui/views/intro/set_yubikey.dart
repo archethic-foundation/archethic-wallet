@@ -19,8 +19,12 @@ import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 class SetYubikey extends StatefulWidget {
   final String? header;
   final String? description;
+  final String? apiKey;
+  final String? clientID;
 
-  const SetYubikey({Key? key, this.header, this.description}) : super(key: key);
+  const SetYubikey(
+      {Key? key, this.header, this.description, this.apiKey, this.clientID})
+      : super(key: key);
 
   @override
   _SetYubikeyState createState() => _SetYubikeyState();
@@ -44,6 +48,12 @@ class _SetYubikeyState extends State<SetYubikey> {
     _clientIDFocusNode = FocusNode();
     _clientAPIKeyController = TextEditingController();
     _clientIDController = TextEditingController();
+    if (widget.apiKey != null) {
+      _clientAPIKeyController!.text = widget.apiKey!;
+    }
+    if (widget.clientID != null) {
+      _clientIDController!.text = widget.clientID!;
+    }
   }
 
   @override
@@ -96,7 +106,7 @@ class _SetYubikeyState extends State<SetYubikey> {
                             Container(
                               child: buildIconWidget(
                                   context,
-                                  'packages/aeuniverse/assets/icons/key-ring.png',
+                                  'packages/aeuniverse/assets/icons/digital-key.png',
                                   90,
                                   90),
                             ),

@@ -62,8 +62,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   Animation<Offset>? _walletFAQOffsetFloat;
   AnimationController? _aboutController;
   Animation<Offset>? _aboutOffsetFloat;
-  AnimationController? _yubikeyParamsController;
-  Animation<Offset>? _yubikeyParamsOffsetFloat;
 
   String versionString = '';
 
@@ -81,7 +79,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   bool? _contactsOpen;
   bool? _walletFAQOpen;
   bool? _nftOpen;
-  bool? _yubikeyParamsOpen;
 
   bool _pinPadShuffleActive = false;
 
@@ -95,7 +92,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     _aboutOpen = false;
     _walletFAQOpen = false;
     _nftOpen = false;
-    _yubikeyParamsOpen = false;
 
     // Determine if they have face or fingerprint enrolled, if not hide the setting
     sl.get<BiometricUtil>().hasBiometrics().then((bool hasBiometrics) {
@@ -136,10 +132,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
-    _yubikeyParamsController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 220),
-    );
     _contactsOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_contactsController!);
@@ -155,9 +147,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     _nftOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_nftController!);
-    _yubikeyParamsOffsetFloat =
-        Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
-            .animate(_yubikeyParamsController!);
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
         versionString =
@@ -173,7 +162,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     _aboutController!.dispose();
     _walletFAQController!.dispose();
     _nftController!.dispose();
-    _yubikeyParamsController!.dispose();
     super.dispose();
   }
 
@@ -641,12 +629,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       });
       _nftController!.reverse();
       return false;
-    } else if (_yubikeyParamsOpen!) {
-      setState(() {
-        _yubikeyParamsOpen = false;
-      });
-      _yubikeyParamsController!.reverse();
-      return false;
     }
     return true;
   }
@@ -676,10 +658,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                 child: WalletFAQ(_walletFAQController!, _walletFAQOpen!)),
             SlideTransition(
                 position: _nftOffsetFloat!, child: buildNFTMenu(context)),
-            SlideTransition(
-                position: _yubikeyParamsOffsetFloat!,
-                child: YubikeyParams(
-                    _yubikeyParamsController!, _yubikeyParamsOpen!)),
           ],
         ),
       ),
@@ -1174,26 +1152,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                             : _preferences.setPinPadShuffle(false);
                       });
                     }),
-                    Column(children: <Widget>[
-                      Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.primary15,
-                      ),
-                      AppSettings.buildSettingsListItemSingleLineWithInfos(
-                          context,
-                          AppLocalization.of(context)!.yubikeyParamsHeader,
-                          AppLocalization.of(context)!.yubikeyParamsDesc,
-                          icon:
-                              'packages/aewallet/assets/icons/digital-key.png',
-                          iconColor: StateContainer.of(context)
-                              .curTheme
-                              .iconDrawerColor!, onPressed: () {
-                        setState(() {
-                          _yubikeyParamsOpen = true;
-                        });
-                        _yubikeyParamsController!.forward();
-                      }),
-                    ]),
                     Divider(
                         height: 2,
                         color: StateContainer.of(context).curTheme.primary15),

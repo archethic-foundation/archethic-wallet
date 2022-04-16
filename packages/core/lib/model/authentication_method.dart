@@ -73,7 +73,7 @@ class AuthenticationMethod extends SettingSelectionItem {
       case AuthMethod.pin:
         return 'packages/aeuniverse/assets/icons/pin-code.png';
       case AuthMethod.yubikeyWithYubicloud:
-        return 'packages/aeuniverse/assets/icons/key-ring.png';
+        return 'packages/aeuniverse/assets/icons/digital-key.png';
       case AuthMethod.password:
         return 'packages/aeuniverse/assets/icons/password.png';
       default:

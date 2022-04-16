@@ -683,6 +683,12 @@ class AppLocalization {
         name: 'seYubicloudHeader');
   }
 
+  String get seYubicloudConfirmHeader {
+    return Intl.message(
+        'Please, confirm your client identity and client API key.',
+        name: 'seYubicloudConfirmHeader');
+  }
+
   String get seYubicloudDescription {
     return Intl.message(
         'To use the Yubico OTP with your Yubikey, you need to get an API key from https://upgrade.yubico.com/getapikey. It\'s quick and free.\n\nAfter that, you can precise the given client identity and the client API key',

@@ -241,7 +241,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                           ),
                           buildIconWidget(
                               context,
-                              'packages/aeuniverse/assets/icons/key-ring.png',
+                              'packages/aeuniverse/assets/icons/digital-key.png',
                               90,
                               90),
                           const SizedBox(
