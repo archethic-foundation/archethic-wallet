@@ -37,7 +37,6 @@ import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/util/case_converter.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 

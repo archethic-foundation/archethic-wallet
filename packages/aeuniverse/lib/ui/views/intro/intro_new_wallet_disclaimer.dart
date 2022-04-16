@@ -9,7 +9,6 @@ import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core_ui/ui/util/dimens.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class IntroNewWalletDisclaimer extends StatefulWidget {
   const IntroNewWalletDisclaimer({Key? key}) : super(key: key);

@@ -383,13 +383,4 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
       ),
     );
   }
-
-  Future<void> _pinEnteredCallback(String pin) async {
-    final Vault _vault = await Vault.getInstance();
-    _vault.setPin(pin);
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      '/home',
-      (Route<dynamic> route) => false,
-    );
-  }
 }

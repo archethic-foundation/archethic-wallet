@@ -14,7 +14,6 @@ import 'package:core/localization.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 
 class SetYubikey extends StatefulWidget {

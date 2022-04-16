@@ -18,7 +18,6 @@ import 'package:aewallet/ui/views/nft/add_nft.dart';
 import 'package:aewallet/ui/views/settings/wallet_faq_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsSheetWallet extends StatefulWidget {

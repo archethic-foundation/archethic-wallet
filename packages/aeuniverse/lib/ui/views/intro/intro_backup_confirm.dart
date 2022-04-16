@@ -16,7 +16,6 @@ import 'package:core/model/authentication_method.dart';
 import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/dimens.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class IntroBackupConfirm extends StatefulWidget {
   const IntroBackupConfirm({Key? key}) : super(key: key);

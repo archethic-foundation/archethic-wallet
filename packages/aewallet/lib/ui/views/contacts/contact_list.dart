@@ -22,7 +22,6 @@ import 'package:core/model/data/hive_db.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:event_taxi/event_taxi.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ContactsList extends StatefulWidget {
   ContactsList(this.contactsController, this.contactsOpen, {Key? key})

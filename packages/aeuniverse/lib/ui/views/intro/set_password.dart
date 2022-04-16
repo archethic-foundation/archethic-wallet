@@ -14,7 +14,6 @@ import 'package:core/localization.dart';
 import 'package:core/util/string_encryption.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SetPassword extends StatefulWidget {
   final String? header;
