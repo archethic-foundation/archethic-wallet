@@ -200,78 +200,84 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
           value == AuthMethod.biometricsUniris ? false : true,
           displayed: _displayed));
     }
-
-    StateSetter _setState;
-
     await showDialog<AuthMethod>(
       context: context,
       builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            _setState = setState;
-            return AlertDialog(
-              title: Text(
-                AppLocalization.of(context)!.authMethod,
-                style: AppStyles.textStyleSize20W700Primary(context),
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                  side: BorderSide(
-                      color: StateContainer.of(context).curTheme.primary45!)),
-              content: SingleChildScrollView(
-                child: PickerWidget(
-                  pickerItems: pickerItemsList,
-                  selectedIndex: _curAuthMethod.method.index,
-                  onSelected: (value) async {
-                    switch (value.value) {
-                      case AuthMethod.biometrics:
-                        bool auth = await sl
-                            .get<BiometricUtil>()
-                            .authenticateWithBiometrics(context,
-                                AppLocalization.of(context)!.unlockBiometrics);
-                        if (auth) {
-                          _preferences.setAuthMethod(
-                              AuthenticationMethod(AuthMethod.biometrics));
-                        }
-                        break;
-                      case AuthMethod.pin:
-                        final String pin = await Navigator.of(context).push(
-                            MaterialPageRoute(builder: (BuildContext context) {
-                          return const PinScreen(
-                            PinOverlayType.newPin,
-                          );
-                        }));
-                        if (pin.length > 5) {
-                          final Vault _vault = await Vault.getInstance();
-                          _vault.setPin(pin);
-                          _preferences.setAuthMethod(
-                              AuthenticationMethod(AuthMethod.pin));
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                            '/home',
-                            (Route<dynamic> route) => false,
-                          );
-                        }
-                        break;
-                      case AuthMethod.password:
-                        Navigator.of(context).pushNamed('/update_password');
-                        _setState(() {});
-                        break;
-                      case AuthMethod.yubikeyWithYubicloud:
-                        Navigator.of(context).pushNamed('/update_yubikey');
-                        _setState(() {});
-                        break;
-                      default:
-                        Navigator.pop(context, value.value);
-                        break;
+        return AlertDialog(
+          title: Text(
+            AppLocalization.of(context)!.authMethod,
+            style: AppStyles.textStyleSize20W700Primary(context),
+          ),
+          shape: RoundedRectangleBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+              side: BorderSide(
+                  color: StateContainer.of(context).curTheme.primary45!)),
+          content: SingleChildScrollView(
+            child: PickerWidget(
+              pickerItems: pickerItemsList,
+              selectedIndex: _curAuthMethod.method.index,
+              onSelected: (value) async {
+                switch (value.value) {
+                  case AuthMethod.biometrics:
+                    bool auth = await sl
+                        .get<BiometricUtil>()
+                        .authenticateWithBiometrics(context,
+                            AppLocalization.of(context)!.unlockBiometrics);
+                    if (auth) {
+                      _preferences.setAuthMethod(
+                          AuthenticationMethod(AuthMethod.biometrics));
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/home',
+                        (Route<dynamic> route) => false,
+                      );
+                    } else {
+                      Navigator.pop(context, value.value);
+                      await _authMethodDialog();
                     }
-                  },
-                ),
-              ),
-            );
-          },
+                    break;
+                  case AuthMethod.pin:
+                    final String pin = await Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return const PinScreen(
+                        PinOverlayType.newPin,
+                      );
+                    }));
+                    if (pin == '') {
+                      Navigator.pop(context, value.value);
+                      await _authMethodDialog();
+                    } else {
+                      if (pin.length > 5) {
+                        final Vault _vault = await Vault.getInstance();
+                        _vault.setPin(pin);
+                        _preferences.setAuthMethod(
+                            AuthenticationMethod(AuthMethod.pin));
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/home',
+                          (Route<dynamic> route) => false,
+                        );
+                      }
+                    }
+                    break;
+                  case AuthMethod.password:
+                    await Navigator.of(context).pushNamed('/update_password');
+                    Navigator.pop(context, value.value);
+                    await _authMethodDialog();
+                    break;
+                  case AuthMethod.yubikeyWithYubicloud:
+                    await Navigator.of(context).pushNamed('/update_yubikey');
+                    Navigator.pop(context, value.value);
+                    await _authMethodDialog();
+                    break;
+                  default:
+                    Navigator.pop(context, value.value);
+                    break;
+                }
+              },
+            ),
+          ),
         );
       },
-    ).then((value) => setState(() {}));
+    );
   }
 
   Future<void> _lockDialog() async {
