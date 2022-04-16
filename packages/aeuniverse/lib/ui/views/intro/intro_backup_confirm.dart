@@ -62,15 +62,14 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                             margin: EdgeInsetsDirectional.only(start: 15),
                             height: 50,
                             width: 50,
-                            child: TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: FaIcon(FontAwesomeIcons.chevronLeft,
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .primary,
-                                    size: 24)),
+                            child: BackButton(
+                              key: const Key('back'),
+                              color:
+                                  StateContainer.of(context).curTheme.primary,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
                           ),
                         ],
                       ),

@@ -77,17 +77,16 @@ class _NodesListState extends State<NodesList> {
                       height: 40,
                       width: 40,
                       margin: const EdgeInsets.only(right: 10, left: 10),
-                      child: TextButton(
-                          onPressed: () {
-                            setState(() {
-                              widget.nodesOpen = false;
-                            });
-                            widget.nodesController.reverse();
-                          },
-                          child: FaIcon(FontAwesomeIcons.chevronLeft,
-                              color:
-                                  StateContainer.of(context).curTheme.primary,
-                              size: 24)),
+                      child: BackButton(
+                        key: const Key('back'),
+                        color: StateContainer.of(context).curTheme.primary,
+                        onPressed: () {
+                          setState(() {
+                            widget.nodesOpen = false;
+                          });
+                          widget.nodesController.reverse();
+                        },
+                      ),
                     ),
                     Expanded(
                       child: AutoSizeText(

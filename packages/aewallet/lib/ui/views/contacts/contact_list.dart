@@ -136,17 +136,16 @@ class _ContactsListState extends State<ContactsList> {
                       height: 40,
                       width: 40,
                       margin: const EdgeInsets.only(right: 10, left: 10),
-                      child: TextButton(
-                          onPressed: () {
-                            setState(() {
-                              widget.contactsOpen = false;
-                            });
-                            widget.contactsController.reverse();
-                          },
-                          child: FaIcon(FontAwesomeIcons.chevronLeft,
-                              color:
-                                  StateContainer.of(context).curTheme.primary,
-                              size: 24)),
+                      child: BackButton(
+                        key: const Key('back'),
+                        color: StateContainer.of(context).curTheme.primary,
+                        onPressed: () {
+                          setState(() {
+                            widget.contactsOpen = false;
+                          });
+                          widget.contactsController.reverse();
+                        },
+                      ),
                     ),
                     Expanded(
                       child: AutoSizeText(

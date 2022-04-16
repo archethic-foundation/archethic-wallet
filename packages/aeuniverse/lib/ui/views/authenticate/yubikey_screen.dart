@@ -81,12 +81,6 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
   Future<void> _verifyOTP(String otp) async {
     final Preferences _preferences = await Preferences.getInstance();
     final Vault _vault = await Vault.getInstance();
-
-    UIUtil.showSnackbar(
-        otp,
-        context,
-        StateContainer.of(context).curTheme.primary!,
-        StateContainer.of(context).curTheme.overlay80!);
     final String yubikeyClientAPIKey = _vault.getYubikeyClientAPIKey();
     final String yubikeyClientID = _vault.getYubikeyClientID();
     verificationResponse = await YubicoService()
@@ -229,15 +223,14 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                             margin: EdgeInsetsDirectional.only(start: 15),
                             height: 50,
                             width: 50,
-                            child: TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: FaIcon(FontAwesomeIcons.chevronLeft,
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .primary,
-                                    size: 24)),
+                            child: BackButton(
+                              key: const Key('back'),
+                              color:
+                                  StateContainer.of(context).curTheme.primary,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
                           ),
                           buildIconWidget(
                               context,

@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:aeuniverse/util/preferences.dart';
+import 'package:core/model/authentication_method.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -79,16 +81,15 @@ class _SetPasswordState extends State<SetPassword> {
                                   margin: EdgeInsetsDirectional.only(start: 15),
                                   height: 50,
                                   width: 50,
-                                  child: TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: FaIcon(
-                                          FontAwesomeIcons.chevronLeft,
-                                          color: StateContainer.of(context)
-                                              .curTheme
-                                              .primary,
-                                          size: 24)),
+                                  child: BackButton(
+                                    key: const Key('back'),
+                                    color: StateContainer.of(context)
+                                        .curTheme
+                                        .primary,
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -279,7 +280,8 @@ class _SetPasswordState extends State<SetPassword> {
       Vault _vault = await Vault.getInstance();
       _vault.setPassword(stringEncryptBase64(setPasswordController!.text,
           await StateContainer.of(context).getSeed()));
-
+      final Preferences _preferences = await Preferences.getInstance();
+      _preferences.setAuthMethod(AuthenticationMethod(AuthMethod.password));
       Navigator.of(context).pushNamedAndRemoveUntil(
         '/home',
         (Route<dynamic> route) => false,

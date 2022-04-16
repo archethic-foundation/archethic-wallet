@@ -16,7 +16,6 @@ import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/views/authenticate/pin_screen.dart';
 import 'package:aeuniverse/ui/views/settings/backupseed_sheet.dart';
-import 'package:aeuniverse/ui/views/settings/yubikey_params_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
@@ -202,63 +201,77 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
           displayed: _displayed));
     }
 
+    StateSetter _setState;
+
     await showDialog<AuthMethod>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(
-              AppLocalization.of(context)!.authMethod,
-              style: AppStyles.textStyleSize20W700Primary(context),
-            ),
-            shape: RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                side: BorderSide(
-                    color: StateContainer.of(context).curTheme.primary45!)),
-            content: SingleChildScrollView(
-              child: PickerWidget(
-                pickerItems: pickerItemsList,
-                selectedIndex: _curAuthMethod.method.index,
-                onSelected: (value) async {
-                  _curAuthMethod =
-                      AuthenticationMethod(value.value as AuthMethod);
-                  _preferences.setAuthMethod(_curAuthMethod);
-                  switch (value.value) {
-                    case AuthMethod.biometrics:
-                      await sl.get<BiometricUtil>().authenticateWithBiometrics(
-                          context,
-                          AppLocalization.of(context)!.unlockBiometrics);
-                      break;
-                    case AuthMethod.pin:
-                      final String pin = await Navigator.of(context).push(
-                          MaterialPageRoute(builder: (BuildContext context) {
-                        return const PinScreen(
-                          PinOverlayType.newPin,
-                        );
-                      }));
-                      if (pin.length > 5) {
-                        final Vault _vault = await Vault.getInstance();
-                        _vault.setPin(pin);
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/home',
-                          (Route<dynamic> route) => false,
-                        );
-                      }
-                      break;
-                    case AuthMethod.password:
-                      Navigator.of(context).pushNamed('/update_password');
-                      break;
-                    case AuthMethod.yubikeyWithYubicloud:
-                      Navigator.of(context).pushNamed('/update_yubikey');
-                      break;
-                    default:
-                      Navigator.pop(context, value.value);
-                      break;
-                  }
-                },
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            _setState = setState;
+            return AlertDialog(
+              title: Text(
+                AppLocalization.of(context)!.authMethod,
+                style: AppStyles.textStyleSize20W700Primary(context),
               ),
-            ),
-          );
-        });
+              shape: RoundedRectangleBorder(
+                  borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                  side: BorderSide(
+                      color: StateContainer.of(context).curTheme.primary45!)),
+              content: SingleChildScrollView(
+                child: PickerWidget(
+                  pickerItems: pickerItemsList,
+                  selectedIndex: _curAuthMethod.method.index,
+                  onSelected: (value) async {
+                    switch (value.value) {
+                      case AuthMethod.biometrics:
+                        bool auth = await sl
+                            .get<BiometricUtil>()
+                            .authenticateWithBiometrics(context,
+                                AppLocalization.of(context)!.unlockBiometrics);
+                        if (auth) {
+                          _preferences.setAuthMethod(
+                              AuthenticationMethod(AuthMethod.biometrics));
+                        }
+                        break;
+                      case AuthMethod.pin:
+                        final String pin = await Navigator.of(context).push(
+                            MaterialPageRoute(builder: (BuildContext context) {
+                          return const PinScreen(
+                            PinOverlayType.newPin,
+                          );
+                        }));
+                        if (pin.length > 5) {
+                          final Vault _vault = await Vault.getInstance();
+                          _vault.setPin(pin);
+                          _preferences.setAuthMethod(
+                              AuthenticationMethod(AuthMethod.pin));
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                            '/home',
+                            (Route<dynamic> route) => false,
+                          );
+                        }
+                        break;
+                      case AuthMethod.password:
+                        Navigator.of(context).pushNamed('/update_password');
+                        _setState(() {});
+                        break;
+                      case AuthMethod.yubikeyWithYubicloud:
+                        Navigator.of(context).pushNamed('/update_yubikey');
+                        _setState(() {});
+                        break;
+                      default:
+                        Navigator.pop(context, value.value);
+                        break;
+                    }
+                  },
+                ),
+              ),
+            );
+          },
+        );
+      },
+    ).then((value) => setState(() {}));
   }
 
   Future<void> _lockDialog() async {
@@ -1028,17 +1041,16 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         height: 40,
                         width: 40,
                         margin: const EdgeInsets.only(right: 10, left: 10),
-                        child: TextButton(
-                            onPressed: () {
-                              setState(() {
-                                _securityOpen = false;
-                              });
-                              _securityController!.reverse();
-                            },
-                            child: FaIcon(FontAwesomeIcons.chevronLeft,
-                                color:
-                                    StateContainer.of(context).curTheme.primary,
-                                size: 24)),
+                        child: BackButton(
+                          key: const Key('back'),
+                          color: StateContainer.of(context).curTheme.primary,
+                          onPressed: () {
+                            setState(() {
+                              _securityOpen = false;
+                            });
+                            _securityController!.reverse();
+                          },
+                        ),
                       ),
                       //Security Header Text
                       Text(
@@ -1213,16 +1225,16 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     height: 40,
                     width: 40,
                     margin: const EdgeInsets.only(right: 10, left: 10),
-                    child: TextButton(
-                        onPressed: () {
-                          setState(() {
-                            _aboutOpen = false;
-                          });
-                          _aboutController!.reverse();
-                        },
-                        child: FaIcon(FontAwesomeIcons.chevronLeft,
-                            color: StateContainer.of(context).curTheme.primary,
-                            size: 24)),
+                    child: BackButton(
+                      key: const Key('back'),
+                      color: StateContainer.of(context).curTheme.primary,
+                      onPressed: () {
+                        setState(() {
+                          _aboutOpen = false;
+                        });
+                        _aboutController!.reverse();
+                      },
+                    ),
                   ),
                   Expanded(
                     child: AutoSizeText(
@@ -1352,16 +1364,16 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     height: 40,
                     width: 40,
                     margin: const EdgeInsets.only(right: 10, left: 10),
-                    child: TextButton(
-                        onPressed: () {
-                          setState(() {
-                            _nftOpen = false;
-                          });
-                          _nftController!.reverse();
-                        },
-                        child: FaIcon(FontAwesomeIcons.chevronLeft,
-                            color: StateContainer.of(context).curTheme.primary,
-                            size: 24)),
+                    child: BackButton(
+                      key: const Key('back'),
+                      color: StateContainer.of(context).curTheme.primary,
+                      onPressed: () {
+                        setState(() {
+                          _nftOpen = false;
+                        });
+                        _nftController!.reverse();
+                      },
+                    ),
                   ),
                   Expanded(
                     child: AutoSizeText(

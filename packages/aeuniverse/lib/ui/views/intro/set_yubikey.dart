@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:aeuniverse/util/preferences.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -90,16 +91,11 @@ class _SetYubikeyState extends State<SetYubikey> {
                                   margin: EdgeInsetsDirectional.only(start: 15),
                                   height: 50,
                                   width: 50,
-                                  child: TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: FaIcon(
-                                          FontAwesomeIcons.chevronLeft,
-                                          color: StateContainer.of(context)
-                                              .curTheme
-                                              .primary,
-                                          size: 24)),
+                                  child: BackButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -293,6 +289,9 @@ class _SetYubikeyState extends State<SetYubikey> {
           AuthenticationMethod(AuthMethod.yubikeyWithYubicloud),
         );
         if (auth) {
+          final Preferences _preferences = await Preferences.getInstance();
+          _preferences.setAuthMethod(
+              AuthenticationMethod(AuthMethod.yubikeyWithYubicloud));
           await Future<void>.delayed(const Duration(milliseconds: 200));
           StateContainer.of(context).getSeed().then((String seed) {
             Navigator.of(context).pushNamedAndRemoveUntil(

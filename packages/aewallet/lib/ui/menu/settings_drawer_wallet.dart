@@ -373,16 +373,16 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     height: 40,
                     width: 40,
                     margin: const EdgeInsets.only(right: 10, left: 10),
-                    child: TextButton(
-                        onPressed: () {
-                          setState(() {
-                            _aboutOpen = false;
-                          });
-                          _aboutController!.reverse();
-                        },
-                        child: FaIcon(FontAwesomeIcons.chevronLeft,
-                            color: StateContainer.of(context).curTheme.primary,
-                            size: 24)),
+                    child: BackButton(
+                      key: const Key('back'),
+                      color: StateContainer.of(context).curTheme.primary,
+                      onPressed: () {
+                        setState(() {
+                          _aboutOpen = false;
+                        });
+                        _aboutController!.reverse();
+                      },
+                    ),
                   ),
                   Expanded(
                     child: AutoSizeText(
@@ -512,16 +512,16 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     height: 40,
                     width: 40,
                     margin: const EdgeInsets.only(right: 10, left: 10),
-                    child: TextButton(
-                        onPressed: () {
-                          setState(() {
-                            _nftOpen = false;
-                          });
-                          _nftController!.reverse();
-                        },
-                        child: FaIcon(FontAwesomeIcons.chevronLeft,
-                            color: StateContainer.of(context).curTheme.primary,
-                            size: 24)),
+                    child: BackButton(
+                      key: const Key('back'),
+                      color: StateContainer.of(context).curTheme.primary,
+                      onPressed: () {
+                        setState(() {
+                          _nftOpen = false;
+                        });
+                        _nftController!.reverse();
+                      },
+                    ),
                   ),
                   Expanded(
                     child: AutoSizeText(
