@@ -90,6 +90,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
   String? _rawAmount;
   bool validRequest = true;
   double feeEstimation = 0.0;
+  bool? _isPressed;
 
   List<UCOTransferWallet> ucoTransferList =
       List<UCOTransferWallet>.empty(growable: true);
@@ -97,6 +98,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
   @override
   void initState() {
     super.initState();
+    _isPressed = false;
     _sendAmountFocusNode = FocusNode();
     _sendAddressFocusNode = FocusNode();
     _sendAmountController = TextEditingController();
@@ -504,33 +506,59 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                 ),
               ),
             ),
+
             Container(
               child: Column(
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      AppButton.buildAppButton(
-                          const Key('send'),
-                          context,
-                          AppButtonType.primary,
-                          widget.actionButtonTitle ??
-                              AppLocalization.of(context)!.send,
-                          Dimens.buttonTopDimens, onPressed: () async {
-                        validRequest = await _validateRequest();
-                        if (validRequest) {
-                          Sheets.showAppHeightNineSheet(
-                              context: context,
-                              widget: TransferConfirmSheet(
-                                lastAddress: StateContainer.of(context)
-                                    .selectedAccount
-                                    .lastAddress!,
-                                ucoTransferList: ucoTransferList,
-                                title: widget.title,
-                                typeTransfer: 'TOKEN',
-                                feeEstimation: feeEstimation,
-                              ));
-                        }
-                      }),
+                      _isPressed == true
+                          ? AppButton.buildAppButton(
+                              const Key('send'),
+                              context,
+                              AppButtonType.primaryOutline,
+                              widget.actionButtonTitle ??
+                                  AppLocalization.of(context)!.send,
+                              Dimens.buttonTopDimens,
+                              onPressed: () {},
+                            )
+                          : AppButton.buildAppButton(
+                              const Key('send'),
+                              context,
+                              AppButtonType.primary,
+                              widget.actionButtonTitle ??
+                                  AppLocalization.of(context)!.send,
+                              Dimens.buttonTopDimens,
+                              onPressed: () async {
+                                setState(() {
+                                  _isPressed = true;
+                                });
+                                validRequest = await _validateRequest();
+                                if (validRequest) {
+                                  Sheets.showAppHeightNineSheet(
+                                    onDisposed: () {
+                                      setState(() {
+                                        _isPressed = false;
+                                      });
+                                    },
+                                    context: context,
+                                    widget: TransferConfirmSheet(
+                                      lastAddress: StateContainer.of(context)
+                                          .selectedAccount
+                                          .lastAddress!,
+                                      ucoTransferList: ucoTransferList,
+                                      title: widget.title,
+                                      typeTransfer: 'TOKEN',
+                                      feeEstimation: feeEstimation,
+                                    ),
+                                  );
+                                } else {
+                                  setState(() {
+                                    _isPressed = false;
+                                  });
+                                }
+                              },
+                            ),
                     ],
                   ),
                 ],

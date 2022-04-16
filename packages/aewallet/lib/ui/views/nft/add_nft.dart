@@ -45,10 +45,13 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
 
   bool? animationOpen;
   double feeEstimation = 0.0;
+  bool? _isPressed;
+  bool validRequest = true;
 
   @override
   void initState() {
     super.initState();
+    _isPressed = false;
     _nameFocusNode = FocusNode();
     _initialSupplyFocusNode = FocusNode();
     _nameController = TextEditingController();
@@ -243,24 +246,48 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    // Add Contact Button
-                    AppButton.buildAppButton(
-                        const Key('addNFT'),
-                        context,
-                        AppButtonType.primary,
-                        AppLocalization.of(context)!.addNFT,
-                        Dimens.buttonTopDimens, onPressed: () async {
-                      if (await validateForm()) {
-                        Sheets.showAppHeightNineSheet(
-                            context: context,
-                            widget: AddNFTConfirm(
-                              nftName: _nameController!.text,
-                              feeEstimation: feeEstimation,
-                              nftInitialSupply:
-                                  int.tryParse(_initialSupplyController!.text),
-                            ));
-                      }
-                    }),
+                    _isPressed == true
+                        ? AppButton.buildAppButton(
+                            const Key('addNFT'),
+                            context,
+                            AppButtonType.primaryOutline,
+                            AppLocalization.of(context)!.addNFT,
+                            Dimens.buttonTopDimens,
+                            onPressed: () {},
+                          )
+                        : AppButton.buildAppButton(
+                            const Key('addNFT'),
+                            context,
+                            AppButtonType.primary,
+                            AppLocalization.of(context)!.addNFT,
+                            Dimens.buttonTopDimens,
+                            onPressed: () async {
+                              setState(() {
+                                _isPressed = true;
+                              });
+                              validRequest = await _validateRequest();
+                              if (validRequest) {
+                                Sheets.showAppHeightNineSheet(
+                                  onDisposed: () {
+                                    setState(() {
+                                      _isPressed = false;
+                                    });
+                                  },
+                                  context: context,
+                                  widget: AddNFTConfirm(
+                                    nftName: _nameController!.text,
+                                    feeEstimation: feeEstimation,
+                                    nftInitialSupply: int.tryParse(
+                                        _initialSupplyController!.text),
+                                  ),
+                                );
+                              } else {
+                                setState(() {
+                                  _isPressed = false;
+                                });
+                              }
+                            },
+                          ),
                   ],
                 ),
                 Row(
@@ -284,7 +311,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
     ));
   }
 
-  Future<bool> validateForm() async {
+  Future<bool> _validateRequest() async {
     bool isValid = true;
     setState(() {
       _nameValidationText = '';
