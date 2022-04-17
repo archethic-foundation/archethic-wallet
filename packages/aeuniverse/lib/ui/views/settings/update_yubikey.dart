@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aeuniverse/ui/views/intro/set_yubikey.dart';
+import 'package:aeuniverse/ui/views/settings/set_yubikey.dart';
 import 'package:core/localization.dart';
 import 'package:core/util/vault.dart';
 

@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aeuniverse/ui/views/intro/set_password.dart';
+import 'package:aeuniverse/ui/views/settings/set_password.dart';
 import 'package:core/localization.dart';
 
 class UpdatePassword extends StatefulWidget {
