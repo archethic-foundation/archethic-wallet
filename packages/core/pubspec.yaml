@@ -24,6 +24,9 @@ dependencies:
   # A flutter plugin for scanning 2D barcodes and QRCodes via camera
   barcode_scan2: ^4.2.0
 
+  # A BIP32 compatible library for Flutter writing in Dart.
+  bip32: ^2.0.0
+
   # Dart implementation of Bitcoin BIP39 Mnemonic code for generating deterministic keys
   bip39: ^1.0.6
   
