@@ -123,18 +123,20 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                   _accessModesSelected = value;
                                 });
                                 if (_accessModesSelected == null) return;
-                                final Preferences _preferences =
-                                    await Preferences.getInstance();
-                                _preferences.setLock(true);
-                                _preferences.setLockTimeout(
-                                    LockTimeoutSetting(LockTimeoutOption.one));
                                 AuthMethod _authMethod =
                                     _accessModesSelected!.value as AuthMethod;
-                                _preferences.setAuthMethod(
-                                    AuthenticationMethod(_authMethod));
                                 switch (_authMethod) {
                                   case AuthMethod.biometrics:
                                     await authenticateWithBiometrics();
+                                    final Preferences _preferences =
+                                        await Preferences.getInstance();
+                                    _preferences.setLock(true);
+                                    _preferences.setLockTimeout(
+                                        LockTimeoutSetting(
+                                            LockTimeoutOption.one));
+                                    _preferences.setAuthMethod(
+                                        AuthenticationMethod(
+                                            AuthMethod.biometrics));
                                     break;
                                   case AuthMethod.password:
                                     Navigator.of(context)
@@ -150,7 +152,22 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                       );
                                     }));
                                     if (pin.length > 5) {
-                                      _pinEnteredCallback(pin);
+                                      final Vault _vault =
+                                          await Vault.getInstance();
+                                      _vault.setPin(pin);
+                                      final Preferences _preferences =
+                                          await Preferences.getInstance();
+                                      _preferences.setLock(true);
+                                      _preferences.setLockTimeout(
+                                          LockTimeoutSetting(
+                                              LockTimeoutOption.one));
+                                      _preferences.setAuthMethod(
+                                          AuthenticationMethod(AuthMethod.pin));
+                                      Navigator.of(context)
+                                          .pushNamedAndRemoveUntil(
+                                        '/home',
+                                        (Route<dynamic> route) => false,
+                                      );
                                     }
                                     break;
                                   case AuthMethod.yubikeyWithYubicloud:
@@ -172,15 +189,6 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
           ),
         ),
       ),
-    );
-  }
-
-  Future<void> _pinEnteredCallback(String pin) async {
-    final Vault _vault = await Vault.getInstance();
-    _vault.setPin(pin);
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      '/home',
-      (Route<dynamic> route) => false,
     );
   }
 

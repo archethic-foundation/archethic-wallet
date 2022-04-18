@@ -683,17 +683,6 @@ class AppLocalization {
         name: 'configureSecurityIntro');
   }
 
-  String get setPasswordHeader {
-    return Intl.message('Please, create a password.',
-        name: 'setPasswordHeader');
-  }
-
-  String get setPasswordDescription {
-    return Intl.message(
-        'In order to protect your account, make sure your password:\n\n- Is longer than 7 characters\n- Is not a member of the list of the most common passwords.\n- Is not a member of the "Have I been Pwned" breach database.',
-        name: 'setPasswordDescription');
-  }
-
   String get seYubicloudHeader {
     return Intl.message(
         'Please, precise your client identity and client API key.',
@@ -1157,6 +1146,41 @@ class AppLocalization {
 
   String get seeAll {
     return Intl.message('See all transactions', name: 'seeAll');
+  }
+
+  String get setPasswordHeader {
+    return Intl.message('Please, create a password.',
+        name: 'setPasswordHeader');
+  }
+
+  String get setPasswordDescription {
+    return Intl.message(
+        'In order to protect your account, make sure your password:',
+        name: 'setPasswordDescription');
+  }
+
+  String get passwordAtLeast {
+    return Intl.message('- At least %1 characters.', name: 'passwordAtLeast');
+  }
+
+  String get passwordBreachDatabase {
+    return Intl.message(
+        '- Is not a member of the "Have I been Pwned" breach database.',
+        name: 'passwordBreachDatabase');
+  }
+
+  String get passwordNormalLetters {
+    return Intl.message('- At least %1 Letter.', name: 'passwordNormalLetters');
+  }
+
+  String get passwordNumericCharacters {
+    return Intl.message('- At least %1 Numeric character.',
+        name: 'passwordNumericCharacters');
+  }
+
+  String get passwordSpecialCharacters {
+    return Intl.message('- At least %1 Special character.',
+        name: 'passwordSpecialCharacters');
   }
 }
 

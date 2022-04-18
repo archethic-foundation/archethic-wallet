@@ -121,7 +121,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                             margin: const EdgeInsets.symmetric(
                                 horizontal: 40, vertical: 10),
                             child: AutoSizeText(
-                              AppLocalization.of(context)!.yubikeyConnectInvite,
+                              AppLocalization.of(context)!.passwordEnterInvite,
                               style:
                                   AppStyles.textStyleSize16W400Primary(context),
                               textAlign: TextAlign.center,

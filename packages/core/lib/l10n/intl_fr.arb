@@ -528,30 +528,30 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-  "labLinkHeader": "Lab",
-  "@labLinkHeader": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "labLinkDesc": "Dernières nouvelles sur l'écosystème Archethic",
-  "@labLinkDesc": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "aeWebsiteLinkHeader": "Site web d'ARCHEthic",
-  "@aeWebsiteLinkHeader": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "aeWebsiteLinkDesc": "Visitez le site web d'ARCHEthic",
-  "@aeWebsiteLinkDesc": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
+	"labLinkHeader": "Lab",
+	"@labLinkHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"labLinkDesc": "Dernières nouvelles sur l'écosystème Archethic",
+	"@labLinkDesc": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"aeWebsiteLinkHeader": "Site web d'ARCHEthic",
+	"@aeWebsiteLinkHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"aeWebsiteLinkDesc": "Visitez le site web d'ARCHEthic",
+	"@aeWebsiteLinkDesc": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
 	"autoLockHeader": "Verrouillage automatique",
 	"@autoLockHeader": {
 		"type": "text",
@@ -949,529 +949,559 @@
 		"placeholders": {}
 	},
 	"yubikeyWithYubiCloudMethod": "Yubikey",
-  	"@yubikeyWithYubiCloudMethod": {
-    	"type": "text",
-    	"placeholders_order": [],
-    	"placeholders": {}
-  	},
+	"@yubikeyWithYubiCloudMethod": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
 	"unlockNFCYubikey": "S'authentifier pour débloquer",
-  	"@unlockNFCYubikey": {
-    	"type": "text",
-    	"placeholders_order": [],
-    	"placeholders": {}
-  	},
-"yubikeyError_BAD_OTP": "Le mot de passe saisi a un format invalide.",
-  "@yubikeyError_BAD_OTP": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_REPLAYED_OTP": "Le mot de passe saisi a déjà été utilisé.",
-  "@yubikeyError_REPLAYED_OTP": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_BAD_SIGNATURE": "La vérification de signature HMAC a échoué.",
-  "@yubikeyError_BAD_SIGNATURE": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_MISSING_PARAMETER": "Il manque un paramètre à la requête.",
-  "@yubikeyError_MISSING_PARAMETER": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_NO_SUCH_CLIENT": "L'ID de la requpête n'existe pas.",
-  "@yubikeyError_NO_SUCH_CLIENT": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_OPERATION_NOT_ALLOWED": "L'ID de la requête n'a pas l'autorisation de vérifier les OTPs.",
-  "@yubikeyError_OPERATION_NOT_ALLOWED": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_BACKEND_ERROR": "Erreur inattendue dans le serveur yubicloud.",
-  "@yubikeyError_BACKEND_ERROR": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_NOT_ENOUGH_ANSWERS": "Le serveur n'a pu se synchroniser à temps.",
-  "@yubikeyError_NOT_ENOUGH_ANSWERS": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_REPLAYED_REQUEST": "Le serveur a déjà vu cette combinaison OTP/Nonce",
-  "@yubikeyError_REPLAYED_REQUEST": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_RESPONSE_KO": "Une erreur s'est produite lors de l'authent. Yubkiey. Réessayer ultérieurement.",
-  "@yubikeyError_RESPONSE_KO": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyError_OTP_NOT_FOUND": "Le mot de passe OTP est vide",
-  "@yubikeyError_OTP_NOT_FOUND": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "enterYubikeyClientID": "Entrer l'ID client",
-  "@enterYubikeyClientID": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "enterYubikeyClientAPIKey": "Entrer la clé client de l'API",
-  "@enterYubikeyClientAPIKey": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyParamsHeader": "Paramètres Yubikey",
-  "@yubikeyParamsHeader": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "yubikeyParamsDesc": "Configuration de l'accès Yubicloud",
-  "@yubikeyParamsDesc": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "themeHeader": "Thème",
-  "@themeHeader": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosHeader": "Infos de la transaction",
-  "@transactionInfosHeader": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyAddress": "Adresse",
-  "@transactionInfosKeyAddress": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyType": "Type",
-  "@transactionInfosKeyType": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyVersion": "Version",
-  "@transactionInfosKeyVersion": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyPreviousPublicKey": "Clé publique de la transaction précédente",
-  "@transactionInfosKeyPreviousPublicKey": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyPreviousSignature": "Signature à partir de la clé privée associée à la clé publique",
-  "@transactionInfosKeyPreviousSignature": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyOriginSignature": "Signature à partir de la clé privée associée au dispositif",
-  "@transactionInfosKeyOriginSignature": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyData": "Données",
-  "@transactionInfosKeyData": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyContent": "Contenu",
-  "@transactionInfosKeyContent": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyCode": "Code",
-  "@transactionInfosKeyCode": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyUCOLedger": "Opérations sur les registres - UCO",
-  "@transactionInfosKeyUCOLedger": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyTo": "A",
-  "@transactionInfosKeyTo": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyAmount": "Montant",
-  "@transactionInfosKeyAmount": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyNFTLedger": "Opérations sur les registres - NFT",
-  "@transactionInfosKeyNFTLedger": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyNft": "NFT",
-  "@transactionInfosKeyNft": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyValidationStamp": "Estampille de Validation",
-  "@transactionInfosKeyValidationStamp": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyProofOfWork": "Preuve de Travail",
-  "@transactionInfosKeyProofOfWork": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyProofOfIntegrity": "Preuve d'intégrité",
-  "@transactionInfosKeyProofOfIntegrity": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyTimeStamp": "Date de la génération de la transaction",
-  "@transactionInfosKeyTimeStamp": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeyCrossValidationStamps": "Estampille(s) de contre-validation",
-  "@transactionInfosKeyCrossValidationStamps": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionInfosKeySignature": "Signature",
-  "@transactionInfosKeySignature": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionBuyHeader": "Acheter des UCO ici",
-  "@transactionBuyHeader": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "transactionsAllListHeader": "Transactions",
-  "@transactionsAllListHeader": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "receive": "Recevoir",
-  "@receive": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "buy": "Acheter",
-  "@buy": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "chart": "Cours",
-  "@chart": {
-	"type": "text",
-	"placeholders_order": [],
-	"placeholders": {}
-  },
-  "share": "Partager",
-  "@share": {
-	"type": "text",
-	"placeholders_order": [],
-	"placeholders": {}
-  },
-  "chartOptionLabel14d": "14j",
-  "@chartOptionLabel14d": {
-	"type": "text",
-	"placeholders_order": [],
-	"placeholders": {}
-  },
-  "chartOptionLabel1y": "1a",
-  "@chartOptionLabel1y": {
-	"type": "text",
-	"placeholders_order": [],
-	"placeholders": {}
-  },
-  "chartOptionLabel200d": "200j",
-  "@chartOptionLabel200d": {
-	"type": "text",
-	"placeholders_order": [],
-	"placeholders": {}
-  },
-  "chartOptionLabel30d": "30j",
-  "@chartOptionLabel30d": {
-	"type": "text",
-	"placeholders_order": [],
-	"placeholders": {}
-  },
-  "chartOptionLabel60d": "60j",
-  "@chartOptionLabel60d": {
-	"type": "text",
-	"placeholders_order": [],
-	"placeholders": {}
-  },
-  "chartOptionLabel7d": "7j",
-  "@chartOptionLabel7d": {
-	"type": "text",
-	"placeholders_order": [],
-	"placeholders": {}
-  },
-  "chartOptionLabel24h": "24h",
-  "@chartOptionLabel24h": {
-	"type": "text",
-	"placeholders_order": [],
-	"placeholders": {}
-  },
-  "transactionChainExplorerHeader": "Explorateur de chaînes de transactions",
-  "@transactionChainExplorerHeader": {
-	"type": "text",
-	"placeholders_order": [],
-	"placeholders": {}
-  },
-  "transactionChainExplorerDesc": "Explorer chaque transaction contenue dans votre chaîne.",
-  "@transactionChainExplorerDesc": {
-	"type": "text",
-	"placeholders_order": [],
-	"placeholders": {}
-  },
-  "transactionChainExplorerLastAddress": "Dernière adresse",
-  "@transactionChainExplorerLastAddress": {
-	"type": "text",
-	"placeholders_order": [],
-	"placeholders": {}
-  },
-  "estimatedFees": "Frais estimés",
+	"@unlockNFCYubikey": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"yubikeyError_BAD_OTP": "Le mot de passe saisi a un format invalide.",
+	"@yubikeyError_BAD_OTP": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"yubikeyError_REPLAYED_OTP": "Le mot de passe saisi a déjà été utilisé.",
+	"@yubikeyError_REPLAYED_OTP": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"yubikeyError_BAD_SIGNATURE": "La vérification de signature HMAC a échoué.",
+	"@yubikeyError_BAD_SIGNATURE": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"yubikeyError_MISSING_PARAMETER": "Il manque un paramètre à la requête.",
+	"@yubikeyError_MISSING_PARAMETER": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"yubikeyError_NO_SUCH_CLIENT": "L'ID de la requpête n'existe pas.",
+	"@yubikeyError_NO_SUCH_CLIENT": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"yubikeyError_OPERATION_NOT_ALLOWED": "L'ID de la requête n'a pas l'autorisation de vérifier les OTPs.",
+	"@yubikeyError_OPERATION_NOT_ALLOWED": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"yubikeyError_BACKEND_ERROR": "Erreur inattendue dans le serveur yubicloud.",
+	"@yubikeyError_BACKEND_ERROR": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"yubikeyError_NOT_ENOUGH_ANSWERS": "Le serveur n'a pu se synchroniser à temps.",
+	"@yubikeyError_NOT_ENOUGH_ANSWERS": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"yubikeyError_REPLAYED_REQUEST": "Le serveur a déjà vu cette combinaison OTP/Nonce",
+	"@yubikeyError_REPLAYED_REQUEST": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"yubikeyError_RESPONSE_KO": "Une erreur s'est produite lors de l'authent. Yubkiey. Réessayer ultérieurement.",
+	"@yubikeyError_RESPONSE_KO": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"yubikeyError_OTP_NOT_FOUND": "Le mot de passe OTP est vide",
+	"@yubikeyError_OTP_NOT_FOUND": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"enterYubikeyClientID": "Entrer l'ID client",
+	"@enterYubikeyClientID": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"enterYubikeyClientAPIKey": "Entrer la clé client de l'API",
+	"@enterYubikeyClientAPIKey": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"yubikeyParamsHeader": "Paramètres Yubikey",
+	"@yubikeyParamsHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"yubikeyParamsDesc": "Configuration de l'accès Yubicloud",
+	"@yubikeyParamsDesc": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"themeHeader": "Thème",
+	"@themeHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosHeader": "Infos de la transaction",
+	"@transactionInfosHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyAddress": "Adresse",
+	"@transactionInfosKeyAddress": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyType": "Type",
+	"@transactionInfosKeyType": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyVersion": "Version",
+	"@transactionInfosKeyVersion": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyPreviousPublicKey": "Clé publique de la transaction précédente",
+	"@transactionInfosKeyPreviousPublicKey": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyPreviousSignature": "Signature à partir de la clé privée associée à la clé publique",
+	"@transactionInfosKeyPreviousSignature": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyOriginSignature": "Signature à partir de la clé privée associée au dispositif",
+	"@transactionInfosKeyOriginSignature": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyData": "Données",
+	"@transactionInfosKeyData": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyContent": "Contenu",
+	"@transactionInfosKeyContent": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyCode": "Code",
+	"@transactionInfosKeyCode": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyUCOLedger": "Opérations sur les registres - UCO",
+	"@transactionInfosKeyUCOLedger": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyTo": "A",
+	"@transactionInfosKeyTo": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyAmount": "Montant",
+	"@transactionInfosKeyAmount": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyNFTLedger": "Opérations sur les registres - NFT",
+	"@transactionInfosKeyNFTLedger": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyNft": "NFT",
+	"@transactionInfosKeyNft": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyValidationStamp": "Estampille de Validation",
+	"@transactionInfosKeyValidationStamp": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyProofOfWork": "Preuve de Travail",
+	"@transactionInfosKeyProofOfWork": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyProofOfIntegrity": "Preuve d'intégrité",
+	"@transactionInfosKeyProofOfIntegrity": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyTimeStamp": "Date de la génération de la transaction",
+	"@transactionInfosKeyTimeStamp": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeyCrossValidationStamps": "Estampille(s) de contre-validation",
+	"@transactionInfosKeyCrossValidationStamps": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionInfosKeySignature": "Signature",
+	"@transactionInfosKeySignature": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionBuyHeader": "Acheter des UCO ici",
+	"@transactionBuyHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionsAllListHeader": "Transactions",
+	"@transactionsAllListHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"receive": "Recevoir",
+	"@receive": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"buy": "Acheter",
+	"@buy": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"chart": "Cours",
+	"@chart": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"share": "Partager",
+	"@share": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"chartOptionLabel14d": "14j",
+	"@chartOptionLabel14d": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"chartOptionLabel1y": "1a",
+	"@chartOptionLabel1y": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"chartOptionLabel200d": "200j",
+	"@chartOptionLabel200d": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"chartOptionLabel30d": "30j",
+	"@chartOptionLabel30d": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"chartOptionLabel60d": "60j",
+	"@chartOptionLabel60d": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"chartOptionLabel7d": "7j",
+	"@chartOptionLabel7d": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"chartOptionLabel24h": "24h",
+	"@chartOptionLabel24h": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionChainExplorerHeader": "Explorateur de chaînes de transactions",
+	"@transactionChainExplorerHeader": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionChainExplorerDesc": "Explorer chaque transaction contenue dans votre chaîne.",
+	"@transactionChainExplorerDesc": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"transactionChainExplorerLastAddress": "Dernière adresse",
+	"@transactionChainExplorerLastAddress": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"estimatedFees": "Frais estimés",
 	"@estimatedFees": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
 	},
 	"estimatedFeesNote": "Note: Les frais seront estimés quand l'adresse et le montant seront spécifiés.",
-	  "@estimatedFeesNote": {
+	"@estimatedFeesNote": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	  "estimatedFeesAddNFTNote": "Note: Les frais seront estimés quand le nom et l'approvisionnement initial seront spécifiés.",
-		"@estimatedFeesAddNFTNote": {
-		  "type": "text",
-		  "placeholders_order": [],
-		  "placeholders": {}
+	"estimatedFeesAddNFTNote": "Note: Les frais seront estimés quand le nom et l'approvisionnement initial seront spécifiés.",
+	"@estimatedFeesAddNFTNote": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
 	},
 	"nodeAuthorizationDate": "Authorization date: ",
-	  "@nodeAuthorizationDate": {
+	"@nodeAuthorizationDate": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
-	  },
+	},
 	"nodeEnrollmentDate": "Enrollment date: ",
-	  "@nodeEnrollmentDate": {
+	"@nodeEnrollmentDate": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"currencyOracleInfo": "Cet icône signifie que la conversion utilisera un oracle founrni par ARCHEthic.",
-	  "@currencyOracleInfo": {
+	"@currencyOracleInfo": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"sendToMeError": "Vous ne pouvez pas envoyer de UCO dans votre propre portefeuille.",
-	  "@sendToMeError": {
+	"@sendToMeError": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"viewExplorer": "Voir dans l'explorer",
-	  "@viewExplorer": {
+	"@viewExplorer": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"total": "Total",
-	  "@total": {
+	"@total": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"seeAll": "Voir toutes les transactions",
-	  "@seeAll": {
+	"@seeAll": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"yubikeyConnectInvite": "Svp, connectez votre Yubikey",
-	  "@yubikeyConnectInvite": {
+	"@yubikeyConnectInvite": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"yubikeyConnectHoldNearDevice": "Tennez votre appareil près de votre Yubikey",
-	  "@yubikeyConnectHoldNearDevice": {
+	"@yubikeyConnectHoldNearDevice": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"passwordEnterInvite": "Svp, saisissez votre mot de passe",
-	  "@passwordEnterInvite": {
+	"@passwordEnterInvite": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"seYubicloudConfirmHeader": "Svp, confirmez votre identité client et la clé API client.",
-	  "@seYubicloudConfirmHeader": {
+	"@seYubicloudConfirmHeader": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"setPasswordHeader": "Svp, créez un mot de passe.",
-	  "@setPasswordHeader": {
+	"@setPasswordHeader": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"setPasswordDescription": "Afin de protéger votre compte, assurez-vous que votre mot de passe :\n\n- Est plus long que 7 caractères\n- N'est pas présent dans la liste des mots de passe les plus courants.\n- N'est pas dans la liste de la base de données des violations de mot de passe \"Have I been Pwned\".",
-	  "@setPasswordDescription": {
+	"setPasswordDescription": "Afin de protéger votre compte, assurez-vous que votre mot de passe respecte les règles suivantes :",
+	"@setPasswordDescription": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"seYubicloudHeader": "Svp, précisez votre identité client et la clé API client.",
-	  "@seYubicloudHeader": {
+	"@seYubicloudHeader": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"seYubicloudDescription": "Pour utiliser le service d'OTP de Yubico avec votre Yubikey, vous devez obtenir une clé API sur https://upgrade.yubico.com/getapikey. C'est rapide et gratuit.\n\nAprès cela, vous pouvez préciser l'identité client donnée et la clé API client",
-	  "@seYubicloudDescription": {
+	"@seYubicloudDescription": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"passwordMethod": "Mot de passe",
-	  "@passwordMethod": {
+	"@passwordMethod": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"biometricsUnirisMethod": "Biométrie d'Uniris (Prochainement...)",
-	  "@biometricsUnirisMethod": {
+	"@biometricsUnirisMethod": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"configureSecurityIntro": "C'est important de protéger l'accès à votre portefeuille !",
-	  "@configureSecurityIntro": {
+	"@configureSecurityIntro": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"configureSecurityExplanation": "Pour accéder à cette application ou pour valider des manipulations importantes, nous vous proposons plusieurs moyens de vous protéger.",
-	  "@configureSecurityExplanation": {
+	"@configureSecurityExplanation": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"configureSecurityExplanationPIN": "Un numéro d'identification personnel (Code PIN) est un mot de passe numérique utilisé dans le processus d'authentification d'un utilisateur accédant à un système.",
-	  "@configureSecurityExplanationPIN": {
+	"@configureSecurityExplanationPIN": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"configureSecurityExplanationPassword": "Un mot de passe est une chaîne de caractères utilisée pour vérifier l'identité d'un utilisateur au cours du processus d'authentification. Évitez les mots trop faciles à trouver (date de naissance, prénom de vos enfants, etc...)",
-	  "@configureSecurityExplanationPassword": {
+	"@configureSecurityExplanationPassword": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"configureSecurityExplanationYubikey": "La YubiKey est un appareil qui rend l'authentification à deux facteurs aussi simple que possible. Au lieu qu'un code vous soit envoyé par SMS ou généré par une application sur votre téléphone, vous appuyez juste sur le bouton de votre YubiKey.",
-	  "@configureSecurityExplanationYubikey": {
+	"@configureSecurityExplanationYubikey": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"configureSecurityExplanationBiometrics": "Il s'agit d'une méthode d'identification biométrique qui utilise les mesures corporelles, et dans ce cas, le visage ou le doigt, pour vérifier l'identité d'une personne grâce à son schéma et ses données biométriques.",
-	  "@configureSecurityExplanationBiometrics": {
+	"@configureSecurityExplanationBiometrics": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"configureSecurityExplanationUnirisBiometrics": "Embarquée dans la blockchain, la technologie biométrique fournie par Uniris permet à chacun de s'identifier sans difficulté et sans stocker aucune donnée biométrique. Il s'agit d'un contrôle d'accès infalsifiable et sans divulgation.",
-	  "@configureSecurityExplanationUnirisBiometrics": {
+	"@configureSecurityExplanationUnirisBiometrics": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"createPasswordHint": "Créer un mot de passe",
-	  "@createPasswordHint": {
+	"@createPasswordHint": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"confirmPasswordHint": "Confirmer le mot de passe",
-	  "@confirmPasswordHint": {
+	"@confirmPasswordHint": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"enterPasswordHint": "Saisissez votre mot de passe",
-	  "@enterPasswordHint": {
+	"@enterPasswordHint": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"passwordsDontMatch": "Les mots de passe ne correspondent pas",
-	  "@passwordsDontMatch": {
+	"@passwordsDontMatch": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"passwordBlank": "Le mot de passe est obligatoire",
-	  "@passwordBlank": {
+	"@passwordBlank": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}
 	},
 	"invalidPassword": "Le mot de passe est invalide",
-	  "@invalidPassword": {
+	"@invalidPassword": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"passwordAtLeast": "- Au moins %1 caractères.",
+	"@passwordAtLeast": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"passwordBreachDatabase": "- Ne soit pas présent dans la liste des violations de mot de passe de la base de données \"Have I been Pwned\".",
+	"@passwordBreachDatabase": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"passwordNormalLetters": "- Au moins %1 lettre.",
+	"@passwordNormalLetters": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"passwordNumericCharacters": "- Au moins %1 caractère numérique.",
+	"@passwordNumericCharacters": {
+		"type": "text",
+		"placeholders_order": [],
+		"placeholders": {}
+	},
+	"passwordSpecialCharacters": "- Au moins %1 caractère spécial.",
+	"@passwordSpecialCharacters": {
 		"type": "text",
 		"placeholders_order": [],
 		"placeholders": {}

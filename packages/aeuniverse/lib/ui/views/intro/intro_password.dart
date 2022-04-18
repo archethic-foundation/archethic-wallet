@@ -18,6 +18,7 @@ class _IntroPasswordState extends State<IntroPassword> {
   Widget build(BuildContext context) {
     return SetPassword(
         header: AppLocalization.of(context)!.setPasswordHeader,
-        description: AppLocalization.of(context)!.setPasswordDescription);
+        description:
+            AppLocalization.of(context)!.configureSecurityExplanationPassword);
   }
 }

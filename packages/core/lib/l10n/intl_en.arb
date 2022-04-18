@@ -1368,7 +1368,7 @@
 	  "placeholders_order": [],
 	  "placeholders": {}
   },
-  "setPasswordDescription": "In order to protect your account, make sure your password:\n\n- Is longer than 7 characters\n- Is not a member of the list of the most common passwords.\n- Is not a member of the \"Have I been Pwned\" breach database.",
+  "setPasswordDescription": "In order to protect your account, make sure your password respects these rules:",
 	"@setPasswordDescription": {
 	  "type": "text",
 	  "placeholders_order": [],
@@ -1470,8 +1470,32 @@
 	  "placeholders_order": [],
 	  "placeholders": {}
   },
-  "invalidPassword": "Invalid Password",
-	"@invalidPassword": {
+  "passwordAtLeast": "- At least %1 characters.",
+	"@passwordAtLeast": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+  },
+  "passwordBreachDatabase": "- Is not a member of the \"Have I been Pwned\" breach database.",
+	"@passwordBreachDatabase": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+  },
+  "passwordNormalLetters": "- At least %1 Letter.",
+	"@passwordNormalLetters": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+  },
+  "passwordNumericCharacters": "- At least %1 Numeric character.",
+	"@passwordNumericCharacters": {
+	  "type": "text",
+	  "placeholders_order": [],
+	  "placeholders": {}
+  },
+  "passwordSpecialCharacters": "- At least %1 Special character.",
+	"@passwordSpecialCharacters": {
 	  "type": "text",
 	  "placeholders_order": [],
 	  "placeholders": {}

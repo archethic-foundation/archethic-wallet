@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-04-16T23:19:27.413501",
+  "@@last_modified": "2022-04-18T21:03:38.556409",
   "welcomeText": "Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -864,18 +864,6 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "setPasswordHeader": "Please, create a password.",
-  "@setPasswordHeader": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "setPasswordDescription": "In order to protect your account, make sure your password:\n\n- Is longer than 7 characters\n- Is not a member of the list of the most common passwords.\n- Is not a member of the \"Have I been Pwned\" breach database.",
-  "@setPasswordDescription": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
   "seYubicloudHeader": "Please, precise your client identity and client API key.",
   "@seYubicloudHeader": {
     "type": "text",
@@ -1502,6 +1490,48 @@
   },
   "seeAll": "See all transactions",
   "@seeAll": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "setPasswordHeader": "Please, create a password.",
+  "@setPasswordHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "setPasswordDescription": "In order to protect your account, make sure your password:",
+  "@setPasswordDescription": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "passwordAtLeast": "- At least %1 characters.",
+  "@passwordAtLeast": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "passwordBreachDatabase": "- Is not a member of the \"Have I been Pwned\" breach database.",
+  "@passwordBreachDatabase": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "passwordNormalLetters": "- At least %1 Letter.",
+  "@passwordNormalLetters": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "passwordNumericCharacters": "- At least %1 Numeric character.",
+  "@passwordNumericCharacters": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "passwordSpecialCharacters": "- At least %1 Special character.",
+  "@passwordSpecialCharacters": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
