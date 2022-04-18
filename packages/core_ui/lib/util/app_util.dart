@@ -10,12 +10,13 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:bip39/bip39.dart' as bip39;
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show uint8ListToHex, deriveAddress;
 import 'package:core/localization.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
 import 'package:core/util/get_it_instance.dart';
+
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show uint8ListToHex, deriveAddress;
 
 /// purpose = 44' (BIP44)
 /// coin_type = 650' (UCO of ArchEthic Blockchain)

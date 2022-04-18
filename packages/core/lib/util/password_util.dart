@@ -1,8 +1,10 @@
+// Dart imports:
 import 'dart:typed_data';
 
+// Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:pointycastle/pointycastle.dart';
 import 'package:http/http.dart' as http;
+import 'package:pointycastle/pointycastle.dart';
 
 /// Validator class hold the RegExp for requested validation
 class PasswordUtil {

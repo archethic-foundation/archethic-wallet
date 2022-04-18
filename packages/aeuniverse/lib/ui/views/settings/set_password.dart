@@ -13,10 +13,10 @@ import 'package:aeuniverse/util/preferences.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
+import 'package:core/util/password_util.dart';
 import 'package:core/util/string_encryption.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
-import 'package:core/util/password_util.dart';
 
 class SetPassword extends StatefulWidget {
   final String? header;
