@@ -112,10 +112,6 @@ class _AppTextFieldState extends State<AppTextField> {
       ),
       padding: widget.padding,
       width: double.infinity,
-      decoration: BoxDecoration(
-        color: StateContainer.of(context).curTheme.backgroundDarkest,
-        borderRadius: BorderRadius.circular(10),
-      ),
       child: widget.overrideTextFieldWidget ??
           Stack(
             alignment: AlignmentDirectional.center,
@@ -144,8 +140,8 @@ class _AppTextFieldState extends State<AppTextField> {
                 // Style
                 style: widget.style,
                 // Input decoration
+
                 decoration: InputDecoration(
-                  border: InputBorder.none,
                   // Hint
                   hintText: widget.hintText ?? '',
                   hintStyle: AppStyles.textStyleSize16W400Primary60(context),
@@ -156,6 +152,16 @@ class _AppTextFieldState extends State<AppTextField> {
                   suffixIcon: widget.suffixButton == null
                       ? const SizedBox(width: 0, height: 0)
                       : const SizedBox(width: 48, height: 48),
+                ),
+              ),
+              Positioned(
+                bottom: 1,
+                child: Container(
+                  height: 1,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    gradient: StateContainer.of(context).curTheme.gradient!,
+                  ),
                 ),
               ),
               // Buttons

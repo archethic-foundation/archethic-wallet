@@ -177,7 +177,6 @@ class _AddContactSheetState extends State<AddContactSheet> {
                 // Enter Name Container
                 AppTextField(
                   topMargin: MediaQuery.of(context).size.height * 0.14,
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   focusNode: _nameFocusNode,
                   controller: _nameController,
                   textInputAction: widget.address != null

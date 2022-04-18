@@ -3,6 +3,7 @@
 
 // Dart imports:
 import 'dart:io';
+import 'dart:ui';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -417,43 +418,64 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                                             constraints: const BoxConstraints(
                                                 maxHeight: 173, minHeight: 0),
                                             // The pop-up Contacts List
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color:
-                                                      StateContainer.of(context)
-                                                          .curTheme
-                                                          .backgroundDarkest,
-                                                ),
-                                                child: Container(
-                                                  decoration: BoxDecoration(
+                                            child: _contacts != null &&
+                                                    _contacts!.isNotEmpty
+                                                ? ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            25),
-                                                  ),
-                                                  margin: const EdgeInsets.only(
-                                                      bottom: 50),
-                                                  child: ListView.builder(
-                                                    shrinkWrap: true,
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            bottom: 0, top: 0),
-                                                    itemCount:
-                                                        _contacts!.length,
-                                                    itemBuilder:
-                                                        (BuildContext context,
-                                                            int index) {
-                                                      return _buildContactItem(
-                                                          _contacts![index]);
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
+                                                            15),
+                                                    child: BackdropFilter(
+                                                      filter: ImageFilter.blur(
+                                                          sigmaX: 8, sigmaY: 8),
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          color: StateContainer
+                                                                  .of(context)
+                                                              .curTheme
+                                                              .backgroundDark!
+                                                              .withOpacity(0.9),
+                                                        ),
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        25),
+                                                          ),
+                                                          margin:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  bottom: 50),
+                                                          child:
+                                                              ListView.builder(
+                                                            shrinkWrap: true,
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    bottom: 0,
+                                                                    top: 0),
+                                                            itemCount:
+                                                                _contacts!
+                                                                    .length,
+                                                            itemBuilder:
+                                                                (BuildContext
+                                                                        context,
+                                                                    int index) {
+                                                              return _buildContactItem(
+                                                                  _contacts![
+                                                                      index]);
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                : const SizedBox(),
                                           ),
                                           getEnterAddressContainer(),
                                         ],
@@ -621,7 +643,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
             },
             child: Text(contact.name!,
                 textAlign: TextAlign.center,
-                style: AppStyles.textStyleSize14W100Primary(context)),
+                style: AppStyles.textStyleSize14W600Primary(context)),
           ),
         ),
         Container(
