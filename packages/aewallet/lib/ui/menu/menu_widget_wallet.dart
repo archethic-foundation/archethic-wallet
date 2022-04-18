@@ -6,7 +6,8 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
+import 'package:aewallet/ui/menu/settings_drawer_wallet_mobile.dart';
+import 'package:core_ui/ui/util/responsive.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -14,15 +15,12 @@ import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
-import 'package:aewallet/ui/menu/settings_drawer_wallet.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
-import 'package:aewallet/ui/views/sheets/ledger_sheet.dart';
 import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
 import 'package:aewallet/ui/views/tokens/transfer_tokens_sheet.dart';
 import 'package:aewallet/ui/views/transactions/transaction_chain_explorer_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
-import 'package:core/model/ae_apps.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
 import 'package:core_ui/ui/widgets/menu/abstract_menu_widget.dart';
@@ -136,7 +134,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                                 AppStyles.textStyleSize14W600Primary(context)),
                       ],
                     ))),
-            if (kIsWeb || Platform.isMacOS)
+            /*if (kIsWeb || Platform.isMacOS)
               Padding(
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                   child: InkWell(
@@ -154,7 +152,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                               style: AppStyles.textStyleSize14W600Primary(
                                   context)),
                         ],
-                      )))
+                      )))*/
           ],
         ),
       ),
@@ -163,31 +161,18 @@ class MenuWidgetWallet extends AbstractMenuWidget {
 
   @override
   Widget buildSecondMenuIcons(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-            child: InkWell(
-              onTap: () {
-                sl.get<HapticUtil>().feedback(FeedbackType.light);
-                StateContainer.of(context).currentAEApp = AEApps.bin;
-                Navigator.pop(context);
-              },
-              child: buildIconDataWidget(context, Icons.home, 20, 20),
-            ),
-          ),
-        ],
-      ),
-    );
+    return const SizedBox();
   }
 
   @override
   Widget buildContextMenu(BuildContext context) {
-    return const SettingsSheetWallet();
+    return SizedBox(
+      width: Responsive.drawerWidth(context),
+      child: const Drawer(
+        // TODO: dependencies issue
+        child: SettingsSheetWalletMobile(),
+      ),
+    );
   }
 
   Widget buildMenuTxExplorer(BuildContext context) {
@@ -202,7 +187,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
           padding: const EdgeInsets.only(left: 10.0, right: 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(
                 child: Column(

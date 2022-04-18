@@ -30,6 +30,7 @@ class AppButton {
       case AppButtonType.primary:
         return Expanded(
           child: Container(
+            width: 400,
             decoration: ShapeDecoration(
                 gradient: StateContainer.of(context).curTheme.gradient!,
                 shape: const StadiumBorder()),

@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:core_ui/ui/util/responsive.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -43,7 +44,7 @@ class AppSettings {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     SizedBox(
-                      width: UIUtil.drawerWidth(context) - 100,
+                      width: Responsive.drawerWidth(context) - 100,
                       child: Text(
                         heading,
                         style: disabled
@@ -95,7 +96,7 @@ class AppSettings {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   SizedBox(
-                      width: UIUtil.drawerWidth(context) - 70,
+                      width: Responsive.drawerWidth(context) - 70,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -114,7 +115,7 @@ class AppSettings {
                         ],
                       )),
                   SizedBox(
-                    width: UIUtil.drawerWidth(context) - 80,
+                    width: Responsive.drawerWidth(context) - 80,
                     child: AutoSizeText(
                       info,
                       maxLines: 5,
@@ -160,14 +161,14 @@ class AppSettings {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   SizedBox(
-                    width: UIUtil.drawerWidth(context) - 100,
+                    width: Responsive.drawerWidth(context) - 100,
                     child: Text(
                       heading,
                       style: AppStyles.textStyleSize16W600Primary(context),
                     ),
                   ),
                   SizedBox(
-                    width: UIUtil.drawerWidth(context) - 100,
+                    width: Responsive.drawerWidth(context) - 100,
                     child: AutoSizeText(
                       info,
                       maxLines: 5,
@@ -212,7 +213,7 @@ class AppSettings {
                       buildIconWidget(context, icon, 30, 30, color: iconColor)),
             ),
             SizedBox(
-              width: UIUtil.drawerWidth(context) - 100,
+              width: Responsive.drawerWidth(context) - 100,
               child: AutoSizeText(
                 heading,
                 style: headingStyle,
@@ -244,7 +245,7 @@ class AppSettings {
                 child:
                     buildIconWidget(context, icon, 30, 30, color: iconColor)),
             SizedBox(
-              width: UIUtil.drawerWidth(context) - 130,
+              width: Responsive.drawerWidth(context) - 130,
               child: Text(
                 heading,
                 style: AppStyles.textStyleSize16W600Primary(context),
