@@ -195,7 +195,6 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                       context,
                                       CaseChange.toUpperCase(
                                           AppLocalization.of(context)!.warning,
-                                          context,
                                           StateContainer.of(context)
                                               .curLanguage
                                               .getLocaleString()),
@@ -213,7 +212,6 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                             .removeWalletReassurance,
                                         CaseChange.toUpperCase(
                                             AppLocalization.of(context)!.yes,
-                                            context,
                                             StateContainer.of(context)
                                                 .curLanguage
                                                 .getLocaleString()), () {
@@ -267,7 +265,6 @@ class _AppLockScreenState extends State<AppLockScreen> {
                           child: Text(
                             CaseChange.toUpperCase(
                                 AppLocalization.of(context)!.locked,
-                                context,
                                 StateContainer.of(context)
                                     .curLanguage
                                     .getLocaleString()),

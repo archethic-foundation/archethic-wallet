@@ -275,9 +275,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
           (await SafeDevice.isJailBroken)) {
         AppDialogs.showConfirmDialog(
             context,
-            CaseChange.toUpperCase(
-                AppLocalization.of(context)!.warning,
-                context,
+            CaseChange.toUpperCase(AppLocalization.of(context)!.warning,
                 StateContainer.of(context).curLanguage.getLocaleString()),
             AppLocalization.of(context)!.rootWarning,
             AppLocalization.of(context)!.iUnderstandTheRisks.toUpperCase(),

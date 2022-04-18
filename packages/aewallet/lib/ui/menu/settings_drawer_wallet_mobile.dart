@@ -851,7 +851,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           context,
                           CaseChange.toUpperCase(
                               AppLocalization.of(context)!.warning,
-                              context,
                               StateContainer.of(context)
                                   .curLanguage
                                   .getLocaleString()),
@@ -867,7 +866,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                                 .removeWalletReassurance,
                             CaseChange.toUpperCase(
                                 AppLocalization.of(context)!.yes,
-                                context,
                                 StateContainer.of(context)
                                     .curLanguage
                                     .getLocaleString()), () {

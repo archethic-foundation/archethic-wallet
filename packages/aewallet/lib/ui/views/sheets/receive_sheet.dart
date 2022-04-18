@@ -207,7 +207,6 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                                           .selectedAccount
                                                           .lastAddress!
                                                           .substring(0, 16),
-                                                      context,
                                                       StateContainer.of(context)
                                                           .curLanguage
                                                           .getLocaleString()),
@@ -220,7 +219,6 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                                           .selectedAccount
                                                           .lastAddress!
                                                           .substring(16, 32),
-                                                      context,
                                                       StateContainer.of(context)
                                                           .curLanguage
                                                           .getLocaleString()),
@@ -233,7 +231,6 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                                           .selectedAccount
                                                           .lastAddress!
                                                           .substring(32, 48),
-                                                      context,
                                                       StateContainer.of(context)
                                                           .curLanguage
                                                           .getLocaleString()),
@@ -246,7 +243,6 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                                           .selectedAccount
                                                           .lastAddress!
                                                           .substring(48),
-                                                      context,
                                                       StateContainer.of(context)
                                                           .curLanguage
                                                           .getLocaleString()),

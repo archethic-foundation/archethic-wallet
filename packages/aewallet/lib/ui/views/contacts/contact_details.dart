@@ -61,7 +61,6 @@ class ContactDetailsSheet {
                                       .replaceAll('%1', contact.name!),
                                   CaseChange.toUpperCase(
                                       AppLocalization.of(context)!.yes,
-                                      context,
                                       StateContainer.of(context)
                                           .curLanguage
                                           .getLocaleString()), () {
@@ -89,7 +88,6 @@ class ContactDetailsSheet {
                               },
                                   cancelText: CaseChange.toUpperCase(
                                       AppLocalization.of(context)!.no,
-                                      context,
                                       StateContainer.of(context)
                                           .curLanguage
                                           .getLocaleString()));
