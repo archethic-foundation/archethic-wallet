@@ -1,3 +1,17 @@
+## 0.2.11
+🚀 Features
+* Password management
+* Implementation of BIP44 Path to define the address from the private key derived from seed
+* Add license notifications
+
+👷‍♂️ Enhancements
+* Improve UI
+* Add vibration on buttons
+* Improve security access management
+
+🐛 Bugfixes
+* Prevent double send action
+
 ## 0.2.5
 👷‍♂️ Enhancements
 * Change access to Chart Sheet (Remove button in the main page. Just click on the balance)

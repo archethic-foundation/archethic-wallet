@@ -6,6 +6,8 @@ fastlane beta
 flutter build apk --split-per-abi
 # web
 flutter build web --web-renderer canvaskit --release
+firebase deploy
+https://test-ae-wallet.web.app
 # macos
 cd macos
 flutter build macos
