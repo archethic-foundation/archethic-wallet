@@ -82,7 +82,7 @@ class _TransactionChainExplorerSheetState
                     height: 40,
                   ),
                   Container(
-                      padding: const EdgeInsets.only(top: 10, right: 0),
+                      padding: const EdgeInsets.only(top: 10),
                       child: InkWell(
                           onTap: () {
                             Navigator.pop(context);
@@ -108,8 +108,7 @@ class _TransactionChainExplorerSheetState
           children: <Widget>[
             Expanded(
               child: Container(
-                padding: const EdgeInsets.only(
-                    top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
+                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                 child: AutoSizeText(
                   AppLocalization.of(context)!.transactionChainExplorerHeader,
                   textAlign: TextAlign.center,
@@ -145,8 +144,6 @@ class _TransactionChainExplorerSheetState
                                       child: ListView.builder(
                                         physics:
                                             const AlwaysScrollableScrollPhysics(),
-                                        padding: const EdgeInsets.only(
-                                            top: 0.0, bottom: 0),
                                         itemCount: transactions.data!.length,
                                         itemBuilder:
                                             (BuildContext context, int index) {
@@ -263,14 +260,14 @@ TimelineTile _buildTimelineTile(
     isFirst: isFirst,
     isLast: isLast,
     startChild: Padding(
-      padding: const EdgeInsets.only(left: 20, right: 10, top: 0, bottom: 10),
+      padding: const EdgeInsets.only(left: 20, right: 10, bottom: 10),
       child: Text(
         dateTx!,
         textAlign: TextAlign.right,
       ),
     ),
     endChild: Padding(
-      padding: const EdgeInsets.only(left: 16, right: 10, top: 0, bottom: 10),
+      padding: const EdgeInsets.only(left: 16, right: 10, bottom: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

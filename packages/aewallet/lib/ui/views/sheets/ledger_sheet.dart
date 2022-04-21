@@ -121,7 +121,6 @@ class _LedgerSheetState extends State<LedgerSheet> {
               //Empty SizedBox
               const SizedBox(
                 width: 60,
-                height: 0,
               ),
               Column(
                 children: <Widget>[
@@ -162,7 +161,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                       height: 40,
                     ),
                     Container(
-                        padding: const EdgeInsets.only(top: 10, right: 0),
+                        padding: const EdgeInsets.only(top: 10),
                         child: InkWell(
                             onTap: () {
                               Navigator.pop(context);

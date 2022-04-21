@@ -214,7 +214,6 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
               children: <Widget>[
                 const SizedBox(
                   width: 60,
-                  height: 0,
                 ),
                 Column(
                   children: <Widget>[
@@ -307,7 +306,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                         height: 40,
                       ),
                       Container(
-                          padding: const EdgeInsets.only(top: 10, right: 0),
+                          padding: const EdgeInsets.only(top: 10),
                           child: InkWell(
                               onTap: () {
                                 Navigator.pop(context);
@@ -329,7 +328,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
             ),
             Expanded(
               child: Container(
-                margin: const EdgeInsets.only(top: 0, bottom: 10),
+                margin: const EdgeInsets.only(bottom: 10),
                 child: Stack(
                   children: <Widget>[
                     GestureDetector(
@@ -345,7 +344,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                     ),
                     SingleChildScrollView(
                       child: Padding(
-                        padding: EdgeInsets.only(top: 0, bottom: bottom + 80),
+                        padding: EdgeInsets.only(bottom: bottom + 80),
                         child: Column(
                           children: <Widget>[
                             Stack(
@@ -453,11 +452,6 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                                                           child:
                                                               ListView.builder(
                                                             shrinkWrap: true,
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .only(
-                                                                    bottom: 0,
-                                                                    top: 0),
                                                             itemCount:
                                                                 _contacts!
                                                                     .length,

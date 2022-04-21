@@ -65,8 +65,8 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Container(
-              padding: const EdgeInsets.only(
-                  top: 0.0, bottom: 20.0, left: 10.0, right: 10.0),
+              padding:
+                  const EdgeInsets.only(bottom: 20.0, left: 10.0, right: 10.0),
               child: AutoSizeText(
                 AppLocalization.of(context)!.transactionsAllListHeader,
                 style: AppStyles.textStyleSize24W700Primary(context),
@@ -82,7 +82,6 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                   child: SafeArea(
                     minimum: EdgeInsets.only(
                       bottom: MediaQuery.of(context).size.height * 0.035,
-                      top: 0,
                     ),
                     child: Column(
                       children: <Widget>[

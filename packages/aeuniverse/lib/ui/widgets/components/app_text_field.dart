@@ -147,10 +147,10 @@ class _AppTextFieldState extends State<AppTextField> {
                   hintStyle: AppStyles.textStyleSize16W400Primary60(context),
                   // First button
                   prefixIcon: widget.prefixButton == null
-                      ? const SizedBox(width: 0, height: 0)
+                      ? const SizedBox()
                       : const SizedBox(width: 48, height: 48),
                   suffixIcon: widget.suffixButton == null
-                      ? const SizedBox(width: 0, height: 0)
+                      ? const SizedBox()
                       : const SizedBox(width: 48, height: 48),
                 ),
               ),

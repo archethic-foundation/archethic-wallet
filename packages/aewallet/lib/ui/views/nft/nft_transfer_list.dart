@@ -34,36 +34,33 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
     return Stack(
       children: <Widget>[
         SizedBox(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 0.0),
-            child: Container(
-              height: widget.listNftTransfer!.length * 100,
-              padding: const EdgeInsets.only(left: 3.5, right: 3.5),
-              width: MediaQuery.of(context).size.width * 0.9,
-              decoration: BoxDecoration(
-                color: StateContainer.of(context).curTheme.background,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(15),
-                ),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: StateContainer.of(context).curTheme.backgroundDark!,
-                    blurRadius: 5.0,
-                    spreadRadius: 0.0,
-                    offset: const Offset(5.0, 5.0),
-                  ),
-                ],
+          child: Container(
+            height: widget.listNftTransfer!.length * 100,
+            padding: const EdgeInsets.only(left: 3.5, right: 3.5),
+            width: MediaQuery.of(context).size.width * 0.9,
+            decoration: BoxDecoration(
+              color: StateContainer.of(context).curTheme.background,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(15),
               ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
-                child: ListView.builder(
-                  itemCount: widget.listNftTransfer!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return displayNftDetail(
-                        context, widget.listNftTransfer![index]);
-                  },
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: StateContainer.of(context).curTheme.backgroundDark!,
+                  blurRadius: 5.0,
+                  spreadRadius: 0.0,
+                  offset: const Offset(5.0, 5.0),
                 ),
+              ],
+            ),
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
+              child: ListView.builder(
+                itemCount: widget.listNftTransfer!.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return displayNftDetail(
+                      context, widget.listNftTransfer![index]);
+                },
               ),
             ),
           ),

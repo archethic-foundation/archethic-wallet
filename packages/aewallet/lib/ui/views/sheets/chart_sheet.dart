@@ -77,7 +77,7 @@ class _ChartSheetState extends State<ChartSheet> {
                     height: 40,
                   ),
                   Container(
-                      padding: const EdgeInsets.only(top: 10, right: 0),
+                      padding: const EdgeInsets.only(top: 10),
                       child: InkWell(
                           onTap: () {
                             Navigator.pop(context);
@@ -103,7 +103,7 @@ class _ChartSheetState extends State<ChartSheet> {
           children: <Widget>[
             Container(
               padding: const EdgeInsets.only(
-                  top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
+               left: 10.0, right: 10.0),
               child: AutoSizeText(
                 AppLocalization.of(context)!.chart,
                 style: AppStyles.textStyleSize24W700Primary(context),
@@ -117,10 +117,10 @@ class _ChartSheetState extends State<ChartSheet> {
           child: Container(
             height: MediaQuery.of(context).size.height * 0.35,
             padding: const EdgeInsets.only(
-                top: 20.0, bottom: 0.0, left: 0.0, right: 0.0),
+                top: 20.0),
             child: Padding(
               padding: const EdgeInsets.only(
-                  right: 5.0, left: 5.0, top: 0.0, bottom: 0.0),
+                  right: 5.0, left: 5.0),
               child: StateContainer.of(context).chartInfos != null
                   ? LineChart(
                       mainData(context),

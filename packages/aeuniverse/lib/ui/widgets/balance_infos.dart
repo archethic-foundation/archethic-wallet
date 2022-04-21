@@ -80,8 +80,7 @@ class BalanceInfosWidget {
                 FadeIn(
                   duration: const Duration(milliseconds: 1000),
                   child: Padding(
-                    padding: const EdgeInsets.only(
-                        right: 20.0, left: 0.0, top: 0.0, bottom: 0.0),
+                    padding: const EdgeInsets.only(right: 20.0),
                     child: StateContainer.of(context).chartInfos != null &&
                             StateContainer.of(context).chartInfos!.data != null
                         ? LineChart(
@@ -97,8 +96,7 @@ class BalanceInfosWidget {
                   width: MediaQuery.of(context).size.width,
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(
-                        right: 0.0, left: 10.0, top: 0.0, bottom: 0.0),
+                    padding: const EdgeInsets.only(left: 10.0),
                     child: AutoSizeText(
                       StateContainer.of(context).wallet!.accountBalance.uco == 0
                           ? StateContainer.of(context)
@@ -130,7 +128,7 @@ class BalanceInfosWidget {
           alignment: Alignment.bottomLeft,
           child: Padding(
             padding: const EdgeInsets.only(
-                right: 0.0, left: 10.0, top: 5.0, bottom: 0.0),
+               left: 10.0, top: 5.0),
             child: StateContainer.of(context)
                         .chartInfos!
                         .getPriceChangePercentage(

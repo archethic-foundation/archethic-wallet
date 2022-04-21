@@ -83,8 +83,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        padding: const EdgeInsets.only(
-                            top: 0.0, bottom: 0.0, left: 10.0, right: 10.0),
+                        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                         child: AutoSizeText(
                           AppLocalization.of(context)!.transactionInfosHeader,
                           style: AppStyles.textStyleSize24W700Primary(context),
@@ -102,7 +101,6 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                               minimum: EdgeInsets.only(
                                 bottom:
                                     MediaQuery.of(context).size.height * 0.035,
-                                top: 0,
                               ),
                               child: Column(
                                 children: <Widget>[
@@ -237,13 +235,13 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                       50)),
             if (transactionInfo.titleInfo == '')
               Container(
-                padding: const EdgeInsets.only(left: 15.0, top: 15, bottom: 0),
+                padding: const EdgeInsets.only(left: 15.0, top: 15),
                 child: Column(
                   children: <Widget>[
                     // Main Container
                     Container(
                       padding: const EdgeInsets.only(
-                          left: 45.0, top: 0, right: 5, bottom: 5),
+                          left: 45.0, right: 5, bottom: 5),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
@@ -283,13 +281,13 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
               )
             else
               Container(
-                padding: const EdgeInsets.only(left: 15.0, top: 15, bottom: 0),
+                padding: const EdgeInsets.only(left: 15.0, top: 15),
                 child: Column(
                   children: <Widget>[
                     // Main Container
                     Container(
                       padding: const EdgeInsets.only(
-                          left: 45.0, top: 0, right: 5, bottom: 5),
+                          left: 45.0, right: 5, bottom: 5),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[

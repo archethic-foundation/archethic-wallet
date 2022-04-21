@@ -107,8 +107,7 @@ class _TxListWidgetState extends State<TxListWidget> {
               color: Colors.transparent,
               width: MediaQuery.of(context).size.width,
               child: Padding(
-                padding:
-                    const EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 0),
+                padding: const EdgeInsets.only(left: 6, right: 6, top: 6),
                 child: RefreshIndicator(
                   backgroundColor:
                       StateContainer.of(context).curTheme.backgroundDark,

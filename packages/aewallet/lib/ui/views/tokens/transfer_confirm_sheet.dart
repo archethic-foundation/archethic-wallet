@@ -227,7 +227,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 10.0, bottom: 0),
+              margin: const EdgeInsets.only(top: 10.0),
               child: Column(
                 children: <Widget>[
                   Row(

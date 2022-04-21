@@ -48,7 +48,6 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
               //Empty SizedBox
               const SizedBox(
                 width: 60,
-                height: 0,
               ),
               Column(
                 children: <Widget>[
@@ -89,7 +88,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                       height: 40,
                     ),
                     Container(
-                        padding: const EdgeInsets.only(top: 10, right: 0),
+                        padding: const EdgeInsets.only(top: 10),
                         child: InkWell(
                             onTap: () {
                               Navigator.pop(context);
@@ -129,145 +128,138 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
 
           Expanded(
             child: SingleChildScrollView(
-              child: Container(
-                  margin: const EdgeInsets.only(top: 0, bottom: 0),
-                  child: SafeArea(
-                    minimum: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.height * 0.035,
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            sl.get<HapticUtil>().feedback(FeedbackType.light);
-                            Clipboard.setData(ClipboardData(
-                                text: StateContainer.of(context)
-                                    .wallet!
-                                    .address));
-                            UIUtil.showSnackbar(
-                                AppLocalization.of(context)!.addressCopied,
-                                context,
-                                StateContainer.of(context).curTheme.primary!,
-                                StateContainer.of(context).curTheme.overlay80!);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Material(
-                              color: StateContainer.of(context)
-                                  .curTheme
-                                  .backgroundDarkest,
-                              borderRadius: BorderRadius.circular(16),
-                              child: SizedBox(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Container(
-                                          width: 200,
-                                          margin: const EdgeInsets.all(8),
-                                          child: AutoSizeText(
-                                            AppLocalization.of(context)!
-                                                .addressInfos,
-                                            style: AppStyles
-                                                .textStyleSize16W700Primary(
-                                                    context),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 150,
-                                          height: 150,
-                                          alignment: Alignment.center,
-                                          margin: const EdgeInsets.all(8),
-                                          decoration: BoxDecoration(
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .backgroundDarkest,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: QrImage(
-                                            foregroundColor: Colors.white,
-                                            data: StateContainer.of(context)
-                                                .selectedAccount
-                                                .lastAddress!,
-                                            version: QrVersions.auto,
-                                            size: 150.0,
-                                            gapless: false,
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 200,
-                                          alignment: Alignment.center,
-                                          margin: const EdgeInsets.all(8),
-                                          child: Column(
-                                            children: <Widget>[
-                                              AutoSizeText(
-                                                  CaseChange.toUpperCase(
-                                                      StateContainer.of(context)
-                                                          .selectedAccount
-                                                          .lastAddress!
-                                                          .substring(0, 16),
-                                                      StateContainer.of(context)
-                                                          .curLanguage
-                                                          .getLocaleString()),
-                                                  style: AppStyles
-                                                      .textStyleSize12W100Primary(
-                                                          context)),
-                                              AutoSizeText(
-                                                  CaseChange.toUpperCase(
-                                                      StateContainer.of(context)
-                                                          .selectedAccount
-                                                          .lastAddress!
-                                                          .substring(16, 32),
-                                                      StateContainer.of(context)
-                                                          .curLanguage
-                                                          .getLocaleString()),
-                                                  style: AppStyles
-                                                      .textStyleSize12W100Primary(
-                                                          context)),
-                                              AutoSizeText(
-                                                  CaseChange.toUpperCase(
-                                                      StateContainer.of(context)
-                                                          .selectedAccount
-                                                          .lastAddress!
-                                                          .substring(32, 48),
-                                                      StateContainer.of(context)
-                                                          .curLanguage
-                                                          .getLocaleString()),
-                                                  style: AppStyles
-                                                      .textStyleSize12W100Primary(
-                                                          context)),
-                                              AutoSizeText(
-                                                  CaseChange.toUpperCase(
-                                                      StateContainer.of(context)
-                                                          .selectedAccount
-                                                          .lastAddress!
-                                                          .substring(48),
-                                                      StateContainer.of(context)
-                                                          .curLanguage
-                                                          .getLocaleString()),
-                                                  style: AppStyles
-                                                      .textStyleSize12W100Primary(
-                                                          context)),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
+              child: SafeArea(
+                minimum: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.035,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        sl.get<HapticUtil>().feedback(FeedbackType.light);
+                        Clipboard.setData(ClipboardData(
+                            text: StateContainer.of(context).wallet!.address));
+                        UIUtil.showSnackbar(
+                            AppLocalization.of(context)!.addressCopied,
+                            context,
+                            StateContainer.of(context).curTheme.primary!,
+                            StateContainer.of(context).curTheme.overlay80!);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Material(
+                          color: StateContainer.of(context)
+                              .curTheme
+                              .backgroundDarkest,
+                          borderRadius: BorderRadius.circular(16),
+                          child: SizedBox(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Container(
+                                      width: 200,
+                                      margin: const EdgeInsets.all(8),
+                                      child: AutoSizeText(
+                                        AppLocalization.of(context)!
+                                            .addressInfos,
+                                        style: AppStyles
+                                            .textStyleSize16W700Primary(
+                                                context),
+                                      ),
                                     ),
-                                  ),
+                                    Container(
+                                      width: 150,
+                                      height: 150,
+                                      alignment: Alignment.center,
+                                      margin: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: StateContainer.of(context)
+                                            .curTheme
+                                            .backgroundDarkest,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: QrImage(
+                                        foregroundColor: Colors.white,
+                                        data: StateContainer.of(context)
+                                            .selectedAccount
+                                            .lastAddress!,
+                                        version: QrVersions.auto,
+                                        size: 150.0,
+                                        gapless: false,
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 200,
+                                      alignment: Alignment.center,
+                                      margin: const EdgeInsets.all(8),
+                                      child: Column(
+                                        children: <Widget>[
+                                          AutoSizeText(
+                                              CaseChange.toUpperCase(
+                                                  StateContainer.of(context)
+                                                      .selectedAccount
+                                                      .lastAddress!
+                                                      .substring(0, 16),
+                                                  StateContainer.of(context)
+                                                      .curLanguage
+                                                      .getLocaleString()),
+                                              style: AppStyles
+                                                  .textStyleSize12W100Primary(
+                                                      context)),
+                                          AutoSizeText(
+                                              CaseChange.toUpperCase(
+                                                  StateContainer.of(context)
+                                                      .selectedAccount
+                                                      .lastAddress!
+                                                      .substring(16, 32),
+                                                  StateContainer.of(context)
+                                                      .curLanguage
+                                                      .getLocaleString()),
+                                              style: AppStyles
+                                                  .textStyleSize12W100Primary(
+                                                      context)),
+                                          AutoSizeText(
+                                              CaseChange.toUpperCase(
+                                                  StateContainer.of(context)
+                                                      .selectedAccount
+                                                      .lastAddress!
+                                                      .substring(32, 48),
+                                                  StateContainer.of(context)
+                                                      .curLanguage
+                                                      .getLocaleString()),
+                                              style: AppStyles
+                                                  .textStyleSize12W100Primary(
+                                                      context)),
+                                          AutoSizeText(
+                                              CaseChange.toUpperCase(
+                                                  StateContainer.of(context)
+                                                      .selectedAccount
+                                                      .lastAddress!
+                                                      .substring(48),
+                                                  StateContainer.of(context)
+                                                      .curLanguage
+                                                      .getLocaleString()),
+                                              style: AppStyles
+                                                  .textStyleSize12W100Primary(
+                                                      context)),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  )),
+                  ],
+                ),
+              ),
             ),
           ),
           Column(
