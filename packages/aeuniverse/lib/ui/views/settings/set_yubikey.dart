@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -61,7 +62,7 @@ class _SetYubikeyState extends State<SetYubikey> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
@@ -74,131 +75,133 @@ class _SetYubikeyState extends State<SetYubikey> {
             ],
           ),
         ),
-        child: LayoutBuilder(
+        child: TapOutsideUnfocus(
+          child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) =>
                 SafeArea(
-                  minimum: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.height * 0.035,
-                      top: MediaQuery.of(context).size.height * 0.075),
-                  child: Column(
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+              minimum: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.035,
+                  top: MediaQuery.of(context).size.height * 0.075),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Row(
                           children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsetsDirectional.only(start: 15),
-                                  height: 50,
-                                  width: 50,
-                                  child: BackButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
                             Container(
-                              child: buildIconWidget(
-                                  context,
-                                  'packages/aeuniverse/assets/icons/digital-key.png',
-                                  90,
-                                  90),
-                            ),
-                            Expanded(
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    if (widget.header != null)
-                                      Container(
-                                        margin: EdgeInsetsDirectional.only(
-                                          start: 20,
-                                          end: 20,
-                                          top: 10,
-                                        ),
-                                        alignment:
-                                            const AlignmentDirectional(-1, 0),
-                                        child: AutoSizeText(
-                                          widget.header!,
-                                          style: AppStyles
-                                              .textStyleSize20W700Warning(
-                                                  context),
-                                        ),
-                                      ),
-                                    if (widget.description != null)
-                                      Container(
-                                        margin: EdgeInsetsDirectional.only(
-                                            start: 20, end: 20, top: 15.0),
-                                        child: Text(
-                                          widget.description!,
-                                          style: AppStyles
-                                              .textStyleSize16W600Primary(
-                                                  context),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      ),
-                                    Container(
-                                      child: getClientIDContainer(),
-                                    ),
-                                    Container(
-                                      alignment:
-                                          const AlignmentDirectional(0, 0),
-                                      margin: const EdgeInsets.only(top: 3),
-                                      child: Text(
-                                        _clientIDValidationText,
-                                        style: AppStyles
-                                            .textStyleSize14W600Primary(
-                                                context),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: getClientAPIKeyContainer(),
-                                    ),
-                                    Container(
-                                      alignment:
-                                          const AlignmentDirectional(0, 0),
-                                      margin: const EdgeInsets.only(top: 3),
-                                      child: Text(
-                                        _clientAPIKeyValidationText,
-                                        style: AppStyles
-                                            .textStyleSize14W600Primary(
-                                                context),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                  ],
-                                ),
+                              margin: EdgeInsetsDirectional.only(start: 15),
+                              height: 50,
+                              width: 50,
+                              child: BackButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
                               ),
                             ),
                           ],
                         ),
-                      ),
-                      Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              // Next Button
-                              AppButton.buildAppButton(
-                                  const Key('confirm'),
-                                  context,
-                                  AppButtonType.primary,
-                                  AppLocalization.of(context)!.confirm,
-                                  Dimens.buttonTopDimens, onPressed: () async {
-                                await validate();
-                              }),
-                            ],
+                        Container(
+                          child: buildIconWidget(
+                              context,
+                              'packages/aeuniverse/assets/icons/digital-key.png',
+                              90,
+                              90),
+                        ),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (widget.header != null)
+                                  Container(
+                                    margin: EdgeInsetsDirectional.only(
+                                      start: 20,
+                                      end: 20,
+                                      top: 10,
+                                    ),
+                                    alignment:
+                                        const AlignmentDirectional(-1, 0),
+                                    child: AutoSizeText(
+                                      widget.header!,
+                                      style:
+                                          AppStyles.textStyleSize20W700Warning(
+                                              context),
+                                    ),
+                                  ),
+                                if (widget.description != null)
+                                  Container(
+                                    margin: EdgeInsetsDirectional.only(
+                                        start: 20, end: 20, top: 15.0),
+                                    child: Text(
+                                      widget.description!,
+                                      style:
+                                          AppStyles.textStyleSize16W600Primary(
+                                              context),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                Container(
+                                  child: getClientIDContainer(),
+                                ),
+                                Container(
+                                  alignment: const AlignmentDirectional(0, 0),
+                                  margin: const EdgeInsets.only(top: 3),
+                                  child: Text(
+                                    _clientIDValidationText,
+                                    style: AppStyles.textStyleSize14W600Primary(
+                                        context),
+                                  ),
+                                ),
+                                Container(
+                                  child: getClientAPIKeyContainer(),
+                                ),
+                                Container(
+                                  alignment: const AlignmentDirectional(0, 0),
+                                  margin: const EdgeInsets.only(top: 3),
+                                  child: Text(
+                                    _clientAPIKeyValidationText,
+                                    style: AppStyles.textStyleSize14W600Primary(
+                                        context),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                              ],
+                            ),
                           ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          // Next Button
+                          AppButton.buildAppButton(
+                              const Key('confirm'),
+                              context,
+                              AppButtonType.primary,
+                              AppLocalization.of(context)!.confirm,
+                              Dimens.buttonTopDimens, onPressed: () async {
+                            await validate();
+                          }),
                         ],
                       ),
                     ],
                   ),
-                )),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

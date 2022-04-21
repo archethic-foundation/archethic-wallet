@@ -6,6 +6,7 @@ import 'dart:io';
 import 'dart:ui';
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:core/util/haptic_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -201,7 +202,8 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
   Widget build(BuildContext context) {
     final double bottom = MediaQuery.of(context).viewInsets.bottom;
     // The main column that holds everything
-    return SafeArea(
+    return TapOutsideUnfocus(
+      child: SafeArea(
         minimum:
             EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
         child: Column(
@@ -583,7 +585,9 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
               ),
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 
   // Determine if this is a max send or not by comparing balances

@@ -7,6 +7,7 @@ import 'dart:io';
 
 // Flutter imports:
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
+import 'package:aeuniverse/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:core/model/available_networks.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -92,353 +93,360 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
   @override
   Widget build(BuildContext context) {
     final double bottom = MediaQuery.of(context).viewInsets.bottom;
-    return SafeArea(
-      minimum:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const SizedBox(
-                width: 60,
-                height: 0,
-              ),
-              Column(
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    height: 5,
-                    width: MediaQuery.of(context).size.width * 0.15,
-                    decoration: BoxDecoration(
-                      color: StateContainer.of(context).curTheme.primary60,
-                      borderRadius: BorderRadius.circular(100.0),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 15.0),
-                    constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width - 140),
-                    child: Column(
-                      children: <Widget>[
-                        Column(
-                          children: [
-                            StateContainer.of(context).curNetwork.getIndex() ==
-                                    AvailableNetworks.AETestNet.index
-                                ? SvgPicture.asset(
-                                    StateContainer.of(context)
-                                            .curTheme
-                                            .assetsFolder! +
-                                        StateContainer.of(context)
-                                            .curTheme
-                                            .logoAlone! +
-                                        '.svg',
-                                    color: Colors.green,
-                                    height: 15,
-                                  )
-                                : StateContainer.of(context)
-                                            .curNetwork
-                                            .getIndex() ==
-                                        AvailableNetworks.AEDevNet.index
-                                    ? SvgPicture.asset(
-                                        StateContainer.of(context)
-                                                .curTheme
-                                                .assetsFolder! +
-                                            StateContainer.of(context)
-                                                .curTheme
-                                                .logoAlone! +
-                                            '.svg',
-                                        color: Colors.orange,
-                                        height: 15,
-                                      )
-                                    : SvgPicture.asset(
-                                        StateContainer.of(context)
-                                                .curTheme
-                                                .assetsFolder! +
-                                            StateContainer.of(context)
-                                                .curTheme
-                                                .logoAlone! +
-                                            '.svg',
-                                        height: 15,
-                                      ),
-                            Text(
-                                StateContainer.of(context)
-                                    .curNetwork
-                                    .getLongDisplayName(),
-                                style: AppStyles.textStyleSize10W100Primary(
-                                    context)),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ), // Header
-                        AutoSizeText(
-                          AppLocalization.of(context)!.addNFTHeader,
-                          style: AppStyles.textStyleSize24W700Primary(context),
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          stepGranularity: 0.1,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              if (kIsWeb || Platform.isMacOS || Platform.isWindows)
-                Stack(
-                  children: <Widget>[
-                    const SizedBox(
-                      width: 60,
-                      height: 40,
-                    ),
-                    Container(
-                        padding: const EdgeInsets.only(top: 10, right: 0),
-                        child: InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Column(
-                              children: <Widget>[
-                                buildIconDataWidget(
-                                    context, Icons.close_outlined, 30, 30),
-                              ],
-                            ))),
-                  ],
-                )
-              else
+    return TapOutsideUnfocus(
+      child: SafeArea(
+        minimum:
+            EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
                 const SizedBox(
                   width: 60,
-                  height: 40,
+                  height: 0,
                 ),
-            ],
-          ),
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.only(top: 0, bottom: 10),
-              child: Stack(
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      _nameFocusNode!.unfocus();
-                      _initialSupplyFocusNode!.unfocus();
-                    },
-                    child: Container(
-                      color: Colors.transparent,
-                      child: const SizedBox.expand(),
-                      constraints: const BoxConstraints.expand(),
+                Column(
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      height: 5,
+                      width: MediaQuery.of(context).size.width * 0.15,
+                      decoration: BoxDecoration(
+                        color: StateContainer.of(context).curTheme.primary60,
+                        borderRadius: BorderRadius.circular(100.0),
+                      ),
                     ),
-                  ),
-                  SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 0, bottom: bottom + 80),
+                    Container(
+                      margin: const EdgeInsets.only(top: 15.0),
+                      constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width - 140),
                       child: Column(
                         children: <Widget>[
-                          Stack(
-                            children: <Widget>[
-                              Column(
-                                children: <Widget>[
-                                  Container(
-                                    child: RichText(
-                                      textAlign: TextAlign.start,
-                                      text: TextSpan(
-                                        text: '',
-                                        children: <InlineSpan>[
-                                          TextSpan(
-                                            text: '(',
-                                            style: AppStyles
-                                                .textStyleSize14W100Primary(
-                                                    context),
-                                          ),
-                                          TextSpan(
-                                              text: StateContainer.of(context)
-                                                  .wallet!
-                                                  .getAccountBalanceDisplay(),
-                                              style: AppStyles
-                                                  .textStyleSize14W700Primary(
-                                                      context)),
-                                          TextSpan(
-                                              text: ' ' +
-                                                  StateContainer.of(context)
-                                                      .curNetwork
-                                                      .getNetworkCryptoCurrencyLabel() +
-                                                  ')',
-                                              style: AppStyles
-                                                  .textStyleSize14W100Primary(
-                                                      context)),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  AppTextField(
-                                    topMargin: 30,
-                                    focusNode: _nameFocusNode,
-                                    controller: _nameController,
-                                    cursorColor: StateContainer.of(context)
-                                        .curTheme
-                                        .primary,
-                                    textInputAction: TextInputAction.next,
-                                    hintText: _showNameHint!
-                                        ? AppLocalization.of(context)!
-                                            .nftNameHint
-                                        : '',
-                                    keyboardType: TextInputType.text,
-                                    style: AppStyles.textStyleSize16W600Primary(
-                                        context),
-                                    inputFormatters: <
-                                        LengthLimitingTextInputFormatter>[
-                                      LengthLimitingTextInputFormatter(100),
-                                    ],
-                                    onChanged: (_) async {
-                                      double _fee = await getFee();
-                                      // Always reset the error message to be less annoying
-                                      setState(() {
-                                        feeEstimation = _fee;
-                                      });
-                                    },
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(
-                                        top: 5, bottom: 5),
-                                    child: Text(_nameValidationText!,
-                                        style: AppStyles
-                                            .textStyleSize14W600Primary(
-                                                context)),
-                                  ),
-                                  AppTextField(
-                                    focusNode: _initialSupplyFocusNode,
-                                    controller: _initialSupplyController,
-                                    cursorColor: StateContainer.of(context)
-                                        .curTheme
-                                        .primary,
-                                    textInputAction: TextInputAction.next,
-                                    hintText: _showInitialSupplyHint!
-                                        ? AppLocalization.of(context)!
-                                            .nftInitialSupplyHint
-                                        : '',
-                                    keyboardType:
-                                        const TextInputType.numberWithOptions(
-                                            signed: false, decimal: false),
-                                    style: AppStyles.textStyleSize16W600Primary(
-                                        context),
-                                    inputFormatters: <
-                                        LengthLimitingTextInputFormatter>[
-                                      LengthLimitingTextInputFormatter(10),
-                                    ],
-                                    onChanged: (_) async {
-                                      double _fee = await getFee();
-                                      // Always reset the error message to be less annoying
-                                      setState(() {
-                                        feeEstimation = _fee;
-                                      });
-                                    },
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(
-                                        top: 5, bottom: 5),
-                                    child: Text(
-                                      _initialSupplyValidationText!,
-                                      style:
-                                          AppStyles.textStyleSize14W600Primary(
-                                              context),
-                                    ),
-                                  ),
-                                  feeEstimation > 0
-                                      ? Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 30, right: 30),
-                                          child: Text(
-                                            AppLocalization.of(context)!
-                                                    .estimatedFees +
-                                                ': ' +
-                                                feeEstimation.toString() +
-                                                ' ' +
-                                                StateContainer.of(context)
-                                                    .curNetwork
-                                                    .getNetworkCryptoCurrencyLabel(),
-                                            style: AppStyles
-                                                .textStyleSize14W100Primary(
-                                                    context),
-                                            textAlign: TextAlign.justify,
-                                          ),
+                          Column(
+                            children: [
+                              StateContainer.of(context)
+                                          .curNetwork
+                                          .getIndex() ==
+                                      AvailableNetworks.AETestNet.index
+                                  ? SvgPicture.asset(
+                                      StateContainer.of(context)
+                                              .curTheme
+                                              .assetsFolder! +
+                                          StateContainer.of(context)
+                                              .curTheme
+                                              .logoAlone! +
+                                          '.svg',
+                                      color: Colors.green,
+                                      height: 15,
+                                    )
+                                  : StateContainer.of(context)
+                                              .curNetwork
+                                              .getIndex() ==
+                                          AvailableNetworks.AEDevNet.index
+                                      ? SvgPicture.asset(
+                                          StateContainer.of(context)
+                                                  .curTheme
+                                                  .assetsFolder! +
+                                              StateContainer.of(context)
+                                                  .curTheme
+                                                  .logoAlone! +
+                                              '.svg',
+                                          color: Colors.orange,
+                                          height: 15,
                                         )
-                                      : Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 30, right: 30),
-                                          child: Text(
-                                            AppLocalization.of(context)!
-                                                .estimatedFeesAddNFTNote,
-                                            style: AppStyles
-                                                .textStyleSize14W100Primary(
-                                                    context),
-                                            textAlign: TextAlign.justify,
-                                          ),
+                                      : SvgPicture.asset(
+                                          StateContainer.of(context)
+                                                  .curTheme
+                                                  .assetsFolder! +
+                                              StateContainer.of(context)
+                                                  .curTheme
+                                                  .logoAlone! +
+                                              '.svg',
+                                          height: 15,
                                         ),
-                                ],
-                              ),
+                              Text(
+                                  StateContainer.of(context)
+                                      .curNetwork
+                                      .getLongDisplayName(),
+                                  style: AppStyles.textStyleSize10W100Primary(
+                                      context)),
                             ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ), // Header
+                          AutoSizeText(
+                            AppLocalization.of(context)!.addNFTHeader,
+                            style:
+                                AppStyles.textStyleSize24W700Primary(context),
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            stepGranularity: 0.1,
                           ),
                         ],
                       ),
                     ),
+                  ],
+                ),
+                if (kIsWeb || Platform.isMacOS || Platform.isWindows)
+                  Stack(
+                    children: <Widget>[
+                      const SizedBox(
+                        width: 60,
+                        height: 40,
+                      ),
+                      Container(
+                          padding: const EdgeInsets.only(top: 10, right: 0),
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Column(
+                                children: <Widget>[
+                                  buildIconDataWidget(
+                                      context, Icons.close_outlined, 30, 30),
+                                ],
+                              ))),
+                    ],
+                  )
+                else
+                  const SizedBox(
+                    width: 60,
+                    height: 40,
+                  ),
+              ],
+            ),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.only(top: 0, bottom: 10),
+                child: Stack(
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {
+                        _nameFocusNode!.unfocus();
+                        _initialSupplyFocusNode!.unfocus();
+                      },
+                      child: Container(
+                        color: Colors.transparent,
+                        child: const SizedBox.expand(),
+                        constraints: const BoxConstraints.expand(),
+                      ),
+                    ),
+                    SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 0, bottom: bottom + 80),
+                        child: Column(
+                          children: <Widget>[
+                            Stack(
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                      child: RichText(
+                                        textAlign: TextAlign.start,
+                                        text: TextSpan(
+                                          text: '',
+                                          children: <InlineSpan>[
+                                            TextSpan(
+                                              text: '(',
+                                              style: AppStyles
+                                                  .textStyleSize14W100Primary(
+                                                      context),
+                                            ),
+                                            TextSpan(
+                                                text: StateContainer.of(context)
+                                                    .wallet!
+                                                    .getAccountBalanceDisplay(),
+                                                style: AppStyles
+                                                    .textStyleSize14W700Primary(
+                                                        context)),
+                                            TextSpan(
+                                                text: ' ' +
+                                                    StateContainer.of(context)
+                                                        .curNetwork
+                                                        .getNetworkCryptoCurrencyLabel() +
+                                                    ')',
+                                                style: AppStyles
+                                                    .textStyleSize14W100Primary(
+                                                        context)),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    AppTextField(
+                                      topMargin: 30,
+                                      focusNode: _nameFocusNode,
+                                      controller: _nameController,
+                                      cursorColor: StateContainer.of(context)
+                                          .curTheme
+                                          .primary,
+                                      textInputAction: TextInputAction.next,
+                                      hintText: _showNameHint!
+                                          ? AppLocalization.of(context)!
+                                              .nftNameHint
+                                          : '',
+                                      keyboardType: TextInputType.text,
+                                      style:
+                                          AppStyles.textStyleSize16W600Primary(
+                                              context),
+                                      inputFormatters: <
+                                          LengthLimitingTextInputFormatter>[
+                                        LengthLimitingTextInputFormatter(100),
+                                      ],
+                                      onChanged: (_) async {
+                                        double _fee = await getFee();
+                                        // Always reset the error message to be less annoying
+                                        setState(() {
+                                          feeEstimation = _fee;
+                                        });
+                                      },
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 5, bottom: 5),
+                                      child: Text(_nameValidationText!,
+                                          style: AppStyles
+                                              .textStyleSize14W600Primary(
+                                                  context)),
+                                    ),
+                                    AppTextField(
+                                      focusNode: _initialSupplyFocusNode,
+                                      controller: _initialSupplyController,
+                                      cursorColor: StateContainer.of(context)
+                                          .curTheme
+                                          .primary,
+                                      textInputAction: TextInputAction.next,
+                                      hintText: _showInitialSupplyHint!
+                                          ? AppLocalization.of(context)!
+                                              .nftInitialSupplyHint
+                                          : '',
+                                      keyboardType:
+                                          const TextInputType.numberWithOptions(
+                                              signed: false, decimal: false),
+                                      style:
+                                          AppStyles.textStyleSize16W600Primary(
+                                              context),
+                                      inputFormatters: <
+                                          LengthLimitingTextInputFormatter>[
+                                        LengthLimitingTextInputFormatter(10),
+                                      ],
+                                      onChanged: (_) async {
+                                        double _fee = await getFee();
+                                        // Always reset the error message to be less annoying
+                                        setState(() {
+                                          feeEstimation = _fee;
+                                        });
+                                      },
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 5, bottom: 5),
+                                      child: Text(
+                                        _initialSupplyValidationText!,
+                                        style: AppStyles
+                                            .textStyleSize14W600Primary(
+                                                context),
+                                      ),
+                                    ),
+                                    feeEstimation > 0
+                                        ? Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 30, right: 30),
+                                            child: Text(
+                                              AppLocalization.of(context)!
+                                                      .estimatedFees +
+                                                  ': ' +
+                                                  feeEstimation.toString() +
+                                                  ' ' +
+                                                  StateContainer.of(context)
+                                                      .curNetwork
+                                                      .getNetworkCryptoCurrencyLabel(),
+                                              style: AppStyles
+                                                  .textStyleSize14W100Primary(
+                                                      context),
+                                              textAlign: TextAlign.justify,
+                                            ),
+                                          )
+                                        : Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 30, right: 30),
+                                            child: Text(
+                                              AppLocalization.of(context)!
+                                                  .estimatedFeesAddNFTNote,
+                                              style: AppStyles
+                                                  .textStyleSize14W100Primary(
+                                                      context),
+                                              textAlign: TextAlign.justify,
+                                            ),
+                                          ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      _isPressed == true
+                          ? AppButton.buildAppButton(
+                              const Key('addNFT'),
+                              context,
+                              AppButtonType.primaryOutline,
+                              AppLocalization.of(context)!.addNFT,
+                              Dimens.buttonTopDimens,
+                              onPressed: () {},
+                            )
+                          : AppButton.buildAppButton(
+                              const Key('addNFT'),
+                              context,
+                              AppButtonType.primary,
+                              AppLocalization.of(context)!.addNFT,
+                              Dimens.buttonTopDimens,
+                              onPressed: () async {
+                                setState(() {
+                                  _isPressed = true;
+                                });
+                                validRequest = await _validateRequest();
+                                if (validRequest) {
+                                  Sheets.showAppHeightNineSheet(
+                                    onDisposed: () {
+                                      setState(() {
+                                        _isPressed = false;
+                                      });
+                                    },
+                                    context: context,
+                                    widget: AddNFTConfirm(
+                                      nftName: _nameController!.text,
+                                      feeEstimation: feeEstimation,
+                                      nftInitialSupply: int.tryParse(
+                                          _initialSupplyController!.text),
+                                    ),
+                                  );
+                                } else {
+                                  setState(() {
+                                    _isPressed = false;
+                                  });
+                                }
+                              },
+                            ),
+                    ],
                   ),
                 ],
               ),
             ),
-          ),
-          Container(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    _isPressed == true
-                        ? AppButton.buildAppButton(
-                            const Key('addNFT'),
-                            context,
-                            AppButtonType.primaryOutline,
-                            AppLocalization.of(context)!.addNFT,
-                            Dimens.buttonTopDimens,
-                            onPressed: () {},
-                          )
-                        : AppButton.buildAppButton(
-                            const Key('addNFT'),
-                            context,
-                            AppButtonType.primary,
-                            AppLocalization.of(context)!.addNFT,
-                            Dimens.buttonTopDimens,
-                            onPressed: () async {
-                              setState(() {
-                                _isPressed = true;
-                              });
-                              validRequest = await _validateRequest();
-                              if (validRequest) {
-                                Sheets.showAppHeightNineSheet(
-                                  onDisposed: () {
-                                    setState(() {
-                                      _isPressed = false;
-                                    });
-                                  },
-                                  context: context,
-                                  widget: AddNFTConfirm(
-                                    nftName: _nameController!.text,
-                                    feeEstimation: feeEstimation,
-                                    nftInitialSupply: int.tryParse(
-                                        _initialSupplyController!.text),
-                                  ),
-                                );
-                              } else {
-                                setState(() {
-                                  _isPressed = false;
-                                });
-                              }
-                            },
-                          ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

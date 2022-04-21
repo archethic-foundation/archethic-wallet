@@ -364,19 +364,6 @@ class _AddContactSheetState extends State<AddContactSheet> {
                   }),
                 ],
               ),
-              Row(
-                children: <Widget>[
-                  // Close Button
-                  AppButton.buildAppButton(
-                      const Key('close'),
-                      context,
-                      AppButtonType.primary,
-                      AppLocalization.of(context)!.close,
-                      Dimens.buttonBottomDimens, onPressed: () {
-                    Navigator.pop(context);
-                  }),
-                ],
-              ),
             ],
           ),
         ],
