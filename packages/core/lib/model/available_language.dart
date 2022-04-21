@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/setting_item.dart';
 
-enum AvailableLanguage { DEFAULT, ENGLISH, FRENCH }
+enum AvailableLanguage { DEFAULT, ENGLISH, FRENCH, ARABIC }
 
 /// Represent the available languages our app supports
 class LanguageSetting extends SettingSelectionItem {
@@ -24,6 +24,8 @@ class LanguageSetting extends SettingSelectionItem {
         return 'English (en)';
       case AvailableLanguage.FRENCH:
         return 'Français (fr)';
+      case AvailableLanguage.ARABIC:
+        return 'Arabic (ar)';
       default:
         return AppLocalization.of(context)!.systemDefault;
     }
@@ -35,6 +37,8 @@ class LanguageSetting extends SettingSelectionItem {
         return 'en';
       case AvailableLanguage.FRENCH:
         return 'fr';
+      case AvailableLanguage.ARABIC:
+        return 'ar';
       default:
         return 'DEFAULT';
     }
