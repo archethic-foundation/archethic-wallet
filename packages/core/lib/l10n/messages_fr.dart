@@ -134,7 +134,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Créer un mot de passe"),
         "currency": MessageLookupByLibrary.simpleMessage("Devise"),
         "currencyOracleInfo": MessageLookupByLibrary.simpleMessage(
-            "Cet icône signifie que la conversion utilisera un oracle founrni par ARCHEthic."),
+            "Cet icône signifie que la conversion utilisera un oracle fourni par ARCHEthic."),
         "defaultAccountName":
             MessageLookupByLibrary.simpleMessage("Compte principal"),
         "deleteOption": MessageLookupByLibrary.simpleMessage("Effacer"),

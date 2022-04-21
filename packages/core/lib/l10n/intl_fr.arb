@@ -1308,7 +1308,7 @@
 		"placeholders_order": [],
 		"placeholders": {}
 	},
-	"currencyOracleInfo": "Cet icône signifie que la conversion utilisera un oracle founrni par ARCHEthic.",
+	"currencyOracleInfo": "Cet icône signifie que la conversion utilisera un oracle fourni par ARCHEthic.",
 	"@currencyOracleInfo": {
 		"type": "text",
 		"placeholders_order": [],
