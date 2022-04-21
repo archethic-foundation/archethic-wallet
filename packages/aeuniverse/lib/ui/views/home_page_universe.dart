@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/widgets/balance_infos.dart';
 import 'package:aeuniverse/ui/widgets/logo.dart';
 import 'package:aeuniverse/util/preferences.dart';

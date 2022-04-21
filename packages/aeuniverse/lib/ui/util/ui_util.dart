@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:core/bus/disable_lock_timeout_event.dart';
 import 'package:core_ui/ui/util/exceptions.dart';
-import 'package:core_ui/ui/util/responsive.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:url_launcher/url_launcher.dart';

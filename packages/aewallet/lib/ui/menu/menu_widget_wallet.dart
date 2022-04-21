@@ -2,9 +2,6 @@
 
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:aewallet/ui/menu/settings_drawer_wallet_mobile.dart';
 import 'package:core_ui/ui/util/responsive.dart';
