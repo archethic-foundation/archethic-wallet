@@ -424,9 +424,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       pickerItemsList.add(PickerItem(
           LanguageSetting(value).getDisplayName(context),
           null,
-          LanguageSetting(value).getLocaleString().toLowerCase() == 'default'
-              ? null
-              : 'packages/aeuniverse/assets/icons/country/${LanguageSetting(value).getLocaleString().toLowerCase()}.png',
+          null,
           null,
           value,
           true));
