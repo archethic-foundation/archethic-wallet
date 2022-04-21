@@ -949,18 +949,18 @@
     "placeholders": {}
   },
   "yubikeyWithYubiCloudMethod": "Yubikey",
-  	"@yubikeyWithYubiCloudMethod": {
-    	"type": "text",
-    	"placeholders_order": [],
-    	"placeholders": {}
-  	},
-	"unlockNFCYubikey": "Authenticate to Unlock",
-  	"@unlockNFCYubikey": {
-    	"type": "text",
-    	"placeholders_order": [],
-    	"placeholders": {}
-  	},
-"yubikeyError_BAD_OTP": "The OTP is invalid format.",
+  "@yubikeyWithYubiCloudMethod": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "unlockNFCYubikey": "Authenticate to Unlock",
+  "@unlockNFCYubikey": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "yubikeyError_BAD_OTP": "The OTP is invalid format.",
   "@yubikeyError_BAD_OTP": {
     "type": "text",
     "placeholders_order": [],
@@ -1206,298 +1206,298 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-	"chart": "Chart",
-	"@chart": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
-	"share": "Share",
-	"@share": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
-	"chartOptionLabel14d": "14d",
-	"@chartOptionLabel14d": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
-	"chartOptionLabel1y": "1y",
-	"@chartOptionLabel1y": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
-	"chartOptionLabel200d": "200d",
-	"@chartOptionLabel200d": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
-	"chartOptionLabel30d": "30d",
-	"@chartOptionLabel30d": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
-	"chartOptionLabel60d": "60d",
-	"@chartOptionLabel60d": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
-	"chartOptionLabel7d": "7d",
-	"@chartOptionLabel7d": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
-	"chartOptionLabel24h": "24h",
-	"@chartOptionLabel24h": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
-	"transactionChainExplorerHeader": "Transaction Chain Explorer",
-	"@transactionChainExplorerHeader": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
-	"transactionChainExplorerDesc": "Explore each transaction stored in your chain",
-	"@transactionChainExplorerDesc": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
-	"transactionChainExplorerLastAddress": "Last address",
-	"@transactionChainExplorerLastAddress": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
+  "chart": "Chart",
+  "@chart": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "share": "Share",
+  "@share": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "chartOptionLabel14d": "14d",
+  "@chartOptionLabel14d": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "chartOptionLabel1y": "1y",
+  "@chartOptionLabel1y": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "chartOptionLabel200d": "200d",
+  "@chartOptionLabel200d": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "chartOptionLabel30d": "30d",
+  "@chartOptionLabel30d": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "chartOptionLabel60d": "60d",
+  "@chartOptionLabel60d": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "chartOptionLabel7d": "7d",
+  "@chartOptionLabel7d": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "chartOptionLabel24h": "24h",
+  "@chartOptionLabel24h": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionChainExplorerHeader": "Transaction Chain Explorer",
+  "@transactionChainExplorerHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionChainExplorerDesc": "Explore each transaction stored in your chain",
+  "@transactionChainExplorerDesc": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionChainExplorerLastAddress": "Last address",
+  "@transactionChainExplorerLastAddress": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "estimatedFees": "Estimated fees",
-	"@estimatedFees": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
+  "@estimatedFees": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "estimatedFeesNote": "Note: The fees will be estimated when the address and the amount are specified.",
-	"@estimatedFeesNote": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
+  "@estimatedFeesNote": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "estimatedFeesAddNFTNote": "Note: The fees will be estimated when the name and the initial supply are specified.",
-	"@estimatedFeesAddNFTNote": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
+  "@estimatedFeesAddNFTNote": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "nodeAuthorizationDate": "Authorization date : ",
-	"@nodeAuthorizationDate": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
-	},
+  "@nodeAuthorizationDate": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "nodeEnrollmentDate": "Enrollment date : ",
-	"@nodeEnrollmentDate": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@nodeEnrollmentDate": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "currencyOracleInfo": "This icon means that the conversion will use an oracle provided by ARCHEthic.",
-	"@currencyOracleInfo": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@currencyOracleInfo": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "sendToMeError": "You can't send UCO to your own wallet.",
-	"@sendToMeError": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@sendToMeError": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "viewExplorer": "View on explorer",
-	"@viewExplorer": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@viewExplorer": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "total": "Total",
-	"@total": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@total": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "seeAll": "See all transactions",
-	"@seeAll": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@seeAll": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "yubikeyConnectInvite": "Please, connect your Yubikey",
-	"@yubikeyConnectInvite": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@yubikeyConnectInvite": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "yubikeyConnectHoldNearDevice": "Hold your device near the Yubikey",
-	"@yubikeyConnectHoldNearDevice": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@yubikeyConnectHoldNearDevice": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "passwordEnterInvite": "Please, enter your password",
-	"@passwordEnterInvite": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@passwordEnterInvite": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "seYubicloudConfirmHeader": "Please, confirm your client identity and client API key.",
-	"@seYubicloudConfirmHeader": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@seYubicloudConfirmHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "setPasswordHeader": "Please, create a password.",
-	"@setPasswordHeader": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@setPasswordHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "setPasswordDescription": "In order to protect your account, make sure your password respects these rules:",
-	"@setPasswordDescription": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@setPasswordDescription": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "seYubicloudHeader": "Please, precise your client identity and client API key.",
-	"@seYubicloudHeader": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@seYubicloudHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "seYubicloudDescription": "To use the Yubico OTP with your Yubikey, you need to get an API key from https://upgrade.yubico.com/getapikey. It's quick and free.\n\nAfter that, you can precise the given client identity and the client API key",
-	"@seYubicloudDescription": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@seYubicloudDescription": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "passwordMethod": "Password",
-	"@passwordMethod": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@passwordMethod": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "biometricsUnirisMethod": "Uniris Biometrics (Soon...)",
-	"@biometricsUnirisMethod": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@biometricsUnirisMethod": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "configureSecurityIntro": "It's important to protect the access to your wallet!",
-	"@configureSecurityIntro": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@configureSecurityIntro": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "configureSecurityExplanation": "To access to this application or to validate important manipulations, we offer several ways to protect yourself.",
-	"@configureSecurityExplanation": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@configureSecurityExplanation": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "configureSecurityExplanationPIN": "A personal identification number (PIN) is a numeric passcode used in the process of authenticating a user accessing a system.",
-	"@configureSecurityExplanationPIN": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@configureSecurityExplanationPIN": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "configureSecurityExplanationPassword": "A password is a string of characters used to verify the identity of a user during the authentication process. Avoid words that are too easy to find (date of birth, first name of your children, etc...)",
-	"@configureSecurityExplanationPassword": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@configureSecurityExplanationPassword": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "configureSecurityExplanationYubikey": "The YubiKey is a device that makes two-factor authentication as simple as possible. Instead of a code being texted to you, or generated by an app on your phone, you press a button on your YubiKey.",
-	"@configureSecurityExplanationYubikey": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@configureSecurityExplanationYubikey": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "configureSecurityExplanationBiometrics": "It's a method of biometric identification that uses that body measures, in this case face and head, to verify the identity of a person through its facial biometric pattern and data.",
-	"@configureSecurityExplanationBiometrics": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@configureSecurityExplanationBiometrics": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "configureSecurityExplanationUnirisBiometrics": "Embedded in the blockchain, the biometric technology provided by Uniris allows anyone to identify themselves without difficulty and without storing any biometric data. This is an access control that is forgery-proof and without disclosure.",
-	"@configureSecurityExplanationUnirisBiometrics": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@configureSecurityExplanationUnirisBiometrics": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "createPasswordHint": "Create a password",
-	"@createPasswordHint": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@createPasswordHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "confirmPasswordHint": "Confirm the password",
-	"@confirmPasswordHint": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@confirmPasswordHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "enterPasswordHint": "Enter your password",
-	"@enterPasswordHint": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@enterPasswordHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "passwordsDontMatch": "Passwords do not match",
-	"@passwordsDontMatch": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@passwordsDontMatch": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "passwordBlank": "Password cannot be empty",
-	"@passwordBlank": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@passwordBlank": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "passwordAtLeast": "- At least %1 characters.",
-	"@passwordAtLeast": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@passwordAtLeast": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "passwordBreachDatabase": "- Is not a member of the \"Have I been Pwned\" breach database.",
-	"@passwordBreachDatabase": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@passwordBreachDatabase": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "passwordNormalLetters": "- At least %1 Letter.",
-	"@passwordNormalLetters": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@passwordNormalLetters": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "passwordNumericCharacters": "- At least %1 Numeric character.",
-	"@passwordNumericCharacters": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@passwordNumericCharacters": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   },
   "passwordSpecialCharacters": "- At least %1 Special character.",
-	"@passwordSpecialCharacters": {
-	  "type": "text",
-	  "placeholders_order": [],
-	  "placeholders": {}
+  "@passwordSpecialCharacters": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

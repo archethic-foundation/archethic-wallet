@@ -1,1509 +1,254 @@
 {
 	"@@last_modified": "2021-11-07T17:33:43.139040",
 	"welcomeText": "Bienvenue sur l'internet de confiance.\n\nARCHEthic redonne à l'humanité la maîtrise de la technologie et à chaque individu la maîtrise de son identité.",
-	"@welcomeText": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"cancel": "Annuler",
-	"@cancel": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"close": "Fermer",
-	"@close": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"confirm": "Confirmer",
-	"@confirm": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"no": "Non",
-	"@no": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yes": "Oui",
-	"@yes": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"send": "Envoyer",
-	"@send": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"add": "Ajouter",
-	"@add": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"update": "Mettre à jour",
-	"@update": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transferTokens": "Envoyer des %1",
-	"@transferTokens": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transferNFT": "Transfert NFT",
-	"@transferNFT": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transferNFTName": "Transfert %1",
-	"@transferNFTName": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"recentTransactionsHeader": "Transactions récentes",
-	"@recentTransactionsHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"recentTransactionsNoTransactionYet": "Aucune transaction pour le moment",
-	"@recentTransactionsNoTransactionYet": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"addressCopied": "Adresse copiée",
-	"@addressCopied": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"copyAddress": "Copier l'adresse",
-	"@copyAddress": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"addressHint": "Entrer l'adresse",
-	"@addressHint": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"scanQrCode": "Scannez le QR code",
-	"@scanQrCode": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"qrInvalidAddress": "Le QR code ne contient pas de destination valide",
-	"@qrInvalidAddress": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"qrInvalidPermissions": "Veuillez accorder des autorisations à l'appareil photo pour scanner les QR codes",
-	"@qrInvalidPermissions": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"qrUnknownError": "Impossible de lire le QR code",
-	"@qrUnknownError": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"networksHeader": "Réseaux",
-	"@networksHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"networksDesc": "Définir le endpoint",
-	"@networksDesc": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"walletFAQHeader": "FAQ sur le portefeuille",
-	"@walletFAQHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"walletFAQDesc": "Une question ? Vérifiez ici en premier !",
-	"@walletFAQDesc": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"enterEndpoint": "Entrer un endpoint",
-	"@enterEndpoint": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"removeContact": "Supprimer contact",
-	"@removeContact": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"removeContactConfirmation": "Êtes-vous sûr(e) de vouloir supprimer %1 ?",
-	"@removeContactConfirmation": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"addressBookHeader": "Carnet d'adresses",
-	"@addressBookHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"contactHeader": "Contact",
-	"@contactHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"addressBookDesc": "Créer et gérer les adresses fréquemment utilisées",
-	"@addressBookDesc": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"addContact": "Ajouter le contact",
-	"@addContact": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"contactNameHint": "Entrez un nom @",
-	"@contactNameHint": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"contactInvalid": "Nom de contact invalide",
-	"@contactInvalid": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"contactAdded": "%1 ajouté au carnet d'adresses.",
-	"@contactAdded": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"contactRemoved": "%1 a été supprimé du carnet d'adresses !",
-	"@contactRemoved": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"contactNameMissing": "Choisissez un nom pour ce contact",
-	"@contactNameMissing": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"contactExists": "Le contact existe déjà",
-	"@contactExists": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transferSuccess": "La transaction a été envoyée avec succès",
-	"@transferSuccess": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transfering": "Transfert",
-	"@transfering": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"getOption": "Get",
-	"@getOption": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"deleteOption": "Effacer",
-	"@deleteOption": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"sendError": "Une erreur s'est produite. Essayer à nouveau plus tard.",
-	"@sendError": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"enterAmount": "Entrer le montant",
-	"@enterAmount": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"enterAddress": "Entrer l'adresse",
-	"@enterAddress": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"invalidAddress": "L'adresse saisie n'est pas valide",
-	"@invalidAddress": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"addressMissing": "Entrez une adresse s'il vous plaît",
-	"@addressMissing": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"amountMissing": "Veuillez saisir un montant",
-	"@amountMissing": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"insufficientBalance": "Vous ne possédez pas assez de %1.",
-	"@insufficientBalance": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"fees": "Fees",
-	"@fees": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"pinCreateTitle": "Créer un code à 6 chiffres (PIN)",
-	"@pinCreateTitle": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"pinConfirmTitle": "Confirmer votre code PIN",
-	"@pinConfirmTitle": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"pinEnterTitle": "Entrer le code PIN",
-	"@pinEnterTitle": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"pinConfirmError": "Les codes PIN ne correspondent pas",
-	"@pinConfirmError": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"pinInvalid": "Le code PIN saisi est non valide",
-	"@pinInvalid": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"authMethod": "Méthode d'authentification",
-	"@authMethod": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"pinMethod": "PIN",
-	"@pinMethod": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"biometricsMethod": "Biométrie",
-	"@biometricsMethod": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"currency": "Devise",
-	"@currency": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"changeCurrencyHeader": "Devise",
-	"@changeCurrencyHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"changeCurrencyDesc": "Sélectionner la monnaie fiduciaire que vous souhaitez afficher aux côtés de %1",
-	"@changeCurrencyDesc": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"language": "Langue",
-	"@language": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"removeWallet": "Supprimer le wallet",
-	"@removeWallet": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"rootWarning": "Il semble que votre appareil soit « enraciné », « jailbreaké » ou modifié d'une manière qui compromet la sécurité. Il est recommandé de réinitialiser votre appareil à son état d'origine avant de continuer.",
-	"@rootWarning": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"iUnderstandTheRisks": "Je comprends les risques",
-	"@iUnderstandTheRisks": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"exit": "Sortie",
-	"@exit": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"warning": "Attention",
-	"@warning": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"removeWalletDetail": "Vous vous apprêtez à supprimer toutes les données liées à ARCHEthic de cet appareil. Si votre phrase secrète n'est pas sauvegardée, vous ne pourrez plus jamais accéder à votre portefeuille",
-	"@removeWalletDetail": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"removeWalletAction": "Supprimer de votre appareil votre portefeuille",
-	"@removeWalletAction": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"removeWalletAreYouSure": "Êtes-vous sûr(e) ?",
-	"@removeWalletAreYouSure": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"removeWalletReassurance": "Tant que vous avez sauvegardé votre phrase secrète, vous n'avez rien à craindre.",
-	"@removeWalletReassurance": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"preferences": "Préférences",
-	"@preferences": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"manage": "Gérer",
-	"@manage": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"fingerprintSeedBackup": "S'authentifier pour sauvegarder la phrase secrète.",
-	"@fingerprintSeedBackup": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"pinSecretPhraseBackup": "Entrer le code PIN pour sauvegarder la phrase secrète",
-	"@pinSecretPhraseBackup": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"systemDefault": "Système par défaut",
-	"@systemDefault": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"unlockPin": "Entrer le code PIN pour déverrouiller",
-	"@unlockPin": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"unlockBiometrics": "Authentifier pour déverrouiller",
-	"@unlockBiometrics": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"confirmBiometrics": "Authentifier pour confirmer",
-	"@confirmBiometrics": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"lockAppSetting": "Auth. au lancement",
-	"@lockAppSetting": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"locked": "Bloqué",
-	"@locked": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"unlock": "Ouvrir",
-	"@unlock": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"tooManyFailedAttempts": "Trop de tentatives de déverrouillage échouées.",
-	"@tooManyFailedAttempts": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"securityHeader": "Sécurité",
-	"@securityHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"aboutHeader": "À propos",
-	"@aboutHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"aboutGeneralTermsAndConditions": "Conditions générales",
-	"@aboutGeneralTermsAndConditions": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"aboutWalletServiceTerms": "Conditions d'utilisation du portefeuille",
-	"@aboutWalletServiceTerms": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"aboutPrivacyPolicy": "Politique de confidentialité",
-	"@aboutPrivacyPolicy": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"labLinkHeader": "Lab",
-	"@labLinkHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"labLinkDesc": "Dernières nouvelles sur l'écosystème Archethic",
-	"@labLinkDesc": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"aeWebsiteLinkHeader": "Site web d'ARCHEthic",
-	"@aeWebsiteLinkHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"aeWebsiteLinkDesc": "Visitez le site web d'ARCHEthic",
-	"@aeWebsiteLinkDesc": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"autoLockHeader": "Verrouillage automatique",
-	"@autoLockHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"xMinutes": "Après %1 minutes",
-	"@xMinutes": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"xMinute": "Après %1 minute",
-	"@xMinute": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"instantly": "Immédiatement",
-	"@instantly": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"defaultAccountName": "Compte principal",
-	"@defaultAccountName": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"tapToReveal": "Tapez pour révéler",
-	"@tapToReveal": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"tapToHide": "Tapez pour cacher",
-	"@tapToHide": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"pinPadShuffle": "Lecture aléatoire du clavier PIN",
-	"@pinPadShuffle": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"copy": "Copier",
-	"@copy": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"secretWarning": "Si vous perdez votre appareil ou désinstallez l'application, vous aurez besoin de votre phrase secrète pour récupérer vos fonds !",
-	"@secretWarning": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"importSecretPhrase": "Importer une phrase secrète",
-	"@importSecretPhrase": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"importSecretPhraseHint": "Veuillez entrer votre phrase secrète de 24 mots ci-dessous. Chaque mot doit être séparé par un espace.",
-	"@importSecretPhraseHint": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"qrMnemonicError": "Le QR code ne contient pas de phrase secrète valide",
-	"@qrMnemonicError": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"mnemonicInvalidWord": "%1 n'est pas un mot valide",
-	"@mnemonicInvalidWord": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"mnemonicSizeError": "La phrase secrète ne peut contenir que 24 mots",
-	"@mnemonicSizeError": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"importWallet": "J'ai déjà un portefeuille",
-	"@importWallet": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"newWallet": "Nouveau portefeuille",
-	"@newWallet": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"understandButton": "Je comprends",
-	"@understandButton": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"ackBackedUp": "Êtes-vous sûr(e) d'avoir sauvegardé votre phrase secrète ?",
-	"@ackBackedUp": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"backupSecretPhrase": "Phrase secrète de sauvegarde",
-	"@backupSecretPhrase": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"ok": "Ok",
-	"@ok": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"addressInfos": "Mon adresse publique pour recevoir des fonds",
-	"@addressInfos": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"informations": "Informations",
-	"@informations": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nodesHeader": "Noeuds",
-	"@nodesHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nodesHeaderDesc": "Informations sur les nœuds",
-	"@nodesHeaderDesc": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"addNFT": "Ajouter NFT",
-	"@addNFT": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"addNFTHeader": "Ajouter NFT",
-	"@addNFTHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"addNFTConfirmationMessage": "Confirmez-vous la création du NFT suivant ?",
-	"@addNFTConfirmationMessage": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nftHeader": "NFT",
-	"@nftHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nftHeaderDesc": "Gérez vos jetons non financiers",
-	"@nftHeaderDesc": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nftNameHint": "Entrez un nom",
-	"@nftNameHint": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nftName": "Name: ",
-	"@nftName": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nftInitialSupplyHint": "Saisir un approvisionnement initial",
-	"@nftInitialSupplyHint": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nftNameMissing": "Choisissez un nom pour le NFT",
-	"@nftNameMissing": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nftInitialSupply": "Approvisionnement initial :",
-	"@nftInitialSupply": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nftInitialSupplyMissing": "Choisissez une offre initiale pour le NFT",
-	"@nftInitialSupplyMissing": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nftInitialSupplyPositive": "L'offre initiale doit être > 0",
-	"@nftInitialSupplyPositive": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nodeNumber": "Nb de nœuds: ",
-	"@nodeNumber": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nodeFirstPublicKey": "Première clé publique: ",
-	"@nodeFirstPublicKey": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nodeLastPublicKey": "Dernière clé publique: ",
-	"@nodeLastPublicKey": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nodeIP": "IP: ",
-	"@nodeIP": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nodeGeoPatch": "Geo patch: ",
-	"@nodeGeoPatch": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nodeNetworkPatch": "Network patch: ",
-	"@nodeNetworkPatch": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nodeAverageAvailability": "Disponibilité moyenne: ",
-	"@nodeAverageAvailability": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nodeAuthorized": "Autorisé: ",
-	"@nodeAuthorized": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nodeRewardAddress": "Adresse de récompense: ",
-	"@nodeRewardAddress": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"txListFrom": "De : ",
-	"@txListFrom": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"txListTo": "À : ",
-	"@txListTo": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"txListDate": "Date : ",
-	"@txListDate": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"txListFees": "Frais : ",
-	"@txListFees": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"txListTypeTransactionLabelNewNFT": "Nouveau NFT",
-	"@txListTypeTransactionLabelNewNFT": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"txListTypeTransactionLabelReceive": "Reçu le ",
-	"@txListTypeTransactionLabelReceive": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"txListTypeTransactionLabelSend": "Envoyé le ",
-	"@txListTypeTransactionLabelSend": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"recoveryPhrase": "Phrase secrète",
-	"@recoveryPhrase": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"iveBackedItUp": "Je l'ai sauvegardé",
-	"@iveBackedItUp": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"backupSafetyLabel1": "Dans l'écran suivant, vous verrez votre phrase secrète.",
-	"@backupSafetyLabel1": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"backupSafetyLabel2": "Qu'est-ce qu'une phrase secrète ?",
-	"@backupSafetyLabel2": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"backupSafetyLabel3": "Une phrase secrète est une forme humainement lisible de la clé privée de votre portefeuille, affichée comme une suite de 24 mots.\n\nAvec ces 24 mots, vous pouvez restaurer votre portefeuille à volonté.\n\nGardez cette liste en sécurité et ne la communiquez à personne.",
-	"@backupSafetyLabel3": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"backupSafetyLabel4": "Comment sauvegarder ?",
-	"@backupSafetyLabel4": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"backupSafetyLabel5": "Ecrivez cette liste de mots dans le bon ordre sur un support non informatique, que vous placez en sécurité.\n\nNe stockez pas cette phrase sur un équipement électronique sous quelque forme que ce soit (texte, image,...).\n\nLa sécurité du contenu de votre portefeuille dépend de celle de cette phrase secrète.",
-	"@backupSafetyLabel5": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"backupSafetyLabel6": "Moyens de sauvegarde non sécurisés.",
-	"@backupSafetyLabel6": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"backupSafetyLabel7": "1. Capture d'écran\n2. Prendre une photo",
-	"@backupSafetyLabel7": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"go": "Go !",
-	"@go": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nftCreated": "NFT créé",
-	"@nftCreated": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"version": "Version :",
-	"@version": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"settings": "Paramètres",
-	"@settings": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yubikeyWithYubiCloudMethod": "Yubikey",
-	"@yubikeyWithYubiCloudMethod": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"unlockNFCYubikey": "S'authentifier pour débloquer",
-	"@unlockNFCYubikey": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yubikeyError_BAD_OTP": "Le mot de passe saisi a un format invalide.",
-	"@yubikeyError_BAD_OTP": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yubikeyError_REPLAYED_OTP": "Le mot de passe saisi a déjà été utilisé.",
-	"@yubikeyError_REPLAYED_OTP": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yubikeyError_BAD_SIGNATURE": "La vérification de signature HMAC a échoué.",
-	"@yubikeyError_BAD_SIGNATURE": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yubikeyError_MISSING_PARAMETER": "Il manque un paramètre à la requête.",
-	"@yubikeyError_MISSING_PARAMETER": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yubikeyError_NO_SUCH_CLIENT": "L'ID de la requpête n'existe pas.",
-	"@yubikeyError_NO_SUCH_CLIENT": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yubikeyError_OPERATION_NOT_ALLOWED": "L'ID de la requête n'a pas l'autorisation de vérifier les OTPs.",
-	"@yubikeyError_OPERATION_NOT_ALLOWED": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yubikeyError_BACKEND_ERROR": "Erreur inattendue dans le serveur yubicloud.",
-	"@yubikeyError_BACKEND_ERROR": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yubikeyError_NOT_ENOUGH_ANSWERS": "Le serveur n'a pu se synchroniser à temps.",
-	"@yubikeyError_NOT_ENOUGH_ANSWERS": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yubikeyError_REPLAYED_REQUEST": "Le serveur a déjà vu cette combinaison OTP/Nonce",
-	"@yubikeyError_REPLAYED_REQUEST": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yubikeyError_RESPONSE_KO": "Une erreur s'est produite lors de l'authent. Yubkiey. Réessayer ultérieurement.",
-	"@yubikeyError_RESPONSE_KO": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yubikeyError_OTP_NOT_FOUND": "Le mot de passe OTP est vide",
-	"@yubikeyError_OTP_NOT_FOUND": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"enterYubikeyClientID": "Entrer l'ID client",
-	"@enterYubikeyClientID": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"enterYubikeyClientAPIKey": "Entrer la clé client de l'API",
-	"@enterYubikeyClientAPIKey": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yubikeyParamsHeader": "Paramètres Yubikey",
-	"@yubikeyParamsHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yubikeyParamsDesc": "Configuration de l'accès Yubicloud",
-	"@yubikeyParamsDesc": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"themeHeader": "Thème",
-	"@themeHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosHeader": "Infos de la transaction",
-	"@transactionInfosHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyAddress": "Adresse",
-	"@transactionInfosKeyAddress": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyType": "Type",
-	"@transactionInfosKeyType": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyVersion": "Version",
-	"@transactionInfosKeyVersion": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyPreviousPublicKey": "Clé publique de la transaction précédente",
-	"@transactionInfosKeyPreviousPublicKey": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyPreviousSignature": "Signature à partir de la clé privée associée à la clé publique",
-	"@transactionInfosKeyPreviousSignature": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyOriginSignature": "Signature à partir de la clé privée associée au dispositif",
-	"@transactionInfosKeyOriginSignature": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyData": "Données",
-	"@transactionInfosKeyData": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyContent": "Contenu",
-	"@transactionInfosKeyContent": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyCode": "Code",
-	"@transactionInfosKeyCode": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyUCOLedger": "Opérations sur les registres - UCO",
-	"@transactionInfosKeyUCOLedger": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyTo": "A",
-	"@transactionInfosKeyTo": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyAmount": "Montant",
-	"@transactionInfosKeyAmount": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyNFTLedger": "Opérations sur les registres - NFT",
-	"@transactionInfosKeyNFTLedger": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyNft": "NFT",
-	"@transactionInfosKeyNft": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyValidationStamp": "Estampille de Validation",
-	"@transactionInfosKeyValidationStamp": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyProofOfWork": "Preuve de Travail",
-	"@transactionInfosKeyProofOfWork": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyProofOfIntegrity": "Preuve d'intégrité",
-	"@transactionInfosKeyProofOfIntegrity": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyTimeStamp": "Date de la génération de la transaction",
-	"@transactionInfosKeyTimeStamp": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeyCrossValidationStamps": "Estampille(s) de contre-validation",
-	"@transactionInfosKeyCrossValidationStamps": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionInfosKeySignature": "Signature",
-	"@transactionInfosKeySignature": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionBuyHeader": "Acheter des UCO ici",
-	"@transactionBuyHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionsAllListHeader": "Transactions",
-	"@transactionsAllListHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"receive": "Recevoir",
-	"@receive": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"buy": "Acheter",
-	"@buy": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"chart": "Cours",
-	"@chart": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"share": "Partager",
-	"@share": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"chartOptionLabel14d": "14j",
-	"@chartOptionLabel14d": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"chartOptionLabel1y": "1a",
-	"@chartOptionLabel1y": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"chartOptionLabel200d": "200j",
-	"@chartOptionLabel200d": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"chartOptionLabel30d": "30j",
-	"@chartOptionLabel30d": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"chartOptionLabel60d": "60j",
-	"@chartOptionLabel60d": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"chartOptionLabel7d": "7j",
-	"@chartOptionLabel7d": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"chartOptionLabel24h": "24h",
-	"@chartOptionLabel24h": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionChainExplorerHeader": "Explorateur de chaînes de transactions",
-	"@transactionChainExplorerHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionChainExplorerDesc": "Explorer chaque transaction contenue dans votre chaîne.",
-	"@transactionChainExplorerDesc": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"transactionChainExplorerLastAddress": "Dernière adresse",
-	"@transactionChainExplorerLastAddress": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"estimatedFees": "Frais estimés",
-	"@estimatedFees": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"estimatedFeesNote": "Note: Les frais seront estimés quand l'adresse et le montant seront spécifiés.",
-	"@estimatedFeesNote": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"estimatedFeesAddNFTNote": "Note: Les frais seront estimés quand le nom et l'approvisionnement initial seront spécifiés.",
-	"@estimatedFeesAddNFTNote": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nodeAuthorizationDate": "Authorization date: ",
-	"@nodeAuthorizationDate": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"nodeEnrollmentDate": "Enrollment date: ",
-	"@nodeEnrollmentDate": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"currencyOracleInfo": "Cet icône signifie que la conversion utilisera un oracle fourni par ARCHEthic.",
-	"@currencyOracleInfo": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"sendToMeError": "Vous ne pouvez pas envoyer de UCO dans votre propre portefeuille.",
-	"@sendToMeError": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"viewExplorer": "Voir dans l'explorer",
-	"@viewExplorer": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"total": "Total",
-	"@total": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"seeAll": "Voir toutes les transactions",
-	"@seeAll": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yubikeyConnectInvite": "Svp, connectez votre Yubikey",
-	"@yubikeyConnectInvite": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"yubikeyConnectHoldNearDevice": "Tennez votre appareil près de votre Yubikey",
-	"@yubikeyConnectHoldNearDevice": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"passwordEnterInvite": "Svp, saisissez votre mot de passe",
-	"@passwordEnterInvite": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"seYubicloudConfirmHeader": "Svp, confirmez votre identité client et la clé API client.",
-	"@seYubicloudConfirmHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"setPasswordHeader": "Svp, créez un mot de passe.",
-	"@setPasswordHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"setPasswordDescription": "Afin de protéger votre compte, assurez-vous que votre mot de passe respecte les règles suivantes :",
-	"@setPasswordDescription": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"seYubicloudHeader": "Svp, précisez votre identité client et la clé API client.",
-	"@seYubicloudHeader": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"seYubicloudDescription": "Pour utiliser le service d'OTP de Yubico avec votre Yubikey, vous devez obtenir une clé API sur https://upgrade.yubico.com/getapikey. C'est rapide et gratuit.\n\nAprès cela, vous pouvez préciser l'identité client donnée et la clé API client",
-	"@seYubicloudDescription": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"passwordMethod": "Mot de passe",
-	"@passwordMethod": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"biometricsUnirisMethod": "Biométrie d'Uniris (Prochainement...)",
-	"@biometricsUnirisMethod": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"configureSecurityIntro": "C'est important de protéger l'accès à votre portefeuille !",
-	"@configureSecurityIntro": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"configureSecurityExplanation": "Pour accéder à cette application ou pour valider des manipulations importantes, nous vous proposons plusieurs moyens de vous protéger.",
-	"@configureSecurityExplanation": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"configureSecurityExplanationPIN": "Un numéro d'identification personnel (Code PIN) est un mot de passe numérique utilisé dans le processus d'authentification d'un utilisateur accédant à un système.",
-	"@configureSecurityExplanationPIN": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"configureSecurityExplanationPassword": "Un mot de passe est une chaîne de caractères utilisée pour vérifier l'identité d'un utilisateur au cours du processus d'authentification. Évitez les mots trop faciles à trouver (date de naissance, prénom de vos enfants, etc...)",
-	"@configureSecurityExplanationPassword": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"configureSecurityExplanationYubikey": "La YubiKey est un appareil qui rend l'authentification à deux facteurs aussi simple que possible. Au lieu qu'un code vous soit envoyé par SMS ou généré par une application sur votre téléphone, vous appuyez juste sur le bouton de votre YubiKey.",
-	"@configureSecurityExplanationYubikey": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"configureSecurityExplanationBiometrics": "Il s'agit d'une méthode d'identification biométrique qui utilise les mesures corporelles, et dans ce cas, le visage ou le doigt, pour vérifier l'identité d'une personne grâce à son schéma et ses données biométriques.",
-	"@configureSecurityExplanationBiometrics": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"configureSecurityExplanationUnirisBiometrics": "Embarquée dans la blockchain, la technologie biométrique fournie par Uniris permet à chacun de s'identifier sans difficulté et sans stocker aucune donnée biométrique. Il s'agit d'un contrôle d'accès infalsifiable et sans divulgation.",
-	"@configureSecurityExplanationUnirisBiometrics": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"createPasswordHint": "Créer un mot de passe",
-	"@createPasswordHint": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"confirmPasswordHint": "Confirmer le mot de passe",
-	"@confirmPasswordHint": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"enterPasswordHint": "Saisissez votre mot de passe",
-	"@enterPasswordHint": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"passwordsDontMatch": "Les mots de passe ne correspondent pas",
-	"@passwordsDontMatch": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"passwordBlank": "Le mot de passe est obligatoire",
-	"@passwordBlank": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"invalidPassword": "Le mot de passe est invalide",
-	"@invalidPassword": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"passwordAtLeast": "- Au moins %1 caractères.",
-	"@passwordAtLeast": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"passwordBreachDatabase": "- Ne soit pas présent dans la liste des violations de mot de passe de la base de données \"Have I been Pwned\".",
-	"@passwordBreachDatabase": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"passwordNormalLetters": "- Au moins %1 lettre.",
-	"@passwordNormalLetters": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
 	"passwordNumericCharacters": "- Au moins %1 caractère numérique.",
-	"@passwordNumericCharacters": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	},
-	"passwordSpecialCharacters": "- Au moins %1 caractère spécial.",
-	"@passwordSpecialCharacters": {
-		"type": "text",
-		"placeholders_order": [],
-		"placeholders": {}
-	}
+	"passwordSpecialCharacters": "- Au moins %1 caractère spécial."
 }
