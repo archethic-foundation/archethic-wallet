@@ -40,10 +40,14 @@ class _SetPasswordState extends State<SetPassword> {
   String? passwordError;
   bool? passwordsMatch;
   bool? isPasswordCompromised;
+  bool? setPasswordVisible;
+  bool? confirmPasswordVisible;
 
   @override
   void initState() {
     super.initState();
+    setPasswordVisible = false;
+    confirmPasswordVisible = false;
     passwordsMatch = false;
     setPasswordFocusNode = FocusNode();
     confirmPasswordFocusNode = FocusNode();
@@ -294,13 +298,24 @@ class _SetPasswordState extends State<SetPassword> {
                                   hintText: AppLocalization.of(context)!
                                       .createPasswordHint,
                                   keyboardType: TextInputType.text,
-                                  obscureText: true,
+                                  obscureText: !setPasswordVisible!,
                                   textAlign: TextAlign.center,
                                   style: AppStyles.textStyleSize16W700Primary(
                                       context),
                                   onSubmitted: (text) {
                                     confirmPasswordFocusNode!.requestFocus();
                                   },
+                                  suffixButton: TextFieldButton(
+                                    icon: setPasswordVisible!
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    onPressed: () {
+                                      setState(() {
+                                        setPasswordVisible =
+                                            !setPasswordVisible!;
+                                      });
+                                    },
+                                  ),
                                 ),
                                 AppTextField(
                                   topMargin: 20,
@@ -333,10 +348,21 @@ class _SetPasswordState extends State<SetPassword> {
                                   hintText: AppLocalization.of(context)!
                                       .confirmPasswordHint,
                                   keyboardType: TextInputType.text,
-                                  obscureText: true,
+                                  obscureText: !confirmPasswordVisible!,
                                   textAlign: TextAlign.center,
                                   style: AppStyles.textStyleSize16W700Primary(
                                       context),
+                                  suffixButton: TextFieldButton(
+                                    icon: confirmPasswordVisible!
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    onPressed: () {
+                                      setState(() {
+                                        confirmPasswordVisible =
+                                            !confirmPasswordVisible!;
+                                      });
+                                    },
+                                  ),
                                 ),
                                 const SizedBox(height: 20),
                                 // Error Text

@@ -32,11 +32,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
   TextEditingController? enterPasswordController;
 
   String? passwordError;
+  bool? enterPasswordVisible;
 
   @override
   void initState() {
     super.initState();
-
+    enterPasswordVisible = false;
     enterPasswordFocusNode = FocusNode();
     enterPasswordController = TextEditingController();
   }
@@ -150,10 +151,20 @@ class _PasswordScreenState extends State<PasswordScreen> {
                             hintText:
                                 AppLocalization.of(context)!.enterPasswordHint,
                             keyboardType: TextInputType.text,
-                            obscureText: true,
+                            obscureText: !enterPasswordVisible!,
                             textAlign: TextAlign.center,
                             style:
                                 AppStyles.textStyleSize16W700Primary(context),
+                            suffixButton: TextFieldButton(
+                              icon: enterPasswordVisible!
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              onPressed: () {
+                                setState(() {
+                                  enterPasswordVisible = !enterPasswordVisible!;
+                                });
+                              },
+                            ),
                           ),
                           // Error Container
                           Container(
