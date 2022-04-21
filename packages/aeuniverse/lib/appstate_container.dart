@@ -545,7 +545,8 @@ class StateContainerState extends State<StateContainer> {
       if (account != null) {
         localWallet!.accountBalance = Balance(
             nft: List<NftBalance>.empty(growable: true),
-            uco: double.tryParse(account.balance!));
+            uco: double.tryParse(
+                account.balance == null ? '0' : account.balance!));
         localWallet!.address =
             account.lastAddress == null ? '' : account.lastAddress!;
       } else {
