@@ -148,6 +148,7 @@ class _TxListWidgetState extends State<TxListWidget> {
             (BuildContext context, AsyncSnapshot<String> _recipientDisplay) {
           return InkWell(
             onTap: () {
+              sl.get<HapticUtil>().feedback(FeedbackType.light);
               Sheets.showAppHeightNineSheet(
                   context: context,
                   widget: TransactionInfosSheet(transaction.address!));
@@ -313,6 +314,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                     padding: const EdgeInsets.only(top: 5),
                     child: GestureDetector(
                       onTap: () {
+                        sl.get<HapticUtil>().feedback(FeedbackType.light);
                         Sheets.showAppHeightNineSheet(
                             context: context, widget: const TxAllListWidget());
                       },

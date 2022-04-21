@@ -1,6 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,6 +15,7 @@ import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
 import 'package:core/model/recent_transaction.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class TxAllListWidget extends StatefulWidget {
   const TxAllListWidget({Key? key}) : super(key: key);
@@ -171,6 +174,7 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
       builder: (BuildContext context, AsyncSnapshot<String> _recipientDisplay) {
         return InkWell(
           onTap: () {
+            sl.get<HapticUtil>().feedback(FeedbackType.light);
             Sheets.showAppHeightNineSheet(
                 context: context,
                 widget: TransactionInfosSheet(transaction.address!));

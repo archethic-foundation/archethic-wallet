@@ -5,12 +5,15 @@ import 'dart:io';
 import 'dart:ui';
 
 // Flutter imports:
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:core_ui/ui/util/routes.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class Sheets {
@@ -205,6 +208,7 @@ class _AppHeightNineModalRoute<T> extends PopupRoute<T> {
       child: GestureDetector(
         onTap: () {
           if (closeOnTap!) {
+            sl.get<HapticUtil>().feedback(FeedbackType.light);
             // Close when tapped anywhere
             Navigator.of(context).pop();
           }

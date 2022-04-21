@@ -4,6 +4,8 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +19,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class ChartSheet extends StatefulWidget {
   const ChartSheet(
@@ -202,6 +205,9 @@ class _ChartSheetState extends State<ChartSheet> {
                         StateContainer.of(context).useOracleUcoPrice
                             ? InkWell(
                                 onTap: () {
+                                  sl
+                                      .get<HapticUtil>()
+                                      .feedback(FeedbackType.light);
                                   AppDialogs.showInfoDialog(
                                     context,
                                     AppLocalization.of(context)!.informations,
@@ -283,6 +289,9 @@ class _ChartSheetState extends State<ChartSheet> {
                         StateContainer.of(context).useOracleUcoPrice
                             ? InkWell(
                                 onTap: () {
+                                  sl
+                                      .get<HapticUtil>()
+                                      .feedback(FeedbackType.light);
                                   AppDialogs.showInfoDialog(
                                     context,
                                     AppLocalization.of(context)!.informations,
@@ -346,6 +355,7 @@ class _ChartSheetState extends State<ChartSheet> {
                             );
                           }).toList(),
                           onChanged: (OptionChart? optionChart) async {
+                            sl.get<HapticUtil>().feedback(FeedbackType.light);
                             await StateContainer.of(context)
                                 .requestUpdateCoinsChart(
                                     option: optionChart!.id);

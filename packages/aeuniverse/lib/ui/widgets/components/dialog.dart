@@ -1,12 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:core/localization.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppDialogs {
@@ -38,6 +41,7 @@ class AppDialogs {
                 ),
               ),
               onPressed: () {
+                sl.get<HapticUtil>().feedback(FeedbackType.light);
                 Navigator.of(context).pop();
                 if (cancelAction != null) {
                   cancelAction();
@@ -53,6 +57,7 @@ class AppDialogs {
                 ),
               ),
               onPressed: () {
+                sl.get<HapticUtil>().feedback(FeedbackType.light);
                 Navigator.of(context).pop();
                 onPressed();
               },
@@ -89,6 +94,7 @@ class AppDialogs {
                 ),
               ),
               onPressed: () {
+                sl.get<HapticUtil>().feedback(FeedbackType.light);
                 Navigator.of(context).pop();
               },
             ),

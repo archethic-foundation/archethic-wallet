@@ -5,6 +5,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:core/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -24,6 +25,7 @@ import 'package:core/util/vault.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yubidart/yubidart.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class YubikeyScreen extends StatefulWidget {
   const YubikeyScreen({Key? key}) : super(key: key);
@@ -257,6 +259,9 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                                     style: AppStyles.textStyleSize16W200Primary(
                                         context)),
                                 onPressed: () {
+                                  sl
+                                      .get<HapticUtil>()
+                                      .feedback(FeedbackType.light);
                                   setState(() {
                                     buttonNFCLabel =
                                         AppLocalization.of(context)!
@@ -313,6 +318,9 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                               suffixButton: TextFieldButton(
                                 icon: FontAwesomeIcons.paste,
                                 onPressed: () {
+                                  sl
+                                      .get<HapticUtil>()
+                                      .feedback(FeedbackType.light);
                                   Clipboard.getData('text/plain')
                                       .then((ClipboardData? data) async {
                                     if (data == null || data.text == null) {

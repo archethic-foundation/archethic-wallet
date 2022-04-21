@@ -1,6 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -15,6 +17,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core_ui/model/chart_infos.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BalanceInfosWidget {
@@ -23,6 +26,7 @@ class BalanceInfosWidget {
   Widget buildInfos(BuildContext context) {
     return InkWell(
       onTap: () {
+        sl.get<HapticUtil>().feedback(FeedbackType.light);
         optionChartList = <OptionChart>[
           OptionChart('24h', ChartInfos.getChartOptionLabel(context, '24h')),
           OptionChart('7d', ChartInfos.getChartOptionLabel(context, '7d')),
@@ -205,6 +209,9 @@ class BalanceInfosWidget {
                       StateContainer.of(context).useOracleUcoPrice
                           ? InkWell(
                               onTap: () {
+                                sl
+                                    .get<HapticUtil>()
+                                    .feedback(FeedbackType.light);
                                 AppDialogs.showInfoDialog(
                                   context,
                                   AppLocalization.of(context)!.informations,
@@ -283,6 +290,9 @@ class BalanceInfosWidget {
                       StateContainer.of(context).useOracleUcoPrice
                           ? InkWell(
                               onTap: () {
+                                sl
+                                    .get<HapticUtil>()
+                                    .feedback(FeedbackType.light);
                                 AppDialogs.showInfoDialog(
                                   context,
                                   AppLocalization.of(context)!.informations,

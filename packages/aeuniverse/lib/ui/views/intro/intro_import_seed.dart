@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:core/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -25,6 +26,7 @@ import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/formatters.dart';
 import 'package:core_ui/util/app_util.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class IntroImportSeedPage extends StatefulWidget {
   const IntroImportSeedPage({Key? key}) : super(key: key);
@@ -141,6 +143,9 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                 prefixButton: TextFieldButton(
                                   icon: FontAwesomeIcons.qrcode,
                                   onPressed: () async {
+                                    sl
+                                        .get<HapticUtil>()
+                                        .feedback(FeedbackType.light);
                                     if (AppMnemomics.validateMnemonic(
                                         _mnemonicController.text.split(' '))) {
                                       return;

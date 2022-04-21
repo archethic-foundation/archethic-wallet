@@ -6,6 +6,7 @@ import 'dart:io';
 import 'dart:ui';
 
 // Flutter imports:
+import 'package:core/util/haptic_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,6 +38,7 @@ import 'package:core_ui/ui/util/formatters.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
@@ -631,6 +633,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
           width: double.infinity - 5,
           child: TextButton(
             onPressed: () async {
+              sl.get<HapticUtil>().feedback(FeedbackType.light);
               _sendAddressController!.text = contact.name!;
               feeEstimation = await getFee();
               _sendAddressFocusNode!.unfocus();
@@ -813,6 +816,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
       suffixButton: TextFieldButton(
         icon: FontAwesomeIcons.anglesUp,
         onPressed: () async {
+          sl.get<HapticUtil>().feedback(FeedbackType.light);
           double _fee = await getFee(maxSend: true);
 
           setState(() {
@@ -873,6 +877,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
         prefixButton: TextFieldButton(
           icon: FontAwesomeIcons.at,
           onPressed: () {
+            sl.get<HapticUtil>().feedback(FeedbackType.light);
             if (_showContactButton && _contacts!.isEmpty) {
               // Show menu
               FocusScope.of(context).requestFocus(_sendAddressFocusNode);
@@ -900,7 +905,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
             if (!_qrCodeButtonVisible) {
               return;
             }
-
+            sl.get<HapticUtil>().feedback(FeedbackType.light);
             UIUtil.cancelLockEvent();
             final String? scanResult =
                 await UserDataUtil.getQRData(DataType.address, context);

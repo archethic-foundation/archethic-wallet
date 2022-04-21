@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:core/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -23,6 +24,7 @@ import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/util/case_converter.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Contact Details Sheet
 class ContactDetailsSheet {
@@ -53,6 +55,7 @@ class ContactDetailsSheet {
                               top: 10.0, start: 10.0),
                           child: TextButton(
                             onPressed: () {
+                              sl.get<HapticUtil>().feedback(FeedbackType.light);
                               AppDialogs.showConfirmDialog(
                                   context,
                                   AppLocalization.of(context)!.removeContact,
@@ -125,6 +128,7 @@ class ContactDetailsSheet {
                               top: 10.0, start: 10.0),
                           child: TextButton(
                             onPressed: () {
+                              sl.get<HapticUtil>().feedback(FeedbackType.light);
                               Clipboard.setData(
                                   ClipboardData(text: contact.address));
                               UIUtil.showSnackbar(
@@ -184,6 +188,9 @@ class ContactDetailsSheet {
                             // Contact Address
                             GestureDetector(
                               onTap: () {
+                                sl
+                                    .get<HapticUtil>()
+                                    .feedback(FeedbackType.light);
                                 Clipboard.setData(
                                     ClipboardData(text: contact.address));
                                 UIUtil.showSnackbar(

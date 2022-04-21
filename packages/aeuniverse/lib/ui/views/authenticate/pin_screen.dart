@@ -212,6 +212,7 @@ class _PinScreenState extends State<PinScreen>
           splashColor: StateContainer.of(context).curTheme.primary30,
           onTap: () {},
           onTapDown: (TapDownDetails details) {
+            sl.get<HapticUtil>().feedback(FeedbackType.light);
             if (_controller!.status == AnimationStatus.forward ||
                 _controller!.status == AnimationStatus.reverse) {
               return;
@@ -483,6 +484,9 @@ class _PinScreenState extends State<PinScreen>
                                       .primary30,
                                   onTap: () {},
                                   onTapDown: (TapDownDetails details) {
+                                    sl
+                                        .get<HapticUtil>()
+                                        .feedback(FeedbackType.light);
                                     _backSpace();
                                   },
                                   child: Container(

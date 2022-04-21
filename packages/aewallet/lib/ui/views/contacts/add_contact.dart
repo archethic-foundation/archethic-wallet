@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:core/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -24,6 +25,7 @@ import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/formatters.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class AddContactSheet extends StatefulWidget {
   const AddContactSheet({Key? key, this.address}) : super(key: key);
@@ -232,6 +234,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                   prefixButton: TextFieldButton(
                       icon: FontAwesomeIcons.qrcode,
                       onPressed: () async {
+                        sl.get<HapticUtil>().feedback(FeedbackType.light);
                         UIUtil.cancelLockEvent();
                         final String? scanResult = await UserDataUtil.getQRData(
                             DataType.address, context);
@@ -255,6 +258,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                       if (!_showPasteButton!) {
                         return;
                       }
+                      sl.get<HapticUtil>().feedback(FeedbackType.light);
                       final String? data =
                           await UserDataUtil.getClipboardText(DataType.address);
                       if (data != null) {
@@ -302,6 +306,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                             if (widget.address != null) {
                               return;
                             }
+                            sl.get<HapticUtil>().feedback(FeedbackType.light);
                             setState(() {
                               _addressValidAndUnfocused = false;
                             });

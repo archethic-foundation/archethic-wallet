@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:core/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -20,6 +21,7 @@ import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/util/app_util.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class IntroBackupSeedPage extends StatefulWidget {
   const IntroBackupSeedPage({Key? key}) : super(key: key);
@@ -95,6 +97,9 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                               width: 50,
                               child: TextButton(
                                   onPressed: () async {
+                                    sl
+                                        .get<HapticUtil>()
+                                        .feedback(FeedbackType.light);
                                     Vault.getInstance().then((Vault _vault) {
                                       final String _seed =
                                           AppSeeds.generateSeed();

@@ -1,13 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
 import 'package:core_ui/ui/util/responsive.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/util/ui_util.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/model/setting_item.dart';
@@ -28,6 +30,7 @@ class AppSettings {
       ignoring: disabled,
       child: TextButton(
         onPressed: () {
+          sl.get<HapticUtil>().feedback(FeedbackType.light);
           onPressed();
         },
         child: Container(
@@ -80,6 +83,7 @@ class AppSettings {
       {bool disabled = false}) {
     return TextButton(
       onPressed: () {
+        sl.get<HapticUtil>().feedback(FeedbackType.light);
         onPressed();
       },
       child: Container(
@@ -142,6 +146,7 @@ class AppSettings {
     return TextButton(
       onPressed: () {
         if (onPressed != null) {
+          sl.get<HapticUtil>().feedback(FeedbackType.light);
           onPressed();
         } else {
           return;
@@ -196,6 +201,7 @@ class AppSettings {
     return TextButton(
       onPressed: () {
         if (onPressed != null) {
+          sl.get<HapticUtil>().feedback(FeedbackType.light);
           onPressed();
         } else {
           return;
@@ -234,7 +240,9 @@ class AppSettings {
       String heading, String icon, Color iconColor, bool _isSwitched,
       {Function? onChanged}) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        sl.get<HapticUtil>().feedback(FeedbackType.light);
+      },
       child: Container(
         height: 50.0,
         margin: const EdgeInsetsDirectional.only(start: 10.0),
@@ -255,6 +263,7 @@ class AppSettings {
                 value: _isSwitched,
                 onChanged: (bool value) {
                   if (onChanged != null) {
+                    sl.get<HapticUtil>().feedback(FeedbackType.light);
                     _isSwitched = value;
                     onChanged(_isSwitched);
                   } else {
