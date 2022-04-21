@@ -206,20 +206,16 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
             EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
         child: Column(
           children: <Widget>[
-            // A row for the header of the sheet, balance text and close button
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                //Empty SizedBox
                 const SizedBox(
                   width: 60,
                   height: 0,
                 ),
-
                 Column(
                   children: <Widget>[
-                    // Sheet handle
                     Container(
                       margin: const EdgeInsets.only(top: 10),
                       height: 5,
@@ -329,7 +325,6 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                   ),
               ],
             ),
-
             Expanded(
               child: Container(
                 margin: const EdgeInsets.only(top: 0, bottom: 10),
@@ -530,7 +525,6 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                 ),
               ),
             ),
-
             Container(
               child: Column(
                 children: <Widget>[

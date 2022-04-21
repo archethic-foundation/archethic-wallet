@@ -3,8 +3,12 @@
 
 // Dart imports:
 import 'dart:async';
+import 'dart:io';
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
+import 'package:core/model/available_networks.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,7 +18,7 @@ import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
-import 'package:aeuniverse/ui/widgets/components/tap_outside_unfocus.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:aewallet/ui/views/nft/add_nft_confirm.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
@@ -87,8 +91,8 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return TapOutsideUnfocus(
-        child: SafeArea(
+    final double bottom = MediaQuery.of(context).viewInsets.bottom;
+    return SafeArea(
       minimum:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
@@ -99,7 +103,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
             children: <Widget>[
               const SizedBox(
                 width: 60,
-                height: 40,
+                height: 0,
               ),
               Column(
                 children: <Widget>[
@@ -112,133 +116,274 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                       borderRadius: BorderRadius.circular(100.0),
                     ),
                   ),
-                ],
-              ),
-              const SizedBox(
-                width: 60,
-                height: 40,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              AutoSizeText(
-                AppLocalization.of(context)!.addNFTHeader,
-                style: AppStyles.textStyleSize24W700Primary(context),
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                stepGranularity: 0.1,
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          Container(
-            child: RichText(
-              textAlign: TextAlign.start,
-              text: TextSpan(
-                text: '',
-                children: <InlineSpan>[
-                  TextSpan(
-                    text: '(',
-                    style: AppStyles.textStyleSize14W100Primary(context),
+                  Container(
+                    margin: const EdgeInsets.only(top: 15.0),
+                    constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width - 140),
+                    child: Column(
+                      children: <Widget>[
+                        Column(
+                          children: [
+                            StateContainer.of(context).curNetwork.getIndex() ==
+                                    AvailableNetworks.AETestNet.index
+                                ? SvgPicture.asset(
+                                    StateContainer.of(context)
+                                            .curTheme
+                                            .assetsFolder! +
+                                        StateContainer.of(context)
+                                            .curTheme
+                                            .logoAlone! +
+                                        '.svg',
+                                    color: Colors.green,
+                                    height: 15,
+                                  )
+                                : StateContainer.of(context)
+                                            .curNetwork
+                                            .getIndex() ==
+                                        AvailableNetworks.AEDevNet.index
+                                    ? SvgPicture.asset(
+                                        StateContainer.of(context)
+                                                .curTheme
+                                                .assetsFolder! +
+                                            StateContainer.of(context)
+                                                .curTheme
+                                                .logoAlone! +
+                                            '.svg',
+                                        color: Colors.orange,
+                                        height: 15,
+                                      )
+                                    : SvgPicture.asset(
+                                        StateContainer.of(context)
+                                                .curTheme
+                                                .assetsFolder! +
+                                            StateContainer.of(context)
+                                                .curTheme
+                                                .logoAlone! +
+                                            '.svg',
+                                        height: 15,
+                                      ),
+                            Text(
+                                StateContainer.of(context)
+                                    .curNetwork
+                                    .getLongDisplayName(),
+                                style: AppStyles.textStyleSize10W100Primary(
+                                    context)),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ), // Header
+                        AutoSizeText(
+                          AppLocalization.of(context)!.addNFTHeader,
+                          style: AppStyles.textStyleSize24W700Primary(context),
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          stepGranularity: 0.1,
+                        ),
+                      ],
+                    ),
                   ),
-                  TextSpan(
-                      text: StateContainer.of(context)
-                          .wallet!
-                          .getAccountBalanceDisplay(),
-                      style: AppStyles.textStyleSize14W700Primary(context)),
-                  TextSpan(
-                      text: ' ' +
-                          StateContainer.of(context)
-                              .curNetwork
-                              .getNetworkCryptoCurrencyLabel() +
-                          ')',
-                      style: AppStyles.textStyleSize14W100Primary(context)),
                 ],
               ),
-            ),
+              if (kIsWeb || Platform.isMacOS || Platform.isWindows)
+                Stack(
+                  children: <Widget>[
+                    const SizedBox(
+                      width: 60,
+                      height: 40,
+                    ),
+                    Container(
+                        padding: const EdgeInsets.only(top: 10, right: 0),
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Column(
+                              children: <Widget>[
+                                buildIconDataWidget(
+                                    context, Icons.close_outlined, 30, 30),
+                              ],
+                            ))),
+                  ],
+                )
+              else
+                const SizedBox(
+                  width: 60,
+                  height: 40,
+                ),
+            ],
           ),
-          feeEstimation > 0
-              ? Text(
-                  AppLocalization.of(context)!.estimatedFees +
-                      ': ' +
-                      feeEstimation.toString() +
-                      ' ' +
-                      StateContainer.of(context)
-                          .curNetwork
-                          .getNetworkCryptoCurrencyLabel(),
-                  style: AppStyles.textStyleSize14W100Primary(context))
-              : Text(AppLocalization.of(context)!.estimatedFeesAddNFTNote,
-                  style: AppStyles.textStyleSize14W100Primary(context)),
-          const SizedBox(height: 30),
           Expanded(
-            child: Column(
-              children: <Widget>[
-                Text(
-                  AppLocalization.of(context)!.nftNameHint,
-                  style: AppStyles.textStyleSize16W200Primary(context),
-                ),
-                AppTextField(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  focusNode: _nameFocusNode,
-                  controller: _nameController,
-                  textInputAction: TextInputAction.next,
-                  hintText: _showNameHint!
-                      ? AppLocalization.of(context)!.nftNameHint
-                      : '',
-                  keyboardType: TextInputType.text,
-                  style: AppStyles.textStyleSize16W600Primary(context),
-                  inputFormatters: <LengthLimitingTextInputFormatter>[
-                    LengthLimitingTextInputFormatter(100),
-                  ],
-                  onChanged: (_) async {
-                    double _fee = await getFee();
-                    // Always reset the error message to be less annoying
-                    setState(() {
-                      feeEstimation = _fee;
-                    });
-                  },
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 5, bottom: 5),
-                  child: Text(_nameValidationText!,
-                      style: AppStyles.textStyleSize14W600Primary(context)),
-                ),
-                const SizedBox(height: 30),
-                Text(
-                  AppLocalization.of(context)!.nftInitialSupplyHint,
-                  style: AppStyles.textStyleSize16W200Primary(context),
-                ),
-                AppTextField(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  focusNode: _initialSupplyFocusNode,
-                  controller: _initialSupplyController,
-                  textInputAction: TextInputAction.done,
-                  hintText: _showInitialSupplyHint!
-                      ? AppLocalization.of(context)!.nftInitialSupplyHint
-                      : '',
-                  keyboardType: TextInputType.number,
-                  style: AppStyles.textStyleSize16W600Primary(context),
-                  inputFormatters: <LengthLimitingTextInputFormatter>[
-                    LengthLimitingTextInputFormatter(10),
-                  ],
-                  onChanged: (_) async {
-                    double _fee = await getFee();
-                    // Always reset the error message to be less annoying
-                    setState(() {
-                      feeEstimation = _fee;
-                    });
-                  },
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 5, bottom: 5),
-                  child: Text(
-                    _initialSupplyValidationText!,
-                    style: AppStyles.textStyleSize14W600Primary(context),
+            child: Container(
+              margin: const EdgeInsets.only(top: 0, bottom: 10),
+              child: Stack(
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      _nameFocusNode!.unfocus();
+                      _initialSupplyFocusNode!.unfocus();
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      child: const SizedBox.expand(),
+                      constraints: const BoxConstraints.expand(),
+                    ),
                   ),
-                ),
-              ],
+                  SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 0, bottom: bottom + 80),
+                      child: Column(
+                        children: <Widget>[
+                          Stack(
+                            children: <Widget>[
+                              Column(
+                                children: <Widget>[
+                                  Container(
+                                    child: RichText(
+                                      textAlign: TextAlign.start,
+                                      text: TextSpan(
+                                        text: '',
+                                        children: <InlineSpan>[
+                                          TextSpan(
+                                            text: '(',
+                                            style: AppStyles
+                                                .textStyleSize14W100Primary(
+                                                    context),
+                                          ),
+                                          TextSpan(
+                                              text: StateContainer.of(context)
+                                                  .wallet!
+                                                  .getAccountBalanceDisplay(),
+                                              style: AppStyles
+                                                  .textStyleSize14W700Primary(
+                                                      context)),
+                                          TextSpan(
+                                              text: ' ' +
+                                                  StateContainer.of(context)
+                                                      .curNetwork
+                                                      .getNetworkCryptoCurrencyLabel() +
+                                                  ')',
+                                              style: AppStyles
+                                                  .textStyleSize14W100Primary(
+                                                      context)),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  AppTextField(
+                                    topMargin: 30,
+                                    focusNode: _nameFocusNode,
+                                    controller: _nameController,
+                                    cursorColor: StateContainer.of(context)
+                                        .curTheme
+                                        .primary,
+                                    textInputAction: TextInputAction.next,
+                                    hintText: _showNameHint!
+                                        ? AppLocalization.of(context)!
+                                            .nftNameHint
+                                        : '',
+                                    keyboardType: TextInputType.text,
+                                    style: AppStyles.textStyleSize16W600Primary(
+                                        context),
+                                    inputFormatters: <
+                                        LengthLimitingTextInputFormatter>[
+                                      LengthLimitingTextInputFormatter(100),
+                                    ],
+                                    onChanged: (_) async {
+                                      double _fee = await getFee();
+                                      // Always reset the error message to be less annoying
+                                      setState(() {
+                                        feeEstimation = _fee;
+                                      });
+                                    },
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                        top: 5, bottom: 5),
+                                    child: Text(_nameValidationText!,
+                                        style: AppStyles
+                                            .textStyleSize14W600Primary(
+                                                context)),
+                                  ),
+                                  AppTextField(
+                                    focusNode: _initialSupplyFocusNode,
+                                    controller: _initialSupplyController,
+                                    cursorColor: StateContainer.of(context)
+                                        .curTheme
+                                        .primary,
+                                    textInputAction: TextInputAction.next,
+                                    hintText: _showInitialSupplyHint!
+                                        ? AppLocalization.of(context)!
+                                            .nftInitialSupplyHint
+                                        : '',
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(
+                                            signed: false, decimal: false),
+                                    style: AppStyles.textStyleSize16W600Primary(
+                                        context),
+                                    inputFormatters: <
+                                        LengthLimitingTextInputFormatter>[
+                                      LengthLimitingTextInputFormatter(10),
+                                    ],
+                                    onChanged: (_) async {
+                                      double _fee = await getFee();
+                                      // Always reset the error message to be less annoying
+                                      setState(() {
+                                        feeEstimation = _fee;
+                                      });
+                                    },
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                        top: 5, bottom: 5),
+                                    child: Text(
+                                      _initialSupplyValidationText!,
+                                      style:
+                                          AppStyles.textStyleSize14W600Primary(
+                                              context),
+                                    ),
+                                  ),
+                                  feeEstimation > 0
+                                      ? Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 30, right: 30),
+                                          child: Text(
+                                            AppLocalization.of(context)!
+                                                    .estimatedFees +
+                                                ': ' +
+                                                feeEstimation.toString() +
+                                                ' ' +
+                                                StateContainer.of(context)
+                                                    .curNetwork
+                                                    .getNetworkCryptoCurrencyLabel(),
+                                            style: AppStyles
+                                                .textStyleSize14W100Primary(
+                                                    context),
+                                            textAlign: TextAlign.justify,
+                                          ),
+                                        )
+                                      : Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 30, right: 30),
+                                          child: Text(
+                                            AppLocalization.of(context)!
+                                                .estimatedFeesAddNFTNote,
+                                            style: AppStyles
+                                                .textStyleSize14W100Primary(
+                                                    context),
+                                            textAlign: TextAlign.justify,
+                                          ),
+                                        ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Container(
@@ -295,7 +440,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
           ),
         ],
       ),
-    ));
+    );
   }
 
   Future<bool> _validateRequest() async {
