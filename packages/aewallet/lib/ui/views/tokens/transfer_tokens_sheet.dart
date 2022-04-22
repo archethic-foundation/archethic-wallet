@@ -803,8 +803,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
       textInputAction: TextInputAction.next,
       maxLines: null,
       autocorrect: false,
-      hintText:
-          _amountHint == null ? '' : AppLocalization.of(context)!.enterAmount,
+      labelText: AppLocalization.of(context)!.enterAmount,
       suffixButton: TextFieldButton(
         icon: FontAwesomeIcons.anglesUp,
         onPressed: () async {
@@ -863,9 +862,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
         textInputAction: TextInputAction.done,
         maxLines: null,
         autocorrect: false,
-        hintText: _addressHint == null
-            ? ''
-            : AppLocalization.of(context)!.enterAddress,
+        labelText: AppLocalization.of(context)!.enterAddress,
         prefixButton: TextFieldButton(
           icon: FontAwesomeIcons.at,
           onPressed: () {

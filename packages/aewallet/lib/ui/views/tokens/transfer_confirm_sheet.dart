@@ -20,9 +20,11 @@ import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/model/nft_transfer_wallet.dart';
 import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:aewallet/ui/views/nft/nft_transfer_list.dart';
-import 'package:aewallet/ui/views/tokens/absinthe_socket.dart';
 import 'package:aewallet/ui/views/tokens/tokens_transfer_list.dart';
 import 'package:core/bus/authenticated_event.dart';
+import 'package:gql_websocket_link/gql_websocket_link.dart';
+import "package:web_socket_channel/web_socket_channel.dart";
+import "package:gql_link/gql_link.dart";
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/service/app_service.dart';
@@ -116,12 +118,23 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   }
 
   Map<String, String> transactionConfirmed = {};
+  Link? link;
 
   @override
   void initState() {
     super.initState();
-    //Absinthe.connect(StateContainer.of(context).curNetwork.getLink());
-    //_waitConfirmations(widget.lastAddress!);
+
+    final String operation =
+        """subscription { transactionConfirmed(address: "$widget.lastAddress!") { nbConfirmations } }""";
+
+    link = WebSocketLink(null,
+        autoReconnect: true,
+        reconnectInterval: const Duration(seconds: 1),
+        initialPayload: {"subscription": operation},
+        channelGenerator: () => WebSocketChannel.connect(
+            Uri.parse('ws://localhost:4000/socket/websocket'),
+            protocols: ['graphql-ws']));
+
     _registerBus();
 
     animationOpen = false;

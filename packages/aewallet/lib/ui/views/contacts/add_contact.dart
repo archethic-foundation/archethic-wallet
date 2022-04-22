@@ -45,8 +45,6 @@ class _AddContactSheetState extends State<AddContactSheet> {
   // State variables
   bool? _addressValid;
   bool? _showPasteButton;
-  bool? _showNameHint;
-  bool? _showAddressHint;
   bool? _addressValidAndUnfocused;
   String? _nameValidationText;
   String? _addressValidationText;
@@ -62,36 +60,19 @@ class _AddContactSheetState extends State<AddContactSheet> {
     // State initializationrue;
     _addressValid = false;
     _showPasteButton = true;
-    _showNameHint = true;
-    _showAddressHint = true;
     _addressValidAndUnfocused = false;
     _nameValidationText = '';
     _addressValidationText = '';
-    // Add focus listeners
-    // On name focus change
-    _nameFocusNode!.addListener(() {
-      if (_nameFocusNode!.hasFocus) {
-        setState(() {
-          _showNameHint = false;
-        });
-      } else {
-        setState(() {
-          _showNameHint = true;
-        });
-      }
-    });
     // On address focus change
     _addressFocusNode!.addListener(() {
       if (_addressFocusNode!.hasFocus) {
         setState(() {
-          _showAddressHint = false;
           _addressValidAndUnfocused = false;
         });
         _addressController!.selection = TextSelection.fromPosition(
             TextPosition(offset: _addressController!.text.length));
       } else {
         setState(() {
-          _showAddressHint = true;
           if (Address(_addressController!.text).isValid()) {
             _addressValidAndUnfocused = true;
           }
@@ -184,9 +165,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                   textInputAction: widget.address != null
                       ? TextInputAction.done
                       : TextInputAction.next,
-                  hintText: _showNameHint!
-                      ? AppLocalization.of(context)!.contactNameHint
-                      : '',
+                  labelText: AppLocalization.of(context)!.contactNameHint,
                   keyboardType: TextInputType.text,
                   style: AppStyles.textStyleSize16W600Primary(context),
                   inputFormatters: <TextInputFormatter>[
@@ -228,9 +207,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                   textInputAction: TextInputAction.done,
                   maxLines: null,
                   autocorrect: false,
-                  hintText: _showAddressHint!
-                      ? AppLocalization.of(context)!.addressHint
-                      : '',
+                  labelText: AppLocalization.of(context)!.addressHint,
                   prefixButton: TextFieldButton(
                       icon: FontAwesomeIcons.qrcode,
                       onPressed: () async {

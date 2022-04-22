@@ -226,7 +226,7 @@ class _SetYubikeyState extends State<SetYubikey> {
           textInputAction: TextInputAction.next,
           maxLines: null,
           autocorrect: false,
-          hintText: AppLocalization.of(context)!.enterYubikeyClientID,
+          labelText: AppLocalization.of(context)!.enterYubikeyClientID,
           keyboardType: TextInputType.number,
           textAlign: TextAlign.left,
           onSubmitted: (String text) {
@@ -257,7 +257,7 @@ class _SetYubikeyState extends State<SetYubikey> {
           textInputAction: TextInputAction.next,
           maxLines: null,
           autocorrect: false,
-          hintText: AppLocalization.of(context)!.enterYubikeyClientAPIKey,
+          labelText: AppLocalization.of(context)!.enterYubikeyClientAPIKey,
           keyboardType: TextInputType.text,
           textAlign: TextAlign.left,
           onSubmitted: (String text) {

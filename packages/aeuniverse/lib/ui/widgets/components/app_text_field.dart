@@ -43,6 +43,7 @@ class AppTextField extends StatefulWidget {
       this.inputFormatters,
       this.textInputAction,
       this.hintText,
+      this.labelText,
       this.prefixButton,
       this.suffixButton,
       this.fadePrefixOnCondition,
@@ -78,6 +79,7 @@ class AppTextField extends StatefulWidget {
   final int? maxLines;
   final bool? autocorrect;
   final String? hintText;
+  final String? labelText;
   final TextFieldButton? prefixButton;
   final TextFieldButton? suffixButton;
   final bool? fadePrefixOnCondition;
@@ -143,8 +145,8 @@ class _AppTextFieldState extends State<AppTextField> {
 
                 decoration: InputDecoration(
                   // Hint
-                  hintText: widget.hintText ?? '',
-                  hintStyle: AppStyles.textStyleSize16W400Primary60(context),
+                  labelText: widget.labelText ?? '',
+                  labelStyle: AppStyles.textStyleSize16W400Primary60(context),
                   // First button
                   prefixIcon: widget.prefixButton == null
                       ? const SizedBox()

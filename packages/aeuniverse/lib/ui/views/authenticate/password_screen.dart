@@ -148,7 +148,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                             onSubmitted: (value) async {
                               FocusScope.of(context).unfocus();
                             },
-                            hintText:
+                            labelText:
                                 AppLocalization.of(context)!.enterPasswordHint,
                             keyboardType: TextInputType.text,
                             obscureText: !enterPasswordVisible!,

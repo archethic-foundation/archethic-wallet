@@ -295,7 +295,7 @@ class _SetPasswordState extends State<SetPassword> {
                                       }
                                     }
                                   },
-                                  hintText: AppLocalization.of(context)!
+                                  labelText: AppLocalization.of(context)!
                                       .createPasswordHint,
                                   keyboardType: TextInputType.text,
                                   obscureText: !setPasswordVisible!,
@@ -345,7 +345,7 @@ class _SetPasswordState extends State<SetPassword> {
                                       }
                                     }
                                   },
-                                  hintText: AppLocalization.of(context)!
+                                  labelText: AppLocalization.of(context)!
                                       .confirmPasswordHint,
                                   keyboardType: TextInputType.text,
                                   obscureText: !confirmPasswordVisible!,

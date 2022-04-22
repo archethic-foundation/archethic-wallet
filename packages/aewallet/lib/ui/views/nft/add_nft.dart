@@ -43,8 +43,6 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
   TextEditingController? _nameController;
   TextEditingController? _initialSupplyController;
 
-  bool? _showNameHint;
-  bool? _showInitialSupplyHint;
   String? _nameValidationText;
   String? _initialSupplyValidationText;
 
@@ -61,33 +59,8 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
     _initialSupplyFocusNode = FocusNode();
     _nameController = TextEditingController();
     _initialSupplyController = TextEditingController();
-    _showNameHint = true;
-    _showInitialSupplyHint = true;
     _nameValidationText = '';
     _initialSupplyValidationText = '';
-    // Add focus listeners
-    _nameFocusNode!.addListener(() {
-      if (_nameFocusNode!.hasFocus) {
-        setState(() {
-          _showNameHint = false;
-        });
-      } else {
-        setState(() {
-          _showNameHint = true;
-        });
-      }
-    });
-    _initialSupplyFocusNode!.addListener(() {
-      if (_initialSupplyFocusNode!.hasFocus) {
-        setState(() {
-          _showInitialSupplyHint = false;
-        });
-      } else {
-        setState(() {
-          _showInitialSupplyHint = true;
-        });
-      }
-    });
   }
 
   @override
@@ -282,10 +255,8 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                           .curTheme
                                           .primary,
                                       textInputAction: TextInputAction.next,
-                                      hintText: _showNameHint!
-                                          ? AppLocalization.of(context)!
-                                              .nftNameHint
-                                          : '',
+                                      labelText: AppLocalization.of(context)!
+                                          .nftNameHint,
                                       keyboardType: TextInputType.text,
                                       style:
                                           AppStyles.textStyleSize16W600Primary(
@@ -317,10 +288,8 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                           .curTheme
                                           .primary,
                                       textInputAction: TextInputAction.next,
-                                      hintText: _showInitialSupplyHint!
-                                          ? AppLocalization.of(context)!
-                                              .nftInitialSupplyHint
-                                          : '',
+                                      labelText: AppLocalization.of(context)!
+                                          .nftInitialSupplyHint,
                                       keyboardType:
                                           const TextInputType.numberWithOptions(
                                               signed: false, decimal: false),
