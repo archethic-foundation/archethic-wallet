@@ -33,7 +33,7 @@ class AppLocalization {
 
   String get welcomeText {
     return Intl.message(
-        'Welcome to Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.',
+        'Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.',
         name: 'welcomeText');
   }
 
@@ -425,7 +425,7 @@ class AppLocalization {
 
   String get currencyOracleInfo {
     return Intl.message(
-        'This icon means that the conversion will use an oracle provided by ARCHEthic.',
+        'This icon means that the conversion will use an oracle provided by Archethic.',
         name: 'currencyOracleInfo');
   }
 
@@ -467,7 +467,7 @@ class AppLocalization {
 
   String get removeWalletDetail {
     return Intl.message(
-        'You are about to remove all ARCHEthic-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again',
+        'You are about to remove all Archethic-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again',
         name: 'removeWalletDetail');
   }
 
@@ -578,11 +578,11 @@ class AppLocalization {
   }
 
   String get aeWebsiteLinkHeader {
-    return Intl.message('ARCHEthic Website', name: 'aeWebsiteLinkHeader');
+    return Intl.message('Archethic Website', name: 'aeWebsiteLinkHeader');
   }
 
   String get aeWebsiteLinkDesc {
-    return Intl.message('Visit the ARCHEthic website',
+    return Intl.message('Visit the Archethic website',
         name: 'aeWebsiteLinkDesc');
   }
 

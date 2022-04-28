@@ -6,7 +6,7 @@ import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 
-public class MainActivityArchEthicWallet extends FlutterFragmentActivity {
+public class MainActivityArchethicWallet extends FlutterFragmentActivity {
     private static final String CHANNEL = "fappchannel";
 
     @Override

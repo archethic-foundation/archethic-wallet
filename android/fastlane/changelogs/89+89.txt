@@ -13,7 +13,7 @@ Version beta 0.0.89
 🐛 Bugfixes
 - The transactions list doesn't refresh correctly (Web app + Mobile)
 - Add refresh button to refresh transactions list (Web app)
-- Add ARCHEthic icons (Web app)
+- Add Archethic icons (Web app)
 - Fix error when sending UCO with decimals (Web app + Mobile)
 - Fix sending UCO process (Web app)
 

@@ -1,6 +1,6 @@
 {
   "@@last_modified": "2021-12-07T12:33:16.270871",
-  "welcomeText": "Welcome to the Internet of Trust.\n\nARCHEthic gives back to humanity control over technology, and to each individual, control over their identity.",
+  "welcomeText": "Welcome to the Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
     "placeholders_order": [],
@@ -402,7 +402,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "removeWalletDetail": "You are about to remove all ARCHEthic-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again",
+  "removeWalletDetail": "You are about to remove all Archethic-related data from this device. If your secret phrase is not backed up, you will never be able to access your wallet again",
   "@removeWalletDetail": {
     "type": "text",
     "placeholders_order": [],
@@ -540,13 +540,13 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "aeWebsiteLinkHeader": "ARCHEthic Website",
+  "aeWebsiteLinkHeader": "Archethic Website",
   "@aeWebsiteLinkHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "aeWebsiteLinkDesc": "Visit the ARCHEthic website",
+  "aeWebsiteLinkDesc": "Visit the Archethic website",
   "@aeWebsiteLinkDesc": {
     "type": "text",
     "placeholders_order": [],
@@ -1308,7 +1308,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "currencyOracleInfo": "This icon means that the conversion will use an oracle provided by ARCHEthic.",
+  "currencyOracleInfo": "This icon means that the conversion will use an oracle provided by Archethic.",
   "@currencyOracleInfo": {
     "type": "text",
     "placeholders_order": [],

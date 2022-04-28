@@ -45,9 +45,9 @@ class ThemeSetting extends SettingSelectionItem {
       case ThemeOptions.light:
         return 'A dynamic theme inspired by Uniris environment';
       case ThemeOptions.dark:
-        return 'A beautiful theme from ARCHEthic eco-system';
+        return 'A beautiful theme from Archethic eco-system';
       default:
-        return 'A beautiful theme from ARCHEthic eco-system';
+        return 'A beautiful theme from Archethic eco-system';
     }
   }
 

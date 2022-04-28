@@ -26,7 +26,7 @@
 
 ## 0.2.3
 🚀 Features
-* Account management menu : Add ARCHEthic website access 
+* Account management menu : Add Archethic website access 
 * Networks : add networks management/switch
 * Add integration tests mechanism
 

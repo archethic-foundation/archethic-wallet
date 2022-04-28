@@ -260,7 +260,7 @@ class StateContainerState extends State<StateContainer> {
     SimplePriceResponse simplePriceResponse = SimplePriceResponse();
     useOracleUcoPrice = false;
 
-    // if eur or usd, use ARCHEThic Oracle
+    // if eur or usd, use Archethic Oracle
     if (currency.getIso4217Code() == 'EUR' ||
         currency.getIso4217Code() == 'USD') {
       try {
@@ -320,7 +320,7 @@ class StateContainerState extends State<StateContainer> {
   Future<void> requestUpdatePrice() async {
     SimplePriceResponse simplePriceResponse = SimplePriceResponse();
     useOracleUcoPrice = false;
-    // if eur or usd, use ARCHEThic Oracle
+    // if eur or usd, use Archethic Oracle
     if (curCurrency.getIso4217Code() == 'EUR' ||
         curCurrency.getIso4217Code() == 'USD') {
       try {

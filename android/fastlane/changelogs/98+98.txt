@@ -1,4 +1,4 @@
-ARCHEThic Wallet - Version beta 0.0.98
+Archethic Wallet - Version beta 0.0.98
 
 🐛 Bugfixes
 - Fix bugs

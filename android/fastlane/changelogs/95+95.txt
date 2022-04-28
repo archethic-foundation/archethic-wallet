@@ -1,4 +1,4 @@
-ARCHEThic Wallet - Version beta 0.0.95
+Archethic Wallet - Version beta 0.0.95
 
 🚀 Features
 - Add chart sheet (first version... lot of works yet) (Web app + Mobile)

@@ -1,4 +1,4 @@
-ARCHEThic Wallet - Version beta 0.1.8
+Archethic Wallet - Version beta 0.1.8
 
 Link to android : 
     https://github.com/archethic-foundation/archethic_wallet/releases/download/v0.1.8/app-arm64-v8a-release.apk
@@ -15,17 +15,17 @@ Link to iOS version :
     Soon
 
 Link to windows : 
-    https://github.com/archethic-foundation/archethic_wallet/releases/download/v0.1.8/ARCHEthicWallet_0.1.8.msix
+    https://github.com/archethic-foundation/archethic_wallet/releases/download/v0.1.8/ArchethicWallet_0.1.8.msix
 
 
 This app is under development and works on TESTNET only. Community feedback helps improve the app
 
 
-## How to install ARCHEthic Wallet
+## How to install Archethic Wallet
 
 ### Android
 
-To install ARCHEthic Wallet in Android Devices:
+To install Archethic Wallet in Android Devices:
 - Download the APK file for application for your platform from [releases](https://github.com/archethic-foundation/archethic_mobile_wallet/releases).
 - Click on the downloaded file and Click on Install
     - If asks for permission to install from unknown sources
@@ -34,7 +34,7 @@ To install ARCHEthic Wallet in Android Devices:
 
 ### Windows
 
-To install ARCHEthic Wallet in Windows platforms:
+To install Archethic Wallet in Windows platforms:
 - Download the MSIX file from [releases](https://github.com/archethic-foundation/archethic_mobile_wallet/releases).
 - Install the certificate 
     1) Right click on the MSIX file, click on Properties and then go to "Digital Signature" tab. Select the certificate from "Signature list" and then click "Details"
@@ -51,24 +51,24 @@ To install ARCHEthic Wallet in Windows platforms:
 
 ### MacOS
 
-To install ARCHEthic Wallet in MacOS platforms:
+To install Archethic Wallet in MacOS platforms:
 - Download the app.zip file from [releases](https://github.com/archethic-foundation/archethic_mobile_wallet/releases).
 - Unzip the file
 - Launch the APP file
 
 ### iOS
 
-To install ARCHEthic Wallet in iOS Devices:
+To install Archethic Wallet in iOS Devices:
 - Soon
 
 ### WebApp
 
 - No installation. Just go to https://reddwarf03.github.io/archethic_web/index.html
 
-## How to test the ARCHEthic Wallet
+## How to test the Archethic Wallet
 
-To test ARCHEthic Wallet with Testnet:
-- Copy your address from the wallet and paste on the [ARCHEthic Testnet Faucet](https://testnet.archethic.net/faucet) 
+To test Archethic Wallet with Testnet:
+- Copy your address from the wallet and paste on the [Archethic Testnet Faucet](https://testnet.archethic.net/faucet) 
 - Click on 'Transfer 100 UCO'
 - Refresh your dashboard
 Now, you can send some UCO and see your transactions

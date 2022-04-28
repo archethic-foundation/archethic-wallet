@@ -19,7 +19,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show uint8ListToHex, deriveAddress;
 
 /// purpose = 44' (BIP44)
-/// coin_type = 650' (UCO of ArchEthic Blockchain)
+/// coin_type = 650' (UCO of Archethic Blockchain)
 /// account = Depends on the intended use of the key.
 /// Currently fixed values: 0xFFFF for o_{key}, 0x0000 for a simple w_{key})
 /// change = 0 (0 for external, 1 for internal)

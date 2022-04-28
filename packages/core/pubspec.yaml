@@ -11,7 +11,7 @@ dependencies:
   # Beautiful animations inspired on Animate.css, every animation is a widget that contains default but customizable values that look attractive.
   animate_do: ^2.1.0
 
-  # ArchEthic dart library for Flutter based on Official ArchEthic Javascript library for Node and Browser
+  # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
   #archethic_lib_dart: ^1.0.5
   archethic_lib_dart: 
     git:
@@ -74,6 +74,9 @@ dependencies:
 
   # A composable, multi-platform, Future-based API for HTTP requests
   http: ^0.13.4
+
+  gql_websocket_link: ^0.3.3
+  web_socket_channel: ^2.1.0
 
   # Lazily load and display pages of items as the user scrolls down your screen.
   infinite_scroll_pagination: ^3.1.0

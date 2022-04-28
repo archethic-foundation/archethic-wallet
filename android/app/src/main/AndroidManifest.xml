@@ -8,11 +8,11 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.NFC" />
     <application
-        android:label="ARCHEthic Wallet"
+        android:label="Archethic Wallet"
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="false">
         <activity
-            android:name=".MainActivityArchEthicWallet"
+            android:name=".MainActivityArchethicWallet"
             android:launchMode="singleTop"
             android:exported="true"
             android:theme="@style/LaunchTheme"

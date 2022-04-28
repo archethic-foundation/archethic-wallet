@@ -1,4 +1,4 @@
-ARCHEThic Wallet - Version beta 0.1.6
+Archethic Wallet - Version beta 0.1.6
 The Wallet is back after some work. Sorry for the delay.
 
 👷‍♂️ Enhancements

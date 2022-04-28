@@ -1,4 +1,4 @@
-ARCHEThic Wallet - Version beta 0.1.0
+Archethic Wallet - Version beta 0.1.0
 
 new links
 

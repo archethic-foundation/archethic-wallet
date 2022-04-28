@@ -30,11 +30,11 @@ class NetworksSetting extends SettingSelectionItem {
   String getLongDisplayName() {
     switch (network) {
       case AvailableNetworks.AEMainNet:
-        return 'ARCHEthic Main Network';
+        return 'Archethic Main Network';
       case AvailableNetworks.AETestNet:
-        return 'ARCHEthic Test Network';
+        return 'Archethic Test Network';
       case AvailableNetworks.AEDevNet:
-        return 'ARCHEthic Dev Network';
+        return 'Archethic Dev Network';
       default:
         return 'Unknown Network';
     }
