@@ -1,6 +1,6 @@
 [![Platform](https://img.shields.io/badge/Platform-Flutter-02569B?logo=flutter)](https://flutter.dev) [![CodeFactor](https://www.codefactor.io/repository/github/archethic-foundation/archethic-wallet/badge)](https://www.codefactor.io/repository/github/archethic-foundation/archethic-wallet)
 
-# ARCHEthic Wallet
+# Archethic Wallet
 
 Similar to a bank account for fiat currency, a crypto wallet is a personal interface for a cryptocurrency network that provides reliable storage and enables transactions. Whether a cryptocurrency is securely stored or not, much depends on the wallet, which is only as secure as its private keys.
 
@@ -9,9 +9,9 @@ Software wallets come in many forms, each with its own set of unique characteris
 - Mobile wallets come in the form of a smartphone app and are easily accessible to their users at any time, considering most people don’t leave their homes without their phones. However, it is worth remembering that mobile devices are vulnerable to various malware and can be easily lost.
 - Online wallets are web wallets that can be accessed from anywhere and any device, making them more convenient, but the private keys are stored by website owners rather than locally on user devices.
 
-ARCHEthic Wallet uses the standard bip39 protocol and uses a 24 words mneumonics for deriving private and public keys. If you are familiar with Metamask then ARCHEthic Wallet is similar application for ARCHEthic blockchain.
+Archethic Wallet uses the standard bip39 protocol and uses a 24 words mneumonics for deriving private and public keys. If you are familiar with Metamask then Archethic Wallet is similar application for Archethic blockchain.
 
-ARCHEthic Wallet have features that are implemented:
+Archethic Wallet have features that are implemented:
 - Use of 24 Words Mnemonics.
 - Support for Multiple Languages
 - Support for Multiple Currencies (Only views not as in multiple cryptocurrencies)
@@ -21,11 +21,11 @@ ARCHEthic Wallet have features that are implemented:
 ![Application Initial Screen](assets/screenshots/AppInit.png?v=20220322)
 * Application Initial Screen
 
-## How to install ARCHEthic Wallet
+## How to install Archethic Wallet
 
 ### Android
 
-To install ARCHEthic Wallet in Android Devices:
+To install Archethic Wallet in Android Devices:
 - Download the APK file for application for your platform from [releases](https://github.com/archethic-foundation/archethic_mobile_wallet/releases).
 - Click on the downloaded file and Click on Install
     - If asks for permission to install from unknown sources
@@ -34,7 +34,7 @@ To install ARCHEthic Wallet in Android Devices:
 
 ### Windows
 
-To install ARCHEthic Wallet in Windows platforms:
+To install Archethic Wallet in Windows platforms:
 - Download the MSIX file from [releases](https://github.com/archethic-foundation/archethic_mobile_wallet/releases).
 - Install the certificate 
     1) Right click on the MSIX file, click on Properties and then go to "Digital Signature" tab. Select the certificate from "Signature list" and then click "Details"
@@ -51,24 +51,24 @@ To install ARCHEthic Wallet in Windows platforms:
 
 ### MacOS
 
-To install ARCHEthic Wallet in MacOS platforms:
+To install Archethic Wallet in MacOS platforms:
 - Download the app.zip file from [releases](https://github.com/archethic-foundation/archethic_mobile_wallet/releases).
 - Unzip the file
 - Launch the APP file
 
 ### iOS
 
-To install ARCHEthic Wallet in iOS Devices:
+To install Archethic Wallet in iOS Devices:
 - Soon
 
 ### WebApp
 
 - No installation. Just go to https://reddwarf03.github.io/archethic_web/index.html
 
-## How to test the ARCHEthic Wallet
+## How to test the Archethic Wallet
 
-To test ARCHEthic Wallet with Testnet:
-- Copy your address from the wallet and paste on the [ARCHEthic Testnet Faucet](https://testnet.archethic.net/faucet) 
+To test Archethic Wallet with Testnet:
+- Copy your address from the wallet and paste on the [Archethic Testnet Faucet](https://testnet.archethic.net/faucet) 
 - Click on 'Transfer 100 UCO'
 - Refresh your dashboard
 Now, you can send some UCO and see your transactions
