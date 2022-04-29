@@ -37,6 +37,15 @@ class AppLocalization {
         name: 'welcomeText');
   }
 
+  String get welcomeDisclaimerChoice {
+    return Intl.message('I have read and agree to the terms of use',
+        name: 'welcomeDisclaimerChoice');
+  }
+
+  String get welcomeDisclaimerLink {
+    return Intl.message('Terms of use', name: 'welcomeDisclaimerLink');
+  }
+
   String get cancel {
     return Intl.message('Cancel', name: 'cancel');
   }

@@ -34,8 +34,8 @@ dev_dependencies:
       url: https://github.com/redDwarf03/import_sorter.git
       ref: master
   # Integration Tests
-  integration_test:
-    sdk: flutter
+  #integration_test:
+  #  sdk: flutter
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl_generator: ^0.2.1
   # A command-line tool that create Msix installer from your flutter windows-build files.

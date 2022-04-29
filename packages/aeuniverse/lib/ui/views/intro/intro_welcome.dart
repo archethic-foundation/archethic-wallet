@@ -2,6 +2,7 @@
 // ignore_for_file: avoid_unnecessary_containers
 
 // Flutter imports:
+import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +28,8 @@ class IntroWelcome extends StatefulWidget {
 
 class _IntroWelcomeState extends State<IntroWelcome> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  bool checkedValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -115,42 +118,108 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                   ),
                   Column(
                     children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 15, right: 15),
+                                  child: CheckboxListTile(
+                                    title: Text(
+                                        AppLocalization.of(context)!
+                                            .welcomeDisclaimerChoice,
+                                        style: AppStyles
+                                            .textStyleSize14W600Primary(
+                                                context)),
+                                    value: checkedValue,
+                                    tristate: false,
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        checkedValue = newValue!;
+                                      });
+                                    },
+                                    checkColor: StateContainer.of(context)
+                                        .curTheme
+                                        .background,
+                                    activeColor: StateContainer.of(context)
+                                        .curTheme
+                                        .primary,
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    secondary: IconButton(
+                                        icon: Icon(Icons.search),
+                                        iconSize: 30,
+                                        color: StateContainer.of(context)
+                                            .curTheme
+                                            .backgroundDarkest,
+                                        onPressed: () {
+                                          UIUtil.showWebview(
+                                              context,
+                                              'https://archethic.net',
+                                              AppLocalization.of(context)!
+                                                  .welcomeDisclaimerLink);
+                                        }),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          )
+                        ],
+                      ),
                       Row(
                         children: <Widget>[
                           AppButton.buildAppButton(
-                              const Key('newWallet'),
-                              context,
-                              AppButtonType.primary,
-                              AppLocalization.of(context)!.newWallet,
-                              Dimens.buttonTopDimens, onPressed: () {
-                            Vault.getInstance().then((Vault _vault) {
-                              final String _seed = AppSeeds.generateSeed();
-                              _vault.setSeed(_seed);
-                              AppUtil()
-                                  .loginAccount(_seed, context,
-                                      forceNewAccount: true)
-                                  .then((Account selectedAcct) {
-                                StateContainer.of(context)
-                                    .requestUpdate(account: selectedAcct);
-                                Navigator.of(context).pushNamed(
-                                  '/intro_backup_safety',
-                                );
-                              });
-                            });
-                          }),
+                            const Key('newWallet'),
+                            context,
+                            checkedValue
+                                ? AppButtonType.primary
+                                : AppButtonType.primaryOutline,
+                            AppLocalization.of(context)!.newWallet,
+                            Dimens.buttonTopDimens,
+                            onPressed: () {
+                              if (checkedValue) {
+                                Vault.getInstance().then((Vault _vault) {
+                                  final String _seed = AppSeeds.generateSeed();
+                                  _vault.setSeed(_seed);
+                                  AppUtil()
+                                      .loginAccount(_seed, context,
+                                          forceNewAccount: true)
+                                      .then((Account selectedAcct) {
+                                    StateContainer.of(context)
+                                        .requestUpdate(account: selectedAcct);
+                                    Navigator.of(context).pushNamed(
+                                      '/intro_backup_safety',
+                                    );
+                                  });
+                                });
+                              }
+                            },
+                          ),
                         ],
                       ),
                       Row(
                         children: <Widget>[
                           // Import Wallet Button
                           AppButton.buildAppButton(
-                              const Key('importWallet'),
-                              context,
-                              AppButtonType.primary,
-                              AppLocalization.of(context)!.importWallet,
-                              Dimens.buttonBottomDimens, onPressed: () {
-                            Navigator.of(context).pushNamed('/intro_import');
-                          }),
+                            const Key('importWallet'),
+                            context,
+                            checkedValue
+                                ? AppButtonType.primary
+                                : AppButtonType.primaryOutline,
+                            AppLocalization.of(context)!.importWallet,
+                            Dimens.buttonBottomDimens,
+                            onPressed: () {
+                              if (checkedValue) {
+                                Navigator.of(context)
+                                    .pushNamed('/intro_import');
+                              }
+                            },
+                          ),
                         ],
                       ),
                     ],

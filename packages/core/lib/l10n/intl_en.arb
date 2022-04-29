@@ -1499,5 +1499,17 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "welcomeDisclaimerChoice": "I have read and agree to the terms of use",
+  "@welcomeDisclaimerChoice": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "welcomeDisclaimerLink": "Terms of use",
+  "@welcomeDisclaimerLink": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

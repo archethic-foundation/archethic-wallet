@@ -250,5 +250,7 @@
 	"passwordBreachDatabase": "- Ne soit pas présent dans la liste des violations de mot de passe de la base de données \"Have I been Pwned\".",
 	"passwordNormalLetters": "- Au moins %1 lettre.",
 	"passwordNumericCharacters": "- Au moins %1 caractère numérique.",
-	"passwordSpecialCharacters": "- Au moins %1 caractère spécial."
+	"passwordSpecialCharacters": "- Au moins %1 caractère spécial.",
+	"welcomeDisclaimerChoice": "لقد قرأت ووافقت على شروط الاستخدام",
+	"welcomeDisclaimerLink": "شروط الاستعمال"
 }
