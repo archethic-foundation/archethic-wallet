@@ -131,6 +131,8 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                     final Preferences _preferences =
                                         await Preferences.getInstance();
                                     _preferences.setLock(true);
+                                    _preferences.setShowBalances(true);
+                                    _preferences.setPinPadShuffle(false);
                                     _preferences.setLockTimeout(
                                         LockTimeoutSetting(
                                             LockTimeoutOption.one));
@@ -158,6 +160,8 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                       final Preferences _preferences =
                                           await Preferences.getInstance();
                                       _preferences.setLock(true);
+                                      _preferences.setShowBalances(true);
+                                      _preferences.setPinPadShuffle(false);
                                       _preferences.setLockTimeout(
                                           LockTimeoutSetting(
                                               LockTimeoutOption.one));

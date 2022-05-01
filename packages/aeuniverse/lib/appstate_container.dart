@@ -103,6 +103,7 @@ class StateContainerState extends State<StateContainer> {
   String? idChartOption = '1d';
 
   bool useOracleUcoPrice = false;
+  bool showBalance = false;
 
   List<Contact> contactsRef = List<Contact>.empty(growable: true);
 
@@ -128,6 +129,7 @@ class StateContainerState extends State<StateContainer> {
         currencyLocale = curCurrency.getLocale().toString();
         curLanguage = _preferences.getLanguage();
         curNetwork = _preferences.getNetwork();
+        showBalance = _preferences.getShowBalances();
       });
       updateTheme(_preferences.getTheme());
     });

@@ -79,6 +79,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   bool? _nftOpen;
 
   bool _pinPadShuffleActive = false;
+  bool _showBalancesActive = false;
 
   bool notNull(Object? o) => o != null;
 
@@ -100,6 +101,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     Preferences.getInstance().then((Preferences _preferences) {
       setState(() {
         _pinPadShuffleActive = _preferences.getPinPadShuffle();
+        _showBalancesActive = _preferences.getShowBalances();
         _curAuthMethod = _preferences.getAuthMethod();
         _curUnlockSetting = _preferences.getLock()
             ? UnlockSetting(UnlockOption.yes)
@@ -1174,9 +1176,27 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           await Preferences.getInstance();
                       setState(() {
                         _pinPadShuffleActive = _isSwitched;
-                        _isSwitched
-                            ? _preferences.setPinPadShuffle(true)
-                            : _preferences.setPinPadShuffle(false);
+                        _preferences.setPinPadShuffle(_isSwitched);
+                      });
+                    }),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
+                    AppSettings.buildSettingsListItemSwitch(
+                        context,
+                        AppLocalization.of(context)!.showBalances,
+                        'packages/aewallet/assets/icons/shy.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        _showBalancesActive,
+                        onChanged: (bool _isSwitched) async {
+                      final Preferences _preferences =
+                          await Preferences.getInstance();
+                      setState(() {
+                        _showBalancesActive = _isSwitched;
+                        StateContainer.of(context).showBalance =
+                            _showBalancesActive;
+                        _preferences.setShowBalances(_showBalancesActive);
                       });
                     }),
                     Divider(

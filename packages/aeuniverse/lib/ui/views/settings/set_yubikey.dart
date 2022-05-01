@@ -2,6 +2,7 @@
 
 // Flutter imports:
 import 'package:aeuniverse/ui/widgets/components/tap_outside_unfocus.dart';
+import 'package:core/model/device_lock_timeout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -296,6 +297,11 @@ class _SetYubikeyState extends State<SetYubikey> {
           final Preferences _preferences = await Preferences.getInstance();
           _preferences.setAuthMethod(
               AuthenticationMethod(AuthMethod.yubikeyWithYubicloud));
+          _preferences.setLock(true);
+          _preferences.setShowBalances(true);
+          _preferences.setPinPadShuffle(false);
+          _preferences
+              .setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
           await Future<void>.delayed(const Duration(milliseconds: 200));
           StateContainer.of(context).getSeed().then((String seed) {
             Navigator.of(context).pushNamedAndRemoveUntil(

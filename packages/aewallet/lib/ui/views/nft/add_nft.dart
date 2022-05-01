@@ -215,40 +215,43 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                               children: <Widget>[
                                 Column(
                                   children: <Widget>[
-                                    Container(
-                                      child: RichText(
-                                        textAlign: TextAlign.start,
-                                        text: TextSpan(
-                                          text: '',
-                                          children: <InlineSpan>[
-                                            TextSpan(
-                                              text: '(',
-                                              style: AppStyles
-                                                  .textStyleSize14W100Primary(
-                                                      context),
+                                    StateContainer.of(context).showBalance
+                                        ? Container(
+                                            child: RichText(
+                                              textAlign: TextAlign.start,
+                                              text: TextSpan(
+                                                text: '',
+                                                children: <InlineSpan>[
+                                                  TextSpan(
+                                                    text: '(',
+                                                    style: AppStyles
+                                                        .textStyleSize14W100Primary(
+                                                            context),
+                                                  ),
+                                                  TextSpan(
+                                                      text: StateContainer.of(
+                                                              context)
+                                                          .wallet!
+                                                          .accountBalance
+                                                          .getNetworkAccountBalanceDisplay(
+                                                              networkCryptoCurrencyLabel:
+                                                                  StateContainer.of(
+                                                                          context)
+                                                                      .curNetwork
+                                                                      .getNetworkCryptoCurrencyLabel()),
+                                                      style: AppStyles
+                                                          .textStyleSize14W700Primary(
+                                                              context)),
+                                                  TextSpan(
+                                                      text: ')',
+                                                      style: AppStyles
+                                                          .textStyleSize14W100Primary(
+                                                              context)),
+                                                ],
+                                              ),
                                             ),
-                                            TextSpan(
-                                                text: StateContainer.of(context)
-                                                    .wallet!
-                                                    .accountBalance
-                                                    .getNetworkAccountBalanceDisplay(
-                                                        networkCryptoCurrencyLabel:
-                                                            StateContainer.of(
-                                                                    context)
-                                                                .curNetwork
-                                                                .getNetworkCryptoCurrencyLabel()),
-                                                style: AppStyles
-                                                    .textStyleSize14W700Primary(
-                                                        context)),
-                                            TextSpan(
-                                                text: ')',
-                                                style: AppStyles
-                                                    .textStyleSize14W100Primary(
-                                                        context)),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
+                                          )
+                                        : const SizedBox(),
                                     AppTextField(
                                       topMargin: 30,
                                       focusNode: _nameFocusNode,

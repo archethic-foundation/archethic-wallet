@@ -627,6 +627,10 @@ class AppLocalization {
     return Intl.message('PIN Pad Shuffle', name: 'pinPadShuffle');
   }
 
+  String get showBalances {
+    return Intl.message('Show balances', name: 'showBalances');
+  }
+
   String get copy {
     return Intl.message('Copy', name: 'copy');
   }

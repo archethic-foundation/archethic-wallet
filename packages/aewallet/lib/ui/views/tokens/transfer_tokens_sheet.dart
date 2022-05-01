@@ -284,51 +284,54 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                           const SizedBox(
                             height: 15,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              primaryCurrency == PrimaryCurrency.selected
-                                  ? Column(
-                                      children: [
-                                        _balanceSelected(context, true),
-                                        _balanceNetwork(context, false),
-                                      ],
-                                    )
-                                  : Column(
-                                      children: [
-                                        _balanceNetwork(context, true),
-                                        _balanceSelected(context, false),
-                                      ],
+                          StateContainer.of(context).showBalance
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    primaryCurrency == PrimaryCurrency.selected
+                                        ? Column(
+                                            children: [
+                                              _balanceSelected(context, true),
+                                              _balanceNetwork(context, false),
+                                            ],
+                                          )
+                                        : Column(
+                                            children: [
+                                              _balanceNetwork(context, true),
+                                              _balanceSelected(context, false),
+                                            ],
+                                          ),
+                                    const SizedBox(
+                                      width: 10,
                                     ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.change_circle),
-                                alignment: Alignment.centerRight,
-                                color: StateContainer.of(context)
-                                    .curTheme
-                                    .backgroundDarkest,
-                                onPressed: () {
-                                  sl
-                                      .get<HapticUtil>()
-                                      .feedback(FeedbackType.light);
-                                  _sendAmountController!.text = '';
-                                  if (primaryCurrency ==
-                                      PrimaryCurrency.network) {
-                                    setState(() {
-                                      primaryCurrency =
-                                          PrimaryCurrency.selected;
-                                    });
-                                  } else {
-                                    setState(() {
-                                      primaryCurrency = PrimaryCurrency.network;
-                                    });
-                                  }
-                                },
-                              ),
-                            ],
-                          ),
+                                    IconButton(
+                                      icon: const Icon(Icons.change_circle),
+                                      alignment: Alignment.centerRight,
+                                      color: StateContainer.of(context)
+                                          .curTheme
+                                          .backgroundDarkest,
+                                      onPressed: () {
+                                        sl
+                                            .get<HapticUtil>()
+                                            .feedback(FeedbackType.light);
+                                        _sendAmountController!.text = '';
+                                        if (primaryCurrency ==
+                                            PrimaryCurrency.network) {
+                                          setState(() {
+                                            primaryCurrency =
+                                                PrimaryCurrency.selected;
+                                          });
+                                        } else {
+                                          setState(() {
+                                            primaryCurrency =
+                                                PrimaryCurrency.network;
+                                          });
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                )
+                              : const SizedBox(),
                         ],
                       ),
                     ),

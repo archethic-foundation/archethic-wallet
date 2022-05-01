@@ -252,5 +252,6 @@
 	"passwordNumericCharacters": "- Au moins %1 caractère numérique.",
 	"passwordSpecialCharacters": "- Au moins %1 caractère spécial.",
 	"welcomeDisclaimerChoice": "لقد قرأت ووافقت على شروط الاستخدام",
-	"welcomeDisclaimerLink": "شروط الاستعمال"
+	"welcomeDisclaimerLink": "شروط الاستعمال",
+	"showBalances": "Show balances"
 }

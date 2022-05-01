@@ -197,6 +197,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "setPasswordHeader" : MessageLookupByLibrary.simpleMessage("Svp, créez un mot de passe."),
     "settings" : MessageLookupByLibrary.simpleMessage("Paramètres"),
     "share" : MessageLookupByLibrary.simpleMessage("Partager"),
+    "showBalances" : MessageLookupByLibrary.simpleMessage("Show balances"),
     "systemDefault" : MessageLookupByLibrary.simpleMessage("Système par défaut"),
     "tapToHide" : MessageLookupByLibrary.simpleMessage("Tapez pour cacher"),
     "tapToReveal" : MessageLookupByLibrary.simpleMessage("Tapez pour révéler"),

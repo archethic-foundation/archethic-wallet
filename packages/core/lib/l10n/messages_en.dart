@@ -196,6 +196,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "setPasswordHeader" : MessageLookupByLibrary.simpleMessage("Please, create a password."),
     "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
     "share" : MessageLookupByLibrary.simpleMessage("Share"),
+    "showBalances" : MessageLookupByLibrary.simpleMessage("Show balances"),
     "systemDefault" : MessageLookupByLibrary.simpleMessage("System Default"),
     "tapToHide" : MessageLookupByLibrary.simpleMessage("Tap to hide"),
     "tapToReveal" : MessageLookupByLibrary.simpleMessage("Tap to reveal"),

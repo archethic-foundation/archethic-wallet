@@ -92,29 +92,32 @@ class BalanceInfosWidget {
                         : const SizedBox(),
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: AutoSizeText(
-                      StateContainer.of(context)
-                                  .wallet!
-                                  .accountBalance
-                                  .networkCurrencyValue ==
-                              0
-                          ? StateContainer.of(context)
-                              .localWallet!
-                              .accountBalance
-                              .getNetworkAccountBalanceDisplay()
-                          : StateContainer.of(context)
-                              .wallet!
-                              .accountBalance
-                              .getNetworkAccountBalanceDisplay(),
-                      style: AppStyles.textStyleSize40W900Primary(context),
-                    ),
-                  ),
-                ),
+                StateContainer.of(context).showBalance
+                    ? Container(
+                        width: MediaQuery.of(context).size.width,
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: AutoSizeText(
+                            StateContainer.of(context)
+                                        .wallet!
+                                        .accountBalance
+                                        .networkCurrencyValue ==
+                                    0
+                                ? StateContainer.of(context)
+                                    .localWallet!
+                                    .accountBalance
+                                    .getNetworkAccountBalanceDisplay()
+                                : StateContainer.of(context)
+                                    .wallet!
+                                    .accountBalance
+                                    .getNetworkAccountBalanceDisplay(),
+                            style:
+                                AppStyles.textStyleSize40W900Primary(context),
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
               ],
             ),
           ),
@@ -136,16 +139,20 @@ class BalanceInfosWidget {
             padding: const EdgeInsets.only(left: 10.0, top: 5.0),
             child: Row(
               children: <Widget>[
-                AutoSizeText(
-                    StateContainer.of(context)
-                        .wallet!
-                        .accountBalance
-                        .getConvertedAccountBalanceDisplay(),
-                    textAlign: TextAlign.center,
-                    style: AppStyles.textStyleSize12W100Primary(context)),
-                const SizedBox(
-                  width: 10,
-                ),
+                StateContainer.of(context).showBalance
+                    ? AutoSizeText(
+                        StateContainer.of(context)
+                            .wallet!
+                            .accountBalance
+                            .getConvertedAccountBalanceDisplay(),
+                        textAlign: TextAlign.center,
+                        style: AppStyles.textStyleSize12W100Primary(context))
+                    : const SizedBox(),
+                StateContainer.of(context).showBalance
+                    ? const SizedBox(
+                        width: 10,
+                      )
+                    : const SizedBox(),
                 AutoSizeText(
                   StateContainer.of(context)
                               .wallet!
