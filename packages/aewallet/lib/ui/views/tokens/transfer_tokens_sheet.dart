@@ -11,6 +11,7 @@ import 'package:core/util/haptic_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:decimal/decimal.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
@@ -68,6 +69,7 @@ class TransferTokensSheet extends StatefulWidget {
 }
 
 enum AddressStyle { text60, text90, primary }
+enum PrimaryCurrency { network, selected }
 
 class _TransferTokensSheetState extends State<TransferTokensSheet> {
   FocusNode? _sendAddressFocusNode;
@@ -75,19 +77,14 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
   FocusNode? _sendAmountFocusNode;
   TextEditingController? _sendAmountController;
 
-  // States
   AddressStyle? _sendAddressStyle;
-  String? _amountHint = '';
-  String? _addressHint = '';
   String? _amountValidationText = '';
   String? _addressValidationText = '';
+  String? _globalValidationText = '';
   String? quickSendAmount;
   List<Contact>? _contacts;
-  // Used to replace address textfield with colorized TextSpan
   bool _addressValidAndUnfocused = false;
-  // Set to true when a contact is being entered
   bool _isContact = false;
-  // Buttons States (Used because we hide the buttons under certain conditions)
   bool _qrCodeButtonVisible = true;
   bool _showContactButton = true;
   NumberFormat? _localCurrencyFormat;
@@ -95,6 +92,8 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
   bool validRequest = true;
   double feeEstimation = 0.0;
   bool? _isPressed;
+  PrimaryCurrency primaryCurrency = PrimaryCurrency.network;
+  double priceConverted = 0.0;
 
   List<UCOTransferWallet> ucoTransferList =
       List<UCOTransferWallet>.empty(growable: true);
@@ -102,6 +101,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
   @override
   void initState() {
     super.initState();
+    primaryCurrency = PrimaryCurrency.network;
     _isPressed = false;
     _sendAmountFocusNode = FocusNode();
     _sendAddressFocusNode = FocusNode();
@@ -142,22 +142,11 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
             quickSendAmount = null;
           });
         }
-        setState(() {
-          _amountHint = null;
-        });
-      } else {
-        setState(() {
-          _amountHint = '';
-        });
       }
     });
     // On address focus change
     _sendAddressFocusNode!.addListener(() {
       if (_sendAddressFocusNode!.hasFocus) {
-        setState(() {
-          _addressHint = null;
-          //_addressValidAndUnfocused = false;
-        });
         _sendAddressController!.selection = TextSelection.fromPosition(
             TextPosition(offset: _sendAddressController!.text.length));
         if (_sendAddressController!.text.startsWith('@')) {
@@ -172,7 +161,6 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
         }
       } else {
         setState(() {
-          _addressHint = '';
           _contacts = <Contact>[];
           if (Address(_sendAddressController!.text).isValid()) {
             //_addressValidAndUnfocused = true;
@@ -293,6 +281,54 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                             maxLines: 1,
                             stepGranularity: 0.1,
                           ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              primaryCurrency == PrimaryCurrency.selected
+                                  ? Column(
+                                      children: [
+                                        _balanceSelected(context, true),
+                                        _balanceNetwork(context, false),
+                                      ],
+                                    )
+                                  : Column(
+                                      children: [
+                                        _balanceNetwork(context, true),
+                                        _balanceSelected(context, false),
+                                      ],
+                                    ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.change_circle),
+                                alignment: Alignment.centerRight,
+                                color: StateContainer.of(context)
+                                    .curTheme
+                                    .backgroundDarkest,
+                                onPressed: () {
+                                  sl
+                                      .get<HapticUtil>()
+                                      .feedback(FeedbackType.light);
+                                  _sendAmountController!.text = '';
+                                  if (primaryCurrency ==
+                                      PrimaryCurrency.network) {
+                                    setState(() {
+                                      primaryCurrency =
+                                          PrimaryCurrency.selected;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      primaryCurrency = PrimaryCurrency.network;
+                                    });
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -351,38 +387,6 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                               children: <Widget>[
                                 Column(
                                   children: <Widget>[
-                                    Container(
-                                      child: RichText(
-                                        textAlign: TextAlign.start,
-                                        text: TextSpan(
-                                          text: '',
-                                          children: <InlineSpan>[
-                                            TextSpan(
-                                              text: '(',
-                                              style: AppStyles
-                                                  .textStyleSize14W100Primary(
-                                                      context),
-                                            ),
-                                            TextSpan(
-                                                text: StateContainer.of(context)
-                                                    .wallet!
-                                                    .getAccountBalanceDisplay(),
-                                                style: AppStyles
-                                                    .textStyleSize14W700Primary(
-                                                        context)),
-                                            TextSpan(
-                                                text: ' ' +
-                                                    StateContainer.of(context)
-                                                        .curNetwork
-                                                        .getNetworkCryptoCurrencyLabel() +
-                                                    ')',
-                                                style: AppStyles
-                                                    .textStyleSize14W100Primary(
-                                                        context)),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
                                     getEnterAmountContainer(),
                                     Container(
                                       alignment:
@@ -509,6 +513,15 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                                                   .textStyleSize14W100Primary(
                                                       context)),
                                     ),
+                                    Container(
+                                      alignment:
+                                          const AlignmentDirectional(0, 0),
+                                      margin: const EdgeInsets.only(top: 3),
+                                      child: Text(_globalValidationText!,
+                                          style: AppStyles
+                                              .textStyleSize14W600Primary(
+                                                  context)),
+                                    ),
                                   ],
                                 ),
                               ],
@@ -551,9 +564,11 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                                 if (validRequest) {
                                   Sheets.showAppHeightNineSheet(
                                     onDisposed: () {
-                                      setState(() {
-                                        _isPressed = false;
-                                      });
+                                      if (mounted) {
+                                        setState(() {
+                                          _isPressed = false;
+                                        });
+                                      }
                                     },
                                     context: context,
                                     widget: TransferConfirmSheet(
@@ -586,33 +601,108 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
 
   // Determine if this is a max send or not by comparing balances
   bool _isMaxSend() {
-    // Sanitize commas
     if (_sendAmountController!.text.isEmpty) {
       return false;
     }
-    final double? _sendAmount = double.tryParse(_sendAmountController!.text);
-    if (_sendAmount == null) {
-      return false;
-    } else {
-      String balance = StateContainer.of(context)
+    try {
+      final String amount = _rawAmount == null
+          ? _sendAmountController!.text
+          : NumberUtil.getRawAsUsableString(_rawAmount!);
+      final double balanceRaw = StateContainer.of(context)
           .wallet!
-          .getAccountBalanceDisplay()
-          .replaceAll(r',', '');
-
-      double? _balanceDouble;
-      double? _feesDouble;
-      _balanceDouble = double.tryParse(balance);
-      _feesDouble = feeEstimation;
-      if (_balanceDouble == null) {
-        return false;
+          .accountBalance
+          .networkCurrencyValue!;
+      if (primaryCurrency == PrimaryCurrency.network) {
+        if (double.tryParse(amount)! + feeEstimation == balanceRaw) {
+          return true;
+        } else {
+          return false;
+        }
       } else {
-        if (_balanceDouble == _sendAmount + _feesDouble) {
+        if (priceConverted + feeEstimation ==
+            StateContainer.of(context)
+                .wallet!
+                .accountBalance
+                .selectedCurrencyValue) {
           return true;
         } else {
           return false;
         }
       }
+    } catch (e) {
+      return false;
     }
+  }
+
+  Widget _balanceNetwork(BuildContext context, bool primary) {
+    return Container(
+      child: RichText(
+        textAlign: TextAlign.start,
+        text: TextSpan(
+          text: '',
+          children: <InlineSpan>[
+            TextSpan(
+              text: '(',
+              style: primary
+                  ? AppStyles.textStyleSize16W100Primary(context)
+                  : AppStyles.textStyleSize14W100Primary(context),
+            ),
+            TextSpan(
+              text: StateContainer.of(context)
+                  .wallet!
+                  .accountBalance
+                  .getNetworkAccountBalanceDisplay(
+                      networkCryptoCurrencyLabel: StateContainer.of(context)
+                          .curNetwork
+                          .getNetworkCryptoCurrencyLabel()),
+              style: primary
+                  ? AppStyles.textStyleSize16W700Primary(context)
+                  : AppStyles.textStyleSize14W700Primary(context),
+            ),
+            TextSpan(
+              text: ')',
+              style: primary
+                  ? AppStyles.textStyleSize16W100Primary(context)
+                  : AppStyles.textStyleSize14W100Primary(context),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _balanceSelected(BuildContext context, bool primary) {
+    return Container(
+      child: RichText(
+        textAlign: TextAlign.start,
+        text: TextSpan(
+          text: '',
+          children: <InlineSpan>[
+            TextSpan(
+              text: '(',
+              style: primary
+                  ? AppStyles.textStyleSize16W100Primary(context)
+                  : AppStyles.textStyleSize14W100Primary(context),
+            ),
+            TextSpan(
+              text: StateContainer.of(context)
+                  .wallet!
+                  .accountBalance
+                  .getConvertedAccountBalanceDisplay(),
+              style: primary
+                  ? AppStyles.textStyleSize16W700Primary(context)
+                  : AppStyles.textStyleSize14W700Primary(context),
+            ),
+            TextSpan(
+              text: ')',
+              style: primary
+                  ? AppStyles.textStyleSize16W100Primary(context)
+                  : AppStyles.textStyleSize14W100Primary(context),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   // Build contact items for the list
@@ -660,6 +750,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
       _sendAddressFocusNode!.unfocus();
       _addressValidationText = '';
       _amountValidationText = '';
+      _globalValidationText = '';
     });
     // Validate amount
     if (_sendAmountController!.text.trim().isEmpty) {
@@ -674,18 +765,20 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
       final String amount = _rawAmount == null
           ? _sendAmountController!.text
           : NumberUtil.getRawAsUsableString(_rawAmount!);
-      final double balanceRaw =
-          StateContainer.of(context).wallet!.accountBalance.uco!;
-      final double sendAmount = double.tryParse(amount)!;
-      if (sendAmount == null) {
+      final double balanceRaw = StateContainer.of(context)
+          .wallet!
+          .accountBalance
+          .networkCurrencyValue!;
+      double sendAmount = 0;
+      if (primaryCurrency == PrimaryCurrency.network) {
+        sendAmount = double.tryParse(amount)!;
+      } else {
+        sendAmount = priceConverted;
+      }
+      if (sendAmount + feeEstimation > balanceRaw) {
         isValid = false;
         setState(() {
-          _amountValidationText = AppLocalization.of(context)!.amountMissing;
-        });
-      } else if (sendAmount + feeEstimation > balanceRaw) {
-        isValid = false;
-        setState(() {
-          _amountValidationText = AppLocalization.of(context)!
+          _globalValidationText = AppLocalization.of(context)!
               .insufficientBalance
               .replaceAll(
                   '%1',
@@ -772,75 +865,121 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
     return isValid;
   }
 
-  AppTextField getEnterAmountContainer() {
-    return AppTextField(
-      focusNode: _sendAmountFocusNode,
-      controller: _sendAmountController,
-      topMargin: 30,
-      cursorColor: StateContainer.of(context).curTheme.primary,
-      style: AppStyles.textStyleSize16W700Primary(context),
-      inputFormatters: _rawAmount == null
-          // ignore: always_specify_types
-          ? [
-              LengthLimitingTextInputFormatter(16),
-              CurrencyFormatter(maxDecimalDigits: NumberUtil.maxDecimalDigits),
-              LocalCurrencyFormatter(
-                  active: false, currencyFormat: _localCurrencyFormat!)
-            ]
-          : <LengthLimitingTextInputFormatter>[
-              LengthLimitingTextInputFormatter(16)
-            ],
-      onChanged: (String text) async {
-        double _fee = await getFee();
-        // Always reset the error message to be less annoying
-        setState(() {
-          feeEstimation = _fee;
-          _amountValidationText = '';
-          // Reset the raw amount
-          _rawAmount = null;
-        });
-      },
-      textInputAction: TextInputAction.next,
-      maxLines: null,
-      autocorrect: false,
-      labelText: AppLocalization.of(context)!.enterAmount,
-      suffixButton: TextFieldButton(
-        icon: FontAwesomeIcons.anglesUp,
-        onPressed: () async {
-          sl.get<HapticUtil>().feedback(FeedbackType.light);
-          double _fee = await getFee(maxSend: true);
+  Widget getEnterAmountContainer() {
+    return Column(
+      children: [
+        AppTextField(
+          focusNode: _sendAmountFocusNode,
+          controller: _sendAmountController,
+          topMargin: 30,
+          cursorColor: StateContainer.of(context).curTheme.primary,
+          style: AppStyles.textStyleSize16W700Primary(context),
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(16),
+            CurrencyFormatter(
+                maxDecimalDigits: primaryCurrency == PrimaryCurrency.network
+                    ? 8
+                    : _localCurrencyFormat!.decimalDigits!),
+            LocalCurrencyFormatter(
+                active: false, currencyFormat: _localCurrencyFormat!),
+            FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,8}')),
+          ],
+          onChanged: (String text) async {
+            double _fee = await getFee();
+            // Always reset the error message to be less annoying
+            setState(() {
+              feeEstimation = _fee;
+              _amountValidationText = '';
+              // Reset the raw amount
+              _rawAmount = null;
+            });
+          },
+          textInputAction: TextInputAction.next,
+          maxLines: null,
+          autocorrect: false,
+          labelText: primaryCurrency == PrimaryCurrency.network
+              ? AppLocalization.of(context)!.enterAmount +
+                  ' (' +
+                  StateContainer.of(context)
+                      .curNetwork
+                      .getNetworkCryptoCurrencyLabel() +
+                  ')'
+              : AppLocalization.of(context)!.enterAmount +
+                  ' (' +
+                  StateContainer.of(context).curCurrency.currency.name +
+                  ')',
+          suffixButton: TextFieldButton(
+            icon: FontAwesomeIcons.anglesUp,
+            onPressed: () async {
+              sl.get<HapticUtil>().feedback(FeedbackType.light);
+              double _fee = await getFee(maxSend: true);
 
-          setState(() {
-            feeEstimation = _fee;
-            _amountValidationText = '';
-            // Reset the raw amount
-            _rawAmount = null;
-          });
-          if (_isMaxSend()) {
-            return;
-          }
+              double sendAmount = 0;
+              if (primaryCurrency == PrimaryCurrency.network) {
+                sendAmount = StateContainer.of(context)
+                        .wallet!
+                        .accountBalance
+                        .networkCurrencyValue! -
+                    _fee;
+                _sendAmountController!.text = sendAmount.toStringAsFixed(8);
+              } else {
+                double selectedCurrencyFee = StateContainer.of(context)
+                        .wallet!
+                        .accountBalance
+                        .localCurrencyPrice *
+                    _fee;
+                sendAmount = StateContainer.of(context)
+                        .wallet!
+                        .accountBalance
+                        .selectedCurrencyValue -
+                    selectedCurrencyFee;
+                _sendAmountController!.text = sendAmount
+                    .toStringAsFixed(_localCurrencyFormat!.decimalDigits!);
+              }
 
-          feeEstimation = await getFee();
-          _sendAmountController!.text = StateContainer.of(context)
-              .wallet!
-              .getAccountBalanceMoinsFeesDisplay(feeEstimation)
-              .replaceAll(r',', '');
-          _sendAddressController!.selection = TextSelection.fromPosition(
-              TextPosition(offset: _sendAddressController!.text.length));
-        },
-      ),
-      fadeSuffixOnCondition: true,
-      suffixShowFirstCondition: !_isMaxSend(),
-      keyboardType:
-          const TextInputType.numberWithOptions(signed: true, decimal: true),
-      textAlign: TextAlign.center,
-      onSubmitted: (String text) {
-        FocusScope.of(context).unfocus();
-        if (!Address(_sendAddressController!.text).isValid()) {
-          FocusScope.of(context).requestFocus(_sendAddressFocusNode);
-        }
-      },
+              setState(() {
+                feeEstimation = _fee;
+                _amountValidationText = '';
+                // Reset the raw amount
+                _rawAmount = null;
+              });
+              if (_isMaxSend()) {
+                return;
+              }
+
+              feeEstimation = await getFee();
+              _sendAddressController!.selection = TextSelection.fromPosition(
+                  TextPosition(offset: _sendAddressController!.text.length));
+            },
+          ),
+          fadeSuffixOnCondition: true,
+          suffixShowFirstCondition: !_isMaxSend(),
+          keyboardType: const TextInputType.numberWithOptions(
+              signed: true, decimal: true),
+          textAlign: TextAlign.center,
+          onSubmitted: (String text) {
+            FocusScope.of(context).unfocus();
+            if (!Address(_sendAddressController!.text).isValid()) {
+              FocusScope.of(context).requestFocus(_sendAddressFocusNode);
+            }
+          },
+        ),
+        _sendAmountController!.text.isNotEmpty
+            ? Container(
+                margin: const EdgeInsets.only(right: 40),
+                alignment: Alignment.centerRight,
+                child: primaryCurrency == PrimaryCurrency.network
+                    ? Text('= ' + _convertNetworkCurrencyToSelectedCurrency(),
+                        textAlign: TextAlign.right,
+                        style: AppStyles.textStyleSize14W100Primary(context))
+                    : Text('= ' + _convertSelectedCurrencyToNetworkCurrency(),
+                        textAlign: TextAlign.right,
+                        style: AppStyles.textStyleSize14W100Primary(context)),
+              )
+            : const SizedBox(),
+      ],
     );
+    ;
   }
 
   AppTextField getEnterAddressContainer() {
@@ -1067,9 +1206,11 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
           List<UCOTransferWallet>.empty(growable: true);
       ucoTransferListForFee.add(UCOTransferWallet(
           amount: maxSend
-              ? BigInt.from(
-                  StateContainer.of(context).wallet!.accountBalance.uco! *
-                      100000000)
+              ? BigInt.from(StateContainer.of(context)
+                      .wallet!
+                      .accountBalance
+                      .networkCurrencyValue! *
+                  100000000)
               : BigInt.from(
                   double.tryParse(_sendAmountController!.text)! * 100000000),
           to: _recipientAddress));
@@ -1082,5 +1223,39 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
       fee = 0;
     }
     return fee;
+  }
+
+  String _convertSelectedCurrencyToNetworkCurrency() {
+    String convertedAmt = _sendAmountController!.text.replaceAll(",", ".");
+    convertedAmt = NumberUtil.sanitizeNumber(convertedAmt);
+    if (convertedAmt.isEmpty || double.tryParse(convertedAmt) == 0) {
+      return '';
+    }
+    priceConverted = (Decimal.parse(convertedAmt) /
+            Decimal.parse(StateContainer.of(context)
+                .wallet!
+                .accountBalance
+                .localCurrencyPrice
+                .toString()))
+        .toDouble();
+    return priceConverted.toStringAsFixed(8) +
+        ' ' +
+        StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel();
+  }
+
+  String _convertNetworkCurrencyToSelectedCurrency() {
+    String convertedAmt = NumberUtil.sanitizeNumber(_sendAmountController!.text,
+        maxDecimalDigits: _localCurrencyFormat!.decimalDigits!);
+    if (convertedAmt.isEmpty) {
+      return '';
+    }
+    priceConverted = (Decimal.parse(StateContainer.of(context)
+                .wallet!
+                .accountBalance
+                .localCurrencyPrice
+                .toString()) *
+            Decimal.parse(convertedAmt))
+        .toDouble();
+    return _localCurrencyFormat!.format(priceConverted);
   }
 }

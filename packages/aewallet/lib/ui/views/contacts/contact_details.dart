@@ -245,7 +245,7 @@ class ContactDetailsSheet {
                             if (StateContainer.of(context)
                                     .wallet!
                                     .accountBalance
-                                    .uco! >
+                                    .networkCurrencyValue! >
                                 0)
                               AppButton.buildAppButton(
                                   const Key('send'),

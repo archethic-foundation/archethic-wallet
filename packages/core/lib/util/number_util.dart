@@ -6,8 +6,6 @@ import 'package:intl/intl.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class NumberUtil {
-  static const int maxDecimalDigits = 6; // Max digits after decimal
-
   /// Convert raw to ban and return as BigDecimal
   ///
   /// @param raw 100000000000000000000000000000
@@ -24,8 +22,8 @@ class NumberUtil {
   /// @returns 1
   ///
   static String getRawAsUsableString(String raw) {
-    final NumberFormat nf = NumberFormat.currency(
-        locale: 'en_US', decimalDigits: maxDecimalDigits, symbol: '');
+    final NumberFormat nf =
+        NumberFormat.currency(locale: 'en_US', decimalDigits: 6, symbol: '');
     String asString = nf.format(
         double.tryParse(getRawAsUsableDecimal(raw).truncate().toString()));
     final List<String> split = asString.split('.');
@@ -56,8 +54,7 @@ class NumberUtil {
   /// be parsed. Expects "." to be decimal separator
   /// @param amount $1,512
   /// @returns 1.512
-  static String sanitizeNumber(String input,
-      {int maxDecimalDigits = maxDecimalDigits}) {
+  static String sanitizeNumber(String input, {int maxDecimalDigits = 8}) {
     String sanitized = '';
     final List<String> splitStr = input.split('.');
     if (splitStr.length > 1) {

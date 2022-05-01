@@ -169,15 +169,16 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                           TextSpan(
                               text: StateContainer.of(context)
                                   .wallet!
-                                  .getAccountBalanceDisplay(),
+                                  .accountBalance
+                                  .getNetworkAccountBalanceDisplay(
+                                      networkCryptoCurrencyLabel:
+                                          StateContainer.of(context)
+                                              .curNetwork
+                                              .getNetworkCryptoCurrencyLabel()),
                               style: AppStyles.textStyleSize14W700Primary(
                                   context)),
                           TextSpan(
-                              text: ' ' +
-                                  StateContainer.of(context)
-                                      .curNetwork
-                                      .getNetworkCryptoCurrencyLabel() +
-                                  ')',
+                              text: ')',
                               style: AppStyles.textStyleSize14W100Primary(
                                   context)),
                         ],

@@ -7,12 +7,12 @@ import 'package:flutter/services.dart';
 import 'package:core/util/number_util.dart';
 import 'package:intl/intl.dart';
 
-/// Input formatter for Crpto/Fiat amounts
+/// Input formatter for Crypto/Fiat amounts
 class CurrencyFormatter extends TextInputFormatter {
   CurrencyFormatter(
       {this.commaSeparator = ',',
       this.decimalSeparator = '.',
-      this.maxDecimalDigits = NumberUtil.maxDecimalDigits});
+      this.maxDecimalDigits = 2});
 
   String commaSeparator;
   String decimalSeparator;

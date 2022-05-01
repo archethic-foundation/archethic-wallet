@@ -230,16 +230,18 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                             TextSpan(
                                                 text: StateContainer.of(context)
                                                     .wallet!
-                                                    .getAccountBalanceDisplay(),
+                                                    .accountBalance
+                                                    .getNetworkAccountBalanceDisplay(
+                                                        networkCryptoCurrencyLabel:
+                                                            StateContainer.of(
+                                                                    context)
+                                                                .curNetwork
+                                                                .getNetworkCryptoCurrencyLabel()),
                                                 style: AppStyles
                                                     .textStyleSize14W700Primary(
                                                         context)),
                                             TextSpan(
-                                                text: ' ' +
-                                                    StateContainer.of(context)
-                                                        .curNetwork
-                                                        .getNetworkCryptoCurrencyLabel() +
-                                                    ')',
+                                                text: ')',
                                                 style: AppStyles
                                                     .textStyleSize14W100Primary(
                                                         context)),
@@ -385,13 +387,16 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                 setState(() {
                                   _isPressed = true;
                                 });
+
                                 validRequest = await _validateRequest();
                                 if (validRequest) {
                                   Sheets.showAppHeightNineSheet(
                                     onDisposed: () {
-                                      setState(() {
-                                        _isPressed = false;
-                                      });
+                                      if (mounted) {
+                                        setState(() {
+                                          _isPressed = false;
+                                        });
+                                      }
                                     },
                                     context: context,
                                     widget: AddNFTConfirm(

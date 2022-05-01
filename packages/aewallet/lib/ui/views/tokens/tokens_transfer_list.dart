@@ -11,6 +11,7 @@ import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
+import 'package:decimal/decimal.dart';
 
 class TokensTransferListWidget extends StatefulWidget {
   TokensTransferListWidget({
@@ -64,7 +65,7 @@ class _TokensTransferListWidgetState extends State<TokensTransferListWidget> {
                   ],
                 ),
                 Text(
-                    widget.feeEstimation.toString() +
+                    widget.feeEstimation!.toStringAsFixed(8) +
                         ' ' +
                         StateContainer.of(context)
                             .curNetwork
@@ -87,7 +88,7 @@ class _TokensTransferListWidgetState extends State<TokensTransferListWidget> {
                   ],
                 ),
                 Text(
-                    (_getTotal()).toString() +
+                    (_getTotal()).toStringAsFixed(8) +
                         ' ' +
                         StateContainer.of(context)
                             .curNetwork
@@ -119,7 +120,8 @@ class _TokensTransferListWidgetState extends State<TokensTransferListWidget> {
               ],
             ),
             Text(
-                (ucoTransfer.amount! / BigInt.from(100000000)).toString() +
+                (ucoTransfer.amount! / BigInt.from(100000000))
+                        .toStringAsFixed(8) +
                     ' ' +
                     StateContainer.of(context)
                         .curNetwork
@@ -134,10 +136,17 @@ class _TokensTransferListWidgetState extends State<TokensTransferListWidget> {
   double _getTotal() {
     double _totalAmount = 0.0;
     for (int i = 0; i < widget.listUcoTransfer!.length; i++) {
-      _totalAmount = _totalAmount +
-          widget.listUcoTransfer![i].amount! / BigInt.from(100000000);
+      double _amount =
+          (Decimal.parse(widget.listUcoTransfer![i].amount!.toString()) /
+                  Decimal.parse('100000000'))
+              .toDouble();
+      _totalAmount = (Decimal.parse(_totalAmount.toString()) +
+              Decimal.parse(_amount.toString()))
+          .toDouble();
     }
-    _totalAmount = _totalAmount + widget.feeEstimation!;
+    _totalAmount = (Decimal.parse(_totalAmount.toString()) +
+            Decimal.parse(widget.feeEstimation!.toString()))
+        .toDouble();
     return _totalAmount;
   }
 }

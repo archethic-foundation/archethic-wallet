@@ -39,20 +39,26 @@ class MenuWidgetWallet extends AbstractMenuWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             (StateContainer.of(context).wallet != null &&
-                        StateContainer.of(context).wallet!.accountBalance.uco !=
+                        StateContainer.of(context)
+                                .wallet!
+                                .accountBalance
+                                .networkCurrencyValue !=
                             null &&
-                        StateContainer.of(context).wallet!.accountBalance.uco! >
+                        StateContainer.of(context)
+                                .wallet!
+                                .accountBalance
+                                .networkCurrencyValue! >
                             0) ||
                     (StateContainer.of(context).localWallet != null &&
                         StateContainer.of(context)
                                 .localWallet!
                                 .accountBalance
-                                .uco !=
+                                .networkCurrencyValue !=
                             null &&
                         StateContainer.of(context)
                                 .localWallet!
                                 .accountBalance
-                                .uco! >
+                                .networkCurrencyValue! >
                             0)
                 ? Padding(
                     padding: const EdgeInsets.only(left: 10.0, right: 10.0),

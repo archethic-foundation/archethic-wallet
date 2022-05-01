@@ -6,6 +6,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:core/model/balance_wallet.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -42,7 +43,6 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
         SimplePriceResponse,
         CoinsPriceResponse,
         CoinsCurrentDataResponse,
-        NftBalance,
         OracleService,
         OracleUcoPrice,
         deriveAddress;
@@ -122,26 +122,6 @@ class StateContainerState extends State<StateContainer> {
     // Register RxBus
     _registerBus();
 
-    wallet = AppWallet();
-    localWallet = AppWallet();
-    sl.get<DBHelper>().getSelectedAccount().then((Account? account) {
-      if (account != null) {
-        localWallet!.accountBalance = Balance(
-            nft: List<NftBalance>.empty(growable: true),
-            uco: account.balance == null
-                ? 0
-                : double.tryParse(account.balance!));
-        localWallet!.address =
-            account.lastAddress == null ? '' : account.lastAddress!;
-      } else {
-        localWallet!.accountBalance =
-            Balance(nft: List<NftBalance>.empty(growable: true), uco: 0.0);
-        localWallet!.address = '';
-      }
-    });
-
-    updateContacts();
-
     Preferences.getInstance().then((Preferences _preferences) {
       setState(() {
         curCurrency = _preferences.getCurrency(deviceLocale);
@@ -151,6 +131,23 @@ class StateContainerState extends State<StateContainer> {
       });
       updateTheme(_preferences.getTheme());
     });
+
+    wallet = AppWallet();
+    localWallet = AppWallet();
+    sl.get<DBHelper>().getSelectedAccount().then((Account? account) {
+      if (account != null) {
+        localWallet!.accountBalance = BalanceWallet(
+            account.balance == 0 ? 0 : double.tryParse(account.balance!),
+            curCurrency);
+        localWallet!.address =
+            account.lastAddress == null ? '' : account.lastAddress!;
+      } else {
+        localWallet!.accountBalance = BalanceWallet(0.0, curCurrency);
+        localWallet!.address = '';
+      }
+    });
+
+    updateContacts();
   }
 
   // Subscriptions
@@ -173,8 +170,8 @@ class StateContainerState extends State<StateContainer> {
       setState(() {
         if (wallet != null) {
           wallet!.accountBalance = event.response!;
-          sl.get<DBHelper>().updateAccountBalance(
-              selectedAccount, wallet!.accountBalance.uco.toString());
+          sl.get<DBHelper>().updateAccountBalance(selectedAccount,
+              wallet!.accountBalance.networkCurrencyValue.toString());
         }
       });
     });
@@ -199,14 +196,14 @@ class StateContainerState extends State<StateContainer> {
         .registerTo<PriceEvent>()
         .listen((PriceEvent event) {
       setState(() {
-        wallet!.localCurrencyPrice =
+        wallet!.accountBalance.localCurrencyPrice =
             event.response == null || event.response!.localCurrencyPrice == null
-                ? '0'
-                : event.response!.localCurrencyPrice.toString();
-        localWallet!.localCurrencyPrice =
+                ? 0
+                : event.response!.localCurrencyPrice;
+        localWallet!.accountBalance.localCurrencyPrice =
             event.response == null || event.response!.localCurrencyPrice == null
-                ? '0'
-                : event.response!.localCurrencyPrice.toString();
+                ? 0
+                : event.response!.localCurrencyPrice;
       });
     });
 
@@ -314,7 +311,8 @@ class StateContainerState extends State<StateContainer> {
     final Balance balance = await sl
         .get<AppService>()
         .getBalanceGetResponse(selectedAccount.lastAddress!);
-    EventTaxiImpl.singleton().fire(BalanceGetEvent(response: balance));
+    final BalanceWallet balanceWallet = BalanceWallet(balance.uco, curCurrency);
+    EventTaxiImpl.singleton().fire(BalanceGetEvent(response: balanceWallet));
   }
 
   Future<void> requestUpdatePrice() async {
@@ -543,15 +541,16 @@ class StateContainerState extends State<StateContainer> {
 
     sl.get<DBHelper>().getSelectedAccount().then((Account? account) {
       if (account != null) {
-        localWallet!.accountBalance = Balance(
-            nft: List<NftBalance>.empty(growable: true),
-            uco: double.tryParse(
-                account.balance == null ? '0' : account.balance!));
+        localWallet!.accountBalance = BalanceWallet(
+            double.tryParse(account.balance == null ? '0' : account.balance!),
+            curCurrency);
+
         localWallet!.address =
             account.lastAddress == null ? '' : account.lastAddress!;
       } else {
-        localWallet!.accountBalance =
-            Balance(nft: List<NftBalance>.empty(growable: true), uco: 0.0);
+        localWallet!.accountBalance = BalanceWallet(
+            double.tryParse(account!.balance == null ? '0' : account.balance!),
+            curCurrency);
         localWallet!.address = '';
       }
     });

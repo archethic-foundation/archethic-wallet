@@ -50,6 +50,7 @@ class ChartInfos {
       case '7d':
         return priceChangePercentage7d;
       case '24h':
+        return priceChangePercentage24h;
       default:
         return priceChangePercentage24h;
     }
@@ -70,6 +71,7 @@ class ChartInfos {
       case '7d':
         return AppLocalization.of(context)!.chartOptionLabel7d;
       case '24h':
+        return AppLocalization.of(context)!.chartOptionLabel24h;
       default:
         return AppLocalization.of(context)!.chartOptionLabel24h;
     }

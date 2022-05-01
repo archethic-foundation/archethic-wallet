@@ -204,9 +204,15 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                           style: AppStyles.textStyleSize20W700Primary(context)),
                     ),
                     if (StateContainer.of(context).wallet != null &&
-                        StateContainer.of(context).wallet!.accountBalance.uco !=
+                        StateContainer.of(context)
+                                .wallet!
+                                .accountBalance
+                                .networkCurrencyValue !=
                             null &&
-                        StateContainer.of(context).wallet!.accountBalance.uco! >
+                        StateContainer.of(context)
+                                .wallet!
+                                .accountBalance
+                                .networkCurrencyValue! >
                             0)
                       Divider(
                         height: 2,
@@ -215,9 +221,15 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     else
                       const SizedBox(),
                     if (StateContainer.of(context).wallet != null &&
-                        StateContainer.of(context).wallet!.accountBalance.uco !=
+                        StateContainer.of(context)
+                                .wallet!
+                                .accountBalance
+                                .networkCurrencyValue !=
                             null &&
-                        StateContainer.of(context).wallet!.accountBalance.uco! >
+                        StateContainer.of(context)
+                                .wallet!
+                                .accountBalance
+                                .networkCurrencyValue! >
                             0)
                       AppSettings.buildSettingsListItemSingleLineWithInfos(
                           context,

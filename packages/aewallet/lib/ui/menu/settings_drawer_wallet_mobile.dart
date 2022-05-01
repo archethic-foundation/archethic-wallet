@@ -407,9 +407,11 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     if (selection != null) {
       _preferences.setCurrency(AvailableCurrency(selection));
       if (StateContainer.of(context).curCurrency.currency != selection) {
-        setState(() {
+        setState(() async {
           StateContainer.of(context).curCurrency = AvailableCurrency(selection);
-          StateContainer.of(context)
+          StateContainer.of(context).wallet!.accountBalance.selectedCurrency =
+              AvailableCurrency(selection);
+          await StateContainer.of(context)
               .updateCurrency(AvailableCurrency(selection));
         });
       }
@@ -710,9 +712,15 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           style: AppStyles.textStyleSize20W700Primary(context)),
                     ),
                     if (StateContainer.of(context).wallet != null &&
-                        StateContainer.of(context).wallet!.accountBalance.uco !=
+                        StateContainer.of(context)
+                                .wallet!
+                                .accountBalance
+                                .networkCurrencyValue !=
                             null &&
-                        StateContainer.of(context).wallet!.accountBalance.uco! >
+                        StateContainer.of(context)
+                                .wallet!
+                                .accountBalance
+                                .networkCurrencyValue! >
                             0)
                       Divider(
                         height: 2,
@@ -721,9 +729,15 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     else
                       const SizedBox(),
                     if (StateContainer.of(context).wallet != null &&
-                        StateContainer.of(context).wallet!.accountBalance.uco !=
+                        StateContainer.of(context)
+                                .wallet!
+                                .accountBalance
+                                .networkCurrencyValue !=
                             null &&
-                        StateContainer.of(context).wallet!.accountBalance.uco! >
+                        StateContainer.of(context)
+                                .wallet!
+                                .accountBalance
+                                .networkCurrencyValue! >
                             0)
                       AppSettings.buildSettingsListItemSingleLineWithInfos(
                           context,

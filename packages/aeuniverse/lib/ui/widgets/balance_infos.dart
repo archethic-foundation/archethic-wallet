@@ -98,13 +98,19 @@ class BalanceInfosWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: AutoSizeText(
-                      StateContainer.of(context).wallet!.accountBalance.uco == 0
+                      StateContainer.of(context)
+                                  .wallet!
+                                  .accountBalance
+                                  .networkCurrencyValue ==
+                              0
                           ? StateContainer.of(context)
                               .localWallet!
-                              .getAccountBalanceDisplay()
+                              .accountBalance
+                              .getNetworkAccountBalanceDisplay()
                           : StateContainer.of(context)
                               .wallet!
-                              .getAccountBalanceDisplay(),
+                              .accountBalance
+                              .getNetworkAccountBalanceDisplay(),
                       style: AppStyles.textStyleSize40W900Primary(context),
                     ),
                   ),
@@ -127,187 +133,104 @@ class BalanceInfosWidget {
           width: MediaQuery.of(context).size.width,
           alignment: Alignment.bottomLeft,
           child: Padding(
-            padding: const EdgeInsets.only(
-               left: 10.0, top: 5.0),
-            child: StateContainer.of(context)
-                        .chartInfos!
-                        .getPriceChangePercentage(
-                            StateContainer.of(context).idChartOption!)! >=
-                    0
-                ? Row(
-                    children: <Widget>[
-                      AutoSizeText(
+            padding: const EdgeInsets.only(left: 10.0, top: 5.0),
+            child: Row(
+              children: <Widget>[
+                AutoSizeText(
+                    StateContainer.of(context)
+                        .wallet!
+                        .accountBalance
+                        .getConvertedAccountBalanceDisplay(),
+                    textAlign: TextAlign.center,
+                    style: AppStyles.textStyleSize12W100Primary(context)),
+                const SizedBox(
+                  width: 10,
+                ),
+                AutoSizeText(
+                  StateContainer.of(context)
+                              .wallet!
+                              .accountBalance
+                              .networkCurrencyValue ==
+                          0
+                      ? '1 ' +
+                          StateContainer.of(context)
+                              .curNetwork
+                              .getNetworkCryptoCurrencyLabel() +
+                          ' = ' +
+                          StateContainer.of(context)
+                              .localWallet!
+                              .accountBalance
+                              .getLocalCurrencyPriceDisplay()
+                      : '1 ' +
+                          StateContainer.of(context)
+                              .curNetwork
+                              .getNetworkCryptoCurrencyLabel() +
+                          ' = ' +
                           StateContainer.of(context)
                               .wallet!
-                              .getLocalCurrencyPrice(
-                                  StateContainer.of(context).curCurrency,
-                                  locale: StateContainer.of(context)
-                                      .currencyLocale!),
-                          textAlign: TextAlign.center,
-                          style: AppStyles.textStyleSize12W100Primary(context)),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      AutoSizeText(
-                        StateContainer.of(context).wallet!.accountBalance.uco ==
-                                0
-                            ? '1 ' +
-                                StateContainer.of(context)
-                                    .curNetwork
-                                    .getNetworkCryptoCurrencyLabel() +
-                                ' = ' +
-                                StateContainer.of(context)
-                                    .localWallet!
-                                    .getLocalPrice(
-                                        StateContainer.of(context).curCurrency,
-                                        locale: StateContainer.of(context)
-                                            .currencyLocale!)
-                            : '1 ' +
-                                StateContainer.of(context)
-                                    .curNetwork
-                                    .getNetworkCryptoCurrencyLabel() +
-                                ' = ' +
-                                StateContainer.of(context)
-                                    .wallet!
-                                    .getLocalPrice(
-                                        StateContainer.of(context).curCurrency,
-                                        locale: StateContainer.of(context)
-                                            .currencyLocale!),
-                        style: AppStyles.textStyleSize12W100Primary(context),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      AutoSizeText(
-                        StateContainer.of(context)
-                                .chartInfos!
-                                .getPriceChangePercentage(
-                                    StateContainer.of(context).idChartOption!)!
-                                .toStringAsFixed(2) +
-                            '%',
-                        style:
-                            AppStyles.textStyleSize12W100PositiveValue(context),
-                      ),
-                      const SizedBox(width: 5),
-                      FaIcon(FontAwesomeIcons.caretUp,
-                          color: StateContainer.of(context)
-                              .curTheme
-                              .positiveValue),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      AutoSizeText(
-                        ChartInfos.getChartOptionLabel(
-                            context, StateContainer.of(context).idChartOption!),
-                        style: AppStyles.textStyleSize12W100Primary(context),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      StateContainer.of(context).useOracleUcoPrice
-                          ? InkWell(
-                              onTap: () {
-                                sl
-                                    .get<HapticUtil>()
-                                    .feedback(FeedbackType.light);
-                                AppDialogs.showInfoDialog(
-                                  context,
-                                  AppLocalization.of(context)!.informations,
-                                  AppLocalization.of(context)!
-                                      .currencyOracleInfo,
-                                );
-                              },
-                              child: buildIconWidget(
-                                context,
-                                'packages/aewallet/assets/icons/oracle.png',
-                                15,
-                                15,
-                              ),
-                            )
-                          : const SizedBox(),
-                    ],
-                  )
-                : Row(
-                    children: <Widget>[
-                      Text(
-                        StateContainer.of(context).wallet!.accountBalance.uco ==
-                                0
-                            ? '1 ' +
-                                StateContainer.of(context)
-                                    .curNetwork
-                                    .getNetworkCryptoCurrencyLabel() +
-                                ' = ' +
-                                StateContainer.of(context)
-                                    .localWallet!
-                                    .getLocalPrice(
-                                        StateContainer.of(context).curCurrency,
-                                        locale: StateContainer.of(context)
-                                            .currencyLocale!)
-                            : '1 ' +
-                                StateContainer.of(context)
-                                    .curNetwork
-                                    .getNetworkCryptoCurrencyLabel() +
-                                ' = ' +
-                                StateContainer.of(context)
-                                    .wallet!
-                                    .getLocalPrice(
-                                        StateContainer.of(context).curCurrency,
-                                        locale: StateContainer.of(context)
-                                            .currencyLocale!),
-                        style: AppStyles.textStyleSize12W100Primary(context),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        StateContainer.of(context)
-                                .chartInfos!
-                                .getPriceChangePercentage(
-                                    StateContainer.of(context).idChartOption!)!
-                                .toStringAsFixed(2) +
-                            '%',
-                        style:
-                            AppStyles.textStyleSize12W100NegativeValue(context),
-                      ),
-                      const SizedBox(width: 5),
-                      FaIcon(FontAwesomeIcons.caretDown,
-                          color: StateContainer.of(context)
-                              .curTheme
-                              .negativeValue),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      AutoSizeText(
-                        ChartInfos.getChartOptionLabel(
-                            context, StateContainer.of(context).idChartOption!),
-                        style: AppStyles.textStyleSize12W100Primary(context),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      StateContainer.of(context).useOracleUcoPrice
-                          ? InkWell(
-                              onTap: () {
-                                sl
-                                    .get<HapticUtil>()
-                                    .feedback(FeedbackType.light);
-                                AppDialogs.showInfoDialog(
-                                  context,
-                                  AppLocalization.of(context)!.informations,
-                                  AppLocalization.of(context)!
-                                      .currencyOracleInfo,
-                                );
-                              },
-                              child: buildIconWidget(
-                                context,
-                                'packages/aewallet/assets/icons/oracle.png',
-                                15,
-                                15,
-                              ),
-                            )
-                          : const SizedBox(),
-                    ],
-                  ),
+                              .accountBalance
+                              .getLocalCurrencyPriceDisplay(),
+                  style: AppStyles.textStyleSize12W100Primary(context),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                AutoSizeText(
+                  StateContainer.of(context)
+                          .chartInfos!
+                          .getPriceChangePercentage(
+                              StateContainer.of(context).idChartOption!)!
+                          .toStringAsFixed(2) +
+                      '%',
+                  style: StateContainer.of(context)
+                              .chartInfos!
+                              .getPriceChangePercentage(
+                                  StateContainer.of(context).idChartOption!)! >=
+                          0
+                      ? AppStyles.textStyleSize12W100PositiveValue(context)
+                      : AppStyles.textStyleSize12W100NegativeValue(context),
+                ),
+                const SizedBox(width: 5),
+                StateContainer.of(context).chartInfos!.getPriceChangePercentage(
+                            StateContainer.of(context).idChartOption!)! >=
+                        0
+                    ? FaIcon(FontAwesomeIcons.caretUp,
+                        color:
+                            StateContainer.of(context).curTheme.positiveValue)
+                    : FaIcon(FontAwesomeIcons.caretDown,
+                        color:
+                            StateContainer.of(context).curTheme.negativeValue),
+                const SizedBox(
+                  width: 10,
+                ),
+                AutoSizeText(
+                  ChartInfos.getChartOptionLabel(
+                      context, StateContainer.of(context).idChartOption!),
+                  style: AppStyles.textStyleSize12W100Primary(context),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                StateContainer.of(context).useOracleUcoPrice
+                    ? InkWell(
+                        onTap: () {
+                          sl.get<HapticUtil>().feedback(FeedbackType.light);
+                          AppDialogs.showInfoDialog(
+                            context,
+                            AppLocalization.of(context)!.informations,
+                            AppLocalization.of(context)!.currencyOracleInfo,
+                          );
+                        },
+                        child: buildIconWidget(
+                          context,
+                          'packages/aewallet/assets/icons/oracle.png',
+                          15,
+                          15,
+                        ),
+                      )
+                    : const SizedBox(),
+              ],
+            ),
           ),
         ),
       );
