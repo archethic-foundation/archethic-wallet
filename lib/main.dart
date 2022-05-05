@@ -316,7 +316,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
         if (_preferences.getLock() || _preferences.shouldLock()) {
           Navigator.of(context).pushReplacementNamed('/lock_screen');
         } else {
-          Account selectedAcct = await AppUtil().loginAccount(seed!, context);
+          Account? selectedAcct = await AppUtil().loginAccount(seed!, context);
           StateContainer.of(context).requestUpdate(account: selectedAcct);
           Navigator.of(context).pushReplacementNamed('/home');
         }

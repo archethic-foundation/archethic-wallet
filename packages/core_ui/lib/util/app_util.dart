@@ -2,34 +2,23 @@
 
 // Dart imports:
 import 'dart:io';
+import 'dart:math';
+import 'dart:typed_data';
 
 // Flutter imports:
+import 'package:core/util/global_var.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:bip32/bip32.dart' as bip32;
-import 'package:bip39/bip39.dart' as bip39;
 import 'package:core/localization.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
 import 'package:core/util/get_it_instance.dart';
-
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show uint8ListToHex, deriveAddress;
-
-/// purpose = 44' (BIP44)
-/// coin_type = 650' (UCO of Archethic Blockchain)
-/// account = Depends on the intended use of the key.
-/// Currently fixed values: 0xFFFF for o_{key}, 0x0000 for a simple w_{key})
-/// change = 0 (0 for external, 1 for internal)
-/// address_index = variable (0,1,2,...)
-/// path = m/44'/650'/0'/0'/0'
-const int kPurpose = 44;
-const int kCoinType = 650;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 class AppUtil {
-  Future<Account> loginAccount(String seed, BuildContext context,
+  Future<Account?> loginAccount(String walletSeed, BuildContext context,
       {bool forceNewAccount = false}) async {
     if (forceNewAccount) {
       await sl.get<DBHelper>().dropAll();
@@ -37,51 +26,54 @@ class AppUtil {
     Account? selectedAcct = await sl.get<DBHelper>().getSelectedAccount();
 
     if (selectedAcct == null) {
-      String privateKey = seedToPrivateKey(seed, 0, 0, 0);
-      final String genesisAddress = deriveAddress(privateKey, 0);
-      selectedAcct = Account(
-          index: 0,
-          lastAccess: 0,
-          genesisAddress: genesisAddress,
-          name: AppLocalization.of(context)!.defaultAccountName,
-          selected: true);
-      await sl.get<DBHelper>().saveAccount(selectedAcct);
+      /// Get Wallet KeyPair
+      final KeyPair walletKeyPair = deriveKeyPair(walletSeed, 0);
+
+      /// Generate keyChain Seed from random value
+      final int keychainSeed = Random.secure().nextInt(32);
+
+      /// Create Keychain from keyChain seed and wallet public key to encrypt secret
+      /// TODO: Add params in the 'newKeychainTransaction' method to pass the name of the service : eq: uco-wallet-main
+      /// and the derivation path = m/650'/uco-wallet-main'/0
+      final Transaction keychainTransaction = await sl
+          .get<ApiService>()
+          .newKeychainTransaction(
+              uint8ListToHex(
+                  Uint8List.fromList(keychainSeed.toString().codeUnits)),
+              [uint8ListToHex(walletKeyPair.publicKey)],
+              hexToUint8List(globalVarOriginPrivateKey));
+
+      /// Create Keychain Access for wallet
+      final Transaction keychainAccessTransaction = await sl
+          .get<ApiService>()
+          .newAccessKeychainTransaction(
+              walletSeed,
+              hexToUint8List(keychainTransaction.address!),
+              hexToUint8List(globalVarOriginPrivateKey));
+
+      /// Get KeyChain Wallet
+      Keychain keychain = await sl.get<ApiService>().getKeychain(walletSeed);
+
+      /// Get all services for archethic blockchain
+      keychain.services!.forEach((serviceName, service) async {
+        /// For the moment, only one account for wallet : services "uco-wallet-main"
+        /// When multi accounts will be implemented in archethic wallet, user could choose by himself the name of services
+        /// The wallet app will force the account in the derivation path with nameService = Account
+        if (service.derivationPath!.startsWith('m/650\'/uco-wallet-main\'/') &&
+            serviceName == 'uco-wallet-main') {
+          Uint8List genesisAddress =
+              keychain.deriveAddress(serviceName, index: 0);
+          selectedAcct = Account(
+              index: 0,
+              lastAccess: 0,
+              genesisAddress: uint8ListToHex(genesisAddress),
+              name: AppLocalization.of(context)!.defaultAccountName,
+              selected: true);
+          await sl.get<DBHelper>().saveAccount(selectedAcct!);
+        }
+      });
     }
     return selectedAcct;
-  }
-
-  String seedToPublicKey(
-      String seed, int account, int change, int addressIndex) {
-    return uint8ListToHex(bip32.BIP32
-        .fromSeed(bip39.mnemonicToSeed(bip39.entropyToMnemonic(seed)))
-        .derivePath("m/" +
-            kPurpose.toString() +
-            "'/" +
-            kCoinType.toString() +
-            "'/" +
-            account.toString() +
-            "'/" +
-            change.toString() +
-            "/" +
-            addressIndex.toString())
-        .publicKey);
-  }
-
-  String seedToPrivateKey(
-      String seed, int account, int change, int addressIndex) {
-    return uint8ListToHex(bip32.BIP32
-        .fromSeed(bip39.mnemonicToSeed(bip39.entropyToMnemonic(seed)))
-        .derivePath("m/" +
-            kPurpose.toString() +
-            "'/" +
-            kCoinType.toString() +
-            "'/" +
-            account.toString() +
-            "'/" +
-            change.toString() +
-            "/" +
-            addressIndex.toString())
-        .privateKey!);
   }
 
   static bool isDesktopMode() {

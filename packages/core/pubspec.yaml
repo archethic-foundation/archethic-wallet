@@ -12,21 +12,18 @@ dependencies:
   animate_do: ^2.1.0
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^1.0.7
-  #archethic_lib_dart: 
-  #  git:
-  #    url: https://github.com/archethic-foundation/libdart.git
-  #    ref: master
+  #archethic_lib_dart: ^1.0.7
+  archethic_lib_dart: 
+    git:
+      url: https://github.com/archethic-foundation/libdart.git
+      ref: master
       
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0
 
   # A flutter plugin for scanning 2D barcodes and QRCodes via camera
   barcode_scan2: ^4.2.0
-
-  # A BIP32 compatible library for Flutter writing in Dart.
-  bip32: ^2.0.0
-
+  
   # Dart implementation of Bitcoin BIP39 Mnemonic code for generating deterministic keys
   bip39: ^1.0.6
   

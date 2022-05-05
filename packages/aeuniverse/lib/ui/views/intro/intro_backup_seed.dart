@@ -107,7 +107,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                       AppUtil()
                                           .loginAccount(_seed, context,
                                               forceNewAccount: true)
-                                          .then((Account selectedAcct) {
+                                          .then((Account? selectedAcct) {
                                         StateContainer.of(context)
                                             .requestUpdate(
                                                 account: selectedAcct);
@@ -169,7 +169,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                 .then((String seed) {
                               AppUtil()
                                   .loginAccount(seed, context)
-                                  .then((Account selectedAcct) {
+                                  .then((Account? selectedAcct) {
                                 StateContainer.of(context)
                                     .requestUpdate(account: selectedAcct);
                                 StateContainer.of(context).requestUpdate(

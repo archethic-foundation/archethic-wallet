@@ -189,7 +189,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                                   AppUtil()
                                       .loginAccount(_seed, context,
                                           forceNewAccount: true)
-                                      .then((Account selectedAcct) {
+                                      .then((Account? selectedAcct) {
                                     StateContainer.of(context)
                                         .requestUpdate(account: selectedAcct);
                                     Navigator.of(context).pushNamed(
