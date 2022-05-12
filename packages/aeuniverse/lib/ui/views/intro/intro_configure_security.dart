@@ -21,10 +21,10 @@ import 'package:core/util/vault.dart';
 
 class IntroConfigureSecurity extends StatefulWidget {
   final List<PickerItem>? accessModes;
-  const IntroConfigureSecurity({Key? key, this.accessModes}) : super(key: key);
+  const IntroConfigureSecurity({super.key, this.accessModes});
 
   @override
-  _IntroConfigureSecurityState createState() => _IntroConfigureSecurityState();
+  State<IntroConfigureSecurity> createState() => _IntroConfigureSecurityState();
 }
 
 class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {

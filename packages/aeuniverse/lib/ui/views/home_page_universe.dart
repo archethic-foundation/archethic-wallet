@@ -25,10 +25,10 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AppHomePageUniverse extends StatefulWidget {
-  const AppHomePageUniverse({Key? key}) : super(key: key);
+  const AppHomePageUniverse({super.key});
 
   @override
-  _AppHomePageUniverseState createState() => _AppHomePageUniverseState();
+  State<AppHomePageUniverse> createState() => _AppHomePageUniverseState();
 }
 
 class _AppHomePageUniverseState extends State<AppHomePageUniverse>

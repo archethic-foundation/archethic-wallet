@@ -29,12 +29,12 @@ import 'package:core/util/global_var.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 
 class AddNFTSheet extends StatefulWidget {
-  const AddNFTSheet({Key? key, this.address}) : super(key: key);
+  const AddNFTSheet({super.key, this.address});
 
   final String? address;
 
   @override
-  _AddNFTSheetState createState() => _AddNFTSheetState();
+  State<AddNFTSheet> createState() => _AddNFTSheetState();
 }
 
 class _AddNFTSheetState extends State<AddNFTSheet> {

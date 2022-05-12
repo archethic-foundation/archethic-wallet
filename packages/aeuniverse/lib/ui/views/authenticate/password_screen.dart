@@ -21,10 +21,10 @@ import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 
 class PasswordScreen extends StatefulWidget {
-  const PasswordScreen({Key? key}) : super(key: key);
+  const PasswordScreen({super.key});
 
   @override
-  _PasswordScreenState createState() => _PasswordScreenState();
+  State<PasswordScreen> createState() => _PasswordScreenState();
 }
 
 class _PasswordScreenState extends State<PasswordScreen> {

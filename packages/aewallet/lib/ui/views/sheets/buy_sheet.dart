@@ -17,10 +17,10 @@ import 'package:core/localization.dart';
 import 'package:flutter_svg/svg.dart';
 
 class BuySheet extends StatefulWidget {
-  const BuySheet({Key? key}) : super(key: key);
+  const BuySheet({super.key});
 
   @override
-  _BuySheetState createState() => _BuySheetState();
+  State<BuySheet> createState() => _BuySheetState();
 }
 
 class _BuySheetState extends State<BuySheet> {

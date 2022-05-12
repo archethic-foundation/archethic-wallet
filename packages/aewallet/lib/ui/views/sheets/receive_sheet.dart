@@ -26,10 +26,10 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ReceiveSheet extends StatefulWidget {
-  const ReceiveSheet({Key? key}) : super(key: key);
+  const ReceiveSheet({super.key});
 
   @override
-  _ReceiveSheetState createState() => _ReceiveSheetState();
+  State<ReceiveSheet> createState() => _ReceiveSheetState();
 }
 
 class _ReceiveSheetState extends State<ReceiveSheet> {

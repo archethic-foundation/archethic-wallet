@@ -347,5 +347,7 @@
 		</array>
 		<key>UIStatusBarHidden</key>
 		<false/>
-	</dict>
+		<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+</dict>
 </plist>

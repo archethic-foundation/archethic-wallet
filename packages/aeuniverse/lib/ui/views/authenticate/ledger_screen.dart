@@ -17,12 +17,12 @@ import 'package:core/util/ledger/archethic_ledger_util.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
 class LedgerScreen extends StatefulWidget {
-  const LedgerScreen(this.ucoTransferList, {Key? key}) : super(key: key);
+  const LedgerScreen(this.ucoTransferList, {super.key});
 
   final List<UCOTransfer>? ucoTransferList;
 
   @override
-  _LedgerScreenState createState() => _LedgerScreenState();
+  State<LedgerScreen> createState() => _LedgerScreenState();
 }
 
 class _LedgerScreenState extends State<LedgerScreen> {

@@ -16,14 +16,13 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 /// A widget for displaying a mnemonic phrase
 class MnemonicDisplay extends StatefulWidget {
   const MnemonicDisplay(
-      {Key? key, required this.wordList, this.obscureSeed = false})
-      : super(key: key);
+      {super.key, required this.wordList, this.obscureSeed = false});
 
   final List<String> wordList;
   final bool obscureSeed;
 
   @override
-  _MnemonicDisplayState createState() => _MnemonicDisplayState();
+  State<MnemonicDisplay> createState() => _MnemonicDisplayState();
 }
 
 class _MnemonicDisplayState extends State<MnemonicDisplay> {

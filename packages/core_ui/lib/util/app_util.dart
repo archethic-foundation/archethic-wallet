@@ -30,26 +30,32 @@ class AppUtil {
       final KeyPair walletKeyPair = deriveKeyPair(walletSeed, 0);
 
       /// Generate keyChain Seed from random value
-      final int keychainSeed = Random.secure().nextInt(32);
+      final String keychainSeed = uint8ListToHex(Uint8List.fromList(
+          List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
+
+      /// Default service for wallet
+      const String kServiceName = 'main-uco-wallet';
+      const String kDerivationPathWithoutIndex =
+          'm/650\'/' + kServiceName + '\'/';
+      const String index = '0';
+      String kDerivationPath =
+          kDerivationPathWithoutIndex + index.toString() + '\'';
 
       /// Create Keychain from keyChain seed and wallet public key to encrypt secret
-      /// TODO: Add params in the 'newKeychainTransaction' method to pass the name of the service : eq: uco-wallet-main
-      /// and the derivation path = m/650'/uco-wallet-main'/0
       final Transaction keychainTransaction = await sl
           .get<ApiService>()
           .newKeychainTransaction(
-              uint8ListToHex(
-                  Uint8List.fromList(keychainSeed.toString().codeUnits)),
+              keychainSeed,
               [uint8ListToHex(walletKeyPair.publicKey)],
-              hexToUint8List(globalVarOriginPrivateKey));
+              hexToUint8List(globalVarOriginPrivateKey),
+              serviceName: kServiceName,
+              derivationPath: kDerivationPath);
 
       /// Create Keychain Access for wallet
-      final Transaction keychainAccessTransaction = await sl
-          .get<ApiService>()
-          .newAccessKeychainTransaction(
-              walletSeed,
-              hexToUint8List(keychainTransaction.address!),
-              hexToUint8List(globalVarOriginPrivateKey));
+      await sl.get<ApiService>().newAccessKeychainTransaction(
+          walletSeed,
+          hexToUint8List(keychainTransaction.address!),
+          hexToUint8List(globalVarOriginPrivateKey));
 
       /// Get KeyChain Wallet
       Keychain keychain = await sl.get<ApiService>().getKeychain(walletSeed);
@@ -59,8 +65,8 @@ class AppUtil {
         /// For the moment, only one account for wallet : services "uco-wallet-main"
         /// When multi accounts will be implemented in archethic wallet, user could choose by himself the name of services
         /// The wallet app will force the account in the derivation path with nameService = Account
-        if (service.derivationPath!.startsWith('m/650\'/uco-wallet-main\'/') &&
-            serviceName == 'uco-wallet-main') {
+        if (service.derivationPath!.startsWith(kDerivationPathWithoutIndex) &&
+            serviceName == kServiceName) {
           Uint8List genesisAddress =
               keychain.deriveAddress(serviceName, index: 0);
           selectedAcct = Account(

@@ -5,8 +5,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 /// [UCOTransferWallet] represents the an asset transfer
 class UCOTransferWallet extends UCOTransfer {
-  UCOTransferWallet({BigInt? amount, String? to, this.toContactName})
-      : super(amount: amount, to: to);
+  UCOTransferWallet({super.amount, super.to, this.toContactName});
 
   String? toContactName;
 

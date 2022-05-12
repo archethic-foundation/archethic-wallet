@@ -13,10 +13,10 @@ import 'package:core/localization.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 
 class IntroNewWalletDisclaimer extends StatefulWidget {
-  const IntroNewWalletDisclaimer({Key? key}) : super(key: key);
+  const IntroNewWalletDisclaimer({super.key});
 
   @override
-  _IntroNewWalletDisclaimerState createState() =>
+  State<IntroNewWalletDisclaimer> createState() =>
       _IntroNewWalletDisclaimerState();
 }
 

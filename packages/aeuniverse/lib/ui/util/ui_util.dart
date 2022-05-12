@@ -17,6 +17,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 enum ThreeLineAddressTextType { primary60, primary, success, successFull }
+
 enum OneLineAddressTextType { primary60, primary, success }
 
 // ignore: avoid_classes_with_only_static_members
@@ -450,6 +451,6 @@ class UIUtil {
 
   static Future<void> showWebview(
       BuildContext context, String url, String title) async {
-    await launch(url);
+    await launchUrl(Uri.parse(url));
   }
 }

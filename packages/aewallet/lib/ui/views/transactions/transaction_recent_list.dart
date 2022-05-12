@@ -24,9 +24,9 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 
 class TxListWidget extends StatefulWidget {
-  const TxListWidget({Key? key}) : super(key: key);
+  const TxListWidget({super.key});
   @override
-  _TxListWidgetState createState() => _TxListWidgetState();
+  State<TxListWidget> createState() => _TxListWidgetState();
 }
 
 class _TxListWidgetState extends State<TxListWidget> {

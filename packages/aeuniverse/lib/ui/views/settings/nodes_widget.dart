@@ -22,13 +22,13 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show Node, ApiService;
 
 class NodesList extends StatefulWidget {
-  NodesList(this.nodesController, this.nodesOpen, {Key? key}) : super(key: key);
+  NodesList(this.nodesController, this.nodesOpen, {super.key});
 
   final AnimationController nodesController;
   bool nodesOpen;
 
   @override
-  _NodesListState createState() => _NodesListState();
+  State<NodesList> createState() => _NodesListState();
 }
 
 class _NodesListState extends State<NodesList> {

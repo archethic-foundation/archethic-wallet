@@ -20,10 +20,10 @@ import 'package:core_ui/util/app_util.dart';
 import 'package:flutter_svg/svg.dart';
 
 class IntroWelcome extends StatefulWidget {
-  const IntroWelcome({Key? key}) : super(key: key);
+  const IntroWelcome({super.key});
 
   @override
-  _IntroWelcomeState createState() => _IntroWelcomeState();
+  State<IntroWelcome> createState() => _IntroWelcomeState();
 }
 
 class _IntroWelcomeState extends State<IntroWelcome> {

@@ -18,10 +18,10 @@ import 'package:intl/intl.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class TxAllListWidget extends StatefulWidget {
-  const TxAllListWidget({Key? key}) : super(key: key);
+  const TxAllListWidget({super.key});
 
   @override
-  _TxAllListWidgetState createState() => _TxAllListWidgetState();
+  State<TxAllListWidget> createState() => _TxAllListWidgetState();
 }
 
 class _TxAllListWidgetState extends State<TxAllListWidget> {

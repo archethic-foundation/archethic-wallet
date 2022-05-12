@@ -41,10 +41,10 @@ import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 */
 
 class LedgerSheet extends StatefulWidget {
-  const LedgerSheet({Key? key}) : super(key: key);
+  const LedgerSheet({super.key});
 
   @override
-  _LedgerSheetState createState() => _LedgerSheetState();
+  State<LedgerSheet> createState() => _LedgerSheetState();
 }
 
 class _LedgerSheetState extends State<LedgerSheet> {

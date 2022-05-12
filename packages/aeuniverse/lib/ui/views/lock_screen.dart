@@ -25,10 +25,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class AppLockScreen extends StatefulWidget {
-  const AppLockScreen({Key? key}) : super(key: key);
+  const AppLockScreen({super.key});
 
   @override
-  _AppLockScreenState createState() => _AppLockScreenState();
+  State<AppLockScreen> createState() => _AppLockScreenState();
 }
 
 class _AppLockScreenState extends State<AppLockScreen> {

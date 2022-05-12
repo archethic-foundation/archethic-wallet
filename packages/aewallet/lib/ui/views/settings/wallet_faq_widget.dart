@@ -12,14 +12,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 
 class WalletFAQ extends StatefulWidget {
-  WalletFAQ(this.tokensListController, this.tokensListOpen, {Key? key})
-      : super(key: key);
+  WalletFAQ(this.tokensListController, this.tokensListOpen, {super.key});
 
   final AnimationController tokensListController;
   bool tokensListOpen;
 
   @override
-  _WalletFAQState createState() => _WalletFAQState();
+  State<WalletFAQ> createState() => _WalletFAQState();
 }
 
 class _WalletFAQState extends State<WalletFAQ> {

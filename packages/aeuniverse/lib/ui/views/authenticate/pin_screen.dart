@@ -33,8 +33,7 @@ class PinScreen extends StatefulWidget {
       {this.description = '',
       this.expectedPin = '',
       this.pinScreenBackgroundColor,
-      Key? key})
-      : super(key: key);
+      super.key});
 
   final PinOverlayType type;
   final String expectedPin;
@@ -42,7 +41,7 @@ class PinScreen extends StatefulWidget {
   final Color? pinScreenBackgroundColor;
 
   @override
-  _PinScreenState createState() => _PinScreenState();
+  State<PinScreen> createState() => _PinScreenState();
 }
 
 class _PinScreenState extends State<PinScreen>

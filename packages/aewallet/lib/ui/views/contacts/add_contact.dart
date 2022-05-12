@@ -28,12 +28,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class AddContactSheet extends StatefulWidget {
-  const AddContactSheet({Key? key, this.address}) : super(key: key);
+  const AddContactSheet({super.key, this.address});
 
   final String? address;
 
   @override
-  _AddContactSheetState createState() => _AddContactSheetState();
+  State<AddContactSheet> createState() => _AddContactSheetState();
 }
 
 class _AddContactSheetState extends State<AddContactSheet> {

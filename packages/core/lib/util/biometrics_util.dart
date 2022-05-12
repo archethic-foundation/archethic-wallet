@@ -51,8 +51,8 @@ class BiometricUtil {
       final LocalAuthentication localAuth = LocalAuthentication();
       return await localAuth.authenticate(
           localizedReason: message,
-          useErrorDialogs: false,
-          biometricOnly: true);
+          options: const AuthenticationOptions(
+              useErrorDialogs: false, biometricOnly: true));
     }
     return false;
   }

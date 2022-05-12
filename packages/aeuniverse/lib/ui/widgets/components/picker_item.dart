@@ -30,8 +30,7 @@ class PickerWidget extends StatefulWidget {
   final int selectedIndex;
 
   const PickerWidget(
-      {Key? key, this.pickerItems, this.onSelected, this.selectedIndex = -1})
-      : super(key: key);
+      {super.key, this.pickerItems, this.onSelected, this.selectedIndex = -1});
 
   @override
   _PickerWidgetState createState() => _PickerWidgetState();

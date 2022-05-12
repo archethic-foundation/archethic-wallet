@@ -41,10 +41,10 @@ import 'package:core_ui/util/case_converter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsSheetWalletMobile extends StatefulWidget {
-  const SettingsSheetWalletMobile({Key? key}) : super(key: key);
+  const SettingsSheetWalletMobile({super.key});
 
   @override
-  _SettingsSheetWalletMobileState createState() =>
+  State<SettingsSheetWalletMobile> createState() =>
       _SettingsSheetWalletMobileState();
 }
 

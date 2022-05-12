@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 /// NoTransitionRoute
 /// Custom route which has no transitions
 class NoTransitionRoute<T> extends MaterialPageRoute<T> {
-  NoTransitionRoute(
-      {required WidgetBuilder builder, required RouteSettings settings})
-      : super(builder: builder, settings: settings);
+  NoTransitionRoute({required super.builder, required super.settings});
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
@@ -20,8 +18,7 @@ class NoTransitionRoute<T> extends MaterialPageRoute<T> {
 /// NoPushTransitionRoute
 /// Custom route which has no transition when pushed, but has a pop animation
 class NoPushTransitionRoute<T> extends MaterialPageRoute<T> {
-  NoPushTransitionRoute({required WidgetBuilder builder})
-      : super(builder: builder);
+  NoPushTransitionRoute({required super.builder});
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
@@ -38,9 +35,7 @@ class NoPushTransitionRoute<T> extends MaterialPageRoute<T> {
 /// NoPopTransitionRoute
 /// Custom route which has no transition when popped, but has a push animation
 class NoPopTransitionRoute<T> extends MaterialPageRoute<T> {
-  NoPopTransitionRoute(
-      {required WidgetBuilder builder, required RouteSettings settings})
-      : super(builder: builder, settings: settings);
+  NoPopTransitionRoute({required super.builder, required super.settings});
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,

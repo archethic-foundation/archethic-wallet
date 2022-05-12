@@ -40,14 +40,13 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
 
 class TransferConfirmSheet extends StatefulWidget {
   const TransferConfirmSheet(
-      {Key? key,
+      {super.key,
       required this.lastAddress,
       required this.typeTransfer,
       required this.feeEstimation,
       this.title,
       this.ucoTransferList,
-      this.nftTransferList})
-      : super(key: key);
+      this.nftTransferList});
 
   final String? lastAddress;
   final String? typeTransfer;
@@ -57,7 +56,7 @@ class TransferConfirmSheet extends StatefulWidget {
   final List<NFTTransferWallet>? nftTransferList;
 
   @override
-  _TransferConfirmSheetState createState() => _TransferConfirmSheetState();
+  State<TransferConfirmSheet> createState() => _TransferConfirmSheetState();
 }
 
 class _TransferConfirmSheetState extends State<TransferConfirmSheet> {

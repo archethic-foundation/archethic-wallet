@@ -26,14 +26,13 @@ import 'package:core_ui/ui/util/dimens.dart';
 import 'package:event_taxi/event_taxi.dart';
 
 class ContactsList extends StatefulWidget {
-  ContactsList(this.contactsController, this.contactsOpen, {Key? key})
-      : super(key: key);
+  ContactsList(this.contactsController, this.contactsOpen, {super.key});
 
   final AnimationController contactsController;
   bool contactsOpen;
 
   @override
-  _ContactsListState createState() => _ContactsListState();
+  State<ContactsList> createState() => _ContactsListState();
 }
 
 class _ContactsListState extends State<ContactsList> {

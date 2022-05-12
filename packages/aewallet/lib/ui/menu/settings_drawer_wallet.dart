@@ -24,10 +24,10 @@ import 'package:core/localization.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsSheetWallet extends StatefulWidget {
-  const SettingsSheetWallet({Key? key}) : super(key: key);
+  const SettingsSheetWallet({super.key});
 
   @override
-  _SettingsSheetWalletState createState() => _SettingsSheetWalletState();
+  State<SettingsSheetWallet> createState() => _SettingsSheetWalletState();
 }
 
 class _SettingsSheetWalletState extends State<SettingsSheetWallet>

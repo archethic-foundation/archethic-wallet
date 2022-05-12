@@ -12,18 +12,18 @@ import 'package:core/model/address.dart';
 
 class NftTransferListWidget extends StatefulWidget {
   NftTransferListWidget({
-    Key? key,
+    super.key,
     this.listNftTransfer,
     this.onGet,
     this.onDelete,
-  }) : super(key: key);
+  });
 
   List<NFTTransferWallet>? listNftTransfer;
   final Function(NFTTransferWallet)? onGet;
   final Function()? onDelete;
 
   @override
-  _NftTransferListWidgetState createState() => _NftTransferListWidgetState();
+  State<NftTransferListWidget> createState() => _NftTransferListWidgetState();
 }
 
 class _NftTransferListWidgetState extends State<NftTransferListWidget> {

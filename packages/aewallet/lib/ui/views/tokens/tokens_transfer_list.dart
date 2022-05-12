@@ -15,12 +15,12 @@ import 'package:decimal/decimal.dart';
 
 class TokensTransferListWidget extends StatefulWidget {
   TokensTransferListWidget({
-    Key? key,
+    super.key,
     required this.listUcoTransfer,
     required this.feeEstimation,
     this.onGet,
     this.onDelete,
-  }) : super(key: key);
+  });
 
   List<UCOTransferWallet>? listUcoTransfer;
   final Function(UCOTransferWallet)? onGet;
@@ -28,7 +28,7 @@ class TokensTransferListWidget extends StatefulWidget {
   final double? feeEstimation;
 
   @override
-  _TokensTransferListWidgetState createState() =>
+  State<TokensTransferListWidget> createState() =>
       _TokensTransferListWidgetState();
 }
 

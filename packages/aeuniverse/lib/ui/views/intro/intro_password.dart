@@ -8,9 +8,9 @@ import 'package:aeuniverse/ui/views/settings/set_password.dart';
 import 'package:core/localization.dart';
 
 class IntroPassword extends StatefulWidget {
-  const IntroPassword({Key? key}) : super(key: key);
+  const IntroPassword({super.key});
   @override
-  _IntroPasswordState createState() => _IntroPasswordState();
+  State<IntroPassword> createState() => _IntroPasswordState();
 }
 
 class _IntroPasswordState extends State<IntroPassword> {

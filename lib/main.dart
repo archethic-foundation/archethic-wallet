@@ -56,10 +56,10 @@ Future<void> main() async {
 }
 
 class App extends StatefulWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
-  _AppState createState() => _AppState();
+  State<App> createState() => _AppState();
 }
 
 class _AppState extends State<App> {
@@ -256,10 +256,10 @@ class _AppState extends State<App> {
 /// Splash
 /// Default page route that determines if user is logged in and routes them appropriately.
 class Splash extends StatefulWidget {
-  const Splash({Key? key}) : super(key: key);
+  const Splash({super.key});
 
   @override
-  SplashState createState() => SplashState();
+  State<Splash> createState() => SplashState();
 }
 
 class SplashState extends State<Splash> with WidgetsBindingObserver {

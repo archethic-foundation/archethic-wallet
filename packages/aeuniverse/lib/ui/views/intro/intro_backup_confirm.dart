@@ -19,10 +19,10 @@ import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 
 class IntroBackupConfirm extends StatefulWidget {
-  const IntroBackupConfirm({Key? key}) : super(key: key);
+  const IntroBackupConfirm({super.key});
 
   @override
-  _IntroBackupConfirmState createState() => _IntroBackupConfirmState();
+  State<IntroBackupConfirm> createState() => _IntroBackupConfirmState();
 }
 
 class _IntroBackupConfirmState extends State<IntroBackupConfirm> {

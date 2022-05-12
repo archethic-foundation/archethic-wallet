@@ -27,11 +27,10 @@ class SetYubikey extends StatefulWidget {
   final String? clientID;
 
   const SetYubikey(
-      {Key? key, this.header, this.description, this.apiKey, this.clientID})
-      : super(key: key);
+      {super.key, this.header, this.description, this.apiKey, this.clientID});
 
   @override
-  _SetYubikeyState createState() => _SetYubikeyState();
+  State<SetYubikey> createState() => _SetYubikeyState();
 }
 
 class _SetYubikeyState extends State<SetYubikey> {

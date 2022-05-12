@@ -1,7 +1,6 @@
 ## 0.2.11
 🚀 Features
 * Password management
-* Implementation of BIP44 Path to define the address from the private key derived from seed
 * Add license notifications
 
 👷‍♂️ Enhancements

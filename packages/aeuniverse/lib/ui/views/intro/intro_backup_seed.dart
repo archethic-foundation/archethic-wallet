@@ -24,10 +24,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class IntroBackupSeedPage extends StatefulWidget {
-  const IntroBackupSeedPage({Key? key}) : super(key: key);
+  const IntroBackupSeedPage({super.key});
 
   @override
-  _IntroBackupSeedState createState() => _IntroBackupSeedState();
+  State<IntroBackupSeedPage> createState() => _IntroBackupSeedState();
 }
 
 class _IntroBackupSeedState extends State<IntroBackupSeedPage> {

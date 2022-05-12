@@ -24,10 +24,9 @@ class SetPassword extends StatefulWidget {
   final String? header;
   final String? description;
 
-  const SetPassword({Key? key, this.header, this.description})
-      : super(key: key);
+  const SetPassword({super.key, this.header, this.description});
   @override
-  _SetPasswordState createState() => _SetPasswordState();
+  State<SetPassword> createState() => _SetPasswordState();
 }
 
 class _SetPasswordState extends State<SetPassword> {

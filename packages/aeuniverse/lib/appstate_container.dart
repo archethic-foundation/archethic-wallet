@@ -49,10 +49,9 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
 
 class _InheritedStateContainer extends InheritedWidget {
   const _InheritedStateContainer({
-    Key? key,
     required this.data,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+  });
 
   final StateContainerState data;
 
@@ -61,7 +60,7 @@ class _InheritedStateContainer extends InheritedWidget {
 }
 
 class StateContainer extends StatefulWidget {
-  const StateContainer({Key? key, required this.child}) : super(key: key);
+  const StateContainer({super.key, required this.child});
 
   final Widget child;
 
@@ -72,7 +71,7 @@ class StateContainer extends StatefulWidget {
   }
 
   @override
-  StateContainerState createState() => StateContainerState();
+  State<StateContainer> createState() => StateContainerState();
 }
 
 class StateContainerState extends State<StateContainer> {

@@ -11,8 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /// TextField button
 class TextFieldButton extends StatelessWidget {
-  const TextFieldButton({@required this.icon, this.onPressed, Key? key})
-      : super(key: key);
+  const TextFieldButton({@required this.icon, this.onPressed, super.key});
 
   final IconData? icon;
   final Function? onPressed;
@@ -66,8 +65,7 @@ class AppTextField extends StatefulWidget {
       this.buttonFadeDurationMs = 100,
       this.topMargin = 0,
       this.autofocus = false,
-      Key? key})
-      : super(key: key);
+      super.key});
 
   final TextAlign? textAlign;
   final FocusNode? focusNode;
@@ -100,7 +98,7 @@ class AppTextField extends StatefulWidget {
   final bool? autofocus;
 
   @override
-  _AppTextFieldState createState() => _AppTextFieldState();
+  State<AppTextField> createState() => _AppTextFieldState();
 }
 
 class _AppTextFieldState extends State<AppTextField> {

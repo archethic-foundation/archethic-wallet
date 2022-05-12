@@ -20,10 +20,10 @@ import 'package:intl/intl.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 class TransactionChainExplorerSheet extends StatefulWidget {
-  const TransactionChainExplorerSheet({Key? key}) : super(key: key);
+  const TransactionChainExplorerSheet({super.key});
 
   @override
-  _TransactionChainExplorerSheetState createState() =>
+  State<TransactionChainExplorerSheet> createState() =>
       _TransactionChainExplorerSheetState();
 }
 
@@ -292,10 +292,9 @@ TimelineTile _buildTimelineTile(
 
 class _IconIndicator extends StatelessWidget {
   const _IconIndicator({
-    Key? key,
     this.iconData,
     this.size,
-  }) : super(key: key);
+  });
 
   final IconData? iconData;
   final double? size;

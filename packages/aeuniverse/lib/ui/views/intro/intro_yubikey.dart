@@ -8,9 +8,9 @@ import 'package:aeuniverse/ui/views/settings/set_yubikey.dart';
 import 'package:core/localization.dart';
 
 class IntroYubikey extends StatefulWidget {
-  const IntroYubikey({Key? key}) : super(key: key);
+  const IntroYubikey({super.key});
   @override
-  _IntroYubikeyState createState() => _IntroYubikeyState();
+  State<IntroYubikey> createState() => _IntroYubikeyState();
 }
 
 class _IntroYubikeyState extends State<IntroYubikey> {

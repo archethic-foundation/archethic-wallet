@@ -18,12 +18,12 @@ import 'package:core_ui/ui/util/dimens.dart';
 import 'package:intl/intl.dart';
 
 class TransactionInfosSheet extends StatefulWidget {
-  const TransactionInfosSheet(this.txAddress, {Key? key}) : super(key: key);
+  const TransactionInfosSheet(this.txAddress, {super.key});
 
   final String txAddress;
 
   @override
-  _TransactionInfosSheetState createState() => _TransactionInfosSheetState();
+  State<TransactionInfosSheet> createState() => _TransactionInfosSheetState();
 }
 
 class _TransactionInfosSheetState extends State<TransactionInfosSheet> {

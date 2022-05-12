@@ -54,8 +54,7 @@ class TransferTokensSheet extends StatefulWidget {
       this.quickSendAmount,
       this.title,
       this.actionButtonTitle,
-      Key? key})
-      : super(key: key);
+      super.key});
 
   final AvailableCurrency? localCurrency;
   final Contact? contact;
@@ -65,10 +64,11 @@ class TransferTokensSheet extends StatefulWidget {
   final String? actionButtonTitle;
 
   @override
-  _TransferTokensSheetState createState() => _TransferTokensSheetState();
+  State<TransferTokensSheet> createState() => _TransferTokensSheetState();
 }
 
 enum AddressStyle { text60, text90, primary }
+
 enum PrimaryCurrency { network, selected }
 
 class _TransferTokensSheetState extends State<TransferTokensSheet> {
@@ -982,7 +982,6 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
             : const SizedBox(),
       ],
     );
-    ;
   }
 
   AppTextField getEnterAddressContainer() {

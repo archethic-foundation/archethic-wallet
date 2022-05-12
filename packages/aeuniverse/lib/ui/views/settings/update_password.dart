@@ -8,9 +8,9 @@ import 'package:aeuniverse/ui/views/settings/set_password.dart';
 import 'package:core/localization.dart';
 
 class UpdatePassword extends StatefulWidget {
-  const UpdatePassword({Key? key}) : super(key: key);
+  const UpdatePassword({super.key});
   @override
-  _UpdatePasswordState createState() => _UpdatePasswordState();
+  State<UpdatePassword> createState() => _UpdatePasswordState();
 }
 
 class _UpdatePasswordState extends State<UpdatePassword> {

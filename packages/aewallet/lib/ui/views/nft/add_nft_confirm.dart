@@ -33,18 +33,17 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
 
 class AddNFTConfirm extends StatefulWidget {
   const AddNFTConfirm(
-      {Key? key,
+      {super.key,
       this.nftName,
       this.nftInitialSupply,
-      required this.feeEstimation})
-      : super(key: key);
+      required this.feeEstimation});
 
   final String? nftName;
   final int? nftInitialSupply;
   final double? feeEstimation;
 
   @override
-  _AddNFTConfirmState createState() => _AddNFTConfirmState();
+  State<AddNFTConfirm> createState() => _AddNFTConfirmState();
 }
 
 class _AddNFTConfirmState extends State<AddNFTConfirm> {

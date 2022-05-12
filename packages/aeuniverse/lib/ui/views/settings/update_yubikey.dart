@@ -9,9 +9,9 @@ import 'package:core/localization.dart';
 import 'package:core/util/vault.dart';
 
 class UpdateYubikey extends StatefulWidget {
-  const UpdateYubikey({Key? key}) : super(key: key);
+  const UpdateYubikey({super.key});
   @override
-  _UpdateYubikeyState createState() => _UpdateYubikeyState();
+  State<UpdateYubikey> createState() => _UpdateYubikeyState();
 }
 
 class _UpdateYubikeyState extends State<UpdateYubikey> {

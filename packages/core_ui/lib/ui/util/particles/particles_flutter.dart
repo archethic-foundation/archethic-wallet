@@ -15,7 +15,7 @@ import 'package:core_ui/ui/util/particles/painter.dart';
 
 class CircularParticle extends StatefulWidget {
   const CircularParticle({
-    Key? key,
+    super.key,
     this.height,
     this.width,
     this.onTapAnimation = true,
@@ -39,7 +39,7 @@ class CircularParticle extends StatefulWidget {
     this.hoverColor = Colors.orangeAccent,
     this.hoverRadius = 80,
     this.connectDots = false,
-  }) : super(key: key);
+  });
   final double? awayRadius;
   final double? height;
   final double? width;
@@ -59,7 +59,7 @@ class CircularParticle extends StatefulWidget {
   final bool? connectDots; //not recommended
 
   @override
-  _CircularParticleState createState() => _CircularParticleState();
+  State<CircularParticle> createState() => _CircularParticleState();
 }
 
 // ignore: duplicate_ignore

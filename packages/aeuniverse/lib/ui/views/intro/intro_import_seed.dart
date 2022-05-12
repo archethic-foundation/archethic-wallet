@@ -29,10 +29,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class IntroImportSeedPage extends StatefulWidget {
-  const IntroImportSeedPage({Key? key}) : super(key: key);
+  const IntroImportSeedPage({super.key});
 
   @override
-  _IntroImportSeedState createState() => _IntroImportSeedState();
+  State<IntroImportSeedPage> createState() => _IntroImportSeedState();
 }
 
 class _IntroImportSeedState extends State<IntroImportSeedPage> {

@@ -13,12 +13,12 @@ import 'package:core/localization.dart';
 import 'package:core/util/mnemonics.dart';
 
 class AppSeedBackupSheet extends StatefulWidget {
-  const AppSeedBackupSheet(this.seed, {Key? key}) : super(key: key);
+  const AppSeedBackupSheet(this.seed, {super.key});
 
   final String seed;
 
   @override
-  _AppSeedBackupSheetState createState() => _AppSeedBackupSheetState();
+  State<AppSeedBackupSheet> createState() => _AppSeedBackupSheetState();
 }
 
 class _AppSeedBackupSheetState extends State<AppSeedBackupSheet> {

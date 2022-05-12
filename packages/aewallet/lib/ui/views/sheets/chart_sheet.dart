@@ -6,7 +6,6 @@ import 'dart:io';
 // Flutter imports:
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
-import 'package:core_ui/model/chart_infos.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -24,13 +23,12 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class ChartSheet extends StatefulWidget {
   const ChartSheet(
-      {Key? key, required this.optionChartList, required this.optionChart})
-      : super(key: key);
+      {super.key, required this.optionChartList, required this.optionChart});
 
   final List<OptionChart> optionChartList;
   final OptionChart? optionChart;
   @override
-  _ChartSheetState createState() => _ChartSheetState();
+  State<ChartSheet> createState() => _ChartSheetState();
 }
 
 class _ChartSheetState extends State<ChartSheet> {

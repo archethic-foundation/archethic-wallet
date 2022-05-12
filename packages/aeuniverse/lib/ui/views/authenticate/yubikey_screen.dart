@@ -28,10 +28,10 @@ import 'package:yubidart/yubidart.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class YubikeyScreen extends StatefulWidget {
-  const YubikeyScreen({Key? key}) : super(key: key);
+  const YubikeyScreen({super.key});
 
   @override
-  _YubikeyScreenState createState() => _YubikeyScreenState();
+  State<YubikeyScreen> createState() => _YubikeyScreenState();
 }
 
 class _YubikeyScreenState extends State<YubikeyScreen> {

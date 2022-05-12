@@ -11,8 +11,10 @@ enum AddressTextType { primary60, primary, success }
 
 class OneOrThreeLineAddressText extends StatelessWidget {
   OneOrThreeLineAddressText(
-      {Key? key, @required this.address, @required this.type, this.contactName})
-      : super(key: key);
+      {super.key,
+      @required this.address,
+      @required this.type,
+      this.contactName});
 
   String? address;
   String? contactName;

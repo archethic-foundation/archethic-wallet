@@ -145,12 +145,11 @@ class _AppHeightNineModalRoute<T> extends PopupRoute<T> {
       this.barrierLabel,
       this.color,
       this.radius,
-      RouteSettings? settings,
+      super.settings,
       this.bgColor,
       this.animationDurationMs,
       this.closeOnTap,
-      this.onDisposed})
-      : super(settings: settings);
+      this.onDisposed});
 
   final WidgetBuilder? builder;
   final double? radius;
@@ -301,10 +300,9 @@ class _AppHeightEightModalRoute<T> extends PopupRoute<T> {
       this.barrierLabel,
       this.color,
       this.radius,
-      RouteSettings? settings,
+      super.settings,
       this.bgColor,
-      this.animationDurationMs})
-      : super(settings: settings);
+      this.animationDurationMs});
 
   final WidgetBuilder? builder;
   final double? radius;
