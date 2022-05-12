@@ -53,7 +53,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
     super.initState();
 
     _registerBus();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
 
     // Setup placeholder animation and start
     _animationDisposed = false;
@@ -154,7 +154,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
   @override
   void dispose() {
     _destroyBus();
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     _placeholderCardAnimationController!.dispose();
     _scrollController!.dispose();
     super.dispose();
@@ -306,6 +306,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                               MenuWidgetWallet().buildMenuTxExplorer(context),
                         ),
                       ),
+                      TxListWidget(),
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: 100,

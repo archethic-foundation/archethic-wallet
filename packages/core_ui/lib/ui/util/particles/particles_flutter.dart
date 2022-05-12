@@ -96,7 +96,7 @@ class _CircularParticleState extends State<CircularParticle>
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback(initailizeOffsets);
+    WidgetsBinding.instance.addPostFrameCallback(initailizeOffsets);
     controller =
         AnimationController(duration: const Duration(seconds: 10), vsync: this);
     animation = Tween<double>(begin: 0, end: 1).animate(controller!)

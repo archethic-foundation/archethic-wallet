@@ -76,8 +76,8 @@ Now, you can send some UCO and see your transactions
 ## Setup this Application for developers
 
 ### Pre-requisites
-- Flutter 2.8+
-- Dart 2.15+
+- Flutter 3.0+
+- Dart 2.17+
 
 ### Instructions
 - Download the repo into a folder
