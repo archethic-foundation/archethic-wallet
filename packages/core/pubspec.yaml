@@ -79,7 +79,7 @@ dependencies:
   #infinite_scroll_pagination: ^3.1.0
   infinite_scroll_pagination: 
     git:
-      url: https://github.com/archethic-foundation/libdart.git
+      url: https://github.com/redDwarf03/infinite_scroll_pagination.git
       ref: master
 
   # Localization
