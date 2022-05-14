@@ -1,4 +1,5 @@
-dart format lib packages
+melos exec -- "flutter pub get" 
+melos exec -- "dart format lib packages"
 dart fix --dry-run
-flutter pub run import_sorter:main
+melos exec -- "flutter pub run import_sorter:main"
 flutter pub run flutter_native_splash:create --path=flutter_native_splash.yaml 
