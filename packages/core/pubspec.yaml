@@ -12,7 +12,7 @@ dependencies:
   animate_do: ^2.1.0
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^1.0.8
+  archethic_lib_dart: ^1.0.9
   #archethic_lib_dart: 
   #  git:
   #    url: https://github.com/archethic-foundation/libdart.git
@@ -26,7 +26,8 @@ dependencies:
   
   # Dart implementation of Bitcoin BIP39 Mnemonic code for generating deterministic keys
   bip39: ^1.0.6
-  
+  bip32: ^2.0.0
+
   # Utilities for converting between data representations. Provides a number of Sink, Codec, Decoder, and Encoder types
   convert: ^3.0.1
 
@@ -43,8 +44,8 @@ dependencies:
   expandable: ^5.0.1
 
   # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart
-  fl_chart: ^0.50.1
-
+  fl_chart: ^0.50.5
+  
   flutter:
     sdk: flutter
   flutter_localizations:
