@@ -6,14 +6,9 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:core/model/balance_wallet.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aeuniverse/model/available_themes.dart';
-import 'package:aeuniverse/ui/themes/theme_dark.dart';
-import 'package:aeuniverse/util/preferences.dart';
-import 'package:aeuniverse/util/service_locator.dart';
 import 'package:core/bus/balance_get_event.dart';
 import 'package:core/bus/price_event.dart';
 import 'package:core/bus/transactions_list_event.dart';
@@ -21,6 +16,7 @@ import 'package:core/model/ae_apps.dart';
 import 'package:core/model/available_currency.dart';
 import 'package:core/model/available_language.dart';
 import 'package:core/model/available_networks.dart';
+import 'package:core/model/balance_wallet.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
 import 'package:core/model/recent_transaction.dart';
@@ -34,6 +30,12 @@ import 'package:core_ui/ui/themes/themes.dart';
 import 'package:core_ui/util/app_util.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:fl_chart/fl_chart.dart';
+
+// Project imports:
+import 'package:aeuniverse/model/available_themes.dart';
+import 'package:aeuniverse/ui/themes/theme_dark.dart';
+import 'package:aeuniverse/util/preferences.dart';
+import 'package:aeuniverse/util/service_locator.dart';
 
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show

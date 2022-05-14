@@ -5,10 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aeuniverse/appstate_container.dart';
 import 'package:core/model/ae_apps.dart';
 import 'package:core_ui/util/app_util.dart';
 import 'package:flutter_svg/svg.dart';
+
+// Project imports:
+import 'package:aeuniverse/appstate_container.dart';
 
 Widget getLogo(BuildContext context) {
   return StateContainer.of(context).currentAEApp == AEApps.bin

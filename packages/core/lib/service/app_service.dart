@@ -5,12 +5,14 @@ import 'dart:async';
 import 'dart:developer' as dev;
 
 // Package imports:
+import 'package:intl/intl.dart';
+
+// Project imports:
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
 import 'package:core/model/recent_transaction.dart';
 import 'package:core/model/transaction_infos.dart';
 import 'package:core/util/get_it_instance.dart';
-import 'package:intl/intl.dart';
 
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show

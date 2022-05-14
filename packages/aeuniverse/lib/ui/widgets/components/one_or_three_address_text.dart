@@ -4,7 +4,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
+// Project imports:
 import 'package:aeuniverse/ui/util/styles.dart';
 
 enum AddressTextType { primary60, primary, success }

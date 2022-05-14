@@ -22,9 +22,6 @@ import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aeuniverse/util/preferences.dart';
 import 'package:aeuniverse/util/service_locator.dart';
-import 'package:aewallet/ui/views/contacts/contact_list.dart';
-import 'package:aewallet/ui/views/nft/add_nft.dart';
-import 'package:aewallet/ui/views/settings/wallet_faq_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
@@ -39,6 +36,11 @@ import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/util/case_converter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+
+// Project imports:
+import 'package:aewallet/ui/views/contacts/contact_list.dart';
+import 'package:aewallet/ui/views/nft/add_nft.dart';
+import 'package:aewallet/ui/views/settings/wallet_faq_widget.dart';
 
 class SettingsSheetWalletMobile extends StatefulWidget {
   const SettingsSheetWalletMobile({super.key});

@@ -7,9 +7,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:intl/intl.dart';
+
+// Project imports:
 import 'package:core/l10n/messages_all.dart';
 import 'package:core/model/available_language.dart';
-import 'package:intl/intl.dart';
 
 /// Localization
 class AppLocalization {

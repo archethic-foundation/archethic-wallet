@@ -5,15 +5,17 @@ import 'dart:io';
 import 'dart:ui';
 
 // Flutter imports:
-import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/haptic_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aeuniverse/appstate_container.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+
+// Project imports:
+import 'package:aeuniverse/appstate_container.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class Sheets {

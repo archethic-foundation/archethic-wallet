@@ -7,11 +7,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/widgets/balance_infos.dart';
-import 'package:aeuniverse/ui/widgets/logo.dart';
-import 'package:aeuniverse/util/preferences.dart';
 import 'package:aewallet/ui/menu/menu_widget_wallet.dart';
 import 'package:aewallet/ui/menu/settings_drawer_wallet_mobile.dart';
 import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
@@ -19,10 +14,17 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/bus/account_changed_event.dart';
 import 'package:core/bus/disable_lock_timeout_event.dart';
 import 'package:core/model/available_networks.dart';
-import 'package:core_ui/ui/util/routes.dart';
 import 'package:core_ui/ui/util/responsive.dart';
+import 'package:core_ui/ui/util/routes.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+// Project imports:
+import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/widgets/balance_infos.dart';
+import 'package:aeuniverse/ui/widgets/logo.dart';
+import 'package:aeuniverse/util/preferences.dart';
 
 class AppHomePageUniverse extends StatefulWidget {
   const AppHomePageUniverse({super.key});

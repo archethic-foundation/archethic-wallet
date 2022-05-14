@@ -4,8 +4,6 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/haptic_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -17,9 +15,11 @@ import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ChartSheet extends StatefulWidget {
   const ChartSheet(

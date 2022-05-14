@@ -3,8 +3,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:aewallet/ui/menu/settings_drawer_wallet_mobile.dart';
-import 'package:core_ui/ui/util/responsive.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -12,16 +10,20 @@ import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
-import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
-import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
-import 'package:aewallet/ui/views/tokens/transfer_tokens_sheet.dart';
-import 'package:aewallet/ui/views/transactions/transaction_chain_explorer_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
+import 'package:core_ui/ui/util/responsive.dart';
 import 'package:core_ui/ui/widgets/menu/abstract_menu_widget.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+
+// Project imports:
+import 'package:aewallet/ui/menu/settings_drawer_wallet_mobile.dart';
+import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
+import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
+import 'package:aewallet/ui/views/tokens/transfer_tokens_sheet.dart';
+import 'package:aewallet/ui/views/transactions/transaction_chain_explorer_sheet.dart';
 
 class MenuWidgetWallet extends AbstractMenuWidget {
   @override

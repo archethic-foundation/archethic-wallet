@@ -8,10 +8,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:core/bus/otp_event.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:yubidart/yubidart.dart';
+
+// Project imports:
+import 'package:core/bus/otp_event.dart';
 
 class NFCUtil {
   /// hasNFC()

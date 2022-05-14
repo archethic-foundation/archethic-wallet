@@ -9,6 +9,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import "package:gql_link/gql_link.dart";
+import "package:web_socket_channel/web_socket_channel.dart";
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
@@ -16,27 +18,26 @@ import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/util/preferences.dart';
+import 'package:core/bus/authenticated_event.dart';
+import 'package:core/localization.dart';
+import 'package:core/model/authentication_method.dart';
+import 'package:core/service/app_service.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core_ui/ui/util/dimens.dart';
+import 'package:core_ui/ui/util/routes.dart';
+import 'package:event_taxi/event_taxi.dart';
+import 'package:gql_websocket_link/gql_websocket_link.dart';
+
+// Project imports:
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/model/nft_transfer_wallet.dart';
 import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:aewallet/ui/views/nft/nft_transfer_list.dart';
 import 'package:aewallet/ui/views/tokens/tokens_transfer_list.dart';
-import 'package:core/bus/authenticated_event.dart';
-import 'package:gql_websocket_link/gql_websocket_link.dart';
-import "package:web_socket_channel/web_socket_channel.dart";
-import "package:gql_link/gql_link.dart";
-import 'package:core/localization.dart';
-import 'package:core/model/authentication_method.dart';
-import 'package:core/service/app_service.dart';
-import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/global_var.dart';
-import 'package:core_ui/ui/util/dimens.dart';
-import 'package:core_ui/ui/util/routes.dart';
-import 'package:event_taxi/event_taxi.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show TransactionStatus;
+    show TransactionStatus, ApiService;
 
 class TransferConfirmSheet extends StatefulWidget {
   const TransferConfirmSheet(
@@ -291,10 +292,11 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       final String transactionChainSeed =
           await StateContainer.of(context).getSeed();
       List<UCOTransferWallet> _ucoTransferList = widget.ucoTransferList!;
+      final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
       final TransactionStatus transactionStatus = await sl
           .get<AppService>()
           .sendUCO(
-              globalVarOriginPrivateKey,
+              originPrivateKey,
               transactionChainSeed,
               StateContainer.of(context).selectedAccount.lastAddress!,
               _ucoTransferList);

@@ -10,7 +10,7 @@ import 'dart:math';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
+// Project imports:
 import 'package:core_ui/ui/util/particles/painter.dart';
 
 class CircularParticle extends StatefulWidget {

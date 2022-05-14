@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aewallet/model/nft_transfer_wallet.dart';
 import 'package:core/model/address.dart';
+
+// Project imports:
+import 'package:aewallet/model/nft_transfer_wallet.dart';
 
 class NftTransferListWidget extends StatefulWidget {
   NftTransferListWidget({

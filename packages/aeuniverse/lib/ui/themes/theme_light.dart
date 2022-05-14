@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:aeuniverse/appstate_container.dart';
 import 'package:core_ui/ui/themes/themes.dart';
 import 'package:core_ui/ui/util/particles/particles_flutter.dart';
+
+// Project imports:
+import 'package:aeuniverse/appstate_container.dart';
 
 class LightTheme implements BaseTheme {
   @override

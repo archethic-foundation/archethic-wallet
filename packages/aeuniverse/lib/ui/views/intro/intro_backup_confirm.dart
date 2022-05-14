@@ -6,17 +6,19 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/widgets/components/buttons.dart';
-import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
-import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/dimens.dart';
+
+// Project imports:
+import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/widgets/components/buttons.dart';
+import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
+import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 
 class IntroBackupConfirm extends StatefulWidget {
   const IntroBackupConfirm({super.key});

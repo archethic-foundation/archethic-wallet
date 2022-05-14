@@ -6,12 +6,9 @@ import 'dart:io';
 import 'dart:ui';
 
 // Flutter imports:
-import 'package:aeuniverse/ui/widgets/components/tap_outside_unfocus.dart';
-import 'package:core/util/haptic_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:decimal/decimal.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
@@ -21,9 +18,8 @@ import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
+import 'package:aeuniverse/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aeuniverse/util/user_data_util.dart';
-import 'package:aewallet/model/uco_transfer_wallet.dart';
-import 'package:aewallet/ui/views/tokens/transfer_confirm_sheet.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
@@ -33,18 +29,23 @@ import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
 import 'package:core/service/app_service.dart';
 import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/global_var.dart';
+import 'package:core/util/haptic_util.dart';
 import 'package:core/util/number_util.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/formatters.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+
+// Project imports:
+import 'package:aewallet/model/uco_transfer_wallet.dart';
+import 'package:aewallet/ui/views/tokens/transfer_confirm_sheet.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show AddressService, isHex;
+    show AddressService, isHex, ApiService;
 
 class TransferTokensSheet extends StatefulWidget {
   const TransferTokensSheet(
@@ -1216,8 +1217,9 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
               : BigInt.from(
                   double.tryParse(_sendAmountController!.text)! * 100000000),
           to: _recipientAddress));
+      final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
       fee = await sl.get<AppService>().getFeesEstimationUCO(
-          globalVarOriginPrivateKey,
+          originPrivateKey,
           transactionChainSeed,
           StateContainer.of(context).selectedAccount.lastAddress!,
           ucoTransferListForFee);

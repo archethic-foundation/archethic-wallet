@@ -2,6 +2,8 @@
 
 // Package imports:
 import 'package:bip39/bip39.dart' as bip39;
+
+// Project imports:
 import 'package:core/util/seeds.dart';
 
 // ignore: avoid_classes_with_only_static_members

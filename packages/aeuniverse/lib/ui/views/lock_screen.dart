@@ -1,10 +1,23 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:core/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:core/localization.dart';
+import 'package:core/model/authentication_method.dart';
+import 'package:core/model/data/appdb.dart';
+import 'package:core/model/data/hive_db.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
+import 'package:core/util/vault.dart';
+import 'package:core_ui/ui/util/dimens.dart';
+import 'package:core_ui/util/app_util.dart';
+import 'package:core_ui/util/case_converter.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+// Project imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
@@ -12,17 +25,6 @@ import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/util/preferences.dart';
-import 'package:core/localization.dart';
-import 'package:core/model/authentication_method.dart';
-import 'package:core/model/data/appdb.dart';
-import 'package:core/model/data/hive_db.dart';
-import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/vault.dart';
-import 'package:core_ui/ui/util/dimens.dart';
-import 'package:core_ui/util/app_util.dart';
-import 'package:core_ui/util/case_converter.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class AppLockScreen extends StatefulWidget {
   const AppLockScreen({super.key});

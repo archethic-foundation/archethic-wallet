@@ -4,9 +4,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aeuniverse/ui/views/authenticate/password_screen.dart';
-import 'package:aeuniverse/ui/views/authenticate/pin_screen.dart';
-import 'package:aeuniverse/ui/views/authenticate/yubikey_screen.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/util/biometrics_util.dart';
@@ -15,6 +12,11 @@ import 'package:core/util/haptic_util.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+
+// Project imports:
+import 'package:aeuniverse/ui/views/authenticate/password_screen.dart';
+import 'package:aeuniverse/ui/views/authenticate/pin_screen.dart';
+import 'package:aeuniverse/ui/views/authenticate/yubikey_screen.dart';
 
 class AuthFactory {
   static Future<bool> authenticate(

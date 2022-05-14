@@ -5,27 +5,29 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:core/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:core/bus/otp_event.dart';
+import 'package:core/localization.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
+import 'package:core/util/nfc.dart';
+import 'package:core/util/vault.dart';
+import 'package:event_taxi/event_taxi.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:yubidart/yubidart.dart';
+
+// Project imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/util/preferences.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/bus/otp_event.dart';
-import 'package:core/localization.dart';
-import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/nfc.dart';
-import 'package:core/util/vault.dart';
-import 'package:event_taxi/event_taxi.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yubidart/yubidart.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class YubikeyScreen extends StatefulWidget {
   const YubikeyScreen({super.key});

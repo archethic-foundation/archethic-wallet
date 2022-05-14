@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-// Package imports:
+// Project imports:
 import 'package:core/model/available_currency.dart';
 import 'package:core/model/balance_wallet.dart';
 import 'package:core/model/recent_transaction.dart';

@@ -4,8 +4,10 @@
 import 'package:flutter/foundation.dart';
 
 // Package imports:
-import 'package:core/model/data/hive_db.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+// Project imports:
+import 'package:core/model/data/hive_db.dart';
 
 class DBHelper {
   static const String _contactsTable = 'contacts';

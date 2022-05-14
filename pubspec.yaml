@@ -29,10 +29,7 @@ dependencies:
 dev_dependencies:
   flutter_lints: ^1.0.4
   # Automatically organize your dart imports
-  import_sorter: 
-    git:
-      url: https://github.com/redDwarf03/import_sorter.git
-      ref: master
+  import_sorter: ^4.6.0
   # Integration Tests
   #integration_test:
   #  sdk: flutter

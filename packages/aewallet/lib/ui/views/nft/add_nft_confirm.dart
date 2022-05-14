@@ -16,20 +16,20 @@ import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/util/preferences.dart';
-import 'package:aewallet/bus/nft_add_event.dart';
 import 'package:core/bus/authenticated_event.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/service/app_service.dart';
 import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/global_var.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:event_taxi/event_taxi.dart';
 
-// Package imports:
+// Project imports:
+import 'package:aewallet/bus/nft_add_event.dart';
+
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show TransactionStatus;
+    show TransactionStatus, ApiService;
 
 class AddNFTConfirm extends StatefulWidget {
   const AddNFTConfirm(
@@ -283,10 +283,11 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
       _showSendingAnimation(context);
       final String transactionChainSeed =
           await StateContainer.of(context).getSeed();
+      final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
       final TransactionStatus transactionStatus = await sl
           .get<AppService>()
           .addNFT(
-              globalVarOriginPrivateKey,
+              originPrivateKey,
               transactionChainSeed,
               StateContainer.of(context).selectedAccount.lastAddress!,
               widget.nftName!,

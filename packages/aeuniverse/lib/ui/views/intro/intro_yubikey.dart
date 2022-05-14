@@ -4,8 +4,10 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aeuniverse/ui/views/settings/set_yubikey.dart';
 import 'package:core/localization.dart';
+
+// Project imports:
+import 'package:aeuniverse/ui/views/settings/set_yubikey.dart';
 
 class IntroYubikey extends StatefulWidget {
   const IntroYubikey({super.key});

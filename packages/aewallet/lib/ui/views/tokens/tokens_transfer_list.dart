@@ -8,10 +8,12 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
 import 'package:decimal/decimal.dart';
+
+// Project imports:
+import 'package:aewallet/model/uco_transfer_wallet.dart';
 
 class TokensTransferListWidget extends StatefulWidget {
   TokensTransferListWidget({

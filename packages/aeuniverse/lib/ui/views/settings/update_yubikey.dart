@@ -4,9 +4,11 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aeuniverse/ui/views/settings/set_yubikey.dart';
 import 'package:core/localization.dart';
 import 'package:core/util/vault.dart';
+
+// Project imports:
+import 'package:aeuniverse/ui/views/settings/set_yubikey.dart';
 
 class UpdateYubikey extends StatefulWidget {
   const UpdateYubikey({super.key});

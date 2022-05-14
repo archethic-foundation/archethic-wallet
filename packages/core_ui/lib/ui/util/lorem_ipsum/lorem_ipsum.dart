@@ -3,7 +3,7 @@
 // Dart imports:
 import 'dart:math';
 
-// Package imports:
+// Project imports:
 import 'package:core_ui/ui/util/lorem_ipsum/words.dart';
 
 Random _random = Random();

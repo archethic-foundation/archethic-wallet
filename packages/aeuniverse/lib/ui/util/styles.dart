@@ -3,7 +3,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
+// Project imports:
 import 'package:aeuniverse/appstate_container.dart';
 
 // ignore: avoid_classes_with_only_static_members

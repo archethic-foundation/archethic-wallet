@@ -1,11 +1,27 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:core/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:core/localization.dart';
+import 'package:core/model/authentication_method.dart';
+import 'package:core/model/data/appdb.dart';
+import 'package:core/util/biometrics_util.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
+import 'package:core/util/mnemonics.dart';
+import 'package:core/util/seeds.dart';
+import 'package:core/util/vault.dart';
+import 'package:core_ui/ui/util/dimens.dart';
+import 'package:core_ui/ui/util/formatters.dart';
+import 'package:core_ui/util/app_util.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+// Project imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
@@ -13,20 +29,6 @@ import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 import 'package:aeuniverse/util/user_data_util.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/localization.dart';
-import 'package:core/model/authentication_method.dart';
-import 'package:core/model/data/appdb.dart';
-import 'package:core/util/biometrics_util.dart';
-import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/mnemonics.dart';
-import 'package:core/util/seeds.dart';
-import 'package:core/util/vault.dart';
-import 'package:core_ui/ui/util/dimens.dart';
-import 'package:core_ui/ui/util/formatters.dart';
-import 'package:core_ui/util/app_util.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class IntroImportSeedPage extends StatefulWidget {
   const IntroImportSeedPage({super.key});

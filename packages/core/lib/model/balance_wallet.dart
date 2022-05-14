@@ -1,8 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 ///
-import 'package:core/model/available_currency.dart';
+
+// Package imports:
 import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
+
+// Project imports:
+import 'package:core/model/available_currency.dart';
 
 class BalanceWallet {
   BalanceWallet(this.networkCurrencyValue, this.selectedCurrency);

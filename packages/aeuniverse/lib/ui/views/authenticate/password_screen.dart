@@ -8,17 +8,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:core/localization.dart';
+import 'package:core/util/string_encryption.dart';
+import 'package:core/util/vault.dart';
+import 'package:core_ui/ui/util/dimens.dart';
+
+// Project imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/util/preferences.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core/localization.dart';
-import 'package:core/util/string_encryption.dart';
-import 'package:core/util/vault.dart';
-import 'package:core_ui/ui/util/dimens.dart';
 
 class PasswordScreen extends StatefulWidget {
   const PasswordScreen({super.key});
