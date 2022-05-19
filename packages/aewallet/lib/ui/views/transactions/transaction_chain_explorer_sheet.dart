@@ -33,9 +33,9 @@ class _TransactionChainExplorerSheetState
 
   Future<List<Transaction>> _getTransactionChain() async {
     List<Transaction>? _transactions;
-    _transactions = await sl
-        .get<ApiService>()
-        .getTransactionChain(StateContainer.of(context).wallet!.address, 0);
+    _transactions = await sl.get<ApiService>().getTransactionChain(
+        StateContainer.of(context).wallet!.address,
+        pagingAddress: '');
     transactionsLength = _transactions.length;
     return _transactions;
   }

@@ -28,10 +28,11 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
 
 class AppService {
   Future<List<Transaction>> getTransactionChain(
-      String address, int? page) async {
-    page ??= 1;
-    final List<Transaction> transactionChain =
-        await sl.get<ApiService>().getTransactionChain(address, page);
+      String address, String? pagingAddress) async {
+    pagingAddress ??= '';
+    final List<Transaction> transactionChain = await sl
+        .get<ApiService>()
+        .getTransactionChain(address, pagingAddress: pagingAddress);
     return transactionChain;
   }
 
@@ -42,9 +43,10 @@ class AppService {
   }
 
   Future<List<RecentTransaction>> getRecentTransactions(
-      String genesisAddress, String lastAddress, int page) async {
+      String genesisAddress, String lastAddress, String? pagingAddress) async {
+    pagingAddress ??= '';
     final List<Transaction> transactionChain =
-        await getTransactionChain(lastAddress, page);
+        await getTransactionChain(lastAddress, pagingAddress);
     final List<TransactionInput> transactionInputsGenesisAddress =
         await getTransactionInputs(genesisAddress);
     final List<RecentTransaction> recentTransactions =

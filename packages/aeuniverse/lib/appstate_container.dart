@@ -360,11 +360,11 @@ class StateContainerState extends State<StateContainer> {
     EventTaxiImpl.singleton().fire(PriceEvent(response: simplePriceResponse));
   }
 
-  Future<void> requestUpdateRecentTransactions(int page) async {
+  Future<void> requestUpdateRecentTransactions(String pagingAddress) async {
     final List<RecentTransaction> recentTransactions = await sl
         .get<AppService>()
         .getRecentTransactions(selectedAccount.genesisAddress!,
-            selectedAccount.lastAddress!, page);
+            selectedAccount.lastAddress!, pagingAddress);
     EventTaxiImpl.singleton()
         .fire(TransactionsListEvent(transaction: recentTransactions));
   }
@@ -525,7 +525,8 @@ class StateContainerState extends State<StateContainer> {
     });
   }
 
-  Future<void> requestUpdate({Account? account, int? page = 0}) async {
+  Future<void> requestUpdate(
+      {Account? account, String? pagingAddress = ''}) async {
     await requestUpdateLastAddress(account!);
     setState(() {
       balanceLoading = true;
@@ -536,7 +537,7 @@ class StateContainerState extends State<StateContainer> {
       balanceLoading = false;
     });
     await requestUpdatePrice();
-    await requestUpdateRecentTransactions(page!);
+    await requestUpdateRecentTransactions(pagingAddress!);
     setState(() {
       recentTransactionsLoading = false;
     });
