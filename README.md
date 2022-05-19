@@ -90,10 +90,6 @@ Now, you can send some UCO and see your transactions
 
 By default, the endpoint is https://testnet.archethic.net but you can change it in 'Networks' menu.
 
-### Web app
-The wallet (beta version) is available in web mode too with the same source code as the mobile versions.
-[Wallet Web App](https://reddwarf03.github.io/archethic_web/)
-
 ### Note
 
 *** This Application is currently in active development so it might fail to build. Please refer to issues or create new issues if you find any. Contributions are welcomed.
