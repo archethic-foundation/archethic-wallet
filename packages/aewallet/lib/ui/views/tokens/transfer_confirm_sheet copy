@@ -1,0 +1,143 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+
+// Dart imports:
+import 'dart:async';
+
+// Flutter imports:
+import 'package:aewallet/ui/views/transactions/phoenix_link.dart';
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:aeuniverse/ui/widgets/components/buttons.dart';
+import 'package:core/localization.dart';
+import 'package:core/service/app_service.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core_ui/ui/util/dimens.dart';
+
+// Project imports:
+import 'package:graphql_flutter/graphql_flutter.dart';
+
+class TransferConfirmSheet extends StatefulWidget {
+  const TransferConfirmSheet({super.key});
+
+  @override
+  State<TransferConfirmSheet> createState() => _TransferConfirmSheetState();
+}
+
+class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
+  PhoenixLink? link;
+  ValueNotifier<GraphQLClient>? client;
+
+  // your subscription query
+  final subscriptionDocument = gql(
+      """subscription { transactionConfirmed(address: "0000D2690135438EF7842075DCEB62E42F46614B6E3478FCE01A943EC7E699AC74C3") { nbConfirmations } }""");
+
+  Future<void> initGraphQLChannel() async {
+    // my absinthe plug api location
+    final HttpLink phoenixHttpLink = HttpLink(
+      'http://localhost:4000/socket/websocket',
+    );
+
+    // my websocket location
+    String websocketUri = "ws://localhost:4000/socket/websocket";
+
+    // creation of phoenixChannel for use in PhoenixLink
+    final phoenixChannel =
+        await PhoenixLink.createChannel(websocketUri: websocketUri);
+
+    final phoenixLink = PhoenixLink(
+      channel: phoenixChannel,
+    );
+    var _link = Link.split(
+        (request) => request.isSubscription, phoenixLink, phoenixHttpLink);
+
+    client = ValueNotifier(
+      GraphQLClient(
+        link: _link,
+        cache: GraphQLCache(),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      minimum:
+          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                client == null
+                    ? const SizedBox()
+                    : Center(
+                        child: GraphQLProvider(
+                          client: client,
+                          child: Subscription(
+                              options: SubscriptionOptions(
+                                document: subscriptionDocument,
+                              ),
+                              builder: (result) {
+                                if (result.hasException) {
+                                  return Text(result.exception.toString());
+                                }
+                                if (result.isLoading) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                                return ResultAccumulator.appendUniqueEntries(
+                                    latest: result.data,
+                                    builder: (context, {results}) =>
+                                        Text(result.data.toString()));
+                              }),
+                        ),
+                      ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 10.0),
+            child: Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    AppButton.buildAppButton(
+                      const Key('confirm'),
+                      context,
+                      AppButtonType.primary,
+                      AppLocalization.of(context)!.confirm,
+                      Dimens.buttonTopDimens,
+                      onPressed: () async {
+                        _doSend();
+                      },
+                    ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    AppButton.buildAppButton(
+                        const Key('cancel'),
+                        context,
+                        AppButtonType.primary,
+                        AppLocalization.of(context)!.cancel,
+                        Dimens.buttonBottomDimens, onPressed: () {
+                      Navigator.of(context).pop();
+                    }),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _doSend() async {
+    await initGraphQLChannel();
+    await sl.get<AppService>().send();
+  }
+}

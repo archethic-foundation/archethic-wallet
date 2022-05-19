@@ -12,7 +12,7 @@ dependencies:
   animate_do: ^2.1.0
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^1.0.9
+  archethic_lib_dart: ^1.0.10
   #archethic_lib_dart: 
   #  git:
   #    url: https://github.com/archethic-foundation/libdart.git
@@ -73,8 +73,15 @@ dependencies:
   # A composable, multi-platform, Future-based API for HTTP requests
   http: ^0.13.4
 
-  gql_websocket_link: ^0.3.3
-  web_socket_channel: ^2.2.0
+  graphql_flutter: 
+    git:
+      url: https://github.com/Quantit-Github/graphql-flutter.git
+      path: packages/graphql_flutter
+      ref: f1ccb2d775826697fa0ab4f6d27d132f8a28f444 # commit hash
+
+  phoenix_socket: ^0.5.3
+
+  gql_phoenix_link_2: ^0.5.0
 
   # Lazily load and display pages of items as the user scrolls down your screen.
   #infinite_scroll_pagination: ^3.1.0

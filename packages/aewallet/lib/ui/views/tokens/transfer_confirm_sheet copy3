@@ -10,7 +10,7 @@ import 'package:aewallet/ui/views/transactions/phoenix_link.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:gql_exec/gql_exec.dart';
+
 import "package:web_socket_channel/web_socket_channel.dart";
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
@@ -26,11 +26,8 @@ import 'package:core/service/app_service.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/routes.dart';
-import "package:gql_link/gql_link.dart";
 import 'package:event_taxi/event_taxi.dart';
 import 'package:phoenix_socket/phoenix_socket.dart';
-import 'package:phoenix_socket/phoenix_socket.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 
 // Project imports:
 import 'package:aewallet/bus/transaction_send_event.dart';
@@ -67,19 +64,24 @@ class TransferConfirmSheet extends StatefulWidget {
 class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   bool? animationOpen;
 
-  PhoenixLink? phoenixLink;
-
-  final subscriptionDocument = gql(
-      """subscription { transactionConfirmed(address: "00005b97bd47bb11af2e17732fe355c18731d30035066b43d4788c189014f6807090") { nbConfirmations } }""");
+  PhoenixChannel? _channel;
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
 
   void subscribe() {
-    PhoenixLink.createChannel(
-            websocketUri: 'ws://localhost:4000/socket/websocket')
-        .then((channel) {
-      phoenixLink = PhoenixLink(channel: channel);
+    var socket = PhoenixSocket('ws://localhost:4000/socket/websocket')
+      ..connect();
+    socket.openStream.listen((event) {
+      print('socket connected');
+      var channel = socket.addChannel(topic: '__absinthe__:control');
+      channel.join();
+      setState(() {
+        _channel = channel;
+      });
+    });
+    socket.closeStream.listen((event) {
+      print('socket disconnected');
     });
   }
 
@@ -232,15 +234,12 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                   height: 20,
                 ),
                 StreamBuilder(
-                    stream: phoenixLink?.request(Request(
-                        operation: Operation(
-                            document: subscriptionDocument,
-                            operationName: "query"))),
+                    stream: _channel?.messages,
                     builder: (BuildContext context,
-                        AsyncSnapshot<Response> snapshot) {
+                        AsyncSnapshot<Message?> snapshot) {
                       print('snap ${snapshot.data}');
 
-                      return const Text('toto');
+                      return Text('toto');
                     }),
                 SizedBox(
                   child: widget.typeTransfer == 'TOKEN'
@@ -313,6 +312,11 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
           await StateContainer.of(context).getSeed();
       List<UCOTransferWallet> _ucoTransferList = widget.ucoTransferList!;
       final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
+
+      _channel!.push('doc', {
+        "query":
+            """subscription { transactionConfirmed(address: "0000FA741C13F659B081CFC1D8B66F9C76E3C5ED50D0F08C0E47EA940CF756C24D99") { nbConfirmations } }"""
+      });
 
       final TransactionStatus transactionStatus = await sl
           .get<AppService>()
