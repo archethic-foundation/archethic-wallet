@@ -17,11 +17,27 @@ dependencies:
   aeuniverse:
     path: ../aeuniverse
 
+  # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
+  archethic_lib_dart: ^1.0.10
+  #archethic_lib_dart: 
+  #  git:
+  #    url: https://github.com/archethic-foundation/libdart.git
+  #    ref: master
+  
+  # EventTaxi could be used to send events through different layers of the application decoupled from the architecture
+  event_taxi: ^1.0.0
+
+  # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter.
+  phoenix_socket: ^0.5.3
+  gql_exec: ^0.4.0
+  gql_link: ^0.4.2
+  graphql_flutter: ^5.1.0
+
   flutter:
     sdk: flutter
 
 dev_dependencies:
-  flutter_lints: ^1.0.4
+  flutter_lints: ^2.0.1
   # Automatically organize your dart imports
   import_sorter: ^4.6.0
   
