@@ -17,19 +17,6 @@ class NetworksSetting extends SettingSelectionItem {
   String getDisplayName(BuildContext context) {
     switch (network) {
       case AvailableNetworks.AEMainNet:
-        return 'AE Main Network';
-      case AvailableNetworks.AETestNet:
-        return 'AE Test Network';
-      case AvailableNetworks.AEDevNet:
-        return 'AE Dev Network';
-      default:
-        return 'Unknown Network';
-    }
-  }
-
-  String getLongDisplayName() {
-    switch (network) {
-      case AvailableNetworks.AEMainNet:
         return 'Archethic Main Network';
       case AvailableNetworks.AETestNet:
         return 'Archethic Test Network';

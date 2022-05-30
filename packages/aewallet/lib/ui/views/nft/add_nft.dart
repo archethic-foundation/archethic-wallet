@@ -143,7 +143,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                               Text(
                                   StateContainer.of(context)
                                       .curNetwork
-                                      .getLongDisplayName(),
+                                      .getDisplayName(context),
                                   style: AppStyles.textStyleSize10W100Primary(
                                       context)),
                             ],

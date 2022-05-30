@@ -477,7 +477,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
         List<PickerItem>.empty(growable: true);
     for (var value in AvailableNetworks.values) {
       pickerItemsList.add(PickerItem(
-          NetworksSetting(value).getLongDisplayName(),
+          NetworksSetting(value).getDisplayName(context),
           NetworksSetting(value).getLink(),
           'packages/core_ui/assets/themes/dark/logo_alone.png',
           NetworksSetting(value).getColor(),

@@ -360,7 +360,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                               Text(
                                   StateContainer.of(context)
                                       .curNetwork
-                                      .getLongDisplayName(),
+                                      .getDisplayName(context),
                                   style: AppStyles.textStyleSize10W100Primary(
                                       context)),
                             ],
@@ -430,7 +430,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                   Text(
                       StateContainer.of(context)
                           .curNetwork
-                          .getLongDisplayName(),
+                          .getDisplayName(context),
                       style: AppStyles.textStyleSize10W100Primary(context)),
                 ],
               ),
