@@ -5,6 +5,8 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/components/buttons.dart';
+import 'package:core_ui/ui/util/dimens.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -23,11 +25,12 @@ import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aeuniverse/util/preferences.dart';
 import 'package:aeuniverse/util/service_locator.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/model/available_currency.dart';
 import 'package:core/model/available_language.dart';
-import 'package:core/model/available_networks.dart';
+import 'package:aeuniverse/model/available_networks.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/device_lock_timeout.dart';
 import 'package:core/model/device_unlock_option.dart';
@@ -35,7 +38,9 @@ import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/util/case_converter.dart';
+import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 // Project imports:
 import 'package:aewallet/ui/views/contacts/contact_list.dart';
@@ -72,7 +77,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       LockTimeoutSetting(LockTimeoutOption.one);
   ThemeSetting _curThemeSetting = ThemeSetting(ThemeOptions.dark);
   NetworksSetting _curNetworksSetting =
-      NetworksSetting(AvailableNetworks.AETestNet);
+      NetworksSetting(AvailableNetworks.ArchethicTestNet);
 
   bool? _securityOpen;
   bool? _aboutOpen;
@@ -472,17 +477,21 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   }
 
   Future<void> _networkDialog() async {
-    final Preferences _preferences = await Preferences.getInstance();
+    FocusNode endpointFocusNode = FocusNode();
+    TextEditingController endpointController = TextEditingController();
+    String? endpointError;
+
+    final Preferences preferences = await Preferences.getInstance();
     final List<PickerItem> pickerItemsList =
         List<PickerItem>.empty(growable: true);
     for (var value in AvailableNetworks.values) {
       pickerItemsList.add(PickerItem(
           NetworksSetting(value).getDisplayName(context),
-          NetworksSetting(value).getLink(),
+          await NetworksSetting(value).getLink(),
           'packages/core_ui/assets/themes/dark/logo_alone.png',
           NetworksSetting(value).getColor(),
           value,
-          value == AvailableNetworks.AEMainNet ? false : true));
+          value == AvailableNetworks.ArchethicMainNet ? false : true));
     }
 
     final AvailableNetworks? selection = await showDialog<AvailableNetworks>(
@@ -510,16 +519,138 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
           );
         });
     if (selection != null) {
-      if (StateContainer.of(context).curNetwork.network != selection) {
-        _preferences.setNetwork(NetworksSetting(selection));
-        setState(() {
-          _curNetworksSetting = NetworksSetting(selection);
-          StateContainer.of(context).curNetwork = _curNetworksSetting;
-        });
-        setupServiceLocator();
-        await StateContainer.of(context)
-            .requestUpdate(account: StateContainer.of(context).selectedAccount);
+      preferences.setNetwork(NetworksSetting(selection));
+      setState(() {
+        _curNetworksSetting = NetworksSetting(selection);
+        StateContainer.of(context).curNetwork = _curNetworksSetting;
+      });
+      if (selection == AvailableNetworks.ArchethicDevNet) {
+        endpointController.text = preferences.getNetworkDevEndpoint();
+        final AvailableNetworks? endpoint = await showDialog<AvailableNetworks>(
+            context: context,
+            builder: (BuildContext context) {
+              return StatefulBuilder(
+                builder: (context, setState) {
+                  return AlertDialog(
+                    title: Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: Column(children: [
+                        SvgPicture.asset(
+                          StateContainer.of(context).curTheme.assetsFolder! +
+                              StateContainer.of(context).curTheme.logoAlone! +
+                              '.svg',
+                          color: Colors.orange,
+                          height: 15,
+                        ),
+                        Text(
+                            StateContainer.of(context)
+                                .curNetwork
+                                .getDisplayName(context),
+                            style:
+                                AppStyles.textStyleSize10W100Primary(context)),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          AppLocalization.of(context)!.enterEndpointHeader,
+                          style: AppStyles.textStyleSize16W400Primary(context),
+                        ),
+                      ]),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16.0)),
+                        side: BorderSide(
+                            color: StateContainer.of(context)
+                                .curTheme
+                                .primary45!)),
+                    content: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            AppTextField(
+                              leftMargin: 0,
+                              rightMargin: 0,
+                              focusNode: endpointFocusNode,
+                              controller: endpointController,
+                              labelText:
+                                  AppLocalization.of(context)!.enterEndpoint,
+                              keyboardType: TextInputType.text,
+                              style:
+                                  AppStyles.textStyleSize14W600Primary(context),
+                              inputFormatters: <TextInputFormatter>[
+                                LengthLimitingTextInputFormatter(28),
+                              ],
+                            ),
+                            Text(
+                              'http://xxx.xxx.xxx.xxx:xxxx',
+                              style:
+                                  AppStyles.textStyleSize12W400Primary(context),
+                            ),
+                            endpointError != null
+                                ? Container(
+                                    margin: const EdgeInsets.only(
+                                        top: 5, bottom: 5),
+                                    child: Text(endpointError!,
+                                        style: AppStyles
+                                            .textStyleSize14W600Primary(
+                                                context)),
+                                  )
+                                : const SizedBox(),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            AppButton.buildAppButton(
+                              const Key('addEndpoint'),
+                              context,
+                              AppButtonType.primary,
+                              AppLocalization.of(context)!.ok,
+                              Dimens.buttonTopDimens,
+                              onPressed: () async {
+                                endpointError = '';
+                                if (endpointController.text.isEmpty) {
+                                  setState(() {
+                                    endpointError = AppLocalization.of(context)!
+                                        .enterEndpointBlank;
+                                    FocusScope.of(context)
+                                        .requestFocus(endpointFocusNode);
+                                  });
+                                } else {
+                                  if (Uri.parse(endpointController.text)
+                                          .isAbsolute ==
+                                      false) {
+                                    setState(() {
+                                      endpointError =
+                                          AppLocalization.of(context)!
+                                              .enterEndpointNotValid;
+                                      FocusScope.of(context)
+                                          .requestFocus(endpointFocusNode);
+                                    });
+                                  } else {
+                                    preferences.setNetworkDevEndpoint(
+                                        endpointController.text);
+                                    Navigator.pop(context);
+                                  }
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            });
       }
+      setupServiceLocator();
+      await StateContainer.of(context)
+          .requestUpdate(account: StateContainer.of(context).selectedAccount);
     }
   }
 
@@ -884,19 +1015,17 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                                 AppLocalization.of(context)!.yes,
                                 StateContainer.of(context)
                                     .curLanguage
-                                    .getLocaleString()), () {
+                                    .getLocaleString()), () async {
                           // Delete all data
-                          sl.get<DBHelper>().dropAll();
-                          Vault.getInstance().then((Vault _vault) {
-                            _vault.deleteAll();
-                          });
-                          Preferences.getInstance()
-                              .then((Preferences _preferences) {
-                            _preferences.deleteAll();
-                            StateContainer.of(context).logOut();
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                                '/', (Route<dynamic> route) => false);
-                          });
+                          await sl.get<DBHelper>().dropAll();
+                          Vault vault = await Vault.getInstance();
+                          await vault.deleteAll();
+                          Preferences preferences =
+                              await Preferences.getInstance();
+                          await preferences.deleteAll();
+                          StateContainer.of(context).logOut();
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/', (Route<dynamic> route) => false);
                         });
                       });
                     }),

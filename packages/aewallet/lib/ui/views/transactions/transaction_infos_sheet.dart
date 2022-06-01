@@ -147,11 +147,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                           ), onPressed: () async {
                                         UIUtil.showWebview(
                                             context,
-                                            StateContainer.of(context)
-                                                    .curNetwork
-                                                    .getLink() +
-                                                '/explorer/transaction/' +
-                                                widget.txAddress,
+                                            '${await StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${widget.txAddress}',
                                             '');
                                       }),
                                     ],

@@ -18,9 +18,13 @@ class BalanceWallet {
 
   set localCurrencyPrice(double? localCurrencyPrice) {
     _localCurrencyPrice = localCurrencyPrice;
-    _selectedCurrencyValue = (Decimal.parse(_localCurrencyPrice!.toString()) *
-            Decimal.parse(networkCurrencyValue!.toString()))
-        .toDouble();
+    if (networkCurrencyValue != null) {
+      _selectedCurrencyValue = (Decimal.parse(_localCurrencyPrice!.toString()) *
+              Decimal.parse(networkCurrencyValue!.toString()))
+          .toDouble();
+    } else {
+      _selectedCurrencyValue = 0;
+    }
   }
 
   double get localCurrencyPrice => _localCurrencyPrice!;

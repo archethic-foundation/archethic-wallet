@@ -1517,5 +1517,23 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "enterEndpointBlank": "The endpoint cannot be empty",
+  "@enterEndpointBlank": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "enterEndpointNotValid": "The endpoint is not valid",
+  "@enterEndpointNotValid": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "enterEndpointHeader": "Please, specify your endpoint",
+  "@enterEndpointHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

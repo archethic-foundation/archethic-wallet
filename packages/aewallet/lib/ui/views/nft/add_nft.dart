@@ -21,7 +21,7 @@ import 'package:aeuniverse/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' show ApiService;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
-import 'package:core/model/available_networks.dart';
+import 'package:aeuniverse/model/available_networks.dart';
 import 'package:core/service/app_service.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/dimens.dart';
@@ -103,7 +103,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                               StateContainer.of(context)
                                           .curNetwork
                                           .getIndex() ==
-                                      AvailableNetworks.AETestNet.index
+                                      AvailableNetworks.ArchethicTestNet.index
                                   ? SvgPicture.asset(
                                       StateContainer.of(context)
                                               .curTheme
@@ -118,7 +118,8 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                   : StateContainer.of(context)
                                               .curNetwork
                                               .getIndex() ==
-                                          AvailableNetworks.AEDevNet.index
+                                          AvailableNetworks
+                                              .ArchethicDevNet.index
                                       ? SvgPicture.asset(
                                           StateContainer.of(context)
                                                   .curTheme

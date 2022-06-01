@@ -280,11 +280,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                       ), onPressed: () async {
                     UIUtil.showWebview(
                         context,
-                        StateContainer.of(context).curNetwork.getLink() +
-                            '/explorer/transaction/' +
-                            StateContainer.of(context)
-                                .selectedAccount
-                                .lastAddress!,
+                        '${await StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${StateContainer.of(context).selectedAccount.lastAddress!}',
                         '');
                   }),
                 ],

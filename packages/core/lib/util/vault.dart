@@ -93,7 +93,7 @@ class Vault {
 
   Future<void> deleteAll() async {
     await deleteSecureKey();
-    _box.deleteFromDisk();
+    await _box.deleteFromDisk();
   }
 
   Future<void> deleteSecureKey() async {

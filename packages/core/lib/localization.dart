@@ -153,6 +153,21 @@ class AppLocalization {
     return Intl.message('Enter an endpoint', name: 'enterEndpoint');
   }
 
+  String get enterEndpointBlank {
+    return Intl.message('The endpoint cannot be empty',
+        name: 'enterEndpointBlank');
+  }
+
+  String get enterEndpointNotValid {
+    return Intl.message('The endpoint is not valid',
+        name: 'enterEndpointNotValid');
+  }
+
+  String get enterEndpointHeader {
+    return Intl.message('Please, specify your endpoint',
+        name: 'enterEndpointHeader');
+  }
+
   String get enterYubikeyClientID {
     return Intl.message('Enter the client ID', name: 'enterYubikeyClientID');
   }

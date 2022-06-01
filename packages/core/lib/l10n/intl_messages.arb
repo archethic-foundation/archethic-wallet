@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-05-01T23:43:28.620321",
+  "@@last_modified": "2022-06-01T10:09:15.481263",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -164,6 +164,24 @@
   },
   "enterEndpoint": "Enter an endpoint",
   "@enterEndpoint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "enterEndpointBlank": "The endpoint cannot be empty",
+  "@enterEndpointBlank": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "enterEndpointNotValid": "The endpoint is not valid",
+  "@enterEndpointNotValid": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "enterEndpointHeader": "Please, specify your endpoint",
+  "@enterEndpointHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

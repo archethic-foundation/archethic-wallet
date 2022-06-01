@@ -8,7 +8,7 @@ import 'dart:ui';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/model/available_currency.dart';
 import 'package:core/model/available_language.dart';
-import 'package:core/model/available_networks.dart';
+import 'package:aeuniverse/model/available_networks.dart';
 import 'package:core/model/device_lock_timeout.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
@@ -27,6 +27,7 @@ class Preferences {
   static const String _cur_currency = 'archethic_cur_currency';
   static const String _cur_language = 'archethic_cur_language';
   static const String _cur_network = 'archethic_cur_network';
+  static const String _cur_network_dev_endpoint = '_cur_network_dev_endpoint';
   static const String _cur_theme = 'archethic_cur_theme';
   static const String _lock = 'archethic_lock';
   static const String _lock_timeout = 'archethic_lock_timeout';
@@ -85,7 +86,13 @@ class Preferences {
 
   NetworksSetting getNetwork() =>
       NetworksSetting(AvailableNetworks.values[_getValue(_cur_network,
-          defaultValue: AvailableNetworks.AETestNet.index)]);
+          defaultValue: AvailableNetworks.ArchethicTestNet.index)]);
+
+  Future<void> setNetworkDevEndpoint(String s) =>
+      _setValue(_cur_network_dev_endpoint, s);
+
+  String getNetworkDevEndpoint() => _getValue(_cur_network_dev_endpoint,
+      defaultValue: 'http://localhost:4000');
 
   Future<void> setVersionApp(String v) => _setValue(_version_app, v);
 
@@ -174,5 +181,7 @@ class Preferences {
   ThemeSetting getTheme() => ThemeSetting(ThemeOptions
       .values[_getValue(_cur_theme, defaultValue: ThemeOptions.dark.index)]);
 
-  Future<void> deleteAll() => _box.deleteFromDisk();
+  Future<void> deleteAll() async {
+    await _box.deleteFromDisk();
+  }
 }

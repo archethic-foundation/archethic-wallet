@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:core/model/setting_item.dart';
+import 'package:aeuniverse/util/preferences.dart';
 
-enum AvailableNetworks { AEMainNet, AETestNet, AEDevNet }
+enum AvailableNetworks { ArchethicMainNet, ArchethicTestNet, ArchethicDevNet }
 
 class NetworksSetting extends SettingSelectionItem {
   NetworksSetting(this.network);
@@ -16,25 +17,26 @@ class NetworksSetting extends SettingSelectionItem {
   @override
   String getDisplayName(BuildContext context) {
     switch (network) {
-      case AvailableNetworks.AEMainNet:
+      case AvailableNetworks.ArchethicMainNet:
         return 'Archethic Main Network';
-      case AvailableNetworks.AETestNet:
+      case AvailableNetworks.ArchethicTestNet:
         return 'Archethic Test Network';
-      case AvailableNetworks.AEDevNet:
+      case AvailableNetworks.ArchethicDevNet:
         return 'Archethic Dev Network';
       default:
         return 'Unknown Network';
     }
   }
 
-  String getLink() {
+  Future<String> getLink() async {
     switch (network) {
-      case AvailableNetworks.AEMainNet:
+      case AvailableNetworks.ArchethicMainNet:
         return 'https://mainnet.archethic.net';
-      case AvailableNetworks.AETestNet:
+      case AvailableNetworks.ArchethicTestNet:
         return 'https://testnet.archethic.net';
-      case AvailableNetworks.AEDevNet:
-        return 'http://localhost:4000';
+      case AvailableNetworks.ArchethicDevNet:
+        final Preferences preferences = await Preferences.getInstance();
+        return preferences.getNetworkDevEndpoint();
       default:
         return '';
     }
@@ -42,11 +44,11 @@ class NetworksSetting extends SettingSelectionItem {
 
   Color? getColor() {
     switch (network) {
-      case AvailableNetworks.AEMainNet:
+      case AvailableNetworks.ArchethicMainNet:
         return null;
-      case AvailableNetworks.AETestNet:
+      case AvailableNetworks.ArchethicTestNet:
         return Colors.green;
-      case AvailableNetworks.AEDevNet:
+      case AvailableNetworks.ArchethicDevNet:
         return Colors.orange;
       default:
         return null;
@@ -55,11 +57,11 @@ class NetworksSetting extends SettingSelectionItem {
 
   String getNetworkCryptoCurrencyLabel() {
     switch (network) {
-      case AvailableNetworks.AEMainNet:
+      case AvailableNetworks.ArchethicMainNet:
         return 'UCO';
-      case AvailableNetworks.AETestNet:
+      case AvailableNetworks.ArchethicTestNet:
         return 'UCO';
-      case AvailableNetworks.AEDevNet:
+      case AvailableNetworks.ArchethicDevNet:
         return 'UCO';
       default:
         return 'Unknown Crypto Currency';

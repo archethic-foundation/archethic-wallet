@@ -253,5 +253,8 @@
 	"passwordSpecialCharacters": "- Au moins %1 caractère spécial.",
 	"welcomeDisclaimerChoice": "لقد قرأت ووافقت على شروط الاستخدام",
 	"welcomeDisclaimerLink": "شروط الاستعمال",
-	"showBalances": "Show balances"
+	"showBalances": "Show balances",
+	"enterEndpointBlank": "The endpoint cannot be empty",
+	"enterEndpointNotValid": "The endpoint is not valid",
+	"enterEndpointHeader": "Please, specify your endpoint"
 }

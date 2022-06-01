@@ -25,7 +25,7 @@
 	"networksDesc": "Définir le endpoint",
 	"walletFAQHeader": "FAQ sur le portefeuille",
 	"walletFAQDesc": "Une question ? Vérifiez ici en premier !",
-	"enterEndpoint": "Entrer un endpoint",
+	"enterEndpoint": "Entrer un point d'accès",
 	"removeContact": "Supprimer contact",
 	"removeContactConfirmation": "Êtes-vous sûr(e) de vouloir supprimer %1 ?",
 	"addressBookHeader": "Carnet d'adresses",
@@ -252,6 +252,9 @@
 	"passwordNumericCharacters": "- Au moins %1 caractère numérique.",
 	"passwordSpecialCharacters": "- Au moins %1 caractère spécial.",
 	"welcomeDisclaimerChoice": "J'ai lu et j'accepte les conditions d'utilisation",
-  	"welcomeDisclaimerLink": "Conditions d'utilisation",
-	"showBalances": "Montrer les balances"
+	"welcomeDisclaimerLink": "Conditions d'utilisation",
+	"showBalances": "Montrer les balances",
+	"enterEndpointBlank": "Le point d'accès est obligatoire.",
+	"enterEndpointNotValid": "Le point d'accès n'est pas valide.",
+	"enterEndpointHeader": "Veuillez préciser votre point d'accès."
 }

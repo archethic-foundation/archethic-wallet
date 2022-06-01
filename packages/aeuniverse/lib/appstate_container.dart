@@ -15,7 +15,7 @@ import 'package:core/bus/transactions_list_event.dart';
 import 'package:core/model/ae_apps.dart';
 import 'package:core/model/available_currency.dart';
 import 'package:core/model/available_language.dart';
-import 'package:core/model/available_networks.dart';
+import 'package:aeuniverse/model/available_networks.dart';
 import 'package:core/model/balance_wallet.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
@@ -88,7 +88,8 @@ class StateContainerState extends State<StateContainer> {
   Locale deviceLocale = const Locale('en', 'US');
   AvailableCurrency curCurrency = AvailableCurrency(AvailableCurrencyEnum.USD);
   LanguageSetting curLanguage = LanguageSetting(AvailableLanguage.DEFAULT);
-  NetworksSetting curNetwork = NetworksSetting(AvailableNetworks.AETestNet);
+  NetworksSetting curNetwork =
+      NetworksSetting(AvailableNetworks.ArchethicTestNet);
   BaseTheme curTheme = DarkTheme();
 
   AEApps currentAEApp = AEApps.bin;
@@ -140,7 +141,11 @@ class StateContainerState extends State<StateContainer> {
     sl.get<DBHelper>().getSelectedAccount().then((Account? account) {
       if (account != null) {
         localWallet!.accountBalance = BalanceWallet(
-            account.balance == 0 ? 0 : double.tryParse(account.balance!),
+            account.balance == null
+                ? 0
+                : account.balance == 0
+                    ? 0
+                    : double.tryParse(account.balance!),
             curCurrency);
         localWallet!.address =
             account.lastAddress == null ? '' : account.lastAddress!;
@@ -563,7 +568,9 @@ class StateContainerState extends State<StateContainer> {
   void logOut() {
     setState(() {
       wallet = AppWallet();
+      localWallet = AppWallet();
     });
+    setupServiceLocator();
   }
 
   Future<String> getSeed() async {

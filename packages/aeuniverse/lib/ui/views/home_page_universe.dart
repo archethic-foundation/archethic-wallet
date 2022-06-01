@@ -13,7 +13,7 @@ import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/bus/account_changed_event.dart';
 import 'package:core/bus/disable_lock_timeout_event.dart';
-import 'package:core/model/available_networks.dart';
+import 'package:aeuniverse/model/available_networks.dart';
 import 'package:core_ui/ui/util/responsive.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -320,7 +320,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                               StateContainer.of(context)
                                           .curNetwork
                                           .getIndex() ==
-                                      AvailableNetworks.AETestNet.index
+                                      AvailableNetworks.ArchethicTestNet.index
                                   ? SvgPicture.asset(
                                       StateContainer.of(context)
                                               .curTheme
@@ -335,7 +335,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                   : StateContainer.of(context)
                                               .curNetwork
                                               .getIndex() ==
-                                          AvailableNetworks.AEDevNet.index
+                                          AvailableNetworks
+                                              .ArchethicDevNet.index
                                       ? SvgPicture.asset(
                                           StateContainer.of(context)
                                                   .curTheme
@@ -396,7 +397,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
               title: Column(
                 children: [
                   StateContainer.of(context).curNetwork.getIndex() ==
-                          AvailableNetworks.AETestNet.index
+                          AvailableNetworks.ArchethicTestNet.index
                       ? SvgPicture.asset(
                           StateContainer.of(context).curTheme.assetsFolder! +
                               StateContainer.of(context).curTheme.logoAlone! +
@@ -405,7 +406,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                           height: 15,
                         )
                       : StateContainer.of(context).curNetwork.getIndex() ==
-                              AvailableNetworks.AEDevNet.index
+                              AvailableNetworks.ArchethicDevNet.index
                           ? SvgPicture.asset(
                               StateContainer.of(context)
                                       .curTheme

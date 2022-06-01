@@ -119,7 +119,6 @@ class _AppTextFieldState extends State<AppTextField> {
             alignment: AlignmentDirectional.center,
             children: <Widget>[
               TextField(
-                // User defined fields
                 textAlign: widget.textAlign!,
                 keyboardAppearance: widget.keyboardAppearance,
                 autocorrect: widget.autocorrect!,
@@ -139,22 +138,45 @@ class _AppTextFieldState extends State<AppTextField> {
                   }
                 },
                 onChanged: widget.onChanged,
-                // Style
                 style: widget.style,
-                // Input decoration
-
-                decoration: InputDecoration(
-                  // Hint
-                  labelText: widget.labelText ?? '',
-                  labelStyle: AppStyles.textStyleSize16W400Primary60(context),
-                  // First button
-                  prefixIcon: widget.prefixButton == null
-                      ? const SizedBox()
-                      : const SizedBox(width: 48, height: 48),
-                  suffixIcon: widget.suffixButton == null
-                      ? const SizedBox()
-                      : const SizedBox(width: 48, height: 48),
-                ),
+                decoration: widget.prefixButton == null &&
+                        widget.suffixButton == null
+                    ? InputDecoration(
+                        labelText: widget.labelText ?? '',
+                        labelStyle:
+                            AppStyles.textStyleSize16W400Primary60(context),
+                      )
+                    : widget.prefixButton != null && widget.suffixButton == null
+                        ? InputDecoration(
+                            contentPadding: EdgeInsets.only(right: 48),
+                            labelText: widget.labelText ?? '',
+                            labelStyle:
+                                AppStyles.textStyleSize16W400Primary60(context),
+                            prefixIcon: const SizedBox(width: 48, height: 48),
+                          )
+                        : widget.prefixButton == null &&
+                                widget.suffixButton != null
+                            ? InputDecoration(
+                                contentPadding: EdgeInsets.only(left: 48),
+                                labelText: widget.labelText ?? '',
+                                labelStyle:
+                                    AppStyles.textStyleSize16W400Primary60(
+                                        context),
+                                suffixIcon:
+                                    const SizedBox(width: 48, height: 48),
+                              )
+                            : InputDecoration(
+                                labelText: widget.labelText ?? '',
+                                labelStyle:
+                                    AppStyles.textStyleSize16W400Primary60(
+                                        context),
+                                prefixIconConstraints:
+                                    BoxConstraints(minWidth: 48, maxHeight: 48),
+                                prefixIcon:
+                                    const SizedBox(width: 48, height: 48),
+                                suffixIcon:
+                                    const SizedBox(width: 48, height: 48),
+                              ),
               ),
               Positioned(
                 bottom: 1,

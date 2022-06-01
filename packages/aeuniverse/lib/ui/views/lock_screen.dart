@@ -221,22 +221,18 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                             AppLocalization.of(context)!.yes,
                                             StateContainer.of(context)
                                                 .curLanguage
-                                                .getLocaleString()), () {
+                                                .getLocaleString()), () async {
                                       // Delete all data
-                                      sl.get<DBHelper>().dropAll();
-                                      Vault.getInstance().then((Vault _vault) {
-                                        _vault.deleteAll();
-                                      });
-                                      Preferences.getInstance()
-                                          .then((Preferences _preferences) {
-                                        _preferences.deleteAll();
-                                        StateContainer.of(context).logOut();
-                                        Navigator.of(context)
-                                            .pushNamedAndRemoveUntil(
-                                                '/',
-                                                (Route<dynamic> route) =>
-                                                    false);
-                                      });
+                                      await sl.get<DBHelper>().dropAll();
+                                      Vault vault = await Vault.getInstance();
+                                      await vault.deleteAll();
+                                      Preferences preferences =
+                                          await Preferences.getInstance();
+                                      await preferences.deleteAll();
+                                      StateContainer.of(context).logOut();
+                                      Navigator.of(context)
+                                          .pushNamedAndRemoveUntil('/',
+                                              (Route<dynamic> route) => false);
                                     });
                                   });
                                 },

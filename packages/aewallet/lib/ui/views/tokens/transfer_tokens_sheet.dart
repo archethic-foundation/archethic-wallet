@@ -24,7 +24,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
 import 'package:core/model/available_currency.dart';
-import 'package:core/model/available_networks.dart';
+import 'package:aeuniverse/model/available_networks.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
 import 'package:core/service/app_service.dart';
@@ -226,7 +226,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                               StateContainer.of(context)
                                           .curNetwork
                                           .getIndex() ==
-                                      AvailableNetworks.AETestNet.index
+                                      AvailableNetworks.ArchethicTestNet.index
                                   ? SvgPicture.asset(
                                       StateContainer.of(context)
                                               .curTheme
@@ -241,7 +241,8 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                                   : StateContainer.of(context)
                                               .curNetwork
                                               .getIndex() ==
-                                          AvailableNetworks.AEDevNet.index
+                                          AvailableNetworks
+                                              .ArchethicDevNet.index
                                       ? SvgPicture.asset(
                                           StateContainer.of(context)
                                                   .curTheme
@@ -266,7 +267,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                               Text(
                                   StateContainer.of(context)
                                       .curNetwork
-                                      .getLongDisplayName(),
+                                      .getDisplayName(context),
                                   style: AppStyles.textStyleSize10W100Primary(
                                       context)),
                             ],
