@@ -18,7 +18,7 @@ dependencies:
     path: ../aeuniverse
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^1.0.10
+  archethic_lib_dart: ^1.0.13
   #archethic_lib_dart: 
   #  git:
   #    url: https://github.com/archethic-foundation/libdart.git
@@ -31,7 +31,7 @@ dependencies:
   phoenix_socket: ^0.5.3
   gql_exec: ^0.4.0
   gql_link: ^0.4.2
-  graphql_flutter: ^5.1.0
+  graphql_flutter: ^5.1.1-beta.3
 
   flutter:
     sdk: flutter

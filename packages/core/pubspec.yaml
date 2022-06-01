@@ -12,7 +12,7 @@ dependencies:
   animate_do: ^2.1.0
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^1.0.10
+  archethic_lib_dart: ^1.0.13
   #archethic_lib_dart: 
   #  git:
   #    url: https://github.com/archethic-foundation/libdart.git
@@ -74,11 +74,7 @@ dependencies:
   http: ^0.13.4
 
   # Lazily load and display pages of items as the user scrolls down your screen.
-  #infinite_scroll_pagination: ^3.1.0
-  infinite_scroll_pagination: 
-    git:
-      url: https://github.com/redDwarf03/infinite_scroll_pagination.git
-      ref: master
+  infinite_scroll_pagination: ^3.2.0
 
   # Localization
   intl: ^0.17.0
