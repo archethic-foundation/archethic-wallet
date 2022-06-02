@@ -957,7 +957,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         'packages/aewallet/assets/icons/languages.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         _languageDialog),
-                    Divider(
+                    // Disable until new design
+                    /*Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
                     ),
@@ -967,7 +968,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         _curThemeSetting,
                         'packages/aewallet/assets/icons/themes.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
-                        _themeDialog),
+                        _themeDialog),*/
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,
