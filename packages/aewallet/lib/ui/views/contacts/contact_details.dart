@@ -49,7 +49,6 @@ class ContactDetailsSheet {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        // Trashcan Button
                         Container(
                           width: 50,
                           height: 50,
@@ -104,7 +103,6 @@ class ContactDetailsSheet {
                                     .primary),
                           ),
                         ),
-                        // The header of the sheet
                         Container(
                           margin: const EdgeInsets.only(top: 25.0),
                           constraints: BoxConstraints(
@@ -150,8 +148,6 @@ class ContactDetailsSheet {
                         ),
                       ],
                     ),
-
-                    // The main container that holds Contact Name and Contact Address
                     Expanded(
                       child: Container(
                         padding: const EdgeInsetsDirectional.only(
@@ -159,35 +155,28 @@ class ContactDetailsSheet {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            // Contact Name container
+                            Text(contact.name!,
+                                textAlign: TextAlign.center,
+                                style: AppStyles.textStyleSize16W600Primary(
+                                    context)),
+                            const SizedBox(height: 5),
                             Container(
-                              width: double.infinity,
+                              padding: const EdgeInsetsDirectional.only(
+                                  top: 4, bottom: 12),
                               margin: EdgeInsets.only(
                                 left: MediaQuery.of(context).size.width * 0.105,
                                 right:
                                     MediaQuery.of(context).size.width * 0.105,
                               ),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 25.0, vertical: 12.0),
+                              height: 1,
+                              width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
-                                color: StateContainer.of(context)
+                                gradient: StateContainer.of(context)
                                     .curTheme
-                                    .backgroundDarkest,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .backgroundDarkest!,
-                                  )
-                                ],
+                                    .gradient!,
                               ),
-                              child: Text(contact.name!,
-                                  textAlign: TextAlign.center,
-                                  style: AppStyles.textStyleSize16W600Primary(
-                                      context)),
                             ),
-                            // Contact Address
+                            const SizedBox(height: 50),
                             GestureDetector(
                               onTap: () {
                                 sl
@@ -205,40 +194,31 @@ class ContactDetailsSheet {
                                         .curTheme
                                         .overlay80!);
                               },
-                              child: Container(
-                                width: double.infinity,
-                                margin: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.width *
-                                        0.105,
-                                    right: MediaQuery.of(context).size.width *
-                                        0.105,
-                                    top: 15),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 25.0, vertical: 15.0),
-                                decoration: BoxDecoration(
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .backgroundDarkest,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: <BoxShadow>[
-                                    BoxShadow(
-                                      color: StateContainer.of(context)
-                                          .curTheme
-                                          .backgroundDarkest!,
-                                    )
-                                  ],
-                                ),
-                                child:
-                                    UIUtil.threeLinetextStyleSmallestW400Text(
-                                        context, contact.address!,
-                                        type: ThreeLineAddressTextType.primary),
+                              child: UIUtil.threeLinetextStyleSmallestW400Text(
+                                  context, contact.address!,
+                                  type: ThreeLineAddressTextType.primary),
+                            ),
+                            const SizedBox(height: 5),
+                            Container(
+                              padding: const EdgeInsetsDirectional.only(
+                                  top: 4, bottom: 12),
+                              margin: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.105,
+                                right:
+                                    MediaQuery.of(context).size.width * 0.105,
+                              ),
+                              height: 1,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                gradient: StateContainer.of(context)
+                                    .curTheme
+                                    .gradient!,
                               ),
                             ),
                           ],
                         ),
                       ),
                     ),
-
                     Column(
                       children: <Widget>[
                         Row(
@@ -266,19 +246,6 @@ class ContactDetailsSheet {
                               })
                             else
                               const SizedBox(),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            // Close Button
-                            AppButton.buildAppButton(
-                                const Key('close'),
-                                context,
-                                AppButtonType.primary,
-                                AppLocalization.of(context)!.close,
-                                Dimens.buttonBottomDimens, onPressed: () {
-                              Navigator.pop(context);
-                            }),
                           ],
                         ),
                       ],

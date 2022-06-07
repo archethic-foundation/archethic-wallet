@@ -254,7 +254,7 @@ class _ContactsListState extends State<ContactsList> {
         // Main Container
         Container(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
-          margin: const EdgeInsetsDirectional.only(start: 12.0, end: 20.0),
+          margin: const EdgeInsetsDirectional.only(start: 10.0, end: 10.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
