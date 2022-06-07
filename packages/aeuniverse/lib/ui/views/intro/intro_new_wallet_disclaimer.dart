@@ -15,7 +15,8 @@ import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 
 class IntroNewWalletDisclaimer extends StatefulWidget {
-  const IntroNewWalletDisclaimer({super.key});
+  final String? name;
+  const IntroNewWalletDisclaimer({super.key, this.name});
 
   @override
   State<IntroNewWalletDisclaimer> createState() =>
@@ -186,9 +187,8 @@ class _IntroNewWalletDisclaimerState extends State<IntroNewWalletDisclaimer> {
                         AppButtonType.primary,
                         AppLocalization.of(context)!.understandButton,
                         Dimens.buttonBottomDimens, onPressed: () {
-                      Navigator.of(context).pushNamed(
-                        '/intro_backup',
-                      );
+                      Navigator.of(context)
+                          .pushNamed('/intro_backup', arguments: widget.name);
                     }),
                   ],
                 ),

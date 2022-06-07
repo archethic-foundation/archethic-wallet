@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/model/available_networks.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
@@ -24,7 +25,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
 import 'package:core/model/available_currency.dart';
-import 'package:aeuniverse/model/available_networks.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
 import 'package:core/service/app_service.dart';
@@ -1204,7 +1204,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
       }
     }
     try {
-      final String transactionChainSeed =
+      final String? transactionChainSeed =
           await StateContainer.of(context).getSeed();
       List<UCOTransferWallet> ucoTransferListForFee =
           List<UCOTransferWallet>.empty(growable: true);
@@ -1221,7 +1221,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
       final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
       fee = await sl.get<AppService>().getFeesEstimationUCO(
           originPrivateKey,
-          transactionChainSeed,
+          transactionChainSeed!,
           StateContainer.of(context).selectedAccount.lastAddress!,
           ucoTransferListForFee);
     } catch (e) {

@@ -67,7 +67,6 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                         maxWidth: MediaQuery.of(context).size.width - 140),
                     child: Column(
                       children: <Widget>[
-                        // Header
                         AutoSizeText(
                           AppLocalization.of(context)!.receive,
                           style: AppStyles.textStyleSize24W700Primary(context),
@@ -111,7 +110,9 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                     onPressed: () {
                       sl.get<HapticUtil>().feedback(FeedbackType.light);
                       Clipboard.setData(ClipboardData(
-                          text: StateContainer.of(context).wallet!.address));
+                          text: StateContainer.of(context)
+                              .selectedAccount
+                              .lastAddress!));
                       UIUtil.showSnackbar(
                           AppLocalization.of(context)!.addressCopied,
                           context,
@@ -138,7 +139,9 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                       onPressed: () {
                         sl.get<HapticUtil>().feedback(FeedbackType.light);
                         Clipboard.setData(ClipboardData(
-                            text: StateContainer.of(context).wallet!.address));
+                            text: StateContainer.of(context)
+                                .selectedAccount
+                                .lastAddress!));
                         UIUtil.showSnackbar(
                             AppLocalization.of(context)!.addressCopied,
                             context,

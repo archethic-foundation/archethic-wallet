@@ -160,8 +160,9 @@ class DarkTheme implements BaseTheme {
       decoration: const BoxDecoration(
         image: DecorationImage(
             image: AssetImage(
-                'packages/core_ui/assets/themes/dark/background.jpg'),
-            fit: BoxFit.cover),
+                'packages/core_ui/assets/themes/dark/background.png'),
+            fit: BoxFit.cover,
+            opacity: 0.3),
       ),
     );
   }

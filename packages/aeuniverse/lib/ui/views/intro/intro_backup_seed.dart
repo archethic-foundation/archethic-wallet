@@ -10,11 +10,11 @@ import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
+import 'package:core/util/keychain_util.dart';
 import 'package:core/util/mnemonics.dart';
 import 'package:core/util/seeds.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
-import 'package:core_ui/util/app_util.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -26,24 +26,25 @@ import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 
 class IntroBackupSeedPage extends StatefulWidget {
-  const IntroBackupSeedPage({super.key});
+  final String? name;
+  const IntroBackupSeedPage({super.key, this.name});
 
   @override
   State<IntroBackupSeedPage> createState() => _IntroBackupSeedState();
 }
 
 class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
-  List<String>? _mnemonic;
+  String? seed;
+  List<String>? mnemonic;
+  bool? isPressed;
 
   @override
   void initState() {
     super.initState();
 
-    Vault.getInstance().then((Vault _vault) {
-      setState(() {
-        _mnemonic = AppMnemomics.seedToMnemonic(_vault.getSeed()!);
-      });
-    });
+    isPressed = false;
+    seed = AppSeeds.generateSeed();
+    mnemonic = AppMnemomics.seedToMnemonic(seed!);
   }
 
   @override
@@ -102,21 +103,9 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                     sl
                                         .get<HapticUtil>()
                                         .feedback(FeedbackType.light);
-                                    Vault.getInstance().then((Vault _vault) {
-                                      final String _seed =
-                                          AppSeeds.generateSeed();
-                                      _vault.setSeed(_seed);
-                                      AppUtil()
-                                          .loginAccount(_seed, context,
-                                              forceNewAccount: true)
-                                          .then((Account? selectedAcct) {
-                                        StateContainer.of(context)
-                                            .requestUpdate(
-                                                account: selectedAcct);
-                                        _mnemonic = AppMnemomics.seedToMnemonic(
-                                            _vault.getSeed()!);
-                                      });
-                                    });
+                                    seed = AppSeeds.generateSeed();
+                                    mnemonic =
+                                        AppMnemomics.seedToMnemonic(seed!);
                                     setState(() {});
                                   },
                                   child: FaIcon(FontAwesomeIcons.rotate,
@@ -144,10 +133,10 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                 AppStyles.textStyleSize20W700Primary(context),
                           ),
                         ),
-                        if (_mnemonic != null)
+                        if (mnemonic != null)
                           Expanded(
                             child: SingleChildScrollView(
-                              child: MnemonicDisplay(wordList: _mnemonic!),
+                              child: MnemonicDisplay(wordList: mnemonic!),
                             ),
                           )
                         else
@@ -158,33 +147,39 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      AppButton.buildAppButton(
-                        const Key('iveBackedItUp'),
-                        context,
-                        AppButtonType.primary,
-                        AppLocalization.of(context)!.iveBackedItUp,
-                        Dimens.buttonBottomDimens,
-                        onPressed: () {
-                          sl.get<DBHelper>().dropAccounts().then((_) {
-                            StateContainer.of(context)
-                                .getSeed()
-                                .then((String seed) {
-                              AppUtil()
-                                  .loginAccount(seed, context)
-                                  .then((Account? selectedAcct) {
-                                StateContainer.of(context)
-                                    .requestUpdate(account: selectedAcct);
-                                StateContainer.of(context).requestUpdate(
-                                  account: StateContainer.of(context)
-                                      .selectedAccount,
-                                );
+                      isPressed == true
+                          ? AppButton.buildAppButton(
+                              const Key('iveBackedItUp'),
+                              context,
+                              AppButtonType.primaryOutline,
+                              AppLocalization.of(context)!.iveBackedItUp,
+                              Dimens.buttonBottomDimens,
+                              onPressed: () {},
+                            )
+                          : AppButton.buildAppButton(
+                              const Key('iveBackedItUp'),
+                              context,
+                              AppButtonType.primary,
+                              AppLocalization.of(context)!.iveBackedItUp,
+                              Dimens.buttonBottomDimens,
+                              onPressed: () async {
+                                setState(() {
+                                  isPressed = true;
+                                });
+                                await sl.get<DBHelper>().dropAccounts();
+                                final Vault vault = await Vault.getInstance();
+                                await vault.setSeed(seed!);
+                                Account? account = await KeychainUtil()
+                                    .addAccount(seed!, widget.name!);
+                                StateContainer.of(context).selectedAccount =
+                                    account!;
+                                setState(() {
+                                  isPressed = false;
+                                });
                                 Navigator.of(context)
                                     .pushNamed('/intro_backup_confirm');
-                              });
-                            });
-                          });
-                        },
-                      ),
+                              },
+                            ),
                     ],
                   ),
                 ],

@@ -20,6 +20,7 @@ import 'package:aeuniverse/ui/views/intro/intro_backup_seed.dart';
 import 'package:aeuniverse/ui/views/intro/intro_configure_security.dart';
 import 'package:aeuniverse/ui/views/intro/intro_import_seed.dart';
 import 'package:aeuniverse/ui/views/intro/intro_new_wallet_disclaimer.dart';
+import 'package:aeuniverse/ui/views/intro/intro_new_wallet_get_first_infos.dart';
 import 'package:aeuniverse/ui/views/intro/intro_password.dart';
 import 'package:aeuniverse/ui/views/intro/intro_welcome.dart';
 import 'package:aeuniverse/ui/views/intro/intro_yubikey.dart';
@@ -33,9 +34,8 @@ import 'package:core/localization.dart';
 import 'package:core/model/available_language.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
-import 'package:core/util/vault.dart';
+import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/routes.dart';
-import 'package:core_ui/util/app_util.dart';
 import 'package:core_ui/util/case_converter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -186,14 +186,27 @@ class _AppState extends State<App> {
                 builder: (_) => const IntroWelcome(),
                 settings: settings,
               );
+            case '/intro_welcome_get_first_infos':
+              return MaterialPageRoute<IntroNewWalletGetFirstInfos>(
+                builder: (_) => const IntroNewWalletGetFirstInfos(),
+                settings: settings,
+              );
             case '/intro_backup':
               return MaterialPageRoute<IntroBackupSeedPage>(
-                builder: (_) => const IntroBackupSeedPage(),
+                builder: (_) => IntroBackupSeedPage(
+                  name: settings.arguments == null
+                      ? null
+                      : settings.arguments as String,
+                ),
                 settings: settings,
               );
             case '/intro_backup_safety':
               return MaterialPageRoute<IntroNewWalletDisclaimer>(
-                builder: (_) => const IntroNewWalletDisclaimer(),
+                builder: (_) => IntroNewWalletDisclaimer(
+                  name: settings.arguments == null
+                      ? null
+                      : settings.arguments as String,
+                ),
                 settings: settings,
               );
             case '/intro_configure_security':
@@ -305,8 +318,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       // See if logged in already
       bool isLoggedIn = false;
 
-      final Vault _vault = await Vault.getInstance();
-      final String? seed = _vault.getSeed();
+      final String? seed = await StateContainer.of(context).getSeed();
 
       if (seed != null) {
         isLoggedIn = true;
@@ -316,7 +328,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
         if (_preferences.getLock() || _preferences.shouldLock()) {
           Navigator.of(context).pushReplacementNamed('/lock_screen');
         } else {
-          Account? selectedAcct = await AppUtil().loginAccount(seed!, context);
+          Account? selectedAcct = await sl.get<DBHelper>().getSelectedAccount();
           StateContainer.of(context).requestUpdate(account: selectedAcct);
           Navigator.of(context).pushReplacementNamed('/home');
         }

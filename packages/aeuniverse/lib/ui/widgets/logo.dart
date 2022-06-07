@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:core/model/ae_apps.dart';
-import 'package:core_ui/util/app_util.dart';
+import 'package:core_ui/util/screen_util.dart';
 import 'package:flutter_svg/svg.dart';
 
 // Project imports:
@@ -17,7 +17,7 @@ Widget getLogo(BuildContext context) {
       ? Container(
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.only(left: 10.0),
-          child: AppUtil.isDesktopMode()
+          child: ScreenUtil.isDesktopMode()
               ? Image.asset(
                   StateContainer.of(context).curTheme.assetsFolder! +
                       StateContainer.of(context).curTheme.logo! +
@@ -44,12 +44,12 @@ Widget getLogo(BuildContext context) {
             children: [
               InkWell(
                 onTap: () {
-                  if (AppUtil.isDesktopMode() == true) {
+                  if (ScreenUtil.isDesktopMode() == true) {
                     StateContainer.of(context).currentAEApp = AEApps.bin;
                     Navigator.pop(context);
                   }
                 },
-                child: AppUtil.isDesktopMode()
+                child: ScreenUtil.isDesktopMode()
                     ? Image.asset(
                         StateContainer.of(context).curTheme.assetsFolder! +
                             StateContainer.of(context).curTheme.logoAlone! +
@@ -77,10 +77,10 @@ Widget getLogo(BuildContext context) {
                             ),
                           ),
               ),
-              AppUtil.isDesktopMode() == true
+              ScreenUtil.isDesktopMode() == true
                   ? const SizedBox(width: 20)
                   : const SizedBox(),
-              AppUtil.isDesktopMode() == true
+              ScreenUtil.isDesktopMode() == true
                   ? Text(AEAppsUtil(StateContainer.of(context).currentAEApp)
                       .getDisplayName())
                   : const SizedBox(),

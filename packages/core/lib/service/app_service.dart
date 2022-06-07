@@ -16,9 +16,11 @@ import 'package:core/util/get_it_instance.dart';
 
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show
+        uint8ListToHex,
         ApiService,
         Transaction,
         Balance,
+        Keychain,
         UCOTransfer,
         NftBalance,
         NFTService,
@@ -169,22 +171,29 @@ class AppService {
 
   Future<TransactionStatus> sendUCO(
       String originPrivateKey,
-      String transactionChainSeed,
+      String seed,
       String address,
-      List<UCOTransfer> listUcoTransfer) async {
-    final Transaction lastTransaction =
-        await sl.get<ApiService>().getLastTransaction(address);
+      List<UCOTransfer> listUcoTransfer,
+      String accountName) async {
+    final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
+    final String service = 'archethic-wallet-' + accountName;
+    final int index = (await sl.get<ApiService>().getTransactionIndex(
+            uint8ListToHex(keychain.deriveAddress(service, index: 0))))
+        .chainLength!;
+
     final Transaction transaction =
         Transaction(type: 'transfer', data: Transaction.initData());
     for (UCOTransfer transfer in listUcoTransfer) {
       transaction.addUCOTransfer(transfer.to, transfer.amount!);
     }
-    TransactionStatus transactionStatus = TransactionStatus();
-    transaction
-        .build(transactionChainSeed, lastTransaction.chainLength!)
+
+    Transaction signedTx = keychain
+        .buildTransaction(transaction, service, index)
         .originSign(originPrivateKey);
+
+    TransactionStatus transactionStatus = TransactionStatus();
     try {
-      transactionStatus = await sl.get<ApiService>().sendTx(transaction);
+      transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
     } catch (e) {
       dev.log(e.toString());
       transactionStatus.status = e.toString();
@@ -194,21 +203,29 @@ class AppService {
 
   Future<TransactionStatus> addNFT(
       String originPrivateKey,
-      String transactionChainSeed,
+      String seed,
       String address,
       String name,
-      int initialSupply) async {
+      int initialSupply,
+      String accountName) async {
+    final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
+    final String service = 'archethic-wallet-' + accountName;
+    final int index = (await sl.get<ApiService>().getTransactionIndex(
+            uint8ListToHex(keychain.deriveAddress(service, index: 0))))
+        .chainLength!;
+
     TransactionStatus transactionStatus = TransactionStatus();
-    final Transaction lastTransaction =
-        await sl.get<ApiService>().getLastTransaction(address);
-    final Transaction transaction = NFTService().prepareNewNFT(
-        initialSupply,
-        name,
-        transactionChainSeed,
-        lastTransaction.chainLength!,
-        originPrivateKey);
+
     try {
-      transactionStatus = await sl.get<ApiService>().sendTx(transaction);
+      String content = 'initial supply: $initialSupply\nname: $name';
+      final Transaction transaction =
+          Transaction(type: 'nft', data: Transaction.initData())
+              .setContent(content);
+      Transaction signedTx = keychain
+          .buildTransaction(transaction, service, index)
+          .originSign(originPrivateKey);
+
+      transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
     } catch (e) {
       dev.log(e.toString());
       transactionStatus.status = e.toString();

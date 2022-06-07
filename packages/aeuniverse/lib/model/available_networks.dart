@@ -3,8 +3,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
+// Package imports:
 import 'package:core/model/setting_item.dart';
+
+// Project imports:
 import 'package:aeuniverse/util/preferences.dart';
 
 enum AvailableNetworks { ArchethicMainNet, ArchethicTestNet, ArchethicDevNet }

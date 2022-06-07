@@ -12,7 +12,7 @@ dependencies:
   animate_do: ^2.1.0
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^1.0.13
+  archethic_lib_dart: ^1.0.14
   #archethic_lib_dart: 
   #  git:
   #    url: https://github.com/archethic-foundation/libdart.git
@@ -111,7 +111,7 @@ dependencies:
   safe_device: ^1.1.1
 
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
-  share_plus: ^3.0.3
+  share_plus: ^4.0.7
 
   # A package to help you build highly customisable timelines with Flutter.
   timeline_tile: ^2.0.0

@@ -7,22 +7,32 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:aewallet/ui/account/accountdetails_sheet.dart';
+import 'package:aewallet/ui/account/accounts_sheet.dart';
 import 'package:aewallet/ui/menu/menu_widget_wallet.dart';
 import 'package:aewallet/ui/menu/settings_drawer_wallet_mobile.dart';
+import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/bus/account_changed_event.dart';
 import 'package:core/bus/disable_lock_timeout_event.dart';
-import 'package:aeuniverse/model/available_networks.dart';
+import 'package:core/localization.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
+import 'package:core/util/keychain_util.dart';
 import 'package:core_ui/ui/util/responsive.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Project imports:
 import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/model/available_networks.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/balance_infos.dart';
+import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
+import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aeuniverse/ui/widgets/logo.dart';
 import 'package:aeuniverse/util/preferences.dart';
 
@@ -470,31 +480,109 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          Stack(
-                            children: <Widget>[
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.08,
-                                alignment: Alignment.centerRight,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 10.0),
-                                  child: AutoSizeText(
-                                    StateContainer.of(context)
-                                        .curNetwork
-                                        .getNetworkCryptoCurrencyLabel(),
-                                    style:
-                                        AppStyles.textStyleSize80W700Primary15(
-                                            context),
+                      InkWell(
+                        onTap: () {
+                          AccountDetailsSheet(
+                                  StateContainer.of(context).selectedAccount)
+                              .mainBottomSheet(context);
+                        },
+                        child: Column(
+                          children: <Widget>[
+                            Stack(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Opacity(
+                                      opacity: 0.9,
+                                      child: SvgPicture.asset(
+                                        'packages/core_ui/assets/themes/dark/backgroundAccountLeft.svg',
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.08,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                        width: StateContainer.of(context)
+                                                .selectedAccount
+                                                .name!
+                                                .length *
+                                            6),
+                                    Opacity(
+                                      opacity: 0.9,
+                                      child: SvgPicture.asset(
+                                        'packages/core_ui/assets/themes/dark/backgroundAccountRight.svg',
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.08,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                InkWell(
+                                  onTap: () async {
+                                    /*   sl
+                                        .get<HapticUtil>()
+                                        .feedback(FeedbackType.light);
+                                    AppAccountsSheet(await KeychainUtil()
+                                            .getListAccountsFromKeychain(
+                                                await StateContainer.of(context)
+                                                    .getSeed()))
+                                        .mainBottomSheet(context);*/
+                                  },
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.08,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            StateContainer.of(context)
+                                                .selectedAccount
+                                                .name!
+                                                .toUpperCase(),
+                                            style: AppStyles
+                                                .textStyleSize18W400Equinox(
+                                                    context),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              BalanceInfosWidget().buildInfos(context),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                            Stack(
+                              children: <Widget>[
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.08,
+                                  alignment: Alignment.centerRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 10.0),
+                                    child: AutoSizeText(
+                                      StateContainer.of(context)
+                                          .curNetwork
+                                          .getNetworkCryptoCurrencyLabel(),
+                                      style: AppStyles
+                                          .textStyleSize80W700Primary15(
+                                              context),
+                                    ),
+                                  ),
+                                ),
+                                BalanceInfosWidget().buildInfos(context),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                       BalanceInfosWidget().buildKPI(context),
                       SizedBox(

@@ -10,9 +10,9 @@ import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
+import 'package:core/util/keychain_util.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
-import 'package:core_ui/util/app_util.dart';
 import 'package:core_ui/util/case_converter.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -39,12 +39,13 @@ class _AppLockScreenState extends State<AppLockScreen> {
 
   Future<void> _goHome() async {
     if (StateContainer.of(context).wallet == null) {
-      Account? selectedAcct = await AppUtil()
-          .loginAccount(await StateContainer.of(context).getSeed(), context);
+      Account? selectedAcct = await KeychainUtil()
+          .addAccount(await StateContainer.of(context).getSeed(), '');
       StateContainer.of(context).requestUpdate(account: selectedAcct);
     }
-    StateContainer.of(context)
-        .requestUpdate(account: StateContainer.of(context).selectedAccount);
+    Account? account = await sl.get<DBHelper>().getSelectedAccount();
+    StateContainer.of(context).selectedAccount = account!;
+    StateContainer.of(context).requestUpdate(account: account);
     Navigator.of(context).pushNamedAndRemoveUntil(
       '/home_transition',
       (Route<dynamic> route) => false,

@@ -281,17 +281,18 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
   Future<void> _doAdd() async {
     try {
       _showSendingAnimation(context);
-      final String transactionChainSeed =
+      final String? transactionChainSeed =
           await StateContainer.of(context).getSeed();
       final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
       final TransactionStatus transactionStatus = await sl
           .get<AppService>()
           .addNFT(
               originPrivateKey,
-              transactionChainSeed,
+              transactionChainSeed!,
               StateContainer.of(context).selectedAccount.lastAddress!,
               widget.nftName!,
-              widget.nftInitialSupply!);
+              widget.nftInitialSupply!,
+              StateContainer.of(context).selectedAccount.name!);
       EventTaxiImpl.singleton()
           .fire(NFTAddEvent(response: transactionStatus.status));
     } catch (e) {

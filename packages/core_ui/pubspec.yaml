@@ -25,4 +25,3 @@ dev_dependencies:
 flutter:
   assets:
     - assets/themes/dark/
-    - assets/themes/light/

@@ -142,12 +142,14 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                   .textStyleSize16W200Primary(
                                                       context)),
                                           onPressed: () async {
-                                            String addressIndex =
+                                            String addressIndex = '';
+                                            // TODO: A Revoir
+                                            /*String addressIndex =
                                                 StateContainer.of(context)
                                                     .selectedAccount
                                                     .index!
                                                     .toRadixString(16)
-                                                    .padLeft(8, '0');
+                                                    .padLeft(8, '0');*/
                                             final Transaction transaction =
                                                 Transaction(
                                                     type: 'transfer',
@@ -167,7 +169,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                                 context)
                                                             .selectedAccount
                                                             .lastAddress!);
-                                            final String transactionChainSeed =
+                                            final String? transactionChainSeed =
                                                 await StateContainer.of(context)
                                                     .getSeed();
                                             final String originPrivateKey =
@@ -176,7 +178,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                     .getOriginKey();
                                             transaction
                                                 .build(
-                                                    transactionChainSeed,
+                                                    transactionChainSeed!,
                                                     lastTransaction
                                                         .chainLength!)
                                                 .originSign(originPrivateKey);

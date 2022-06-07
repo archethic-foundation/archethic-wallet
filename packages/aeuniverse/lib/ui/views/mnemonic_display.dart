@@ -8,7 +8,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
-import 'package:core_ui/util/app_util.dart';
+import 'package:core_ui/util/screen_util.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Project imports:
@@ -38,7 +38,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
   }
 
   List<Widget> _buildMnemonicRows() {
-    int nRows = AppUtil.isDesktopMode() ? 8 : 12;
+    int nRows = ScreenUtil.isDesktopMode() ? 8 : 12;
     int itemsPerRow = 24 ~/ nRows;
     int curWord = 0;
     final List<Widget> ret = <Widget>[];

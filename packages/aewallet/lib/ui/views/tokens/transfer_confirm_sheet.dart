@@ -6,12 +6,9 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:aewallet/ui/views/transactions/phoenix_link.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:gql_exec/gql_exec.dart';
-import "package:web_socket_channel/web_socket_channel.dart";
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
@@ -26,11 +23,7 @@ import 'package:core/service/app_service.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/routes.dart';
-import "package:gql_link/gql_link.dart";
 import 'package:event_taxi/event_taxi.dart';
-import 'package:phoenix_socket/phoenix_socket.dart';
-import 'package:phoenix_socket/phoenix_socket.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 
 // Project imports:
 import 'package:aewallet/bus/transaction_send_event.dart';
@@ -67,21 +60,8 @@ class TransferConfirmSheet extends StatefulWidget {
 class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   bool? animationOpen;
 
-  PhoenixLink? phoenixLink;
-
-  final subscriptionDocument = gql(
-      """subscription { transactionConfirmed(address: "00005b97bd47bb11af2e17732fe355c18731d30035066b43d4788c189014f6807090") { nbConfirmations } }""");
-
   StreamSubscription<AuthenticatedEvent>? _authSub;
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
-
-  void subscribe() {
-    PhoenixLink.createChannel(
-            websocketUri: 'ws://localhost:4000/socket/websocket')
-        .then((channel) {
-      phoenixLink = PhoenixLink(channel: channel);
-    });
-  }
 
   void _registerBus() {
     _authSub = EventTaxiImpl.singleton()
@@ -97,7 +77,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         .listen((TransactionSendEvent event) {
       Navigator.of(context).pop();
 
-      /* if (event.response != 'pending') {
+      if (event.response != 'pending') {
         // Send failed
         if (animationOpen!) {
           Navigator.of(context).pop();
@@ -124,7 +104,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
               account: StateContainer.of(context).selectedAccount);
         });
         Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
-      }*/
+      }
     });
   }
 
@@ -146,40 +126,6 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
 
     animationOpen = false;
   }
-
-  /* _waitConfirmations(String lastAddress) async {
-    final String operation =
-        """subscription { transactionConfirmed(address: "$lastAddress") { nbConfirmations } }""";
-
-    return Absinthe.subscribe(
-      StateContainer.of(context).curNetwork.getLink(),
-      'transactionConfirmed',
-      operation,
-      onResult: (payload) async {
-        if (payload == null) {
-          print('nbConfirmations null');
-        } else {
-          print('nbConfirmations pas null');
-          setState(() {
-            toto = transactionConfirmed[payload['data']['transactionConfirmed']
-                ['nbConfirmations']]!;
-          });
-        }
-      },
-      onError: (error) {
-        print('Error ----> $error');
-      },
-      onCancel: () {
-        print("cancelled subscription");
-      },
-      onAbort: () {
-        print("subscription aborted");
-      },
-      onStart: () {
-        print("start subscription");
-      },
-    );
-  }*/
 
   @override
   void dispose() {
@@ -231,17 +177,6 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                 const SizedBox(
                   height: 20,
                 ),
-                StreamBuilder(
-                    stream: phoenixLink?.request(Request(
-                        operation: Operation(
-                            document: subscriptionDocument,
-                            operationName: "query"))),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<Response> snapshot) {
-                      print('snap ${snapshot.data}');
-
-                      return const Text('toto');
-                    }),
                 SizedBox(
                   child: widget.typeTransfer == 'TOKEN'
                       ? TokensTransferListWidget(
@@ -307,10 +242,8 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
 
   Future<void> _doSend() async {
     try {
-      subscribe();
       _showSendingAnimation(context);
-      final String transactionChainSeed =
-          await StateContainer.of(context).getSeed();
+      final String? seed = await StateContainer.of(context).getSeed();
       List<UCOTransferWallet> _ucoTransferList = widget.ucoTransferList!;
       final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
 
@@ -318,9 +251,10 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
           .get<AppService>()
           .sendUCO(
               originPrivateKey,
-              transactionChainSeed,
+              seed!,
               StateContainer.of(context).selectedAccount.lastAddress!,
-              _ucoTransferList);
+              _ucoTransferList,
+              StateContainer.of(context).selectedAccount.name!);
       EventTaxiImpl.singleton()
           .fire(TransactionSendEvent(response: transactionStatus.status));
     } catch (e) {

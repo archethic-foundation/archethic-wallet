@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/model/available_networks.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
@@ -21,7 +22,6 @@ import 'package:aeuniverse/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' show ApiService;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
-import 'package:aeuniverse/model/available_networks.dart';
 import 'package:core/service/app_service.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/dimens.dart';
@@ -265,6 +265,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                       textInputAction: TextInputAction.next,
                                       labelText: AppLocalization.of(context)!
                                           .nftNameHint,
+                                      autocorrect: false,
                                       keyboardType: TextInputType.text,
                                       style:
                                           AppStyles.textStyleSize16W600Primary(
@@ -470,12 +471,12 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
       return fee;
     }
     try {
-      final String transactionChainSeed =
+      final String? transactionChainSeed =
           await StateContainer.of(context).getSeed();
       final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
       fee = await sl.get<AppService>().getFeesEstimationAddNFT(
           originPrivateKey,
-          transactionChainSeed,
+          transactionChainSeed!,
           StateContainer.of(context).selectedAccount.lastAddress!,
           _nameController!.text,
           int.tryParse(_initialSupplyController!.text)!);

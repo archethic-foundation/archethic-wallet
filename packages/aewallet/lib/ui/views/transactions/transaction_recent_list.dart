@@ -82,8 +82,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                             true
                     ? Text(
                         AppLocalization.of(context)!.recentTransactionsHeader,
-                        style: AppStyles.textStyleSize14W600BackgroundDarkest(
-                            context))
+                        style: AppStyles.textStyleSize14W600Primary(context))
                     : Text(
                         AppLocalization.of(context)!
                             .recentTransactionsNoTransactionYet,

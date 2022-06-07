@@ -256,5 +256,11 @@
 	"showBalances": "Montrer les balances",
 	"enterEndpointBlank": "Le point d'accès est obligatoire.",
 	"enterEndpointNotValid": "Le point d'accès n'est pas valide.",
-	"enterEndpointHeader": "Veuillez préciser votre point d'accès."
+	"enterEndpointHeader": "Veuillez préciser votre point d'accès.",
+	"introNewWalletGetFirstInfosWelcome": "Bienvenue dans le Wallet Archethic.",
+	"introNewWalletGetFirstInfosNameRequest": "Quel nom souhaitez-vous donner à ce compte, compte qui sera stocké dans votre porte clé décentralisé ?",
+	"introNewWalletGetFirstInfosNameInfos": "Il vous permettra de distinguer ce compte avec les autres comptes que vous pourrez, si vous le souhaitez, créer par la suite.\nATTENTION: Ce nom sera rattaché à votre porte clé décentralisé et ne pourra plus être modifié.",
+	"introNewWalletGetFirstInfosNameBlank": "Veuillez renseigner un nom pour ce compte",
+	"introNewWalletGetFirstInfosNetworkHeader": "Sur quel réseau souhaitez vous utiliser votre wallet ?",
+	"introNewWalletGetFirstInfosNameSlash": "Le nom ne peut pas commporter un caractère '/'"
 }

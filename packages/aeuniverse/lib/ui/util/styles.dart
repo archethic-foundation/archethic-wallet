@@ -1,5 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+// Dart imports:
+import 'dart:math';
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -8,6 +11,15 @@ import 'package:aeuniverse/appstate_container.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppStyles {
+  static TextStyle textStyleSize18W400Equinox(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Equinox',
+      fontSize: AppFontSizes.size18,
+      fontWeight: FontWeight.w700,
+      color: StateContainer.of(context).curTheme.primary!.withOpacity(0.7),
+    );
+  }
+
   static TextStyle textStyleSize16W200Primary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
@@ -198,7 +210,6 @@ class AppStyles {
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.success,
-      height: 1.5,
     );
   }
 
@@ -208,7 +219,6 @@ class AppStyles {
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.primary60,
-      height: 1.5,
     );
   }
 
@@ -218,7 +228,6 @@ class AppStyles {
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.primary60,
-      height: 1.5,
     );
   }
 
@@ -228,7 +237,6 @@ class AppStyles {
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.primary,
-      height: 1.5,
     );
   }
 
@@ -433,7 +441,6 @@ class AppStyles {
       fontWeight: FontWeight.w100,
       fontFamily: 'Montserrat',
       color: StateContainer.of(context).curTheme.success,
-      height: 1.5,
       letterSpacing: 1,
     );
   }

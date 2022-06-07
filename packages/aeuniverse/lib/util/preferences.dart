@@ -8,12 +8,12 @@ import 'dart:ui';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/model/available_currency.dart';
 import 'package:core/model/available_language.dart';
-import 'package:aeuniverse/model/available_networks.dart';
 import 'package:core/model/device_lock_timeout.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
+import 'package:aeuniverse/model/available_networks.dart';
 import 'package:aeuniverse/model/available_themes.dart';
 
 class Preferences {

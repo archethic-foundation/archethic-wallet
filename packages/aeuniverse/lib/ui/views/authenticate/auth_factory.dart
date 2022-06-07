@@ -93,12 +93,13 @@ class AuthFactory {
     final String? expectedPin = _vault.getPin();
     bool auth = false;
     if (transitions) {
+      // TODO: add the description
       auth = await Navigator.of(context)
           .push(MaterialPageRoute(builder: (BuildContext context) {
         return PinScreen(
           PinOverlayType.enterPin,
           expectedPin: expectedPin!,
-          description: AppLocalization.of(context)!.pinSecretPhraseBackup,
+          description: '',
         );
       })) as bool;
     } else {
@@ -107,7 +108,7 @@ class AuthFactory {
         return PinScreen(
           PinOverlayType.enterPin,
           expectedPin: expectedPin!,
-          description: AppLocalization.of(context)!.pinSecretPhraseBackup,
+          description: '',
         );
       })) as bool;
     }

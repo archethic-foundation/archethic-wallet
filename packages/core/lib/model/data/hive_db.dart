@@ -3,7 +3,7 @@
 // Package imports:
 import 'package:hive/hive.dart';
 
-part 'hiveDB.g.dart';
+part 'hive_db.g.dart';
 
 @HiveType(typeId: 0)
 class Contact extends HiveObject {
@@ -21,39 +21,34 @@ class Contact extends HiveObject {
 @HiveType(typeId: 1)
 class Account extends HiveObject {
   Account(
-      {this.genesisAddress,
-      this.index,
-      this.name,
+      {this.name,
+      this.genesisAddress,
       this.lastAccess,
       this.selected = false,
       this.lastAddress,
       this.balance});
 
-  /// Genesis Address - Primary Key
+  /// Account name - Primary Key
   @HiveField(0)
-  String? genesisAddress;
-
-  /// Index on the seed
-  @HiveField(1)
-  int? index;
-
-  /// Account nickname
-  @HiveField(2)
   String? name;
 
+  /// Genesis Address
+  @HiveField(1)
+  String? genesisAddress;
+
   /// Last Accessed incrementor
-  @HiveField(3)
+  @HiveField(2)
   int? lastAccess;
 
   /// Whether this is the currently selected account
-  @HiveField(4)
+  @HiveField(3)
   bool? selected;
 
   /// Last address
-  @HiveField(5)
+  @HiveField(4)
   String? lastAddress;
 
   /// Last known balance in RAW
-  @HiveField(6)
+  @HiveField(5)
   String? balance;
 }

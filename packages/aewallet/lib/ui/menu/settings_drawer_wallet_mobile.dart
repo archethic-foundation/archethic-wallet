@@ -5,12 +5,12 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:aeuniverse/ui/widgets/components/buttons.dart';
-import 'package:core_ui/ui/util/dimens.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/model/available_networks.dart';
 import 'package:aeuniverse/model/available_themes.dart';
 import 'package:aeuniverse/ui/util/settings_list_item.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
@@ -18,6 +18,8 @@ import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 import 'package:aeuniverse/ui/views/authenticate/pin_screen.dart';
 import 'package:aeuniverse/ui/views/settings/backupseed_sheet.dart';
+import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
+import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
@@ -25,22 +27,20 @@ import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aeuniverse/util/preferences.dart';
 import 'package:aeuniverse/util/service_locator.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/model/available_currency.dart';
 import 'package:core/model/available_language.dart';
-import 'package:aeuniverse/model/available_networks.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/device_lock_timeout.dart';
 import 'package:core/model/device_unlock_option.dart';
 import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/vault.dart';
+import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/util/case_converter.dart';
-import 'package:flutter/services.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 // Project imports:
 import 'package:aewallet/ui/views/contacts/contact_list.dart';
@@ -1285,10 +1285,10 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         if (auth) {
                           StateContainer.of(context)
                               .getSeed()
-                              .then((String seed) {
+                              .then((String? seed) {
                             Sheets.showAppHeightNineSheet(
                                 context: context,
-                                widget: AppSeedBackupSheet(seed));
+                                widget: AppSeedBackupSheet(seed!));
                           });
                         }
                       }),
@@ -1571,7 +1571,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       Sheets.showAppHeightNineSheet(
                           context: context, widget: const AddNFTSheet());
                     }),
-                    Divider(
+                    /*Divider(
                         height: 2,
                         color: StateContainer.of(context).curTheme.primary15),
                     AppSettings.buildSettingsListItemSingleLine(
@@ -1587,7 +1587,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                             contactsRef: StateContainer.of(context).contactsRef,
                             title: AppLocalization.of(context).transferNFT,
                           ));*/
-                    }),
+                    }),*/
                     Divider(
                         height: 2,
                         color: StateContainer.of(context).curTheme.primary15),

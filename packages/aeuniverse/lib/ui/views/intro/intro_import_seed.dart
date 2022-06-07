@@ -9,15 +9,16 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/model/data/appdb.dart';
+import 'package:core/model/data/hive_db.dart';
 import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
+import 'package:core/util/keychain_util.dart';
 import 'package:core/util/mnemonics.dart';
 import 'package:core/util/seeds.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/formatters.dart';
-import 'package:core_ui/util/app_util.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -280,21 +281,23 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       AppButton.buildAppButton(
-                        const Key('yes'),
+                        const Key('ok'),
                         context,
                         AppButtonType.primary,
-                        AppLocalization.of(context)!.yes,
+                        AppLocalization.of(context)!.ok,
                         Dimens.buttonTopDimens,
                         onPressed: () async {
                           _mnemonicFocusNode.unfocus();
                           if (AppMnemomics.validateMnemonic(
                               _mnemonicController.text.split(' '))) {
-                            String _seed = AppMnemomics.mnemonicListToSeed(
+                            String seed = AppMnemomics.mnemonicListToSeed(
                                 _mnemonicController.text.split(' '));
                             final Vault _vault = await Vault.getInstance();
-                            _vault.setSeed(_seed);
+                            _vault.setSeed(seed);
                             await sl.get<DBHelper>().dropAccounts();
-                            await AppUtil().loginAccount(_seed, context);
+                            List<Account>? accounts = await KeychainUtil()
+                                .getListAccountsFromKeychain(seed);
+
                             StateContainer.of(context).requestUpdate(
                                 account:
                                     StateContainer.of(context).selectedAccount);

@@ -628,10 +628,6 @@ class AppLocalization {
     return Intl.message('Instantly', name: 'instantly');
   }
 
-  String get defaultAccountName {
-    return Intl.message('Main Account', name: 'defaultAccountName');
-  }
-
   String get tapToReveal {
     return Intl.message('Tap to reveal', name: 'tapToReveal');
   }
@@ -1211,6 +1207,42 @@ class AppLocalization {
   String get passwordSpecialCharacters {
     return Intl.message('- At least %1 Special character.',
         name: 'passwordSpecialCharacters');
+  }
+
+  String get introNewWalletGetFirstInfosWelcome {
+    return Intl.message('Welcome to Archethic Wallet.',
+        name: 'introNewWalletGetFirstInfosWelcome');
+  }
+
+  String get introNewWalletGetFirstInfosNameRequest {
+    return Intl.message(
+        'What name would you like to give to this account, which account will be stored in your decentralized keychain?',
+        name: 'introNewWalletGetFirstInfosNameRequest');
+  }
+
+  String get introNewWalletGetFirstInfosNameInfos {
+    return Intl.message(
+        'It will allow you to distinguish this account from other accounts that you can, if you want, create later.\nWARNING: This name will be added to your decentralized keychain and cannot be modified.',
+        name: 'introNewWalletGetFirstInfosNameInfos');
+  }
+
+  String get introNewWalletGetFirstInfosNameBlank {
+    return Intl.message('Please enter a name for this account',
+        name: 'introNewWalletGetFirstInfosNameBlank');
+  }
+
+  String get introNewWalletGetFirstInfosNameSlash {
+    return Intl.message('The name cannot have a \'/\' character.',
+        name: 'introNewWalletGetFirstInfosNameSlash');
+  }
+
+  String get introNewWalletGetFirstInfosNetworkHeader {
+    return Intl.message('On which network do you want to use your wallet?',
+        name: 'introNewWalletGetFirstInfosNetworkHeader');
+  }
+
+  String get accountHeader {
+    return Intl.message('Account', name: 'accountHeader');
   }
 }
 

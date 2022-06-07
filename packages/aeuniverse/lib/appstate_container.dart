@@ -15,7 +15,6 @@ import 'package:core/bus/transactions_list_event.dart';
 import 'package:core/model/ae_apps.dart';
 import 'package:core/model/available_currency.dart';
 import 'package:core/model/available_language.dart';
-import 'package:aeuniverse/model/available_networks.dart';
 import 'package:core/model/balance_wallet.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
@@ -27,11 +26,12 @@ import 'package:core/util/vault.dart';
 import 'package:core_ui/bus/chart_event.dart';
 import 'package:core_ui/model/chart_infos.dart';
 import 'package:core_ui/ui/themes/themes.dart';
-import 'package:core_ui/util/app_util.dart';
+import 'package:core_ui/util/screen_util.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 // Project imports:
+import 'package:aeuniverse/model/available_networks.dart';
 import 'package:aeuniverse/model/available_themes.dart';
 import 'package:aeuniverse/ui/themes/theme_dark.dart';
 import 'package:aeuniverse/util/preferences.dart';
@@ -46,8 +46,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
         CoinsPriceResponse,
         CoinsCurrentDataResponse,
         OracleService,
-        OracleUcoPrice,
-        deriveAddress;
+        OracleUcoPrice;
 
 class _InheritedStateContainer extends InheritedWidget {
   const _InheritedStateContainer({
@@ -95,8 +94,7 @@ class StateContainerState extends State<StateContainer> {
   AEApps currentAEApp = AEApps.bin;
 
   // Currently selected account
-  Account selectedAccount = Account(
-      name: 'AB', index: 0, lastAccess: 0, selected: true, genesisAddress: '0');
+  Account selectedAccount = Account();
   // Two most recently used accounts
   Account? recentLast;
   Account? recentSecondLast;
@@ -113,7 +111,7 @@ class StateContainerState extends State<StateContainer> {
   void initState() {
     super.initState();
 
-    if (AppUtil.isDesktopMode()) {
+    if (ScreenUtil.isDesktopMode()) {
       currentAEApp = AEApps.bin;
     } else {
       currentAEApp = AEApps.aewallet;
@@ -513,16 +511,11 @@ class StateContainerState extends State<StateContainer> {
   }
 
   Future<void> requestUpdateLastAddress(Account account) async {
-    final String seed = await getSeed();
-    final String genesisAddress = deriveAddress(seed, 0);
-
-    String lastAddress =
-        await sl.get<AddressService>().lastAddressFromAddress(genesisAddress);
-    if (lastAddress == '') {
-      lastAddress = genesisAddress;
-    }
-    account.genesisAddress = genesisAddress;
-    account.lastAddress = lastAddress;
+    String lastAddress = await sl
+        .get<AddressService>()
+        .lastAddressFromAddress(account.genesisAddress!);
+    account.lastAddress =
+        lastAddress == '' ? account.genesisAddress! : lastAddress;
     selectedAccount = account;
 
     setState(() {
@@ -548,21 +541,11 @@ class StateContainerState extends State<StateContainer> {
     });
     await requestUpdateCoinsChart();
 
-    sl.get<DBHelper>().getSelectedAccount().then((Account? account) {
-      if (account != null) {
-        localWallet!.accountBalance = BalanceWallet(
-            double.tryParse(account.balance == null ? '0' : account.balance!),
-            curCurrency);
-
-        localWallet!.address =
-            account.lastAddress == null ? '' : account.lastAddress!;
-      } else {
-        localWallet!.accountBalance = BalanceWallet(
-            double.tryParse(account!.balance == null ? '0' : account.balance!),
-            curCurrency);
-        localWallet!.address = '';
-      }
-    });
+    localWallet!.accountBalance = BalanceWallet(
+        double.tryParse(account.balance == null ? '0' : account.balance!),
+        curCurrency);
+    localWallet!.address =
+        account.lastAddress == null ? '' : account.lastAddress!;
   }
 
   void logOut() {
@@ -573,9 +556,33 @@ class StateContainerState extends State<StateContainer> {
     setupServiceLocator();
   }
 
-  Future<String> getSeed() async {
-    final Vault _vault = await Vault.getInstance();
-    return _vault.getSeed()!;
+  Future<String?> getSeed() async {
+    final Vault vault = await Vault.getInstance();
+    String? seed = vault.getSeed();
+    return seed;
+  }
+
+  Future<void> updateRecentlyUsedAccounts() async {
+    List<Account> otherAccounts =
+        await sl.get<DBHelper>().getRecentlyUsedAccounts();
+    if (otherAccounts != null && otherAccounts.length > 0) {
+      if (otherAccounts.length > 1) {
+        setState(() {
+          recentLast = otherAccounts[0];
+          recentSecondLast = otherAccounts[1];
+        });
+      } else {
+        setState(() {
+          recentLast = otherAccounts[0];
+          recentSecondLast = null;
+        });
+      }
+    } else {
+      setState(() {
+        recentLast = null;
+        recentSecondLast = null;
+      });
+    }
   }
 
   /// Simple build method that just passes this state through

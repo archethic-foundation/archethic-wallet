@@ -110,18 +110,48 @@ class DBHelper {
     box.delete(contact.address);
   }
 
-  // Accounts
-  Future<void> saveAccount(Account account) async {
+  Future<Account> addAccount(Account account) async {
+    Box<Account> box = await Hive.openBox<Account>(_accountsTable);
+    box.put(account.name, account);
+    return account;
+  }
+
+  Future<List<Account>> getRecentlyUsedAccounts() async {
+    final Box<Account> box = await Hive.openBox<Account>(_accountsTable);
+    final List<Account> accounts = box.values.toList();
+    accounts
+        .sort((Account a, Account b) => a.lastAccess!.compareTo(b.lastAccess!));
+    return accounts;
+  }
+
+  Future<void> changeAccount(Account account) async {
+    Box<Account> box = await Hive.openBox<Account>(_accountsTable);
+    final List<Account> accountsList = box.values.toList();
+    int maxLastAccessed = 0;
+    for (Account _account in accountsList) {
+      _account.selected = false;
+      box.put(_account.name, _account);
+      if (_account.lastAccess != null &&
+          maxLastAccessed < _account.lastAccess!) {
+        maxLastAccessed = _account.lastAccess!;
+      }
+    }
+    account.selected = true;
+    account.lastAccess = maxLastAccessed + 1;
+    box.put(account.name, account);
+  }
+
+  Future<void> hideAccount(Account account) async {
     // ignore: prefer_final_locals
     Box<Account> box = await Hive.openBox<Account>(_accountsTable);
-    box.put(account.genesisAddress, account);
+    box.delete(account.name);
   }
 
   Future<void> updateAccountBalance(Account account, String balance) async {
     // ignore: prefer_final_locals
     Box<Account> box = await Hive.openBox<Account>(_accountsTable);
     account.balance = balance;
-    box.put(account.genesisAddress!, account);
+    box.put(account.name, account);
   }
 
   Future<Account?> getSelectedAccount() async {

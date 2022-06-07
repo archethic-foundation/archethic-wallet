@@ -304,7 +304,7 @@ class _SetYubikeyState extends State<SetYubikey> {
           _preferences
               .setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
           await Future<void>.delayed(const Duration(milliseconds: 200));
-          StateContainer.of(context).getSeed().then((String seed) {
+          StateContainer.of(context).getSeed().then((String? seed) {
             Navigator.of(context).pushNamedAndRemoveUntil(
               '/home',
               (Route<dynamic> route) => false,

@@ -8,11 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
-import 'package:core/model/data/hive_db.dart';
-import 'package:core/util/seeds.dart';
-import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
-import 'package:core_ui/util/app_util.dart';
 import 'package:flutter_svg/svg.dart';
 
 // Project imports:
@@ -77,29 +73,17 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                                 child: SizedBox(
                                   height: 200,
                                   child: AspectRatio(
-                                    aspectRatio: 3 / 1,
-                                    child: kIsWeb
-                                        ? Image.asset(
+                                      aspectRatio: 3 / 1,
+                                      child: Image.asset(
+                                        StateContainer.of(context)
+                                                .curTheme
+                                                .assetsFolder! +
                                             StateContainer.of(context)
-                                                    .curTheme
-                                                    .assetsFolder! +
-                                                StateContainer.of(context)
-                                                    .curTheme
-                                                    .logo! +
-                                                '.png',
-                                            height: 200,
-                                          )
-                                        : SvgPicture.asset(
-                                            StateContainer.of(context)
-                                                    .curTheme
-                                                    .assetsFolder! +
-                                                StateContainer.of(context)
-                                                    .curTheme
-                                                    .logo! +
-                                                '.svg',
-                                            height: 200,
-                                          ),
-                                  ),
+                                                .curTheme
+                                                .logo! +
+                                            '.png',
+                                        height: 200,
+                                      )),
                                 ),
                               ),
                             ),
@@ -151,7 +135,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                                     controlAffinity:
                                         ListTileControlAffinity.leading,
                                     secondary: IconButton(
-                                        icon: Icon(Icons.search),
+                                        icon: Icon(Icons.read_more),
                                         iconSize: 30,
                                         color: StateContainer.of(context)
                                             .curTheme
@@ -185,20 +169,9 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                             Dimens.buttonTopDimens,
                             onPressed: () {
                               if (checkedValue) {
-                                Vault.getInstance().then((Vault _vault) {
-                                  final String _seed = AppSeeds.generateSeed();
-                                  _vault.setSeed(_seed);
-                                  AppUtil()
-                                      .loginAccount(_seed, context,
-                                          forceNewAccount: true)
-                                      .then((Account? selectedAcct) {
-                                    StateContainer.of(context)
-                                        .requestUpdate(account: selectedAcct);
-                                    Navigator.of(context).pushNamed(
-                                      '/intro_backup_safety',
-                                    );
-                                  });
-                                });
+                                Navigator.of(context).pushNamed(
+                                  '/intro_welcome_get_first_infos',
+                                );
                               }
                             },
                           ),
