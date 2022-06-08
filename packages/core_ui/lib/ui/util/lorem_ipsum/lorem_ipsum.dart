@@ -10,10 +10,10 @@ Random _random = Random();
 
 String loremIpsum(
     {int paragraphs = 1, int words = 100, bool initWithLorem = false}) {
-  if (paragraphs == null || paragraphs < 0) {
+  if (paragraphs < 0) {
     throw ArgumentError.value(paragraphs, "paragraphs");
   }
-  if (words == null || words < 0) {
+  if (words < 0) {
     throw ArgumentError.value(words, "words");
   }
 

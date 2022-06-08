@@ -21,7 +21,6 @@ import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/keychain_util.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:event_taxi/event_taxi.dart';
-import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 // Project imports:
@@ -279,7 +278,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
           onPressed: (context) {
             AccountDetailsSheet(account).mainBottomSheet(context);
           },
-          backgroundColor: Color(0xFF0392CF),
+          backgroundColor: const Color(0xFF0392CF),
           foregroundColor: Colors.white,
           icon: Icons.edit,
           label: 'Edit',
@@ -289,7 +288,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
             AppDialogs.showConfirmDialog(
                 context,
                 'Hide Account?',
-                'Are you sure you want to hide this account? You can re-add it later by tapping the \"%1\" button.',
+                'Are you sure you want to hide this account? You can re-add it later by tapping the "%1" button.',
                 AppLocalization.of(context)!.yes, () {
               sl.get<DBHelper>().hideAccount(account).then((id) {
                 EventTaxiImpl.singleton().fire(
@@ -451,7 +450,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                           ],
                         ),
                         nameError != null
-                            ? Container(
+                            ? SizedBox(
                                 height: 40,
                                 child: Text(nameError!,
                                     style: AppStyles.textStyleSize14W600Primary(

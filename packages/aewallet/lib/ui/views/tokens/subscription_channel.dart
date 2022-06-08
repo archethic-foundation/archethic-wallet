@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Package imports:
-import 'package:gql_link/gql_link.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:phoenix_socket/phoenix_socket.dart';
 

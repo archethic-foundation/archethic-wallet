@@ -68,7 +68,6 @@ class _PinScreenState extends State<PinScreen>
 
   // Invalid animation
   AnimationController? _controller;
-  Animation<double>? _animation;
 
   @override
   void initState() {
@@ -101,49 +100,6 @@ class _PinScreenState extends State<PinScreen>
         duration: const Duration(milliseconds: 350), vsync: this);
     final Animation<double> curve =
         CurvedAnimation(parent: _controller!, curve: ShakeCurve());
-    _animation = Tween<double>(begin: 0.0, end: 25.0).animate(curve)
-      ..addStatusListener((AnimationStatus status) {
-        if (status == AnimationStatus.completed) {
-          if (widget.type == PinOverlayType.enterPin) {
-            Preferences.getInstance().then((Preferences _preferences) {
-              _preferences.incrementLockAttempts();
-
-              _failedAttempts++;
-              if (_failedAttempts >= maxAttempts) {
-                setState(() {
-                  _controller!.value = 0;
-                });
-                _preferences.updateLockDate();
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/lock_screen_transition', (Route<dynamic> route) => false);
-              } else {
-                setState(() {
-                  _pin = '';
-                  _header = AppLocalization.of(context)!.pinInvalid;
-                  _dotStates =
-                      List<IconData>.filled(_pinLength, FontAwesomeIcons.minus);
-                  _controller!.value = 0;
-                });
-              }
-            });
-          } else {
-            setState(() {
-              _awaitingConfirmation = false;
-              _dotStates =
-                  List<IconData>.filled(_pinLength, FontAwesomeIcons.minus);
-              _pin = '';
-              _pinConfirmed = '';
-              _header = AppLocalization.of(context)!.pinConfirmError;
-              _controller!.value = 0;
-            });
-          }
-        }
-      })
-      ..addListener(() {
-        setState(() {
-          // the animation object’s value is the changed state
-        });
-      });
   }
 
   @override

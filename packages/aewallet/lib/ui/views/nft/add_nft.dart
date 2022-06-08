@@ -187,8 +187,8 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                       },
                       child: Container(
                         color: Colors.transparent,
-                        child: const SizedBox.expand(),
                         constraints: const BoxConstraints.expand(),
+                        child: const SizedBox.expand(),
                       ),
                     ),
                     SingleChildScrollView(

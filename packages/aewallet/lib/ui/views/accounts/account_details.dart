@@ -1,4 +1,6 @@
 // Dart imports:
+// ignore_for_file: unnecessary_string_escapes
+
 import 'dart:async';
 
 // Flutter imports:
