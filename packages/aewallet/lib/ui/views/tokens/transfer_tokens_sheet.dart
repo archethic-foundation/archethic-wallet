@@ -890,10 +890,10 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
             FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,8}')),
           ],
           onChanged: (String text) async {
-            double _fee = await getFee();
+            double fee = await getFee();
             // Always reset the error message to be less annoying
             setState(() {
-              feeEstimation = _fee;
+              feeEstimation = fee;
               _amountValidationText = '';
               // Reset the raw amount
               _rawAmount = null;
@@ -917,7 +917,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
             icon: FontAwesomeIcons.anglesUp,
             onPressed: () async {
               sl.get<HapticUtil>().feedback(FeedbackType.light);
-              double _fee = await getFee(maxSend: true);
+              double fee = await getFee(maxSend: true);
 
               double sendAmount = 0;
               if (primaryCurrency == PrimaryCurrency.network) {
@@ -925,14 +925,14 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                         .wallet!
                         .accountBalance
                         .networkCurrencyValue! -
-                    _fee;
+                    fee;
                 _sendAmountController!.text = sendAmount.toStringAsFixed(8);
               } else {
                 double selectedCurrencyFee = StateContainer.of(context)
                         .wallet!
                         .accountBalance
                         .localCurrencyPrice *
-                    _fee;
+                    fee;
                 sendAmount = StateContainer.of(context)
                         .wallet!
                         .accountBalance
@@ -943,7 +943,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
               }
 
               setState(() {
-                feeEstimation = _fee;
+                feeEstimation = fee;
                 _amountValidationText = '';
                 // Reset the raw amount
                 _rawAmount = null;
@@ -1098,15 +1098,15 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                 ? AppStyles.textStyleSize14W700Primary(context)
                 : AppStyles.textStyleSize14W700Primary(context),
         onChanged: (String text) async {
-          double _fee = await getFee();
+          double fee = await getFee();
           if (text.isNotEmpty) {
             setState(() {
-              feeEstimation = _fee;
+              feeEstimation = fee;
               _showContactButton = false;
             });
           } else {
             setState(() {
-              feeEstimation = _fee;
+              feeEstimation = fee;
               _showContactButton = true;
             });
           }
@@ -1181,7 +1181,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
     double fee = 0;
 
     final bool isContact = _sendAddressController!.text.startsWith('@');
-    String _recipientAddress = '';
+    String recipientAddress = '';
     if (_sendAddressController!.text.isEmpty ||
         (!isContact && !isHex(_sendAddressController!.text))) {
       return fee;
@@ -1192,7 +1192,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
               .get<DBHelper>()
               .getContactWithName(_sendAddressController!.text);
           if (contact.address != null) {
-            _recipientAddress = contact.address!;
+            recipientAddress = contact.address!;
           } else {
             return fee;
           }
@@ -1200,7 +1200,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
           return fee;
         }
       } else {
-        _recipientAddress = _sendAddressController!.text.trim();
+        recipientAddress = _sendAddressController!.text.trim();
       }
     }
     try {
@@ -1217,7 +1217,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                   100000000)
               : BigInt.from(
                   double.tryParse(_sendAmountController!.text)! * 100000000),
-          to: _recipientAddress));
+          to: recipientAddress));
       final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
       fee = await sl.get<AppService>().getFeesEstimationUCO(
           originPrivateKey,

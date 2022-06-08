@@ -221,11 +221,11 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       AppLocalization.of(context)!.confirm,
                       Dimens.buttonTopDimens,
                       onPressed: () async {
-                        final Preferences _preferences =
+                        final Preferences preferences =
                             await Preferences.getInstance();
                         // Authenticate
                         final AuthenticationMethod authMethod =
-                            _preferences.getAuthMethod();
+                            preferences.getAuthMethod();
                         bool auth =
                             await AuthFactory.authenticate(context, authMethod);
                         if (auth) {
@@ -261,7 +261,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       _showSendingAnimation(context);
       final String? transactionChainSeed =
           await StateContainer.of(context).getSeed();
-      List<UCOTransferWallet> _ucoTransferList = widget.ucoTransferList!;
+      List<UCOTransferWallet> ucoTransferList = widget.ucoTransferList!;
       final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
 
 /*
@@ -277,7 +277,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
           await sl.get<ApiService>().getLastTransaction(widget.lastAddress!);
       final Transaction transaction =
           Transaction(type: 'transfer', data: Transaction.initData());
-      for (UCOTransfer transfer in _ucoTransferList) {
+      for (UCOTransfer transfer in ucoTransferList) {
         transaction.addUCOTransfer(transfer.to, transfer.amount!);
       }
       TransactionStatus transactionStatus = TransactionStatus();

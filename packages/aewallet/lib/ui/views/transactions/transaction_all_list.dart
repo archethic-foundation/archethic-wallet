@@ -172,7 +172,7 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
       BuildContext context, RecentTransaction transaction) {
     return FutureBuilder<String>(
       future: transaction.recipientDisplay,
-      builder: (BuildContext context, AsyncSnapshot<String> _recipientDisplay) {
+      builder: (BuildContext context, AsyncSnapshot<String> recipientDisplay) {
         return InkWell(
           onTap: () {
             sl.get<HapticUtil>().feedback(FeedbackType.light);
@@ -255,9 +255,9 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                               else
                                 Text(
                                     AppLocalization.of(context)!.txListTo +
-                                        Address(_recipientDisplay.data == null
+                                        Address(recipientDisplay.data == null
                                                 ? transaction.recipient!
-                                                : _recipientDisplay.data!)
+                                                : recipientDisplay.data!)
                                             .getShortString3(),
                                     style: AppStyles.textStyleSize12W400Primary(
                                         context))

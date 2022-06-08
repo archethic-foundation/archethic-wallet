@@ -105,17 +105,17 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
         _hasBiometrics = hasBiometrics;
       });
     });
-    Preferences.getInstance().then((Preferences _preferences) {
+    Preferences.getInstance().then((Preferences preferences) {
       setState(() {
-        _pinPadShuffleActive = _preferences.getPinPadShuffle();
-        _showBalancesActive = _preferences.getShowBalances();
-        _curAuthMethod = _preferences.getAuthMethod();
-        _curUnlockSetting = _preferences.getLock()
+        _pinPadShuffleActive = preferences.getPinPadShuffle();
+        _showBalancesActive = preferences.getShowBalances();
+        _curAuthMethod = preferences.getAuthMethod();
+        _curUnlockSetting = preferences.getLock()
             ? UnlockSetting(UnlockOption.yes)
             : UnlockSetting(UnlockOption.no);
-        _curThemeSetting = _preferences.getTheme();
-        _curNetworksSetting = _preferences.getNetwork();
-        _curTimeoutSetting = _preferences.getLockTimeout();
+        _curThemeSetting = preferences.getTheme();
+        _curNetworksSetting = preferences.getNetwork();
+        _curTimeoutSetting = preferences.getLockTimeout();
       });
     });
 
@@ -188,15 +188,15 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   }
 
   Future<void> _authMethodDialog() async {
-    final Preferences _preferences = await Preferences.getInstance();
+    final Preferences preferences = await Preferences.getInstance();
     final List<PickerItem> pickerItemsList =
         List<PickerItem>.empty(growable: true);
     for (var value in AuthMethod.values) {
-      bool _displayed = false;
+      bool displayed = false;
       if (value != AuthMethod.ledger) {
         if ((_hasBiometrics && value == AuthMethod.biometrics) ||
             value != AuthMethod.biometrics) {
-          _displayed = true;
+          displayed = true;
         }
       }
       pickerItemsList.add(PickerItem(
@@ -206,7 +206,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
           StateContainer.of(context).curTheme.icon,
           value,
           value == AuthMethod.biometricsUniris ? false : true,
-          displayed: _displayed));
+          displayed: displayed));
     }
     await showDialog<AuthMethod>(
       context: context,
@@ -232,7 +232,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         .authenticateWithBiometrics(context,
                             AppLocalization.of(context)!.unlockBiometrics);
                     if (auth) {
-                      _preferences.setAuthMethod(
+                      preferences.setAuthMethod(
                           AuthenticationMethod(AuthMethod.biometrics));
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         '/home',
@@ -255,9 +255,9 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       await _authMethodDialog();
                     } else {
                       if (pin.length > 5) {
-                        final Vault _vault = await Vault.getInstance();
-                        _vault.setPin(pin);
-                        _preferences.setAuthMethod(
+                        final Vault vault = await Vault.getInstance();
+                        vault.setPin(pin);
+                        preferences.setAuthMethod(
                             AuthenticationMethod(AuthMethod.pin));
                         Navigator.of(context).pushNamedAndRemoveUntil(
                           '/home',
@@ -289,7 +289,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   }
 
   Future<void> _lockDialog() async {
-    final Preferences _preferences = await Preferences.getInstance();
+    final Preferences preferences = await Preferences.getInstance();
     final List<PickerItem> pickerItemsList =
         List<PickerItem>.empty(growable: true);
     for (var value in UnlockOption.values) {
@@ -325,19 +325,19 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
           );
         })) {
       case UnlockOption.yes:
-        _preferences.setLock(true);
+        preferences.setLock(true);
         setState(() {
           _curUnlockSetting = UnlockSetting(UnlockOption.yes);
         });
         break;
       case UnlockOption.no:
-        _preferences.setLock(false);
+        preferences.setLock(false);
         setState(() {
           _curUnlockSetting = UnlockSetting(UnlockOption.no);
         });
         break;
       default:
-        _preferences.setLock(false);
+        preferences.setLock(false);
         setState(() {
           _curUnlockSetting = UnlockSetting(UnlockOption.no);
         });
@@ -346,7 +346,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   }
 
   Future<void> _currencyDialog() async {
-    final Preferences _preferences = await Preferences.getInstance();
+    final Preferences preferences = await Preferences.getInstance();
     final List<PickerItem> pickerItemsList =
         List<PickerItem>.empty(growable: true);
     for (var value in AvailableCurrencyEnum.values) {
@@ -414,7 +414,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
               );
             });
     if (selection != null) {
-      _preferences.setCurrency(AvailableCurrency(selection));
+      preferences.setCurrency(AvailableCurrency(selection));
       if (StateContainer.of(context).curCurrency.currency != selection) {
         setState(() async {
           StateContainer.of(context).curCurrency = AvailableCurrency(selection);
@@ -428,7 +428,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   }
 
   Future<void> _languageDialog() async {
-    final Preferences _preferences = await Preferences.getInstance();
+    final Preferences preferences = await Preferences.getInstance();
     final List<PickerItem> pickerItemsList =
         List<PickerItem>.empty(growable: true);
     for (var value in AvailableLanguage.values) {
@@ -467,7 +467,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
           );
         });
     if (selection != null) {
-      _preferences.setLanguage(LanguageSetting(selection));
+      preferences.setLanguage(LanguageSetting(selection));
       if (StateContainer.of(context).curLanguage.language != selection) {
         setState(() {
           StateContainer.of(context).updateLanguage(LanguageSetting(selection));
@@ -655,7 +655,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   }
 
   Future<void> _lockTimeoutDialog() async {
-    final Preferences _preferences = await Preferences.getInstance();
+    final Preferences preferences = await Preferences.getInstance();
     final List<PickerItem> pickerItemsList =
         List<PickerItem>.empty(growable: true);
     for (var value in LockTimeoutOption.values) {
@@ -695,7 +695,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
         });
     if (selection != null) {
       if (_curTimeoutSetting.setting != selection) {
-        _preferences.setLockTimeout(LockTimeoutSetting(selection));
+        preferences.setLockTimeout(LockTimeoutSetting(selection));
         setState(() {
           _curTimeoutSetting = LockTimeoutSetting(selection);
         });
@@ -704,7 +704,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   }
 
   Future<void> _themeDialog() async {
-    final Preferences _preferences = await Preferences.getInstance();
+    final Preferences preferences = await Preferences.getInstance();
     final List<PickerItem> pickerItemsList =
         List<PickerItem>.empty(growable: true);
     for (var value in ThemeOptions.values) {
@@ -742,7 +742,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
         });
     if (selection != null) {
       if (_curThemeSetting != ThemeSetting(selection)) {
-        _preferences.setTheme(ThemeSetting(selection));
+        preferences.setTheme(ThemeSetting(selection));
         setState(() {
           StateContainer.of(context).updateTheme(ThemeSetting(selection));
           _curThemeSetting = ThemeSetting(selection);
@@ -1275,10 +1275,10 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           'packages/aewallet/assets/icons/key-word.png',
                           StateContainer.of(context).curTheme.iconDrawerColor!,
                           onPressed: () async {
-                        final Preferences _preferences =
+                        final Preferences preferences =
                             await Preferences.getInstance();
                         final AuthenticationMethod authMethod =
-                            _preferences.getAuthMethod();
+                            preferences.getAuthMethod();
 
                         bool auth =
                             await AuthFactory.authenticate(context, authMethod);
@@ -1303,12 +1303,12 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         'packages/aewallet/assets/icons/shuffle.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         _pinPadShuffleActive,
-                        onChanged: (bool _isSwitched) async {
-                      final Preferences _preferences =
+                        onChanged: (bool isSwitched) async {
+                      final Preferences preferences =
                           await Preferences.getInstance();
                       setState(() {
-                        _pinPadShuffleActive = _isSwitched;
-                        _preferences.setPinPadShuffle(_isSwitched);
+                        _pinPadShuffleActive = isSwitched;
+                        preferences.setPinPadShuffle(isSwitched);
                       });
                     }),
                     Divider(
@@ -1321,14 +1321,14 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         'packages/aewallet/assets/icons/shy.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         _showBalancesActive,
-                        onChanged: (bool _isSwitched) async {
-                      final Preferences _preferences =
+                        onChanged: (bool isSwitched) async {
+                      final Preferences preferences =
                           await Preferences.getInstance();
                       setState(() {
-                        _showBalancesActive = _isSwitched;
+                        _showBalancesActive = isSwitched;
                         StateContainer.of(context).showBalance =
                             _showBalancesActive;
-                        _preferences.setShowBalances(_showBalancesActive);
+                        preferences.setShowBalances(_showBalancesActive);
                       });
                     }),
                     Divider(

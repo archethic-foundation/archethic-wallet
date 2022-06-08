@@ -279,13 +279,13 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
   bool? _hasCheckedLoggedIn;
 
   Future<void> checkLoggedIn() async {
-    final Preferences _preferences = await Preferences.getInstance();
+    final Preferences preferences = await Preferences.getInstance();
     if (!kIsWeb &&
         !Platform.isMacOS &&
         !Platform.isWindows &&
         !Platform.isLinux) {
       // Check if device is rooted or jailbroken, show user a warning informing them of the risks if so
-      if (!_preferences.getHasSeenRootWarning() &&
+      if (!preferences.getHasSeenRootWarning() &&
           (await SafeDevice.isJailBroken)) {
         AppDialogs.showConfirmDialog(
             context,
@@ -294,7 +294,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
             AppLocalization.of(context)!.rootWarning,
             AppLocalization.of(context)!.iUnderstandTheRisks.toUpperCase(),
             () async {
-              _preferences.setHasSeenRootWarning();
+              preferences.setHasSeenRootWarning();
               checkLoggedIn();
             },
             cancelText: AppLocalization.of(context)!.exit.toUpperCase(),
@@ -325,7 +325,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       }
 
       if (isLoggedIn) {
-        if (_preferences.getLock() || _preferences.shouldLock()) {
+        if (preferences.getLock() || preferences.shouldLock()) {
           Navigator.of(context).pushReplacementNamed('/lock_screen');
         } else {
           Account? selectedAcct = await sl.get<DBHelper>().getSelectedAccount();
@@ -379,9 +379,9 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
     setState(() {
       StateContainer.of(context).deviceLocale = Localizations.localeOf(context);
     });
-    Preferences.getInstance().then((Preferences _preferences) {
+    Preferences.getInstance().then((Preferences preferences) {
       setState(() {
-        StateContainer.of(context).curLanguage = _preferences.getLanguage();
+        StateContainer.of(context).curLanguage = preferences.getLanguage();
       });
     });
   }
@@ -389,10 +389,10 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     setLanguage();
-    Preferences.getInstance().then((Preferences _preferences) {
+    Preferences.getInstance().then((Preferences preferences) {
       setState(() {
         StateContainer.of(context).curCurrency =
-            _preferences.getCurrency(StateContainer.of(context).deviceLocale);
+            preferences.getCurrency(StateContainer.of(context).deviceLocale);
       });
     });
     return Scaffold(

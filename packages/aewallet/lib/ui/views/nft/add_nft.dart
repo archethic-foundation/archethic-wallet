@@ -275,10 +275,10 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                         LengthLimitingTextInputFormatter(100),
                                       ],
                                       onChanged: (_) async {
-                                        double _fee = await getFee();
+                                        double fee = await getFee();
                                         // Always reset the error message to be less annoying
                                         setState(() {
-                                          feeEstimation = _fee;
+                                          feeEstimation = fee;
                                         });
                                       },
                                     ),
@@ -310,10 +310,10 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                         LengthLimitingTextInputFormatter(10),
                                       ],
                                       onChanged: (_) async {
-                                        double _fee = await getFee();
+                                        double fee = await getFee();
                                         // Always reset the error message to be less annoying
                                         setState(() {
-                                          feeEstimation = _fee;
+                                          feeEstimation = fee;
                                         });
                                       },
                                     ),

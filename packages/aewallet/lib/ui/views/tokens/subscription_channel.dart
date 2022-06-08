@@ -28,10 +28,10 @@ class SubscriptionChannel {
       channel: phoenixChannel,
     );
 
-    var _link = Link.split(
+    var link = Link.split(
         (request) => request.isSubscription, phoenixLink, phoenixHttpLink);
     client = GraphQLClient(
-      link: _link,
+      link: link,
       cache: GraphQLCache(),
     );
   }

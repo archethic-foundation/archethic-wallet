@@ -136,19 +136,19 @@ class _TokensTransferListWidgetState extends State<TokensTransferListWidget> {
   }
 
   double _getTotal() {
-    double _totalAmount = 0.0;
+    double totalAmount = 0.0;
     for (int i = 0; i < widget.listUcoTransfer!.length; i++) {
-      double _amount =
+      double amount =
           (Decimal.parse(widget.listUcoTransfer![i].amount!.toString()) /
                   Decimal.parse('100000000'))
               .toDouble();
-      _totalAmount = (Decimal.parse(_totalAmount.toString()) +
-              Decimal.parse(_amount.toString()))
+      totalAmount = (Decimal.parse(totalAmount.toString()) +
+              Decimal.parse(amount.toString()))
           .toDouble();
     }
-    _totalAmount = (Decimal.parse(_totalAmount.toString()) +
+    totalAmount = (Decimal.parse(totalAmount.toString()) +
             Decimal.parse(widget.feeEstimation!.toString()))
         .toDouble();
-    return _totalAmount;
+    return totalAmount;
   }
 }
