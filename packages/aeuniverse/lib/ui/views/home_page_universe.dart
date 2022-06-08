@@ -4,11 +4,11 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aewallet/ui/views/accounts/account_details.dart';
+import 'package:aewallet/ui/views/accounts/account_list.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:aewallet/ui/account/accountdetails_sheet.dart';
-import 'package:aewallet/ui/account/accounts_sheet.dart';
 import 'package:aewallet/ui/menu/menu_widget_wallet.dart';
 import 'package:aewallet/ui/menu/settings_drawer_wallet_mobile.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
@@ -309,16 +309,17 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        height: 300,
                         child: Padding(
-                          padding: EdgeInsets.only(
-                              top: 200.0,
-                              left: Responsive.drawerWidth(context)),
-                          child:
-                              MenuWidgetWallet().buildMenuTxExplorer(context),
-                        ),
+                            padding: EdgeInsets.only(
+                                top: 200.0,
+                                left: Responsive.drawerWidth(context)),
+                            child: Column(
+                              children: [
+                                MenuWidgetWallet().buildMenuTxExplorer(context),
+                                const Expanded(child: TxListWidget()),
+                              ],
+                            )),
                       ),
-                      TxListWidget(),
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: 100,
@@ -522,14 +523,14 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                 ),
                                 InkWell(
                                   onTap: () async {
-                                    /*   sl
+                                    sl
                                         .get<HapticUtil>()
                                         .feedback(FeedbackType.light);
-                                    AppAccountsSheet(await KeychainUtil()
+                                    AccountsList(await KeychainUtil()
                                             .getListAccountsFromKeychain(
                                                 await StateContainer.of(context)
                                                     .getSeed()))
-                                        .mainBottomSheet(context);*/
+                                        .mainBottomSheet(context);
                                   },
                                   child: Align(
                                     alignment: Alignment.center,
@@ -546,8 +547,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                           Text(
                                             StateContainer.of(context)
                                                 .selectedAccount
-                                                .name!
-                                                .toUpperCase(),
+                                                .name!,
                                             style: AppStyles
                                                 .textStyleSize18W400Equinox(
                                                     context),
