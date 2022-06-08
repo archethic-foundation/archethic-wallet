@@ -371,10 +371,8 @@ class _PinScreenState extends State<PinScreen>
                     ),
                     Container(
                       margin: EdgeInsetsDirectional.only(
-                        start: MediaQuery.of(context).size.width * 0.25 +
-                            _animation!.value,
-                        end: MediaQuery.of(context).size.width * 0.25 -
-                            _animation!.value,
+                        start: MediaQuery.of(context).size.width * 0.25,
+                        end: MediaQuery.of(context).size.width * 0.25,
                         top: MediaQuery.of(context).size.height * 0.02,
                       ),
                       child: Row(
