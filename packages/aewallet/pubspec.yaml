@@ -17,27 +17,72 @@ dependencies:
   aeuniverse:
     path: ../aeuniverse
 
+  # Beautiful animations inspired on Animate.css, every animation is a widget that contains default but customizable values that look attractive.
+  animate_do: ^2.1.0
+
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
   archethic_lib_dart: ^1.0.14
   #archethic_lib_dart: 
   #  git:
   #    url: https://github.com/archethic-foundation/libdart.git
   #    ref: master
-  
+
+  # Flutter widget that automatically resizes text to fit perfectly within its bounds
+  auto_size_text: ^3.0.0
+
+  # Utilities for converting between data representations. Provides a number of Sink, Codec, Decoder, and Encoder types
+  convert: ^3.0.1
+
+  # The decimal package allows you to deal with decimal numbers without losing precision
+  decimal: ^2.2.0
+
   # EventTaxi could be used to send events through different layers of the application decoupled from the architecture
   event_taxi: ^1.0.0
+  
+  # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart
+  fl_chart: ^0.50.6
 
   # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter.
   phoenix_socket: ^0.5.3
   gql_exec: ^0.4.0
   gql_link: ^0.4.2
   graphql_flutter: ^5.1.1-beta.3
+  
+  flutter:
+    sdk: flutter
+
+  # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files
+  flutter_svg: ^1.0.3
+
+  # A Flutter plugin to vibrate the device
+  flutter_vibrate: ^1.3.0
 
   # A Flutter implementation of slidable list item with directional slide actions that can be dismissed
   flutter_slidable: ^1.3.0
 
-  flutter:
-    sdk: flutter
+  # The Font Awesome Icon pack available as set of Flutter Icons.
+  font_awesome_flutter: ^10.1.0
+
+  # Lazily load and display pages of items as the user scrolls down your screen.
+  infinite_scroll_pagination: ^3.2.0
+  
+  # Localization
+  intl: ^0.17.0
+
+  # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
+  ledger_dart_lib: ^0.1.2
+
+  # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
+  package_info_plus: ^1.4.2
+
+  # QR.Flutter is a Flutter library for simple and fast QR code rendering via a Widget or custom painter
+  qr_flutter: ^4.0.0
+
+  # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
+  share_plus: ^4.0.7
+
+  # A package to help you build highly customisable timelines with Flutter.
+  timeline_tile: ^2.0.0
 
 dev_dependencies:
   flutter_lints: ^2.0.1

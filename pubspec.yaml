@@ -25,7 +25,17 @@ dependencies:
 
   # Customize Flutter's default white native splash screen with background color and splash image. Supports dark mode, full screen, and more.
   flutter_native_splash: ^2.2.3
-  
+
+  # Hive is a lightweight and blazing fast key-value database written in pure Dart
+  hive: ^2.2.1
+  hive_flutter: ^1.1.0
+
+  # A pure flutter toast library Support custom style/widget. Easy to use. You can use this library to achieve the same effect as Android toast
+  oktoast: ^3.2.0
+
+  # With the Flutter safe_device package, you can easily implement security steps such as Jailbroken, root, emulator and fake location detection.
+  safe_device: ^1.1.1
+
 dev_dependencies:
   flutter_lints: ^2.0.1
   # Automatically organize your dart imports
