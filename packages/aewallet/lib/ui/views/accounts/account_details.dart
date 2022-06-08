@@ -3,32 +3,20 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/util/ui_util.dart';
-import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
-import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aeuniverse/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
-import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
-import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/haptic_util.dart';
-import 'package:core/util/number_util.dart';
-import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/util/case_converter.dart';
-import 'package:event_taxi/event_taxi.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:aewallet/bus/account_modified_event.dart';
-import 'package:aewallet/ui/views/tokens/transfer_tokens_sheet.dart';
 
 // Account Details Sheet
 class AccountDetailsSheet {

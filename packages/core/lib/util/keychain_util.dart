@@ -11,7 +11,6 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
 import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/vault.dart';
 
 class KeychainUtil {
   Future<Account?> addAccount(String? seed, String? name) async {

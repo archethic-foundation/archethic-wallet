@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core_ui/ui/util/dimens.dart';
-import 'package:flutter_svg/svg.dart';
 
 // Project imports:
 import 'package:aeuniverse/appstate_container.dart';
