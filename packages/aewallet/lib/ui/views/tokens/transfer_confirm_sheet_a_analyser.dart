@@ -7,6 +7,7 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'dart:developer' as dev;
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
@@ -124,7 +125,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     try {
       subscriptionChannel.connect();
     } catch (e) {
-      setState(() => print('error: $e'));
+      setState(() => dev.log('error: $e'));
     }
 
     _registerBus();
@@ -134,7 +135,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   void _onEvent(Map event) {
     if (event != null) {
       if (event["status"] == "ok") {
-        print('ok');
+        dev.log('ok');
       }
     }
   }
@@ -300,7 +301,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   }
 
   void reactToPostCreated(QueryResult event) {
-    print("Received event =>");
-    print(event);
+    dev.log("Received event =>");
+    dev.log(event.toString());
   }
 }
