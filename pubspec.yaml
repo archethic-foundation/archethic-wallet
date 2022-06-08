@@ -24,7 +24,7 @@ dependencies:
     sdk: flutter
 
   # Customize Flutter's default white native splash screen with background color and splash image. Supports dark mode, full screen, and more.
-  flutter_native_splash: ^2.1.1
+  flutter_native_splash: ^2.2.3
   
 dev_dependencies:
   flutter_lints: ^2.0.1
@@ -34,7 +34,7 @@ dev_dependencies:
   #integration_test:
   #  sdk: flutter
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
-  intl_generator: ^0.2.1
+  # intl_generator: ^0.2.1
   # A command-line tool that create Msix installer from your flutter windows-build files.
   msix: ^3.5.1
 
