@@ -105,13 +105,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                           .getIndex() ==
                                       AvailableNetworks.ArchethicTestNet.index
                                   ? SvgPicture.asset(
-                                      StateContainer.of(context)
-                                              .curTheme
-                                              .assetsFolder! +
-                                          StateContainer.of(context)
-                                              .curTheme
-                                              .logoAlone! +
-                                          '.svg',
+                                      '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
                                       color: Colors.green,
                                       height: 15,
                                     )
@@ -121,24 +115,12 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                           AvailableNetworks
                                               .ArchethicDevNet.index
                                       ? SvgPicture.asset(
-                                          StateContainer.of(context)
-                                                  .curTheme
-                                                  .assetsFolder! +
-                                              StateContainer.of(context)
-                                                  .curTheme
-                                                  .logoAlone! +
-                                              '.svg',
+                                          '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
                                           color: Colors.orange,
                                           height: 15,
                                         )
                                       : SvgPicture.asset(
-                                          StateContainer.of(context)
-                                                  .curTheme
-                                                  .assetsFolder! +
-                                              StateContainer.of(context)
-                                                  .curTheme
-                                                  .logoAlone! +
-                                              '.svg',
+                                          '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
                                           height: 15,
                                         ),
                               Text(
@@ -332,14 +314,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                             padding: const EdgeInsets.only(
                                                 left: 30, right: 30),
                                             child: Text(
-                                              AppLocalization.of(context)!
-                                                      .estimatedFees +
-                                                  ': ' +
-                                                  feeEstimation.toString() +
-                                                  ' ' +
-                                                  StateContainer.of(context)
-                                                      .curNetwork
-                                                      .getNetworkCryptoCurrencyLabel(),
+                                              '${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                               style: AppStyles
                                                   .textStyleSize14W100Primary(
                                                       context),

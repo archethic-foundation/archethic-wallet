@@ -62,16 +62,12 @@ class _TokensTransferListWidgetState extends State<TokensTransferListWidget> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Text('+ ' + AppLocalization.of(context)!.estimatedFees,
+                    Text('+ ${AppLocalization.of(context)!.estimatedFees}',
                         style: AppStyles.textStyleSize14W600Primary(context)),
                   ],
                 ),
                 Text(
-                    widget.feeEstimation!.toStringAsFixed(8) +
-                        ' ' +
-                        StateContainer.of(context)
-                            .curNetwork
-                            .getNetworkCryptoCurrencyLabel(),
+                    '${widget.feeEstimation!.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                     style: AppStyles.textStyleSize14W600Primary(context)),
               ],
             ),
@@ -90,11 +86,7 @@ class _TokensTransferListWidgetState extends State<TokensTransferListWidget> {
                   ],
                 ),
                 Text(
-                    (_getTotal()).toStringAsFixed(8) +
-                        ' ' +
-                        StateContainer.of(context)
-                            .curNetwork
-                            .getNetworkCryptoCurrencyLabel(),
+                    '${(_getTotal()).toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                     style: AppStyles.textStyleSize14W600Primary(context)),
               ],
             ),
@@ -115,19 +107,12 @@ class _TokensTransferListWidgetState extends State<TokensTransferListWidget> {
                 Text(
                     ucoTransfer.toContactName == null
                         ? Address(ucoTransfer.to!).getShortString()
-                        : ucoTransfer.toContactName! +
-                            '\n' +
-                            Address(ucoTransfer.to!).getShortString(),
+                        : '${ucoTransfer.toContactName!}\n${Address(ucoTransfer.to!).getShortString()}',
                     style: AppStyles.textStyleSize14W600Primary(context)),
               ],
             ),
             Text(
-                (ucoTransfer.amount! / BigInt.from(100000000))
-                        .toStringAsFixed(8) +
-                    ' ' +
-                    StateContainer.of(context)
-                        .curNetwork
-                        .getNetworkCryptoCurrencyLabel(),
+                '${(ucoTransfer.amount! / BigInt.from(100000000)).toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                 style: AppStyles.textStyleSize14W600Primary(context)),
           ],
         ),

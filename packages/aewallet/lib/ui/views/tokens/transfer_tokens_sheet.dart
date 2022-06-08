@@ -228,13 +228,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                                           .getIndex() ==
                                       AvailableNetworks.ArchethicTestNet.index
                                   ? SvgPicture.asset(
-                                      StateContainer.of(context)
-                                              .curTheme
-                                              .assetsFolder! +
-                                          StateContainer.of(context)
-                                              .curTheme
-                                              .logoAlone! +
-                                          '.svg',
+                                      '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
                                       color: Colors.green,
                                       height: 15,
                                     )
@@ -244,24 +238,12 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                                           AvailableNetworks
                                               .ArchethicDevNet.index
                                       ? SvgPicture.asset(
-                                          StateContainer.of(context)
-                                                  .curTheme
-                                                  .assetsFolder! +
-                                              StateContainer.of(context)
-                                                  .curTheme
-                                                  .logoAlone! +
-                                              '.svg',
+                                          '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
                                           color: Colors.orange,
                                           height: 15,
                                         )
                                       : SvgPicture.asset(
-                                          StateContainer.of(context)
-                                                  .curTheme
-                                                  .assetsFolder! +
-                                              StateContainer.of(context)
-                                                  .curTheme
-                                                  .logoAlone! +
-                                              '.svg',
+                                          '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
                                           height: 15,
                                         ),
                               Text(
@@ -498,15 +480,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                                           horizontal: 30),
                                       child: feeEstimation > 0
                                           ? Text(
-                                              '+ ' +
-                                                  AppLocalization.of(context)!
-                                                      .estimatedFees +
-                                                  ': ' +
-                                                  feeEstimation.toString() +
-                                                  ' ' +
-                                                  StateContainer.of(context)
-                                                      .curNetwork
-                                                      .getNetworkCryptoCurrencyLabel(),
+                                              '+ ${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                               style: AppStyles
                                                   .textStyleSize14W100Primary(
                                                       context),
@@ -903,16 +877,8 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
           maxLines: null,
           autocorrect: false,
           labelText: primaryCurrency == PrimaryCurrency.network
-              ? AppLocalization.of(context)!.enterAmount +
-                  ' (' +
-                  StateContainer.of(context)
-                      .curNetwork
-                      .getNetworkCryptoCurrencyLabel() +
-                  ')'
-              : AppLocalization.of(context)!.enterAmount +
-                  ' (' +
-                  StateContainer.of(context).curCurrency.currency.name +
-                  ')',
+              ? '${AppLocalization.of(context)!.enterAmount} (${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})'
+              : '${AppLocalization.of(context)!.enterAmount} (${StateContainer.of(context).curCurrency.currency.name})',
           suffixButton: TextFieldButton(
             icon: FontAwesomeIcons.anglesUp,
             onPressed: () async {
@@ -974,10 +940,10 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                 margin: const EdgeInsets.only(right: 40),
                 alignment: Alignment.centerRight,
                 child: primaryCurrency == PrimaryCurrency.network
-                    ? Text('= ' + _convertNetworkCurrencyToSelectedCurrency(),
+                    ? Text('= ${_convertNetworkCurrencyToSelectedCurrency()}',
                         textAlign: TextAlign.right,
                         style: AppStyles.textStyleSize14W100Primary(context))
-                    : Text('= ' + _convertSelectedCurrencyToNetworkCurrency(),
+                    : Text('= ${_convertSelectedCurrencyToNetworkCurrency()}',
                         textAlign: TextAlign.right,
                         style: AppStyles.textStyleSize14W100Primary(context)),
               )
@@ -1243,9 +1209,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                 .localCurrencyPrice
                 .toString()))
         .toDouble();
-    return priceConverted.toStringAsFixed(8) +
-        ' ' +
-        StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel();
+    return '${priceConverted.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}';
   }
 
   String _convertNetworkCurrencyToSelectedCurrency() {

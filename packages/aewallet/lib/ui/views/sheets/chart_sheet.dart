@@ -145,36 +145,15 @@ class _ChartSheetState extends State<ChartSheet> {
                                 .accountBalance
                                 .networkCurrencyValue ==
                             0
-                        ? '1 ' +
-                            StateContainer.of(context)
-                                .curNetwork
-                                .getNetworkCryptoCurrencyLabel() +
-                            ' = ' +
-                            StateContainer.of(context)
-                                .localWallet!
-                                .accountBalance
-                                .getLocalCurrencyPriceDisplay()
-                        : '1 ' +
-                            StateContainer.of(context)
-                                .curNetwork
-                                .getNetworkCryptoCurrencyLabel() +
-                            ' = ' +
-                            StateContainer.of(context)
-                                .wallet!
-                                .accountBalance
-                                .getLocalCurrencyPriceDisplay(),
+                        ? '1 ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} = ${StateContainer.of(context).localWallet!.accountBalance.getLocalCurrencyPriceDisplay()}'
+                        : '1 ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} = ${StateContainer.of(context).wallet!.accountBalance.getLocalCurrencyPriceDisplay()}',
                     style: AppStyles.textStyleSize16W700Primary(context),
                   ),
                   const SizedBox(
                     width: 10,
                   ),
                   AutoSizeText(
-                    StateContainer.of(context)
-                            .chartInfos!
-                            .getPriceChangePercentage(
-                                StateContainer.of(context).idChartOption!)!
-                            .toStringAsFixed(2) +
-                        '%',
+                    '${StateContainer.of(context).chartInfos!.getPriceChangePercentage(StateContainer.of(context).idChartOption!)!.toStringAsFixed(2)}%',
                     style: StateContainer.of(context)
                                 .chartInfos!
                                 .getPriceChangePercentage(

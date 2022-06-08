@@ -91,9 +91,7 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                     Text(
                         nftTransfer.toContactName == null
                             ? Address(nftTransfer.to!).getShortString3()
-                            : nftTransfer.toContactName! +
-                                '\n' +
-                                Address(nftTransfer.to!).getShortString3(),
+                            : '${nftTransfer.toContactName!}\n${Address(nftTransfer.to!).getShortString3()}',
                         style: AppStyles.textStyleSize10W100Primary60(context))
                   ],
                 ),

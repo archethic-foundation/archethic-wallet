@@ -224,9 +224,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                   height: 50,
                   child: buildIconWidget(
                       context,
-                      'packages/aewallet/assets/icons/txInfos/' +
-                          transactionInfo.titleInfo +
-                          '.png',
+                      'packages/aewallet/assets/icons/txInfos/${transactionInfo.titleInfo}.png',
                       50,
                       50)),
             if (transactionInfo.titleInfo == '')

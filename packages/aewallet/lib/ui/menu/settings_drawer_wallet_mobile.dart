@@ -157,7 +157,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
         versionString =
-            AppLocalization.of(context)!.version + ' ${packageInfo.version}';
+            '${AppLocalization.of(context)!.version} ${packageInfo.version}';
       });
     });
   }
@@ -536,9 +536,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: Column(children: [
                         SvgPicture.asset(
-                          StateContainer.of(context).curTheme.assetsFolder! +
-                              StateContainer.of(context).curTheme.logoAlone! +
-                              '.svg',
+                          '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
                           color: Colors.orange,
                           height: 15,
                         ),

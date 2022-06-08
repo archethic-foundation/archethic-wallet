@@ -70,10 +70,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
           Navigator.of(context).pop();
         }
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.sendError +
-                ' (' +
-                event.response! +
-                ')',
+            '${AppLocalization.of(context)!.sendError} (${event.response!})',
             context,
             StateContainer.of(context).curTheme.primary!,
             StateContainer.of(context).curTheme.overlay80!);
@@ -185,13 +182,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                     ),
                   ),
                   Text(
-                      AppLocalization.of(context)!.estimatedFees +
-                          ': ' +
-                          widget.feeEstimation.toString() +
-                          ' ' +
-                          StateContainer.of(context)
-                              .curNetwork
-                              .getNetworkCryptoCurrencyLabel(),
+                      '${AppLocalization.of(context)!.estimatedFees}: ${widget.feeEstimation} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                       style: AppStyles.textStyleSize14W100Primary(context)),
                   const SizedBox(height: 30),
                   Padding(

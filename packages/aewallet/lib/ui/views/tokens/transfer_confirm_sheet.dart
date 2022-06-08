@@ -84,10 +84,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         }
 
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.sendError +
-                ' (' +
-                event.response! +
-                ')',
+            '${AppLocalization.of(context)!.sendError} (${event.response!})',
             context,
             StateContainer.of(context).curTheme.primary!,
             StateContainer.of(context).curTheme.overlay80!);

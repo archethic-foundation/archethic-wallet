@@ -193,7 +193,7 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                       const Text('')
                     else
                       transaction.typeTx == RecentTransaction.transferOutput
-                          ? AutoSizeText('-' + transaction.amount!.toString(),
+                          ? AutoSizeText('-${transaction.amount!}',
                               style: AppStyles.textStyleSize20W700Red(context))
                           : AutoSizeText(transaction.amount!.toString(),
                               style:
@@ -288,12 +288,7 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                  AppLocalization.of(context)!.txListFees +
-                                      transaction.fee.toString() +
-                                      ' ' +
-                                      StateContainer.of(context)
-                                          .curNetwork
-                                          .getNetworkCryptoCurrencyLabel(),
+                                  '${AppLocalization.of(context)!.txListFees}${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                   style: AppStyles.textStyleSize12W400Primary(
                                       context)),
                             ]),

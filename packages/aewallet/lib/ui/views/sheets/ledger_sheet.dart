@@ -61,12 +61,12 @@ class _LedgerSheetState extends State<LedgerSheet> {
 
       switch (method) {
         case 'getPubKey':
-          response = 'Public Key : ' +
-              hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase();
+          response =
+              'Public Key : ${hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase()}';
           break;
         case 'getArchAddress':
-          response = 'Address : ' +
-              hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase();
+          response =
+              'Address : ${hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase()}';
           break;
         case 'signTxn':
           /*String responseHex = hex.encode(event.apdu!);
@@ -77,8 +77,8 @@ class _LedgerSheetState extends State<LedgerSheet> {
             String originType = rawTxn.substring(offset, offset + 2);
             offset += 2;
             String pubKey = rawTxn.substring(offset, rawTxn.length);*/
-          response = 'Transaction : ' +
-              hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase();
+          response =
+              'Transaction : ${hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase()}';
           break;
         default:
       }
@@ -309,8 +309,8 @@ class _LedgerSheetState extends State<LedgerSheet> {
                                 0x00,
                                 Uint8List.fromList(
                                     hex.decode(enterPayloadController!.text)));
-                            print('getArchAddress: ' +
-                                uint8ListToHex(getArchAddress));
+                            print(
+                                'getArchAddress: ${uint8ListToHex(getArchAddress)}');
                             await sl
                                 .get<LedgerNanoSImpl>()
                                 .connectLedger(getArchAddress);
@@ -355,7 +355,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
 
   void addLog(String log) {
     setState(() {
-      info = info + '\n' + log;
+      info = '$info\n$log';
     });
   }
 }
