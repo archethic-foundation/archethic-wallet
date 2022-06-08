@@ -1,3 +1,4 @@
+melos exec -- "flutter pub outdated"
 melos exec -- "flutter pub get" 
 melos exec -- "dart format lib packages"
 dart fix --dry-run
