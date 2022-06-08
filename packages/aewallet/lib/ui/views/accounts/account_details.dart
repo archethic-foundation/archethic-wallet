@@ -33,15 +33,9 @@ import 'package:aewallet/ui/views/tokens/transfer_tokens_sheet.dart';
 // Account Details Sheet
 class AccountDetailsSheet {
   Account? account;
-  String? originalName;
-  TextEditingController? _nameController;
-  FocusNode? _nameFocusNode;
   bool? deleted;
-  bool? _addressCopied;
-  Timer? _addressCopiedTimer;
 
   AccountDetailsSheet(this.account) {
-    originalName = account!.name!;
     deleted = false;
   }
 
@@ -58,9 +52,6 @@ class AccountDetailsSheet {
   }
 
   mainBottomSheet(BuildContext context) {
-    _addressCopied = false;
-    _nameController = TextEditingController(text: account!.name!);
-    _nameFocusNode = FocusNode();
     Sheets.showAppHeightNineSheet(
         context: context,
         onDisposed: () => _onWillPop(context),
@@ -172,29 +163,29 @@ class AccountDetailsSheet {
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
-                                AppTextField(
-                                  topMargin:
-                                      MediaQuery.of(context).size.width * 0.14,
-                                  rightMargin:
-                                      MediaQuery.of(context).size.width * 0.105,
-                                  controller: _nameController,
-                                  focusNode: _nameFocusNode,
-                                  textInputAction: TextInputAction.done,
-                                  autocorrect: false,
-                                  keyboardType: TextInputType.text,
-                                  inputFormatters: [
-                                    LengthLimitingTextInputFormatter(15),
-                                  ],
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16.0,
-                                    color: StateContainer.of(context)
+                                const SizedBox(height: 50),
+                                Text(account!.name!,
+                                    textAlign: TextAlign.center,
+                                    style: AppStyles.textStyleSize16W600Primary(
+                                        context)),
+                                const SizedBox(height: 5),
+                                Container(
+                                  padding: const EdgeInsetsDirectional.only(
+                                      top: 4, bottom: 12),
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width *
+                                        0.105,
+                                    right: MediaQuery.of(context).size.width *
+                                        0.105,
+                                  ),
+                                  height: 1,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    gradient: StateContainer.of(context)
                                         .curTheme
-                                        .primary,
-                                    fontFamily: 'NunitoSans',
+                                        .gradient!,
                                   ),
                                 ),
-                                const SizedBox(height: 10),
                               ])),
                         ],
                       ))));

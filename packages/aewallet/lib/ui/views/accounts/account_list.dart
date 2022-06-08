@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aewallet/ui/views/accounts/account_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,32 +35,31 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // Project imports:
 import 'package:aewallet/bus/account_changed_event.dart';
 import 'package:aewallet/bus/account_modified_event.dart';
-import 'package:aewallet/ui/account/accountdetails_sheet.dart';
 import 'package:aewallet/ui/views/tokens/transfer_tokens_sheet.dart';
 
 // Project imports:
 
-class AppAccountsSheet {
+class AccountsList {
   List<Account>? accounts;
 
-  AppAccountsSheet(this.accounts);
+  AccountsList(this.accounts);
 
   mainBottomSheet(BuildContext context) {
     Sheets.showAppHeightNineSheet(
-        context: context, widget: AppAccountsWidget(accounts: accounts));
+        context: context, widget: AccountsListWidget(accounts: accounts));
   }
 }
 
-class AppAccountsWidget extends StatefulWidget {
+class AccountsListWidget extends StatefulWidget {
   final List<Account>? accounts;
 
-  const AppAccountsWidget({super.key, @required this.accounts});
+  const AccountsListWidget({super.key, @required this.accounts});
 
   @override
-  State<AppAccountsWidget> createState() => _AppAccountsWidgetState();
+  State<AccountsListWidget> createState() => _AccountsListWidgetState();
 }
 
-class _AppAccountsWidgetState extends State<AppAccountsWidget> {
+class _AccountsListWidgetState extends State<AccountsListWidget> {
   static const int kMaxAccounts = 50;
   final GlobalKey expandedKey = GlobalKey();
   bool? addingAccount;
@@ -282,11 +282,39 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
       BuildContext context, Account account, StateSetter setState) {
     return Slidable(
       key: Key(account.name!),
-      endActionPane: ActionPane(
-        motion: const DrawerMotion(),
-        extentRatio: 0.2,
-        children: _getSlideActionsForAccount(context, account, setState),
-      ),
+      endActionPane: ActionPane(motion: const DrawerMotion(), children: [
+        SlidableAction(
+          flex: 2,
+          onPressed: (context) {
+            AccountDetailsSheet(account).mainBottomSheet(context);
+          },
+          backgroundColor: Color(0xFF0392CF),
+          foregroundColor: Colors.white,
+          icon: Icons.edit,
+          label: 'Edit',
+        ),
+        SlidableAction(
+          onPressed: (context) {
+            AppDialogs.showConfirmDialog(
+                context,
+                'Hide Account?',
+                'Are you sure you want to hide this account? You can re-add it later by tapping the \"%1\" button.',
+                AppLocalization.of(context)!.yes, () {
+              sl.get<DBHelper>().hideAccount(account).then((id) {
+                EventTaxiImpl.singleton().fire(
+                    AccountModifiedEvent(account: account, deleted: true));
+                setState(() {
+                  widget.accounts!.removeWhere((a) => a.name == account.name);
+                });
+              });
+            }, cancelText: AppLocalization.of(context)!.no);
+          },
+          backgroundColor: Colors.red,
+          foregroundColor: Colors.white,
+          icon: Icons.hide_source,
+          label: 'Hide',
+        ),
+      ]),
       child: FlatButton(
           highlightColor: StateContainer.of(context).curTheme.primary15,
           splashColor: StateContainer.of(context).curTheme.primary15,
@@ -335,9 +363,8 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                               children: <Widget>[
                                 // Account name and address
                                 Container(
-                                  width: (MediaQuery.of(context).size.width -
-                                          116) *
-                                      0.5,
+                                  width:
+                                      (MediaQuery.of(context).size.width * 0.8),
                                   margin: const EdgeInsetsDirectional.only(
                                       start: 8.0),
                                   child: Column(
@@ -348,36 +375,18 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                                       // Account name
                                       AutoSizeText(
                                         account.name!,
-                                        style: TextStyle(
-                                          fontFamily: "NunitoSans",
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16.0,
-                                          color: StateContainer.of(context)
-                                              .curTheme
-                                              .primary,
-                                        ),
-                                        minFontSize: 8.0,
-                                        stepGranularity: 0.1,
-                                        maxLines: 1,
-                                        textAlign: TextAlign.start,
+                                        style: AppStyles
+                                            .textStyleSize16W600Primary(
+                                                context),
                                       ),
                                       // Account address
                                       account.lastAddress != null
                                           ? AutoSizeText(
-                                              "${account.lastAddress!.substring(0, 12)}...",
-                                              style: TextStyle(
-                                                fontFamily: "OverpassMono",
-                                                fontWeight: FontWeight.w100,
-                                                fontSize: 14.0,
-                                                color:
-                                                    StateContainer.of(context)
-                                                        .curTheme
-                                                        .primary60,
-                                              ),
-                                              minFontSize: 8.0,
-                                              stepGranularity: 0.1,
-                                              maxLines: 1,
-                                            )
+                                              account.lastAddress!
+                                                  .toUpperCase(),
+                                              style: AppStyles
+                                                  .textStyleSize12W100Text60(
+                                                      context))
                                           : const SizedBox(),
                                     ],
                                   ),
@@ -402,36 +411,6 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
             ],
           )),
     );
-  }
-
-  List<Widget> _getSlideActionsForAccount(
-      BuildContext context, Account account, StateSetter setState) {
-    List<Widget> actions = List<Widget>.empty(growable: true);
-    actions.add(SlidableAction(
-        icon: Icons.edit,
-        onPressed: (context) {
-          AccountDetailsSheet(account).mainBottomSheet(context);
-        }));
-
-    actions.add(SlidableAction(
-        icon: Icons.delete,
-        onPressed: (context) {
-          AppDialogs.showConfirmDialog(
-              context,
-              'Hide Account?',
-              'Are you sure you want to hide this account? You can re-add it later by tapping the \"%1\" button.',
-              AppLocalization.of(context)!.yes, () {
-            sl.get<DBHelper>().hideAccount(account).then((id) {
-              EventTaxiImpl.singleton()
-                  .fire(AccountModifiedEvent(account: account, deleted: true));
-              setState(() {
-                widget.accounts!.removeWhere((a) => a.name == account.name);
-              });
-            });
-          }, cancelText: AppLocalization.of(context)!.no);
-        }));
-
-    return actions;
   }
 
   Future<void> _nameDialog() async {
