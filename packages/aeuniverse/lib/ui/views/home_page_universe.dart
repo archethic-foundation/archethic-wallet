@@ -137,7 +137,6 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
     _switchAccountSub = EventTaxiImpl.singleton()
         .registerTo<AccountChangedEvent>()
         .listen((AccountChangedEvent event) {
-      print('toto');
       setState(() {
         StateContainer.of(context).recentTransactionsLoading = true;
 

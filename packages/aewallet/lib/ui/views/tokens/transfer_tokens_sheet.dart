@@ -105,8 +105,10 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
   @override
   void initState() {
     super.initState();
-    if (widget.primaryCurrency ==
-        PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE)) {
+    if (widget.primaryCurrency!.primaryCurrency.name ==
+        PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE)
+            .primaryCurrency
+            .name) {
       primaryCurrency = PrimaryCurrency.network;
     } else {
       primaryCurrency = PrimaryCurrency.selected;

@@ -66,8 +66,13 @@ class BalanceInfosWidget {
               width: MediaQuery.of(context).size.width * 0.95,
               child: Padding(
                 padding: const EdgeInsets.only(right: 10.0),
-                child: StateContainer.of(context).curPrimaryCurrency ==
+                child: StateContainer.of(context)
+                            .curPrimaryCurrency
+                            .primaryCurrency
+                            .name ==
                         PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE)
+                            .primaryCurrency
+                            .name
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -111,7 +116,7 @@ class BalanceInfosWidget {
                                     .accountBalance
                                     .getConvertedAccountBalanceDisplay(),
                                 textAlign: TextAlign.center,
-                                style: AppStyles.textStyleSize12W100Primary(
+                                style: AppStyles.textStyleSize12W600Primary(
                                     context),
                               ),
                             ],
@@ -126,8 +131,10 @@ class BalanceInfosWidget {
                             padding: const EdgeInsets.only(left: 10.0),
                             child: AutoSizeText(
                               StateContainer.of(context)
-                                  .curNetwork
-                                  .getNetworkCryptoCurrencyLabel(),
+                                  .wallet!
+                                  .accountBalance
+                                  .selectedCurrency!
+                                  .getIso4217Code(),
                               style:
                                   AppStyles.textStyleSize35W900EquinoxPrimary(
                                       context),
@@ -154,14 +161,22 @@ class BalanceInfosWidget {
                                             .networkCurrencyValue ==
                                         0
                                     ? StateContainer.of(context)
-                                        .localWallet!
-                                        .accountBalance
-                                        .getNetworkAccountBalanceDisplay()
+                                            .localWallet!
+                                            .accountBalance
+                                            .getNetworkAccountBalanceDisplay() +
+                                        ' ' +
+                                        StateContainer.of(context)
+                                            .curNetwork
+                                            .getNetworkCryptoCurrencyLabel()
                                     : StateContainer.of(context)
-                                        .wallet!
-                                        .accountBalance
-                                        .getNetworkAccountBalanceDisplay(),
-                                style: AppStyles.textStyleSize12W100Primary(
+                                            .wallet!
+                                            .accountBalance
+                                            .getNetworkAccountBalanceDisplay() +
+                                        ' ' +
+                                        StateContainer.of(context)
+                                            .curNetwork
+                                            .getNetworkCryptoCurrencyLabel(),
+                                style: AppStyles.textStyleSize12W600Primary(
                                     context),
                               ),
                             ],

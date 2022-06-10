@@ -27,7 +27,13 @@ class BalanceWallet {
     }
   }
 
-  double get localCurrencyPrice => _localCurrencyPrice!;
+  double get localCurrencyPrice {
+    if (_localCurrencyPrice != null) {
+      return _localCurrencyPrice!;
+    } else {
+      return 0;
+    }
+  }
 
   double get selectedCurrencyValue => _selectedCurrencyValue!;
 

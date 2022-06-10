@@ -6,6 +6,8 @@ import 'dart:math';
 
 // Flutter imports:
 import 'package:aeuniverse/ui/widgets/components/gradient_shadow_box_decoration.dart';
+import 'package:core/model/balance_wallet.dart';
+import 'package:core/model/primary_currency.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -145,204 +147,256 @@ class _TxListWidgetState extends State<TxListWidget> {
 
   static Widget displayTxDetailTransfer(
       BuildContext context, RecentTransaction transaction, int index) {
+    BalanceWallet balance = BalanceWallet(
+        transaction.amount, StateContainer.of(context).curCurrency);
+    balance.localCurrencyPrice =
+        StateContainer.of(context).wallet!.accountBalance.localCurrencyPrice;
     return FutureBuilder<String>(
-        future: transaction.recipientDisplay,
-        builder:
-            (BuildContext context, AsyncSnapshot<String> recipientDisplay) {
-          return InkWell(
-            onTap: () {
-              sl.get<HapticUtil>().feedback(FeedbackType.light);
-              Sheets.showAppHeightNineSheet(
-                  context: context,
-                  widget: TransactionInfosSheet(transaction.address!));
-            },
-            child: Column(
-              children: [
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  elevation: 0,
-                  color: transaction.typeTx == RecentTransaction.transferOutput
-                      ? Colors.redAccent[100]!.withOpacity(0.1)
-                      : transaction.typeTx! == RecentTransaction.nftCreation
-                          ? Colors.blueAccent[100]!.withOpacity(0.1)
-                          : Colors.greenAccent[100]!.withOpacity(0.1),
-                  child: Container(
-                    padding: const EdgeInsets.all(9.5),
-                    width: MediaQuery.of(context).size.width,
-                    child: Stack(
-                      children: <Widget>[
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              if (transaction.amount == null)
-                                const Text('')
-                              else
-                                transaction.typeTx ==
-                                        RecentTransaction.transferOutput
-                                    ? AutoSizeText('-${transaction.amount!}',
+      future: transaction.recipientDisplay,
+      builder: (BuildContext context, AsyncSnapshot<String> recipientDisplay) {
+        return InkWell(
+          onTap: () {
+            sl.get<HapticUtil>().feedback(FeedbackType.light);
+            Sheets.showAppHeightNineSheet(
+                context: context,
+                widget: TransactionInfosSheet(transaction.address!));
+          },
+          child: Column(
+            children: [
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                elevation: 0,
+                color: transaction.typeTx == RecentTransaction.transferOutput
+                    ? Colors.redAccent[100]!.withOpacity(0.1)
+                    : transaction.typeTx! == RecentTransaction.nftCreation
+                        ? Colors.blueAccent[100]!.withOpacity(0.1)
+                        : Colors.greenAccent[100]!.withOpacity(0.1),
+                child: Container(
+                  padding: const EdgeInsets.all(9.5),
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          StateContainer.of(context)
+                                      .curPrimaryCurrency
+                                      .primaryCurrency
+                                      .name ==
+                                  PrimaryCurrencySetting(
+                                          AvailablePrimaryCurrency.NATIVE)
+                                      .primaryCurrency
+                                      .name
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    if (transaction.amount == null)
+                                      const Text('')
+                                    else
+                                      transaction.typeTx ==
+                                              RecentTransaction.transferOutput
+                                          ? AutoSizeText(
+                                              '-${transaction.amount!}',
+                                              style: AppStyles
+                                                  .textStyleSize20W700EquinoxRed(
+                                                      context))
+                                          : AutoSizeText(
+                                              transaction.amount!.toString(),
+                                              style: AppStyles
+                                                  .textStyleSize20W700EquinoxGreen(
+                                                      context)),
+                                    Text(
+                                        balance
+                                            .getConvertedAccountBalanceDisplay(),
                                         style: AppStyles
-                                            .textStyleSize20W700EquinoxRed(
-                                                context))
-                                    : AutoSizeText(
-                                        transaction.amount!.toString(),
-                                        style: AppStyles
-                                            .textStyleSize20W700EquinoxGreen(
+                                            .textStyleSize12W600Primary(
                                                 context)),
-                            ]),
-                        Column(
-                          children: <Widget>[
-                            if (transaction.typeTx! ==
-                                RecentTransaction.nftCreation)
-                              Row(
+                                  ],
+                                )
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    if (transaction.amount == null)
+                                      const Text('')
+                                    else
+                                      transaction.typeTx ==
+                                              RecentTransaction.transferOutput
+                                          ? AutoSizeText(
+                                              '-${balance.getConvertedAccountBalanceDisplay()}',
+                                              style: AppStyles
+                                                  .textStyleSize20W700EquinoxRed(
+                                                      context))
+                                          : AutoSizeText(
+                                              balance
+                                                  .getConvertedAccountBalanceDisplay(),
+                                              style: AppStyles
+                                                  .textStyleSize20W700EquinoxGreen(
+                                                      context)),
+                                    if (transaction.amount == null)
+                                      const Text('')
+                                    else
+                                      transaction.typeTx ==
+                                              RecentTransaction.transferOutput
+                                          ? AutoSizeText(
+                                              '-${transaction.amount!} ' +
+                                                  StateContainer.of(context)
+                                                      .curNetwork
+                                                      .getNetworkCryptoCurrencyLabel(),
+                                              style: AppStyles
+                                                  .textStyleSize12W600Primary(
+                                                      context))
+                                          : AutoSizeText(
+                                              transaction.amount!.toString() +
+                                                  ' ' +
+                                                  StateContainer.of(context)
+                                                      .curNetwork
+                                                      .getNetworkCryptoCurrencyLabel(),
+                                              style: AppStyles
+                                                  .textStyleSize12W600Primary(
+                                                      context)),
+                                  ],
+                                )
+                        ],
+                      ),
+                      Column(
+                        children: <Widget>[
+                          if (transaction.typeTx! ==
+                              RecentTransaction.nftCreation)
+                            Row(
+                              children: <Widget>[
+                                AutoSizeText(
+                                    AppLocalization.of(context)!
+                                        .txListTypeTransactionLabelNewNFT,
+                                    style: AppStyles
+                                        .textStyleSize14W600EquinoxPrimary(
+                                            context)),
+                              ],
+                            )
+                          else
+                            const SizedBox(),
+                          if (transaction.typeTx ==
+                                  RecentTransaction.nftCreation &&
+                              transaction.content != null)
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
-                                  AutoSizeText(
-                                      AppLocalization.of(context)!
-                                          .txListTypeTransactionLabelNewNFT,
-                                      style: AppStyles
-                                          .textStyleSize14W600EquinoxPrimary(
-                                              context)),
-                                ],
-                              )
-                            else
-                              const SizedBox(),
-                            if (transaction.typeTx ==
-                                    RecentTransaction.nftCreation &&
-                                transaction.content != null)
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(transaction.content!,
+                                  Text(transaction.content!,
+                                      style:
+                                          AppStyles.textStyleSize12W400Primary(
+                                              context))
+                                ])
+                          else
+                            const SizedBox(),
+                          if (transaction.typeTx ==
+                                  RecentTransaction.transferOutput ||
+                              transaction.typeTx ==
+                                  RecentTransaction.nftCreation)
+                            const SizedBox()
+                          else
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  if (transaction.from == null)
+                                    const Text('')
+                                  else
+                                    Text(
+                                        AppLocalization.of(context)!
+                                                .txListFrom +
+                                            Address(transaction.from!)
+                                                .getShortString4(),
                                         style: AppStyles
                                             .textStyleSize12W400Primary(
                                                 context))
-                                  ])
-                            else
-                              const SizedBox(),
-                            if (transaction.typeTx ==
-                                    RecentTransaction.transferOutput ||
-                                transaction.typeTx ==
-                                    RecentTransaction.nftCreation)
-                              const SizedBox()
-                            else
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    if (transaction.from == null)
-                                      const Text('')
-                                    else
-                                      Text(
-                                          AppLocalization.of(context)!
-                                                  .txListFrom +
-                                              Address(transaction.from!)
-                                                  .getShortString3(),
-                                          style: AppStyles
-                                              .textStyleSize12W400Primary(
-                                                  context))
-                                  ]),
-                            if (transaction.typeTx ==
-                                    RecentTransaction.transferInput ||
-                                transaction.typeTx ==
-                                    RecentTransaction.nftCreation)
-                              const SizedBox()
-                            else
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    if (transaction.recipient == null)
-                                      const Text('')
-                                    else
-                                      Text(
-                                          AppLocalization.of(context)!
-                                                  .txListTo +
-                                              Address(recipientDisplay.data ==
-                                                          null
-                                                      ? transaction.recipient!
-                                                      : recipientDisplay.data!)
-                                                  .getShortString3(),
-                                          style: AppStyles
-                                              .textStyleSize12W400Primary(
-                                                  context))
-                                  ]),
+                                ]),
+                          if (transaction.typeTx ==
+                                  RecentTransaction.transferInput ||
+                              transaction.typeTx ==
+                                  RecentTransaction.nftCreation)
+                            const SizedBox()
+                          else
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  if (transaction.recipient == null)
+                                    const Text('')
+                                  else
+                                    Text(
+                                        AppLocalization.of(context)!.txListTo +
+                                            Address(recipientDisplay.data ==
+                                                        null
+                                                    ? transaction.recipient!
+                                                    : recipientDisplay.data!)
+                                                .getShortString4(),
+                                        style: AppStyles
+                                            .textStyleSize12W400Primary(
+                                                context))
+                                ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                    DateFormat.yMMMEd(
+                                            Localizations.localeOf(context)
+                                                .languageCode)
+                                        .add_Hms()
+                                        .format(
+                                            DateTime.fromMillisecondsSinceEpoch(
+                                                    transaction.timestamp! *
+                                                        1000)
+                                                .toLocal())
+                                        .toString(),
+                                    style: AppStyles.textStyleSize12W400Primary(
+                                        context)),
+                              ]),
+                          if (transaction.typeTx ==
+                              RecentTransaction.transferInput)
+                            const SizedBox()
+                          else
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                      getTypeTransactionLabelForDate(
-                                              context, transaction.typeTx!) +
-                                          DateFormat.yMMMEd(
-                                                  Localizations.localeOf(
-                                                          context)
-                                                      .languageCode)
-                                              .add_Hms()
-                                              .format(DateTime
-                                                      .fromMillisecondsSinceEpoch(
-                                                          transaction
-                                                                  .timestamp! *
-                                                              1000)
-                                                  .toLocal())
-                                              .toString(),
+                                      '${AppLocalization.of(context)!.txListFees}${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                       style:
                                           AppStyles.textStyleSize12W400Primary(
                                               context)),
                                 ]),
-                            if (transaction.typeTx ==
-                                RecentTransaction.transferInput)
-                              const SizedBox()
-                            else
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                        '${AppLocalization.of(context)!.txListFees}${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                        style: AppStyles
-                                            .textStyleSize12W400Primary(
-                                                context)),
-                                  ]),
-                          ],
-                        ),
-                      ],
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              if (index == 2)
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: GestureDetector(
+                    onTap: () {
+                      sl.get<HapticUtil>().feedback(FeedbackType.light);
+                      Sheets.showAppHeightNineSheet(
+                          context: context, widget: const TxAllListWidget());
+                    },
+                    child: Container(
+                      padding:
+                          const EdgeInsets.fromLTRB(19.0, 10.0, 19.0, 10.0),
+                      decoration: ShapeDecoration(
+                          gradient:
+                              StateContainer.of(context).curTheme.gradient!,
+                          shape: const StadiumBorder()),
+                      child: Text(AppLocalization.of(context)!.seeAll,
+                          style: AppStyles.textStyleSize14W600EquinoxPrimary(
+                              context)),
                     ),
                   ),
                 ),
-                if (index == 2)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: GestureDetector(
-                      onTap: () {
-                        sl.get<HapticUtil>().feedback(FeedbackType.light);
-                        Sheets.showAppHeightNineSheet(
-                            context: context, widget: const TxAllListWidget());
-                      },
-                      child: Container(
-                        padding:
-                            const EdgeInsets.fromLTRB(19.0, 10.0, 19.0, 10.0),
-                        decoration: ShapeDecoration(
-                            gradient:
-                                StateContainer.of(context).curTheme.gradient!,
-                            shape: const StadiumBorder()),
-                        child: Text(AppLocalization.of(context)!.seeAll,
-                            style: AppStyles.textStyleSize14W600EquinoxPrimary(
-                                context)),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          );
-        });
-  }
-
-  static String getTypeTransactionLabelForDate(
-      BuildContext context, int typeTx) {
-    switch (typeTx) {
-      case RecentTransaction.transferInput:
-        return AppLocalization.of(context)!.txListTypeTransactionLabelReceive;
-      case RecentTransaction.transferOutput:
-        return AppLocalization.of(context)!.txListTypeTransactionLabelSend;
-      default:
-        return AppLocalization.of(context)!.txListDate;
-    }
+            ],
+          ),
+        );
+      },
+    );
   }
 }
