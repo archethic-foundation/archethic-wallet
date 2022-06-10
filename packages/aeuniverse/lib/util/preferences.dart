@@ -39,6 +39,7 @@ class Preferences {
 
   static const String _pinPadShuffle = 'archethic_pinPadShuffle';
   static const String _showBalances = 'archethic_showBalances';
+  static const String _showPriceChart = 'archethic_showPriceChart';
 
   // This doesn't have to be a singleton.
   // We just want to make sure that the box is open, before we start getting/setting objects on it
@@ -109,6 +110,11 @@ class Preferences {
   Future<void> setShowBalances(bool value) => _setValue(_showBalances, value);
 
   bool getShowBalances() => _getValue(_showBalances, defaultValue: true);
+
+  Future<void> setShowPriceChart(bool value) =>
+      _setValue(_showPriceChart, value);
+
+  bool getShowPriceChart() => _getValue(_showPriceChart, defaultValue: true);
 
   Future<void> setLockTimeout(LockTimeoutSetting setting) =>
       _setValue(_lock_timeout, setting.getIndex());

@@ -577,6 +577,10 @@ class AppLocalization {
     return Intl.message('Security', name: 'securityHeader');
   }
 
+  String get customHeader {
+    return Intl.message('Customization', name: 'customHeader');
+  }
+
   String get aboutHeader {
     return Intl.message('About', name: 'aboutHeader');
   }
@@ -648,6 +652,10 @@ class AppLocalization {
 
   String get showBalances {
     return Intl.message('Show balances', name: 'showBalances');
+  }
+
+  String get showPriceChart {
+    return Intl.message('Show price chart', name: 'showPriceChart');
   }
 
   String get copy {

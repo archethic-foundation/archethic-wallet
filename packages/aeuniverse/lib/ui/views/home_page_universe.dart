@@ -477,21 +477,21 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      InkWell(
-                        onTap: () async {
-                          sl.get<HapticUtil>().feedback(FeedbackType.light);
-                          AccountsList(await KeychainUtil()
-                                  .getListAccountsFromKeychain(
-                                      await StateContainer.of(context)
-                                          .getSeed(),
-                                      StateContainer.of(context)
-                                          .selectedAccount
-                                          .name))
-                              .mainBottomSheet(context);
-                        },
-                        child: Column(
-                          children: <Widget>[
-                            Row(
+                      Column(
+                        children: <Widget>[
+                          InkWell(
+                            onTap: () async {
+                              sl.get<HapticUtil>().feedback(FeedbackType.light);
+                              AccountsList(await KeychainUtil()
+                                      .getListAccountsFromKeychain(
+                                          await StateContainer.of(context)
+                                              .getSeed(),
+                                          StateContainer.of(context)
+                                              .selectedAccount
+                                              .name))
+                                  .mainBottomSheet(context);
+                            },
+                            child: Row(
                               children: [
                                 Align(
                                   alignment: Alignment.centerLeft,
@@ -500,7 +500,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                               .name !=
                                           null
                                       ? Image.asset(
-                                          'packages/core_ui/assets/themes/dark/profile inverse.png',
+                                          'packages/core_ui/assets/themes/dark/profile.png',
                                           height: 100,
                                         )
                                       : const SizedBox(),
@@ -537,21 +537,25 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                     : const SizedBox(),
                               ],
                             ),
-                            StateContainer.of(context).showBalance
-                                ? BalanceInfosWidget().getBalance(context)
-                                : const SizedBox(),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Stack(
-                              children: <Widget>[
-                                BalanceInfosWidget().buildInfos(context),
-                              ],
-                            ),
-                          ],
-                        ),
+                          ),
+                          StateContainer.of(context).showBalance
+                              ? BalanceInfosWidget().getBalance(context)
+                              : const SizedBox(),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          StateContainer.of(context).showPriceChart
+                              ? Stack(
+                                  children: <Widget>[
+                                    BalanceInfosWidget().buildInfos(context),
+                                  ],
+                                )
+                              : const SizedBox(),
+                        ],
                       ),
-                      BalanceInfosWidget().buildKPI(context),
+                      StateContainer.of(context).showPriceChart
+                          ? BalanceInfosWidget().buildKPI(context)
+                          : const SizedBox(),
                       SizedBox(
                         height: MediaQuery.of(context).size.height -
                             kToolbarHeight -

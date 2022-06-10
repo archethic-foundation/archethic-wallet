@@ -96,6 +96,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
             StateContainer.of(context).curTheme.primary!,
             StateContainer.of(context).curTheme.overlay80!,
             duration: const Duration(milliseconds: 5000));
+
         setState(() {
           StateContainer.of(context).requestUpdate(
               account: StateContainer.of(context).selectedAccount);
@@ -253,6 +254,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
               StateContainer.of(context).selectedAccount.lastAddress!,
               ucoTransferList,
               StateContainer.of(context).selectedAccount.name!);
+
       EventTaxiImpl.singleton()
           .fire(TransactionSendEvent(response: transactionStatus.status));
     } catch (e) {
