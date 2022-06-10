@@ -5,6 +5,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:core/model/primary_currency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -484,6 +485,60 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       if (StateContainer.of(context).curLanguage.language != selection) {
         setState(() {
           StateContainer.of(context).updateLanguage(LanguageSetting(selection));
+        });
+      }
+    }
+  }
+
+  Future<void> _primaryCurrencyDialog() async {
+    final Preferences preferences = await Preferences.getInstance();
+    final List<PickerItem> pickerItemsList =
+        List<PickerItem>.empty(growable: true);
+    for (var value in AvailablePrimaryCurrency.values) {
+      pickerItemsList.add(PickerItem(
+          PrimaryCurrencySetting(value).getDisplayName(context),
+          null,
+          null,
+          null,
+          value,
+          true));
+    }
+
+    final AvailablePrimaryCurrency? selection =
+        await showDialog<AvailablePrimaryCurrency>(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: Text(
+                    AppLocalization.of(context)!.primaryCurrency,
+                    style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
+                  ),
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                    side: BorderSide(
+                        color: StateContainer.of(context).curTheme.primary45!)),
+                content: PickerWidget(
+                  pickerItems: pickerItemsList,
+                  selectedIndex: StateContainer.of(context)
+                      .curPrimaryCurrency
+                      .primaryCurrency
+                      .index,
+                  onSelected: (value) {
+                    Navigator.pop(context, value.value);
+                  },
+                ),
+              );
+            });
+    if (selection != null) {
+      preferences.setPrimaryCurrency(PrimaryCurrencySetting(selection));
+      if (StateContainer.of(context).curPrimaryCurrency.primaryCurrency !=
+          selection) {
+        setState(() {
+          StateContainer.of(context)
+              .updatePrimaryCurrency(PrimaryCurrencySetting(selection));
         });
       }
     }
@@ -1363,7 +1418,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
         ),
         child: Column(
           children: <Widget>[
-            // Back button and Security Text
             Container(
               margin: const EdgeInsets.only(bottom: 10.0, top: 5),
               child: Row(
@@ -1428,6 +1482,17 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         'packages/aewallet/assets/icons/money-currency.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         _currencyDialog),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.primary15,
+                    ),
+                    AppSettings.buildSettingsListItemWithDefaultValue(
+                        context,
+                        AppLocalization.of(context)!.primaryCurrency,
+                        StateContainer.of(context).curPrimaryCurrency,
+                        'packages/aewallet/assets/icons/exchange.png',
+                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        _primaryCurrencyDialog),
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.primary15,

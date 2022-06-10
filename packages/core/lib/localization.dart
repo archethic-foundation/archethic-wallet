@@ -475,6 +475,10 @@ class AppLocalization {
     return Intl.message('Language', name: 'language');
   }
 
+  String get primaryCurrency {
+    return Intl.message('Primary currency', name: 'primaryCurrency');
+  }
+
   String get removeWallet {
     return Intl.message('Remove Wallet', name: 'removeWallet');
   }

@@ -2,6 +2,8 @@
 // ignore_for_file: always_specify_types
 
 // Flutter imports:
+import 'package:aewallet/ui/views/tokens/transfer_tokens_sheet.dart';
+import 'package:core/model/primary_currency.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -135,6 +137,11 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                     _preferences.setLock(true);
                                     _preferences.setShowBalances(true);
                                     _preferences.setPinPadShuffle(false);
+                                    _preferences.setShowPriceChart(true);
+                                    _preferences.setShowBalances(true);
+                                    _preferences.setPrimaryCurrency(
+                                        PrimaryCurrencySetting(
+                                            AvailablePrimaryCurrency.NATIVE));
                                     _preferences.setLockTimeout(
                                         LockTimeoutSetting(
                                             LockTimeoutOption.one));
@@ -164,6 +171,11 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                       _preferences.setLock(true);
                                       _preferences.setShowBalances(true);
                                       _preferences.setPinPadShuffle(false);
+                                      _preferences.setShowPriceChart(true);
+                                      _preferences.setShowBalances(true);
+                                      _preferences.setPrimaryCurrency(
+                                          PrimaryCurrencySetting(
+                                              AvailablePrimaryCurrency.NATIVE));
                                       _preferences.setLockTimeout(
                                           LockTimeoutSetting(
                                               LockTimeoutOption.one));

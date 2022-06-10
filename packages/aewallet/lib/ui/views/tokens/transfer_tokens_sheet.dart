@@ -6,6 +6,7 @@ import 'dart:io';
 import 'dart:ui';
 
 // Flutter imports:
+import 'package:core/model/primary_currency.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -55,6 +56,7 @@ class TransferTokensSheet extends StatefulWidget {
       this.quickSendAmount,
       this.title,
       this.actionButtonTitle,
+      this.primaryCurrency,
       super.key});
 
   final AvailableCurrency? localCurrency;
@@ -63,6 +65,7 @@ class TransferTokensSheet extends StatefulWidget {
   final String? quickSendAmount;
   final String? title;
   final String? actionButtonTitle;
+  final PrimaryCurrencySetting? primaryCurrency;
 
   @override
   State<TransferTokensSheet> createState() => _TransferTokensSheetState();
@@ -102,7 +105,12 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
   @override
   void initState() {
     super.initState();
-    primaryCurrency = PrimaryCurrency.network;
+    if (widget.primaryCurrency ==
+        PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE)) {
+      primaryCurrency = PrimaryCurrency.network;
+    } else {
+      primaryCurrency = PrimaryCurrency.selected;
+    }
     _isPressed = false;
     _sendAmountFocusNode = FocusNode();
     _sendAddressFocusNode = FocusNode();

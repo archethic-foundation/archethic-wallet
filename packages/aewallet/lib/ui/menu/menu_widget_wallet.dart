@@ -68,17 +68,20 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                         onTap: () {
                           sl.get<HapticUtil>().feedback(FeedbackType.light);
                           Sheets.showAppHeightNineSheet(
-                              context: context,
-                              widget: TransferTokensSheet(
-                                  title: AppLocalization.of(context)!
-                                      .transferTokens
-                                      .replaceAll(
-                                          '%1',
-                                          StateContainer.of(context)
-                                              .curNetwork
-                                              .getNetworkCryptoCurrencyLabel()),
-                                  localCurrency:
-                                      StateContainer.of(context).curCurrency));
+                            context: context,
+                            widget: TransferTokensSheet(
+                                primaryCurrency: StateContainer.of(context)
+                                    .curPrimaryCurrency,
+                                title: AppLocalization.of(context)!
+                                    .transferTokens
+                                    .replaceAll(
+                                        '%1',
+                                        StateContainer.of(context)
+                                            .curNetwork
+                                            .getNetworkCryptoCurrencyLabel()),
+                                localCurrency:
+                                    StateContainer.of(context).curCurrency),
+                          );
                         },
                         child: Column(
                           children: <Widget>[

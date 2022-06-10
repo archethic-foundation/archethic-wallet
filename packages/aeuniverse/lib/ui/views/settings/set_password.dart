@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:core/model/primary_currency.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -466,6 +467,10 @@ class _SetPasswordState extends State<SetPassword> {
       _preferences.setLock(true);
       _preferences.setShowBalances(true);
       _preferences.setPinPadShuffle(false);
+      _preferences.setShowPriceChart(true);
+      _preferences.setShowBalances(true);
+      _preferences.setPrimaryCurrency(
+          PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE));
       _preferences.setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
       Navigator.of(context).pushNamedAndRemoveUntil(
         '/home',

@@ -6,6 +6,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:core/model/primary_currency.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -87,6 +88,8 @@ class StateContainerState extends State<StateContainer> {
   Locale deviceLocale = const Locale('en', 'US');
   AvailableCurrency curCurrency = AvailableCurrency(AvailableCurrencyEnum.USD);
   LanguageSetting curLanguage = LanguageSetting(AvailableLanguage.DEFAULT);
+  PrimaryCurrencySetting curPrimaryCurrency =
+      PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE);
   NetworksSetting curNetwork =
       NetworksSetting(AvailableNetworks.ArchethicTestNet);
   BaseTheme curTheme = DarkTheme();
@@ -129,6 +132,7 @@ class StateContainerState extends State<StateContainer> {
         curCurrency = _preferences.getCurrency(deviceLocale);
         currencyLocale = curCurrency.getLocale().toString();
         curLanguage = _preferences.getLanguage();
+        curPrimaryCurrency = _preferences.getPrimaryCurrency();
         curNetwork = _preferences.getNetwork();
         showBalance = _preferences.getShowBalances();
         showPriceChart = _preferences.getShowPriceChart();
@@ -260,7 +264,14 @@ class StateContainerState extends State<StateContainer> {
     });
   }
 
-  // Change curency
+  // Change primary currency
+  void updatePrimaryCurrency(PrimaryCurrencySetting primaryCurrency) {
+    setState(() {
+      curPrimaryCurrency = primaryCurrency;
+    });
+  }
+
+  // Change currency
   Future<void> updateCurrency(AvailableCurrency currency) async {
     SimplePriceResponse simplePriceResponse = SimplePriceResponse();
     useOracleUcoPrice = false;

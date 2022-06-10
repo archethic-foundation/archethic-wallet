@@ -240,6 +240,9 @@ class ContactDetailsSheet {
                                 Sheets.showAppHeightNineSheet(
                                     context: context,
                                     widget: TransferTokensSheet(
+                                        primaryCurrency:
+                                            StateContainer.of(context)
+                                                .curPrimaryCurrency,
                                         localCurrency:
                                             StateContainer.of(context)
                                                 .curCurrency,

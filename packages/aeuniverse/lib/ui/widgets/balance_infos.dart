@@ -4,6 +4,7 @@
 import 'dart:math';
 
 import 'package:aeuniverse/ui/widgets/components/gradient_shadow_box_decoration.dart';
+import 'package:core/model/primary_currency.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -65,53 +66,108 @@ class BalanceInfosWidget {
               width: MediaQuery.of(context).size.width * 0.95,
               child: Padding(
                 padding: const EdgeInsets.only(right: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: AutoSizeText(
-                        StateContainer.of(context)
-                            .curNetwork
-                            .getNetworkCryptoCurrencyLabel(),
-                        style: AppStyles.textStyleSize35W900EquinoxPrimary(
-                            context),
+                child: StateContainer.of(context).curPrimaryCurrency ==
+                        PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE)
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: AutoSizeText(
+                              StateContainer.of(context)
+                                  .curNetwork
+                                  .getNetworkCryptoCurrencyLabel(),
+                              style:
+                                  AppStyles.textStyleSize35W900EquinoxPrimary(
+                                      context),
+                            ),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              AutoSizeText(
+                                StateContainer.of(context)
+                                            .wallet!
+                                            .accountBalance
+                                            .networkCurrencyValue ==
+                                        0
+                                    ? StateContainer.of(context)
+                                        .localWallet!
+                                        .accountBalance
+                                        .getNetworkAccountBalanceDisplay()
+                                    : StateContainer.of(context)
+                                        .wallet!
+                                        .accountBalance
+                                        .getNetworkAccountBalanceDisplay(),
+                                style:
+                                    AppStyles.textStyleSize25W900EquinoxPrimary(
+                                        context),
+                              ),
+                              AutoSizeText(
+                                StateContainer.of(context)
+                                    .wallet!
+                                    .accountBalance
+                                    .getConvertedAccountBalanceDisplay(),
+                                textAlign: TextAlign.center,
+                                style: AppStyles.textStyleSize12W100Primary(
+                                    context),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: AutoSizeText(
+                              StateContainer.of(context)
+                                  .curNetwork
+                                  .getNetworkCryptoCurrencyLabel(),
+                              style:
+                                  AppStyles.textStyleSize35W900EquinoxPrimary(
+                                      context),
+                            ),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              AutoSizeText(
+                                StateContainer.of(context)
+                                    .wallet!
+                                    .accountBalance
+                                    .getConvertedAccountBalanceDisplay(),
+                                textAlign: TextAlign.center,
+                                style:
+                                    AppStyles.textStyleSize25W900EquinoxPrimary(
+                                        context),
+                              ),
+                              AutoSizeText(
+                                StateContainer.of(context)
+                                            .wallet!
+                                            .accountBalance
+                                            .networkCurrencyValue ==
+                                        0
+                                    ? StateContainer.of(context)
+                                        .localWallet!
+                                        .accountBalance
+                                        .getNetworkAccountBalanceDisplay()
+                                    : StateContainer.of(context)
+                                        .wallet!
+                                        .accountBalance
+                                        .getNetworkAccountBalanceDisplay(),
+                                style: AppStyles.textStyleSize12W100Primary(
+                                    context),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        AutoSizeText(
-                          StateContainer.of(context)
-                                      .wallet!
-                                      .accountBalance
-                                      .networkCurrencyValue ==
-                                  0
-                              ? StateContainer.of(context)
-                                  .localWallet!
-                                  .accountBalance
-                                  .getNetworkAccountBalanceDisplay()
-                              : StateContainer.of(context)
-                                  .wallet!
-                                  .accountBalance
-                                  .getNetworkAccountBalanceDisplay(),
-                          style: AppStyles.textStyleSize25W900EquinoxPrimary(
-                              context),
-                        ),
-                        AutoSizeText(
-                          StateContainer.of(context)
-                              .wallet!
-                              .accountBalance
-                              .getConvertedAccountBalanceDisplay(),
-                          textAlign: TextAlign.center,
-                          style: AppStyles.textStyleSize12W100Primary(context),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
               ),
             ),
           ),
