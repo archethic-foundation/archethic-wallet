@@ -352,6 +352,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
 
   Future<bool> validateForm() async {
     bool isValid = true;
+    _nameValidationText = '';
+    _addressValidationText = '';
     // Address Validations
     // Don't validate address if it came pre-filled in
     if (widget.address == null) {
@@ -373,7 +375,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
         if (addressExists) {
           setState(() {
             isValid = false;
-            _addressValidationText = AppLocalization.of(context)!.contactExists;
+            _addressValidationText =
+                AppLocalization.of(context)!.contactExistsAddress;
           });
         }
       }
@@ -390,7 +393,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
       if (nameExists) {
         setState(() {
           isValid = false;
-          _nameValidationText = AppLocalization.of(context)!.contactExists;
+          _nameValidationText = AppLocalization.of(context)!.contactExistsName;
         });
       }
     }

@@ -222,12 +222,6 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "contactExists": "Contact Already Exists",
-  "@contactExists": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
   "transferSuccess": "The transaction was sent successfully",
   "@transferSuccess": {
     "type": "text",

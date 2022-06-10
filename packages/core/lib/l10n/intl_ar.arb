@@ -37,7 +37,6 @@
 	"contactAdded": "%1 ajouté au carnet d'adresses.",
 	"contactRemoved": "%1 a été supprimé du carnet d'adresses !",
 	"contactNameMissing": "Choisissez un nom pour ce contact",
-	"contactExists": "Le contact existe déjà",
 	"transferSuccess": "La transaction a été envoyée avec succès",
 	"transfering": "Transfert",
 	"getOption": "Get",

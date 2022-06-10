@@ -249,8 +249,14 @@ class AppLocalization {
         name: 'contactNameMissing');
   }
 
-  String get contactExists {
-    return Intl.message('Contact Already Exists', name: 'contactExists');
+  String get contactExistsName {
+    return Intl.message('You already have a contact with this name',
+        name: 'contactExistsName');
+  }
+
+  String get contactExistsAddress {
+    return Intl.message('You already have a contact with this address',
+        name: 'contactExistsName');
   }
 
   String get transferSuccess {
