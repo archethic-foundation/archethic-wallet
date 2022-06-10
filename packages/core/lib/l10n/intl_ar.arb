@@ -262,5 +262,6 @@
 	"introNewWalletGetFirstInfosNameInfos": "It will allow you to distinguish this account from other accounts that you can, if you want, create later.\nWARNING: This name will be added to your decentralized keychain and cannot be modified.",
 	"introNewWalletGetFirstInfosNameBlank": "Please enter a name for this account",
 	"introNewWalletGetFirstInfosNetworkHeader": "On which network do you want to use your wallet?",
-	"introNewWalletGetFirstInfosNameSlash": "The name cannot have a '/' character."
+	"introNewWalletGetFirstInfosNameSlash": "The name cannot have a '/' character.",
+	"priceChartHeader": "Price Chart"
 }

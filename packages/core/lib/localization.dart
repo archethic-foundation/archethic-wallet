@@ -808,6 +808,10 @@ class AppLocalization {
     return Intl.message('Nodes informations', name: 'nodesHeaderDesc');
   }
 
+  String get priceChartHeader {
+    return Intl.message('Price Chart', name: 'priceChartHeader');
+  }
+
   String get addNFT {
     return Intl.message('Add NFT', name: 'addNFT');
   }
