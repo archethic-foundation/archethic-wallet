@@ -256,7 +256,7 @@ class AppLocalization {
 
   String get contactExistsAddress {
     return Intl.message('You already have a contact with this address',
-        name: 'contactExistsName');
+        name: 'contactExistsAddress');
   }
 
   String get transferSuccess {

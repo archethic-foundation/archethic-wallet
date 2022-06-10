@@ -1560,14 +1560,56 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "introNewWalletGetFirstInfosNameSlash": "The name cannot have a '/' character.",
-  "@introNewWalletGetFirstInfosNameSlash": {
+  "introNewWalletGetFirstInfosNameRegExp": "The name should contains only alphanumeric characters.",
+  "@introNewWalletGetFirstInfosNameRegExp": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
   "priceChartHeader": "Price Chart",
   "@priceChartHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "contactExistsName": "You already have a contact with this name",
+  "@contactExistsName": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "contactExistsAddress": "You already have a contact with this address",
+  "@contactExistsAddress": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "accountsHeader": "Accounts",
+  "@accountsHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "newAccount": "New account",
+  "@newAccount": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addAccount": "Add account",
+  "@addAccount": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "newAccountConfirmation": "Are you sure you want to create in your keychain \"%1?\"",
+  "@newAccountConfirmation": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addAccountConfirmation": "Are you sure you want to add in your keychain \"%1?\"",
+  "@addAccountConfirmation": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
