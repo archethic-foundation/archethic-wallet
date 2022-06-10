@@ -44,7 +44,7 @@ dev_dependencies:
   #integration_test:
   #  sdk: flutter
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
-  # intl_generator: ^0.2.1
+  intl_generator: ^0.3.0
   # A command-line tool that create Msix installer from your flutter windows-build files.
   msix: ^3.5.1
 
@@ -84,6 +84,8 @@ flutter:
         - asset: assets/fonts/Montserrat-Regular.ttf
         - asset: assets/fonts/Montserrat-SemiBold.ttf
         - asset: assets/fonts/Montserrat-SemiBoldItalic.ttf
+    - family: Equinox
+      fonts:
         - asset: assets/fonts/Equinox Bold.otf
         - asset: assets/fonts/Equinox Regular.otf
 
