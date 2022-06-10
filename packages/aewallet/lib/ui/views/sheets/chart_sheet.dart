@@ -104,7 +104,7 @@ class _ChartSheetState extends State<ChartSheet> {
               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: AutoSizeText(
                 AppLocalization.of(context)!.chart,
-                style: AppStyles.textStyleSize24W700Primary(context),
+                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
               ),
             ),
           ],

@@ -145,7 +145,8 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                       children: <Widget>[
                         Text(
                           AppLocalization.of(context)!.addNFTHeader,
-                          style: AppStyles.textStyleSize24W700Primary(context),
+                          style: AppStyles.textStyleSize24W700EquinoxPrimary(
+                              context),
                         ),
                       ],
                     ),

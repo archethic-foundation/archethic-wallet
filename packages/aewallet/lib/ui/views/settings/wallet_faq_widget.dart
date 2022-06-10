@@ -69,7 +69,8 @@ class _WalletFAQState extends State<WalletFAQ> {
                   Expanded(
                     child: AutoSizeText(
                       AppLocalization.of(context)!.walletFAQHeader,
-                      style: AppStyles.textStyleSize20W700Primary(context),
+                      style:
+                          AppStyles.textStyleSize20W700EquinoxPrimary(context),
                       maxLines: 2,
                     ),
                   ),

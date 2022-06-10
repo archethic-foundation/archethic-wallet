@@ -53,8 +53,10 @@ class AppSettings {
                       child: Text(
                         heading,
                         style: disabled
-                            ? AppStyles.textStyleSize16W600Primary30(context)
-                            : AppStyles.textStyleSize16W600Primary(context),
+                            ? AppStyles.textStyleSize16W600EquinoxPrimary30(
+                                context)
+                            : AppStyles.textStyleSize16W600EquinoxPrimary(
+                                context),
                       ),
                     ),
                     AutoSizeText(
@@ -108,8 +110,8 @@ class AppSettings {
                         children: <Widget>[
                           Text(
                             heading,
-                            style:
-                                AppStyles.textStyleSize16W600Primary(context),
+                            style: AppStyles.textStyleSize16W600EquinoxPrimary(
+                                context),
                           ),
                           Text(
                             defaultMethod.getDisplayName(context),
@@ -171,7 +173,8 @@ class AppSettings {
                     width: Responsive.drawerWidth(context) - 100,
                     child: Text(
                       heading,
-                      style: AppStyles.textStyleSize16W600Primary(context),
+                      style:
+                          AppStyles.textStyleSize16W600EquinoxPrimary(context),
                     ),
                   ),
                   SizedBox(
@@ -258,7 +261,7 @@ class AppSettings {
               width: Responsive.drawerWidth(context) - 130,
               child: Text(
                 heading,
-                style: AppStyles.textStyleSize16W600Primary(context),
+                style: AppStyles.textStyleSize16W600EquinoxPrimary(context),
               ),
             ),
             Switch(

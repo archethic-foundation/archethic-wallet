@@ -136,7 +136,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
               // The header of the sheet
               AutoSizeText(
                 AppLocalization.of(context)!.addContact,
-                style: AppStyles.textStyleSize24W700Primary(context),
+                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 stepGranularity: 0.1,

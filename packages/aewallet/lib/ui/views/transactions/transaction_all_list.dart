@@ -71,7 +71,7 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                   const EdgeInsets.only(bottom: 20.0, left: 10.0, right: 10.0),
               child: AutoSizeText(
                 AppLocalization.of(context)!.transactionsAllListHeader,
-                style: AppStyles.textStyleSize24W700Primary(context),
+                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
               ),
             ),
           ],
@@ -207,8 +207,9 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                             AutoSizeText(
                                 AppLocalization.of(context)!
                                     .txListTypeTransactionLabelNewNFT,
-                                style: AppStyles.textStyleSize20W700Primary(
-                                    context)),
+                                style:
+                                    AppStyles.textStyleSize20W700EquinoxPrimary(
+                                        context)),
                           ],
                         )
                       else

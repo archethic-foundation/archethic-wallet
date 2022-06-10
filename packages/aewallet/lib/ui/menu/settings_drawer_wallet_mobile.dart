@@ -214,7 +214,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
         return AlertDialog(
           title: Text(
             AppLocalization.of(context)!.authMethod,
-            style: AppStyles.textStyleSize20W700Primary(context),
+            style: AppStyles.textStyleSize20W700EquinoxPrimary(context),
           ),
           shape: RoundedRectangleBorder(
               borderRadius: const BorderRadius.all(Radius.circular(16.0)),
@@ -358,61 +358,60 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
           value,
           true));
     }
-    final AvailableCurrencyEnum? selection =
-        await showDialog<AvailableCurrencyEnum>(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    final AvailableCurrencyEnum? selection = await showDialog<
+            AvailableCurrencyEnum>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppLocalization.of(context)!.currency,
+                    style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
                     children: [
-                      Text(
-                        AppLocalization.of(context)!.currency,
-                        style: AppStyles.textStyleSize20W700Primary(context),
+                      buildIconWidget(
+                        context,
+                        'packages/aewallet/assets/icons/oracle.png',
+                        20,
+                        20,
                       ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: [
-                          buildIconWidget(
-                            context,
-                            'packages/aewallet/assets/icons/oracle.png',
-                            20,
-                            20,
-                          ),
-                          const SizedBox(width: 5),
-                          Expanded(
-                            child: Text(
-                              AppLocalization.of(context)!.currencyOracleInfo,
-                              style:
-                                  AppStyles.textStyleSize12W100Primary(context),
-                            ),
-                          ),
-                        ],
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          AppLocalization.of(context)!.currencyOracleInfo,
+                          style: AppStyles.textStyleSize12W100Primary(context),
+                        ),
                       ),
                     ],
                   ),
-                ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                    side: BorderSide(
-                        color: StateContainer.of(context).curTheme.primary45!)),
-                content: SingleChildScrollView(
-                  child: PickerWidget(
-                    pickerItems: pickerItemsList,
-                    selectedIndex:
-                        StateContainer.of(context).curCurrency.getIndex(),
-                    onSelected: (value) {
-                      Navigator.pop(context, value.value);
-                    },
-                  ),
-                ),
-              );
-            });
+                ],
+              ),
+            ),
+            shape: RoundedRectangleBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                side: BorderSide(
+                    color: StateContainer.of(context).curTheme.primary45!)),
+            content: SingleChildScrollView(
+              child: PickerWidget(
+                pickerItems: pickerItemsList,
+                selectedIndex:
+                    StateContainer.of(context).curCurrency.getIndex(),
+                onSelected: (value) {
+                  Navigator.pop(context, value.value);
+                },
+              ),
+            ),
+          );
+        });
     if (selection != null) {
       preferences.setCurrency(AvailableCurrency(selection));
       if (StateContainer.of(context).curCurrency.currency != selection) {
@@ -449,7 +448,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
                 AppLocalization.of(context)!.language,
-                style: AppStyles.textStyleSize20W700Primary(context),
+                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
               ),
             ),
             shape: RoundedRectangleBorder(
@@ -502,7 +501,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
                 AppLocalization.of(context)!.networksHeader,
-                style: AppStyles.textStyleSize20W700Primary(context),
+                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
               ),
             ),
             shape: RoundedRectangleBorder(
@@ -673,7 +672,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
                 AppLocalization.of(context)!.autoLockHeader,
-                style: AppStyles.textStyleSize20W700Primary(context),
+                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
               ),
             ),
             shape: RoundedRectangleBorder(
@@ -722,7 +721,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
                 AppLocalization.of(context)!.themeHeader,
-                style: AppStyles.textStyleSize20W700Primary(context),
+                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
               ),
             ),
             shape: RoundedRectangleBorder(
@@ -842,7 +841,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       margin: const EdgeInsetsDirectional.only(
                           top: 10.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context)!.manage,
-                          style: AppStyles.textStyleSize20W700Primary(context)),
+                          style: AppStyles.textStyleSize20W700EquinoxPrimary(
+                              context)),
                     ),
                     if (StateContainer.of(context).wallet != null &&
                         StateContainer.of(context)
@@ -913,7 +913,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       margin: const EdgeInsetsDirectional.only(
                           top: 20.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context)!.preferences,
-                          style: AppStyles.textStyleSize20W700Primary(context)),
+                          style: AppStyles.textStyleSize20W700EquinoxPrimary(
+                              context)),
                     ),
                     Divider(
                       height: 2,
@@ -974,7 +975,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.securityHeader,
-                        AppStyles.textStyleSize16W600Primary(context),
+                        AppStyles.textStyleSize16W600EquinoxPrimary(context),
                         'packages/aewallet/assets/icons/encrypted.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () {
@@ -990,7 +991,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.removeWallet,
-                        AppStyles.textStyleSize16W600Red(context),
+                        AppStyles.textStyleSize16W600EquinoxRed(context),
                         'packages/aewallet/assets/icons/rubbish.png',
                         Colors.red, onPressed: () {
                       AppDialogs.showConfirmDialog(
@@ -1037,7 +1038,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       margin: const EdgeInsetsDirectional.only(
                           top: 20.0, bottom: 10.0),
                       child: Text(AppLocalization.of(context)!.informations,
-                          style: AppStyles.textStyleSize20W700Primary(context)),
+                          style: AppStyles.textStyleSize20W700EquinoxPrimary(
+                              context)),
                     ),
                     Divider(
                       height: 2,
@@ -1095,7 +1097,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutHeader,
-                        AppStyles.textStyleSize16W600Primary(context),
+                        AppStyles.textStyleSize16W600EquinoxPrimary(context),
                         'packages/aewallet/assets/icons/help.png',
                         StateContainer.of(context).curTheme.iconDrawerColor!,
                         onPressed: () {
@@ -1202,7 +1204,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       //Security Header Text
                       Text(
                         AppLocalization.of(context)!.securityHeader,
-                        style: AppStyles.textStyleSize28W700Primary(context),
+                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
+                            context),
                       ),
                     ],
                   ),
@@ -1219,7 +1222,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       alignment: Alignment.center,
                       margin: const EdgeInsetsDirectional.only(bottom: 10),
                       child: Text(AppLocalization.of(context)!.preferences,
-                          style: AppStyles.textStyleSize20W700Primary(context)),
+                          style: AppStyles.textStyleSize20W700EquinoxPrimary(
+                              context)),
                     ),
                     // Authentication Method
                     Divider(
@@ -1269,7 +1273,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       AppSettings.buildSettingsListItemSingleLine(
                           context,
                           AppLocalization.of(context)!.backupSecretPhrase,
-                          AppStyles.textStyleSize16W600Primary(context),
+                          AppStyles.textStyleSize16W600EquinoxPrimary(context),
                           'packages/aewallet/assets/icons/key-word.png',
                           StateContainer.of(context).curTheme.iconDrawerColor!,
                           onPressed: () async {
@@ -1404,7 +1408,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                   Expanded(
                     child: AutoSizeText(
                       AppLocalization.of(context)!.aboutHeader,
-                      style: AppStyles.textStyleSize28W700Primary(context),
+                      style:
+                          AppStyles.textStyleSize24W700EquinoxPrimary(context),
                       maxLines: 2,
                     ),
                   ),
@@ -1543,7 +1548,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                   Expanded(
                     child: AutoSizeText(
                       AppLocalization.of(context)!.nftHeader,
-                      style: AppStyles.textStyleSize28W700Primary(context),
+                      style:
+                          AppStyles.textStyleSize24W700EquinoxPrimary(context),
                       maxLines: 2,
                     ),
                   ),

@@ -259,8 +259,8 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                           ), // Header
                           AutoSizeText(
                             widget.title ?? AppLocalization.of(context)!.send,
-                            style:
-                                AppStyles.textStyleSize24W700Primary(context),
+                            style: AppStyles.textStyleSize24W700EquinoxPrimary(
+                                context),
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             stepGranularity: 0.1,

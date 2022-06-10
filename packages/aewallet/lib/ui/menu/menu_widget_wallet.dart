@@ -86,8 +86,9 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                                 Icons.arrow_circle_up_outlined, 40, 40),
                             const SizedBox(height: 5),
                             Text(AppLocalization.of(context)!.send,
-                                style: AppStyles.textStyleSize14W600Primary(
-                                    context)),
+                                style:
+                                    AppStyles.textStyleSize14W600EquinoxPrimary(
+                                        context)),
                           ],
                         )))
                 : Container(
@@ -98,8 +99,9 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                           enabled: false),
                       const SizedBox(height: 5),
                       Text(AppLocalization.of(context)!.send,
-                          style: AppStyles.textStyleSize14W600PrimaryDisabled(
-                              context)),
+                          style: AppStyles
+                              .textStyleSize14W600EquinoxPrimaryDisabled(
+                                  context)),
                     ],
                   )),
             Padding(
@@ -116,7 +118,8 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                         context, Icons.arrow_circle_down_outlined, 40, 40),
                     const SizedBox(height: 5),
                     Text(AppLocalization.of(context)!.receive,
-                        style: AppStyles.textStyleSize14W600Primary(context)),
+                        style: AppStyles.textStyleSize14W600EquinoxPrimary(
+                            context)),
                   ],
                 ),
               ),
@@ -135,8 +138,8 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                             context, Icons.add_circle_outline_outlined, 40, 40),
                         const SizedBox(height: 5),
                         Text(AppLocalization.of(context)!.buy,
-                            style:
-                                AppStyles.textStyleSize14W600Primary(context)),
+                            style: AppStyles.textStyleSize14W600EquinoxPrimary(
+                                context)),
                       ],
                     ))),
             /*if (kIsWeb || Platform.isMacOS)
@@ -203,7 +206,8 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                         AppLocalization.of(context)!
                             .transactionChainExplorerHeader,
                         maxLines: 2,
-                        style: AppStyles.textStyleSize16W700Primary(context)),
+                        style: AppStyles.textStyleSize14W600EquinoxPrimary(
+                            context)),
                     AutoSizeText(
                         AppLocalization.of(context)!
                             .transactionChainExplorerDesc,

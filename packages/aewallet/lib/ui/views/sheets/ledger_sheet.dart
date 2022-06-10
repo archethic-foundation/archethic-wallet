@@ -143,7 +143,8 @@ class _LedgerSheetState extends State<LedgerSheet> {
                         // Header
                         AutoSizeText(
                           'Ledger - Tests',
-                          style: AppStyles.textStyleSize24W700Primary(context),
+                          style: AppStyles.textStyleSize24W700EquinoxPrimary(
+                              context),
                           textAlign: TextAlign.center,
                           maxLines: 1,
                           stepGranularity: 0.1,

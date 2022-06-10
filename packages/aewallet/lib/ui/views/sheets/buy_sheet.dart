@@ -88,7 +88,7 @@ class _BuySheetState extends State<BuySheet> {
               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: AutoSizeText(
                 AppLocalization.of(context)!.transactionBuyHeader,
-                style: AppStyles.textStyleSize24W700Primary(context),
+                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
               ),
             ),
           ],

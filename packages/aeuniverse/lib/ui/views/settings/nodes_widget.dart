@@ -94,7 +94,8 @@ class _NodesListState extends State<NodesList> {
                     Expanded(
                       child: AutoSizeText(
                         AppLocalization.of(context)!.nodesHeader,
-                        style: AppStyles.textStyleSize20W700Primary(context),
+                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
+                            context),
                         maxLines: 2,
                       ),
                     ),

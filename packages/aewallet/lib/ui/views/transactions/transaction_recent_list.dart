@@ -2,8 +2,10 @@
 
 // Dart imports:
 import 'dart:io';
+import 'dart:math';
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/components/gradient_shadow_box_decoration.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -82,7 +84,8 @@ class _TxListWidgetState extends State<TxListWidget> {
                             true
                     ? Text(
                         AppLocalization.of(context)!.recentTransactionsHeader,
-                        style: AppStyles.textStyleSize14W600Primary(context))
+                        style: AppStyles.textStyleSize14W600EquinoxPrimary(
+                            context))
                     : Text(
                         AppLocalization.of(context)!
                             .recentTransactionsNoTransactionYet,
@@ -179,12 +182,13 @@ class _TxListWidgetState extends State<TxListWidget> {
                                 transaction.typeTx ==
                                         RecentTransaction.transferOutput
                                     ? AutoSizeText('-${transaction.amount!}',
-                                        style: AppStyles.textStyleSize20W700Red(
-                                            context))
+                                        style: AppStyles
+                                            .textStyleSize20W700EquinoxRed(
+                                                context))
                                     : AutoSizeText(
                                         transaction.amount!.toString(),
-                                        style:
-                                            AppStyles.textStyleSize20W700Green(
+                                        style: AppStyles
+                                            .textStyleSize20W700EquinoxGreen(
                                                 context)),
                             ]),
                         Column(
@@ -196,8 +200,8 @@ class _TxListWidgetState extends State<TxListWidget> {
                                   AutoSizeText(
                                       AppLocalization.of(context)!
                                           .txListTypeTransactionLabelNewNFT,
-                                      style:
-                                          AppStyles.textStyleSize14W700Primary(
+                                      style: AppStyles
+                                          .textStyleSize14W600EquinoxPrimary(
                                               context)),
                                 ],
                               )
@@ -319,8 +323,8 @@ class _TxListWidgetState extends State<TxListWidget> {
                                 StateContainer.of(context).curTheme.gradient!,
                             shape: const StadiumBorder()),
                         child: Text(AppLocalization.of(context)!.seeAll,
-                            style:
-                                AppStyles.textStyleSize14W600Primary(context)),
+                            style: AppStyles.textStyleSize14W600EquinoxPrimary(
+                                context)),
                       ),
                     ),
                   ),

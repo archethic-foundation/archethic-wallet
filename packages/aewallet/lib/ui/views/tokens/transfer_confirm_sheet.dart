@@ -166,7 +166,8 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       Text(
                         widget.title ??
                             AppLocalization.of(context)!.transfering,
-                        style: AppStyles.textStyleSize24W700Primary(context),
+                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
+                            context),
                       ),
                     ],
                   ),

@@ -62,7 +62,8 @@ class _AppSeedBackupSheetState extends State<AppSeedBackupSheet> {
                       children: <Widget>[
                         AutoSizeText(
                           AppLocalization.of(context)!.recoveryPhrase,
-                          style: AppStyles.textStyleSize24W700Primary(context),
+                          style: AppStyles.textStyleSize24W700EquinoxPrimary(
+                              context),
                           minFontSize: 12,
                           stepGranularity: 0.1,
                           textAlign: TextAlign.center,

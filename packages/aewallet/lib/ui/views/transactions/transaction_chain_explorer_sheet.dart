@@ -112,7 +112,7 @@ class _TransactionChainExplorerSheetState
                 child: AutoSizeText(
                   AppLocalization.of(context)!.transactionChainExplorerHeader,
                   textAlign: TextAlign.center,
-                  style: AppStyles.textStyleSize24W700Primary(context),
+                  style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
                 ),
               ),
             )

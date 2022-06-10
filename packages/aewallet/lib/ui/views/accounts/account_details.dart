@@ -123,8 +123,8 @@ class AccountDetailsSheet {
                                     AutoSizeText(
                                       AppLocalization.of(context)!
                                           .accountHeader,
-                                      style:
-                                          AppStyles.textStyleSize24W700Primary(
+                                      style: AppStyles
+                                          .textStyleSize24W700EquinoxPrimary(
                                               context),
                                       textAlign: TextAlign.center,
                                       maxLines: 1,

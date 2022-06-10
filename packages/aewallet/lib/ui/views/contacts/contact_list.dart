@@ -152,7 +152,8 @@ class _ContactsListState extends State<ContactsList> {
                     Expanded(
                       child: AutoSizeText(
                         AppLocalization.of(context)!.addressBookHeader,
-                        style: AppStyles.textStyleSize20W700Primary(context),
+                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
+                            context),
                         maxLines: 2,
                       ),
                     ),

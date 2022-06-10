@@ -86,7 +86,8 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                         padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                         child: AutoSizeText(
                           AppLocalization.of(context)!.transactionInfosHeader,
-                          style: AppStyles.textStyleSize24W700Primary(context),
+                          style: AppStyles.textStyleSize24W700EquinoxPrimary(
+                              context),
                         ),
                       ),
                     ],
