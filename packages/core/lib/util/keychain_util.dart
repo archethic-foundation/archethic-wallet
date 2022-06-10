@@ -24,7 +24,6 @@ class KeychainUtil {
     /// Generate keyChain Seed from random value
     final String keychainSeed = uint8ListToHex(Uint8List.fromList(
         List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
-    dev.log('keychain seed (new Account) : ' + keychainSeed);
 
     /// Default service for wallet
     String formatName = name!.replaceAll(' ', '-');
@@ -80,7 +79,6 @@ class KeychainUtil {
     Account? selectedAcct;
 
     final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
-    dev.log('keychain seed (add Account) : ' + uint8ListToHex(keychain.seed!));
 
     final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
 
