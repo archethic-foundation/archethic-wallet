@@ -1,6 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'dart:math';
+
+import 'package:aeuniverse/ui/widgets/components/gradient_shadow_box_decoration.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -24,6 +27,84 @@ import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 
 class BalanceInfosWidget {
   List<OptionChart> optionChartList = List<OptionChart>.empty(growable: true);
+
+  Widget getBalance(BuildContext context) {
+    return Container(
+      height: 60,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Card(
+          color: Colors.transparent,
+          child: Container(
+            decoration: GradientShadowBoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    'packages/core_ui/assets/themes/dark/background-1.png'),
+                fit: BoxFit.cover,
+              ),
+              backgroundBlendMode: BlendMode.dstIn,
+              boxShadow: [
+                BoxShadow(
+                  blurStyle: BlurStyle.outer,
+                  spreadRadius: 1,
+                  blurRadius: 5,
+                  offset: Offset(0, 0),
+                ),
+              ],
+              gradient: LinearGradient(
+                colors: <Color>[
+                  Color(0xFF00A4DB),
+                  Color(0xFFCC00FF),
+                ],
+                begin: Alignment(-1.0, 0.0),
+                end: Alignment(1.0, 0.0),
+                transform: GradientRotation(pi / 9),
+              ),
+            ),
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.95,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: AutoSizeText(
+                        StateContainer.of(context)
+                            .curNetwork
+                            .getNetworkCryptoCurrencyLabel(),
+                        style: AppStyles.textStyleSize35W900EquinoxPrimary(
+                            context),
+                      ),
+                    ),
+                    AutoSizeText(
+                      StateContainer.of(context)
+                                  .wallet!
+                                  .accountBalance
+                                  .networkCurrencyValue ==
+                              0
+                          ? StateContainer.of(context)
+                              .localWallet!
+                              .accountBalance
+                              .getNetworkAccountBalanceDisplay()
+                          : StateContainer.of(context)
+                              .wallet!
+                              .accountBalance
+                              .getNetworkAccountBalanceDisplay(),
+                      style:
+                          AppStyles.textStyleSize25W900EquinoxPrimary(context),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   Widget buildInfos(BuildContext context) {
     return InkWell(
@@ -79,6 +160,13 @@ class BalanceInfosWidget {
             height: MediaQuery.of(context).size.height * 0.08,
             child: Stack(
               children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    AppLocalization.of(context)!.priceChartHeader,
+                    style: AppStyles.textStyleSize14W600EquinoxPrimary(context),
+                  ),
+                ),
                 FadeIn(
                   duration: const Duration(milliseconds: 1000),
                   child: Padding(
@@ -94,32 +182,6 @@ class BalanceInfosWidget {
                         : const SizedBox(),
                   ),
                 ),
-                StateContainer.of(context).showBalance
-                    ? Container(
-                        width: MediaQuery.of(context).size.width,
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: AutoSizeText(
-                            StateContainer.of(context)
-                                        .wallet!
-                                        .accountBalance
-                                        .networkCurrencyValue ==
-                                    0
-                                ? StateContainer.of(context)
-                                    .localWallet!
-                                    .accountBalance
-                                    .getNetworkAccountBalanceDisplay()
-                                : StateContainer.of(context)
-                                    .wallet!
-                                    .accountBalance
-                                    .getNetworkAccountBalanceDisplay(),
-                            style:
-                                AppStyles.textStyleSize40W900Primary(context),
-                          ),
-                        ),
-                      )
-                    : const SizedBox(),
               ],
             ),
           ),

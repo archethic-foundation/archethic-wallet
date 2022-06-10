@@ -1,8 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-
 // Package imports:
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -14,9 +11,7 @@ class DBHelper {
   static const String _accountsTable = 'accounts';
 
   static Future<void> setupDatabase() async {
-    if (!kIsWeb) {
-      await Hive.initFlutter();
-    }
+    await Hive.initFlutter();
     Hive.registerAdapter(ContactAdapter());
     Hive.registerAdapter(AccountAdapter());
   }
@@ -173,11 +168,7 @@ class DBHelper {
   }
 
   Future<void> dropAll() async {
-    // ignore: prefer_final_locals
-    Box<Account> boxAccounts = await Hive.openBox<Account>(_accountsTable);
-    // ignore: prefer_final_locals
-    Box<Contact> boxContacts = await Hive.openBox<Contact>(_contactsTable);
-    boxAccounts.clear();
-    boxContacts.clear();
+    await Hive.deleteBoxFromDisk(_accountsTable);
+    await Hive.deleteBoxFromDisk(_contactsTable);
   }
 }

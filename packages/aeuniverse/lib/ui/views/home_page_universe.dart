@@ -4,7 +4,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:aewallet/ui/views/accounts/account_details.dart';
 import 'package:aewallet/ui/views/accounts/account_list.dart';
 import 'package:flutter/material.dart';
 
@@ -138,6 +137,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
     _switchAccountSub = EventTaxiImpl.singleton()
         .registerTo<AccountChangedEvent>()
         .listen((AccountChangedEvent event) {
+      print('toto');
       setState(() {
         StateContainer.of(context).recentTransactionsLoading = true;
 
@@ -478,102 +478,73 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       InkWell(
-                        onTap: () {
-                          AccountDetailsSheet(
-                                  StateContainer.of(context).selectedAccount)
+                        onTap: () async {
+                          sl.get<HapticUtil>().feedback(FeedbackType.light);
+                          AccountsList(await KeychainUtil()
+                                  .getListAccountsFromKeychain(
+                                      await StateContainer.of(context)
+                                          .getSeed(),
+                                      StateContainer.of(context)
+                                          .selectedAccount
+                                          .name))
                               .mainBottomSheet(context);
                         },
                         child: Column(
                           children: <Widget>[
-                            Stack(
+                            Row(
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Opacity(
-                                      opacity: 0.9,
-                                      child: SvgPicture.asset(
-                                        'packages/core_ui/assets/themes/dark/backgroundAccountLeft.svg',
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.08,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        width: StateContainer.of(context)
-                                                .selectedAccount
-                                                .name!
-                                                .length *
-                                            6),
-                                    Opacity(
-                                      opacity: 0.9,
-                                      child: SvgPicture.asset(
-                                        'packages/core_ui/assets/themes/dark/backgroundAccountRight.svg',
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.08,
-                                      ),
-                                    ),
-                                  ],
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: StateContainer.of(context)
+                                              .selectedAccount
+                                              .name !=
+                                          null
+                                      ? Image.asset(
+                                          'packages/core_ui/assets/themes/dark/profile inverse.png',
+                                          height: 100,
+                                        )
+                                      : const SizedBox(),
                                 ),
-                                InkWell(
-                                  onTap: () async {
-                                    sl
-                                        .get<HapticUtil>()
-                                        .feedback(FeedbackType.light);
-                                    AccountsList(await KeychainUtil()
-                                            .getListAccountsFromKeychain(
-                                                await StateContainer.of(context)
-                                                    .getSeed()))
-                                        .mainBottomSheet(context);
-                                  },
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
+                                StateContainer.of(context)
+                                            .selectedAccount
+                                            .name !=
+                                        null
+                                    ? Align(
+                                        alignment: Alignment.center,
+                                        child: Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
                                               0.08,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            StateContainer.of(context)
-                                                .selectedAccount
-                                                .name!,
-                                            style: AppStyles
-                                                .textStyleSize18W400Equinox(
-                                                    context),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                StateContainer.of(context)
+                                                    .selectedAccount
+                                                    .name!,
+                                                style: AppStyles
+                                                    .textStyleSize20W700EquinoxPrimary(
+                                                        context),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                        ),
+                                      )
+                                    : const SizedBox(),
                               ],
+                            ),
+                            StateContainer.of(context).showBalance
+                                ? BalanceInfosWidget().getBalance(context)
+                                : const SizedBox(),
+                            const SizedBox(
+                              height: 10,
                             ),
                             Stack(
                               children: <Widget>[
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.08,
-                                  alignment: Alignment.centerRight,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 10.0),
-                                    child: AutoSizeText(
-                                      StateContainer.of(context)
-                                          .curNetwork
-                                          .getNetworkCryptoCurrencyLabel(),
-                                      style: AppStyles
-                                          .textStyleSize80W700Primary15(
-                                              context),
-                                    ),
-                                  ),
-                                ),
                                 BalanceInfosWidget().buildInfos(context),
                               ],
                             ),

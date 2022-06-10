@@ -170,7 +170,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                 final Vault vault = await Vault.getInstance();
                                 await vault.setSeed(seed!);
                                 Account? account = await KeychainUtil()
-                                    .addAccount(seed!, widget.name!);
+                                    .newAccount(seed!, widget.name!);
                                 StateContainer.of(context).selectedAccount =
                                     account!;
                                 setState(() {

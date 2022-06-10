@@ -136,8 +136,8 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                           ), // Header
                           AutoSizeText(
                             AppLocalization.of(context)!.addNFTHeader,
-                            style:
-                                AppStyles.textStyleSize24W700Primary(context),
+                            style: AppStyles.textStyleSize24W700EquinoxPrimary(
+                                context),
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             stepGranularity: 0.1,
@@ -454,7 +454,8 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
           transactionChainSeed!,
           StateContainer.of(context).selectedAccount.lastAddress!,
           _nameController!.text,
-          int.tryParse(_initialSupplyController!.text)!);
+          int.tryParse(_initialSupplyController!.text)!,
+          StateContainer.of(context).selectedAccount.name!);
     } catch (e) {
       fee = 0;
     }

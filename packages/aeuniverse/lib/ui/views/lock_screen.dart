@@ -40,7 +40,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
   Future<void> _goHome() async {
     if (StateContainer.of(context).wallet == null) {
       Account? selectedAcct = await KeychainUtil()
-          .addAccount(await StateContainer.of(context).getSeed(), '');
+          .newAccount(await StateContainer.of(context).getSeed(), '');
       StateContainer.of(context).requestUpdate(account: selectedAcct);
     }
     Account? account = await sl.get<DBHelper>().getSelectedAccount();

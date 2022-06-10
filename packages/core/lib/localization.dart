@@ -1235,9 +1235,10 @@ class AppLocalization {
         name: 'introNewWalletGetFirstInfosNameBlank');
   }
 
-  String get introNewWalletGetFirstInfosNameSlash {
-    return Intl.message('The name cannot have a \'/\' character.',
-        name: 'introNewWalletGetFirstInfosNameSlash');
+  String get introNewWalletGetFirstInfosNameRegExp {
+    return Intl.message(
+        'The name should contains only alphanumeric characters.',
+        name: 'introNewWalletGetFirstInfosNameRegExp');
   }
 
   String get introNewWalletGetFirstInfosNetworkHeader {
@@ -1247,6 +1248,29 @@ class AppLocalization {
 
   String get accountHeader {
     return Intl.message('Account', name: 'accountHeader');
+  }
+
+  String get accountsHeader {
+    return Intl.message('Accounts', name: 'accountsHeader');
+  }
+
+  String get newAccount {
+    return Intl.message('New account', name: 'newAccount');
+  }
+
+  String get addAccount {
+    return Intl.message('Add account', name: 'addAccount');
+  }
+
+  String get newAccountConfirmation {
+    return Intl.message(
+        'Are you sure you want to create in your keychain "%1?"',
+        name: 'newAccountConfirmation');
+  }
+
+  String get addAccountConfirmation {
+    return Intl.message('Are you sure you want to add in your keychain "%1?"',
+        name: 'addAccountConfirmation');
   }
 }
 

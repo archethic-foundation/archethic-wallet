@@ -562,29 +562,6 @@ class StateContainerState extends State<StateContainer> {
     return seed;
   }
 
-  Future<void> updateRecentlyUsedAccounts() async {
-    List<Account> otherAccounts =
-        await sl.get<DBHelper>().getRecentlyUsedAccounts();
-    if (otherAccounts != null && otherAccounts.length > 0) {
-      if (otherAccounts.length > 1) {
-        setState(() {
-          recentLast = otherAccounts[0];
-          recentSecondLast = otherAccounts[1];
-        });
-      } else {
-        setState(() {
-          recentLast = otherAccounts[0];
-          recentSecondLast = null;
-        });
-      }
-    } else {
-      setState(() {
-        recentLast = null;
-        recentSecondLast = null;
-      });
-    }
-  }
-
   /// Simple build method that just passes this state through
   /// your InheritedWidget
   @override

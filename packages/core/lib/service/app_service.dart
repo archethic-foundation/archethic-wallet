@@ -374,24 +374,28 @@ class AppService {
 
   Future<double> getFeesEstimationAddNFT(
       String originPrivateKey,
-      String transactionChainSeed,
+      String seed,
       String address,
       String name,
-      int initialSupply) async {
-    final Transaction lastTransaction =
-        await sl.get<ApiService>().getLastTransaction(address);
-
-    final Transaction transaction = NFTService().prepareNewNFT(
-        initialSupply,
-        name,
-        transactionChainSeed,
-        lastTransaction.chainLength!,
-        originPrivateKey);
+      int initialSupply,
+      String accountName) async {
+    final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
+    final String service = 'archethic-wallet-' + accountName;
+    final int index = (await sl.get<ApiService>().getTransactionIndex(
+            uint8ListToHex(keychain.deriveAddress(service, index: 0))))
+        .chainLength!;
 
     TransactionFee transactionFee = TransactionFee();
     try {
-      transactionFee =
-          await sl.get<ApiService>().getTransactionFee(transaction);
+      String content = 'initial supply: $initialSupply\nname: $name';
+      final Transaction transaction =
+          Transaction(type: 'nft', data: Transaction.initData())
+              .setContent(content);
+      Transaction signedTx = keychain
+          .buildTransaction(transaction, service, index)
+          .originSign(originPrivateKey);
+
+      transactionFee = await sl.get<ApiService>().getTransactionFee(signedTx);
     } catch (e) {
       dev.log(e.toString());
     }

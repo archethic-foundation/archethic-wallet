@@ -1,6 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/components/dialog.dart';
+import 'package:core_ui/ui/util/formatters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -37,6 +39,7 @@ class _IntroNewWalletDisclaimerState
   String? nameError;
   NetworksSetting _curNetworksSetting =
       NetworksSetting(AvailableNetworks.ArchethicTestNet);
+  final RegExp validCharacters = RegExp(r'^[A-Z0-9]+$');
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +128,7 @@ class _IntroNewWalletDisclaimerState
                                       context),
                                   inputFormatters: <TextInputFormatter>[
                                     LengthLimitingTextInputFormatter(20),
+                                    UpperCaseTextFormatter(),
                                   ],
                                 ),
                                 nameError != null
@@ -173,17 +177,30 @@ class _IntroNewWalletDisclaimerState
                           FocusScope.of(context).requestFocus(nameFocusNode);
                         });
                       } else {
-                        if (nameController.text.contains('/') == true) {
+                        if (validCharacters.hasMatch(nameController.text) ==
+                            false) {
                           setState(() {
                             nameError = AppLocalization.of(context)!
-                                .introNewWalletGetFirstInfosNameSlash;
+                                .introNewWalletGetFirstInfosNameRegExp;
                             FocusScope.of(context).requestFocus(nameFocusNode);
                           });
                         } else {
-                          await _networkDialog();
-                          Navigator.of(context).pushNamed(
-                              '/intro_backup_safety',
-                              arguments: nameController.text);
+                          AppDialogs.showConfirmDialog(
+                              context,
+                              AppLocalization.of(context)!.newAccount,
+                              AppLocalization.of(context)!
+                                  .newAccountConfirmation
+                                  .replaceAll('%1', nameController.text),
+                              AppLocalization.of(context)!.yes.toUpperCase(),
+                              () async {
+                            await _networkDialog();
+                            Navigator.of(context).pushNamed(
+                                '/intro_backup_safety',
+                                arguments: nameController.text);
+                          },
+                              cancelText: AppLocalization.of(context)!
+                                  .no
+                                  .toUpperCase());
                         }
                       }
                     }),

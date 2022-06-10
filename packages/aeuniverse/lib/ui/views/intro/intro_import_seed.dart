@@ -296,8 +296,14 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             _vault.setSeed(seed);
                             await sl.get<DBHelper>().dropAccounts();
                             List<Account>? accounts = await KeychainUtil()
-                                .getListAccountsFromKeychain(seed);
-
+                                .getListAccountsFromKeychain(
+                                    seed,
+                                    StateContainer.of(context)
+                                        .selectedAccount
+                                        .name);
+                            accounts!.forEach((Account account) async {
+                              await sl.get<DBHelper>().addAccount(account);
+                            });
                             StateContainer.of(context).requestUpdate(
                                 account:
                                     StateContainer.of(context).selectedAccount);
