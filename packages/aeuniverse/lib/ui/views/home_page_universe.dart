@@ -302,7 +302,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                           child: MenuWidgetWallet().buildContextMenu(context),
                         ),
                       ),
-                      SizedBox(
+                      /*SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Padding(
                             padding: EdgeInsets.only(
@@ -314,7 +314,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                 const Expanded(child: TxListWidget()),
                               ],
                             )),
-                      ),
+                      ),*/
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: 100,
@@ -568,17 +568,11 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                Divider(
-                                  height: 1,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .primary30,
-                                ),
                                 const SizedBox(
                                   height: 7,
                                 ),
                                 MenuWidgetWallet().buildMainMenuIcons(context),
-                                Divider(
+                                /*Divider(
                                   height: 15,
                                   color: StateContainer.of(context)
                                       .curTheme
@@ -590,6 +584,9 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                   color: StateContainer.of(context)
                                       .curTheme
                                       .primary30,
+                                ),*/
+                                const SizedBox(
+                                  height: 15,
                                 ),
                                 const Expanded(
                                   child: TxListWidget(),
