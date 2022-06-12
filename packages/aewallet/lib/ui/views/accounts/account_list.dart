@@ -337,56 +337,83 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                                   nameFocusNode);
                                                         });
                                                       } else {
-                                                        setState(() {
-                                                          isPressed = true;
-                                                        });
-                                                        AppDialogs
-                                                            .showConfirmDialog(
-                                                                context,
+                                                        bool accountExists =
+                                                            false;
+                                                        for (Account account
+                                                            in widget
+                                                                .accounts!) {
+                                                          if (account.name ==
+                                                              nameController
+                                                                  .text) {
+                                                            accountExists =
+                                                                true;
+                                                          }
+                                                        }
+                                                        if (accountExists ==
+                                                            true) {
+                                                          setState(() {
+                                                            nameError =
                                                                 AppLocalization.of(
                                                                         context)!
-                                                                    .addAccount,
-                                                                AppLocalization.of(
-                                                                        context)!
-                                                                    .addAccountConfirmation
-                                                                    .replaceAll(
-                                                                        '%1',
+                                                                    .addAccountExists;
+                                                            FocusScope.of(
+                                                                    context)
+                                                                .requestFocus(
+                                                                    nameFocusNode);
+                                                          });
+                                                        } else {
+                                                          setState(() {
+                                                            isPressed = true;
+                                                          });
+                                                          AppDialogs
+                                                              .showConfirmDialog(
+                                                                  context,
+                                                                  AppLocalization.of(
+                                                                          context)!
+                                                                      .addAccount,
+                                                                  AppLocalization.of(
+                                                                          context)!
+                                                                      .addAccountConfirmation
+                                                                      .replaceAll(
+                                                                          '%1',
+                                                                          nameController
+                                                                              .text),
+                                                                  AppLocalization.of(
+                                                                          context)!
+                                                                      .yes
+                                                                      .toUpperCase(),
+                                                                  () async {
+                                                                    Account? account = await KeychainUtil().addAccountInKeyChain(
+                                                                        await StateContainer.of(context)
+                                                                            .getSeed(),
                                                                         nameController
-                                                                            .text),
-                                                                AppLocalization.of(
-                                                                        context)!
-                                                                    .yes
-                                                                    .toUpperCase(),
-                                                                () async {
-                                                                  Account? account = await KeychainUtil().addAccountInKeyChain(
-                                                                      await StateContainer.of(
-                                                                              context)
-                                                                          .getSeed(),
-                                                                      nameController
-                                                                          .text);
-                                                                  setState(() {
-                                                                    widget
-                                                                        .accounts!
-                                                                        .add(
-                                                                            account!);
-                                                                    isPressed =
-                                                                        false;
+                                                                            .text);
+                                                                    setState(
+                                                                        () {
+                                                                      widget
+                                                                          .accounts!
+                                                                          .add(
+                                                                              account!);
+                                                                      isPressed =
+                                                                          false;
+                                                                    });
+                                                                    Navigator.pop(
+                                                                        context,
+                                                                        true);
+                                                                  },
+                                                                  cancelText: AppLocalization.of(
+                                                                          context)!
+                                                                      .no
+                                                                      .toUpperCase(),
+                                                                  cancelAction:
+                                                                      () {
+                                                                    setState(
+                                                                        () {
+                                                                      isPressed =
+                                                                          false;
+                                                                    });
                                                                   });
-                                                                  Navigator.pop(
-                                                                      context,
-                                                                      true);
-                                                                },
-                                                                cancelText: AppLocalization.of(
-                                                                        context)!
-                                                                    .no
-                                                                    .toUpperCase(),
-                                                                cancelAction:
-                                                                    () {
-                                                                  setState(() {
-                                                                    isPressed =
-                                                                        false;
-                                                                  });
-                                                                });
+                                                        }
                                                       }
                                                     }
                                                   },

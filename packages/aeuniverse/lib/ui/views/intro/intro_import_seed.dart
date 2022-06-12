@@ -295,13 +295,17 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             final Vault _vault = await Vault.getInstance();
                             _vault.setSeed(seed);
                             await sl.get<DBHelper>().dropAccounts();
+
                             List<Account>? accounts = await KeychainUtil()
                                 .getListAccountsFromKeychain(
                                     seed,
                                     StateContainer.of(context)
                                         .selectedAccount
                                         .name);
-                            accounts!.forEach((Account account) async {
+                            accounts!
+                                .sort((a, b) => a.name!.compareTo(b.name!));
+                            await _accountsDialog(accounts);
+                            accounts.forEach((Account account) async {
                               await sl.get<DBHelper>().addAccount(account);
                             });
                             StateContainer.of(context).requestUpdate(
@@ -398,5 +402,60 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
         ],
       ),
     );
+  }
+
+  Future<void> _accountsDialog(List<Account> accounts) async {
+    final List<PickerItem> pickerItemsList =
+        List<PickerItem>.empty(growable: true);
+    for (Account account in accounts) {
+      pickerItemsList
+          .add(PickerItem(account.name!, null, null, null, account, true));
+    }
+
+    final Account? selection = await showDialog<Account>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppLocalization.of(context)!.accountsHeader,
+                    style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  accounts.length > 1
+                      ? Text(
+                          AppLocalization.of(context)!.selectAccountDescSeveral,
+                          style: AppStyles.textStyleSize12W100Primary(context),
+                        )
+                      : Text(
+                          AppLocalization.of(context)!.selectAccountDescOne,
+                          style: AppStyles.textStyleSize12W100Primary(context),
+                        ),
+                ],
+              ),
+            ),
+            shape: RoundedRectangleBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                side: BorderSide(
+                    color: StateContainer.of(context).curTheme.primary45!)),
+            content: PickerWidget(
+              pickerItems: pickerItemsList,
+              selectedIndex: 0,
+              onSelected: (value) {
+                Navigator.pop(context, value.value);
+              },
+            ),
+          );
+        });
+    if (selection != null) {
+      StateContainer.of(context).selectedAccount = selection;
+    }
   }
 }
