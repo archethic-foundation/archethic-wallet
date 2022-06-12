@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-06-10T11:16:50.000049",
+  "@@last_modified": "2022-06-12T21:59:11.850580",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -576,6 +576,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "primaryCurrency": "Primary currency",
+  "@primaryCurrency": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "removeWallet": "Remove Wallet",
   "@removeWallet": {
     "type": "text",
@@ -714,6 +720,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "customHeader": "Customization",
+  "@customHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "aboutHeader": "About",
   "@aboutHeader": {
     "type": "text",
@@ -812,6 +824,12 @@
   },
   "showBalances": "Show balances",
   "@showBalances": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "showPriceChart": "Show price chart",
+  "@showPriceChart": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1608,6 +1626,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "addAccountExists": "This name already exists in your keychain.",
+  "@addAccountExists": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "introNewWalletGetFirstInfosNetworkHeader": "On which network do you want to use your wallet?",
   "@introNewWalletGetFirstInfosNetworkHeader": {
     "type": "text",
@@ -1646,6 +1670,18 @@
   },
   "addAccountConfirmation": "Are you sure you want to add in your keychain \"%1?\"",
   "@addAccountConfirmation": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "selectAccountDescOne": "Your keychain contains one account. You will be able to create other accounts at any time.",
+  "@selectAccountDescOne": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "selectAccountDescSeveral": "Your keychain contains several accounts. Which account do you want to manage first in your app? You will be able to create or select other accounts at any time.",
+  "@selectAccountDescSeveral": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

@@ -1259,6 +1259,11 @@ class AppLocalization {
         name: 'introNewWalletGetFirstInfosNameRegExp');
   }
 
+  String get addAccountExists {
+    return Intl.message('This name already exists in your keychain.',
+        name: 'addAccountExists');
+  }
+
   String get introNewWalletGetFirstInfosNetworkHeader {
     return Intl.message('On which network do you want to use your wallet?',
         name: 'introNewWalletGetFirstInfosNetworkHeader');
@@ -1289,6 +1294,18 @@ class AppLocalization {
   String get addAccountConfirmation {
     return Intl.message('Are you sure you want to add in your keychain "%1?"',
         name: 'addAccountConfirmation');
+  }
+
+  String get selectAccountDescOne {
+    return Intl.message(
+        'Your keychain contains one account. You will be able to create other accounts at any time.',
+        name: 'selectAccountDescOne');
+  }
+
+  String get selectAccountDescSeveral {
+    return Intl.message(
+        'Your keychain contains several accounts. Which account do you want to manage first in your app? You will be able to create or select other accounts at any time.',
+        name: 'selectAccountDescSeveral');
   }
 }
 

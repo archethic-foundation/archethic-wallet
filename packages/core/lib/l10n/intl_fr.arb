@@ -270,5 +270,11 @@
 	"newAccount": "Nouveau compte",
 	"addAccount": "Ajout d'un compte",
 	"newAccountConfirmation": "Etes-vous sûr(e) de vouloir créer dans votre porte clé \"%1?\"",
-	"addAccountConfirmation": "Etes-vous sûr(e) de vouloir ajouter dans votre porte clé \"%1?\""
+	"addAccountConfirmation": "Etes-vous sûr(e) de vouloir ajouter dans votre porte clé \"%1?\"",
+	"primaryCurrency": "Monnaie prioritaire",
+	"customHeader": "Personnalisation",
+	"showPriceChart": "Montrer le cours",
+	"addAccountExists": "Ce nom existe déjà dans votre porte clés.",
+	"selectAccountDescOne": "Votre porte clés contient un compte. Vous pourrez en créer d'autres quand vous le souhaitez.",
+	"selectAccountDescSeveral": "Votre porte clés contient plusieurs comptes. Quel compte souhaitez-vous gérer en premier dans l'application ? Vous pourrez en créer ou sélectionner d'autres quand vous le souhaitez."
 }
