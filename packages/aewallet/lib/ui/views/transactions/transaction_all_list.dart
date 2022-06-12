@@ -233,12 +233,15 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                                               style: AppStyles
                                                   .textStyleSize20W700EquinoxGreen(
                                                       context)),
-                                    Text(
-                                        balance
-                                            .getConvertedAccountBalanceDisplay(),
-                                        style: AppStyles
-                                            .textStyleSize12W600Primary(
-                                                context)),
+                                    if (transaction.amount == null)
+                                      const Text('')
+                                    else
+                                      Text(
+                                          balance
+                                              .getConvertedAccountBalanceDisplay(),
+                                          style: AppStyles
+                                              .textStyleSize12W600Primary(
+                                                  context)),
                                   ],
                                 )
                               : Column(
