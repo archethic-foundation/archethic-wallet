@@ -175,24 +175,25 @@ class AppService {
       String address,
       List<UCOTransfer> listUcoTransfer,
       String accountName) async {
-    final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
-    final String service = 'archethic-wallet-' + accountName;
-    final int index = (await sl.get<ApiService>().getTransactionIndex(
-            uint8ListToHex(keychain.deriveAddress(service, index: 0))))
-        .chainLength!;
-
-    final Transaction transaction =
-        Transaction(type: 'transfer', data: Transaction.initData());
-    for (UCOTransfer transfer in listUcoTransfer) {
-      transaction.addUCOTransfer(transfer.to, transfer.amount!);
-    }
-
-    Transaction signedTx = keychain
-        .buildTransaction(transaction, service, index)
-        .originSign(originPrivateKey);
-
     TransactionStatus transactionStatus = TransactionStatus();
+
     try {
+      final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
+      final String service = 'archethic-wallet-' + accountName;
+      final int index = (await sl.get<ApiService>().getTransactionIndex(
+              uint8ListToHex(keychain.deriveAddress(service, index: 0))))
+          .chainLength!;
+
+      final Transaction transaction =
+          Transaction(type: 'transfer', data: Transaction.initData());
+      for (UCOTransfer transfer in listUcoTransfer) {
+        transaction.addUCOTransfer(transfer.to, transfer.amount!);
+      }
+
+      Transaction signedTx = keychain
+          .buildTransaction(transaction, service, index)
+          .originSign(originPrivateKey);
+
       transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
     } catch (e) {
       dev.log(e.toString());

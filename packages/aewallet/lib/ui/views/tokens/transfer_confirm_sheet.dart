@@ -19,22 +19,29 @@ import 'package:aeuniverse/util/preferences.dart';
 import 'package:core/bus/authenticated_event.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
-import 'package:core/service/app_service.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:event_taxi/event_taxi.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 // Project imports:
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/model/nft_transfer_wallet.dart';
 import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:aewallet/ui/views/nft/nft_transfer_list.dart';
+import 'package:aewallet/ui/views/tokens/subscription_channel.dart';
 import 'package:aewallet/ui/views/tokens/tokens_transfer_list.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show TransactionStatus, ApiService;
+    show
+        TransactionStatus,
+        ApiService,
+        Transaction,
+        UCOTransfer,
+        Keychain,
+        uint8ListToHex;
 
 class TransferConfirmSheet extends StatefulWidget {
   const TransferConfirmSheet(
@@ -60,6 +67,8 @@ class TransferConfirmSheet extends StatefulWidget {
 class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   bool? animationOpen;
 
+  SubscriptionChannel subscriptionChannel = SubscriptionChannel();
+
   StreamSubscription<AuthenticatedEvent>? _authSub;
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
 
@@ -77,7 +86,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         .listen((TransactionSendEvent event) {
       Navigator.of(context).pop();
 
-      if (event.response != 'pending') {
+      if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
         if (animationOpen!) {
           Navigator.of(context).pop();
@@ -96,7 +105,6 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
             StateContainer.of(context).curTheme.primary!,
             StateContainer.of(context).curTheme.overlay80!,
             duration: const Duration(milliseconds: 5000));
-
         setState(() {
           StateContainer.of(context).requestUpdate(
               account: StateContainer.of(context).selectedAccount);
@@ -113,15 +121,13 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     if (_sendTxSub != null) {
       _sendTxSub!.cancel();
     }
+    subscriptionChannel.close();
   }
-
-  Map<String, String> transactionConfirmed = {};
 
   @override
   void initState() {
     super.initState();
     _registerBus();
-
     animationOpen = false;
   }
 
@@ -167,8 +173,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       Text(
                         widget.title ??
                             AppLocalization.of(context)!.transfering,
-                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                            context),
+                        style: AppStyles.textStyleSize24W700Primary(context),
                       ),
                     ],
                   ),
@@ -246,20 +251,55 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       List<UCOTransferWallet> ucoTransferList = widget.ucoTransferList!;
       final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
 
-      final TransactionStatus transactionStatus = await sl
-          .get<AppService>()
-          .sendUCO(
-              originPrivateKey,
-              seed!,
-              StateContainer.of(context).selectedAccount.lastAddress!,
-              ucoTransferList,
-              StateContainer.of(context).selectedAccount.name!);
+      final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
+      final String service =
+          'archethic-wallet-${StateContainer.of(context).selectedAccount.name!}';
+      final int index = (await sl.get<ApiService>().getTransactionIndex(
+              uint8ListToHex(keychain.deriveAddress(service, index: 0))))
+          .chainLength!;
 
-      EventTaxiImpl.singleton()
-          .fire(TransactionSendEvent(response: transactionStatus.status));
+      final Transaction transaction =
+          Transaction(type: 'transfer', data: Transaction.initData());
+      for (UCOTransfer transfer in ucoTransferList) {
+        transaction.addUCOTransfer(transfer.to, transfer.amount!);
+      }
+
+      Transaction signedTx = keychain
+          .buildTransaction(transaction, service, index)
+          .originSign(originPrivateKey);
+
+      TransactionStatus transactionStatus = TransactionStatus();
+
+      final Preferences preferences = await Preferences.getInstance();
+      await subscriptionChannel.connect(
+          await preferences.getNetwork().getPhoenixHttpLink(),
+          await preferences.getNetwork().getWebsocketUri());
+
+      subscriptionChannel.addSubscriptionTransactionConfirmed(
+          transaction.address!, waitConfirmations);
+
+      transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
     } catch (e) {
-      EventTaxiImpl.singleton()
-          .fire(TransactionSendEvent(response: e.toString()));
+      EventTaxiImpl.singleton().fire(
+          TransactionSendEvent(response: e.toString(), nbConfirmations: 0));
+      subscriptionChannel.close();
     }
+  }
+
+  void waitConfirmations(QueryResult event) {
+    if (event.data != null &&
+        event.data!['transactionConfirmed'] != null &&
+        event.data!['transactionConfirmed']['nbConfirmations'] != null) {
+      EventTaxiImpl.singleton().fire(TransactionSendEvent(
+          response: 'ok',
+          nbConfirmations: event.data!['transactionConfirmed']
+              ['nbConfirmations']));
+    } else {
+      // TODO: Mettre un libellé plus clair
+      EventTaxiImpl.singleton().fire(
+        TransactionSendEvent(nbConfirmations: 0, response: 'ko'),
+      );
+    }
+    subscriptionChannel.close();
   }
 }

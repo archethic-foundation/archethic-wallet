@@ -4,7 +4,8 @@
 import 'package:event_taxi/event_taxi.dart';
 
 class TransactionSendEvent implements Event {
-  TransactionSendEvent({this.response});
+  TransactionSendEvent({this.nbConfirmations, this.response});
 
+  final int? nbConfirmations;
   final String? response;
 }

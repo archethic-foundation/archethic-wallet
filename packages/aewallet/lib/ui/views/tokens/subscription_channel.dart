@@ -16,15 +16,16 @@ class SubscriptionChannel {
   final StreamController<Map> _onMessageController = StreamController<Map>();
   Stream<Map> get onMessage => _onMessageController.stream;
 
-  Future<void> connect() async {
+  Future<void> connect(
+      String phoenixHttpLinkEndpoint, String websocketUriEndpoint) async {
     final HttpLink phoenixHttpLink = HttpLink(
-      'http://localhost:4000/socket/websocket',
+      phoenixHttpLinkEndpoint,
     );
 
-    final phoenixChannel = await PhoenixLink.createChannel(
-        websocketUri: 'ws://localhost:4000/socket/websocket');
+    channel =
+        await PhoenixLink.createChannel(websocketUri: websocketUriEndpoint);
     final phoenixLink = PhoenixLink(
-      channel: phoenixChannel,
+      channel: channel!,
     );
 
     var link = Link.split(
@@ -35,11 +36,16 @@ class SubscriptionChannel {
     );
   }
 
-  Push addSubscriptionTransactionConfirmed(String address) {
-    return channel!.push('doc', {
-      "query":
-          'subscription { transactionConfirmed(address: "$address") { nbConfirmations } }'
-    });
+  void addSubscriptionTransactionConfirmed(
+      String address, Function(QueryResult) function) {
+    final subscriptionDocument = gql(
+      'subscription { transactionConfirmed(address: "$address") { nbConfirmations } }',
+    );
+
+    Stream<QueryResult> subscription = client!.subscribe(
+      SubscriptionOptions(document: subscriptionDocument),
+    );
+    subscription.listen(function);
   }
 
   Future<Message> onPushReply(Push push) async {
@@ -51,6 +57,8 @@ class SubscriptionChannel {
 
   void close() {
     _onMessageController.close();
-    socket!.close();
+    if (socket != null) {
+      socket!.close();
+    }
   }
 }

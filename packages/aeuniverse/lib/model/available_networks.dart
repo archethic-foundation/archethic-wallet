@@ -44,6 +44,38 @@ class NetworksSetting extends SettingSelectionItem {
     }
   }
 
+  Future<String> getPhoenixHttpLink() async {
+    switch (network) {
+      case AvailableNetworks.ArchethicMainNet:
+        return 'https://mainnet.archethic.net/socket/websocket';
+      case AvailableNetworks.ArchethicTestNet:
+        return 'https://testnet.archethic.net/socket/websocket';
+      case AvailableNetworks.ArchethicDevNet:
+        final Preferences preferences = await Preferences.getInstance();
+        return preferences.getNetworkDevEndpoint() + '/socket/websocket';
+      default:
+        return '';
+    }
+  }
+
+  Future<String> getWebsocketUri() async {
+    switch (network) {
+      case AvailableNetworks.ArchethicMainNet:
+        return 'ws://mainnet.archethic.net/socket/websocket';
+      case AvailableNetworks.ArchethicTestNet:
+        return 'ws://testnet.archethic.net/socket/websocket';
+      case AvailableNetworks.ArchethicDevNet:
+        final Preferences preferences = await Preferences.getInstance();
+        return preferences
+                .getNetworkDevEndpoint()
+                .replaceAll('https:', 'ws:')
+                .replaceAll('http:', 'ws:') +
+            '/socket/websocket';
+      default:
+        return '';
+    }
+  }
+
   Color? getColor() {
     switch (network) {
       case AvailableNetworks.ArchethicMainNet:
