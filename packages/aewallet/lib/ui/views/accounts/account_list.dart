@@ -3,6 +3,8 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
+import 'package:core/model/balance_wallet.dart';
+import 'package:core/model/primary_currency.dart';
 import 'package:core_ui/ui/util/formatters.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:flutter/material.dart';
@@ -399,6 +401,11 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
 
   Widget _buildAccountListItem(
       BuildContext context, Account account, StateSetter setState) {
+    BalanceWallet balance = BalanceWallet(double.tryParse(account.balance!),
+        StateContainer.of(context).curCurrency);
+    balance.localCurrencyPrice =
+        StateContainer.of(context).wallet!.accountBalance.localCurrencyPrice;
+
     return TextButton(
         style: TextButton.styleFrom(
           padding: const EdgeInsets.all(0.0),
@@ -415,7 +422,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
               color: StateContainer.of(context).curTheme.text15,
             ),
             SizedBox(
-              height: 70.0,
+              height: 60.0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -431,7 +438,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                   Expanded(
                     child: Container(
                       margin:
-                          const EdgeInsetsDirectional.only(start: 8, end: 16),
+                          const EdgeInsetsDirectional.only(start: 8, end: 8),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -440,30 +447,96 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              // Account name and address
                               Container(
                                 width:
-                                    (MediaQuery.of(context).size.width * 0.8),
+                                    (MediaQuery.of(context).size.width * 0.9),
                                 margin: const EdgeInsetsDirectional.only(
                                     start: 8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    // Account name
-                                    AutoSizeText(
-                                      account.name!,
-                                      style: AppStyles
-                                          .textStyleSize16W600EquinoxPrimary(
-                                              context),
-                                    ),
-                                    // Account address
-                                    account.lastAddress != null
-                                        ? AutoSizeText(
-                                            account.lastAddress!.toUpperCase(),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          AutoSizeText(
+                                            account.name!,
                                             style: AppStyles
-                                                .textStyleSize12W100Text60(
-                                                    context))
+                                                .textStyleSize16W600EquinoxPrimary(
+                                                    context),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    StateContainer.of(context).showBalance
+                                        ? StateContainer.of(context)
+                                                    .curPrimaryCurrency
+                                                    .primaryCurrency
+                                                    .name ==
+                                                PrimaryCurrencySetting(
+                                                        AvailablePrimaryCurrency
+                                                            .NATIVE)
+                                                    .primaryCurrency
+                                                    .name
+                                            ? Expanded(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: <Widget>[
+                                                    AutoSizeText(
+                                                      account.balance! +
+                                                          ' ' +
+                                                          StateContainer.of(
+                                                                  context)
+                                                              .curNetwork
+                                                              .getNetworkCryptoCurrencyLabel(),
+                                                      style: AppStyles
+                                                          .textStyleSize20W700EquinoxPrimary(
+                                                              context),
+                                                    ),
+                                                    Text(
+                                                        balance
+                                                            .getConvertedAccountBalanceDisplay(),
+                                                        style: AppStyles
+                                                            .textStyleSize14W600Primary(
+                                                                context)),
+                                                  ],
+                                                ),
+                                              )
+                                            : Expanded(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: <Widget>[
+                                                    Text(
+                                                        balance
+                                                            .getConvertedAccountBalanceDisplay(),
+                                                        style: AppStyles
+                                                            .textStyleSize20W700EquinoxPrimary(
+                                                                context)),
+                                                    AutoSizeText(
+                                                      account.balance! +
+                                                          ' ' +
+                                                          StateContainer.of(
+                                                                  context)
+                                                              .curNetwork
+                                                              .getNetworkCryptoCurrencyLabel(),
+                                                      style: AppStyles
+                                                          .textStyleSize14W600Primary(
+                                                              context),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
                                         : const SizedBox(),
                                   ],
                                 ),

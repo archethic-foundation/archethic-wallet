@@ -290,6 +290,9 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                         AppLocalization.of(context)!.ok,
                         Dimens.buttonTopDimens,
                         onPressed: () async {
+                          setState(() {
+                            _mnemonicError = '';
+                          });
                           _mnemonicFocusNode.unfocus();
                           if (AppMnemomics.validateMnemonic(
                               _mnemonicController.text.split(' '))) {
@@ -300,11 +303,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             await sl.get<DBHelper>().dropAccounts();
 
                             List<Account>? accounts = await KeychainUtil()
-                                .getListAccountsFromKeychain(
-                                    seed,
-                                    StateContainer.of(context)
-                                        .selectedAccount
-                                        .name);
+                                .getListAccountsFromKeychain(seed, '');
                             if (accounts == null || accounts.length == 0) {
                               setState(() {
                                 _mnemonicIsValid = false;

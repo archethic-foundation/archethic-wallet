@@ -23,7 +23,6 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
         Keychain,
         UCOTransfer,
         NftBalance,
-        NFTService,
         TransactionStatus,
         TransactionInput,
         TransactionFee;

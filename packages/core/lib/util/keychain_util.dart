@@ -12,6 +12,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 // Project imports:
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/hive_db.dart';
+import 'package:core/service/app_service.dart';
 import 'package:core/util/get_it_instance.dart';
 
 class KeychainUtil {
@@ -160,19 +161,36 @@ class KeychainUtil {
               .replaceAll(kDerivationPathWithoutService, '')
               .split('/')[0];
           Account account = Account(
-            lastAccess: 0,
-            lastAddress: uint8ListToHex(genesisAddress),
-            genesisAddress: uint8ListToHex(genesisAddress),
-            name: name,
-          );
+              lastAccess: 0,
+              lastAddress: uint8ListToHex(genesisAddress),
+              genesisAddress: uint8ListToHex(genesisAddress),
+              name: name,
+              balance: '0');
           if (currentName == name) {
             account.selected = true;
           } else {
             account.selected = false;
           }
+
           accounts.add(account);
         }
       });
+
+      for (int i = 0; i <= accounts.length; i++) {
+        String? lastAddress = await sl
+            .get<AddressService>()
+            .lastAddressFromAddress(accounts[i].genesisAddress!);
+        if (lastAddress.isNotEmpty) {
+          accounts[i].lastAddress = lastAddress;
+        }
+
+        final Balance balance = await sl
+            .get<AppService>()
+            .getBalanceGetResponse(accounts[i].lastAddress!);
+        if (balance.uco != null) {
+          accounts[i].balance = balance.uco.toString();
+        }
+      }
     } catch (e) {}
 
     return accounts;
