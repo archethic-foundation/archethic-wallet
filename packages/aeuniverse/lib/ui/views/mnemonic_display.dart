@@ -46,7 +46,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
       ret.add(Container(
         width: MediaQuery.of(context).size.width,
         height: 1,
-        color: StateContainer.of(context).curTheme.primary05,
+        color: StateContainer.of(context).curTheme.text05,
       ));
       // Build individual items
       final List<Widget> items = <Widget>[];
@@ -93,7 +93,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
         ret.add(Container(
           width: MediaQuery.of(context).size.width,
           height: 1,
-          color: StateContainer.of(context).curTheme.primary05,
+          color: StateContainer.of(context).curTheme.text05,
         ));
       }
     }

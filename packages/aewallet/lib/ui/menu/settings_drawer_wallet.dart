@@ -183,8 +183,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
           color: StateContainer.of(context).curTheme.backgroundDark,
           border: Border(
             right: BorderSide(
-                color: StateContainer.of(context).curTheme.primary30!,
-                width: 1),
+                color: StateContainer.of(context).curTheme.text30!, width: 1),
           )),
       child: SafeArea(
         minimum: EdgeInsets.only(
@@ -218,7 +217,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                             0)
                       Divider(
                         height: 2,
-                        color: StateContainer.of(context).curTheme.primary15,
+                        color: StateContainer.of(context).curTheme.text15,
                       )
                     else
                       const SizedBox(),
@@ -240,7 +239,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                           icon: 'packages/aewallet/assets/icons/nft.png',
                           iconColor: StateContainer.of(context)
                               .curTheme
-                              .iconDrawerColor!, onPressed: () {
+                              .iconDrawer!, onPressed: () {
                         setState(() {
                           _nftOpen = true;
                         });
@@ -250,7 +249,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                       const SizedBox(),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
+                      color: StateContainer.of(context).curTheme.text15,
                     ),
                     AppSettings.buildSettingsListItemSingleLineWithInfos(
                         context,
@@ -259,7 +258,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                         icon: 'packages/aewallet/assets/icons/address-book.png',
                         iconColor: StateContainer.of(context)
                             .curTheme
-                            .iconDrawerColor!, onPressed: () {
+                            .iconDrawer!, onPressed: () {
                       setState(() {
                         _contactsOpen = true;
                       });
@@ -267,7 +266,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     }),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
+                      color: StateContainer.of(context).curTheme.text15,
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -278,7 +277,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     ),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
+                      color: StateContainer.of(context).curTheme.text15,
                     ),
                     AppSettings.buildSettingsListItemSingleLineWithInfos(
                         context,
@@ -287,7 +286,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                         icon: 'packages/aewallet/assets/icons/faq.png',
                         iconColor: StateContainer.of(context)
                             .curTheme
-                            .iconDrawerColor!, onPressed: () {
+                            .iconDrawer!, onPressed: () {
                       setState(() {
                         _walletFAQOpen = true;
                       });
@@ -295,14 +294,14 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     }),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
+                      color: StateContainer.of(context).curTheme.text15,
                     ),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutHeader,
                         AppStyles.textStyleSize16W600Primary(context),
                         'packages/aewallet/assets/icons/help.png',
-                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () {
                       setState(() {
                         _aboutOpen = true;
@@ -311,7 +310,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     }),
                     Divider(
                         height: 2,
-                        color: StateContainer.of(context).curTheme.primary15),
+                        color: StateContainer.of(context).curTheme.text15),
                     const SizedBox(height: 30),
                   ].where(notNull).toList(),
                 ),
@@ -364,7 +363,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(
-              color: StateContainer.of(context).curTheme.primary30!, width: 1),
+              color: StateContainer.of(context).curTheme.text30!, width: 1),
         ),
         color: StateContainer.of(context).curTheme.backgroundDark,
         boxShadow: <BoxShadow>[
@@ -391,7 +390,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     margin: const EdgeInsets.only(right: 10, left: 10),
                     child: BackButton(
                       key: const Key('back'),
-                      color: StateContainer.of(context).curTheme.primary,
+                      color: StateContainer.of(context).curTheme.text,
                       onPressed: () {
                         setState(() {
                           _aboutOpen = false;
@@ -429,14 +428,14 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     ),
                     Divider(
                         height: 2,
-                        color: StateContainer.of(context).curTheme.primary15),
+                        color: StateContainer.of(context).curTheme.text15),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!
                             .aboutGeneralTermsAndConditions,
                         AppStyles.textStyleSize16W600Primary(context),
                         'packages/aewallet/assets/icons/terms-and-conditions.png',
-                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () async {
                       UIUtil.showWebview(
                           context,
@@ -446,26 +445,26 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     }),
                     Divider(
                         height: 2,
-                        color: StateContainer.of(context).curTheme.primary15),
+                        color: StateContainer.of(context).curTheme.text15),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutWalletServiceTerms,
                         AppStyles.textStyleSize16W600Primary(context),
                         'packages/aewallet/assets/icons/walletServiceTerms.png',
-                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () async {
                       UIUtil.showWebview(context, 'https://archethic.net',
                           AppLocalization.of(context)!.aboutWalletServiceTerms);
                     }),
                     Divider(
                         height: 2,
-                        color: StateContainer.of(context).curTheme.primary15),
+                        color: StateContainer.of(context).curTheme.text15),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutPrivacyPolicy,
                         AppStyles.textStyleSize16W600Primary(context),
                         'packages/aewallet/assets/icons/privacyPolicy.png',
-                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () async {
                       UIUtil.showWebview(context, 'https://archethic.net',
                           AppLocalization.of(context)!.aboutPrivacyPolicy);
@@ -503,7 +502,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(
-              color: StateContainer.of(context).curTheme.primary30!, width: 1),
+              color: StateContainer.of(context).curTheme.text30!, width: 1),
         ),
         color: StateContainer.of(context).curTheme.backgroundDark,
         boxShadow: <BoxShadow>[
@@ -530,7 +529,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     margin: const EdgeInsets.only(right: 10, left: 10),
                     child: BackButton(
                       key: const Key('back'),
-                      color: StateContainer.of(context).curTheme.primary,
+                      color: StateContainer.of(context).curTheme.text,
                       onPressed: () {
                         setState(() {
                           _nftOpen = false;
@@ -557,26 +556,26 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                   children: <Widget>[
                     Divider(
                         height: 2,
-                        color: StateContainer.of(context).curTheme.primary15),
+                        color: StateContainer.of(context).curTheme.text15),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.addNFTHeader,
                         AppStyles.textStyleSize16W600Primary(context),
                         'packages/aewallet/assets/icons/addNft.png',
-                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () {
                       Sheets.showAppHeightNineSheet(
                           context: context, widget: const AddNFTSheet());
                     }),
                     Divider(
                         height: 2,
-                        color: StateContainer.of(context).curTheme.primary15),
+                        color: StateContainer.of(context).curTheme.text15),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.transferNFT,
                         AppStyles.textStyleSize16W600Primary(context),
                         'packages/aewallet/assets/icons/transferNft.png',
-                        StateContainer.of(context).curTheme.iconDrawerColor!,
+                        StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () {
                       /*Sheets.showAppHeightNineSheet(
                           context: context,
@@ -587,7 +586,7 @@ class _SettingsSheetWalletState extends State<SettingsSheetWallet>
                     }),
                     Divider(
                         height: 2,
-                        color: StateContainer.of(context).curTheme.primary15),
+                        color: StateContainer.of(context).curTheme.text15),
                   ].where(notNull).toList(),
                 ),
                 //List Top Gradient End

@@ -138,7 +138,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                                         .background,
                                     activeColor: StateContainer.of(context)
                                         .curTheme
-                                        .primary,
+                                        .text,
                                     controlAffinity:
                                         ListTileControlAffinity.leading,
                                     secondary: IconButton(
@@ -255,7 +255,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
             shape: RoundedRectangleBorder(
                 borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                 side: BorderSide(
-                    color: StateContainer.of(context).curTheme.primary45!)),
+                    color: StateContainer.of(context).curTheme.text45!)),
             content: PickerWidget(
               pickerItems: pickerItemsList,
               selectedIndex: _curNetworksSetting.getIndex(),
@@ -308,9 +308,8 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(16.0)),
                         side: BorderSide(
-                            color: StateContainer.of(context)
-                                .curTheme
-                                .primary45!)),
+                            color:
+                                StateContainer.of(context).curTheme.text45!)),
                     content: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,

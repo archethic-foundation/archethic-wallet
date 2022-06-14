@@ -118,7 +118,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                     height: 5,
                     width: MediaQuery.of(context).size.width * 0.15,
                     decoration: BoxDecoration(
-                      color: StateContainer.of(context).curTheme.primary10,
+                      color: StateContainer.of(context).curTheme.text10,
                       borderRadius: BorderRadius.circular(100.0),
                     ),
                   ),
@@ -334,8 +334,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
                               .contactAdded
                               .replaceAll('%1', newContact.name!),
                           context,
-                          StateContainer.of(context).curTheme.primary!,
-                          StateContainer.of(context).curTheme.overlay80!);
+                          StateContainer.of(context).curTheme.text!,
+                          StateContainer.of(context).curTheme.snackBarShadow!);
                       EventTaxiImpl.singleton()
                           .fire(ContactModifiedEvent(contact: newContact));
                       Navigator.of(context).pop();

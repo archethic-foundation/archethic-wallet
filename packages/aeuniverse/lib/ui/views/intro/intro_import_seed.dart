@@ -54,6 +54,10 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                      StateContainer.of(context).curTheme.background2Small!),
+                  fit: BoxFit.fitHeight),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -86,8 +90,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                               width: 50,
                               child: BackButton(
                                 key: const Key('back'),
-                                color:
-                                    StateContainer.of(context).curTheme.primary,
+                                color: StateContainer.of(context).curTheme.text,
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
@@ -164,10 +167,10 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                           context,
                                           StateContainer.of(context)
                                               .curTheme
-                                              .primary!,
+                                              .text!,
                                           StateContainer.of(context)
                                               .curTheme
-                                              .overlay80!);
+                                              .snackBarShadow!);
                                     } else if (QRScanErrs.errorList
                                         .contains(scanResult)) {
                                       return;
@@ -188,10 +191,10 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                             context,
                                             StateContainer.of(context)
                                                 .curTheme
-                                                .primary!,
+                                                .text!,
                                             StateContainer.of(context)
                                                 .curTheme
-                                                .overlay80!);
+                                                .snackBarShadow!);
                                       }
                                     }
                                   },
@@ -302,71 +305,90 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                     StateContainer.of(context)
                                         .selectedAccount
                                         .name);
-                            accounts!
-                                .sort((a, b) => a.name!.compareTo(b.name!));
-                            await _accountsDialog(accounts);
-                            accounts.forEach((Account account) async {
-                              await sl.get<DBHelper>().addAccount(account);
-                            });
-                            StateContainer.of(context).requestUpdate(
-                                account:
-                                    StateContainer.of(context).selectedAccount);
-                            bool biometricsAvalaible =
-                                await sl.get<BiometricUtil>().hasBiometrics();
-                            List<PickerItem> accessModes = [];
-                            accessModes.add(PickerItem(
-                                AppLocalization.of(context)!.pinMethod,
-                                AppLocalization.of(context)!
-                                    .configureSecurityExplanationPIN,
-                                AuthenticationMethod.getIcon(AuthMethod.pin),
-                                StateContainer.of(context).curTheme.icon,
-                                AuthMethod.pin,
-                                true));
-                            accessModes.add(PickerItem(
-                                AppLocalization.of(context)!.passwordMethod,
-                                AppLocalization.of(context)!
-                                    .configureSecurityExplanationPassword,
-                                AuthenticationMethod.getIcon(
-                                    AuthMethod.password),
-                                StateContainer.of(context).curTheme.icon,
-                                AuthMethod.password,
-                                true));
-                            if (biometricsAvalaible) {
+                            if (accounts == null || accounts.length == 0) {
+                              setState(() {
+                                _mnemonicIsValid = false;
+                                _mnemonicError =
+                                    AppLocalization.of(context)!.noKeychain;
+                              });
+                            } else {
+                              accounts
+                                  .sort((a, b) => a.name!.compareTo(b.name!));
+                              await _accountsDialog(accounts);
+                              accounts.forEach((Account account) async {
+                                await sl.get<DBHelper>().addAccount(account);
+                              });
+                              StateContainer.of(context).requestUpdate(
+                                  account: StateContainer.of(context)
+                                      .selectedAccount);
+                              bool biometricsAvalaible =
+                                  await sl.get<BiometricUtil>().hasBiometrics();
+                              List<PickerItem> accessModes = [];
                               accessModes.add(PickerItem(
-                                  AppLocalization.of(context)!.biometricsMethod,
+                                  AppLocalization.of(context)!.pinMethod,
                                   AppLocalization.of(context)!
-                                      .configureSecurityExplanationBiometrics,
-                                  AuthenticationMethod.getIcon(
-                                      AuthMethod.biometrics),
-                                  StateContainer.of(context).curTheme.icon,
-                                  AuthMethod.biometrics,
+                                      .configureSecurityExplanationPIN,
+                                  AuthenticationMethod.getIcon(AuthMethod.pin),
+                                  StateContainer.of(context)
+                                      .curTheme
+                                      .pickerItemIconEnabled,
+                                  AuthMethod.pin,
                                   true));
+                              accessModes.add(PickerItem(
+                                  AppLocalization.of(context)!.passwordMethod,
+                                  AppLocalization.of(context)!
+                                      .configureSecurityExplanationPassword,
+                                  AuthenticationMethod.getIcon(
+                                      AuthMethod.password),
+                                  StateContainer.of(context)
+                                      .curTheme
+                                      .pickerItemIconEnabled,
+                                  AuthMethod.password,
+                                  true));
+                              if (biometricsAvalaible) {
+                                accessModes.add(PickerItem(
+                                    AppLocalization.of(context)!
+                                        .biometricsMethod,
+                                    AppLocalization.of(context)!
+                                        .configureSecurityExplanationBiometrics,
+                                    AuthenticationMethod.getIcon(
+                                        AuthMethod.biometrics),
+                                    StateContainer.of(context)
+                                        .curTheme
+                                        .pickerItemIconEnabled,
+                                    AuthMethod.biometrics,
+                                    true));
+                              }
+
+                              accessModes.add(PickerItem(
+                                  AppLocalization.of(context)!
+                                      .biometricsUnirisMethod,
+                                  AppLocalization.of(context)!
+                                      .configureSecurityExplanationUnirisBiometrics,
+                                  AuthenticationMethod.getIcon(
+                                      AuthMethod.biometricsUniris),
+                                  StateContainer.of(context)
+                                      .curTheme
+                                      .pickerItemIconEnabled,
+                                  AuthMethod.biometricsUniris,
+                                  false));
+
+                              accessModes.add(PickerItem(
+                                  AppLocalization.of(context)!
+                                      .yubikeyWithYubiCloudMethod,
+                                  AppLocalization.of(context)!
+                                      .configureSecurityExplanationYubikey,
+                                  AuthenticationMethod.getIcon(
+                                      AuthMethod.yubikeyWithYubicloud),
+                                  StateContainer.of(context)
+                                      .curTheme
+                                      .pickerItemIconEnabled,
+                                  AuthMethod.yubikeyWithYubicloud,
+                                  true));
+                              Navigator.of(context).pushNamed(
+                                  '/intro_configure_security',
+                                  arguments: accessModes);
                             }
-
-                            accessModes.add(PickerItem(
-                                AppLocalization.of(context)!
-                                    .biometricsUnirisMethod,
-                                AppLocalization.of(context)!
-                                    .configureSecurityExplanationUnirisBiometrics,
-                                AuthenticationMethod.getIcon(
-                                    AuthMethod.biometricsUniris),
-                                StateContainer.of(context).curTheme.icon,
-                                AuthMethod.biometricsUniris,
-                                false));
-
-                            accessModes.add(PickerItem(
-                                AppLocalization.of(context)!
-                                    .yubikeyWithYubiCloudMethod,
-                                AppLocalization.of(context)!
-                                    .configureSecurityExplanationYubikey,
-                                AuthenticationMethod.getIcon(
-                                    AuthMethod.yubikeyWithYubicloud),
-                                StateContainer.of(context).curTheme.icon,
-                                AuthMethod.yubikeyWithYubicloud,
-                                true));
-                            Navigator.of(context).pushNamed(
-                                '/intro_configure_security',
-                                arguments: accessModes);
                           } else {
                             if (_mnemonicController.text.split(' ').length !=
                                 24) {
@@ -444,7 +466,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
             shape: RoundedRectangleBorder(
                 borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                 side: BorderSide(
-                    color: StateContainer.of(context).curTheme.primary45!)),
+                    color: StateContainer.of(context).curTheme.text45!)),
             content: PickerWidget(
               pickerItems: pickerItemsList,
               selectedIndex: 0,

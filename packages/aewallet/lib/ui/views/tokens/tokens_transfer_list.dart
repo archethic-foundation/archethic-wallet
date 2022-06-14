@@ -72,8 +72,7 @@ class _TokensTransferListWidgetState extends State<TokensTransferListWidget> {
               ],
             ),
           ),
-          Divider(
-              height: 4, color: StateContainer.of(context).curTheme.primary),
+          Divider(height: 4, color: StateContainer.of(context).curTheme.text),
           SizedBox(
             height: 50,
             child: Row(

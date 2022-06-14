@@ -29,9 +29,9 @@ class _WalletFAQState extends State<WalletFAQ> {
       decoration: BoxDecoration(
         border: Border(
           right: BorderSide(
-              color: StateContainer.of(context).curTheme.primary30!, width: 1),
+              color: StateContainer.of(context).curTheme.text30!, width: 1),
         ),
-        color: StateContainer.of(context).curTheme.backgroundDark,
+        color: StateContainer.of(context).curTheme.drawerBackground,
         boxShadow: <BoxShadow>[
           BoxShadow(
               color: StateContainer.of(context).curTheme.overlay30!,
@@ -57,7 +57,7 @@ class _WalletFAQState extends State<WalletFAQ> {
                     margin: const EdgeInsets.only(right: 10, left: 10),
                     child: BackButton(
                       key: const Key('back'),
-                      color: StateContainer.of(context).curTheme.primary,
+                      color: StateContainer.of(context).curTheme.text,
                       onPressed: () {
                         setState(() {
                           widget.tokensListOpen = false;

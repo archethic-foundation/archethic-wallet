@@ -32,10 +32,12 @@ class Sheets {
       Function? onDisposed}) {
     assert(radius > 0.0);
     color ??= StateContainer.of(context).curTheme.backgroundDark;
-    bgColor ??= StateContainer.of(context).curTheme.overlay70;
+    bgColor ??= StateContainer.of(context).curTheme.sheetBackground;
     final _AppHeightNineModalRoute<T> route = _AppHeightNineModalRoute<T>(
         builder: (BuildContext context) {
           return Container(
+            decoration:
+                StateContainer.of(context).curTheme.getDecorationSheet(),
             child: TweenAnimationBuilder(
               tween: Tween(begin: 0.0, end: 1.0),
               duration: Duration(milliseconds: 500),
@@ -84,7 +86,7 @@ class Sheets {
       int animationDurationMs = 225}) {
     assert(radius > 0.0);
     color ??= StateContainer.of(context).curTheme.backgroundDark;
-    bgColor ??= StateContainer.of(context).curTheme.overlay70;
+    bgColor ??= StateContainer.of(context).curTheme.sheetBackground;
     return Navigator.push<T>(
         context,
         _AppHeightEightModalRoute<T>(

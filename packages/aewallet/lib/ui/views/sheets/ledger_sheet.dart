@@ -130,7 +130,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                     height: 5,
                     width: MediaQuery.of(context).size.width * 0.15,
                     decoration: BoxDecoration(
-                      color: StateContainer.of(context).curTheme.primary60,
+                      color: StateContainer.of(context).curTheme.text60,
                       borderRadius: BorderRadius.circular(100.0),
                     ),
                   ),

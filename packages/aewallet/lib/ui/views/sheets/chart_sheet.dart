@@ -62,7 +62,7 @@ class _ChartSheetState extends State<ChartSheet> {
                   height: 5,
                   width: MediaQuery.of(context).size.width * 0.15,
                   decoration: BoxDecoration(
-                    color: StateContainer.of(context).curTheme.primary10,
+                    color: StateContainer.of(context).curTheme.text10,
                     borderRadius: BorderRadius.circular(100.0),
                   ),
                 ),
@@ -226,7 +226,7 @@ class _ChartSheetState extends State<ChartSheet> {
                           isExpanded: false,
                           value: optionChartSelected,
                           style: TextStyle(
-                            color: StateContainer.of(context).curTheme.primary,
+                            color: StateContainer.of(context).curTheme.text,
                           ),
                           underline: const SizedBox(),
                           iconEnabledColor: StateContainer.of(context)

@@ -391,8 +391,9 @@ class _TxListWidgetState extends State<TxListWidget> {
                               StateContainer.of(context).curTheme.gradient!,
                           shape: const StadiumBorder()),
                       child: Text(AppLocalization.of(context)!.seeAll,
-                          style: AppStyles.textStyleSize14W600EquinoxPrimary(
-                              context)),
+                          style: AppStyles
+                              .textStyleSize14W600EquinoxMiddleButtonLabel(
+                                  context)),
                     ),
                   ),
                 ),

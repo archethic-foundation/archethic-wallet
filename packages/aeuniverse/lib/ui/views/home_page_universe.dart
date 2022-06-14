@@ -445,7 +445,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
               elevation: 0.0,
               centerTitle: true,
               iconTheme: IconThemeData(
-                  color: StateContainer.of(context).curTheme.primary),
+                  color: StateContainer.of(context).curTheme.text),
             ),
             drawerEdgeDragWidth: 0,
             resizeToAvoidBottomInset: false,
@@ -491,19 +491,9 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                   .mainBottomSheet(context);
                             },
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: StateContainer.of(context)
-                                              .selectedAccount
-                                              .name !=
-                                          null
-                                      ? Image.asset(
-                                          'packages/core_ui/assets/themes/dark/profile.png',
-                                          height: 100,
-                                        )
-                                      : const SizedBox(),
-                                ),
                                 StateContainer.of(context)
                                             .selectedAccount
                                             .name !=
@@ -555,6 +545,10 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                       StateContainer.of(context).showPriceChart
                           ? BalanceInfosWidget().buildKPI(context)
                           : const SizedBox(),
+                      Divider(
+                        height: 1,
+                        color: StateContainer.of(context).curTheme.text30,
+                      ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height -
                             kToolbarHeight -
@@ -576,14 +570,14 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                   height: 15,
                                   color: StateContainer.of(context)
                                       .curTheme
-                                      .primary30,
+                                      .text30,
                                 ),
                                 MenuWidgetWallet().buildMenuTxExplorer(context),
                                 Divider(
                                   height: 15,
                                   color: StateContainer.of(context)
                                       .curTheme
-                                      .primary30,
+                                      .text30,
                                 ),*/
                                 const SizedBox(
                                   height: 15,

@@ -94,88 +94,88 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.yubikeyError_BAD_OTP,
             context,
-            StateContainer.of(context).curTheme.primary!,
-            StateContainer.of(context).curTheme.overlay80!);
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
         Navigator.of(context).pop();
         break;
       case 'BACKEND_ERROR':
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.yubikeyError_BACKEND_ERROR,
             context,
-            StateContainer.of(context).curTheme.primary!,
-            StateContainer.of(context).curTheme.overlay80!);
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
         Navigator.of(context).pop();
         break;
       case 'BAD_SIGNATURE':
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.yubikeyError_BAD_SIGNATURE,
             context,
-            StateContainer.of(context).curTheme.primary!,
-            StateContainer.of(context).curTheme.overlay80!);
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
         Navigator.of(context).pop();
         break;
       case 'MISSING_PARAMETER':
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.yubikeyError_MISSING_PARAMETER,
             context,
-            StateContainer.of(context).curTheme.primary!,
-            StateContainer.of(context).curTheme.overlay80!);
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
         Navigator.of(context).pop();
         break;
       case 'NOT_ENOUGH_ANSWERS':
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.yubikeyError_NOT_ENOUGH_ANSWERS,
             context,
-            StateContainer.of(context).curTheme.primary!,
-            StateContainer.of(context).curTheme.overlay80!);
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
         Navigator.of(context).pop();
         break;
       case 'NO_SUCH_CLIENT':
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.yubikeyError_NO_SUCH_CLIENT,
             context,
-            StateContainer.of(context).curTheme.primary!,
-            StateContainer.of(context).curTheme.overlay80!);
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
         Navigator.of(context).pop();
         break;
       case 'OPERATION_NOT_ALLOWED':
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.yubikeyError_OPERATION_NOT_ALLOWED,
             context,
-            StateContainer.of(context).curTheme.primary!,
-            StateContainer.of(context).curTheme.overlay80!);
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
         Navigator.of(context).pop();
         break;
       case 'REPLAYED_OTP':
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.yubikeyError_REPLAYED_OTP,
             context,
-            StateContainer.of(context).curTheme.primary!,
-            StateContainer.of(context).curTheme.overlay80!);
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
         Navigator.of(context).pop();
         break;
       case 'REPLAYED_REQUEST':
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.yubikeyError_REPLAYED_REQUEST,
             context,
-            StateContainer.of(context).curTheme.primary!,
-            StateContainer.of(context).curTheme.overlay80!);
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
         Navigator.of(context).pop();
         break;
       case 'RESPONSE_KO':
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.yubikeyError_RESPONSE_KO,
             context,
-            StateContainer.of(context).curTheme.primary!,
-            StateContainer.of(context).curTheme.overlay80!);
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
         Navigator.of(context).pop();
         break;
       case 'OK':
         UIUtil.showSnackbar(
             verificationResponse.status,
             context,
-            StateContainer.of(context).curTheme.primary!,
-            StateContainer.of(context).curTheme.overlay80!);
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
         _preferences.resetLockAttempts();
         Navigator.of(context).pop(true);
         break;
@@ -183,8 +183,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         UIUtil.showSnackbar(
             verificationResponse.status,
             context,
-            StateContainer.of(context).curTheme.primary!,
-            StateContainer.of(context).curTheme.overlay80!);
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
         Navigator.of(context).pop();
         break;
     }
@@ -229,8 +229,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                             width: 50,
                             child: BackButton(
                               key: const Key('back'),
-                              color:
-                                  StateContainer.of(context).curTheme.primary,
+                              color: StateContainer.of(context).curTheme.text,
                               onPressed: () {
                                 Navigator.pop(context);
                               },

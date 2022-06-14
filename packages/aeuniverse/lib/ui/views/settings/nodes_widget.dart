@@ -53,8 +53,7 @@ class _NodesListState extends State<NodesList> {
         decoration: BoxDecoration(
           border: Border(
             right: BorderSide(
-                color: StateContainer.of(context).curTheme.primary30!,
-                width: 1),
+                color: StateContainer.of(context).curTheme.text30!, width: 1),
           ),
           color: StateContainer.of(context).curTheme.backgroundDark,
           boxShadow: <BoxShadow>[
@@ -82,7 +81,7 @@ class _NodesListState extends State<NodesList> {
                       margin: const EdgeInsets.only(right: 10, left: 10),
                       child: BackButton(
                         key: const Key('back'),
-                        color: StateContainer.of(context).curTheme.primary,
+                        color: StateContainer.of(context).curTheme.text,
                         onPressed: () {
                           setState(() {
                             widget.nodesOpen = false;
@@ -350,8 +349,7 @@ class _NodesListState extends State<NodesList> {
             ],
           ),
         ),
-        Divider(
-            height: 2, color: StateContainer.of(context).curTheme.primary60),
+        Divider(height: 2, color: StateContainer.of(context).curTheme.text60),
       ],
     );
   }

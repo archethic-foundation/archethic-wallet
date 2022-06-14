@@ -216,7 +216,7 @@ class _SetYubikeyState extends State<SetYubikey> {
           topMargin: 30,
           focusNode: _clientIDFocusNode,
           controller: _clientIDController,
-          cursorColor: StateContainer.of(context).curTheme.primary,
+          cursorColor: StateContainer.of(context).curTheme.text,
           style: AppStyles.textStyleSize16W700Primary(context),
           inputFormatters: <LengthLimitingTextInputFormatter>[
             LengthLimitingTextInputFormatter(10)
@@ -247,7 +247,7 @@ class _SetYubikeyState extends State<SetYubikey> {
           topMargin: 10,
           focusNode: _clientAPIKeyFocusNode,
           controller: _clientAPIKeyController,
-          cursorColor: StateContainer.of(context).curTheme.primary,
+          cursorColor: StateContainer.of(context).curTheme.text,
           style: AppStyles.textStyleSize16W700Primary(context),
           inputFormatters: <LengthLimitingTextInputFormatter>[
             LengthLimitingTextInputFormatter(40)

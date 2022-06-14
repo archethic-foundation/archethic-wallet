@@ -37,6 +37,10 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
       key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                  StateContainer.of(context).curTheme.background3Small!),
+              fit: BoxFit.fitHeight),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -66,8 +70,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                             width: 50,
                             child: BackButton(
                               key: const Key('back'),
-                              color:
-                                  StateContainer.of(context).curTheme.primary,
+                              color: StateContainer.of(context).curTheme.text,
                               onPressed: () {
                                 Navigator.pop(context);
                               },
@@ -139,7 +142,9 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                               AuthenticationMethod(AuthMethod.pin)
                                   .getDescription(context),
                               AuthenticationMethod.getIcon(AuthMethod.pin),
-                              StateContainer.of(context).curTheme.icon,
+                              StateContainer.of(context)
+                                  .curTheme
+                                  .pickerItemIconEnabled,
                               AuthMethod.pin,
                               true));
                           accessModes.add(PickerItem(
@@ -148,7 +153,9 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                               AuthenticationMethod(AuthMethod.password)
                                   .getDescription(context),
                               AuthenticationMethod.getIcon(AuthMethod.password),
-                              StateContainer.of(context).curTheme.icon,
+                              StateContainer.of(context)
+                                  .curTheme
+                                  .pickerItemIconEnabled,
                               AuthMethod.password,
                               true));
                           if (biometricsAvalaible) {
@@ -159,7 +166,9 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                     .getDescription(context),
                                 AuthenticationMethod.getIcon(
                                     AuthMethod.biometrics),
-                                StateContainer.of(context).curTheme.icon,
+                                StateContainer.of(context)
+                                    .curTheme
+                                    .pickerItemIconEnabled,
                                 AuthMethod.biometrics,
                                 true));
                           }
@@ -170,7 +179,9 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                   .getDescription(context),
                               AuthenticationMethod.getIcon(
                                   AuthMethod.biometricsUniris),
-                              StateContainer.of(context).curTheme.icon,
+                              StateContainer.of(context)
+                                  .curTheme
+                                  .pickerItemIconEnabled,
                               AuthMethod.biometricsUniris,
                               false));
                           accessModes.add(PickerItem(
@@ -182,7 +193,9 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                   .getDescription(context),
                               AuthenticationMethod.getIcon(
                                   AuthMethod.yubikeyWithYubicloud),
-                              StateContainer.of(context).curTheme.icon,
+                              StateContainer.of(context)
+                                  .curTheme
+                                  .pickerItemIconEnabled,
                               AuthMethod.yubikeyWithYubicloud,
                               true));
                           Navigator.of(context).pushNamed(

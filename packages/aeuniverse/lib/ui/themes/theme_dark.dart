@@ -4,6 +4,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/components/gradient_shadow_box_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,121 +15,136 @@ class DarkTheme implements BaseTheme {
   @override
   String? displayName = 'Dark';
 
-  static const Color orange = Color(0xFFfc9034);
+  // Main Buttons
+  @override
+  Color? mainButtonLabel = Color(0xFFFFFFFF);
+  @override
+  Color? middleButtonLabel = Color(0xFFFFFFFF);
+  @override
+  Gradient? gradientMainButton = const LinearGradient(
+    colors: <Color>[
+      Color(0xFF00A4DB),
+      Color(0xFFCC00FF),
+    ],
+    begin: Alignment(-1.0, 0.0),
+    end: Alignment(1.0, 0.0),
+    transform: GradientRotation(pi / 9),
+  );
 
-  static const Color orangeDark = Color(0xFFf9852b);
+  // IconData Widget
+  @override
+  Color? iconDataWidgetBoxShadow = Color(0xFFFFFFFF).withOpacity(0.1);
+  @override
+  Color? iconDataWidgetIconGradientLeft = Color(0xFF00A4DB);
+  @override
+  Color? iconDataWidgetIconGradientRight = Color(0xFFCC00FF);
+  @override
+  Color? iconDataWidgetIconBackground = Color(0xFFFFFFFF).withOpacity(0.1);
+  @override
+  Color? iconDataWidgetIcon = Color(0xFFFFFFFF);
 
-  static const Color blue = Color(0xFF1BA5D9);
+  // Menu
+  @override
+  Color? iconDrawer = Color(0xFFFFFFFF);
+  @override
+  Color? iconDrawerBackground = Color(0xFFFFFFFF).withOpacity(0.2);
+  @override
+  Color? drawerBackground = Color(0xFF05212B);
 
-  static const Color blackDark = Color(0xFF05212B);
+  // Icons Picker Items
+  @override
+  Color? pickerItemIconEnabled = Color(0xFFFFFFFF);
+  @override
+  Color? pickerItemIconDisabled = Color(0xFFFFFFFF).withOpacity(0.6);
 
-  static const Color blueDarktest = Color(0xFF06347c);
+  // Icons TextField
+  Color? textFieldIcon = Color(0xFFFFFFFF);
 
-  static const Color white = Color(0xFFFFFFFF);
-
-  static const Color black = Color(0xFF000000);
-
-  static const Color grey = Color(0xFF4b4b4b);
-
+  // Texts
   @override
-  Color? primary = white;
+  Color? text = Color(0xFFFFFFFF);
   @override
-  Color? primary60 = white.withOpacity(0.6);
+  Color? text60 = Color(0xFFFFFFFF).withOpacity(0.6);
   @override
-  Color? primary45 = white.withOpacity(0.45);
+  Color? text45 = Color(0xFFFFFFFF).withOpacity(0.45);
   @override
-  Color? primary30 = white.withOpacity(0.3);
+  Color? text30 = Color(0xFFFFFFFF).withOpacity(0.3);
   @override
-  Color? primary20 = white.withOpacity(0.2);
+  Color? text20 = Color(0xFFFFFFFF).withOpacity(0.2);
   @override
-  Color? primary15 = white.withOpacity(0.15);
+  Color? text15 = Color(0xFFFFFFFF).withOpacity(0.15);
   @override
-  Color? primary10 = white.withOpacity(0.1);
+  Color? text10 = Color(0xFFFFFFFF).withOpacity(0.1);
   @override
-  Color? primary05 = white.withOpacity(0.05);
+  Color? text05 = Color(0xFFFFFFFF).withOpacity(0.05);
   @override
-  Color? primary03 = white.withOpacity(0.03);
-
-  @override
-  Color? icon = white;
-  @override
-  Color? icon45 = white.withOpacity(0.45);
-  @override
-  Color? icon60 = white.withOpacity(0.60);
-
-  @override
-  Color? success = orange;
-  @override
-  Color? success60 = orange.withOpacity(0.6);
-  @override
-  Color? success30 = orange.withOpacity(0.3);
-  @override
-  Color? success15 = orange.withOpacity(0.15);
-
-  @override
-  Color? successDark = orangeDark;
-  @override
-  Color? successDark30 = orangeDark.withOpacity(0.3);
-
-  @override
-  Color? background = black;
-  @override
-  Color? background40 = black.withOpacity(0.4);
-  @override
-  Color? background00 = black.withOpacity(0.0);
-  @override
-  Color? backgroundDark = blackDark;
-  @override
-  Color? backgroundDark00 = blackDark.withOpacity(0.0);
-
-  @override
-  Color? backgroundDarkest = blue;
-
-  @override
-  Color? backgroundMainTop = black;
-  @override
-  Color? backgroundMainBottom = black;
-
-  @override
-  Color? overlay90 = black.withOpacity(0.9);
-  @override
-  Color? overlay85 = black.withOpacity(0.85);
-  @override
-  Color? overlay80 = black.withOpacity(0.8);
-  @override
-  Color? overlay70 = black.withOpacity(0.7);
-  @override
-  Color? overlay50 = black.withOpacity(0.5);
-  @override
-  Color? overlay30 = black.withOpacity(0.3);
-  @override
-  Color? overlay20 = black.withOpacity(0.2);
-
-  @override
-  Color? animationOverlayMedium = black.withOpacity(0.7);
-  @override
-  Color? animationOverlayStrong = black.withOpacity(0.85);
-
+  Color? text03 = Color(0xFFFFFFFF).withOpacity(0.03);
   @override
   Color? positiveValue = Colors.lightGreenAccent[400];
   @override
   Color? negativeValue = Colors.red[300];
-
   @override
   Color? positiveAmount = Colors.greenAccent[400];
   @override
   Color? negativeAmount = Colors.redAccent[400];
-
   @override
   Color? warning = Colors.yellow[600];
+  @override
+  Color? success = Color(0xFFFFFFFF);
+
+  // Sheet
+  @override
+  Color? sheetBackground = Color(0xFF000000).withOpacity(0.7);
+
+  // SnackBar
+  @override
+  Color? snackBarShadow = Color(0xFF000000).withOpacity(0.8);
+
+  // Background
+  @override
+  Color? backgroundMainTop = Color(0xFF000000);
+  @override
+  Color? backgroundMainBottom = Color(0xFF000000);
+  @override
+  Color? background = Color(0xFF000000);
+  @override
+  Color? background40 = Color(0xFF000000).withOpacity(0.4);
+  @override
+  Color? backgroundDark = Color(0xFF000000);
+  @override
+  Color? backgroundDark00 = Color(0xFF05212B).withOpacity(0.0);
+  @override
+  Color? backgroundDarkest = Color(0xFFFFFFFF);
 
   @override
-  Color? contextMenuText = blue;
+  String? background1Small =
+      'packages/core_ui/assets/themes/dark/v01-waves-dark-1100.jpg';
   @override
-  Color? contextMenuTextRed = Colors.red[300];
+  String? background2Small =
+      'packages/core_ui/assets/themes/dark/v02-waves-dark-1100.jpg';
+  @override
+  String? background3Small =
+      'packages/core_ui/assets/themes/dark/v03-waves-dark-1100.jpg';
+  @override
+  String? background4Small =
+      'packages/core_ui/assets/themes/dark/v04-waves-dark-1100.jpg';
+  @override
+  String? background5Small =
+      'packages/core_ui/assets/themes/dark/v05-waves-dark-1100.jpg';
+
+  // Animation Overlay
+  @override
+  Color? animationOverlayMedium = Color(0xFF000000).withOpacity(0.7);
+  @override
+  Color? animationOverlayStrong = Color(0xFF000000).withOpacity(0.85);
 
   @override
-  Color? choiceOption = blue;
+  Color? overlay30 = Color(0xFF000000).withOpacity(0.3);
+
+  @override
+  Color? activeTrackColorSwitch = Color(0xFFFFFFFF);
+  @override
+  Color? inactiveTrackColorSwitch = Color(0xFFFFFFFF);
 
   @override
   Brightness? brightness = Brightness.dark;
@@ -149,20 +165,13 @@ class DarkTheme implements BaseTheme {
   String? logoAlone = 'logo_alone';
 
   @override
-  Color? iconDrawerColor = blue;
-
-  @override
-  Color? iconDrawerBackgroundColor = white.withOpacity(0.1);
-
-  @override
   Widget? getBackgroundScreen(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(
-                'packages/core_ui/assets/themes/dark/background.png'),
+            image: AssetImage(background4Small!),
             fit: BoxFit.cover,
-            opacity: 0.3),
+            opacity: 0.8),
       ),
     );
   }
@@ -177,4 +186,37 @@ class DarkTheme implements BaseTheme {
     end: Alignment(1.0, 0.0),
     transform: GradientRotation(pi / 9),
   );
+
+  @override
+  Decoration getDecorationBalance() {
+    return GradientShadowBoxDecoration(
+      image: DecorationImage(
+        image: AssetImage(background2Small!),
+        fit: BoxFit.cover,
+      ),
+      backgroundBlendMode: BlendMode.dstIn,
+      gradient: LinearGradient(
+        colors: <Color>[
+          Color(0xFF00A4DB),
+          Color(0xFFCC00FF),
+        ],
+        begin: Alignment(-1.0, 0.0),
+        end: Alignment(1.0, 0.0),
+        transform: GradientRotation(pi / 9),
+      ),
+    );
+  }
+
+  @override
+  Decoration getDecorationSheet() {
+    return BoxDecoration(
+      color: text60,
+      borderRadius: BorderRadius.only(
+        topLeft: const Radius.circular(40.0),
+        topRight: const Radius.circular(40.0),
+      ),
+      image: DecorationImage(
+          image: AssetImage(background2Small!), fit: BoxFit.fitHeight),
+    );
+  }
 }

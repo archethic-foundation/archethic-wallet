@@ -57,7 +57,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                     height: 5,
                     width: MediaQuery.of(context).size.width * 0.15,
                     decoration: BoxDecoration(
-                      color: StateContainer.of(context).curTheme.primary60,
+                      color: StateContainer.of(context).curTheme.text60,
                       borderRadius: BorderRadius.circular(100.0),
                     ),
                   ),
@@ -117,12 +117,12 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                       UIUtil.showSnackbar(
                           AppLocalization.of(context)!.addressCopied,
                           context,
-                          StateContainer.of(context).curTheme.primary!,
-                          StateContainer.of(context).curTheme.overlay80!);
+                          StateContainer.of(context).curTheme.text!,
+                          StateContainer.of(context).curTheme.snackBarShadow!);
                     },
                     child: FaIcon(FontAwesomeIcons.paste,
                         size: 24,
-                        color: StateContainer.of(context).curTheme.primary),
+                        color: StateContainer.of(context).curTheme.text),
                   ),
                 ),
             ],
@@ -146,16 +146,13 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                         UIUtil.showSnackbar(
                             AppLocalization.of(context)!.addressCopied,
                             context,
-                            StateContainer.of(context).curTheme.primary!,
-                            StateContainer.of(context).curTheme.overlay80!);
+                            StateContainer.of(context).curTheme.text!,
+                            StateContainer.of(context)
+                                .curTheme
+                                .snackBarShadow!);
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          image: const DecorationImage(
-                            image: AssetImage(
-                                'packages/core_ui/assets/themes/dark/background-1.png'),
-                            fit: BoxFit.cover,
-                          ),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Padding(
@@ -286,7 +283,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                       Dimens.buttonTopDimens,
                       icon: Icon(
                         Icons.more_horiz,
-                        color: StateContainer.of(context).curTheme.primary,
+                        color: StateContainer.of(context).curTheme.text,
                       ), onPressed: () async {
                     UIUtil.showWebview(
                         context,
@@ -305,7 +302,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                       Dimens.buttonBottomDimens,
                       icon: Icon(
                         Icons.share,
-                        color: StateContainer.of(context).curTheme.primary,
+                        color: StateContainer.of(context).curTheme.text,
                       ), onPressed: () {
                     final RenderBox? box =
                         context.findRenderObject() as RenderBox?;

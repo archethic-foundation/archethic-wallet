@@ -51,7 +51,7 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                   height: 5,
                   width: MediaQuery.of(context).size.width * 0.15,
                   decoration: BoxDecoration(
-                    color: StateContainer.of(context).curTheme.primary10,
+                    color: StateContainer.of(context).curTheme.text10,
                     borderRadius: BorderRadius.circular(100.0),
                   ),
                 ),

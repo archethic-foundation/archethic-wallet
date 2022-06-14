@@ -1,6 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aeuniverse/ui/themes/theme_orange.dart';
+import 'package:aeuniverse/ui/themes/theme_white.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -10,7 +12,7 @@ import 'package:core_ui/ui/themes/themes.dart';
 // Project imports:
 import 'package:aeuniverse/ui/themes/theme_dark.dart';
 
-enum ThemeOptions { dark }
+enum ThemeOptions { dark, white, orange }
 
 /// Represent notification on/off setting
 class ThemeSetting extends SettingSelectionItem {
@@ -23,6 +25,10 @@ class ThemeSetting extends SettingSelectionItem {
     switch (theme) {
       case ThemeOptions.dark:
         return 'Dark';
+      case ThemeOptions.white:
+        return 'White';
+      case ThemeOptions.orange:
+        return 'Orange';
       default:
         return 'Dark';
     }
@@ -32,6 +38,10 @@ class ThemeSetting extends SettingSelectionItem {
     switch (theme) {
       case ThemeOptions.dark:
         return DarkTheme();
+      case ThemeOptions.white:
+        return WhiteTheme();
+      case ThemeOptions.orange:
+        return OrangeTheme();
       default:
         return DarkTheme();
     }

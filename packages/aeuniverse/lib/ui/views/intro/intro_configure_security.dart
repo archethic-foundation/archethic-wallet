@@ -2,7 +2,6 @@
 // ignore_for_file: always_specify_types
 
 // Flutter imports:
-import 'package:aewallet/ui/views/tokens/transfer_tokens_sheet.dart';
 import 'package:core/model/primary_currency.dart';
 import 'package:flutter/material.dart';
 
@@ -42,6 +41,10 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
       key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                  StateContainer.of(context).curTheme.background2Small!),
+              fit: BoxFit.fitHeight),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -71,8 +74,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                               width: 50,
                               child: BackButton(
                                 key: const Key('back'),
-                                color:
-                                    StateContainer.of(context).curTheme.primary,
+                                color: StateContainer.of(context).curTheme.text,
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },

@@ -85,15 +85,15 @@ class UserDataUtil {
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.qrInvalidPermissions,
             context,
-            StateContainer.of(context).curTheme.primary!,
-            StateContainer.of(context).curTheme.overlay80!);
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
         return QRScanErrs.permissionDenied;
       } else {
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.qrUnknownError,
             context,
-            StateContainer.of(context).curTheme.primary!,
-            StateContainer.of(context).curTheme.overlay80!);
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
         return QRScanErrs.unknownError;
       }
     } on FormatException {

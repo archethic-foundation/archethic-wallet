@@ -18,12 +18,13 @@ class PickerItem {
   String? icon;
   Color? iconColor;
   Object value;
+  DecorationImage? decorationImageItem;
   bool enabled;
   bool displayed;
 
   PickerItem(this.label, this.description, this.icon, this.iconColor,
       this.value, this.enabled,
-      {this.displayed = true});
+      {this.displayed = true, this.decorationImageItem});
 }
 
 class PickerWidget extends StatefulWidget {
@@ -70,10 +71,11 @@ class _PickerWidgetState extends State<PickerWidget> {
                 alignment: Alignment.center,
                 margin: const EdgeInsets.symmetric(vertical: 4),
                 decoration: BoxDecoration(
+                  image: pickerItem.decorationImageItem,
                   border: Border.all(
                       color: isItemSelected
                           ? Colors.green
-                          : StateContainer.of(context).curTheme.primary30!),
+                          : StateContainer.of(context).curTheme.text30!),
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
                 child: Padding(
@@ -101,7 +103,7 @@ class _PickerWidgetState extends State<PickerWidget> {
                                                       .iconColor
                                                   : StateContainer.of(context)
                                                       .curTheme
-                                                      .icon60),
+                                                      .pickerItemIconDisabled),
                                 ),
                           SizedBox(width: 10),
                           Expanded(

@@ -221,7 +221,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                       height: 5,
                       width: MediaQuery.of(context).size.width * 0.15,
                       decoration: BoxDecoration(
-                        color: StateContainer.of(context).curTheme.primary60,
+                        color: StateContainer.of(context).curTheme.text60,
                         borderRadius: BorderRadius.circular(100.0),
                       ),
                     ),
@@ -723,7 +723,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 25),
           height: 1,
-          color: StateContainer.of(context).curTheme.primary03,
+          color: StateContainer.of(context).curTheme.text03,
         ),
       ],
     );
@@ -861,7 +861,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
           focusNode: _sendAmountFocusNode,
           controller: _sendAmountController,
           topMargin: 30,
-          cursorColor: StateContainer.of(context).curTheme.primary,
+          cursorColor: StateContainer.of(context).curTheme.text,
           style: AppStyles.textStyleSize16W700Primary(context),
           inputFormatters: [
             LengthLimitingTextInputFormatter(16),
@@ -971,7 +971,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
         textAlign: TextAlign.center,
         focusNode: _sendAddressFocusNode,
         controller: _sendAddressController,
-        cursorColor: StateContainer.of(context).curTheme.primary,
+        cursorColor: StateContainer.of(context).curTheme.text,
         inputFormatters: <LengthLimitingTextInputFormatter>[
           if (_isContact)
             LengthLimitingTextInputFormatter(20)
@@ -1021,8 +1021,8 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
               UIUtil.showSnackbar(
                   AppLocalization.of(context)!.qrInvalidAddress,
                   context,
-                  StateContainer.of(context).curTheme.primary!,
-                  StateContainer.of(context).curTheme.overlay80!);
+                  StateContainer.of(context).curTheme.text!,
+                  StateContainer.of(context).curTheme.snackBarShadow!);
             } else if (QRScanErrs.errorList.contains(scanResult)) {
               return;
             } else {

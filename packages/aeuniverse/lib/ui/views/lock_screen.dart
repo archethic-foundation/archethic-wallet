@@ -243,7 +243,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                         size: 16,
                                         color: StateContainer.of(context)
                                             .curTheme
-                                            .primary),
+                                            .text),
                                     Container(
                                       margin: const EdgeInsetsDirectional.only(
                                           start: 4),

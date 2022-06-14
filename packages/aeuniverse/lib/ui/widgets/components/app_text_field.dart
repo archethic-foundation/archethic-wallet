@@ -30,7 +30,8 @@ class TextFieldButton extends StatelessWidget {
             }
           },
           child: FaIcon(icon,
-              size: 20, color: StateContainer.of(context).curTheme.icon),
+              size: 20,
+              color: StateContainer.of(context).curTheme.textFieldIcon),
         ));
   }
 }
@@ -126,7 +127,7 @@ class _AppTextFieldState extends State<AppTextField> {
                 focusNode: widget.focusNode,
                 controller: widget.controller,
                 cursorColor: widget.cursorColor ??
-                    StateContainer.of(context).curTheme.primary,
+                    StateContainer.of(context).curTheme.text,
                 inputFormatters: widget.inputFormatters,
                 textInputAction: widget.textInputAction,
                 keyboardType: widget.keyboardType,

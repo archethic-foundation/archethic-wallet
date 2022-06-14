@@ -190,7 +190,7 @@ class AppSettings {
                 ]),
             FaIcon(
               FontAwesomeIcons.chevronRight,
-              color: StateContainer.of(context).curTheme.icon,
+              color: StateContainer.of(context).curTheme.iconDrawer,
               size: 15,
             ),
           ],
@@ -232,7 +232,7 @@ class AppSettings {
             ),
             FaIcon(
               FontAwesomeIcons.chevronRight,
-              color: StateContainer.of(context).curTheme.icon,
+              color: StateContainer.of(context).curTheme.iconDrawer,
               size: 15,
             ),
           ],
@@ -275,9 +275,13 @@ class AppSettings {
                     return;
                   }
                 },
+                inactiveTrackColor: StateContainer.of(context)
+                    .curTheme
+                    .inactiveTrackColorSwitch,
                 activeTrackColor:
-                    StateContainer.of(context).curTheme.backgroundDarkest,
-                activeColor: Colors.green)
+                    StateContainer.of(context).curTheme.activeTrackColorSwitch,
+                activeColor:
+                    StateContainer.of(context).curTheme.backgroundDark!)
           ],
         ),
       ),

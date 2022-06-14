@@ -165,8 +165,8 @@ class _PinScreenState extends State<PinScreen>
       child: InkWell(
           key: Key('pinButton' + buttonText),
           borderRadius: BorderRadius.circular(200),
-          highlightColor: StateContainer.of(context).curTheme.primary15,
-          splashColor: StateContainer.of(context).curTheme.primary30,
+          highlightColor: StateContainer.of(context).curTheme.text15,
+          splashColor: StateContainer.of(context).curTheme.text30,
           onTap: () {},
           onTapDown: (TapDownDetails details) {
             sl.get<HapticUtil>().feedback(FeedbackType.light);
@@ -234,7 +234,7 @@ class _PinScreenState extends State<PinScreen>
     final List<Widget> ret = List<Widget>.empty(growable: true);
     for (int i = 0; i < _pinLength; i++) {
       ret.add(FaIcon(_dotStates![i],
-          color: StateContainer.of(context).curTheme.primary, size: 15.0));
+          color: StateContainer.of(context).curTheme.text, size: 15.0));
     }
     return ret;
   }
@@ -262,6 +262,10 @@ class _PinScreenState extends State<PinScreen>
       resizeToAvoidBottomInset: false,
       body: Container(
         decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                  StateContainer.of(context).curTheme.background3Small!),
+              fit: BoxFit.fitHeight),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -288,7 +292,7 @@ class _PinScreenState extends State<PinScreen>
                           width: 50,
                           child: BackButton(
                             key: const Key('back'),
-                            color: StateContainer.of(context).curTheme.primary,
+                            color: StateContainer.of(context).curTheme.text,
                             onPressed: () {
                               Navigator.pop(context, '');
                             },
@@ -433,10 +437,10 @@ class _PinScreenState extends State<PinScreen>
                                   borderRadius: BorderRadius.circular(200),
                                   highlightColor: StateContainer.of(context)
                                       .curTheme
-                                      .primary15,
+                                      .text15,
                                   splashColor: StateContainer.of(context)
                                       .curTheme
-                                      .primary30,
+                                      .text30,
                                   onTap: () {},
                                   onTapDown: (TapDownDetails details) {
                                     sl
@@ -460,7 +464,7 @@ class _PinScreenState extends State<PinScreen>
                                     child: FaIcon(Icons.backspace,
                                         color: StateContainer.of(context)
                                             .curTheme
-                                            .primary,
+                                            .text,
                                         size: 20.0),
                                   )),
                             ),

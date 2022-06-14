@@ -33,6 +33,10 @@ class _IntroNewWalletDisclaimerState extends State<IntroNewWalletDisclaimer> {
       key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                  StateContainer.of(context).curTheme.background1Small!),
+              fit: BoxFit.fitHeight),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -64,8 +68,7 @@ class _IntroNewWalletDisclaimerState extends State<IntroNewWalletDisclaimer> {
                               width: 50,
                               child: BackButton(
                                 key: const Key('back'),
-                                color:
-                                    StateContainer.of(context).curTheme.primary,
+                                color: StateContainer.of(context).curTheme.text,
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
@@ -108,9 +111,8 @@ class _IntroNewWalletDisclaimerState extends State<IntroNewWalletDisclaimer> {
                               ),
                               Divider(
                                 height: 30,
-                                color: StateContainer.of(context)
-                                    .curTheme
-                                    .primary60,
+                                color:
+                                    StateContainer.of(context).curTheme.text60,
                               ),
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel2,
@@ -128,9 +130,8 @@ class _IntroNewWalletDisclaimerState extends State<IntroNewWalletDisclaimer> {
                               ),
                               Divider(
                                 height: 30,
-                                color: StateContainer.of(context)
-                                    .curTheme
-                                    .primary60,
+                                color:
+                                    StateContainer.of(context).curTheme.text60,
                               ),
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel4,
@@ -148,9 +149,8 @@ class _IntroNewWalletDisclaimerState extends State<IntroNewWalletDisclaimer> {
                               ),
                               Divider(
                                 height: 30,
-                                color: StateContainer.of(context)
-                                    .curTheme
-                                    .primary60,
+                                color:
+                                    StateContainer.of(context).curTheme.text60,
                               ),
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel6,

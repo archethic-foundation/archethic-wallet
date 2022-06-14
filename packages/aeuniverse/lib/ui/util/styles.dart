@@ -13,7 +13,7 @@ class AppStyles {
       fontFamily: 'Equinox',
       fontSize: AppFontSizes.size18,
       fontWeight: FontWeight.w700,
-      color: StateContainer.of(context).curTheme.primary!.withOpacity(0.7),
+      color: StateContainer.of(context).curTheme.text!.withOpacity(0.7),
     );
   }
 
@@ -22,7 +22,7 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size16,
         fontWeight: FontWeight.w200,
-        color: StateContainer.of(context).curTheme.primary);
+        color: StateContainer.of(context).curTheme.text);
   }
 
   static TextStyle textStyleSize16W400Primary(BuildContext context) {
@@ -30,7 +30,7 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size16,
         fontWeight: FontWeight.w400,
-        color: StateContainer.of(context).curTheme.primary);
+        color: StateContainer.of(context).curTheme.text);
   }
 
   static TextStyle textStyleSize16W400Primary60(BuildContext context) {
@@ -38,7 +38,7 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size16,
         fontWeight: FontWeight.w400,
-        color: StateContainer.of(context).curTheme.primary60);
+        color: StateContainer.of(context).curTheme.text60);
   }
 
   static TextStyle textStyleSize16W700Primary(BuildContext context) {
@@ -46,7 +46,7 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size16,
         fontWeight: FontWeight.w700,
-        color: StateContainer.of(context).curTheme.primary);
+        color: StateContainer.of(context).curTheme.text);
   }
 
   static TextStyle textStyleSize16W100Primary60(BuildContext context) {
@@ -54,7 +54,7 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size16,
         fontWeight: FontWeight.w100,
-        color: StateContainer.of(context).curTheme.primary60);
+        color: StateContainer.of(context).curTheme.text60);
   }
 
   static TextStyle textStyleSize14W600Primary(BuildContext context) {
@@ -62,7 +62,7 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w600,
-        color: StateContainer.of(context).curTheme.primary);
+        color: StateContainer.of(context).curTheme.text);
   }
 
   static TextStyle textStyleSize14W600EquinoxPrimary(BuildContext context) {
@@ -70,7 +70,17 @@ class AppStyles {
         fontFamily: 'Equinox',
         fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w600,
-        color: StateContainer.of(context).curTheme.primary);
+        color: StateContainer.of(context).curTheme.text);
+  }
+
+  static TextStyle textStyleSize14W600EquinoxMiddleButtonLabel(
+      BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Equinox',
+      fontSize: AppFontSizes.size14,
+      fontWeight: FontWeight.w600,
+      color: StateContainer.of(context).curTheme.middleButtonLabel,
+    );
   }
 
   static TextStyle textStyleSize14W600EquinoxPrimaryDisabled(
@@ -79,7 +89,7 @@ class AppStyles {
         fontFamily: 'Equinox',
         fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w600,
-        color: StateContainer.of(context).curTheme.primary!.withOpacity(0.3));
+        color: StateContainer.of(context).curTheme.text!.withOpacity(0.3));
   }
 
   static TextStyle textStyleSize14W600PrimaryDisabled(BuildContext context) {
@@ -87,7 +97,7 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w600,
-        color: StateContainer.of(context).curTheme.primary!.withOpacity(0.3));
+        color: StateContainer.of(context).curTheme.text!.withOpacity(0.3));
   }
 
   static TextStyle textStyleSize18W600PrimaryDisabled(BuildContext context) {
@@ -95,7 +105,7 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size18,
         fontWeight: FontWeight.w600,
-        color: StateContainer.of(context).curTheme.primary!.withOpacity(0.3));
+        color: StateContainer.of(context).curTheme.text!.withOpacity(0.3));
   }
 
   static TextStyle textStyleSize18W600EquinoxPrimaryDisabled(
@@ -104,7 +114,19 @@ class AppStyles {
         fontFamily: 'Equinox',
         fontSize: AppFontSizes.size18,
         fontWeight: FontWeight.w600,
-        color: StateContainer.of(context).curTheme.primary!.withOpacity(0.3));
+        color: StateContainer.of(context).curTheme.text!.withOpacity(0.3));
+  }
+
+  static TextStyle textStyleSize18W600EquinoxMainButtonLabelDisabled(
+      BuildContext context) {
+    return TextStyle(
+        fontFamily: 'Equinox',
+        fontSize: AppFontSizes.size18,
+        fontWeight: FontWeight.w600,
+        color: StateContainer.of(context)
+            .curTheme
+            .mainButtonLabel!
+            .withOpacity(0.3));
   }
 
   static TextStyle textStyleSize12W100PrimaryDisabled(BuildContext context) {
@@ -112,7 +134,7 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size12,
         fontWeight: FontWeight.w100,
-        color: StateContainer.of(context).curTheme.primary!.withOpacity(0.3));
+        color: StateContainer.of(context).curTheme.text!.withOpacity(0.3));
   }
 
   static TextStyle textStyleSize24W600Primary(BuildContext context) {
@@ -120,7 +142,7 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size24,
         fontWeight: FontWeight.w600,
-        color: StateContainer.of(context).curTheme.primary);
+        color: StateContainer.of(context).curTheme.text);
   }
 
   static TextStyle textStyleSize14W600BackgroundDarkest(BuildContext context) {
@@ -147,22 +169,6 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.background);
   }
 
-  static TextStyle textStyleSize14W700ContextMenuPrimary(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.size14,
-        fontWeight: FontWeight.w700,
-        color: StateContainer.of(context).curTheme.contextMenuText);
-  }
-
-  static TextStyle textStyleSize14W700ContextMenuTextRed(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.size14,
-        fontWeight: FontWeight.w700,
-        color: StateContainer.of(context).curTheme.contextMenuTextRed);
-  }
-
   static TextStyle textStyleSize20W700Background(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
@@ -176,7 +182,7 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size20,
         fontWeight: FontWeight.w700,
-        color: StateContainer.of(context).curTheme.primary);
+        color: StateContainer.of(context).curTheme.text);
   }
 
   static TextStyle textStyleSize20W700EquinoxPrimary(BuildContext context) {
@@ -184,7 +190,7 @@ class AppStyles {
         fontFamily: 'Equinox',
         fontSize: AppFontSizes.size20,
         fontWeight: FontWeight.w700,
-        color: StateContainer.of(context).curTheme.primary);
+        color: StateContainer.of(context).curTheme.text);
   }
 
   static TextStyle textStyleSize20W700Green(BuildContext context) {
@@ -226,23 +232,7 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w700,
-        color: StateContainer.of(context).curTheme.primary);
-  }
-
-  static TextStyle textStyleSize14W700Success(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.size14,
-        fontWeight: FontWeight.w700,
-        color: StateContainer.of(context).curTheme.success);
-  }
-
-  static TextStyle textStyleSize14W700SuccessDark(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: AppFontSizes.size14,
-        fontWeight: FontWeight.w700,
-        color: StateContainer.of(context).curTheme.successDark);
+        color: StateContainer.of(context).curTheme.text);
   }
 
   static TextStyle textStyleSize20W700Primary60(BuildContext context) {
@@ -250,7 +240,7 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size20,
         fontWeight: FontWeight.w700,
-        color: StateContainer.of(context).curTheme.primary60);
+        color: StateContainer.of(context).curTheme.text60);
   }
 
   static TextStyle textStyleSize14W100Sucess(BuildContext context) {
@@ -267,7 +257,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w100,
-      color: StateContainer.of(context).curTheme.primary60,
+      color: StateContainer.of(context).curTheme.text60,
     );
   }
 
@@ -276,7 +266,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w700,
-      color: StateContainer.of(context).curTheme.primary60,
+      color: StateContainer.of(context).curTheme.text60,
     );
   }
 
@@ -285,7 +275,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w100,
-      color: StateContainer.of(context).curTheme.primary,
+      color: StateContainer.of(context).curTheme.text,
     );
   }
 
@@ -294,7 +284,7 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w600,
-        color: StateContainer.of(context).curTheme.primary60);
+        color: StateContainer.of(context).curTheme.text60);
   }
 
   static TextStyle textStyleSize28W900Primary(BuildContext context) {
@@ -302,7 +292,7 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size28,
         fontWeight: FontWeight.w900,
-        color: StateContainer.of(context).curTheme.primary);
+        color: StateContainer.of(context).curTheme.text);
   }
 
   static TextStyle textStyleSize40W900Primary(BuildContext context) {
@@ -310,7 +300,7 @@ class AppStyles {
         fontFamily: 'Montserrat',
         fontSize: 40,
         fontWeight: FontWeight.w900,
-        color: StateContainer.of(context).curTheme.primary);
+        color: StateContainer.of(context).curTheme.text);
   }
 
   static TextStyle textStyleSize25W900EquinoxPrimary(BuildContext context) {
@@ -319,7 +309,7 @@ class AppStyles {
         fontSize: 25,
         fontWeight: FontWeight.w900,
         letterSpacing: 1,
-        color: StateContainer.of(context).curTheme.primary);
+        color: StateContainer.of(context).curTheme.text);
   }
 
   static TextStyle textStyleSize35W900EquinoxPrimary(BuildContext context) {
@@ -327,7 +317,7 @@ class AppStyles {
         fontFamily: 'Equinox',
         fontSize: 35,
         fontWeight: FontWeight.w900,
-        color: StateContainer.of(context).curTheme.primary);
+        color: StateContainer.of(context).curTheme.text);
   }
 
   static TextStyle textStyleSize12W100PositiveValue(BuildContext context) {
@@ -369,7 +359,7 @@ class AppStyles {
   static TextStyle textStyleSize12W100Primary60(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      color: StateContainer.of(context).curTheme.primary60,
+      color: StateContainer.of(context).curTheme.text60,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
     );
@@ -378,7 +368,7 @@ class AppStyles {
   static TextStyle textStyleSize12W100Primary(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      color: StateContainer.of(context).curTheme.primary,
+      color: StateContainer.of(context).curTheme.text,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
     );
@@ -387,7 +377,7 @@ class AppStyles {
   static TextStyle textStyleSize12W100Primary30(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      color: StateContainer.of(context).curTheme.primary,
+      color: StateContainer.of(context).curTheme.text,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
     );
@@ -396,7 +386,7 @@ class AppStyles {
   static TextStyle textStyleSize10W100Primary60(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      color: StateContainer.of(context).curTheme.primary60,
+      color: StateContainer.of(context).curTheme.text60,
       fontSize: AppFontSizes.size10,
       fontWeight: FontWeight.w100,
     );
@@ -405,7 +395,7 @@ class AppStyles {
   static TextStyle textStyleSize10W100Primary(BuildContext context) {
     return TextStyle(
       fontFamily: 'Montserrat',
-      color: StateContainer.of(context).curTheme.primary,
+      color: StateContainer.of(context).curTheme.text,
       fontSize: AppFontSizes.size10,
       fontWeight: FontWeight.w100,
     );
@@ -425,7 +415,7 @@ class AppStyles {
       fontSize: AppFontSizes.size12,
       fontFamily: 'Montserrat',
       fontWeight: FontWeight.w100,
-      color: StateContainer.of(context).curTheme.primary60,
+      color: StateContainer.of(context).curTheme.text60,
     );
   }
 
@@ -434,7 +424,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
-      color: StateContainer.of(context).curTheme.primary,
+      color: StateContainer.of(context).curTheme.text,
     );
   }
 
@@ -443,7 +433,7 @@ class AppStyles {
       fontFamily: 'Equinox',
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
-      color: StateContainer.of(context).curTheme.primary,
+      color: StateContainer.of(context).curTheme.text,
     );
   }
 
@@ -479,7 +469,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
-      color: StateContainer.of(context).curTheme.primary30,
+      color: StateContainer.of(context).curTheme.text30,
     );
   }
 
@@ -488,7 +478,7 @@ class AppStyles {
       fontFamily: 'Equinox',
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
-      color: StateContainer.of(context).curTheme.primary30,
+      color: StateContainer.of(context).curTheme.text30,
     );
   }
 
@@ -497,25 +487,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w200,
-      color: StateContainer.of(context).curTheme.primary30,
-    );
-  }
-
-  static TextStyle textStyleSize14W600ChoiceOption(BuildContext context) {
-    return TextStyle(
-      fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.size14,
-      fontWeight: FontWeight.w600,
-      color: StateContainer.of(context).curTheme.choiceOption,
-    );
-  }
-
-  static TextStyle textStyleSize16W600ChoiceOption(BuildContext context) {
-    return TextStyle(
-      fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.size16,
-      fontWeight: FontWeight.w600,
-      color: StateContainer.of(context).curTheme.choiceOption,
+      color: StateContainer.of(context).curTheme.text30,
     );
   }
 
@@ -524,17 +496,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w600,
-      color: StateContainer.of(context).curTheme.primary,
-    );
-  }
-
-  static TextStyle textStyleSize14W100Success(BuildContext context) {
-    return TextStyle(
-      fontSize: AppFontSizes.size14,
-      fontWeight: FontWeight.w100,
-      fontFamily: 'Montserrat',
-      color: StateContainer.of(context).curTheme.success,
-      letterSpacing: 1,
+      color: StateContainer.of(context).curTheme.text,
     );
   }
 
@@ -543,7 +505,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size24,
       fontWeight: FontWeight.w700,
-      color: StateContainer.of(context).curTheme.primary,
+      color: StateContainer.of(context).curTheme.text,
     );
   }
 
@@ -552,7 +514,7 @@ class AppStyles {
       fontFamily: 'Equinox',
       fontSize: AppFontSizes.size24,
       fontWeight: FontWeight.w700,
-      color: StateContainer.of(context).curTheme.primary,
+      color: StateContainer.of(context).curTheme.text,
     );
   }
 
@@ -561,7 +523,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size28,
       fontWeight: FontWeight.w700,
-      color: StateContainer.of(context).curTheme.primary,
+      color: StateContainer.of(context).curTheme.text,
     );
   }
 
@@ -588,7 +550,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: 80,
       fontWeight: FontWeight.w700,
-      color: StateContainer.of(context).curTheme.primary15,
+      color: StateContainer.of(context).curTheme.text15,
     );
   }
 
@@ -597,7 +559,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
-      color: StateContainer.of(context).curTheme.primary45,
+      color: StateContainer.of(context).curTheme.text45,
     );
   }
 
@@ -606,7 +568,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
-      color: StateContainer.of(context).curTheme.primary30,
+      color: StateContainer.of(context).curTheme.text30,
     );
   }
 
@@ -615,7 +577,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.smallText(context),
       fontWeight: FontWeight.w100,
-      color: StateContainer.of(context).curTheme.primary,
+      color: StateContainer.of(context).curTheme.text,
     );
   }
 
@@ -624,7 +586,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size18,
       fontWeight: FontWeight.w600,
-      color: StateContainer.of(context).curTheme.primary,
+      color: StateContainer.of(context).curTheme.text,
     );
   }
 
@@ -633,25 +595,17 @@ class AppStyles {
       fontFamily: 'Equinox',
       fontSize: AppFontSizes.size18,
       fontWeight: FontWeight.w600,
-      color: StateContainer.of(context).curTheme.primary,
+      color: StateContainer.of(context).curTheme.text,
     );
   }
 
-  static TextStyle textStyleSmallTextW100Success(BuildContext context) {
+  static TextStyle textStyleSize18W600EquinoxMainButtonLabel(
+      BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.smallText(context),
-      fontWeight: FontWeight.w100,
-      color: StateContainer.of(context).curTheme.success,
-    );
-  }
-
-  static TextStyle textStyleSmallTextW400SuccessDark(BuildContext context) {
-    return TextStyle(
-      fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.smallText(context),
-      fontWeight: FontWeight.w400,
-      color: StateContainer.of(context).curTheme.successDark,
+      fontFamily: 'Equinox',
+      fontSize: AppFontSizes.size18,
+      fontWeight: FontWeight.w600,
+      color: StateContainer.of(context).curTheme.mainButtonLabel,
     );
   }
 
@@ -660,43 +614,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.smallText(context),
       fontWeight: FontWeight.w100,
-      color: StateContainer.of(context).curTheme.primary30,
-    );
-  }
-
-  static TextStyle textStyleSize14W600Success(BuildContext context) {
-    return TextStyle(
-      fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.size14,
-      fontWeight: FontWeight.w600,
-      color: StateContainer.of(context).curTheme.success,
-    );
-  }
-
-  static TextStyle textStyleSize16W100Success(BuildContext context) {
-    return TextStyle(
-      fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.size16,
-      fontWeight: FontWeight.w100,
-      color: StateContainer.of(context).curTheme.success,
-    );
-  }
-
-  static TextStyle textStyleSize16W700Success(BuildContext context) {
-    return TextStyle(
-      fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.size16,
-      fontWeight: FontWeight.w700,
-      color: StateContainer.of(context).curTheme.success,
-    );
-  }
-
-  static TextStyle textStyleSize28W700Success(BuildContext context) {
-    return TextStyle(
-      fontFamily: 'Montserrat',
-      fontSize: AppFontSizes.size28,
-      fontWeight: FontWeight.w700,
-      color: StateContainer.of(context).curTheme.success,
+      color: StateContainer.of(context).curTheme.text30,
     );
   }
 
@@ -705,7 +623,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w100,
-      color: StateContainer.of(context).curTheme.primary,
+      color: StateContainer.of(context).curTheme.text,
     );
   }
 
@@ -714,7 +632,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
-      color: StateContainer.of(context).curTheme.primary,
+      color: StateContainer.of(context).curTheme.text,
     );
   }
 
@@ -723,7 +641,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w700,
-      color: StateContainer.of(context).curTheme.primary60,
+      color: StateContainer.of(context).curTheme.text60,
     );
   }
 }

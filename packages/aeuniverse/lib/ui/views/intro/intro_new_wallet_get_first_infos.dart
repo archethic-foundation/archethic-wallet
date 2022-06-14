@@ -46,6 +46,10 @@ class _IntroNewWalletDisclaimerState
       key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                  StateContainer.of(context).curTheme.background2Small!),
+              fit: BoxFit.fitHeight),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -77,8 +81,7 @@ class _IntroNewWalletDisclaimerState
                               width: 50,
                               child: BackButton(
                                 key: const Key('back'),
-                                color:
-                                    StateContainer.of(context).curTheme.primary,
+                                color: StateContainer.of(context).curTheme.text,
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },

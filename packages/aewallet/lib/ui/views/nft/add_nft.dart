@@ -88,7 +88,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                       height: 5,
                       width: MediaQuery.of(context).size.width * 0.15,
                       decoration: BoxDecoration(
-                        color: StateContainer.of(context).curTheme.primary60,
+                        color: StateContainer.of(context).curTheme.text60,
                         borderRadius: BorderRadius.circular(100.0),
                       ),
                     ),
@@ -243,7 +243,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                       controller: _nameController,
                                       cursorColor: StateContainer.of(context)
                                           .curTheme
-                                          .primary,
+                                          .text,
                                       textInputAction: TextInputAction.next,
                                       labelText: AppLocalization.of(context)!
                                           .nftNameHint,
@@ -277,7 +277,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                       controller: _initialSupplyController,
                                       cursorColor: StateContainer.of(context)
                                           .curTheme
-                                          .primary,
+                                          .text,
                                       textInputAction: TextInputAction.next,
                                       labelText: AppLocalization.of(context)!
                                           .nftInitialSupplyHint,

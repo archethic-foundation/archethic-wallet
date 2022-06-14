@@ -28,7 +28,8 @@ class AppButton {
           child: Container(
             width: 400,
             decoration: ShapeDecoration(
-                gradient: StateContainer.of(context).curTheme.gradient!,
+                gradient:
+                    StateContainer.of(context).curTheme.gradientMainButton!,
                 shape: const StadiumBorder()),
             height: 55,
             margin: EdgeInsetsDirectional.fromSTEB(
@@ -42,8 +43,9 @@ class AppButton {
                     ),
                     child: AutoSizeText(buttonText,
                         textAlign: TextAlign.center,
-                        style: AppStyles.textStyleSize18W600EquinoxPrimary(
-                            context),
+                        style:
+                            AppStyles.textStyleSize18W600EquinoxMainButtonLabel(
+                                context),
                         maxLines: 1,
                         stepGranularity: 0.5),
                     onPressed: () {
@@ -63,8 +65,9 @@ class AppButton {
                     icon: icon,
                     label: AutoSizeText(buttonText,
                         textAlign: TextAlign.center,
-                        style: AppStyles.textStyleSize18W600EquinoxPrimary(
-                            context),
+                        style:
+                            AppStyles.textStyleSize18W600EquinoxMainButtonLabel(
+                                context),
                         maxLines: 1,
                         stepGranularity: 0.5),
                     onPressed: () {
@@ -96,8 +99,8 @@ class AppButton {
                     ),
                     child: AutoSizeText(buttonText,
                         textAlign: TextAlign.center,
-                        style:
-                            AppStyles.textStyleSize18W600EquinoxPrimaryDisabled(
+                        style: AppStyles
+                            .textStyleSize18W600EquinoxMainButtonLabelDisabled(
                                 context),
                         maxLines: 1,
                         stepGranularity: 0.5),
@@ -118,8 +121,8 @@ class AppButton {
                     icon: icon,
                     label: AutoSizeText(buttonText,
                         textAlign: TextAlign.center,
-                        style:
-                            AppStyles.textStyleSize18W600EquinoxPrimaryDisabled(
+                        style: AppStyles
+                            .textStyleSize18W600EquinoxMainButtonLabelDisabled(
                                 context),
                         maxLines: 1,
                         stepGranularity: 0.5),

@@ -111,10 +111,9 @@ class _ContactsListState extends State<ContactsList> {
         decoration: BoxDecoration(
           border: Border(
             right: BorderSide(
-                color: StateContainer.of(context).curTheme.primary30!,
-                width: 1),
+                color: StateContainer.of(context).curTheme.text30!, width: 1),
           ),
-          color: StateContainer.of(context).curTheme.backgroundDark,
+          color: StateContainer.of(context).curTheme.drawerBackground,
           boxShadow: <BoxShadow>[
             BoxShadow(
                 color: StateContainer.of(context).curTheme.overlay30!,
@@ -140,7 +139,7 @@ class _ContactsListState extends State<ContactsList> {
                       margin: const EdgeInsets.only(right: 10, left: 10),
                       child: BackButton(
                         key: const Key('back'),
-                        color: StateContainer.of(context).curTheme.primary,
+                        color: StateContainer.of(context).curTheme.text,
                         onPressed: () {
                           setState(() {
                             widget.contactsOpen = false;
@@ -185,7 +184,7 @@ class _ContactsListState extends State<ContactsList> {
                             colors: <Color>[
                               StateContainer.of(context)
                                   .curTheme
-                                  .backgroundDark!,
+                                  .drawerBackground!,
                               StateContainer.of(context)
                                   .curTheme
                                   .backgroundDark00!
@@ -210,7 +209,7 @@ class _ContactsListState extends State<ContactsList> {
                                   .backgroundDark00!,
                               StateContainer.of(context)
                                   .curTheme
-                                  .backgroundDark!,
+                                  .drawerBackground!,
                             ],
                             begin: const AlignmentDirectional(0.5, -1.0),
                             end: const AlignmentDirectional(0.5, 1.0),
@@ -250,7 +249,7 @@ class _ContactsListState extends State<ContactsList> {
       child: Column(children: <Widget>[
         Divider(
           height: 2,
-          color: StateContainer.of(context).curTheme.primary15,
+          color: StateContainer.of(context).curTheme.text15,
         ),
         // Main Container
         Container(

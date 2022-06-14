@@ -700,6 +700,11 @@ class AppLocalization {
         name: 'mnemonicSizeError');
   }
 
+  String get noKeychain {
+    return Intl.message('No keychain exists with this secret phrase.',
+        name: 'noKeychain');
+  }
+
   String get importWallet {
     return Intl.message('I already have a wallet', name: 'importWallet');
   }

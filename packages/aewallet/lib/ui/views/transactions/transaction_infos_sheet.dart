@@ -58,14 +58,12 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                       ),
                       Column(
                         children: <Widget>[
-                          // Sheet handle
                           Container(
                             margin: const EdgeInsets.only(top: 10),
                             height: 5,
                             width: MediaQuery.of(context).size.width * 0.15,
                             decoration: BoxDecoration(
-                              color:
-                                  StateContainer.of(context).curTheme.primary10,
+                              color: StateContainer.of(context).curTheme.text10,
                               borderRadius: BorderRadius.circular(100.0),
                             ),
                           ),
@@ -83,7 +81,8 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                        padding: const EdgeInsets.only(
+                            left: 10.0, right: 10.0, bottom: 10),
                         child: AutoSizeText(
                           AppLocalization.of(context)!.transactionInfosHeader,
                           style: AppStyles.textStyleSize24W700EquinoxPrimary(
@@ -144,7 +143,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                             Icons.more_horiz,
                                             color: StateContainer.of(context)
                                                 .curTheme
-                                                .primary,
+                                                .text,
                                           ), onPressed: () async {
                                         UIUtil.showWebview(
                                             context,
@@ -154,51 +153,6 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                     ],
                                   ),
                                 ],
-                              ),
-                            ),
-                          ),
-
-                          //List Top Gradient End
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Container(
-                              height: 20.0,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: <Color>[
-                                    StateContainer.of(context)
-                                        .curTheme
-                                        .backgroundDark!,
-                                    StateContainer.of(context)
-                                        .curTheme
-                                        .backgroundDark00!
-                                  ],
-                                  begin: const AlignmentDirectional(0.5, -1.0),
-                                  end: const AlignmentDirectional(0.5, 1.0),
-                                ),
-                              ),
-                            ),
-                          ),
-                          //List Bottom Gradient End
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              height: 15.0,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: <Color>[
-                                    StateContainer.of(context)
-                                        .curTheme
-                                        .backgroundDark00!,
-                                    StateContainer.of(context)
-                                        .curTheme
-                                        .backgroundDark!,
-                                  ],
-                                  begin: const AlignmentDirectional(0.5, -1.0),
-                                  end: const AlignmentDirectional(0.5, 1.0),
-                                ),
                               ),
                             ),
                           ),
@@ -269,7 +223,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                     ),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
+                      color: StateContainer.of(context).curTheme.text15,
                     ),
                   ],
                 ),
@@ -307,7 +261,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                     ),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.primary15,
+                      color: StateContainer.of(context).curTheme.text15,
                     ),
                   ],
                 ),

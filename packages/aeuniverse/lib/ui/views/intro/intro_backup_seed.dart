@@ -56,6 +56,10 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                      StateContainer.of(context).curTheme.background4Small!),
+                  fit: BoxFit.fitHeight),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -87,8 +91,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                               width: 50,
                               child: BackButton(
                                 key: const Key('back'),
-                                color:
-                                    StateContainer.of(context).curTheme.primary,
+                                color: StateContainer.of(context).curTheme.text,
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
@@ -111,7 +114,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                   child: FaIcon(FontAwesomeIcons.rotate,
                                       color: StateContainer.of(context)
                                           .curTheme
-                                          .primary,
+                                          .text,
                                       size: 24)),
                             ),
                           ],

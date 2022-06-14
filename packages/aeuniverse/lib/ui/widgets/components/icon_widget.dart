@@ -16,13 +16,14 @@ Widget buildIconWidget(
       shape: BoxShape.circle,
       boxShadow: <BoxShadow>[
         BoxShadow(
-          color: StateContainer.of(context).curTheme.iconDrawerBackgroundColor!,
+          color: StateContainer.of(context).curTheme.iconDrawerBackground!,
         ),
       ],
     ),
     alignment: const AlignmentDirectional(0, 0),
     child: SizedBox(
-      child: Image.asset(icon, color: color ?? Colors.white),
+      child: Image.asset(icon,
+          color: color ?? StateContainer.of(context).curTheme.iconDrawer),
     ),
   );
 }
@@ -38,7 +39,9 @@ Widget buildIconWidgetWidget(
             shape: BoxShape.circle,
             boxShadow: <BoxShadow>[
               BoxShadow(
-                color: StateContainer.of(context).curTheme.primary10!,
+                color: StateContainer.of(context)
+                    .curTheme
+                    .iconDataWidgetIconBackground!,
               ),
             ],
           ),
@@ -73,7 +76,9 @@ Widget buildIconDataWidget(
             shape: BoxShape.circle,
             boxShadow: <BoxShadow>[
               BoxShadow(
-                color: StateContainer.of(context).curTheme.primary10!,
+                color: StateContainer.of(context)
+                    .curTheme
+                    .iconDataWidgetIconBackground!,
               ),
             ],
           ),

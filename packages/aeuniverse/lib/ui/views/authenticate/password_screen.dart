@@ -102,9 +102,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
                                 width: 50,
                                 child: BackButton(
                                   key: const Key('back'),
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .primary,
+                                  color:
+                                      StateContainer.of(context).curTheme.text,
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },

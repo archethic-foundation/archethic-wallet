@@ -141,37 +141,40 @@ class KeychainUtil {
       String? seed, String? currentName) async {
     List<Account> accounts = List<Account>.empty(growable: true);
 
-    /// Get KeyChain Wallet
-    final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
+    try {
+      /// Get KeyChain Wallet
+      final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
 
-    const String kDerivationPathWithoutService = 'm/650\'/archethic-wallet-';
+      const String kDerivationPathWithoutService = 'm/650\'/archethic-wallet-';
 
-    /// Get all services for archethic blockchain
-    keychain.services!.forEach((serviceName, service) async {
-      /// For the moment, only one account for wallet : services "uco-wallet-main"
-      /// When multi accounts will be implemented in archethic wallet, user could choose by himself the name of services
-      /// The wallet app will force the account in the derivation path with nameService = Account
-      if (service.derivationPath!.startsWith(kDerivationPathWithoutService)) {
-        Uint8List genesisAddress =
-            keychain.deriveAddress(serviceName, index: 0);
+      /// Get all services for archethic blockchain
+      keychain.services!.forEach((serviceName, service) async {
+        /// For the moment, only one account for wallet : services "uco-wallet-main"
+        /// When multi accounts will be implemented in archethic wallet, user could choose by himself the name of services
+        /// The wallet app will force the account in the derivation path with nameService = Account
+        if (service.derivationPath!.startsWith(kDerivationPathWithoutService)) {
+          Uint8List genesisAddress =
+              keychain.deriveAddress(serviceName, index: 0);
 
-        String name = service.derivationPath!
-            .replaceAll(kDerivationPathWithoutService, '')
-            .split('/')[0];
-        Account account = Account(
-          lastAccess: 0,
-          lastAddress: uint8ListToHex(genesisAddress),
-          genesisAddress: uint8ListToHex(genesisAddress),
-          name: name,
-        );
-        if (currentName == name) {
-          account.selected = true;
-        } else {
-          account.selected = false;
+          String name = service.derivationPath!
+              .replaceAll(kDerivationPathWithoutService, '')
+              .split('/')[0];
+          Account account = Account(
+            lastAccess: 0,
+            lastAddress: uint8ListToHex(genesisAddress),
+            genesisAddress: uint8ListToHex(genesisAddress),
+            name: name,
+          );
+          if (currentName == name) {
+            account.selected = true;
+          } else {
+            account.selected = false;
+          }
+          accounts.add(account);
         }
-        accounts.add(account);
-      }
-    });
+      });
+    } catch (e) {}
+
     return accounts;
   }
 }

@@ -65,6 +65,10 @@ class _SetPasswordState extends State<SetPassword> {
       key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                  StateContainer.of(context).curTheme.background1Small!),
+              fit: BoxFit.fitHeight),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -95,8 +99,7 @@ class _SetPasswordState extends State<SetPassword> {
                               width: 50,
                               child: BackButton(
                                 key: const Key('back'),
-                                color:
-                                    StateContainer.of(context).curTheme.primary,
+                                color: StateContainer.of(context).curTheme.text,
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
@@ -261,9 +264,8 @@ class _SetPasswordState extends State<SetPassword> {
                                   ),
                                 AppTextField(
                                   topMargin: 30,
-                                  cursorColor: StateContainer.of(context)
-                                      .curTheme
-                                      .primary,
+                                  cursorColor:
+                                      StateContainer.of(context).curTheme.text,
                                   focusNode: setPasswordFocusNode,
                                   controller: setPasswordController,
                                   textInputAction: TextInputAction.next,

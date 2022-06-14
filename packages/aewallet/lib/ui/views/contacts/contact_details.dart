@@ -81,12 +81,10 @@ class ContactDetailsSheet {
                                           .contactRemoved
                                           .replaceAll('%1', contact.name!),
                                       context,
+                                      StateContainer.of(context).curTheme.text!,
                                       StateContainer.of(context)
                                           .curTheme
-                                          .primary!,
-                                      StateContainer.of(context)
-                                          .curTheme
-                                          .overlay80!);
+                                          .snackBarShadow!);
                                   Navigator.of(context).pop();
                                 });
                               },
@@ -98,9 +96,8 @@ class ContactDetailsSheet {
                             },
                             child: FaIcon(FontAwesomeIcons.trash,
                                 size: 24,
-                                color: StateContainer.of(context)
-                                    .curTheme
-                                    .primary),
+                                color:
+                                    StateContainer.of(context).curTheme.text),
                           ),
                         ),
                         Container(
@@ -135,16 +132,15 @@ class ContactDetailsSheet {
                               UIUtil.showSnackbar(
                                   AppLocalization.of(context)!.addressCopied,
                                   context,
-                                  StateContainer.of(context).curTheme.primary!,
+                                  StateContainer.of(context).curTheme.text!,
                                   StateContainer.of(context)
                                       .curTheme
-                                      .overlay80!);
+                                      .snackBarShadow!);
                             },
                             child: FaIcon(FontAwesomeIcons.paste,
                                 size: 24,
-                                color: StateContainer.of(context)
-                                    .curTheme
-                                    .primary),
+                                color:
+                                    StateContainer.of(context).curTheme.text),
                           ),
                         ),
                       ],
@@ -188,12 +184,10 @@ class ContactDetailsSheet {
                                 UIUtil.showSnackbar(
                                     AppLocalization.of(context)!.addressCopied,
                                     context,
+                                    StateContainer.of(context).curTheme.text!,
                                     StateContainer.of(context)
                                         .curTheme
-                                        .primary!,
-                                    StateContainer.of(context)
-                                        .curTheme
-                                        .overlay80!);
+                                        .snackBarShadow!);
                               },
                               child: UIUtil.threeLinetextStyleSmallestW400Text(
                                   context, contact.address!,

@@ -25,3 +25,5 @@ dev_dependencies:
 flutter:
   assets:
     - assets/themes/dark/
+    - assets/themes/orange/
+    - assets/themes/white/

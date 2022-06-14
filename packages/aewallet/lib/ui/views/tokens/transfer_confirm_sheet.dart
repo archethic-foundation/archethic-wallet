@@ -84,8 +84,6 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) {
-      Navigator.of(context).pop();
-
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
         if (animationOpen!) {
@@ -95,15 +93,15 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         UIUtil.showSnackbar(
             '${AppLocalization.of(context)!.sendError} (${event.response!})',
             context,
-            StateContainer.of(context).curTheme.primary!,
-            StateContainer.of(context).curTheme.overlay80!);
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
         Navigator.of(context).pop();
       } else {
         UIUtil.showSnackbar(
             AppLocalization.of(context)!.transferSuccess,
             context,
-            StateContainer.of(context).curTheme.primary!,
-            StateContainer.of(context).curTheme.overlay80!,
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!,
             duration: const Duration(milliseconds: 5000));
         setState(() {
           StateContainer.of(context).requestUpdate(
@@ -158,7 +156,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
             height: 5,
             width: MediaQuery.of(context).size.width * 0.15,
             decoration: BoxDecoration(
-              color: StateContainer.of(context).curTheme.primary60,
+              color: StateContainer.of(context).curTheme.text60,
               borderRadius: BorderRadius.circular(100.0),
             ),
           ),

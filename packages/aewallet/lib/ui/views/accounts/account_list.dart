@@ -103,7 +103,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                         height: 5,
                         width: MediaQuery.of(context).size.width * 0.15,
                         decoration: BoxDecoration(
-                          color: StateContainer.of(context).curTheme.primary10,
+                          color: StateContainer.of(context).curTheme.text10,
                           borderRadius: BorderRadius.circular(100.0),
                         ),
                       ),
@@ -147,48 +147,6 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                     context, widget.accounts![index], setState);
                               },
                             ),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          height: 20.0,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                StateContainer.of(context)
-                                    .curTheme
-                                    .backgroundDark00!,
-                                StateContainer.of(context)
-                                    .curTheme
-                                    .backgroundDark!,
-                              ],
-                              begin: const AlignmentDirectional(0.5, 1.0),
-                              end: const AlignmentDirectional(0.5, -1.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          height: 20.0,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                StateContainer.of(context)
-                                    .curTheme
-                                    .backgroundDark!,
-                                StateContainer.of(context)
-                                    .curTheme
-                                    .backgroundDark00!
-                              ],
-                              begin: const AlignmentDirectional(0.5, 1.0),
-                              end: const AlignmentDirectional(0.5, -1.0),
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   )),
               const SizedBox(
@@ -238,7 +196,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                 color:
                                                     StateContainer.of(context)
                                                         .curTheme
-                                                        .primary45!)),
+                                                        .text45!)),
                                         content: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -454,7 +412,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
           children: <Widget>[
             Divider(
               height: 2,
-              color: StateContainer.of(context).curTheme.primary15,
+              color: StateContainer.of(context).curTheme.text15,
             ),
             SizedBox(
               height: 70.0,

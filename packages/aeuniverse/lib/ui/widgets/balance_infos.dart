@@ -37,31 +37,8 @@ class BalanceInfosWidget {
         child: Card(
           color: Colors.transparent,
           child: Container(
-            decoration: GradientShadowBoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                    'packages/core_ui/assets/themes/dark/background-1.png'),
-                fit: BoxFit.cover,
-              ),
-              backgroundBlendMode: BlendMode.dstIn,
-              boxShadow: [
-                BoxShadow(
-                  blurStyle: BlurStyle.outer,
-                  spreadRadius: 1,
-                  blurRadius: 5,
-                  offset: Offset(0, 0),
-                ),
-              ],
-              gradient: LinearGradient(
-                colors: <Color>[
-                  Color(0xFF00A4DB),
-                  Color(0xFFCC00FF),
-                ],
-                begin: Alignment(-1.0, 0.0),
-                end: Alignment(1.0, 0.0),
-                transform: GradientRotation(pi / 9),
-              ),
-            ),
+            decoration:
+                StateContainer.of(context).curTheme.getDecorationBalance(),
             child: Container(
               width: MediaQuery.of(context).size.width * 0.95,
               child: Padding(

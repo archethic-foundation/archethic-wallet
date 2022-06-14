@@ -7,77 +7,95 @@ import 'package:flutter/services.dart';
 abstract class BaseTheme {
   String? displayName;
 
-  Color? primary;
-  Color? primary60;
-  Color? primary45;
-  Color? primary30;
-  Color? primary20;
-  Color? primary15;
-  Color? primary10;
-  Color? primary05;
-  Color? primary03;
+  // Main Buttons
+  Color? mainButtonLabel;
+  Color? middleButtonLabel;
+  Gradient? gradientMainButton;
 
-  Color? icon;
-  Color? icon45;
-  Color? icon60;
+  // IconData Widget
+  Color? iconDataWidgetBoxShadow;
+  Color? iconDataWidgetIconGradientLeft;
+  Color? iconDataWidgetIconGradientRight;
+  Color? iconDataWidgetIconBackground;
+  Color? iconDataWidgetIcon;
 
+  // Menu
+  Color? iconDrawer;
+  Color? iconDrawerBackground;
+  Color? drawerBackground;
+
+  // Icons Picker Items
+  Color? pickerItemIconEnabled;
+  Color? pickerItemIconDisabled;
+
+  // Icons TextField
+  Color? textFieldIcon;
+
+  // Texts
+  Color? text;
+  Color? text60;
+  Color? text45;
+  Color? text30;
+  Color? text20;
+  Color? text15;
+  Color? text10;
+  Color? text05;
+  Color? text03;
+  Color? positiveValue;
+  Color? negativeValue;
+  Color? positiveAmount;
+  Color? negativeAmount;
+  Color? warning;
   Color? success;
-  Color? success60;
-  Color? success30;
-  Color? success15;
-  Color? successDark;
-  Color? successDark30;
 
-  Color? background;
-  Color? background40;
-  Color? background00;
+  // Sheet
+  Color? sheetBackground;
 
-  Color? backgroundDark;
-  Color? backgroundDark00;
+  // SnackBar
+  Color? snackBarShadow;
 
+  // Background
   Color? backgroundMainTop;
   Color? backgroundMainBottom;
-
+  Color? background;
+  Color? background40;
+  Color? backgroundDark;
+  Color? backgroundDark00;
   Color? backgroundDarkest;
 
-  Color? overlay20;
-  Color? overlay30;
-  Color? overlay50;
-  Color? overlay70;
-  Color? overlay80;
-  Color? overlay85;
-  Color? overlay90;
+  String? background1Small;
+  String? background2Small;
+  String? background3Small;
+  String? background4Small;
+  String? background5Small;
 
+  // Animation Overlay
   Color? animationOverlayMedium;
   Color? animationOverlayStrong;
 
-  Color? positiveValue;
-  Color? negativeValue;
+  Color? overlay30;
 
-  Color? contextMenuText;
-  Color? contextMenuTextRed;
-
-  Color? choiceOption;
-
-  Color? warning;
-
-  Color? positiveAmount;
-  Color? negativeAmount;
+  Color? activeTrackColorSwitch;
+  Color? inactiveTrackColorSwitch;
 
   Brightness? brightness;
+
   SystemUiOverlayStyle? statusBar;
 
   BoxShadow? boxShadow;
+
   BoxShadow? boxShadowButton;
 
   String? assetsFolder;
+
   String? logo;
   String? logoAlone;
-
-  Color? iconDrawerColor;
-  Color? iconDrawerBackgroundColor;
 
   Widget? getBackgroundScreen(BuildContext context);
 
   Gradient? gradient;
+
+  Decoration getDecorationBalance();
+
+  Decoration getDecorationSheet();
 }

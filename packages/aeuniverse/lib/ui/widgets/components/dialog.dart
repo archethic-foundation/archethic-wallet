@@ -30,7 +30,7 @@ class AppDialogs {
           shape: RoundedRectangleBorder(
               borderRadius: const BorderRadius.all(Radius.circular(16.0)),
               side: BorderSide(
-                  color: StateContainer.of(context).curTheme.primary45!)),
+                  color: StateContainer.of(context).curTheme.text45!)),
           content: Text(content,
               style: AppStyles.textStyleSize16W200Primary(context)),
           actions: <Widget>[
@@ -83,7 +83,7 @@ class AppDialogs {
           shape: RoundedRectangleBorder(
               borderRadius: const BorderRadius.all(Radius.circular(16.0)),
               side: BorderSide(
-                  color: StateContainer.of(context).curTheme.primary45!)),
+                  color: StateContainer.of(context).curTheme.text45!)),
           content: Text(content,
               style: AppStyles.textStyleSize16W200Primary(context)),
           actions: <Widget>[
@@ -169,7 +169,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
       default:
         return CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(
-                StateContainer.of(context).curTheme.primary60!));
+                StateContainer.of(context).curTheme.text60!));
     }
   }
 
