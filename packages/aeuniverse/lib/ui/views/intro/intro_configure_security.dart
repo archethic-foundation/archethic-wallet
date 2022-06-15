@@ -197,6 +197,9 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                   default:
                                     break;
                                 }
+                                StateContainer.of(context).requestUpdate(
+                                    account: StateContainer.of(context)
+                                        .selectedAccount);
                               },
                             ),
                           ),
