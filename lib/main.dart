@@ -6,6 +6,7 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 // Flutter imports:
+import 'package:aeuniverse/ui/themes/theme_dark.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -333,6 +334,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
           Navigator.of(context).pushReplacementNamed('/home');
         }
       } else {
+        StateContainer.of(context).curTheme = DarkTheme();
         Navigator.of(context).pushReplacementNamed('/intro_welcome');
       }
     } catch (e) {
