@@ -21,10 +21,11 @@ class PickerItem {
   DecorationImage? decorationImageItem;
   bool enabled;
   bool displayed;
+  String? subLabel;
 
   PickerItem(this.label, this.description, this.icon, this.iconColor,
       this.value, this.enabled,
-      {this.displayed = true, this.decorationImageItem});
+      {this.displayed = true, this.decorationImageItem, this.subLabel});
 }
 
 class PickerWidget extends StatefulWidget {
@@ -107,13 +108,37 @@ class _PickerWidgetState extends State<PickerWidget> {
                                 ),
                           SizedBox(width: 10),
                           Expanded(
-                            child: Text(pickerItem.label,
-                                style: widget.pickerItems![index].enabled
-                                    ? AppStyles.textStyleSize14W600Primary(
-                                        context)
-                                    : AppStyles
-                                        .textStyleSize14W600PrimaryDisabled(
-                                            context)),
+                            child: Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(pickerItem.label,
+                                      style: widget.pickerItems![index].enabled
+                                          ? AppStyles
+                                              .textStyleSize14W600Primary(
+                                                  context)
+                                          : AppStyles
+                                              .textStyleSize14W600PrimaryDisabled(
+                                                  context)),
+                                ),
+                                widget.pickerItems![index].subLabel != null
+                                    ? Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                            widget
+                                                .pickerItems![index].subLabel!,
+                                            style: widget
+                                                    .pickerItems![index].enabled
+                                                ? AppStyles
+                                                    .textStyleSize12W400Primary(
+                                                        context)
+                                                : AppStyles
+                                                    .textStyleSize12W400PrimaryDisabled(
+                                                        context)),
+                                      )
+                                    : const SizedBox(),
+                              ],
+                            ),
                           ),
                           isItemSelected
                               ? Icon(
