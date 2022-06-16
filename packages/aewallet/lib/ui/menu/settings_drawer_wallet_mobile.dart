@@ -367,67 +367,52 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
         List<PickerItem>.empty(growable: true);
     for (var value in AvailableCurrencyEnum.values) {
       pickerItemsList.add(PickerItem(
-          AvailableCurrency(value).getDisplayName(context),
-          null,
-          'packages/aeuniverse/assets/icons/currency/${AvailableCurrency(value).getIso4217Code().toLowerCase()}.png',
-          null,
-          value,
-          true));
+        AvailableCurrency(value).getDisplayName(context),
+        null,
+        'packages/aeuniverse/assets/icons/currency/${AvailableCurrency(value).getIso4217Code().toLowerCase()}.png',
+        null,
+        value,
+        true,
+        subLabel: value.name == 'USD' || value.name == 'EUR'
+            ? '(Conversion provided by Archethic Oracles)'
+            : null,
+      ));
     }
-    final AvailableCurrencyEnum? selection = await showDialog<
-            AvailableCurrencyEnum>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalization.of(context)!.currency,
-                    style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Row(
+    final AvailableCurrencyEnum? selection =
+        await showDialog<AvailableCurrencyEnum>(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildIconWidget(
-                        context,
-                        'packages/aewallet/assets/icons/oracle.png',
-                        20,
-                        20,
-                      ),
-                      const SizedBox(width: 5),
-                      Expanded(
-                        child: Text(
-                          AppLocalization.of(context)!.currencyOracleInfo,
-                          style: AppStyles.textStyleSize12W100Primary(context),
-                        ),
+                      Text(
+                        AppLocalization.of(context)!.currency,
+                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
+                            context),
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
-            shape: RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                side: BorderSide(
-                    color: StateContainer.of(context).curTheme.text45!)),
-            content: SingleChildScrollView(
-              child: PickerWidget(
-                pickerItems: pickerItemsList,
-                selectedIndex:
-                    StateContainer.of(context).curCurrency.getIndex(),
-                onSelected: (value) {
-                  Navigator.pop(context, value.value);
-                },
-              ),
-            ),
-          );
-        });
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                    side: BorderSide(
+                        color: StateContainer.of(context).curTheme.text45!)),
+                content: SingleChildScrollView(
+                  child: PickerWidget(
+                    pickerItems: pickerItemsList,
+                    selectedIndex:
+                        StateContainer.of(context).curCurrency.getIndex(),
+                    onSelected: (value) {
+                      Navigator.pop(context, value.value);
+                    },
+                  ),
+                ),
+              );
+            });
     if (selection != null) {
       preferences.setCurrency(AvailableCurrency(selection));
       if (StateContainer.of(context).curCurrency.currency != selection) {

@@ -100,6 +100,14 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.text!.withOpacity(0.3));
   }
 
+  static TextStyle textStyleSize12W400PrimaryDisabled(BuildContext context) {
+    return TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: AppFontSizes.size12,
+        fontWeight: FontWeight.w400,
+        color: StateContainer.of(context).curTheme.text!.withOpacity(0.3));
+  }
+
   static TextStyle textStyleSize18W600PrimaryDisabled(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
