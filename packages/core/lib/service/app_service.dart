@@ -29,27 +29,33 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
 
 class AppService {
   Future<List<Transaction>> getTransactionChain(
-      String address, String? pagingAddress) async {
+      String address, String? pagingAddress, String? request) async {
     pagingAddress ??= '';
     final List<Transaction> transactionChain = await sl
         .get<ApiService>()
-        .getTransactionChain(address, pagingAddress: pagingAddress);
+        .getTransactionChain(address,
+            pagingAddress: pagingAddress, request: request!);
     return transactionChain;
   }
 
-  Future<List<TransactionInput>> getTransactionInputs(String address) async {
-    final List<TransactionInput> transactionInputs =
-        await sl.get<ApiService>().getTransactionInputs(address);
+  Future<List<TransactionInput>> getTransactionInputs(
+      String address, String request) async {
+    final List<TransactionInput> transactionInputs = await sl
+        .get<ApiService>()
+        .getTransactionInputs(address, request: request);
     return transactionInputs;
   }
 
   Future<List<RecentTransaction>> getRecentTransactions(
       String genesisAddress, String lastAddress, String? pagingAddress) async {
     pagingAddress ??= '';
-    final List<Transaction> transactionChain =
-        await getTransactionChain(lastAddress, pagingAddress);
+    final List<Transaction> transactionChain = await getTransactionChain(
+        lastAddress,
+        pagingAddress,
+        'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { content , ledger { uco { transfers { amount, to } } } } ');
     final List<TransactionInput> transactionInputsGenesisAddress =
-        await getTransactionInputs(genesisAddress);
+        await getTransactionInputs(
+            genesisAddress, 'from, type, nftAddress, amount, timestamp');
     final List<RecentTransaction> recentTransactions =
         List<RecentTransaction>.empty(growable: true);
 
@@ -105,23 +111,25 @@ class AppService {
         }
       }
 
-      for (TransactionInput transactionInput in transaction.inputs!) {
-        if (transactionInput.from != transaction.address) {
-          final RecentTransaction recentTransaction = RecentTransaction();
-          recentTransaction.address = transactionInput.from;
-          if (transactionInput.type!.toUpperCase() == 'NFT') {
-            recentTransaction.nftAddress = transactionInput.nftAddress!;
-          } else {
-            recentTransaction.nftAddress = '';
+      if (transaction.inputs != null) {
+        for (TransactionInput transactionInput in transaction.inputs!) {
+          if (transactionInput.from != transaction.address) {
+            final RecentTransaction recentTransaction = RecentTransaction();
+            recentTransaction.address = transactionInput.from;
+            if (transactionInput.type!.toUpperCase() == 'NFT') {
+              recentTransaction.nftAddress = transactionInput.nftAddress!;
+            } else {
+              recentTransaction.nftAddress = '';
+            }
+            recentTransaction.amount = transactionInput.amount!;
+            recentTransaction.typeTx = RecentTransaction.transferInput;
+            recentTransaction.from = transactionInput.from;
+            recentTransaction.recipient = transaction.address;
+            recentTransaction.timestamp = transactionInput.timestamp!;
+            recentTransaction.type = 'TransactionInput';
+            recentTransaction.fee = 0;
+            recentTransactions.add(recentTransaction);
           }
-          recentTransaction.amount = transactionInput.amount!;
-          recentTransaction.typeTx = RecentTransaction.transferInput;
-          recentTransaction.from = transactionInput.from;
-          recentTransaction.recipient = transaction.address;
-          recentTransaction.timestamp = transactionInput.timestamp!;
-          recentTransaction.type = 'TransactionInput';
-          recentTransaction.fee = 0;
-          recentTransactions.add(recentTransaction);
         }
       }
     }
@@ -279,11 +287,12 @@ class AppService {
             i++) {
           if (transaction.data!.ledger!.uco!.transfers![i].to != null) {
             String _recipientContactName = '';
-            try {
-              Contact _contact = await sl.get<DBHelper>().getContactWithAddress(
-                  transaction.data!.ledger!.uco!.transfers![i].to!);
+
+            Contact? _contact = await sl.get<DBHelper>().getContactWithAddress(
+                transaction.data!.ledger!.uco!.transfers![i].to!);
+            if (_contact != null) {
               _recipientContactName = _contact.name!;
-            } catch (e) {}
+            }
 
             if (_recipientContactName.isEmpty) {
               transactionsInfos.add(TransactionInfos(
@@ -352,8 +361,9 @@ class AppService {
       String transactionChainSeed,
       String address,
       List<UCOTransfer> listUcoTransfer) async {
-    final Transaction lastTransaction =
-        await sl.get<ApiService>().getLastTransaction(address);
+    final Transaction lastTransaction = await sl
+        .get<ApiService>()
+        .getLastTransaction(address, request: 'chainLength');
     final Transaction transaction =
         Transaction(type: 'transfer', data: Transaction.initData());
     for (UCOTransfer transfer in listUcoTransfer) {

@@ -93,8 +93,11 @@ class KeychainUtil {
     String kDerivationPath = '$kDerivationPathWithoutIndex$index';
     keychain.addService(kServiceName, kDerivationPath);
 
-    final Transaction lastTransactionKeychain =
-        await sl.get<ApiService>().getLastTransaction(genesisAddressKeychain);
+    final Transaction lastTransactionKeychain = await sl
+        .get<ApiService>()
+        .getLastTransaction(genesisAddressKeychain,
+            request:
+                'chainLength, data { content, ownerships { authorizedPublicKeys { publicKey } } }');
 
     final String aesKey = uint8ListToHex(Uint8List.fromList(
         List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
@@ -177,7 +180,7 @@ class KeychainUtil {
         }
       });
 
-      for (int i = 0; i <= accounts.length; i++) {
+      for (int i = 0; i < accounts.length; i++) {
         String? lastAddress = await sl
             .get<AddressService>()
             .lastAddressFromAddress(accounts[i].genesisAddress!);
