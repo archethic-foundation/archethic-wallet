@@ -420,7 +420,7 @@ class StateContainerState extends State<StateContainer> {
       chartInfos!.minY = 9999999;
       chartInfos!.maxY = 0;
       final CoinsCurrentDataResponse coinsCurrentDataResponse =
-          await sl.get<ApiCoinsService>().getCoinsCurrentData();
+          await sl.get<ApiCoinsService>().getCoinsCurrentData(marketData: true);
       if (coinsCurrentDataResponse
                   .marketData!.priceChangePercentage24HInCurrency![
               curCurrency.getIso4217Code().toLowerCase()] !=
