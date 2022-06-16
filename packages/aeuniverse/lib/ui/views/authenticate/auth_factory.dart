@@ -33,7 +33,7 @@ class AuthFactory {
             await _authenticateWithPassword(context, transitions: transitions);
         break;
       case (AuthMethod.pin):
-        auth = await _authenticateWithPin(context);
+        auth = await _authenticateWithPin(context, transitions: transitions);
         break;
       case (AuthMethod.biometrics):
         final bool hasBiometrics =
@@ -67,6 +67,7 @@ class AuthFactory {
         return const YubikeyScreen();
       })) as bool;
     }
+    await Future<void>.delayed(const Duration(milliseconds: 200));
     return auth;
   }
 
@@ -76,14 +77,15 @@ class AuthFactory {
     if (transitions) {
       auth = await Navigator.of(context)
           .push(MaterialPageRoute(builder: (BuildContext context) {
-        return const PasswordScreen();
+        return PasswordScreen();
       })) as bool;
     } else {
       auth = await Navigator.of(context)
           .push(NoPushTransitionRoute(builder: (BuildContext context) {
-        return const PasswordScreen();
+        return PasswordScreen();
       })) as bool;
     }
+    await Future<void>.delayed(const Duration(milliseconds: 200));
     return auth;
   }
 
@@ -119,6 +121,7 @@ class AuthFactory {
   static Future<bool> _authenticateWithBiometrics(BuildContext context) async {
     final bool auth = await sl.get<BiometricUtil>().authenticateWithBiometrics(
         context, AppLocalization.of(context)!.unlockBiometrics);
+    await Future<void>.delayed(const Duration(milliseconds: 200));
     return auth;
   }
 }
