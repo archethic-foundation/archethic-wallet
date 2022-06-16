@@ -222,13 +222,6 @@ class BalanceInfosWidget {
             height: MediaQuery.of(context).size.height * 0.08,
             child: Stack(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: Text(
-                    AppLocalization.of(context)!.priceChartHeader,
-                    style: AppStyles.textStyleSize14W600EquinoxPrimary(context),
-                  ),
-                ),
                 FadeIn(
                   duration: const Duration(milliseconds: 1000),
                   child: Padding(
@@ -244,6 +237,21 @@ class BalanceInfosWidget {
                         : const SizedBox(),
                   ),
                 ),
+                Padding(
+                    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          AppLocalization.of(context)!.priceChartHeader,
+                          style: AppStyles.textStyleSize14W600EquinoxPrimary(
+                              context),
+                        ),
+                        buildIconDataWidget(
+                            context, Icons.arrow_circle_right_outlined, 20, 20),
+                      ],
+                    )),
               ],
             ),
           ),
