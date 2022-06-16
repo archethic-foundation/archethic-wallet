@@ -36,7 +36,7 @@ class DBHelper {
     return contactsListSelected;
   }
 
-  Future<Contact> getContactWithAddress(String address) async {
+  Future<Contact?> getContactWithAddress(String address) async {
     final Box<Contact> box = await Hive.openBox<Contact>(_contactsTable);
     final List<Contact> contactsList = box.values.toList();
 
@@ -46,11 +46,7 @@ class DBHelper {
         contactSelected = _contact;
       }
     }
-    if (contactSelected == null) {
-      throw Exception();
-    } else {
-      return contactSelected;
-    }
+    return contactSelected;
   }
 
   Future<Contact> getContactWithName(String name) async {

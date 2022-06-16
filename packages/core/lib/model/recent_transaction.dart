@@ -54,15 +54,14 @@ class RecentTransaction {
   /// Recipients: For non asset transfers, the list of recipients of the transaction (e.g Smart contract interactions)
   String? recipient;
   Future<String> getRecipientContactName() async {
-    try {
-      String _recipientContactName = '';
-      Contact _contact =
-          await sl.get<DBHelper>().getContactWithAddress(recipient!);
+    String _recipientContactName = '';
+    Contact? _contact =
+        await sl.get<DBHelper>().getContactWithAddress(recipient!);
+    if (_contact != null) {
       _recipientContactName = _contact.name!;
-      return _recipientContactName;
-    } catch (e) {
-      return '';
     }
+
+    return _recipientContactName;
   }
 
   Future<String> get recipientDisplay async {

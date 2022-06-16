@@ -1044,7 +1044,9 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                     _qrCodeButtonVisible = false;
                     _showContactButton = false;
                   });
-                  _sendAddressController!.text = contact.name!;
+                  if (contact!.name != null) {
+                    _sendAddressController!.text = contact.name!;
+                  }
                 }
               } on Exception {
                 // Not a contact
