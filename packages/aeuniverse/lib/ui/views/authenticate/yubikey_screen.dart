@@ -96,7 +96,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
             context,
             StateContainer.of(context).curTheme.text!,
             StateContainer.of(context).curTheme.snackBarShadow!);
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(false);
         break;
       case 'BACKEND_ERROR':
         UIUtil.showSnackbar(
@@ -104,7 +104,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
             context,
             StateContainer.of(context).curTheme.text!,
             StateContainer.of(context).curTheme.snackBarShadow!);
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(false);
         break;
       case 'BAD_SIGNATURE':
         UIUtil.showSnackbar(
@@ -112,7 +112,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
             context,
             StateContainer.of(context).curTheme.text!,
             StateContainer.of(context).curTheme.snackBarShadow!);
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(false);
         break;
       case 'MISSING_PARAMETER':
         UIUtil.showSnackbar(
@@ -120,7 +120,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
             context,
             StateContainer.of(context).curTheme.text!,
             StateContainer.of(context).curTheme.snackBarShadow!);
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(false);
         break;
       case 'NOT_ENOUGH_ANSWERS':
         UIUtil.showSnackbar(
@@ -128,7 +128,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
             context,
             StateContainer.of(context).curTheme.text!,
             StateContainer.of(context).curTheme.snackBarShadow!);
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(false);
         break;
       case 'NO_SUCH_CLIENT':
         UIUtil.showSnackbar(
@@ -136,7 +136,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
             context,
             StateContainer.of(context).curTheme.text!,
             StateContainer.of(context).curTheme.snackBarShadow!);
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(false);
         break;
       case 'OPERATION_NOT_ALLOWED':
         UIUtil.showSnackbar(
@@ -144,7 +144,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
             context,
             StateContainer.of(context).curTheme.text!,
             StateContainer.of(context).curTheme.snackBarShadow!);
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(false);
         break;
       case 'REPLAYED_OTP':
         UIUtil.showSnackbar(
@@ -152,7 +152,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
             context,
             StateContainer.of(context).curTheme.text!,
             StateContainer.of(context).curTheme.snackBarShadow!);
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(false);
         break;
       case 'REPLAYED_REQUEST':
         UIUtil.showSnackbar(
@@ -160,7 +160,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
             context,
             StateContainer.of(context).curTheme.text!,
             StateContainer.of(context).curTheme.snackBarShadow!);
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(false);
         break;
       case 'RESPONSE_KO':
         UIUtil.showSnackbar(
@@ -168,7 +168,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
             context,
             StateContainer.of(context).curTheme.text!,
             StateContainer.of(context).curTheme.snackBarShadow!);
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(false);
         break;
       case 'OK':
         UIUtil.showSnackbar(
@@ -185,7 +185,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
             context,
             StateContainer.of(context).curTheme.text!,
             StateContainer.of(context).curTheme.snackBarShadow!);
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(false);
         break;
     }
     setState(() {});
@@ -231,7 +231,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                               key: const Key('back'),
                               color: StateContainer.of(context).curTheme.text,
                               onPressed: () {
-                                Navigator.pop(context);
+                                Navigator.pop(context, false);
                               },
                             ),
                           ),
