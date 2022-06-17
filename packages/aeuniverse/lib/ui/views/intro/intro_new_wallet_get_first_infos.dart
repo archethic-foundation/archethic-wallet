@@ -37,7 +37,7 @@ class _IntroNewWalletDisclaimerState
   FocusNode nameFocusNode = FocusNode();
   TextEditingController nameController = TextEditingController();
   String? nameError;
-  final RegExp validCharacters = RegExp(r'^[A-Z0-9]+$');
+  final RegExp validCharacters = RegExp(r'^[A-Z0-9_]+$');
 
   @override
   Widget build(BuildContext context) {

@@ -49,7 +49,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
   final GlobalKey expandedKey = GlobalKey();
   final ScrollController scrollController = ScrollController();
   bool? isPressed;
-  final RegExp validCharacters = RegExp(r'^[A-Z0-9]+$');
+  final RegExp validCharacters = RegExp(r'^[A-Z0-9_]+$');
 
   @override
   void initState() {
