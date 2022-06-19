@@ -118,19 +118,19 @@ class OrangeTheme implements BaseTheme {
 
   @override
   String? background1Small =
-      'packages/core_ui/assets/themes/orange/v01-waves-orange-1100.jpg';
+      'packages/core_ui/assets/themes/orange/v01-waves-1100.jpg';
   @override
   String? background2Small =
-      'packages/core_ui/assets/themes/orange/v02-waves-orange-1100.jpg';
+      'packages/core_ui/assets/themes/orange/v02-waves-1100.jpg';
   @override
   String? background3Small =
-      'packages/core_ui/assets/themes/orange/v03-waves-orange-1100.jpg';
+      'packages/core_ui/assets/themes/orange/v03-waves-1100.jpg';
   @override
   String? background4Small =
-      'packages/core_ui/assets/themes/orange/v04-waves-orange-1100.jpg';
+      'packages/core_ui/assets/themes/orange/v04-waves-1100.jpg';
   @override
   String? background5Small =
-      'packages/core_ui/assets/themes/orange/v05-waves-orange-1100.jpg';
+      'packages/core_ui/assets/themes/orange/v05-waves-1100.jpg';
 
   // Animation Overlay
   @override

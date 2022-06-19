@@ -762,7 +762,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       pickerItemsList.add(PickerItem(value.name, null, null, null, value, true,
           decorationImageItem: DecorationImage(
               image: AssetImage(
-                  'packages/core_ui/assets/themes/${value.name}/v0${Random().nextInt(4) + 1}-waves-${value.name}-1100.jpg'),
+                  'packages/core_ui/assets/themes/${value.name}/v0${Random().nextInt(4) + 1}-waves-1100.jpg'),
               opacity: 0.5,
               fit: BoxFit.fitWidth)));
     }

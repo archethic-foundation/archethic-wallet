@@ -11,9 +11,9 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:core_ui/ui/themes/themes.dart';
 
-class WhiteTheme implements BaseTheme {
+class GreenTheme implements BaseTheme {
   @override
-  String? displayName = 'White';
+  String? displayName = 'Green';
 
   // Main Buttons
   @override
@@ -33,7 +33,7 @@ class WhiteTheme implements BaseTheme {
 
   // IconData Widget
   @override
-  Color? iconDataWidgetBoxShadow = Color(0xFFFFFFFF).withOpacity(0.1);
+  Color? iconDataWidgetBoxShadow = Color(0xFFFFFFFF).withOpacity(0.5);
   @override
   Color? iconDataWidgetIconGradientLeft = Color(0xFF00A4DB);
   @override
@@ -41,15 +41,15 @@ class WhiteTheme implements BaseTheme {
   @override
   Color? iconDataWidgetIconBackground = Color(0xFFFFFFFF);
   @override
-  Color? iconDataWidgetIcon = Color(0xFF000000);
+  Color? iconDataWidgetIcon = Color(0xFF009D78);
 
   // Menu
   @override
-  Color? iconDrawer = Color(0xFF000000);
+  Color? iconDrawer = Color(0xFF009D78);
   @override
-  Color? iconDrawerBackground = Color(0xFFFFFFFF);
+  Color? iconDrawerBackground = Color(0xFFFFFFFF).withOpacity(0.1);
   @override
-  Color? drawerBackground = Color(0xFFC7D1DA).withOpacity(0.7);
+  Color? drawerBackground = Color(0xFF062F31);
 
   // Icons Picker Items
   @override
@@ -58,27 +58,27 @@ class WhiteTheme implements BaseTheme {
   Color? pickerItemIconDisabled = Color(0xFFFFFFFF).withOpacity(0.6);
 
   // Icons TextField
-  Color? textFieldIcon = Color(0xFFFFFFFF);
+  Color? textFieldIcon = Color(0xFF009D78);
 
   // Texts
   @override
-  Color? text = Color(0xFF000000);
+  Color? text = Color(0xFFFFFFFF);
   @override
-  Color? text60 = Color(0xFF000000).withOpacity(0.6);
+  Color? text60 = Color(0xFFFFFFFF).withOpacity(0.6);
   @override
-  Color? text45 = Color(0xFF000000).withOpacity(0.45);
+  Color? text45 = Color(0xFFFFFFFF).withOpacity(0.45);
   @override
-  Color? text30 = Color(0xFF000000).withOpacity(0.3);
+  Color? text30 = Color(0xFFFFFFFF).withOpacity(0.3);
   @override
-  Color? text20 = Color(0xFF000000).withOpacity(0.2);
+  Color? text20 = Color(0xFFFFFFFF).withOpacity(0.2);
   @override
-  Color? text15 = Color(0xFF000000).withOpacity(0.15);
+  Color? text15 = Color(0xFFFFFFFF).withOpacity(0.15);
   @override
-  Color? text10 = Color(0xFF000000).withOpacity(0.1);
+  Color? text10 = Color(0xFFFFFFFF).withOpacity(0.1);
   @override
-  Color? text05 = Color(0xFF000000).withOpacity(0.05);
+  Color? text05 = Color(0xFFFFFFFF).withOpacity(0.05);
   @override
-  Color? text03 = Color(0xFF000000).withOpacity(0.03);
+  Color? text03 = Color(0xFFFFFFFF).withOpacity(0.03);
   @override
   Color? positiveValue = Colors.lightGreenAccent[400];
   @override
@@ -94,52 +94,52 @@ class WhiteTheme implements BaseTheme {
 
   // Sheet
   @override
-  Color? sheetBackground = Color(0xFFC7D1DA).withOpacity(0.7);
+  Color? sheetBackground = Color(0xFF062F31).withOpacity(0.7);
 
   // SnackBar
   @override
-  Color? snackBarShadow = Color(0xFFC7D1DA).withOpacity(0.8);
+  Color? snackBarShadow = Color(0xFF062F31).withOpacity(0.8);
 
   // Background
   @override
-  Color? backgroundMainTop = Color(0xFFC7D1DA);
+  Color? backgroundMainTop = Color(0xFF062F31);
   @override
-  Color? backgroundMainBottom = Color(0xFFC7D1DA);
+  Color? backgroundMainBottom = Color(0xFF062F31);
   @override
-  Color? background = Color(0xFFC7D1DA);
+  Color? background = Color(0xFF062F31);
   @override
-  Color? background40 = Color(0xFFC7D1DA).withOpacity(0.4);
+  Color? background40 = Color(0xFF062F31).withOpacity(0.4);
   @override
-  Color? backgroundDark = Color(0xFFC7D1DA);
+  Color? backgroundDark = Color(0xFF062F31);
   @override
-  Color? backgroundDark00 = Color(0xFFC7D1DA).withOpacity(0.0);
+  Color? backgroundDark00 = Color(0xFF062F31).withOpacity(0.0);
   @override
-  Color? backgroundDarkest = Color(0xFFFFFFFF);
+  Color? backgroundDarkest = Color(0xFF009D78);
 
   @override
   String? background1Small =
-      'packages/core_ui/assets/themes/white/v01-waves-1100.jpg';
+      'packages/core_ui/assets/themes/green/v01-waves-1100.jpg';
   @override
   String? background2Small =
-      'packages/core_ui/assets/themes/white/v02-waves-1100.jpg';
+      'packages/core_ui/assets/themes/green/v02-waves-1100.jpg';
   @override
   String? background3Small =
-      'packages/core_ui/assets/themes/white/v03-waves-1100.jpg';
+      'packages/core_ui/assets/themes/green/v03-waves-1100.jpg';
   @override
   String? background4Small =
-      'packages/core_ui/assets/themes/white/v04-waves-1100.jpg';
+      'packages/core_ui/assets/themes/green/v04-waves-1100.jpg';
   @override
   String? background5Small =
-      'packages/core_ui/assets/themes/white/v05-waves-1100.jpg';
+      'packages/core_ui/assets/themes/green/v05-waves-1100.jpg';
 
   // Animation Overlay
   @override
-  Color? animationOverlayMedium = Color(0xFFC7D1DA).withOpacity(0.7);
+  Color? animationOverlayMedium = Color(0xFF062F31).withOpacity(0.7);
   @override
-  Color? animationOverlayStrong = Color(0xFFC7D1DA).withOpacity(0.85);
+  Color? animationOverlayStrong = Color(0xFF062F31).withOpacity(0.85);
 
   @override
-  Color? overlay30 = Color(0xFFC7D1DA).withOpacity(0.3);
+  Color? overlay30 = Color(0xFF062F31).withOpacity(0.3);
 
   @override
   Color? activeTrackColorSwitch = Color(0xFFFFFFFF);
@@ -158,7 +158,7 @@ class WhiteTheme implements BaseTheme {
   BoxShadow? boxShadowButton = const BoxShadow(color: Colors.transparent);
 
   @override
-  String? assetsFolder = 'packages/core_ui/assets/themes/white/';
+  String? assetsFolder = 'packages/core_ui/assets/themes/green/';
   @override
   String? logo = 'logo';
   @override
@@ -197,8 +197,8 @@ class WhiteTheme implements BaseTheme {
       backgroundBlendMode: BlendMode.dstIn,
       gradient: LinearGradient(
         colors: <Color>[
-          Color(0xFFC7D1DA),
-          Color(0xFFFFFFFF),
+          Color(0xFF062F31),
+          Color(0xFF009D78),
         ],
         begin: Alignment(-1.0, 0.0),
         end: Alignment(1.0, 0.0),

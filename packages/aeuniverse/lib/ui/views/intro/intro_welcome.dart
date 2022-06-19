@@ -177,6 +177,12 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                             onPressed: () async {
                               if (checkedValue) {
                                 await _networkDialog();
+                                /* setState(() {
+                                  _curNetworksSetting = NetworksSetting(
+                                      AvailableNetworks.ArchethicTestNet);
+                                  StateContainer.of(context).curNetwork =
+                                      _curNetworksSetting;
+                                });*/
                                 Navigator.of(context).pushNamed(
                                   '/intro_welcome_get_first_infos',
                                 );
@@ -198,6 +204,12 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                             Dimens.buttonBottomDimens,
                             onPressed: () async {
                               if (checkedValue) {
+                                /*setState(() {
+                                  _curNetworksSetting = NetworksSetting(
+                                      AvailableNetworks.ArchethicTestNet);
+                                  StateContainer.of(context).curNetwork =
+                                      _curNetworksSetting;
+                                });*/
                                 await _networkDialog();
                                 Navigator.of(context)
                                     .pushNamed('/intro_import');

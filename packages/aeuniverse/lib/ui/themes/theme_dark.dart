@@ -118,19 +118,19 @@ class DarkTheme implements BaseTheme {
 
   @override
   String? background1Small =
-      'packages/core_ui/assets/themes/dark/v01-waves-dark-1100.jpg';
+      'packages/core_ui/assets/themes/dark/v01-waves-1100.jpg';
   @override
   String? background2Small =
-      'packages/core_ui/assets/themes/dark/v02-waves-dark-1100.jpg';
+      'packages/core_ui/assets/themes/dark/v02-waves-1100.jpg';
   @override
   String? background3Small =
-      'packages/core_ui/assets/themes/dark/v03-waves-dark-1100.jpg';
+      'packages/core_ui/assets/themes/dark/v03-waves-1100.jpg';
   @override
   String? background4Small =
-      'packages/core_ui/assets/themes/dark/v04-waves-dark-1100.jpg';
+      'packages/core_ui/assets/themes/dark/v04-waves-1100.jpg';
   @override
   String? background5Small =
-      'packages/core_ui/assets/themes/dark/v05-waves-dark-1100.jpg';
+      'packages/core_ui/assets/themes/dark/v05-waves-1100.jpg';
 
   // Animation Overlay
   @override
