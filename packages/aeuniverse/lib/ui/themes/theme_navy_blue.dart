@@ -47,7 +47,7 @@ class NavyBlueTheme implements BaseTheme {
   @override
   Color? iconDrawer = Color(0xFF053A5C);
   @override
-  Color? iconDrawerBackground = Color(0xFFFFFFFF).withOpacity(0.1);
+  Color? iconDrawerBackground = Color(0xFFFFFFFF).withOpacity(0.2);
   @override
   Color? drawerBackground = Color(0xFF171433);
 
@@ -89,8 +89,6 @@ class NavyBlueTheme implements BaseTheme {
   Color? negativeAmount = Colors.redAccent[400];
   @override
   Color? warning = Colors.yellow[600];
-  @override
-  Color? success = Color(0xFFfc9034);
 
   // Sheet
   @override

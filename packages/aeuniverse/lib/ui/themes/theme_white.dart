@@ -41,15 +41,15 @@ class WhiteTheme implements BaseTheme {
   @override
   Color? iconDataWidgetIconBackground = Color(0xFFFFFFFF);
   @override
-  Color? iconDataWidgetIcon = Color(0xFF000000);
+  Color? iconDataWidgetIcon = Color(0xFF323232);
 
   // Menu
   @override
-  Color? iconDrawer = Color(0xFF000000);
+  Color? iconDrawer = Color.fromARGB(255, 48, 48, 48);
   @override
   Color? iconDrawerBackground = Color(0xFFFFFFFF);
   @override
-  Color? drawerBackground = Color(0xFFC7D1DA).withOpacity(0.7);
+  Color? drawerBackground = Color(0xFFC7D1DA);
 
   // Icons Picker Items
   @override
@@ -62,25 +62,25 @@ class WhiteTheme implements BaseTheme {
 
   // Texts
   @override
-  Color? text = Color(0xFF000000);
+  Color? text = Color(0xFF323232);
   @override
-  Color? text60 = Color(0xFF000000).withOpacity(0.6);
+  Color? text60 = Color(0xFF323232).withOpacity(0.6);
   @override
-  Color? text45 = Color(0xFF000000).withOpacity(0.45);
+  Color? text45 = Color(0xFF323232).withOpacity(0.45);
   @override
-  Color? text30 = Color(0xFF000000).withOpacity(0.3);
+  Color? text30 = Color(0xFF323232).withOpacity(0.3);
   @override
-  Color? text20 = Color(0xFF000000).withOpacity(0.2);
+  Color? text20 = Color(0xFF323232).withOpacity(0.2);
   @override
-  Color? text15 = Color(0xFF000000).withOpacity(0.15);
+  Color? text15 = Color(0xFF323232).withOpacity(0.15);
   @override
-  Color? text10 = Color(0xFF000000).withOpacity(0.1);
+  Color? text10 = Color(0xFF323232).withOpacity(0.1);
   @override
-  Color? text05 = Color(0xFF000000).withOpacity(0.05);
+  Color? text05 = Color(0xFF323232).withOpacity(0.05);
   @override
-  Color? text03 = Color(0xFF000000).withOpacity(0.03);
+  Color? text03 = Color(0xFF323232).withOpacity(0.03);
   @override
-  Color? positiveValue = Colors.lightGreenAccent[400];
+  Color? positiveValue = Colors.lightGreenAccent[800];
   @override
   Color? negativeValue = Colors.red[300];
   @override
@@ -89,8 +89,6 @@ class WhiteTheme implements BaseTheme {
   Color? negativeAmount = Colors.redAccent[400];
   @override
   Color? warning = Colors.yellow[600];
-  @override
-  Color? success = Color(0xFFfc9034);
 
   // Sheet
   @override

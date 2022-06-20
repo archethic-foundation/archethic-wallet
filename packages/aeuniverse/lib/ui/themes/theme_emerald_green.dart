@@ -47,7 +47,7 @@ class EmeraldGreenTheme implements BaseTheme {
   @override
   Color? iconDrawer = Color(0xFF228B77);
   @override
-  Color? iconDrawerBackground = Color(0xFFFFFFFF).withOpacity(0.1);
+  Color? iconDrawerBackground = Color(0xFFFFFFFF);
   @override
   Color? drawerBackground = Color(0xFF473B53);
 
@@ -89,8 +89,6 @@ class EmeraldGreenTheme implements BaseTheme {
   Color? negativeAmount = Colors.redAccent[400];
   @override
   Color? warning = Colors.yellow[600];
-  @override
-  Color? success = Color(0xFFfc9034);
 
   // Sheet
   @override

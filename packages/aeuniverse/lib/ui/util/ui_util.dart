@@ -18,7 +18,7 @@ import 'package:url_launcher/url_launcher.dart';
 // Project imports:
 import 'package:aeuniverse/ui/util/styles.dart';
 
-enum ThreeLineAddressTextType { primary60, primary, success, successFull }
+enum ThreeLineAddressTextType { primary60, primary }
 
 enum OneLineAddressTextType { primary60, primary, success }
 
@@ -169,112 +169,7 @@ class UIUtil {
             )
           ],
         );
-      case ThreeLineAddressTextType.success:
-        final Widget contactWidget = contactName != null
-            ? RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                    text: contactName,
-                    style: AppStyles.textStyleSize14W100Sucess(context)))
-            : const SizedBox();
-        return Column(
-          children: <Widget>[
-            contactWidget,
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: '',
-                children: <InlineSpan>[
-                  TextSpan(
-                    text: stringPartOne,
-                    style: AppStyles.textStyleSize14W100Primary(context),
-                  ),
-                  TextSpan(
-                    text: stringPartTwo,
-                    style: AppStyles.textStyleSize14W100Primary(context),
-                  ),
-                ],
-              ),
-            ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: '',
-                children: <InlineSpan>[
-                  TextSpan(
-                    text: stringPartThree,
-                    style: AppStyles.textStyleSize14W100Primary(context),
-                  ),
-                ],
-              ),
-            ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: '',
-                children: <InlineSpan>[
-                  TextSpan(
-                    text: stringPartFour,
-                    style: AppStyles.textStyleSize14W100Primary(context),
-                  ),
-                  TextSpan(
-                    text: stringPartFive,
-                    style: AppStyles.textStyleSize14W100Primary(context),
-                  ),
-                ],
-              ),
-            )
-          ],
-        );
-      case ThreeLineAddressTextType.successFull:
-        return Column(
-          children: <Widget>[
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: '',
-                children: <InlineSpan>[
-                  TextSpan(
-                    text: stringPartOne,
-                    style: AppStyles.textStyleSize14W100Primary(context),
-                  ),
-                  TextSpan(
-                    text: stringPartTwo,
-                    style: AppStyles.textStyleSize14W100Primary(context),
-                  ),
-                ],
-              ),
-            ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: '',
-                children: <InlineSpan>[
-                  TextSpan(
-                    text: stringPartThree,
-                    style: AppStyles.textStyleSize14W100Primary(context),
-                  ),
-                ],
-              ),
-            ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: '',
-                children: <InlineSpan>[
-                  TextSpan(
-                    text: stringPartFour,
-                    style: AppStyles.textStyleSize14W100Primary(context),
-                  ),
-                  TextSpan(
-                    text: stringPartFive,
-                    style: AppStyles.textStyleSize14W100Primary(context),
-                  ),
-                ],
-              ),
-            )
-          ],
-        );
+
       default:
         throw UIException('Invalid threeLineAddressText Type $type');
     }
@@ -330,31 +225,6 @@ class UIUtil {
                   TextSpan(
                     text: stringPartFive,
                     style: AppStyles.textStyleSize14W100Primary(context),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-      case OneLineAddressTextType.success:
-        return Column(
-          children: <Widget>[
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: '',
-                children: <InlineSpan>[
-                  TextSpan(
-                    text: stringPartOne,
-                    style: AppStyles.textStyleSize14W100Sucess(context),
-                  ),
-                  TextSpan(
-                    text: '...',
-                    style: AppStyles.textStyleSize14W100Primary(context),
-                  ),
-                  TextSpan(
-                    text: stringPartFive,
-                    style: AppStyles.textStyleSize14W100Sucess(context),
                   ),
                 ],
               ),

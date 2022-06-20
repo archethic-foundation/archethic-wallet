@@ -41,13 +41,13 @@ class BlueTheme implements BaseTheme {
   @override
   Color? iconDataWidgetIconBackground = Color(0xFFFFFFFF);
   @override
-  Color? iconDataWidgetIcon = Color(0xFF0787A3);
+  Color? iconDataWidgetIcon = Color(0xFF0688E8);
 
   // Menu
   @override
-  Color? iconDrawer = Color(0xFF0787A3);
+  Color? iconDrawer = Color.fromARGB(255, 6, 54, 120);
   @override
-  Color? iconDrawerBackground = Color(0xFFFFFFFF).withOpacity(0.1);
+  Color? iconDrawerBackground = Color(0xFFFFFFFF);
   @override
   Color? drawerBackground = Color(0xFF1B55A7);
 
@@ -58,7 +58,7 @@ class BlueTheme implements BaseTheme {
   Color? pickerItemIconDisabled = Color(0xFFFFFFFF).withOpacity(0.6);
 
   // Icons TextField
-  Color? textFieldIcon = Color(0xFF0787A3);
+  Color? textFieldIcon = Color(0xFF0688E8);
 
   // Texts
   @override
@@ -89,8 +89,6 @@ class BlueTheme implements BaseTheme {
   Color? negativeAmount = Colors.redAccent[400];
   @override
   Color? warning = Colors.yellow[600];
-  @override
-  Color? success = Color(0xFFfc9034);
 
   // Sheet
   @override
@@ -114,7 +112,7 @@ class BlueTheme implements BaseTheme {
   @override
   Color? backgroundDark00 = Color(0xFF1B55A7).withOpacity(0.0);
   @override
-  Color? backgroundDarkest = Color(0xFF0787A3);
+  Color? backgroundDarkest = Color(0xFF0688E8);
 
   @override
   String? background1Small =
@@ -198,7 +196,7 @@ class BlueTheme implements BaseTheme {
       gradient: LinearGradient(
         colors: <Color>[
           Color(0xFF1B55A7),
-          Color(0xFF0787A3),
+          Color(0xFF0688E8),
         ],
         begin: Alignment(-1.0, 0.0),
         end: Alignment(1.0, 0.0),

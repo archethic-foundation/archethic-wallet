@@ -47,7 +47,7 @@ class RedTheme implements BaseTheme {
   @override
   Color? iconDrawer = Color(0xFFCD195B);
   @override
-  Color? iconDrawerBackground = Color(0xFFFFFFFF).withOpacity(0.1);
+  Color? iconDrawerBackground = Color(0xFFFFFFFF);
   @override
   Color? drawerBackground = Color(0xFF571150);
 
@@ -89,8 +89,6 @@ class RedTheme implements BaseTheme {
   Color? negativeAmount = Colors.redAccent[400];
   @override
   Color? warning = Colors.yellow[600];
-  @override
-  Color? success = Color(0xFFfc9034);
 
   // Sheet
   @override

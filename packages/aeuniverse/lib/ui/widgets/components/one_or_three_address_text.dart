@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:aeuniverse/ui/util/styles.dart';
 
-enum AddressTextType { primary60, primary, success }
+enum AddressTextType { primary60, primary }
 
 class OneOrThreeLineAddressText extends StatelessWidget {
   OneOrThreeLineAddressText(
@@ -71,31 +71,6 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                     TextSpan(
                       text: stringPartFive,
                       style: AppStyles.textStyleSize14W100Primary(context),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          );
-        case AddressTextType.success:
-          return Column(
-            children: <Widget>[
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  text: '',
-                  children: <InlineSpan>[
-                    TextSpan(
-                      text: stringPartOne,
-                      style: AppStyles.textStyleSize14W100Sucess(context),
-                    ),
-                    TextSpan(
-                      text: '...',
-                      style: AppStyles.textStyleSize14W100Primary(context),
-                    ),
-                    TextSpan(
-                      text: stringPartFive,
-                      style: AppStyles.textStyleSize14W100Sucess(context),
                     ),
                   ],
                 ),
@@ -239,63 +214,6 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                   TextSpan(
                     text: stringPartFive,
                     style: AppStyles.textStyleSize14W100Primary(context),
-                  ),
-                ],
-              ),
-            )
-          ],
-        );
-      case AddressTextType.success:
-        final Widget contactWidget = contactName != null
-            ? RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                    text: contactName,
-                    style: AppStyles.textStyleSize14W100Sucess(context)))
-            : const SizedBox();
-        return Column(
-          children: <Widget>[
-            contactWidget,
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: '',
-                children: <InlineSpan>[
-                  TextSpan(
-                    text: stringPartOne,
-                    style: AppStyles.textStyleSize14W100Sucess(context),
-                  ),
-                  TextSpan(
-                    text: stringPartTwo,
-                    style: AppStyles.textStyleSize14W100Primary(context),
-                  ),
-                ],
-              ),
-            ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: '',
-                children: <InlineSpan>[
-                  TextSpan(
-                    text: stringPartThree,
-                    style: AppStyles.textStyleSize14W100Primary(context),
-                  ),
-                ],
-              ),
-            ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: '',
-                children: <InlineSpan>[
-                  TextSpan(
-                    text: stringPartFour,
-                    style: AppStyles.textStyleSize14W100Primary(context),
-                  ),
-                  TextSpan(
-                    text: stringPartFive,
-                    style: AppStyles.textStyleSize14W100Sucess(context),
                   ),
                 ],
               ),

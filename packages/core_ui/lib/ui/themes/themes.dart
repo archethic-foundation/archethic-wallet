@@ -46,7 +46,6 @@ abstract class BaseTheme {
   Color? positiveAmount;
   Color? negativeAmount;
   Color? warning;
-  Color? success;
 
   // Sheet
   Color? sheetBackground;

@@ -89,8 +89,6 @@ class DarkTheme implements BaseTheme {
   Color? negativeAmount = Colors.redAccent[400];
   @override
   Color? warning = Colors.yellow[600];
-  @override
-  Color? success = Color(0xFFFFFFFF);
 
   // Sheet
   @override
