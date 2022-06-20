@@ -45,7 +45,7 @@ class NavyBlueTheme implements BaseTheme {
 
   // Menu
   @override
-  Color? iconDrawer = Color(0xFF053A5C);
+  Color? iconDrawer = Color(0xFFFFFFFF);
   @override
   Color? iconDrawerBackground = Color(0xFFFFFFFF).withOpacity(0.2);
   @override

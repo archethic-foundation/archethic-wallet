@@ -542,7 +542,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       pickerItemsList.add(PickerItem(
           NetworksSetting(value).getDisplayName(context),
           await NetworksSetting(value).getLink(),
-          'packages/core_ui/assets/themes/dark/logo_alone.png',
+         '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.png',
           null,
           value,
           value == AvailableNetworks.ArchethicMainNet ? false : true));

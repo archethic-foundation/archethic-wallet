@@ -4,6 +4,7 @@
 import 'package:aeuniverse/ui/themes/theme_blue.dart';
 import 'package:aeuniverse/ui/themes/theme_emerald_green.dart';
 import 'package:aeuniverse/ui/themes/theme_green.dart';
+import 'package:aeuniverse/ui/themes/theme_navy_blue.dart';
 import 'package:aeuniverse/ui/themes/theme_orange.dart';
 import 'package:aeuniverse/ui/themes/theme_red.dart';
 import 'package:aeuniverse/ui/themes/theme_red_fire.dart';
@@ -67,6 +68,8 @@ class ThemeSetting extends SettingSelectionItem {
         return WhiteTheme();
       case ThemeOptions.orange:
         return OrangeTheme();
+      case ThemeOptions.navy_blue:
+        return NavyBlueTheme();
       case ThemeOptions.blue:
         return BlueTheme();
       case ThemeOptions.emerald_green:
