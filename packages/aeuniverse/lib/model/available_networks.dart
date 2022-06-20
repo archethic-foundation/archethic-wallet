@@ -76,19 +76,6 @@ class NetworksSetting extends SettingSelectionItem {
     }
   }
 
-  Color? getColor() {
-    switch (network) {
-      case AvailableNetworks.ArchethicMainNet:
-        return null;
-      case AvailableNetworks.ArchethicTestNet:
-        return Colors.green;
-      case AvailableNetworks.ArchethicDevNet:
-        return Colors.orange;
-      default:
-        return null;
-    }
-  }
-
   String getNetworkCryptoCurrencyLabel() {
     switch (network) {
       case AvailableNetworks.ArchethicMainNet:

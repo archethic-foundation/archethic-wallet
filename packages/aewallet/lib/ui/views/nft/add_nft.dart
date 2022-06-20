@@ -100,35 +100,10 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                         children: <Widget>[
                           Column(
                             children: [
-                              StateContainer.of(context)
-                                          .curNetwork
-                                          .getIndex() ==
-                                      AvailableNetworks.ArchethicTestNet.index
-                                  ? SvgPicture.asset(
-                                      '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
-                                      color: Colors.green,
-                                      height: 15,
-                                    )
-                                  : StateContainer.of(context)
-                                              .curNetwork
-                                              .getIndex() ==
-                                          AvailableNetworks
-                                              .ArchethicDevNet.index
-                                      ? SvgPicture.asset(
-                                          '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
-                                          color: Colors.orange,
-                                          height: 15,
-                                        )
-                                      : SvgPicture.asset(
-                                          '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
-                                          height: 15,
-                                        ),
-                              Text(
-                                  StateContainer.of(context)
-                                      .curNetwork
-                                      .getDisplayName(context),
-                                  style: AppStyles.textStyleSize10W100Primary(
-                                      context)),
+                              SvgPicture.asset(
+                                '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
+                                height: 30,
+                              ),
                             ],
                           ),
                           const SizedBox(

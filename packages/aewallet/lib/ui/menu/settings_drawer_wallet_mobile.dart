@@ -543,7 +543,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
           NetworksSetting(value).getDisplayName(context),
           await NetworksSetting(value).getLink(),
           'packages/core_ui/assets/themes/dark/logo_alone.png',
-          NetworksSetting(value).getColor(),
+          null,
           value,
           value == AvailableNetworks.ArchethicMainNet ? false : true));
     }
@@ -591,8 +591,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       child: Column(children: [
                         SvgPicture.asset(
                           '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
-                          color: Colors.orange,
-                          height: 15,
+                          height: 30,
                         ),
                         Text(
                             StateContainer.of(context)
@@ -1012,62 +1011,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,
                     ),
-                    AppSettings.buildSettingsListItemWithDefaultValue(
-                        context,
-                        AppLocalization.of(context)!.networksHeader,
-                        _curNetworksSetting,
-                        'packages/aeuniverse/assets/icons/url.png',
-                        StateContainer.of(context).curTheme.iconDrawer!,
-                        _networkDialog),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemSingleLine(
-                        context,
-                        AppLocalization.of(context)!.removeWallet,
-                        AppStyles.textStyleSize16W600EquinoxRed(context),
-                        'packages/aewallet/assets/icons/rubbish.png',
-                        Colors.red, onPressed: () {
-                      AppDialogs.showConfirmDialog(
-                          context,
-                          CaseChange.toUpperCase(
-                              AppLocalization.of(context)!.warning,
-                              StateContainer.of(context)
-                                  .curLanguage
-                                  .getLocaleString()),
-                          AppLocalization.of(context)!.removeWalletDetail,
-                          AppLocalization.of(context)!
-                              .removeWalletAction
-                              .toUpperCase(), () {
-                        // Show another confirm dialog
-                        AppDialogs.showConfirmDialog(
-                            context,
-                            AppLocalization.of(context)!.removeWalletAreYouSure,
-                            AppLocalization.of(context)!
-                                .removeWalletReassurance,
-                            CaseChange.toUpperCase(
-                                AppLocalization.of(context)!.yes,
-                                StateContainer.of(context)
-                                    .curLanguage
-                                    .getLocaleString()), () async {
-                          // Delete all data
-                          await sl.get<DBHelper>().dropAll();
-                          Vault vault = await Vault.getInstance();
-                          await vault.deleteAll();
-                          Preferences preferences =
-                              await Preferences.getInstance();
-                          await preferences.deleteAll();
-                          StateContainer.of(context).logOut();
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/', (Route<dynamic> route) => false);
-                        });
-                      });
-                    }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
                     Container(
                       alignment: Alignment.center,
                       margin: const EdgeInsetsDirectional.only(
@@ -1260,6 +1203,17 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           style: AppStyles.textStyleSize20W700EquinoxPrimary(
                               context)),
                     ),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.text15,
+                    ),
+                    AppSettings.buildSettingsListItemWithDefaultValue(
+                        context,
+                        AppLocalization.of(context)!.networksHeader,
+                        _curNetworksSetting,
+                        'packages/aeuniverse/assets/icons/url.png',
+                        StateContainer.of(context).curTheme.iconDrawer!,
+                        _networkDialog),
                     // Authentication Method
                     Divider(
                       height: 2,
@@ -1352,6 +1306,51 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     Divider(
                         height: 2,
                         color: StateContainer.of(context).curTheme.text15),
+                    AppSettings.buildSettingsListItemSingleLine(
+                        context,
+                        AppLocalization.of(context)!.removeWallet,
+                        AppStyles.textStyleSize16W600EquinoxRed(context),
+                        'packages/aewallet/assets/icons/rubbish.png',
+                        Colors.red, onPressed: () {
+                      AppDialogs.showConfirmDialog(
+                          context,
+                          CaseChange.toUpperCase(
+                              AppLocalization.of(context)!.warning,
+                              StateContainer.of(context)
+                                  .curLanguage
+                                  .getLocaleString()),
+                          AppLocalization.of(context)!.removeWalletDetail,
+                          AppLocalization.of(context)!
+                              .removeWalletAction
+                              .toUpperCase(), () {
+                        // Show another confirm dialog
+                        AppDialogs.showConfirmDialog(
+                            context,
+                            AppLocalization.of(context)!.removeWalletAreYouSure,
+                            AppLocalization.of(context)!
+                                .removeWalletReassurance,
+                            CaseChange.toUpperCase(
+                                AppLocalization.of(context)!.yes,
+                                StateContainer.of(context)
+                                    .curLanguage
+                                    .getLocaleString()), () async {
+                          // Delete all data
+                          await sl.get<DBHelper>().dropAll();
+                          Vault vault = await Vault.getInstance();
+                          await vault.deleteAll();
+                          Preferences preferences =
+                              await Preferences.getInstance();
+                          await preferences.deleteAll();
+                          StateContainer.of(context).logOut();
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/', (Route<dynamic> route) => false);
+                        });
+                      });
+                    }),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.text15,
+                    ),
                   ].where(notNull).toList(),
                 ),
                 //List Top Gradient End

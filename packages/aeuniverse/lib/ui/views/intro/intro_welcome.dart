@@ -242,7 +242,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
           NetworksSetting(value).getDisplayName(context),
           await NetworksSetting(value).getLink(),
           'packages/core_ui/assets/themes/dark/logo_alone.png',
-          NetworksSetting(value).getColor(),
+          null,
           value,
           value == AvailableNetworks.ArchethicMainNet ? false : true));
     }
@@ -298,8 +298,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                           StateContainer.of(context).curTheme.assetsFolder! +
                               StateContainer.of(context).curTheme.logoAlone! +
                               '.svg',
-                          color: Colors.orange,
-                          height: 15,
+                          height: 30,
                         ),
                         Text(
                             StateContainer.of(context)
