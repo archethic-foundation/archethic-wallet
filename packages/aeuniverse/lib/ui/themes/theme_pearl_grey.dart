@@ -11,9 +11,9 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:core_ui/ui/themes/themes.dart';
 
-class RedFireTheme implements BaseTheme {
+class PearlGreyTheme implements BaseTheme {
   @override
-  String? displayName = 'Red_Fire';
+  String? displayName = 'Pearl grey';
 
   // Main Buttons
   @override
@@ -33,7 +33,7 @@ class RedFireTheme implements BaseTheme {
 
   // IconData Widget
   @override
-  Color? iconDataWidgetBoxShadow = Color(0xFFFFFFFF).withOpacity(0.5);
+  Color? iconDataWidgetBoxShadow = Color(0xFFFFFFFF).withOpacity(0.1);
   @override
   Color? iconDataWidgetIconGradientLeft = Color(0xFF00A4DB);
   @override
@@ -41,15 +41,15 @@ class RedFireTheme implements BaseTheme {
   @override
   Color? iconDataWidgetIconBackground = Color(0xFFFFFFFF);
   @override
-  Color? iconDataWidgetIcon = Color(0xFFCF2329);
+  Color? iconDataWidgetIcon = Color(0xFF323232);
 
   // Menu
   @override
-  Color? iconDrawer = Color(0xFFCF2329);
+  Color? iconDrawer = Color.fromARGB(255, 48, 48, 48);
   @override
   Color? iconDrawerBackground = Color(0xFFFFFFFF);
   @override
-  Color? drawerBackground = Color(0xFF6B0036);
+  Color? drawerBackground = Color(0xFFC7D1DA);
 
   // Icons Picker Items
   @override
@@ -58,29 +58,29 @@ class RedFireTheme implements BaseTheme {
   Color? pickerItemIconDisabled = Color(0xFFFFFFFF).withOpacity(0.6);
 
   // Icons TextField
-  Color? textFieldIcon = Color(0xFFCF2329);
+  Color? textFieldIcon = Color(0xFFFFFFFF);
 
   // Texts
   @override
-  Color? text = Color(0xFFFFFFFF);
+  Color? text = Color(0xFF323232);
   @override
-  Color? text60 = Color(0xFFFFFFFF).withOpacity(0.6);
+  Color? text60 = Color(0xFF323232).withOpacity(0.6);
   @override
-  Color? text45 = Color(0xFFFFFFFF).withOpacity(0.45);
+  Color? text45 = Color(0xFF323232).withOpacity(0.45);
   @override
-  Color? text30 = Color(0xFFFFFFFF).withOpacity(0.3);
+  Color? text30 = Color(0xFF323232).withOpacity(0.3);
   @override
-  Color? text20 = Color(0xFFFFFFFF).withOpacity(0.2);
+  Color? text20 = Color(0xFF323232).withOpacity(0.2);
   @override
-  Color? text15 = Color(0xFFFFFFFF).withOpacity(0.15);
+  Color? text15 = Color(0xFF323232).withOpacity(0.15);
   @override
-  Color? text10 = Color(0xFFFFFFFF).withOpacity(0.1);
+  Color? text10 = Color(0xFF323232).withOpacity(0.1);
   @override
-  Color? text05 = Color(0xFFFFFFFF).withOpacity(0.05);
+  Color? text05 = Color(0xFF323232).withOpacity(0.05);
   @override
-  Color? text03 = Color(0xFFFFFFFF).withOpacity(0.03);
+  Color? text03 = Color(0xFF323232).withOpacity(0.03);
   @override
-  Color? positiveValue = Colors.lightGreenAccent[400];
+  Color? positiveValue = Colors.lightGreenAccent[800];
   @override
   Color? negativeValue = Colors.red[300];
   @override
@@ -92,52 +92,52 @@ class RedFireTheme implements BaseTheme {
 
   // Sheet
   @override
-  Color? sheetBackground = Color(0xFF6B0036).withOpacity(0.7);
+  Color? sheetBackground = Color(0xFFC7D1DA).withOpacity(0.7);
 
   // SnackBar
   @override
-  Color? snackBarShadow = Color(0xFF6B0036).withOpacity(0.8);
+  Color? snackBarShadow = Color(0xFFC7D1DA).withOpacity(0.8);
 
   // Background
   @override
-  Color? backgroundMainTop = Color(0xFF6B0036);
+  Color? backgroundMainTop = Color(0xFFC7D1DA);
   @override
-  Color? backgroundMainBottom = Color(0xFF6B0036);
+  Color? backgroundMainBottom = Color(0xFFC7D1DA);
   @override
-  Color? background = Color(0xFF6B0036);
+  Color? background = Color(0xFFC7D1DA);
   @override
-  Color? background40 = Color(0xFF6B0036).withOpacity(0.4);
+  Color? background40 = Color(0xFFC7D1DA).withOpacity(0.4);
   @override
-  Color? backgroundDark = Color(0xFF6B0036);
+  Color? backgroundDark = Color(0xFFC7D1DA);
   @override
-  Color? backgroundDark00 = Color(0xFF6B0036).withOpacity(0.0);
+  Color? backgroundDark00 = Color(0xFFC7D1DA).withOpacity(0.0);
   @override
-  Color? backgroundDarkest = Color(0xFFCF2329);
+  Color? backgroundDarkest = Color(0xFFFFFFFF);
 
   @override
   String? background1Small =
-      'packages/core_ui/assets/themes/red_fire/v01-waves-1100.jpg';
+      'packages/core_ui/assets/themes/pearl_grey/v01-waves-1100.jpg';
   @override
   String? background2Small =
-      'packages/core_ui/assets/themes/red_fire/v02-waves-1100.jpg';
+      'packages/core_ui/assets/themes/pearl_grey/v02-waves-1100.jpg';
   @override
   String? background3Small =
-      'packages/core_ui/assets/themes/red_fire/v03-waves-1100.jpg';
+      'packages/core_ui/assets/themes/pearl_grey/v03-waves-1100.jpg';
   @override
   String? background4Small =
-      'packages/core_ui/assets/themes/red_fire/v04-waves-1100.jpg';
+      'packages/core_ui/assets/themes/pearl_grey/v04-waves-1100.jpg';
   @override
   String? background5Small =
-      'packages/core_ui/assets/themes/red_fire/v05-waves-1100.jpg';
+      'packages/core_ui/assets/themes/pearl_grey/v05-waves-1100.jpg';
 
   // Animation Overlay
   @override
-  Color? animationOverlayMedium = Color(0xFF6B0036).withOpacity(0.7);
+  Color? animationOverlayMedium = Color(0xFFC7D1DA).withOpacity(0.7);
   @override
-  Color? animationOverlayStrong = Color(0xFF6B0036).withOpacity(0.85);
+  Color? animationOverlayStrong = Color(0xFFC7D1DA).withOpacity(0.85);
 
   @override
-  Color? overlay30 = Color(0xFF6B0036).withOpacity(0.3);
+  Color? overlay30 = Color(0xFFC7D1DA).withOpacity(0.3);
 
   @override
   Color? activeTrackColorSwitch = Color(0xFFFFFFFF);
@@ -156,7 +156,7 @@ class RedFireTheme implements BaseTheme {
   BoxShadow? boxShadowButton = const BoxShadow(color: Colors.transparent);
 
   @override
-  String? assetsFolder = 'packages/core_ui/assets/themes/red_fire/';
+  String? assetsFolder = 'packages/core_ui/assets/themes/pearl_grey/';
   @override
   String? logo = 'logo';
   @override
@@ -195,8 +195,8 @@ class RedFireTheme implements BaseTheme {
       backgroundBlendMode: BlendMode.dstIn,
       gradient: LinearGradient(
         colors: <Color>[
-          Color(0xFF6B0036),
-          Color(0xFFCF2329),
+          Color(0xFFC7D1DA),
+          Color(0xFFFFFFFF),
         ],
         begin: Alignment(-1.0, 0.0),
         end: Alignment(1.0, 0.0),

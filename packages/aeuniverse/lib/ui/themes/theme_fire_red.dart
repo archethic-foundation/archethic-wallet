@@ -11,9 +11,9 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:core_ui/ui/themes/themes.dart';
 
-class BlueTheme implements BaseTheme {
+class FireRedTheme implements BaseTheme {
   @override
-  String? displayName = 'Blue';
+  String? displayName = 'Fire red';
 
   // Main Buttons
   @override
@@ -41,15 +41,15 @@ class BlueTheme implements BaseTheme {
   @override
   Color? iconDataWidgetIconBackground = Color(0xFFFFFFFF);
   @override
-  Color? iconDataWidgetIcon = Color(0xFF0688E8);
+  Color? iconDataWidgetIcon = Color(0xFFCF2329);
 
   // Menu
   @override
-  Color? iconDrawer = Color.fromARGB(255, 6, 54, 120);
+  Color? iconDrawer = Color(0xFFCF2329);
   @override
   Color? iconDrawerBackground = Color(0xFFFFFFFF);
   @override
-  Color? drawerBackground = Color(0xFF1B55A7);
+  Color? drawerBackground = Color(0xFF6B0036);
 
   // Icons Picker Items
   @override
@@ -58,7 +58,7 @@ class BlueTheme implements BaseTheme {
   Color? pickerItemIconDisabled = Color(0xFFFFFFFF).withOpacity(0.6);
 
   // Icons TextField
-  Color? textFieldIcon = Color(0xFF0688E8);
+  Color? textFieldIcon = Color(0xFFCF2329);
 
   // Texts
   @override
@@ -92,52 +92,52 @@ class BlueTheme implements BaseTheme {
 
   // Sheet
   @override
-  Color? sheetBackground = Color(0xFF1B55A7).withOpacity(0.7);
+  Color? sheetBackground = Color(0xFF6B0036).withOpacity(0.7);
 
   // SnackBar
   @override
-  Color? snackBarShadow = Color(0xFF1B55A7).withOpacity(0.8);
+  Color? snackBarShadow = Color(0xFF6B0036).withOpacity(0.8);
 
   // Background
   @override
-  Color? backgroundMainTop = Color(0xFF1B55A7);
+  Color? backgroundMainTop = Color(0xFF6B0036);
   @override
-  Color? backgroundMainBottom = Color(0xFF1B55A7);
+  Color? backgroundMainBottom = Color(0xFF6B0036);
   @override
-  Color? background = Color(0xFF1B55A7);
+  Color? background = Color(0xFF6B0036);
   @override
-  Color? background40 = Color(0xFF1B55A7).withOpacity(0.4);
+  Color? background40 = Color(0xFF6B0036).withOpacity(0.4);
   @override
-  Color? backgroundDark = Color(0xFF1B55A7);
+  Color? backgroundDark = Color(0xFF6B0036);
   @override
-  Color? backgroundDark00 = Color(0xFF1B55A7).withOpacity(0.0);
+  Color? backgroundDark00 = Color(0xFF6B0036).withOpacity(0.0);
   @override
-  Color? backgroundDarkest = Color(0xFF0688E8);
+  Color? backgroundDarkest = Color(0xFFCF2329);
 
   @override
   String? background1Small =
-      'packages/core_ui/assets/themes/blue/v01-waves-1100.jpg';
+      'packages/core_ui/assets/themes/fire_red/v01-waves-1100.jpg';
   @override
   String? background2Small =
-      'packages/core_ui/assets/themes/blue/v02-waves-1100.jpg';
+      'packages/core_ui/assets/themes/fire_red/v02-waves-1100.jpg';
   @override
   String? background3Small =
-      'packages/core_ui/assets/themes/blue/v03-waves-1100.jpg';
+      'packages/core_ui/assets/themes/fire_red/v03-waves-1100.jpg';
   @override
   String? background4Small =
-      'packages/core_ui/assets/themes/blue/v04-waves-1100.jpg';
+      'packages/core_ui/assets/themes/fire_red/v04-waves-1100.jpg';
   @override
   String? background5Small =
-      'packages/core_ui/assets/themes/blue/v05-waves-1100.jpg';
+      'packages/core_ui/assets/themes/fire_red/v05-waves-1100.jpg';
 
   // Animation Overlay
   @override
-  Color? animationOverlayMedium = Color(0xFF1B55A7).withOpacity(0.7);
+  Color? animationOverlayMedium = Color(0xFF6B0036).withOpacity(0.7);
   @override
-  Color? animationOverlayStrong = Color(0xFF1B55A7).withOpacity(0.85);
+  Color? animationOverlayStrong = Color(0xFF6B0036).withOpacity(0.85);
 
   @override
-  Color? overlay30 = Color(0xFF1B55A7).withOpacity(0.3);
+  Color? overlay30 = Color(0xFF6B0036).withOpacity(0.3);
 
   @override
   Color? activeTrackColorSwitch = Color(0xFFFFFFFF);
@@ -156,7 +156,7 @@ class BlueTheme implements BaseTheme {
   BoxShadow? boxShadowButton = const BoxShadow(color: Colors.transparent);
 
   @override
-  String? assetsFolder = 'packages/core_ui/assets/themes/blue/';
+  String? assetsFolder = 'packages/core_ui/assets/themes/fire_red/';
   @override
   String? logo = 'logo';
   @override
@@ -195,8 +195,8 @@ class BlueTheme implements BaseTheme {
       backgroundBlendMode: BlendMode.dstIn,
       gradient: LinearGradient(
         colors: <Color>[
-          Color(0xFF1B55A7),
-          Color(0xFF0688E8),
+          Color(0xFF6B0036),
+          Color(0xFFCF2329),
         ],
         begin: Alignment(-1.0, 0.0),
         end: Alignment(1.0, 0.0),

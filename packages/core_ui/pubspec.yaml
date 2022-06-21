@@ -24,12 +24,12 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
-    - assets/themes/blue/
+    - assets/themes/sapphire_blue/
     - assets/themes/dark/
     - assets/themes/emerald_green/
-    - assets/themes/green/
+    - assets/themes/sea_green/
     - assets/themes/navy_blue/
-    - assets/themes/orange/
-    - assets/themes/red/
-    - assets/themes/red_fire/
-    - assets/themes/white/
+    - assets/themes/honey_orange/
+    - assets/themes/byzantine_violet/
+    - assets/themes/fire_red/
+    - assets/themes/pearl_grey/

@@ -1,14 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:aeuniverse/ui/themes/theme_blue.dart';
+import 'package:aeuniverse/ui/themes/theme_byzantine_violet.dart';
+import 'package:aeuniverse/ui/themes/theme_sapphire_blue.dart';
 import 'package:aeuniverse/ui/themes/theme_emerald_green.dart';
-import 'package:aeuniverse/ui/themes/theme_green.dart';
+import 'package:aeuniverse/ui/themes/theme_sea_green.dart';
 import 'package:aeuniverse/ui/themes/theme_navy_blue.dart';
-import 'package:aeuniverse/ui/themes/theme_orange.dart';
-import 'package:aeuniverse/ui/themes/theme_red.dart';
-import 'package:aeuniverse/ui/themes/theme_red_fire.dart';
-import 'package:aeuniverse/ui/themes/theme_white.dart';
+import 'package:aeuniverse/ui/themes/theme_honey_orange.dart';
+import 'package:aeuniverse/ui/themes/theme_fire_red.dart';
+import 'package:aeuniverse/ui/themes/theme_pearl_grey.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -19,15 +19,15 @@ import 'package:core_ui/ui/themes/themes.dart';
 import 'package:aeuniverse/ui/themes/theme_dark.dart';
 
 enum ThemeOptions {
-  blue,
+  sapphire_blue,
   dark,
   emerald_green,
-  green,
+  sea_green,
   navy_blue,
-  orange,
-  red,
-  red_fire,
-  white
+  honey_orange,
+  byzantine_violet,
+  fire_red,
+  pearl_grey
 }
 
 /// Represent notification on/off setting
@@ -41,20 +41,22 @@ class ThemeSetting extends SettingSelectionItem {
     switch (theme) {
       case ThemeOptions.dark:
         return 'Dark';
-      case ThemeOptions.white:
-        return 'White';
-      case ThemeOptions.blue:
-        return 'Blue';
+      case ThemeOptions.byzantine_violet:
+        return 'Byzantine violet';
       case ThemeOptions.emerald_green:
         return 'Emerald green';
-      case ThemeOptions.green:
-        return 'Green';
+      case ThemeOptions.fire_red:
+        return 'Fire red';
+      case ThemeOptions.honey_orange:
+        return 'Honey orange';
       case ThemeOptions.navy_blue:
         return 'Navy Blue';
-      case ThemeOptions.red:
-        return 'Red';
-      case ThemeOptions.red_fire:
-        return 'Red Fire';
+      case ThemeOptions.pearl_grey:
+        return 'Pearl grey';
+      case ThemeOptions.sapphire_blue:
+        return 'Sapphire blue';
+      case ThemeOptions.sea_green:
+        return 'Sea green';
       default:
         return 'Dark';
     }
@@ -64,22 +66,22 @@ class ThemeSetting extends SettingSelectionItem {
     switch (theme) {
       case ThemeOptions.dark:
         return DarkTheme();
-      case ThemeOptions.white:
-        return WhiteTheme();
-      case ThemeOptions.orange:
-        return OrangeTheme();
-      case ThemeOptions.navy_blue:
-        return NavyBlueTheme();
-      case ThemeOptions.blue:
-        return BlueTheme();
+      case ThemeOptions.byzantine_violet:
+        return ByzantineVioletTheme();
       case ThemeOptions.emerald_green:
         return EmeraldGreenTheme();
-      case ThemeOptions.green:
-        return GreenTheme();
-      case ThemeOptions.red:
-        return RedTheme();
-      case ThemeOptions.red_fire:
-        return RedFireTheme();
+      case ThemeOptions.fire_red:
+        return FireRedTheme();
+      case ThemeOptions.honey_orange:
+        return HoneyOrangeTheme();
+      case ThemeOptions.navy_blue:
+        return NavyBlueTheme();
+      case ThemeOptions.pearl_grey:
+        return PearlGreyTheme();
+      case ThemeOptions.sapphire_blue:
+        return SapphireBlueTheme();
+      case ThemeOptions.sea_green:
+        return SeaGreenTheme();
       default:
         return DarkTheme();
     }

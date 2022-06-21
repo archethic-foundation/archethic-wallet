@@ -11,9 +11,9 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:core_ui/ui/themes/themes.dart';
 
-class RedTheme implements BaseTheme {
+class HoneyOrangeTheme implements BaseTheme {
   @override
-  String? displayName = 'Red';
+  String? displayName = 'Honey orange';
 
   // Main Buttons
   @override
@@ -41,15 +41,15 @@ class RedTheme implements BaseTheme {
   @override
   Color? iconDataWidgetIconBackground = Color(0xFFFFFFFF);
   @override
-  Color? iconDataWidgetIcon = Color(0xFFCD195B);
+  Color? iconDataWidgetIcon = Color(0xFFEDA30F);
 
   // Menu
   @override
-  Color? iconDrawer = Color(0xFFCD195B);
+  Color? iconDrawer = Color(0xFFEDA30F);
   @override
-  Color? iconDrawerBackground = Color(0xFFFFFFFF);
+  Color? iconDrawerBackground = Color(0xFFFFFFFF).withOpacity(0.2);
   @override
-  Color? drawerBackground = Color(0xFF571150);
+  Color? drawerBackground = Color(0xFF6C1E1E);
 
   // Icons Picker Items
   @override
@@ -58,7 +58,7 @@ class RedTheme implements BaseTheme {
   Color? pickerItemIconDisabled = Color(0xFFFFFFFF).withOpacity(0.6);
 
   // Icons TextField
-  Color? textFieldIcon = Color(0xFFCD195B);
+  Color? textFieldIcon = Color(0xFFEDA30F);
 
   // Texts
   @override
@@ -92,52 +92,52 @@ class RedTheme implements BaseTheme {
 
   // Sheet
   @override
-  Color? sheetBackground = Color(0xFF571150).withOpacity(0.7);
+  Color? sheetBackground = Color(0xFF6C1E1E).withOpacity(0.7);
 
   // SnackBar
   @override
-  Color? snackBarShadow = Color(0xFF571150).withOpacity(0.8);
+  Color? snackBarShadow = Color(0xFF6C1E1E).withOpacity(0.8);
 
   // Background
   @override
-  Color? backgroundMainTop = Color(0xFF571150);
+  Color? backgroundMainTop = Color(0xFF6C1E1E);
   @override
-  Color? backgroundMainBottom = Color(0xFF571150);
+  Color? backgroundMainBottom = Color(0xFF6C1E1E);
   @override
-  Color? background = Color(0xFF571150);
+  Color? background = Color(0xFF6C1E1E);
   @override
-  Color? background40 = Color(0xFF571150).withOpacity(0.4);
+  Color? background40 = Color(0xFF6C1E1E).withOpacity(0.4);
   @override
-  Color? backgroundDark = Color(0xFF571150);
+  Color? backgroundDark = Color(0xFF6C1E1E);
   @override
-  Color? backgroundDark00 = Color(0xFF571150).withOpacity(0.0);
+  Color? backgroundDark00 = Color(0xFF6C1E1E).withOpacity(0.0);
   @override
-  Color? backgroundDarkest = Color(0xFFCD195B);
+  Color? backgroundDarkest = Color(0xFFEDA30F);
 
   @override
   String? background1Small =
-      'packages/core_ui/assets/themes/red/v01-waves-1100.jpg';
+      'packages/core_ui/assets/themes/honey_orange/v01-waves-1100.jpg';
   @override
   String? background2Small =
-      'packages/core_ui/assets/themes/red/v02-waves-1100.jpg';
+      'packages/core_ui/assets/themes/honey_orange/v02-waves-1100.jpg';
   @override
   String? background3Small =
-      'packages/core_ui/assets/themes/red/v03-waves-1100.jpg';
+      'packages/core_ui/assets/themes/honey_orange/v03-waves-1100.jpg';
   @override
   String? background4Small =
-      'packages/core_ui/assets/themes/red/v04-waves-1100.jpg';
+      'packages/core_ui/assets/themes/honey_orange/v04-waves-1100.jpg';
   @override
   String? background5Small =
-      'packages/core_ui/assets/themes/red/v05-waves-1100.jpg';
+      'packages/core_ui/assets/themes/honey_orange/v05-waves-1100.jpg';
 
   // Animation Overlay
   @override
-  Color? animationOverlayMedium = Color(0xFF571150).withOpacity(0.7);
+  Color? animationOverlayMedium = Color(0xFF6C1E1E).withOpacity(0.7);
   @override
-  Color? animationOverlayStrong = Color(0xFF571150).withOpacity(0.85);
+  Color? animationOverlayStrong = Color(0xFF6C1E1E).withOpacity(0.85);
 
   @override
-  Color? overlay30 = Color(0xFF571150).withOpacity(0.3);
+  Color? overlay30 = Color(0xFF6C1E1E).withOpacity(0.3);
 
   @override
   Color? activeTrackColorSwitch = Color(0xFFFFFFFF);
@@ -156,7 +156,7 @@ class RedTheme implements BaseTheme {
   BoxShadow? boxShadowButton = const BoxShadow(color: Colors.transparent);
 
   @override
-  String? assetsFolder = 'packages/core_ui/assets/themes/red/';
+  String? assetsFolder = 'packages/core_ui/assets/themes/honey_orange/';
   @override
   String? logo = 'logo';
   @override
@@ -195,8 +195,8 @@ class RedTheme implements BaseTheme {
       backgroundBlendMode: BlendMode.dstIn,
       gradient: LinearGradient(
         colors: <Color>[
-          Color(0xFF571150),
-          Color(0xFFCD195B),
+          Color(0xFF6C1E1E),
+          Color(0xFFEDA30F),
         ],
         begin: Alignment(-1.0, 0.0),
         end: Alignment(1.0, 0.0),

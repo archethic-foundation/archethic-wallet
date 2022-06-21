@@ -11,9 +11,9 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:core_ui/ui/themes/themes.dart';
 
-class OrangeTheme implements BaseTheme {
+class SapphireBlueTheme implements BaseTheme {
   @override
-  String? displayName = 'Orange';
+  String? displayName = 'Sapphire blue';
 
   // Main Buttons
   @override
@@ -41,15 +41,15 @@ class OrangeTheme implements BaseTheme {
   @override
   Color? iconDataWidgetIconBackground = Color(0xFFFFFFFF);
   @override
-  Color? iconDataWidgetIcon = Color(0xFFEDA30F);
+  Color? iconDataWidgetIcon = Color(0xFF0688E8);
 
   // Menu
   @override
-  Color? iconDrawer = Color(0xFFEDA30F);
+  Color? iconDrawer = Color.fromARGB(255, 6, 54, 120);
   @override
-  Color? iconDrawerBackground = Color(0xFFFFFFFF).withOpacity(0.2);
+  Color? iconDrawerBackground = Color(0xFFFFFFFF);
   @override
-  Color? drawerBackground = Color(0xFF6C1E1E);
+  Color? drawerBackground = Color(0xFF1B55A7);
 
   // Icons Picker Items
   @override
@@ -58,7 +58,7 @@ class OrangeTheme implements BaseTheme {
   Color? pickerItemIconDisabled = Color(0xFFFFFFFF).withOpacity(0.6);
 
   // Icons TextField
-  Color? textFieldIcon = Color(0xFFEDA30F);
+  Color? textFieldIcon = Color(0xFF0688E8);
 
   // Texts
   @override
@@ -92,52 +92,52 @@ class OrangeTheme implements BaseTheme {
 
   // Sheet
   @override
-  Color? sheetBackground = Color(0xFF6C1E1E).withOpacity(0.7);
+  Color? sheetBackground = Color(0xFF1B55A7).withOpacity(0.7);
 
   // SnackBar
   @override
-  Color? snackBarShadow = Color(0xFF6C1E1E).withOpacity(0.8);
+  Color? snackBarShadow = Color(0xFF1B55A7).withOpacity(0.8);
 
   // Background
   @override
-  Color? backgroundMainTop = Color(0xFF6C1E1E);
+  Color? backgroundMainTop = Color(0xFF1B55A7);
   @override
-  Color? backgroundMainBottom = Color(0xFF6C1E1E);
+  Color? backgroundMainBottom = Color(0xFF1B55A7);
   @override
-  Color? background = Color(0xFF6C1E1E);
+  Color? background = Color(0xFF1B55A7);
   @override
-  Color? background40 = Color(0xFF6C1E1E).withOpacity(0.4);
+  Color? background40 = Color(0xFF1B55A7).withOpacity(0.4);
   @override
-  Color? backgroundDark = Color(0xFF6C1E1E);
+  Color? backgroundDark = Color(0xFF1B55A7);
   @override
-  Color? backgroundDark00 = Color(0xFF6C1E1E).withOpacity(0.0);
+  Color? backgroundDark00 = Color(0xFF1B55A7).withOpacity(0.0);
   @override
-  Color? backgroundDarkest = Color(0xFFEDA30F);
+  Color? backgroundDarkest = Color(0xFF0688E8);
 
   @override
   String? background1Small =
-      'packages/core_ui/assets/themes/orange/v01-waves-1100.jpg';
+      'packages/core_ui/assets/themes/sapphire_blue/v01-waves-1100.jpg';
   @override
   String? background2Small =
-      'packages/core_ui/assets/themes/orange/v02-waves-1100.jpg';
+      'packages/core_ui/assets/themes/sapphire_blue/v02-waves-1100.jpg';
   @override
   String? background3Small =
-      'packages/core_ui/assets/themes/orange/v03-waves-1100.jpg';
+      'packages/core_ui/assets/themes/sapphire_blue/v03-waves-1100.jpg';
   @override
   String? background4Small =
-      'packages/core_ui/assets/themes/orange/v04-waves-1100.jpg';
+      'packages/core_ui/assets/themes/sapphire_blue/v04-waves-1100.jpg';
   @override
   String? background5Small =
-      'packages/core_ui/assets/themes/orange/v05-waves-1100.jpg';
+      'packages/core_ui/assets/themes/sapphire_blue/v05-waves-1100.jpg';
 
   // Animation Overlay
   @override
-  Color? animationOverlayMedium = Color(0xFF6C1E1E).withOpacity(0.7);
+  Color? animationOverlayMedium = Color(0xFF1B55A7).withOpacity(0.7);
   @override
-  Color? animationOverlayStrong = Color(0xFF6C1E1E).withOpacity(0.85);
+  Color? animationOverlayStrong = Color(0xFF1B55A7).withOpacity(0.85);
 
   @override
-  Color? overlay30 = Color(0xFF6C1E1E).withOpacity(0.3);
+  Color? overlay30 = Color(0xFF1B55A7).withOpacity(0.3);
 
   @override
   Color? activeTrackColorSwitch = Color(0xFFFFFFFF);
@@ -156,7 +156,7 @@ class OrangeTheme implements BaseTheme {
   BoxShadow? boxShadowButton = const BoxShadow(color: Colors.transparent);
 
   @override
-  String? assetsFolder = 'packages/core_ui/assets/themes/orange/';
+  String? assetsFolder = 'packages/core_ui/assets/themes/sapphire_blue/';
   @override
   String? logo = 'logo';
   @override
@@ -195,8 +195,8 @@ class OrangeTheme implements BaseTheme {
       backgroundBlendMode: BlendMode.dstIn,
       gradient: LinearGradient(
         colors: <Color>[
-          Color(0xFF6C1E1E),
-          Color(0xFFEDA30F),
+          Color(0xFF1B55A7),
+          Color(0xFF0688E8),
         ],
         begin: Alignment(-1.0, 0.0),
         end: Alignment(1.0, 0.0),

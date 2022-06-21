@@ -11,9 +11,9 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:core_ui/ui/themes/themes.dart';
 
-class GreenTheme implements BaseTheme {
+class ByzantineVioletTheme implements BaseTheme {
   @override
-  String? displayName = 'Green';
+  String? displayName = 'Byzantine violet';
 
   // Main Buttons
   @override
@@ -41,15 +41,15 @@ class GreenTheme implements BaseTheme {
   @override
   Color? iconDataWidgetIconBackground = Color(0xFFFFFFFF);
   @override
-  Color? iconDataWidgetIcon = Color(0xFF009D78);
+  Color? iconDataWidgetIcon = Color(0xFFCD195B);
 
   // Menu
   @override
-  Color? iconDrawer = Color.fromARGB(255, 0, 71, 55);
+  Color? iconDrawer = Color(0xFFCD195B);
   @override
-  Color? iconDrawerBackground = Color(0xFFFFFFFF).withOpacity(0.8);
+  Color? iconDrawerBackground = Color(0xFFFFFFFF);
   @override
-  Color? drawerBackground = Color(0xFF062F31);
+  Color? drawerBackground = Color(0xFF571150);
 
   // Icons Picker Items
   @override
@@ -58,7 +58,7 @@ class GreenTheme implements BaseTheme {
   Color? pickerItemIconDisabled = Color(0xFFFFFFFF).withOpacity(0.6);
 
   // Icons TextField
-  Color? textFieldIcon = Color(0xFF009D78);
+  Color? textFieldIcon = Color(0xFFCD195B);
 
   // Texts
   @override
@@ -92,52 +92,52 @@ class GreenTheme implements BaseTheme {
 
   // Sheet
   @override
-  Color? sheetBackground = Color(0xFF062F31).withOpacity(0.7);
+  Color? sheetBackground = Color(0xFF571150).withOpacity(0.7);
 
   // SnackBar
   @override
-  Color? snackBarShadow = Color(0xFF062F31).withOpacity(0.8);
+  Color? snackBarShadow = Color(0xFF571150).withOpacity(0.8);
 
   // Background
   @override
-  Color? backgroundMainTop = Color(0xFF062F31);
+  Color? backgroundMainTop = Color(0xFF571150);
   @override
-  Color? backgroundMainBottom = Color(0xFF062F31);
+  Color? backgroundMainBottom = Color(0xFF571150);
   @override
-  Color? background = Color(0xFF062F31);
+  Color? background = Color(0xFF571150);
   @override
-  Color? background40 = Color(0xFF062F31).withOpacity(0.4);
+  Color? background40 = Color(0xFF571150).withOpacity(0.4);
   @override
-  Color? backgroundDark = Color(0xFF062F31);
+  Color? backgroundDark = Color(0xFF571150);
   @override
-  Color? backgroundDark00 = Color(0xFF062F31).withOpacity(0.0);
+  Color? backgroundDark00 = Color(0xFF571150).withOpacity(0.0);
   @override
-  Color? backgroundDarkest = Color(0xFF009D78);
+  Color? backgroundDarkest = Color(0xFFCD195B);
 
   @override
   String? background1Small =
-      'packages/core_ui/assets/themes/green/v01-waves-1100.jpg';
+      'packages/core_ui/assets/themes/byzantine_violet/v01-waves-1100.jpg';
   @override
   String? background2Small =
-      'packages/core_ui/assets/themes/green/v02-waves-1100.jpg';
+      'packages/core_ui/assets/themes/byzantine_violet/v02-waves-1100.jpg';
   @override
   String? background3Small =
-      'packages/core_ui/assets/themes/green/v03-waves-1100.jpg';
+      'packages/core_ui/assets/themes/byzantine_violet/v03-waves-1100.jpg';
   @override
   String? background4Small =
-      'packages/core_ui/assets/themes/green/v04-waves-1100.jpg';
+      'packages/core_ui/assets/themes/byzantine_violet/v04-waves-1100.jpg';
   @override
   String? background5Small =
-      'packages/core_ui/assets/themes/green/v05-waves-1100.jpg';
+      'packages/core_ui/assets/themes/byzantine_violet/v05-waves-1100.jpg';
 
   // Animation Overlay
   @override
-  Color? animationOverlayMedium = Color(0xFF062F31).withOpacity(0.7);
+  Color? animationOverlayMedium = Color(0xFF571150).withOpacity(0.7);
   @override
-  Color? animationOverlayStrong = Color(0xFF062F31).withOpacity(0.85);
+  Color? animationOverlayStrong = Color(0xFF571150).withOpacity(0.85);
 
   @override
-  Color? overlay30 = Color(0xFF062F31).withOpacity(0.3);
+  Color? overlay30 = Color(0xFF571150).withOpacity(0.3);
 
   @override
   Color? activeTrackColorSwitch = Color(0xFFFFFFFF);
@@ -156,7 +156,7 @@ class GreenTheme implements BaseTheme {
   BoxShadow? boxShadowButton = const BoxShadow(color: Colors.transparent);
 
   @override
-  String? assetsFolder = 'packages/core_ui/assets/themes/green/';
+  String? assetsFolder = 'packages/core_ui/assets/themes/byzantine_violet/';
   @override
   String? logo = 'logo';
   @override
@@ -195,8 +195,8 @@ class GreenTheme implements BaseTheme {
       backgroundBlendMode: BlendMode.dstIn,
       gradient: LinearGradient(
         colors: <Color>[
-          Color(0xFF062F31),
-          Color(0xFF009D78),
+          Color(0xFF571150),
+          Color(0xFFCD195B),
         ],
         begin: Alignment(-1.0, 0.0),
         end: Alignment(1.0, 0.0),
