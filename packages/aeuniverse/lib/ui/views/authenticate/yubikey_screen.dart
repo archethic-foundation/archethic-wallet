@@ -276,7 +276,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                                   horizontal: 40, vertical: 10),
                               child: AutoSizeText(
                                 AppLocalization.of(context)!
-                                    .passwordEnterInvite,
+                                    .yubikeyConnectInvite,
                                 style: AppStyles.textStyleSize16W200Primary(
                                     context),
                                 textAlign: TextAlign.center,
