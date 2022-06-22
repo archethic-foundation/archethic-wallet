@@ -55,10 +55,12 @@ class RecentTransaction {
   String? recipient;
   Future<String> getRecipientContactName() async {
     String _recipientContactName = '';
-    Contact? _contact =
-        await sl.get<DBHelper>().getContactWithAddress(recipient!);
-    if (_contact != null) {
-      _recipientContactName = _contact.name!;
+    if (recipient != null) {
+      Contact? _contact =
+          await sl.get<DBHelper>().getContactWithAddress(recipient!);
+      if (_contact != null) {
+        _recipientContactName = _contact.name!;
+      }
     }
 
     return _recipientContactName;
@@ -69,7 +71,11 @@ class RecentTransaction {
     if (_recipientDisplay != '') {
       return _recipientDisplay;
     } else {
-      return recipient!;
+      if (recipient != null) {
+        return recipient!;
+      } else {
+        return '';
+      }
     }
   }
 
