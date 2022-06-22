@@ -196,11 +196,6 @@ class AppLocalization {
         name: 'yubikeyConnectHoldNearDevice');
   }
 
-  String get passwordEnterInvite {
-    return Intl.message('Please, enter your password',
-        name: 'passwordEnterInvite');
-  }
-
   String get removeContact {
     return Intl.message('Remove Contact', name: 'removeContact');
   }

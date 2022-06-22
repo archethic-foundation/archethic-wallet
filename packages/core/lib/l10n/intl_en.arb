@@ -1344,12 +1344,6 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "passwordEnterInvite": "Please, enter your password",
-  "@passwordEnterInvite": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
   "seYubicloudConfirmHeader": "Please, confirm your client identity and client API key.",
   "@seYubicloudConfirmHeader": {
     "type": "text",

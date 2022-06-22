@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-06-12T21:59:11.850580",
+  "@@last_modified": "2022-06-22T10:23:14.015570",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -218,12 +218,6 @@
   },
   "yubikeyConnectHoldNearDevice": "Hold your device near the Yubikey",
   "@yubikeyConnectHoldNearDevice": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "passwordEnterInvite": "Please, enter your password",
-  "@passwordEnterInvite": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -878,6 +872,12 @@
   },
   "mnemonicSizeError": "Secret phrase may only contain 24 words",
   "@mnemonicSizeError": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "noKeychain": "No keychain exists with this secret phrase.",
+  "@noKeychain": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
