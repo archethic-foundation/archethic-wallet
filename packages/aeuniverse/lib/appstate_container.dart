@@ -552,7 +552,10 @@ class StateContainerState extends State<StateContainer> {
     setState(() {
       recentTransactionsLoading = false;
     });
-    await requestUpdateCoinsChart();
+
+    if (showPriceChart) {
+      await requestUpdateCoinsChart();
+    }
 
     localWallet!.accountBalance = BalanceWallet(
         double.tryParse(account.balance == null ? '0' : account.balance!),
