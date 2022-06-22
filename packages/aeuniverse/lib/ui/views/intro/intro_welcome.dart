@@ -241,7 +241,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
       pickerItemsList.add(PickerItem(
           NetworksSetting(value).getDisplayName(context),
           await NetworksSetting(value).getLink(),
-         '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.png',
+          '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.png',
           null,
           value,
           value == AvailableNetworks.ArchethicMainNet ? false : true));
@@ -286,6 +286,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
       if (selection == AvailableNetworks.ArchethicDevNet) {
         endpointController.text = preferences.getNetworkDevEndpoint();
         final AvailableNetworks? endpoint = await showDialog<AvailableNetworks>(
+            barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
               return StatefulBuilder(

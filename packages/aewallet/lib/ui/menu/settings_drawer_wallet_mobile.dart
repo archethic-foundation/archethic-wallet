@@ -318,6 +318,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
           true));
     }
     switch (await showDialog<UnlockOption>(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -353,10 +354,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
         });
         break;
       default:
-        preferences.setLock(false);
-        setState(() {
-          _curUnlockSetting = UnlockSetting(UnlockOption.no);
-        });
         break;
     }
   }
@@ -380,6 +377,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     }
     final AvailableCurrencyEnum? selection =
         await showDialog<AvailableCurrencyEnum>(
+            barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
@@ -442,6 +440,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     }
 
     final AvailableLanguage? selection = await showDialog<AvailableLanguage>(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -492,6 +491,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
 
     final AvailablePrimaryCurrency? selection =
         await showDialog<AvailablePrimaryCurrency>(
+            barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
@@ -581,6 +581,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       if (selection == AvailableNetworks.ArchethicDevNet) {
         endpointController.text = preferences.getNetworkDevEndpoint();
         final AvailableNetworks? endpoint = await showDialog<AvailableNetworks>(
+            barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
               return StatefulBuilder(
@@ -718,6 +719,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
           true));
     }
     final LockTimeoutOption? selection = await showDialog<LockTimeoutOption>(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -772,6 +774,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
               fit: BoxFit.fitWidth)));
     }
     final ThemeOptions? selection = await showDialog<ThemeOptions>(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(

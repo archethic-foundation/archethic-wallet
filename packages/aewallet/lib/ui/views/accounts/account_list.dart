@@ -172,6 +172,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                             String? nameError;
 
                             await showDialog(
+                                barrierDismissible: false,
                                 context: expandedKey.currentContext!,
                                 builder: (BuildContext context) {
                                   return StatefulBuilder(

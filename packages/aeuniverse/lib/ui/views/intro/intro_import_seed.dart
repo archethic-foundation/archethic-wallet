@@ -434,6 +434,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
     }
 
     final Account? selection = await showDialog<Account>(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
