@@ -542,7 +542,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       pickerItemsList.add(PickerItem(
           NetworksSetting(value).getDisplayName(context),
           await NetworksSetting(value).getLink(),
-         '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.png',
+          '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.png',
           null,
           value,
           value == AvailableNetworks.ArchethicMainNet ? false : true));
@@ -758,7 +758,13 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     final List<PickerItem> pickerItemsList =
         List<PickerItem>.empty(growable: true);
     for (var value in ThemeOptions.values) {
-      pickerItemsList.add(PickerItem(value.name, null, null, null, value, true,
+      pickerItemsList.add(PickerItem(
+          ThemeSetting(value).getDisplayName(context),
+          null,
+          null,
+          null,
+          value,
+          true,
           decorationImageItem: DecorationImage(
               image: AssetImage(
                   'packages/core_ui/assets/themes/${value.name}/v0${Random().nextInt(4) + 1}-waves-1100.jpg'),
