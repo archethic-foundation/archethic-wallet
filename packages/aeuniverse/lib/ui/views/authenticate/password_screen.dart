@@ -8,7 +8,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/util/string_encryption.dart';
 import 'package:core/util/vault.dart';
@@ -19,7 +18,6 @@ import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
-import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/util/preferences.dart';
 
 class PasswordScreen extends StatefulWidget {
@@ -70,6 +68,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                      StateContainer.of(context).curTheme.background5Small!),
+                  fit: BoxFit.fitHeight),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -88,10 +90,13 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 top: MediaQuery.of(context).size.height * 0.10,
               ),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Row(
@@ -111,24 +116,15 @@ class _PasswordScreenState extends State<PasswordScreen> {
                               ),
                             ],
                           ),
-                          buildIconWidget(
-                              context,
-                              'packages/aeuniverse/assets/icons/password.png',
-                              90,
-                              90),
-                          const SizedBox(
-                            height: 30,
-                          ),
                           Container(
                             margin: const EdgeInsets.symmetric(
                                 horizontal: 40, vertical: 10),
-                            child: AutoSizeText(
-                              AppLocalization.of(context)!.passwordEnterInvite,
+                            child: Text(
+                              AppLocalization.of(context)!.passwordMethod,
                               style:
-                                  AppStyles.textStyleSize16W400Primary(context),
+                                  AppStyles.textStyleSize24W700EquinoxPrimary(
+                                      context),
                               textAlign: TextAlign.center,
-                              maxLines: 1,
-                              stepGranularity: 0.1,
                             ),
                           ),
                           AppTextField(

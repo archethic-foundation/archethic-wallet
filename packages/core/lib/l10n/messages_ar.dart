@@ -44,6 +44,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "aeWebsiteLinkDesc" : MessageLookupByLibrary.simpleMessage("Visitez le site web d\'Archethic"),
     "aeWebsiteLinkHeader" : MessageLookupByLibrary.simpleMessage("Site web d\'Archethic"),
     "amountMissing" : MessageLookupByLibrary.simpleMessage("Veuillez saisir un montant"),
+    "attempt" : MessageLookupByLibrary.simpleMessage("Attempt: "),
     "authMethod" : MessageLookupByLibrary.simpleMessage("Méthode d\'authentification"),
     "autoLockHeader" : MessageLookupByLibrary.simpleMessage("Verrouillage automatique"),
     "backupSafetyLabel1" : MessageLookupByLibrary.simpleMessage("Dans l\'écran suivant, vous verrez votre phrase secrète."),

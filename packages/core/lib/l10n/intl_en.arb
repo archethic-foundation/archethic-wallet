@@ -486,8 +486,14 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "tooManyFailedAttempts": "Too many failed unlock attempts.",
+  "tooManyFailedAttempts": "Too many failed unlock attempts.\nPlease, try again",
   "@tooManyFailedAttempts": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "attempt": "Attempt: ",
+  "@attempt": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

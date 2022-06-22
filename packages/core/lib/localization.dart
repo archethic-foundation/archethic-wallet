@@ -568,8 +568,12 @@ class AppLocalization {
   }
 
   String get tooManyFailedAttempts {
-    return Intl.message('Too many failed unlock attempts.',
+    return Intl.message('Too many failed unlock attempts.\nPlease, try again',
         name: 'tooManyFailedAttempts');
+  }
+
+  String get attempt {
+    return Intl.message('Attempt: ', name: 'attempt');
   }
 
   String get securityHeader {

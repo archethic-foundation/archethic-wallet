@@ -23,7 +23,6 @@ import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
-import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/util/preferences.dart';
 
 class AppLockScreen extends StatefulWidget {
@@ -151,8 +150,9 @@ class _AppLockScreenState extends State<AppLockScreen> {
 
   @override
   void initState() {
-    super.initState();
     _authenticate();
+
+    super.initState();
   }
 
   @override
@@ -164,6 +164,10 @@ class _AppLockScreenState extends State<AppLockScreen> {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                      StateContainer.of(context).curTheme.background3Small!),
+                  fit: BoxFit.fitHeight),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -196,9 +200,6 @@ class _AppLockScreenState extends State<AppLockScreen> {
                               width: 150,
                               child: TextButton(
                                 onPressed: () {
-                                  sl
-                                      .get<HapticUtil>()
-                                      .feedback(FeedbackType.light);
                                   AppDialogs.showConfirmDialog(
                                       context,
                                       CaseChange.toUpperCase(
@@ -260,24 +261,17 @@ class _AppLockScreenState extends State<AppLockScreen> {
                             ),
                           ],
                         ),
-                        buildIconWidget(
-                            context,
-                            'packages/aeuniverse/assets/icons/lock.png',
-                            90,
-                            90),
-                        Container(
-                          child: Text(
-                            CaseChange.toUpperCase(
-                                AppLocalization.of(context)!.locked,
-                                StateContainer.of(context)
-                                    .curLanguage
-                                    .getLocaleString()),
-                            style:
-                                AppStyles.textStyleSize28W700Primary(context),
+                        if (_lockedOut)
+                          Container(
+                            child: Text(
+                              AppLocalization.of(context)!.locked,
+                              style:
+                                  AppStyles.textStyleSize24W700EquinoxPrimary(
+                                      context),
+                            ),
+                            margin: const EdgeInsets.only(top: 10),
                           ),
-                          margin: const EdgeInsets.only(top: 10),
-                        ),
-                        if (!_lockedOut)
+                        if (_lockedOut)
                           Container(
                             width: MediaQuery.of(context).size.width - 100,
                             margin: const EdgeInsets.symmetric(
@@ -308,7 +302,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                           Dimens.buttonBottomDimens, onPressed: () {
                         if (!_lockedOut) {
                           sl.get<HapticUtil>().feedback(FeedbackType.light);
-                          _authenticate(transitions: true);
+                          _authenticate(transitions: false);
                         }
                       }, disabled: _lockedOut),
                     ],

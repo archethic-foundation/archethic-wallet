@@ -82,6 +82,7 @@
 	"locked": "Bloqué",
 	"unlock": "Ouvrir",
 	"tooManyFailedAttempts": "Trop de tentatives de déverrouillage échouées.",
+	"attempt": "Attempt: ",
 	"securityHeader": "Sécurité",
 	"aboutHeader": "À propos",
 	"aboutGeneralTermsAndConditions": "Conditions générales",

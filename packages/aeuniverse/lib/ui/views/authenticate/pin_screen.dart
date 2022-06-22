@@ -26,7 +26,7 @@ class ShakeCurve extends Curve {
   @override
   double transform(double t) {
     //t from 0.0 to 1.0
-    return sin(t * 3 * pi);
+    return sin(t * 2.5 * pi);
   }
 }
 
@@ -68,6 +68,7 @@ class _PinScreenState extends State<PinScreen>
 
   // Invalid animation
   AnimationController? _controller;
+  Animation<double>? _animation;
 
   @override
   void initState() {
@@ -93,13 +94,55 @@ class _PinScreenState extends State<PinScreen>
         // Get adjusted failed attempts
         _failedAttempts = _preferences.getLockAttempts() % maxAttempts;
       });
-    });
 
-    // Set animation
-    _controller = AnimationController(
-        duration: const Duration(milliseconds: 350), vsync: this);
-    final Animation<double> curve =
-        CurvedAnimation(parent: _controller!, curve: ShakeCurve());
+      // Set animation
+      _controller = AnimationController(
+          duration: const Duration(milliseconds: 350), vsync: this);
+      final Animation<double> curve =
+          CurvedAnimation(parent: _controller!, curve: ShakeCurve());
+      _animation = Tween(begin: 0.0, end: 25.0).animate(curve)
+        ..addStatusListener((status) {
+          if (status == AnimationStatus.completed) {
+            if (widget.type == PinOverlayType.enterPin) {
+              _preferences.incrementLockAttempts().then((_) {
+                _failedAttempts++;
+                if (_failedAttempts >= maxAttempts) {
+                  setState(() {
+                    _controller!.value = 0;
+                  });
+                  _preferences.updateLockDate().then((_) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/lock_screen_transition',
+                        (Route<dynamic> route) => false);
+                  });
+                } else {
+                  setState(() {
+                    _pin = '';
+                    _header = AppLocalization.of(context)!.pinInvalid;
+                    _dotStates =
+                        List.filled(_pinLength, FontAwesomeIcons.minus);
+                    _controller!.value = 0;
+                  });
+                }
+              });
+            } else {
+              setState(() {
+                _awaitingConfirmation = false;
+                _dotStates = List.filled(_pinLength, FontAwesomeIcons.minus);
+                _pin = '';
+                _pinConfirmed = '';
+                _header = AppLocalization.of(context)!.pinConfirmError;
+                _controller!.value = 0;
+              });
+            }
+          }
+        })
+        ..addListener(() {
+          setState(() {
+            // the animation object’s value is the changed state
+          });
+        });
+    });
   }
 
   @override
@@ -300,45 +343,60 @@ class _PinScreenState extends State<PinScreen>
                         ),
                       ],
                     ),
-                    buildIconWidget(
-                        context,
-                        'packages/aeuniverse/assets/icons/pin-code.png',
-                        90,
-                        90),
-                    const SizedBox(
-                      height: 30,
-                    ),
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 40),
                       child: AutoSizeText(
                         _header!,
-                        style: AppStyles.textStyleSize16W400Primary(context),
+                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
+                            context),
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         stepGranularity: 0.1,
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 10),
-                      child: AutoSizeText(
-                        widget.description,
-                        style: AppStyles.textStyleSize16W200Primary(context),
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        stepGranularity: 0.1,
+                    if (widget.description.isNotEmpty)
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 10),
+                        child: AutoSizeText(
+                          widget.description,
+                          style: AppStyles.textStyleSize16W200Primary(context),
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          stepGranularity: 0.1,
+                        ),
                       ),
-                    ),
                     Container(
                       margin: EdgeInsetsDirectional.only(
-                        start: MediaQuery.of(context).size.width * 0.25,
-                        end: MediaQuery.of(context).size.width * 0.25,
-                        top: MediaQuery.of(context).size.height * 0.02,
+                        start: _animation == null
+                            ? MediaQuery.of(context).size.width * 0.25
+                            : MediaQuery.of(context).size.width * 0.25 +
+                                _animation!.value,
+                        end: _animation == null
+                            ? MediaQuery.of(context).size.width * 0.25
+                            : MediaQuery.of(context).size.width * 0.25 -
+                                _animation!.value,
+                        top: MediaQuery.of(context).size.height * 0.05,
                       ),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: _buildPinDots()),
                     ),
+                    if (_failedAttempts > 0)
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 10),
+                        child: AutoSizeText(
+                          AppLocalization.of(context)!.attempt +
+                              _failedAttempts.toString() +
+                              '/' +
+                              maxAttempts.toString(),
+                          style: AppStyles.textStyleSize16W200Primary(context),
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          stepGranularity: 0.1,
+                        ),
+                      ),
                   ],
                 ),
               ),
