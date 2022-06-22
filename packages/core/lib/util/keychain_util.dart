@@ -70,6 +70,7 @@ class KeychainUtil {
         lastAddress: uint8ListToHex(genesisAddress),
         genesisAddress: uint8ListToHex(genesisAddress),
         name: name,
+        balance: '0.0',
         selected: true);
     await sl.get<DBHelper>().addAccount(selectedAcct);
 
