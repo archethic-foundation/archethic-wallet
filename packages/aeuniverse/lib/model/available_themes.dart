@@ -19,15 +19,15 @@ import 'package:core_ui/ui/themes/themes.dart';
 import 'package:aeuniverse/ui/themes/theme_dark.dart';
 
 enum ThemeOptions {
-  sapphire_blue,
+  byzantine_violet,
   dark,
   emerald_green,
-  sea_green,
-  navy_blue,
-  honey_orange,
-  byzantine_violet,
   fire_red,
-  pearl_grey
+  honey_orange,
+  navy_blue,
+  pearl_grey,
+  sapphire_blue,
+  sea_green,
 }
 
 /// Represent notification on/off setting
