@@ -80,11 +80,11 @@ class PearlGreyTheme implements BaseTheme {
   @override
   Color? text03 = Color(0xFF323232).withOpacity(0.03);
   @override
-  Color? positiveValue = Colors.lightGreenAccent[800];
+  Color? positiveValue = Color.fromARGB(255, 0, 129, 67);
   @override
   Color? negativeValue = Colors.red[300];
   @override
-  Color? positiveAmount = Colors.greenAccent[400];
+  Color? positiveAmount = Color.fromARGB(255, 0, 129, 67);
   @override
   Color? negativeAmount = Colors.redAccent[400];
   @override
