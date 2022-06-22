@@ -471,9 +471,10 @@ class _SetPasswordState extends State<SetPassword> {
       if (widget.initPreferences == true) {
         _preferences.setLock(true);
         _preferences.setShowBalances(true);
+        _preferences.setActiveVibrations(true);
         _preferences.setPinPadShuffle(false);
         _preferences.setShowPriceChart(true);
-        _preferences.setShowBalances(true);
+
         _preferences.setPrimaryCurrency(
             PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE));
         _preferences.setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));

@@ -103,9 +103,10 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                               width: 50,
                               child: TextButton(
                                   onPressed: () async {
-                                    sl
-                                        .get<HapticUtil>()
-                                        .feedback(FeedbackType.light);
+                                    sl.get<HapticUtil>().feedback(
+                                        FeedbackType.light,
+                                        StateContainer.of(context)
+                                            .activeVibrations);
                                     seed = AppSeeds.generateSeed();
                                     mnemonic =
                                         AppMnemomics.seedToMnemonic(seed!);

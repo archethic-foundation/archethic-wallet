@@ -135,7 +135,8 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
       builder: (BuildContext context, AsyncSnapshot<String> recipientDisplay) {
         return InkWell(
           onTap: () {
-            sl.get<HapticUtil>().feedback(FeedbackType.light);
+            sl.get<HapticUtil>().feedback(FeedbackType.light,
+                StateContainer.of(context).activeVibrations);
             Sheets.showAppHeightNineSheet(
                 context: context,
                 widget: TransactionInfosSheet(transaction.address!));

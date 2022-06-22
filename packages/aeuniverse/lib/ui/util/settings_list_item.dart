@@ -32,7 +32,8 @@ class AppSettings {
       ignoring: disabled,
       child: TextButton(
         onPressed: () {
-          sl.get<HapticUtil>().feedback(FeedbackType.light);
+          sl.get<HapticUtil>().feedback(
+              FeedbackType.light, StateContainer.of(context).activeVibrations);
           onPressed();
         },
         child: Container(
@@ -87,7 +88,8 @@ class AppSettings {
       {bool disabled = false}) {
     return TextButton(
       onPressed: () {
-        sl.get<HapticUtil>().feedback(FeedbackType.light);
+        sl.get<HapticUtil>().feedback(
+            FeedbackType.light, StateContainer.of(context).activeVibrations);
         onPressed();
       },
       child: Container(
@@ -150,7 +152,8 @@ class AppSettings {
     return TextButton(
       onPressed: () {
         if (onPressed != null) {
-          sl.get<HapticUtil>().feedback(FeedbackType.light);
+          sl.get<HapticUtil>().feedback(
+              FeedbackType.light, StateContainer.of(context).activeVibrations);
           onPressed();
         } else {
           return;
@@ -206,7 +209,8 @@ class AppSettings {
     return TextButton(
       onPressed: () {
         if (onPressed != null) {
-          sl.get<HapticUtil>().feedback(FeedbackType.light);
+          sl.get<HapticUtil>().feedback(
+              FeedbackType.light, StateContainer.of(context).activeVibrations);
           onPressed();
         } else {
           return;
@@ -246,7 +250,8 @@ class AppSettings {
       {Function? onChanged}) {
     return TextButton(
       onPressed: () {
-        sl.get<HapticUtil>().feedback(FeedbackType.light);
+        sl.get<HapticUtil>().feedback(
+            FeedbackType.light, StateContainer.of(context).activeVibrations);
       },
       child: Container(
         height: 50.0,
@@ -268,7 +273,8 @@ class AppSettings {
                 value: _isSwitched,
                 onChanged: (bool value) {
                   if (onChanged != null) {
-                    sl.get<HapticUtil>().feedback(FeedbackType.light);
+                    sl.get<HapticUtil>().feedback(FeedbackType.light,
+                        StateContainer.of(context).activeVibrations);
                     _isSwitched = value;
                     onChanged(_isSwitched);
                   } else {

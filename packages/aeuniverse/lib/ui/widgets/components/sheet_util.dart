@@ -211,7 +211,8 @@ class _AppHeightNineModalRoute<T> extends PopupRoute<T> {
       child: GestureDetector(
         onTap: () {
           if (closeOnTap!) {
-            sl.get<HapticUtil>().feedback(FeedbackType.light);
+            sl.get<HapticUtil>().feedback(FeedbackType.light,
+                StateContainer.of(context).activeVibrations);
             // Close when tapped anywhere
             Navigator.of(context).pop();
           }

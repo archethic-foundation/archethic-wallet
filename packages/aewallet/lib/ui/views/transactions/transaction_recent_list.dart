@@ -118,7 +118,8 @@ class _TxListWidgetState extends State<TxListWidget> {
                   backgroundColor:
                       StateContainer.of(context).curTheme.backgroundDark,
                   onRefresh: () => Future<void>.sync(() {
-                    sl.get<HapticUtil>().feedback(FeedbackType.light);
+                    sl.get<HapticUtil>().feedback(FeedbackType.light,
+                        StateContainer.of(context).activeVibrations);
                     StateContainer.of(context).requestUpdate(
                         account: StateContainer.of(context).selectedAccount);
                     _pagingController.refresh();
@@ -156,7 +157,8 @@ class _TxListWidgetState extends State<TxListWidget> {
       builder: (BuildContext context, AsyncSnapshot<String> recipientDisplay) {
         return InkWell(
           onTap: () {
-            sl.get<HapticUtil>().feedback(FeedbackType.light);
+            sl.get<HapticUtil>().feedback(FeedbackType.light,
+                StateContainer.of(context).activeVibrations);
             Sheets.showAppHeightNineSheet(
                 context: context,
                 widget: TransactionInfosSheet(transaction.address!));
@@ -379,7 +381,8 @@ class _TxListWidgetState extends State<TxListWidget> {
                   padding: const EdgeInsets.only(top: 5),
                   child: GestureDetector(
                     onTap: () {
-                      sl.get<HapticUtil>().feedback(FeedbackType.light);
+                      sl.get<HapticUtil>().feedback(FeedbackType.light,
+                          StateContainer.of(context).activeVibrations);
                       Sheets.showAppHeightNineSheet(
                           context: context, widget: const TxAllListWidget());
                     },

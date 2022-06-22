@@ -50,7 +50,8 @@ class AppButton {
                         stepGranularity: 0.5),
                     onPressed: () {
                       if (!disabled) {
-                        sl.get<HapticUtil>().feedback(FeedbackType.light);
+                        sl.get<HapticUtil>().feedback(FeedbackType.light,
+                            StateContainer.of(context).activeVibrations);
                         onPressed();
                       }
                       return;
@@ -72,7 +73,8 @@ class AppButton {
                         stepGranularity: 0.5),
                     onPressed: () {
                       if (!disabled) {
-                        sl.get<HapticUtil>().feedback(FeedbackType.light);
+                        sl.get<HapticUtil>().feedback(FeedbackType.light,
+                            StateContainer.of(context).activeVibrations);
                         onPressed();
                       }
                       return;
@@ -106,7 +108,8 @@ class AppButton {
                         stepGranularity: 0.5),
                     onPressed: () {
                       if (!disabled) {
-                        sl.get<HapticUtil>().feedback(FeedbackType.light);
+                        sl.get<HapticUtil>().feedback(FeedbackType.light,
+                            StateContainer.of(context).activeVibrations);
                         onPressed();
                       }
                       return;
@@ -128,7 +131,8 @@ class AppButton {
                         stepGranularity: 0.5),
                     onPressed: () {
                       if (!disabled) {
-                        sl.get<HapticUtil>().feedback(FeedbackType.light);
+                        sl.get<HapticUtil>().feedback(FeedbackType.light,
+                            StateContainer.of(context).activeVibrations);
                         onPressed();
                       }
                       return;

@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "aboutWalletServiceTerms" : MessageLookupByLibrary.simpleMessage("Conditions d\'utilisation du portefeuille"),
     "accountsHeader" : MessageLookupByLibrary.simpleMessage("Accounts"),
     "ackBackedUp" : MessageLookupByLibrary.simpleMessage("Êtes-vous sûr(e) d\'avoir sauvegardé votre phrase secrète ?"),
+    "activeVibrations" : MessageLookupByLibrary.simpleMessage("Active vibrations"),
     "add" : MessageLookupByLibrary.simpleMessage("يضيف"),
     "addAccount" : MessageLookupByLibrary.simpleMessage("Add account"),
     "addAccountConfirmation" : MessageLookupByLibrary.simpleMessage("Are you sure you want to add in your keychain \"%1?\""),

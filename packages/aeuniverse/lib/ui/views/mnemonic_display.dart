@@ -106,7 +106,8 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
       GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
-          sl.get<HapticUtil>().feedback(FeedbackType.light);
+          sl.get<HapticUtil>().feedback(
+              FeedbackType.light, StateContainer.of(context).activeVibrations);
           if (widget.obscureSeed) {
             setState(() {
               _seedObscured = !_seedObscured!;

@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aeuniverse/appstate_container.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -46,9 +47,11 @@ class AuthFactory {
         break;
     }
     if (auth) {
-      sl.get<HapticUtil>().feedback(FeedbackType.success);
+      sl.get<HapticUtil>().feedback(
+          FeedbackType.success, StateContainer.of(context).activeVibrations);
     } else {
-      sl.get<HapticUtil>().feedback(FeedbackType.error);
+      sl.get<HapticUtil>().feedback(
+          FeedbackType.error, StateContainer.of(context).activeVibrations);
     }
     return auth;
   }

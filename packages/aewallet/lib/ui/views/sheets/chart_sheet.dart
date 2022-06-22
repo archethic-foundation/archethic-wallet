@@ -182,7 +182,8 @@ class _ChartSheetState extends State<ChartSheet> {
                   StateContainer.of(context).useOracleUcoPrice
                       ? InkWell(
                           onTap: () {
-                            sl.get<HapticUtil>().feedback(FeedbackType.light);
+                            sl.get<HapticUtil>().feedback(FeedbackType.light,
+                                StateContainer.of(context).activeVibrations);
                             AppDialogs.showInfoDialog(
                               context,
                               AppLocalization.of(context)!.informations,
@@ -245,7 +246,8 @@ class _ChartSheetState extends State<ChartSheet> {
                             );
                           }).toList(),
                           onChanged: (OptionChart? optionChart) async {
-                            sl.get<HapticUtil>().feedback(FeedbackType.light);
+                            sl.get<HapticUtil>().feedback(FeedbackType.light,
+                                StateContainer.of(context).activeVibrations);
                             await StateContainer.of(context)
                                 .requestUpdateCoinsChart(
                                     option: optionChart!.id);

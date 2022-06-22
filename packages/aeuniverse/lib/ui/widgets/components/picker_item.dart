@@ -62,7 +62,8 @@ class _PickerWidgetState extends State<PickerWidget> {
             return InkWell(
               onTap: () {
                 if (widget.pickerItems![index].enabled) {
-                  sl.get<HapticUtil>().feedback(FeedbackType.light);
+                  sl.get<HapticUtil>().feedback(FeedbackType.light,
+                      StateContainer.of(context).activeVibrations);
                   selectedIndex = index;
                   widget.onSelected!(widget.pickerItems![index]);
                   setState(() {});

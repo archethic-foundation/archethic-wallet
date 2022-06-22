@@ -43,7 +43,8 @@ class AppDialogs {
                 ),
               ),
               onPressed: () {
-                sl.get<HapticUtil>().feedback(FeedbackType.light);
+                sl.get<HapticUtil>().feedback(FeedbackType.light,
+                    StateContainer.of(context).activeVibrations);
                 Navigator.of(context).pop();
                 if (cancelAction != null) {
                   cancelAction();
@@ -59,7 +60,8 @@ class AppDialogs {
                 ),
               ),
               onPressed: () {
-                sl.get<HapticUtil>().feedback(FeedbackType.light);
+                sl.get<HapticUtil>().feedback(FeedbackType.light,
+                    StateContainer.of(context).activeVibrations);
                 Navigator.of(context).pop();
                 onPressed();
               },
@@ -96,7 +98,8 @@ class AppDialogs {
                 ),
               ),
               onPressed: () {
-                sl.get<HapticUtil>().feedback(FeedbackType.light);
+                sl.get<HapticUtil>().feedback(FeedbackType.light,
+                    StateContainer.of(context).activeVibrations);
                 Navigator.of(context).pop();
               },
             ),

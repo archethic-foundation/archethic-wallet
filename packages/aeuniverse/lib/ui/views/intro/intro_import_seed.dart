@@ -149,9 +149,10 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                 prefixButton: TextFieldButton(
                                   icon: FontAwesomeIcons.qrcode,
                                   onPressed: () async {
-                                    sl
-                                        .get<HapticUtil>()
-                                        .feedback(FeedbackType.light);
+                                    sl.get<HapticUtil>().feedback(
+                                        FeedbackType.light,
+                                        StateContainer.of(context)
+                                            .activeVibrations);
                                     if (AppMnemomics.validateMnemonic(
                                         _mnemonicController.text.split(' '))) {
                                       return;

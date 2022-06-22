@@ -106,6 +106,7 @@ class StateContainerState extends State<StateContainer> {
   bool useOracleUcoPrice = false;
   bool showBalance = false;
   bool showPriceChart = false;
+  bool activeVibrations = false;
 
   List<Contact> contactsRef = List<Contact>.empty(growable: true);
 
@@ -133,6 +134,7 @@ class StateContainerState extends State<StateContainer> {
         curPrimaryCurrency = _preferences.getPrimaryCurrency();
         curNetwork = _preferences.getNetwork();
         showBalance = _preferences.getShowBalances();
+        activeVibrations = _preferences.getActiveVibrations();
         showPriceChart = _preferences.getShowPriceChart();
       });
       updateTheme(_preferences.getTheme());

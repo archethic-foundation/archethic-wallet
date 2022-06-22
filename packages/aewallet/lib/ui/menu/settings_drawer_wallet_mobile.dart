@@ -92,6 +92,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
 
   bool _pinPadShuffleActive = false;
   bool _showBalancesActive = false;
+  bool _vibrationActive = false;
   bool _showPriceChartActive = false;
 
   bool notNull(Object? o) => o != null;
@@ -116,6 +117,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       setState(() {
         _pinPadShuffleActive = preferences.getPinPadShuffle();
         _showBalancesActive = preferences.getShowBalances();
+        _vibrationActive = preferences.getActiveVibrations();
         _showPriceChartActive = preferences.getShowPriceChart();
         _curAuthMethod = preferences.getAuthMethod();
         _curUnlockSetting = preferences.getLock()
@@ -1537,6 +1539,25 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         StateContainer.of(context).showPriceChart =
                             _showPriceChartActive;
                         preferences.setShowPriceChart(_showPriceChartActive);
+                      });
+                    }),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.text15,
+                    ),
+                    AppSettings.buildSettingsListItemSwitch(
+                        context,
+                        AppLocalization.of(context)!.activeVibrations,
+                        'packages/aewallet/assets/icons/vibrate.png',
+                        StateContainer.of(context).curTheme.iconDrawer!,
+                        _vibrationActive, onChanged: (bool isSwitched) async {
+                      final Preferences preferences =
+                          await Preferences.getInstance();
+                      setState(() {
+                        _vibrationActive = isSwitched;
+                        StateContainer.of(context).activeVibrations =
+                            _vibrationActive;
+                        preferences.setActiveVibrations(_vibrationActive);
                       });
                     }),
                     Divider(

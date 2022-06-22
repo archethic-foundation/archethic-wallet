@@ -657,6 +657,10 @@ class AppLocalization {
     return Intl.message('Show balances', name: 'showBalances');
   }
 
+  String get activeVibrations {
+    return Intl.message('Active vibrations', name: 'activeVibrations');
+  }
+
   String get showPriceChart {
     return Intl.message('Show price chart', name: 'showPriceChart');
   }

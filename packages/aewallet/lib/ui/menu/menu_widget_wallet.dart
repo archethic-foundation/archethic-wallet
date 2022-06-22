@@ -66,7 +66,8 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                     padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                     child: InkWell(
                         onTap: () {
-                          sl.get<HapticUtil>().feedback(FeedbackType.light);
+                          sl.get<HapticUtil>().feedback(FeedbackType.light,
+                              StateContainer.of(context).activeVibrations);
                           Sheets.showAppHeightNineSheet(
                             context: context,
                             widget: TransferTokensSheet(
@@ -111,7 +112,8 @@ class MenuWidgetWallet extends AbstractMenuWidget {
               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: InkWell(
                 onTap: () {
-                  sl.get<HapticUtil>().feedback(FeedbackType.light);
+                  sl.get<HapticUtil>().feedback(FeedbackType.light,
+                      StateContainer.of(context).activeVibrations);
                   Sheets.showAppHeightNineSheet(
                       context: context, widget: const ReceiveSheet());
                 },
@@ -131,7 +133,8 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                 padding: const EdgeInsets.only(left: 5.0, right: 10.0),
                 child: InkWell(
                     onTap: () {
-                      sl.get<HapticUtil>().feedback(FeedbackType.light);
+                      sl.get<HapticUtil>().feedback(FeedbackType.light,
+                          StateContainer.of(context).activeVibrations);
                       Sheets.showAppHeightNineSheet(
                           context: context, widget: const BuySheet());
                     },
@@ -189,7 +192,8 @@ class MenuWidgetWallet extends AbstractMenuWidget {
   Widget buildMenuTxExplorer(BuildContext context) {
     return InkWell(
       onTap: () {
-        sl.get<HapticUtil>().feedback(FeedbackType.light);
+        sl.get<HapticUtil>().feedback(
+            FeedbackType.light, StateContainer.of(context).activeVibrations);
         Sheets.showAppHeightNineSheet(
             context: context, widget: const TransactionChainExplorerSheet());
       },

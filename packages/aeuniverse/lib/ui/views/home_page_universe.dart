@@ -443,7 +443,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                         children: <Widget>[
                           InkWell(
                             onTap: () async {
-                              sl.get<HapticUtil>().feedback(FeedbackType.light);
+                              sl.get<HapticUtil>().feedback(FeedbackType.light,
+                                  StateContainer.of(context).activeVibrations);
                               AccountsList(await KeychainUtil()
                                       .getListAccountsFromKeychain(
                                           await StateContainer.of(context)

@@ -109,7 +109,8 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                       const EdgeInsetsDirectional.only(top: 10.0, start: 10.0),
                   child: TextButton(
                     onPressed: () {
-                      sl.get<HapticUtil>().feedback(FeedbackType.light);
+                      sl.get<HapticUtil>().feedback(FeedbackType.light,
+                          StateContainer.of(context).activeVibrations);
                       Clipboard.setData(ClipboardData(
                           text: StateContainer.of(context)
                               .selectedAccount
@@ -138,7 +139,8 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                   children: <Widget>[
                     TextButton(
                       onPressed: () {
-                        sl.get<HapticUtil>().feedback(FeedbackType.light);
+                        sl.get<HapticUtil>().feedback(FeedbackType.light,
+                            StateContainer.of(context).activeVibrations);
                         Clipboard.setData(ClipboardData(
                             text: StateContainer.of(context)
                                 .selectedAccount

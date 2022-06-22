@@ -212,7 +212,8 @@ class _PinScreenState extends State<PinScreen>
           splashColor: StateContainer.of(context).curTheme.text30,
           onTap: () {},
           onTapDown: (TapDownDetails details) {
-            sl.get<HapticUtil>().feedback(FeedbackType.light);
+            sl.get<HapticUtil>().feedback(FeedbackType.light,
+                StateContainer.of(context).activeVibrations);
             if (_controller!.status == AnimationStatus.forward ||
                 _controller!.status == AnimationStatus.reverse) {
               return;
@@ -223,7 +224,8 @@ class _PinScreenState extends State<PinScreen>
                 if (widget.type == PinOverlayType.enterPin) {
                   // Pin is not what was expected
                   if (_pin != widget.expectedPin) {
-                    sl.get<HapticUtil>().feedback(FeedbackType.error);
+                    sl.get<HapticUtil>().feedback(FeedbackType.error,
+                        StateContainer.of(context).activeVibrations);
                     _controller!.forward();
                   } else {
                     Preferences.getInstance().then((Preferences _preferences) {
@@ -245,7 +247,8 @@ class _PinScreenState extends State<PinScreen>
                     if (_pin == _pinConfirmed) {
                       Navigator.of(context).pop(_pin);
                     } else {
-                      sl.get<HapticUtil>().feedback(FeedbackType.error);
+                      sl.get<HapticUtil>().feedback(FeedbackType.error,
+                          StateContainer.of(context).activeVibrations);
                       _controller!.forward();
                     }
                   }
@@ -501,9 +504,10 @@ class _PinScreenState extends State<PinScreen>
                                       .text30,
                                   onTap: () {},
                                   onTapDown: (TapDownDetails details) {
-                                    sl
-                                        .get<HapticUtil>()
-                                        .feedback(FeedbackType.light);
+                                    sl.get<HapticUtil>().feedback(
+                                        FeedbackType.light,
+                                        StateContainer.of(context)
+                                            .activeVibrations);
                                     _backSpace();
                                   },
                                   child: Container(

@@ -138,9 +138,10 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                         await Preferences.getInstance();
                                     _preferences.setLock(true);
                                     _preferences.setShowBalances(true);
+                                    _preferences.setActiveVibrations(true);
                                     _preferences.setPinPadShuffle(false);
                                     _preferences.setShowPriceChart(true);
-                                    _preferences.setShowBalances(true);
+
                                     _preferences.setPrimaryCurrency(
                                         PrimaryCurrencySetting(
                                             AvailablePrimaryCurrency.NATIVE));
@@ -172,9 +173,10 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                           await Preferences.getInstance();
                                       _preferences.setLock(true);
                                       _preferences.setShowBalances(true);
+                                      _preferences.setActiveVibrations(true);
                                       _preferences.setPinPadShuffle(false);
                                       _preferences.setShowPriceChart(true);
-                                      _preferences.setShowBalances(true);
+
                                       _preferences.setPrimaryCurrency(
                                           PrimaryCurrencySetting(
                                               AvailablePrimaryCurrency.NATIVE));

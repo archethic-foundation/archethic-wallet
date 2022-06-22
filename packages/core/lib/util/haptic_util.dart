@@ -12,7 +12,11 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 /// Utilities for haptic feedback
 class HapticUtil {
   /// Feedback
-  Future<void> feedback(FeedbackType feedbackType) async {
+  Future<void> feedback(
+      FeedbackType feedbackType, bool activeVibrations) async {
+    if (activeVibrations == false) {
+      return;
+    }
     if ((!kIsWeb && (Platform.isIOS || Platform.isAndroid)) &&
         await Vibrate.canVibrate) {
       Vibrate.feedback(feedbackType);

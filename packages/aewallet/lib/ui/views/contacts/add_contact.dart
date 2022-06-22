@@ -213,7 +213,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
                   prefixButton: TextFieldButton(
                       icon: FontAwesomeIcons.qrcode,
                       onPressed: () async {
-                        sl.get<HapticUtil>().feedback(FeedbackType.light);
+                        sl.get<HapticUtil>().feedback(FeedbackType.light,
+                            StateContainer.of(context).activeVibrations);
                         UIUtil.cancelLockEvent();
                         final String? scanResult = await UserDataUtil.getQRData(
                             DataType.address, context);
@@ -237,7 +238,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
                       if (!_showPasteButton!) {
                         return;
                       }
-                      sl.get<HapticUtil>().feedback(FeedbackType.light);
+                      sl.get<HapticUtil>().feedback(FeedbackType.light,
+                          StateContainer.of(context).activeVibrations);
                       final String? data =
                           await UserDataUtil.getClipboardText(DataType.address);
                       if (data != null) {
@@ -285,7 +287,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
                             if (widget.address != null) {
                               return;
                             }
-                            sl.get<HapticUtil>().feedback(FeedbackType.light);
+                            sl.get<HapticUtil>().feedback(FeedbackType.light,
+                                StateContainer.of(context).activeVibrations);
                             setState(() {
                               _addressValidAndUnfocused = false;
                             });

@@ -171,7 +171,8 @@ class BalanceInfosWidget {
   Widget buildInfos(BuildContext context) {
     return InkWell(
       onTap: () {
-        sl.get<HapticUtil>().feedback(FeedbackType.light);
+        sl.get<HapticUtil>().feedback(
+            FeedbackType.light, StateContainer.of(context).activeVibrations);
         optionChartList = <OptionChart>[
           OptionChart('24h', ChartInfos.getChartOptionLabel(context, '24h')),
           OptionChart('7d', ChartInfos.getChartOptionLabel(context, '7d')),
@@ -341,7 +342,8 @@ class BalanceInfosWidget {
                 StateContainer.of(context).useOracleUcoPrice
                     ? InkWell(
                         onTap: () {
-                          sl.get<HapticUtil>().feedback(FeedbackType.light);
+                          sl.get<HapticUtil>().feedback(FeedbackType.light,
+                              StateContainer.of(context).activeVibrations);
                           AppDialogs.showInfoDialog(
                             context,
                             AppLocalization.of(context)!.informations,

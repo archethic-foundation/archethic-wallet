@@ -294,7 +294,8 @@ class _AppLockScreenState extends State<AppLockScreen> {
                               : AppLocalization.of(context)!.unlock,
                           Dimens.buttonBottomDimens, onPressed: () {
                         if (!_lockedOut) {
-                          sl.get<HapticUtil>().feedback(FeedbackType.light);
+                          sl.get<HapticUtil>().feedback(FeedbackType.light,
+                              StateContainer.of(context).activeVibrations);
                           _authenticate(transitions: false);
                         }
                       }, disabled: _lockedOut),

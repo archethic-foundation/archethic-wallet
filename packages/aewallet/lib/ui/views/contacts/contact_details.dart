@@ -56,7 +56,8 @@ class ContactDetailsSheet {
                               top: 10.0, start: 10.0),
                           child: TextButton(
                             onPressed: () {
-                              sl.get<HapticUtil>().feedback(FeedbackType.light);
+                              sl.get<HapticUtil>().feedback(FeedbackType.light,
+                                  StateContainer.of(context).activeVibrations);
                               AppDialogs.showConfirmDialog(
                                   context,
                                   AppLocalization.of(context)!.removeContact,
@@ -126,7 +127,8 @@ class ContactDetailsSheet {
                               top: 10.0, start: 10.0),
                           child: TextButton(
                             onPressed: () {
-                              sl.get<HapticUtil>().feedback(FeedbackType.light);
+                              sl.get<HapticUtil>().feedback(FeedbackType.light,
+                                  StateContainer.of(context).activeVibrations);
                               Clipboard.setData(
                                   ClipboardData(text: contact.address));
                               UIUtil.showSnackbar(
@@ -176,9 +178,10 @@ class ContactDetailsSheet {
                             const SizedBox(height: 50),
                             GestureDetector(
                               onTap: () {
-                                sl
-                                    .get<HapticUtil>()
-                                    .feedback(FeedbackType.light);
+                                sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    StateContainer.of(context)
+                                        .activeVibrations);
                                 Clipboard.setData(
                                     ClipboardData(text: contact.address));
                                 UIUtil.showSnackbar(

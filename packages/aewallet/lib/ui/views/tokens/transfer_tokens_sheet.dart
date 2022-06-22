@@ -286,9 +286,10 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                                           .curTheme
                                           .backgroundDarkest,
                                       onPressed: () {
-                                        sl
-                                            .get<HapticUtil>()
-                                            .feedback(FeedbackType.light);
+                                        sl.get<HapticUtil>().feedback(
+                                            FeedbackType.light,
+                                            StateContainer.of(context)
+                                                .activeVibrations);
                                         _sendAmountController!.text = '';
                                         if (primaryCurrency ==
                                             PrimaryCurrency.network) {
@@ -685,7 +686,8 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
           width: double.infinity - 5,
           child: TextButton(
             onPressed: () async {
-              sl.get<HapticUtil>().feedback(FeedbackType.light);
+              sl.get<HapticUtil>().feedback(FeedbackType.light,
+                  StateContainer.of(context).activeVibrations);
               _sendAddressController!.text = contact.name!;
               feeEstimation = await getFee();
               _sendAddressFocusNode!.unfocus();
@@ -873,7 +875,8 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
           suffixButton: TextFieldButton(
             icon: FontAwesomeIcons.anglesUp,
             onPressed: () async {
-              sl.get<HapticUtil>().feedback(FeedbackType.light);
+              sl.get<HapticUtil>().feedback(FeedbackType.light,
+                  StateContainer.of(context).activeVibrations);
               double fee = await getFee(maxSend: true);
 
               double sendAmount = 0;
@@ -966,7 +969,8 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
         prefixButton: TextFieldButton(
           icon: FontAwesomeIcons.at,
           onPressed: () {
-            sl.get<HapticUtil>().feedback(FeedbackType.light);
+            sl.get<HapticUtil>().feedback(FeedbackType.light,
+                StateContainer.of(context).activeVibrations);
             if (_showContactButton && _contacts!.isEmpty) {
               // Show menu
               FocusScope.of(context).requestFocus(_sendAddressFocusNode);
@@ -994,7 +998,8 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
             if (!_qrCodeButtonVisible) {
               return;
             }
-            sl.get<HapticUtil>().feedback(FeedbackType.light);
+            sl.get<HapticUtil>().feedback(FeedbackType.light,
+                StateContainer.of(context).activeVibrations);
             UIUtil.cancelLockEvent();
             final String? scanResult =
                 await UserDataUtil.getQRData(DataType.address, context);

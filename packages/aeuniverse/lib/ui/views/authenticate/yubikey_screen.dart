@@ -260,9 +260,10 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                                     style: AppStyles.textStyleSize16W200Primary(
                                         context)),
                                 onPressed: () {
-                                  sl
-                                      .get<HapticUtil>()
-                                      .feedback(FeedbackType.light);
+                                  sl.get<HapticUtil>().feedback(
+                                      FeedbackType.light,
+                                      StateContainer.of(context)
+                                          .activeVibrations);
                                   setState(() {
                                     buttonNFCLabel =
                                         AppLocalization.of(context)!
@@ -319,9 +320,10 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                               suffixButton: TextFieldButton(
                                 icon: FontAwesomeIcons.paste,
                                 onPressed: () {
-                                  sl
-                                      .get<HapticUtil>()
-                                      .feedback(FeedbackType.light);
+                                  sl.get<HapticUtil>().feedback(
+                                      FeedbackType.light,
+                                      StateContainer.of(context)
+                                          .activeVibrations);
                                   Clipboard.getData('text/plain')
                                       .then((ClipboardData? data) async {
                                     if (data == null || data.text == null) {
