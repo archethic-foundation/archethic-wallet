@@ -169,7 +169,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                 setState(() {
                                   isPressed = true;
                                 });
-                                await sl.get<DBHelper>().dropAccounts();
+                                await sl.get<DBHelper>().clearAccounts();
                                 final Vault vault = await Vault.getInstance();
                                 await vault.setSeed(seed!);
                                 Account? account = await KeychainUtil()

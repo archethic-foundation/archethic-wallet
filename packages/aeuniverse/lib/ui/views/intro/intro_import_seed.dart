@@ -300,8 +300,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                 _mnemonicController.text.split(' '));
                             final Vault _vault = await Vault.getInstance();
                             _vault.setSeed(seed);
-                            await sl.get<DBHelper>().dropAccounts();
-
+                            await sl.get<DBHelper>().clearAccounts();
                             List<Account>? accounts = await KeychainUtil()
                                 .getListAccountsFromKeychain(seed, '');
                             if (accounts == null || accounts.length == 0) {

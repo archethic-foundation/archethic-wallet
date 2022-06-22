@@ -224,14 +224,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                             StateContainer.of(context)
                                                 .curLanguage
                                                 .getLocaleString()), () async {
-                                      // Delete all data
-                                      await sl.get<DBHelper>().dropAll();
-                                      Vault vault = await Vault.getInstance();
-                                      await vault.deleteAll();
-                                      Preferences preferences =
-                                          await Preferences.getInstance();
-                                      await preferences.deleteAll();
-                                      StateContainer.of(context).logOut();
+                                      await StateContainer.of(context).logOut();
                                       Navigator.of(context)
                                           .pushNamedAndRemoveUntil('/',
                                               (Route<dynamic> route) => false);

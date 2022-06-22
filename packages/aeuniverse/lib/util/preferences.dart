@@ -196,7 +196,7 @@ class Preferences {
   ThemeSetting getTheme() => ThemeSetting(ThemeOptions
       .values[_getValue(_cur_theme, defaultValue: ThemeOptions.dark.index)]);
 
-  Future<void> deleteAll() async {
-    await _box.deleteFromDisk();
+  Future<void> clearAll() async {
+    await _box.clear();
   }
 }

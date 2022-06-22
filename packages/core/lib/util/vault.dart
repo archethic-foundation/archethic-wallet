@@ -91,13 +91,7 @@ class Vault {
 
   String getYubikeyClientID() => _getValue(_yubikeyClientID, defaultValue: '');
 
-  Future<void> deleteAll() async {
-    await deleteSecureKey();
-    await _box.deleteFromDisk();
-  }
-
-  Future<void> deleteSecureKey() async {
-    const FlutterSecureStorage secureStorage = FlutterSecureStorage();
-    await secureStorage.delete(key: 'archethic_secure_key');
+  Future<void> clearAll() async {
+    await _box.clear();
   }
 }

@@ -52,7 +52,13 @@ Future<void> main() async {
   // Run app
   SystemChrome.setPreferredOrientations(
       <DeviceOrientation>[DeviceOrientation.portraitUp]).then((_) {
-    runApp(const StateContainer(child: App()));
+    runApp(
+      const RestartWidget(
+        child: StateContainer(
+          child: App(),
+        ),
+      ),
+    );
   });
 }
 
@@ -66,7 +72,6 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   void dispose() {
-    Hive.close();
     super.dispose();
   }
 
@@ -399,6 +404,39 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
     });
     return Scaffold(
       backgroundColor: StateContainer.of(context).curTheme.background,
+    );
+  }
+}
+
+class RestartWidget extends StatefulWidget {
+  const RestartWidget({this.child, super.key});
+
+  final Widget? child;
+
+  static void restartApp(BuildContext context) {
+    context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    return _RestartWidgetState();
+  }
+}
+
+class _RestartWidgetState extends State<RestartWidget> {
+  Key key = UniqueKey();
+
+  void restartApp() {
+    setState(() {
+      key = UniqueKey();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyedSubtree(
+      key: key,
+      child: widget.child ?? Container(),
     );
   }
 }

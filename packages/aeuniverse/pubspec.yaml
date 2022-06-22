@@ -17,6 +17,9 @@ dependencies:
   core_ui:
     path: ../core_ui
     
+  aeroot: 
+    path: ../../
+  
   # EventTaxi could be used to send events through different layers of the application decoupled from the architecture
   event_taxi: ^1.0.0
   

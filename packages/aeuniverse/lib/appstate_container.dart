@@ -6,6 +6,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aeroot/main.dart';
 import 'package:core/model/primary_currency.dart';
 import 'package:flutter/material.dart';
 
@@ -77,9 +78,6 @@ class StateContainer extends StatefulWidget {
 }
 
 class StateContainerState extends State<StateContainer> {
-  // Minimum receive = 0.000001
-  String receiveThreshold = BigInt.from(10).pow(24).toString();
-
   AppWallet? wallet;
   AppWallet? localWallet;
   bool recentTransactionsLoading = false;
@@ -564,12 +562,13 @@ class StateContainerState extends State<StateContainer> {
         account.lastAddress == null ? '' : account.lastAddress!;
   }
 
-  void logOut() {
-    setState(() {
-      wallet = AppWallet();
-      localWallet = AppWallet();
-    });
-    setupServiceLocator();
+  Future<void> logOut() async {
+    final Vault vault = await Vault.getInstance();
+    vault.clearAll();
+    final Preferences preferences = await Preferences.getInstance();
+    preferences.clearAll();
+    sl.get<DBHelper>().clearAll();
+    RestartWidget.restartApp(context);
   }
 
   Future<String?> getSeed() async {

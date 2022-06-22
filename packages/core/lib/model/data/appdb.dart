@@ -101,6 +101,12 @@ class DBHelper {
     box.delete(contact.address);
   }
 
+  Future<void> clearContacts() async {
+    // ignore: prefer_final_locals
+    Box<Contact> box = await Hive.openBox<Contact>(_contactsTable);
+    box.clear();
+  }
+
   Future<Account> addAccount(Account account) async {
     Box<Account> box = await Hive.openBox<Account>(_accountsTable);
     box.put(account.name, account);
@@ -157,14 +163,14 @@ class DBHelper {
     return accountSelected;
   }
 
-  Future<void> dropAccounts() async {
+  Future<void> clearAccounts() async {
     // ignore: prefer_final_locals
     Box<Account> box = await Hive.openBox<Account>(_accountsTable);
     box.clear();
   }
 
-  Future<void> dropAll() async {
-    await Hive.deleteBoxFromDisk(_accountsTable);
-    await Hive.deleteBoxFromDisk(_contactsTable);
+  Future<void> clearAll() async {
+    await clearAccounts();
+    await clearContacts();
   }
 }
