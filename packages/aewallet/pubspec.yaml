@@ -40,7 +40,7 @@ dependencies:
   event_taxi: ^1.0.0
   
   # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart
-  fl_chart: ^0.51.0
+  fl_chart: ^0.55.0
 
   # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter.
   phoenix_socket: ^0.5.3
@@ -76,7 +76,7 @@ dependencies:
   qr_flutter: ^4.0.0
 
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
-  share_plus: ^4.0.7
+  share_plus: ^4.0.9
 
   # A package to help you build highly customisable timelines with Flutter.
   timeline_tile: ^2.0.0
