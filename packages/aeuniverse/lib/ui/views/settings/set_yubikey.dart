@@ -28,9 +28,15 @@ class SetYubikey extends StatefulWidget {
   final String? description;
   final String? apiKey;
   final String? clientID;
+  final bool initPreferences;
 
   const SetYubikey(
-      {super.key, this.header, this.description, this.apiKey, this.clientID});
+      {super.key,
+      this.header,
+      this.description,
+      this.apiKey,
+      this.clientID,
+      this.initPreferences = false});
 
   @override
   State<SetYubikey> createState() => _SetYubikeyState();
@@ -299,15 +305,17 @@ class _SetYubikeyState extends State<SetYubikey> {
           final Preferences _preferences = await Preferences.getInstance();
           _preferences.setAuthMethod(
               AuthenticationMethod(AuthMethod.yubikeyWithYubicloud));
-          _preferences.setLock(true);
-          _preferences.setShowBalances(true);
-          _preferences.setPinPadShuffle(false);
-          _preferences.setShowPriceChart(true);
-          _preferences.setShowBalances(true);
-          _preferences.setPrimaryCurrency(
-              PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE));
-          _preferences
-              .setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
+          if (widget.initPreferences) {
+            _preferences.setLock(true);
+            _preferences.setShowBalances(true);
+            _preferences.setPinPadShuffle(false);
+            _preferences.setShowPriceChart(true);
+            _preferences.setShowBalances(true);
+            _preferences.setPrimaryCurrency(
+                PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE));
+            _preferences
+                .setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
+          }
           await Future<void>.delayed(const Duration(milliseconds: 200));
           StateContainer.of(context).getSeed().then((String? seed) {
             Navigator.of(context).pushNamedAndRemoveUntil(

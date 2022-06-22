@@ -19,8 +19,10 @@ class _UpdatePasswordState extends State<UpdatePassword> {
   @override
   Widget build(BuildContext context) {
     return SetPassword(
-        header: AppLocalization.of(context)!.configureSecurityIntro,
-        description:
-            AppLocalization.of(context)!.configureSecurityExplanationPassword);
+      header: AppLocalization.of(context)!.configureSecurityIntro,
+      description:
+          AppLocalization.of(context)!.configureSecurityExplanationPassword,
+      initPreferences: false,
+    );
   }
 }

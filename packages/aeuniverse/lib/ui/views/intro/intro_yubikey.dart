@@ -19,7 +19,9 @@ class _IntroYubikeyState extends State<IntroYubikey> {
   @override
   Widget build(BuildContext context) {
     return SetYubikey(
-        header: AppLocalization.of(context)!.seYubicloudHeader,
-        description: AppLocalization.of(context)!.seYubicloudDescription);
+      header: AppLocalization.of(context)!.seYubicloudHeader,
+      description: AppLocalization.of(context)!.seYubicloudDescription,
+      initPreferences: true,
+    );
   }
 }

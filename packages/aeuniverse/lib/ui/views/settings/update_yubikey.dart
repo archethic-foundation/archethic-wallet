@@ -33,6 +33,7 @@ class _UpdateYubikeyState extends State<UpdateYubikey> {
             description: description,
             apiKey: apiKey,
             clientID: clientID,
+            initPreferences: false,
           );
         } else {
           return Center(child: CircularProgressIndicator());

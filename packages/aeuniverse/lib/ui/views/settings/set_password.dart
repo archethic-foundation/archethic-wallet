@@ -26,8 +26,10 @@ import 'package:aeuniverse/util/preferences.dart';
 class SetPassword extends StatefulWidget {
   final String? header;
   final String? description;
+  final bool initPreferences;
 
-  const SetPassword({super.key, this.header, this.description});
+  const SetPassword(
+      {super.key, this.header, this.description, this.initPreferences = false});
   @override
   State<SetPassword> createState() => _SetPasswordState();
 }
@@ -466,14 +468,16 @@ class _SetPasswordState extends State<SetPassword> {
           await StateContainer.of(context).getSeed()));
       final Preferences _preferences = await Preferences.getInstance();
       _preferences.setAuthMethod(AuthenticationMethod(AuthMethod.password));
-      _preferences.setLock(true);
-      _preferences.setShowBalances(true);
-      _preferences.setPinPadShuffle(false);
-      _preferences.setShowPriceChart(true);
-      _preferences.setShowBalances(true);
-      _preferences.setPrimaryCurrency(
-          PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE));
-      _preferences.setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
+      if (widget.initPreferences == true) {
+        _preferences.setLock(true);
+        _preferences.setShowBalances(true);
+        _preferences.setPinPadShuffle(false);
+        _preferences.setShowPriceChart(true);
+        _preferences.setShowBalances(true);
+        _preferences.setPrimaryCurrency(
+            PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE));
+        _preferences.setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
+      }
       Navigator.of(context).pushNamedAndRemoveUntil(
         '/home',
         (Route<dynamic> route) => false,
