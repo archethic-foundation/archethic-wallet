@@ -242,8 +242,10 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                             await Preferences.getInstance();
                         final AuthenticationMethod authMethod =
                             preferences.getAuthMethod();
-                        bool auth =
-                            await AuthFactory.authenticate(context, authMethod);
+                        bool auth = await AuthFactory.authenticate(
+                            context, authMethod,
+                            activeVibrations:
+                                StateContainer.of(context).activeVibrations);
                         if (auth) {
                           EventTaxiImpl.singleton()
                               .fire(AuthenticatedEvent(AUTH_EVENT_TYPE.send));

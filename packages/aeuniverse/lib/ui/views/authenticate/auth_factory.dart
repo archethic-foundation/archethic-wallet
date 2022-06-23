@@ -22,7 +22,7 @@ import 'package:aeuniverse/ui/views/authenticate/yubikey_screen.dart';
 class AuthFactory {
   static Future<bool> authenticate(
       BuildContext context, AuthenticationMethod authMethod,
-      {bool transitions = false}) async {
+      {bool transitions = false, bool activeVibrations = false}) async {
     bool auth = false;
     switch (authMethod.method) {
       case (AuthMethod.yubikeyWithYubicloud):
@@ -47,11 +47,9 @@ class AuthFactory {
         break;
     }
     if (auth) {
-      sl.get<HapticUtil>().feedback(
-          FeedbackType.success, StateContainer.of(context).activeVibrations);
+      sl.get<HapticUtil>().feedback(FeedbackType.success, activeVibrations);
     } else {
-      sl.get<HapticUtil>().feedback(
-          FeedbackType.error, StateContainer.of(context).activeVibrations);
+      sl.get<HapticUtil>().feedback(FeedbackType.error, activeVibrations);
     }
     return auth;
   }

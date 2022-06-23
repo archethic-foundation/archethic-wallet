@@ -719,8 +719,10 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         final AuthenticationMethod authMethod =
                             preferences.getAuthMethod();
 
-                        bool auth =
-                            await AuthFactory.authenticate(context, authMethod);
+                        bool auth = await AuthFactory.authenticate(
+                            context, authMethod,
+                            activeVibrations:
+                                StateContainer.of(context).activeVibrations);
                         if (auth) {
                           StateContainer.of(context)
                               .getSeed()

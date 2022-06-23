@@ -298,9 +298,8 @@ class _SetYubikeyState extends State<SetYubikey> {
         _vault.setYubikeyClientID(_clientIDController!.text);
 
         bool auth = await AuthFactory.authenticate(
-          context,
-          AuthenticationMethod(AuthMethod.yubikeyWithYubicloud),
-        );
+            context, AuthenticationMethod(AuthMethod.yubikeyWithYubicloud),
+            activeVibrations: StateContainer.of(context).activeVibrations);
         if (auth) {
           final Preferences _preferences = await Preferences.getInstance();
           _preferences.setAuthMethod(
