@@ -30,7 +30,7 @@ class LockDialog {
           return AlertDialog(
             title: Text(
               AppLocalization.of(context)!.lockAppSetting,
-              style: AppStyles.textStyleSize20W700Primary(context),
+              style: AppStyles.textStyleSize20W700EquinoxPrimary(context),
             ),
             shape: RoundedRectangleBorder(
                 borderRadius: const BorderRadius.all(Radius.circular(16.0)),
