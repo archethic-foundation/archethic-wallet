@@ -320,6 +320,9 @@ class StateContainerState extends State<StateContainer> {
   void updateTheme(ThemeSetting theme) {
     setState(() {
       curTheme = theme.getTheme();
+      if (showPriceChart) {
+        requestUpdateCoinsChart();
+      }
     });
   }
 
@@ -535,14 +538,7 @@ class StateContainerState extends State<StateContainer> {
 
   Future<void> requestUpdate(
       {Account? account, String? pagingAddress = ''}) async {
-    localWallet!.accountBalance = BalanceWallet(
-        double.tryParse(account!.balance == null ? '0' : account.balance!),
-        curCurrency);
-
-    localWallet!.address =
-        account.lastAddress == null ? '' : account.lastAddress!;
-
-    await requestUpdateLastAddress(account);
+    await requestUpdateLastAddress(account!);
     setState(() {
       balanceLoading = true;
       recentTransactionsLoading = true;
@@ -560,6 +556,13 @@ class StateContainerState extends State<StateContainer> {
     if (showPriceChart) {
       await requestUpdateCoinsChart();
     }
+
+    localWallet!.accountBalance = BalanceWallet(
+        double.tryParse(account.balance == null ? '0' : account.balance!),
+        curCurrency);
+
+    localWallet!.address =
+        account.lastAddress == null ? '' : account.lastAddress!;
   }
 
   Future<void> logOut() async {
