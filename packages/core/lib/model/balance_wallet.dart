@@ -62,7 +62,7 @@ class BalanceWallet {
 
   String getConvertedAccountBalanceDisplay() {
     if (_selectedCurrencyValue == null) {
-      return '0';
+      return '';
     }
     if (selectedCurrency!.getIso4217Code() == 'BTC') {
       return _selectedCurrencyValue!.toStringAsFixed(8) +

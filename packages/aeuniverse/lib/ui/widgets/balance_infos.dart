@@ -67,11 +67,8 @@ class BalanceInfosWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               AutoSizeText(
-                                StateContainer.of(context)
-                                            .wallet!
-                                            .accountBalance
-                                            .networkCurrencyValue ==
-                                        0
+                                StateContainer.of(context).balanceLoading ==
+                                        true
                                     ? StateContainer.of(context)
                                         .localWallet!
                                         .accountBalance
@@ -85,10 +82,16 @@ class BalanceInfosWidget {
                                         context),
                               ),
                               AutoSizeText(
-                                StateContainer.of(context)
-                                    .wallet!
-                                    .accountBalance
-                                    .getConvertedAccountBalanceDisplay(),
+                                StateContainer.of(context).balanceLoading ==
+                                        true
+                                    ? StateContainer.of(context)
+                                        .localWallet!
+                                        .accountBalance
+                                        .getConvertedAccountBalanceDisplay()
+                                    : StateContainer.of(context)
+                                        .wallet!
+                                        .accountBalance
+                                        .getConvertedAccountBalanceDisplay(),
                                 textAlign: TextAlign.center,
                                 style: AppStyles.textStyleSize12W600Primary(
                                     context),
@@ -104,11 +107,17 @@ class BalanceInfosWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 10.0),
                             child: AutoSizeText(
-                              StateContainer.of(context)
-                                  .wallet!
-                                  .accountBalance
-                                  .selectedCurrency!
-                                  .getIso4217Code(),
+                              StateContainer.of(context).balanceLoading == true
+                                  ? StateContainer.of(context)
+                                      .localWallet!
+                                      .accountBalance
+                                      .selectedCurrency!
+                                      .getIso4217Code()
+                                  : StateContainer.of(context)
+                                      .wallet!
+                                      .accountBalance
+                                      .selectedCurrency!
+                                      .getIso4217Code(),
                               style:
                                   AppStyles.textStyleSize35W900EquinoxPrimary(
                                       context),
@@ -119,21 +128,24 @@ class BalanceInfosWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               AutoSizeText(
-                                StateContainer.of(context)
-                                    .wallet!
-                                    .accountBalance
-                                    .getConvertedAccountBalanceDisplay(),
+                                StateContainer.of(context).balanceLoading ==
+                                        true
+                                    ? StateContainer.of(context)
+                                        .localWallet!
+                                        .accountBalance
+                                        .getConvertedAccountBalanceDisplay()
+                                    : StateContainer.of(context)
+                                        .wallet!
+                                        .accountBalance
+                                        .getConvertedAccountBalanceDisplay(),
                                 textAlign: TextAlign.center,
                                 style:
                                     AppStyles.textStyleSize25W900EquinoxPrimary(
                                         context),
                               ),
                               AutoSizeText(
-                                StateContainer.of(context)
-                                            .wallet!
-                                            .accountBalance
-                                            .networkCurrencyValue ==
-                                        0
+                                StateContainer.of(context).balanceLoading ==
+                                        true
                                     ? StateContainer.of(context)
                                             .localWallet!
                                             .accountBalance
@@ -213,45 +225,42 @@ class BalanceInfosWidget {
             ));
       },
       child: Ink(
-        child: FadeIn(
-          duration: const Duration(milliseconds: 1000),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.08,
-            child: Stack(
-              children: <Widget>[
-                FadeIn(
-                  duration: const Duration(milliseconds: 1000),
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 20.0),
-                    child: StateContainer.of(context).chartInfos != null &&
-                            StateContainer.of(context).chartInfos!.data != null
-                        ? LineChart(
-                            mainData(context),
-                            swapAnimationCurve: Curves.easeInOutCubic,
-                            swapAnimationDuration:
-                                const Duration(milliseconds: 1000),
-                          )
-                        : const SizedBox(),
-                  ),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.08,
+          child: Stack(
+            children: <Widget>[
+              FadeIn(
+                duration: const Duration(milliseconds: 1000),
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: StateContainer.of(context).chartInfos != null &&
+                          StateContainer.of(context).chartInfos!.data != null
+                      ? LineChart(
+                          mainData(context),
+                          swapAnimationCurve: Curves.easeInOutCubic,
+                          swapAnimationDuration:
+                              const Duration(milliseconds: 1000),
+                        )
+                      : const SizedBox(),
                 ),
-                Padding(
-                    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          AppLocalization.of(context)!.priceChartHeader,
-                          style: AppStyles.textStyleSize14W600EquinoxPrimary(
-                              context),
-                        ),
-                        buildIconDataWidget(
-                            context, Icons.arrow_circle_right_outlined, 20, 20),
-                      ],
-                    )),
-              ],
-            ),
+              ),
+              Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        AppLocalization.of(context)!.priceChartHeader,
+                        style: AppStyles.textStyleSize14W600EquinoxPrimary(
+                            context),
+                      ),
+                      buildIconDataWidget(
+                          context, Icons.arrow_circle_right_outlined, 20, 20),
+                    ],
+                  )),
+            ],
           ),
         ),
       ),
