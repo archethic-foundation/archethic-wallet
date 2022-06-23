@@ -3,12 +3,17 @@
 
 // Dart imports:
 import 'dart:async';
-import 'dart:math';
 
 // Flutter imports:
-import 'package:core/model/primary_currency.dart';
+import 'package:aeuniverse/ui/widgets/dialogs/authentification_method_dialog.dart';
+import 'package:aeuniverse/ui/widgets/dialogs/currency_dialog.dart';
+import 'package:aeuniverse/ui/widgets/dialogs/language_dialog.dart';
+import 'package:aeuniverse/ui/widgets/dialogs/lock_dialog.dart';
+import 'package:aeuniverse/ui/widgets/dialogs/lock_timeout_dialog.dart';
+import 'package:aeuniverse/ui/widgets/dialogs/network_dialog.dart';
+import 'package:aeuniverse/ui/widgets/dialogs/primary_currency_dialog.dart';
+import 'package:aeuniverse/ui/widgets/dialogs/theme_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
@@ -18,28 +23,18 @@ import 'package:aeuniverse/ui/util/settings_list_item.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
-import 'package:aeuniverse/ui/views/authenticate/pin_screen.dart';
 import 'package:aeuniverse/ui/views/settings/backupseed_sheet.dart';
-import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
-import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
-import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aeuniverse/util/preferences.dart';
-import 'package:aeuniverse/util/service_locator.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
-import 'package:core/model/available_currency.dart';
-import 'package:core/model/available_language.dart';
 import 'package:core/model/device_lock_timeout.dart';
 import 'package:core/model/device_unlock_option.dart';
 import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/vault.dart';
-import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/util/case_converter.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 // Project imports:
@@ -204,609 +199,49 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   }
 
   Future<void> _authMethodDialog() async {
-    final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList =
-        List<PickerItem>.empty(growable: true);
-    for (var value in AuthMethod.values) {
-      bool displayed = false;
-      if (value != AuthMethod.ledger) {
-        if ((_hasBiometrics && value == AuthMethod.biometrics) ||
-            value != AuthMethod.biometrics) {
-          displayed = true;
-        }
-      }
-      pickerItemsList.add(PickerItem(
-          AuthenticationMethod(value).getDisplayName(context),
-          AuthenticationMethod(value).getDescription(context),
-          AuthenticationMethod.getIcon(value),
-          StateContainer.of(context).curTheme.pickerItemIconEnabled,
-          value,
-          value == AuthMethod.biometricsUniris ? false : true,
-          displayed: displayed));
-    }
-    await showDialog<AuthMethod>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            AppLocalization.of(context)!.authMethod,
-            style: AppStyles.textStyleSize20W700EquinoxPrimary(context),
-          ),
-          shape: RoundedRectangleBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-              side: BorderSide(
-                  color: StateContainer.of(context).curTheme.text45!)),
-          content: SingleChildScrollView(
-            child: PickerWidget(
-              pickerItems: pickerItemsList,
-              selectedIndex: _curAuthMethod.method.index,
-              onSelected: (value) async {
-                switch (value.value) {
-                  case AuthMethod.biometrics:
-                    bool auth = await sl
-                        .get<BiometricUtil>()
-                        .authenticateWithBiometrics(context,
-                            AppLocalization.of(context)!.unlockBiometrics);
-                    if (auth) {
-                      preferences.setAuthMethod(
-                          AuthenticationMethod(AuthMethod.biometrics));
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/home',
-                        (Route<dynamic> route) => false,
-                      );
-                    } else {
-                      Navigator.pop(context, value.value);
-                      await _authMethodDialog();
-                    }
-                    break;
-                  case AuthMethod.pin:
-                    final String pin = await Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                      return const PinScreen(
-                        PinOverlayType.newPin,
-                      );
-                    }));
-                    if (pin == '') {
-                      Navigator.pop(context, value.value);
-                      await _authMethodDialog();
-                    } else {
-                      if (pin.length > 5) {
-                        final Vault vault = await Vault.getInstance();
-                        vault.setPin(pin);
-                        preferences.setAuthMethod(
-                            AuthenticationMethod(AuthMethod.pin));
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/home',
-                          (Route<dynamic> route) => false,
-                        );
-                      }
-                    }
-                    break;
-                  case AuthMethod.password:
-                    await Navigator.of(context).pushNamed('/update_password');
-                    Navigator.pop(context, value.value);
-                    await _authMethodDialog();
-                    break;
-                  case AuthMethod.yubikeyWithYubicloud:
-                    await Navigator.of(context).pushNamed('/update_yubikey');
-                    Navigator.pop(context, value.value);
-                    await _authMethodDialog();
-                    break;
-                  default:
-                    Navigator.pop(context, value.value);
-                    break;
-                }
-              },
-            ),
-          ),
-        );
-      },
-    );
+    await AuthentificationMethodDialog.getDialog(
+        context, _hasBiometrics, _curAuthMethod);
   }
 
   Future<void> _lockDialog() async {
-    final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList =
-        List<PickerItem>.empty(growable: true);
-    for (var value in UnlockOption.values) {
-      pickerItemsList.add(PickerItem(
-          UnlockSetting(value).getDisplayName(context),
-          null,
-          null,
-          null,
-          value,
-          true));
-    }
-    switch (await showDialog<UnlockOption>(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(
-              AppLocalization.of(context)!.lockAppSetting,
-              style: AppStyles.textStyleSize20W700Primary(context),
-            ),
-            shape: RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                side: BorderSide(
-                    color: StateContainer.of(context).curTheme.text45!)),
-            content: SingleChildScrollView(
-              child: PickerWidget(
-                pickerItems: pickerItemsList,
-                selectedIndex: _curUnlockSetting.setting.index,
-                onSelected: (value) {
-                  Navigator.pop(context, value.value);
-                },
-              ),
-            ),
-          );
-        })) {
-      case UnlockOption.yes:
-        preferences.setLock(true);
-        setState(() {
-          _curUnlockSetting = UnlockSetting(UnlockOption.yes);
-        });
-        break;
-      case UnlockOption.no:
-        preferences.setLock(false);
-        setState(() {
-          _curUnlockSetting = UnlockSetting(UnlockOption.no);
-        });
-        break;
-      default:
-        break;
-    }
+    _curUnlockSetting =
+        (await LockDialog.getDialog(context, _curUnlockSetting))!;
+    setState(() {});
   }
 
   Future<void> _currencyDialog() async {
-    final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList =
-        List<PickerItem>.empty(growable: true);
-    for (var value in AvailableCurrencyEnum.values) {
-      pickerItemsList.add(PickerItem(
-        AvailableCurrency(value).getDisplayName(context),
-        null,
-        'packages/aeuniverse/assets/icons/currency/${AvailableCurrency(value).getIso4217Code().toLowerCase()}.png',
-        null,
-        value,
-        true,
-        subLabel: value.name == 'USD' || value.name == 'EUR'
-            ? '(Conversion provided by Archethic Oracles)'
-            : null,
-      ));
-    }
-    final AvailableCurrencyEnum? selection =
-        await showDialog<AvailableCurrencyEnum>(
-            barrierDismissible: false,
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppLocalization.of(context)!.currency,
-                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                            context),
-                      ),
-                    ],
-                  ),
-                ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                    side: BorderSide(
-                        color: StateContainer.of(context).curTheme.text45!)),
-                content: SingleChildScrollView(
-                  child: PickerWidget(
-                    pickerItems: pickerItemsList,
-                    selectedIndex:
-                        StateContainer.of(context).curCurrency.getIndex(),
-                    onSelected: (value) {
-                      Navigator.pop(context, value.value);
-                    },
-                  ),
-                ),
-              );
-            });
-    if (selection != null) {
-      preferences.setCurrency(AvailableCurrency(selection));
-      if (StateContainer.of(context).curCurrency.currency != selection) {
-        setState(() async {
-          StateContainer.of(context).curCurrency = AvailableCurrency(selection);
-          StateContainer.of(context).wallet!.accountBalance.selectedCurrency =
-              AvailableCurrency(selection);
-          await StateContainer.of(context)
-              .updateCurrency(AvailableCurrency(selection));
-        });
-      }
-    }
+    await CurrencyDialog.getDialog(context);
+    setState(() {});
   }
 
   Future<void> _languageDialog() async {
-    final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList =
-        List<PickerItem>.empty(growable: true);
-    for (var value in AvailableLanguage.values) {
-      pickerItemsList.add(PickerItem(
-          LanguageSetting(value).getDisplayName(context),
-          null,
-          null,
-          null,
-          value,
-          true));
-    }
-
-    final AvailableLanguage? selection = await showDialog<AvailableLanguage>(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                AppLocalization.of(context)!.language,
-                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
-              ),
-            ),
-            shape: RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                side: BorderSide(
-                    color: StateContainer.of(context).curTheme.text45!)),
-            content: PickerWidget(
-              pickerItems: pickerItemsList,
-              selectedIndex:
-                  StateContainer.of(context).curLanguage.language.index,
-              onSelected: (value) {
-                Navigator.pop(context, value.value);
-              },
-            ),
-          );
-        });
-    if (selection != null) {
-      preferences.setLanguage(LanguageSetting(selection));
-      if (StateContainer.of(context).curLanguage.language != selection) {
-        setState(() {
-          StateContainer.of(context).updateLanguage(LanguageSetting(selection));
-        });
-      }
-    }
+    await LanguageDialog.getDialog(context);
+    setState(() {});
   }
 
   Future<void> _primaryCurrencyDialog() async {
-    final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList =
-        List<PickerItem>.empty(growable: true);
-    for (var value in AvailablePrimaryCurrency.values) {
-      pickerItemsList.add(PickerItem(
-          PrimaryCurrencySetting(value).getDisplayName(context),
-          null,
-          null,
-          null,
-          value,
-          true));
-    }
-
-    final AvailablePrimaryCurrency? selection =
-        await showDialog<AvailablePrimaryCurrency>(
-            barrierDismissible: false,
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: Text(
-                    AppLocalization.of(context)!.primaryCurrency,
-                    style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
-                  ),
-                ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                    side: BorderSide(
-                        color: StateContainer.of(context).curTheme.text45!)),
-                content: PickerWidget(
-                  pickerItems: pickerItemsList,
-                  selectedIndex: StateContainer.of(context)
-                      .curPrimaryCurrency
-                      .primaryCurrency
-                      .index,
-                  onSelected: (value) {
-                    Navigator.pop(context, value.value);
-                  },
-                ),
-              );
-            });
-    if (selection != null) {
-      preferences.setPrimaryCurrency(PrimaryCurrencySetting(selection));
-      if (StateContainer.of(context).curPrimaryCurrency.primaryCurrency !=
-          selection) {
-        setState(() {
-          StateContainer.of(context)
-              .updatePrimaryCurrency(PrimaryCurrencySetting(selection));
-        });
-      }
-    }
+    await PrimaryCurrencyDialog.getDialog(context);
+    setState(() {});
   }
 
   Future<void> _networkDialog() async {
-    FocusNode endpointFocusNode = FocusNode();
-    TextEditingController endpointController = TextEditingController();
-    String? endpointError;
-
-    final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList =
-        List<PickerItem>.empty(growable: true);
-    for (var value in AvailableNetworks.values) {
-      pickerItemsList.add(PickerItem(
-          NetworksSetting(value).getDisplayName(context),
-          await NetworksSetting(value).getLink(),
-          '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.png',
-          null,
-          value,
-          value == AvailableNetworks.ArchethicMainNet ? false : true));
-    }
-
-    final AvailableNetworks? selection = await showDialog<AvailableNetworks>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                AppLocalization.of(context)!.networksHeader,
-                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
-              ),
-            ),
-            shape: RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                side: BorderSide(
-                    color: StateContainer.of(context).curTheme.text45!)),
-            content: PickerWidget(
-              pickerItems: pickerItemsList,
-              selectedIndex: _curNetworksSetting.getIndex(),
-              onSelected: (value) {
-                Navigator.pop(context, value.value);
-              },
-            ),
-          );
-        });
-    if (selection != null) {
-      preferences.setNetwork(NetworksSetting(selection));
-      setState(() {
-        _curNetworksSetting = NetworksSetting(selection);
-        StateContainer.of(context).curNetwork = _curNetworksSetting;
-      });
-      if (selection == AvailableNetworks.ArchethicDevNet) {
-        endpointController.text = preferences.getNetworkDevEndpoint();
-        final AvailableNetworks? endpoint = await showDialog<AvailableNetworks>(
-            barrierDismissible: false,
-            context: context,
-            builder: (BuildContext context) {
-              return StatefulBuilder(
-                builder: (context, setState) {
-                  return AlertDialog(
-                    title: Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Column(children: [
-                        SvgPicture.asset(
-                          '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
-                          height: 30,
-                        ),
-                        Text(
-                            StateContainer.of(context)
-                                .curNetwork
-                                .getDisplayName(context),
-                            style:
-                                AppStyles.textStyleSize10W100Primary(context)),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          AppLocalization.of(context)!.enterEndpointHeader,
-                          style: AppStyles.textStyleSize16W400Primary(context),
-                        ),
-                      ]),
-                    ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(16.0)),
-                        side: BorderSide(
-                            color:
-                                StateContainer.of(context).curTheme.text45!)),
-                    content: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            AppTextField(
-                              leftMargin: 0,
-                              rightMargin: 0,
-                              focusNode: endpointFocusNode,
-                              controller: endpointController,
-                              labelText:
-                                  AppLocalization.of(context)!.enterEndpoint,
-                              keyboardType: TextInputType.text,
-                              style:
-                                  AppStyles.textStyleSize14W600Primary(context),
-                              inputFormatters: <TextInputFormatter>[
-                                LengthLimitingTextInputFormatter(28),
-                              ],
-                            ),
-                            Text(
-                              'http://xxx.xxx.xxx.xxx:xxxx',
-                              style:
-                                  AppStyles.textStyleSize12W400Primary(context),
-                            ),
-                            endpointError != null
-                                ? Container(
-                                    margin: const EdgeInsets.only(
-                                        top: 5, bottom: 5),
-                                    child: Text(endpointError!,
-                                        style: AppStyles
-                                            .textStyleSize14W600Primary(
-                                                context)),
-                                  )
-                                : const SizedBox(),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            AppButton.buildAppButton(
-                              const Key('addEndpoint'),
-                              context,
-                              AppButtonType.primary,
-                              AppLocalization.of(context)!.ok,
-                              Dimens.buttonTopDimens,
-                              onPressed: () async {
-                                endpointError = '';
-                                if (endpointController.text.isEmpty) {
-                                  setState(() {
-                                    endpointError = AppLocalization.of(context)!
-                                        .enterEndpointBlank;
-                                    FocusScope.of(context)
-                                        .requestFocus(endpointFocusNode);
-                                  });
-                                } else {
-                                  if (Uri.parse(endpointController.text)
-                                          .isAbsolute ==
-                                      false) {
-                                    setState(() {
-                                      endpointError =
-                                          AppLocalization.of(context)!
-                                              .enterEndpointNotValid;
-                                      FocusScope.of(context)
-                                          .requestFocus(endpointFocusNode);
-                                    });
-                                  } else {
-                                    preferences.setNetworkDevEndpoint(
-                                        endpointController.text);
-                                    Navigator.pop(context);
-                                  }
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            });
-      }
-      setupServiceLocator();
-      await StateContainer.of(context)
-          .requestUpdate(account: StateContainer.of(context).selectedAccount);
-    }
+    _curNetworksSetting =
+        (await NetworkDialog.getDialog(context, _curNetworksSetting))!;
+    await StateContainer.of(context)
+        .requestUpdate(account: StateContainer.of(context).selectedAccount);
+    setState(() {});
   }
 
   Future<void> _lockTimeoutDialog() async {
-    final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList =
-        List<PickerItem>.empty(growable: true);
-    for (var value in LockTimeoutOption.values) {
-      pickerItemsList.add(PickerItem(
-          LockTimeoutSetting(value).getDisplayName(context),
-          null,
-          null,
-          null,
-          value,
-          true));
-    }
-    final LockTimeoutOption? selection = await showDialog<LockTimeoutOption>(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                AppLocalization.of(context)!.autoLockHeader,
-                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
-              ),
-            ),
-            shape: RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                side: BorderSide(
-                    color: StateContainer.of(context).curTheme.text45!)),
-            content: SingleChildScrollView(
-              child: PickerWidget(
-                pickerItems: pickerItemsList,
-                selectedIndex: _curTimeoutSetting.setting.index,
-                onSelected: (value) {
-                  Navigator.pop(context, value.value);
-                },
-              ),
-            ),
-          );
-        });
-    if (selection != null) {
-      if (_curTimeoutSetting.setting != selection) {
-        preferences.setLockTimeout(LockTimeoutSetting(selection));
-        setState(() {
-          _curTimeoutSetting = LockTimeoutSetting(selection);
-        });
-      }
-    }
+    _curTimeoutSetting =
+        (await LockTimeoutDialog.getDialog(context, _curTimeoutSetting))!;
+    setState(() {});
   }
 
   Future<void> _themeDialog() async {
-    final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList =
-        List<PickerItem>.empty(growable: true);
-    for (var value in ThemeOptions.values) {
-      pickerItemsList.add(PickerItem(
-          ThemeSetting(value).getDisplayName(context),
-          null,
-          null,
-          null,
-          value,
-          true,
-          decorationImageItem: DecorationImage(
-              image: AssetImage(
-                  'packages/core_ui/assets/themes/${value.name}/v0${Random().nextInt(4) + 1}-waves-1100.jpg'),
-              opacity: 0.5,
-              fit: BoxFit.fitWidth)));
-    }
-    final ThemeOptions? selection = await showDialog<ThemeOptions>(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                AppLocalization.of(context)!.themeHeader,
-                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
-              ),
-            ),
-            shape: RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                side: BorderSide(
-                    color: StateContainer.of(context).curTheme.text45!)),
-            content: PickerWidget(
-              pickerItems: pickerItemsList,
-              selectedIndex: _curThemeSetting.getIndex(),
-              onSelected: (value) {
-                Navigator.pop(context, value.value);
-              },
-            ),
-          );
-        });
-    if (selection != null) {
-      if (_curThemeSetting != ThemeSetting(selection)) {
-        preferences.setTheme(ThemeSetting(selection));
-        setState(() {
-          StateContainer.of(context).updateTheme(ThemeSetting(selection));
-          _curThemeSetting = ThemeSetting(selection);
-        });
-      }
-    }
+    _curThemeSetting =
+        (await ThemeDialog.getDialog(context, _curThemeSetting))!;
+    setState(() {});
   }
 
   Future<bool> _onBackButtonPressed() async {

@@ -4,13 +4,8 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
-import 'package:aeuniverse/ui/widgets/components/buttons.dart';
-import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
-import 'package:aeuniverse/util/service_locator.dart';
+import 'package:aeuniverse/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aewallet/ui/views/accounts/account_list.dart';
-import 'package:core/localization.dart';
-import 'package:core_ui/ui/util/dimens.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -26,7 +21,6 @@ import 'package:core/util/keychain_util.dart';
 import 'package:core_ui/ui/util/responsive.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:event_taxi/event_taxi.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
@@ -563,177 +557,10 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
   }
 
   Future<void> _networkDialog() async {
-    FocusNode endpointFocusNode = FocusNode();
-    TextEditingController endpointController = TextEditingController();
-    String? endpointError;
-
-    final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList =
-        List<PickerItem>.empty(growable: true);
-    for (var value in AvailableNetworks.values) {
-      pickerItemsList.add(PickerItem(
-          NetworksSetting(value).getDisplayName(context),
-          await NetworksSetting(value).getLink(),
-          '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.png',
-          null,
-          value,
-          value == AvailableNetworks.ArchethicMainNet ? false : true));
-    }
-
-    final AvailableNetworks? selection = await showDialog<AvailableNetworks>(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                AppLocalization.of(context)!.networksHeader,
-                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
-              ),
-            ),
-            shape: RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                side: BorderSide(
-                    color: StateContainer.of(context).curTheme.text45!)),
-            content: PickerWidget(
-              pickerItems: pickerItemsList,
-              selectedIndex: StateContainer.of(context).curNetwork.getIndex(),
-              onSelected: (value) {
-                Navigator.pop(context, value.value);
-              },
-            ),
-          );
-        });
-    if (selection != null) {
-      preferences.setNetwork(NetworksSetting(selection));
-      setState(() {
-        StateContainer.of(context).curNetwork = NetworksSetting(selection);
-      });
-      if (selection == AvailableNetworks.ArchethicDevNet) {
-        endpointController.text = preferences.getNetworkDevEndpoint();
-        final AvailableNetworks? endpoint = await showDialog<AvailableNetworks>(
-            barrierDismissible: false,
-            context: context,
-            builder: (BuildContext context) {
-              return StatefulBuilder(
-                builder: (context, setState) {
-                  return AlertDialog(
-                    title: Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Column(children: [
-                        SvgPicture.asset(
-                          '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
-                          height: 30,
-                        ),
-                        Text(
-                            StateContainer.of(context)
-                                .curNetwork
-                                .getDisplayName(context),
-                            style:
-                                AppStyles.textStyleSize10W100Primary(context)),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          AppLocalization.of(context)!.enterEndpointHeader,
-                          style: AppStyles.textStyleSize16W400Primary(context),
-                        ),
-                      ]),
-                    ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(16.0)),
-                        side: BorderSide(
-                            color:
-                                StateContainer.of(context).curTheme.text45!)),
-                    content: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            AppTextField(
-                              leftMargin: 0,
-                              rightMargin: 0,
-                              focusNode: endpointFocusNode,
-                              controller: endpointController,
-                              labelText:
-                                  AppLocalization.of(context)!.enterEndpoint,
-                              keyboardType: TextInputType.text,
-                              style:
-                                  AppStyles.textStyleSize14W600Primary(context),
-                              inputFormatters: <TextInputFormatter>[
-                                LengthLimitingTextInputFormatter(28),
-                              ],
-                            ),
-                            Text(
-                              'http://xxx.xxx.xxx.xxx:xxxx',
-                              style:
-                                  AppStyles.textStyleSize12W400Primary(context),
-                            ),
-                            endpointError != null
-                                ? Container(
-                                    margin: const EdgeInsets.only(
-                                        top: 5, bottom: 5),
-                                    child: Text(endpointError!,
-                                        style: AppStyles
-                                            .textStyleSize14W600Primary(
-                                                context)),
-                                  )
-                                : const SizedBox(),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            AppButton.buildAppButton(
-                              const Key('addEndpoint'),
-                              context,
-                              AppButtonType.primary,
-                              AppLocalization.of(context)!.ok,
-                              Dimens.buttonTopDimens,
-                              onPressed: () async {
-                                endpointError = '';
-                                if (endpointController.text.isEmpty) {
-                                  setState(() {
-                                    endpointError = AppLocalization.of(context)!
-                                        .enterEndpointBlank;
-                                    FocusScope.of(context)
-                                        .requestFocus(endpointFocusNode);
-                                  });
-                                } else {
-                                  if (Uri.parse(endpointController.text)
-                                          .isAbsolute ==
-                                      false) {
-                                    setState(() {
-                                      endpointError =
-                                          AppLocalization.of(context)!
-                                              .enterEndpointNotValid;
-                                      FocusScope.of(context)
-                                          .requestFocus(endpointFocusNode);
-                                    });
-                                  } else {
-                                    preferences.setNetworkDevEndpoint(
-                                        endpointController.text);
-                                    Navigator.pop(context);
-                                  }
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            });
-      }
-      setupServiceLocator();
-      await StateContainer.of(context)
-          .requestUpdate(account: StateContainer.of(context).selectedAccount);
-    }
+    StateContainer.of(context).curNetwork = (await NetworkDialog.getDialog(
+        context, StateContainer.of(context).curNetwork))!;
+    await StateContainer.of(context)
+        .requestUpdate(account: StateContainer.of(context).selectedAccount);
+    setState(() {});
   }
 }
