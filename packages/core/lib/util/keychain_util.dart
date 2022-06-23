@@ -4,7 +4,6 @@
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
-import 'dart:developer' as dev;
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';

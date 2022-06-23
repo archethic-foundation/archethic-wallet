@@ -13,7 +13,6 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/model/available_networks.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';

@@ -17,7 +17,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // Project imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/util/preferences.dart';
 
 enum PinOverlayType { newPin, enterPin }

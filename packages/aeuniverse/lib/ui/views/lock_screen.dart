@@ -11,7 +11,6 @@ import 'package:core/model/data/hive_db.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
 import 'package:core/util/keychain_util.dart';
-import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/util/case_converter.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';

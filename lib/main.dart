@@ -40,7 +40,6 @@ import 'package:core_ui/ui/util/routes.dart';
 import 'package:core_ui/util/case_converter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:hive/hive.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:safe_device/safe_device.dart';
 

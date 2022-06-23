@@ -2,10 +2,8 @@
 
 // Dart imports:
 import 'dart:io';
-import 'dart:math';
 
 // Flutter imports:
-import 'package:aeuniverse/ui/widgets/components/gradient_shadow_box_decoration.dart';
 import 'package:core/model/balance_wallet.dart';
 import 'package:core/model/primary_currency.dart';
 import 'package:flutter/foundation.dart';

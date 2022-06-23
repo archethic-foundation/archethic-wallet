@@ -1,9 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'dart:math';
-
-import 'package:aeuniverse/ui/widgets/components/gradient_shadow_box_decoration.dart';
 import 'package:core/model/primary_currency.dart';
 import 'package:flutter/material.dart';
 

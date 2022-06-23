@@ -10,17 +10,12 @@ import 'package:flutter/services.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core_ui/ui/util/dimens.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 // Project imports:
 import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/model/available_networks.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
-import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
-import 'package:aeuniverse/util/preferences.dart';
-import 'package:aeuniverse/util/service_locator.dart';
 
 class IntroNewWalletGetFirstInfos extends StatefulWidget {
   const IntroNewWalletGetFirstInfos({super.key});
