@@ -55,10 +55,9 @@ class BalanceWallet {
     if (_localCurrencyPrice == null) {
       return '';
     }
-    return NumberFormat.currency(
-            locale: selectedCurrency!.getLocale().toString(),
-            symbol: selectedCurrency!.getCurrencySymbol())
-        .format(_localCurrencyPrice);
+    return _localCurrencyPrice.toString() +
+        ' ' +
+        selectedCurrency!.getCurrencySymbol();
   }
 
   String getConvertedAccountBalanceDisplay() {

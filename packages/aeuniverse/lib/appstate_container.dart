@@ -96,9 +96,6 @@ class StateContainerState extends State<StateContainer> {
 
   // Currently selected account
   Account selectedAccount = Account();
-  // Two most recently used accounts
-  Account? recentLast;
-  Account? recentSecondLast;
 
   ChartInfos? chartInfos;
   String? idChartOption = '1d';
@@ -538,7 +535,14 @@ class StateContainerState extends State<StateContainer> {
 
   Future<void> requestUpdate(
       {Account? account, String? pagingAddress = ''}) async {
-    await requestUpdateLastAddress(account!);
+    localWallet!.accountBalance = BalanceWallet(
+        double.tryParse(account!.balance == null ? '0' : account.balance!),
+        curCurrency);
+
+    localWallet!.address =
+        account.lastAddress == null ? '' : account.lastAddress!;
+
+    await requestUpdateLastAddress(account);
     setState(() {
       balanceLoading = true;
       recentTransactionsLoading = true;
@@ -556,12 +560,6 @@ class StateContainerState extends State<StateContainer> {
     if (showPriceChart) {
       await requestUpdateCoinsChart();
     }
-
-    localWallet!.accountBalance = BalanceWallet(
-        double.tryParse(account.balance == null ? '0' : account.balance!),
-        curCurrency);
-    localWallet!.address =
-        account.lastAddress == null ? '' : account.lastAddress!;
   }
 
   Future<void> logOut() async {
