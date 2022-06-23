@@ -12,6 +12,7 @@ import 'package:core/localization.dart';
 import 'package:core/util/string_encryption.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 // Project imports:
 import 'package:aeuniverse/appstate_container.dart';
@@ -28,6 +29,9 @@ class PasswordScreen extends StatefulWidget {
 }
 
 class _PasswordScreenState extends State<PasswordScreen> {
+  static const int maxAttempts = 5;
+  int _failedAttempts = 0;
+
   FocusNode? enterPasswordFocusNode;
   TextEditingController? enterPasswordController;
 
@@ -40,6 +44,13 @@ class _PasswordScreenState extends State<PasswordScreen> {
     enterPasswordVisible = false;
     enterPasswordFocusNode = FocusNode();
     enterPasswordController = TextEditingController();
+
+    Preferences.getInstance().then((Preferences _preferences) {
+      setState(() {
+        // Get adjusted failed attempts
+        _failedAttempts = _preferences.getLockAttempts() % maxAttempts;
+      });
+    });
   }
 
   Future<void> _verifyPassword() async {
@@ -52,6 +63,15 @@ class _PasswordScreenState extends State<PasswordScreen> {
       _preferences.resetLockAttempts();
       Navigator.of(context).pop(true);
     } else {
+      enterPasswordController!.text = '';
+      _preferences.incrementLockAttempts();
+      _failedAttempts++;
+      if (_failedAttempts >= maxAttempts) {
+        _preferences.updateLockDate();
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            '/lock_screen_transition', (Route<dynamic> route) => false);
+      }
+
       if (mounted) {
         setState(() {
           passwordError = AppLocalization.of(context)!.invalidPassword;
@@ -163,6 +183,22 @@ class _PasswordScreenState extends State<PasswordScreen> {
                               },
                             ),
                           ),
+                          if (_failedAttempts > 0)
+                            Container(
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 10),
+                              child: AutoSizeText(
+                                AppLocalization.of(context)!.attempt +
+                                    _failedAttempts.toString() +
+                                    '/' +
+                                    maxAttempts.toString(),
+                                style: AppStyles.textStyleSize14W200Primary(
+                                    context),
+                                textAlign: TextAlign.center,
+                                maxLines: 1,
+                                stepGranularity: 0.1,
+                              ),
+                            ),
                           // Error Container
                           Container(
                             alignment: AlignmentDirectional(0, 0),
