@@ -3,9 +3,9 @@
 
 // Dart imports:
 import 'dart:io';
-import 'dart:ui';
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/dialogs/contacts_dialog.dart';
 import 'package:core/model/primary_currency.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +89,6 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
   bool _addressValidAndUnfocused = false;
   bool _isContact = false;
   bool _qrCodeButtonVisible = true;
-  bool _showContactButton = true;
   NumberFormat? _localCurrencyFormat;
   String? _rawAmount;
   bool validRequest = true;
@@ -124,13 +123,11 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
       // Setup initial state for contact pre-filled
       _sendAddressController!.text = widget.contact!.name!;
       _isContact = true;
-      _showContactButton = false;
       _qrCodeButtonVisible = false;
       _sendAddressStyle = AddressStyle.primary;
     } else if (widget.address != null) {
       // Setup initial state with prefilled address
       _sendAddressController!.text = widget.address!;
-      _showContactButton = false;
       _qrCodeButtonVisible = false;
       _sendAddressStyle = AddressStyle.text90;
       _addressValidAndUnfocused = true;
@@ -178,9 +175,6 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
         });
         if (_sendAddressController!.text.trim() == '@') {
           _sendAddressController!.text = '';
-          setState(() {
-            _showContactButton = true;
-          });
         }
       }
     });
@@ -381,80 +375,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                                   children: <Widget>[
                                     Container(
                                       alignment: Alignment.topCenter,
-                                      child: Stack(
-                                        alignment: Alignment.topCenter,
-                                        children: <Widget>[
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                left: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.105,
-                                                right: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.105),
-                                            alignment: Alignment.bottomCenter,
-                                            constraints: const BoxConstraints(
-                                                maxHeight: 173, minHeight: 0),
-                                            // The pop-up Contacts List
-                                            child: _contacts != null &&
-                                                    _contacts!.isNotEmpty
-                                                ? ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15),
-                                                    child: BackdropFilter(
-                                                      filter: ImageFilter.blur(
-                                                          sigmaX: 8, sigmaY: 8),
-                                                      child: Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                          color: StateContainer
-                                                                  .of(context)
-                                                              .curTheme
-                                                              .backgroundDark!
-                                                              .withOpacity(0.9),
-                                                        ),
-                                                        child: Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        25),
-                                                          ),
-                                                          margin:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  bottom: 50),
-                                                          child:
-                                                              ListView.builder(
-                                                            shrinkWrap: true,
-                                                            itemCount:
-                                                                _contacts!
-                                                                    .length,
-                                                            itemBuilder:
-                                                                (BuildContext
-                                                                        context,
-                                                                    int index) {
-                                                              return _buildContactItem(
-                                                                  _contacts![
-                                                                      index]);
-                                                            },
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                : const SizedBox(),
-                                          ),
-                                          getEnterAddressContainer(),
-                                        ],
-                                      ),
+                                      child: getEnterAddressContainer(),
                                     ),
                                     Container(
                                       alignment:
@@ -672,42 +593,6 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
           ],
         ),
       ),
-    );
-  }
-
-  // Build contact items for the list
-  Widget _buildContactItem(Contact contact) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        SizedBox(
-          height: 42,
-          width: double.infinity - 5,
-          child: TextButton(
-            onPressed: () async {
-              sl.get<HapticUtil>().feedback(FeedbackType.light,
-                  StateContainer.of(context).activeVibrations);
-              _sendAddressController!.text = contact.name!;
-              feeEstimation = await getFee();
-              _sendAddressFocusNode!.unfocus();
-              setState(() {
-                _isContact = true;
-                _showContactButton = false;
-                _qrCodeButtonVisible = false;
-                _sendAddressStyle = AddressStyle.primary;
-              });
-            },
-            child: Text(contact.name!,
-                textAlign: TextAlign.center,
-                style: AppStyles.textStyleSize14W600Primary(context)),
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 25),
-          height: 1,
-          color: StateContainer.of(context).curTheme.text03,
-        ),
-      ],
     );
   }
 
@@ -967,30 +852,23 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
         labelText: AppLocalization.of(context)!.enterAddress,
         prefixButton: TextFieldButton(
           icon: FontAwesomeIcons.at,
-          onPressed: () {
+          onPressed: () async {
             sl.get<HapticUtil>().feedback(FeedbackType.light,
                 StateContainer.of(context).activeVibrations);
-            if (_showContactButton && _contacts!.isEmpty) {
-              // Show menu
-              FocusScope.of(context).requestFocus(_sendAddressFocusNode);
-              if (_sendAddressController!.text.isEmpty) {
-                _sendAddressController!.text = '@';
-                _sendAddressController!.selection = TextSelection.fromPosition(
-                    TextPosition(offset: _sendAddressController!.text.length));
-              }
-              sl
-                  .get<DBHelper>()
-                  .getContacts()
-                  .then((List<Contact> contactList) {
-                setState(() {
-                  _contacts = contactList;
-                });
+
+            Contact? contact = await ContactsDialog.getDialog(context);
+            if (contact != null && contact.name != null) {
+              _sendAddressController!.text = contact.name!;
+              _sendAddressStyle = AddressStyle.text90;
+              double fee = await getFee();
+              setState(() {
+                feeEstimation = fee;
               });
             }
           },
         ),
         fadePrefixOnCondition: true,
-        prefixShowFirstCondition: _showContactButton && _contacts!.isEmpty,
+        prefixShowFirstCondition: true,
         suffixButton: TextFieldButton(
           icon: FontAwesomeIcons.qrcode,
           onPressed: () async {
@@ -1027,7 +905,6 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                     _addressValidationText = '';
                     _sendAddressStyle = AddressStyle.primary;
                     _qrCodeButtonVisible = false;
-                    _showContactButton = false;
                   });
                   if (contact!.name != null) {
                     _sendAddressController!.text = contact.name!;
@@ -1041,7 +918,6 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                     _addressValidationText = '';
                     _sendAddressStyle = AddressStyle.text90;
                     _qrCodeButtonVisible = false;
-                    _showContactButton = false;
                   });
                   _sendAddressController!.text = address.address;
                   _sendAddressFocusNode!.unfocus();
@@ -1065,12 +941,10 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
           if (text.isNotEmpty) {
             setState(() {
               feeEstimation = fee;
-              _showContactButton = false;
             });
           } else {
             setState(() {
               feeEstimation = fee;
-              _showContactButton = true;
             });
           }
           final bool isContact = text.startsWith('@');

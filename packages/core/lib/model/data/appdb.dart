@@ -20,6 +20,8 @@ class DBHelper {
   Future<List<Contact>> getContacts() async {
     final Box<Contact> box = await Hive.openBox<Contact>(_contactsTable);
     final List<Contact> contactsList = box.values.toList();
+    contactsList.sort((Contact a, Contact b) =>
+        a.name!.toLowerCase().compareTo(b.name!.toLowerCase()));
     return contactsList;
   }
 
