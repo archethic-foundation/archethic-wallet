@@ -1315,6 +1315,10 @@ class AppLocalization {
         'Your keychain contains several accounts. Which account do you want to manage first in your app? You will be able to create or select other accounts at any time.',
         name: 'selectAccountDescSeveral');
   }
+
+  String get searchField {
+    return Intl.message("Search...", name: 'searchField');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {

@@ -6,6 +6,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -38,40 +39,43 @@ class ContactsList extends StatefulWidget {
 }
 
 class _ContactsListState extends State<ContactsList> {
-  List<Contact>? _contacts;
+  List<Contact>? contacts;
+  List<Contact>? contactsToDisplay = List<Contact>.empty(growable: true);
+  FocusNode? searchNameFocusNode = FocusNode();
+  TextEditingController? searchNameController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    contacts = List<Contact>.empty(growable: true);
     _registerBus();
     // Initial contacts list
-    _contacts = List<Contact>.empty(growable: true);
     _updateContacts();
   }
 
   @override
   void dispose() {
-    if (_contactAddedSub != null) {
-      _contactAddedSub!.cancel();
+    if (contactAddedSub != null) {
+      contactAddedSub!.cancel();
     }
-    if (_contactRemovedSub != null) {
-      _contactRemovedSub!.cancel();
+    if (contactRemovedSub != null) {
+      contactRemovedSub!.cancel();
     }
     super.dispose();
   }
 
-  StreamSubscription<ContactAddedEvent>? _contactAddedSub;
-  StreamSubscription<ContactRemovedEvent>? _contactRemovedSub;
+  StreamSubscription<ContactAddedEvent>? contactAddedSub;
+  StreamSubscription<ContactRemovedEvent>? contactRemovedSub;
 
   void _registerBus() {
     // Contact added bus event
-    _contactAddedSub = EventTaxiImpl.singleton()
+    contactAddedSub = EventTaxiImpl.singleton()
         .registerTo<ContactAddedEvent>()
         .listen((ContactAddedEvent event) {
       setState(() {
-        _contacts!.add(event.contact!);
+        contacts!.add(event.contact!);
         //Sort by name
-        _contacts!.sort((Contact a, Contact b) =>
+        contacts!.sort((Contact a, Contact b) =>
             a.name!.toLowerCase().compareTo(b.name!.toLowerCase()));
         StateContainer.of(context).updateContacts();
       });
@@ -79,11 +83,11 @@ class _ContactsListState extends State<ContactsList> {
       _updateContacts();
     });
     // Contact removed bus event
-    _contactRemovedSub = EventTaxiImpl.singleton()
+    contactRemovedSub = EventTaxiImpl.singleton()
         .registerTo<ContactRemovedEvent>()
         .listen((ContactRemovedEvent event) {
       setState(() {
-        _contacts!.remove(event.contact);
+        contacts!.remove(event.contact);
       });
     });
   }
@@ -91,16 +95,17 @@ class _ContactsListState extends State<ContactsList> {
   void _updateContacts() {
     sl.get<DBHelper>().getContacts().then((List<Contact> contacts) {
       for (Contact c in contacts) {
-        if (!_contacts!.contains(c)) {
+        if (!contacts.contains(c)) {
           setState(() {
-            _contacts!.add(c);
+            contacts.add(c);
           });
         }
       }
       // Re-sort list
       setState(() {
-        _contacts!.sort((Contact a, Contact b) =>
+        contacts.sort((Contact a, Contact b) =>
             a.name!.toLowerCase().compareTo(b.name!.toLowerCase()));
+        contactsToDisplay = contacts;
       });
     });
   }
@@ -159,18 +164,44 @@ class _ContactsListState extends State<ContactsList> {
                   ],
                 ),
               ),
-              // Contacts list + top and bottom gradients
+              Container(
+                padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                child: AppTextField(
+                  focusNode: searchNameFocusNode,
+                  controller: searchNameController,
+                  autofocus: true,
+                  maxLines: 1,
+                  autocorrect: false,
+                  labelText: AppLocalization.of(context)!.searchField,
+                  keyboardType: TextInputType.text,
+                  style: AppStyles.textStyleSize16W600Primary(context),
+                  onChanged: (text) async {
+                    text = text.toLowerCase();
+                    contactsToDisplay =
+                        await StateContainer.of(context).getContacts();
+                    setState(() {
+                      contactsToDisplay =
+                          contactsToDisplay!.where((Contact contact) {
+                        var contactName = contact.name!.toLowerCase();
+                        return contactName.contains(text);
+                      }).toList();
+                    });
+                  },
+                ),
+              ),
               Expanded(
                 child: Stack(
                   children: <Widget>[
                     // Contacts list
                     ListView.builder(
                       physics: const AlwaysScrollableScrollPhysics(),
-                      padding: const EdgeInsets.only(top: 15.0, bottom: 15),
-                      itemCount: _contacts!.length,
+                      padding: const EdgeInsets.only(
+                          left: 15.0, top: 15.0, bottom: 15),
+                      itemCount: contactsToDisplay!.length,
                       itemBuilder: (BuildContext context, int index) {
                         // Build contact
-                        return buildSingleContact(context, _contacts![index]);
+                        return buildSingleContact(
+                            context, contactsToDisplay![index]);
                       },
                     ),
                     //List Top Gradient End

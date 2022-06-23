@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-06-22T17:51:52.589287",
+  "@@last_modified": "2022-06-23T14:13:57.450693",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -1694,6 +1694,12 @@
   },
   "selectAccountDescSeveral": "Your keychain contains several accounts. Which account do you want to manage first in your app? You will be able to create or select other accounts at any time.",
   "@selectAccountDescSeveral": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "searchField": "Search...",
+  "@searchField": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

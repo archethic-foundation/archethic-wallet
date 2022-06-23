@@ -205,6 +205,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "seYubicloudConfirmHeader" : MessageLookupByLibrary.simpleMessage("Please, confirm your client identity and client API key."),
     "seYubicloudDescription" : MessageLookupByLibrary.simpleMessage("To use the Yubico OTP with your Yubikey, you need to get an API key from https://upgrade.yubico.com/getapikey. It\'s quick and free.\n\nAfter that, you can precise the given client identity and the client API key"),
     "seYubicloudHeader" : MessageLookupByLibrary.simpleMessage("Please, precise your client identity and client API key."),
+    "searchField" : MessageLookupByLibrary.simpleMessage("Search..."),
     "secretWarning" : MessageLookupByLibrary.simpleMessage("If you lose your device or uninstall the application, you\'ll need your secret phrase to recover your funds!"),
     "securityHeader" : MessageLookupByLibrary.simpleMessage("Security"),
     "seeAll" : MessageLookupByLibrary.simpleMessage("See all transactions"),

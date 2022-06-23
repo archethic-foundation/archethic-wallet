@@ -276,5 +276,6 @@
 	"addAccountExists": "This name already exists in your keychain.",
 	"selectAccountDescOne": "Your keychain contains one account. You will be able to create other accounts at any time.",
 	"selectAccountDescSeveral": "Your keychain contains several accounts. Which account do you want to manage first in your app? You will be able to create or select other accounts at any time.",
-	"activeVibrations": "Active vibrations"
+	"activeVibrations": "Active vibrations",
+	"searchField": "Search..."
 }

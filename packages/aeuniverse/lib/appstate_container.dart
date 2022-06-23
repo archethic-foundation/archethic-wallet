@@ -254,6 +254,10 @@ class StateContainerState extends State<StateContainer> {
     });
   }
 
+  Future<List<Contact>> getContacts() async {
+    return await sl.get<DBHelper>().getContacts();
+  }
+
   // Change language
   void updateLanguage(LanguageSetting language) {
     setState(() {

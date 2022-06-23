@@ -298,8 +298,12 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
             ),
             buildMainSettings(context),
             SlideTransition(
-                position: _contactsOffsetFloat!,
-                child: ContactsList(_contactsController!, _contactsOpen!)),
+              position: _contactsOffsetFloat!,
+              child: ContactsList(
+                _contactsController!,
+                _contactsOpen!,
+              ),
+            ),
             SlideTransition(
                 position: _securityOffsetFloat!,
                 child: buildSecurityMenu(context)),
