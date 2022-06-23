@@ -1,0 +1,13 @@
+{
+    "name": "Archethic Wallet",
+    "description": "Archethic Wallet",
+    "version": "0.2.23",
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' ; object-src 'self'"
+    },
+    "action": {
+        "default_popup": "index.html",
+        "default_icon": "icons/Icon-192.png"
+    },
+    "manifest_version": 3
+}
