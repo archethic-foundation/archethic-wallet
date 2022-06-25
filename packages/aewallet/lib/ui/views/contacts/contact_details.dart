@@ -26,7 +26,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // Project imports:
 import 'package:aewallet/bus/contact_modified_event.dart';
 import 'package:aewallet/bus/contact_removed_event.dart';
-import 'package:aewallet/ui/views/tokens/transfer_tokens_sheet.dart';
+import 'package:aewallet/ui/views/uco/transfer_uco_sheet.dart';
 
 // Contact Details Sheet
 class ContactDetailsSheet {
@@ -236,7 +236,7 @@ class ContactDetailsSheet {
                                 Navigator.of(context).pop();
                                 Sheets.showAppHeightNineSheet(
                                     context: context,
-                                    widget: TransferTokensSheet(
+                                    widget: TransferUCOSheet(
                                         primaryCurrency:
                                             StateContainer.of(context)
                                                 .curPrimaryCurrency,

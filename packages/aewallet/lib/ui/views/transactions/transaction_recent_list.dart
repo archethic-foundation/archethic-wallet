@@ -170,7 +170,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                 elevation: 0,
                 color: transaction.typeTx == RecentTransaction.transferOutput
                     ? Colors.redAccent[100]!.withOpacity(0.1)
-                    : transaction.typeTx! == RecentTransaction.nftCreation
+                    : transaction.typeTx! == RecentTransaction.tokenCreation
                         ? Colors.blueAccent[100]!.withOpacity(0.1)
                         : Colors.greenAccent[100]!.withOpacity(0.1),
                 child: Container(
@@ -268,12 +268,12 @@ class _TxListWidgetState extends State<TxListWidget> {
                       Column(
                         children: <Widget>[
                           if (transaction.typeTx! ==
-                              RecentTransaction.nftCreation)
+                              RecentTransaction.tokenCreation)
                             Row(
                               children: <Widget>[
                                 AutoSizeText(
                                     AppLocalization.of(context)!
-                                        .txListTypeTransactionLabelNewNFT,
+                                        .txListTypeTransactionLabelNewToken,
                                     style: AppStyles
                                         .textStyleSize14W600EquinoxPrimary(
                                             context)),
@@ -282,7 +282,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                           else
                             const SizedBox(),
                           if (transaction.typeTx ==
-                                  RecentTransaction.nftCreation &&
+                                  RecentTransaction.tokenCreation &&
                               transaction.content != null)
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -297,7 +297,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                           if (transaction.typeTx ==
                                   RecentTransaction.transferOutput ||
                               transaction.typeTx ==
-                                  RecentTransaction.nftCreation)
+                                  RecentTransaction.tokenCreation)
                             const SizedBox()
                           else
                             Row(
@@ -318,7 +318,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                           if (transaction.typeTx ==
                                   RecentTransaction.transferInput ||
                               transaction.typeTx ==
-                                  RecentTransaction.nftCreation)
+                                  RecentTransaction.tokenCreation)
                             const SizedBox()
                           else
                             Row(

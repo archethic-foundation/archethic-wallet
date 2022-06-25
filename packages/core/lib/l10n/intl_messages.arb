@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-06-23T14:13:57.450693",
+  "@@last_modified": "2022-06-24T17:38:07.325681",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -72,14 +72,14 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transferNFT": "Transfer NFT",
-  "@transferNFT": {
+  "transferToken": "Transfer Token",
+  "@transferToken": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transferNFTName": "Transfer %1",
-  "@transferNFTName": {
+  "transferTokenName": "Transfer %1",
+  "@transferTokenName": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -462,8 +462,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "estimatedFeesAddNFTNote": "Note: The fees will be estimated when the name and the initial supply are specified.",
-  "@estimatedFeesAddNFTNote": {
+  "estimatedFeesAddTokenNote": "Note: The fees will be estimated when the name and the initial supply are specified.",
+  "@estimatedFeesAddTokenNote": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1056,74 +1056,74 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addNFT": "Add NFT",
-  "@addNFT": {
+  "addToken": "Add Token",
+  "@addToken": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addNFTHeader": "Add NFT",
-  "@addNFTHeader": {
+  "addTokenHeader": "Add Token",
+  "@addTokenHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addNFTConfirmationMessage": "Do you confirm the creation of the following NFT?",
-  "@addNFTConfirmationMessage": {
+  "addTokenConfirmationMessage": "Do you confirm the creation of the following Token?",
+  "@addTokenConfirmationMessage": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftHeader": "NFT",
-  "@nftHeader": {
+  "tokenHeader": "Token",
+  "@tokenHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftHeaderDesc": "Manage your Non Financial Tokens",
-  "@nftHeaderDesc": {
+  "tokenHeaderDesc": "Manage your tokens",
+  "@tokenHeaderDesc": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftNameHint": "Enter a name",
-  "@nftNameHint": {
+  "tokenNameHint": "Enter a name",
+  "@tokenNameHint": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftName": "Name: ",
-  "@nftName": {
+  "tokenName": "Name: ",
+  "@tokenName": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftInitialSupplyHint": "Enter an initial supply",
-  "@nftInitialSupplyHint": {
+  "tokenInitialSupplyHint": "Enter an initial supply",
+  "@tokenInitialSupplyHint": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftNameMissing": "Choose a Name for the NFT",
-  "@nftNameMissing": {
+  "tokenNameMissing": "Choose a Name for the Token",
+  "@tokenNameMissing": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftInitialSupply": "Initial supply: ",
-  "@nftInitialSupply": {
+  "tokenInitialSupply": "Initial supply: ",
+  "@tokenInitialSupply": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftInitialSupplyMissing": "Choose an initial supply for the NFT",
-  "@nftInitialSupplyMissing": {
+  "tokenInitialSupplyMissing": "Choose an initial supply for the Token",
+  "@tokenInitialSupplyMissing": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftInitialSupplyPositive": "The initial supply should be > 0",
-  "@nftInitialSupplyPositive": {
+  "tokenInitialSupplyPositive": "The initial supply should be > 0",
+  "@tokenInitialSupplyPositive": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1218,8 +1218,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "txListTypeTransactionLabelNewNFT": "New NFT",
-  "@txListTypeTransactionLabelNewNFT": {
+  "txListTypeTransactionLabelNewToken": "New Token",
+  "@txListTypeTransactionLabelNewToken": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1296,8 +1296,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftCreated": "NFT Created",
-  "@nftCreated": {
+  "tokenCreated": "Token Created",
+  "@tokenCreated": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1392,14 +1392,14 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transactionInfosKeyNFTLedger": "NFT Ledger",
-  "@transactionInfosKeyNFTLedger": {
+  "transactionInfosKeyTokenLedger": "Token Ledger",
+  "@transactionInfosKeyTokenLedger": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transactionInfosKeyNft": "NFT",
-  "@transactionInfosKeyNft": {
+  "transactionInfosKeyToken": "Token",
+  "@transactionInfosKeyToken": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

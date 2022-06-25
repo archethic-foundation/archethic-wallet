@@ -27,11 +27,11 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 
 // Project imports:
 import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/model/nft_transfer_wallet.dart';
+import 'package:aewallet/model/token_transfer_wallet.dart';
 import 'package:aewallet/model/uco_transfer_wallet.dart';
-import 'package:aewallet/ui/views/nft/nft_transfer_list.dart';
-import 'package:aewallet/ui/views/tokens/subscription_channel.dart';
-import 'package:aewallet/ui/views/tokens/tokens_transfer_list.dart';
+import 'package:aewallet/ui/views/tokens/token_transfer_list.dart';
+import 'package:aewallet/ui/views/uco/subscription_channel.dart';
+import 'package:aewallet/ui/views/uco/uco_transfer_list.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
@@ -51,14 +51,14 @@ class TransferConfirmSheet extends StatefulWidget {
       required this.feeEstimation,
       this.title,
       this.ucoTransferList,
-      this.nftTransferList});
+      this.tokenTransferList});
 
   final String? lastAddress;
   final String? typeTransfer;
   final String? title;
   final double? feeEstimation;
   final List<UCOTransferWallet>? ucoTransferList;
-  final List<NFTTransferWallet>? nftTransferList;
+  final List<TokenTransferWallet>? tokenTransferList;
 
   @override
   State<TransferConfirmSheet> createState() => _TransferConfirmSheetState();
@@ -180,14 +180,14 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                   height: 20,
                 ),
                 SizedBox(
-                  child: widget.typeTransfer == 'TOKEN'
-                      ? TokensTransferListWidget(
+                  child: widget.typeTransfer == 'UCO'
+                      ? UCOTransferListWidget(
                           listUcoTransfer: widget.ucoTransferList,
                           feeEstimation: widget.feeEstimation,
                         )
-                      : widget.typeTransfer == 'NFT'
-                          ? NftTransferListWidget(
-                              listNftTransfer: widget.nftTransferList,
+                      : widget.typeTransfer == 'TOKEN'
+                          ? TokenTransferListWidget(
+                              listTokenTransfer: widget.tokenTransferList,
                             )
                           : const SizedBox(),
                 ),

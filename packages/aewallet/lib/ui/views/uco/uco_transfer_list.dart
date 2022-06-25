@@ -15,8 +15,8 @@ import 'package:decimal/decimal.dart';
 // Project imports:
 import 'package:aewallet/model/uco_transfer_wallet.dart';
 
-class TokensTransferListWidget extends StatefulWidget {
-  TokensTransferListWidget({
+class UCOTransferListWidget extends StatefulWidget {
+  UCOTransferListWidget({
     super.key,
     required this.listUcoTransfer,
     required this.feeEstimation,
@@ -30,11 +30,10 @@ class TokensTransferListWidget extends StatefulWidget {
   final double? feeEstimation;
 
   @override
-  State<TokensTransferListWidget> createState() =>
-      _TokensTransferListWidgetState();
+  State<UCOTransferListWidget> createState() => _UCOTransferListWidgetState();
 }
 
-class _TokensTransferListWidgetState extends State<TokensTransferListWidget> {
+class _UCOTransferListWidgetState extends State<UCOTransferListWidget> {
   @override
   Widget build(BuildContext context) {
     widget.listUcoTransfer!.sort(

@@ -15,8 +15,8 @@ class RecentTransaction {
     this.recipient,
     this.from,
     this.fee,
-    this.nftName,
-    this.nftAddress,
+    this.tokenName,
+    this.tokenAddress,
     this.content,
     this.timestamp,
     this.type,
@@ -30,8 +30,8 @@ class RecentTransaction {
         amount: json['amount']?.toDouble(),
         fee: json['fee']?.toDouble(),
         from: json['from'],
-        nftAddress: json['nftAddress'],
-        nftName: json['nftName'],
+        tokenAddress: json['tokenAddress'],
+        tokenName: json['tokenName'],
         content: json['content'],
         timestamp: json['timestamp'],
         type: json['type'],
@@ -40,12 +40,12 @@ class RecentTransaction {
   /// Types of transaction
   static const int transferInput = 1;
   static const int transferOutput = 2;
-  static const int nftCreation = 3;
+  static const int tokenCreation = 3;
 
   /// Address of transaction
   String? address;
 
-  /// Type of transaction : 1=Transfer/Input, 2=Transfer/Output, 3=NFT creation
+  /// Type of transaction : 1=Transfer/Input, 2=Transfer/Output, 3=Token creation
   int? typeTx;
 
   /// Amount: asset amount
@@ -88,16 +88,16 @@ class RecentTransaction {
   /// From: transaction which send the amount of assets
   String? from;
 
-  /// NFT name: name of the NFT if the type is NFT
-  String? nftName;
+  /// Token name: name of the Token if the type is Token
+  String? tokenName;
 
-  /// NFT address: address of the NFT if the type is NFT
-  String? nftAddress;
+  /// Token address: address of the Token if the type is Token
+  String? tokenAddress;
 
   /// Content: free zone for data hosting (string or hexadecimal)
   String? content;
 
-  /// Type: UCO/NFT/Call
+  /// Type: UCO/tokens/Call
   String? type;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -107,8 +107,8 @@ class RecentTransaction {
         'amount': amount,
         'fee': fee,
         'from': from,
-        'nftAddress': nftAddress,
-        'nftName': nftName,
+        'tokenAddress': tokenAddress,
+        'tokenName': tokenName,
         'content': content,
         'timestamp': timestamp,
         'type': type,

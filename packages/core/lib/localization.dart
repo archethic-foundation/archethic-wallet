@@ -84,12 +84,12 @@ class AppLocalization {
     return Intl.message('Send %1', name: 'transferTokens');
   }
 
-  String get transferNFT {
-    return Intl.message('Transfer NFT', name: 'transferNFT');
+  String get transferToken {
+    return Intl.message('Transfer Token', name: 'transferToken');
   }
 
-  String get transferNFTName {
-    return Intl.message('Transfer %1', name: 'transferNFTName');
+  String get transferTokenName {
+    return Intl.message('Transfer %1', name: 'transferTokenName');
   }
 
   String get recentTransactionsHeader {
@@ -391,10 +391,10 @@ class AppLocalization {
         name: 'estimatedFeesNote');
   }
 
-  String get estimatedFeesAddNFTNote {
+  String get estimatedFeesAddTokenNote {
     return Intl.message(
         'Note: The fees will be estimated when the name and the initial supply are specified.',
-        name: 'estimatedFeesAddNFTNote');
+        name: 'estimatedFeesAddTokenNote');
   }
 
   String get pinCreateTitle {
@@ -838,57 +838,57 @@ class AppLocalization {
     return Intl.message('Price Chart', name: 'priceChartHeader');
   }
 
-  String get addNFT {
-    return Intl.message('Add NFT', name: 'addNFT');
+  String get addToken {
+    return Intl.message('Add Token', name: 'addToken');
   }
 
-  String get addNFTHeader {
-    return Intl.message('Add NFT', name: 'addNFTHeader');
+  String get addTokenHeader {
+    return Intl.message('Add Token', name: 'addTokenHeader');
   }
 
-  String get addNFTConfirmationMessage {
-    return Intl.message('Do you confirm the creation of the following NFT?',
-        name: 'addNFTConfirmationMessage');
+  String get addTokenConfirmationMessage {
+    return Intl.message('Do you confirm the creation of the following Token?',
+        name: 'addTokenConfirmationMessage');
   }
 
-  String get nftHeader {
-    return Intl.message('NFT', name: 'nftHeader');
+  String get tokenHeader {
+    return Intl.message('Token', name: 'tokenHeader');
   }
 
-  String get nftHeaderDesc {
-    return Intl.message('Manage your Non Financial Tokens',
-        name: 'nftHeaderDesc');
+  String get tokenHeaderDesc {
+    return Intl.message('Manage your tokens', name: 'tokenHeaderDesc');
   }
 
-  String get nftNameHint {
-    return Intl.message('Enter a name', name: 'nftNameHint');
+  String get tokenNameHint {
+    return Intl.message('Enter a name', name: 'tokenNameHint');
   }
 
-  String get nftName {
-    return Intl.message('Name: ', name: 'nftName');
+  String get tokenName {
+    return Intl.message('Name: ', name: 'tokenName');
   }
 
-  String get nftInitialSupplyHint {
+  String get tokenInitialSupplyHint {
     return Intl.message('Enter an initial supply',
-        name: 'nftInitialSupplyHint');
+        name: 'tokenInitialSupplyHint');
   }
 
-  String get nftNameMissing {
-    return Intl.message('Choose a Name for the NFT', name: 'nftNameMissing');
+  String get tokenNameMissing {
+    return Intl.message('Choose a Name for the Token',
+        name: 'tokenNameMissing');
   }
 
-  String get nftInitialSupply {
-    return Intl.message('Initial supply: ', name: 'nftInitialSupply');
+  String get tokenInitialSupply {
+    return Intl.message('Initial supply: ', name: 'tokenInitialSupply');
   }
 
-  String get nftInitialSupplyMissing {
-    return Intl.message('Choose an initial supply for the NFT',
-        name: 'nftInitialSupplyMissing');
+  String get tokenInitialSupplyMissing {
+    return Intl.message('Choose an initial supply for the Token',
+        name: 'tokenInitialSupplyMissing');
   }
 
-  String get nftInitialSupplyPositive {
+  String get tokenInitialSupplyPositive {
     return Intl.message('The initial supply should be > 0',
-        name: 'nftInitialSupplyPositive');
+        name: 'tokenInitialSupplyPositive');
   }
 
   String get nodeNumber {
@@ -952,8 +952,9 @@ class AppLocalization {
     return Intl.message('Fees : ', name: 'txListFees');
   }
 
-  String get txListTypeTransactionLabelNewNFT {
-    return Intl.message('New NFT', name: 'txListTypeTransactionLabelNewNFT');
+  String get txListTypeTransactionLabelNewToken {
+    return Intl.message('New Token',
+        name: 'txListTypeTransactionLabelNewToken');
   }
 
   String get txListTypeTransactionLabelReceive {
@@ -1013,8 +1014,8 @@ class AppLocalization {
     return Intl.message('Go!', name: 'go');
   }
 
-  String get nftCreated {
-    return Intl.message('NFT Created', name: 'nftCreated');
+  String get tokenCreated {
+    return Intl.message('Token Created', name: 'tokenCreated');
   }
 
   String get version {
@@ -1081,12 +1082,12 @@ class AppLocalization {
     return Intl.message('Amount', name: 'transactionInfosKeyAmount');
   }
 
-  String get transactionInfosKeyNFTLedger {
-    return Intl.message('NFT Ledger', name: 'transactionInfosKeyNFTLedger');
+  String get transactionInfosKeyTokenLedger {
+    return Intl.message('Token Ledger', name: 'transactionInfosKeyTokenLedger');
   }
 
-  String get transactionInfosKeyNft {
-    return Intl.message('NFT', name: 'transactionInfosKeyNft');
+  String get transactionInfosKeyToken {
+    return Intl.message('Token', name: 'transactionInfosKeyToken');
   }
 
   String get transactionInfosKeyValidationStamp {

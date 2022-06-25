@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
+import 'package:aewallet/ui/views/tokens/add_token_confirm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,19 +27,16 @@ import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-// Project imports:
-import 'package:aewallet/ui/views/nft/add_nft_confirm.dart';
-
-class AddNFTSheet extends StatefulWidget {
-  const AddNFTSheet({super.key, this.address});
+class AddTokenSheet extends StatefulWidget {
+  const AddTokenSheet({super.key, this.address});
 
   final String? address;
 
   @override
-  State<AddNFTSheet> createState() => _AddNFTSheetState();
+  State<AddTokenSheet> createState() => _AddTokenSheetState();
 }
 
-class _AddNFTSheetState extends State<AddNFTSheet> {
+class _AddTokenSheetState extends State<AddTokenSheet> {
   FocusNode? _nameFocusNode;
   FocusNode? _initialSupplyFocusNode;
   TextEditingController? _nameController;
@@ -109,7 +107,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                             height: 15,
                           ), // Header
                           AutoSizeText(
-                            AppLocalization.of(context)!.addNFTHeader,
+                            AppLocalization.of(context)!.addTokenHeader,
                             style: AppStyles.textStyleSize24W700EquinoxPrimary(
                                 context),
                             textAlign: TextAlign.center,
@@ -220,7 +218,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                           .text,
                                       textInputAction: TextInputAction.next,
                                       labelText: AppLocalization.of(context)!
-                                          .nftNameHint,
+                                          .tokenNameHint,
                                       autocorrect: false,
                                       keyboardType: TextInputType.text,
                                       style:
@@ -254,7 +252,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                           .text,
                                       textInputAction: TextInputAction.next,
                                       labelText: AppLocalization.of(context)!
-                                          .nftInitialSupplyHint,
+                                          .tokenInitialSupplyHint,
                                       keyboardType:
                                           const TextInputType.numberWithOptions(
                                               signed: false, decimal: false),
@@ -300,7 +298,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                                 left: 30, right: 30),
                                             child: Text(
                                               AppLocalization.of(context)!
-                                                  .estimatedFeesAddNFTNote,
+                                                  .estimatedFeesAddTokenNote,
                                               style: AppStyles
                                                   .textStyleSize14W100Primary(
                                                       context),
@@ -326,18 +324,18 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                     children: <Widget>[
                       _isPressed == true
                           ? AppButton.buildAppButton(
-                              const Key('addNFT'),
+                              const Key('addToken'),
                               context,
                               AppButtonType.primaryOutline,
-                              AppLocalization.of(context)!.addNFT,
+                              AppLocalization.of(context)!.addToken,
                               Dimens.buttonTopDimens,
                               onPressed: () {},
                             )
                           : AppButton.buildAppButton(
-                              const Key('addNFT'),
+                              const Key('addToken'),
                               context,
                               AppButtonType.primary,
-                              AppLocalization.of(context)!.addNFT,
+                              AppLocalization.of(context)!.addToken,
                               Dimens.buttonTopDimens,
                               onPressed: () async {
                                 setState(() {
@@ -355,10 +353,10 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
                                       }
                                     },
                                     context: context,
-                                    widget: AddNFTConfirm(
-                                      nftName: _nameController!.text,
+                                    widget: AddTokenConfirm(
+                                      tokenName: _nameController!.text,
                                       feeEstimation: feeEstimation,
-                                      nftInitialSupply: int.tryParse(
+                                      tokenInitialSupply: int.tryParse(
                                           _initialSupplyController!.text),
                                     ),
                                   );
@@ -389,14 +387,14 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
     if (_nameController!.text.isEmpty) {
       isValid = false;
       setState(() {
-        _nameValidationText = AppLocalization.of(context)!.nftNameMissing;
+        _nameValidationText = AppLocalization.of(context)!.tokenNameMissing;
       });
     }
     if (_initialSupplyController!.text.isEmpty) {
       isValid = false;
       setState(() {
         _initialSupplyValidationText =
-            AppLocalization.of(context)!.nftInitialSupplyMissing;
+            AppLocalization.of(context)!.tokenInitialSupplyMissing;
       });
     } else {
       if (int.tryParse(_initialSupplyController!.text) == null ||
@@ -404,7 +402,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
         isValid = false;
         setState(() {
           _initialSupplyValidationText =
-              AppLocalization.of(context)!.nftInitialSupplyPositive;
+              AppLocalization.of(context)!.tokenInitialSupplyPositive;
         });
       }
     }
@@ -423,7 +421,7 @@ class _AddNFTSheetState extends State<AddNFTSheet> {
       final String? transactionChainSeed =
           await StateContainer.of(context).getSeed();
       final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
-      fee = await sl.get<AppService>().getFeesEstimationAddNFT(
+      fee = await sl.get<AppService>().getFeesEstimationAddToken(
           originPrivateKey,
           transactionChainSeed!,
           StateContainer.of(context).selectedAccount.lastAddress!,

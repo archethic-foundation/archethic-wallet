@@ -26,31 +26,31 @@ import 'package:core_ui/ui/util/routes.dart';
 import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
-import 'package:aewallet/bus/nft_add_event.dart';
+import 'package:aewallet/bus/token_add_event.dart';
 
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show TransactionStatus, ApiService;
 
-class AddNFTConfirm extends StatefulWidget {
-  const AddNFTConfirm(
+class AddTokenConfirm extends StatefulWidget {
+  const AddTokenConfirm(
       {super.key,
-      this.nftName,
-      this.nftInitialSupply,
+      this.tokenName,
+      this.tokenInitialSupply,
       required this.feeEstimation});
 
-  final String? nftName;
-  final int? nftInitialSupply;
+  final String? tokenName;
+  final int? tokenInitialSupply;
   final double? feeEstimation;
 
   @override
-  State<AddNFTConfirm> createState() => _AddNFTConfirmState();
+  State<AddTokenConfirm> createState() => _AddTokenConfirmState();
 }
 
-class _AddNFTConfirmState extends State<AddNFTConfirm> {
+class _AddTokenConfirmState extends State<AddTokenConfirm> {
   bool? animationOpen;
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
-  StreamSubscription<NFTAddEvent>? _addNFTSub;
+  StreamSubscription<TokenAddEvent>? _addTokenSub;
 
   void _registerBus() {
     _authSub = EventTaxiImpl.singleton()
@@ -61,9 +61,9 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
       }
     });
 
-    _addNFTSub = EventTaxiImpl.singleton()
-        .registerTo<NFTAddEvent>()
-        .listen((NFTAddEvent event) {
+    _addTokenSub = EventTaxiImpl.singleton()
+        .registerTo<TokenAddEvent>()
+        .listen((TokenAddEvent event) {
       if (event.response! != 'pending') {
         // Send failed
         if (animationOpen!) {
@@ -104,8 +104,8 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
     if (_authSub != null) {
       _authSub!.cancel();
     }
-    if (_addNFTSub != null) {
-      _addNFTSub!.cancel();
+    if (_addTokenSub != null) {
+      _addTokenSub!.cancel();
     }
     super.dispose();
   }
@@ -144,7 +144,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          AppLocalization.of(context)!.addNFTHeader,
+                          AppLocalization.of(context)!.addTokenHeader,
                           style: AppStyles.textStyleSize24W700EquinoxPrimary(
                               context),
                         ),
@@ -190,7 +190,7 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                       padding: const EdgeInsets.only(left: 30.0, right: 30.0),
                       child: Text(
                           AppLocalization.of(context)!
-                              .addNFTConfirmationMessage,
+                              .addTokenConfirmationMessage,
                           style:
                               AppStyles.textStyleSize14W600Primary(context))),
                   const SizedBox(
@@ -200,10 +200,10 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                     padding: const EdgeInsets.only(left: 40.0),
                     child: Row(
                       children: <Widget>[
-                        Text(AppLocalization.of(context)!.nftName,
+                        Text(AppLocalization.of(context)!.tokenName,
                             style:
                                 AppStyles.textStyleSize14W600Primary(context)),
-                        Text(widget.nftName!,
+                        Text(widget.tokenName!,
                             style:
                                 AppStyles.textStyleSize14W100Primary(context)),
                       ],
@@ -213,10 +213,10 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
                     padding: const EdgeInsets.only(left: 40.0),
                     child: Row(
                       children: <Widget>[
-                        Text(AppLocalization.of(context)!.nftInitialSupply,
+                        Text(AppLocalization.of(context)!.tokenInitialSupply,
                             style:
                                 AppStyles.textStyleSize14W600Primary(context)),
-                        Text(widget.nftInitialSupply!.toString(),
+                        Text(widget.tokenInitialSupply!.toString(),
                             style:
                                 AppStyles.textStyleSize14W100Primary(context)),
                       ],
@@ -277,20 +277,20 @@ class _AddNFTConfirmState extends State<AddNFTConfirm> {
       _showSendingAnimation(context);
       final String? transactionChainSeed =
           await StateContainer.of(context).getSeed();
-      final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
+      final String originPrivateKey = sl.get<ApiService>().getOriginKey();
       final TransactionStatus transactionStatus = await sl
           .get<AppService>()
-          .addNFT(
+          .addToken(
               originPrivateKey,
               transactionChainSeed!,
               StateContainer.of(context).selectedAccount.lastAddress!,
-              widget.nftName!,
-              widget.nftInitialSupply!,
+              widget.tokenName!,
+              widget.tokenInitialSupply!,
               StateContainer.of(context).selectedAccount.name!);
       EventTaxiImpl.singleton()
-          .fire(NFTAddEvent(response: transactionStatus.status));
+          .fire(TokenAddEvent(response: transactionStatus.status));
     } catch (e) {
-      EventTaxiImpl.singleton().fire(NFTAddEvent(response: e.toString()));
+      EventTaxiImpl.singleton().fire(TokenAddEvent(response: e.toString()));
     }
   }
 }

@@ -22,7 +22,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
         Balance,
         Keychain,
         UCOTransfer,
-        NftBalance,
+        TokenBalance,
         TransactionStatus,
         TransactionInput,
         TransactionFee;
@@ -46,21 +46,33 @@ class AppService {
     return transactionInputs;
   }
 
-  Future<List<RecentTransaction>> getRecentTransactions(
-      String genesisAddress, String lastAddress, String? pagingAddress) async {
-    pagingAddress ??= '';
+  Future<List<RecentTransaction>> getRecentTransactions(String genesisAddress,
+      String lastAddress, String seed, String name) async {
+    String pagingAddress = '';
+    final Transaction lastTransaction = await sl
+        .get<ApiService>()
+        .getLastTransaction(lastAddress, request: 'chainLength');
+    if (lastTransaction.chainLength! > 10) {
+      final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
+      String formatName = name.replaceAll(' ', '-');
+      String serviceName = 'archethic-wallet-$formatName';
+      pagingAddress = uint8ListToHex(keychain.deriveAddress(serviceName,
+          index: lastTransaction.chainLength! - 10));
+    }
+
     final List<Transaction> transactionChain = await getTransactionChain(
         lastAddress,
         pagingAddress,
         'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { content , ledger { uco { transfers { amount, to } } } } ');
+
     final List<TransactionInput> transactionInputsGenesisAddress =
         await getTransactionInputs(
-            genesisAddress, 'from, type, nftAddress, amount, timestamp');
+            genesisAddress, 'from, type, tokenAddress, amount, timestamp');
     final List<RecentTransaction> recentTransactions =
         List<RecentTransaction>.empty(growable: true);
 
     for (Transaction transaction in transactionChain) {
-      if (transaction.type!.toUpperCase() == 'NFT') {
+      if (transaction.type!.toUpperCase() == 'Token') {
         final RecentTransaction recentTransaction = RecentTransaction();
         recentTransaction.address = transaction.address;
         recentTransaction.fee = 0;
@@ -68,8 +80,8 @@ class AppService {
         if (transaction.data!.content!
             .toLowerCase()
             .contains('initial supply:')) {
-          recentTransaction.nftAddress = transaction.address;
-          recentTransaction.typeTx = RecentTransaction.nftCreation;
+          recentTransaction.tokenAddress = transaction.address;
+          recentTransaction.typeTx = RecentTransaction.tokenCreation;
           recentTransaction.content = transaction.data!.content!.substring(
               transaction.data!.content!
                   .toLowerCase()
@@ -79,10 +91,10 @@ class AppService {
           recentTransaction.content = '';
         }
         if (transaction.data!.content!.toLowerCase().contains('name:')) {
-          recentTransaction.nftName = transaction.data!.content!.substring(
+          recentTransaction.tokenName = transaction.data!.content!.substring(
               transaction.data!.content!.indexOf('name: ') + 'name: '.length);
         } else {
-          recentTransaction.nftName = '';
+          recentTransaction.tokenName = '';
         }
         recentTransaction.fee =
             transaction.validationStamp!.ledgerOperations!.fee;
@@ -116,10 +128,10 @@ class AppService {
           if (transactionInput.from != transaction.address) {
             final RecentTransaction recentTransaction = RecentTransaction();
             recentTransaction.address = transactionInput.from;
-            if (transactionInput.type!.toUpperCase() == 'NFT') {
-              recentTransaction.nftAddress = transactionInput.nftAddress!;
+            if (transactionInput.type!.toUpperCase() == 'Token') {
+              recentTransaction.tokenAddress = transactionInput.tokenAddress!;
             } else {
-              recentTransaction.nftAddress = '';
+              recentTransaction.tokenAddress = '';
             }
             recentTransaction.amount = transactionInput.amount!;
             recentTransaction.typeTx = RecentTransaction.transferInput;
@@ -138,10 +150,10 @@ class AppService {
     for (TransactionInput transaction in transactionInputsGenesisAddress) {
       final RecentTransaction recentTransaction = RecentTransaction();
       recentTransaction.address = transaction.from;
-      if (transaction.type!.toUpperCase() == 'NFT') {
-        recentTransaction.nftAddress = transaction.nftAddress!;
+      if (transaction.type!.toUpperCase() == 'Token') {
+        recentTransaction.tokenAddress = transaction.tokenAddress!;
       } else {
-        recentTransaction.nftAddress = '';
+        recentTransaction.tokenAddress = '';
       }
       recentTransaction.amount = transaction.amount!;
       recentTransaction.typeTx = RecentTransaction.transferInput;
@@ -162,15 +174,15 @@ class AppService {
 
   Future<Balance> getBalanceGetResponse(String address) async {
     Balance balance =
-        Balance(uco: 0, nft: List<NftBalance>.empty(growable: true));
+        Balance(uco: 0, token: List<TokenBalance>.empty(growable: true));
     balance = await sl.get<ApiService>().fetchBalance(address);
-    final List<NftBalance> balanceNftList =
-        List<NftBalance>.empty(growable: true);
-    if (balance.nft != null) {
-      for (int i = 0; i < balance.nft!.length; i++) {
-        NftBalance balanceNft = NftBalance();
-        balanceNft = balance.nft![i];
-        balanceNftList.add(balanceNft);
+    final List<TokenBalance> balanceTokenList =
+        List<TokenBalance>.empty(growable: true);
+    if (balance.token != null) {
+      for (int i = 0; i < balance.token!.length; i++) {
+        TokenBalance balanceToken = TokenBalance();
+        balanceToken = balance.token![i];
+        balanceTokenList.add(balanceToken);
       }
     }
     return balance;
@@ -209,7 +221,7 @@ class AppService {
     return transactionStatus;
   }
 
-  Future<TransactionStatus> addNFT(
+  Future<TransactionStatus> addToken(
       String originPrivateKey,
       String seed,
       String address,
@@ -227,7 +239,7 @@ class AppService {
     try {
       String content = 'initial supply: $initialSupply\nname: $name';
       final Transaction transaction =
-          Transaction(type: 'nft', data: Transaction.initData())
+          Transaction(type: 'token', data: Transaction.initData())
               .setContent(content);
       Transaction signedTx = keychain
           .buildTransaction(transaction, service, index)
@@ -322,32 +334,33 @@ class AppService {
         }
       }
       if (transaction.data!.ledger != null &&
-          transaction.data!.ledger!.nft != null &&
-          transaction.data!.ledger!.nft!.transfers != null &&
-          transaction.data!.ledger!.nft!.transfers!.isNotEmpty) {
+          transaction.data!.ledger!.token != null &&
+          transaction.data!.ledger!.token!.transfers != null &&
+          transaction.data!.ledger!.token!.transfers!.isNotEmpty) {
         transactionsInfos.add(TransactionInfos(
-            domain: 'NFTLedger', titleInfo: '', valueInfo: ''));
+            domain: 'TokenLedger', titleInfo: '', valueInfo: ''));
         for (int i = 0;
-            i < transaction.data!.ledger!.nft!.transfers!.length;
+            i < transaction.data!.ledger!.token!.transfers!.length;
             i++) {
-          if (transaction.data!.ledger!.nft!.transfers![i].nft != null) {
+          if (transaction.data!.ledger!.token!.transfers![i].token != null) {
             transactionsInfos.add(TransactionInfos(
-                domain: 'NFTLedger',
-                titleInfo: 'Nft',
-                valueInfo: transaction.data!.ledger!.nft!.transfers![i].nft!));
+                domain: 'TokenLedger',
+                titleInfo: 'Token',
+                valueInfo:
+                    transaction.data!.ledger!.token!.transfers![i].token!));
           }
-          if (transaction.data!.ledger!.nft!.transfers![i].to != null) {
+          if (transaction.data!.ledger!.token!.transfers![i].to != null) {
             transactionsInfos.add(TransactionInfos(
-                domain: 'NFTLedger',
+                domain: 'TokenLedger',
                 titleInfo: 'To',
-                valueInfo: transaction.data!.ledger!.nft!.transfers![i].to!));
+                valueInfo: transaction.data!.ledger!.token!.transfers![i].to!));
           }
-          if (transaction.data!.ledger!.nft!.transfers![i].amount != null) {
+          if (transaction.data!.ledger!.token!.transfers![i].amount != null) {
             transactionsInfos.add(TransactionInfos(
-                domain: 'NFTLedger',
+                domain: 'TokenLedger',
                 titleInfo: 'Amount',
                 valueInfo:
-                    (transaction.data!.ledger!.nft!.transfers![i].amount!)
+                    (transaction.data!.ledger!.token!.transfers![i].amount!)
                         .toString()));
           }
         }
@@ -382,7 +395,7 @@ class AppService {
     return transactionFee.fee!;
   }
 
-  Future<double> getFeesEstimationAddNFT(
+  Future<double> getFeesEstimationAddToken(
       String originPrivateKey,
       String seed,
       String address,
@@ -399,7 +412,7 @@ class AppService {
     try {
       String content = 'initial supply: $initialSupply\nname: $name';
       final Transaction transaction =
-          Transaction(type: 'nft', data: Transaction.initData())
+          Transaction(type: 'token', data: Transaction.initData())
               .setContent(content);
       Transaction signedTx = keychain
           .buildTransaction(transaction, service, index)

@@ -22,7 +22,7 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:aewallet/ui/menu/settings_drawer_wallet_mobile.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
-import 'package:aewallet/ui/views/tokens/transfer_tokens_sheet.dart';
+import 'package:aewallet/ui/views/uco/transfer_uco_sheet.dart';
 import 'package:aewallet/ui/views/transactions/transaction_chain_explorer_sheet.dart';
 
 class MenuWidgetWallet extends AbstractMenuWidget {
@@ -70,7 +70,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                               StateContainer.of(context).activeVibrations);
                           Sheets.showAppHeightNineSheet(
                             context: context,
-                            widget: TransferTokensSheet(
+                            widget: TransferUCOSheet(
                                 primaryCurrency: StateContainer.of(context)
                                     .curPrimaryCurrency,
                                 title: AppLocalization.of(context)!

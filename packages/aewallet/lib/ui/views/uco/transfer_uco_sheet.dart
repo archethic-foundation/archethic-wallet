@@ -41,14 +41,14 @@ import 'package:intl/intl.dart';
 
 // Project imports:
 import 'package:aewallet/model/uco_transfer_wallet.dart';
-import 'package:aewallet/ui/views/tokens/transfer_confirm_sheet.dart';
+import 'package:aewallet/ui/views/uco/transfer_confirm_sheet.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show AddressService, isHex, ApiService;
 
-class TransferTokensSheet extends StatefulWidget {
-  const TransferTokensSheet(
+class TransferUCOSheet extends StatefulWidget {
+  const TransferUCOSheet(
       {@required this.localCurrency,
       this.contact,
       this.address,
@@ -67,14 +67,14 @@ class TransferTokensSheet extends StatefulWidget {
   final PrimaryCurrencySetting? primaryCurrency;
 
   @override
-  State<TransferTokensSheet> createState() => _TransferTokensSheetState();
+  State<TransferUCOSheet> createState() => _TransferUCOSheetState();
 }
 
 enum AddressStyle { text60, text90, primary }
 
 enum PrimaryCurrency { network, selected }
 
-class _TransferTokensSheetState extends State<TransferTokensSheet> {
+class _TransferUCOSheetState extends State<TransferUCOSheet> {
   FocusNode? _sendAddressFocusNode;
   TextEditingController? _sendAddressController;
   FocusNode? _sendAmountFocusNode;
@@ -468,7 +468,7 @@ class _TransferTokensSheetState extends State<TransferTokensSheet> {
                                           .lastAddress!,
                                       ucoTransferList: ucoTransferList,
                                       title: widget.title,
-                                      typeTransfer: 'TOKEN',
+                                      typeTransfer: 'UCO',
                                       feeEstimation: feeEstimation,
                                     ),
                                   );

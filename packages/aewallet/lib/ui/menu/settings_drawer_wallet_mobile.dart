@@ -13,6 +13,7 @@ import 'package:aeuniverse/ui/widgets/dialogs/lock_timeout_dialog.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/primary_currency_dialog.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/theme_dialog.dart';
+import 'package:aewallet/ui/views/tokens/add_token.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -39,7 +40,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 // Project imports:
 import 'package:aewallet/ui/views/contacts/contact_list.dart';
-import 'package:aewallet/ui/views/nft/add_nft.dart';
 import 'package:aewallet/ui/views/settings/wallet_faq_widget.dart';
 
 class SettingsSheetWalletMobile extends StatefulWidget {
@@ -58,8 +58,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   Animation<Offset>? _securityOffsetFloat;
   AnimationController? _customController;
   Animation<Offset>? _customOffsetFloat;
-  AnimationController? _nftController;
-  Animation<Offset>? _nftOffsetFloat;
+  AnimationController? _tokenController;
+  Animation<Offset>? _tokenOffsetFloat;
   AnimationController? _walletFAQController;
   Animation<Offset>? _walletFAQOffsetFloat;
   AnimationController? _aboutController;
@@ -81,7 +81,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   bool? _aboutOpen;
   bool? _contactsOpen;
   bool? _walletFAQOpen;
-  bool? _nftOpen;
+  bool? _tokenOpen;
 
   bool _pinPadShuffleActive = false;
   bool _showBalancesActive = false;
@@ -98,7 +98,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     _customOpen = false;
     _aboutOpen = false;
     _walletFAQOpen = false;
-    _nftOpen = false;
+    _tokenOpen = false;
 
     // Determine if they have face or fingerprint enrolled, if not hide the setting
     sl.get<BiometricUtil>().hasBiometrics().then((bool hasBiometrics) {
@@ -142,7 +142,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
-    _nftController = AnimationController(
+    _tokenController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
@@ -161,9 +161,9 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     _walletFAQOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_walletFAQController!);
-    _nftOffsetFloat =
+    _tokenOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
-            .animate(_nftController!);
+            .animate(_tokenController!);
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
         versionString =
@@ -179,7 +179,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     _customController!.dispose();
     _aboutController!.dispose();
     _walletFAQController!.dispose();
-    _nftController!.dispose();
+    _tokenController!.dispose();
     super.dispose();
   }
 
@@ -275,11 +275,11 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       });
       _walletFAQController!.reverse();
       return false;
-    } else if (_nftOpen!) {
+    } else if (_tokenOpen!) {
       setState(() {
-        _nftOpen = false;
+        _tokenOpen = false;
       });
-      _nftController!.reverse();
+      _tokenController!.reverse();
       return false;
     }
     return true;
@@ -315,7 +315,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                 position: _walletFAQOffsetFloat!,
                 child: WalletFAQ(_walletFAQController!, _walletFAQOpen!)),
             SlideTransition(
-                position: _nftOffsetFloat!, child: buildNFTMenu(context)),
+                position: _tokenOffsetFloat!, child: buildTokenMenu(context)),
           ],
         ),
       ),
@@ -381,16 +381,16 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                             0)
                       AppSettings.buildSettingsListItemSingleLineWithInfos(
                           context,
-                          AppLocalization.of(context)!.nftHeader,
-                          AppLocalization.of(context)!.nftHeaderDesc,
-                          icon: 'packages/aewallet/assets/icons/nft.png',
+                          AppLocalization.of(context)!.tokenHeader,
+                          AppLocalization.of(context)!.tokenHeaderDesc,
+                          icon: 'packages/aewallet/assets/icons/token.png',
                           iconColor: StateContainer.of(context)
                               .curTheme
                               .iconDrawer!, onPressed: () {
                         setState(() {
-                          _nftOpen = true;
+                          _tokenOpen = true;
                         });
-                        _nftController!.forward();
+                        _tokenController!.forward();
                       })
                     else
                       const SizedBox(),
@@ -1170,7 +1170,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     );
   }
 
-  Widget buildNFTMenu(BuildContext context) {
+  Widget buildTokenMenu(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         border: Border(
@@ -1205,15 +1205,15 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       color: StateContainer.of(context).curTheme.text,
                       onPressed: () {
                         setState(() {
-                          _nftOpen = false;
+                          _tokenOpen = false;
                         });
-                        _nftController!.reverse();
+                        _tokenController!.reverse();
                       },
                     ),
                   ),
                   Expanded(
                     child: AutoSizeText(
-                      AppLocalization.of(context)!.nftHeader,
+                      AppLocalization.of(context)!.tokenHeader,
                       style:
                           AppStyles.textStyleSize24W700EquinoxPrimary(context),
                       maxLines: 2,
@@ -1233,29 +1233,29 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         color: StateContainer.of(context).curTheme.text15),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
-                        AppLocalization.of(context)!.addNFTHeader,
+                        AppLocalization.of(context)!.addTokenHeader,
                         AppStyles.textStyleSize16W600Primary(context),
-                        'packages/aewallet/assets/icons/addNft.png',
+                        'packages/aewallet/assets/icons/addToken.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () {
                       Sheets.showAppHeightNineSheet(
-                          context: context, widget: const AddNFTSheet());
+                          context: context, widget: const AddTokenSheet());
                     }),
                     /*Divider(
                         height: 2,
                         color: StateContainer.of(context).curTheme.text15),
                     AppSettings.buildSettingsListItemSingleLine(
                         context,
-                        AppLocalization.of(context)!.transferNFT,
+                        AppLocalization.of(context)!.transferToken,
                         AppStyles.textStyleSize16W600Primary(context),
-                        'packages/aewallet/assets/icons/transferNft.png',
+                        'packages/aewallet/assets/icons/transferToken.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () {
                       /*Sheets.showAppHeightNineSheet(
                           context: context,
-                          widget: TransferNftSheet(
+                          widget: TransferTokenSheet(
                             contactsRef: StateContainer.of(context).contactsRef,
-                            title: AppLocalization.of(context).transferNFT,
+                            title: AppLocalization.of(context).transferToken,
                           ));*/
                     }),*/
                     Divider(

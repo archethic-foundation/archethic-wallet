@@ -3,8 +3,8 @@
 // Package imports:
 import 'package:event_taxi/event_taxi.dart';
 
-class NFTAddEvent implements Event {
-  NFTAddEvent({this.response});
+class TokenAddEvent implements Event {
+  TokenAddEvent({this.response});
 
   final String? response;
 }

@@ -10,34 +10,36 @@ import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:core/model/address.dart';
 
 // Project imports:
-import 'package:aewallet/model/nft_transfer_wallet.dart';
+import 'package:aewallet/model/token_transfer_wallet.dart';
 
-class NftTransferListWidget extends StatefulWidget {
-  NftTransferListWidget({
+class TokenTransferListWidget extends StatefulWidget {
+  TokenTransferListWidget({
     super.key,
-    this.listNftTransfer,
+    this.listTokenTransfer,
     this.onGet,
     this.onDelete,
   });
 
-  List<NFTTransferWallet>? listNftTransfer;
-  final Function(NFTTransferWallet)? onGet;
+  List<TokenTransferWallet>? listTokenTransfer;
+  final Function(TokenTransferWallet)? onGet;
   final Function()? onDelete;
 
   @override
-  State<NftTransferListWidget> createState() => _NftTransferListWidgetState();
+  State<TokenTransferListWidget> createState() =>
+      _TokenTransferListWidgetState();
 }
 
-class _NftTransferListWidgetState extends State<NftTransferListWidget> {
+class _TokenTransferListWidgetState extends State<TokenTransferListWidget> {
   @override
   Widget build(BuildContext context) {
-    widget.listNftTransfer!.sort(
-        (NFTTransferWallet a, NFTTransferWallet b) => a.to!.compareTo(b.to!));
+    widget.listTokenTransfer!.sort(
+        (TokenTransferWallet a, TokenTransferWallet b) =>
+            a.to!.compareTo(b.to!));
     return Stack(
       children: <Widget>[
         SizedBox(
           child: Container(
-            height: widget.listNftTransfer!.length * 100,
+            height: widget.listTokenTransfer!.length * 100,
             padding: const EdgeInsets.only(left: 3.5, right: 3.5),
             width: MediaQuery.of(context).size.width * 0.9,
             decoration: BoxDecoration(
@@ -58,10 +60,10 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
               padding:
                   const EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
               child: ListView.builder(
-                itemCount: widget.listNftTransfer!.length,
+                itemCount: widget.listTokenTransfer!.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return displayNftDetail(
-                      context, widget.listNftTransfer![index]);
+                  return displayTokenDetail(
+                      context, widget.listTokenTransfer![index]);
                 },
               ),
             ),
@@ -71,7 +73,8 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
     );
   }
 
-  Widget displayNftDetail(BuildContext context, NFTTransferWallet nftTransfer) {
+  Widget displayTokenDetail(
+      BuildContext context, TokenTransferWallet tokenTransfer) {
     return Column(
       children: <Widget>[
         Row(
@@ -84,20 +87,20 @@ class _NftTransferListWidgetState extends State<NftTransferListWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                        nftTransfer.nft == null
-                            ? 'NFT 1....'
-                            : nftTransfer.nft!,
+                        tokenTransfer.token == null
+                            ? 'Token 1....'
+                            : tokenTransfer.token!,
                         style: AppStyles.textStyleSize14W100Primary(context)),
                     Text(
-                        nftTransfer.toContactName == null
-                            ? Address(nftTransfer.to!).getShortString3()
-                            : '${nftTransfer.toContactName!}\n${Address(nftTransfer.to!).getShortString3()}',
+                        tokenTransfer.toContactName == null
+                            ? Address(tokenTransfer.to!).getShortString3()
+                            : '${tokenTransfer.toContactName!}\n${Address(tokenTransfer.to!).getShortString3()}',
                         style: AppStyles.textStyleSize10W100Primary60(context))
                   ],
                 ),
               ],
             ),
-            Text(nftTransfer.amount!.toString(),
+            Text(tokenTransfer.amount!.toString(),
                 style: AppStyles.textStyleSize14W100Primary(context)),
           ],
         ),

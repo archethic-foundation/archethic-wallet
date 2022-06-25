@@ -60,14 +60,14 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transferNFT": "Transfer NFT",
-  "@transferNFT": {
+  "transferToken": "Transfer Token",
+  "@transferToken": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transferNFTName": "Transfer %1",
-  "@transferNFTName": {
+  "transferTokenName": "Transfer %1",
+  "@transferTokenName": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -702,74 +702,74 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addNFT": "Add NFT",
-  "@addNFT": {
+  "addToken": "Add Token",
+  "@addToken": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addNFTHeader": "Add NFT",
-  "@addNFTHeader": {
+  "addTokenHeader": "Add Token",
+  "@addTokenHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addNFTConfirmationMessage": "Do you confirm the creation of the following NFT?",
-  "@addNFTConfirmationMessage": {
+  "addTokenConfirmationMessage": "Do you confirm the creation of the following Token?",
+  "@addTokenConfirmationMessage": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftHeader": "NFT",
-  "@nftHeader": {
+  "TokenHeader": "Token",
+  "@TokenHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftHeaderDesc": "Manage your Non Financial Tokens",
-  "@nftHeaderDesc": {
+  "TokenHeaderDesc": "Manage your tokens",
+  "@TokenHeaderDesc": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftNameHint": "Enter a name",
-  "@nftNameHint": {
+  "TokenNameHint": "Enter a name",
+  "@TokenNameHint": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftName": "Name: ",
-  "@nftName": {
+  "TokenName": "Name: ",
+  "@TokenName": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftInitialSupplyHint": "Enter an initial supply",
-  "@nftInitialSupplyHint": {
+  "TokenInitialSupplyHint": "Enter an initial supply",
+  "@TokenInitialSupplyHint": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftNameMissing": "Choose a Name for the NFT",
-  "@nftNameMissing": {
+  "TokenNameMissing": "Choose a Name for the Token",
+  "@TokenNameMissing": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftInitialSupply": "Initial supply: ",
-  "@nftInitialSupply": {
+  "TokenInitialSupply": "Initial supply: ",
+  "@TokenInitialSupply": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftInitialSupplyMissing": "Choose an initial supply for the NFT",
-  "@nftInitialSupplyMissing": {
+  "TokenInitialSupplyMissing": "Choose an initial supply for the Token",
+  "@TokenInitialSupplyMissing": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftInitialSupplyPositive": "The initial supply should be > 0",
-  "@nftInitialSupplyPositive": {
+  "TokenInitialSupplyPositive": "The initial supply should be > 0",
+  "@TokenInitialSupplyPositive": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -852,8 +852,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "txListTypeTransactionLabelNewNFT": "New NFT",
-  "@txListTypeTransactionLabelNewNFT": {
+  "txListTypeTransactionLabelNewToken": "New Token",
+  "@txListTypeTransactionLabelNewToken": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -930,8 +930,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftCreated": "NFT Created",
-  "@nftCreated": {
+  "TokenCreated": "Token Created",
+  "@TokenCreated": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1134,14 +1134,14 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transactionInfosKeyNFTLedger": "NFT Ledger",
-  "@transactionInfosKeyNFTLedger": {
+  "transactionInfosKeyTokenLedger": "Token Ledger",
+  "@transactionInfosKeyTokenLedger": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
   },
-  "transactionInfosKeyNft": "NFT",
-  "@transactionInfosKeyNft": {
+  "transactionInfosKeyToken": "Token",
+  "@transactionInfosKeyToken": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1290,8 +1290,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "estimatedFeesAddNFTNote": "Note: The fees will be estimated when the name and the initial supply are specified.",
-  "@estimatedFeesAddNFTNote": {
+  "estimatedFeesAddTokenNote": "Note: The fees will be estimated when the name and the initial supply are specified.",
+  "@estimatedFeesAddTokenNote": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

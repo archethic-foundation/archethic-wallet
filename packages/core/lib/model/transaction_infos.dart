@@ -29,10 +29,10 @@ class TransactionInfos {
             .transactionInfosKeyCrossValidationStamps;
       case 'Data':
         return AppLocalization.of(context)!.transactionInfosKeyData;
-      case 'NFTLedger':
-        return AppLocalization.of(context)!.transactionInfosKeyNFTLedger;
-      case 'Nft':
-        return AppLocalization.of(context)!.transactionInfosKeyNft;
+      case 'TokenLedger':
+        return AppLocalization.of(context)!.transactionInfosKeyTokenLedger;
+      case 'Token':
+        return AppLocalization.of(context)!.transactionInfosKeyToken;
       case 'OriginSignature':
         return AppLocalization.of(context)!.transactionInfosKeyOriginSignature;
       case 'PreviousPublicKey':
