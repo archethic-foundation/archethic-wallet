@@ -66,8 +66,18 @@ class AppService {
         'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { content , ledger { uco { transfers { amount, to } } } } ');
 
     final List<TransactionInput> transactionInputsGenesisAddress =
+        await getTransactionInputs(genesisAddress,
+            'from, type, spent, tokenAddress, amount, timestamp');
+
+    final List<TransactionInput> transactionInputLastAddress =
         await getTransactionInputs(
-            genesisAddress, 'from, type, tokenAddress, amount, timestamp');
+            lastAddress, 'from, type, tokenAddress, amount, timestamp');
+    transactionInputLastAddress.forEach((TransactionInput transactionInput) {
+      if (transactionInput.from != lastAddress) {
+        transactionInputsGenesisAddress.add(transactionInput);
+      }
+    });
+
     final List<RecentTransaction> recentTransactions =
         List<RecentTransaction>.empty(growable: true);
 

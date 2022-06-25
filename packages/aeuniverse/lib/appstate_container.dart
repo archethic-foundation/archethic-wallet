@@ -381,10 +381,11 @@ class StateContainerState extends State<StateContainer> {
   }
 
   Future<void> requestUpdateRecentTransactions(String pagingAddress) async {
+    String? seed = await getSeed();
     final List<RecentTransaction> recentTransactions = await sl
         .get<AppService>()
         .getRecentTransactions(selectedAccount.genesisAddress!,
-            selectedAccount.lastAddress!, pagingAddress);
+            selectedAccount.lastAddress!, seed!, selectedAccount.name!);
     EventTaxiImpl.singleton()
         .fire(TransactionsListEvent(transaction: recentTransactions));
   }
