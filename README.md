@@ -16,7 +16,7 @@ Archethic Wallet have features that are implemented:
 - Support for Multiple Languages
 - Support for Multiple Currencies (Only views not as in multiple cryptocurrencies)
 - Support for transactions (Sending and Receiving Tokens)
-- Upcoming Support for NFTs and Many More
+- Upcoming Support for Tokens and Many More
 
 ![Application Initial Screen](assets/screenshots/AppInit.png?v=20220614)
 * Application Initial Screen
