@@ -368,7 +368,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       )
                     else
                       const SizedBox(),
-                    if (StateContainer.of(context).wallet != null &&
+                    /* if (StateContainer.of(context).wallet != null &&
                         StateContainer.of(context)
                                 .wallet!
                                 .accountBalance
@@ -397,7 +397,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,
-                    ),
+                    ),*/
                     AppSettings.buildSettingsListItemSingleLineWithInfos(
                         context,
                         AppLocalization.of(context)!.addressBookHeader,
@@ -1228,7 +1228,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                 ListView(
                   padding: const EdgeInsets.only(top: 15.0),
                   children: <Widget>[
-                    Divider(
+                    /*Divider(
                         height: 2,
                         color: StateContainer.of(context).curTheme.text15),
                     AppSettings.buildSettingsListItemSingleLine(
@@ -1241,7 +1241,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       Sheets.showAppHeightNineSheet(
                           context: context, widget: const AddTokenSheet());
                     }),
-                    /*Divider(
+                    Divider(
                         height: 2,
                         color: StateContainer.of(context).curTheme.text15),
                     AppSettings.buildSettingsListItemSingleLine(
