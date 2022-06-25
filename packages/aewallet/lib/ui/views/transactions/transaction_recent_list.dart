@@ -150,6 +150,10 @@ class _TxListWidgetState extends State<TxListWidget> {
         transaction.amount, StateContainer.of(context).curCurrency);
     balance.localCurrencyPrice =
         StateContainer.of(context).wallet!.accountBalance.localCurrencyPrice;
+    BalanceWallet balanceFee =
+        BalanceWallet(transaction.fee, StateContainer.of(context).curCurrency);
+    balanceFee.localCurrencyPrice =
+        StateContainer.of(context).wallet!.accountBalance.localCurrencyPrice;
     return FutureBuilder<String>(
       future: transaction.recipientDisplay,
       builder: (BuildContext context, AsyncSnapshot<String> recipientDisplay) {
@@ -199,12 +203,12 @@ class _TxListWidgetState extends State<TxListWidget> {
                                       transaction.typeTx ==
                                               RecentTransaction.transferOutput
                                           ? AutoSizeText(
-                                              '-${transaction.amount!}',
+                                              '-${transaction.amount!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                               style: AppStyles
                                                   .textStyleSize20W700EquinoxRed(
                                                       context))
                                           : AutoSizeText(
-                                              transaction.amount!.toString(),
+                                              '${transaction.amount!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                               style: AppStyles
                                                   .textStyleSize20W700EquinoxGreen(
                                                       context)),
@@ -245,19 +249,12 @@ class _TxListWidgetState extends State<TxListWidget> {
                                       transaction.typeTx ==
                                               RecentTransaction.transferOutput
                                           ? AutoSizeText(
-                                              '-${transaction.amount!} ' +
-                                                  StateContainer.of(context)
-                                                      .curNetwork
-                                                      .getNetworkCryptoCurrencyLabel(),
+                                              '-${transaction.amount!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                               style: AppStyles
                                                   .textStyleSize12W600Primary(
                                                       context))
                                           : AutoSizeText(
-                                              transaction.amount!.toString() +
-                                                  ' ' +
-                                                  StateContainer.of(context)
-                                                      .curNetwork
-                                                      .getNetworkCryptoCurrencyLabel(),
+                                              '${transaction.amount!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                               style: AppStyles
                                                   .textStyleSize12W600Primary(
                                                       context)),
@@ -362,11 +359,25 @@ class _TxListWidgetState extends State<TxListWidget> {
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
-                                  Text(
-                                      '${AppLocalization.of(context)!.txListFees}${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                      style:
-                                          AppStyles.textStyleSize12W400Primary(
-                                              context)),
+                                  StateContainer.of(context)
+                                              .curPrimaryCurrency
+                                              .primaryCurrency
+                                              .name ==
+                                          PrimaryCurrencySetting(
+                                                  AvailablePrimaryCurrency
+                                                      .NATIVE)
+                                              .primaryCurrency
+                                              .name
+                                      ? Text(
+                                          '${AppLocalization.of(context)!.txListFees}${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${balanceFee.getConvertedAccountBalanceDisplay()})',
+                                          style: AppStyles
+                                              .textStyleSize12W400Primary(
+                                                  context))
+                                      : Text(
+                                          '${AppLocalization.of(context)!.txListFees}${balanceFee.getConvertedAccountBalanceDisplay()} (${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})',
+                                          style: AppStyles
+                                              .textStyleSize12W400Primary(
+                                                  context)),
                                 ]),
                         ],
                       ),

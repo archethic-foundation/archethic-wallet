@@ -130,6 +130,10 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
         transaction.amount, StateContainer.of(context).curCurrency);
     balance.localCurrencyPrice =
         StateContainer.of(context).wallet!.accountBalance.localCurrencyPrice;
+    BalanceWallet balanceFee =
+        BalanceWallet(transaction.fee, StateContainer.of(context).curCurrency);
+    balanceFee.localCurrencyPrice =
+        StateContainer.of(context).wallet!.accountBalance.localCurrencyPrice;
     return FutureBuilder<String>(
       future: transaction.recipientDisplay,
       builder: (BuildContext context, AsyncSnapshot<String> recipientDisplay) {
@@ -342,11 +346,25 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
-                                  Text(
-                                      '${AppLocalization.of(context)!.txListFees}${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                      style:
-                                          AppStyles.textStyleSize12W400Primary(
-                                              context)),
+                                  StateContainer.of(context)
+                                              .curPrimaryCurrency
+                                              .primaryCurrency
+                                              .name ==
+                                          PrimaryCurrencySetting(
+                                                  AvailablePrimaryCurrency
+                                                      .NATIVE)
+                                              .primaryCurrency
+                                              .name
+                                      ? Text(
+                                          '${AppLocalization.of(context)!.txListFees}${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${balanceFee.getConvertedAccountBalanceDisplay()})',
+                                          style: AppStyles
+                                              .textStyleSize12W400Primary(
+                                                  context))
+                                      : Text(
+                                          '${balanceFee.getConvertedAccountBalanceDisplay()} (${AppLocalization.of(context)!.txListFees}${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}))',
+                                          style: AppStyles
+                                              .textStyleSize12W400Primary(
+                                                  context)),
                                 ]),
                         ],
                       ),
