@@ -249,7 +249,8 @@ class _AppState extends State<App> {
               );
             case '/intro_backup_confirm':
               return MaterialPageRoute<IntroBackupConfirm>(
-                builder: (_) => const IntroBackupConfirm(),
+                builder: (_) => IntroBackupConfirm(
+                    wordList: settings.arguments as List<String>),
                 settings: settings,
               );
             case '/lock_screen':

@@ -606,8 +606,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "secretWarning": "If you lose your device or uninstall the application, you'll need your secret phrase to recover your funds!",
-  "@secretWarning": {
+  "confirmSecretPhraseExplanation": "Select the words to put them in the correct order.",
+  "@confirmSecretPhraseExplanation": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -660,8 +660,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "ackBackedUp": "Are you sure that you've backed up your secret phrase?",
-  "@ackBackedUp": {
+  "confirmSecretPhrase": "Confirm your secret phrase.",
+  "@confirmSecretPhrase": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

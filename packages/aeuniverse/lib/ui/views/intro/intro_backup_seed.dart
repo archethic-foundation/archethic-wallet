@@ -180,8 +180,9 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                 setState(() {
                                   isPressed = false;
                                 });
-                                Navigator.of(context)
-                                    .pushNamed('/intro_backup_confirm');
+                                Navigator.of(context).pushNamed(
+                                    '/intro_backup_confirm',
+                                    arguments: mnemonic!);
                               },
                             ),
                     ],

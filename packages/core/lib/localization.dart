@@ -673,10 +673,9 @@ class AppLocalization {
     return Intl.message('View on explorer', name: 'viewExplorer');
   }
 
-  String get secretWarning {
-    return Intl.message(
-        'If you lose your device or uninstall the application, you\'ll need your secret phrase to recover your funds!',
-        name: 'secretWarning');
+  String get confirmSecretPhraseExplanation {
+    return Intl.message('Select the words to put them in the correct order.',
+        name: 'confirmSecretPhraseExplanation');
   }
 
   String get importSecretPhrase {
@@ -720,10 +719,9 @@ class AppLocalization {
     return Intl.message('I understand', name: 'understandButton');
   }
 
-  String get ackBackedUp {
-    return Intl.message(
-        'Are you sure that you\'ve backed up your secret phrase ?',
-        name: 'ackBackedUp');
+  String get confirmSecretPhrase {
+    return Intl.message('Confirm your secret phrase.',
+        name: 'confirmSecretPhrase');
   }
 
   String get backupSecretPhrase {
