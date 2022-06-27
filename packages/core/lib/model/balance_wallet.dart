@@ -82,4 +82,20 @@ class BalanceWallet {
           .format(_selectedCurrencyValue);
     }
   }
+
+  String getConvertedAccountBalanceDisplayWithNumberOfDigits(
+      int numberOfDigits) {
+    if (_selectedCurrencyValue == null) {
+      return '';
+    }
+    if (selectedCurrency!.getIso4217Code() == 'BTC') {
+      return _selectedCurrencyValue!.toStringAsFixed(8) +
+          ' ' +
+          selectedCurrency!.getCurrencySymbol();
+    } else {
+      return _selectedCurrencyValue!.toStringAsFixed(numberOfDigits) +
+          ' ' +
+          selectedCurrency!.getCurrencySymbol();
+    }
+  }
 }

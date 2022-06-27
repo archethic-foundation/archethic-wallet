@@ -369,12 +369,12 @@ class _TxListWidgetState extends State<TxListWidget> {
                                               .primaryCurrency
                                               .name
                                       ? Text(
-                                          '${AppLocalization.of(context)!.txListFees}${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${balanceFee.getConvertedAccountBalanceDisplay()})',
+                                          '${AppLocalization.of(context)!.txListFees}${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${balanceFee.getConvertedAccountBalanceDisplayWithNumberOfDigits(8)})',
                                           style: AppStyles
                                               .textStyleSize12W400Primary(
                                                   context))
                                       : Text(
-                                          '${AppLocalization.of(context)!.txListFees}${balanceFee.getConvertedAccountBalanceDisplay()} (${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})',
+                                          '${AppLocalization.of(context)!.txListFees}${balanceFee.getConvertedAccountBalanceDisplayWithNumberOfDigits(8)} (${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})',
                                           style: AppStyles
                                               .textStyleSize12W400Primary(
                                                   context)),

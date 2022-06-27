@@ -356,12 +356,12 @@ class _TxAllListWidgetState extends State<TxAllListWidget> {
                                               .primaryCurrency
                                               .name
                                       ? Text(
-                                          '${AppLocalization.of(context)!.txListFees}${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${balanceFee.getConvertedAccountBalanceDisplay()})',
+                                          '${AppLocalization.of(context)!.txListFees}${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${balanceFee.getConvertedAccountBalanceDisplayWithNumberOfDigits(8)})',
                                           style: AppStyles
                                               .textStyleSize12W400Primary(
                                                   context))
                                       : Text(
-                                          '${balanceFee.getConvertedAccountBalanceDisplay()} (${AppLocalization.of(context)!.txListFees}${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}))',
+                                          '${balanceFee.getConvertedAccountBalanceDisplayWithNumberOfDigits(8)} (${AppLocalization.of(context)!.txListFees}${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}))',
                                           style: AppStyles
                                               .textStyleSize12W400Primary(
                                                   context)),

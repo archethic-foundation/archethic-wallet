@@ -6,6 +6,7 @@ import 'dart:io';
 
 // Flutter imports:
 import 'package:aeuniverse/ui/widgets/dialogs/contacts_dialog.dart';
+import 'package:core/model/balance_wallet.dart';
 import 'package:core/model/primary_currency.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -193,6 +194,10 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
   @override
   Widget build(BuildContext context) {
     final double bottom = MediaQuery.of(context).viewInsets.bottom;
+    BalanceWallet balanceFee =
+        BalanceWallet(feeEstimation, StateContainer.of(context).curCurrency);
+    balanceFee.localCurrencyPrice =
+        StateContainer.of(context).wallet!.accountBalance.localCurrencyPrice;
     // The main column that holds everything
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -403,6 +408,18 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
                                               style: AppStyles
                                                   .textStyleSize14W100Primary(
                                                       context)),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 30),
+                                      child: feeEstimation > 0
+                                          ? Text(
+                                              '(${balanceFee.getConvertedAccountBalanceDisplayWithNumberOfDigits(8)})',
+                                              style: AppStyles
+                                                  .textStyleSize14W100Primary(
+                                                      context),
+                                            )
+                                          : const SizedBox(),
                                     ),
                                     Container(
                                       alignment:
