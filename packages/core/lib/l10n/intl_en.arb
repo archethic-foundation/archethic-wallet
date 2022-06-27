@@ -1560,12 +1560,6 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "introNewWalletGetFirstInfosNameRegExp": "The name should contains only alphanumeric characters.",
-  "@introNewWalletGetFirstInfosNameRegExp": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
   "priceChartHeader": "Price Chart",
   "@priceChartHeader": {
     "type": "text",

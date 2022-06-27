@@ -1262,12 +1262,6 @@ class AppLocalization {
         name: 'introNewWalletGetFirstInfosNameBlank');
   }
 
-  String get introNewWalletGetFirstInfosNameRegExp {
-    return Intl.message(
-        'The name should contains only alphanumeric characters.',
-        name: 'introNewWalletGetFirstInfosNameRegExp');
-  }
-
   String get addAccountExists {
     return Intl.message('This name already exists in your keychain.',
         name: 'addAccountExists');

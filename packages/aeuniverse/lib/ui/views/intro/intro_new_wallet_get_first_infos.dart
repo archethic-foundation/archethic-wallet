@@ -32,7 +32,6 @@ class _IntroNewWalletDisclaimerState
   FocusNode nameFocusNode = FocusNode();
   TextEditingController nameController = TextEditingController();
   String? nameError;
-  final RegExp validCharacters = RegExp(r'^[A-Z0-9_]+$');
 
   @override
   Widget build(BuildContext context) {
@@ -173,30 +172,20 @@ class _IntroNewWalletDisclaimerState
                           FocusScope.of(context).requestFocus(nameFocusNode);
                         });
                       } else {
-                        if (validCharacters.hasMatch(nameController.text) ==
-                            false) {
-                          setState(() {
-                            nameError = AppLocalization.of(context)!
-                                .introNewWalletGetFirstInfosNameRegExp;
-                            FocusScope.of(context).requestFocus(nameFocusNode);
-                          });
-                        } else {
-                          AppDialogs.showConfirmDialog(
-                              context,
-                              AppLocalization.of(context)!.newAccount,
-                              AppLocalization.of(context)!
-                                  .newAccountConfirmation
-                                  .replaceAll('%1', nameController.text),
-                              AppLocalization.of(context)!.yes.toUpperCase(),
-                              () async {
-                            Navigator.of(context).pushNamed(
-                                '/intro_backup_safety',
-                                arguments: nameController.text);
-                          },
-                              cancelText: AppLocalization.of(context)!
-                                  .no
-                                  .toUpperCase());
-                        }
+                        AppDialogs.showConfirmDialog(
+                            context,
+                            AppLocalization.of(context)!.newAccount,
+                            AppLocalization.of(context)!
+                                .newAccountConfirmation
+                                .replaceAll('%1', nameController.text),
+                            AppLocalization.of(context)!.yes.toUpperCase(),
+                            () async {
+                          Navigator.of(context).pushNamed(
+                              '/intro_backup_safety',
+                              arguments: nameController.text);
+                        },
+                            cancelText:
+                                AppLocalization.of(context)!.no.toUpperCase());
                       }
                     }),
                   ],

@@ -196,9 +196,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "introNewWalletGetFirstInfosNameInfos":
             MessageLookupByLibrary.simpleMessage(
                 "Il vous permettra de distinguer ce compte avec les autres comptes que vous pourrez, si vous le souhaitez, créer par la suite.\nATTENTION: Ce nom sera rattaché à votre porte clé décentralisé et ne pourra plus être modifié."),
-        "introNewWalletGetFirstInfosNameRegExp":
-            MessageLookupByLibrary.simpleMessage(
-                "Le nom doit contenir uniquement des caractères alphanumériques."),
         "introNewWalletGetFirstInfosNameRequest":
             MessageLookupByLibrary.simpleMessage(
                 "Quel nom souhaitez-vous donner à ce compte, compte qui sera stocké dans votre porte clé décentralisé ?"),

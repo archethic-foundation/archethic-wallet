@@ -1632,12 +1632,6 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "introNewWalletGetFirstInfosNameRegExp": "The name should contains only alphanumeric characters.",
-  "@introNewWalletGetFirstInfosNameRegExp": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
   "addAccountExists": "This name already exists in your keychain.",
   "@addAccountExists": {
     "type": "text",

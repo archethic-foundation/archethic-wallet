@@ -86,8 +86,7 @@ class KeychainUtil {
     final String genesisAddressKeychain =
         deriveAddress(uint8ListToHex(keychain.seed!), 0);
 
-    String formatName = name!.replaceAll(' ', '-');
-    String kServiceName = 'archethic-wallet-$formatName';
+    String kServiceName = 'archethic-wallet-$name';
     String kDerivationPathWithoutIndex = 'm/650\'/$kServiceName/';
     const String index = '0';
     String kDerivationPath = '$kDerivationPathWithoutIndex$index';
