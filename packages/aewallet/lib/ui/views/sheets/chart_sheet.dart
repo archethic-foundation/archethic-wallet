@@ -220,7 +220,7 @@ class _ChartSheetState extends State<ChartSheet> {
                         data: Theme.of(context).copyWith(
                             canvasColor: StateContainer.of(context)
                                 .curTheme
-                                .backgroundDarkest),
+                                .backgroundDark),
                         child: DropdownButton<OptionChart>(
                           elevation: 2,
                           focusColor: Colors.white,
@@ -232,7 +232,7 @@ class _ChartSheetState extends State<ChartSheet> {
                           underline: const SizedBox(),
                           iconEnabledColor: StateContainer.of(context)
                               .curTheme
-                              .backgroundDarkest!,
+                              .backgroundDark!,
                           isDense: true,
                           items: widget.optionChartList
                               .map((OptionChart optionChart) {
