@@ -28,127 +28,139 @@ import 'package:aewallet/ui/views/transactions/transaction_chain_explorer_sheet.
 class MenuWidgetWallet extends AbstractMenuWidget {
   @override
   Widget buildMainMenuIcons(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 0,
-      color: Colors.transparent,
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.9,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            (StateContainer.of(context).wallet != null &&
-                        StateContainer.of(context)
-                                .wallet!
-                                .accountBalance
-                                .networkCurrencyValue !=
-                            null &&
-                        StateContainer.of(context)
-                                .wallet!
-                                .accountBalance
-                                .networkCurrencyValue! >
-                            0) ||
-                    (StateContainer.of(context).localWallet != null &&
-                        StateContainer.of(context)
-                                .localWallet!
-                                .accountBalance
-                                .networkCurrencyValue !=
-                            null &&
-                        StateContainer.of(context)
-                                .localWallet!
-                                .accountBalance
-                                .networkCurrencyValue! >
-                            0)
-                ? Padding(
-                    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          elevation: 0,
+          color: Colors.transparent,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                (StateContainer.of(context).wallet != null &&
+                            StateContainer.of(context)
+                                    .wallet!
+                                    .accountBalance
+                                    .networkCurrencyValue !=
+                                null &&
+                            StateContainer.of(context)
+                                    .wallet!
+                                    .accountBalance
+                                    .networkCurrencyValue! >
+                                0) ||
+                        (StateContainer.of(context).localWallet != null &&
+                            StateContainer.of(context)
+                                    .localWallet!
+                                    .accountBalance
+                                    .networkCurrencyValue !=
+                                null &&
+                            StateContainer.of(context)
+                                    .localWallet!
+                                    .accountBalance
+                                    .networkCurrencyValue! >
+                                0)
+                    ? Padding(
+                        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                        child: InkWell(
+                            onTap: () {
+                              sl.get<HapticUtil>().feedback(FeedbackType.light,
+                                  StateContainer.of(context).activeVibrations);
+                              Sheets.showAppHeightNineSheet(
+                                context: context,
+                                widget: TransferUCOSheet(
+                                    primaryCurrency: StateContainer.of(context)
+                                        .curPrimaryCurrency,
+                                    title: AppLocalization.of(context)!
+                                        .transferTokens
+                                        .replaceAll(
+                                            '%1',
+                                            StateContainer.of(context)
+                                                .curNetwork
+                                                .getNetworkCryptoCurrencyLabel()),
+                                    localCurrency:
+                                        StateContainer.of(context).curCurrency),
+                              );
+                            },
+                            child: Column(
+                              children: <Widget>[
+                                buildIconDataWidget(context,
+                                    Icons.arrow_circle_up_outlined, 40, 40),
+                                const SizedBox(height: 5),
+                                Text(AppLocalization.of(context)!.send,
+                                    style: AppStyles
+                                        .textStyleSize14W600EquinoxPrimary(
+                                            context)),
+                              ],
+                            )))
+                    : Container(
+                        child: Column(
+                        children: <Widget>[
+                          buildIconDataWidget(
+                              context, Icons.arrow_circle_up_outlined, 40, 40,
+                              enabled: false),
+                          const SizedBox(height: 5),
+                          Text(AppLocalization.of(context)!.send,
+                              style: AppStyles
+                                  .textStyleSize14W600EquinoxPrimaryDisabled(
+                                      context)),
+                        ],
+                      )),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                  child: InkWell(
+                    onTap: () {
+                      sl.get<HapticUtil>().feedback(FeedbackType.light,
+                          StateContainer.of(context).activeVibrations);
+                      Sheets.showAppHeightNineSheet(
+                          context: context,
+                          widget: const ReceiveSheet(),
+                          onDisposed: () {
+                            setState(() {
+                              StateContainer.of(context).requestUpdate(
+                                  account: StateContainer.of(context)
+                                      .selectedAccount,
+                                  forceUpdateChart: false);
+                            });
+                          });
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        buildIconDataWidget(
+                            context, Icons.arrow_circle_down_outlined, 40, 40),
+                        const SizedBox(height: 5),
+                        Text(AppLocalization.of(context)!.receive,
+                            style: AppStyles.textStyleSize14W600EquinoxPrimary(
+                                context)),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(left: 5.0, right: 10.0),
                     child: InkWell(
                         onTap: () {
                           sl.get<HapticUtil>().feedback(FeedbackType.light,
                               StateContainer.of(context).activeVibrations);
                           Sheets.showAppHeightNineSheet(
-                            context: context,
-                            widget: TransferUCOSheet(
-                                primaryCurrency: StateContainer.of(context)
-                                    .curPrimaryCurrency,
-                                title: AppLocalization.of(context)!
-                                    .transferTokens
-                                    .replaceAll(
-                                        '%1',
-                                        StateContainer.of(context)
-                                            .curNetwork
-                                            .getNetworkCryptoCurrencyLabel()),
-                                localCurrency:
-                                    StateContainer.of(context).curCurrency),
-                          );
+                              context: context, widget: const BuySheet());
                         },
                         child: Column(
                           children: <Widget>[
                             buildIconDataWidget(context,
-                                Icons.arrow_circle_up_outlined, 40, 40),
+                                Icons.add_circle_outline_outlined, 40, 40),
                             const SizedBox(height: 5),
-                            Text(AppLocalization.of(context)!.send,
+                            Text(AppLocalization.of(context)!.buy,
                                 style:
                                     AppStyles.textStyleSize14W600EquinoxPrimary(
                                         context)),
                           ],
-                        )))
-                : Container(
-                    child: Column(
-                    children: <Widget>[
-                      buildIconDataWidget(
-                          context, Icons.arrow_circle_up_outlined, 40, 40,
-                          enabled: false),
-                      const SizedBox(height: 5),
-                      Text(AppLocalization.of(context)!.send,
-                          style: AppStyles
-                              .textStyleSize14W600EquinoxPrimaryDisabled(
-                                  context)),
-                    ],
-                  )),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: InkWell(
-                onTap: () {
-                  sl.get<HapticUtil>().feedback(FeedbackType.light,
-                      StateContainer.of(context).activeVibrations);
-                  Sheets.showAppHeightNineSheet(
-                      context: context, widget: const ReceiveSheet());
-                },
-                child: Column(
-                  children: <Widget>[
-                    buildIconDataWidget(
-                        context, Icons.arrow_circle_down_outlined, 40, 40),
-                    const SizedBox(height: 5),
-                    Text(AppLocalization.of(context)!.receive,
-                        style: AppStyles.textStyleSize14W600EquinoxPrimary(
-                            context)),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-                padding: const EdgeInsets.only(left: 5.0, right: 10.0),
-                child: InkWell(
-                    onTap: () {
-                      sl.get<HapticUtil>().feedback(FeedbackType.light,
-                          StateContainer.of(context).activeVibrations);
-                      Sheets.showAppHeightNineSheet(
-                          context: context, widget: const BuySheet());
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        buildIconDataWidget(
-                            context, Icons.add_circle_outline_outlined, 40, 40),
-                        const SizedBox(height: 5),
-                        Text(AppLocalization.of(context)!.buy,
-                            style: AppStyles.textStyleSize14W600EquinoxPrimary(
-                                context)),
-                      ],
-                    ))),
-            /*if (kIsWeb || Platform.isMacOS)
+                        ))),
+                /*if (kIsWeb || Platform.isMacOS)
               Padding(
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                   child: InkWell(
@@ -167,9 +179,11 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                                   context)),
                         ],
                       )))*/
-          ],
-        ),
-      ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 

@@ -542,7 +542,9 @@ class StateContainerState extends State<StateContainer> {
   }
 
   Future<void> requestUpdate(
-      {Account? account, String? pagingAddress = ''}) async {
+      {Account? account,
+      String? pagingAddress = '',
+      bool forceUpdateChart = true}) async {
     await requestUpdateLastAddress(account!);
     setState(() {
       balanceLoading = true;
@@ -558,7 +560,7 @@ class StateContainerState extends State<StateContainer> {
       recentTransactionsLoading = false;
     });
 
-    if (showPriceChart) {
+    if (forceUpdateChart && showPriceChart) {
       await requestUpdateCoinsChart();
     }
 
