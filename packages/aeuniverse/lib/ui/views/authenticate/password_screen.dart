@@ -158,11 +158,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
                             autocorrect: false,
                             autofocus: true,
                             onChanged: (String newText) {
-                              if (passwordError != null) {
-                                setState(() {
+                              setState(() {
+                                if (passwordError != null) {
                                   passwordError = null;
-                                });
-                              }
+                                }
+                              });
                             },
                             onSubmitted: (value) async {
                               FocusScope.of(context).unfocus();
@@ -218,15 +218,22 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          // Next Button
-                          AppButton.buildAppButton(
-                              const Key('confirm'),
-                              context,
-                              AppButtonType.primary,
-                              AppLocalization.of(context)!.confirm,
-                              Dimens.buttonTopDimens, onPressed: () async {
-                            await _verifyPassword();
-                          }),
+                          enterPasswordController!.text == ''
+                              ? AppButton.buildAppButton(
+                                  const Key('confirm'),
+                                  context,
+                                  AppButtonType.primaryOutline,
+                                  AppLocalization.of(context)!.confirm,
+                                  Dimens.buttonTopDimens,
+                                  onPressed: () async {})
+                              : AppButton.buildAppButton(
+                                  const Key('confirm'),
+                                  context,
+                                  AppButtonType.primary,
+                                  AppLocalization.of(context)!.confirm,
+                                  Dimens.buttonTopDimens, onPressed: () async {
+                                  await _verifyPassword();
+                                }),
                         ],
                       ),
                     ],
