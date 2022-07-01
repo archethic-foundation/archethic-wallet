@@ -69,11 +69,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
@@ -331,6 +326,8 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       }
 
       if (isLoggedIn) {
+        StateContainer.of(context).checkTransactionInputs(
+            AppLocalization.of(context)!.transactionInputNotification);
         if (preferences.getLock() || preferences.shouldLock()) {
           Navigator.of(context).pushReplacementNamed('/lock_screen');
         } else {

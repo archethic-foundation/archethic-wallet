@@ -12,11 +12,11 @@ dependencies:
   animate_do: ^2.1.0
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^1.0.21
-  #archethic_lib_dart: 
-  #  git:
-  #    url: https://github.com/archethic-foundation/libdart.git
-  #    ref: master
+  #archethic_lib_dart: ^1.0.21
+  archethic_lib_dart: 
+    git:
+      url: https://github.com/archethic-foundation/libdart.git
+      ref: master
       
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0
@@ -46,6 +46,9 @@ dependencies:
   # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart
   fl_chart: ^0.55.0
   
+  # A cross platform plugin for displaying local notifications.
+  flutter_local_notifications: ^9.6.1
+
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -106,6 +109,9 @@ dependencies:
 
   # Quiver is a set of utility libraries for Dart that makes using many Dart libraries easier and more convenient, or adds additional functionality
   quiver: ^3.1.0
+
+  # RxDart is an implementation of the popular reactiveX api for asynchronous programming, leveraging the native Dart Streams api.  
+  rxdart: ^0.27.4
 
   # With the Flutter safe_device package, you can easily implement security steps such as Jailbroken, root, emulator and fake location detection.
   safe_device: ^1.1.1

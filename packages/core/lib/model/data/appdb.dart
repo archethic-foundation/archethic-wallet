@@ -115,28 +115,14 @@ class DBHelper {
     return account;
   }
 
-  Future<List<Account>> getRecentlyUsedAccounts() async {
-    final Box<Account> box = await Hive.openBox<Account>(_accountsTable);
-    final List<Account> accounts = box.values.toList();
-    accounts
-        .sort((Account a, Account b) => a.lastAccess!.compareTo(b.lastAccess!));
-    return accounts;
-  }
-
   Future<void> changeAccount(Account account) async {
     Box<Account> box = await Hive.openBox<Account>(_accountsTable);
     final List<Account> accountsList = box.values.toList();
-    int maxLastAccessed = 0;
     for (Account _account in accountsList) {
       _account.selected = false;
       box.put(_account.name, _account);
-      if (_account.lastAccess != null &&
-          maxLastAccessed < _account.lastAccess!) {
-        maxLastAccessed = _account.lastAccess!;
-      }
     }
     account.selected = true;
-    account.lastAccess = maxLastAccessed + 1;
     box.put(account.name, account);
   }
 
@@ -151,6 +137,12 @@ class DBHelper {
     Box<Account> box = await Hive.openBox<Account>(_accountsTable);
     account.balance = balance;
     box.put(account.name, account);
+  }
+
+  Future<int?> getAccountLastAccess(Account account) async {
+    // ignore: prefer_final_locals
+    Box<Account> box = await Hive.openBox<Account>(_accountsTable);
+    return box.get(account.name)!.lastAccess!;
   }
 
   Future<Account?> getSelectedAccount() async {

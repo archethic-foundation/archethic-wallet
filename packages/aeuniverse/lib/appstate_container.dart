@@ -8,6 +8,8 @@ import 'dart:async';
 // Flutter imports:
 import 'package:aeroot/main.dart';
 import 'package:core/model/primary_currency.dart';
+import 'package:core/util/keychain_util.dart';
+import 'package:core/util/notifications_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -44,6 +46,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
         AddressService,
         ApiCoinsService,
         Balance,
+        TransactionInput,
         SimplePriceResponse,
         CoinsPriceResponse,
         CoinsCurrentDataResponse,
@@ -78,6 +81,7 @@ class StateContainer extends StatefulWidget {
 }
 
 class StateContainerState extends State<StateContainer> {
+  Timer? timerCheckTransactionInputs;
   AppWallet? wallet;
   AppWallet? localWallet;
   bool recentTransactionsLoading = false;
@@ -104,6 +108,7 @@ class StateContainerState extends State<StateContainer> {
   bool showBalance = false;
   bool showPriceChart = false;
   bool activeVibrations = false;
+  bool activeNotifications = false;
 
   List<Contact> contactsRef = List<Contact>.empty(growable: true);
 
@@ -132,6 +137,7 @@ class StateContainerState extends State<StateContainer> {
         curNetwork = _preferences.getNetwork();
         showBalance = _preferences.getShowBalances();
         activeVibrations = _preferences.getActiveVibrations();
+        activeNotifications = _preferences.getActiveNotifications();
         showPriceChart = _preferences.getShowPriceChart();
       });
       updateTheme(_preferences.getTheme());
@@ -198,6 +204,8 @@ class StateContainerState extends State<StateContainer> {
           });
         }
         wallet!.history.reversed.toList();
+        selectedAccount.lastAccess = (DateTime.now().millisecondsSinceEpoch ~/
+            Duration.millisecondsPerSecond);
       }
     });
 
@@ -228,6 +236,9 @@ class StateContainerState extends State<StateContainer> {
   @override
   void dispose() {
     _destroyBus();
+    if (timerCheckTransactionInputs != null) {
+      timerCheckTransactionInputs!.cancel();
+    }
     super.dispose();
   }
 
@@ -244,6 +255,44 @@ class StateContainerState extends State<StateContainer> {
     if (_transactionsListEventSub != null) {
       _transactionsListEventSub!.cancel();
     }
+  }
+
+  void checkTransactionInputs(String message) {
+    timerCheckTransactionInputs =
+        Timer.periodic(Duration(seconds: 30), (Timer t) async {
+      String? seed = await getSeed();
+      List<Account>? accounts = await KeychainUtil()
+          .getListAccountsFromKeychain(seed!, loadBalance: false);
+
+      accounts!.forEach((Account account) async {
+        int? lastAccessAccount =
+            await sl.get<DBHelper>().getAccountLastAccess(account);
+
+        final List<TransactionInput> transactionInputList = await sl
+            .get<AppService>()
+            .getTransactionInputs(
+                account.lastAddress!, 'from, amount, timestamp');
+
+        if (transactionInputList.length > 0) {
+          transactionInputList.forEach((TransactionInput transactionInput) {
+            if (lastAccessAccount == null ||
+                transactionInput.timestamp! > lastAccessAccount) {
+              account.lastAccess = DateTime.now().millisecondsSinceEpoch ~/
+                  Duration.millisecondsPerSecond;
+              if (transactionInput.from != account.lastAddress) {
+                NotificationsUtil.showNotification(
+                    title: 'Archethic',
+                    body: message
+                        .replaceAll('%1', transactionInput.amount.toString())
+                        .replaceAll('%2', 'UCO')
+                        .replaceAll('%3', account.name!),
+                    payload: account.name!);
+              }
+            }
+          });
+        }
+      });
+    });
   }
 
   void updateContacts() {
@@ -573,6 +622,9 @@ class StateContainerState extends State<StateContainer> {
   }
 
   Future<void> logOut() async {
+    if (timerCheckTransactionInputs != null) {
+      timerCheckTransactionInputs!.cancel();
+    }
     final Vault vault = await Vault.getInstance();
     vault.clearAll();
     final Preferences preferences = await Preferences.getInstance();

@@ -303,7 +303,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             _vault.setSeed(seed);
                             await sl.get<DBHelper>().clearAccounts();
                             List<Account>? accounts = await KeychainUtil()
-                                .getListAccountsFromKeychain(seed, '');
+                                .getListAccountsFromKeychain(seed);
                             if (accounts == null || accounts.length == 0) {
                               setState(() {
                                 _mnemonicIsValid = false;

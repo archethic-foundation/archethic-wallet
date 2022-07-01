@@ -6,6 +6,8 @@ import 'dart:async';
 // Flutter imports:
 import 'package:aeuniverse/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aewallet/ui/views/accounts/account_list.dart';
+import 'package:core/bus/notifications_event.dart';
+import 'package:core/util/notifications_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -63,6 +65,9 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
     _registerBus();
     WidgetsBinding.instance.addObserver(this);
 
+    NotificationsUtil.init();
+    listenNotifications();
+
     // Setup placeholder animation and start
     _animationDisposed = false;
     _placeholderCardAnimationController = AnimationController(
@@ -82,6 +87,13 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
     _placeholderCardAnimationController!.forward();
 
     _scrollController = ScrollController();
+  }
+
+  listenNotifications() =>
+      NotificationsUtil.onNotifications.stream.listen(onClickedNotification);
+
+  void onClickedNotification(String? payload) {
+    EventTaxiImpl.singleton().fire(NotificationsEvent(payload: payload));
   }
 
   void _animationStatusListener(AnimationStatus status) {
@@ -123,6 +135,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
 
   StreamSubscription<DisableLockTimeoutEvent>? _disableLockSub;
   StreamSubscription<AccountChangedEvent>? _switchAccountSub;
+  StreamSubscription<NotificationsEvent>? _notificationsSub;
 
   void _registerBus() {
     // Hackish event to block auto-lock functionality
@@ -157,6 +170,18 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
         Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
       }
     });
+
+    _notificationsSub = EventTaxiImpl.singleton()
+        .registerTo<NotificationsEvent>()
+        .listen((NotificationsEvent event) async {
+      StateContainer.of(context).recentTransactionsLoading = true;
+
+      await StateContainer.of(context)
+          .requestUpdate(account: StateContainer.of(context).selectedAccount);
+
+      StateContainer.of(context).recentTransactionsLoading = false;
+      Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+    });
   }
 
   @override
@@ -174,6 +199,9 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
     }
     if (_switchAccountSub != null) {
       _switchAccountSub!.cancel();
+    }
+    if (_notificationsSub != null) {
+      _notificationsSub!.cancel();
     }
   }
 
@@ -443,9 +471,10 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                       .getListAccountsFromKeychain(
                                           await StateContainer.of(context)
                                               .getSeed(),
-                                          StateContainer.of(context)
-                                              .selectedAccount
-                                              .name))
+                                          currentName:
+                                              StateContainer.of(context)
+                                                  .selectedAccount
+                                                  .name))
                                   .mainBottomSheet(context);
                             },
                             child: Row(

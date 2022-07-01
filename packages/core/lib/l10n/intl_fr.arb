@@ -111,6 +111,7 @@
 	"newWallet": "Nouveau portefeuille",
 	"understandButton": "Je comprends",
 	"confirmSecretPhrase": "Confirmez votre phrase secrète.",
+	"confirmSecretPhraseKo": "L'ordre n'est pas correct.",
 	"backupSecretPhrase": "Phrase secrète de sauvegarde",
 	"ok": "Ok",
 	"addressInfos": "Mon adresse publique pour recevoir des fonds",
@@ -276,6 +277,8 @@
 	"addAccountExists": "Ce nom existe déjà dans votre porte clés.",
 	"selectAccountDescOne": "Votre porte clés contient un compte. Vous pourrez en créer d'autres quand vous le souhaitez.",
 	"selectAccountDescSeveral": "Votre porte clés contient plusieurs comptes. Quel compte souhaitez-vous gérer en premier dans l'application ? Vous pourrez en créer ou sélectionner d'autres quand vous le souhaitez.",
-	"activeVibrations": "Activer les vibrations",
+	"activateVibrations": "Activer les vibrations",
+	"activateNotifications": "Activer les notifications",
+	"transactionInputNotification": "Vous avez reçu %1 %2 sur votre compte %3",
 	"searchField": "Recherche..."
 }

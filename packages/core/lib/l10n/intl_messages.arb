@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-06-27T23:50:19.645399",
+  "@@last_modified": "2022-07-01T10:29:55.125863",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -828,8 +828,20 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "activeVibrations": "Active vibrations",
-  "@activeVibrations": {
+  "activateVibrations": "Activate vibrations",
+  "@activateVibrations": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "activateNotifications": "Activate notifications",
+  "@activateNotifications": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInputNotification": "You have received %1 %2 on your %3 account",
+  "@transactionInputNotification": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -854,6 +866,12 @@
   },
   "confirmSecretPhraseExplanation": "Select the words to put them in the correct order.",
   "@confirmSecretPhraseExplanation": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "confirmSecretPhraseKo": "The order is not correct.",
+  "@confirmSecretPhraseKo": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

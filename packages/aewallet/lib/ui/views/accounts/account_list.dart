@@ -72,7 +72,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
     await sl.get<DBHelper>().changeAccount(account);
     StateContainer.of(context).recentTransactionsLoading = true;
 
-    StateContainer.of(context).requestUpdate(account: account);
+    await StateContainer.of(context).requestUpdate(account: account);
 
     StateContainer.of(context).recentTransactionsLoading = false;
     Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));

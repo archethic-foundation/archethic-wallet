@@ -139,6 +139,11 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                     _preferences.setLock(true);
                                     _preferences.setShowBalances(true);
                                     _preferences.setActiveVibrations(true);
+                                    _preferences.setActiveNotifications(true);
+                                    StateContainer.of(context)
+                                        .checkTransactionInputs(
+                                            AppLocalization.of(context)!
+                                                .transactionInputNotification);
                                     _preferences.setPinPadShuffle(false);
                                     _preferences.setShowPriceChart(true);
 
@@ -174,6 +179,11 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                       _preferences.setLock(true);
                                       _preferences.setShowBalances(true);
                                       _preferences.setActiveVibrations(true);
+                                      _preferences.setActiveNotifications(true);
+                                      StateContainer.of(context)
+                                          .checkTransactionInputs(
+                                              AppLocalization.of(context)!
+                                                  .transactionInputNotification);
                                       _preferences.setPinPadShuffle(false);
                                       _preferences.setShowPriceChart(true);
 

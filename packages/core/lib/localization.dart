@@ -657,8 +657,18 @@ class AppLocalization {
     return Intl.message('Show balances', name: 'showBalances');
   }
 
-  String get activeVibrations {
-    return Intl.message('Active vibrations', name: 'activeVibrations');
+  String get activateVibrations {
+    return Intl.message('Activate vibrations', name: 'activateVibrations');
+  }
+
+  String get activateNotifications {
+    return Intl.message('Activate notifications',
+        name: 'activateNotifications');
+  }
+
+  String get transactionInputNotification {
+    return Intl.message('You have received %1 %2 on your %3 account',
+        name: 'transactionInputNotification');
   }
 
   String get showPriceChart {
@@ -676,6 +686,11 @@ class AppLocalization {
   String get confirmSecretPhraseExplanation {
     return Intl.message('Select the words to put them in the correct order.',
         name: 'confirmSecretPhraseExplanation');
+  }
+
+  String get confirmSecretPhraseKo {
+    return Intl.message('The order is not correct.',
+        name: 'confirmSecretPhraseKo');
   }
 
   String get importSecretPhrase {

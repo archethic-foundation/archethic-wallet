@@ -26,8 +26,7 @@ class KeychainUtil {
         List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
 
     /// Default service for wallet
-    String formatName = name!.replaceAll(' ', '-');
-    String kServiceName = 'archethic-wallet-$formatName';
+    String kServiceName = 'archethic-wallet-$name';
     String kDerivationPathWithoutIndex = 'm/650\'/$kServiceName/';
     const String index = '0';
     String kDerivationPath = '$kDerivationPathWithoutIndex$index';
@@ -141,8 +140,8 @@ class KeychainUtil {
     return selectedAcct;
   }
 
-  Future<List<Account>?> getListAccountsFromKeychain(
-      String? seed, String? currentName) async {
+  Future<List<Account>?> getListAccountsFromKeychain(String? seed,
+      {String? currentName = '', bool loadBalance = true}) async {
     List<Account> accounts = List<Account>.empty(growable: true);
 
     try {
@@ -187,11 +186,13 @@ class KeychainUtil {
           accounts[i].lastAddress = lastAddress;
         }
 
-        final Balance balance = await sl
-            .get<AppService>()
-            .getBalanceGetResponse(accounts[i].lastAddress!);
-        if (balance.uco != null) {
-          accounts[i].balance = balance.uco.toString();
+        if (loadBalance) {
+          final Balance balance = await sl
+              .get<AppService>()
+              .getBalanceGetResponse(accounts[i].lastAddress!);
+          if (balance.uco != null) {
+            accounts[i].balance = balance.uco.toString();
+          }
         }
       }
     } catch (e) {}

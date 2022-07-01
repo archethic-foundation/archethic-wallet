@@ -666,6 +666,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "confirmSecretPhraseKo": "The order is not correct.",
+  "@confirmSecretPhraseKo": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "backupSecretPhrase": "Backup Secret Phrase",
   "@backupSecretPhrase": {
     "type": "text",
@@ -1644,8 +1650,20 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "activeVibrations": "Active vibrations",
-  "@activeVibrations": {
+  "activateVibrations": "Activate vibrations",
+  "@activateVibrations": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "activateNotifications": "Activate notifications",
+  "@activateNotifications": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionInputNotification": "You have received %1 %2 on your %3 account",
+  "@transactionInputNotification": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

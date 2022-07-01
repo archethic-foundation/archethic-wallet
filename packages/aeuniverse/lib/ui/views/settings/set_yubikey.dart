@@ -308,6 +308,9 @@ class _SetYubikeyState extends State<SetYubikey> {
             _preferences.setLock(true);
             _preferences.setShowBalances(true);
             _preferences.setActiveVibrations(true);
+            _preferences.setActiveNotifications(true);
+            StateContainer.of(context).checkTransactionInputs(
+                AppLocalization.of(context)!.transactionInputNotification);
             _preferences.setPinPadShuffle(false);
             _preferences.setShowPriceChart(true);
             _preferences.setPrimaryCurrency(
