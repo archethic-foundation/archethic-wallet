@@ -138,6 +138,9 @@ class EmeraldGreenTheme implements BaseTheme {
   Color? overlay30 = Color(0xFF473B53).withOpacity(0.3);
 
   @override
+  Color? numMnemonicBackground = Color(0xFF473B53);
+
+  @override
   Color? activeTrackColorSwitch = Color(0xFFFFFFFF);
   @override
   Color? inactiveTrackColorSwitch = Color(0xFFFFFFFF);

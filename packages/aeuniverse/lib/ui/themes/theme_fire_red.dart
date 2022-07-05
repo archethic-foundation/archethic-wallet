@@ -138,6 +138,9 @@ class FireRedTheme implements BaseTheme {
   Color? overlay30 = Color(0xFF6B0036).withOpacity(0.3);
 
   @override
+  Color? numMnemonicBackground = Color(0xFF6B0036);
+
+  @override
   Color? activeTrackColorSwitch = Color(0xFFFFFFFF);
   @override
   Color? inactiveTrackColorSwitch = Color(0xFFFFFFFF);

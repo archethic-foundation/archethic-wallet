@@ -138,6 +138,9 @@ class HoneyOrangeTheme implements BaseTheme {
   Color? overlay30 = Color(0xFF6C1E1E).withOpacity(0.3);
 
   @override
+  Color? numMnemonicBackground = Color(0xFF6C1E1E);
+
+  @override
   Color? activeTrackColorSwitch = Color(0xFFFFFFFF);
   @override
   Color? inactiveTrackColorSwitch = Color(0xFFFFFFFF);

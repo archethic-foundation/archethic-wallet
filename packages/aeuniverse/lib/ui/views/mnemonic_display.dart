@@ -60,9 +60,11 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                       padding: const EdgeInsets.all(5.0),
                       child: Chip(
                         avatar: CircleAvatar(
-                          backgroundColor: Colors.grey.shade800,
+                          backgroundColor: StateContainer.of(context)
+                              .curTheme
+                              .numMnemonicBackground,
                           child: Text((entry.key + 1).toString(),
-                              style: AppStyles.textStyleSize16W100Primary60(
+                              style: AppStyles.textStyleSize16W400Primary(
                                   context)),
                         ),
                         label: Text(
@@ -70,7 +72,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                                 ? '•' * 6
                                 : entry.value,
                             style:
-                                AppStyles.textStyleSize16W200Primary(context)),
+                                AppStyles.textStyleSize16W400Primary(context)),
                       ));
                 }).toList()),
             // Tap to reveal or hide

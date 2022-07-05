@@ -43,7 +43,7 @@ class PearlGreyTheme implements BaseTheme {
 
   // Menu
   @override
-  Color? iconDrawer = Color.fromARGB(255, 48, 48, 48);
+  Color? iconDrawer = Color(0xFF151515);
   @override
   Color? iconDrawerBackground = Color(0xFFFFFFFF);
   @override
@@ -60,23 +60,23 @@ class PearlGreyTheme implements BaseTheme {
 
   // Texts
   @override
-  Color? text = Color(0xFF2e2e2e);
+  Color? text = Color(0xFF151515);
   @override
-  Color? text60 = Color(0xFF2e2e2e).withOpacity(0.6);
+  Color? text60 = Color(0xFF151515).withOpacity(0.6);
   @override
-  Color? text45 = Color(0xFF2e2e2e).withOpacity(0.45);
+  Color? text45 = Color(0xFF151515).withOpacity(0.45);
   @override
-  Color? text30 = Color(0xFF2e2e2e).withOpacity(0.3);
+  Color? text30 = Color(0xFF151515).withOpacity(0.3);
   @override
-  Color? text20 = Color(0xFF2e2e2e).withOpacity(0.2);
+  Color? text20 = Color(0xFF151515).withOpacity(0.2);
   @override
-  Color? text15 = Color(0xFF2e2e2e).withOpacity(0.15);
+  Color? text15 = Color(0xFF151515).withOpacity(0.15);
   @override
-  Color? text10 = Color(0xFF2e2e2e).withOpacity(0.1);
+  Color? text10 = Color(0xFF151515).withOpacity(0.1);
   @override
-  Color? text05 = Color(0xFF2e2e2e).withOpacity(0.05);
+  Color? text05 = Color(0xFF151515).withOpacity(0.05);
   @override
-  Color? text03 = Color(0xFF2e2e2e).withOpacity(0.03);
+  Color? text03 = Color(0xFF151515).withOpacity(0.03);
   @override
   Color? positiveValue = Color.fromARGB(255, 0, 129, 67);
   @override
@@ -136,6 +136,9 @@ class PearlGreyTheme implements BaseTheme {
 
   @override
   Color? overlay30 = Color(0xFFC7D1DA).withOpacity(0.3);
+
+  @override
+  Color? numMnemonicBackground = Color(0xFFC7D1DA);
 
   @override
   Color? activeTrackColorSwitch = Color(0xFFFFFFFF);

@@ -17,7 +17,6 @@ abstract class BaseTheme {
   Color? iconDataWidgetIconGradientLeft;
   Color? iconDataWidgetIconGradientRight;
   Color? iconDataWidgetIconBackground;
-  Color? iconDataWidgetIcon;
 
   // Menu
   Color? iconDrawer;
@@ -76,6 +75,8 @@ abstract class BaseTheme {
 
   Color? activeTrackColorSwitch;
   Color? inactiveTrackColorSwitch;
+
+  Color? numMnemonicBackground;
 
   Brightness? brightness;
 
