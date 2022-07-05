@@ -4,7 +4,6 @@
 
 // Flutter imports:
 import 'package:aeuniverse/ui/util/ui_util.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -33,13 +32,13 @@ class IntroBackupConfirm extends StatefulWidget {
 class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<String> wordListSelected = List<String>.empty(growable: true);
-  List<String> wordListSav = List<String>.empty(growable: true);
   List<String> wordListToSelect = List<String>.empty(growable: true);
+  List<String> wordListSave = List<String>.empty(growable: true);
 
   @override
   void initState() {
     wordListToSelect = widget.wordList;
-    wordListSav = widget.wordList;
+    wordListSave = widget.wordList;
     wordListToSelect.shuffle();
     super.initState();
   }
@@ -129,7 +128,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                 margin: EdgeInsetsDirectional.only(
                                     start: 20, end: 20, top: 15.0),
                                 child: Wrap(
-                                    alignment: WrapAlignment.center,
+                                    alignment: WrapAlignment.start,
                                     children: wordListSelected
                                         .asMap()
                                         .entries
@@ -149,7 +148,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                             ),
                                             label: Text(entry.value,
                                                 style: AppStyles
-                                                    .textStyleSize12W100Primary(
+                                                    .textStyleSize12W400Primary(
                                                         context)),
                                             onDeleted: () {
                                               setState(() {
@@ -162,6 +161,11 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                             deleteIconColor: Colors.white,
                                           ));
                                     }).toList()),
+                              ),
+                              Divider(
+                                height: 0,
+                                color:
+                                    StateContainer.of(context).curTheme.text60,
                               ),
                               Container(
                                 margin: EdgeInsetsDirectional.only(
@@ -187,7 +191,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                               child: Chip(
                                                 label: Text(entry.value,
                                                     style: AppStyles
-                                                        .textStyleSize12W100Primary(
+                                                        .textStyleSize12W400Primary(
                                                             context)),
                                               )));
                                     }).toList()),
@@ -221,91 +225,99 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                 bool biometricsAvalaible = await sl
                                     .get<BiometricUtil>()
                                     .hasBiometrics();
-
-                                /*if (IterableEquality()
-                                  .equals(wordListSav, wordListSelected) ==
-                              false) {
-                            UIUtil.showSnackbar(
-                                'no no no',
-                                context,
-                                StateContainer.of(context).curTheme.text!,
-                                StateContainer.of(context)
-                                    .curTheme
-                                    .snackBarShadow!);
-                            return;
-                          }*/
-                                List<PickerItem> accessModes = [];
-                                accessModes.add(PickerItem(
-                                    AuthenticationMethod(AuthMethod.pin)
-                                        .getDisplayName(context),
-                                    AuthenticationMethod(AuthMethod.pin)
-                                        .getDescription(context),
-                                    AuthenticationMethod.getIcon(
-                                        AuthMethod.pin),
-                                    StateContainer.of(context)
-                                        .curTheme
-                                        .pickerItemIconEnabled,
-                                    AuthMethod.pin,
-                                    true));
-                                accessModes.add(PickerItem(
-                                    AuthenticationMethod(AuthMethod.password)
-                                        .getDisplayName(context),
-                                    AuthenticationMethod(AuthMethod.password)
-                                        .getDescription(context),
-                                    AuthenticationMethod.getIcon(
-                                        AuthMethod.password),
-                                    StateContainer.of(context)
-                                        .curTheme
-                                        .pickerItemIconEnabled,
-                                    AuthMethod.password,
-                                    true));
-                                if (biometricsAvalaible) {
+                                bool orderOk = true;
+                                for (int i = 0; i < wordListSave.length; i++) {
+                                  if (wordListSave != wordListSelected[i]) {
+                                    //orderOk = false;
+                                  }
+                                }
+                                if (orderOk == false) {
+                                  setState(() {
+                                    UIUtil.showSnackbar(
+                                        AppLocalization.of(context)!
+                                            .confirmSecretPhraseKo,
+                                        context,
+                                        StateContainer.of(context)
+                                            .curTheme
+                                            .text!,
+                                        StateContainer.of(context)
+                                            .curTheme
+                                            .snackBarShadow!);
+                                  });
+                                } else {
+                                  List<PickerItem> accessModes = [];
                                   accessModes.add(PickerItem(
-                                      AuthenticationMethod(
-                                              AuthMethod.biometrics)
+                                      AuthenticationMethod(AuthMethod.pin)
                                           .getDisplayName(context),
-                                      AuthenticationMethod(
-                                              AuthMethod.biometrics)
+                                      AuthenticationMethod(AuthMethod.pin)
                                           .getDescription(context),
                                       AuthenticationMethod.getIcon(
-                                          AuthMethod.biometrics),
+                                          AuthMethod.pin),
                                       StateContainer.of(context)
                                           .curTheme
                                           .pickerItemIconEnabled,
-                                      AuthMethod.biometrics,
+                                      AuthMethod.pin,
                                       true));
+                                  accessModes.add(PickerItem(
+                                      AuthenticationMethod(AuthMethod.password)
+                                          .getDisplayName(context),
+                                      AuthenticationMethod(AuthMethod.password)
+                                          .getDescription(context),
+                                      AuthenticationMethod.getIcon(
+                                          AuthMethod.password),
+                                      StateContainer.of(context)
+                                          .curTheme
+                                          .pickerItemIconEnabled,
+                                      AuthMethod.password,
+                                      true));
+                                  if (biometricsAvalaible) {
+                                    accessModes.add(PickerItem(
+                                        AuthenticationMethod(
+                                                AuthMethod.biometrics)
+                                            .getDisplayName(context),
+                                        AuthenticationMethod(
+                                                AuthMethod.biometrics)
+                                            .getDescription(context),
+                                        AuthenticationMethod.getIcon(
+                                            AuthMethod.biometrics),
+                                        StateContainer.of(context)
+                                            .curTheme
+                                            .pickerItemIconEnabled,
+                                        AuthMethod.biometrics,
+                                        true));
+                                  }
+                                  accessModes.add(PickerItem(
+                                      AuthenticationMethod(
+                                              AuthMethod.biometricsUniris)
+                                          .getDisplayName(context),
+                                      AuthenticationMethod(
+                                              AuthMethod.biometricsUniris)
+                                          .getDescription(context),
+                                      AuthenticationMethod.getIcon(
+                                          AuthMethod.biometricsUniris),
+                                      StateContainer.of(context)
+                                          .curTheme
+                                          .pickerItemIconEnabled,
+                                      AuthMethod.biometricsUniris,
+                                      false));
+                                  accessModes.add(PickerItem(
+                                      AuthenticationMethod(
+                                              AuthMethod.yubikeyWithYubicloud)
+                                          .getDisplayName(context),
+                                      AuthenticationMethod(
+                                              AuthMethod.yubikeyWithYubicloud)
+                                          .getDescription(context),
+                                      AuthenticationMethod.getIcon(
+                                          AuthMethod.yubikeyWithYubicloud),
+                                      StateContainer.of(context)
+                                          .curTheme
+                                          .pickerItemIconEnabled,
+                                      AuthMethod.yubikeyWithYubicloud,
+                                      true));
+                                  Navigator.of(context).pushNamed(
+                                      '/intro_configure_security',
+                                      arguments: accessModes);
                                 }
-                                accessModes.add(PickerItem(
-                                    AuthenticationMethod(
-                                            AuthMethod.biometricsUniris)
-                                        .getDisplayName(context),
-                                    AuthenticationMethod(
-                                            AuthMethod.biometricsUniris)
-                                        .getDescription(context),
-                                    AuthenticationMethod.getIcon(
-                                        AuthMethod.biometricsUniris),
-                                    StateContainer.of(context)
-                                        .curTheme
-                                        .pickerItemIconEnabled,
-                                    AuthMethod.biometricsUniris,
-                                    false));
-                                accessModes.add(PickerItem(
-                                    AuthenticationMethod(
-                                            AuthMethod.yubikeyWithYubicloud)
-                                        .getDisplayName(context),
-                                    AuthenticationMethod(
-                                            AuthMethod.yubikeyWithYubicloud)
-                                        .getDescription(context),
-                                    AuthenticationMethod.getIcon(
-                                        AuthMethod.yubikeyWithYubicloud),
-                                    StateContainer.of(context)
-                                        .curTheme
-                                        .pickerItemIconEnabled,
-                                    AuthMethod.yubikeyWithYubicloud,
-                                    true));
-                                Navigator.of(context).pushNamed(
-                                    '/intro_configure_security',
-                                    arguments: accessModes);
                               }),
                       ],
                     ),

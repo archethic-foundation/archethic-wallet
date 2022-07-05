@@ -186,20 +186,6 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                                             context),
                                                   ),
                                                   TextSpan(
-                                                      text: StateContainer.of(
-                                                              context)
-                                                          .wallet!
-                                                          .accountBalance
-                                                          .getNetworkAccountBalanceDisplay(
-                                                              networkCryptoCurrencyLabel:
-                                                                  StateContainer.of(
-                                                                          context)
-                                                                      .curNetwork
-                                                                      .getNetworkCryptoCurrencyLabel()),
-                                                      style: AppStyles
-                                                          .textStyleSize14W700Primary(
-                                                              context)),
-                                                  TextSpan(
                                                       text: ')',
                                                       style: AppStyles
                                                           .textStyleSize14W100Primary(
@@ -420,14 +406,22 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
     try {
       final String? transactionChainSeed =
           await StateContainer.of(context).getSeed();
-      final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
+      final String originPrivateKey = sl.get<ApiService>().getOriginKey();
       fee = await sl.get<AppService>().getFeesEstimationAddToken(
           originPrivateKey,
           transactionChainSeed!,
-          StateContainer.of(context).selectedAccount.lastAddress!,
+          StateContainer.of(context)
+              .appWallet!
+              .appKeychain!
+              .getAccountSelected()!
+              .lastAddress!,
           _nameController!.text,
           int.tryParse(_initialSupplyController!.text)!,
-          StateContainer.of(context).selectedAccount.name!);
+          StateContainer.of(context)
+              .appWallet!
+              .appKeychain!
+              .getAccountSelected()!
+              .name!);
     } catch (e) {
       fee = 0;
     }

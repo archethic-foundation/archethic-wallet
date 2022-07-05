@@ -3,8 +3,9 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
-import 'package:core/model/balance_wallet.dart';
+import 'package:core/model/data/account.dart';
 import 'package:core/model/primary_currency.dart';
+import 'package:core/util/currency_util.dart';
 import 'package:core_ui/ui/util/formatters.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,6 @@ import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/data/appdb.dart';
-import 'package:core/model/data/hive_db.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/keychain_util.dart';
 import 'package:core_ui/ui/util/dimens.dart';
@@ -72,7 +72,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
     await sl.get<DBHelper>().changeAccount(account);
     StateContainer.of(context).recentTransactionsLoading = true;
 
-    await StateContainer.of(context).requestUpdate(account: account);
+    await StateContainer.of(context).requestUpdate();
 
     StateContainer.of(context).recentTransactionsLoading = false;
     Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
@@ -332,10 +332,18 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                                       nameController
                                                                           .text);
                                                                   setState(() {
-                                                                    widget
+                                                                    StateContainer.of(
+                                                                            context)
+                                                                        .appWallet!
+                                                                        .appKeychain!
                                                                         .accounts!
                                                                         .add(
                                                                             account!);
+                                                                    StateContainer.of(
+                                                                            context)
+                                                                        .appWallet!
+                                                                        .save();
+
                                                                     isPressed =
                                                                         false;
                                                                   });
@@ -381,11 +389,6 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
 
   Widget _buildAccountListItem(
       BuildContext context, Account account, StateSetter setState) {
-    BalanceWallet balance = BalanceWallet(double.tryParse(account.balance!),
-        StateContainer.of(context).curCurrency);
-    balance.localCurrencyPrice =
-        StateContainer.of(context).wallet!.accountBalance.localCurrencyPrice;
-
     return TextButton(
         style: TextButton.styleFrom(
           padding: const EdgeInsets.all(0.0),
@@ -471,22 +474,28 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                       CrossAxisAlignment.end,
                                                   children: <Widget>[
                                                     AutoSizeText(
-                                                      account.balance! +
-                                                          ' ' +
-                                                          StateContainer.of(
-                                                                  context)
-                                                              .curNetwork
-                                                              .getNetworkCryptoCurrencyLabel(),
+                                                      account.balance!
+                                                          .nativeTokenValueToString(),
                                                       style: AppStyles
-                                                          .textStyleSize20W700EquinoxPrimary(
+                                                          .textStyleSize25W900EquinoxPrimary(
                                                               context),
                                                     ),
-                                                    Text(
-                                                        balance
-                                                            .getConvertedAccountBalanceDisplay(),
-                                                        style: AppStyles
-                                                            .textStyleSize14W600Primary(
-                                                                context)),
+                                                    AutoSizeText(
+                                                      CurrencyUtil
+                                                          .getConvertedAmount(
+                                                              StateContainer.of(
+                                                                      context)
+                                                                  .curCurrency
+                                                                  .currency
+                                                                  .name,
+                                                              account.balance!
+                                                                  .fiatCurrencyValue!),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: AppStyles
+                                                          .textStyleSize12W600Primary(
+                                                              context),
+                                                    ),
                                                   ],
                                                 ),
                                               )
@@ -497,21 +506,26 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.end,
                                                   children: <Widget>[
-                                                    Text(
-                                                        balance
-                                                            .getConvertedAccountBalanceDisplay(),
-                                                        style: AppStyles
-                                                            .textStyleSize20W700EquinoxPrimary(
-                                                                context)),
                                                     AutoSizeText(
-                                                      account.balance! +
-                                                          ' ' +
-                                                          StateContainer.of(
-                                                                  context)
-                                                              .curNetwork
-                                                              .getNetworkCryptoCurrencyLabel(),
+                                                      CurrencyUtil
+                                                          .getConvertedAmount(
+                                                              StateContainer.of(
+                                                                      context)
+                                                                  .curCurrency
+                                                                  .currency
+                                                                  .name,
+                                                              account.balance!
+                                                                  .fiatCurrencyValue!),
+                                                      textAlign:
+                                                          TextAlign.center,
                                                       style: AppStyles
-                                                          .textStyleSize14W600Primary(
+                                                          .textStyleSize25W900EquinoxPrimary(
+                                                              context),
+                                                    ),
+                                                    AutoSizeText(
+                                                      '${account.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
+                                                      style: AppStyles
+                                                          .textStyleSize12W600Primary(
                                                               context),
                                                     ),
                                                   ],

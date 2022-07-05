@@ -156,7 +156,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
 
         _startAnimation();
 
-        StateContainer.of(context).requestUpdate(account: event.account);
+        StateContainer.of(context).requestUpdate();
         _disposeAnimation();
 
         StateContainer.of(context).recentTransactionsLoading = false;
@@ -176,8 +176,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
         .listen((NotificationsEvent event) async {
       StateContainer.of(context).recentTransactionsLoading = true;
 
-      await StateContainer.of(context)
-          .requestUpdate(account: StateContainer.of(context).selectedAccount);
+      await StateContainer.of(context).requestUpdate();
 
       StateContainer.of(context).recentTransactionsLoading = false;
       Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
@@ -404,6 +403,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
         : Scaffold(
             extendBodyBehindAppBar: true,
             appBar: AppBar(
+              actions: [StateContainer.of(context).notificationIconWidget],
               title: InkWell(
                 onTap: () async {
                   await _networkDialog();
@@ -469,11 +469,30 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                   StateContainer.of(context).activeVibrations);
                               AccountsList(await KeychainUtil()
                                       .getListAccountsFromKeychain(
+                                          StateContainer.of(context).appWallet!,
                                           await StateContainer.of(context)
                                               .getSeed(),
+                                          StateContainer.of(context)
+                                              .curCurrency
+                                              .currency
+                                              .name,
+                                          StateContainer.of(context)
+                                              .appWallet!
+                                              .appKeychain!
+                                              .getAccountSelected()!
+                                              .balance!
+                                              .nativeTokenName!,
+                                          StateContainer.of(context)
+                                              .appWallet!
+                                              .appKeychain!
+                                              .getAccountSelected()!
+                                              .balance!
+                                              .tokenPrice!,
                                           currentName:
                                               StateContainer.of(context)
-                                                  .selectedAccount
+                                                  .appWallet!
+                                                  .appKeychain!
+                                                  .getAccountSelected()!
                                                   .name))
                                   .mainBottomSheet(context);
                             },
@@ -482,7 +501,9 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 StateContainer.of(context)
-                                            .selectedAccount
+                                            .appWallet!
+                                            .appKeychain!
+                                            .getAccountSelected()!
                                             .name !=
                                         null
                                     ? Align(
@@ -500,7 +521,9 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                             children: [
                                               Text(
                                                 StateContainer.of(context)
-                                                    .selectedAccount
+                                                    .appWallet!
+                                                    .appKeychain!
+                                                    .getAccountSelected()!
                                                     .name!,
                                                 style: AppStyles
                                                     .textStyleSize20W700EquinoxPrimary(
@@ -588,8 +611,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
   Future<void> _networkDialog() async {
     StateContainer.of(context).curNetwork = (await NetworkDialog.getDialog(
         context, StateContainer.of(context).curNetwork))!;
-    await StateContainer.of(context)
-        .requestUpdate(account: StateContainer.of(context).selectedAccount);
+    await StateContainer.of(context).requestUpdate();
     setState(() {});
   }
 }

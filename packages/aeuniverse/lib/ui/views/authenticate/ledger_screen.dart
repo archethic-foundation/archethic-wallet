@@ -167,7 +167,9 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                     .getLastTransaction(
                                                         StateContainer.of(
                                                                 context)
-                                                            .selectedAccount
+                                                            .appWallet!
+                                                            .appKeychain!
+                                                            .getAccountSelected()!
                                                             .lastAddress!,
                                                         request: 'chainLength');
                                             final String? transactionChainSeed =

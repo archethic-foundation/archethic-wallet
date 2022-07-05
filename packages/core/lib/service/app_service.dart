@@ -5,12 +5,12 @@ import 'dart:async';
 import 'dart:developer' as dev;
 
 // Package imports:
+import 'package:core/model/data/contact.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
 import 'package:core/model/data/appdb.dart';
-import 'package:core/model/data/hive_db.dart';
-import 'package:core/model/recent_transaction.dart';
+import 'package:core/model/data/recent_transaction.dart';
 import 'package:core/model/transaction_infos.dart';
 import 'package:core/util/get_it_instance.dart';
 
@@ -54,8 +54,7 @@ class AppService {
         .getLastTransaction(lastAddress, request: 'chainLength');
     if (lastTransaction.chainLength! > 10) {
       final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
-      String formatName = name.replaceAll(' ', '-');
-      String serviceName = 'archethic-wallet-$formatName';
+      String serviceName = 'archethic-wallet-$name';
       pagingAddress = uint8ListToHex(keychain.deriveAddress(serviceName,
           index: lastTransaction.chainLength! - 10));
     }

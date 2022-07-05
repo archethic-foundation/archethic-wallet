@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:core/model/data/contact.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,7 +15,6 @@ import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/data/appdb.dart';
-import 'package:core/model/data/hive_db.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
 import 'package:core_ui/ui/util/dimens.dart';
@@ -223,10 +223,11 @@ class ContactDetailsSheet {
                           children: <Widget>[
                             // Send Button
                             if (StateContainer.of(context)
-                                    .wallet!
-                                    .accountBalance
-                                    .networkCurrencyValue! >
-                                0)
+                                .appWallet!
+                                .appKeychain!
+                                .getAccountSelected()!
+                                .balance!
+                                .isNativeTokenValuePositive())
                               AppButton.buildAppButton(
                                   const Key('send'),
                                   context,

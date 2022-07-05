@@ -104,8 +104,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
             StateContainer.of(context).curTheme.snackBarShadow!,
             duration: const Duration(milliseconds: 5000));
         setState(() {
-          StateContainer.of(context).requestUpdate(
-              account: StateContainer.of(context).selectedAccount);
+          StateContainer.of(context).requestUpdate();
         });
         Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
       }
@@ -171,7 +170,8 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       Text(
                         widget.title ??
                             AppLocalization.of(context)!.transfering,
-                        style: AppStyles.textStyleSize24W700Primary(context),
+                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
+                            context),
                       ),
                     ],
                   ),
@@ -249,11 +249,11 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       _showSendingAnimation(context);
       final String? seed = await StateContainer.of(context).getSeed();
       List<UCOTransferWallet> ucoTransferList = widget.ucoTransferList!;
-      final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
+      final String originPrivateKey = sl.get<ApiService>().getOriginKey();
 
       final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
       final String service =
-          'archethic-wallet-${StateContainer.of(context).selectedAccount.name!}';
+          'archethic-wallet-${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.name!}';
       final int index = (await sl.get<ApiService>().getTransactionIndex(
               uint8ListToHex(keychain.deriveAddress(service, index: 0))))
           .chainLength!;

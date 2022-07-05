@@ -49,12 +49,12 @@ class ThemeDialog {
             content: PickerWidget(
               pickerItems: pickerItemsList,
               selectedIndex: curThemeSetting.getIndex(),
-              onSelected: (value) {
+              onSelected: (value) async {
                 if (curThemeSetting !=
                     ThemeSetting(value.value as ThemeOptions)) {
                   preferences
                       .setTheme(ThemeSetting(value.value as ThemeOptions));
-                  StateContainer.of(context)
+                  await StateContainer.of(context)
                       .updateTheme(ThemeSetting(value.value as ThemeOptions));
                   curThemeSetting = ThemeSetting(value.value as ThemeOptions);
                 }

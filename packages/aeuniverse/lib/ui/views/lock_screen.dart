@@ -1,16 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:core/model/data/appdb.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
-import 'package:core/model/data/appdb.dart';
-import 'package:core/model/data/hive_db.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
-import 'package:core/util/keychain_util.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/util/case_converter.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -36,14 +34,13 @@ class _AppLockScreenState extends State<AppLockScreen> {
   String _countDownTxt = '';
 
   Future<void> _goHome() async {
-    if (StateContainer.of(context).wallet == null) {
-      Account? selectedAcct = await KeychainUtil()
-          .newAccount(await StateContainer.of(context).getSeed(), '');
-      StateContainer.of(context).requestUpdate(account: selectedAcct);
+    StateContainer.of(context).appWallet =
+        await sl.get<DBHelper>().getAppWallet();
+    if (StateContainer.of(context).appWallet == null) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
     }
-    Account? account = await sl.get<DBHelper>().getSelectedAccount();
-    StateContainer.of(context).selectedAccount = account!;
-    StateContainer.of(context).requestUpdate(account: account);
+    StateContainer.of(context).requestUpdate();
     Navigator.of(context).pushNamedAndRemoveUntil(
       '/home_transition',
       (Route<dynamic> route) => false,

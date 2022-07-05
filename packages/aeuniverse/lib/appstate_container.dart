@@ -1,5 +1,3 @@
-// ignore_for_file: cancel_subscriptions
-
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Dart imports:
@@ -7,32 +5,26 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:aeroot/main.dart';
+import 'package:aeuniverse/ui/widgets/components/notification_icon_widget.dart';
+import 'package:core/model/data/account.dart';
+import 'package:core/model/data/app_wallet.dart';
+import 'package:core/model/data/contact.dart';
+import 'package:core/model/data/price.dart';
 import 'package:core/model/primary_currency.dart';
-import 'package:core/util/keychain_util.dart';
 import 'package:core/util/notifications_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:core/bus/balance_get_event.dart';
-import 'package:core/bus/price_event.dart';
-import 'package:core/bus/transactions_list_event.dart';
 import 'package:core/model/ae_apps.dart';
 import 'package:core/model/available_currency.dart';
 import 'package:core/model/available_language.dart';
-import 'package:core/model/balance_wallet.dart';
 import 'package:core/model/data/appdb.dart';
-import 'package:core/model/data/hive_db.dart';
-import 'package:core/model/recent_transaction.dart';
-import 'package:core/model/wallet.dart';
 import 'package:core/service/app_service.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/vault.dart';
-import 'package:core_ui/bus/chart_event.dart';
 import 'package:core_ui/model/chart_infos.dart';
 import 'package:core_ui/ui/themes/themes.dart';
 import 'package:core_ui/util/screen_util.dart';
-import 'package:event_taxi/event_taxi.dart';
-import 'package:fl_chart/fl_chart.dart';
 
 // Project imports:
 import 'package:aeuniverse/model/available_networks.dart';
@@ -42,16 +34,7 @@ import 'package:aeuniverse/util/preferences.dart';
 import 'package:aeuniverse/util/service_locator.dart';
 
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show
-        AddressService,
-        ApiCoinsService,
-        Balance,
-        TransactionInput,
-        SimplePriceResponse,
-        CoinsPriceResponse,
-        CoinsCurrentDataResponse,
-        OracleService,
-        OracleUcoPrice;
+    show TransactionInput;
 
 class _InheritedStateContainer extends InheritedWidget {
   const _InheritedStateContainer({
@@ -81,12 +64,11 @@ class StateContainer extends StatefulWidget {
 }
 
 class StateContainerState extends State<StateContainer> {
+  AppWallet? appWallet;
+  Price? price;
   Timer? timerCheckTransactionInputs;
-  AppWallet? wallet;
-  AppWallet? localWallet;
   bool recentTransactionsLoading = false;
   bool balanceLoading = false;
-  String? currencyLocale;
   Locale deviceLocale = const Locale('en', 'US');
   AvailableCurrency curCurrency = AvailableCurrency(AvailableCurrencyEnum.USD);
   LanguageSetting curLanguage = LanguageSetting(AvailableLanguage.DEFAULT);
@@ -98,19 +80,15 @@ class StateContainerState extends State<StateContainer> {
 
   AEApps currentAEApp = AEApps.bin;
 
-  // Currently selected account
-  Account selectedAccount = Account();
-
-  ChartInfos? chartInfos;
+  ChartInfos? chartInfos = ChartInfos();
   String? idChartOption = '1d';
 
-  bool useOracleUcoPrice = false;
   bool showBalance = false;
   bool showPriceChart = false;
   bool activeVibrations = false;
   bool activeNotifications = false;
 
-  List<Contact> contactsRef = List<Contact>.empty(growable: true);
+  NotificationIconWidget notificationIconWidget = NotificationIconWidget();
 
   @override
   void initState() {
@@ -123,184 +101,65 @@ class StateContainerState extends State<StateContainer> {
     }
 
     // Setup Service Provide
-    setupServiceLocator();
-
-    // Register RxBus
-    _registerBus();
-
-    Preferences.getInstance().then((Preferences _preferences) {
-      setState(() {
-        curCurrency = _preferences.getCurrency(deviceLocale);
-        currencyLocale = curCurrency.getLocale().toString();
-        curLanguage = _preferences.getLanguage();
-        curPrimaryCurrency = _preferences.getPrimaryCurrency();
-        curNetwork = _preferences.getNetwork();
-        showBalance = _preferences.getShowBalances();
-        activeVibrations = _preferences.getActiveVibrations();
-        activeNotifications = _preferences.getActiveNotifications();
-        showPriceChart = _preferences.getShowPriceChart();
-      });
-      updateTheme(_preferences.getTheme());
-    });
-
-    wallet = AppWallet();
-    localWallet = AppWallet();
-    sl.get<DBHelper>().getSelectedAccount().then((Account? account) {
-      if (account != null) {
-        localWallet!.accountBalance = BalanceWallet(
-            account.balance == null
-                ? 0
-                : account.balance == 0
-                    ? 0
-                    : double.tryParse(account.balance!),
-            curCurrency);
-        localWallet!.address =
-            account.lastAddress == null ? '' : account.lastAddress!;
-      } else {
-        localWallet!.accountBalance = BalanceWallet(0.0, curCurrency);
-        localWallet!.address = '';
-      }
-    });
-
-    updateContacts();
-  }
-
-  // Subscriptions
-  StreamSubscription<BalanceGetEvent>? _balanceGetEventSub;
-  StreamSubscription<PriceEvent>? _priceEventSub;
-  StreamSubscription<ChartEvent>? _chartEventSub;
-  StreamSubscription<TransactionsListEvent>? _transactionsListEventSub;
-
-  void _registerBus() {
-    _balanceGetEventSub = EventTaxiImpl.singleton()
-        .registerTo<BalanceGetEvent>()
-        .listen((BalanceGetEvent event) {
+    setupServiceLocator().then((_) {
       Preferences.getInstance().then((Preferences _preferences) {
         setState(() {
           curCurrency = _preferences.getCurrency(deviceLocale);
-          currencyLocale = curCurrency.getLocale().toString();
-        });
-      });
-
-      setState(() {
-        if (wallet != null) {
-          wallet!.accountBalance = event.response!;
-          sl.get<DBHelper>().updateAccountBalance(selectedAccount,
-              wallet!.accountBalance.networkCurrencyValue.toString());
-        }
-      });
-    });
-
-    _transactionsListEventSub = EventTaxiImpl.singleton()
-        .registerTo<TransactionsListEvent>()
-        .listen((TransactionsListEvent event) {
-      wallet!.history.clear();
-
-      // Iterate list in reverse (oldest to newest block)
-      if (event.transaction != null) {
-        for (RecentTransaction recentTransaction in event.transaction!) {
-          setState(() {
-            wallet!.history.add(recentTransaction);
+          updateCurrency(curCurrency).then((_) {
+            curLanguage = _preferences.getLanguage();
+            curPrimaryCurrency = _preferences.getPrimaryCurrency();
+            curNetwork = _preferences.getNetwork();
+            showBalance = _preferences.getShowBalances();
+            activeVibrations = _preferences.getActiveVibrations();
+            activeNotifications = _preferences.getActiveNotifications();
+            showPriceChart = _preferences.getShowPriceChart();
           });
-        }
-        wallet!.history.reversed.toList();
-        selectedAccount.lastAccess = (DateTime.now().millisecondsSinceEpoch ~/
-            Duration.millisecondsPerSecond);
-      }
-    });
-
-    _priceEventSub = EventTaxiImpl.singleton()
-        .registerTo<PriceEvent>()
-        .listen((PriceEvent event) {
-      setState(() {
-        wallet!.accountBalance.localCurrencyPrice =
-            event.response == null || event.response!.localCurrencyPrice == null
-                ? 0
-                : event.response!.localCurrencyPrice;
-        localWallet!.accountBalance.localCurrencyPrice =
-            event.response == null || event.response!.localCurrencyPrice == null
-                ? 0
-                : event.response!.localCurrencyPrice;
-      });
-    });
-
-    _chartEventSub = EventTaxiImpl.singleton()
-        .registerTo<ChartEvent>()
-        .listen((ChartEvent event) {
-      setState(() {
-        chartInfos = event.chartInfos;
+        });
+        updateTheme(_preferences.getTheme());
       });
     });
   }
 
   @override
   void dispose() {
-    _destroyBus();
     if (timerCheckTransactionInputs != null) {
       timerCheckTransactionInputs!.cancel();
     }
     super.dispose();
   }
 
-  void _destroyBus() {
-    if (_balanceGetEventSub != null) {
-      _balanceGetEventSub!.cancel();
-    }
-    if (_priceEventSub != null) {
-      _priceEventSub!.cancel();
-    }
-    if (_chartEventSub != null) {
-      _chartEventSub!.cancel();
-    }
-    if (_transactionsListEventSub != null) {
-      _transactionsListEventSub!.cancel();
-    }
-  }
-
   void checkTransactionInputs(String message) {
-    timerCheckTransactionInputs =
-        Timer.periodic(Duration(seconds: 30), (Timer t) async {
-      String? seed = await getSeed();
-      List<Account>? accounts = await KeychainUtil()
-          .getListAccountsFromKeychain(seed!, loadBalance: false);
+    if (appWallet != null) {
+      timerCheckTransactionInputs =
+          Timer.periodic(Duration(seconds: 30), (Timer t) async {
+        List<Account>? accounts = appWallet!.appKeychain!.accounts;
+        accounts!.forEach((Account account) async {
+          final List<TransactionInput> transactionInputList = await sl
+              .get<AppService>()
+              .getTransactionInputs(
+                  account.lastAddress!, 'from, amount, timestamp');
 
-      accounts!.forEach((Account account) async {
-        int? lastAccessAccount =
-            await sl.get<DBHelper>().getAccountLastAccess(account);
-
-        final List<TransactionInput> transactionInputList = await sl
-            .get<AppService>()
-            .getTransactionInputs(
-                account.lastAddress!, 'from, amount, timestamp');
-
-        if (transactionInputList.length > 0) {
-          transactionInputList.forEach((TransactionInput transactionInput) {
-            if (lastAccessAccount == null ||
-                transactionInput.timestamp! > lastAccessAccount) {
-              account.lastAccess = DateTime.now().millisecondsSinceEpoch ~/
-                  Duration.millisecondsPerSecond;
-              if (transactionInput.from != account.lastAddress) {
-                NotificationsUtil.showNotification(
-                    title: 'Archethic',
-                    body: message
-                        .replaceAll('%1', transactionInput.amount.toString())
-                        .replaceAll('%2', 'UCO')
-                        .replaceAll('%3', account.name!),
-                    payload: account.name!);
+          if (transactionInputList.length > 0) {
+            transactionInputList.forEach((TransactionInput transactionInput) {
+              if (account.lastLoadingTransactionInputs == null ||
+                  transactionInput.timestamp! >
+                      account.lastLoadingTransactionInputs!) {
+                account.updateLastLoadingTransactionInputs();
+                if (transactionInput.from != account.lastAddress) {
+                  NotificationsUtil.showNotification(
+                      title: 'Archethic',
+                      body: message
+                          .replaceAll('%1', transactionInput.amount.toString())
+                          .replaceAll('%2', 'UCO')
+                          .replaceAll('%3', account.name!),
+                      payload: account.name!);
+                }
               }
-            }
-          });
-        }
+            });
+          }
+        });
       });
-    });
-  }
-
-  void updateContacts() {
-    sl.get<DBHelper>().getContacts().then((List<Contact> contacts) {
-      setState(() {
-        contactsRef = contacts;
-      });
-    });
+    }
   }
 
   Future<List<Contact>> getContacts() async {
@@ -323,312 +182,68 @@ class StateContainerState extends State<StateContainer> {
 
   // Change currency
   Future<void> updateCurrency(AvailableCurrency currency) async {
-    SimplePriceResponse simplePriceResponse = SimplePriceResponse();
-    useOracleUcoPrice = false;
-
-    // if eur or usd, use Archethic Oracle
-    if (currency.getIso4217Code() == 'EUR' ||
-        currency.getIso4217Code() == 'USD') {
-      try {
-        final OracleUcoPrice oracleUcoPrice =
-            await sl.get<OracleService>().getLastOracleUcoPrice();
-        if (oracleUcoPrice.uco == null || oracleUcoPrice.uco!.eur == 0) {
-          simplePriceResponse = await sl
-              .get<ApiCoinsService>()
-              .getSimplePrice(currency.getIso4217Code());
-        } else {
-          simplePriceResponse.currency = currency.getIso4217Code();
-          if (currency.getIso4217Code() == 'EUR') {
-            simplePriceResponse.localCurrencyPrice = oracleUcoPrice.uco!.eur;
-            useOracleUcoPrice = true;
-          } else {
-            if (currency.getIso4217Code() == 'USD') {
-              simplePriceResponse.localCurrencyPrice = oracleUcoPrice.uco!.usd;
-              useOracleUcoPrice = true;
-            } else {
-              simplePriceResponse = await sl
-                  .get<ApiCoinsService>()
-                  .getSimplePrice(currency.getIso4217Code());
-            }
-          }
-        }
-      } catch (e) {
-        simplePriceResponse = await sl
-            .get<ApiCoinsService>()
-            .getSimplePrice(currency.getIso4217Code());
-      }
-    } else {
-      simplePriceResponse = await sl
-          .get<ApiCoinsService>()
-          .getSimplePrice(currency.getIso4217Code());
+    if (appWallet != null) {
+      Price tokenPrice = await Price.getCurrency(curCurrency.currency.name);
+      appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice =
+          tokenPrice;
+      appWallet!.save();
+      await chartInfos!.updateCoinsChart(curCurrency.currency.name);
+      setState(() {
+        price = tokenPrice;
+        curCurrency = currency;
+      });
     }
-    EventTaxiImpl.singleton().fire(PriceEvent(response: simplePriceResponse));
-    requestUpdateCoinsChart(option: idChartOption!);
-    setState(() {
-      curCurrency = currency;
-    });
   }
 
   // Change theme
-  void updateTheme(ThemeSetting theme) {
+  Future<void> updateTheme(ThemeSetting theme) async {
+    if (showPriceChart && chartInfos != null) {
+      await chartInfos!.updateCoinsChart(curCurrency.currency.name);
+    }
     setState(() {
       curTheme = theme.getTheme();
-      if (showPriceChart) {
-        requestUpdateCoinsChart();
-      }
-    });
-  }
-
-  Future<void> requestUpdateBalance() async {
-    final Balance balance = await sl
-        .get<AppService>()
-        .getBalanceGetResponse(selectedAccount.lastAddress!);
-    final BalanceWallet balanceWallet = BalanceWallet(balance.uco, curCurrency);
-    EventTaxiImpl.singleton().fire(BalanceGetEvent(response: balanceWallet));
-  }
-
-  Future<void> requestUpdatePrice() async {
-    SimplePriceResponse simplePriceResponse = SimplePriceResponse();
-    useOracleUcoPrice = false;
-    // if eur or usd, use Archethic Oracle
-    if (curCurrency.getIso4217Code() == 'EUR' ||
-        curCurrency.getIso4217Code() == 'USD') {
-      try {
-        final OracleUcoPrice oracleUcoPrice =
-            await sl.get<OracleService>().getLastOracleUcoPrice();
-        if (oracleUcoPrice.uco == null || oracleUcoPrice.uco!.eur == 0) {
-          simplePriceResponse = await sl
-              .get<ApiCoinsService>()
-              .getSimplePrice(curCurrency.getIso4217Code());
-        } else {
-          simplePriceResponse.currency = curCurrency.getIso4217Code();
-          if (curCurrency.getIso4217Code() == 'EUR') {
-            simplePriceResponse.localCurrencyPrice = oracleUcoPrice.uco!.eur;
-            useOracleUcoPrice = true;
-          } else {
-            if (curCurrency.getIso4217Code() == 'USD') {
-              simplePriceResponse.localCurrencyPrice = oracleUcoPrice.uco!.usd;
-              useOracleUcoPrice = true;
-            } else {
-              simplePriceResponse = await sl
-                  .get<ApiCoinsService>()
-                  .getSimplePrice(curCurrency.getIso4217Code());
-            }
-          }
-        }
-      } catch (e) {
-        simplePriceResponse = await sl
-            .get<ApiCoinsService>()
-            .getSimplePrice(curCurrency.getIso4217Code());
-      }
-    } else {
-      simplePriceResponse = await sl
-          .get<ApiCoinsService>()
-          .getSimplePrice(curCurrency.getIso4217Code());
-    }
-    EventTaxiImpl.singleton().fire(PriceEvent(response: simplePriceResponse));
-  }
-
-  Future<void> requestUpdateRecentTransactions(String pagingAddress) async {
-    String? seed = await getSeed();
-    final List<RecentTransaction> recentTransactions = await sl
-        .get<AppService>()
-        .getRecentTransactions(selectedAccount.genesisAddress!,
-            selectedAccount.lastAddress!, seed!, selectedAccount.name!);
-    EventTaxiImpl.singleton()
-        .fire(TransactionsListEvent(transaction: recentTransactions));
-  }
-
-  Future<void> requestUpdateCoinsChart({String option = '24h'}) async {
-    int nbDays;
-    idChartOption = option;
-    switch (option) {
-      case '7d':
-        nbDays = 7;
-        break;
-      case '14d':
-        nbDays = 14;
-        break;
-      case '30d':
-        nbDays = 30;
-        break;
-      case '60d':
-        nbDays = 60;
-        break;
-      case '200d':
-        nbDays = 200;
-        break;
-      case '1y':
-        nbDays = 365;
-        break;
-      case '24h':
-      default:
-        nbDays = 1;
-        break;
-    }
-    try {
-      final CoinsPriceResponse coinsPriceResponse = await sl
-          .get<ApiCoinsService>()
-          .getCoinsChart(curCurrency.getIso4217Code(), nbDays);
-      chartInfos = ChartInfos();
-      chartInfos!.minY = 9999999;
-      chartInfos!.maxY = 0;
-      final CoinsCurrentDataResponse coinsCurrentDataResponse =
-          await sl.get<ApiCoinsService>().getCoinsCurrentData(marketData: true);
-      if (coinsCurrentDataResponse
-                  .marketData!.priceChangePercentage24HInCurrency![
-              curCurrency.getIso4217Code().toLowerCase()] !=
-          null) {
-        chartInfos!.priceChangePercentage24h = coinsCurrentDataResponse
-                .marketData!.priceChangePercentage24HInCurrency![
-            curCurrency.getIso4217Code().toLowerCase()];
-      } else {
-        chartInfos!.priceChangePercentage24h =
-            coinsCurrentDataResponse.marketData!.priceChangePercentage24H;
-      }
-      if (coinsCurrentDataResponse
-                  .marketData!.priceChangePercentage14DInCurrency![
-              curCurrency.getIso4217Code().toLowerCase()] !=
-          null) {
-        chartInfos!.priceChangePercentage14d = coinsCurrentDataResponse
-                .marketData!.priceChangePercentage14DInCurrency![
-            curCurrency.getIso4217Code().toLowerCase()];
-      } else {
-        chartInfos!.priceChangePercentage14d =
-            coinsCurrentDataResponse.marketData!.priceChangePercentage14D;
-      }
-      if (coinsCurrentDataResponse
-                  .marketData!.priceChangePercentage1YInCurrency![
-              curCurrency.getIso4217Code().toLowerCase()] !=
-          null) {
-        chartInfos!.priceChangePercentage1y = coinsCurrentDataResponse
-                .marketData!.priceChangePercentage1YInCurrency![
-            curCurrency.getIso4217Code().toLowerCase()];
-      } else {
-        chartInfos!.priceChangePercentage1y =
-            coinsCurrentDataResponse.marketData!.priceChangePercentage1Y;
-      }
-      if (coinsCurrentDataResponse
-                  .marketData!.priceChangePercentage200DInCurrency![
-              curCurrency.getIso4217Code().toLowerCase()] !=
-          null) {
-        chartInfos!.priceChangePercentage200d = coinsCurrentDataResponse
-                .marketData!.priceChangePercentage200DInCurrency![
-            curCurrency.getIso4217Code().toLowerCase()];
-      } else {
-        chartInfos!.priceChangePercentage200d =
-            coinsCurrentDataResponse.marketData!.priceChangePercentage200D;
-      }
-      if (coinsCurrentDataResponse
-                  .marketData!.priceChangePercentage30DInCurrency![
-              curCurrency.getIso4217Code().toLowerCase()] !=
-          null) {
-        chartInfos!.priceChangePercentage30d = coinsCurrentDataResponse
-                .marketData!.priceChangePercentage30DInCurrency![
-            curCurrency.getIso4217Code().toLowerCase()];
-      } else {
-        chartInfos!.priceChangePercentage30d =
-            coinsCurrentDataResponse.marketData!.priceChangePercentage30D;
-      }
-      if (coinsCurrentDataResponse
-                  .marketData!.priceChangePercentage60DInCurrency![
-              curCurrency.getIso4217Code().toLowerCase()] !=
-          null) {
-        chartInfos!.priceChangePercentage60d = coinsCurrentDataResponse
-                .marketData!.priceChangePercentage60DInCurrency![
-            curCurrency.getIso4217Code().toLowerCase()];
-      } else {
-        chartInfos!.priceChangePercentage60d =
-            coinsCurrentDataResponse.marketData!.priceChangePercentage60D;
-      }
-      if (coinsCurrentDataResponse
-                  .marketData!.priceChangePercentage7DInCurrency![
-              curCurrency.getIso4217Code().toLowerCase()] !=
-          null) {
-        chartInfos!.priceChangePercentage7d = coinsCurrentDataResponse
-                .marketData!.priceChangePercentage7DInCurrency![
-            curCurrency.getIso4217Code().toLowerCase()];
-      } else {
-        chartInfos!.priceChangePercentage7d =
-            coinsCurrentDataResponse.marketData!.priceChangePercentage7D;
-      }
-      final List<FlSpot> data = List<FlSpot>.empty(growable: true);
-      for (int i = 0; i < coinsPriceResponse.prices!.length; i = i + 1) {
-        final FlSpot chart = FlSpot(
-            coinsPriceResponse.prices![i][0],
-            double.tryParse(
-                coinsPriceResponse.prices![i][1].toStringAsFixed(5))!);
-        data.add(chart);
-        if (chartInfos!.minY! > coinsPriceResponse.prices![i][1]) {
-          chartInfos!.minY = coinsPriceResponse.prices![i][1];
-        }
-
-        if (chartInfos!.maxY! < coinsPriceResponse.prices![i][1]) {
-          chartInfos!.maxY = coinsPriceResponse.prices![i][1];
-        }
-      }
-      chartInfos!.data = data;
-      chartInfos!.minX = coinsPriceResponse.prices![0][0];
-      chartInfos!.maxX =
-          coinsPriceResponse.prices![coinsPriceResponse.prices!.length - 1][0];
-      EventTaxiImpl.singleton().fire(ChartEvent(chartInfos: chartInfos));
-    } catch (e) {
-      EventTaxiImpl.singleton().fire(ChartEvent(chartInfos: ChartInfos()));
-    }
-  }
-
-  Future<void> requestUpdateLastAddress(Account account) async {
-    String lastAddress = await sl
-        .get<AddressService>()
-        .lastAddressFromAddress(account.genesisAddress!);
-    account.lastAddress =
-        lastAddress == '' ? account.genesisAddress! : lastAddress;
-    selectedAccount = account;
-
-    setState(() {
-      wallet = AppWallet(address: account.lastAddress);
     });
   }
 
   Future<void> requestUpdate(
-      {Account? account,
-      String? pagingAddress = '',
-      bool forceUpdateChart = true}) async {
-    await requestUpdateLastAddress(account!);
+      {String? pagingAddress = '', bool forceUpdateChart = true}) async {
+    await appWallet!.appKeychain!.getAccountSelected()!.updateLastAddress();
+
     setState(() {
       balanceLoading = true;
       recentTransactionsLoading = true;
     });
-    await requestUpdateBalance();
+
+    Price tokenPrice = await Price.getCurrency(curCurrency.currency.name);
+    await appWallet!.appKeychain!.getAccountSelected()!.updateBalance(
+        curNetwork.getNetworkCryptoCurrencyLabel(),
+        curCurrency.currency.name,
+        tokenPrice);
+
     setState(() {
       balanceLoading = false;
     });
-    await requestUpdatePrice();
-    await requestUpdateRecentTransactions(pagingAddress!);
+
+    String? seed = await getSeed();
+    await appWallet!.appKeychain!
+        .getAccountSelected()!
+        .updateRecentTransactions(pagingAddress!, seed!);
+
     setState(() {
       recentTransactionsLoading = false;
     });
 
     if (forceUpdateChart && showPriceChart) {
-      await requestUpdateCoinsChart();
+      await chartInfos!.updateCoinsChart(curCurrency.currency.name);
     }
-
-    localWallet!.accountBalance = BalanceWallet(
-        double.tryParse(account.balance == null ? '0' : account.balance!),
-        curCurrency);
-
-    localWallet!.address =
-        account.lastAddress == null ? '' : account.lastAddress!;
   }
 
   Future<void> logOut() async {
     if (timerCheckTransactionInputs != null) {
       timerCheckTransactionInputs!.cancel();
     }
-    final Vault vault = await Vault.getInstance();
-    vault.clearAll();
-    final Preferences preferences = await Preferences.getInstance();
-    preferences.clearAll();
+    (await Vault.getInstance()).clearAll();
+    (await Preferences.getInstance()).clearAll();
     sl.get<DBHelper>().clearAll();
     RestartWidget.restartApp(context);
   }

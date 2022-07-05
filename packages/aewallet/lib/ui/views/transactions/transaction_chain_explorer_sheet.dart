@@ -34,7 +34,11 @@ class _TransactionChainExplorerSheetState
   Future<List<Transaction>> _getTransactionChain() async {
     List<Transaction>? transactions;
     transactions = await sl.get<ApiService>().getTransactionChain(
-        StateContainer.of(context).wallet!.address,
+        StateContainer.of(context)
+            .appWallet!
+            .appKeychain!
+            .getAccountSelected()!
+            .lastAddress!,
         pagingAddress: '');
     transactionsLength = transactions.length;
     return transactions;

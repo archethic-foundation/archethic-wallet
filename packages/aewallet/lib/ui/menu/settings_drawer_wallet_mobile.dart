@@ -13,7 +13,6 @@ import 'package:aeuniverse/ui/widgets/dialogs/lock_timeout_dialog.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/primary_currency_dialog.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/theme_dialog.dart';
-import 'package:aewallet/ui/views/tokens/add_token.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -229,8 +228,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   Future<void> _networkDialog() async {
     _curNetworksSetting =
         (await NetworkDialog.getDialog(context, _curNetworksSetting))!;
-    await StateContainer.of(context)
-        .requestUpdate(account: StateContainer.of(context).selectedAccount);
+    await StateContainer.of(context).requestUpdate();
     setState(() {});
   }
 
@@ -353,17 +351,12 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           style: AppStyles.textStyleSize20W700EquinoxPrimary(
                               context)),
                     ),
-                    if (StateContainer.of(context).wallet != null &&
-                        StateContainer.of(context)
-                                .wallet!
-                                .accountBalance
-                                .networkCurrencyValue !=
-                            null &&
-                        StateContainer.of(context)
-                                .wallet!
-                                .accountBalance
-                                .networkCurrencyValue! >
-                            0)
+                    if (StateContainer.of(context)
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .balance!
+                        .isNativeTokenValuePositive())
                       Divider(
                         height: 2,
                         color: StateContainer.of(context).curTheme.text15,
@@ -997,30 +990,25 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           await Preferences.getInstance();
                       setState(() {
                         _notificationsActive = isSwitched;
-                        StateContainer.of(context).activeVibrations =
+                        StateContainer.of(context).activeNotifications =
                             _notificationsActive;
+                        if (StateContainer.of(context)
+                                .timerCheckTransactionInputs !=
+                            null) {
+                          StateContainer.of(context)
+                              .timerCheckTransactionInputs!
+                              .cancel();
+                        }
                         if (_notificationsActive) {
-                          if (StateContainer.of(context)
-                                  .timerCheckTransactionInputs !=
-                              null) {
-                            StateContainer.of(context)
-                                .timerCheckTransactionInputs!
-                                .cancel();
-                          }
                           StateContainer.of(context).checkTransactionInputs(
                               AppLocalization.of(context)!
                                   .transactionInputNotification);
-                        } else {
-                          if (StateContainer.of(context)
-                                  .timerCheckTransactionInputs !=
-                              null) {
-                            StateContainer.of(context)
-                                .timerCheckTransactionInputs!
-                                .cancel();
-                          }
                         }
                         preferences
                             .setActiveNotifications(_notificationsActive);
+                        StateContainer.of(context)
+                            .notificationIconWidget
+                            .refresh();
                       });
                     }),
                     Divider(

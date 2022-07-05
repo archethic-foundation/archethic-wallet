@@ -5,7 +5,7 @@ import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 import 'package:core/localization.dart';
-import 'package:core/model/data/hive_db.dart';
+import 'package:core/model/data/contact.dart';
 import 'package:flutter/material.dart';
 
 class ContactsDialog {

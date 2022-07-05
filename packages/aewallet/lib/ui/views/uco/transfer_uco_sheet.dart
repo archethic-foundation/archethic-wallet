@@ -6,8 +6,9 @@ import 'dart:io';
 
 // Flutter imports:
 import 'package:aeuniverse/ui/widgets/dialogs/contacts_dialog.dart';
-import 'package:core/model/balance_wallet.dart';
+import 'package:core/model/data/contact.dart';
 import 'package:core/model/primary_currency.dart';
+import 'package:core/util/currency_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,7 +28,6 @@ import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
 import 'package:core/model/available_currency.dart';
 import 'package:core/model/data/appdb.dart';
-import 'package:core/model/data/hive_db.dart';
 import 'package:core/service/app_service.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
@@ -86,7 +86,6 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
   String? _addressValidationText = '';
   String? _globalValidationText = '';
   String? quickSendAmount;
-  List<Contact>? _contacts;
   bool _addressValidAndUnfocused = false;
   bool _isContact = false;
   bool _qrCodeButtonVisible = true;
@@ -118,7 +117,6 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
     _sendAmountController = TextEditingController();
     _sendAddressController = TextEditingController();
     _sendAddressStyle = AddressStyle.text60;
-    _contacts = List<Contact>.empty(growable: true);
     quickSendAmount = widget.quickSendAmount;
     if (widget.contact != null) {
       // Setup initial state for contact pre-filled
@@ -161,19 +159,9 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
           sl
               .get<DBHelper>()
               .getContactsWithNameLike(_sendAddressController!.text)
-              .then((List<Contact> contactList) {
-            setState(() {
-              _contacts = contactList;
-            });
-          });
+              .then((List<Contact> contactList) {});
         }
       } else {
-        setState(() {
-          _contacts = <Contact>[];
-          if (Address(_sendAddressController!.text).isValid()) {
-            //_addressValidAndUnfocused = true;
-          }
-        });
         if (_sendAddressController!.text.trim() == '@') {
           _sendAddressController!.text = '';
         }
@@ -182,8 +170,10 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
 
     // Set initial currency format
     _localCurrencyFormat = NumberFormat.currency(
-        locale: widget.localCurrency!.getLocale().toString(),
-        symbol: widget.localCurrency!.getCurrencySymbol());
+        locale:
+            CurrencyUtil.getLocale(widget.localCurrency!.toString()).toString(),
+        symbol:
+            CurrencyUtil.getCurrencySymbol(widget.localCurrency!.toString()));
     // Set quick send amount
     if (quickSendAmount != null) {
       _sendAmountController!.text =
@@ -194,10 +184,6 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
   @override
   Widget build(BuildContext context) {
     final double bottom = MediaQuery.of(context).viewInsets.bottom;
-    BalanceWallet balanceFee =
-        BalanceWallet(feeEstimation, StateContainer.of(context).curCurrency);
-    balanceFee.localCurrencyPrice =
-        StateContainer.of(context).wallet!.accountBalance.localCurrencyPrice;
     // The main column that holds everything
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -282,7 +268,7 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
                                       alignment: Alignment.centerRight,
                                       color: StateContainer.of(context)
                                           .curTheme
-                                          .backgroundDarkest,
+                                          .textFieldIcon,
                                       onPressed: () {
                                         sl.get<HapticUtil>().feedback(
                                             FeedbackType.light,
@@ -414,7 +400,7 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
                                           horizontal: 30),
                                       child: feeEstimation > 0
                                           ? Text(
-                                              '(${balanceFee.getConvertedAccountBalanceDisplayWithNumberOfDigits(8)})',
+                                              '(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, feeEstimation, 8)})',
                                               style: AppStyles
                                                   .textStyleSize14W100Primary(
                                                       context),
@@ -481,7 +467,9 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
                                     context: context,
                                     widget: TransferConfirmSheet(
                                       lastAddress: StateContainer.of(context)
-                                          .selectedAccount
+                                          .appWallet!
+                                          .appKeychain!
+                                          .getAccountSelected()!
                                           .lastAddress!,
                                       ucoTransferList: ucoTransferList,
                                       title: widget.title,
@@ -517,9 +505,11 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
           ? _sendAmountController!.text
           : NumberUtil.getRawAsUsableString(_rawAmount!);
       final double balanceRaw = StateContainer.of(context)
-          .wallet!
-          .accountBalance
-          .networkCurrencyValue!;
+          .appWallet!
+          .appKeychain!
+          .getAccountSelected()!
+          .balance!
+          .nativeTokenValue!;
       if (primaryCurrency == PrimaryCurrency.network) {
         if (double.tryParse(amount)! + feeEstimation == balanceRaw) {
           return true;
@@ -529,9 +519,11 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
       } else {
         if (priceConverted + feeEstimation ==
             StateContainer.of(context)
-                .wallet!
-                .accountBalance
-                .selectedCurrencyValue) {
+                .appWallet!
+                .appKeychain!
+                .getAccountSelected()!
+                .balance!
+                .fiatCurrencyValue) {
           return true;
         } else {
           return false;
@@ -556,13 +548,8 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
                   : AppStyles.textStyleSize14W100Primary(context),
             ),
             TextSpan(
-              text: StateContainer.of(context)
-                  .wallet!
-                  .accountBalance
-                  .getNetworkAccountBalanceDisplay(
-                      networkCryptoCurrencyLabel: StateContainer.of(context)
-                          .curNetwork
-                          .getNetworkCryptoCurrencyLabel()),
+              text:
+                  '${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
               style: primary
                   ? AppStyles.textStyleSize16W700Primary(context)
                   : AppStyles.textStyleSize14W700Primary(context),
@@ -593,10 +580,14 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
                   : AppStyles.textStyleSize14W100Primary(context),
             ),
             TextSpan(
-              text: StateContainer.of(context)
-                  .wallet!
-                  .accountBalance
-                  .getConvertedAccountBalanceDisplay(),
+              text: CurrencyUtil.getConvertedAmount(
+                  StateContainer.of(context).curCurrency.currency.name,
+                  StateContainer.of(context)
+                      .appWallet!
+                      .appKeychain!
+                      .getAccountSelected()!
+                      .balance!
+                      .fiatCurrencyValue!),
               style: primary
                   ? AppStyles.textStyleSize16W700Primary(context)
                   : AppStyles.textStyleSize14W700Primary(context),
@@ -639,9 +630,11 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
           ? _sendAmountController!.text
           : NumberUtil.getRawAsUsableString(_rawAmount!);
       final double balanceRaw = StateContainer.of(context)
-          .wallet!
-          .accountBalance
-          .networkCurrencyValue!;
+          .appWallet!
+          .appKeychain!
+          .getAccountSelected()!
+          .balance!
+          .nativeTokenValue!;
       double sendAmount = 0;
       if (primaryCurrency == PrimaryCurrency.network) {
         sendAmount = double.tryParse(amount)!;
@@ -719,7 +712,11 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
           .get<AddressService>()
           .lastAddressFromAddress(ucoTransfer.to!);
       if (lastAddressRecipient ==
-          StateContainer.of(context).selectedAccount.lastAddress!) {
+          StateContainer.of(context)
+              .appWallet!
+              .appKeychain!
+              .getAccountSelected()!
+              .lastAddress!) {
         isValid = false;
         setState(() {
           _addressValidationText = AppLocalization.of(context)!
@@ -783,21 +780,28 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
               double sendAmount = 0;
               if (primaryCurrency == PrimaryCurrency.network) {
                 sendAmount = StateContainer.of(context)
-                        .wallet!
-                        .accountBalance
-                        .networkCurrencyValue! -
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .balance!
+                        .nativeTokenValue! -
                     fee;
                 _sendAmountController!.text = sendAmount.toStringAsFixed(8);
               } else {
                 double selectedCurrencyFee = StateContainer.of(context)
-                        .wallet!
-                        .accountBalance
-                        .localCurrencyPrice *
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .balance!
+                        .tokenPrice!
+                        .amount! *
                     fee;
                 sendAmount = StateContainer.of(context)
-                        .wallet!
-                        .accountBalance
-                        .selectedCurrencyValue -
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .balance!
+                        .fiatCurrencyValue! -
                     selectedCurrencyFee;
                 _sendAmountController!.text = sendAmount
                     .toStringAsFixed(_localCurrencyFormat!.decimalDigits!);
@@ -897,6 +901,7 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
             UIUtil.cancelLockEvent();
             final String? scanResult =
                 await UserDataUtil.getQRData(DataType.address, context);
+            QRScanErrs.errorList;
             if (scanResult == null) {
               UIUtil.showSnackbar(
                   AppLocalization.of(context)!.qrInvalidAddress,
@@ -904,6 +909,11 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
                   StateContainer.of(context).curTheme.text!,
                   StateContainer.of(context).curTheme.snackBarShadow!);
             } else if (QRScanErrs.errorList.contains(scanResult)) {
+              UIUtil.showSnackbar(
+                  scanResult,
+                  context,
+                  StateContainer.of(context).curTheme.text!,
+                  StateContainer.of(context).curTheme.snackBarShadow!);
               return;
             } else {
               // Is a URI
@@ -973,15 +983,10 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
             sl
                 .get<DBHelper>()
                 .getContactsWithNameLike(text)
-                .then((List<Contact> matchedList) {
-              setState(() {
-                _contacts = matchedList;
-              });
-            });
+                .then((List<Contact> matchedList) {});
           } else {
             setState(() {
               _isContact = false;
-              _contacts = <Contact>[];
             });
           }
           // Always reset the error message to be less annoying
@@ -1033,7 +1038,9 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
 
   Future<double> getFee({maxSend = false}) async {
     double fee = 0;
-
+    if (double.tryParse(_sendAmountController!.text) == null) {
+      return fee;
+    }
     final bool isContact = _sendAddressController!.text.startsWith('@');
     String recipientAddress = '';
     if (_sendAddressController!.text.isEmpty ||
@@ -1065,18 +1072,24 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
       ucoTransferListForFee.add(UCOTransferWallet(
           amount: maxSend
               ? BigInt.from(StateContainer.of(context)
-                      .wallet!
-                      .accountBalance
-                      .networkCurrencyValue! *
+                      .appWallet!
+                      .appKeychain!
+                      .getAccountSelected()!
+                      .balance!
+                      .nativeTokenValue! *
                   100000000)
               : BigInt.from(
                   double.tryParse(_sendAmountController!.text)! * 100000000),
           to: recipientAddress));
-      final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
+      final String originPrivateKey = sl.get<ApiService>().getOriginKey();
       fee = await sl.get<AppService>().getFeesEstimationUCO(
           originPrivateKey,
           transactionChainSeed!,
-          StateContainer.of(context).selectedAccount.lastAddress!,
+          StateContainer.of(context)
+              .appWallet!
+              .appKeychain!
+              .getAccountSelected()!
+              .lastAddress!,
           ucoTransferListForFee);
     } catch (e) {
       fee = 0;
@@ -1092,9 +1105,12 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
     }
     priceConverted = (Decimal.parse(convertedAmt) /
             Decimal.parse(StateContainer.of(context)
-                .wallet!
-                .accountBalance
-                .localCurrencyPrice
+                .appWallet!
+                .appKeychain!
+                .getAccountSelected()!
+                .balance!
+                .tokenPrice!
+                .amount!
                 .toString()))
         .toDouble();
     return '${priceConverted.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}';
@@ -1107,9 +1123,12 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
       return '';
     }
     priceConverted = (Decimal.parse(StateContainer.of(context)
-                .wallet!
-                .accountBalance
-                .localCurrencyPrice
+                .appWallet!
+                .appKeychain!
+                .getAccountSelected()!
+                .balance!
+                .tokenPrice!
+                .amount!
                 .toString()) *
             Decimal.parse(convertedAmt))
         .toDouble();

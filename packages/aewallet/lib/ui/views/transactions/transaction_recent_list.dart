@@ -2,10 +2,13 @@
 
 // Dart imports:
 import 'dart:io';
+import 'dart:math';
 
 // Flutter imports:
-import 'package:core/model/balance_wallet.dart';
+import 'package:aewallet/ui/views/transactions/transaction_all_list.dart';
+import 'package:core/model/data/recent_transaction.dart';
 import 'package:core/model/primary_currency.dart';
+import 'package:core/util/currency_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +19,6 @@ import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
-import 'package:core/model/recent_transaction.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -24,7 +26,6 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:aewallet/ui/views/transactions/transaction_all_list.dart';
 import 'package:aewallet/ui/views/transactions/transaction_infos_sheet.dart';
 
 class TxListWidget extends StatefulWidget {
@@ -48,8 +49,21 @@ class _TxListWidgetState extends State<TxListWidget> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final List<RecentTransaction> newItems =
-          StateContainer.of(context).wallet!.recentHistory;
+      final List<RecentTransaction> newItems = StateContainer.of(context)
+          .appWallet!
+          .appKeychain!
+          .getAccountSelected()!
+          .recentTransactions!
+          .sublist(
+              0,
+              min(
+                  3,
+                  StateContainer.of(context)
+                      .appWallet!
+                      .appKeychain!
+                      .getAccountSelected()!
+                      .recentTransactions!
+                      .length));
       final bool isLastPage = newItems.length < _pageSize;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems);
@@ -77,8 +91,10 @@ class _TxListWidgetState extends State<TxListWidget> {
             Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: StateContainer.of(context)
-                            .wallet!
-                            .recentHistory
+                            .appWallet!
+                            .appKeychain!
+                            .getAccountSelected()!
+                            .recentTransactions!
                             .isNotEmpty ||
                         StateContainer.of(context).recentTransactionsLoading ==
                             true
@@ -95,8 +111,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                 icon: const Icon(Icons.refresh),
                 color: StateContainer.of(context).curTheme.backgroundDarkest,
                 onPressed: () async {
-                  StateContainer.of(context).requestUpdate(
-                      account: StateContainer.of(context).selectedAccount);
+                  StateContainer.of(context).requestUpdate();
                   _pagingController.refresh();
                 },
               )
@@ -118,8 +133,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                   onRefresh: () => Future<void>.sync(() {
                     sl.get<HapticUtil>().feedback(FeedbackType.light,
                         StateContainer.of(context).activeVibrations);
-                    StateContainer.of(context).requestUpdate(
-                        account: StateContainer.of(context).selectedAccount);
+                    StateContainer.of(context).requestUpdate();
                     _pagingController.refresh();
                   }),
                   child: PagedListView<int, RecentTransaction>(
@@ -146,14 +160,6 @@ class _TxListWidgetState extends State<TxListWidget> {
 
   static Widget displayTxDetailTransfer(
       BuildContext context, RecentTransaction transaction, int index) {
-    BalanceWallet balance = BalanceWallet(
-        transaction.amount, StateContainer.of(context).curCurrency);
-    balance.localCurrencyPrice =
-        StateContainer.of(context).wallet!.accountBalance.localCurrencyPrice;
-    BalanceWallet balanceFee =
-        BalanceWallet(transaction.fee, StateContainer.of(context).curCurrency);
-    balanceFee.localCurrencyPrice =
-        StateContainer.of(context).wallet!.accountBalance.localCurrencyPrice;
     return FutureBuilder<String>(
       future: transaction.recipientDisplay,
       builder: (BuildContext context, AsyncSnapshot<String> recipientDisplay) {
@@ -216,8 +222,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                                       const Text('')
                                     else
                                       Text(
-                                          balance
-                                              .getConvertedAccountBalanceDisplay(),
+                                          '${CurrencyUtil.convertAmountFormated(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.amount!)} ',
                                           style: AppStyles
                                               .textStyleSize12W600Primary(
                                                   context)),
@@ -230,16 +235,29 @@ class _TxListWidgetState extends State<TxListWidget> {
                                     if (transaction.amount == null)
                                       const Text('')
                                     else
-                                      transaction.typeTx ==
+                                      transaction
+                                                  .typeTx ==
                                               RecentTransaction.transferOutput
                                           ? AutoSizeText(
-                                              '-${balance.getConvertedAccountBalanceDisplay()}',
+                                              '-${CurrencyUtil.convertAmountFormated(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.amount!)}',
                                               style: AppStyles
                                                   .textStyleSize20W700EquinoxRed(
                                                       context))
                                           : AutoSizeText(
-                                              balance
-                                                  .getConvertedAccountBalanceDisplay(),
+                                              CurrencyUtil
+                                                  .convertAmountFormated(
+                                                      StateContainer.of(context)
+                                                          .curCurrency
+                                                          .currency
+                                                          .name,
+                                                      StateContainer.of(context)
+                                                          .appWallet!
+                                                          .appKeychain!
+                                                          .getAccountSelected()!
+                                                          .balance!
+                                                          .tokenPrice!
+                                                          .amount!,
+                                                      transaction.amount!),
                                               style: AppStyles
                                                   .textStyleSize20W700EquinoxGreen(
                                                       context)),
@@ -369,12 +387,12 @@ class _TxListWidgetState extends State<TxListWidget> {
                                               .primaryCurrency
                                               .name
                                       ? Text(
-                                          '${AppLocalization.of(context)!.txListFees}${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${balanceFee.getConvertedAccountBalanceDisplayWithNumberOfDigits(8)})',
+                                          '${AppLocalization.of(context)!.txListFees} ${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.fee!, 8)})',
                                           style: AppStyles
                                               .textStyleSize12W400Primary(
                                                   context))
                                       : Text(
-                                          '${AppLocalization.of(context)!.txListFees}${balanceFee.getConvertedAccountBalanceDisplayWithNumberOfDigits(8)} (${transaction.fee} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})',
+                                          '${AppLocalization.of(context)!.txListFees} ${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.fee!, 8)} (${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})',
                                           style: AppStyles
                                               .textStyleSize12W400Primary(
                                                   context)),

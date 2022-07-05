@@ -113,7 +113,9 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                           StateContainer.of(context).activeVibrations);
                       Clipboard.setData(ClipboardData(
                           text: StateContainer.of(context)
-                              .selectedAccount
+                              .appWallet!
+                              .appKeychain!
+                              .getAccountSelected()!
                               .lastAddress!));
                       UIUtil.showSnackbar(
                           AppLocalization.of(context)!.addressCopied,
@@ -143,7 +145,9 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                             StateContainer.of(context).activeVibrations);
                         Clipboard.setData(ClipboardData(
                             text: StateContainer.of(context)
-                                .selectedAccount
+                                .appWallet!
+                                .appKeychain!
+                                .getAccountSelected()!
                                 .lastAddress!));
                         UIUtil.showSnackbar(
                             AppLocalization.of(context)!.addressCopied,
@@ -193,7 +197,9 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                         child: QrImage(
                                           foregroundColor: Colors.white,
                                           data: StateContainer.of(context)
-                                              .selectedAccount
+                                              .appWallet!
+                                              .appKeychain!
+                                              .getAccountSelected()!
                                               .lastAddress!,
                                           version: QrVersions.auto,
                                           size: 150.0,
@@ -209,7 +215,9 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                             AutoSizeText(
                                                 CaseChange.toUpperCase(
                                                     StateContainer.of(context)
-                                                        .selectedAccount
+                                                        .appWallet!
+                                                        .appKeychain!
+                                                        .getAccountSelected()!
                                                         .lastAddress!
                                                         .substring(0, 16),
                                                     StateContainer.of(context)
@@ -221,7 +229,9 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                             AutoSizeText(
                                                 CaseChange.toUpperCase(
                                                     StateContainer.of(context)
-                                                        .selectedAccount
+                                                        .appWallet!
+                                                        .appKeychain!
+                                                        .getAccountSelected()!
                                                         .lastAddress!
                                                         .substring(16, 32),
                                                     StateContainer.of(context)
@@ -233,7 +243,9 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                             AutoSizeText(
                                                 CaseChange.toUpperCase(
                                                     StateContainer.of(context)
-                                                        .selectedAccount
+                                                        .appWallet!
+                                                        .appKeychain!
+                                                        .getAccountSelected()!
                                                         .lastAddress!
                                                         .substring(32, 48),
                                                     StateContainer.of(context)
@@ -245,7 +257,9 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                             AutoSizeText(
                                                 CaseChange.toUpperCase(
                                                     StateContainer.of(context)
-                                                        .selectedAccount
+                                                        .appWallet!
+                                                        .appKeychain!
+                                                        .getAccountSelected()!
                                                         .lastAddress!
                                                         .substring(48),
                                                     StateContainer.of(context)
@@ -289,7 +303,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                       ), onPressed: () async {
                     UIUtil.showWebview(
                         context,
-                        '${await StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${StateContainer.of(context).selectedAccount.lastAddress!}',
+                        '${await StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.lastAddress!}',
                         '');
                   }),
                 ],
@@ -309,7 +323,9 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                     final RenderBox? box =
                         context.findRenderObject() as RenderBox?;
                     final String textToShare = StateContainer.of(context)
-                        .selectedAccount
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
                         .lastAddress!
                         .toUpperCase();
                     Share.share('$textToShare ',

@@ -2,12 +2,18 @@
 
 // Project imports:
 import 'package:core/model/data/appdb.dart';
-import 'package:core/model/data/hive_db.dart';
+import 'package:core/model/data/contact.dart';
 import 'package:core/util/get_it_instance.dart';
+
+// Package imports:
+import 'package:hive/hive.dart';
+
+part 'recent_transaction.g.dart';
 
 /// [TransactionInput] represents the inputs from the transaction.
 
-class RecentTransaction {
+@HiveType(typeId: 6)
+class RecentTransaction extends HiveObject {
   RecentTransaction({
     this.address,
     this.typeTx,
@@ -22,37 +28,69 @@ class RecentTransaction {
     this.type,
   });
 
-  factory RecentTransaction.fromJson(Map<String, dynamic> json) =>
-      RecentTransaction(
-        address: json['address'],
-        typeTx: json['typeTx']?.toInt(),
-        recipient: json['recipient'],
-        amount: json['amount']?.toDouble(),
-        fee: json['fee']?.toDouble(),
-        from: json['from'],
-        tokenAddress: json['tokenAddress'],
-        tokenName: json['tokenName'],
-        content: json['content'],
-        timestamp: json['timestamp'],
-        type: json['type'],
-      );
-
   /// Types of transaction
   static const int transferInput = 1;
   static const int transferOutput = 2;
   static const int tokenCreation = 3;
 
   /// Address of transaction
+  @HiveField(0)
   String? address;
 
   /// Type of transaction : 1=Transfer/Input, 2=Transfer/Output, 3=Token creation
+  @HiveField(1)
   int? typeTx;
 
   /// Amount: asset amount
+  @HiveField(2)
   double? amount;
 
   /// Recipients: For non asset transfers, the list of recipients of the transaction (e.g Smart contract interactions)
+  @HiveField(3)
   String? recipient;
+
+  /// Timestamp: Date time when the transaction was generated
+  @HiveField(4)
+  int? timestamp;
+
+  /// Fee: transaction fee (distributed over the node rewards)
+  @HiveField(5)
+  double? fee;
+
+  /// From: transaction which send the amount of assets
+  @HiveField(6)
+  String? from;
+
+  /// Token name: name of the Token if the type is Token
+  @HiveField(7)
+  String? tokenName;
+
+  /// Token address: address of the Token if the type is Token
+  @HiveField(8)
+  String? tokenAddress;
+
+  /// Content: free zone for data hosting (string or hexadecimal)
+  @HiveField(9)
+  String? content;
+
+  /// Type: UCO/tokens/Call
+  @HiveField(10)
+  String? type;
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'address': address,
+        'typeTx': typeTx,
+        'recipient': recipient,
+        'amount': amount,
+        'fee': fee,
+        'from': from,
+        'tokenAddress': tokenAddress,
+        'tokenName': tokenName,
+        'content': content,
+        'timestamp': timestamp,
+        'type': type,
+      };
+
   Future<String> getRecipientContactName() async {
     String _recipientContactName = '';
     if (recipient != null) {
@@ -79,38 +117,18 @@ class RecentTransaction {
     }
   }
 
-  /// Timestamp: Date time when the transaction was generated
-  int? timestamp;
-
-  /// Fee: transaction fee (distributed over the node rewards)
-  double? fee;
-
-  /// From: transaction which send the amount of assets
-  String? from;
-
-  /// Token name: name of the Token if the type is Token
-  String? tokenName;
-
-  /// Token address: address of the Token if the type is Token
-  String? tokenAddress;
-
-  /// Content: free zone for data hosting (string or hexadecimal)
-  String? content;
-
-  /// Type: UCO/tokens/Call
-  String? type;
-
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'address': address,
-        'typeTx': typeTx,
-        'recipient': recipient,
-        'amount': amount,
-        'fee': fee,
-        'from': from,
-        'tokenAddress': tokenAddress,
-        'tokenName': tokenName,
-        'content': content,
-        'timestamp': timestamp,
-        'type': type,
-      };
+  factory RecentTransaction.fromJson(Map<String, dynamic> json) =>
+      RecentTransaction(
+        address: json['address'],
+        typeTx: json['typeTx']?.toInt(),
+        recipient: json['recipient'],
+        amount: json['amount']?.toDouble(),
+        fee: json['fee']?.toDouble(),
+        from: json['from'],
+        tokenAddress: json['tokenAddress'],
+        tokenName: json['tokenName'],
+        content: json['content'],
+        timestamp: json['timestamp'],
+        type: json['type'],
+      );
 }

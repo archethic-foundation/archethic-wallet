@@ -7,6 +7,7 @@ import 'dart:io';
 
 // Flutter imports:
 import 'package:aeuniverse/ui/themes/theme_dark.dart';
+import 'package:core/util/get_it_instance.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -34,8 +35,6 @@ import 'package:aeuniverse/util/preferences.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/available_language.dart';
 import 'package:core/model/data/appdb.dart';
-import 'package:core/model/data/hive_db.dart';
-import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:core_ui/util/case_converter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -326,13 +325,14 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       }
 
       if (isLoggedIn) {
+        StateContainer.of(context).appWallet =
+            await sl.get<DBHelper>().getAppWallet();
         StateContainer.of(context).checkTransactionInputs(
             AppLocalization.of(context)!.transactionInputNotification);
         if (preferences.getLock() || preferences.shouldLock()) {
           Navigator.of(context).pushReplacementNamed('/lock_screen');
         } else {
-          Account? selectedAcct = await sl.get<DBHelper>().getSelectedAccount();
-          StateContainer.of(context).requestUpdate(account: selectedAcct);
+          StateContainer.of(context).requestUpdate();
           Navigator.of(context).pushReplacementNamed('/home');
         }
       } else {

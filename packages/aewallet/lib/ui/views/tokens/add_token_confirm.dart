@@ -84,8 +84,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
           duration: const Duration(milliseconds: 5000),
         );
         setState(() {
-          StateContainer.of(context).requestUpdate(
-              account: StateContainer.of(context).selectedAccount);
+          StateContainer.of(context).requestUpdate();
         });
         Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
       }
@@ -163,17 +162,6 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                             style:
                                 AppStyles.textStyleSize14W100Primary(context),
                           ),
-                          TextSpan(
-                              text: StateContainer.of(context)
-                                  .wallet!
-                                  .accountBalance
-                                  .getNetworkAccountBalanceDisplay(
-                                      networkCryptoCurrencyLabel:
-                                          StateContainer.of(context)
-                                              .curNetwork
-                                              .getNetworkCryptoCurrencyLabel()),
-                              style: AppStyles.textStyleSize14W700Primary(
-                                  context)),
                           TextSpan(
                               text: ')',
                               style: AppStyles.textStyleSize14W100Primary(
@@ -283,10 +271,18 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
           .addToken(
               originPrivateKey,
               transactionChainSeed!,
-              StateContainer.of(context).selectedAccount.lastAddress!,
+              StateContainer.of(context)
+                  .appWallet!
+                  .appKeychain!
+                  .getAccountSelected()!
+                  .lastAddress!,
               widget.tokenName!,
               widget.tokenInitialSupply!,
-              StateContainer.of(context).selectedAccount.name!);
+              StateContainer.of(context)
+                  .appWallet!
+                  .appKeychain!
+                  .getAccountSelected()!
+                  .name!);
       EventTaxiImpl.singleton()
           .fire(TokenAddEvent(response: transactionStatus.status));
     } catch (e) {

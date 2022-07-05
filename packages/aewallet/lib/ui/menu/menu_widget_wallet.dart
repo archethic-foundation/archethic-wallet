@@ -42,28 +42,12 @@ class MenuWidgetWallet extends AbstractMenuWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                (StateContainer.of(context).wallet != null &&
-                            StateContainer.of(context)
-                                    .wallet!
-                                    .accountBalance
-                                    .networkCurrencyValue !=
-                                null &&
-                            StateContainer.of(context)
-                                    .wallet!
-                                    .accountBalance
-                                    .networkCurrencyValue! >
-                                0) ||
-                        (StateContainer.of(context).localWallet != null &&
-                            StateContainer.of(context)
-                                    .localWallet!
-                                    .accountBalance
-                                    .networkCurrencyValue !=
-                                null &&
-                            StateContainer.of(context)
-                                    .localWallet!
-                                    .accountBalance
-                                    .networkCurrencyValue! >
-                                0)
+                StateContainer.of(context)
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .balance!
+                        .isNativeTokenValuePositive()
                     ? Padding(
                         padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                         child: InkWell(
@@ -121,10 +105,8 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                           widget: const ReceiveSheet(),
                           onDisposed: () {
                             setState(() {
-                              StateContainer.of(context).requestUpdate(
-                                  account: StateContainer.of(context)
-                                      .selectedAccount,
-                                  forceUpdateChart: false);
+                              StateContainer.of(context)
+                                  .requestUpdate(forceUpdateChart: false);
                             });
                           });
                     },

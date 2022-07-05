@@ -7,15 +7,17 @@ import 'dart:typed_data';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:core/model/data/account.dart';
+import 'package:core/model/data/account_balance.dart';
+import 'package:core/model/data/app_wallet.dart';
 
 // Project imports:
 import 'package:core/model/data/appdb.dart';
-import 'package:core/model/data/hive_db.dart';
-import 'package:core/service/app_service.dart';
+import 'package:core/model/data/price.dart';
 import 'package:core/util/get_it_instance.dart';
 
 class KeychainUtil {
-  Future<Account?> newAccount(String? seed, String? name) async {
+  Future<AppWallet?> newAppWallet(String? seed, String? name) async {
     Account? selectedAcct;
 
     /// Get Wallet KeyPair
@@ -62,17 +64,27 @@ class KeychainUtil {
     final TransactionStatus transactionStatusKeychainAccess =
         await sl.get<ApiService>().sendTx(accessKeychainTx);
 
+    // TODO: Crypt Seed
+    AppWallet appWallet = await sl
+        .get<DBHelper>()
+        .createAppWallet('', keychainTransaction.address!);
+
     Uint8List genesisAddress = keychain.deriveAddress(kServiceName, index: 0);
     selectedAcct = Account(
-        lastAccess: 0,
+        lastLoadingTransactionInputs: 0,
         lastAddress: uint8ListToHex(genesisAddress),
         genesisAddress: uint8ListToHex(genesisAddress),
         name: name,
-        balance: '0.0',
-        selected: true);
-    await sl.get<DBHelper>().addAccount(selectedAcct);
+        balance: AccountBalance(
+            fiatCurrencyCode: '',
+            fiatCurrencyValue: 0,
+            nativeTokenName: '',
+            nativeTokenValue: 0),
+        selected: true,
+        recentTransactions: []);
+    appWallet = await sl.get<DBHelper>().addAccount(selectedAcct);
 
-    return selectedAcct;
+    return appWallet;
   }
 
   Future<Account?> addAccountInKeyChain(String? seed, String? name) async {
@@ -129,19 +141,24 @@ class KeychainUtil {
 
     Uint8List genesisAddress = keychain.deriveAddress(kServiceName, index: 0);
     selectedAcct = Account(
-        lastAccess: 0,
+        lastLoadingTransactionInputs: 0,
         lastAddress: uint8ListToHex(genesisAddress),
         genesisAddress: uint8ListToHex(genesisAddress),
         name: name,
-        balance: '0.0',
-        selected: false);
-    await sl.get<DBHelper>().addAccount(selectedAcct);
+        balance: AccountBalance(
+            fiatCurrencyCode: '',
+            fiatCurrencyValue: 0,
+            nativeTokenName: '',
+            nativeTokenValue: 0),
+        selected: false,
+        recentTransactions: []);
 
     return selectedAcct;
   }
 
-  Future<List<Account>?> getListAccountsFromKeychain(String? seed,
-      {String? currentName = '', bool loadBalance = true}) async {
+  Future<List<Account>?> getListAccountsFromKeychain(AppWallet appWallet,
+      String? seed, String currency, String tokenName, Price tokenPrice,
+      {String? currentName = ''}) async {
     List<Account> accounts = List<Account>.empty(growable: true);
 
     try {
@@ -152,9 +169,6 @@ class KeychainUtil {
 
       /// Get all services for archethic blockchain
       keychain.services!.forEach((serviceName, service) async {
-        /// For the moment, only one account for wallet : services "uco-wallet-main"
-        /// When multi accounts will be implemented in archethic wallet, user could choose by himself the name of services
-        /// The wallet app will force the account in the derivation path with nameService = Account
         if (service.derivationPath!.startsWith(kDerivationPathWithoutService)) {
           Uint8List genesisAddress =
               keychain.deriveAddress(serviceName, index: 0);
@@ -163,11 +177,16 @@ class KeychainUtil {
               .replaceAll(kDerivationPathWithoutService, '')
               .split('/')[0];
           Account account = Account(
-              lastAccess: 0,
+              lastLoadingTransactionInputs: 0,
               lastAddress: uint8ListToHex(genesisAddress),
               genesisAddress: uint8ListToHex(genesisAddress),
               name: name,
-              balance: '0');
+              balance: AccountBalance(
+                  fiatCurrencyCode: '',
+                  fiatCurrencyValue: 0,
+                  nativeTokenName: '',
+                  nativeTokenValue: 0),
+              recentTransactions: []);
           if (currentName == name) {
             account.selected = true;
           } else {
@@ -185,16 +204,10 @@ class KeychainUtil {
         if (lastAddress.isNotEmpty) {
           accounts[i].lastAddress = lastAddress;
         }
-
-        if (loadBalance) {
-          final Balance balance = await sl
-              .get<AppService>()
-              .getBalanceGetResponse(accounts[i].lastAddress!);
-          if (balance.uco != null) {
-            accounts[i].balance = balance.uco.toString();
-          }
-        }
+        await accounts[i].updateBalance(tokenName, currency, tokenPrice);
       }
+      appWallet.appKeychain!.accounts = accounts;
+      appWallet.save();
     } catch (e) {}
 
     return accounts;

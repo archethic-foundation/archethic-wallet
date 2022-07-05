@@ -17,7 +17,7 @@ class CurrencyDialog {
       pickerItemsList.add(PickerItem(
         AvailableCurrency(value).getDisplayName(context),
         null,
-        'packages/aeuniverse/assets/icons/currency/${AvailableCurrency(value).getIso4217Code().toLowerCase()}.png',
+        'packages/aeuniverse/assets/icons/currency/${AvailableCurrency(value).currency.name.toLowerCase()}.png',
         null,
         value,
         true,
@@ -59,10 +59,14 @@ class CurrencyDialog {
                   StateContainer.of(context).curCurrency =
                       AvailableCurrency(value.value as AvailableCurrencyEnum);
                   StateContainer.of(context)
-                          .wallet!
-                          .accountBalance
-                          .selectedCurrency =
-                      AvailableCurrency(value.value as AvailableCurrencyEnum);
+                          .appWallet!
+                          .appKeychain!
+                          .getAccountSelected()!
+                          .balance!
+                          .fiatCurrencyCode =
+                      (AvailableCurrency(value.value as AvailableCurrencyEnum))
+                          .currency
+                          .name;
                   await StateContainer.of(context).updateCurrency(
                       AvailableCurrency(value.value as AvailableCurrencyEnum));
                   Navigator.pop(context, value.value);

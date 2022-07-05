@@ -186,7 +186,6 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                                   .transactionInputNotification);
                                       _preferences.setPinPadShuffle(false);
                                       _preferences.setShowPriceChart(true);
-
                                       _preferences.setPrimaryCurrency(
                                           PrimaryCurrencySetting(
                                               AvailablePrimaryCurrency.NATIVE));
@@ -209,9 +208,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                   default:
                                     break;
                                 }
-                                StateContainer.of(context).requestUpdate(
-                                    account: StateContainer.of(context)
-                                        .selectedAccount);
+                                StateContainer.of(context).requestUpdate();
                               },
                             ),
                           ),

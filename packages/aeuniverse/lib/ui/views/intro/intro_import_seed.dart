@@ -1,6 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:core/model/data/account.dart';
+import 'package:core/model/data/price.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,7 +11,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/model/data/appdb.dart';
-import 'package:core/model/data/hive_db.dart';
 import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
@@ -301,9 +302,23 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                 _mnemonicController.text.split(' '));
                             final Vault _vault = await Vault.getInstance();
                             _vault.setSeed(seed);
-                            await sl.get<DBHelper>().clearAccounts();
+                            Price tokenPrice = await Price.getCurrency(
+                                StateContainer.of(context)
+                                    .curCurrency
+                                    .currency
+                                    .name);
                             List<Account>? accounts = await KeychainUtil()
-                                .getListAccountsFromKeychain(seed);
+                                .getListAccountsFromKeychain(
+                                    StateContainer.of(context).appWallet!,
+                                    seed,
+                                    StateContainer.of(context)
+                                        .curCurrency
+                                        .currency
+                                        .name,
+                                    StateContainer.of(context)
+                                        .curNetwork
+                                        .getNetworkCryptoCurrencyLabel(),
+                                    tokenPrice);
                             if (accounts == null || accounts.length == 0) {
                               setState(() {
                                 _mnemonicIsValid = false;
@@ -317,9 +332,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                               accounts.forEach((Account account) async {
                                 await sl.get<DBHelper>().addAccount(account);
                               });
-                              StateContainer.of(context).requestUpdate(
-                                  account: StateContainer.of(context)
-                                      .selectedAccount);
+                              StateContainer.of(context).requestUpdate();
                               bool biometricsAvalaible =
                                   await sl.get<BiometricUtil>().hasBiometrics();
                               List<PickerItem> accessModes = [];
@@ -477,7 +490,10 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
           );
         });
     if (selection != null) {
-      StateContainer.of(context).selectedAccount = selection;
+      StateContainer.of(context)
+          .appWallet!
+          .appKeychain!
+          .setAccountSelected(selection);
     }
   }
 }

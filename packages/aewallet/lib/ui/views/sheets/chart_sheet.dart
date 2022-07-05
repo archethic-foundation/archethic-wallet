@@ -140,13 +140,7 @@ class _ChartSheetState extends State<ChartSheet> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   AutoSizeText(
-                    StateContainer.of(context)
-                                .wallet!
-                                .accountBalance
-                                .networkCurrencyValue ==
-                            0
-                        ? '1 ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} = ${StateContainer.of(context).localWallet!.accountBalance.getLocalCurrencyPriceDisplay()}'
-                        : '1 ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} = ${StateContainer.of(context).wallet!.accountBalance.getLocalCurrencyPriceDisplay()}',
+                    '1 ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} = ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPriceToString()}',
                     style: AppStyles.textStyleSize16W700Primary(context),
                   ),
                   const SizedBox(
@@ -179,7 +173,13 @@ class _ChartSheetState extends State<ChartSheet> {
                   const SizedBox(
                     width: 10,
                   ),
-                  StateContainer.of(context).useOracleUcoPrice
+                  StateContainer.of(context)
+                          .appWallet!
+                          .appKeychain!
+                          .getAccountSelected()!
+                          .balance!
+                          .tokenPrice!
+                          .useOracleUcoPrice!
                       ? InkWell(
                           onTap: () {
                             sl.get<HapticUtil>().feedback(FeedbackType.light,
@@ -248,9 +248,15 @@ class _ChartSheetState extends State<ChartSheet> {
                           onChanged: (OptionChart? optionChart) async {
                             sl.get<HapticUtil>().feedback(FeedbackType.light,
                                 StateContainer.of(context).activeVibrations);
-                            await StateContainer.of(context)
-                                .requestUpdateCoinsChart(
+                            StateContainer.of(context)
+                                .chartInfos!
+                                .updateCoinsChart(
+                                    StateContainer.of(context)
+                                        .curCurrency
+                                        .currency
+                                        .name,
                                     option: optionChart!.id);
+
                             setState(() {
                               optionChartSelected = optionChart;
                             });

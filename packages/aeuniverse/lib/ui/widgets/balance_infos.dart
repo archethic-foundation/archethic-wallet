@@ -2,6 +2,7 @@
 
 // Flutter imports:
 import 'package:core/model/primary_currency.dart';
+import 'package:core/util/currency_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -67,31 +68,28 @@ class BalanceInfosWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               AutoSizeText(
-                                StateContainer.of(context).balanceLoading ==
-                                        true
-                                    ? StateContainer.of(context)
-                                        .localWallet!
-                                        .accountBalance
-                                        .getNetworkAccountBalanceDisplay()
-                                    : StateContainer.of(context)
-                                        .wallet!
-                                        .accountBalance
-                                        .getNetworkAccountBalanceDisplay(),
+                                StateContainer.of(context)
+                                    .appWallet!
+                                    .appKeychain!
+                                    .getAccountSelected()!
+                                    .balance!
+                                    .nativeTokenValueToString(),
                                 style:
                                     AppStyles.textStyleSize25W900EquinoxPrimary(
                                         context),
                               ),
                               AutoSizeText(
-                                StateContainer.of(context).balanceLoading ==
-                                        true
-                                    ? StateContainer.of(context)
-                                        .localWallet!
-                                        .accountBalance
-                                        .getConvertedAccountBalanceDisplay()
-                                    : StateContainer.of(context)
-                                        .wallet!
-                                        .accountBalance
-                                        .getConvertedAccountBalanceDisplay(),
+                                CurrencyUtil.getConvertedAmount(
+                                    StateContainer.of(context)
+                                        .curCurrency
+                                        .currency
+                                        .name,
+                                    StateContainer.of(context)
+                                        .appWallet!
+                                        .appKeychain!
+                                        .getAccountSelected()!
+                                        .balance!
+                                        .fiatCurrencyValue!),
                                 textAlign: TextAlign.center,
                                 style: AppStyles.textStyleSize12W600Primary(
                                     context),
@@ -107,17 +105,12 @@ class BalanceInfosWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 10.0),
                             child: AutoSizeText(
-                              StateContainer.of(context).balanceLoading == true
-                                  ? StateContainer.of(context)
-                                      .localWallet!
-                                      .accountBalance
-                                      .selectedCurrency!
-                                      .getIso4217Code()
-                                  : StateContainer.of(context)
-                                      .wallet!
-                                      .accountBalance
-                                      .selectedCurrency!
-                                      .getIso4217Code(),
+                              StateContainer.of(context)
+                                  .appWallet!
+                                  .appKeychain!
+                                  .getAccountSelected()!
+                                  .balance!
+                                  .fiatCurrencyCode!,
                               style:
                                   AppStyles.textStyleSize35W900EquinoxPrimary(
                                       context),
@@ -128,40 +121,36 @@ class BalanceInfosWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               AutoSizeText(
-                                StateContainer.of(context).balanceLoading ==
-                                        true
-                                    ? StateContainer.of(context)
-                                        .localWallet!
-                                        .accountBalance
-                                        .getConvertedAccountBalanceDisplay()
-                                    : StateContainer.of(context)
-                                        .wallet!
-                                        .accountBalance
-                                        .getConvertedAccountBalanceDisplay(),
+                                CurrencyUtil.getConvertedAmount(
+                                    StateContainer.of(context)
+                                        .curCurrency
+                                        .currency
+                                        .name,
+                                    StateContainer.of(context)
+                                        .appWallet!
+                                        .appKeychain!
+                                        .getAccountSelected()!
+                                        .balance!
+                                        .fiatCurrencyValue!),
                                 textAlign: TextAlign.center,
                                 style:
                                     AppStyles.textStyleSize25W900EquinoxPrimary(
                                         context),
                               ),
                               AutoSizeText(
-                                StateContainer.of(context).balanceLoading ==
-                                        true
-                                    ? StateContainer.of(context)
-                                            .localWallet!
-                                            .accountBalance
-                                            .getNetworkAccountBalanceDisplay() +
-                                        ' ' +
-                                        StateContainer.of(context)
-                                            .curNetwork
-                                            .getNetworkCryptoCurrencyLabel()
-                                    : StateContainer.of(context)
-                                            .wallet!
-                                            .accountBalance
-                                            .getNetworkAccountBalanceDisplay() +
-                                        ' ' +
-                                        StateContainer.of(context)
-                                            .curNetwork
-                                            .getNetworkCryptoCurrencyLabel(),
+                                StateContainer.of(context)
+                                        .appWallet!
+                                        .appKeychain!
+                                        .getAccountSelected()!
+                                        .balance!
+                                        .nativeTokenValueToString() +
+                                    ' ' +
+                                    StateContainer.of(context)
+                                        .appWallet!
+                                        .appKeychain!
+                                        .getAccountSelected()!
+                                        .balance!
+                                        .nativeTokenName!,
                                 style: AppStyles.textStyleSize12W600Primary(
                                     context),
                               ),
@@ -281,29 +270,28 @@ class BalanceInfosWidget {
             child: Row(
               children: <Widget>[
                 AutoSizeText(
-                  StateContainer.of(context)
-                              .wallet!
-                              .accountBalance
-                              .networkCurrencyValue ==
-                          0
-                      ? '1 ' +
+                  '1 ' +
+                      StateContainer.of(context)
+                          .appWallet!
+                          .appKeychain!
+                          .getAccountSelected()!
+                          .balance!
+                          .nativeTokenName! +
+                      ' = ' +
+                      CurrencyUtil.getAmountPlusSymbol(
                           StateContainer.of(context)
-                              .curNetwork
-                              .getNetworkCryptoCurrencyLabel() +
-                          ' = ' +
+                              .appWallet!
+                              .appKeychain!
+                              .getAccountSelected()!
+                              .balance!
+                              .fiatCurrencyCode!,
                           StateContainer.of(context)
-                              .localWallet!
-                              .accountBalance
-                              .getLocalCurrencyPriceDisplay()
-                      : '1 ' +
-                          StateContainer.of(context)
-                              .curNetwork
-                              .getNetworkCryptoCurrencyLabel() +
-                          ' = ' +
-                          StateContainer.of(context)
-                              .wallet!
-                              .accountBalance
-                              .getLocalCurrencyPriceDisplay(),
+                              .appWallet!
+                              .appKeychain!
+                              .getAccountSelected()!
+                              .balance!
+                              .tokenPrice!
+                              .amount!),
                   style: AppStyles.textStyleSize12W100Primary(context),
                 ),
                 const SizedBox(
@@ -345,7 +333,13 @@ class BalanceInfosWidget {
                 const SizedBox(
                   width: 10,
                 ),
-                StateContainer.of(context).useOracleUcoPrice
+                StateContainer.of(context)
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .balance!
+                        .tokenPrice!
+                        .useOracleUcoPrice!
                     ? InkWell(
                         onTap: () {
                           sl.get<HapticUtil>().feedback(FeedbackType.light,

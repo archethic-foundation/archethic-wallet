@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/data/appdb.dart';
-import 'package:core/model/data/hive_db.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
 import 'package:core/util/keychain_util.dart';
@@ -170,13 +169,12 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                 setState(() {
                                   isPressed = true;
                                 });
-                                await sl.get<DBHelper>().clearAccounts();
+                                await sl.get<DBHelper>().clearAppWallet();
                                 final Vault vault = await Vault.getInstance();
                                 await vault.setSeed(seed!);
-                                Account? account = await KeychainUtil()
-                                    .newAccount(seed!, widget.name!);
-                                StateContainer.of(context).selectedAccount =
-                                    account!;
+                                StateContainer.of(context).appWallet =
+                                    await KeychainUtil()
+                                        .newAppWallet(seed!, widget.name!);
                                 setState(() {
                                   isPressed = false;
                                 });
