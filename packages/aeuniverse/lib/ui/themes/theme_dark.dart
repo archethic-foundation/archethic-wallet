@@ -40,8 +40,6 @@ class DarkTheme implements BaseTheme {
   Color? iconDataWidgetIconGradientRight = Color(0xFFCC00FF);
   @override
   Color? iconDataWidgetIconBackground = Color(0xFFFFFFFF).withOpacity(0.1);
-  @override
-  Color? iconDataWidgetIcon = Color(0xFFFFFFFF);
 
   // Menu
   @override

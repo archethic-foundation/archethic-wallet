@@ -40,8 +40,6 @@ class PearlGreyTheme implements BaseTheme {
   Color? iconDataWidgetIconGradientRight = Color(0xFFCC00FF);
   @override
   Color? iconDataWidgetIconBackground = Color(0xFFFFFFFF);
-  @override
-  Color? iconDataWidgetIcon = Color(0xFF2e2e2e);
 
   // Menu
   @override
@@ -58,7 +56,7 @@ class PearlGreyTheme implements BaseTheme {
   Color? pickerItemIconDisabled = Color(0xFFFFFFFF).withOpacity(0.6);
 
   // Icons TextField
-  Color? textFieldIcon = Color(0xFFFFFFFF);
+  Color? textFieldIcon = Color(0xFF0000000);
 
   // Texts
   @override

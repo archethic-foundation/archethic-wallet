@@ -40,8 +40,6 @@ class FireRedTheme implements BaseTheme {
   Color? iconDataWidgetIconGradientRight = Color(0xFFCC00FF);
   @override
   Color? iconDataWidgetIconBackground = Color(0xFFFFFFFF);
-  @override
-  Color? iconDataWidgetIcon = Color(0xFFCF2329);
 
   // Menu
   @override
@@ -58,7 +56,7 @@ class FireRedTheme implements BaseTheme {
   Color? pickerItemIconDisabled = Color(0xFFFFFFFF).withOpacity(0.6);
 
   // Icons TextField
-  Color? textFieldIcon = Color(0xFFCF2329);
+  Color? textFieldIcon = Color(0xFFFFFFFF);
 
   // Texts
   @override
