@@ -920,38 +920,33 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
               final Address address = Address(scanResult);
               // See if this address belongs to a contact
               final Contact? contact;
-              try {
-                contact = await sl
-                    .get<DBHelper>()
-                    .getContactWithAddress(address.address);
 
-                // Is a contact
-                if (mounted) {
-                  setState(() {
-                    _isContact = true;
-                    _addressValidationText = '';
-                    _sendAddressStyle = AddressStyle.primary;
-                    _qrCodeButtonVisible = false;
-                  });
-                  if (contact!.name != null) {
-                    _sendAddressController!.text = contact.name!;
-                  }
+              contact = await sl
+                  .get<DBHelper>()
+                  .getContactWithAddress(address.address);
+
+              if (contact != null) {
+                setState(() {
+                  _isContact = true;
+                  _addressValidationText = '';
+                  _sendAddressStyle = AddressStyle.primary;
+                  _qrCodeButtonVisible = false;
+                });
+                if (contact.name != null) {
+                  _sendAddressController!.text = contact.name!;
                 }
-              } on Exception {
-                // Not a contact
-                if (mounted) {
-                  setState(() {
-                    _isContact = false;
-                    _addressValidationText = '';
-                    _sendAddressStyle = AddressStyle.text90;
-                    _qrCodeButtonVisible = false;
-                  });
-                  _sendAddressController!.text = address.address;
-                  _sendAddressFocusNode!.unfocus();
-                  setState(() {
-                    _addressValidAndUnfocused = true;
-                  });
-                }
+              } else {
+                setState(() {
+                  _isContact = false;
+                  _addressValidationText = '';
+                  _sendAddressStyle = AddressStyle.text90;
+                  _qrCodeButtonVisible = false;
+                });
+                _sendAddressController!.text = address.address;
+                _sendAddressFocusNode!.unfocus();
+                setState(() {
+                  _addressValidAndUnfocused = true;
+                });
               }
             }
           },
