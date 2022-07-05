@@ -41,7 +41,7 @@ class ContactsList extends StatefulWidget {
 class _ContactsListState extends State<ContactsList> {
   List<Contact>? contacts;
   List<Contact>? contactsToDisplay = List<Contact>.empty(growable: true);
-  FocusNode? searchNameFocusNode = FocusNode();
+  FocusNode searchNameFocusNode = FocusNode();
   TextEditingController? searchNameController = TextEditingController();
 
   @override
@@ -111,6 +111,11 @@ class _ContactsListState extends State<ContactsList> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.contactsOpen) {
+      searchNameFocusNode.requestFocus();
+    } else {
+      FocusScope.of(context).unfocus();
+    }
     return Container(
         decoration: BoxDecoration(
           border: Border(
