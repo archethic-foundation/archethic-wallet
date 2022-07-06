@@ -193,7 +193,6 @@ class _AppLockScreenState extends State<AppLockScreen> {
                               margin: EdgeInsetsDirectional.only(
                                   start: smallScreen(context) ? 15 : 20),
                               height: 50,
-                              width: 150,
                               child: TextButton(
                                 onPressed: () {
                                   AppDialogs.showConfirmDialog(
