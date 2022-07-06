@@ -25,8 +25,6 @@ class IntroWelcome extends StatefulWidget {
 }
 
 class _IntroWelcomeState extends State<IntroWelcome> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   bool checkedValue = false;
   NetworksSetting _curNetworksSetting =
       NetworksSetting(AvailableNetworks.ArchethicTestNet);
@@ -35,7 +33,6 @@ class _IntroWelcomeState extends State<IntroWelcome> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      key: _scaffoldKey,
       body: Stack(
         children: <Widget>[
           Container(

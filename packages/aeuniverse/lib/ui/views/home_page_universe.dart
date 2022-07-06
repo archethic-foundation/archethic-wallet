@@ -43,9 +43,6 @@ class AppHomePageUniverse extends StatefulWidget {
 
 class _AppHomePageUniverseState extends State<AppHomePageUniverse>
     with WidgetsBindingObserver, TickerProviderStateMixin {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  // Controller for placeholder card animations
   AnimationController? _placeholderCardAnimationController;
   Animation<double>? _opacityAnimation;
   bool? _animationDisposed;
@@ -257,7 +254,6 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
             extendBodyBehindAppBar: true,
             drawerEdgeDragWidth: 0,
             resizeToAvoidBottomInset: false,
-            key: _scaffoldKey,
             backgroundColor: StateContainer.of(context).curTheme.background,
             body: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
@@ -434,7 +430,6 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
             ),
             drawerEdgeDragWidth: 0,
             resizeToAvoidBottomInset: false,
-            key: _scaffoldKey,
             backgroundColor: StateContainer.of(context).curTheme.background,
             drawer: SizedBox(
               width: Responsive.drawerWidth(context),

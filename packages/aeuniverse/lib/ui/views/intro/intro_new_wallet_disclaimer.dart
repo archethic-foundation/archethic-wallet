@@ -24,13 +24,10 @@ class IntroNewWalletDisclaimer extends StatefulWidget {
 }
 
 class _IntroNewWalletDisclaimerState extends State<IntroNewWalletDisclaimer> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(

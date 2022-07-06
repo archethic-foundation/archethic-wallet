@@ -27,8 +27,6 @@ class IntroNewWalletGetFirstInfos extends StatefulWidget {
 
 class _IntroNewWalletDisclaimerState
     extends State<IntroNewWalletGetFirstInfos> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   FocusNode nameFocusNode = FocusNode();
   TextEditingController nameController = TextEditingController();
   String? nameError;
@@ -37,7 +35,6 @@ class _IntroNewWalletDisclaimerState
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(

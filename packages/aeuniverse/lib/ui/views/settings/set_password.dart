@@ -35,8 +35,6 @@ class SetPassword extends StatefulWidget {
 }
 
 class _SetPasswordState extends State<SetPassword> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   FocusNode? setPasswordFocusNode;
   TextEditingController? setPasswordController;
   FocusNode? confirmPasswordFocusNode;
@@ -64,7 +62,6 @@ class _SetPasswordState extends State<SetPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(

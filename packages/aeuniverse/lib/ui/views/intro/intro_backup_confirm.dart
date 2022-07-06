@@ -30,7 +30,6 @@ class IntroBackupConfirm extends StatefulWidget {
 }
 
 class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<String> wordListSelected = List<String>.empty(growable: true);
   List<String> wordListToSelect = List<String>.empty(growable: true);
   List<String> wordListSave = List<String>.empty(growable: true);
@@ -47,7 +46,6 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(

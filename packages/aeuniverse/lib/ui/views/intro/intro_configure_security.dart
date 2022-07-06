@@ -31,14 +31,12 @@ class IntroConfigureSecurity extends StatefulWidget {
 }
 
 class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   PickerItem? _accessModesSelected;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -168,6 +166,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                                 (BuildContext context) {
                                       return const PinScreen(
                                         PinOverlayType.newPin,
+                                        hideBackButton: false,
                                       );
                                     }));
                                     if (pin.length > 5) {

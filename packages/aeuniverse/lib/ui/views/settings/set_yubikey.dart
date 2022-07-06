@@ -43,8 +43,6 @@ class SetYubikey extends StatefulWidget {
 }
 
 class _SetYubikeyState extends State<SetYubikey> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   FocusNode? _clientIDFocusNode;
   TextEditingController? _clientIDController;
   FocusNode? _clientAPIKeyFocusNode;
@@ -72,7 +70,6 @@ class _SetYubikeyState extends State<SetYubikey> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
