@@ -327,6 +327,11 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       if (isLoggedIn) {
         StateContainer.of(context).appWallet =
             await sl.get<DBHelper>().getAppWallet();
+        if (StateContainer.of(context).appWallet == null) {
+          await StateContainer.of(context).logOut();
+          StateContainer.of(context).curTheme = DarkTheme();
+          Navigator.of(context).pushReplacementNamed('/intro_welcome');
+        }
         StateContainer.of(context).checkTransactionInputs(
             AppLocalization.of(context)!.transactionInputNotification);
         if (preferences.getLock() || preferences.shouldLock()) {
@@ -341,6 +346,9 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       }
     } catch (e) {
       dev.log(e.toString());
+      await StateContainer.of(context).logOut();
+      StateContainer.of(context).curTheme = DarkTheme();
+      Navigator.of(context).pushReplacementNamed('/intro_welcome');
     }
     FlutterNativeSplash.remove();
   }
