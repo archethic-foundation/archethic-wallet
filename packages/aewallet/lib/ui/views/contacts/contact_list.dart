@@ -166,7 +166,7 @@ class _ContactsListState extends State<ContactsList> {
                 padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                 child: AppTextField(
                   controller: searchNameController,
-                  autofocus: true,
+                  autofocus: false,
                   maxLines: 1,
                   autocorrect: false,
                   labelText: AppLocalization.of(context)!.searchField,
