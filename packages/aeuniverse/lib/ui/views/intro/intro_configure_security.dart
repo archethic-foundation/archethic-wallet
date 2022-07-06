@@ -166,7 +166,6 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                                 (BuildContext context) {
                                       return const PinScreen(
                                         PinOverlayType.newPin,
-                                        hideBackButton: false,
                                       );
                                     }));
                                     if (pin.length > 5) {
