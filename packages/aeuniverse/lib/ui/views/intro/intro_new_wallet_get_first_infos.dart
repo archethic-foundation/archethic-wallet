@@ -156,35 +156,48 @@ class _IntroNewWalletDisclaimerState
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     AppButton.buildAppButton(
-                        const Key('okButton'),
-                        context,
-                        AppButtonType.primary,
-                        AppLocalization.of(context)!.ok,
-                        Dimens.buttonBottomDimens, onPressed: () async {
-                      nameError = '';
-                      if (nameController.text.isEmpty) {
-                        setState(() {
-                          nameError = AppLocalization.of(context)!
-                              .introNewWalletGetFirstInfosNameBlank;
-                          FocusScope.of(context).requestFocus(nameFocusNode);
-                        });
-                      } else {
-                        AppDialogs.showConfirmDialog(
-                            context,
-                            AppLocalization.of(context)!.newAccount,
-                            AppLocalization.of(context)!
-                                .newAccountConfirmation
-                                .replaceAll('%1', nameController.text),
-                            AppLocalization.of(context)!.yes.toUpperCase(),
-                            () async {
-                          Navigator.of(context).pushNamed(
-                              '/intro_backup_safety',
-                              arguments: nameController.text);
-                        },
-                            cancelText:
-                                AppLocalization.of(context)!.no.toUpperCase());
-                      }
-                    }),
+                      const Key('okButton'),
+                      context,
+                      AppButtonType.primary,
+                      AppLocalization.of(context)!.ok,
+                      Dimens.buttonBottomDimens,
+                      onPressed: () async {
+                        nameError = '';
+                        if (nameController.text.isEmpty) {
+                          setState(() {
+                            nameError = AppLocalization.of(context)!
+                                .introNewWalletGetFirstInfosNameBlank;
+                            FocusScope.of(context).requestFocus(nameFocusNode);
+                          });
+                        } else {
+                          if (nameController.text.contains(' ') ||
+                              nameController.text.contains('\\')) {
+                            setState(() {
+                              nameError = AppLocalization.of(context)!
+                                  .introNewWalletGetFirstInfosNameCharacterNonValid;
+                              FocusScope.of(context)
+                                  .requestFocus(nameFocusNode);
+                            });
+                          } else {
+                            AppDialogs.showConfirmDialog(
+                                context,
+                                AppLocalization.of(context)!.newAccount,
+                                AppLocalization.of(context)!
+                                    .newAccountConfirmation
+                                    .replaceAll('%1', nameController.text),
+                                AppLocalization.of(context)!.yes.toUpperCase(),
+                                () async {
+                              Navigator.of(context).pushNamed(
+                                  '/intro_backup_safety',
+                                  arguments: nameController.text);
+                            },
+                                cancelText: AppLocalization.of(context)!
+                                    .no
+                                    .toUpperCase());
+                          }
+                        }
+                      },
+                    ),
                   ],
                 ),
               ],

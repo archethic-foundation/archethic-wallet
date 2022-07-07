@@ -1275,6 +1275,11 @@ class AppLocalization {
         name: 'introNewWalletGetFirstInfosNameBlank');
   }
 
+  String get introNewWalletGetFirstInfosNameCharacterNonValid {
+    return Intl.message('The name cannot contain "\\" and space characters',
+        name: 'introNewWalletGetFirstInfosNameCharacterNonValid');
+  }
+
   String get addAccountExists {
     return Intl.message('This name already exists in your keychain.',
         name: 'addAccountExists');

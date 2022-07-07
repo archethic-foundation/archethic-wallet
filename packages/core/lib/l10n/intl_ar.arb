@@ -261,6 +261,7 @@
 	"introNewWalletGetFirstInfosNameRequest": "What name would you like to give to this account, which account will be stored in your decentralized keychain?",
 	"introNewWalletGetFirstInfosNameInfos": "It will allow you to distinguish this account from other accounts that you can, if you want, create later.\nWARNING: This name will be added to your decentralized keychain and cannot be modified.",
 	"introNewWalletGetFirstInfosNameBlank": "Please enter a name for this account",
+	"introNewWalletGetFirstInfosNameCharacterNonValid": "The name cannot contain \"\\\" and space characters",
 	"introNewWalletGetFirstInfosNetworkHeader": "On which network do you want to use your wallet?",
 	"introNewWalletGetFirstInfosNameSlash": "The name should contains only alphanumeric characters.",
 	"priceChartHeader": "Price Chart",

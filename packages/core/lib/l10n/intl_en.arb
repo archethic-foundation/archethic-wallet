@@ -1560,6 +1560,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "introNewWalletGetFirstInfosNameCharacterNonValid": "The name cannot contain \"\\\" and space characters",
+  "@introNewWalletGetFirstInfosNameCharacterNonValid": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "introNewWalletGetFirstInfosNetworkHeader": "On which network do you want to use your wallet?",
   "@introNewWalletGetFirstInfosNetworkHeader": {
     "type": "text",

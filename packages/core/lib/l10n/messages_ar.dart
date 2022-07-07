@@ -124,6 +124,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "instantly" : MessageLookupByLibrary.simpleMessage("Immédiatement"),
     "insufficientBalance" : MessageLookupByLibrary.simpleMessage("Vous ne possédez pas assez de %1."),
     "introNewWalletGetFirstInfosNameBlank" : MessageLookupByLibrary.simpleMessage("Please enter a name for this account"),
+    "introNewWalletGetFirstInfosNameCharacterNonValid" : MessageLookupByLibrary.simpleMessage("The name cannot contain \"\\\" and space characters"),
     "introNewWalletGetFirstInfosNameInfos" : MessageLookupByLibrary.simpleMessage("It will allow you to distinguish this account from other accounts that you can, if you want, create later.\nWARNING: This name will be added to your decentralized keychain and cannot be modified."),
     "introNewWalletGetFirstInfosNameRequest" : MessageLookupByLibrary.simpleMessage("What name would you like to give to this account, which account will be stored in your decentralized keychain?"),
     "introNewWalletGetFirstInfosNetworkHeader" : MessageLookupByLibrary.simpleMessage("On which network do you want to use your wallet?"),
