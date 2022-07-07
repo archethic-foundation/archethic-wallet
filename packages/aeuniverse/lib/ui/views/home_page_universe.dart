@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:aeuniverse/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aewallet/ui/views/accounts/account_list.dart';
 import 'package:core/bus/notifications_event.dart';
+import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/notifications_util.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,6 @@ import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/bus/account_changed_event.dart';
 import 'package:core/bus/disable_lock_timeout_event.dart';
-import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
 import 'package:core/util/keychain_util.dart';
 import 'package:core_ui/ui/util/responsive.dart';
@@ -49,6 +49,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
 
   bool _lockDisabled = false; // whether we should avoid locking the app
 
+  bool? accountIsPressed;
+
   ScrollController? _scrollController;
 
   AnimationController? animationController;
@@ -58,6 +60,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
   @override
   void initState() {
     super.initState();
+
+    accountIsPressed = false;
 
     _registerBus();
     WidgetsBinding.instance.addObserver(this);
@@ -460,36 +464,49 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                         children: <Widget>[
                           InkWell(
                             onTap: () async {
-                              sl.get<HapticUtil>().feedback(FeedbackType.light,
-                                  StateContainer.of(context).activeVibrations);
-                              AccountsList(await KeychainUtil()
-                                      .getListAccountsFromKeychain(
-                                          StateContainer.of(context).appWallet!,
-                                          await StateContainer.of(context)
-                                              .getSeed(),
-                                          StateContainer.of(context)
-                                              .curCurrency
-                                              .currency
-                                              .name,
-                                          StateContainer.of(context)
-                                              .appWallet!
-                                              .appKeychain!
-                                              .getAccountSelected()!
-                                              .balance!
-                                              .nativeTokenName!,
-                                          StateContainer.of(context)
-                                              .appWallet!
-                                              .appKeychain!
-                                              .getAccountSelected()!
-                                              .balance!
-                                              .tokenPrice!,
-                                          currentName:
-                                              StateContainer.of(context)
-                                                  .appWallet!
-                                                  .appKeychain!
-                                                  .getAccountSelected()!
-                                                  .name))
-                                  .mainBottomSheet(context);
+                              if (accountIsPressed == false) {
+                                setState(() {
+                                  accountIsPressed = true;
+                                });
+                                sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    StateContainer.of(context)
+                                        .activeVibrations);
+                                AccountsList((await KeychainUtil()
+                                            .getListAccountsFromKeychain(
+                                                StateContainer.of(context)
+                                                    .appWallet!,
+                                                await StateContainer.of(context)
+                                                    .getSeed(),
+                                                StateContainer.of(context)
+                                                    .curCurrency
+                                                    .currency
+                                                    .name,
+                                                StateContainer.of(context)
+                                                    .appWallet!
+                                                    .appKeychain!
+                                                    .getAccountSelected()!
+                                                    .balance!
+                                                    .nativeTokenName!,
+                                                StateContainer.of(context)
+                                                    .appWallet!
+                                                    .appKeychain!
+                                                    .getAccountSelected()!
+                                                    .balance!
+                                                    .tokenPrice!,
+                                                currentName:
+                                                    StateContainer.of(context)
+                                                        .appWallet!
+                                                        .appKeychain!
+                                                        .getAccountSelected()!
+                                                        .name))!
+                                        .appKeychain!
+                                        .accounts!)
+                                    .mainBottomSheet(context);
+                                setState(() {
+                                  accountIsPressed = false;
+                                });
+                              }
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
