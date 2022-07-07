@@ -168,7 +168,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   Widget _getAnimation(BuildContext context) {
     switch (type) {
       case AnimationType.send:
-        return const Center();
+        return PulsatingCircleLogo();
       default:
         return CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(
@@ -179,19 +179,14 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   Widget _buildOverlayContent(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: type == AnimationType.send
-          ? MainAxisAlignment.end
-          : MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
           margin: type == AnimationType.send
               ? const EdgeInsets.only(bottom: 10.0, left: 90, right: 90)
               : EdgeInsets.zero,
-          //Widgth/Height ratio is needed because BoxFit is not working as expected
-          width: type == AnimationType.send ? double.infinity : 100,
-          height: type == AnimationType.send
-              ? MediaQuery.of(context).size.width
-              : 100,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height / 2,
           child: _getAnimation(context),
         ),
       ],
@@ -202,5 +197,78 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   Widget buildTransitions(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation, Widget child) {
     return child;
+  }
+}
+
+class PulsatingCircleLogo extends StatefulWidget {
+  const PulsatingCircleLogo({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  PulsatingCircleLogoState createState() => PulsatingCircleLogoState();
+}
+
+class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
+    with SingleTickerProviderStateMixin {
+  AnimationController? _animationController;
+  Animation? _animation;
+
+  @override
+  void initState() {
+    _animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _animation = Tween(begin: 0.0, end: 12.0).animate(
+      CurvedAnimation(parent: _animationController!, curve: Curves.easeOut),
+    );
+    _animationController!.repeat(reverse: true);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        InkWell(
+          borderRadius: BorderRadius.circular(100),
+          child: AnimatedBuilder(
+            animation: _animation!,
+            builder: (context, _) {
+              return Ink(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: StateContainer.of(context).curTheme.iconDrawer,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      for (int i = 1; i <= 2; i++)
+                        BoxShadow(
+                          color: StateContainer.of(context)
+                              .curTheme
+                              .iconDrawer!
+                              .withOpacity(_animationController!.value / 2),
+                          spreadRadius: _animation!.value * i,
+                        )
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.png',
+                        height: 80,
+                      ),
+                    ],
+                  ));
+            },
+          ),
+        ),
+        const SizedBox(
+          height: 40,
+        ),
+        Text(
+          'Please wait',
+          style: AppStyles.textStyleSize16W600EquinoxPrimary(context),
+        )
+      ],
+    );
   }
 }
