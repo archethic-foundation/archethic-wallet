@@ -654,7 +654,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         context,
                         AppLocalization.of(context)!.networksHeader,
                         _curNetworksSetting,
-                        'packages/aeuniverse/assets/icons/url.png',
+                        'packages/aewallet/assets/icons/url.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
                         _networkDialog),
                     // Authentication Method
