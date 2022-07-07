@@ -87,7 +87,8 @@ class KeychainUtil {
     return appWallet;
   }
 
-  Future<Account?> addAccountInKeyChain(String? seed, String? name) async {
+  Future<Account?> addAccountInKeyChain(
+      String? seed, String? name, String currency) async {
     Account? selectedAcct;
 
     final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
@@ -139,6 +140,8 @@ class KeychainUtil {
     final TransactionStatus transactionStatusKeychain =
         await sl.get<ApiService>().sendTx(keychainTransaction);
 
+    Price tokenPrice = await Price.getCurrency(currency);
+
     Uint8List genesisAddress = keychain.deriveAddress(kServiceName, index: 0);
     selectedAcct = Account(
         lastLoadingTransactionInputs: 0,
@@ -149,14 +152,15 @@ class KeychainUtil {
             fiatCurrencyCode: '',
             fiatCurrencyValue: 0,
             nativeTokenName: '',
-            nativeTokenValue: 0),
+            nativeTokenValue: 0,
+            tokenPrice: tokenPrice),
         selected: false,
         recentTransactions: []);
 
     return selectedAcct;
   }
 
-  Future<List<Account>?> getListAccountsFromKeychain(AppWallet appWallet,
+  Future<AppWallet?> getListAccountsFromKeychain(AppWallet? appWallet,
       String? seed, String currency, String tokenName, Price tokenPrice,
       {String? currentName = ''}) async {
     List<Account> accounts = List<Account>.empty(growable: true);
@@ -164,6 +168,18 @@ class KeychainUtil {
     try {
       /// Get KeyChain Wallet
       final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
+
+      /// Creation of a new appWallet
+      if (appWallet == null) {
+        final String addressKeychain =
+            deriveAddress(uint8ListToHex(keychain.seed!), 0);
+        Transaction lastTransaction =
+            await sl.get<ApiService>().getLastTransaction(addressKeychain);
+
+        appWallet = await sl
+            .get<DBHelper>()
+            .createAppWallet('', lastTransaction.address!);
+      }
 
       const String kDerivationPathWithoutService = 'm/650\'/archethic-wallet-';
 
@@ -210,6 +226,6 @@ class KeychainUtil {
       appWallet.save();
     } catch (e) {}
 
-    return accounts;
+    return appWallet;
   }
 }

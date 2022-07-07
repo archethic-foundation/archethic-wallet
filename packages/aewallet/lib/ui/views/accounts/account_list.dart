@@ -330,7 +330,12 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                                               context)
                                                                           .getSeed(),
                                                                       nameController
-                                                                          .text);
+                                                                          .text,
+                                                                      StateContainer.of(
+                                                                              context)
+                                                                          .curCurrency
+                                                                          .currency
+                                                                          .name);
                                                                   setState(() {
                                                                     StateContainer.of(
                                                                             context)

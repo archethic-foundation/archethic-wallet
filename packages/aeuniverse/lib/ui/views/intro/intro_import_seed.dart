@@ -2,6 +2,7 @@
 
 // Flutter imports:
 import 'package:core/model/data/account.dart';
+import 'package:core/model/data/app_wallet.dart';
 import 'package:core/model/data/price.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,6 +46,13 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
 
   bool _mnemonicIsValid = false;
   String _mnemonicError = '';
+  bool? isPressed;
+
+  @override
+  void initState() {
+    isPressed = false;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -207,9 +215,9 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                         _mnemonicController.text.split(' ')),
                                 keyboardType: TextInputType.text,
                                 style: _mnemonicIsValid
-                                    ? AppStyles.textStyleSize16W200Primary(
+                                    ? AppStyles.textStyleSize16W400Primary(
                                         context)
-                                    : AppStyles.textStyleSize16W200Primary30(
+                                    : AppStyles.textStyleSize16W400Primary60(
                                         context),
                                 onChanged: (String text) {
                                   if (text.length < 3) {
@@ -227,7 +235,6 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                   // If valid mnemonic, clear focus/close keyboard
                                   if (AppMnemomics.validateMnemonic(
                                       text.split(' '))) {
-                                    _mnemonicFocusNode.unfocus();
                                     setState(() {
                                       _mnemonicIsValid = true;
                                       _mnemonicError = '';
@@ -285,148 +292,175 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      AppButton.buildAppButton(
-                        const Key('ok'),
-                        context,
-                        AppButtonType.primary,
-                        AppLocalization.of(context)!.ok,
-                        Dimens.buttonTopDimens,
-                        onPressed: () async {
-                          setState(() {
-                            _mnemonicError = '';
-                          });
-                          _mnemonicFocusNode.unfocus();
-                          if (AppMnemomics.validateMnemonic(
-                              _mnemonicController.text.split(' '))) {
-                            String seed = AppMnemomics.mnemonicListToSeed(
-                                _mnemonicController.text.split(' '));
-                            final Vault _vault = await Vault.getInstance();
-                            _vault.setSeed(seed);
-                            Price tokenPrice = await Price.getCurrency(
-                                StateContainer.of(context)
-                                    .curCurrency
-                                    .currency
-                                    .name);
-                            List<Account>? accounts = await KeychainUtil()
-                                .getListAccountsFromKeychain(
-                                    StateContainer.of(context).appWallet!,
-                                    seed,
-                                    StateContainer.of(context)
-                                        .curCurrency
-                                        .currency
-                                        .name,
-                                    StateContainer.of(context)
-                                        .curNetwork
-                                        .getNetworkCryptoCurrencyLabel(),
-                                    tokenPrice);
-                            if (accounts == null || accounts.length == 0) {
-                              setState(() {
-                                _mnemonicIsValid = false;
-                                _mnemonicError =
-                                    AppLocalization.of(context)!.noKeychain;
-                              });
-                            } else {
-                              accounts
-                                  .sort((a, b) => a.name!.compareTo(b.name!));
-                              await _accountsDialog(accounts);
-                              accounts.forEach((Account account) async {
-                                await sl.get<DBHelper>().addAccount(account);
-                              });
-                              StateContainer.of(context).requestUpdate();
-                              bool biometricsAvalaible =
-                                  await sl.get<BiometricUtil>().hasBiometrics();
-                              List<PickerItem> accessModes = [];
-                              accessModes.add(PickerItem(
-                                  AppLocalization.of(context)!.pinMethod,
-                                  AppLocalization.of(context)!
-                                      .configureSecurityExplanationPIN,
-                                  AuthenticationMethod.getIcon(AuthMethod.pin),
-                                  StateContainer.of(context)
-                                      .curTheme
-                                      .pickerItemIconEnabled,
-                                  AuthMethod.pin,
-                                  true));
-                              accessModes.add(PickerItem(
-                                  AppLocalization.of(context)!.passwordMethod,
-                                  AppLocalization.of(context)!
-                                      .configureSecurityExplanationPassword,
-                                  AuthenticationMethod.getIcon(
-                                      AuthMethod.password),
-                                  StateContainer.of(context)
-                                      .curTheme
-                                      .pickerItemIconEnabled,
-                                  AuthMethod.password,
-                                  true));
-                              if (biometricsAvalaible) {
-                                accessModes.add(PickerItem(
-                                    AppLocalization.of(context)!
-                                        .biometricsMethod,
-                                    AppLocalization.of(context)!
-                                        .configureSecurityExplanationBiometrics,
-                                    AuthenticationMethod.getIcon(
-                                        AuthMethod.biometrics),
-                                    StateContainer.of(context)
-                                        .curTheme
-                                        .pickerItemIconEnabled,
-                                    AuthMethod.biometrics,
-                                    true));
-                              }
-
-                              accessModes.add(PickerItem(
-                                  AppLocalization.of(context)!
-                                      .biometricsUnirisMethod,
-                                  AppLocalization.of(context)!
-                                      .configureSecurityExplanationUnirisBiometrics,
-                                  AuthenticationMethod.getIcon(
-                                      AuthMethod.biometricsUniris),
-                                  StateContainer.of(context)
-                                      .curTheme
-                                      .pickerItemIconEnabled,
-                                  AuthMethod.biometricsUniris,
-                                  false));
-
-                              accessModes.add(PickerItem(
-                                  AppLocalization.of(context)!
-                                      .yubikeyWithYubiCloudMethod,
-                                  AppLocalization.of(context)!
-                                      .configureSecurityExplanationYubikey,
-                                  AuthenticationMethod.getIcon(
-                                      AuthMethod.yubikeyWithYubicloud),
-                                  StateContainer.of(context)
-                                      .curTheme
-                                      .pickerItemIconEnabled,
-                                  AuthMethod.yubikeyWithYubicloud,
-                                  true));
-                              Navigator.of(context).pushNamed(
-                                  '/intro_configure_security',
-                                  arguments: accessModes);
-                            }
-                          } else {
-                            if (_mnemonicController.text.split(' ').length !=
-                                24) {
-                              setState(() {
-                                _mnemonicIsValid = false;
-                                _mnemonicError = AppLocalization.of(context)!
-                                    .mnemonicSizeError;
-                              });
-                            } else {
+                      isPressed == true ||
                               _mnemonicController.text
-                                  .split(' ')
-                                  .forEach((String word) {
-                                if (!AppMnemomics.isValidWord(word)) {
-                                  setState(() {
-                                    _mnemonicIsValid = false;
-                                    _mnemonicError =
+                                      .trim()
+                                      .split(' ')
+                                      .length !=
+                                  24
+                          ? AppButton.buildAppButton(
+                              const Key('ok'),
+                              context,
+                              AppButtonType.primaryOutline,
+                              AppLocalization.of(context)!.ok,
+                              Dimens.buttonTopDimens,
+                              onPressed: () {},
+                            )
+                          : AppButton.buildAppButton(
+                              const Key('ok'),
+                              context,
+                              AppButtonType.primary,
+                              AppLocalization.of(context)!.ok,
+                              Dimens.buttonTopDimens,
+                              onPressed: () async {
+                                setState(() {
+                                  _mnemonicError = '';
+                                  isPressed = true;
+                                });
+                                _mnemonicFocusNode.unfocus();
+                                if (AppMnemomics.validateMnemonic(
+                                    _mnemonicController.text
+                                        .trim()
+                                        .split(' '))) {
+                                  String seed = AppMnemomics.mnemonicListToSeed(
+                                      _mnemonicController.text
+                                          .trim()
+                                          .split(' '));
+                                  final Vault _vault =
+                                      await Vault.getInstance();
+                                  _vault.setSeed(seed);
+                                  Price tokenPrice = await Price.getCurrency(
+                                      StateContainer.of(context)
+                                          .curCurrency
+                                          .currency
+                                          .name);
+                                  AppWallet? appWallet = await KeychainUtil()
+                                      .getListAccountsFromKeychain(
+                                          StateContainer.of(context).appWallet,
+                                          seed,
+                                          StateContainer.of(context)
+                                              .curCurrency
+                                              .currency
+                                              .name,
+                                          StateContainer.of(context)
+                                              .curNetwork
+                                              .getNetworkCryptoCurrencyLabel(),
+                                          tokenPrice);
+                                  StateContainer.of(context).appWallet =
+                                      appWallet;
+                                  List<Account>? accounts =
+                                      appWallet!.appKeychain!.accounts;
+
+                                  if (accounts == null ||
+                                      accounts.length == 0) {
+                                    setState(() {
+                                      _mnemonicIsValid = false;
+                                      _mnemonicError =
+                                          AppLocalization.of(context)!
+                                              .noKeychain;
+                                    });
+                                  } else {
+                                    accounts.sort(
+                                        (a, b) => a.name!.compareTo(b.name!));
+                                    await _accountsDialog(accounts);
+                                    accounts.forEach((Account account) async {
+                                      await sl
+                                          .get<DBHelper>()
+                                          .addAccount(account);
+                                    });
+                                    StateContainer.of(context).requestUpdate();
+                                    bool biometricsAvalaible = await sl
+                                        .get<BiometricUtil>()
+                                        .hasBiometrics();
+                                    List<PickerItem> accessModes = [];
+                                    accessModes.add(PickerItem(
+                                        AppLocalization.of(context)!.pinMethod,
                                         AppLocalization.of(context)!
-                                            .mnemonicInvalidWord
-                                            .replaceAll('%1', word);
+                                            .configureSecurityExplanationPIN,
+                                        AuthenticationMethod.getIcon(
+                                            AuthMethod.pin),
+                                        StateContainer.of(context)
+                                            .curTheme
+                                            .pickerItemIconEnabled,
+                                        AuthMethod.pin,
+                                        true));
+                                    accessModes.add(PickerItem(
+                                        AppLocalization.of(context)!
+                                            .passwordMethod,
+                                        AppLocalization.of(context)!
+                                            .configureSecurityExplanationPassword,
+                                        AuthenticationMethod.getIcon(
+                                            AuthMethod.password),
+                                        StateContainer.of(context)
+                                            .curTheme
+                                            .pickerItemIconEnabled,
+                                        AuthMethod.password,
+                                        true));
+                                    if (biometricsAvalaible) {
+                                      accessModes.add(PickerItem(
+                                          AppLocalization.of(context)!
+                                              .biometricsMethod,
+                                          AppLocalization.of(context)!
+                                              .configureSecurityExplanationBiometrics,
+                                          AuthenticationMethod.getIcon(
+                                              AuthMethod.biometrics),
+                                          StateContainer.of(context)
+                                              .curTheme
+                                              .pickerItemIconEnabled,
+                                          AuthMethod.biometrics,
+                                          true));
+                                    }
+
+                                    accessModes.add(PickerItem(
+                                        AppLocalization.of(context)!
+                                            .biometricsUnirisMethod,
+                                        AppLocalization.of(context)!
+                                            .configureSecurityExplanationUnirisBiometrics,
+                                        AuthenticationMethod.getIcon(
+                                            AuthMethod.biometricsUniris),
+                                        StateContainer.of(context)
+                                            .curTheme
+                                            .pickerItemIconEnabled,
+                                        AuthMethod.biometricsUniris,
+                                        false));
+
+                                    accessModes.add(PickerItem(
+                                        AppLocalization.of(context)!
+                                            .yubikeyWithYubiCloudMethod,
+                                        AppLocalization.of(context)!
+                                            .configureSecurityExplanationYubikey,
+                                        AuthenticationMethod.getIcon(
+                                            AuthMethod.yubikeyWithYubicloud),
+                                        StateContainer.of(context)
+                                            .curTheme
+                                            .pickerItemIconEnabled,
+                                        AuthMethod.yubikeyWithYubicloud,
+                                        true));
+                                    Navigator.of(context).pushNamed(
+                                        '/intro_configure_security',
+                                        arguments: accessModes);
+                                  }
+                                } else {
+                                  _mnemonicController.text
+                                      .trim()
+                                      .split(' ')
+                                      .forEach((String word) {
+                                    if (!AppMnemomics.isValidWord(word)) {
+                                      setState(() {
+                                        _mnemonicIsValid = false;
+                                        _mnemonicError =
+                                            AppLocalization.of(context)!
+                                                .mnemonicInvalidWord
+                                                .replaceAll('%1', word);
+                                      });
+                                    }
                                   });
                                 }
-                              });
-                            }
-                          }
-                        },
-                      ),
+                                setState(() {
+                                  isPressed = false;
+                                });
+                              },
+                            ),
                     ],
                   ),
                 ],
@@ -490,7 +524,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
           );
         });
     if (selection != null) {
-      StateContainer.of(context)
+      await StateContainer.of(context)
           .appWallet!
           .appKeychain!
           .setAccountSelected(selection);
