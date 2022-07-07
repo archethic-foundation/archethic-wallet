@@ -834,19 +834,29 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
             }
           },
         ),
-        _sendAmountController!.text.isNotEmpty
-            ? Container(
-                margin: const EdgeInsets.only(right: 40),
-                alignment: Alignment.centerRight,
-                child: primaryCurrency == PrimaryCurrency.network
-                    ? Text('= ${_convertNetworkCurrencyToSelectedCurrency()}',
-                        textAlign: TextAlign.right,
-                        style: AppStyles.textStyleSize14W100Primary(context))
-                    : Text('= ${_convertSelectedCurrencyToNetworkCurrency()}',
-                        textAlign: TextAlign.right,
-                        style: AppStyles.textStyleSize14W100Primary(context)),
-              )
-            : const SizedBox(),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Container(
+            margin: const EdgeInsets.only(left: 40),
+            alignment: Alignment.centerLeft,
+            child: AutoSizeText(
+              '1 ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!} = ${CurrencyUtil.getAmountPlusSymbol(StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.fiatCurrencyCode!, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!)}',
+              style: AppStyles.textStyleSize14W100Primary(context),
+            ),
+          ),
+          _sendAmountController!.text.isNotEmpty
+              ? Container(
+                  margin: const EdgeInsets.only(right: 40),
+                  alignment: Alignment.centerRight,
+                  child: primaryCurrency == PrimaryCurrency.network
+                      ? Text('= ${_convertNetworkCurrencyToSelectedCurrency()}',
+                          textAlign: TextAlign.right,
+                          style: AppStyles.textStyleSize14W100Primary(context))
+                      : Text('= ${_convertSelectedCurrencyToNetworkCurrency()}',
+                          textAlign: TextAlign.right,
+                          style: AppStyles.textStyleSize14W100Primary(context)),
+                )
+              : const SizedBox(),
+        ]),
       ],
     );
   }
