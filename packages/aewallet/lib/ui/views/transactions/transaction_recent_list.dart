@@ -47,21 +47,8 @@ class _TxListWidgetState extends State<TxListWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .recentTransactions!
-                          .isNotEmpty ||
-                      StateContainer.of(context).recentTransactionsLoading ==
-                          true
-                  ? Text(AppLocalization.of(context)!.recentTransactionsHeader,
-                      style:
-                          AppStyles.textStyleSize14W600EquinoxPrimary(context))
-                  : Text(
-                      AppLocalization.of(context)!
-                          .recentTransactionsNoTransactionYet,
-                      style: AppStyles.textStyleSize14W600Primary(context)),
+              Text(AppLocalization.of(context)!.recentTransactionsHeader,
+                  style: AppStyles.textStyleSize14W600EquinoxPrimary(context)),
               if (kIsWeb || Platform.isMacOS || Platform.isWindows)
                 IconButton(
                   icon: const Icon(Icons.refresh),
@@ -79,82 +66,92 @@ class _TxListWidgetState extends State<TxListWidget> {
                 },
                 child: buildIconDataWidget(
                     context, Icons.arrow_circle_right_outlined, 20, 20),
-              ),
+              )
             ],
           ),
         ),
         Container(
-          height: 100 *
-              StateContainer.of(context)
-                  .appWallet!
-                  .appKeychain!
-                  .getAccountSelected()!
-                  .recentTransactions!
-                  .sublist(
-                      0,
-                      min(
-                          3,
+          height: 80 *
+                  StateContainer.of(context)
+                      .appWallet!
+                      .appKeychain!
+                      .getAccountSelected()!
+                      .recentTransactions!
+                      .sublist(
+                          0,
+                          min(
+                              3,
+                              StateContainer.of(context)
+                                  .appWallet!
+                                  .appKeychain!
+                                  .getAccountSelected()!
+                                  .recentTransactions!
+                                  .length))
+                      .length
+                      .toDouble() +
+              70,
+          color: Colors.transparent,
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 6, right: 6, top: 6),
+            child: StateContainer.of(context)
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .recentTransactions!
+                        .isNotEmpty ||
+                    StateContainer.of(context).recentTransactionsLoading == true
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    itemCount: StateContainer.of(context)
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .recentTransactions!
+                        .sublist(
+                            0,
+                            min(
+                                3,
+                                StateContainer.of(context)
+                                    .appWallet!
+                                    .appKeychain!
+                                    .getAccountSelected()!
+                                    .recentTransactions!
+                                    .length))
+                        .length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return displayTxDetailTransfer(
+                          context,
                           StateContainer.of(context)
                               .appWallet!
                               .appKeychain!
                               .getAccountSelected()!
                               .recentTransactions!
-                              .length))
-                  .length
-                  .toDouble(),
-          color: Colors.transparent,
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 6, right: 6, top: 6),
-            child: RefreshIndicator(
-              backgroundColor:
-                  StateContainer.of(context).curTheme.backgroundDark,
-              onRefresh: () => Future<void>.sync(() {
-                sl.get<HapticUtil>().feedback(FeedbackType.light,
-                    StateContainer.of(context).activeVibrations);
-                StateContainer.of(context).requestUpdate();
-              }),
-              child: ListView.builder(
-                shrinkWrap: true,
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                itemCount: StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!
-                    .recentTransactions!
-                    .sublist(
-                        0,
-                        min(
-                            3,
-                            StateContainer.of(context)
-                                .appWallet!
-                                .appKeychain!
-                                .getAccountSelected()!
-                                .recentTransactions!
-                                .length))
-                    .length,
-                itemBuilder: (BuildContext context, int index) {
-                  return displayTxDetailTransfer(
-                      context,
-                      StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .recentTransactions!
-                          .sublist(
-                              0,
-                              min(
-                                  3,
-                                  StateContainer.of(context)
-                                      .appWallet!
-                                      .appKeychain!
-                                      .getAccountSelected()!
-                                      .recentTransactions!
-                                      .length))[index],
-                      index);
-                },
-              ),
-            ),
+                              .sublist(
+                                  0,
+                                  min(
+                                      3,
+                                      StateContainer.of(context)
+                                          .appWallet!
+                                          .appKeychain!
+                                          .getAccountSelected()!
+                                          .recentTransactions!
+                                          .length))[index],
+                          index);
+                    },
+                  )
+                : Container(
+                    height: 30,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        AppLocalization.of(context)!
+                            .recentTransactionsNoTransactionYet,
+                        style: AppStyles.textStyleSize14W600Primary(context),
+                      ),
+                    ),
+                  ),
           ),
         ),
       ],
@@ -406,7 +403,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                   ),
                 ),
               ),
-              if (index == 2)
+              /*if (index == 2)
                 Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child: GestureDetector(
@@ -429,7 +426,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                                   context)),
                     ),
                   ),
-                ),
+                ),*/
             ],
           ),
         );

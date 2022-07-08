@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 class NotificationIconWidget extends StatefulWidget {
-  final _NotificationIconWidgetState abs = _NotificationIconWidgetState();
+  final NotificationIconWidgetState abs = NotificationIconWidgetState();
   void refresh() {
     abs.refresh();
   }
 
   @override
-  _NotificationIconWidgetState createState() => abs;
+  NotificationIconWidgetState createState() => abs;
 }
 
-class _NotificationIconWidgetState extends State<NotificationIconWidget> {
+class NotificationIconWidgetState extends State<NotificationIconWidget> {
   @override
   Widget build(BuildContext context) {
     return StateContainer.of(context).activeNotifications

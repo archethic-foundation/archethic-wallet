@@ -94,12 +94,28 @@ class AuthentificationMethodDialog {
                     }
                     break;
                   case AuthMethod.password:
-                    await Navigator.of(context).pushNamed('/update_password');
+                    await Navigator.of(context)
+                        .pushNamed('/update_password', arguments: {
+                      'name': StateContainer.of(context)
+                          .appWallet!
+                          .appKeychain!
+                          .getAccountSelected()!
+                          .name,
+                      'seed': await StateContainer.of(context).getSeed()
+                    });
                     Navigator.pop(context, value.value);
                     await getDialog(context, hasBiometrics, curAuthMethod);
                     break;
                   case AuthMethod.yubikeyWithYubicloud:
-                    await Navigator.of(context).pushNamed('/update_yubikey');
+                    await Navigator.of(context)
+                        .pushNamed('/update_yubikey', arguments: {
+                      'name': StateContainer.of(context)
+                          .appWallet!
+                          .appKeychain!
+                          .getAccountSelected()!
+                          .name,
+                      'seed': await StateContainer.of(context).getSeed()
+                    });
                     Navigator.pop(context, value.value);
                     await getDialog(context, hasBiometrics, curAuthMethod);
                     break;

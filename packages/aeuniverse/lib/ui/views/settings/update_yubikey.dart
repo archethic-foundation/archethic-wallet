@@ -11,7 +11,10 @@ import 'package:core/util/vault.dart';
 import 'package:aeuniverse/ui/views/settings/set_yubikey.dart';
 
 class UpdateYubikey extends StatefulWidget {
-  const UpdateYubikey({super.key});
+  final String name;
+  final String seed;
+
+  const UpdateYubikey({super.key, this.name = '', this.seed = ''});
   @override
   State<UpdateYubikey> createState() => _UpdateYubikeyState();
 }
@@ -29,12 +32,13 @@ class _UpdateYubikeyState extends State<UpdateYubikey> {
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
         if (snapshot.hasData) {
           return SetYubikey(
-            header: header,
-            description: description,
-            apiKey: apiKey,
-            clientID: clientID,
-            initPreferences: false,
-          );
+              header: header,
+              description: description,
+              apiKey: apiKey,
+              clientID: clientID,
+              initPreferences: false,
+              name: widget.name,
+              seed: widget.seed);
         } else {
           return Center(child: CircularProgressIndicator());
         }

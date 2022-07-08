@@ -239,13 +239,21 @@ class _AppState extends State<App> {
                 settings: settings,
               );
             case '/update_password':
+              Map<String, String?> args =
+                  settings.arguments as Map<String, String?>;
               return MaterialPageRoute(
-                builder: (_) => const UpdatePassword(),
+                builder: (_) => UpdatePassword(
+                    name: args['name'] == null ? '' : args['name'] as String,
+                    seed: args['seed'] == null ? '' : args['seed'] as String),
                 settings: settings,
               );
             case '/update_yubikey':
+              Map<String, String?> args =
+                  settings.arguments as Map<String, String?>;
               return MaterialPageRoute(
-                builder: (_) => const UpdateYubikey(),
+                builder: (_) => UpdateYubikey(
+                    name: args['name'] == null ? '' : args['name'] as String,
+                    seed: args['seed'] == null ? '' : args['seed'] as String),
                 settings: settings,
               );
             case '/intro_import':

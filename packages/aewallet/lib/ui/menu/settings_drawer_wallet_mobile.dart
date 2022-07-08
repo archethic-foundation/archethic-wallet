@@ -228,10 +228,13 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   }
 
   Future<void> _networkDialog() async {
-    _curNetworksSetting =
-        (await NetworkDialog.getDialog(context, _curNetworksSetting))!;
-    await StateContainer.of(context).requestUpdate();
-    setState(() {});
+    NetworksSetting? ns =
+        await NetworkDialog.getDialog(context, _curNetworksSetting);
+    if (ns != null) {
+      _curNetworksSetting = ns;
+      await StateContainer.of(context).requestUpdate();
+      setState(() {});
+    }
   }
 
   Future<void> _lockTimeoutDialog() async {

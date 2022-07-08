@@ -593,55 +593,65 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                   ),
                 ),
                 Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: heightBack,
-                        child: Stack(
-                          children: <Widget>[
-                            Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(StateContainer.of(context)
-                                        .curTheme
-                                        .background4Small!),
-                                    fit: BoxFit.none,
-                                    opacity: 0.8),
-                              ),
-                              child: Stack(
-                                children: <Widget>[
-                                  SingleChildScrollView(
-                                    physics:
-                                        const AlwaysScrollableScrollPhysics(),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        const SizedBox(
-                                          height: 7,
-                                        ),
-                                        MenuWidgetWallet()
-                                            .buildMainMenuIcons(context),
-                                        const SizedBox(
-                                          height: 15,
-                                        ),
-                                        TxListWidget(),
-                                        LastArticlesWidget(),
-                                        const SizedBox(
-                                          height: 30,
-                                        ),
-                                      ],
+                  child: RefreshIndicator(
+                    backgroundColor:
+                        StateContainer.of(context).curTheme.backgroundDark,
+                    onRefresh: () => Future<void>.sync(() {
+                      sl.get<HapticUtil>().feedback(FeedbackType.light,
+                          StateContainer.of(context).activeVibrations);
+                      StateContainer.of(context).requestUpdate();
+                    }),
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: heightBack,
+                          child: Stack(
+                            children: <Widget>[
+                              Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          StateContainer.of(context)
+                                              .curTheme
+                                              .background4Small!),
+                                      fit: BoxFit.none,
+                                      opacity: 0.8),
+                                ),
+                                child: Stack(
+                                  children: <Widget>[
+                                    SingleChildScrollView(
+                                      physics:
+                                          const AlwaysScrollableScrollPhysics(),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          const SizedBox(
+                                            height: 7,
+                                          ),
+                                          MenuWidgetWallet()
+                                              .buildMainMenuIcons(context),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          TxListWidget(),
+                                          LastArticlesWidget(),
+                                          const SizedBox(
+                                            height: 30,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 )
               ],

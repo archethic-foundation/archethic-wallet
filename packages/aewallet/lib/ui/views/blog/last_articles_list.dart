@@ -85,7 +85,7 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.30,
+            height: 250,
             child: PageView.builder(
               controller: pageController,
               itemCount: posts!.length,
@@ -121,7 +121,7 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
               height: 50,
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.30,
+              height: 250,
             )
           ]);
     }
