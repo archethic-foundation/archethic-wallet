@@ -164,18 +164,6 @@ class SapphireBlueTheme implements BaseTheme {
   String? logoAlone = 'logo_alone';
 
   @override
-  Widget? getBackgroundScreen(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage(background4Small!),
-            fit: BoxFit.cover,
-            opacity: 0.8),
-      ),
-    );
-  }
-
-  @override
   Gradient? gradient = const LinearGradient(
     colors: <Color>[
       Color(0xFF00A4DB),

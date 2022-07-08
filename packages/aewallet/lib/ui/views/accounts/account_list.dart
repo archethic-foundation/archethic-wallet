@@ -57,6 +57,12 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
     widget.accounts!.sort((a, b) => a.name!.compareTo(b.name!));
   }
 
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
   Future<void> _changeAccount(Account account, StateSetter setState) async {
     for (var a in widget.accounts!) {
       if (a.selected!) {
@@ -169,9 +175,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                             TextEditingController nameController =
                                 TextEditingController();
                             String? nameError;
-
                             await showDialog(
-                                barrierDismissible: false,
                                 context: expandedKey.currentContext!,
                                 builder: (BuildContext context) {
                                   return StatefulBuilder(
@@ -268,9 +272,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                   if (isPressed == true) {
                                                     return;
                                                   }
-
                                                   nameError = '';
-
                                                   if (nameController
                                                       .text.isEmpty) {
                                                     setState(() {

@@ -1518,6 +1518,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "showBlog": "Show blog",
+  "@showBlog": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "enterEndpointBlank": "The endpoint cannot be empty",
   "@enterEndpointBlank": {
     "type": "text",
@@ -1574,6 +1580,12 @@
   },
   "priceChartHeader": "Price Chart",
   "@priceChartHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "blogHeader": "Archethic Blog",
+  "@blogHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

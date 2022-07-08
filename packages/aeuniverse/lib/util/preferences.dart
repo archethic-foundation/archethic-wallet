@@ -41,6 +41,7 @@ class Preferences {
 
   static const String _pinPadShuffle = 'archethic_pinPadShuffle';
   static const String _showBalances = 'archethic_showBalances';
+  static const String _showBlog = 'archethic_showBlog';
   static const String _showPriceChart = 'archethic_showPriceChart';
   static const String _activeVibrations = 'archethic_activeVibrations';
   static const String _activeNotifications = 'archethic_activeNotifications';
@@ -121,6 +122,10 @@ class Preferences {
   Future<void> setShowBalances(bool value) => _setValue(_showBalances, value);
 
   bool getShowBalances() => _getValue(_showBalances, defaultValue: true);
+
+  Future<void> setShowBlog(bool value) => _setValue(_showBlog, value);
+
+  bool getShowBlog() => _getValue(_showBlog, defaultValue: true);
 
   Future<void> setActiveVibrations(bool value) =>
       _setValue(_activeVibrations, value);

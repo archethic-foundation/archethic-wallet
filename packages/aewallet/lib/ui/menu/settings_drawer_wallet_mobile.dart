@@ -84,6 +84,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
 
   bool _pinPadShuffleActive = false;
   bool _showBalancesActive = false;
+  bool _showBlogActive = false;
   bool _vibrationActive = false;
   bool _notificationsActive = false;
   bool _showPriceChartActive = false;
@@ -110,6 +111,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       setState(() {
         _pinPadShuffleActive = preferences.getPinPadShuffle();
         _showBalancesActive = preferences.getShowBalances();
+        _showBlogActive = preferences.getShowBlog();
         _vibrationActive = preferences.getActiveVibrations();
         _notificationsActive = preferences.getActiveNotifications();
         _showPriceChartActive = preferences.getShowPriceChart();
@@ -953,6 +955,24 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         StateContainer.of(context).showBalance =
                             _showBalancesActive;
                         preferences.setShowBalances(_showBalancesActive);
+                      });
+                    }),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.text15,
+                    ),
+                    AppSettings.buildSettingsListItemSwitch(
+                        context,
+                        AppLocalization.of(context)!.showBlog,
+                        'packages/aewallet/assets/icons/blog.png',
+                        StateContainer.of(context).curTheme.iconDrawer!,
+                        _showBlogActive, onChanged: (bool isSwitched) async {
+                      final Preferences preferences =
+                          await Preferences.getInstance();
+                      setState(() {
+                        _showBlogActive = isSwitched;
+                        StateContainer.of(context).showBlog = _showBlogActive;
+                        preferences.setShowBlog(_showBlogActive);
                       });
                     }),
                     Divider(

@@ -91,8 +91,6 @@ abstract class BaseTheme {
   String? logo;
   String? logoAlone;
 
-  Widget? getBackgroundScreen(BuildContext context);
-
   Gradient? gradient;
 
   Decoration getDecorationBalance();

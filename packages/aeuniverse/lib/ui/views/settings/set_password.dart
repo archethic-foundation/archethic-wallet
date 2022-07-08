@@ -468,6 +468,7 @@ class _SetPasswordState extends State<SetPassword> {
       if (widget.initPreferences == true) {
         _preferences.setLock(true);
         _preferences.setShowBalances(true);
+        _preferences.setShowBlog(true);
         _preferences.setActiveVibrations(true);
         _preferences.setActiveNotifications(true);
         StateContainer.of(context).checkTransactionInputs(

@@ -136,6 +136,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                         await Preferences.getInstance();
                                     _preferences.setLock(true);
                                     _preferences.setShowBalances(true);
+                                    _preferences.setShowBlog(true);
                                     _preferences.setActiveVibrations(true);
                                     _preferences.setActiveNotifications(true);
                                     StateContainer.of(context)
@@ -176,6 +177,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                           await Preferences.getInstance();
                                       _preferences.setLock(true);
                                       _preferences.setShowBalances(true);
+                                      _preferences.setShowBlog(true);
                                       _preferences.setActiveVibrations(true);
                                       _preferences.setActiveNotifications(true);
                                       StateContainer.of(context)

@@ -657,6 +657,10 @@ class AppLocalization {
     return Intl.message('Show balances', name: 'showBalances');
   }
 
+  String get showBlog {
+    return Intl.message('Show blog', name: 'showBlog');
+  }
+
   String get activateVibrations {
     return Intl.message('Activate vibrations', name: 'activateVibrations');
   }
@@ -849,6 +853,10 @@ class AppLocalization {
 
   String get priceChartHeader {
     return Intl.message('Price Chart', name: 'priceChartHeader');
+  }
+
+  String get blogHeader {
+    return Intl.message('Archethic Blog', name: 'blogHeader');
   }
 
   String get addToken {

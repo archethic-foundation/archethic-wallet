@@ -60,6 +60,13 @@ dependencies:
   # The Font Awesome Icon pack available as set of Flutter Icons.
   font_awesome_flutter: ^10.1.0
 
+  # Ghost CMS API client that closely follows the official implementation
+  #ghost: ^1.0.2
+  ghost:
+    git:
+      url: https://github.com/redDwarf03/dart_ghost.git
+      ref: main
+
   # Lazily load and display pages of items as the user scrolls down your screen.
   infinite_scroll_pagination: ^3.2.0
   

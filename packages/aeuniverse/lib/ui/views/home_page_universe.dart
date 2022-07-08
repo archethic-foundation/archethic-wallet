@@ -6,6 +6,7 @@ import 'dart:async';
 // Flutter imports:
 import 'package:aeuniverse/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aewallet/ui/views/accounts/account_list.dart';
+import 'package:aewallet/ui/views/blog/last_articles_list.dart';
 import 'package:core/bus/notifications_event.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/notifications_util.dart';
@@ -51,8 +52,6 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
 
   bool? accountIsPressed;
 
-  ScrollController? _scrollController;
-
   AnimationController? animationController;
   ColorTween? colorTween;
   CurvedAnimation? curvedAnimation;
@@ -86,8 +85,6 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
     );
     _opacityAnimation!.addStatusListener(_animationStatusListener);
     _placeholderCardAnimationController!.forward();
-
-    _scrollController = ScrollController();
   }
 
   listenNotifications() =>
@@ -189,7 +186,6 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
     _destroyBus();
     WidgetsBinding.instance.removeObserver(this);
     _placeholderCardAnimationController!.dispose();
-    _scrollController!.dispose();
     super.dispose();
   }
 
@@ -253,6 +249,17 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
 
   @override
   Widget build(BuildContext context) {
+    double heightBalance = 60;
+    if (StateContainer.of(context).showBalance == false) {
+      heightBalance = 0;
+    }
+    double heightPriceChart = MediaQuery.of(context).size.height * 0.08 + 30;
+    if (StateContainer.of(context).showPriceChart == false) {
+      heightPriceChart = 0;
+    }
+    double heightBack = MediaQuery.of(context).size.height -
+        (171 + heightBalance + heightPriceChart);
+
     return Responsive.isDesktop(context) == true
         ? Scaffold(
             extendBodyBehindAppBar: true,
@@ -260,7 +267,6 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
             resizeToAvoidBottomInset: false,
             backgroundColor: StateContainer.of(context).curTheme.background,
             body: SingleChildScrollView(
-              physics: const NeverScrollableScrollPhysics(),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
@@ -277,9 +283,16 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                   height: MediaQuery.of(context).size.height,
                   child: Stack(
                     children: <Widget>[
-                      StateContainer.of(context)
-                          .curTheme
-                          .getBackgroundScreen(context)!,
+                      Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(StateContainer.of(context)
+                                  .curTheme
+                                  .background4Small!),
+                              fit: BoxFit.none,
+                              opacity: 0.8),
+                        ),
+                      ),
                       SizedBox(
                         width: Responsive.drawerWidth(context),
                         child: Padding(
@@ -442,112 +455,117 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                 child: SettingsSheetWalletMobile(),
               ),
             ),
-            body: SingleChildScrollView(
-              physics: const NeverScrollableScrollPhysics(),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: <Color>[
-                      StateContainer.of(context).curTheme.backgroundMainTop!,
-                      StateContainer.of(context).curTheme.backgroundMainBottom!
-                    ],
+            body: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(top: 120.0),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: <Color>[
+                        StateContainer.of(context).curTheme.backgroundMainTop!,
+                        StateContainer.of(context)
+                            .curTheme
+                            .backgroundMainBottom!
+                      ],
+                    ),
                   ),
-                ),
-                child: SafeArea(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Column(
                         children: <Widget>[
-                          InkWell(
-                            onTap: () async {
-                              if (accountIsPressed == false) {
-                                setState(() {
-                                  accountIsPressed = true;
-                                });
-                                sl.get<HapticUtil>().feedback(
-                                    FeedbackType.light,
-                                    StateContainer.of(context)
-                                        .activeVibrations);
-                                AccountsList((await KeychainUtil()
-                                            .getListAccountsFromKeychain(
-                                                StateContainer.of(context)
-                                                    .appWallet!,
-                                                await StateContainer.of(context)
-                                                    .getSeed(),
-                                                StateContainer.of(context)
-                                                    .curCurrency
-                                                    .currency
-                                                    .name,
-                                                StateContainer.of(context)
-                                                    .appWallet!
-                                                    .appKeychain!
-                                                    .getAccountSelected()!
-                                                    .balance!
-                                                    .nativeTokenName!,
-                                                StateContainer.of(context)
-                                                    .appWallet!
-                                                    .appKeychain!
-                                                    .getAccountSelected()!
-                                                    .balance!
-                                                    .tokenPrice!,
-                                                currentName:
-                                                    StateContainer.of(context)
-                                                        .appWallet!
-                                                        .appKeychain!
-                                                        .getAccountSelected()!
-                                                        .name))!
-                                        .appKeychain!
-                                        .accounts!)
-                                    .mainBottomSheet(context);
-                                setState(() {
-                                  accountIsPressed = false;
-                                });
-                              }
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                StateContainer.of(context)
-                                            .appWallet!
-                                            .appKeychain!
-                                            .getAccountSelected()!
-                                            .name !=
-                                        null
-                                    ? Align(
-                                        alignment: Alignment.center,
-                                        child: Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.08,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                StateContainer.of(context)
-                                                    .appWallet!
-                                                    .appKeychain!
-                                                    .getAccountSelected()!
-                                                    .name!,
-                                                style: AppStyles
-                                                    .textStyleSize20W700EquinoxPrimary(
-                                                        context),
-                                              ),
-                                            ],
+                          Container(
+                            height: 30,
+                            child: InkWell(
+                              onTap: () async {
+                                if (accountIsPressed == false) {
+                                  setState(() {
+                                    accountIsPressed = true;
+                                  });
+                                  sl.get<HapticUtil>().feedback(
+                                      FeedbackType.light,
+                                      StateContainer.of(context)
+                                          .activeVibrations);
+                                  AccountsList((await KeychainUtil()
+                                              .getListAccountsFromKeychain(
+                                                  StateContainer.of(context)
+                                                      .appWallet!,
+                                                  await StateContainer.of(
+                                                          context)
+                                                      .getSeed(),
+                                                  StateContainer.of(context)
+                                                      .curCurrency
+                                                      .currency
+                                                      .name,
+                                                  StateContainer.of(context)
+                                                      .appWallet!
+                                                      .appKeychain!
+                                                      .getAccountSelected()!
+                                                      .balance!
+                                                      .nativeTokenName!,
+                                                  StateContainer.of(context)
+                                                      .appWallet!
+                                                      .appKeychain!
+                                                      .getAccountSelected()!
+                                                      .balance!
+                                                      .tokenPrice!,
+                                                  currentName:
+                                                      StateContainer.of(context)
+                                                          .appWallet!
+                                                          .appKeychain!
+                                                          .getAccountSelected()!
+                                                          .name))!
+                                          .appKeychain!
+                                          .accounts!)
+                                      .mainBottomSheet(context);
+                                  setState(() {
+                                    accountIsPressed = false;
+                                  });
+                                }
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  StateContainer.of(context)
+                                              .appWallet!
+                                              .appKeychain!
+                                              .getAccountSelected()!
+                                              .name !=
+                                          null
+                                      ? Align(
+                                          alignment: Alignment.center,
+                                          child: Container(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  StateContainer.of(context)
+                                                      .appWallet!
+                                                      .appKeychain!
+                                                      .getAccountSelected()!
+                                                      .name!,
+                                                  style: AppStyles
+                                                      .textStyleSize20W700EquinoxPrimary(
+                                                          context),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      )
-                                    : const SizedBox(),
-                              ],
+                                        )
+                                      : const SizedBox(),
+                                ],
+                              ),
                             ),
+                          ),
+                          const SizedBox(
+                            height: 10,
                           ),
                           StateContainer.of(context).showBalance
                               ? BalanceInfosWidget().getBalance(context)
@@ -571,51 +589,62 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                         height: 1,
                         color: StateContainer.of(context).curTheme.text30,
                       ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: <Widget>[
                       SizedBox(
-                        height: MediaQuery.of(context).size.height -
-                            kToolbarHeight -
-                            kBottomNavigationBarHeight,
+                        height: heightBack,
                         child: Stack(
                           children: <Widget>[
-                            StateContainer.of(context)
-                                .curTheme
-                                .getBackgroundScreen(context)!,
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                const SizedBox(
-                                  height: 7,
-                                ),
-                                MenuWidgetWallet().buildMainMenuIcons(context),
-                                /*Divider(
-                                  height: 15,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .text30,
-                                ),
-                                MenuWidgetWallet().buildMenuTxExplorer(context),
-                                Divider(
-                                  height: 15,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .text30,
-                                ),*/
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                const Expanded(
-                                  child: TxListWidget(),
-                                ),
-                              ],
+                            Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(StateContainer.of(context)
+                                        .curTheme
+                                        .background4Small!),
+                                    fit: BoxFit.none,
+                                    opacity: 0.8),
+                              ),
+                              child: Stack(
+                                children: <Widget>[
+                                  SingleChildScrollView(
+                                    physics:
+                                        const AlwaysScrollableScrollPhysics(),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        const SizedBox(
+                                          height: 7,
+                                        ),
+                                        MenuWidgetWallet()
+                                            .buildMainMenuIcons(context),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        TxListWidget(),
+                                        LastArticlesWidget(),
+                                        const SizedBox(
+                                          height: 30,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
                       ),
                     ],
                   ),
-                ),
-              ),
+                )
+              ],
             ),
           );
   }

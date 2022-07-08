@@ -46,9 +46,15 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                 ],
               ),
             ),
-            child: StateContainer.of(context)
-                .curTheme
-                .getBackgroundScreen(context)!,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(
+                        StateContainer.of(context).curTheme.background4Small!),
+                    fit: BoxFit.none,
+                    opacity: 0.8),
+              ),
+            ),
           ),
           LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) =>

@@ -304,6 +304,7 @@ class _SetYubikeyState extends State<SetYubikey> {
           if (widget.initPreferences) {
             _preferences.setLock(true);
             _preferences.setShowBalances(true);
+            _preferences.setShowBlog(true);
             _preferences.setActiveVibrations(true);
             _preferences.setActiveNotifications(true);
             StateContainer.of(context).checkTransactionInputs(

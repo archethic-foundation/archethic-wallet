@@ -85,6 +85,7 @@ class StateContainerState extends State<StateContainer> {
 
   bool showBalance = false;
   bool showPriceChart = false;
+  bool showBlog = false;
   bool activeVibrations = false;
   bool activeNotifications = false;
 
@@ -110,6 +111,7 @@ class StateContainerState extends State<StateContainer> {
             curPrimaryCurrency = _preferences.getPrimaryCurrency();
             curNetwork = _preferences.getNetwork();
             showBalance = _preferences.getShowBalances();
+            showBlog = _preferences.getShowBlog();
             activeVibrations = _preferences.getActiveVibrations();
             activeNotifications = _preferences.getActiveNotifications();
             showPriceChart = _preferences.getShowPriceChart();
