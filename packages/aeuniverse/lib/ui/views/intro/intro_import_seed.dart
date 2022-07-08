@@ -438,7 +438,18 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                         true));
                                     Navigator.of(context).pushNamed(
                                         '/intro_configure_security',
-                                        arguments: accessModes);
+                                        arguments: {
+                                          'accessModes': accessModes,
+                                          'name':
+                                              await StateContainer.of(context)
+                                                  .appWallet!
+                                                  .appKeychain!
+                                                  .getAccountSelected()!
+                                                  .name,
+                                          'seed':
+                                              await StateContainer.of(context)
+                                                  .getSeed()
+                                        });
                                   }
                                 } else {
                                   _mnemonicController.text

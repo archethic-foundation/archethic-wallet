@@ -10,7 +10,10 @@ import 'package:core/localization.dart';
 import 'package:aeuniverse/ui/views/settings/set_yubikey.dart';
 
 class IntroYubikey extends StatefulWidget {
-  const IntroYubikey({super.key});
+  final String? name;
+  final String? seed;
+
+  const IntroYubikey({super.key, this.name = '', this.seed = ''});
   @override
   State<IntroYubikey> createState() => _IntroYubikeyState();
 }
@@ -19,9 +22,10 @@ class _IntroYubikeyState extends State<IntroYubikey> {
   @override
   Widget build(BuildContext context) {
     return SetYubikey(
-      header: AppLocalization.of(context)!.seYubicloudHeader,
-      description: AppLocalization.of(context)!.seYubicloudDescription,
-      initPreferences: true,
-    );
+        header: AppLocalization.of(context)!.seYubicloudHeader,
+        description: AppLocalization.of(context)!.seYubicloudDescription,
+        initPreferences: true,
+        name: widget.name,
+        seed: widget.seed);
   }
 }

@@ -2,7 +2,9 @@
 // ignore_for_file: always_specify_types
 
 // Flutter imports:
+import 'package:core/model/data/appdb.dart';
 import 'package:core/model/primary_currency.dart';
+import 'package:core/util/keychain_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -24,7 +26,11 @@ import 'package:aeuniverse/util/preferences.dart';
 
 class IntroConfigureSecurity extends StatefulWidget {
   final List<PickerItem>? accessModes;
-  const IntroConfigureSecurity({super.key, this.accessModes});
+  final String? name;
+  final String? seed;
+
+  const IntroConfigureSecurity(
+      {super.key, this.accessModes, required this.name, required this.seed});
 
   @override
   State<IntroConfigureSecurity> createState() => _IntroConfigureSecurityState();
@@ -145,7 +151,6 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                                 .transactionInputNotification);
                                     _preferences.setPinPadShuffle(false);
                                     _preferences.setShowPriceChart(true);
-
                                     _preferences.setPrimaryCurrency(
                                         PrimaryCurrencySetting(
                                             AvailablePrimaryCurrency.NATIVE));
@@ -155,10 +160,22 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                     _preferences.setAuthMethod(
                                         AuthenticationMethod(
                                             AuthMethod.biometrics));
+                                    await sl.get<DBHelper>().clearAppWallet();
+                                    final Vault vault =
+                                        await Vault.getInstance();
+                                    await vault.setSeed(widget.seed!);
+                                    StateContainer.of(context).appWallet =
+                                        await KeychainUtil().newAppWallet(
+                                            widget.seed!, widget.name!);
+                                    StateContainer.of(context).requestUpdate();
                                     break;
                                   case AuthMethod.password:
-                                    Navigator.of(context)
-                                        .pushNamed('/intro_password');
+                                    Navigator.of(context).pushNamed(
+                                        '/intro_password',
+                                        arguments: {
+                                          'name': widget.name,
+                                          'seed': widget.seed
+                                        });
                                     break;
                                   case AuthMethod.pin:
                                     final String pin =
@@ -169,6 +186,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                         PinOverlayType.newPin,
                                       );
                                     }));
+
                                     if (pin.length > 5) {
                                       final Vault _vault =
                                           await Vault.getInstance();
@@ -194,6 +212,15 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                               LockTimeoutOption.one));
                                       _preferences.setAuthMethod(
                                           AuthenticationMethod(AuthMethod.pin));
+                                      await sl.get<DBHelper>().clearAppWallet();
+                                      final Vault vault =
+                                          await Vault.getInstance();
+                                      await vault.setSeed(widget.seed!);
+                                      StateContainer.of(context).appWallet =
+                                          await KeychainUtil().newAppWallet(
+                                              widget.seed!, widget.name!);
+                                      StateContainer.of(context)
+                                          .requestUpdate();
                                       Navigator.of(context)
                                           .pushNamedAndRemoveUntil(
                                         '/home',
@@ -202,13 +229,16 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                     }
                                     break;
                                   case AuthMethod.yubikeyWithYubicloud:
-                                    Navigator.of(context)
-                                        .pushNamed('/intro_yubikey');
+                                    Navigator.of(context).pushNamed(
+                                        '/intro_yubikey',
+                                        arguments: {
+                                          'name': widget.name,
+                                          'seed': widget.seed
+                                        });
                                     break;
                                   default:
                                     break;
                                 }
-                                StateContainer.of(context).requestUpdate();
                               },
                             ),
                           ),
@@ -230,7 +260,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
         .authenticateWithBiometrics(
             context, AppLocalization.of(context)!.unlockBiometrics);
     if (authenticated) {
-      Navigator.of(context).pushNamedAndRemoveUntil(
+      await Navigator.of(context).pushNamedAndRemoveUntil(
         '/home',
         (Route<dynamic> route) => false,
       );

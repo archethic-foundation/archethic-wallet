@@ -209,21 +209,33 @@ class _AppState extends State<App> {
                 settings: settings,
               );
             case '/intro_configure_security':
+              Map<String, dynamic> args =
+                  settings.arguments as Map<String, dynamic>;
               return MaterialPageRoute<IntroConfigureSecurity>(
                 builder: (_) => IntroConfigureSecurity(
-                    accessModes: settings.arguments == null
+                    accessModes: args['accessModes'] == null
                         ? null
-                        : settings.arguments as List<PickerItem>),
+                        : args['accessModes'] as List<PickerItem>,
+                    name: args['name'] == null ? null : args['name'] as String,
+                    seed: args['seed'] == null ? null : args['seed'] as String),
                 settings: settings,
               );
             case '/intro_password':
+              Map<String, String?> args =
+                  settings.arguments as Map<String, String?>;
               return MaterialPageRoute(
-                builder: (_) => const IntroPassword(),
+                builder: (_) => IntroPassword(
+                    name: args['name'] == null ? '' : args['name'] as String,
+                    seed: args['seed'] == null ? '' : args['seed'] as String),
                 settings: settings,
               );
             case '/intro_yubikey':
+              Map<String, String?> args =
+                  settings.arguments as Map<String, String?>;
               return MaterialPageRoute(
-                builder: (_) => const IntroYubikey(),
+                builder: (_) => IntroYubikey(
+                    name: args['name'] == null ? '' : args['name'] as String,
+                    seed: args['seed'] == null ? '' : args['seed'] as String),
                 settings: settings,
               );
             case '/update_password':
@@ -242,9 +254,15 @@ class _AppState extends State<App> {
                 settings: settings,
               );
             case '/intro_backup_confirm':
+              Map<String, dynamic> args =
+                  settings.arguments as Map<String, dynamic>;
               return MaterialPageRoute<IntroBackupConfirm>(
                 builder: (_) => IntroBackupConfirm(
-                    wordList: settings.arguments as List<String>),
+                    wordList: args['mnemonic'] == null
+                        ? List<String>.empty(growable: true)
+                        : args['mnemonic'] as List<String>,
+                    name: args['name'] == null ? null : args['name'] as String,
+                    seed: args['seed'] == null ? null : args['seed'] as String),
                 settings: settings,
               );
             case '/lock_screen':

@@ -166,21 +166,13 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                               AppLocalization.of(context)!.iveBackedItUp,
                               Dimens.buttonBottomDimens,
                               onPressed: () async {
-                                setState(() {
-                                  isPressed = true;
-                                });
-                                await sl.get<DBHelper>().clearAppWallet();
-                                final Vault vault = await Vault.getInstance();
-                                await vault.setSeed(seed!);
-                                StateContainer.of(context).appWallet =
-                                    await KeychainUtil()
-                                        .newAppWallet(seed!, widget.name!);
-                                setState(() {
-                                  isPressed = false;
-                                });
                                 Navigator.of(context).pushNamed(
                                     '/intro_backup_confirm',
-                                    arguments: mnemonic!);
+                                    arguments: {
+                                      'mnemonic': mnemonic,
+                                      'name': widget.name,
+                                      'seed': seed
+                                    });
                               },
                             ),
                     ],

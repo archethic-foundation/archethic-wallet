@@ -22,8 +22,13 @@ import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 
 class IntroBackupConfirm extends StatefulWidget {
   final List<String> wordList;
-
-  const IntroBackupConfirm({required this.wordList, super.key});
+  final String? name;
+  final String? seed;
+  const IntroBackupConfirm(
+      {required this.wordList,
+      required this.name,
+      required this.seed,
+      super.key});
 
   @override
   State<IntroBackupConfirm> createState() => _IntroBackupConfirmState();
@@ -314,7 +319,11 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                       true));
                                   Navigator.of(context).pushNamed(
                                       '/intro_configure_security',
-                                      arguments: accessModes);
+                                      arguments: {
+                                        'accessModes': accessModes,
+                                        'name': widget.name,
+                                        'seed': widget.seed
+                                      });
                                 }
                               }),
                       ],

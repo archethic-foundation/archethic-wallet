@@ -1,7 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:core/model/data/appdb.dart';
 import 'package:core/model/primary_currency.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/keychain_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -26,10 +29,17 @@ import 'package:aeuniverse/util/preferences.dart';
 class SetPassword extends StatefulWidget {
   final String? header;
   final String? description;
+  final String? name;
+  final String? seed;
   final bool initPreferences;
 
   const SetPassword(
-      {super.key, this.header, this.description, this.initPreferences = false});
+      {super.key,
+      this.header,
+      this.description,
+      this.initPreferences = false,
+      this.name,
+      this.seed});
   @override
   State<SetPassword> createState() => _SetPasswordState();
 }
@@ -461,8 +471,8 @@ class _SetPasswordState extends State<SetPassword> {
       }
     } else {
       Vault _vault = await Vault.getInstance();
-      _vault.setPassword(stringEncryptBase64(setPasswordController!.text,
-          await StateContainer.of(context).getSeed()));
+      _vault.setPassword(
+          stringEncryptBase64(setPasswordController!.text, widget.seed));
       final Preferences _preferences = await Preferences.getInstance();
       _preferences.setAuthMethod(AuthenticationMethod(AuthMethod.password));
       if (widget.initPreferences == true) {
@@ -475,10 +485,15 @@ class _SetPasswordState extends State<SetPassword> {
             AppLocalization.of(context)!.transactionInputNotification);
         _preferences.setPinPadShuffle(false);
         _preferences.setShowPriceChart(true);
-
         _preferences.setPrimaryCurrency(
             PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE));
         _preferences.setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
+        await sl.get<DBHelper>().clearAppWallet();
+        final Vault vault = await Vault.getInstance();
+        await vault.setSeed(widget.seed!);
+        StateContainer.of(context).appWallet =
+            await KeychainUtil().newAppWallet(widget.seed!, widget.name!);
+        StateContainer.of(context).requestUpdate();
       }
       Navigator.of(context).pushNamedAndRemoveUntil(
         '/home',

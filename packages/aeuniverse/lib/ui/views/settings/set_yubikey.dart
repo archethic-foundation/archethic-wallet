@@ -1,7 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:core/model/data/appdb.dart';
 import 'package:core/model/primary_currency.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/keychain_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -29,6 +32,8 @@ class SetYubikey extends StatefulWidget {
   final String? apiKey;
   final String? clientID;
   final bool initPreferences;
+  final String? name;
+  final String? seed;
 
   const SetYubikey(
       {super.key,
@@ -36,7 +41,9 @@ class SetYubikey extends StatefulWidget {
       this.description,
       this.apiKey,
       this.clientID,
-      this.initPreferences = false});
+      this.initPreferences = false,
+      this.name,
+      this.seed});
 
   @override
   State<SetYubikey> createState() => _SetYubikeyState();
@@ -315,8 +322,13 @@ class _SetYubikeyState extends State<SetYubikey> {
                 PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE));
             _preferences
                 .setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
+            await sl.get<DBHelper>().clearAppWallet();
+            final Vault vault = await Vault.getInstance();
+            await vault.setSeed(widget.seed!);
+            StateContainer.of(context).appWallet =
+                await KeychainUtil().newAppWallet(widget.seed!, widget.name!);
           }
-          await Future<void>.delayed(const Duration(milliseconds: 200));
+          StateContainer.of(context).requestUpdate();
           StateContainer.of(context).getSeed().then((String? seed) {
             Navigator.of(context).pushNamedAndRemoveUntil(
               '/home',

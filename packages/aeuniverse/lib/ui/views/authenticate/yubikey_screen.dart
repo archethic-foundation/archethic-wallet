@@ -217,24 +217,25 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                 top: MediaQuery.of(context).size.height * 0.10,
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Container(
+                    margin: EdgeInsetsDirectional.only(start: 15),
+                    height: 50,
+                    width: 50,
+                    child: BackButton(
+                      key: const Key('back'),
+                      color: StateContainer.of(context).curTheme.text,
+                      onPressed: () {
+                        Navigator.pop(context, false);
+                      },
+                    ),
+                  ),
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Container(
-                            margin: EdgeInsetsDirectional.only(start: 15),
-                            height: 50,
-                            width: 50,
-                            child: BackButton(
-                              key: const Key('back'),
-                              color: StateContainer.of(context).curTheme.text,
-                              onPressed: () {
-                                Navigator.pop(context, false);
-                              },
-                            ),
-                          ),
                           buildIconWidget(
                               context,
                               'packages/aeuniverse/assets/icons/digital-key.png',
