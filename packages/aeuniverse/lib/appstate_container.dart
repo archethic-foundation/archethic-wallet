@@ -81,7 +81,7 @@ class StateContainerState extends State<StateContainer> {
   AEApps currentAEApp = AEApps.bin;
 
   ChartInfos? chartInfos = ChartInfos();
-  String? idChartOption = '1d';
+  String? idChartOption = '24h';
 
   bool showBalance = false;
   bool showPriceChart = false;
@@ -115,9 +115,9 @@ class StateContainerState extends State<StateContainer> {
             activeVibrations = _preferences.getActiveVibrations();
             activeNotifications = _preferences.getActiveNotifications();
             showPriceChart = _preferences.getShowPriceChart();
+            updateTheme(_preferences.getTheme());
           });
         });
-        updateTheme(_preferences.getTheme());
       });
     });
   }
@@ -189,11 +189,11 @@ class StateContainerState extends State<StateContainer> {
       appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice =
           tokenPrice;
       appWallet!.save();
-      await chartInfos!.updateCoinsChart(curCurrency.currency.name);
       setState(() {
         price = tokenPrice;
         curCurrency = currency;
       });
+      await chartInfos!.updateCoinsChart(curCurrency.currency.name);
     }
   }
 
