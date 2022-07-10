@@ -1029,9 +1029,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         }
                         preferences
                             .setActiveNotifications(_notificationsActive);
-                        StateContainer.of(context)
-                            .notificationIconWidget
-                            .refresh();
                       });
                     }),
                     Divider(

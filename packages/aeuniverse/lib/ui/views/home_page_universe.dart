@@ -8,6 +8,7 @@ import 'package:aeuniverse/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aewallet/ui/views/accounts/account_list.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
 import 'package:core/bus/notifications_event.dart';
+import 'package:core/localization.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/notifications_util.dart';
 import 'package:flutter/material.dart';
@@ -416,7 +417,44 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
         : Scaffold(
             extendBodyBehindAppBar: true,
             appBar: AppBar(
-              actions: [StateContainer.of(context).notificationIconWidget],
+              actions: [
+                StateContainer.of(context).activeNotifications
+                    ? IconButton(
+                        icon: Icon(Icons.notifications_active_outlined),
+                        onPressed: () async {
+                          StateContainer.of(context).activeNotifications =
+                              false;
+                          if (StateContainer.of(context)
+                                  .timerCheckTransactionInputs !=
+                              null) {
+                            StateContainer.of(context)
+                                .timerCheckTransactionInputs!
+                                .cancel();
+                          }
+                          final Preferences preferences =
+                              await Preferences.getInstance();
+                          await preferences.setActiveNotifications(false);
+                        })
+                    : IconButton(
+                        icon: Icon(Icons.notifications_off_outlined),
+                        onPressed: () async {
+                          StateContainer.of(context).activeNotifications = true;
+
+                          if (StateContainer.of(context)
+                                  .timerCheckTransactionInputs !=
+                              null) {
+                            StateContainer.of(context)
+                                .timerCheckTransactionInputs!
+                                .cancel();
+                          }
+                          StateContainer.of(context).checkTransactionInputs(
+                              AppLocalization.of(context)!
+                                  .transactionInputNotification);
+                          final Preferences preferences =
+                              await Preferences.getInstance();
+                          await preferences.setActiveNotifications(true);
+                        })
+              ],
               title: InkWell(
                 onTap: () async {
                   await _networkDialog();

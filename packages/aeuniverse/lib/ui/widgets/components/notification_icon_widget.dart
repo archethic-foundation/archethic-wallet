@@ -30,7 +30,7 @@ class NotificationIconWidgetState extends State<NotificationIconWidget> {
                     .cancel();
               }
               final Preferences preferences = await Preferences.getInstance();
-              preferences.setActiveNotifications(false);
+              await preferences.setActiveNotifications(false);
               StateContainer.of(context).notificationIconWidget.refresh();
             })
         : IconButton(
@@ -47,7 +47,7 @@ class NotificationIconWidgetState extends State<NotificationIconWidget> {
               StateContainer.of(context).checkTransactionInputs(
                   AppLocalization.of(context)!.transactionInputNotification);
               final Preferences preferences = await Preferences.getInstance();
-              preferences.setActiveNotifications(true);
+              await preferences.setActiveNotifications(true);
               StateContainer.of(context).notificationIconWidget.refresh();
             });
   }
