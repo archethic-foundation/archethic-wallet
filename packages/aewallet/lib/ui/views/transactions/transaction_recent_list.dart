@@ -7,7 +7,6 @@ import 'dart:math';
 // Flutter imports:
 import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
-import 'package:aewallet/ui/views/transactions/transaction_all_list.dart';
 import 'package:core/model/data/recent_transaction.dart';
 import 'package:core/model/primary_currency.dart';
 import 'package:core/util/currency_util.dart';
@@ -93,7 +92,7 @@ class _TxListWidgetState extends State<TxListWidget> {
           color: Colors.transparent,
           width: MediaQuery.of(context).size.width,
           child: Padding(
-            padding: const EdgeInsets.only(left: 6, right: 6, top: 6),
+            padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
             child: StateContainer.of(context)
                         .appWallet!
                         .appKeychain!
