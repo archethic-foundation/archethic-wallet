@@ -4,22 +4,21 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/balance_infos.dart';
+import 'package:aeuniverse/ui/widgets/components/history_chart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ChartSheet extends StatefulWidget {
   const ChartSheet(
@@ -44,7 +43,6 @@ class _ChartSheetState extends State<ChartSheet> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        // A row for the address text and close button
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,19 +107,45 @@ class _ChartSheetState extends State<ChartSheet> {
             ),
           ],
         ),
-
         FadeIn(
           duration: const Duration(milliseconds: 1000),
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.35,
+            height: MediaQuery.of(context).size.height * 0.45,
             padding: const EdgeInsets.only(top: 20.0),
             child: Padding(
               padding: const EdgeInsets.only(right: 5.0, left: 5.0),
               child: StateContainer.of(context).chartInfos != null
-                  ? LineChart(
-                      mainData(context),
-                      swapAnimationCurve: Curves.decelerate,
-                      swapAnimationDuration: const Duration(milliseconds: 1000),
+                  ? HistoryChart(
+                      intervals: StateContainer.of(context).chartInfos!.data!,
+                      gradientColors: LinearGradient(
+                        colors: <Color>[
+                          StateContainer.of(context).curTheme.text20!,
+                          StateContainer.of(context).curTheme.text!,
+                        ],
+                      ),
+                      gradientColorsBar: LinearGradient(
+                        colors: <Color>[
+                          StateContainer.of(context)
+                              .curTheme
+                              .text!
+                              .withOpacity(0.9),
+                          StateContainer.of(context)
+                              .curTheme
+                              .text!
+                              .withOpacity(0.0),
+                        ],
+                        begin: const Alignment(0.0, 0.0),
+                        end: const Alignment(0.0, 1.0),
+                      ),
+                      tooltipBg:
+                          StateContainer.of(context).curTheme.backgroundDark!,
+                      tooltipText:
+                          AppStyles.textStyleSize12W100Primary(context),
+                      optionChartSelected:
+                          StateContainer.of(context).idChartOption!,
+                      currency:
+                          StateContainer.of(context).curCurrency.currency.name,
+                      completeChart: true,
                     )
                   : const SizedBox(),
             ),
@@ -131,80 +155,9 @@ class _ChartSheetState extends State<ChartSheet> {
           height: 30,
         ),
         if (StateContainer.of(context).chartInfos != null)
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: FadeIn(
-              duration: const Duration(milliseconds: 1000),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  AutoSizeText(
-                    '1 ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} = ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPriceToString()}',
-                    style: AppStyles.textStyleSize16W700Primary(context),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  AutoSizeText(
-                    '${StateContainer.of(context).chartInfos!.getPriceChangePercentage(StateContainer.of(context).idChartOption!)!.toStringAsFixed(2)}%',
-                    style: StateContainer.of(context)
-                                .chartInfos!
-                                .getPriceChangePercentage(
-                                    StateContainer.of(context)
-                                        .idChartOption!)! >=
-                            0
-                        ? AppStyles.textStyleSize16W100PositiveValue(context)
-                        : AppStyles.textStyleSize16W100NegativeValue(context),
-                  ),
-                  const SizedBox(width: 5),
-                  StateContainer.of(context)
-                              .chartInfos!
-                              .getPriceChangePercentage(
-                                  StateContainer.of(context).idChartOption!)! >=
-                          0
-                      ? FaIcon(FontAwesomeIcons.caretUp,
-                          color:
-                              StateContainer.of(context).curTheme.positiveValue)
-                      : FaIcon(FontAwesomeIcons.caretDown,
-                          color: StateContainer.of(context)
-                              .curTheme
-                              .negativeValue),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .balance!
-                          .tokenPrice!
-                          .useOracleUcoPrice!
-                      ? InkWell(
-                          onTap: () {
-                            sl.get<HapticUtil>().feedback(FeedbackType.light,
-                                StateContainer.of(context).activeVibrations);
-                            AppDialogs.showInfoDialog(
-                              context,
-                              AppLocalization.of(context)!.informations,
-                              AppLocalization.of(context)!.currencyOracleInfo,
-                            );
-                          },
-                          child: buildIconWidget(
-                            context,
-                            'packages/aewallet/assets/icons/oracle.png',
-                            15,
-                            15,
-                          ),
-                        )
-                      : const SizedBox(),
-                ],
-              ),
-            ),
-          )
+          BalanceInfosWidget().buildKPI(context)
         else
           const SizedBox(),
-
         Expanded(
           child: Center(
             child: SizedBox(
@@ -248,7 +201,7 @@ class _ChartSheetState extends State<ChartSheet> {
                           onChanged: (OptionChart? optionChart) async {
                             sl.get<HapticUtil>().feedback(FeedbackType.light,
                                 StateContainer.of(context).activeVibrations);
-                            StateContainer.of(context)
+                            await StateContainer.of(context)
                                 .chartInfos!
                                 .updateCoinsChart(
                                     StateContainer.of(context)
@@ -259,6 +212,8 @@ class _ChartSheetState extends State<ChartSheet> {
 
                             setState(() {
                               optionChartSelected = optionChart;
+                              StateContainer.of(context).idChartOption =
+                                  optionChart.id;
                             });
                           },
                         ),
@@ -266,73 +221,6 @@ class _ChartSheetState extends State<ChartSheet> {
                     ],
                   ),
                 )),
-          ),
-        ),
-      ],
-    );
-  }
-
-  LineChartData mainData(BuildContext context) {
-    final Gradient gradientColors = LinearGradient(colors: <Color>[
-      StateContainer.of(context).curTheme.backgroundDarkest!,
-      StateContainer.of(context).curTheme.backgroundDarkest!,
-    ]);
-    final Gradient gradientColorsBar = LinearGradient(
-      colors: <Color>[
-        StateContainer.of(context).curTheme.backgroundDarkest!.withOpacity(0.9),
-        StateContainer.of(context).curTheme.backgroundDarkest!.withOpacity(0.0),
-      ],
-      begin: const Alignment(0.0, 0.0),
-      end: const Alignment(0.0, 1.0),
-    );
-
-    return LineChartData(
-      gridData: FlGridData(
-        show: false,
-      ),
-      titlesData: FlTitlesData(
-        show: true,
-        bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-      ),
-      borderData: FlBorderData(
-        show: false,
-      ),
-      minX: StateContainer.of(context).chartInfos!.minX,
-      maxX: StateContainer.of(context).chartInfos!.maxX,
-      minY: StateContainer.of(context).chartInfos!.minY,
-      maxY: StateContainer.of(context).chartInfos!.maxY,
-      lineTouchData: LineTouchData(
-        touchTooltipData: LineTouchTooltipData(
-          tooltipPadding: const EdgeInsets.all(8),
-          tooltipBgColor: const Color(0xff2e3747).withOpacity(0.8),
-          getTooltipItems: (List<LineBarSpot> touchedSpots) {
-            return touchedSpots.map((LineBarSpot touchedSpot) {
-              return LineTooltipItem(
-                '${touchedSpot.y}',
-                const TextStyle(color: Colors.white, fontSize: 12.0),
-              );
-            }).toList();
-          },
-        ),
-        handleBuiltInTouches: true,
-        enabled: true,
-      ),
-      lineBarsData: <LineChartBarData>[
-        LineChartBarData(
-          spots: StateContainer.of(context).chartInfos!.data,
-          isCurved: true,
-          gradient: gradientColors,
-          barWidth: 2,
-          isStrokeCapRound: true,
-          dotData: FlDotData(
-            show: false,
-          ),
-          belowBarData: BarAreaData(
-            show: true,
-            gradient: gradientColorsBar,
           ),
         ),
       ],

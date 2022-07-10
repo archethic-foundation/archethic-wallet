@@ -2,21 +2,17 @@
 
 // Flutter imports:
 import 'package:core/util/get_it_instance.dart';
+import 'package:core_ui/model/asset_history_interval.dart';
 import 'package:flutter/material.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show ApiCoinsService, CoinsPriceResponse, CoinsCurrentDataResponse;
 
 // Package imports:
 import 'package:core/localization.dart';
-import 'package:fl_chart/fl_chart.dart';
 
 class ChartInfos {
   ChartInfos(
-      {this.minY,
-      this.maxY,
-      this.minX,
-      this.maxX,
-      this.data,
+      {this.data,
       this.priceChangePercentage24h,
       this.priceChangePercentage14d,
       this.priceChangePercentage1y,
@@ -25,11 +21,7 @@ class ChartInfos {
       this.priceChangePercentage60d,
       this.priceChangePercentage7d});
 
-  double? minY = 0;
-  double? maxY = 0;
-  double? minX = 0;
-  double? maxX = 0;
-  List<FlSpot>? data;
+  List<AssetHistoryInterval>? data;
   double? priceChangePercentage14d = 0;
   double? priceChangePercentage1y = 0;
   double? priceChangePercentage200d = 0;
@@ -108,12 +100,6 @@ class ChartInfos {
         break;
     }
     try {
-      final CoinsPriceResponse coinsPriceResponse = await sl
-          .get<ApiCoinsService>()
-          .getCoinsChart(currencyIso4217Code, nbDays);
-
-      minY = 9999999;
-      maxY = 0;
       final CoinsCurrentDataResponse coinsCurrentDataResponse =
           await sl.get<ApiCoinsService>().getCoinsCurrentData(marketData: true);
       if (coinsCurrentDataResponse
@@ -193,25 +179,20 @@ class ChartInfos {
         priceChangePercentage7d =
             coinsCurrentDataResponse.marketData!.priceChangePercentage7D;
       }
-      final List<FlSpot> dataList = List<FlSpot>.empty(growable: true);
-      for (int i = 0; i < coinsPriceResponse.prices!.length; i = i + 1) {
-        final FlSpot chart = FlSpot(
-            coinsPriceResponse.prices![i][0],
-            double.tryParse(
-                coinsPriceResponse.prices![i][1].toStringAsFixed(5))!);
-        dataList.add(chart);
-        if (minY! > coinsPriceResponse.prices![i][1]) {
-          minY = coinsPriceResponse.prices![i][1];
-        }
 
-        if (maxY! < coinsPriceResponse.prices![i][1]) {
-          maxY = coinsPriceResponse.prices![i][1];
-        }
+      final CoinsPriceResponse coinsPriceResponse = await sl
+          .get<ApiCoinsService>()
+          .getCoinsChart(currencyIso4217Code, nbDays);
+      final List<AssetHistoryInterval> assetHistoryIntervalList =
+          List<AssetHistoryInterval>.empty(growable: true);
+      for (int i = 0; i < coinsPriceResponse.prices!.length; i = i + 1) {
+        AssetHistoryInterval assetHistoryInterval = AssetHistoryInterval(
+            price: coinsPriceResponse.prices![i][1],
+            time: DateTime.fromMillisecondsSinceEpoch(
+                coinsPriceResponse.prices![i][0].toInt()));
+        assetHistoryIntervalList.add(assetHistoryInterval);
       }
-      data = dataList;
-      minX = coinsPriceResponse.prices![0][0];
-      maxX =
-          coinsPriceResponse.prices![coinsPriceResponse.prices!.length - 1][0];
+      data = assetHistoryIntervalList;
     } catch (e) {}
   }
 }

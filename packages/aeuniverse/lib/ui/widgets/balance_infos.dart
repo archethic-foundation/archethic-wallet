@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/components/history_chart.dart';
 import 'package:core/model/primary_currency.dart';
 import 'package:core/util/currency_util.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,6 @@ import 'package:core/localization.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
 import 'package:core_ui/model/chart_infos.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -168,8 +168,8 @@ class BalanceInfosWidget {
 
   Widget buildInfos(BuildContext context) {
     return InkWell(
-      onTap: () {
-        sl.get<HapticUtil>().feedback(
+      onTap: () async {
+        await sl.get<HapticUtil>().feedback(
             FeedbackType.light, StateContainer.of(context).activeVibrations);
         optionChartList = <OptionChart>[
           OptionChart('24h', ChartInfos.getChartOptionLabel(context, '24h')),
@@ -219,21 +219,6 @@ class BalanceInfosWidget {
           height: MediaQuery.of(context).size.height * 0.08,
           child: Stack(
             children: <Widget>[
-              FadeIn(
-                duration: const Duration(milliseconds: 1000),
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 20.0),
-                  child: StateContainer.of(context).chartInfos != null &&
-                          StateContainer.of(context).chartInfos!.data != null
-                      ? LineChart(
-                          mainData(context),
-                          swapAnimationCurve: Curves.easeInOutCubic,
-                          swapAnimationDuration:
-                              const Duration(milliseconds: 1000),
-                        )
-                      : const SizedBox(),
-                ),
-              ),
               Padding(
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                   child: Row(
@@ -249,6 +234,52 @@ class BalanceInfosWidget {
                           context, Icons.arrow_circle_right_outlined, 20, 20),
                     ],
                   )),
+              FadeIn(
+                duration: const Duration(milliseconds: 1000),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(left: 30, right: 30.0, top: 10),
+                  child: StateContainer.of(context).chartInfos != null &&
+                          StateContainer.of(context).chartInfos!.data != null
+                      ? HistoryChart(
+                          intervals:
+                              StateContainer.of(context).chartInfos!.data!,
+                          gradientColors: LinearGradient(
+                            colors: <Color>[
+                              StateContainer.of(context).curTheme.text20!,
+                              StateContainer.of(context).curTheme.text!,
+                            ],
+                          ),
+                          gradientColorsBar: LinearGradient(
+                            colors: <Color>[
+                              StateContainer.of(context)
+                                  .curTheme
+                                  .text!
+                                  .withOpacity(0.9),
+                              StateContainer.of(context)
+                                  .curTheme
+                                  .text!
+                                  .withOpacity(0.0),
+                            ],
+                            begin: const Alignment(0.0, 0.0),
+                            end: const Alignment(0.0, 1.0),
+                          ),
+                          tooltipBg: StateContainer.of(context)
+                              .curTheme
+                              .backgroundDark!,
+                          tooltipText:
+                              AppStyles.textStyleSize12W100Primary(context),
+                          optionChartSelected:
+                              StateContainer.of(context).idChartOption!,
+                          currency: StateContainer.of(context)
+                              .curCurrency
+                              .currency
+                              .name,
+                          completeChart: false,
+                        )
+                      : const SizedBox(),
+                ),
+              ),
             ],
           ),
         ),
@@ -368,61 +399,5 @@ class BalanceInfosWidget {
         height: 30,
       );
     }
-  }
-
-  static LineChartData mainData(BuildContext context) {
-    final Gradient gradientColors = LinearGradient(colors: <Color>[
-      StateContainer.of(context).curTheme.backgroundDark!,
-      StateContainer.of(context).curTheme.backgroundDarkest!,
-    ]);
-
-    return LineChartData(
-      gridData: FlGridData(
-        show: false,
-      ),
-      titlesData: FlTitlesData(
-        show: false,
-        bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-      ),
-      borderData: FlBorderData(
-        show: false,
-      ),
-      minX: StateContainer.of(context).chartInfos!.minX,
-      maxX: StateContainer.of(context).chartInfos!.maxX,
-      minY: StateContainer.of(context).chartInfos!.minY,
-      maxY: StateContainer.of(context).chartInfos!.maxY,
-      lineTouchData: LineTouchData(
-        touchTooltipData: LineTouchTooltipData(
-          tooltipPadding: const EdgeInsets.all(8),
-          tooltipBgColor: const Color(0xff2e3747).withOpacity(0.8),
-          getTooltipItems: (List<LineBarSpot> touchedSpots) {
-            return touchedSpots.map((LineBarSpot touchedSpot) {
-              return LineTooltipItem(
-                '${touchedSpot.y}',
-                const TextStyle(color: Colors.white, fontSize: 12.0),
-              );
-            }).toList();
-          },
-        ),
-        handleBuiltInTouches: true,
-        enabled: true,
-      ),
-      lineBarsData: <LineChartBarData>[
-        LineChartBarData(
-          spots: StateContainer.of(context).chartInfos!.data,
-          isCurved: true,
-          gradient: gradientColors,
-          barWidth: 1,
-          isStrokeCapRound: true,
-          dotData: FlDotData(
-            show: false,
-          ),
-          belowBarData: BarAreaData(
-            show: false,
-          ),
-        ),
-      ],
-    );
   }
 }
