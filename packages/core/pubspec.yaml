@@ -25,7 +25,7 @@ dependencies:
   barcode_scan2: ^4.2.1
   
   # Dart implementation of Bitcoin BIP39 Mnemonic code for generating deterministic keys
-  bip39_mnemonic: ^3.0.2
+  bip39_mnemonic: ^3.0.3
 
   bip32: ^2.0.0
 
@@ -43,9 +43,6 @@ dependencies:
 
   # A Flutter widget that can be expanded or collapsed by clicking on a header or an icon.
   expandable: ^5.0.1
-
-  # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart
-  fl_chart: ^0.55.0
   
   # A cross platform plugin for displaying local notifications.
   flutter_local_notifications: ^9.6.1
