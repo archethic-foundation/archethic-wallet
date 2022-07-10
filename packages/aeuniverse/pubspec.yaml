@@ -20,8 +20,14 @@ dependencies:
   aeroot: 
     path: ../../
 
+  # Collections and utilities functions and classes related to collections.
+  collection: ^1.16.0
+
   # EventTaxi could be used to send events through different layers of the application decoupled from the architecture
   event_taxi: ^1.0.0
+  
+  # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart
+  fl_chart: ^0.55.0
   
   flutter:
     sdk: flutter
