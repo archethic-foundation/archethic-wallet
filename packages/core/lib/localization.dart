@@ -1340,6 +1340,10 @@ class AppLocalization {
   String get searchField {
     return Intl.message("Search...", name: 'searchField');
   }
+
+  String get pleaseWait {
+    return Intl.message("Please wait", name: 'pleaseWait');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {

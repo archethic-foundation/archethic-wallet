@@ -265,7 +265,7 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
           height: 40,
         ),
         Text(
-          'Please wait',
+          AppLocalization.of(context)!.pleaseWait,
           style: AppStyles.textStyleSize16W600EquinoxPrimary(context),
         )
       ],

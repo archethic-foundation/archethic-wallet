@@ -283,5 +283,6 @@
 	"activateVibrations": "Activate vibrations",
 	"activateNotifications": "Activate notifications",
 	"transactionInputNotification": "You have received %1 %2 on your %3 account",
-	"searchField": "Search..."
+	"searchField": "Search...",
+	"pleaseWait": "Please wait"
 }

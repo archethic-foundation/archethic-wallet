@@ -184,6 +184,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pinMethod" : MessageLookupByLibrary.simpleMessage("PIN"),
     "pinPadShuffle" : MessageLookupByLibrary.simpleMessage("PIN Pad Shuffle"),
     "pinSecretPhraseBackup" : MessageLookupByLibrary.simpleMessage("Enter PIN to Backup Secret Phrase"),
+    "pleaseWait" : MessageLookupByLibrary.simpleMessage("Please wait"),
     "preferences" : MessageLookupByLibrary.simpleMessage("Preferences"),
     "priceChartHeader" : MessageLookupByLibrary.simpleMessage("Price Chart"),
     "primaryCurrency" : MessageLookupByLibrary.simpleMessage("Primary currency"),
