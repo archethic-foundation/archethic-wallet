@@ -80,8 +80,14 @@ class _TxListWidgetState extends State<TxListWidget> {
                           .getAccountSelected()!
                           .recentTransactions!
                           .isNotEmpty ||
-                      StateContainer.of(context).recentTransactionsLoading ==
-                          true
+                      (StateContainer.of(context).recentTransactionsLoading ==
+                              true &&
+                          StateContainer.of(context)
+                              .appWallet!
+                              .appKeychain!
+                              .getAccountSelected()!
+                              .recentTransactions!
+                              .isNotEmpty)
                   ? displayTxDetailTransfer(
                       context,
                       StateContainer.of(context)
@@ -109,8 +115,15 @@ class _TxListWidgetState extends State<TxListWidget> {
                                   .recentTransactions!
                                   .length >
                               1) ||
-                      StateContainer.of(context).recentTransactionsLoading ==
-                          true
+                      (StateContainer.of(context).recentTransactionsLoading ==
+                              true &&
+                          StateContainer.of(context)
+                                  .appWallet!
+                                  .appKeychain!
+                                  .getAccountSelected()!
+                                  .recentTransactions!
+                                  .length >
+                              1)
                   ? displayTxDetailTransfer(
                       context,
                       StateContainer.of(context)
@@ -138,8 +151,15 @@ class _TxListWidgetState extends State<TxListWidget> {
                                   .recentTransactions!
                                   .length >
                               2) ||
-                      StateContainer.of(context).recentTransactionsLoading ==
-                          true
+                      (StateContainer.of(context).recentTransactionsLoading ==
+                              true &&
+                          StateContainer.of(context)
+                                  .appWallet!
+                                  .appKeychain!
+                                  .getAccountSelected()!
+                                  .recentTransactions!
+                                  .length >
+                              2)
                   ? displayTxDetailTransfer(
                       context,
                       StateContainer.of(context)
@@ -198,9 +218,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    if (transaction.amount == null)
-                                      const Text('')
-                                    else
+                                    if (transaction.amount != null)
                                       transaction.typeTx ==
                                               RecentTransaction.transferOutput
                                           ? AutoSizeText(
@@ -213,9 +231,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                                               style: AppStyles
                                                   .textStyleSize20W700EquinoxGreen(
                                                       context)),
-                                    if (transaction.amount == null)
-                                      const Text('')
-                                    else
+                                    if (transaction.amount != null)
                                       Text(
                                           '${CurrencyUtil.convertAmountFormated(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.amount!)} ',
                                           style: AppStyles
@@ -227,9 +243,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    if (transaction.amount == null)
-                                      const Text('')
-                                    else
+                                    if (transaction.amount != null)
                                       transaction
                                                   .typeTx ==
                                               RecentTransaction.transferOutput
@@ -256,9 +270,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                                               style: AppStyles
                                                   .textStyleSize20W700EquinoxGreen(
                                                       context)),
-                                    if (transaction.amount == null)
-                                      const Text('')
-                                    else
+                                    if (transaction.amount != null)
                                       transaction.typeTx ==
                                               RecentTransaction.transferOutput
                                           ? AutoSizeText(
@@ -272,7 +284,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                                                   .textStyleSize12W600Primary(
                                                       context)),
                                   ],
-                                )
+                                ),
                         ],
                       ),
                       Column(
@@ -365,10 +377,8 @@ class _TxListWidgetState extends State<TxListWidget> {
                                     style: AppStyles.textStyleSize12W400Primary(
                                         context)),
                               ]),
-                          if (transaction.typeTx ==
+                          if (transaction.typeTx !=
                               RecentTransaction.transferInput)
-                            const SizedBox()
-                          else
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
@@ -392,6 +402,18 @@ class _TxListWidgetState extends State<TxListWidget> {
                                               .textStyleSize12W400Primary(
                                                   context)),
                                 ]),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              if (transaction.content != null &&
+                                  transaction.content != '')
+                                AutoSizeText(
+                                    AppLocalization.of(context)!
+                                        .messageInTxTransfer,
+                                    style: AppStyles.textStyleSize12W400Primary(
+                                        context))
+                            ],
+                          )
                         ],
                       ),
                     ],

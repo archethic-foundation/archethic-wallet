@@ -1703,5 +1703,23 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "sendMessageHeader": "Message",
+  "@sendMessageHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "sendMessageConfirmHeader": "Your message:",
+  "@sendMessageConfirmHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "messageInTxTransfer": "See the message attached...",
+  "@messageInTxTransfer": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

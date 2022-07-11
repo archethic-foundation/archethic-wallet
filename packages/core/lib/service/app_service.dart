@@ -115,6 +115,7 @@ class AppService {
               i < transaction.data!.ledger!.uco!.transfers!.length;
               i++) {
             final RecentTransaction recentTransaction = RecentTransaction();
+            recentTransaction.content = transaction.data!.content;
             recentTransaction.address = transaction.address;
             recentTransaction.typeTx = RecentTransaction.transferOutput;
             recentTransaction.amount = transaction
@@ -383,7 +384,8 @@ class AppService {
       String originPrivateKey,
       String transactionChainSeed,
       String address,
-      List<UCOTransfer> listUcoTransfer) async {
+      List<UCOTransfer> listUcoTransfer,
+      String content) async {
     final Transaction lastTransaction = await sl
         .get<ApiService>()
         .getLastTransaction(address, request: 'chainLength');
@@ -392,6 +394,7 @@ class AppService {
     for (UCOTransfer transfer in listUcoTransfer) {
       transaction.addUCOTransfer(transfer.to, transfer.amount!);
     }
+    transaction.setContent(content);
     TransactionFee transactionFee = TransactionFee();
     transaction
         .build(transactionChainSeed, lastTransaction.chainLength!)

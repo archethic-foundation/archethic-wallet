@@ -80,6 +80,8 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
   TextEditingController? _sendAddressController;
   FocusNode? _sendAmountFocusNode;
   TextEditingController? _sendAmountController;
+  FocusNode? _messageFocusNode;
+  TextEditingController? _messageController;
 
   AddressStyle? _sendAddressStyle;
   String? _amountValidationText = '';
@@ -114,8 +116,10 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
     _isPressed = false;
     _sendAmountFocusNode = FocusNode();
     _sendAddressFocusNode = FocusNode();
+    _messageFocusNode = FocusNode();
     _sendAmountController = TextEditingController();
     _sendAddressController = TextEditingController();
+    _messageController = TextEditingController();
     _sendAddressStyle = AddressStyle.text60;
     quickSendAmount = widget.quickSendAmount;
     if (widget.contact != null) {
@@ -379,6 +383,8 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
                                                   context)),
                                     ),
                                     const SizedBox(height: 10),
+                                    getEnterMessage(),
+                                    const SizedBox(height: 10),
                                     Container(
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 30),
@@ -476,6 +482,7 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
                                       title: widget.title,
                                       typeTransfer: 'UCO',
                                       feeEstimation: feeEstimation,
+                                      message: _messageController!.text.trim(),
                                     ),
                                   );
                                 } else {
@@ -865,6 +872,26 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
     );
   }
 
+  AppTextField getEnterMessage() {
+    return AppTextField(
+      topMargin: MediaQuery.of(context).size.height * 0.0009,
+      focusNode: _messageFocusNode,
+      controller: _messageController,
+      maxLines: 4,
+      labelText:
+          '${AppLocalization.of(context)!.sendMessageHeader} (${_messageController!.text.length}/200)',
+      onChanged: (String text) {
+        setState(() {});
+      },
+      keyboardType: TextInputType.text,
+      textAlign: TextAlign.left,
+      style: AppStyles.textStyleSize16W600Primary(context),
+      inputFormatters: <TextInputFormatter>[
+        LengthLimitingTextInputFormatter(200),
+      ],
+    );
+  }
+
   AppTextField getEnterAddressContainer() {
     return AppTextField(
         topMargin: 124,
@@ -1099,7 +1126,8 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
               .appKeychain!
               .getAccountSelected()!
               .lastAddress!,
-          ucoTransferListForFee);
+          ucoTransferListForFee,
+          _messageController!.text);
     } catch (e) {
       fee = 0;
     }

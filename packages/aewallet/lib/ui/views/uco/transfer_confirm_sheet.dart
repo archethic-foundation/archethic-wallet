@@ -51,12 +51,14 @@ class TransferConfirmSheet extends StatefulWidget {
       required this.feeEstimation,
       this.title,
       this.ucoTransferList,
-      this.tokenTransferList});
+      this.tokenTransferList,
+      this.message});
 
   final String? lastAddress;
   final String? typeTransfer;
   final String? title;
   final double? feeEstimation;
+  final String? message;
   final List<UCOTransferWallet>? ucoTransferList;
   final List<TokenTransferWallet>? tokenTransferList;
 
@@ -191,6 +193,28 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                             )
                           : const SizedBox(),
                 ),
+                if (widget.message!.isNotEmpty)
+                  Container(
+                    margin: const EdgeInsets.only(
+                        left: 20, right: 20, top: 20.0, bottom: 20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          AppLocalization.of(context)!.sendMessageConfirmHeader,
+                          style: AppStyles.textStyleSize14W600Primary(context),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          widget.message!,
+                          style: AppStyles.textStyleSize14W600Primary(context),
+                        ),
+                      ],
+                    ),
+                  ),
               ],
             ),
           ),
@@ -263,7 +287,9 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       for (UCOTransfer transfer in ucoTransferList) {
         transaction.addUCOTransfer(transfer.to, transfer.amount!);
       }
-
+      if (widget.message!.isNotEmpty) {
+        transaction.setContent(widget.message);
+      }
       Transaction signedTx = keychain
           .buildTransaction(transaction, service, index)
           .originSign(originPrivateKey);

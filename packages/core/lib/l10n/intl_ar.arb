@@ -285,5 +285,8 @@
 	"transactionInputNotification": "You have received %1 %2 on your %3 account",
 	"searchField": "Search...",
 	"pleaseWait": "Please wait",
-	"keychainCreationInProgress": "Your keychain is being created..."
+	"keychainCreationInProgress": "Your keychain is being created...",
+	"sendMessageHeader": "Message",
+	"sendMessageConfirmHeader": "Your message:",
+	"messageInTxTransfer": "See the message attached..."
 }

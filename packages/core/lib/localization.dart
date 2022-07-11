@@ -263,6 +263,19 @@ class AppLocalization {
     return Intl.message('Transfering', name: 'transfering');
   }
 
+  String get sendMessageHeader {
+    return Intl.message('Message', name: 'sendMessageHeader');
+  }
+
+  String get sendMessageConfirmHeader {
+    return Intl.message('Your message:', name: 'sendMessageConfirmHeader');
+  }
+
+  String get messageInTxTransfer {
+    return Intl.message('See the message attached...',
+        name: 'messageInTxTransfer');
+  }
+
   String get getOption {
     return Intl.message('Get', name: 'getOption');
   }
