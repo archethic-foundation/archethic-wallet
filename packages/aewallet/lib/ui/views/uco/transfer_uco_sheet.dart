@@ -371,7 +371,8 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
                                     Container(
                                       alignment:
                                           const AlignmentDirectional(0, 0),
-                                      margin: const EdgeInsets.only(top: 3),
+                                      margin: const EdgeInsets.only(
+                                          left: 50, right: 40, top: 3),
                                       child: Text(_addressValidationText!,
                                           style: AppStyles
                                               .textStyleSize14W600Primary(
@@ -711,6 +712,9 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
       String lastAddressRecipient = await sl
           .get<AddressService>()
           .lastAddressFromAddress(ucoTransfer.to!);
+      if (lastAddressRecipient == '') {
+        lastAddressRecipient = ucoTransfer.to!;
+      }
       if (lastAddressRecipient ==
           StateContainer.of(context)
               .appWallet!
