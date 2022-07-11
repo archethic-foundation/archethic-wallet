@@ -2,10 +2,10 @@
 
 # Archethic Wallet
 
-The app is mainly a FULLY decentralized and cryptocurrency non-custodial hot wallet that enables you to safety manage assets on Layer 1 Archethic blockchain.
-This wallet includes the features of send and receive coins instantly to and from anyone.
-No signup or KYC needed, you just control your service access keychain, protected by different security ways like PIN Code, Password, Yubikey devices (*) and Biometrics
-(*) Yubikey is a device that makes 2-factor authentification as simple as possible (see [yubico.com](https://www.yubico.com))
+The app is mainly a FULLY decentralized and cryptocurrency non-custodial hot wallet that enables you to safety manage assets on Layer 1 Archethic blockchain.</br>
+This wallet includes the features of send and receive coins instantly to and from anyone.</br>
+No signup or KYC needed, you just control your service access keychain, protected by different security ways like PIN Code, Password, Yubikey devices (*) and Biometrics</br>
+(*) Yubikey is a device that makes 2-factor authentification as simple as possible (see [yubico.com](https://www.yubico.com))</br>
 
 Archethic Wallet have features that are implemented:
 - Use of 24 Words Mnemonics.
@@ -20,8 +20,8 @@ Archethic Wallet have features that are implemented:
 - UCO Price chart
 - Last Archethic's articles
 
+## Application Initial Screen
 ![Application Initial Screen](assets/screenshots/AppInit.png?v=20220711)
-* Application Initial Screen
 
 ## Informations
 All news about wallet are available on the [Archethic Youtube Channel](https://www.youtube.com/playlist?list=PL6GQEJjcIwHChTok4CJyw3lsmlvoJLnZK)
@@ -38,35 +38,26 @@ To install Archethic Wallet in Android Devices:
 - Once installed open the application and proceed as per instructions the application.
 
 ### Windows
-
-To install Archethic Wallet in Windows platforms:
 - Soon
 
 ### MacOS
-
-To install Archethic Wallet in MacOS platforms:
 - Soon
 
 ### iOS
-
-To install Archethic Wallet in iOS Devices:
 - Soon
 
 ### WebApp
-
 - Soon
 
 ### Chrome Extension
-
 - Soon
-
 
 ## How to test the Archethic Wallet
 
-To test Archethic Wallet with Testnet:
+To test Archethic Wallet with Faucet:
 - Copy your address from the wallet and paste on the [Archethic Testnet Faucet](https://testnet.archethic.net/faucet) 
 - Click on 'Transfer 100 UCO'
-- Refresh your dashboard
+- Refresh your dashboard</br>
 Now, you can send some UCO and see your transactions
 
 ## Setup this Application for developers
