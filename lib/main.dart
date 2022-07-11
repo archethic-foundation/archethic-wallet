@@ -266,9 +266,6 @@ class _AppState extends State<App> {
                   settings.arguments as Map<String, dynamic>;
               return MaterialPageRoute<IntroBackupConfirm>(
                 builder: (_) => IntroBackupConfirm(
-                    mnemonic: args['mnemonic'] == null
-                        ? List<String>.empty(growable: true)
-                        : args['mnemonic'] as List<String>,
                     name: args['name'] == null ? null : args['name'] as String,
                     seed: args['seed'] == null ? null : args['seed'] as String),
                 settings: settings,

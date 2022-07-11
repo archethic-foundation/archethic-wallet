@@ -4,6 +4,7 @@
 
 // Flutter imports:
 import 'package:aeuniverse/ui/util/ui_util.dart';
+import 'package:core/util/mnemonics.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -21,36 +22,32 @@ import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 
 class IntroBackupConfirm extends StatefulWidget {
-  final List<String> wordList;
   final String? name;
   final String? seed;
-  const IntroBackupConfirm(
-      {required this.wordList,
-      required this.name,
-      required this.seed,
-      super.key});
+  const IntroBackupConfirm({required this.name, required this.seed, super.key});
 
   @override
   State<IntroBackupConfirm> createState() => _IntroBackupConfirmState();
 }
 
 class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<String> wordListSelected = List<String>.empty(growable: true);
   List<String> wordListToSelect = List<String>.empty(growable: true);
-  List<String> wordListSave = List<String>.empty(growable: true);
-
+  List<String> originalWordsList = List<String>.empty(growable: true);
   @override
   void initState() {
-    wordListToSelect = widget.wordList;
-    wordListSave = widget.wordList;
-    wordListToSelect.shuffle();
     super.initState();
+    wordListToSelect = AppMnemomics.seedToMnemonic(widget.seed!);
+    wordListToSelect.shuffle();
+    originalWordsList = AppMnemomics.seedToMnemonic(widget.seed!);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -184,12 +181,11 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                               right: 5.0, left: 5.0),
                                           child: GestureDetector(
                                               onTap: () {
-                                                setState(() {
-                                                  wordListSelected
-                                                      .add(entry.value);
-                                                  wordListToSelect
-                                                      .removeAt(entry.key);
-                                                });
+                                                wordListSelected
+                                                    .add(entry.value);
+                                                wordListToSelect
+                                                    .removeAt(entry.key);
+                                                setState(() {});
                                               },
                                               child: Chip(
                                                 label: Text(entry.value,
@@ -229,8 +225,12 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                     .get<BiometricUtil>()
                                     .hasBiometrics();
                                 bool orderOk = true;
-                                for (int i = 0; i < wordListSave.length; i++) {
-                                  if (wordListSave != wordListSelected[i]) {
+
+                                for (int i = 0;
+                                    i < originalWordsList.length;
+                                    i++) {
+                                  if (originalWordsList[i] !=
+                                      wordListSelected[i]) {
                                     //orderOk = false;
                                   }
                                 }
