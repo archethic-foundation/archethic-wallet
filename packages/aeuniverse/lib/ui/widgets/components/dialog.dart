@@ -12,6 +12,7 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 // Project imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppDialogs {
@@ -262,9 +263,9 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
                   ),
                   child: Column(
                     children: [
-                      Image.asset(
-                        '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.png',
-                        height: 80,
+                      SvgPicture.asset(
+                        '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
+                        height: 30,
                       ),
                     ],
                   ));
