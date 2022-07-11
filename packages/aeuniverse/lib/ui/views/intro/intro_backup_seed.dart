@@ -166,7 +166,6 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                 Navigator.of(context).pushNamed(
                                     '/intro_backup_confirm',
                                     arguments: {
-                                      'mnemonic': mnemonic,
                                       'name': widget.name,
                                       'seed': seed
                                     });
