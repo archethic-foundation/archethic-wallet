@@ -31,7 +31,7 @@ class NetworkDialog {
           '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.png',
           null,
           value,
-          value == AvailableNetworks.ArchethicMainNet ? false : true));
+          true));
     }
 
     return await showDialog<NetworksSetting>(
