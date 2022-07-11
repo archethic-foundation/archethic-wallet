@@ -1344,6 +1344,11 @@ class AppLocalization {
   String get pleaseWait {
     return Intl.message("Please wait", name: 'pleaseWait');
   }
+
+  String get keychainCreationInProgress {
+    return Intl.message("Your keychain is being created...",
+        name: 'keychainCreationInProgress');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {

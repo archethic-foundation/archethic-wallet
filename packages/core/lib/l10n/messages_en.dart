@@ -132,6 +132,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "introNewWalletGetFirstInfosWelcome" : MessageLookupByLibrary.simpleMessage("Welcome to Archethic Wallet."),
     "invalidAddress" : MessageLookupByLibrary.simpleMessage("Address entered is invalid"),
     "iveBackedItUp" : MessageLookupByLibrary.simpleMessage("I\'ve Backed It Up"),
+    "keychainCreationInProgress" : MessageLookupByLibrary.simpleMessage("Your keychain is being created..."),
     "labLinkDesc" : MessageLookupByLibrary.simpleMessage("Latest tech and product updates on the Archethic ecosystem"),
     "labLinkHeader" : MessageLookupByLibrary.simpleMessage("Lab"),
     "language" : MessageLookupByLibrary.simpleMessage("Language"),

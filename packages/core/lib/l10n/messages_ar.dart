@@ -133,6 +133,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalidAddress" : MessageLookupByLibrary.simpleMessage("L\'adresse saisie n\'est pas valide"),
     "invalidPassword" : MessageLookupByLibrary.simpleMessage("Le mot de passe est invalide"),
     "iveBackedItUp" : MessageLookupByLibrary.simpleMessage("Je l\'ai sauvegardé"),
+    "keychainCreationInProgress" : MessageLookupByLibrary.simpleMessage("Your keychain is being created..."),
     "labLinkDesc" : MessageLookupByLibrary.simpleMessage("Dernières nouvelles sur l\'écosystème Archethic"),
     "labLinkHeader" : MessageLookupByLibrary.simpleMessage("Lab"),
     "language" : MessageLookupByLibrary.simpleMessage("Langue"),

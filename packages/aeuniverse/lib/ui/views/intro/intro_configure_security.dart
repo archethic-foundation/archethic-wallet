@@ -2,6 +2,7 @@
 // ignore_for_file: always_specify_types
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/primary_currency.dart';
 import 'package:core/util/keychain_util.dart';
@@ -38,6 +39,13 @@ class IntroConfigureSecurity extends StatefulWidget {
 
 class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
   PickerItem? _accessModesSelected;
+  bool? animationOpen;
+
+  @override
+  void initState() {
+    animationOpen = false;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,38 +145,51 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                     _accessModesSelected!.value as AuthMethod;
                                 switch (_authMethod) {
                                   case AuthMethod.biometrics:
-                                    await authenticateWithBiometrics();
-                                    final Preferences _preferences =
-                                        await Preferences.getInstance();
-                                    _preferences.setLock(true);
-                                    _preferences.setShowBalances(true);
-                                    _preferences.setShowBlog(true);
-                                    _preferences.setActiveVibrations(true);
-                                    _preferences.setActiveNotifications(true);
-                                    StateContainer.of(context)
-                                        .checkTransactionInputs(
+                                    final bool authenticated = await sl
+                                        .get<BiometricUtil>()
+                                        .authenticateWithBiometrics(
+                                            context,
                                             AppLocalization.of(context)!
-                                                .transactionInputNotification);
-                                    _preferences.setPinPadShuffle(false);
-                                    _preferences.setShowPriceChart(true);
-                                    _preferences.setPrimaryCurrency(
-                                        PrimaryCurrencySetting(
-                                            AvailablePrimaryCurrency.NATIVE));
-                                    _preferences.setLockTimeout(
-                                        LockTimeoutSetting(
-                                            LockTimeoutOption.one));
-                                    _preferences.setAuthMethod(
-                                        AuthenticationMethod(
-                                            AuthMethod.biometrics));
-                                    await sl.get<DBHelper>().clearAppWallet();
-                                    final Vault vault =
-                                        await Vault.getInstance();
-                                    await vault.setSeed(widget.seed!);
-                                    StateContainer.of(context).appWallet =
-                                        await KeychainUtil().newAppWallet(
-                                            widget.seed!, widget.name!);
-                                    await StateContainer.of(context)
-                                        .requestUpdate();
+                                                .unlockBiometrics);
+                                    if (authenticated) {
+                                      _showSendingAnimation(context);
+                                      final Preferences _preferences =
+                                          await Preferences.getInstance();
+                                      _preferences.setLock(true);
+                                      _preferences.setShowBalances(true);
+                                      _preferences.setShowBlog(true);
+                                      _preferences.setActiveVibrations(true);
+                                      _preferences.setActiveNotifications(true);
+                                      StateContainer.of(context)
+                                          .checkTransactionInputs(
+                                              AppLocalization.of(context)!
+                                                  .transactionInputNotification);
+                                      _preferences.setPinPadShuffle(false);
+                                      _preferences.setShowPriceChart(true);
+                                      _preferences.setPrimaryCurrency(
+                                          PrimaryCurrencySetting(
+                                              AvailablePrimaryCurrency.NATIVE));
+                                      _preferences.setLockTimeout(
+                                          LockTimeoutSetting(
+                                              LockTimeoutOption.one));
+                                      _preferences.setAuthMethod(
+                                          AuthenticationMethod(
+                                              AuthMethod.biometrics));
+                                      await sl.get<DBHelper>().clearAppWallet();
+                                      final Vault vault =
+                                          await Vault.getInstance();
+                                      await vault.setSeed(widget.seed!);
+                                      StateContainer.of(context).appWallet =
+                                          await KeychainUtil().newAppWallet(
+                                              widget.seed!, widget.name!);
+                                      await StateContainer.of(context)
+                                          .requestUpdate();
+                                    }
+                                    await Navigator.of(context)
+                                        .pushNamedAndRemoveUntil(
+                                      '/home',
+                                      (Route<dynamic> route) => false,
+                                    );
                                     break;
                                   case AuthMethod.password:
                                     Navigator.of(context).pushNamed(
@@ -189,6 +210,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                     }));
 
                                     if (pin.length > 5) {
+                                      _showSendingAnimation(context);
                                       final Vault _vault =
                                           await Vault.getInstance();
                                       _vault.setPin(pin);
@@ -255,16 +277,13 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
     );
   }
 
-  Future<void> authenticateWithBiometrics() async {
-    final bool authenticated = await sl
-        .get<BiometricUtil>()
-        .authenticateWithBiometrics(
-            context, AppLocalization.of(context)!.unlockBiometrics);
-    if (authenticated) {
-      await Navigator.of(context).pushNamedAndRemoveUntil(
-        '/home',
-        (Route<dynamic> route) => false,
-      );
-    }
+  void _showSendingAnimation(BuildContext context) {
+    animationOpen = true;
+    Navigator.of(context).push(AnimationLoadingOverlay(
+        AnimationType.send,
+        StateContainer.of(context).curTheme.animationOverlayStrong!,
+        StateContainer.of(context).curTheme.animationOverlayMedium!,
+        onPoppedCallback: () => animationOpen = false,
+        title: AppLocalization.of(context)!.keychainCreationInProgress));
   }
 }

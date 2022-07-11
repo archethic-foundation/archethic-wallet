@@ -284,5 +284,6 @@
 	"activateNotifications": "Activate notifications",
 	"transactionInputNotification": "You have received %1 %2 on your %3 account",
 	"searchField": "Search...",
-	"pleaseWait": "Please wait"
+	"pleaseWait": "Please wait",
+	"keychainCreationInProgress": "Your keychain is being created..."
 }

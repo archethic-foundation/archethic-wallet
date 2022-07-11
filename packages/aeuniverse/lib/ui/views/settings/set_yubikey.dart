@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/primary_currency.dart';
 import 'package:core/util/get_it_instance.dart';
@@ -54,7 +55,7 @@ class _SetYubikeyState extends State<SetYubikey> {
   TextEditingController? _clientIDController;
   FocusNode? _clientAPIKeyFocusNode;
   TextEditingController? _clientAPIKeyController;
-
+  bool? animationOpen;
   String _clientIDValidationText = '';
   String _clientAPIKeyValidationText = '';
 
@@ -71,6 +72,7 @@ class _SetYubikeyState extends State<SetYubikey> {
     if (widget.clientID != null) {
       _clientIDController!.text = widget.clientID!;
     }
+    animationOpen = false;
   }
 
   @override
@@ -297,6 +299,7 @@ class _SetYubikeyState extends State<SetYubikey> {
           });
         }
       } else {
+        _showSendingAnimation(context);
         Vault _vault = await Vault.getInstance();
         _vault.setYubikeyClientAPIKey(_clientAPIKeyController!.text);
         _vault.setYubikeyClientID(_clientIDController!.text);
@@ -338,5 +341,15 @@ class _SetYubikeyState extends State<SetYubikey> {
         }
       }
     }
+  }
+
+  void _showSendingAnimation(BuildContext context) {
+    animationOpen = true;
+    Navigator.of(context).push(AnimationLoadingOverlay(
+        AnimationType.send,
+        StateContainer.of(context).curTheme.animationOverlayStrong!,
+        StateContainer.of(context).curTheme.animationOverlayMedium!,
+        onPoppedCallback: () => animationOpen = false,
+        title: AppLocalization.of(context)!.keychainCreationInProgress));
   }
 }

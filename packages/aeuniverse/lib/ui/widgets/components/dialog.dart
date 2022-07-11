@@ -116,12 +116,13 @@ enum AnimationType {
 
 class AnimationLoadingOverlay extends ModalRoute<void> {
   AnimationLoadingOverlay(this.type, this.overlay85, this.overlay70,
-      {this.onPoppedCallback});
+      {this.onPoppedCallback, this.title});
 
   AnimationType type;
   Function? onPoppedCallback;
   Color overlay85;
   Color overlay70;
+  String? title;
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 0);
@@ -168,7 +169,9 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   Widget _getAnimation(BuildContext context) {
     switch (type) {
       case AnimationType.send:
-        return PulsatingCircleLogo();
+        return PulsatingCircleLogo(
+          title: title,
+        );
       default:
         return CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(
@@ -201,12 +204,11 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
 }
 
 class PulsatingCircleLogo extends StatefulWidget {
-  const PulsatingCircleLogo({
-    Key? key,
-  }) : super(key: key);
+  final String? title;
+  const PulsatingCircleLogo({super.key, this.title});
 
   @override
-  PulsatingCircleLogoState createState() => PulsatingCircleLogoState();
+  State<PulsatingCircleLogo> createState() => PulsatingCircleLogoState();
 }
 
 class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
@@ -223,6 +225,14 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
     );
     _animationController!.repeat(reverse: true);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (_animationController != null) {
+      _animationController!.dispose();
+    }
+    super.dispose();
   }
 
   @override
@@ -265,7 +275,10 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
           height: 40,
         ),
         Text(
-          AppLocalization.of(context)!.pleaseWait,
+          widget.title != null
+              ? widget.title!
+              : AppLocalization.of(context)!.pleaseWait,
+          textAlign: TextAlign.center,
           style: AppStyles.textStyleSize16W600EquinoxPrimary(context),
         )
       ],

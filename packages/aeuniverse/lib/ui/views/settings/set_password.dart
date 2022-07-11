@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/primary_currency.dart';
 import 'package:core/util/get_it_instance.dart';
@@ -49,6 +50,7 @@ class _SetPasswordState extends State<SetPassword> {
   TextEditingController? setPasswordController;
   FocusNode? confirmPasswordFocusNode;
   TextEditingController? confirmPasswordController;
+  bool? animationOpen;
 
   String? passwordError;
   bool? passwordsMatch;
@@ -66,6 +68,7 @@ class _SetPasswordState extends State<SetPassword> {
     confirmPasswordFocusNode = FocusNode();
     setPasswordController = TextEditingController();
     confirmPasswordController = TextEditingController();
+    animationOpen = false;
   }
 
   @override
@@ -470,6 +473,7 @@ class _SetPasswordState extends State<SetPassword> {
         });
       }
     } else {
+      _showSendingAnimation(context);
       Vault _vault = await Vault.getInstance();
       _vault.setPassword(
           stringEncryptBase64(setPasswordController!.text, widget.seed));
@@ -500,5 +504,15 @@ class _SetPasswordState extends State<SetPassword> {
         (Route<dynamic> route) => false,
       );
     }
+  }
+
+  void _showSendingAnimation(BuildContext context) {
+    animationOpen = true;
+    Navigator.of(context).push(AnimationLoadingOverlay(
+        AnimationType.send,
+        StateContainer.of(context).curTheme.animationOverlayStrong!,
+        StateContainer.of(context).curTheme.animationOverlayMedium!,
+        onPoppedCallback: () => animationOpen = false,
+        title: AppLocalization.of(context)!.keychainCreationInProgress));
   }
 }
