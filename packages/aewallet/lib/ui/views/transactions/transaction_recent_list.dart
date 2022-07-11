@@ -70,95 +70,91 @@ class _TxListWidgetState extends State<TxListWidget> {
           ),
         ),
         Container(
-          height: 80 *
-                  StateContainer.of(context)
-                      .appWallet!
-                      .appKeychain!
-                      .getAccountSelected()!
-                      .recentTransactions!
-                      .sublist(
-                          0,
-                          min(
-                              3,
-                              StateContainer.of(context)
-                                  .appWallet!
-                                  .appKeychain!
-                                  .getAccountSelected()!
-                                  .recentTransactions!
-                                  .length))
-                      .length
-                      .toDouble() +
-              70,
           color: Colors.transparent,
           width: MediaQuery.of(context).size.width,
           child: Padding(
-            padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
-            child: StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
-                        .recentTransactions!
-                        .isNotEmpty ||
-                    StateContainer.of(context).recentTransactionsLoading == true
-                ? ListView.builder(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    itemCount: StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
-                        .recentTransactions!
-                        .sublist(
-                            0,
-                            min(
-                                3,
-                                StateContainer.of(context)
-                                    .appWallet!
-                                    .appKeychain!
-                                    .getAccountSelected()!
-                                    .recentTransactions!
-                                    .length))
-                        .length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return displayTxDetailTransfer(
-                          context,
-                          StateContainer.of(context)
+              padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
+              child: StateContainer.of(context)
+                          .appWallet!
+                          .appKeychain!
+                          .getAccountSelected()!
+                          .recentTransactions!
+                          .isNotEmpty ||
+                      StateContainer.of(context).recentTransactionsLoading ==
+                          true
+                  ? displayTxDetailTransfer(
+                      context,
+                      StateContainer.of(context)
+                          .appWallet!
+                          .appKeychain!
+                          .getAccountSelected()!
+                          .recentTransactions![0])
+                  : const SizedBox()),
+        ),
+        Container(
+          color: Colors.transparent,
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+              padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
+              child: (StateContainer.of(context)
                               .appWallet!
                               .appKeychain!
                               .getAccountSelected()!
                               .recentTransactions!
-                              .sublist(
-                                  0,
-                                  min(
-                                      3,
-                                      StateContainer.of(context)
-                                          .appWallet!
-                                          .appKeychain!
-                                          .getAccountSelected()!
-                                          .recentTransactions!
-                                          .length))[index],
-                          index);
-                    },
-                  )
-                : Container(
-                    height: 30,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        AppLocalization.of(context)!
-                            .recentTransactionsNoTransactionYet,
-                        style: AppStyles.textStyleSize14W600Primary(context),
-                      ),
-                    ),
-                  ),
-          ),
+                              .isNotEmpty &&
+                          StateContainer.of(context)
+                                  .appWallet!
+                                  .appKeychain!
+                                  .getAccountSelected()!
+                                  .recentTransactions!
+                                  .length >
+                              1) ||
+                      StateContainer.of(context).recentTransactionsLoading ==
+                          true
+                  ? displayTxDetailTransfer(
+                      context,
+                      StateContainer.of(context)
+                          .appWallet!
+                          .appKeychain!
+                          .getAccountSelected()!
+                          .recentTransactions![1])
+                  : const SizedBox()),
+        ),
+        Container(
+          color: Colors.transparent,
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+              padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
+              child: (StateContainer.of(context)
+                              .appWallet!
+                              .appKeychain!
+                              .getAccountSelected()!
+                              .recentTransactions!
+                              .isNotEmpty &&
+                          StateContainer.of(context)
+                                  .appWallet!
+                                  .appKeychain!
+                                  .getAccountSelected()!
+                                  .recentTransactions!
+                                  .length >
+                              2) ||
+                      StateContainer.of(context).recentTransactionsLoading ==
+                          true
+                  ? displayTxDetailTransfer(
+                      context,
+                      StateContainer.of(context)
+                          .appWallet!
+                          .appKeychain!
+                          .getAccountSelected()!
+                          .recentTransactions![2])
+                  : const SizedBox()),
         ),
       ],
     );
   }
 
   static Widget displayTxDetailTransfer(
-      BuildContext context, RecentTransaction transaction, int index) {
+      BuildContext context, RecentTransaction transaction) {
     return FutureBuilder<String>(
       future: transaction.recipientDisplay,
       builder: (BuildContext context, AsyncSnapshot<String> recipientDisplay) {
@@ -402,30 +398,6 @@ class _TxListWidgetState extends State<TxListWidget> {
                   ),
                 ),
               ),
-              /*if (index == 2)
-                Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: GestureDetector(
-                    onTap: () {
-                      sl.get<HapticUtil>().feedback(FeedbackType.light,
-                          StateContainer.of(context).activeVibrations);
-                      Sheets.showAppHeightNineSheet(
-                          context: context, widget: const TxAllListWidget());
-                    },
-                    child: Container(
-                      padding:
-                          const EdgeInsets.fromLTRB(19.0, 10.0, 19.0, 10.0),
-                      decoration: ShapeDecoration(
-                          gradient:
-                              StateContainer.of(context).curTheme.gradient!,
-                          shape: const StadiumBorder()),
-                      child: Text(AppLocalization.of(context)!.seeAll,
-                          style: AppStyles
-                              .textStyleSize14W600EquinoxMiddleButtonLabel(
-                                  context)),
-                    ),
-                  ),
-                ),*/
             ],
           ),
         );
