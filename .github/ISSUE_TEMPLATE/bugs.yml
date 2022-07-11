@@ -3,14 +3,14 @@ description: You would like to declare a TECHNICAL or FUNCTIONAL issue and/or se
 title: '[Bug]: '
 labels: ['Bug']
 body:
-  - type: input
+  - type: textarea
     id: description
     attributes:
       label: Description
       description: What is the excepted behavior, the actual behavior and could you describe steps to reproduce ("Please tell us exactly how to reproduce the problem you are running into")
     validations:
       required: true
-  - type: input
+  - type: textarea
     id: proof
     attributes:
       label: Logs / Images
