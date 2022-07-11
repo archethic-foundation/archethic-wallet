@@ -493,7 +493,7 @@ class _SetPasswordState extends State<SetPassword> {
         await vault.setSeed(widget.seed!);
         StateContainer.of(context).appWallet =
             await KeychainUtil().newAppWallet(widget.seed!, widget.name!);
-        StateContainer.of(context).requestUpdate();
+        await StateContainer.of(context).requestUpdate();
       }
       Navigator.of(context).pushNamedAndRemoveUntil(
         '/home',

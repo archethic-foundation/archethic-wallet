@@ -167,7 +167,8 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                     StateContainer.of(context).appWallet =
                                         await KeychainUtil().newAppWallet(
                                             widget.seed!, widget.name!);
-                                    StateContainer.of(context).requestUpdate();
+                                    await StateContainer.of(context)
+                                        .requestUpdate();
                                     break;
                                   case AuthMethod.password:
                                     Navigator.of(context).pushNamed(
@@ -219,7 +220,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                       StateContainer.of(context).appWallet =
                                           await KeychainUtil().newAppWallet(
                                               widget.seed!, widget.name!);
-                                      StateContainer.of(context)
+                                      await StateContainer.of(context)
                                           .requestUpdate();
                                       Navigator.of(context)
                                           .pushNamedAndRemoveUntil(

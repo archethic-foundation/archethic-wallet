@@ -368,7 +368,8 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                           .get<DBHelper>()
                                           .addAccount(account);
                                     });
-                                    StateContainer.of(context).requestUpdate();
+                                    await StateContainer.of(context)
+                                        .requestUpdate();
                                     bool biometricsAvalaible = await sl
                                         .get<BiometricUtil>()
                                         .hasBiometrics();

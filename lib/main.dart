@@ -266,7 +266,7 @@ class _AppState extends State<App> {
                   settings.arguments as Map<String, dynamic>;
               return MaterialPageRoute<IntroBackupConfirm>(
                 builder: (_) => IntroBackupConfirm(
-                    wordList: args['mnemonic'] == null
+                    mnemonic: args['mnemonic'] == null
                         ? List<String>.empty(growable: true)
                         : args['mnemonic'] as List<String>,
                     name: args['name'] == null ? null : args['name'] as String,
@@ -363,7 +363,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
         if (preferences.getLock() || preferences.shouldLock()) {
           Navigator.of(context).pushReplacementNamed('/lock_screen');
         } else {
-          StateContainer.of(context).requestUpdate();
+          await StateContainer.of(context).requestUpdate();
           Navigator.of(context).pushReplacementNamed('/home');
         }
       } else {

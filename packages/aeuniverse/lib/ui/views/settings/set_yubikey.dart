@@ -328,7 +328,7 @@ class _SetYubikeyState extends State<SetYubikey> {
             StateContainer.of(context).appWallet =
                 await KeychainUtil().newAppWallet(widget.seed!, widget.name!);
           }
-          StateContainer.of(context).requestUpdate();
+          await StateContainer.of(context).requestUpdate();
           StateContainer.of(context).getSeed().then((String? seed) {
             Navigator.of(context).pushNamedAndRemoveUntil(
               '/home',
