@@ -2,24 +2,29 @@
 
 # Archethic Wallet
 
-Similar to a bank account for fiat currency, a crypto wallet is a personal interface for a cryptocurrency network that provides reliable storage and enables transactions. Whether a cryptocurrency is securely stored or not, much depends on the wallet, which is only as secure as its private keys.
-
-Software wallets come in many forms, each with its own set of unique characteristics. Most are somehow connected to the internet and are hot in nature. Wallets are distinguished by a set of supported cryptocurrencies and software platforms such as Windows, Mac and other operating systems. Software wallets are available in three forms — desktop, mobile and online:
-- Desktop wallets are computer programs that store cryptocurrencies on a PC so that its information is not accessible to anyone but the user, whose private keys are kept only on the desktop.
-- Mobile wallets come in the form of a smartphone app and are easily accessible to their users at any time, considering most people don’t leave their homes without their phones. However, it is worth remembering that mobile devices are vulnerable to various malware and can be easily lost.
-- Online wallets are web wallets that can be accessed from anywhere and any device, making them more convenient, but the private keys are stored by website owners rather than locally on user devices.
-
-Archethic Wallet uses the standard bip39 protocol and uses a 24 words mneumonics for deriving private and public keys. If you are familiar with Metamask then Archethic Wallet is similar application for Archethic blockchain.
+The app is mainly a FULLY decentralized and cryptocurrency non-custodial hot wallet that enables you to safety manage assets on Layer 1 Archethic blockchain.
+This wallet includes the features of send and receive coins instantly to and from anyone.
+No signup or KYC needed, you just control your service access keychain, protected by different security ways like PIN Code, Password, Yubikey devices (*) and Biometrics
+(*) Yubikey is a device that makes 2-factor authentification as simple as possible (see [yubico.com](https://www.yubico.com))
 
 Archethic Wallet have features that are implemented:
 - Use of 24 Words Mnemonics.
-- Support for Multiple Languages
+- Decentralized keychain management
+- Multi accounts management
+- Support for transactions (Sending and Receiving UCO Token)
+- Security access with Password, PIN, Yubikey, Face ID, Touch ID, Uniris Biometrics (soon)
+- Support for english and french Languages
 - Support for Multiple Currencies (Only views not as in multiple cryptocurrencies)
-- Support for transactions (Sending and Receiving Tokens)
-- Upcoming Support for Tokens and Many More
+- Multi themes
+- Address book
+- UCO Price chart
+- Last Archethic's articles
 
-![Application Initial Screen](assets/screenshots/AppInit.png?v=20220614)
+![Application Initial Screen](assets/screenshots/AppInit.png?v=20220711)
 * Application Initial Screen
+
+## Informations
+All news about wallet are available on the [Archethic Youtube Channel](https://www.youtube.com/playlist?list=PL6GQEJjcIwHChTok4CJyw3lsmlvoJLnZK)
 
 ## How to install Archethic Wallet
 
@@ -35,26 +40,12 @@ To install Archethic Wallet in Android Devices:
 ### Windows
 
 To install Archethic Wallet in Windows platforms:
-- Download the MSIX file from [releases](https://github.com/archethic-foundation/archethic_mobile_wallet/releases).
-- Install the certificate 
-    1) Right click on the MSIX file, click on Properties and then go to "Digital Signature" tab. Select the certificate from "Signature list" and then click "Details"
-    2) Click view certificate
-    3) Click "Install certificate" 
-    4) Select "Local Machine" and then click "Next"
-    5) Select "Place all certificates in the following store" and then click "Browse"
-    6) Browse to "Trusted Root Certification Authorities" and then click "OK"
-    7) Click "Next"
-    8) Click "Finish"
-    9) Click "OK"
-    The required certificate is imported now and you can begin installing the msix file
-- Install the MSIX file
+- Soon
 
 ### MacOS
 
 To install Archethic Wallet in MacOS platforms:
-- Download the app.zip file from [releases](https://github.com/archethic-foundation/archethic_mobile_wallet/releases).
-- Unzip the file
-- Launch the APP file
+- Soon
 
 ### iOS
 
@@ -63,7 +54,12 @@ To install Archethic Wallet in iOS Devices:
 
 ### WebApp
 
-- No installation. Just go to https://reddwarf03.github.io/archethic_web/index.html
+- Soon
+
+### Chrome Extension
+
+- Soon
+
 
 ## How to test the Archethic Wallet
 
