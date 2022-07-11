@@ -6,13 +6,10 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
-import 'package:core/model/data/appdb.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
-import 'package:core/util/keychain_util.dart';
 import 'package:core/util/mnemonics.dart';
 import 'package:core/util/seeds.dart';
-import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
