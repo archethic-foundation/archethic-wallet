@@ -350,80 +350,74 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
                         padding: EdgeInsets.only(bottom: bottom + 80),
                         child: Column(
                           children: <Widget>[
-                            Stack(
+                            const SizedBox(height: 25),
+                            Column(
                               children: <Widget>[
-                                Column(
-                                  children: <Widget>[
-                                    getEnterAmountContainer(),
-                                    Container(
-                                      alignment:
-                                          const AlignmentDirectional(0, 0),
-                                      margin: const EdgeInsets.only(top: 3),
-                                      child: Text(_amountValidationText!,
-                                          style: AppStyles
-                                              .textStyleSize14W600Primary(
-                                                  context)),
-                                    ),
-                                  ],
+                                getEnterAmountContainer(),
+                                Container(
+                                  alignment: const AlignmentDirectional(0, 0),
+                                  margin: const EdgeInsets.only(top: 3),
+                                  child: Text(_amountValidationText!,
+                                      style:
+                                          AppStyles.textStyleSize14W600Primary(
+                                              context)),
                                 ),
-                                Column(
-                                  children: <Widget>[
-                                    Container(
-                                      alignment: Alignment.topCenter,
-                                      child: getEnterAddressContainer(),
-                                    ),
-                                    Container(
-                                      alignment:
-                                          const AlignmentDirectional(0, 0),
-                                      margin: const EdgeInsets.only(
-                                          left: 50, right: 40, top: 3),
-                                      child: Text(_addressValidationText!,
+                              ],
+                            ),
+                            Column(
+                              children: <Widget>[
+                                Container(
+                                  alignment: Alignment.topCenter,
+                                  child: getEnterAddressContainer(),
+                                ),
+                                Container(
+                                  alignment: const AlignmentDirectional(0, 0),
+                                  margin: const EdgeInsets.only(
+                                      left: 50, right: 40, top: 3),
+                                  child: Text(_addressValidationText!,
+                                      style:
+                                          AppStyles.textStyleSize14W600Primary(
+                                              context)),
+                                ),
+                                const SizedBox(height: 10),
+                                getEnterMessage(),
+                                const SizedBox(height: 10),
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 30),
+                                  child: feeEstimation > 0
+                                      ? Text(
+                                          '+ ${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                           style: AppStyles
-                                              .textStyleSize14W600Primary(
-                                                  context)),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    getEnterMessage(),
-                                    const SizedBox(height: 10),
-                                    Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 30),
-                                      child: feeEstimation > 0
-                                          ? Text(
-                                              '+ ${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                              style: AppStyles
-                                                  .textStyleSize14W100Primary(
-                                                      context),
-                                            )
-                                          : Text(
-                                              AppLocalization.of(context)!
-                                                  .estimatedFeesNote,
-                                              style: AppStyles
-                                                  .textStyleSize14W100Primary(
-                                                      context)),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 30),
-                                      child: feeEstimation > 0
-                                          ? Text(
-                                              '(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, feeEstimation, 8)})',
-                                              style: AppStyles
-                                                  .textStyleSize14W100Primary(
-                                                      context),
-                                            )
-                                          : const SizedBox(),
-                                    ),
-                                    Container(
-                                      alignment:
-                                          const AlignmentDirectional(0, 0),
-                                      margin: const EdgeInsets.only(top: 3),
-                                      child: Text(_globalValidationText!,
+                                              .textStyleSize14W100Primary(
+                                                  context),
+                                        )
+                                      : Text(
+                                          AppLocalization.of(context)!
+                                              .estimatedFeesNote,
                                           style: AppStyles
-                                              .textStyleSize14W600Primary(
+                                              .textStyleSize14W100Primary(
                                                   context)),
-                                    ),
-                                  ],
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 30),
+                                  child: feeEstimation > 0
+                                      ? Text(
+                                          '(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, feeEstimation, 8)})',
+                                          style: AppStyles
+                                              .textStyleSize14W100Primary(
+                                                  context),
+                                        )
+                                      : const SizedBox(),
+                                ),
+                                Container(
+                                  alignment: const AlignmentDirectional(0, 0),
+                                  margin: const EdgeInsets.only(top: 3),
+                                  child: Text(_globalValidationText!,
+                                      style:
+                                          AppStyles.textStyleSize14W600Primary(
+                                              context)),
                                 ),
                               ],
                             ),
@@ -752,7 +746,6 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
         AppTextField(
           focusNode: _sendAmountFocusNode,
           controller: _sendAmountController,
-          topMargin: 30,
           cursorColor: StateContainer.of(context).curTheme.text,
           style: AppStyles.textStyleSize16W700Primary(context),
           inputFormatters: [
@@ -874,7 +867,6 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
 
   AppTextField getEnterMessage() {
     return AppTextField(
-      topMargin: MediaQuery.of(context).size.height * 0.0009,
       focusNode: _messageFocusNode,
       controller: _messageController,
       maxLines: 4,
@@ -894,7 +886,6 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
 
   AppTextField getEnterAddressContainer() {
     return AppTextField(
-        topMargin: 124,
         padding: _addressValidAndUnfocused
             ? const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0)
             : EdgeInsets.zero,
