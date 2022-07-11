@@ -45,6 +45,7 @@ class Preferences {
   static const String _showPriceChart = 'archethic_showPriceChart';
   static const String _activeVibrations = 'archethic_activeVibrations';
   static const String _activeNotifications = 'archethic_activeNotifications';
+  static const String _language_seed = 'archethic_language_seed';
 
   // This doesn't have to be a singleton.
   // We just want to make sure that the box is open, before we start getting/setting objects on it
@@ -110,6 +111,10 @@ class Preferences {
   Future<void> setVersionApp(String v) => _setValue(_version_app, v);
 
   String getVersionApp() => _getValue(_version_app, defaultValue: '');
+
+  Future<void> setLanguageSeed(String v) => _setValue(_language_seed, v);
+
+  String getLanguageSeed() => _getValue(_language_seed, defaultValue: '');
 
   Future<void> setLock(bool value) => _setValue(_lock, value);
 

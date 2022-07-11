@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aeuniverse/util/preferences.dart';
 import 'package:core/model/data/account.dart';
 import 'package:core/model/data/app_wallet.dart';
 import 'package:core/model/data/price.dart';
@@ -47,10 +48,13 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   bool _mnemonicIsValid = false;
   String _mnemonicError = '';
   bool? isPressed;
+  String language = 'en';
 
   @override
   void initState() {
     isPressed = false;
+    Preferences.getInstance()
+        .then((Preferences preferences) => preferences.setLanguageSeed('en'));
     super.initState();
   }
 
@@ -105,6 +109,66 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                 },
                               ),
                             ),
+                            Row(
+                              children: [
+                                Container(
+                                  margin: EdgeInsetsDirectional.only(start: 15),
+                                  height: 50,
+                                  width: 50,
+                                  child: TextButton(
+                                    onPressed: () async {
+                                      sl.get<HapticUtil>().feedback(
+                                          FeedbackType.light,
+                                          StateContainer.of(context)
+                                              .activeVibrations);
+
+                                      Preferences preferences =
+                                          await Preferences.getInstance();
+                                      preferences.setLanguageSeed('en');
+                                      setState(() {
+                                        language = 'en';
+                                      });
+                                    },
+                                    child: language == 'en'
+                                        ? Image.asset(
+                                            'packages/aeuniverse/assets/icons/languages/united-states.png')
+                                        : Opacity(
+                                            opacity: 0.3,
+                                            child: Image.asset(
+                                                'packages/aeuniverse/assets/icons/languages/united-states.png'),
+                                          ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsetsDirectional.only(start: 15),
+                                  height: 50,
+                                  width: 50,
+                                  child: TextButton(
+                                    onPressed: () async {
+                                      sl.get<HapticUtil>().feedback(
+                                          FeedbackType.light,
+                                          StateContainer.of(context)
+                                              .activeVibrations);
+
+                                      Preferences preferences =
+                                          await Preferences.getInstance();
+                                      preferences.setLanguageSeed('fr');
+                                      setState(() {
+                                        language = 'fr';
+                                      });
+                                    },
+                                    child: language == 'fr'
+                                        ? Image.asset(
+                                            'packages/aeuniverse/assets/icons/languages/france.png')
+                                        : Opacity(
+                                            opacity: 0.3,
+                                            child: Image.asset(
+                                                'packages/aeuniverse/assets/icons/languages/france.png'),
+                                          ),
+                                  ),
+                                ),
+                              ],
+                            )
                           ],
                         ),
                         Container(
@@ -149,8 +213,6 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                 inputFormatters: [
                                   SingleSpaceInputFormatter(),
                                   LowerCaseTextFormatter(),
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp('[a-zA-Z ]')),
                                 ],
                                 textInputAction: TextInputAction.done,
                                 maxLines: null,
@@ -255,7 +317,8 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                       }
                                       final String lastWord = text.substring(
                                           lastSpaceIndex, text.length - 1);
-                                      if (!AppMnemomics.isValidWord(lastWord)) {
+                                      if (!AppMnemomics.isValidWord(lastWord,
+                                          languageCode: language)) {
                                         setState(() {
                                           _mnemonicIsValid = false;
                                           setState(() {
@@ -325,7 +388,8 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                   String seed = AppMnemomics.mnemonicListToSeed(
                                       _mnemonicController.text
                                           .trim()
-                                          .split(' '));
+                                          .split(' '),
+                                      languageCode: language);
                                   final Vault _vault =
                                       await Vault.getInstance();
                                   _vault.setSeed(seed);

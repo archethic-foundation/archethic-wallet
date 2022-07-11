@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aeuniverse/util/preferences.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -30,7 +31,12 @@ class _AppSeedBackupSheetState extends State<AppSeedBackupSheet> {
   @override
   void initState() {
     super.initState();
-    _mnemonic = AppMnemomics.seedToMnemonic(widget.seed);
+    Preferences.getInstance().then((Preferences preferences) {
+      setState(() {
+        _mnemonic = AppMnemomics.seedToMnemonic(widget.seed,
+            languageCode: preferences.getLanguageSeed());
+      });
+    });
   }
 
   @override
@@ -75,10 +81,12 @@ class _AppSeedBackupSheetState extends State<AppSeedBackupSheet> {
                   Expanded(
                     child: Column(
                       children: <Widget>[
-                        MnemonicDisplay(
-                          wordList: _mnemonic!,
-                          obscureSeed: true,
-                        )
+                        _mnemonic != null
+                            ? MnemonicDisplay(
+                                wordList: _mnemonic!,
+                                obscureSeed: true,
+                              )
+                            : const SizedBox()
                       ],
                     ),
                   ),

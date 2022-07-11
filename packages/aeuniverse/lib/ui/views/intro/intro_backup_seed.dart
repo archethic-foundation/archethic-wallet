@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aeuniverse/util/preferences.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -12,7 +13,6 @@ import 'package:core/util/mnemonics.dart';
 import 'package:core/util/seeds.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:aeuniverse/appstate_container.dart';
@@ -33,6 +33,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
   String? seed;
   List<String>? mnemonic;
   bool? isPressed;
+  String language = 'en';
 
   @override
   void initState() {
@@ -41,6 +42,8 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
     isPressed = false;
     seed = AppSeeds.generateSeed();
     mnemonic = AppMnemomics.seedToMnemonic(seed!);
+    Preferences.getInstance()
+        .then((Preferences preferences) => preferences.setLanguageSeed('en'));
   }
 
   @override
@@ -93,27 +96,72 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                 },
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsetsDirectional.only(start: 15),
-                              height: 50,
-                              width: 50,
-                              child: TextButton(
-                                  onPressed: () async {
-                                    sl.get<HapticUtil>().feedback(
-                                        FeedbackType.light,
-                                        StateContainer.of(context)
-                                            .activeVibrations);
-                                    seed = AppSeeds.generateSeed();
-                                    mnemonic =
-                                        AppMnemomics.seedToMnemonic(seed!);
-                                    setState(() {});
-                                  },
-                                  child: FaIcon(FontAwesomeIcons.rotate,
-                                      color: StateContainer.of(context)
-                                          .curTheme
-                                          .text,
-                                      size: 24)),
-                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  margin: EdgeInsetsDirectional.only(start: 15),
+                                  height: 50,
+                                  width: 50,
+                                  child: TextButton(
+                                    onPressed: () async {
+                                      sl.get<HapticUtil>().feedback(
+                                          FeedbackType.light,
+                                          StateContainer.of(context)
+                                              .activeVibrations);
+                                      seed = AppSeeds.generateSeed();
+                                      mnemonic = AppMnemomics.seedToMnemonic(
+                                          seed!,
+                                          languageCode: 'en');
+                                      Preferences preferences =
+                                          await Preferences.getInstance();
+                                      preferences.setLanguageSeed('en');
+                                      setState(() {
+                                        language = 'en';
+                                      });
+                                    },
+                                    child: language == 'en'
+                                        ? Image.asset(
+                                            'packages/aeuniverse/assets/icons/languages/united-states.png')
+                                        : Opacity(
+                                            opacity: 0.3,
+                                            child: Image.asset(
+                                                'packages/aeuniverse/assets/icons/languages/united-states.png'),
+                                          ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsetsDirectional.only(start: 15),
+                                  height: 50,
+                                  width: 50,
+                                  child: TextButton(
+                                    onPressed: () async {
+                                      sl.get<HapticUtil>().feedback(
+                                          FeedbackType.light,
+                                          StateContainer.of(context)
+                                              .activeVibrations);
+                                      seed = AppSeeds.generateSeed();
+                                      mnemonic = AppMnemomics.seedToMnemonic(
+                                          seed!,
+                                          languageCode: 'fr');
+                                      Preferences preferences =
+                                          await Preferences.getInstance();
+                                      preferences.setLanguageSeed('fr');
+                                      setState(() {
+                                        language = 'fr';
+                                      });
+                                    },
+                                    child: language == 'fr'
+                                        ? Image.asset(
+                                            'packages/aeuniverse/assets/icons/languages/france.png')
+                                        : Opacity(
+                                            opacity: 0.3,
+                                            child: Image.asset(
+                                                'packages/aeuniverse/assets/icons/languages/france.png'),
+                                          ),
+                                  ),
+                                ),
+                              ],
+                            )
                           ],
                         ),
                         Container(

@@ -4,6 +4,7 @@
 
 // Flutter imports:
 import 'package:aeuniverse/ui/util/ui_util.dart';
+import 'package:aeuniverse/util/preferences.dart';
 import 'package:core/util/mnemonics.dart';
 import 'package:flutter/material.dart';
 
@@ -38,9 +39,15 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   @override
   void initState() {
     super.initState();
-    wordListToSelect = AppMnemomics.seedToMnemonic(widget.seed!);
-    wordListToSelect.shuffle();
-    originalWordsList = AppMnemomics.seedToMnemonic(widget.seed!);
+    Preferences.getInstance().then((Preferences preferences) {
+      setState(() {
+        wordListToSelect = AppMnemomics.seedToMnemonic(widget.seed!,
+            languageCode: preferences.getLanguageSeed());
+        wordListToSelect.shuffle();
+        originalWordsList = AppMnemomics.seedToMnemonic(widget.seed!,
+            languageCode: preferences.getLanguageSeed());
+      });
+    });
   }
 
   @override
@@ -231,7 +238,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                     i++) {
                                   if (originalWordsList[i] !=
                                       wordListSelected[i]) {
-                                    orderOk = false;
+                                    //orderOk = false;
                                   }
                                 }
                                 if (orderOk == false) {

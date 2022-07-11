@@ -44,4 +44,5 @@ flutter:
   assets:
     - assets/icons/
     - assets/icons/currency/
+    - assets/icons/languages/
     - assets/icons/txInfos/
