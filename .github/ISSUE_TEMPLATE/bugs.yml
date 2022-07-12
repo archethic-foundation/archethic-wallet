@@ -31,3 +31,10 @@ body:
       description: 
     validations:
       required: false
+  - type: textarea
+    id: fix
+    attributes:
+      label: Fix
+      description: What do you suggest to fix it ?
+    validations:
+      required: false
