@@ -1358,9 +1358,9 @@ class AppLocalization {
     return Intl.message("Please wait", name: 'pleaseWait');
   }
 
-  String get keychainCreationInProgress {
-    return Intl.message("Your keychain is being created...",
-        name: 'keychainCreationInProgress');
+  String get appWalletInitInProgress {
+    return Intl.message("Your wallet is being configured...",
+        name: 'appWalletInitInProgress');
   }
 }
 

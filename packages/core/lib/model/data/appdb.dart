@@ -129,6 +129,14 @@ class DBHelper {
     return appWallet;
   }
 
+  Future<AppWallet> clearAccount() async {
+    Box<AppWallet> box = await Hive.openBox<AppWallet>(appWalletTable);
+    AppWallet appWallet = box.get(0)!;
+    appWallet.appKeychain!.accounts!.clear();
+    box.put(0, appWallet);
+    return appWallet;
+  }
+
   Future<void> changeAccount(Account account) async {
     Box<AppWallet> box = await Hive.openBox<AppWallet>(appWalletTable);
     AppWallet appWallet = box.get(0)!;

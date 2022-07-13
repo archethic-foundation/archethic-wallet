@@ -1698,8 +1698,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "keychainCreationInProgress": "Your keychain is being created...",
-  "@keychainCreationInProgress": {
+  "appWalletInitInProgress": "Your wallet is being configured...",
+  "@appWalletInitInProgress": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

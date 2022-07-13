@@ -284,6 +284,6 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
         StateContainer.of(context).curTheme.animationOverlayStrong!,
         StateContainer.of(context).curTheme.animationOverlayMedium!,
         onPoppedCallback: () => animationOpen = false,
-        title: AppLocalization.of(context)!.keychainCreationInProgress));
+        title: AppLocalization.of(context)!.appWalletInitInProgress));
   }
 }

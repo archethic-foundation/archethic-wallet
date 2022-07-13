@@ -285,7 +285,7 @@
 	"transactionInputNotification": "You have received %1 %2 on your %3 account",
 	"searchField": "Search...",
 	"pleaseWait": "Please wait",
-	"keychainCreationInProgress": "Your keychain is being created...",
+	"appWalletInitInProgress": "Your wallet is being configured...",
 	"sendMessageHeader": "Message",
 	"sendMessageConfirmHeader": "Your message:",
 	"messageInTxTransfer": "See the message attached..."
