@@ -36,8 +36,6 @@
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
   <link rel="stylesheet" type="text/css" href="splash/style.css">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-
-  <script src="flutter.js" defer></script>
 </head>
 
 <body>
@@ -50,13 +48,7 @@
       media="(prefers-color-scheme: dark)">
     <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="" />
   </picture>
-  <script>
-    window.addEventListener('load', function (ev) {
-      _flutter.loader.loadEntrypoint().then(function (engineInitializer) {
-        return engineInitializer.autoStart();
-      });
-    });
-  </script>
+  <script src="main.dart.js" type="application/javascript"></script>
 </body>
 
 </html>
