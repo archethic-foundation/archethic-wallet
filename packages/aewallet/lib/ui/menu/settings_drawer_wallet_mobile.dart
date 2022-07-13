@@ -651,7 +651,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           style: AppStyles.textStyleSize20W700EquinoxPrimary(
                               context)),
                     ),
-                    Divider(
+                    /*Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,
                     ),
@@ -661,7 +661,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         _curNetworksSetting,
                         'packages/aewallet/assets/icons/url.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
-                        _networkDialog),
+                        _networkDialog),*/
                     // Authentication Method
                     Divider(
                       height: 2,
