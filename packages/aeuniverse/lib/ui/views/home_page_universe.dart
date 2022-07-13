@@ -467,13 +467,11 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                           '.svg',
                       height: 30,
                     ),
-                    if (StateContainer.of(context).curNetwork !=
-                        NetworksSetting(AvailableNetworks.ArchethicMainNet))
-                      Text(
-                          StateContainer.of(context)
-                              .curNetwork
-                              .getDisplayName(context),
-                          style: AppStyles.textStyleSize10W100Primary(context)),
+                    Text(
+                        StateContainer.of(context)
+                            .curNetwork
+                            .getDisplayName(context),
+                        style: AppStyles.textStyleSize10W100Primary(context)),
                   ],
                 ),
               ),
