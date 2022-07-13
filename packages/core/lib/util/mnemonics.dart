@@ -26,9 +26,13 @@ class AppMnemomics {
   /// Convert a 24-word mnemonic word list to a seed
   static String mnemonicListToSeed(List<String> words,
       {String languageCode = 'en'}) {
-    return uint8ListToHex(Uint8List.fromList(
-        bip39.Mnemonic.fromSentence(words.join(' '), getLanguage(languageCode))
-            .entropy));
+    try {
+      return uint8ListToHex(Uint8List.fromList(bip39.Mnemonic.fromSentence(
+              words.join(' '), getLanguage(languageCode))
+          .entropy));
+    } catch (e) {
+      return '';
+    }
   }
 
   /// Validate a mnemonic word list

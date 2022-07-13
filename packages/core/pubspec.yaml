@@ -25,7 +25,7 @@ dependencies:
   barcode_scan2: ^4.2.1
   
   # Dart implementation of Bitcoin BIP39 Mnemonic code for generating deterministic keys
-  bip39_mnemonic: ^3.0.3
+  bip39_mnemonic: ^3.0.4
 
   bip32: ^2.0.0
 
