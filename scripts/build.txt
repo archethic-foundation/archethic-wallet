@@ -15,3 +15,5 @@ Xcode : notarize App : Archive/Distribute app/Deveoper ID/Upload/Automatically s
 # windows
 flutter build windows
 flutter pub run msix:create -c /XX/XX/CERTIFICATE.pfx -p kfmslmkd
+# chrome extension
+flutter build web --web-renderer html --csp
