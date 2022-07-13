@@ -223,6 +223,9 @@ class KeychainUtil {
         await accounts[i].updateBalance(tokenName, currency, tokenPrice);
       }
       appWallet.appKeychain!.accounts = accounts;
+      appWallet.appKeychain!
+          .getAccountSelected()!
+          .updateRecentTransactions('', seed);
       appWallet.save();
     } catch (e) {}
 
