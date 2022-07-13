@@ -144,9 +144,6 @@ class AppService {
             } else {
               recentTransaction.tokenAddress = '';
             }
-            recentTransaction.content = await sl
-                .get<ApiService>()
-                .getTransactionContent(recentTransaction.address!);
             recentTransaction.amount = transactionInput.amount!;
             recentTransaction.typeTx = RecentTransaction.transferInput;
             recentTransaction.from = transactionInput.from;
@@ -169,10 +166,6 @@ class AppService {
       } else {
         recentTransaction.tokenAddress = '';
       }
-      // TODO: Get Content see: https://github.com/archethic-foundation/archethic-node/issues/444
-      recentTransaction.content = await sl
-          .get<ApiService>()
-          .getTransactionContent(recentTransaction.address!);
       recentTransaction.amount = transaction.amount!;
       recentTransaction.typeTx = RecentTransaction.transferInput;
       recentTransaction.from = transaction.from;
@@ -186,6 +179,14 @@ class AppService {
     // Sort by date (desc)
     recentTransactions.sort((RecentTransaction a, RecentTransaction b) =>
         a.timestamp!.compareTo(b.timestamp!));
+
+    for (int i = 0; i < recentTransactions.length; i++) {
+      if (i <= 3) {
+        recentTransactions[i].content = await sl
+            .get<ApiService>()
+            .getTransactionContent(recentTransactions[i].address!);
+      }
+    }
 
     return recentTransactions.reversed.toList();
   }
