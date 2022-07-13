@@ -144,6 +144,9 @@ class AppService {
             } else {
               recentTransaction.tokenAddress = '';
             }
+            recentTransaction.content = await sl
+                .get<ApiService>()
+                .getTransactionContent(recentTransaction.address!);
             recentTransaction.amount = transactionInput.amount!;
             recentTransaction.typeTx = RecentTransaction.transferInput;
             recentTransaction.from = transactionInput.from;
@@ -166,6 +169,10 @@ class AppService {
       } else {
         recentTransaction.tokenAddress = '';
       }
+      // TODO: Get Content see: https://github.com/archethic-foundation/archethic-node/issues/444
+      recentTransaction.content = await sl
+          .get<ApiService>()
+          .getTransactionContent(recentTransaction.address!);
       recentTransaction.amount = transaction.amount!;
       recentTransaction.typeTx = RecentTransaction.transferInput;
       recentTransaction.from = transaction.from;
