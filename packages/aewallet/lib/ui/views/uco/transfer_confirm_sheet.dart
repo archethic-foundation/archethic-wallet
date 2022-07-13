@@ -195,6 +195,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                 ),
                 if (widget.message!.isNotEmpty)
                   Container(
+                    width: MediaQuery.of(context).size.width,
                     margin: const EdgeInsets.only(
                         left: 20, right: 20, top: 20.0, bottom: 20.0),
                     child: Column(
