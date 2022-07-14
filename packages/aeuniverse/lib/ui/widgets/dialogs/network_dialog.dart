@@ -36,6 +36,7 @@ class NetworkDialog {
 
     return await showDialog<NetworksSetting>(
         context: context,
+        barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Padding(

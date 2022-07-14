@@ -73,7 +73,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       LockTimeoutSetting(LockTimeoutOption.one);
   ThemeSetting _curThemeSetting = ThemeSetting(ThemeOptions.dark);
   NetworksSetting _curNetworksSetting =
-      NetworksSetting(AvailableNetworks.ArchethicTestNet);
+      NetworksSetting(AvailableNetworks.ArchethicMainNet);
 
   bool? _securityOpen;
   bool? _customOpen;

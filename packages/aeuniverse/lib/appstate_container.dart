@@ -75,7 +75,7 @@ class StateContainerState extends State<StateContainer> {
   PrimaryCurrencySetting curPrimaryCurrency =
       PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE);
   NetworksSetting curNetwork =
-      NetworksSetting(AvailableNetworks.ArchethicTestNet);
+      NetworksSetting(AvailableNetworks.ArchethicMainNet);
   BaseTheme curTheme = DarkTheme();
 
   AEApps currentAEApp = AEApps.bin;

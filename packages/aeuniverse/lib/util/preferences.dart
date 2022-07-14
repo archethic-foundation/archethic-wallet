@@ -100,7 +100,7 @@ class Preferences {
 
   NetworksSetting getNetwork() =>
       NetworksSetting(AvailableNetworks.values[_getValue(_cur_network,
-          defaultValue: AvailableNetworks.ArchethicTestNet.index)]);
+          defaultValue: AvailableNetworks.ArchethicMainNet.index)]);
 
   Future<void> setNetworkDevEndpoint(String s) =>
       _setValue(_cur_network_dev_endpoint, s);

@@ -27,7 +27,7 @@ class IntroWelcome extends StatefulWidget {
 class _IntroWelcomeState extends State<IntroWelcome> {
   bool checkedValue = false;
   NetworksSetting _curNetworksSetting =
-      NetworksSetting(AvailableNetworks.ArchethicTestNet);
+      NetworksSetting(AvailableNetworks.ArchethicMainNet);
 
   @override
   Widget build(BuildContext context) {
