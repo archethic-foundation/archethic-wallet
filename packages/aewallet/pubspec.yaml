@@ -76,6 +76,9 @@ dependencies:
   # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
   package_info_plus: ^1.4.2
 
+  # A handful collection of some cool progress indicators and text animators
+  progress_indicators: ^1.0.0
+
   # QR.Flutter is a Flutter library for simple and fast QR code rendering via a Widget or custom painter
   qr_flutter: ^4.0.0
 

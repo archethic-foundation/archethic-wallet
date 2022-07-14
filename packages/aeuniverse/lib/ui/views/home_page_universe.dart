@@ -359,7 +359,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                       ),*/
                       InkWell(
                         onTap: () async {
-                          await _networkDialog();
+                          // await _networkDialog();
                         },
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width,
@@ -457,7 +457,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
               ],
               title: InkWell(
                 onTap: () async {
-                  await _networkDialog();
+                  // await _networkDialog();
                 },
                 child: Column(
                   children: [
@@ -525,38 +525,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                       FeedbackType.light,
                                       StateContainer.of(context)
                                           .activeVibrations);
-                                  AccountsList((await KeychainUtil()
-                                              .getListAccountsFromKeychain(
-                                                  StateContainer.of(context)
-                                                      .appWallet!,
-                                                  await StateContainer.of(
-                                                          context)
-                                                      .getSeed(),
-                                                  StateContainer.of(context)
-                                                      .curCurrency
-                                                      .currency
-                                                      .name,
-                                                  StateContainer.of(context)
-                                                      .appWallet!
-                                                      .appKeychain!
-                                                      .getAccountSelected()!
-                                                      .balance!
-                                                      .nativeTokenName!,
-                                                  StateContainer.of(context)
-                                                      .appWallet!
-                                                      .appKeychain!
-                                                      .getAccountSelected()!
-                                                      .balance!
-                                                      .tokenPrice!,
-                                                  currentName:
-                                                      StateContainer.of(context)
-                                                          .appWallet!
-                                                          .appKeychain!
-                                                          .getAccountSelected()!
-                                                          .name))!
-                                          .appKeychain!
-                                          .accounts!)
-                                      .mainBottomSheet(context);
+                                  AccountsList().mainBottomSheet(context);
                                   setState(() {
                                     accountIsPressed = false;
                                   });

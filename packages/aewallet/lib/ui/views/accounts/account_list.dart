@@ -4,6 +4,7 @@ import 'dart:async';
 // Flutter imports:
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:core/model/data/account.dart';
+import 'package:core/model/data/app_wallet.dart';
 import 'package:core/model/primary_currency.dart';
 import 'package:core/util/currency_util.dart';
 import 'package:core_ui/ui/util/formatters.dart';
@@ -23,38 +24,41 @@ import 'package:core/model/data/appdb.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/keychain_util.dart';
 import 'package:core_ui/ui/util/dimens.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 
 class AccountsList {
-  List<Account>? accounts;
-
-  AccountsList(this.accounts);
+  AccountsList();
 
   mainBottomSheet(BuildContext context) {
     Sheets.showAppHeightNineSheet(
-        context: context, widget: AccountsListWidget(accounts: accounts));
+        context: context, widget: const AccountsListWidget());
   }
 }
 
 class AccountsListWidget extends StatefulWidget {
-  final List<Account>? accounts;
-
-  const AccountsListWidget({super.key, @required this.accounts});
+  const AccountsListWidget({super.key});
 
   @override
   State<AccountsListWidget> createState() => _AccountsListWidgetState();
 }
 
 class _AccountsListWidgetState extends State<AccountsListWidget> {
+  List<Account> accountList = List<Account>.empty(growable: true);
   static const int kMaxAccounts = 50;
   final GlobalKey expandedKey = GlobalKey();
   final ScrollController scrollController = ScrollController();
   bool? isPressed;
+  bool? isChangeAccountInProgress;
+  bool? animationOpen;
+  bool? keychainSync;
 
   @override
   void initState() {
     super.initState();
     isPressed = false;
-    widget.accounts!.sort((a, b) => a.name!.compareTo(b.name!));
+    animationOpen = false;
+    isChangeAccountInProgress = false;
+    keychainSync = false;
   }
 
   @override
@@ -63,8 +67,8 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
     super.dispose();
   }
 
-  Future<void> _changeAccount(Account account, StateSetter setState) async {
-    for (var a in widget.accounts!) {
+  void _changeAccount(Account account, StateSetter setState) async {
+    for (var a in accountList) {
       if (a.selected!) {
         setState(() {
           a.selected = false;
@@ -75,13 +79,6 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
         });
       }
     }
-    await sl.get<DBHelper>().changeAccount(account);
-    StateContainer.of(context).recentTransactionsLoading = true;
-
-    await StateContainer.of(context).requestUpdate();
-
-    StateContainer.of(context).recentTransactionsLoading = false;
-    Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
   }
 
   @override
@@ -139,30 +136,149 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                   ),
                 ],
               ),
-              Expanded(
-                  key: expandedKey,
-                  child: Stack(
-                    children: <Widget>[
-                      widget.accounts == null
-                          ? const SizedBox()
-                          : ListView.builder(
-                              padding: const EdgeInsets.symmetric(vertical: 20),
-                              itemCount: widget.accounts!.length,
-                              controller: scrollController,
-                              itemBuilder: (BuildContext context, int index) {
-                                return _buildAccountListItem(
-                                    context, widget.accounts![index], setState);
-                              },
-                            ),
-                    ],
-                  )),
+              FutureBuilder<String?>(
+                  future: StateContainer.of(context).getSeed(),
+                  builder: (BuildContext context, AsyncSnapshot<String?> seed) {
+                    if (isChangeAccountInProgress == true) {
+                      return Expanded(
+                          key: expandedKey,
+                          child: Stack(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(top: 30),
+                                child: ListView.builder(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  itemCount: accountList.length,
+                                  controller: scrollController,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return _buildAccountListItem(
+                                        context, accountList[index], setState);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ));
+                    } else {
+                      if (seed.hasData) {
+                        keychainSync = true;
+                        return FutureBuilder<AppWallet?>(
+                            future: KeychainUtil().getListAccountsFromKeychain(
+                                StateContainer.of(context).appWallet!,
+                                seed.data,
+                                StateContainer.of(context)
+                                    .curCurrency
+                                    .currency
+                                    .name,
+                                StateContainer.of(context)
+                                    .appWallet!
+                                    .appKeychain!
+                                    .getAccountSelected()!
+                                    .balance!
+                                    .nativeTokenName!,
+                                StateContainer.of(context)
+                                    .appWallet!
+                                    .appKeychain!
+                                    .getAccountSelected()!
+                                    .balance!
+                                    .tokenPrice!,
+                                currentName: StateContainer.of(context)
+                                    .appWallet!
+                                    .appKeychain!
+                                    .getAccountSelected()!
+                                    .name),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<AppWallet?> snapshot) {
+                              if (snapshot.hasData) {
+                                keychainSync = false;
+                                accountList =
+                                    snapshot.data!.appKeychain!.accounts!;
+                                accountList
+                                    .sort((a, b) => a.name!.compareTo(b.name!));
+                                return Expanded(
+                                    key: expandedKey,
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 30),
+                                          child: ListView.builder(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 20),
+                                            itemCount: accountList.length,
+                                            controller: scrollController,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              return _buildAccountListItem(
+                                                  context,
+                                                  accountList[index],
+                                                  setState);
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ));
+                              } else {
+                                accountList = StateContainer.of(context)
+                                    .appWallet!
+                                    .appKeychain!
+                                    .accounts!;
+                                accountList
+                                    .sort((a, b) => a.name!.compareTo(b.name!));
+                                return Expanded(
+                                    key: expandedKey,
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                  AppLocalization.of(context)!
+                                                      .keychainSync,
+                                                  style: AppStyles
+                                                      .textStyleSize16W400Primary(
+                                                          context)),
+                                              JumpingDotsProgressIndicator(
+                                                fontSize: 20.0,
+                                                color: Colors.white,
+                                              ),
+                                            ]),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 30),
+                                          child: ListView.builder(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 20),
+                                            itemCount: accountList.length,
+                                            controller: scrollController,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              return _buildAccountListItem(
+                                                  context,
+                                                  accountList[index],
+                                                  setState);
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ));
+                              }
+                            });
+                      } else {
+                        return const SizedBox();
+                      }
+                    }
+                  }),
               const SizedBox(
                 height: 15,
               ),
               Row(
                 children: <Widget>[
-                  widget.accounts == null ||
-                          widget.accounts!.length >= kMaxAccounts
+                  accountList.length >= kMaxAccounts
                       ? const SizedBox()
                       : AppButton.buildAppButton(
                           const Key('addAccount'),
@@ -301,8 +417,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                         bool accountExists =
                                                             false;
                                                         for (Account account
-                                                            in widget
-                                                                .accounts!) {
+                                                            in accountList) {
                                                           if (account.name ==
                                                               nameController
                                                                   .text) {
@@ -400,7 +515,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                   );
                                 });
                             setState(() {
-                              widget.accounts!
+                              accountList
                                   .sort((a, b) => a.name!.compareTo(b.name!));
                             });
                           },
@@ -418,10 +533,22 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
         style: TextButton.styleFrom(
           padding: const EdgeInsets.all(0.0),
         ),
-        onPressed: () {
+        onPressed: () async {
+          if (keychainSync == true) {
+            return;
+          }
+          _showSendingAnimation(context);
+          setState(() {
+            isChangeAccountInProgress = true;
+          });
           if (!account.selected!) {
             _changeAccount(account, setState);
+            StateContainer.of(context).appWallet =
+                await sl.get<DBHelper>().changeAccount(account);
+            await StateContainer.of(context)
+                .requestUpdate(forceUpdateChart: false);
           }
+          Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
         },
         child: Column(
           children: <Widget>[
@@ -472,12 +599,19 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          AutoSizeText(
-                                            account.name!,
-                                            style: AppStyles
-                                                .textStyleSize16W600EquinoxPrimary(
-                                                    context),
-                                          ),
+                                          keychainSync == false
+                                              ? AutoSizeText(
+                                                  account.name!,
+                                                  style: AppStyles
+                                                      .textStyleSize16W600EquinoxPrimary(
+                                                          context),
+                                                )
+                                              : AutoSizeText(
+                                                  account.name!,
+                                                  style: AppStyles
+                                                      .textStyleSize16W600EquinoxPrimary30(
+                                                          context),
+                                                ),
                                         ],
                                       ),
                                     ),
@@ -498,29 +632,52 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.end,
                                                   children: <Widget>[
-                                                    AutoSizeText(
-                                                      account.balance!
-                                                          .nativeTokenValueToString(),
-                                                      style: AppStyles
-                                                          .textStyleSize25W900EquinoxPrimary(
-                                                              context),
-                                                    ),
-                                                    AutoSizeText(
-                                                      CurrencyUtil
-                                                          .getConvertedAmount(
-                                                              StateContainer.of(
-                                                                      context)
-                                                                  .curCurrency
-                                                                  .currency
-                                                                  .name,
-                                                              account.balance!
-                                                                  .fiatCurrencyValue!),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: AppStyles
-                                                          .textStyleSize12W600Primary(
-                                                              context),
-                                                    ),
+                                                    keychainSync == false
+                                                        ? AutoSizeText(
+                                                            account.balance!
+                                                                .nativeTokenValueToString(),
+                                                            style: AppStyles
+                                                                .textStyleSize25W900EquinoxPrimary(
+                                                                    context),
+                                                          )
+                                                        : AutoSizeText(
+                                                            account.balance!
+                                                                .nativeTokenValueToString(),
+                                                            style: AppStyles
+                                                                .textStyleSize25W900EquinoxPrimary30(
+                                                                    context),
+                                                          ),
+                                                    keychainSync == false
+                                                        ? AutoSizeText(
+                                                            CurrencyUtil.getConvertedAmount(
+                                                                StateContainer.of(
+                                                                        context)
+                                                                    .curCurrency
+                                                                    .currency
+                                                                    .name,
+                                                                account.balance!
+                                                                    .fiatCurrencyValue!),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: AppStyles
+                                                                .textStyleSize12W600Primary(
+                                                                    context),
+                                                          )
+                                                        : AutoSizeText(
+                                                            CurrencyUtil.getConvertedAmount(
+                                                                StateContainer.of(
+                                                                        context)
+                                                                    .curCurrency
+                                                                    .currency
+                                                                    .name,
+                                                                account.balance!
+                                                                    .fiatCurrencyValue!),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: AppStyles
+                                                                .textStyleSize12W600Primary30(
+                                                                    context),
+                                                          ),
                                                   ],
                                                 ),
                                               )
@@ -531,28 +688,50 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.end,
                                                   children: <Widget>[
-                                                    AutoSizeText(
-                                                      CurrencyUtil
-                                                          .getConvertedAmount(
-                                                              StateContainer.of(
-                                                                      context)
-                                                                  .curCurrency
-                                                                  .currency
-                                                                  .name,
-                                                              account.balance!
-                                                                  .fiatCurrencyValue!),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: AppStyles
-                                                          .textStyleSize25W900EquinoxPrimary(
-                                                              context),
-                                                    ),
-                                                    AutoSizeText(
-                                                      '${account.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
-                                                      style: AppStyles
-                                                          .textStyleSize12W600Primary(
-                                                              context),
-                                                    ),
+                                                    keychainSync == false
+                                                        ? AutoSizeText(
+                                                            CurrencyUtil.getConvertedAmount(
+                                                                StateContainer.of(
+                                                                        context)
+                                                                    .curCurrency
+                                                                    .currency
+                                                                    .name,
+                                                                account.balance!
+                                                                    .fiatCurrencyValue!),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: AppStyles
+                                                                .textStyleSize25W900EquinoxPrimary(
+                                                                    context),
+                                                          )
+                                                        : AutoSizeText(
+                                                            CurrencyUtil.getConvertedAmount(
+                                                                StateContainer.of(
+                                                                        context)
+                                                                    .curCurrency
+                                                                    .currency
+                                                                    .name,
+                                                                account.balance!
+                                                                    .fiatCurrencyValue!),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: AppStyles
+                                                                .textStyleSize25W900EquinoxPrimary30(
+                                                                    context),
+                                                          ),
+                                                    keychainSync == false
+                                                        ? AutoSizeText(
+                                                            '${account.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
+                                                            style: AppStyles
+                                                                .textStyleSize12W600Primary(
+                                                                    context),
+                                                          )
+                                                        : AutoSizeText(
+                                                            '${account.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
+                                                            style: AppStyles
+                                                                .textStyleSize12W600Primary30(
+                                                                    context),
+                                                          ),
                                                   ],
                                                 ),
                                               )
@@ -579,5 +758,14 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
             ),
           ],
         ));
+  }
+
+  void _showSendingAnimation(BuildContext context) {
+    animationOpen = true;
+    Navigator.of(context).push(AnimationLoadingOverlay(
+        AnimationType.send,
+        StateContainer.of(context).curTheme.animationOverlayStrong!,
+        StateContainer.of(context).curTheme.animationOverlayMedium!,
+        onPoppedCallback: () => animationOpen = false));
   }
 }

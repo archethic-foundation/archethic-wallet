@@ -1721,5 +1721,11 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "keychainSync": "Synchronization of your keychain in progress",
+  "@keychainSync": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

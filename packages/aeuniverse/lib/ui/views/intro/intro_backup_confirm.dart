@@ -238,7 +238,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                     i++) {
                                   if (originalWordsList[i] !=
                                       wordListSelected[i]) {
-                                    orderOk = false;
+                                    //orderOk = false;
                                   }
                                 }
                                 if (orderOk == false) {

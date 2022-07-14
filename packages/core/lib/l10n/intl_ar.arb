@@ -288,5 +288,6 @@
 	"appWalletInitInProgress": "Your wallet is being configured...",
 	"sendMessageHeader": "Message",
 	"sendMessageConfirmHeader": "Your message:",
-	"messageInTxTransfer": "See the message attached..."
+	"messageInTxTransfer": "See the message attached...",
+	"keychainSync": "Synchronization of your keychain in progress"
 }

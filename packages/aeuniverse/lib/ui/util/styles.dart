@@ -320,6 +320,15 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.text);
   }
 
+  static TextStyle textStyleSize25W900EquinoxPrimary30(BuildContext context) {
+    return TextStyle(
+        fontFamily: 'Equinox',
+        fontSize: 25,
+        fontWeight: FontWeight.w900,
+        letterSpacing: 1,
+        color: StateContainer.of(context).curTheme.text30);
+  }
+
   static TextStyle textStyleSize35W900EquinoxPrimary(BuildContext context) {
     return TextStyle(
         fontFamily: 'Equinox',
@@ -505,6 +514,15 @@ class AppStyles {
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text,
+    );
+  }
+
+  static TextStyle textStyleSize12W600Primary30(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.size12,
+      fontWeight: FontWeight.w600,
+      color: StateContainer.of(context).curTheme.text30,
     );
   }
 

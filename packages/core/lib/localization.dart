@@ -1319,6 +1319,11 @@ class AppLocalization {
     return Intl.message('Accounts', name: 'accountsHeader');
   }
 
+  String get keychainSync {
+    return Intl.message('Synchronization of your keychain in progress',
+        name: 'keychainSync');
+  }
+
   String get newAccount {
     return Intl.message('New account', name: 'newAccount');
   }

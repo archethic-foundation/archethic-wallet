@@ -137,7 +137,7 @@ class DBHelper {
     return appWallet;
   }
 
-  Future<void> changeAccount(Account account) async {
+  Future<AppWallet> changeAccount(Account account) async {
     Box<AppWallet> box = await Hive.openBox<AppWallet>(appWalletTable);
     AppWallet appWallet = box.get(0)!;
     for (int i = 0; i < appWallet.appKeychain!.accounts!.length; i++) {
@@ -148,6 +148,7 @@ class DBHelper {
       }
     }
     box.put(0, appWallet);
+    return appWallet;
   }
 
   Future<void> updateAccountBalance(
