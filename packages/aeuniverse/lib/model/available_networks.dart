@@ -9,8 +9,7 @@ import 'package:core/model/setting_item.dart';
 // Project imports:
 import 'package:aeuniverse/util/preferences.dart';
 
-//enum AvailableNetworks { ArchethicMainNet, ArchethicTestNet, ArchethicDevNet }
-enum AvailableNetworks { ArchethicTestNet, ArchethicDevNet }
+enum AvailableNetworks { ArchethicMainNet, ArchethicTestNet, ArchethicDevNet }
 
 class NetworksSetting extends SettingSelectionItem {
   NetworksSetting(this.network);
@@ -20,8 +19,8 @@ class NetworksSetting extends SettingSelectionItem {
   @override
   String getDisplayName(BuildContext context) {
     switch (network) {
-      //case AvailableNetworks.ArchethicMainNet:
-      //  return 'Archethic Main Network';
+      case AvailableNetworks.ArchethicMainNet:
+        return 'Archethic Main Network';
       case AvailableNetworks.ArchethicTestNet:
         return 'Archethic Test Network';
       case AvailableNetworks.ArchethicDevNet:
@@ -33,8 +32,8 @@ class NetworksSetting extends SettingSelectionItem {
 
   Future<String> getLink() async {
     switch (network) {
-      //case AvailableNetworks.ArchethicMainNet:
-      //  return 'https://mainnet.archethic.net';
+      case AvailableNetworks.ArchethicMainNet:
+        return 'https://mainnet.archethic.net';
       case AvailableNetworks.ArchethicTestNet:
         return 'https://testnet.archethic.net';
       case AvailableNetworks.ArchethicDevNet:
@@ -47,8 +46,8 @@ class NetworksSetting extends SettingSelectionItem {
 
   Future<String> getPhoenixHttpLink() async {
     switch (network) {
-      //case AvailableNetworks.ArchethicMainNet:
-      //  return 'https://mainnet.archethic.net/socket/websocket';
+      case AvailableNetworks.ArchethicMainNet:
+        return 'https://mainnet.archethic.net/socket/websocket';
       case AvailableNetworks.ArchethicTestNet:
         return 'https://testnet.archethic.net/socket/websocket';
       case AvailableNetworks.ArchethicDevNet:
@@ -61,8 +60,8 @@ class NetworksSetting extends SettingSelectionItem {
 
   Future<String> getWebsocketUri() async {
     switch (network) {
-      //case AvailableNetworks.ArchethicMainNet:
-      //  return 'ws://mainnet.archethic.net/socket/websocket';
+      case AvailableNetworks.ArchethicMainNet:
+        return 'ws://mainnet.archethic.net/socket/websocket';
       case AvailableNetworks.ArchethicTestNet:
         return 'ws://testnet.archethic.net/socket/websocket';
       case AvailableNetworks.ArchethicDevNet:
@@ -79,8 +78,8 @@ class NetworksSetting extends SettingSelectionItem {
 
   String getNetworkCryptoCurrencyLabel() {
     switch (network) {
-      //case AvailableNetworks.ArchethicMainNet:
-      //  return 'UCO';
+      case AvailableNetworks.ArchethicMainNet:
+        return 'UCO';
       case AvailableNetworks.ArchethicTestNet:
         return 'UCO';
       case AvailableNetworks.ArchethicDevNet:
