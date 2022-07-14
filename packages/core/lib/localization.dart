@@ -230,6 +230,12 @@ class AppLocalization {
     return Intl.message('Invalid Contact Name', name: 'contactInvalid');
   }
 
+  String get messageInvalid {
+    return Intl.message(
+        'Your message cannot contain (for the moment) special characters',
+        name: 'messageInvalid');
+  }
+
   String get contactAdded {
     return Intl.message('%1 added to address book.', name: 'contactAdded');
   }

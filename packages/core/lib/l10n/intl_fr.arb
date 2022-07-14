@@ -289,5 +289,6 @@
 	"sendMessageHeader": "Message",
 	"sendMessageConfirmHeader": "Votre message :",
 	"messageInTxTransfer": "Consulter le message associé...",
-	"keychainSync": "Synchronisation de votre portefeuille en cours"
+	"keychainSync": "Synchronisation de votre portefeuille en cours",
+	"messageInvalid": "Votre message ne peut pas comporter (pour le moment) des caractères spéciaux."
 }

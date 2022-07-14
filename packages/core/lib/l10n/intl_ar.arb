@@ -289,5 +289,6 @@
 	"sendMessageHeader": "Message",
 	"sendMessageConfirmHeader": "Your message:",
 	"messageInTxTransfer": "See the message attached...",
-	"keychainSync": "Synchronization of your keychain in progress"
+	"keychainSync": "Synchronization of your keychain in progress",
+	"messageInvalid": "Your message cannot contain (for the moment) special characters"
 }

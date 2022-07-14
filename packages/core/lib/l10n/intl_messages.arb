@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-07-14T11:10:18.699523",
+  "@@last_modified": "2022-07-14T12:07:57.623969",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -266,6 +266,12 @@
   },
   "contactInvalid": "Invalid Contact Name",
   "@contactInvalid": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "messageInvalid": "Your message cannot contain (for the moment) special characters",
+  "@messageInvalid": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

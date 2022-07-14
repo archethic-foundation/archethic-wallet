@@ -142,6 +142,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "locked" : MessageLookupByLibrary.simpleMessage("Bloqué"),
     "manage" : MessageLookupByLibrary.simpleMessage("Gérer"),
     "messageInTxTransfer" : MessageLookupByLibrary.simpleMessage("Consulter le message associé..."),
+    "messageInvalid" : MessageLookupByLibrary.simpleMessage("Votre message ne peut pas comporter (pour le moment) des caractères spéciaux."),
     "mnemonicInvalidWord" : MessageLookupByLibrary.simpleMessage("%1 n\'est pas un mot valide"),
     "mnemonicSizeError" : MessageLookupByLibrary.simpleMessage("La phrase secrète ne peut contenir que 24 mots"),
     "networksDesc" : MessageLookupByLibrary.simpleMessage("Définir le endpoint"),

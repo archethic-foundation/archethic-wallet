@@ -1727,5 +1727,11 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "messageInvalid": "Your message cannot contain (for the moment) special characters",
+  "@messageInvalid": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }
