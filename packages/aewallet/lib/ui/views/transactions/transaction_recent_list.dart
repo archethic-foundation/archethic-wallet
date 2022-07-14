@@ -69,6 +69,24 @@ class _TxListWidgetState extends State<TxListWidget> {
             ],
           ),
         ),
+        if (StateContainer.of(context)
+            .appWallet!
+            .appKeychain!
+            .getAccountSelected()!
+            .recentTransactions!
+            .isEmpty)
+          Container(
+            alignment: Alignment.center,
+            color: Colors.transparent,
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 26),
+              child: Text(
+                  AppLocalization.of(context)!
+                      .recentTransactionsNoTransactionYet,
+                  style: AppStyles.textStyleSize14W600Primary(context)),
+            ),
+          ),
         Container(
           color: Colors.transparent,
           width: MediaQuery.of(context).size.width,
