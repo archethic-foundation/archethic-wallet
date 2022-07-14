@@ -485,8 +485,6 @@ class _SetPasswordState extends State<SetPassword> {
         _preferences.setShowBlog(true);
         _preferences.setActiveVibrations(true);
         _preferences.setActiveNotifications(true);
-        StateContainer.of(context).checkTransactionInputs(
-            AppLocalization.of(context)!.transactionInputNotification);
         _preferences.setPinPadShuffle(false);
         _preferences.setShowPriceChart(true);
         _preferences.setPrimaryCurrency(
@@ -498,6 +496,8 @@ class _SetPasswordState extends State<SetPassword> {
         StateContainer.of(context).appWallet =
             await KeychainUtil().newAppWallet(widget.seed!, widget.name!);
         await StateContainer.of(context).requestUpdate();
+        StateContainer.of(context).checkTransactionInputs(
+            AppLocalization.of(context)!.transactionInputNotification);
       }
       Navigator.of(context).pushNamedAndRemoveUntil(
         '/home',

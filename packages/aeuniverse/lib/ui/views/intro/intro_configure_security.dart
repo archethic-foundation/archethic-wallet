@@ -160,10 +160,6 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                       _preferences.setShowBlog(true);
                                       _preferences.setActiveVibrations(true);
                                       _preferences.setActiveNotifications(true);
-                                      StateContainer.of(context)
-                                          .checkTransactionInputs(
-                                              AppLocalization.of(context)!
-                                                  .transactionInputNotification);
                                       _preferences.setPinPadShuffle(false);
                                       _preferences.setShowPriceChart(true);
                                       _preferences.setPrimaryCurrency(
@@ -184,6 +180,10 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                               widget.seed!, widget.name!);
                                       await StateContainer.of(context)
                                           .requestUpdate();
+                                      StateContainer.of(context)
+                                          .checkTransactionInputs(
+                                              AppLocalization.of(context)!
+                                                  .transactionInputNotification);
                                     }
                                     await Navigator.of(context)
                                         .pushNamedAndRemoveUntil(
@@ -221,10 +221,6 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                       _preferences.setShowBlog(true);
                                       _preferences.setActiveVibrations(true);
                                       _preferences.setActiveNotifications(true);
-                                      StateContainer.of(context)
-                                          .checkTransactionInputs(
-                                              AppLocalization.of(context)!
-                                                  .transactionInputNotification);
                                       _preferences.setPinPadShuffle(false);
                                       _preferences.setShowPriceChart(true);
                                       _preferences.setPrimaryCurrency(
@@ -244,6 +240,10 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                               widget.seed!, widget.name!);
                                       await StateContainer.of(context)
                                           .requestUpdate();
+                                      StateContainer.of(context)
+                                          .checkTransactionInputs(
+                                              AppLocalization.of(context)!
+                                                  .transactionInputNotification);
                                       Navigator.of(context)
                                           .pushNamedAndRemoveUntil(
                                         '/home',

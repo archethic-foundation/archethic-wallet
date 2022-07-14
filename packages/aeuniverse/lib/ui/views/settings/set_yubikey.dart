@@ -317,8 +317,6 @@ class _SetYubikeyState extends State<SetYubikey> {
             _preferences.setShowBlog(true);
             _preferences.setActiveVibrations(true);
             _preferences.setActiveNotifications(true);
-            StateContainer.of(context).checkTransactionInputs(
-                AppLocalization.of(context)!.transactionInputNotification);
             _preferences.setPinPadShuffle(false);
             _preferences.setShowPriceChart(true);
             _preferences.setPrimaryCurrency(
@@ -332,6 +330,8 @@ class _SetYubikeyState extends State<SetYubikey> {
                 await KeychainUtil().newAppWallet(widget.seed!, widget.name!);
           }
           await StateContainer.of(context).requestUpdate();
+          StateContainer.of(context).checkTransactionInputs(
+              AppLocalization.of(context)!.transactionInputNotification);
           StateContainer.of(context).getSeed().then((String? seed) {
             Navigator.of(context).pushNamedAndRemoveUntil(
               '/home',
