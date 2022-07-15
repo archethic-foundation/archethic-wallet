@@ -30,7 +30,7 @@ class Price extends HiveObject {
     SimplePriceResponse simplePriceResponse = SimplePriceResponse();
     price.useOracleUcoPrice = false;
     // if eur or usd, use Archethic Oracle
-    // TODO: The value of 1 uco is not correct when the price is given by Archethic oracle #192
+    // Provide a way to get the last value of an oracle #451
     /*if (currency == 'EUR' || currency == 'USD') {
       try {
         final OracleUcoPrice oracleUcoPrice =
