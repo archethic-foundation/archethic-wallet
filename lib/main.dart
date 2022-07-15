@@ -213,11 +213,15 @@ class _AppState extends State<App> {
                   settings.arguments as Map<String, dynamic>;
               return MaterialPageRoute<IntroConfigureSecurity>(
                 builder: (_) => IntroConfigureSecurity(
-                    accessModes: args['accessModes'] == null
-                        ? null
-                        : args['accessModes'] as List<PickerItem>,
-                    name: args['name'] == null ? null : args['name'] as String,
-                    seed: args['seed'] == null ? null : args['seed'] as String),
+                  accessModes: args['accessModes'] == null
+                      ? null
+                      : args['accessModes'] as List<PickerItem>,
+                  name: args['name'] == null ? null : args['name'] as String,
+                  seed: args['seed'] == null ? null : args['seed'] as String,
+                  process: args['process'] == null
+                      ? null
+                      : args['process'] as String,
+                ),
                 settings: settings,
               );
             case '/intro_password':
@@ -225,8 +229,11 @@ class _AppState extends State<App> {
                   settings.arguments as Map<String, String?>;
               return MaterialPageRoute(
                 builder: (_) => IntroPassword(
-                    name: args['name'] == null ? '' : args['name'] as String,
-                    seed: args['seed'] == null ? '' : args['seed'] as String),
+                  name: args['name'] == null ? '' : args['name'] as String,
+                  seed: args['seed'] == null ? '' : args['seed'] as String,
+                  process:
+                      args['process'] == null ? '' : args['process'] as String,
+                ),
                 settings: settings,
               );
             case '/intro_yubikey':
@@ -234,8 +241,11 @@ class _AppState extends State<App> {
                   settings.arguments as Map<String, String?>;
               return MaterialPageRoute(
                 builder: (_) => IntroYubikey(
-                    name: args['name'] == null ? '' : args['name'] as String,
-                    seed: args['seed'] == null ? '' : args['seed'] as String),
+                  name: args['name'] == null ? '' : args['name'] as String,
+                  seed: args['seed'] == null ? '' : args['seed'] as String,
+                  process:
+                      args['process'] == null ? '' : args['process'] as String,
+                ),
                 settings: settings,
               );
             case '/update_password':

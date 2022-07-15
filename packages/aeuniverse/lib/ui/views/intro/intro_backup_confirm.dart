@@ -329,7 +329,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                       arguments: {
                                         'accessModes': accessModes,
                                         'name': widget.name,
-                                        'seed': widget.seed
+                                        'seed': widget.seed,
+                                        'process': 'newWallet'
                                       });
                                 }
                               }),

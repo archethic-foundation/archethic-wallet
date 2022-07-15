@@ -32,6 +32,7 @@ class SetPassword extends StatefulWidget {
   final String? description;
   final String? name;
   final String? seed;
+  final String? process;
   final bool initPreferences;
 
   const SetPassword(
@@ -40,7 +41,8 @@ class SetPassword extends StatefulWidget {
       this.description,
       this.initPreferences = false,
       this.name,
-      this.seed});
+      this.seed,
+      this.process});
   @override
   State<SetPassword> createState() => _SetPasswordState();
 }
@@ -490,12 +492,15 @@ class _SetPasswordState extends State<SetPassword> {
         _preferences.setPrimaryCurrency(
             PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE));
         _preferences.setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
-        await sl.get<DBHelper>().clearAppWallet();
-        final Vault vault = await Vault.getInstance();
-        await vault.setSeed(widget.seed!);
-        StateContainer.of(context).appWallet =
-            await KeychainUtil().newAppWallet(widget.seed!, widget.name!);
-        await StateContainer.of(context).requestUpdate();
+        if (widget.process == 'newWallet') {
+          await sl.get<DBHelper>().clearAppWallet();
+          final Vault vault = await Vault.getInstance();
+          await vault.setSeed(widget.seed!);
+          StateContainer.of(context).appWallet =
+              await KeychainUtil().newAppWallet(widget.seed!, widget.name!);
+          await StateContainer.of(context).requestUpdate();
+        }
+
         StateContainer.of(context).checkTransactionInputs(
             AppLocalization.of(context)!.transactionInputNotification);
       }

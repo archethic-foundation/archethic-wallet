@@ -35,6 +35,7 @@ class SetYubikey extends StatefulWidget {
   final bool initPreferences;
   final String? name;
   final String? seed;
+  final String? process;
 
   const SetYubikey(
       {super.key,
@@ -44,7 +45,8 @@ class SetYubikey extends StatefulWidget {
       this.clientID,
       this.initPreferences = false,
       this.name,
-      this.seed});
+      this.seed,
+      this.process});
 
   @override
   State<SetYubikey> createState() => _SetYubikeyState();
@@ -323,11 +325,13 @@ class _SetYubikeyState extends State<SetYubikey> {
                 PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE));
             _preferences
                 .setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
-            await sl.get<DBHelper>().clearAppWallet();
-            final Vault vault = await Vault.getInstance();
-            await vault.setSeed(widget.seed!);
-            StateContainer.of(context).appWallet =
-                await KeychainUtil().newAppWallet(widget.seed!, widget.name!);
+            if (widget.process == 'newWallet') {
+              await sl.get<DBHelper>().clearAppWallet();
+              final Vault vault = await Vault.getInstance();
+              await vault.setSeed(widget.seed!);
+              StateContainer.of(context).appWallet =
+                  await KeychainUtil().newAppWallet(widget.seed!, widget.name!);
+            }
           }
           await StateContainer.of(context).requestUpdate();
           StateContainer.of(context).checkTransactionInputs(

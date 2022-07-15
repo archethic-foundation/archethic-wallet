@@ -29,9 +29,14 @@ class IntroConfigureSecurity extends StatefulWidget {
   final List<PickerItem>? accessModes;
   final String? name;
   final String? seed;
+  final String? process;
 
   const IntroConfigureSecurity(
-      {super.key, this.accessModes, required this.name, required this.seed});
+      {super.key,
+      this.accessModes,
+      required this.name,
+      required this.seed,
+      required this.process});
 
   @override
   State<IntroConfigureSecurity> createState() => _IntroConfigureSecurityState();
@@ -171,15 +176,20 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                       _preferences.setAuthMethod(
                                           AuthenticationMethod(
                                               AuthMethod.biometrics));
-                                      await sl.get<DBHelper>().clearAppWallet();
-                                      final Vault vault =
-                                          await Vault.getInstance();
-                                      await vault.setSeed(widget.seed!);
-                                      StateContainer.of(context).appWallet =
-                                          await KeychainUtil().newAppWallet(
-                                              widget.seed!, widget.name!);
-                                      await StateContainer.of(context)
-                                          .requestUpdate();
+                                      if (widget.process == 'newWallet') {
+                                        await sl
+                                            .get<DBHelper>()
+                                            .clearAppWallet();
+                                        final Vault vault =
+                                            await Vault.getInstance();
+                                        await vault.setSeed(widget.seed!);
+                                        StateContainer.of(context).appWallet =
+                                            await KeychainUtil().newAppWallet(
+                                                widget.seed!, widget.name!);
+                                        await StateContainer.of(context)
+                                            .requestUpdate();
+                                      }
+
                                       StateContainer.of(context)
                                           .checkTransactionInputs(
                                               AppLocalization.of(context)!
@@ -196,7 +206,8 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                         '/intro_password',
                                         arguments: {
                                           'name': widget.name,
-                                          'seed': widget.seed
+                                          'seed': widget.seed,
+                                          'process': widget.process
                                         });
                                     break;
                                   case AuthMethod.pin:
@@ -231,15 +242,20 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                               LockTimeoutOption.one));
                                       _preferences.setAuthMethod(
                                           AuthenticationMethod(AuthMethod.pin));
-                                      await sl.get<DBHelper>().clearAppWallet();
-                                      final Vault vault =
-                                          await Vault.getInstance();
-                                      await vault.setSeed(widget.seed!);
-                                      StateContainer.of(context).appWallet =
-                                          await KeychainUtil().newAppWallet(
-                                              widget.seed!, widget.name!);
-                                      await StateContainer.of(context)
-                                          .requestUpdate();
+                                      if (widget.process == 'newWallet') {
+                                        await sl
+                                            .get<DBHelper>()
+                                            .clearAppWallet();
+                                        final Vault vault =
+                                            await Vault.getInstance();
+                                        await vault.setSeed(widget.seed!);
+                                        StateContainer.of(context).appWallet =
+                                            await KeychainUtil().newAppWallet(
+                                                widget.seed!, widget.name!);
+                                        await StateContainer.of(context)
+                                            .requestUpdate();
+                                      }
+
                                       StateContainer.of(context)
                                           .checkTransactionInputs(
                                               AppLocalization.of(context)!
@@ -256,7 +272,8 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                         '/intro_yubikey',
                                         arguments: {
                                           'name': widget.name,
-                                          'seed': widget.seed
+                                          'seed': widget.seed,
+                                          'process': widget.process
                                         });
                                     break;
                                   default:

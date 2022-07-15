@@ -12,8 +12,10 @@ import 'package:aeuniverse/ui/views/settings/set_yubikey.dart';
 class IntroYubikey extends StatefulWidget {
   final String? name;
   final String? seed;
+  final String? process;
 
-  const IntroYubikey({super.key, this.name = '', this.seed = ''});
+  const IntroYubikey(
+      {super.key, this.name = '', this.seed = '', this.process = ''});
   @override
   State<IntroYubikey> createState() => _IntroYubikeyState();
 }
@@ -26,6 +28,7 @@ class _IntroYubikeyState extends State<IntroYubikey> {
         description: AppLocalization.of(context)!.seYubicloudDescription,
         initPreferences: true,
         name: widget.name,
-        seed: widget.seed);
+        seed: widget.seed,
+        process: widget.process);
   }
 }

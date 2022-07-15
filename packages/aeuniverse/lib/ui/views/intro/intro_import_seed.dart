@@ -450,11 +450,6 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                           (a, b) => a.name!.compareTo(b.name!));
                                       await _accountsDialog(accounts);
 
-                                      accounts.forEach((Account account) async {
-                                        await sl
-                                            .get<DBHelper>()
-                                            .addAccount(account);
-                                      });
                                       await StateContainer.of(context)
                                           .requestUpdate();
                                       bool biometricsAvalaible = await sl
@@ -537,7 +532,8 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                                     .name,
                                             'seed':
                                                 await StateContainer.of(context)
-                                                    .getSeed()
+                                                    .getSeed(),
+                                            'process': 'importWallet'
                                           });
                                     }
                                   } else {
