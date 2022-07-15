@@ -24,7 +24,6 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:aewallet/bus/contact_modified_event.dart';
 import 'package:aewallet/bus/contact_removed_event.dart';
 import 'package:aewallet/ui/views/uco/transfer_uco_sheet.dart';
 
@@ -75,8 +74,7 @@ class ContactDetailsSheet {
                                     .then((_) {
                                   EventTaxiImpl.singleton().fire(
                                       ContactRemovedEvent(contact: contact));
-                                  EventTaxiImpl.singleton().fire(
-                                      ContactModifiedEvent(contact: contact));
+
                                   UIUtil.showSnackbar(
                                       AppLocalization.of(context)!
                                           .contactRemoved

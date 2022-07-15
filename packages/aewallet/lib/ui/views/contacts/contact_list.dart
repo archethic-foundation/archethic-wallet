@@ -87,6 +87,8 @@ class _ContactsListState extends State<ContactsList> {
       setState(() {
         contacts!.remove(event.contact);
       });
+      // Full update
+      _updateContacts();
     });
   }
 

@@ -27,7 +27,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:aewallet/bus/contact_added_event.dart';
-import 'package:aewallet/bus/contact_modified_event.dart';
 
 class AddContactSheet extends StatefulWidget {
   const AddContactSheet({super.key, this.address});
@@ -154,8 +153,6 @@ class _AddContactSheetState extends State<AddContactSheet> {
               stepGranularity: 0.1,
             ),
           ),
-
-          // The main container that holds "Enter Name" and "Enter Address" text fields
           Expanded(
             child: Column(
               children: <Widget>[
@@ -339,8 +336,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                           context,
                           StateContainer.of(context).curTheme.text!,
                           StateContainer.of(context).curTheme.snackBarShadow!);
-                      EventTaxiImpl.singleton()
-                          .fire(ContactModifiedEvent(contact: newContact));
+
                       Navigator.of(context).pop();
                     }
                   }),
