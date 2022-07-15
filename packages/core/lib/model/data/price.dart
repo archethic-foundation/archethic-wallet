@@ -30,7 +30,8 @@ class Price extends HiveObject {
     SimplePriceResponse simplePriceResponse = SimplePriceResponse();
     price.useOracleUcoPrice = false;
     // if eur or usd, use Archethic Oracle
-    if (currency == 'EUR' || currency == 'USD') {
+    // TODO: The value of 1 uco is not correct when the price is given by Archethic oracle #192
+    /*if (currency == 'EUR' || currency == 'USD') {
       try {
         final OracleUcoPrice oracleUcoPrice =
             await sl.get<OracleService>().getLastOracleUcoPrice();
@@ -59,7 +60,9 @@ class Price extends HiveObject {
     } else {
       simplePriceResponse =
           await sl.get<ApiCoinsService>().getSimplePrice(currency);
-    }
+    }*/
+    simplePriceResponse =
+        await sl.get<ApiCoinsService>().getSimplePrice(currency);
     price.amount = simplePriceResponse.localCurrencyPrice!;
     price.lastLoading =
         DateTime.now().millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;

@@ -13,7 +13,8 @@ class CurrencyDialog {
     final Preferences preferences = await Preferences.getInstance();
     final List<PickerItem> pickerItemsList =
         List<PickerItem>.empty(growable: true);
-    for (var value in AvailableCurrencyEnum.values) {
+    // Provide a way to get the last value of an oracle #451
+    /* for (var value in AvailableCurrencyEnum.values) {
       pickerItemsList.add(PickerItem(
         AvailableCurrency(value).getDisplayName(context),
         null,
@@ -24,6 +25,17 @@ class CurrencyDialog {
         subLabel: value.name == 'USD' || value.name == 'EUR'
             ? '(Conversion provided by Archethic Oracles)'
             : null,
+      ));
+    }*/
+    for (var value in AvailableCurrencyEnum.values) {
+      pickerItemsList.add(PickerItem(
+        AvailableCurrency(value).getDisplayName(context),
+        null,
+        'packages/aeuniverse/assets/icons/currency/${AvailableCurrency(value).currency.name.toLowerCase()}.png',
+        null,
+        value,
+        true,
+        subLabel: null,
       ));
     }
     return await showDialog<AvailableCurrencyEnum>(
