@@ -6,6 +6,7 @@ import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 import 'package:aeuniverse/util/preferences.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/available_currency.dart';
+import 'package:core/model/data/price.dart';
 import 'package:flutter/material.dart';
 
 class CurrencyDialog {
@@ -70,6 +71,20 @@ class CurrencyDialog {
                       AvailableCurrency(value.value as AvailableCurrencyEnum));
                   StateContainer.of(context).curCurrency =
                       AvailableCurrency(value.value as AvailableCurrencyEnum);
+
+                  Price tokenPrice = await Price.getCurrency(
+                      StateContainer.of(context).curCurrency.currency.name);
+                  await StateContainer.of(context)
+                      .appWallet!
+                      .appKeychain!
+                      .getAccountSelected()!
+                      .updateBalance(
+                          StateContainer.of(context)
+                              .curNetwork
+                              .getNetworkCryptoCurrencyLabel(),
+                          StateContainer.of(context).curCurrency.currency.name,
+                          tokenPrice);
+
                   StateContainer.of(context)
                           .appWallet!
                           .appKeychain!
