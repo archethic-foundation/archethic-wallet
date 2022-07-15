@@ -411,6 +411,8 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                         FocusScope.of(context)
                                                             .requestFocus(
                                                                 nameFocusNode);
+
+                                                        isPressed = false;
                                                       });
                                                     } else {
                                                       {
