@@ -189,9 +189,13 @@ class KeychainUtil {
           Uint8List genesisAddress =
               keychain.deriveAddress(serviceName, index: 0);
 
-          String name = service.derivationPath!
+          final List<String> path = service.derivationPath!
               .replaceAll(kDerivationPathWithoutService, '')
-              .split('/')[0];
+              .split('/');
+          path.last = '';
+          String name = path.join('/');
+          name = name.substring(0, name.length - 1);
+
           Account account = Account(
               lastLoadingTransactionInputs: 0,
               lastAddress: uint8ListToHex(genesisAddress),
