@@ -734,24 +734,26 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         }
                       }),
                     ]),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemSwitch(
-                        context,
-                        AppLocalization.of(context)!.pinPadShuffle,
-                        'packages/aewallet/assets/icons/shuffle.png',
-                        StateContainer.of(context).curTheme.iconDrawer!,
-                        _pinPadShuffleActive,
-                        onChanged: (bool isSwitched) async {
-                      final Preferences preferences =
-                          await Preferences.getInstance();
-                      setState(() {
-                        _pinPadShuffleActive = isSwitched;
-                        preferences.setPinPadShuffle(isSwitched);
-                      });
-                    }),
+                    if (_curAuthMethod.method == AuthMethod.pin)
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                    if (_curAuthMethod.method == AuthMethod.pin)
+                      AppSettings.buildSettingsListItemSwitch(
+                          context,
+                          AppLocalization.of(context)!.pinPadShuffle,
+                          'packages/aewallet/assets/icons/shuffle.png',
+                          StateContainer.of(context).curTheme.iconDrawer!,
+                          _pinPadShuffleActive,
+                          onChanged: (bool isSwitched) async {
+                        final Preferences preferences =
+                            await Preferences.getInstance();
+                        setState(() {
+                          _pinPadShuffleActive = isSwitched;
+                          preferences.setPinPadShuffle(isSwitched);
+                        });
+                      }),
 
                     Divider(
                         height: 2,
