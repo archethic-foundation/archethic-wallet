@@ -1,6 +1,6 @@
 [![Platform](https://img.shields.io/badge/Platform-Flutter-02569B?logo=flutter)](https://flutter.dev) [![CodeFactor](https://www.codefactor.io/repository/github/archethic-foundation/archethic-wallet/badge)](https://www.codefactor.io/repository/github/archethic-foundation/archethic-wallet)
-[![Github All Releases](https://img.shields.io/github/downloads/archethic-foundation/archethic-wallet/total.svg)]()
-[![Github Downloads (monthly)](https://img.shields.io/github/downloads/archethic-foundation/archethic-wallet/latest/total.svg)]()
+[![Github All Releases](https://img.shields.io/github/downloads/archethic-foundation/archethic-wallet/total.svg)](https://github.com/archethic-foundation/archethic-wallet/releases)
+[![Github Downloads (monthly)](https://img.shields.io/github/downloads/archethic-foundation/archethic-wallet/latest/total.svg)](https://github.com/archethic-foundation/archethic-wallet/releases)
 
 # Archethic Wallet
 
@@ -8,6 +8,8 @@ The app is mainly a FULLY decentralized and cryptocurrency non-custodial hot wal
 This wallet includes the features of send and receive coins instantly to and from anyone.</br>
 No signup or KYC needed, you just control your service access keychain, protected by different security ways like PIN Code, Password, Yubikey devices and Biometrics</br>
 NB: Yubikey is a device that makes 2-factor authentification as simple as possible (see [yubico.com](https://www.yubico.com))</br>
+
+![Download](assets/screenshots/Dl_here_github_wallet.png?v=20220718)
 
 Archethic Wallet have features that are implemented:
 - Use of 24 Words Mnemonics.
