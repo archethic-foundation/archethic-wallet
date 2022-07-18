@@ -38,7 +38,7 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
     /// where they share any keys they create."
     final GhostContentAPI api = GhostContentAPI(
       url: blogUrl,
-      key: '65f045286a0870b97bea0cefc2',
+      key: 'aeec92562cfcb3f27993205631',
       version: 'v3',
     );
 
