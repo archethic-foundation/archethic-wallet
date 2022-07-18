@@ -1,5 +1,6 @@
 [![Platform](https://img.shields.io/badge/Platform-Flutter-02569B?logo=flutter)](https://flutter.dev) [![CodeFactor](https://www.codefactor.io/repository/github/archethic-foundation/archethic-wallet/badge)](https://www.codefactor.io/repository/github/archethic-foundation/archethic-wallet)
 [![Github All Releases](https://img.shields.io/github/downloads/archethic-foundation/archethic-wallet/total.svg)]()
+[![Github Downloads (monthly)](https://img.shields.io/github/downloads/archethic-foundation/archethic-wallet/latest/total.svg)]()
 
 # Archethic Wallet
 
