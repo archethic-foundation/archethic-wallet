@@ -25,7 +25,7 @@ Archethic Wallet have features that are implemented:
 - Last Archethic's articles
 
 ## Application Initial Screen
-![Application Initial Screen](assets/screenshots/AppInit.png?v=20220711)
+![Application Initial Screen](assets/screenshots/AppInit.png?v=20220711)(https://github.com/archethic-foundation/archethic-wallet/releases)
 
 ## Informations
 All news about wallet are available on the [Archethic Youtube Channel](https://www.youtube.com/playlist?list=PL6GQEJjcIwHChTok4CJyw3lsmlvoJLnZK)
