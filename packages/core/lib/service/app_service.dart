@@ -82,27 +82,25 @@ class AppService {
         List<RecentTransaction>.empty(growable: true);
 
     for (Transaction transaction in transactionChain) {
+      String content = transaction.data!.content!.toLowerCase();
       if (transaction.type!.toUpperCase() == 'Token') {
         final RecentTransaction recentTransaction = RecentTransaction();
         recentTransaction.address = transaction.address;
         recentTransaction.fee = 0;
         recentTransaction.timestamp = transaction.validationStamp!.timestamp!;
-        if (transaction.data!.content!
-            .toLowerCase()
-            .contains('initial supply:')) {
+
+        if (content.contains('initial supply:')) {
           recentTransaction.tokenAddress = transaction.address;
           recentTransaction.typeTx = RecentTransaction.tokenCreation;
-          recentTransaction.content = transaction.data!.content!.substring(
-              transaction.data!.content!
-                  .toLowerCase()
-                  .indexOf('initial supply: '));
+          recentTransaction.content = content
+              .substring(content.toLowerCase().indexOf('initial supply: '));
         } else {
           recentTransaction.typeTx = RecentTransaction.transferOutput;
           recentTransaction.content = '';
         }
-        if (transaction.data!.content!.toLowerCase().contains('name:')) {
-          recentTransaction.tokenName = transaction.data!.content!.substring(
-              transaction.data!.content!.indexOf('name: ') + 'name: '.length);
+        if (content.contains('name:')) {
+          recentTransaction.tokenName =
+              content.substring(content.indexOf('name: ') + 'name: '.length);
         } else {
           recentTransaction.tokenName = '';
         }
@@ -115,7 +113,7 @@ class AppService {
               i < transaction.data!.ledger!.uco!.transfers!.length;
               i++) {
             final RecentTransaction recentTransaction = RecentTransaction();
-            recentTransaction.content = transaction.data!.content;
+            recentTransaction.content = content;
             recentTransaction.address = transaction.address;
             recentTransaction.typeTx = RecentTransaction.transferOutput;
             recentTransaction.amount = transaction
