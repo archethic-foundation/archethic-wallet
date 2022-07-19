@@ -19,7 +19,7 @@ class AppDialogs {
   static void showConfirmDialog(BuildContext context, String title,
       String content, String buttonText, Function onPressed,
       {String? cancelText, Function? cancelAction}) {
-    cancelText ??= AppLocalization.of(context)!.cancel.toUpperCase();
+    cancelText ??= AppLocalization.of(context)!.cancel;
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -33,7 +33,7 @@ class AppDialogs {
               side: BorderSide(
                   color: StateContainer.of(context).curTheme.text45!)),
           content: Text(content,
-              style: AppStyles.textStyleSize16W200Primary(context)),
+              style: AppStyles.textStyleSize16W400Primary(context)),
           actions: <Widget>[
             TextButton(
               child: Container(
@@ -88,7 +88,7 @@ class AppDialogs {
               side: BorderSide(
                   color: StateContainer.of(context).curTheme.text45!)),
           content: Text(content,
-              style: AppStyles.textStyleSize16W200Primary(context)),
+              style: AppStyles.textStyleSize16W400Primary(context)),
           actions: <Widget>[
             TextButton(
               child: Container(
