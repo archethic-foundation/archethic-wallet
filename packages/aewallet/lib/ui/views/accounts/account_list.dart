@@ -1,10 +1,12 @@
 // Flutter imports:
+import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:core/model/data/account.dart';
 import 'package:core/model/data/app_wallet.dart';
 import 'package:core/model/primary_currency.dart';
 import 'package:core/util/currency_util.dart';
+import 'package:core/util/haptic_util.dart';
 import 'package:core_ui/ui/util/formatters.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,7 @@ import 'package:core/model/data/appdb.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/keychain_util.dart';
 import 'package:core_ui/ui/util/dimens.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class AccountsList {
   AccountsList(this.seed, this.currencyName, this.appWallet);
@@ -169,18 +172,44 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                       stepGranularity: 0.1,
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width - 140),
-                    child: AutoSizeText(
-                      appWalletLive!.appKeychain!.address!,
-                      style: AppStyles.textStyleSize12W100Primary(context),
-                      maxLines: 1,
-                      stepGranularity: 0.1,
-                    ),
-                  ),
                 ],
+              ),
+              Container(
+                constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width - 140),
+                child: AutoSizeText(
+                  AppLocalization.of(context)!.accountsKeychainAddressHeader,
+                  style: AppStyles.textStyleSize12W100Primary(context),
+                  maxLines: 1,
+                  stepGranularity: 0.1,
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  sl.get<HapticUtil>().feedback(FeedbackType.light,
+                      StateContainer.of(context).activeVibrations);
+                  Clipboard.setData(ClipboardData(
+                      text: StateContainer.of(context)
+                          .appWallet!
+                          .appKeychain!
+                          .getAccountSelected()!
+                          .lastAddress!));
+                  UIUtil.showSnackbar(
+                      AppLocalization.of(context)!.addressCopied,
+                      context,
+                      StateContainer.of(context).curTheme.text!,
+                      StateContainer.of(context).curTheme.snackBarShadow!);
+                },
+                child: Container(
+                  constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width - 140),
+                  child: AutoSizeText(
+                    appWalletLive!.appKeychain!.address!.toUpperCase(),
+                    style: AppStyles.textStyleSize12W100Primary(context),
+                    maxLines: 1,
+                    stepGranularity: 0.1,
+                  ),
+                ),
               ),
               Expanded(
                   key: expandedKey,
@@ -412,10 +441,10 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                                         context,
                                                                         true);
                                                                   },
-                                                                  cancelText: AppLocalization.of(
-                                                                          context)!
-                                                                      .no
-                                                                      .toUpperCase(),
+                                                                  cancelText:
+                                                                      AppLocalization.of(
+                                                                              context)!
+                                                                          .no,
                                                                   cancelAction:
                                                                       () {
                                                                     setState(

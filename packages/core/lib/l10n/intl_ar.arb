@@ -293,5 +293,6 @@
 	"messageInvalid": "Your message cannot contain (for the moment) special characters",
 	"pass": "Pass",
 	"passBackupConfirmationDisclaimer": "DISCLAIMER",
-	"passBackupConfirmationMessage": "We invite you to manually confirm the registration of your recovery phrase. In case of loss, you will lose your funds. As a reminder, Archethic does not keep any copy."
+	"passBackupConfirmationMessage": "We invite you to manually confirm the registration of your recovery phrase. In case of loss, you will lose your funds. As a reminder, Archethic does not keep any copy.",
+	"accountsKeychainAddressHeader": "Your keychain's address"
 }

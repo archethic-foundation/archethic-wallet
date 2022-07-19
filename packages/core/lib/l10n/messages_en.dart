@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "aboutPrivacyPolicy" : MessageLookupByLibrary.simpleMessage("Privacy Policy"),
     "aboutWalletServiceTerms" : MessageLookupByLibrary.simpleMessage("Wallet Service Terms"),
     "accountsHeader" : MessageLookupByLibrary.simpleMessage("Accounts"),
+    "accountsKeychainAddressHeader" : MessageLookupByLibrary.simpleMessage("Your keychain\'s address"),
     "activateNotifications" : MessageLookupByLibrary.simpleMessage("Activate notifications"),
     "activateVibrations" : MessageLookupByLibrary.simpleMessage("Activate vibrations"),
     "add" : MessageLookupByLibrary.simpleMessage("Add"),

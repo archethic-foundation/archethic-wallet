@@ -1339,6 +1339,11 @@ class AppLocalization {
     return Intl.message('Accounts', name: 'accountsHeader');
   }
 
+  String get accountsKeychainAddressHeader {
+    return Intl.message('Your keychain\'s address',
+        name: 'accountsKeychainAddressHeader');
+  }
+
   String get keychainSync {
     return Intl.message('Synchronization of your keychain in progress',
         name: 'keychainSync');
