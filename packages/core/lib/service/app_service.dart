@@ -62,21 +62,11 @@ class AppService {
     final List<Transaction> transactionChain = await getTransactionChain(
         lastAddress,
         pagingAddress,
-        'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { content , ledger { uco { transfers { amount, to } } } } ');
+        'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { content , ledger { uco { transfers { amount, to } } } }, inputs { from, type, spent, tokenAddress, amount, timestamp } ');
 
     final List<TransactionInput> transactionInputsGenesisAddress =
         await getTransactionInputs(genesisAddress,
             'from, type, spent, tokenAddress, amount, timestamp');
-    if (lastAddress != genesisAddress) {
-      final List<TransactionInput> transactionInputLastAddress =
-          await getTransactionInputs(
-              lastAddress, 'from, type, tokenAddress, amount, timestamp');
-      transactionInputLastAddress.forEach((TransactionInput transactionInput) {
-        if (transactionInput.from != lastAddress) {
-          transactionInputsGenesisAddress.add(transactionInput);
-        }
-      });
-    }
 
     final List<RecentTransaction> recentTransactions =
         List<RecentTransaction>.empty(growable: true);
