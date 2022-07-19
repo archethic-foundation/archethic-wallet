@@ -318,7 +318,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
         !Platform.isWindows &&
         !Platform.isLinux) {
       // Check if device is rooted or jailbroken, show user a warning informing them of the risks if so
-      if (!preferences.getHasSeenRootWarning() &&
+      /*if (!preferences.getHasSeenRootWarning() &&
           (await SafeDevice.isJailBroken)) {
         AppDialogs.showConfirmDialog(
             context,
@@ -339,7 +339,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
               }
             });
         return;
-      }
+      }*/
     }
 
     if (!_hasCheckedLoggedIn!) {
