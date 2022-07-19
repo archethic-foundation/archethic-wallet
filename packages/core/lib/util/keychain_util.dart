@@ -87,8 +87,8 @@ class KeychainUtil {
     return appWallet;
   }
 
-  Future<Account?> addAccountInKeyChain(
-      String? seed, String? name, String currency) async {
+  Future<AppWallet?> addAccountInKeyChain(
+      AppWallet? appWallet, String? seed, String? name, String currency) async {
     Account? selectedAcct;
 
     final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
@@ -157,12 +157,18 @@ class KeychainUtil {
         selected: false,
         recentTransactions: []);
 
-    return selectedAcct;
+    appWallet!.appKeychain!.accounts!.add(selectedAcct);
+    appWallet.appKeychain!.accounts!.sort((a, b) => a.name!.compareTo(b.name!));
+    await appWallet.save();
+
+    return appWallet;
   }
 
   Future<AppWallet?> getListAccountsFromKeychain(AppWallet? appWallet,
       String? seed, String currency, String tokenName, Price tokenPrice,
-      {String? currentName = ''}) async {
+      {String? currentName = '',
+      bool loadBalance = true,
+      bool loadRecentTransactions = true}) async {
     List<Account> accounts = List<Account>.empty(growable: true);
 
     try {
@@ -197,7 +203,9 @@ class KeychainUtil {
           name = name.substring(0, name.length - 1);
 
           Account account = Account(
-              lastLoadingTransactionInputs: 0,
+              lastLoadingTransactionInputs:
+                  DateTime.now().millisecondsSinceEpoch ~/
+                      Duration.millisecondsPerSecond,
               lastAddress: uint8ListToHex(genesisAddress),
               genesisAddress: uint8ListToHex(genesisAddress),
               name: name,
@@ -224,14 +232,28 @@ class KeychainUtil {
         if (lastAddress.isNotEmpty) {
           accounts[i].lastAddress = lastAddress;
         }
-        await accounts[i].updateBalance(tokenName, currency, tokenPrice);
+        if (loadBalance) {
+          await accounts[i].updateBalance(tokenName, currency, tokenPrice);
+        }
       }
+      final String genesisAddressKeychain =
+          deriveAddress(uint8ListToHex(keychain.seed!), 0);
+
+      final Transaction lastTransactionKeychain = await sl
+          .get<ApiService>()
+          .getLastTransaction(genesisAddressKeychain, request: 'address');
+      appWallet.appKeychain!.address = lastTransactionKeychain.address;
       appWallet.appKeychain!.accounts = accounts;
-      appWallet.appKeychain!
-          .getAccountSelected()!
-          .updateRecentTransactions('', seed);
-      appWallet.save();
-    } catch (e) {}
+      if (loadRecentTransactions) {
+        await appWallet.appKeychain!
+            .getAccountSelected()!
+            .updateRecentTransactions('', seed);
+      }
+
+      await appWallet.save();
+    } catch (e) {
+      throw Exception();
+    }
 
     return appWallet;
   }

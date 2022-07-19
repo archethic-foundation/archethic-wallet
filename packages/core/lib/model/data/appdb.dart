@@ -106,26 +106,26 @@ class DBHelper {
   Future<void> saveContact(Contact contact) async {
     // ignore: prefer_final_locals
     Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
-    box.put(contact.address, contact);
+    await box.put(contact.address, contact);
   }
 
   Future<void> deleteContact(Contact contact) async {
     // ignore: prefer_final_locals
     Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
-    box.delete(contact.address);
+    await box.delete(contact.address);
   }
 
   Future<void> clearContacts() async {
     // ignore: prefer_final_locals
     Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
-    box.clear();
+    await box.clear();
   }
 
   Future<AppWallet> addAccount(Account account) async {
     Box<AppWallet> box = await Hive.openBox<AppWallet>(appWalletTable);
     AppWallet appWallet = box.get(0)!;
     appWallet.appKeychain!.accounts!.add(account);
-    box.put(0, appWallet);
+    await box.putAt(0, appWallet);
     return appWallet;
   }
 
@@ -133,7 +133,7 @@ class DBHelper {
     Box<AppWallet> box = await Hive.openBox<AppWallet>(appWalletTable);
     AppWallet appWallet = box.get(0)!;
     appWallet.appKeychain!.accounts!.clear();
-    box.put(0, appWallet);
+    await box.putAt(0, appWallet);
     return appWallet;
   }
 
@@ -147,7 +147,7 @@ class DBHelper {
         appWallet.appKeychain!.accounts![i].selected = false;
       }
     }
-    box.put(0, appWallet);
+    await box.putAt(0, appWallet);
     return appWallet;
   }
 
@@ -160,7 +160,7 @@ class DBHelper {
     for (Account account in accounts) {
       if (selectedAccount.name == account.name) {
         account.balance = balance;
-        box.putAt(0, appWallet);
+        await box.putAt(0, appWallet);
         return;
       }
     }
@@ -174,7 +174,7 @@ class DBHelper {
     for (Account account in accounts) {
       if (selectedAccount.name == account.name) {
         account = selectedAccount;
-        box.putAt(0, appWallet);
+        await box.putAt(0, appWallet);
         return;
       }
     }
@@ -183,7 +183,7 @@ class DBHelper {
   Future<void> clearAppWallet() async {
     // ignore: prefer_final_locals
     Box<AppWallet> box = await Hive.openBox<AppWallet>(appWalletTable);
-    box.clear();
+    await box.clear();
   }
 
   Future<AppWallet> createAppWallet(String seed, String keyChainAddress) async {
@@ -192,7 +192,7 @@ class DBHelper {
     AppKeychain appKeychain =
         AppKeychain(address: keyChainAddress, accounts: <Account>[]);
     AppWallet appWallet = AppWallet(seed: seed, appKeychain: appKeychain);
-    box.add(appWallet);
+    await box.add(appWallet);
     return appWallet;
   }
 
@@ -212,9 +212,9 @@ class DBHelper {
     // ignore: prefer_final_locals
     Box<Price> box = await Hive.openBox<Price>(priceTable);
     if (box.isEmpty) {
-      box.add(price);
+      await box.add(price);
     } else {
-      box.putAt(0, price);
+      await box.putAt(0, price);
     }
   }
 
@@ -227,6 +227,6 @@ class DBHelper {
   Future<void> clearPrice() async {
     // ignore: prefer_final_locals
     Box<Price> box = await Hive.openBox<Price>(priceTable);
-    box.clear();
+    await box.clear();
   }
 }

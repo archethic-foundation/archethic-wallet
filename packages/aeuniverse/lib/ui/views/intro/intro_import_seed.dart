@@ -419,122 +419,136 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                             .curCurrency
                                             .currency
                                             .name);
-                                    AppWallet? appWallet = await KeychainUtil()
-                                        .getListAccountsFromKeychain(
-                                            StateContainer.of(context)
-                                                .appWallet,
-                                            seed,
-                                            StateContainer.of(context)
-                                                .curCurrency
-                                                .currency
-                                                .name,
-                                            StateContainer.of(context)
-                                                .curNetwork
-                                                .getNetworkCryptoCurrencyLabel(),
-                                            tokenPrice);
-                                    StateContainer.of(context).appWallet =
-                                        appWallet;
-                                    List<Account>? accounts =
-                                        appWallet!.appKeychain!.accounts;
 
-                                    if (accounts == null ||
-                                        accounts.length == 0) {
+                                    try {
+                                      AppWallet? appWallet = await KeychainUtil()
+                                          .getListAccountsFromKeychain(
+                                              StateContainer.of(context)
+                                                  .appWallet,
+                                              seed,
+                                              StateContainer.of(context)
+                                                  .curCurrency
+                                                  .currency
+                                                  .name,
+                                              StateContainer.of(context)
+                                                  .curNetwork
+                                                  .getNetworkCryptoCurrencyLabel(),
+                                              tokenPrice,
+                                              loadBalance: false,
+                                              loadRecentTransactions: false);
+
+                                      StateContainer.of(context).appWallet =
+                                          appWallet;
+                                      List<Account>? accounts =
+                                          appWallet!.appKeychain!.accounts;
+
+                                      if (accounts == null ||
+                                          accounts.length == 0) {
+                                        setState(() {
+                                          _mnemonicIsValid = false;
+                                          _mnemonicError =
+                                              AppLocalization.of(context)!
+                                                  .noKeychain;
+                                        });
+                                      } else {
+                                        accounts.sort((a, b) =>
+                                            a.name!.compareTo(b.name!));
+                                        await _accountsDialog(accounts);
+
+                                        await StateContainer.of(context)
+                                            .requestUpdate();
+                                        bool biometricsAvalaible = await sl
+                                            .get<BiometricUtil>()
+                                            .hasBiometrics();
+                                        List<PickerItem> accessModes = [];
+                                        accessModes.add(PickerItem(
+                                            AppLocalization.of(context)!
+                                                .pinMethod,
+                                            AppLocalization.of(context)!
+                                                .configureSecurityExplanationPIN,
+                                            AuthenticationMethod.getIcon(
+                                                AuthMethod.pin),
+                                            StateContainer.of(context)
+                                                .curTheme
+                                                .pickerItemIconEnabled,
+                                            AuthMethod.pin,
+                                            true));
+                                        accessModes.add(PickerItem(
+                                            AppLocalization.of(context)!
+                                                .passwordMethod,
+                                            AppLocalization.of(context)!
+                                                .configureSecurityExplanationPassword,
+                                            AuthenticationMethod.getIcon(
+                                                AuthMethod.password),
+                                            StateContainer.of(context)
+                                                .curTheme
+                                                .pickerItemIconEnabled,
+                                            AuthMethod.password,
+                                            true));
+                                        if (biometricsAvalaible) {
+                                          accessModes.add(PickerItem(
+                                              AppLocalization.of(context)!
+                                                  .biometricsMethod,
+                                              AppLocalization.of(context)!
+                                                  .configureSecurityExplanationBiometrics,
+                                              AuthenticationMethod.getIcon(
+                                                  AuthMethod.biometrics),
+                                              StateContainer.of(context)
+                                                  .curTheme
+                                                  .pickerItemIconEnabled,
+                                              AuthMethod.biometrics,
+                                              true));
+                                        }
+
+                                        accessModes.add(PickerItem(
+                                            AppLocalization.of(context)!
+                                                .biometricsUnirisMethod,
+                                            AppLocalization.of(context)!
+                                                .configureSecurityExplanationUnirisBiometrics,
+                                            AuthenticationMethod.getIcon(
+                                                AuthMethod.biometricsUniris),
+                                            StateContainer.of(context)
+                                                .curTheme
+                                                .pickerItemIconEnabled,
+                                            AuthMethod.biometricsUniris,
+                                            false));
+
+                                        accessModes.add(PickerItem(
+                                            AppLocalization.of(context)!
+                                                .yubikeyWithYubiCloudMethod,
+                                            AppLocalization.of(context)!
+                                                .configureSecurityExplanationYubikey,
+                                            AuthenticationMethod.getIcon(
+                                                AuthMethod
+                                                    .yubikeyWithYubicloud),
+                                            StateContainer.of(context)
+                                                .curTheme
+                                                .pickerItemIconEnabled,
+                                            AuthMethod.yubikeyWithYubicloud,
+                                            true));
+                                        Navigator.of(context).pushNamed(
+                                            '/intro_configure_security',
+                                            arguments: {
+                                              'accessModes': accessModes,
+                                              'name': await StateContainer.of(
+                                                      context)
+                                                  .appWallet!
+                                                  .appKeychain!
+                                                  .getAccountSelected()!
+                                                  .name,
+                                              'seed': await StateContainer.of(
+                                                      context)
+                                                  .getSeed(),
+                                              'process': 'importWallet'
+                                            });
+                                      }
+                                    } catch (e) {
                                       setState(() {
                                         _mnemonicIsValid = false;
                                         _mnemonicError =
                                             AppLocalization.of(context)!
                                                 .noKeychain;
                                       });
-                                    } else {
-                                      accounts.sort(
-                                          (a, b) => a.name!.compareTo(b.name!));
-                                      await _accountsDialog(accounts);
-
-                                      await StateContainer.of(context)
-                                          .requestUpdate();
-                                      bool biometricsAvalaible = await sl
-                                          .get<BiometricUtil>()
-                                          .hasBiometrics();
-                                      List<PickerItem> accessModes = [];
-                                      accessModes.add(PickerItem(
-                                          AppLocalization.of(context)!
-                                              .pinMethod,
-                                          AppLocalization.of(context)!
-                                              .configureSecurityExplanationPIN,
-                                          AuthenticationMethod.getIcon(
-                                              AuthMethod.pin),
-                                          StateContainer.of(context)
-                                              .curTheme
-                                              .pickerItemIconEnabled,
-                                          AuthMethod.pin,
-                                          true));
-                                      accessModes.add(PickerItem(
-                                          AppLocalization.of(context)!
-                                              .passwordMethod,
-                                          AppLocalization.of(context)!
-                                              .configureSecurityExplanationPassword,
-                                          AuthenticationMethod.getIcon(
-                                              AuthMethod.password),
-                                          StateContainer.of(context)
-                                              .curTheme
-                                              .pickerItemIconEnabled,
-                                          AuthMethod.password,
-                                          true));
-                                      if (biometricsAvalaible) {
-                                        accessModes.add(PickerItem(
-                                            AppLocalization.of(context)!
-                                                .biometricsMethod,
-                                            AppLocalization.of(context)!
-                                                .configureSecurityExplanationBiometrics,
-                                            AuthenticationMethod.getIcon(
-                                                AuthMethod.biometrics),
-                                            StateContainer.of(context)
-                                                .curTheme
-                                                .pickerItemIconEnabled,
-                                            AuthMethod.biometrics,
-                                            true));
-                                      }
-
-                                      accessModes.add(PickerItem(
-                                          AppLocalization.of(context)!
-                                              .biometricsUnirisMethod,
-                                          AppLocalization.of(context)!
-                                              .configureSecurityExplanationUnirisBiometrics,
-                                          AuthenticationMethod.getIcon(
-                                              AuthMethod.biometricsUniris),
-                                          StateContainer.of(context)
-                                              .curTheme
-                                              .pickerItemIconEnabled,
-                                          AuthMethod.biometricsUniris,
-                                          false));
-
-                                      accessModes.add(PickerItem(
-                                          AppLocalization.of(context)!
-                                              .yubikeyWithYubiCloudMethod,
-                                          AppLocalization.of(context)!
-                                              .configureSecurityExplanationYubikey,
-                                          AuthenticationMethod.getIcon(
-                                              AuthMethod.yubikeyWithYubicloud),
-                                          StateContainer.of(context)
-                                              .curTheme
-                                              .pickerItemIconEnabled,
-                                          AuthMethod.yubikeyWithYubicloud,
-                                          true));
-                                      Navigator.of(context).pushNamed(
-                                          '/intro_configure_security',
-                                          arguments: {
-                                            'accessModes': accessModes,
-                                            'name':
-                                                await StateContainer.of(context)
-                                                    .appWallet!
-                                                    .appKeychain!
-                                                    .getAccountSelected()!
-                                                    .name,
-                                            'seed':
-                                                await StateContainer.of(context)
-                                                    .getSeed(),
-                                            'process': 'importWallet'
-                                          });
                                     }
                                   } else {
                                     _mnemonicController.text
@@ -612,12 +626,14 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                 borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                 side: BorderSide(
                     color: StateContainer.of(context).curTheme.text45!)),
-            content: PickerWidget(
-              pickerItems: pickerItemsList,
-              selectedIndex: 0,
-              onSelected: (value) {
-                Navigator.pop(context, value.value);
-              },
+            content: SingleChildScrollView(
+              child: PickerWidget(
+                pickerItems: pickerItemsList,
+                selectedIndex: 0,
+                onSelected: (value) {
+                  Navigator.pop(context, value.value);
+                },
+              ),
             ),
           );
         });

@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aewallet/ui/views/accounts/account_list.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
@@ -21,7 +22,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/bus/account_changed_event.dart';
 import 'package:core/bus/disable_lock_timeout_event.dart';
 import 'package:core/util/haptic_util.dart';
-import 'package:core/util/keychain_util.dart';
 import 'package:core_ui/ui/util/responsive.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -30,7 +30,6 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Project imports:
 import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/model/available_networks.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/balance_infos.dart';
 import 'package:aeuniverse/ui/widgets/logo.dart';
@@ -525,7 +524,18 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                       FeedbackType.light,
                                       StateContainer.of(context)
                                           .activeVibrations);
-                                  AccountsList().mainBottomSheet(context);
+                                  Sheets.showAppHeightNineSheet(
+                                      context: context,
+                                      widget: AccountsListWidget(
+                                          appWallet: StateContainer.of(context)
+                                              .appWallet,
+                                          currencyName:
+                                              StateContainer.of(context)
+                                                  .curCurrency
+                                                  .currency
+                                                  .name,
+                                          seed: await StateContainer.of(context)
+                                              .getSeed()));
                                   setState(() {
                                     accountIsPressed = false;
                                   });
