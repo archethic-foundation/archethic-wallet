@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aeuniverse/ui/themes/theme_dark.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:flutter/material.dart';
 
@@ -220,6 +221,8 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                                 .curLanguage
                                                 .getLocaleString()), () async {
                                       await StateContainer.of(context).logOut();
+                                      StateContainer.of(context).curTheme =
+                                          DarkTheme();
                                       Navigator.of(context)
                                           .pushNamedAndRemoveUntil('/',
                                               (Route<dynamic> route) => false);

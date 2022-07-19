@@ -5,6 +5,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aeuniverse/ui/themes/theme_dark.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/authentification_method_dialog.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/currency_dialog.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/language_dialog.dart';
@@ -787,6 +788,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                                     .curLanguage
                                     .getLocaleString()), () async {
                           await StateContainer.of(context).logOut();
+                          StateContainer.of(context).curTheme = DarkTheme();
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               '/', (Route<dynamic> route) => false);
                         });
