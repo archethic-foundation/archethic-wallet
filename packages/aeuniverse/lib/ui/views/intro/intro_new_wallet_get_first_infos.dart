@@ -185,15 +185,11 @@ class _IntroNewWalletDisclaimerState
                                 AppLocalization.of(context)!
                                     .newAccountConfirmation
                                     .replaceAll('%1', nameController.text),
-                                AppLocalization.of(context)!.yes.toUpperCase(),
-                                () async {
+                                AppLocalization.of(context)!.yes, () async {
                               Navigator.of(context).pushNamed(
                                   '/intro_backup_safety',
                                   arguments: nameController.text);
-                            },
-                                cancelText: AppLocalization.of(context)!
-                                    .no
-                                    .toUpperCase());
+                            }, cancelText: AppLocalization.of(context)!.no);
                           }
                         }
                       },

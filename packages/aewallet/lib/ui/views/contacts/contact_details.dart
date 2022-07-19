@@ -63,11 +63,7 @@ class ContactDetailsSheet {
                                   AppLocalization.of(context)!
                                       .removeContactConfirmation
                                       .replaceAll('%1', contact.name!),
-                                  CaseChange.toUpperCase(
-                                      AppLocalization.of(context)!.yes,
-                                      StateContainer.of(context)
-                                          .curLanguage
-                                          .getLocaleString()), () {
+                                  AppLocalization.of(context)!.yes, () {
                                 sl
                                     .get<DBHelper>()
                                     .deleteContact(contact)
@@ -86,12 +82,7 @@ class ContactDetailsSheet {
                                           .snackBarShadow!);
                                   Navigator.of(context).pop();
                                 });
-                              },
-                                  cancelText: CaseChange.toUpperCase(
-                                      AppLocalization.of(context)!.no,
-                                      StateContainer.of(context)
-                                          .curLanguage
-                                          .getLocaleString()));
+                              }, cancelText: AppLocalization.of(context)!.no);
                             },
                             child: FaIcon(FontAwesomeIcons.trash,
                                 size: 24,
