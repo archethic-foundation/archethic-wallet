@@ -16,7 +16,7 @@ class NotificationsUtil {
   }
 
   static Future init() async {
-    final android = AndroidInitializationSettings('@mipmap/ic_launcher');
+    final android = AndroidInitializationSettings('@drawable/ic_notification');
     final iOS = IOSInitializationSettings();
     final settings = InitializationSettings(android: android, iOS: iOS);
     await _notifications.initialize(settings,
