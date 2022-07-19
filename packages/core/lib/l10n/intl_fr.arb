@@ -290,5 +290,8 @@
 	"sendMessageConfirmHeader": "Votre message :",
 	"messageInTxTransfer": "Consulter le message associé...",
 	"keychainSync": "Synchronisation de votre portefeuille en cours",
-	"messageInvalid": "Votre message ne peut pas comporter (pour le moment) des caractères spéciaux."
+	"messageInvalid": "Votre message ne peut pas comporter (pour le moment) des caractères spéciaux.",
+	"pass": "Passer",
+	"passBackupConfirmationDisclaimer": "CLAUSE DE NON-RESPONSABILITE",
+	"passBackupConfirmationMessage": "Nous vous invitons à confirmer manuellement l'enregistrement de votre recovery phrase. En cas de perte, vous perdrez vos fonds. Pour rappel, Archethic n'en garde aucune copie"
 }

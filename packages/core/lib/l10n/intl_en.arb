@@ -1733,5 +1733,23 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "pass": "Pass",
+  "@pass": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "passBackupConfirmationDisclaimer": "DISCLAIMER",
+  "@passBackupConfirmationDisclaimer": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "passBackupConfirmationMessage": "We invite you to manually confirm the registration of your recovery phrase. In case of loss, you will lose your funds. As a reminder, Archethic does not keep any copy.",
+  "@passBackupConfirmationMessage": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

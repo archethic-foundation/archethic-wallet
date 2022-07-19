@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-07-14T12:07:57.623969",
+  "@@last_modified": "2022-07-19T11:22:32.152819",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -32,6 +32,12 @@
   },
   "confirm": "Confirm",
   "@confirm": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "pass": "Pass",
+  "@pass": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -650,6 +656,18 @@
   },
   "removeWalletReassurance": "As long as you've backed up your seed you have nothing to worry about.",
   "@removeWalletReassurance": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "passBackupConfirmationDisclaimer": "DISCLAIMER",
+  "@passBackupConfirmationDisclaimer": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "passBackupConfirmationMessage": "We invite you to manually confirm the registration of your recovery phrase. In case of loss, you will lose your funds. As a reminder, Archethic does not keep any copy.",
+  "@passBackupConfirmationMessage": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

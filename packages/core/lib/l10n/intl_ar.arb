@@ -290,5 +290,8 @@
 	"sendMessageConfirmHeader": "Your message:",
 	"messageInTxTransfer": "See the message attached...",
 	"keychainSync": "Synchronization of your keychain in progress",
-	"messageInvalid": "Your message cannot contain (for the moment) special characters"
+	"messageInvalid": "Your message cannot contain (for the moment) special characters",
+	"pass": "Pass",
+	"passBackupConfirmationDisclaimer": "DISCLAIMER",
+	"passBackupConfirmationMessage": "We invite you to manually confirm the registration of your recovery phrase. In case of loss, you will lose your funds. As a reminder, Archethic does not keep any copy."
 }

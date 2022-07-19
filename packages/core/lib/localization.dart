@@ -60,6 +60,10 @@ class AppLocalization {
     return Intl.message('Confirm', name: 'confirm');
   }
 
+  String get pass {
+    return Intl.message('Pass', name: 'pass');
+  }
+
   String get no {
     return Intl.message('No', name: 'no');
   }
@@ -534,6 +538,16 @@ class AppLocalization {
     return Intl.message(
         'As long as you\'ve backed up your seed you have nothing to worry about.',
         name: 'removeWalletReassurance');
+  }
+
+  String get passBackupConfirmationDisclaimer {
+    return Intl.message('DISCLAIMER', name: 'passBackupConfirmationDisclaimer');
+  }
+
+  String get passBackupConfirmationMessage {
+    return Intl.message(
+        'We invite you to manually confirm the registration of your recovery phrase. In case of loss, you will lose your funds. As a reminder, Archethic does not keep any copy.',
+        name: 'passBackupConfirmationMessage');
   }
 
   String get preferences {
