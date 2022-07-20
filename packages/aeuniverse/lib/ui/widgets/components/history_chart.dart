@@ -101,7 +101,7 @@ class HistoryChart extends StatelessWidget {
                   break;
               }
               return LineTooltipItem(
-                '${title}\n${CurrencyUtil.getConvertedAmountWithNumberOfDigits(currency, touchedSpot.y, 5)}',
+                '$title\n${CurrencyUtil.getConvertedAmountWithNumberOfDigits(currency, touchedSpot.y, 5)}',
                 tooltipText,
               );
             }).toList();

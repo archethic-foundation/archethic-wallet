@@ -545,25 +545,23 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                           null
                                       ? Align(
                                           alignment: Alignment.center,
-                                          child: Container(
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  StateContainer.of(context)
-                                                      .appWallet!
-                                                      .appKeychain!
-                                                      .getAccountSelected()!
-                                                      .name!,
-                                                  style: AppStyles
-                                                      .textStyleSize20W700EquinoxPrimary(
-                                                          context),
-                                                ),
-                                              ],
-                                            ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                StateContainer.of(context)
+                                                    .appWallet!
+                                                    .appKeychain!
+                                                    .getAccountSelected()!
+                                                    .name!,
+                                                style: AppStyles
+                                                    .textStyleSize20W700EquinoxPrimary(
+                                                        context),
+                                              ),
+                                            ],
                                           ),
                                         )
                                       : const SizedBox(),

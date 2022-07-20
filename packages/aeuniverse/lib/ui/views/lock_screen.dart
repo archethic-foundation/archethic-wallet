@@ -251,13 +251,13 @@ class _AppLockScreenState extends State<AppLockScreen> {
                         ),
                         if (_lockedOut)
                           Container(
+                            margin: const EdgeInsets.only(top: 10),
                             child: Text(
                               AppLocalization.of(context)!.locked,
                               style:
                                   AppStyles.textStyleSize24W700EquinoxPrimary(
                                       context),
                             ),
-                            margin: const EdgeInsets.only(top: 10),
                           ),
                         if (_lockedOut)
                           Container(

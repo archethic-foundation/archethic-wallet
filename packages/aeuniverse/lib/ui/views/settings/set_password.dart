@@ -397,7 +397,7 @@ class _SetPasswordState extends State<SetPassword> {
                                   alignment: const AlignmentDirectional(0, 0),
                                   margin: const EdgeInsets.only(top: 3),
                                   child: Text(
-                                      this.passwordError == null
+                                      passwordError == null
                                           ? ''
                                           : passwordError!,
                                       style:

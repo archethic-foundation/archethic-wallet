@@ -120,11 +120,11 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
       return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(
+          children: const [
+            SizedBox(
               height: 50,
             ),
-            const SizedBox(
+            SizedBox(
               height: 250,
             )
           ]);

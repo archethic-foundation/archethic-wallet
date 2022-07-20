@@ -38,34 +38,31 @@ class ContactsDialog {
                     AppLocalization.of(context)!.addressBookHeader,
                     style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
                   ),
-                  Container(
-                    child: AppTextField(
-                      focusNode: searchNameFocusNode,
-                      controller: searchNameController,
-                      autofocus: true,
-                      maxLines: 1,
-                      autocorrect: false,
-                      labelText: AppLocalization.of(context)!.searchField,
-                      keyboardType: TextInputType.text,
-                      style: AppStyles.textStyleSize16W600Primary(context),
-                      onChanged: (text) async {
-                        contacts =
-                            await StateContainer.of(context).getContacts();
-                        setState(
-                          () {
-                            contacts = contacts.where((Contact contact) {
-                              var contactName = contact.name!.toLowerCase();
-                              return contactName.contains(text);
-                            }).toList();
-                            pickerItemsList.clear();
-                            for (var contact in contacts) {
-                              pickerItemsList.add(PickerItem(contact.name!,
-                                  contact.address, null, null, contact, true));
-                            }
-                          },
-                        );
-                      },
-                    ),
+                  AppTextField(
+                    focusNode: searchNameFocusNode,
+                    controller: searchNameController,
+                    autofocus: true,
+                    maxLines: 1,
+                    autocorrect: false,
+                    labelText: AppLocalization.of(context)!.searchField,
+                    keyboardType: TextInputType.text,
+                    style: AppStyles.textStyleSize16W600Primary(context),
+                    onChanged: (text) async {
+                      contacts = await StateContainer.of(context).getContacts();
+                      setState(
+                        () {
+                          contacts = contacts.where((Contact contact) {
+                            var contactName = contact.name!.toLowerCase();
+                            return contactName.contains(text);
+                          }).toList();
+                          pickerItemsList.clear();
+                          for (var contact in contacts) {
+                            pickerItemsList.add(PickerItem(contact.name!,
+                                contact.address, null, null, contact, true));
+                          }
+                        },
+                      );
+                    },
                   ),
                 ],
               ),

@@ -46,13 +46,13 @@ class Sheets {
                     shaderCallback: (rect) {
                       return RadialGradient(
                               radius: (value * 5),
-                              colors: [
+                              colors: const [
                                 Colors.white,
                                 Colors.white,
                                 Colors.transparent,
                                 Colors.transparent
                               ],
-                              stops: [0.0, 0.55, 0.6, 1.0],
+                              stops: const [0.0, 0.55, 0.6, 1.0],
                               center: const FractionalOffset(0.95, 0.95))
                           .createShader(rect);
                     },

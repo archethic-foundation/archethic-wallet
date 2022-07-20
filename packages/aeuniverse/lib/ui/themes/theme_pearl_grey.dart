@@ -59,7 +59,7 @@ class PearlGreyTheme implements BaseTheme {
 
   // Icons TextField
   @override
-  Color? textFieldIcon = const Color(0xFF0000000);
+  Color? textFieldIcon = const Color(0xff000000);
 
   // Texts
   @override
