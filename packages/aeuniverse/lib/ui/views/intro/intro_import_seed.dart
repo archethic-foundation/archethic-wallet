@@ -532,8 +532,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                             '/intro_configure_security',
                                             arguments: {
                                               'accessModes': accessModes,
-                                              'name': await StateContainer.of(
-                                                      context)
+                                              'name': StateContainer.of(context)
                                                   .appWallet!
                                                   .appKeychain!
                                                   .getAccountSelected()!

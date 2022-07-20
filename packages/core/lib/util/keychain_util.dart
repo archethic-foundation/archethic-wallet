@@ -33,13 +33,13 @@ class KeychainUtil {
     const String index = '0';
     String kDerivationPath = '$kDerivationPathWithoutIndex$index';
 
-    final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
+    final String originPrivateKey = sl.get<ApiService>().getOriginKey();
 
     Keychain keychain = Keychain(hexToUint8List(keychainSeed), version: 1);
     keychain.addService(kServiceName, kDerivationPath);
 
     /// Create Keychain from keyChain seed and wallet public key to encrypt secret
-    final Transaction keychainTransaction = await sl
+    final Transaction keychainTransaction = sl
         .get<ApiService>()
         .newKeychainTransaction(
             keychainSeed,
@@ -49,7 +49,7 @@ class KeychainUtil {
             derivationPath: kDerivationPath);
 
     /// Create Keychain Access for wallet
-    final Transaction accessKeychainTx = await sl
+    final Transaction accessKeychainTx = sl
         .get<ApiService>()
         .newAccessKeychainTransaction(
             seed,
@@ -93,7 +93,7 @@ class KeychainUtil {
 
     final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
 
-    final String originPrivateKey = await sl.get<ApiService>().getOriginKey();
+    final String originPrivateKey = sl.get<ApiService>().getOriginKey();
 
     final String genesisAddressKeychain =
         deriveAddress(uint8ListToHex(keychain.seed!), 0);

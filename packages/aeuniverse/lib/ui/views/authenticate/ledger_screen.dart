@@ -175,10 +175,9 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             final String? transactionChainSeed =
                                                 await StateContainer.of(context)
                                                     .getSeed();
-                                            final String originPrivateKey =
-                                                await sl
-                                                    .get<ApiService>()
-                                                    .getOriginKey();
+                                            final String originPrivateKey = sl
+                                                .get<ApiService>()
+                                                .getOriginKey();
                                             transaction
                                                 .build(
                                                     transactionChainSeed!,
