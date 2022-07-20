@@ -58,6 +58,7 @@ class SapphireBlueTheme implements BaseTheme {
   Color? pickerItemIconDisabled = const Color(0xFFFFFFFF).withOpacity(0.6);
 
   // Icons TextField
+  @override
   Color? textFieldIcon = const Color(0xFFFFFFFF);
 
   // Texts
