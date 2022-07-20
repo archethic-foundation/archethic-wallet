@@ -100,7 +100,7 @@ dependencies:
   package_info_plus: ^1.4.2
   
   # A Dart library implementing cryptographic algorithms and primitives, modeled on the BouncyCastle library
-  pointycastle: ^3.6.0
+  pointycastle: ^3.6.1
   
   # QR.Flutter is a Flutter library for simple and fast QR code rendering via a Widget or custom painter
   qr_flutter: ^4.0.0
@@ -133,6 +133,7 @@ dependencies:
   yubidart: ^1.0.3
 
 dev_dependencies:
+  flutter_lints: ^2.0.1
   build_runner: ^2.1.11
   # A build system for Dart code generation and modular compilation
   hive_generator: ^1.1.3
