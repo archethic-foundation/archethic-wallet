@@ -122,7 +122,7 @@ ios/fastlane/Appfile
 ios/Runner.app.dSYM.zip
 ios/Runner.ipa
 android/fastlane/Appfile
-android/secret/api-5373400179997468599-215172-2a68660d069f.json
+android/secret/pc-api-5169468416570896137-923-bb9ef60f132d.json
 
 *.ninja
 .ninja*
