@@ -28,7 +28,7 @@ class BalanceInfosWidget {
   List<OptionChart> optionChartList = List<OptionChart>.empty(growable: true);
 
   Widget getBalance(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 60,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
@@ -37,7 +37,7 @@ class BalanceInfosWidget {
           child: Container(
             decoration:
                 StateContainer.of(context).curTheme.getDecorationBalance(),
-            child: Container(
+            child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.95,
               child: Padding(
                 padding: const EdgeInsets.only(right: 10.0),

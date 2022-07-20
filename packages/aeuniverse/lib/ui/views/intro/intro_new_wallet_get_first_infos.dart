@@ -124,7 +124,7 @@ class _IntroNewWalletDisclaimerState
                                   ],
                                 ),
                                 nameError != null
-                                    ? Container(
+                                    ? SizedBox(
                                         height: 40,
                                         child: Text(nameError!,
                                             style: AppStyles

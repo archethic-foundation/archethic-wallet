@@ -504,7 +504,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                     children: <Widget>[
                       Column(
                         children: <Widget>[
-                          Container(
+                          SizedBox(
                             height: 30,
                             child: InkWell(
                               onTap: () async {

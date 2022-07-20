@@ -45,7 +45,7 @@ class _PickerWidgetState extends State<PickerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.maxFinite,
       child: ListView.builder(
         shrinkWrap: true,
@@ -93,7 +93,7 @@ class _PickerWidgetState extends State<PickerWidget> {
                                   width: 0,
                                   height: 24,
                                 )
-                              : Container(
+                              : SizedBox(
                                   height: 24,
                                   child: widget.pickerItems![index].iconColor ==
                                           null
