@@ -159,6 +159,12 @@ class KeychainUtil {
 
     appWallet!.appKeychain!.accounts!.add(selectedAcct);
     appWallet.appKeychain!.accounts!.sort((a, b) => a.name!.compareTo(b.name!));
+
+    final Transaction lastTransactionKeychainAddress = await sl
+        .get<ApiService>()
+        .getLastTransaction(genesisAddressKeychain, request: 'address');
+    appWallet.appKeychain!.address = lastTransactionKeychainAddress.address;
+
     await appWallet.save();
 
     return appWallet;

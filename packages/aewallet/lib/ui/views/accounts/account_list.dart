@@ -185,32 +185,38 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                 ),
               ),
               InkWell(
-                onTap: () {
-                  sl.get<HapticUtil>().feedback(FeedbackType.light,
-                      StateContainer.of(context).activeVibrations);
-                  Clipboard.setData(ClipboardData(
-                      text: StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .lastAddress!));
-                  UIUtil.showSnackbar(
-                      AppLocalization.of(context)!.addressCopied,
-                      context,
-                      StateContainer.of(context).curTheme.text!,
-                      StateContainer.of(context).curTheme.snackBarShadow!);
-                },
-                child: Container(
-                  constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width - 140),
-                  child: AutoSizeText(
-                    appWalletLive!.appKeychain!.address!.toUpperCase(),
-                    style: AppStyles.textStyleSize12W100Primary(context),
-                    maxLines: 1,
-                    stepGranularity: 0.1,
-                  ),
-                ),
-              ),
+                  onTap: () {
+                    sl.get<HapticUtil>().feedback(FeedbackType.light,
+                        StateContainer.of(context).activeVibrations);
+                    Clipboard.setData(ClipboardData(
+                        text: appWalletLive!.appKeychain!.address!
+                            .toUpperCase()));
+                    UIUtil.showSnackbar(
+                        AppLocalization.of(context)!.addressCopied,
+                        context,
+                        StateContainer.of(context).curTheme.text!,
+                        StateContainer.of(context).curTheme.snackBarShadow!);
+                  },
+                  child: Column(
+                    children: [
+                      AutoSizeText(
+                        appWalletLive!.appKeychain!.address!
+                            .toUpperCase()
+                            .substring(0, 34),
+                        style: AppStyles.textStyleSize12W100Primary(context),
+                        maxLines: 1,
+                        stepGranularity: 0.1,
+                      ),
+                      AutoSizeText(
+                        appWalletLive!.appKeychain!.address!
+                            .toUpperCase()
+                            .substring(34),
+                        style: AppStyles.textStyleSize12W100Primary(context),
+                        maxLines: 1,
+                        stepGranularity: 0.1,
+                      ),
+                    ],
+                  )),
               Expanded(
                   key: expandedKey,
                   child: Stack(
@@ -432,6 +438,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                                             .curCurrency
                                                                             .currency
                                                                             .name);
+
                                                                     setState(
                                                                         () {
                                                                       isPressed =

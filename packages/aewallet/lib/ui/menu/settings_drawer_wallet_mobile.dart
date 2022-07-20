@@ -782,11 +782,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                             AppLocalization.of(context)!.removeWalletAreYouSure,
                             AppLocalization.of(context)!
                                 .removeWalletReassurance,
-                            CaseChange.toUpperCase(
-                                AppLocalization.of(context)!.yes,
-                                StateContainer.of(context)
-                                    .curLanguage
-                                    .getLocaleString()), () async {
+                            AppLocalization.of(context)!.yes, () async {
                           await StateContainer.of(context).logOut();
                           StateContainer.of(context).curTheme = DarkTheme();
                           Navigator.of(context).pushNamedAndRemoveUntil(
