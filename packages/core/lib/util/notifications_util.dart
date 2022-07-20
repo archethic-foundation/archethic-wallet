@@ -17,9 +17,9 @@ class NotificationsUtil {
   }
 
   static Future init() async {
-    final android =
+    const android =
         const AndroidInitializationSettings('@drawable/ic_notification');
-    final iOS = const IOSInitializationSettings();
+    const iOS = const IOSInitializationSettings();
     final settings = InitializationSettings(android: android, iOS: iOS);
     await _notifications.initialize(settings,
         onSelectNotification: (payload) async {

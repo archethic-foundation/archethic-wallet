@@ -371,7 +371,7 @@ class _BoxDecorationPainter extends BoxPainter {
 
   void _paintShadows(Canvas canvas, Rect rect, TextDirection textDirection) {
     if (_decoration.boxShadow == null) {
-      final boxShadow = const BoxShadow(
+      const boxShadow = const BoxShadow(
           blurRadius: 30, spreadRadius: 15, color: Colors.black);
       _drawShadow(boxShadow, canvas, rect, textDirection);
     } else
