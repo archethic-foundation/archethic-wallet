@@ -28,7 +28,6 @@ import 'package:aeuniverse/ui/views/intro/intro_yubikey.dart';
 import 'package:aeuniverse/ui/views/lock_screen.dart';
 import 'package:aeuniverse/ui/views/settings/update_password.dart';
 import 'package:aeuniverse/ui/views/settings/update_yubikey.dart';
-import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 import 'package:aeuniverse/util/preferences.dart';
 import 'package:core/localization.dart';
@@ -36,11 +35,9 @@ import 'package:core/model/available_language.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/routes.dart';
-import 'package:core_ui/util/case_converter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:safe_device/safe_device.dart';
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();

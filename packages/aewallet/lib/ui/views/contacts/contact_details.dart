@@ -18,7 +18,6 @@ import 'package:core/model/data/contact.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
 import 'package:core_ui/ui/util/dimens.dart';
-import 'package:core_ui/util/case_converter.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
