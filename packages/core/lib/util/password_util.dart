@@ -16,26 +16,26 @@ class PasswordUtil {
   /// Checks if password has at least normal char letter matches
   static bool hasMinNormalChar(String password, int normalCount) {
     String pattern = '^(.*?[A-Z]){$normalCount,}';
-    return password.toUpperCase().contains(new RegExp(pattern));
+    return password.toUpperCase().contains(RegExp(pattern));
   }
 
   /// Checks if password has at least uppercaseCount uppercase letter matches
   static bool hasMinUppercase(String password, int uppercaseCount) {
     String pattern = '^(.*?[A-Z]){$uppercaseCount,}';
-    return password.contains(new RegExp(pattern));
+    return password.contains(RegExp(pattern));
   }
 
   /// Checks if password has at least numericCount numeric character matches
   static bool hasMinNumericChar(String password, int numericCount) {
     String pattern = '^(.*?[0-9]){$numericCount,}';
-    return password.contains(new RegExp(pattern));
+    return password.contains(RegExp(pattern));
   }
 
   /// Checks if password has at least specialCount special character matches
   static bool hasMinSpecialChar(String password, int specialCount) {
     String pattern =
         r"^(.*?[$&+,\:;/=?@#|'<>.^*()_%!-]){" + specialCount.toString() + ",}";
-    return password.contains(new RegExp(pattern));
+    return password.contains(RegExp(pattern));
   }
 
   /// Checks if password is compromised

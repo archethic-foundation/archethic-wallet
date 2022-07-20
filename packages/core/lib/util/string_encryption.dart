@@ -21,7 +21,7 @@ Uint8List _genRandomWithNonZero(int seedLength) {
 }
 
 Uint8List _createUint8ListFromString(String s) {
-  var ret = new Uint8List(s.length);
+  var ret = Uint8List(s.length);
   for (var i = 0; i < s.length; i++) {
     ret[i] = s.codeUnitAt(i);
   }
@@ -49,7 +49,7 @@ Tuple2<Uint8List, Uint8List> _deriveKeyAndIV(
 
   var keyBtyes = concatenatedHashes.sublist(0, 32);
   var ivBtyes = concatenatedHashes.sublist(32, 48);
-  return new Tuple2(keyBtyes, ivBtyes);
+  return Tuple2(keyBtyes, ivBtyes);
 }
 
 String stringEncryptBase64(String string, String? seed) {
