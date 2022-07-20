@@ -40,7 +40,7 @@ class _UpdateYubikeyState extends State<UpdateYubikey> {
               name: widget.name,
               seed: widget.seed);
         } else {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: const CircularProgressIndicator());
         }
       },
     );

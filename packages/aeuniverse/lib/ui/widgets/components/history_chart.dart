@@ -156,7 +156,7 @@ class HistoryChart extends StatelessWidget {
                         }
                       }
                       return Padding(
-                        padding: EdgeInsets.only(top: 8.0, left: 5),
+                        padding: const EdgeInsets.only(top: 8.0, left: 5),
                         child: Text(
                           _title,
                         ),
@@ -171,7 +171,7 @@ class HistoryChart extends StatelessWidget {
                     reservedSize: 60,
                     getTitlesWidget: (value, titleMeta) {
                       return Padding(
-                          padding: EdgeInsets.only(top: 8.0, left: 5),
+                          padding: const EdgeInsets.only(top: 8.0, left: 5),
                           child: Text(
                               CurrencyUtil.getConvertedAmountWithNumberOfDigits(
                                   currency, value, 3)));

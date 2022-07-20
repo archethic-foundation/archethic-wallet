@@ -108,7 +108,8 @@ class _SetYubikeyState extends State<SetYubikey> {
                         Row(
                           children: <Widget>[
                             Container(
-                              margin: EdgeInsetsDirectional.only(start: 15),
+                              margin:
+                                  const EdgeInsetsDirectional.only(start: 15),
                               height: 50,
                               width: 50,
                               child: BackButton(
@@ -134,7 +135,7 @@ class _SetYubikeyState extends State<SetYubikey> {
                               children: [
                                 if (widget.header != null)
                                   Container(
-                                    margin: EdgeInsetsDirectional.only(
+                                    margin: const EdgeInsetsDirectional.only(
                                       start: 20,
                                       end: 20,
                                       top: 10,
@@ -150,7 +151,7 @@ class _SetYubikeyState extends State<SetYubikey> {
                                   ),
                                 if (widget.description != null)
                                   Container(
-                                    margin: EdgeInsetsDirectional.only(
+                                    margin: const EdgeInsetsDirectional.only(
                                         start: 20, end: 20, top: 15.0),
                                     child: Text(
                                       widget.description!,

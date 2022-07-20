@@ -133,7 +133,7 @@ class StateContainerState extends State<StateContainer> {
   void checkTransactionInputs(String message) {
     if (appWallet != null) {
       timerCheckTransactionInputs =
-          Timer.periodic(Duration(seconds: 30), (Timer t) async {
+          Timer.periodic(const Duration(seconds: 30), (Timer t) async {
         List<Account>? accounts = appWallet!.appKeychain!.accounts;
         accounts!.forEach((Account account) async {
           final List<TransactionInput> transactionInputList = await sl

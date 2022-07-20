@@ -85,7 +85,8 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(
-                              margin: EdgeInsetsDirectional.only(start: 15),
+                              margin:
+                                  const EdgeInsetsDirectional.only(start: 15),
                               height: 50,
                               width: 50,
                               child: BackButton(
@@ -99,7 +100,8 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                             Row(
                               children: [
                                 Container(
-                                  margin: EdgeInsetsDirectional.only(start: 15),
+                                  margin: const EdgeInsetsDirectional.only(
+                                      start: 15),
                                   height: 50,
                                   width: 50,
                                   child: TextButton(
@@ -130,7 +132,8 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsetsDirectional.only(start: 15),
+                                  margin: const EdgeInsetsDirectional.only(
+                                      start: 15),
                                   height: 50,
                                   width: 50,
                                   child: TextButton(
@@ -172,7 +175,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                               90),
                         ),
                         Container(
-                          margin: EdgeInsetsDirectional.only(
+                          margin: const EdgeInsetsDirectional.only(
                             top: 10,
                           ),
                           child: AutoSizeText(

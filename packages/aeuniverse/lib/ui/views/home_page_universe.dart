@@ -419,7 +419,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
               actions: [
                 StateContainer.of(context).activeNotifications
                     ? IconButton(
-                        icon: Icon(Icons.notifications_active_outlined),
+                        icon: const Icon(Icons.notifications_active_outlined),
                         onPressed: () async {
                           StateContainer.of(context).activeNotifications =
                               false;
@@ -435,7 +435,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                           await preferences.setActiveNotifications(false);
                         })
                     : IconButton(
-                        icon: Icon(Icons.notifications_off_outlined),
+                        icon: const Icon(Icons.notifications_off_outlined),
                         onPressed: () async {
                           StateContainer.of(context).activeNotifications = true;
 
@@ -651,8 +651,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                           const SizedBox(
                                             height: 15,
                                           ),
-                                          TxListWidget(),
-                                          LastArticlesWidget(),
+                                          const TxListWidget(),
+                                          const LastArticlesWidget(),
                                           const SizedBox(
                                             height: 30,
                                           ),

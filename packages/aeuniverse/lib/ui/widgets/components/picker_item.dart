@@ -78,7 +78,7 @@ class _PickerWidgetState extends State<PickerWidget> {
                       color: isItemSelected
                           ? Colors.green
                           : StateContainer.of(context).curTheme.text30!),
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                  borderRadius: const BorderRadius.all(Radius.circular(12)),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -107,7 +107,7 @@ class _PickerWidgetState extends State<PickerWidget> {
                                                       .curTheme
                                                       .pickerItemIconDisabled),
                                 ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Expanded(
                             child: Column(
                               children: [
@@ -142,7 +142,7 @@ class _PickerWidgetState extends State<PickerWidget> {
                             ),
                           ),
                           isItemSelected
-                              ? Icon(
+                              ? const Icon(
                                   Icons.check_circle,
                                   size: 16,
                                   color: Colors.green,
@@ -150,7 +150,8 @@ class _PickerWidgetState extends State<PickerWidget> {
                               : Container(),
                         ],
                       ),
-                      if (pickerItem.description != null) SizedBox(height: 5),
+                      if (pickerItem.description != null)
+                        const SizedBox(height: 5),
                       if (pickerItem.description != null)
                         Text(
                           pickerItem.description!,
@@ -162,7 +163,7 @@ class _PickerWidgetState extends State<PickerWidget> {
               ),
             );
           } else {
-            return SizedBox();
+            return const SizedBox();
           }
         },
         itemCount: widget.pickerItems!.length,

@@ -149,7 +149,7 @@ class _AppTextFieldState extends State<AppTextField> {
                       )
                     : widget.prefixButton != null && widget.suffixButton == null
                         ? InputDecoration(
-                            contentPadding: EdgeInsets.only(right: 48),
+                            contentPadding: const EdgeInsets.only(right: 48),
                             labelText: widget.labelText ?? '',
                             labelStyle:
                                 AppStyles.textStyleSize16W400Primary60(context),
@@ -158,7 +158,7 @@ class _AppTextFieldState extends State<AppTextField> {
                         : widget.prefixButton == null &&
                                 widget.suffixButton != null
                             ? InputDecoration(
-                                contentPadding: EdgeInsets.only(left: 48),
+                                contentPadding: const EdgeInsets.only(left: 48),
                                 labelText: widget.labelText ?? '',
                                 labelStyle:
                                     AppStyles.textStyleSize16W400Primary60(
@@ -171,8 +171,8 @@ class _AppTextFieldState extends State<AppTextField> {
                                 labelStyle:
                                     AppStyles.textStyleSize16W400Primary60(
                                         context),
-                                prefixIconConstraints:
-                                    BoxConstraints(minWidth: 48, maxHeight: 48),
+                                prefixIconConstraints: const BoxConstraints(
+                                    minWidth: 48, maxHeight: 48),
                                 prefixIcon:
                                     const SizedBox(width: 48, height: 48),
                                 suffixIcon:

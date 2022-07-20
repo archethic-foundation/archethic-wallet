@@ -108,7 +108,8 @@ class _SetPasswordState extends State<SetPassword> {
                         Row(
                           children: <Widget>[
                             Container(
-                              margin: EdgeInsetsDirectional.only(start: 15),
+                              margin:
+                                  const EdgeInsetsDirectional.only(start: 15),
                               height: 50,
                               width: 50,
                               child: BackButton(
@@ -136,7 +137,7 @@ class _SetPasswordState extends State<SetPassword> {
                               children: [
                                 if (widget.header != null)
                                   Container(
-                                    margin: EdgeInsetsDirectional.only(
+                                    margin: const EdgeInsetsDirectional.only(
                                       start: 20,
                                       end: 20,
                                       top: 10,
@@ -157,8 +158,9 @@ class _SetPasswordState extends State<SetPassword> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Container(
-                                        margin: EdgeInsetsDirectional.only(
-                                            start: 20, end: 20, top: 15.0),
+                                        margin:
+                                            const EdgeInsetsDirectional.only(
+                                                start: 20, end: 20, top: 15.0),
                                         child: Text(
                                           widget.description!,
                                           style: AppStyles
@@ -168,8 +170,9 @@ class _SetPasswordState extends State<SetPassword> {
                                         ),
                                       ),
                                       Container(
-                                        margin: EdgeInsetsDirectional.only(
-                                            start: 20, end: 20, top: 15),
+                                        margin:
+                                            const EdgeInsetsDirectional.only(
+                                                start: 20, end: 20, top: 15),
                                         child: Text(
                                           AppLocalization.of(context)!
                                               .setPasswordDescription,
@@ -180,8 +183,9 @@ class _SetPasswordState extends State<SetPassword> {
                                         ),
                                       ),
                                       Container(
-                                        margin: EdgeInsetsDirectional.only(
-                                            start: 20, end: 20),
+                                        margin:
+                                            const EdgeInsetsDirectional.only(
+                                                start: 20, end: 20),
                                         child: Text(
                                           AppLocalization.of(context)!
                                               .passwordAtLeast
@@ -199,8 +203,9 @@ class _SetPasswordState extends State<SetPassword> {
                                         ),
                                       ),
                                       Container(
-                                        margin: EdgeInsetsDirectional.only(
-                                            start: 20, end: 20),
+                                        margin:
+                                            const EdgeInsetsDirectional.only(
+                                                start: 20, end: 20),
                                         child: Text(
                                           AppLocalization.of(context)!
                                               .passwordNormalLetters
@@ -218,8 +223,9 @@ class _SetPasswordState extends State<SetPassword> {
                                         ),
                                       ),
                                       Container(
-                                        margin: EdgeInsetsDirectional.only(
-                                            start: 20, end: 20),
+                                        margin:
+                                            const EdgeInsetsDirectional.only(
+                                                start: 20, end: 20),
                                         child: Text(
                                           AppLocalization.of(context)!
                                               .passwordNumericCharacters
@@ -237,8 +243,9 @@ class _SetPasswordState extends State<SetPassword> {
                                         ),
                                       ),
                                       Container(
-                                        margin: EdgeInsetsDirectional.only(
-                                            start: 20, end: 20),
+                                        margin:
+                                            const EdgeInsetsDirectional.only(
+                                                start: 20, end: 20),
                                         child: Text(
                                           AppLocalization.of(context)!
                                               .passwordSpecialCharacters
@@ -256,8 +263,9 @@ class _SetPasswordState extends State<SetPassword> {
                                         ),
                                       ),
                                       Container(
-                                        margin: EdgeInsetsDirectional.only(
-                                            start: 20, end: 20),
+                                        margin:
+                                            const EdgeInsetsDirectional.only(
+                                                start: 20, end: 20),
                                         child: Text(
                                           AppLocalization.of(context)!
                                               .passwordBreachDatabase,
@@ -386,8 +394,8 @@ class _SetPasswordState extends State<SetPassword> {
                                 const SizedBox(height: 20),
                                 // Error Text
                                 Container(
-                                  alignment: AlignmentDirectional(0, 0),
-                                  margin: EdgeInsets.only(top: 3),
+                                  alignment: const AlignmentDirectional(0, 0),
+                                  margin: const EdgeInsets.only(top: 3),
                                   child: Text(
                                       this.passwordError == null
                                           ? ''

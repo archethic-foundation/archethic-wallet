@@ -332,7 +332,7 @@ class _PinScreenState extends State<PinScreen>
                     Row(
                       children: <Widget>[
                         Container(
-                          margin: EdgeInsetsDirectional.only(start: 15),
+                          margin: const EdgeInsetsDirectional.only(start: 15),
                           height: 50,
                           width: 50,
                           child: BackButton(

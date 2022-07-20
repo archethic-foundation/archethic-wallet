@@ -9,7 +9,7 @@ class NotificationsUtil {
   static final onNotifications = BehaviorSubject<String?>();
 
   static Future _notificationDetails() async {
-    return NotificationDetails(
+    return const NotificationDetails(
         android: AndroidNotificationDetails('channel id', 'channel name',
             channelDescription: 'channel description',
             importance: Importance.max),
@@ -17,8 +17,9 @@ class NotificationsUtil {
   }
 
   static Future init() async {
-    final android = AndroidInitializationSettings('@drawable/ic_notification');
-    final iOS = IOSInitializationSettings();
+    final android =
+        const AndroidInitializationSettings('@drawable/ic_notification');
+    final iOS = const IOSInitializationSettings();
     final settings = InitializationSettings(android: android, iOS: iOS);
     await _notifications.initialize(settings,
         onSelectNotification: (payload) async {

@@ -74,7 +74,7 @@ class _IntroNewWalletDisclaimerState extends State<IntroNewWalletDisclaimer> {
                           ],
                         ),
                         Container(
-                          margin: EdgeInsetsDirectional.only(),
+                          margin: const EdgeInsetsDirectional.only(),
                           child: buildIconWidget(
                             context,
                             'packages/aeuniverse/assets/icons/warning.png',
@@ -84,7 +84,7 @@ class _IntroNewWalletDisclaimerState extends State<IntroNewWalletDisclaimer> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsetsDirectional.only(
+                          margin: const EdgeInsetsDirectional.only(
                             top: 10,
                           ),
                           child: AutoSizeText(
@@ -94,7 +94,7 @@ class _IntroNewWalletDisclaimerState extends State<IntroNewWalletDisclaimer> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsetsDirectional.only(
+                          margin: const EdgeInsetsDirectional.only(
                               start: 20, end: 20, top: 15.0),
                           alignment: Alignment.bottomLeft,
                           child: Column(

@@ -25,7 +25,7 @@ class NotificationIconWidgetState extends State<NotificationIconWidget> {
   Widget build(BuildContext context) {
     return StateContainer.of(context).activeNotifications
         ? IconButton(
-            icon: Icon(Icons.notifications_active_outlined),
+            icon: const Icon(Icons.notifications_active_outlined),
             onPressed: () async {
               StateContainer.of(context).activeNotifications = false;
               if (StateContainer.of(context).timerCheckTransactionInputs !=
@@ -39,7 +39,7 @@ class NotificationIconWidgetState extends State<NotificationIconWidget> {
               StateContainer.of(context).notificationIconWidget.refresh();
             })
         : IconButton(
-            icon: Icon(Icons.notifications_off_outlined),
+            icon: const Icon(Icons.notifications_off_outlined),
             onPressed: () async {
               StateContainer.of(context).activeNotifications = true;
 

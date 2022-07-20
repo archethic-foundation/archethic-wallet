@@ -220,7 +220,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsetsDirectional.only(start: 15),
+                    margin: const EdgeInsetsDirectional.only(start: 15),
                     height: 50,
                     width: 50,
                     child: BackButton(

@@ -40,7 +40,7 @@ class Sheets {
                 StateContainer.of(context).curTheme.getDecorationSheet(),
             child: TweenAnimationBuilder(
               tween: Tween(begin: 0.0, end: 1.0),
-              duration: Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 500),
               builder: (context, double value, child) {
                 return ShaderMask(
                     shaderCallback: (rect) {
@@ -53,7 +53,7 @@ class Sheets {
                                 Colors.transparent
                               ],
                               stops: [0.0, 0.55, 0.6, 1.0],
-                              center: FractionalOffset(0.95, 0.95))
+                              center: const FractionalOffset(0.95, 0.95))
                           .createShader(rect);
                     },
                     child: widget);

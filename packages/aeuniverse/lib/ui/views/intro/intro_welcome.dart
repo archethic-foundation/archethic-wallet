@@ -116,7 +116,8 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsets.only(left: 15, right: 15),
+                                  padding: const EdgeInsets.only(
+                                      left: 15, right: 15),
                                   child: CheckboxListTile(
                                     title: Text(
                                         AppLocalization.of(context)!
@@ -140,7 +141,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                                     controlAffinity:
                                         ListTileControlAffinity.leading,
                                     secondary: IconButton(
-                                        icon: Icon(Icons.read_more),
+                                        icon: const Icon(Icons.read_more),
                                         iconSize: 30,
                                         color: StateContainer.of(context)
                                             .curTheme

@@ -86,7 +86,8 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                         Row(
                           children: <Widget>[
                             Container(
-                              margin: EdgeInsetsDirectional.only(start: 15),
+                              margin:
+                                  const EdgeInsetsDirectional.only(start: 15),
                               height: 50,
                               width: 50,
                               child: BackButton(
@@ -107,7 +108,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                               90),
                         ),
                         Container(
-                          margin: EdgeInsetsDirectional.only(
+                          margin: const EdgeInsetsDirectional.only(
                             start: 20,
                             end: 20,
                             top: 10,
@@ -120,7 +121,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsetsDirectional.only(
+                          margin: const EdgeInsetsDirectional.only(
                               start: 20, end: 20, top: 15.0),
                           child: AutoSizeText(
                             AppLocalization.of(context)!
@@ -137,8 +138,8 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                         ),
                         if (widget.accessModes != null)
                           Container(
-                            margin:
-                                EdgeInsetsDirectional.only(start: 20, end: 20),
+                            margin: const EdgeInsetsDirectional.only(
+                                start: 20, end: 20),
                             child: PickerWidget(
                               pickerItems: widget.accessModes,
                               onSelected: (value) async {

@@ -124,7 +124,7 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
             const SizedBox(
               height: 50,
             ),
-            SizedBox(
+            const SizedBox(
               height: 250,
             )
           ]);

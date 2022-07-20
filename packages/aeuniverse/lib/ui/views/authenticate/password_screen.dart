@@ -122,7 +122,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           Row(
                             children: <Widget>[
                               Container(
-                                margin: EdgeInsetsDirectional.only(start: 15),
+                                margin:
+                                    const EdgeInsetsDirectional.only(start: 15),
                                 height: 50,
                                 width: 50,
                                 child: BackButton(
@@ -149,8 +150,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           ),
                           AppTextField(
                             topMargin: 30,
-                            padding:
-                                EdgeInsetsDirectional.only(start: 16, end: 16),
+                            padding: const EdgeInsetsDirectional.only(
+                                start: 16, end: 16),
                             focusNode: enterPasswordFocusNode,
                             controller: enterPasswordController,
                             textInputAction: TextInputAction.go,
@@ -203,8 +204,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
                             ),
                           // Error Container
                           Container(
-                            alignment: AlignmentDirectional(0, 0),
-                            margin: EdgeInsets.only(top: 3),
+                            alignment: const AlignmentDirectional(0, 0),
+                            margin: const EdgeInsets.only(top: 3),
                             child: Text(
                                 passwordError == null ? '' : passwordError!,
                                 style: AppStyles.textStyleSize14W600Primary(

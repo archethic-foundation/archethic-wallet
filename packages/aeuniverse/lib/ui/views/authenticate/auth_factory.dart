@@ -77,12 +77,12 @@ class AuthFactory {
     if (transitions) {
       auth = await Navigator.of(context)
           .push(MaterialPageRoute(builder: (BuildContext context) {
-        return PasswordScreen();
+        return const PasswordScreen();
       })) as bool;
     } else {
       auth = await Navigator.of(context)
           .push(NoPushTransitionRoute(builder: (BuildContext context) {
-        return PasswordScreen();
+        return const PasswordScreen();
       })) as bool;
     }
     await Future<void>.delayed(const Duration(milliseconds: 200));

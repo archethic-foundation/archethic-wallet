@@ -19,9 +19,9 @@ class NavyBlueTheme implements BaseTheme {
 
   // Main Buttons
   @override
-  Color? mainButtonLabel = Color(0xFFFFFFFF);
+  Color? mainButtonLabel = const Color(0xFFFFFFFF);
   @override
-  Color? middleButtonLabel = Color(0xFFFFFFFF);
+  Color? middleButtonLabel = const Color(0xFFFFFFFF);
   @override
   Gradient? gradientMainButton = const LinearGradient(
     colors: <Color>[
@@ -35,50 +35,50 @@ class NavyBlueTheme implements BaseTheme {
 
   // IconData Widget
   @override
-  Color? iconDataWidgetBoxShadow = Color(0xFFFFFFFF).withOpacity(0.5);
+  Color? iconDataWidgetBoxShadow = const Color(0xFFFFFFFF).withOpacity(0.5);
   @override
-  Color? iconDataWidgetIconGradientLeft = Color(0xFF00A4DB);
+  Color? iconDataWidgetIconGradientLeft = const Color(0xFF00A4DB);
   @override
-  Color? iconDataWidgetIconGradientRight = Color(0xFFCC00FF);
+  Color? iconDataWidgetIconGradientRight = const Color(0xFFCC00FF);
   @override
-  Color? iconDataWidgetIconBackground = Color(0xFFFFFFFF);
+  Color? iconDataWidgetIconBackground = const Color(0xFFFFFFFF);
 
   // Menu
   @override
-  Color? iconDrawer = Color(0xFFFFFFFF);
+  Color? iconDrawer = const Color(0xFFFFFFFF);
   @override
-  Color? iconDrawerBackground = Color(0xFFFFFFFF).withOpacity(0.2);
+  Color? iconDrawerBackground = const Color(0xFFFFFFFF).withOpacity(0.2);
   @override
-  Color? drawerBackground = Color(0xFF171433);
+  Color? drawerBackground = const Color(0xFF171433);
 
   // Icons Picker Items
   @override
-  Color? pickerItemIconEnabled = Color(0xFFFFFFFF);
+  Color? pickerItemIconEnabled = const Color(0xFFFFFFFF);
   @override
-  Color? pickerItemIconDisabled = Color(0xFFFFFFFF).withOpacity(0.6);
+  Color? pickerItemIconDisabled = const Color(0xFFFFFFFF).withOpacity(0.6);
 
   // Icons TextField
-  Color? textFieldIcon = Color(0xFFFFFFFF);
+  Color? textFieldIcon = const Color(0xFFFFFFFF);
 
   // Texts
   @override
-  Color? text = Color(0xFFFFFFFF);
+  Color? text = const Color(0xFFFFFFFF);
   @override
-  Color? text60 = Color(0xFFFFFFFF).withOpacity(0.6);
+  Color? text60 = const Color(0xFFFFFFFF).withOpacity(0.6);
   @override
-  Color? text45 = Color(0xFFFFFFFF).withOpacity(0.45);
+  Color? text45 = const Color(0xFFFFFFFF).withOpacity(0.45);
   @override
-  Color? text30 = Color(0xFFFFFFFF).withOpacity(0.3);
+  Color? text30 = const Color(0xFFFFFFFF).withOpacity(0.3);
   @override
-  Color? text20 = Color(0xFFFFFFFF).withOpacity(0.2);
+  Color? text20 = const Color(0xFFFFFFFF).withOpacity(0.2);
   @override
-  Color? text15 = Color(0xFFFFFFFF).withOpacity(0.15);
+  Color? text15 = const Color(0xFFFFFFFF).withOpacity(0.15);
   @override
-  Color? text10 = Color(0xFFFFFFFF).withOpacity(0.1);
+  Color? text10 = const Color(0xFFFFFFFF).withOpacity(0.1);
   @override
-  Color? text05 = Color(0xFFFFFFFF).withOpacity(0.05);
+  Color? text05 = const Color(0xFFFFFFFF).withOpacity(0.05);
   @override
-  Color? text03 = Color(0xFFFFFFFF).withOpacity(0.03);
+  Color? text03 = const Color(0xFFFFFFFF).withOpacity(0.03);
   @override
   Color? positiveValue = Colors.lightGreenAccent[400];
   @override
@@ -92,27 +92,27 @@ class NavyBlueTheme implements BaseTheme {
 
   // Sheet
   @override
-  Color? sheetBackground = Color(0xFF171433).withOpacity(0.7);
+  Color? sheetBackground = const Color(0xFF171433).withOpacity(0.7);
 
   // SnackBar
   @override
-  Color? snackBarShadow = Color(0xFF171433).withOpacity(0.8);
+  Color? snackBarShadow = const Color(0xFF171433).withOpacity(0.8);
 
   // Background
   @override
-  Color? backgroundMainTop = Color(0xFF171433);
+  Color? backgroundMainTop = const Color(0xFF171433);
   @override
-  Color? backgroundMainBottom = Color(0xFF171433);
+  Color? backgroundMainBottom = const Color(0xFF171433);
   @override
-  Color? background = Color(0xFF171433);
+  Color? background = const Color(0xFF171433);
   @override
-  Color? background40 = Color(0xFF171433).withOpacity(0.4);
+  Color? background40 = const Color(0xFF171433).withOpacity(0.4);
   @override
-  Color? backgroundDark = Color(0xFF171433);
+  Color? backgroundDark = const Color(0xFF171433);
   @override
-  Color? backgroundDark00 = Color(0xFF171433).withOpacity(0.0);
+  Color? backgroundDark00 = const Color(0xFF171433).withOpacity(0.0);
   @override
-  Color? backgroundDarkest = Color(0xFF053A5C);
+  Color? backgroundDarkest = const Color(0xFF053A5C);
 
   @override
   String? background1Small =
@@ -132,20 +132,20 @@ class NavyBlueTheme implements BaseTheme {
 
   // Animation Overlay
   @override
-  Color? animationOverlayMedium = Color(0xFF171433).withOpacity(0.7);
+  Color? animationOverlayMedium = const Color(0xFF171433).withOpacity(0.7);
   @override
-  Color? animationOverlayStrong = Color(0xFF171433).withOpacity(0.85);
+  Color? animationOverlayStrong = const Color(0xFF171433).withOpacity(0.85);
 
   @override
-  Color? overlay30 = Color(0xFF171433).withOpacity(0.3);
+  Color? overlay30 = const Color(0xFF171433).withOpacity(0.3);
 
   @override
-  Color? numMnemonicBackground = Color(0xFF171433);
+  Color? numMnemonicBackground = const Color(0xFF171433);
 
   @override
-  Color? activeTrackColorSwitch = Color(0xFFFFFFFF);
+  Color? activeTrackColorSwitch = const Color(0xFFFFFFFF);
   @override
-  Color? inactiveTrackColorSwitch = Color(0xFFFFFFFF);
+  Color? inactiveTrackColorSwitch = const Color(0xFFFFFFFF);
 
   @override
   Brightness? brightness = Brightness.dark;
@@ -184,14 +184,14 @@ class NavyBlueTheme implements BaseTheme {
         fit: BoxFit.cover,
       ),
       backgroundBlendMode: BlendMode.dstIn,
-      gradient: LinearGradient(
+      gradient: const LinearGradient(
         colors: <Color>[
           Color(0xFF171433),
-          Color(0xFF053A5C),
+          const Color(0xFF053A5C),
         ],
         begin: Alignment(-1.0, 0.0),
-        end: Alignment(1.0, 0.0),
-        transform: GradientRotation(pi / 9),
+        end: const Alignment(1.0, 0.0),
+        transform: const GradientRotation(pi / 9),
       ),
     );
   }
@@ -200,9 +200,9 @@ class NavyBlueTheme implements BaseTheme {
   Decoration getDecorationSheet() {
     return BoxDecoration(
       color: text60,
-      borderRadius: BorderRadius.only(
-        topLeft: const Radius.circular(40.0),
-        topRight: const Radius.circular(40.0),
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(40.0),
+        topRight: Radius.circular(40.0),
       ),
       image: DecorationImage(
           image: AssetImage(background2Small!),

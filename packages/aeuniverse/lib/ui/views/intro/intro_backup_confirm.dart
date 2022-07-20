@@ -82,7 +82,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                 Row(
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsetsDirectional.only(start: 15),
+                      margin: const EdgeInsetsDirectional.only(start: 15),
                       height: 50,
                       width: 50,
                       child: BackButton(
@@ -102,7 +102,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          margin: EdgeInsetsDirectional.only(
+                          margin: const EdgeInsetsDirectional.only(
                             start: 20,
                             end: 20,
                             top: 10,
@@ -115,7 +115,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsetsDirectional.only(
+                          margin: const EdgeInsetsDirectional.only(
                               start: 20, end: 20, top: 15.0),
                           child: AutoSizeText(
                             AppLocalization.of(context)!
@@ -128,7 +128,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsetsDirectional.only(
+                          margin: const EdgeInsetsDirectional.only(
                               start: 20, end: 20, top: 15.0),
                           child: Wrap(
                               alignment: WrapAlignment.start,
@@ -166,7 +166,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           color: StateContainer.of(context).curTheme.text60,
                         ),
                         Container(
-                          margin: EdgeInsetsDirectional.only(
+                          margin: const EdgeInsetsDirectional.only(
                               start: 20, end: 20, top: 15.0),
                           child: Wrap(
                               alignment: WrapAlignment.center,

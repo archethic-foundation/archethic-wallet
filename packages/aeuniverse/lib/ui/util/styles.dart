@@ -464,7 +464,7 @@ class AppStyles {
   }
 
   static TextStyle textStyleSize16W600Red(BuildContext context) {
-    return TextStyle(
+    return const TextStyle(
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
@@ -473,7 +473,7 @@ class AppStyles {
   }
 
   static TextStyle textStyleSize16W600EquinoxRed(BuildContext context) {
-    return TextStyle(
+    return const TextStyle(
       fontFamily: 'Equinox',
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,

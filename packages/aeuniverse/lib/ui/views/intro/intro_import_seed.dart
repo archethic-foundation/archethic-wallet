@@ -112,7 +112,8 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             Row(
                               children: [
                                 Container(
-                                  margin: EdgeInsetsDirectional.only(start: 15),
+                                  margin: const EdgeInsetsDirectional.only(
+                                      start: 15),
                                   height: 50,
                                   width: 50,
                                   child: TextButton(
@@ -140,7 +141,8 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsetsDirectional.only(start: 15),
+                                  margin: const EdgeInsetsDirectional.only(
+                                      start: 15),
                                   height: 50,
                                   width: 50,
                                   child: TextButton(
