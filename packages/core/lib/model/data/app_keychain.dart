@@ -33,7 +33,6 @@ class AppKeychain extends HiveObject {
           return account;
         }
       }
-      ;
     }
     return null;
   }
@@ -49,7 +48,6 @@ class AppKeychain extends HiveObject {
           return account;
         }
       }
-      ;
     }
     return null;
   }
