@@ -52,20 +52,20 @@ Tuple2<Uint8List, Uint8List> _deriveKeyAndIV(
   return new Tuple2(keyBtyes, ivBtyes);
 }
 
-String stringEncryptBase64(String _string, String? seed) {
+String stringEncryptBase64(String string, String? seed) {
   final salt = _genRandomWithNonZero(8);
   var keyndIV = _deriveKeyAndIV(seed!, salt);
   final key = Key(keyndIV.item1);
   final iv = IV(keyndIV.item2);
   final encrypter = Encrypter(AES(key, mode: AESMode.cbc, padding: "PKCS7"));
-  final encrypted = encrypter.encrypt(_string, iv: iv);
+  final encrypted = encrypter.encrypt(string, iv: iv);
   Uint8List encryptedBytesWithSalt = Uint8List.fromList(
       _createUint8ListFromString("Salted__") + salt + encrypted.bytes);
   return base64.encode(encryptedBytesWithSalt);
 }
 
-String stringDecryptBase64(String _string, String? seed) {
-  Uint8List encryptedBytesWithSalt = base64.decode(_string);
+String stringDecryptBase64(String string, String? seed) {
+  Uint8List encryptedBytesWithSalt = base64.decode(string);
   Uint8List encryptedBytes =
       encryptedBytesWithSalt.sublist(16, encryptedBytesWithSalt.length);
   final salt = encryptedBytesWithSalt.sublist(8, 16);

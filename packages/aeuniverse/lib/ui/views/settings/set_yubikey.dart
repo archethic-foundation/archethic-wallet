@@ -303,28 +303,28 @@ class _SetYubikeyState extends State<SetYubikey> {
         }
       } else {
         _showSendingAnimation(context);
-        Vault _vault = await Vault.getInstance();
-        _vault.setYubikeyClientAPIKey(_clientAPIKeyController!.text);
-        _vault.setYubikeyClientID(_clientIDController!.text);
+        Vault vault = await Vault.getInstance();
+        vault.setYubikeyClientAPIKey(_clientAPIKeyController!.text);
+        vault.setYubikeyClientID(_clientIDController!.text);
 
         bool auth = await AuthFactory.authenticate(
             context, AuthenticationMethod(AuthMethod.yubikeyWithYubicloud),
             activeVibrations: StateContainer.of(context).activeVibrations);
         if (auth) {
-          final Preferences _preferences = await Preferences.getInstance();
-          _preferences.setAuthMethod(
+          final Preferences preferences = await Preferences.getInstance();
+          preferences.setAuthMethod(
               AuthenticationMethod(AuthMethod.yubikeyWithYubicloud));
           if (widget.initPreferences) {
-            _preferences.setLock(true);
-            _preferences.setShowBalances(true);
-            _preferences.setShowBlog(true);
-            _preferences.setActiveVibrations(true);
-            _preferences.setActiveNotifications(true);
-            _preferences.setPinPadShuffle(false);
-            _preferences.setShowPriceChart(true);
-            _preferences.setPrimaryCurrency(
+            preferences.setLock(true);
+            preferences.setShowBalances(true);
+            preferences.setShowBlog(true);
+            preferences.setActiveVibrations(true);
+            preferences.setActiveNotifications(true);
+            preferences.setPinPadShuffle(false);
+            preferences.setShowPriceChart(true);
+            preferences.setPrimaryCurrency(
                 PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE));
-            _preferences
+            preferences
                 .setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
             if (widget.process == 'newWallet') {
               await sl.get<DBHelper>().clearAppWallet();

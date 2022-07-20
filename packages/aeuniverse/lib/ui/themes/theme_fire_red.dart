@@ -186,12 +186,12 @@ class FireRedTheme implements BaseTheme {
       backgroundBlendMode: BlendMode.dstIn,
       gradient: const LinearGradient(
         colors: <Color>[
-          const Color(0xFF6B0036),
-          const Color(0xFFCF2329),
+          Color(0xFF6B0036),
+          Color(0xFFCF2329),
         ],
         begin: Alignment(-1.0, 0.0),
-        end: const Alignment(1.0, 0.0),
-        transform: const GradientRotation(pi / 9),
+        end: Alignment(1.0, 0.0),
+        transform: GradientRotation(pi / 9),
       ),
     );
   }

@@ -224,13 +224,13 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
   StreamSubscription<dynamic>? lockStreamListener;
 
   Future<void> setAppLockEvent() async {
-    final Preferences _preferences = await Preferences.getInstance();
-    if ((_preferences.getLock()) && !_lockDisabled) {
+    final Preferences preferences = await Preferences.getInstance();
+    if ((preferences.getLock()) && !_lockDisabled) {
       if (lockStreamListener != null) {
         lockStreamListener!.cancel();
       }
       final Future<dynamic> delayed =
-          Future<void>.delayed((_preferences.getLockTimeout()).getDuration());
+          Future<void>.delayed((preferences.getLockTimeout()).getDuration());
       delayed.then((_) {
         return true;
       });

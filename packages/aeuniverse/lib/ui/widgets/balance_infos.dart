@@ -181,8 +181,8 @@ class BalanceInfosWidget {
           OptionChart('1y', ChartInfos.getChartOptionLabel(context, '1y')),
         ];
         final OptionChart? optionChart;
-        final String _idChartOption = StateContainer.of(context).idChartOption!;
-        switch (_idChartOption) {
+        final String idChartOption = StateContainer.of(context).idChartOption!;
+        switch (idChartOption) {
           case '7d':
             optionChart = optionChartList[1];
             break;

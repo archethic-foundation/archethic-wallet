@@ -92,22 +92,22 @@ class RecentTransaction extends HiveObject {
       };
 
   Future<String> getRecipientContactName() async {
-    String _recipientContactName = '';
+    String recipientContactName = '';
     if (recipient != null) {
-      Contact? _contact =
+      Contact? contact =
           await sl.get<DBHelper>().getContactWithAddress(recipient!);
-      if (_contact != null) {
-        _recipientContactName = _contact.name!;
+      if (contact != null) {
+        recipientContactName = contact.name!;
       }
     }
 
-    return _recipientContactName;
+    return recipientContactName;
   }
 
   Future<String> get recipientDisplay async {
-    String _recipientDisplay = await getRecipientContactName();
-    if (_recipientDisplay != '') {
-      return _recipientDisplay;
+    String recipientDisplay = await getRecipientContactName();
+    if (recipientDisplay != '') {
+      return recipientDisplay;
     } else {
       if (recipient != null) {
         return recipient!;

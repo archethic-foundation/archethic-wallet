@@ -42,9 +42,9 @@ class DBHelper {
     final List<Contact> contactsList = box.values.toList();
     // ignore: prefer_final_locals
     List<Contact> contactsListSelected = List<Contact>.empty(growable: true);
-    for (Contact _contact in contactsList) {
-      if (_contact.name!.contains(pattern)) {
-        contactsListSelected.add(_contact);
+    for (Contact contact in contactsList) {
+      if (contact.name!.contains(pattern)) {
+        contactsListSelected.add(contact);
       }
     }
     return contactsListSelected;
@@ -55,9 +55,9 @@ class DBHelper {
     final List<Contact> contactsList = box.values.toList();
 
     Contact? contactSelected;
-    for (Contact _contact in contactsList) {
-      if (_contact.address!.toLowerCase().contains(address.toLowerCase())) {
-        contactSelected = _contact;
+    for (Contact contact in contactsList) {
+      if (contact.address!.toLowerCase().contains(address.toLowerCase())) {
+        contactSelected = contact;
       }
     }
     return contactSelected;
@@ -67,9 +67,9 @@ class DBHelper {
     final Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
     final List<Contact> contactsList = box.values.toList();
     Contact? contactSelected;
-    for (Contact _contact in contactsList) {
-      if (_contact.name!.toLowerCase() == name.toLowerCase()) {
-        contactSelected = _contact;
+    for (Contact contact in contactsList) {
+      if (contact.name!.toLowerCase() == name.toLowerCase()) {
+        contactSelected = contact;
       }
     }
     if (contactSelected == null) {
@@ -83,8 +83,8 @@ class DBHelper {
     final Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
     final List<Contact> contactsList = box.values.toList();
     bool contactExists = false;
-    for (Contact _contact in contactsList) {
-      if (_contact.name!.toLowerCase() == name.toLowerCase()) {
+    for (Contact contact in contactsList) {
+      if (contact.name!.toLowerCase() == name.toLowerCase()) {
         contactExists = true;
       }
     }
@@ -95,8 +95,8 @@ class DBHelper {
     final Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
     final List<Contact> contactsList = box.values.toList();
     bool contactExists = false;
-    for (Contact _contact in contactsList) {
-      if (_contact.address!.toLowerCase().contains(address.toLowerCase())) {
+    for (Contact contact in contactsList) {
+      if (contact.address!.toLowerCase().contains(address.toLowerCase())) {
         contactExists = true;
       }
     }

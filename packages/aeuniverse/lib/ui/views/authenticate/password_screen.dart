@@ -45,29 +45,29 @@ class _PasswordScreenState extends State<PasswordScreen> {
     enterPasswordFocusNode = FocusNode();
     enterPasswordController = TextEditingController();
 
-    Preferences.getInstance().then((Preferences _preferences) {
+    Preferences.getInstance().then((Preferences preferences) {
       setState(() {
         // Get adjusted failed attempts
-        _failedAttempts = _preferences.getLockAttempts() % maxAttempts;
+        _failedAttempts = preferences.getLockAttempts() % maxAttempts;
       });
     });
   }
 
   Future<void> _verifyPassword() async {
-    final Vault _vault = await Vault.getInstance();
-    final Preferences _preferences = await Preferences.getInstance();
+    final Vault vault = await Vault.getInstance();
+    final Preferences preferences = await Preferences.getInstance();
 
     if (enterPasswordController!.text ==
-        stringDecryptBase64(_vault.getPassword()!,
-            await StateContainer.of(context).getSeed())) {
-      _preferences.resetLockAttempts();
+        stringDecryptBase64(
+            vault.getPassword()!, await StateContainer.of(context).getSeed())) {
+      preferences.resetLockAttempts();
       Navigator.of(context).pop(true);
     } else {
       enterPasswordController!.text = '';
-      _preferences.incrementLockAttempts();
+      preferences.incrementLockAttempts();
       _failedAttempts++;
       if (_failedAttempts >= maxAttempts) {
-        _preferences.updateLockDate();
+        preferences.updateLockDate();
         Navigator.of(context).pushNamedAndRemoveUntil(
             '/lock_screen_transition', (Route<dynamic> route) => false);
       }

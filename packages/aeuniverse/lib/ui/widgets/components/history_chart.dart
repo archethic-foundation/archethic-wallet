@@ -74,34 +74,34 @@ class HistoryChart extends StatelessWidget {
           tooltipBgColor: tooltipBg.withOpacity(1),
           getTooltipItems: (List<LineBarSpot> touchedSpots) {
             return touchedSpots.map((LineBarSpot touchedSpot) {
-              String _title = '';
+              String title = '';
               DateTime dt = intervals[touchedSpot.x.toInt()].time;
               switch (optionChartSelected) {
                 case '7d':
-                  _title = '${dt.day}/${dt.month}';
+                  title = '${dt.day}/${dt.month}';
                   break;
                 case '14d':
-                  _title = '${dt.day}/${dt.month}';
+                  title = '${dt.day}/${dt.month}';
                   break;
                 case '30d':
-                  _title = '${dt.day}/${dt.month}';
+                  title = '${dt.day}/${dt.month}';
                   break;
                 case '60d':
-                  _title = '${dt.day}/${dt.month}';
+                  title = '${dt.day}/${dt.month}';
                   break;
                 case '200d':
-                  _title = '${dt.day}/${dt.month}/${dt.year}';
+                  title = '${dt.day}/${dt.month}/${dt.year}';
                   break;
                 case '1y':
-                  _title = '${dt.day}/${dt.month}/${dt.year}';
+                  title = '${dt.day}/${dt.month}/${dt.year}';
                   break;
                 case '24h':
                 default:
-                  _title = '${dt.hour}:${dt.minute}';
+                  title = '${dt.hour}:${dt.minute}';
                   break;
               }
               return LineTooltipItem(
-                '${_title}\n${CurrencyUtil.getConvertedAmountWithNumberOfDigits(currency, touchedSpot.y, 5)}',
+                '${title}\n${CurrencyUtil.getConvertedAmountWithNumberOfDigits(currency, touchedSpot.y, 5)}',
                 tooltipText,
               );
             }).toList();
@@ -124,41 +124,41 @@ class HistoryChart extends StatelessWidget {
                     interval: (intervals.length ~/ 4).toDouble(),
                     reservedSize: 30,
                     getTitlesWidget: (value, titleMeta) {
-                      String _title = '';
+                      String title = '';
                       if (value != 0 &&
                           value < intervals.length - intervals.length ~/ 4) {
                         DateTime dt = intervals[value.toInt()].time;
                         switch (optionChartSelected) {
                           case '7d':
-                            _title = '${dt.day}/${dt.month}';
+                            title = '${dt.day}/${dt.month}';
                             break;
                           case '14d':
-                            _title = '${dt.day}/${dt.month}';
+                            title = '${dt.day}/${dt.month}';
                             break;
                           case '30d':
-                            _title = '${dt.day}/${dt.month}';
+                            title = '${dt.day}/${dt.month}';
                             break;
                           case '60d':
-                            _title = '${dt.day}/${dt.month}';
+                            title = '${dt.day}/${dt.month}';
                             break;
                           case '200d':
-                            _title = '${dt.day}/${dt.month}/${dt.year}';
+                            title = '${dt.day}/${dt.month}/${dt.year}';
                             break;
                           case '1y':
-                            _title = '${dt.day}/${dt.month}/${dt.year}';
+                            title = '${dt.day}/${dt.month}/${dt.year}';
                             break;
                           case '24h':
-                            _title = '${dt.hour}h';
+                            title = '${dt.hour}h';
                             break;
                           default:
-                            _title = '${dt.hour}h';
+                            title = '${dt.hour}h';
                             break;
                         }
                       }
                       return Padding(
                         padding: const EdgeInsets.only(top: 8.0, left: 5),
                         child: Text(
-                          _title,
+                          title,
                         ),
                       );
                     }),

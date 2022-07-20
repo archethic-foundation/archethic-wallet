@@ -91,8 +91,8 @@ class AuthFactory {
 
   static Future<bool> _authenticateWithPin(BuildContext context,
       {bool transitions = false}) async {
-    final Vault _vault = await Vault.getInstance();
-    final String? expectedPin = _vault.getPin();
+    final Vault vault = await Vault.getInstance();
+    final String? expectedPin = vault.getPin();
     bool auth = false;
     if (transitions) {
       // TODO: add the description

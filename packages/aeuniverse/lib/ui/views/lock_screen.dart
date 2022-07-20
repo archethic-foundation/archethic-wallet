@@ -122,10 +122,10 @@ class _AppLockScreenState extends State<AppLockScreen> {
   }
 
   Future<void> _authenticate({bool transitions = false}) async {
-    final Preferences _preferences = await Preferences.getInstance();
-    final DateTime? lockUntil = _preferences.getLockDate();
+    final Preferences preferences = await Preferences.getInstance();
+    final DateTime? lockUntil = preferences.getLockDate();
     if (lockUntil == null) {
-      _preferences.resetLockAttempts();
+      preferences.resetLockAttempts();
     } else {
       final int countDown =
           lockUntil.difference(DateTime.now().toUtc()).inSeconds;
@@ -137,7 +137,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
     setState(() {
       _lockedOut = false;
     });
-    final AuthenticationMethod authMethod = _preferences.getAuthMethod();
+    final AuthenticationMethod authMethod = preferences.getAuthMethod();
     bool auth = await AuthFactory.authenticate(context, authMethod,
         transitions: transitions);
     if (auth) {

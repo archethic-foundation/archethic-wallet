@@ -187,11 +187,11 @@ class HoneyOrangeTheme implements BaseTheme {
       gradient: const LinearGradient(
         colors: <Color>[
           Color(0xFF6C1E1E),
-          const Color(0xFFEDA30F),
+          Color(0xFFEDA30F),
         ],
-        begin: const Alignment(-1.0, 0.0),
+        begin: Alignment(-1.0, 0.0),
         end: Alignment(1.0, 0.0),
-        transform: const GradientRotation(pi / 9),
+        transform: GradientRotation(pi / 9),
       ),
     );
   }

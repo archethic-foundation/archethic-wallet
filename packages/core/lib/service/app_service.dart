@@ -305,15 +305,15 @@ class AppService {
             i < transaction.data!.ledger!.uco!.transfers!.length;
             i++) {
           if (transaction.data!.ledger!.uco!.transfers![i].to != null) {
-            String _recipientContactName = '';
+            String recipientContactName = '';
 
-            Contact? _contact = await sl.get<DBHelper>().getContactWithAddress(
+            Contact? contact = await sl.get<DBHelper>().getContactWithAddress(
                 transaction.data!.ledger!.uco!.transfers![i].to!);
-            if (_contact != null) {
-              _recipientContactName = _contact.name!;
+            if (contact != null) {
+              recipientContactName = contact.name!;
             }
 
-            if (_recipientContactName.isEmpty) {
+            if (recipientContactName.isEmpty) {
               transactionsInfos.add(TransactionInfos(
                   domain: 'UCOLedger',
                   titleInfo: 'To',
@@ -322,7 +322,7 @@ class AppService {
               transactionsInfos.add(TransactionInfos(
                   domain: 'UCOLedger',
                   titleInfo: 'To',
-                  valueInfo: _recipientContactName +
+                  valueInfo: recipientContactName +
                       '\n' +
                       transaction.data!.ledger!.uco!.transfers![i].to!));
             }

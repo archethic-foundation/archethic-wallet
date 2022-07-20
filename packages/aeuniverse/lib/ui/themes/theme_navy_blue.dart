@@ -187,11 +187,11 @@ class NavyBlueTheme implements BaseTheme {
       gradient: const LinearGradient(
         colors: <Color>[
           Color(0xFF171433),
-          const Color(0xFF053A5C),
+          Color(0xFF053A5C),
         ],
         begin: Alignment(-1.0, 0.0),
-        end: const Alignment(1.0, 0.0),
-        transform: const GradientRotation(pi / 9),
+        end: Alignment(1.0, 0.0),
+        transform: GradientRotation(pi / 9),
       ),
     );
   }

@@ -187,7 +187,7 @@ class DarkTheme implements BaseTheme {
       backgroundBlendMode: BlendMode.dstIn,
       gradient: const LinearGradient(
         colors: <Color>[
-          const Color(0xFF00A4DB),
+          Color(0xFF00A4DB),
           Color(0xFFCC00FF),
         ],
         begin: Alignment(-1.0, 0.0),

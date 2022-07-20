@@ -30,16 +30,15 @@ class Vault {
     try {
       const FlutterSecureStorage secureStorage = FlutterSecureStorage();
       final Uint8List encryptionKey;
-      String? _secureKey =
-          await secureStorage.read(key: 'archethic_secure_key');
-      if (_secureKey == null || _secureKey.isEmpty) {
+      String? secureKey = await secureStorage.read(key: 'archethic_secure_key');
+      if (secureKey == null || secureKey.isEmpty) {
         final List<int> key = Hive.generateSecureKey();
         encryptionKey = Uint8List.fromList(key);
-        _secureKey = base64UrlEncode(key);
+        secureKey = base64UrlEncode(key);
         await secureStorage.write(
-            key: 'archethic_secure_key', value: _secureKey);
+            key: 'archethic_secure_key', value: secureKey);
       } else {
-        encryptionKey = base64Url.decode(_secureKey);
+        encryptionKey = base64Url.decode(secureKey);
       }
       final Box<dynamic> encryptedBox = await Hive.openBox<dynamic>(_vaultBox,
           encryptionCipher: HiveAesCipher(encryptionKey));

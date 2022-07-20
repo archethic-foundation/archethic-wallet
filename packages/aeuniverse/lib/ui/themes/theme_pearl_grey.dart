@@ -187,11 +187,11 @@ class PearlGreyTheme implements BaseTheme {
       gradient: const LinearGradient(
         colors: <Color>[
           Color(0xFFC7D1DA),
-          const Color(0xFFFFFFFF),
+          Color(0xFFFFFFFF),
         ],
         begin: Alignment(-1.0, 0.0),
-        end: const Alignment(1.0, 0.0),
-        transform: const GradientRotation(pi / 9),
+        end: Alignment(1.0, 0.0),
+        transform: GradientRotation(pi / 9),
       ),
     );
   }

@@ -85,13 +85,13 @@ class _PinScreenState extends State<PinScreen>
     _pin = '';
     _pinConfirmed = '';
 
-    Preferences.getInstance().then((Preferences _preferences) {
-      if (_preferences.getPinPadShuffle()) {
+    Preferences.getInstance().then((Preferences preferences) {
+      if (preferences.getPinPadShuffle()) {
         _listPinNumber.shuffle();
       }
       setState(() {
         // Get adjusted failed attempts
-        _failedAttempts = _preferences.getLockAttempts() % maxAttempts;
+        _failedAttempts = preferences.getLockAttempts() % maxAttempts;
       });
 
       // Set animation
@@ -103,13 +103,13 @@ class _PinScreenState extends State<PinScreen>
         ..addStatusListener((status) {
           if (status == AnimationStatus.completed) {
             if (widget.type == PinOverlayType.enterPin) {
-              _preferences.incrementLockAttempts().then((_) {
+              preferences.incrementLockAttempts().then((_) {
                 _failedAttempts++;
                 if (_failedAttempts >= maxAttempts) {
                   setState(() {
                     _controller!.value = 0;
                   });
-                  _preferences.updateLockDate().then((_) {
+                  preferences.updateLockDate().then((_) {
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         '/lock_screen_transition',
                         (Route<dynamic> route) => false);
@@ -227,8 +227,8 @@ class _PinScreenState extends State<PinScreen>
                         StateContainer.of(context).activeVibrations);
                     _controller!.forward();
                   } else {
-                    Preferences.getInstance().then((Preferences _preferences) {
-                      _preferences.resetLockAttempts();
+                    Preferences.getInstance().then((Preferences preferences) {
+                      preferences.resetLockAttempts();
                       Navigator.of(context).pop(true);
                     });
                   }

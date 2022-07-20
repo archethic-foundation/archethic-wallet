@@ -246,7 +246,7 @@ class AppSettings {
   }
 
   static Widget buildSettingsListItemSwitch(BuildContext context,
-      String heading, String icon, Color iconColor, bool _isSwitched,
+      String heading, String icon, Color iconColor, bool isSwitched,
       {Function? onChanged}) {
     return TextButton(
       onPressed: () {
@@ -270,13 +270,13 @@ class AppSettings {
               ),
             ),
             Switch(
-                value: _isSwitched,
+                value: isSwitched,
                 onChanged: (bool value) {
                   if (onChanged != null) {
                     sl.get<HapticUtil>().feedback(FeedbackType.light,
                         StateContainer.of(context).activeVibrations);
-                    _isSwitched = value;
-                    onChanged(_isSwitched);
+                    isSwitched = value;
+                    onChanged(isSwitched);
                   } else {
                     return;
                   }

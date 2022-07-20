@@ -64,8 +64,8 @@ class AuthenticationMethod extends SettingSelectionItem {
     }
   }
 
-  static String getIcon(AuthMethod _method) {
-    switch (_method) {
+  static String getIcon(AuthMethod method) {
+    switch (method) {
       case AuthMethod.biometrics:
         return 'packages/aeuniverse/assets/icons/biometrics.png';
       case AuthMethod.biometricsUniris:

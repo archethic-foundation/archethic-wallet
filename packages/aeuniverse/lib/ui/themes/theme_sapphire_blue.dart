@@ -186,10 +186,10 @@ class SapphireBlueTheme implements BaseTheme {
       backgroundBlendMode: BlendMode.dstIn,
       gradient: const LinearGradient(
         colors: <Color>[
-          const Color(0xFF1B55A7),
+          Color(0xFF1B55A7),
           Color(0xFF0688E8),
         ],
-        begin: const Alignment(-1.0, 0.0),
+        begin: Alignment(-1.0, 0.0),
         end: Alignment(1.0, 0.0),
         transform: GradientRotation(pi / 9),
       ),

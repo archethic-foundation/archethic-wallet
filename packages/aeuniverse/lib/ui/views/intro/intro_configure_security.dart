@@ -147,9 +147,9 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                   _accessModesSelected = value;
                                 });
                                 if (_accessModesSelected == null) return;
-                                AuthMethod _authMethod =
+                                AuthMethod authMethod =
                                     _accessModesSelected!.value as AuthMethod;
-                                switch (_authMethod) {
+                                switch (authMethod) {
                                   case AuthMethod.biometrics:
                                     final bool authenticated = await sl
                                         .get<BiometricUtil>()
@@ -159,22 +159,22 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                                 .unlockBiometrics);
                                     if (authenticated) {
                                       _showSendingAnimation(context);
-                                      final Preferences _preferences =
+                                      final Preferences preferences =
                                           await Preferences.getInstance();
-                                      _preferences.setLock(true);
-                                      _preferences.setShowBalances(true);
-                                      _preferences.setShowBlog(true);
-                                      _preferences.setActiveVibrations(true);
-                                      _preferences.setActiveNotifications(true);
-                                      _preferences.setPinPadShuffle(false);
-                                      _preferences.setShowPriceChart(true);
-                                      _preferences.setPrimaryCurrency(
+                                      preferences.setLock(true);
+                                      preferences.setShowBalances(true);
+                                      preferences.setShowBlog(true);
+                                      preferences.setActiveVibrations(true);
+                                      preferences.setActiveNotifications(true);
+                                      preferences.setPinPadShuffle(false);
+                                      preferences.setShowPriceChart(true);
+                                      preferences.setPrimaryCurrency(
                                           PrimaryCurrencySetting(
                                               AvailablePrimaryCurrency.NATIVE));
-                                      _preferences.setLockTimeout(
+                                      preferences.setLockTimeout(
                                           LockTimeoutSetting(
                                               LockTimeoutOption.one));
-                                      _preferences.setAuthMethod(
+                                      preferences.setAuthMethod(
                                           AuthenticationMethod(
                                               AuthMethod.biometrics));
                                       if (widget.process == 'newWallet') {
@@ -223,25 +223,25 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
 
                                     if (pin.length > 5) {
                                       _showSendingAnimation(context);
-                                      final Vault _vault =
+                                      final Vault vault =
                                           await Vault.getInstance();
-                                      _vault.setPin(pin);
-                                      final Preferences _preferences =
+                                      vault.setPin(pin);
+                                      final Preferences preferences =
                                           await Preferences.getInstance();
-                                      _preferences.setLock(true);
-                                      _preferences.setShowBalances(true);
-                                      _preferences.setShowBlog(true);
-                                      _preferences.setActiveVibrations(true);
-                                      _preferences.setActiveNotifications(true);
-                                      _preferences.setPinPadShuffle(false);
-                                      _preferences.setShowPriceChart(true);
-                                      _preferences.setPrimaryCurrency(
+                                      preferences.setLock(true);
+                                      preferences.setShowBalances(true);
+                                      preferences.setShowBlog(true);
+                                      preferences.setActiveVibrations(true);
+                                      preferences.setActiveNotifications(true);
+                                      preferences.setPinPadShuffle(false);
+                                      preferences.setShowPriceChart(true);
+                                      preferences.setPrimaryCurrency(
                                           PrimaryCurrencySetting(
                                               AvailablePrimaryCurrency.NATIVE));
-                                      _preferences.setLockTimeout(
+                                      preferences.setLockTimeout(
                                           LockTimeoutSetting(
                                               LockTimeoutOption.one));
-                                      _preferences.setAuthMethod(
+                                      preferences.setAuthMethod(
                                           AuthenticationMethod(AuthMethod.pin));
                                       if (widget.process == 'newWallet') {
                                         await sl

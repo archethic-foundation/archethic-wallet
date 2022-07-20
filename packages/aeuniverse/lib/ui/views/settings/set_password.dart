@@ -484,22 +484,22 @@ class _SetPasswordState extends State<SetPassword> {
       }
     } else {
       _showSendingAnimation(context);
-      Vault _vault = await Vault.getInstance();
-      _vault.setPassword(
+      Vault vault = await Vault.getInstance();
+      vault.setPassword(
           stringEncryptBase64(setPasswordController!.text, widget.seed));
-      final Preferences _preferences = await Preferences.getInstance();
-      _preferences.setAuthMethod(AuthenticationMethod(AuthMethod.password));
+      final Preferences preferences = await Preferences.getInstance();
+      preferences.setAuthMethod(AuthenticationMethod(AuthMethod.password));
       if (widget.initPreferences == true) {
-        _preferences.setLock(true);
-        _preferences.setShowBalances(true);
-        _preferences.setShowBlog(true);
-        _preferences.setActiveVibrations(true);
-        _preferences.setActiveNotifications(true);
-        _preferences.setPinPadShuffle(false);
-        _preferences.setShowPriceChart(true);
-        _preferences.setPrimaryCurrency(
+        preferences.setLock(true);
+        preferences.setShowBalances(true);
+        preferences.setShowBlog(true);
+        preferences.setActiveVibrations(true);
+        preferences.setActiveNotifications(true);
+        preferences.setPinPadShuffle(false);
+        preferences.setShowPriceChart(true);
+        preferences.setPrimaryCurrency(
             PrimaryCurrencySetting(AvailablePrimaryCurrency.NATIVE));
-        _preferences.setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
+        preferences.setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
         if (widget.process == 'newWallet') {
           await sl.get<DBHelper>().clearAppWallet();
           final Vault vault = await Vault.getInstance();

@@ -54,9 +54,9 @@ class Account extends HiveObject {
   List<RecentTransaction>? recentTransactions;
 
   Future<void> updateLastAddress() async {
-    String _lastAddress =
+    String lastAddress =
         await sl.get<AddressService>().lastAddressFromAddress(genesisAddress!);
-    lastAddress = _lastAddress == '' ? genesisAddress! : _lastAddress;
+    lastAddress = lastAddress == '' ? genesisAddress! : lastAddress;
     await updateAccount();
   }
 

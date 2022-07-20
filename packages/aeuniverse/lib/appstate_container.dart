@@ -103,19 +103,19 @@ class StateContainerState extends State<StateContainer> {
 
     // Setup Service Provide
     setupServiceLocator().then((_) {
-      Preferences.getInstance().then((Preferences _preferences) {
+      Preferences.getInstance().then((Preferences preferences) {
         setState(() {
-          curCurrency = _preferences.getCurrency(deviceLocale);
+          curCurrency = preferences.getCurrency(deviceLocale);
           updateCurrency(curCurrency).then((_) {
-            curLanguage = _preferences.getLanguage();
-            curPrimaryCurrency = _preferences.getPrimaryCurrency();
-            curNetwork = _preferences.getNetwork();
-            showBalance = _preferences.getShowBalances();
-            showBlog = _preferences.getShowBlog();
-            activeVibrations = _preferences.getActiveVibrations();
-            activeNotifications = _preferences.getActiveNotifications();
-            showPriceChart = _preferences.getShowPriceChart();
-            updateTheme(_preferences.getTheme());
+            curLanguage = preferences.getLanguage();
+            curPrimaryCurrency = preferences.getPrimaryCurrency();
+            curNetwork = preferences.getNetwork();
+            showBalance = preferences.getShowBalances();
+            showBlog = preferences.getShowBlog();
+            activeVibrations = preferences.getActiveVibrations();
+            activeNotifications = preferences.getActiveNotifications();
+            showPriceChart = preferences.getShowPriceChart();
+            updateTheme(preferences.getTheme());
           });
         });
       });

@@ -83,10 +83,10 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
   }
 
   Future<void> _verifyOTP(String otp) async {
-    final Preferences _preferences = await Preferences.getInstance();
-    final Vault _vault = await Vault.getInstance();
-    final String yubikeyClientAPIKey = _vault.getYubikeyClientAPIKey();
-    final String yubikeyClientID = _vault.getYubikeyClientID();
+    final Preferences preferences = await Preferences.getInstance();
+    final Vault vault = await Vault.getInstance();
+    final String yubikeyClientAPIKey = vault.getYubikeyClientAPIKey();
+    final String yubikeyClientID = vault.getYubikeyClientID();
     verificationResponse = await YubicoService()
         .verifyYubiCloudOTP(otp, yubikeyClientAPIKey, yubikeyClientID);
     switch (verificationResponse.status) {
@@ -176,7 +176,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
             context,
             StateContainer.of(context).curTheme.text!,
             StateContainer.of(context).curTheme.snackBarShadow!);
-        _preferences.resetLockAttempts();
+        preferences.resetLockAttempts();
         Navigator.of(context).pop(true);
         break;
       default:

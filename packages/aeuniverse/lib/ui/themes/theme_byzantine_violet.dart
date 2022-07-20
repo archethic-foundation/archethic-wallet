@@ -187,10 +187,10 @@ class ByzantineVioletTheme implements BaseTheme {
       gradient: const LinearGradient(
         colors: <Color>[
           Color(0xFF571150),
-          const Color(0xFFCD195B),
+          Color(0xFFCD195B),
         ],
-        begin: const Alignment(-1.0, 0.0),
-        end: const Alignment(1.0, 0.0),
+        begin: Alignment(-1.0, 0.0),
+        end: Alignment(1.0, 0.0),
         transform: GradientRotation(pi / 9),
       ),
     );

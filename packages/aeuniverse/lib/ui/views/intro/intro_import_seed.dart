@@ -383,11 +383,11 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                   isPressed = true;
                                 });
                                 _mnemonicFocusNode.unfocus();
-                                List<String> _listWords =
+                                List<String> listWords =
                                     _mnemonicController.text.trim().split(' ');
                                 _mnemonicIsValid = true;
-                                for (int i = 0; i < _listWords.length; i++) {
-                                  if (AppMnemomics.isValidWord(_listWords[i],
+                                for (int i = 0; i < listWords.length; i++) {
+                                  if (AppMnemomics.isValidWord(listWords[i],
                                           languageCode: language) ==
                                       false) {
                                     _mnemonicIsValid = true;
@@ -396,7 +396,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                       _mnemonicError =
                                           AppLocalization.of(context)!
                                               .mnemonicInvalidWord
-                                              .replaceAll('%1', _listWords[i]);
+                                              .replaceAll('%1', listWords[i]);
                                     });
                                   }
                                 }
@@ -413,9 +413,9 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                                 .trim()
                                                 .split(' '),
                                             languageCode: language);
-                                    final Vault _vault =
+                                    final Vault vault =
                                         await Vault.getInstance();
-                                    _vault.setSeed(seed);
+                                    vault.setSeed(seed);
                                     Price tokenPrice = await Price.getCurrency(
                                         StateContainer.of(context)
                                             .curCurrency

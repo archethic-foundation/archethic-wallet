@@ -25,13 +25,13 @@ String loremIpsum(
     paragraphs = words;
   }
 
-  String _lorem = _makeParagraphs(paragraphs, words);
+  String lorem = _makeParagraphs(paragraphs, words);
   if (words > 3 && initWithLorem) {
-    _lorem = _lorem.replaceAll(_lorem.split(" ")[0], "Lorem");
-    _lorem = _lorem.replaceAll(_lorem.split(" ")[1], "ipsum,");
-    return _lorem;
+    lorem = lorem.replaceAll(lorem.split(" ")[0], "Lorem");
+    lorem = lorem.replaceAll(lorem.split(" ")[1], "ipsum,");
+    return lorem;
   }
-  return _lorem;
+  return lorem;
 }
 
 String _makeParagraphs(int paragraphs, int words) {

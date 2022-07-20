@@ -186,7 +186,7 @@ class EmeraldGreenTheme implements BaseTheme {
       backgroundBlendMode: BlendMode.dstIn,
       gradient: const LinearGradient(
         colors: <Color>[
-          const Color(0xFF473B53),
+          Color(0xFF473B53),
           Color(0xFF228B77),
         ],
         begin: Alignment(-1.0, 0.0),
