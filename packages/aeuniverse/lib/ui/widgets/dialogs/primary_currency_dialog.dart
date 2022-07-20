@@ -1,12 +1,17 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:core/localization.dart';
+import 'package:core/model/primary_currency.dart';
+
+// Project imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 import 'package:aeuniverse/util/preferences.dart';
-import 'package:core/localization.dart';
-import 'package:core/model/primary_currency.dart';
-import 'package:flutter/material.dart';
 
 class PrimaryCurrencyDialog {
   static Future<AvailablePrimaryCurrency?> getDialog(

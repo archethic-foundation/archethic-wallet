@@ -1,16 +1,21 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/views/authenticate/pin_screen.dart';
-import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
-import 'package:aeuniverse/util/preferences.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/vault.dart';
-import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/views/authenticate/pin_screen.dart';
+import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
+import 'package:aeuniverse/util/preferences.dart';
 
 class AuthentificationMethodDialog {
   static Future<void> getDialog(BuildContext context, bool hasBiometrics,

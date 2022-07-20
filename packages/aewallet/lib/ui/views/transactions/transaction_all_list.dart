@@ -1,9 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:core/model/data/recent_transaction.dart';
-import 'package:core/model/primary_currency.dart';
-import 'package:core/util/currency_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,6 +10,9 @@ import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/address.dart';
+import 'package:core/model/data/recent_transaction.dart';
+import 'package:core/model/primary_currency.dart';
+import 'package:core/util/currency_util.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';

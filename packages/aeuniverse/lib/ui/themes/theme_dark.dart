@@ -4,12 +4,14 @@
 import 'dart:math';
 
 // Flutter imports:
-import 'package:aeuniverse/ui/widgets/components/gradient_shadow_box_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:core_ui/ui/themes/themes.dart';
+
+// Project imports:
+import 'package:aeuniverse/ui/widgets/components/gradient_shadow_box_decoration.dart';
 
 class DarkTheme implements BaseTheme {
   @override

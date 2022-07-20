@@ -1,10 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:aeuniverse/util/preferences.dart';
-import 'package:core/model/data/account.dart';
-import 'package:core/model/data/app_wallet.dart';
-import 'package:core/model/data/price.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,7 +8,10 @@ import 'package:flutter/services.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
+import 'package:core/model/data/account.dart';
+import 'package:core/model/data/app_wallet.dart';
 import 'package:core/model/data/appdb.dart';
+import 'package:core/model/data/price.dart';
 import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
@@ -32,6 +31,7 @@ import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
+import 'package:aeuniverse/util/preferences.dart';
 import 'package:aeuniverse/util/user_data_util.dart';
 
 class IntroImportSeedPage extends StatefulWidget {

@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:core/localization.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Project imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppDialogs {

@@ -1,13 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:aeuniverse/ui/themes/theme_dark.dart';
-import 'package:core/model/data/appdb.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
+import 'package:core/model/data/appdb.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
 import 'package:core_ui/ui/util/dimens.dart';
@@ -17,6 +16,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/ui/themes/theme_dark.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';

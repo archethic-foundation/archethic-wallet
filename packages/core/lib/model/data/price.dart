@@ -2,9 +2,11 @@
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:hive/hive.dart';
+
+// Project imports:
 import 'package:core/model/data/appdb.dart';
 import 'package:core/util/get_it_instance.dart';
-import 'package:hive/hive.dart';
 
 part 'price.g.dart';
 

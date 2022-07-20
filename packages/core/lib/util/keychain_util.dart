@@ -7,11 +7,11 @@ import 'dart:typed_data';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+
+// Project imports:
 import 'package:core/model/data/account.dart';
 import 'package:core/model/data/account_balance.dart';
 import 'package:core/model/data/app_wallet.dart';
-
-// Project imports:
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/price.dart';
 import 'package:core/util/get_it_instance.dart';

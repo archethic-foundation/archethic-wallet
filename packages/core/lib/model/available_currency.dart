@@ -3,11 +3,11 @@
 // ignore_for_file: constant_identifier_names
 
 // Flutter imports:
-import 'package:core/util/currency_util.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:core/model/setting_item.dart';
+import 'package:core/util/currency_util.dart';
 
 enum AvailableCurrencyEnum {
   USD,

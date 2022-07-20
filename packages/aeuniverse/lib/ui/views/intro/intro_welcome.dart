@@ -2,8 +2,6 @@
 // ignore_for_file: avoid_unnecessary_containers
 
 // Flutter imports:
-import 'package:aeuniverse/model/available_networks.dart';
-import 'package:aeuniverse/ui/widgets/dialogs/network_dialog.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,9 +11,11 @@ import 'package:core_ui/ui/util/dimens.dart';
 
 // Project imports:
 import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/model/available_networks.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
+import 'package:aeuniverse/ui/widgets/dialogs/network_dialog.dart';
 
 class IntroWelcome extends StatefulWidget {
   const IntroWelcome({super.key});

@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:aeuniverse/util/preferences.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -20,6 +19,7 @@ import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/views/mnemonic_display.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
+import 'package:aeuniverse/util/preferences.dart';
 
 class IntroBackupSeedPage extends StatefulWidget {
   final String? name;

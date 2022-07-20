@@ -5,7 +5,20 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/model/available_networks.dart';
+import 'package:aeuniverse/model/available_themes.dart';
 import 'package:aeuniverse/ui/themes/theme_dark.dart';
+import 'package:aeuniverse/ui/util/settings_list_item.dart';
+import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/util/ui_util.dart';
+import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
+import 'package:aeuniverse/ui/views/settings/backupseed_sheet.dart';
+import 'package:aeuniverse/ui/widgets/components/dialog.dart';
+import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/authentification_method_dialog.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/currency_dialog.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/language_dialog.dart';
@@ -14,19 +27,6 @@ import 'package:aeuniverse/ui/widgets/dialogs/lock_timeout_dialog.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/primary_currency_dialog.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/theme_dialog.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/model/available_networks.dart';
-import 'package:aeuniverse/model/available_themes.dart';
-import 'package:aeuniverse/ui/util/settings_list_item.dart';
-import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/util/ui_util.dart';
-import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
-import 'package:aeuniverse/ui/views/settings/backupseed_sheet.dart';
-import 'package:aeuniverse/ui/widgets/components/dialog.dart';
-import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aeuniverse/util/preferences.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';

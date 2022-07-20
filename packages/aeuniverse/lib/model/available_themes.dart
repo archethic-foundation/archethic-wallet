@@ -1,14 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:aeuniverse/ui/themes/theme_byzantine_violet.dart';
-import 'package:aeuniverse/ui/themes/theme_sapphire_blue.dart';
-import 'package:aeuniverse/ui/themes/theme_emerald_green.dart';
-import 'package:aeuniverse/ui/themes/theme_sea_green.dart';
-import 'package:aeuniverse/ui/themes/theme_navy_blue.dart';
-import 'package:aeuniverse/ui/themes/theme_honey_orange.dart';
-import 'package:aeuniverse/ui/themes/theme_fire_red.dart';
-import 'package:aeuniverse/ui/themes/theme_pearl_grey.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -16,7 +8,15 @@ import 'package:core/model/setting_item.dart';
 import 'package:core_ui/ui/themes/themes.dart';
 
 // Project imports:
+import 'package:aeuniverse/ui/themes/theme_byzantine_violet.dart';
 import 'package:aeuniverse/ui/themes/theme_dark.dart';
+import 'package:aeuniverse/ui/themes/theme_emerald_green.dart';
+import 'package:aeuniverse/ui/themes/theme_fire_red.dart';
+import 'package:aeuniverse/ui/themes/theme_honey_orange.dart';
+import 'package:aeuniverse/ui/themes/theme_navy_blue.dart';
+import 'package:aeuniverse/ui/themes/theme_pearl_grey.dart';
+import 'package:aeuniverse/ui/themes/theme_sapphire_blue.dart';
+import 'package:aeuniverse/ui/themes/theme_sea_green.dart';
 
 enum ThemeOptions {
   byzantine_violet,

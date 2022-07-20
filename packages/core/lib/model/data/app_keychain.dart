@@ -1,10 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Package imports:
+import 'package:hive/hive.dart';
+
+// Project imports:
+import 'package:core/model/data/account.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/util/get_it_instance.dart';
-import 'package:hive/hive.dart';
-import 'package:core/model/data/account.dart';
 
 part 'app_keychain.g.dart';
 

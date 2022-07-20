@@ -6,7 +6,6 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
-import 'package:aewallet/ui/views/tokens/add_token_confirm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,6 +25,9 @@ import 'package:core/service/app_service.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+// Project imports:
+import 'package:aewallet/ui/views/tokens/add_token_confirm.dart';
 
 class AddTokenSheet extends StatefulWidget {
   const AddTokenSheet({super.key, this.address});

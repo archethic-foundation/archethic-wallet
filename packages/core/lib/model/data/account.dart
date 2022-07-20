@@ -2,13 +2,15 @@
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:hive/hive.dart';
+
+// Project imports:
+import 'package:core/model/data/account_balance.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/price.dart';
+import 'package:core/model/data/recent_transaction.dart';
 import 'package:core/service/app_service.dart';
 import 'package:core/util/get_it_instance.dart';
-import 'package:hive/hive.dart';
-import 'package:core/model/data/account_balance.dart';
-import 'package:core/model/data/recent_transaction.dart';
 
 part 'account.g.dart';
 

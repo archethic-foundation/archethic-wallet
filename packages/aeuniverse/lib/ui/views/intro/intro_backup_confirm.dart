@@ -3,10 +3,6 @@
 // ignore_for_file: always_specify_types
 
 // Flutter imports:
-import 'package:aeuniverse/ui/util/ui_util.dart';
-import 'package:aeuniverse/ui/widgets/components/dialog.dart';
-import 'package:aeuniverse/util/preferences.dart';
-import 'package:core/util/mnemonics.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -15,13 +11,17 @@ import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
 import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/mnemonics.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 
 // Project imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
+import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
+import 'package:aeuniverse/util/preferences.dart';
 
 class IntroBackupConfirm extends StatefulWidget {
   final String? name;

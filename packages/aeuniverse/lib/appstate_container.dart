@@ -4,23 +4,22 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:aeroot/main.dart';
-import 'package:aeuniverse/ui/widgets/components/notification_icon_widget.dart';
-import 'package:core/model/data/account.dart';
-import 'package:core/model/data/app_wallet.dart';
-import 'package:core/model/data/contact.dart';
-import 'package:core/model/data/price.dart';
-import 'package:core/model/primary_currency.dart';
-import 'package:core/util/notifications_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:aeroot/main.dart';
 import 'package:core/model/ae_apps.dart';
 import 'package:core/model/available_currency.dart';
 import 'package:core/model/available_language.dart';
+import 'package:core/model/data/account.dart';
+import 'package:core/model/data/app_wallet.dart';
 import 'package:core/model/data/appdb.dart';
+import 'package:core/model/data/contact.dart';
+import 'package:core/model/data/price.dart';
+import 'package:core/model/primary_currency.dart';
 import 'package:core/service/app_service.dart';
 import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/notifications_util.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/model/chart_infos.dart';
 import 'package:core_ui/ui/themes/themes.dart';
@@ -30,6 +29,7 @@ import 'package:core_ui/util/screen_util.dart';
 import 'package:aeuniverse/model/available_networks.dart';
 import 'package:aeuniverse/model/available_themes.dart';
 import 'package:aeuniverse/ui/themes/theme_dark.dart';
+import 'package:aeuniverse/ui/widgets/components/notification_icon_widget.dart';
 import 'package:aeuniverse/util/preferences.dart';
 import 'package:aeuniverse/util/service_locator.dart';
 

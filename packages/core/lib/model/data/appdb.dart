@@ -1,16 +1,16 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Package imports:
+import 'package:hive_flutter/hive_flutter.dart';
+
+// Project imports:
 import 'package:core/model/data/account.dart';
+import 'package:core/model/data/account_balance.dart';
 import 'package:core/model/data/app_keychain.dart';
 import 'package:core/model/data/app_wallet.dart';
 import 'package:core/model/data/contact.dart';
 import 'package:core/model/data/price.dart';
 import 'package:core/model/data/recent_transaction.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
-// Project imports:
-import 'package:core/model/data/account_balance.dart';
 
 class DBHelper {
   static const String contactsTable = 'contacts';

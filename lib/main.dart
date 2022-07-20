@@ -6,8 +6,6 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 // Flutter imports:
-import 'package:aeuniverse/ui/themes/theme_dark.dart';
-import 'package:core/util/get_it_instance.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -15,6 +13,7 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
+import 'package:aeuniverse/ui/themes/theme_dark.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/views/home_page_universe.dart';
 import 'package:aeuniverse/ui/views/intro/intro_backup_confirm.dart';
@@ -35,6 +34,7 @@ import 'package:aeuniverse/util/preferences.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/available_language.dart';
 import 'package:core/model/data/appdb.dart';
+import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:core_ui/util/case_converter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

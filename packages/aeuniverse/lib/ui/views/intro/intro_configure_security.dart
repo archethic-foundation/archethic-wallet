@@ -2,25 +2,25 @@
 // ignore_for_file: always_specify_types
 
 // Flutter imports:
-import 'package:aeuniverse/ui/widgets/components/dialog.dart';
-import 'package:core/model/data/appdb.dart';
-import 'package:core/model/primary_currency.dart';
-import 'package:core/util/keychain_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
+import 'package:core/model/data/appdb.dart';
 import 'package:core/model/device_lock_timeout.dart';
+import 'package:core/model/primary_currency.dart';
 import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/keychain_util.dart';
 import 'package:core/util/vault.dart';
 
 // Project imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/views/authenticate/pin_screen.dart';
+import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
 import 'package:aeuniverse/util/preferences.dart';

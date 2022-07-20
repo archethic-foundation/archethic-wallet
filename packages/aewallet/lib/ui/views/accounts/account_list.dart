@@ -1,28 +1,28 @@
 // Flutter imports:
-import 'package:aeuniverse/ui/util/ui_util.dart';
-import 'package:aeuniverse/ui/widgets/components/dialog.dart';
-import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
-import 'package:core/model/data/account.dart';
-import 'package:core/model/data/app_wallet.dart';
-import 'package:core/model/primary_currency.dart';
-import 'package:core/util/currency_util.dart';
-import 'package:core/util/haptic_util.dart';
-import 'package:core_ui/ui/util/formatters.dart';
-import 'package:core_ui/ui/util/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
+import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
+import 'package:aeuniverse/ui/widgets/components/dialog.dart';
+import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
+import 'package:core/model/data/account.dart';
+import 'package:core/model/data/app_wallet.dart';
 import 'package:core/model/data/appdb.dart';
+import 'package:core/model/primary_currency.dart';
+import 'package:core/util/currency_util.dart';
 import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/haptic_util.dart';
 import 'package:core/util/keychain_util.dart';
 import 'package:core_ui/ui/util/dimens.dart';
+import 'package:core_ui/ui/util/formatters.dart';
+import 'package:core_ui/ui/util/routes.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class AccountsList {

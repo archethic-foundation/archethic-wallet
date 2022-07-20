@@ -1,13 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:core/util/currency_util.dart';
-import 'package:core_ui/model/asset_history_interval.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:fl_chart/fl_chart.dart';
 import 'package:collection/collection.dart';
+import 'package:core/util/currency_util.dart';
+import 'package:core_ui/model/asset_history_interval.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class HistoryChart extends StatelessWidget {
   const HistoryChart(

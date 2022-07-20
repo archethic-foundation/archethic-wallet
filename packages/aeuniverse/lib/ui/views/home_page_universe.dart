@@ -4,24 +4,22 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
-import 'package:aeuniverse/ui/widgets/dialogs/network_dialog.dart';
-import 'package:aewallet/ui/views/accounts/account_list.dart';
-import 'package:aewallet/ui/views/blog/last_articles_list.dart';
-import 'package:core/bus/notifications_event.dart';
-import 'package:core/localization.dart';
-import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/notifications_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:aewallet/ui/menu/menu_widget_wallet.dart';
 import 'package:aewallet/ui/menu/settings_drawer_wallet_mobile.dart';
+import 'package:aewallet/ui/views/accounts/account_list.dart';
+import 'package:aewallet/ui/views/blog/last_articles_list.dart';
 import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/bus/account_changed_event.dart';
 import 'package:core/bus/disable_lock_timeout_event.dart';
+import 'package:core/bus/notifications_event.dart';
+import 'package:core/localization.dart';
+import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
+import 'package:core/util/notifications_util.dart';
 import 'package:core_ui/ui/util/responsive.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -32,6 +30,8 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/balance_infos.dart';
+import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
+import 'package:aeuniverse/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aeuniverse/ui/widgets/logo.dart';
 import 'package:aeuniverse/util/preferences.dart';
 

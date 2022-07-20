@@ -2,6 +2,8 @@
 
 // Package imports:
 import 'package:hive/hive.dart';
+
+// Project imports:
 import 'package:core/model/data/price.dart';
 
 part 'account_balance.g.dart';

@@ -5,11 +5,11 @@ import 'dart:async';
 import 'dart:developer' as dev;
 
 // Package imports:
-import 'package:core/model/data/contact.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
 import 'package:core/model/data/appdb.dart';
+import 'package:core/model/data/contact.dart';
 import 'package:core/model/data/recent_transaction.dart';
 import 'package:core/model/transaction_infos.dart';
 import 'package:core/util/get_it_instance.dart';

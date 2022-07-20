@@ -1,14 +1,18 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:core/util/get_it_instance.dart';
-import 'package:core_ui/model/asset_history_interval.dart';
 import 'package:flutter/material.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show ApiCoinsService, CoinsPriceResponse, CoinsCurrentDataResponse;
 
 // Package imports:
 import 'package:core/localization.dart';
+import 'package:core/util/get_it_instance.dart';
+
+// Project imports:
+import 'package:core_ui/model/asset_history_interval.dart';
+
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show ApiCoinsService, CoinsPriceResponse, CoinsCurrentDataResponse;
+
 
 class ChartInfos {
   ChartInfos(

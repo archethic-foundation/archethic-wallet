@@ -2,6 +2,8 @@
 
 // Package imports:
 import 'package:hive/hive.dart';
+
+// Project imports:
 import 'package:core/model/data/app_keychain.dart';
 
 part 'app_wallet.g.dart';

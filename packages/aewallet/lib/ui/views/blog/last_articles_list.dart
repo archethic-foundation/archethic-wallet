@@ -1,11 +1,15 @@
+// Dart imports:
+import 'dart:math' as math;
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:core/localization.dart';
-import 'package:flutter/material.dart';
-import 'dart:math' as math;
-
 import 'package:ghost/ghost.dart';
 import 'package:intl/intl.dart';
 

@@ -8,11 +8,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/util/string_encryption.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 // Project imports:
 import 'package:aeuniverse/appstate_container.dart';

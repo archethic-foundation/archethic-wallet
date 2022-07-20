@@ -1,11 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:aeuniverse/ui/widgets/components/dialog.dart';
-import 'package:core/model/data/appdb.dart';
-import 'package:core/model/primary_currency.dart';
-import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/keychain_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,7 +8,11 @@ import 'package:flutter/services.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
+import 'package:core/model/data/appdb.dart';
 import 'package:core/model/device_lock_timeout.dart';
+import 'package:core/model/primary_currency.dart';
+import 'package:core/util/get_it_instance.dart';
+import 'package:core/util/keychain_util.dart';
 import 'package:core/util/vault.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 
@@ -23,6 +22,7 @@ import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/views/authenticate/auth_factory.dart';
 import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
+import 'package:aeuniverse/ui/widgets/components/dialog.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aeuniverse/util/preferences.dart';

@@ -1,7 +1,12 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:core/localization.dart';
+
+// Project imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/util/preferences.dart';
-import 'package:core/localization.dart';
-import 'package:flutter/material.dart';
 
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 

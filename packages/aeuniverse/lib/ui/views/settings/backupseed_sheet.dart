@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:aeuniverse/util/preferences.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -14,6 +13,7 @@ import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/views/mnemonic_display.dart';
 import 'package:aeuniverse/ui/widgets/components/tap_outside_unfocus.dart';
+import 'package:aeuniverse/util/preferences.dart';
 
 class AppSeedBackupSheet extends StatefulWidget {
   const AppSeedBackupSheet(this.seed, {super.key});
