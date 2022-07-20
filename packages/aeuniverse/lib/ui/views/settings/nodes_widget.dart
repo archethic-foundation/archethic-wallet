@@ -221,7 +221,7 @@ class _NodesListState extends State<NodesList> {
                           Text(AppLocalization.of(context)!.nodeIP,
                               style: AppStyles.textStyleSize12W600Primary(
                                   context)),
-                          Text(node.ip! + ':' + node.port.toString(),
+                          Text('${node.ip!}:${node.port}',
                               style: AppStyles.textStyleSize12W100Primary(
                                   context)),
                         ],
@@ -238,8 +238,7 @@ class _NodesListState extends State<NodesList> {
                               style: AppStyles.textStyleSize12W100Primary(
                                   context)),
                           Text(
-                              ' - ' +
-                                  AppLocalization.of(context)!.nodeNetworkPatch,
+                              ' - ${AppLocalization.of(context)!.nodeNetworkPatch}',
                               style: AppStyles.textStyleSize12W600Primary(
                                   context)),
                           Text(node.networkPatch!,

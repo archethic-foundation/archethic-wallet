@@ -80,13 +80,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                                   child: AspectRatio(
                                       aspectRatio: 3 / 1,
                                       child: Image.asset(
-                                        StateContainer.of(context)
-                                                .curTheme
-                                                .assetsFolder! +
-                                            StateContainer.of(context)
-                                                .curTheme
-                                                .logo! +
-                                            '.png',
+                                        '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logo!}.png',
                                         height: 200,
                                       )),
                                 ),

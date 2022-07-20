@@ -138,19 +138,7 @@ class BalanceInfosWidget {
                                         context),
                               ),
                               AutoSizeText(
-                                StateContainer.of(context)
-                                        .appWallet!
-                                        .appKeychain!
-                                        .getAccountSelected()!
-                                        .balance!
-                                        .nativeTokenValueToString() +
-                                    ' ' +
-                                    StateContainer.of(context)
-                                        .appWallet!
-                                        .appKeychain!
-                                        .getAccountSelected()!
-                                        .balance!
-                                        .nativeTokenName!,
+                                '${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
                                 style: AppStyles.textStyleSize12W600Primary(
                                     context),
                               ),
@@ -301,40 +289,14 @@ class BalanceInfosWidget {
             child: Row(
               children: <Widget>[
                 AutoSizeText(
-                  '1 ' +
-                      StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .balance!
-                          .nativeTokenName! +
-                      ' = ' +
-                      CurrencyUtil.getAmountPlusSymbol(
-                          StateContainer.of(context)
-                              .appWallet!
-                              .appKeychain!
-                              .getAccountSelected()!
-                              .balance!
-                              .fiatCurrencyCode!,
-                          StateContainer.of(context)
-                              .appWallet!
-                              .appKeychain!
-                              .getAccountSelected()!
-                              .balance!
-                              .tokenPrice!
-                              .amount!),
+                  '1 ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!} = ${CurrencyUtil.getAmountPlusSymbol(StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.fiatCurrencyCode!, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!)}',
                   style: AppStyles.textStyleSize12W100Primary(context),
                 ),
                 const SizedBox(
                   width: 10,
                 ),
                 AutoSizeText(
-                  StateContainer.of(context)
-                          .chartInfos!
-                          .getPriceChangePercentage(
-                              StateContainer.of(context).idChartOption!)!
-                          .toStringAsFixed(2) +
-                      '%',
+                  '${StateContainer.of(context).chartInfos!.getPriceChangePercentage(StateContainer.of(context).idChartOption!)!.toStringAsFixed(2)}%',
                   style: StateContainer.of(context)
                               .chartInfos!
                               .getPriceChangePercentage(

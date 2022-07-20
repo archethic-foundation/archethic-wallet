@@ -27,9 +27,7 @@ class Address {
     if (_address!.length < 21) {
       return _address!;
     } else {
-      return _address!.substring(0, 11) +
-          '...' +
-          _address!.substring(_address!.length - 6);
+      return '${_address!.substring(0, 11)}...${_address!.substring(_address!.length - 6)}';
     }
   }
 
@@ -40,9 +38,7 @@ class Address {
     if (_address!.length < 21) {
       return _address!;
     } else {
-      return _address!.substring(0, 18) +
-          '...' +
-          _address!.substring(_address!.length - 6);
+      return '${_address!.substring(0, 18)}...${_address!.substring(_address!.length - 6)}';
     }
   }
 
@@ -53,9 +49,7 @@ class Address {
     if (_address!.length < 27) {
       return _address!;
     } else {
-      return _address!.substring(0, 12) +
-          '...' +
-          _address!.substring(_address!.length - 12);
+      return '${_address!.substring(0, 12)}...${_address!.substring(_address!.length - 12)}';
     }
   }
 
@@ -66,9 +60,7 @@ class Address {
     if (_address!.length < 21) {
       return _address!;
     } else {
-      return _address!.substring(0, 11) +
-          '...' +
-          _address!.substring(_address!.length - 2);
+      return '${_address!.substring(0, 11)}...${_address!.substring(_address!.length - 2)}';
     }
   }
 

@@ -191,10 +191,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 40, vertical: 10),
                               child: AutoSizeText(
-                                AppLocalization.of(context)!.attempt +
-                                    _failedAttempts.toString() +
-                                    '/' +
-                                    maxAttempts.toString(),
+                                '${AppLocalization.of(context)!.attempt}$_failedAttempts/$maxAttempts',
                                 style: AppStyles.textStyleSize14W200Primary(
                                     context),
                                 textAlign: TextAlign.center,

@@ -370,13 +370,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                             child: Column(
                               children: [
                                 SvgPicture.asset(
-                                  StateContainer.of(context)
-                                          .curTheme
-                                          .assetsFolder! +
-                                      StateContainer.of(context)
-                                          .curTheme
-                                          .logoAlone! +
-                                      '.svg',
+                                  '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
                                   height: 30,
                                 ),
                                 Text(
@@ -461,9 +455,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                 child: Column(
                   children: [
                     SvgPicture.asset(
-                      StateContainer.of(context).curTheme.assetsFolder! +
-                          StateContainer.of(context).curTheme.logoAlone! +
-                          '.svg',
+                      '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
                       height: 30,
                     ),
                     Text(

@@ -195,8 +195,8 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                 transaction,
                                                 hashType,
                                                 int.tryParse(addressIndex)!);
-                                            print('signTxn:' +
-                                                uint8ListToHex(signTxn));
+                                            print(
+                                                'signTxn:${uint8ListToHex(signTxn)}');
                                             await sl
                                                 .get<LedgerNanoSImpl>()
                                                 .connectLedger(signTxn);

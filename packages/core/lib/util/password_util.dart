@@ -15,19 +15,19 @@ class PasswordUtil {
 
   /// Checks if password has at least normal char letter matches
   static bool hasMinNormalChar(String password, int normalCount) {
-    String pattern = '^(.*?[A-Z]){' + normalCount.toString() + ',}';
+    String pattern = '^(.*?[A-Z]){$normalCount,}';
     return password.toUpperCase().contains(new RegExp(pattern));
   }
 
   /// Checks if password has at least uppercaseCount uppercase letter matches
   static bool hasMinUppercase(String password, int uppercaseCount) {
-    String pattern = '^(.*?[A-Z]){' + uppercaseCount.toString() + ',}';
+    String pattern = '^(.*?[A-Z]){$uppercaseCount,}';
     return password.contains(new RegExp(pattern));
   }
 
   /// Checks if password has at least numericCount numeric character matches
   static bool hasMinNumericChar(String password, int numericCount) {
-    String pattern = '^(.*?[0-9]){' + numericCount.toString() + ',}';
+    String pattern = '^(.*?[0-9]){$numericCount,}';
     return password.contains(new RegExp(pattern));
   }
 

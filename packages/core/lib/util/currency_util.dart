@@ -250,16 +250,9 @@ class CurrencyUtil {
 
   static String getConvertedAmount(String currency, double amount) {
     if (currency == 'BTC') {
-      return amount.toStringAsFixed(8) +
-          ' ' +
-          CurrencyUtil.getCurrencySymbol(currency);
+      return '${amount.toStringAsFixed(8)} ${CurrencyUtil.getCurrencySymbol(currency)}';
     } else if (currency == 'EUR') {
-      return amount.toStringAsFixed(NumberFormat.currency(
-                  locale: CurrencyUtil.getLocale(currency).toString(),
-                  symbol: CurrencyUtil.getCurrencySymbol(currency))
-              .decimalDigits!) +
-          ' ' +
-          CurrencyUtil.getCurrencySymbol(currency);
+      return '${amount.toStringAsFixed(NumberFormat.currency(locale: CurrencyUtil.getLocale(currency).toString(), symbol: CurrencyUtil.getCurrencySymbol(currency)).decimalDigits!)} ${CurrencyUtil.getCurrencySymbol(currency)}';
     } else {
       return NumberFormat.currency(
               locale: CurrencyUtil.getLocale(currency).toString(),
@@ -271,9 +264,7 @@ class CurrencyUtil {
   static String getConvertedAmountWithNumberOfDigits(
       String currency, double amount, int numberOfDigits) {
     if (currency == 'BTC') {
-      return amount.toStringAsFixed(8) +
-          ' ' +
-          CurrencyUtil.getCurrencySymbol(currency);
+      return '${amount.toStringAsFixed(8)} ${CurrencyUtil.getCurrencySymbol(currency)}';
     } else {
       return NumberFormat.currency(
               locale: CurrencyUtil.getLocale(currency).toString(),
@@ -288,12 +279,12 @@ class CurrencyUtil {
     if (networkCryptoCurrencyLabel!.isEmpty) {
       return amount.toString();
     } else {
-      return amount.toString() + ' ' + networkCryptoCurrencyLabel;
+      return '$amount $networkCryptoCurrencyLabel';
     }
   }
 
   static String getAmountPlusSymbol(String currency, double amount) {
-    return amount.toString() + ' ' + CurrencyUtil.getCurrencySymbol(currency);
+    return '$amount ${CurrencyUtil.getCurrencySymbol(currency)}';
   }
 
   static double convertAmount(double price, double amount) {

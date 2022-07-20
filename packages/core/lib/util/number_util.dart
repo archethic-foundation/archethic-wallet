@@ -32,7 +32,7 @@ class NumberUtil {
       if (int.parse(split[1]) == 0) {
         asString = split[0];
       } else {
-        String newStr = split[0] + '.';
+        String newStr = '${split[0]}.';
         String digits = split[1];
         int endIndex = digits.length;
         for (int i = 1; i <= digits.length; i++) {
@@ -43,7 +43,7 @@ class NumberUtil {
           }
         }
         digits = digits.substring(0, endIndex);
-        newStr = split[0] + '.' + digits;
+        newStr = '${split[0]}.$digits';
         asString = newStr;
       }
     }
@@ -60,7 +60,7 @@ class NumberUtil {
     if (splitStr.length > 1) {
       if (splitStr[1].length > maxDecimalDigits) {
         splitStr[1] = splitStr[1].substring(0, maxDecimalDigits);
-        input = splitStr[0] + '.' + splitStr[1];
+        input = '${splitStr[0]}.${splitStr[1]}';
       }
     }
     for (int i = 0; i < input.length; i++) {

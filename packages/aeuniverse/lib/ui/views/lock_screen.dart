@@ -53,32 +53,32 @@ class _AppLockScreenState extends State<AppLockScreen> {
       // Seconds only
       String secondsStr = count.toString();
       if (count < 10) {
-        secondsStr = '0' + secondsStr;
+        secondsStr = '0$secondsStr';
       }
-      return '00:' + secondsStr;
+      return '00:$secondsStr';
     } else if (count > 60 && count <= 3600) {
       // Minutes:Seconds
       String minutesStr = '';
       final int minutes = count ~/ 60;
       if (minutes < 10) {
-        minutesStr = '0' + minutes.toString();
+        minutesStr = '0$minutes';
       } else {
         minutesStr = minutes.toString();
       }
       String secondsStr = '';
       final int seconds = count % 60;
       if (seconds < 10) {
-        secondsStr = '0' + seconds.toString();
+        secondsStr = '0$seconds';
       } else {
         secondsStr = seconds.toString();
       }
-      return minutesStr + ':' + secondsStr;
+      return '$minutesStr:$secondsStr';
     } else {
       // Hours:Minutes:Seconds
       String hoursStr = '';
       final int hours = count ~/ 3600;
       if (hours < 10) {
-        hoursStr = '0' + hours.toString();
+        hoursStr = '0$hours';
       } else {
         hoursStr = hours.toString();
       }
@@ -86,18 +86,18 @@ class _AppLockScreenState extends State<AppLockScreen> {
       String minutesStr = '';
       final int minutes = count ~/ 60;
       if (minutes < 10) {
-        minutesStr = '0' + minutes.toString();
+        minutesStr = '0$minutes';
       } else {
         minutesStr = minutes.toString();
       }
       String secondsStr = '';
       final int seconds = count % 60;
       if (seconds < 10) {
-        secondsStr = '0' + seconds.toString();
+        secondsStr = '0$seconds';
       } else {
         secondsStr = seconds.toString();
       }
-      return hoursStr + ':' + minutesStr + ':' + secondsStr;
+      return '$hoursStr:$minutesStr:$secondsStr';
     }
   }
 

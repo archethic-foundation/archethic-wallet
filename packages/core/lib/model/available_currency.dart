@@ -57,9 +57,7 @@ class AvailableCurrency extends SettingSelectionItem {
 
   @override
   String getDisplayName(BuildContext context) {
-    return CurrencyUtil.getCurrencySymbol(currency.name) +
-        ' ' +
-        CurrencyUtil.getDisplayNameNoSymbol(currency.name);
+    return '${CurrencyUtil.getCurrencySymbol(currency.name)} ${CurrencyUtil.getDisplayNameNoSymbol(currency.name)}';
   }
 
   // For saving to shared prefs

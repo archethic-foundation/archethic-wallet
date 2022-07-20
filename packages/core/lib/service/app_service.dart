@@ -205,7 +205,7 @@ class AppService {
 
     try {
       final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
-      final String service = 'archethic-wallet-' + accountName;
+      final String service = 'archethic-wallet-$accountName';
       final int index = (await sl.get<ApiService>().getTransactionIndex(
               uint8ListToHex(keychain.deriveAddress(service, index: 0))))
           .chainLength!;
@@ -236,7 +236,7 @@ class AppService {
       int initialSupply,
       String accountName) async {
     final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
-    final String service = 'archethic-wallet-' + accountName;
+    final String service = 'archethic-wallet-$accountName';
     final int index = (await sl.get<ApiService>().getTransactionIndex(
             uint8ListToHex(keychain.deriveAddress(service, index: 0))))
         .chainLength!;
@@ -322,9 +322,8 @@ class AppService {
               transactionsInfos.add(TransactionInfos(
                   domain: 'UCOLedger',
                   titleInfo: 'To',
-                  valueInfo: recipientContactName +
-                      '\n' +
-                      transaction.data!.ledger!.uco!.transfers![i].to!));
+                  valueInfo:
+                      '$recipientContactName\n${transaction.data!.ledger!.uco!.transfers![i].to!}'));
             }
           }
           if (transaction.data!.ledger!.uco!.transfers![i].amount != null) {
@@ -332,11 +331,7 @@ class AppService {
                 domain: 'UCOLedger',
                 titleInfo: 'Amount',
                 valueInfo:
-                    (transaction.data!.ledger!.uco!.transfers![i].amount! /
-                                BigInt.from(100000000))
-                            .toString() +
-                        ' ' +
-                        cryptoCurrency));
+                    '${transaction.data!.ledger!.uco!.transfers![i].amount! / BigInt.from(100000000)} $cryptoCurrency'));
           }
         }
       }
@@ -412,7 +407,7 @@ class AppService {
       int initialSupply,
       String accountName) async {
     final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
-    final String service = 'archethic-wallet-' + accountName;
+    final String service = 'archethic-wallet-$accountName';
     final int index = (await sl.get<ApiService>().getTransactionIndex(
             uint8ListToHex(keychain.deriveAddress(service, index: 0))))
         .chainLength!;

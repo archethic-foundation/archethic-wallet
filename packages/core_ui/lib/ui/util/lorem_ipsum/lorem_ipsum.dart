@@ -92,7 +92,7 @@ String _makeSentence(int words) {
     result.add(nextWord);
   }
   result[0] = result[0].substring(0, 1).toUpperCase() + result[0].substring(1);
-  return result.join(" ") + ".";
+  return "${result.join(" ")}.";
 }
 
 _randomInt(int min, int max) {

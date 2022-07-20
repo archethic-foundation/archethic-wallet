@@ -40,7 +40,7 @@ class CurrencyFormatter extends TextInputFormatter {
           text: oldValue.text,
           selection: TextSelection.collapsed(offset: oldValue.text.length));
     } else if (workingText.startsWith(decimalSeparator)) {
-      workingText = '0' + workingText;
+      workingText = '0$workingText';
     }
 
     final List<String> splitStr = workingText.split(decimalSeparator);
@@ -126,13 +126,13 @@ class ContactInputFormatter extends TextInputFormatter {
 
     String workingText = newValue.text;
     if (!workingText.startsWith('@')) {
-      workingText = '@' + workingText;
+      workingText = '@$workingText';
     }
 
     final List<String> splitStr = workingText.split('@');
     // If this string contains more than 1 @, remove all but the first one
     if (splitStr.length > 2) {
-      workingText = '@' + workingText.replaceAll(r'@', '');
+      workingText = '@${workingText.replaceAll(r'@', '')}';
     }
 
     // If nothing changed, return original

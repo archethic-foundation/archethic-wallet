@@ -19,22 +19,16 @@ Widget getLogo(BuildContext context) {
           padding: const EdgeInsets.only(left: 10.0),
           child: ScreenUtil.isDesktopMode()
               ? Image.asset(
-                  StateContainer.of(context).curTheme.assetsFolder! +
-                      StateContainer.of(context).curTheme.logo! +
-                      '.png',
+                  '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logo!}.png',
                   height: 40,
                 )
               : kIsWeb
                   ? Image.asset(
-                      StateContainer.of(context).curTheme.assetsFolder! +
-                          StateContainer.of(context).curTheme.logoAlone! +
-                          '.png',
+                      '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.png',
                       height: 40,
                     )
                   : SvgPicture.asset(
-                      StateContainer.of(context).curTheme.assetsFolder! +
-                          StateContainer.of(context).curTheme.logoAlone! +
-                          '.svg',
+                      '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
                       height: 40,
                     ),
         )
@@ -51,28 +45,18 @@ Widget getLogo(BuildContext context) {
                 },
                 child: ScreenUtil.isDesktopMode()
                     ? Image.asset(
-                        StateContainer.of(context).curTheme.assetsFolder! +
-                            StateContainer.of(context).curTheme.logoAlone! +
-                            '.png',
+                        '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.png',
                         height: 40,
                       )
                     : kIsWeb
                         ? Image.asset(
-                            StateContainer.of(context).curTheme.assetsFolder! +
-                                StateContainer.of(context).curTheme.logoAlone! +
-                                '.png',
+                            '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.png',
                             height: 40,
                           )
                         : Container(
                             alignment: Alignment.center,
                             child: SvgPicture.asset(
-                              StateContainer.of(context)
-                                      .curTheme
-                                      .assetsFolder! +
-                                  StateContainer.of(context)
-                                      .curTheme
-                                      .logoAlone! +
-                                  '.svg',
+                              '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
                               height: 40,
                             ),
                           ),

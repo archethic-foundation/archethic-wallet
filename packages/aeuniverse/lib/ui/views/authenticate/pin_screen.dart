@@ -205,7 +205,7 @@ class _PinScreenState extends State<PinScreen>
       height: smallScreen(context) ? buttonSize - 15 : buttonSize,
       width: smallScreen(context) ? buttonSize - 15 : buttonSize,
       child: InkWell(
-          key: Key('pinButton' + buttonText),
+          key: Key('pinButton$buttonText'),
           borderRadius: BorderRadius.circular(200),
           highlightColor: StateContainer.of(context).curTheme.text15,
           splashColor: StateContainer.of(context).curTheme.text30,
@@ -389,10 +389,7 @@ class _PinScreenState extends State<PinScreen>
                         margin: const EdgeInsets.symmetric(
                             horizontal: 40, vertical: 10),
                         child: AutoSizeText(
-                          AppLocalization.of(context)!.attempt +
-                              _failedAttempts.toString() +
-                              '/' +
-                              maxAttempts.toString(),
+                          '${AppLocalization.of(context)!.attempt}$_failedAttempts/$maxAttempts',
                           style: AppStyles.textStyleSize16W200Primary(context),
                           textAlign: TextAlign.center,
                           maxLines: 1,
