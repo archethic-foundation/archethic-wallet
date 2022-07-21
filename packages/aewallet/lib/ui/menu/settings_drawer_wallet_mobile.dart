@@ -1190,7 +1190,9 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         'packages/aewallet/assets/icons/privacyPolicy.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () async {
-                      UIUtil.showWebview(context, 'https://archethic.net',
+                      UIUtil.showWebview(
+                          context,
+                          'https://archethic.net/aewallet-privacy.html',
                           AppLocalization.of(context)!.aboutPrivacyPolicy);
                     }),
                   ].where(notNull).toList(),
