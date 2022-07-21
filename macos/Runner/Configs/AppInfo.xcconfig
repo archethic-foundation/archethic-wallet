@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = archethic_mobile_wallet
+PRODUCT_NAME = archethic_wallet
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = io.reddwarf.archethicMobileWallet
+PRODUCT_BUNDLE_IDENTIFIER = net.archethic.archethicMobileWallet
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2021 io.reddwarf. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2022 Archethic Technologies. All rights reserved.

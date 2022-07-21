@@ -38,11 +38,28 @@ import 'package:core_ui/ui/util/routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await DBHelper.setupDatabase();
+  if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
+    await windowManager.ensureInitialized();
+
+    WindowOptions windowOptions = const WindowOptions(
+      size: Size(393, 850),
+      center: true,
+      backgroundColor: Colors.transparent,
+      skipTaskbar: false,
+      titleBarStyle: TitleBarStyle.hidden,
+    );
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      windowManager.setResizable(false);
+      await windowManager.show();
+      await windowManager.focus();
+    });
+  }
 
   // Run app
   SystemChrome.setPreferredOrientations(

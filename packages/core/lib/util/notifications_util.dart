@@ -13,13 +13,16 @@ class NotificationsUtil {
         android: AndroidNotificationDetails('channel id', 'channel name',
             channelDescription: 'channel description',
             importance: Importance.max),
-        iOS: IOSNotificationDetails());
+        iOS: IOSNotificationDetails(),
+        macOS: MacOSNotificationDetails());
   }
 
   static Future init() async {
     const android = AndroidInitializationSettings('@drawable/ic_notification');
     const iOS = IOSInitializationSettings();
-    const settings = InitializationSettings(android: android, iOS: iOS);
+    const macOS = MacOSInitializationSettings();
+    const settings =
+        InitializationSettings(android: android, iOS: iOS, macOS: macOS);
     await _notifications.initialize(settings,
         onSelectNotification: (payload) async {
       onNotifications.add(payload);

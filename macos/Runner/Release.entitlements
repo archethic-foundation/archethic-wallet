@@ -4,13 +4,13 @@
 <dict>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
+	<key>com.apple.security.network.client</key>
+	<true/>
 	<key>com.apple.security.network.server</key>
- 	<true/>
- 	<key>com.apple.security.network.client</key>
- 	<true/>
- 	<key>keychain-access-groups</key>
- 	<array>
- 		<string>$(AppIdentifierPrefix)io.reddwarf.archethicMobileWallet</string>
- 	</array>
+	<true/>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)net.archethic.archethic_wallet</string>
+	</array>
 </dict>
 </plist>

@@ -47,24 +47,31 @@ class _TxListWidgetState extends State<TxListWidget> {
             children: [
               Text(AppLocalization.of(context)!.recentTransactionsHeader,
                   style: AppStyles.textStyleSize14W600EquinoxPrimary(context)),
-              if (kIsWeb || Platform.isMacOS || Platform.isWindows)
-                IconButton(
-                  icon: const Icon(Icons.refresh),
-                  color: StateContainer.of(context).curTheme.backgroundDarkest,
-                  onPressed: () async {
-                    StateContainer.of(context).requestUpdate();
-                  },
-                ),
-              InkWell(
-                onTap: () async {
-                  UIUtil.showWebview(
-                      context,
-                      '${await StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.lastAddress!}',
-                      '');
-                },
-                child: buildIconDataWidget(
-                    context, Icons.arrow_circle_right_outlined, 20, 20),
-              )
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  if (kIsWeb || Platform.isMacOS || Platform.isWindows)
+                    IconButton(
+                      icon: const Icon(Icons.refresh),
+                      color:
+                          StateContainer.of(context).curTheme.backgroundDarkest,
+                      onPressed: () async {
+                        StateContainer.of(context).requestUpdate();
+                      },
+                    ),
+                  InkWell(
+                    onTap: () async {
+                      UIUtil.showWebview(
+                          context,
+                          '${await StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.lastAddress!}',
+                          '');
+                    },
+                    child: buildIconDataWidget(
+                        context, Icons.arrow_circle_right_outlined, 20, 20),
+                  )
+                ],
+              ),
             ],
           ),
         ),
