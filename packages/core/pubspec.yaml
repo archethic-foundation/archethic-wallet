@@ -12,7 +12,7 @@ dependencies:
   animate_do: ^2.1.0
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^1.0.22
+  archethic_lib_dart: ^1.0.23
   #archethic_lib_dart: 
   #  git:
   #    url: https://github.com/archethic-foundation/libdart.git
