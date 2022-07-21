@@ -3,6 +3,7 @@
 
 // Dart imports:
 import 'dart:async';
+import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -998,39 +999,41 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         preferences.setShowPriceChart(_showPriceChartActive);
                       });
                     }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemSwitch(
-                        context,
-                        AppLocalization.of(context)!.activateNotifications,
-                        'packages/aewallet/assets/icons/notification-bell.png',
-                        StateContainer.of(context).curTheme.iconDrawer!,
-                        _notificationsActive,
-                        onChanged: (bool isSwitched) async {
-                      final Preferences preferences =
-                          await Preferences.getInstance();
-                      setState(() {
-                        _notificationsActive = isSwitched;
-                        StateContainer.of(context).activeNotifications =
-                            _notificationsActive;
-                        if (StateContainer.of(context)
-                                .timerCheckTransactionInputs !=
-                            null) {
-                          StateContainer.of(context)
-                              .timerCheckTransactionInputs!
-                              .cancel();
-                        }
-                        if (_notificationsActive) {
-                          StateContainer.of(context).checkTransactionInputs(
-                              AppLocalization.of(context)!
-                                  .transactionInputNotification);
-                        }
-                        preferences
-                            .setActiveNotifications(_notificationsActive);
-                      });
-                    }),
+                    if (Platform.isWindows == false)
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                    if (Platform.isWindows == false)
+                      AppSettings.buildSettingsListItemSwitch(
+                          context,
+                          AppLocalization.of(context)!.activateNotifications,
+                          'packages/aewallet/assets/icons/notification-bell.png',
+                          StateContainer.of(context).curTheme.iconDrawer!,
+                          _notificationsActive,
+                          onChanged: (bool isSwitched) async {
+                        final Preferences preferences =
+                            await Preferences.getInstance();
+                        setState(() {
+                          _notificationsActive = isSwitched;
+                          StateContainer.of(context).activeNotifications =
+                              _notificationsActive;
+                          if (StateContainer.of(context)
+                                  .timerCheckTransactionInputs !=
+                              null) {
+                            StateContainer.of(context)
+                                .timerCheckTransactionInputs!
+                                .cancel();
+                          }
+                          if (_notificationsActive) {
+                            StateContainer.of(context).checkTransactionInputs(
+                                AppLocalization.of(context)!
+                                    .transactionInputNotification);
+                          }
+                          preferences
+                              .setActiveNotifications(_notificationsActive);
+                        });
+                      }),
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,

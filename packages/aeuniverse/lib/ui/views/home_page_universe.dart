@@ -2,6 +2,7 @@
 
 // Dart imports:
 import 'dart:async';
+import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -411,42 +412,44 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
             extendBodyBehindAppBar: true,
             appBar: AppBar(
               actions: [
-                StateContainer.of(context).activeNotifications
-                    ? IconButton(
-                        icon: const Icon(Icons.notifications_active_outlined),
-                        onPressed: () async {
-                          StateContainer.of(context).activeNotifications =
-                              false;
-                          if (StateContainer.of(context)
-                                  .timerCheckTransactionInputs !=
-                              null) {
-                            StateContainer.of(context)
-                                .timerCheckTransactionInputs!
-                                .cancel();
-                          }
-                          final Preferences preferences =
-                              await Preferences.getInstance();
-                          await preferences.setActiveNotifications(false);
-                        })
-                    : IconButton(
-                        icon: const Icon(Icons.notifications_off_outlined),
-                        onPressed: () async {
-                          StateContainer.of(context).activeNotifications = true;
+                if (Platform.isWindows == false)
+                  StateContainer.of(context).activeNotifications
+                      ? IconButton(
+                          icon: const Icon(Icons.notifications_active_outlined),
+                          onPressed: () async {
+                            StateContainer.of(context).activeNotifications =
+                                false;
+                            if (StateContainer.of(context)
+                                    .timerCheckTransactionInputs !=
+                                null) {
+                              StateContainer.of(context)
+                                  .timerCheckTransactionInputs!
+                                  .cancel();
+                            }
+                            final Preferences preferences =
+                                await Preferences.getInstance();
+                            await preferences.setActiveNotifications(false);
+                          })
+                      : IconButton(
+                          icon: const Icon(Icons.notifications_off_outlined),
+                          onPressed: () async {
+                            StateContainer.of(context).activeNotifications =
+                                true;
 
-                          if (StateContainer.of(context)
-                                  .timerCheckTransactionInputs !=
-                              null) {
-                            StateContainer.of(context)
-                                .timerCheckTransactionInputs!
-                                .cancel();
-                          }
-                          StateContainer.of(context).checkTransactionInputs(
-                              AppLocalization.of(context)!
-                                  .transactionInputNotification);
-                          final Preferences preferences =
-                              await Preferences.getInstance();
-                          await preferences.setActiveNotifications(true);
-                        })
+                            if (StateContainer.of(context)
+                                    .timerCheckTransactionInputs !=
+                                null) {
+                              StateContainer.of(context)
+                                  .timerCheckTransactionInputs!
+                                  .cancel();
+                            }
+                            StateContainer.of(context).checkTransactionInputs(
+                                AppLocalization.of(context)!
+                                    .transactionInputNotification);
+                            final Preferences preferences =
+                                await Preferences.getInstance();
+                            await preferences.setActiveNotifications(true);
+                          })
               ],
               title: InkWell(
                 onTap: () async {

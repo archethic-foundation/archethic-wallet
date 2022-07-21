@@ -29,7 +29,6 @@ import 'package:core_ui/util/screen_util.dart';
 import 'package:aeuniverse/model/available_networks.dart';
 import 'package:aeuniverse/model/available_themes.dart';
 import 'package:aeuniverse/ui/themes/theme_dark.dart';
-import 'package:aeuniverse/ui/widgets/components/notification_icon_widget.dart';
 import 'package:aeuniverse/util/preferences.dart';
 import 'package:aeuniverse/util/service_locator.dart';
 
@@ -88,8 +87,6 @@ class StateContainerState extends State<StateContainer> {
   bool showBlog = false;
   bool activeVibrations = false;
   bool activeNotifications = false;
-
-  NotificationIconWidget notificationIconWidget = NotificationIconWidget();
 
   @override
   void initState() {
