@@ -89,7 +89,7 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "io.reddwarf" "\0"
+            VALUE "CompanyName", "net.archethic" "\0"
             VALUE "FileDescription", "archethic_wallet" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "archethic_wallet" "\0"
