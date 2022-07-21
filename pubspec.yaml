@@ -3,7 +3,7 @@ description: A place for all the DApps to live.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.2+250
+version: 1.0.2+251
 
 environment:
   sdk: '>=2.17.0 <3.0.0'
@@ -59,7 +59,7 @@ msix_config:
   display_name: Archethic Wallet
   publisher_display_name: Archethic Technologies
   identity_name: mainnet.archethic.net
-  msix_version: 1.0.2
+  msix_version: 1.0.2.0
   icons_background_color: "#000000"
   logo_path: windows/icons/Icon-512.png
   # See https://docs.microsoft.com/en-us/windows/uwp/packaging/app-capability-declarations
