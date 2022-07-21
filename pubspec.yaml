@@ -49,7 +49,7 @@ dev_dependencies:
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl_generator: ^0.3.0
   # A command-line tool that create Msix installer from your flutter windows-build files.
-  msix: ^3.5.1
+  msix: ^3.6.2
 
 flutter_icons:
   android: true
@@ -57,9 +57,9 @@ flutter_icons:
 
 msix_config:
   display_name: Archethic Wallet
-  publisher_display_name: Archethic Foundation
-  identity_name: testnet.archethic.net
-  msix_version: 0.1.8.0
+  publisher_display_name: Archethic Technologies
+  identity_name: mainnet.archethic.net
+  msix_version: 1.0.2
   icons_background_color: "#000000"
   logo_path: windows/icons/Icon-512.png
   # See https://docs.microsoft.com/en-us/windows/uwp/packaging/app-capability-declarations
