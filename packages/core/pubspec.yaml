@@ -124,7 +124,7 @@ dependencies:
   tuple: ^2.0.0
 
   # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes
-  url_launcher: ^6.1.3
+  url_launcher: ^6.1.5
   
   # String validation and sanitization for Dart
   validators: ^3.0.0

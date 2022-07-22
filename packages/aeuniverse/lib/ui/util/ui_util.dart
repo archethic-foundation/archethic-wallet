@@ -323,6 +323,6 @@ class UIUtil {
 
   static Future<void> showWebview(
       BuildContext context, String url, String title) async {
-    await launchUrl(Uri.parse(url));
+    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   }
 }
