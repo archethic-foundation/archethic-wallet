@@ -645,7 +645,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                             height: 15,
                                           ),
                                           const TxListWidget(),
-                                          const LastArticlesWidget(),
+                                          // ignore: prefer_const_constructors
+                                          LastArticlesWidget(),
                                           const SizedBox(
                                             height: 30,
                                           ),
