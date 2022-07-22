@@ -14,6 +14,6 @@ flutter build macos
 Xcode : notarize App : Archive/Distribute app/Deveoper ID/Upload/Automatically sign
 # windows
 flutter build windows
-flutter pub run msix:create -c /XX/XX/CERTIFICATE.pfx -p kfmslmkd
+flutter pub run msix:create -c windows/certificates/archethic_wallet.pfx -p password12345
 # chrome extension
 flutter build web --web-renderer html --csp

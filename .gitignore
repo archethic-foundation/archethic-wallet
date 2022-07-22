@@ -135,5 +135,9 @@ windows/certificates/archethic_wallet_testnet.crt
 windows/certificates/archethic_wallet_testnet.csr
 windows/certificates/archethic_wallet_testnet.key
 windows/certificates/archethic_wallet_testnet.pfx
+windows/certificates/archethic_wallet.crt
+windows/certificates/archethic_wallet.csr
+windows/certificates/archethic_wallet.key
+windows/certificates/archethic_wallet.pfx
 windows/certificates/mdp.txt
 windows/certificates/mykeyname.key
