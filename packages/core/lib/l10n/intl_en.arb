@@ -1757,5 +1757,11 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "amountZero": "Your amount should be > 0",
+  "@amountZero": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

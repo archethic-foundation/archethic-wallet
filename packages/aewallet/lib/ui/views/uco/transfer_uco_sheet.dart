@@ -636,37 +636,44 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
         _amountValidationText = AppLocalization.of(context)!.amountMissing;
       });
     } else {
-      // Estimation of fees
-      feeEstimation = await getFee();
-
-      final String amount = _rawAmount == null
-          ? _sendAmountController!.text
-          : NumberUtil.getRawAsUsableString(_rawAmount!);
-      final double balanceRaw = StateContainer.of(context)
-          .appWallet!
-          .appKeychain!
-          .getAccountSelected()!
-          .balance!
-          .nativeTokenValue!;
-      double sendAmount = 0;
-      if (primaryCurrency == PrimaryCurrency.network) {
-        sendAmount = double.tryParse(amount)!;
-      } else {
-        sendAmount = priceConverted;
-      }
-      if (sendAmount + feeEstimation > balanceRaw) {
+      if (double.tryParse((_sendAmountController!.text))! <= 0) {
         isValid = false;
         setState(() {
-          _globalValidationText = AppLocalization.of(context)!
-              .insufficientBalance
-              .replaceAll(
-                  '%1',
-                  StateContainer.of(context)
-                      .curNetwork
-                      .getNetworkCryptoCurrencyLabel());
+          _amountValidationText = AppLocalization.of(context)!.amountZero;
         });
       } else {
-        ucoTransfer.amount = BigInt.from(sendAmount * 100000000);
+        // Estimation of fees
+        feeEstimation = await getFee();
+
+        final String amount = _rawAmount == null
+            ? _sendAmountController!.text
+            : NumberUtil.getRawAsUsableString(_rawAmount!);
+        final double balanceRaw = StateContainer.of(context)
+            .appWallet!
+            .appKeychain!
+            .getAccountSelected()!
+            .balance!
+            .nativeTokenValue!;
+        double sendAmount = 0;
+        if (primaryCurrency == PrimaryCurrency.network) {
+          sendAmount = double.tryParse(amount)!;
+        } else {
+          sendAmount = priceConverted;
+        }
+        if (sendAmount + feeEstimation > balanceRaw) {
+          isValid = false;
+          setState(() {
+            _globalValidationText = AppLocalization.of(context)!
+                .insufficientBalance
+                .replaceAll(
+                    '%1',
+                    StateContainer.of(context)
+                        .curNetwork
+                        .getNetworkCryptoCurrencyLabel());
+          });
+        } else {
+          ucoTransfer.amount = BigInt.from(sendAmount * 100000000);
+        }
       }
     }
     // Validate address
@@ -770,14 +777,24 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
             FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,8}')),
           ],
           onChanged: (String text) async {
-            double fee = await getFee();
-            // Always reset the error message to be less annoying
-            setState(() {
-              feeEstimation = fee;
-              _amountValidationText = '';
-              // Reset the raw amount
-              _rawAmount = null;
-            });
+            double? amount = double.tryParse(text);
+            if (amount != null && amount > 0) {
+              double fee = await getFee();
+              // Always reset the error message to be less annoying
+              setState(() {
+                feeEstimation = fee;
+                _amountValidationText = '';
+                // Reset the raw amount
+                _rawAmount = null;
+              });
+            } else {
+              setState(() {
+                feeEstimation = 0;
+                _amountValidationText = '';
+                // Reset the raw amount
+                _rawAmount = null;
+              });
+            }
           },
           textInputAction: TextInputAction.next,
           maxLines: null,

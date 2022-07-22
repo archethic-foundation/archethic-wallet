@@ -391,6 +391,10 @@ class AppLocalization {
     return Intl.message('Please Enter an Amount', name: 'amountMissing');
   }
 
+  String get amountZero {
+    return Intl.message('Your amount should be > 0', name: 'amountZero');
+  }
+
   String get insufficientBalance {
     return Intl.message('You don\'t have enough %1',
         name: 'insufficientBalance');

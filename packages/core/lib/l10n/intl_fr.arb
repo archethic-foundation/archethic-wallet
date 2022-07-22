@@ -294,5 +294,6 @@
 	"pass": "Passer",
 	"passBackupConfirmationDisclaimer": "CLAUSE DE NON-RESPONSABILITE",
 	"passBackupConfirmationMessage": "Nous vous invitons à confirmer manuellement l'enregistrement de votre recovery phrase. En cas de perte, vous perdrez vos fonds. Pour rappel, Archethic n'en garde aucune copie",
-	"accountsKeychainAddressHeader": "Adresse de votre porte clés"
+	"accountsKeychainAddressHeader": "Adresse de votre porte clés",
+	"amountZero": "Le montant doit être > 0"
 }
