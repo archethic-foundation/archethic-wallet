@@ -169,7 +169,7 @@ class AppService {
         a.timestamp!.compareTo(b.timestamp!));
 
     for (int i = 0; i < recentTransactions.length; i++) {
-      if (i <= 3) {
+      if (i <= 10) {
         recentTransactions[i].content = await sl
             .get<ApiService>()
             .getTransactionContent(recentTransactions[i].address!);

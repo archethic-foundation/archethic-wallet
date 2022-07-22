@@ -93,107 +93,56 @@ class _TxListWidgetState extends State<TxListWidget> {
                   style: AppStyles.textStyleSize14W600Primary(context)),
             ),
           ),
-        Container(
-          color: Colors.transparent,
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-              padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
-              child: StateContainer.of(context)
+        getLign(context, 0),
+        getLign(context, 1),
+        getLign(context, 2),
+        getLign(context, 3),
+        getLign(context, 4),
+        getLign(context, 5),
+        getLign(context, 6),
+        getLign(context, 7),
+        getLign(context, 8),
+        getLign(context, 9),
+      ],
+    );
+  }
+
+  static Container getLign(BuildContext context, int num) {
+    return Container(
+      color: Colors.transparent,
+      width: MediaQuery.of(context).size.width,
+      child: Padding(
+          padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
+          child: (StateContainer.of(context)
                           .appWallet!
                           .appKeychain!
                           .getAccountSelected()!
                           .recentTransactions!
-                          .isNotEmpty ||
-                      (StateContainer.of(context).recentTransactionsLoading ==
-                              true &&
-                          StateContainer.of(context)
+                          .isNotEmpty &&
+                      StateContainer.of(context)
                               .appWallet!
                               .appKeychain!
                               .getAccountSelected()!
                               .recentTransactions!
-                              .isNotEmpty)
-                  ? displayTxDetailTransfer(
-                      context,
+                              .length >
+                          num) ||
+                  (StateContainer.of(context).recentTransactionsLoading ==
+                          true &&
                       StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .recentTransactions![0])
-                  : const SizedBox()),
-        ),
-        Container(
-          color: Colors.transparent,
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-              padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
-              child: (StateContainer.of(context)
                               .appWallet!
                               .appKeychain!
                               .getAccountSelected()!
                               .recentTransactions!
-                              .isNotEmpty &&
-                          StateContainer.of(context)
-                                  .appWallet!
-                                  .appKeychain!
-                                  .getAccountSelected()!
-                                  .recentTransactions!
-                                  .length >
-                              1) ||
-                      (StateContainer.of(context).recentTransactionsLoading ==
-                              true &&
-                          StateContainer.of(context)
-                                  .appWallet!
-                                  .appKeychain!
-                                  .getAccountSelected()!
-                                  .recentTransactions!
-                                  .length >
-                              1)
-                  ? displayTxDetailTransfer(
-                      context,
-                      StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .recentTransactions![1])
-                  : const SizedBox()),
-        ),
-        Container(
-          color: Colors.transparent,
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-              padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
-              child: (StateContainer.of(context)
-                              .appWallet!
-                              .appKeychain!
-                              .getAccountSelected()!
-                              .recentTransactions!
-                              .isNotEmpty &&
-                          StateContainer.of(context)
-                                  .appWallet!
-                                  .appKeychain!
-                                  .getAccountSelected()!
-                                  .recentTransactions!
-                                  .length >
-                              2) ||
-                      (StateContainer.of(context).recentTransactionsLoading ==
-                              true &&
-                          StateContainer.of(context)
-                                  .appWallet!
-                                  .appKeychain!
-                                  .getAccountSelected()!
-                                  .recentTransactions!
-                                  .length >
-                              2)
-                  ? displayTxDetailTransfer(
-                      context,
-                      StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .recentTransactions![2])
-                  : const SizedBox()),
-        ),
-      ],
+                              .length >
+                          num)
+              ? displayTxDetailTransfer(
+                  context,
+                  StateContainer.of(context)
+                      .appWallet!
+                      .appKeychain!
+                      .getAccountSelected()!
+                      .recentTransactions![num])
+              : const SizedBox()),
     );
   }
 
