@@ -35,6 +35,7 @@ import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aeuniverse/ui/widgets/logo.dart';
 import 'package:aeuniverse/util/preferences.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppHomePageUniverse extends StatefulWidget {
   const AppHomePageUniverse({super.key});
@@ -412,6 +413,25 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
             extendBodyBehindAppBar: true,
             appBar: AppBar(
               actions: [
+                StateContainer.of(context).showBalance
+                    ? IconButton(
+                        icon: const FaIcon(FontAwesomeIcons.eye),
+                        onPressed: () async {
+                          StateContainer.of(context).showBalance = false;
+
+                          final Preferences preferences =
+                              await Preferences.getInstance();
+                          await preferences.setShowBalances(false);
+                        })
+                    : IconButton(
+                        icon: const FaIcon(FontAwesomeIcons.eyeLowVision),
+                        onPressed: () async {
+                          StateContainer.of(context).showBalance = true;
+
+                          final Preferences preferences =
+                              await Preferences.getInstance();
+                          await preferences.setShowBalances(true);
+                        }),
                 if (Platform.isWindows == false)
                   StateContainer.of(context).activeNotifications
                       ? IconButton(
