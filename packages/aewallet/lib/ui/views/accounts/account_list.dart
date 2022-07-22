@@ -495,6 +495,10 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
         onPressed: () async {
           _showSendingAnimation(context);
 
+          while (keychainLoaded == false) {
+            await Future.delayed(const Duration(milliseconds: 200), () {});
+          }
+
           if (!account.selected!) {
             _changeAccount(account, setState);
             StateContainer.of(context).appWallet =
