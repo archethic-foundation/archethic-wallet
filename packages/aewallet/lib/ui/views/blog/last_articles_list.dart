@@ -154,11 +154,13 @@ class SlidingCard extends StatelessWidget {
     return Transform.translate(
       offset: Offset(-32 * gauss * offset!.sign, 0),
       child: Card(
+        elevation: 5,
+        shadowColor: Colors.black,
         margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-        color: Colors.transparent,
+        color: StateContainer.of(context).curTheme.backgroundDark,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(32),
-          side: const BorderSide(color: Colors.white24, width: 1),
+          borderRadius: BorderRadius.circular(25),
+          side: const BorderSide(color: Colors.white10, width: 1),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,7 +168,7 @@ class SlidingCard extends StatelessWidget {
           children: <Widget>[
             ClipRRect(
               borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(32)),
+                  const BorderRadius.vertical(top: Radius.circular(25)),
               child: assetName == null
                   ? SizedBox(
                       width: MediaQuery.of(context).size.width,
