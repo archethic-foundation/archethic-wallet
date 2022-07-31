@@ -83,7 +83,7 @@ class HoneyOrangeTheme implements BaseTheme {
   @override
   Color? positiveValue = Colors.lightGreenAccent[400];
   @override
-  Color? negativeValue = Colors.red[300];
+  Color? negativeValue = Colors.redAccent[400];
   @override
   Color? positiveAmount = Colors.greenAccent[400];
   @override

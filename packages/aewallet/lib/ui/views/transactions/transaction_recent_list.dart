@@ -197,18 +197,18 @@ class _TxListWidgetState extends State<TxListWidget> {
                                           ? AutoSizeText(
                                               '-${transaction.amount!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                               style: AppStyles
-                                                  .textStyleSize20W700EquinoxRed(
+                                                  .textStyleSize12W400PrimaryRed(
                                                       context))
                                           : AutoSizeText(
                                               '${transaction.amount!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                               style: AppStyles
-                                                  .textStyleSize20W700EquinoxGreen(
+                                                  .textStyleSize12W400PrimaryGreen(
                                                       context)),
                                     if (transaction.amount != null)
                                       Text(
                                           '${CurrencyUtil.convertAmountFormated(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.amount!)} ',
                                           style: AppStyles
-                                              .textStyleSize12W600Primary(
+                                              .textStyleSize12W400Primary(
                                                   context)),
                                   ],
                                 )
@@ -223,7 +223,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                                           ? AutoSizeText(
                                               '-${CurrencyUtil.convertAmountFormated(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.amount!)}',
                                               style: AppStyles
-                                                  .textStyleSize20W700EquinoxRed(
+                                                  .textStyleSize12W400PrimaryRed(
                                                       context))
                                           : AutoSizeText(
                                               CurrencyUtil
@@ -241,7 +241,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                                                           .amount!,
                                                       transaction.amount!),
                                               style: AppStyles
-                                                  .textStyleSize20W700EquinoxGreen(
+                                                  .textStyleSize12W400PrimaryGreen(
                                                       context)),
                                     if (transaction.amount != null)
                                       transaction.typeTx ==
@@ -254,7 +254,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                                           : AutoSizeText(
                                               '${transaction.amount!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                               style: AppStyles
-                                                  .textStyleSize12W600Primary(
+                                                  .textStyleSize12W400Primary(
                                                       context)),
                                   ],
                                 ),

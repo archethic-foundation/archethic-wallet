@@ -209,29 +209,11 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.positiveAmount);
   }
 
-  static TextStyle textStyleSize20W700EquinoxGreen(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Equinox',
-        fontSize: AppFontSizes.size20,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 1,
-        color: StateContainer.of(context).curTheme.positiveAmount);
-  }
-
   static TextStyle textStyleSize20W700Red(BuildContext context) {
     return TextStyle(
         fontFamily: 'Montserrat',
         fontSize: AppFontSizes.size20,
         fontWeight: FontWeight.w700,
-        color: StateContainer.of(context).curTheme.negativeAmount);
-  }
-
-  static TextStyle textStyleSize20W700EquinoxRed(BuildContext context) {
-    return TextStyle(
-        fontFamily: 'Equinox',
-        fontSize: AppFontSizes.size20,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 1,
         color: StateContainer.of(context).curTheme.negativeAmount);
   }
 
@@ -514,6 +496,24 @@ class AppStyles {
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text,
+    );
+  }
+
+  static TextStyle textStyleSize12W400PrimaryRed(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.size12,
+      fontWeight: FontWeight.w400,
+      color: StateContainer.of(context).curTheme.negativeAmount,
+    );
+  }
+
+  static TextStyle textStyleSize12W400PrimaryGreen(BuildContext context) {
+    return TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: AppFontSizes.size12,
+      fontWeight: FontWeight.w400,
+      color: StateContainer.of(context).curTheme.positiveAmount,
     );
   }
 

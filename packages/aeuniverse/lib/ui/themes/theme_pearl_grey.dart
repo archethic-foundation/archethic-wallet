@@ -83,7 +83,7 @@ class PearlGreyTheme implements BaseTheme {
   @override
   Color? positiveValue = const Color.fromARGB(255, 0, 129, 67);
   @override
-  Color? negativeValue = Colors.red[300];
+  Color? negativeValue = Colors.redAccent[400];
   @override
   Color? positiveAmount = const Color.fromARGB(255, 0, 129, 67);
   @override
