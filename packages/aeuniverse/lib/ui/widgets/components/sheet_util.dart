@@ -24,7 +24,7 @@ class Sheets {
       {required BuildContext context,
       required Widget widget,
       Color? color,
-      double radius = 30.0,
+      double radius = 25.0,
       Color? bgColor,
       int animationDurationMs = 250,
       bool removeUntilHome = false,
@@ -81,7 +81,7 @@ class Sheets {
       {required BuildContext context,
       required WidgetBuilder builder,
       Color? color,
-      double radius = 30.0,
+      double radius = 25.0,
       Color? bgColor,
       int animationDurationMs = 225}) {
     assert(radius > 0.0);

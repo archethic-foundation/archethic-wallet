@@ -28,9 +28,18 @@ class AppButton {
           child: Container(
             width: 400,
             decoration: ShapeDecoration(
-                gradient:
-                    StateContainer.of(context).curTheme.gradientMainButton!,
-                shape: const StadiumBorder()),
+              gradient: StateContainer.of(context).curTheme.gradientMainButton!,
+              shape: const StadiumBorder(),
+              shadows: [
+                BoxShadow(
+                  blurStyle: BlurStyle.normal,
+                  color: Colors.black.withOpacity(0.5),
+                  blurRadius: 7,
+                  spreadRadius: 1,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
             height: 55,
             margin: EdgeInsetsDirectional.fromSTEB(
                 dimens[0], dimens[1], dimens[2], dimens[3]),
