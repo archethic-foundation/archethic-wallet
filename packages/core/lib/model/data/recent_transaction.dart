@@ -97,7 +97,7 @@ class RecentTransaction extends HiveObject {
       Contact? contact =
           await sl.get<DBHelper>().getContactWithAddress(recipient!);
       if (contact != null) {
-        recipientContactName = contact.name!;
+        recipientContactName = contact.name!.substring(1);
       }
     }
 
