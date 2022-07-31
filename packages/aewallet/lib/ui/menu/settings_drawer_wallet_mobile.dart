@@ -999,12 +999,12 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         preferences.setShowPriceChart(_showPriceChartActive);
                       });
                     }),
-                    if (Platform.isWindows == false)
+                    if (Platform.isIOS == true || Platform.isAndroid == true)
                       Divider(
                         height: 2,
                         color: StateContainer.of(context).curTheme.text15,
                       ),
-                    if (Platform.isWindows == false)
+                    if (Platform.isIOS == true || Platform.isAndroid == true)
                       AppSettings.buildSettingsListItemSwitch(
                           context,
                           AppLocalization.of(context)!.activateNotifications,

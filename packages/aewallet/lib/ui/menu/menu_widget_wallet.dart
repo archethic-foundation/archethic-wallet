@@ -10,7 +10,6 @@ import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/localization.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
@@ -22,7 +21,6 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:aewallet/ui/menu/settings_drawer_wallet_mobile.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
-import 'package:aewallet/ui/views/transactions/transaction_chain_explorer_sheet.dart';
 import 'package:aewallet/ui/views/uco/transfer_uco_sheet.dart';
 
 class MenuWidgetWallet extends AbstractMenuWidget {
@@ -181,52 +179,6 @@ class MenuWidgetWallet extends AbstractMenuWidget {
       child: const Drawer(
         // TODO: dependencies issue
         child: SettingsSheetWalletMobile(),
-      ),
-    );
-  }
-
-  Widget buildMenuTxExplorer(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        sl.get<HapticUtil>().feedback(
-            FeedbackType.light, StateContainer.of(context).activeVibrations);
-        Sheets.showAppHeightNineSheet(
-            context: context, widget: const TransactionChainExplorerSheet());
-      },
-      child: Ink(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    AutoSizeText(
-                        AppLocalization.of(context)!
-                            .transactionChainExplorerHeader,
-                        maxLines: 2,
-                        style: AppStyles.textStyleSize14W600EquinoxPrimary(
-                            context)),
-                    AutoSizeText(
-                        AppLocalization.of(context)!
-                            .transactionChainExplorerDesc,
-                        maxLines: 2,
-                        style: AppStyles.textStyleSize12W100Primary(context)),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              buildIconDataWidget(
-                  context, Icons.arrow_forward_ios_rounded, 25, 25),
-            ],
-          ),
-        ),
       ),
     );
   }
