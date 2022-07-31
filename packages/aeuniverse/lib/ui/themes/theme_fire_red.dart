@@ -115,6 +115,18 @@ class FireRedTheme implements BaseTheme {
   @override
   Color? backgroundDarkest = const Color(0xFFCF2329);
 
+  // Bottom Bar
+  @override
+  num? bottomBarBackgroundColorOpacity = 0.2;
+  @override
+  Color? bottomBarActiveIconColor = const Color(0xFF6B0036);
+  @override
+  Color? bottomBarActiveTitleColor = const Color(0xFFFFFFFF).withOpacity(0.8);
+  @override
+  Color? bottomBarActiveColor = const Color(0xFFFFFFFF);
+  @override
+  Color? bottomBarInactiveIcon = const Color(0xFFFFFFFF);
+
   @override
   String? background1Small =
       'packages/core_ui/assets/themes/fire_red/v01-waves-1100.jpg';

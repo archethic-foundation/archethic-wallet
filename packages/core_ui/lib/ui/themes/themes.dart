@@ -67,6 +67,13 @@ abstract class BaseTheme {
   String? background4Small;
   String? background5Small;
 
+  // Bottom Bar
+  num? bottomBarBackgroundColorOpacity;
+  Color? bottomBarActiveIconColor;
+  Color? bottomBarActiveTitleColor;
+  Color? bottomBarActiveColor;
+  Color? bottomBarInactiveIcon;
+
   // Animation Overlay
   Color? animationOverlayMedium;
   Color? animationOverlayStrong;

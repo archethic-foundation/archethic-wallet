@@ -115,6 +115,18 @@ class ByzantineVioletTheme implements BaseTheme {
   @override
   Color? backgroundDarkest = const Color(0xFFCD195B);
 
+  // Bottom Bar
+  @override
+  num? bottomBarBackgroundColorOpacity = 0.2;
+  @override
+  Color? bottomBarActiveIconColor = const Color(0xFF571150);
+  @override
+  Color? bottomBarActiveTitleColor = const Color(0xFFFFFFFF).withOpacity(0.8);
+  @override
+  Color? bottomBarActiveColor = const Color(0xFFFFFFFF);
+  @override
+  Color? bottomBarInactiveIcon = const Color(0xFFFFFFFF);
+
   @override
   String? background1Small =
       'packages/core_ui/assets/themes/byzantine_violet/v01-waves-1100.jpg';

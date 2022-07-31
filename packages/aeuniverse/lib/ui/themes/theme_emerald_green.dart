@@ -115,6 +115,18 @@ class EmeraldGreenTheme implements BaseTheme {
   @override
   Color? backgroundDarkest = const Color(0xFF228B77);
 
+  // Bottom Bar
+  @override
+  num? bottomBarBackgroundColorOpacity = 0.2;
+  @override
+  Color? bottomBarActiveIconColor = const Color(0xFF473B53);
+  @override
+  Color? bottomBarActiveTitleColor = const Color(0xFFFFFFFF).withOpacity(0.8);
+  @override
+  Color? bottomBarActiveColor = const Color(0xFFFFFFFF);
+  @override
+  Color? bottomBarInactiveIcon = const Color(0xFFFFFFFF);
+
   @override
   String? background1Small =
       'packages/core_ui/assets/themes/emerald_green/v01-waves-1100.jpg';

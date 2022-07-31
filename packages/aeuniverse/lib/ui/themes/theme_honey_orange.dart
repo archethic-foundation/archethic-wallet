@@ -115,6 +115,18 @@ class HoneyOrangeTheme implements BaseTheme {
   @override
   Color? backgroundDarkest = const Color(0xFFEDA30F);
 
+  // Bottom Bar
+  @override
+  num? bottomBarBackgroundColorOpacity = 0.2;
+  @override
+  Color? bottomBarActiveIconColor = const Color(0xFF6C1E1E);
+  @override
+  Color? bottomBarActiveTitleColor = const Color(0xFFFFFFFF).withOpacity(0.8);
+  @override
+  Color? bottomBarActiveColor = const Color(0xFFFFFFFF);
+  @override
+  Color? bottomBarInactiveIcon = const Color(0xFFFFFFFF);
+
   @override
   String? background1Small =
       'packages/core_ui/assets/themes/honey_orange/v01-waves-1100.jpg';

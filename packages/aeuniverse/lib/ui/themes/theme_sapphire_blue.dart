@@ -115,6 +115,18 @@ class SapphireBlueTheme implements BaseTheme {
   @override
   Color? backgroundDarkest = const Color(0xFF0688E8);
 
+  // Bottom Bar
+  @override
+  num? bottomBarBackgroundColorOpacity = 0.2;
+  @override
+  Color? bottomBarActiveIconColor = const Color(0xFF1B55A7);
+  @override
+  Color? bottomBarActiveTitleColor = const Color(0xFFFFFFFF).withOpacity(0.8);
+  @override
+  Color? bottomBarActiveColor = const Color(0xFFFFFFFF);
+  @override
+  Color? bottomBarInactiveIcon = const Color(0xFFFFFFFF);
+
   @override
   String? background1Small =
       'packages/core_ui/assets/themes/sapphire_blue/v01-waves-1100.jpg';
