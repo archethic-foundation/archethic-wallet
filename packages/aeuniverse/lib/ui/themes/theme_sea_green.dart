@@ -202,8 +202,8 @@ class SeaGreenTheme implements BaseTheme {
     return BoxDecoration(
       color: text60,
       borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(40.0),
-        topRight: Radius.circular(40.0),
+        topLeft: Radius.circular(25.0),
+        topRight: Radius.circular(25.0),
       ),
       image: DecorationImage(
           image: AssetImage(background2Small!),
