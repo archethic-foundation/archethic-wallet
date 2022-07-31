@@ -83,11 +83,11 @@ class EmeraldGreenTheme implements BaseTheme {
   @override
   Color? positiveValue = Colors.lightGreenAccent[400];
   @override
-  Color? negativeValue = Colors.redAccent[400];
+  Color? negativeValue = Colors.redAccent[100];
   @override
   Color? positiveAmount = Colors.greenAccent[400];
   @override
-  Color? negativeAmount = Colors.redAccent[400];
+  Color? negativeAmount = Colors.redAccent[100];
   @override
   Color? warning = Colors.yellow[600];
 

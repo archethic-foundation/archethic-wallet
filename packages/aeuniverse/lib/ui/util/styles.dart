@@ -504,7 +504,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
-      color: StateContainer.of(context).curTheme.negativeAmount,
+      color: StateContainer.of(context).curTheme.text,
     );
   }
 
@@ -513,7 +513,7 @@ class AppStyles {
       fontFamily: 'Montserrat',
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
-      color: StateContainer.of(context).curTheme.positiveAmount,
+      color: StateContainer.of(context).curTheme.text,
     );
   }
 
