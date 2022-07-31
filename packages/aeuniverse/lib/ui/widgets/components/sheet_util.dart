@@ -27,7 +27,6 @@ class Sheets {
       double radius = 25.0,
       Color? bgColor,
       int animationDurationMs = 250,
-      bool removeUntilHome = false,
       bool closeOnTap = false,
       Function? onDisposed}) {
     assert(radius > 0.0);
@@ -69,10 +68,7 @@ class Sheets {
         animationDurationMs: animationDurationMs,
         closeOnTap: closeOnTap,
         onDisposed: onDisposed);
-    if (removeUntilHome) {
-      return Navigator.pushAndRemoveUntil<T>(
-          context, route, RouteUtils.withNameLike('/home'));
-    }
+
     return Navigator.push<T>(context, route);
   }
 

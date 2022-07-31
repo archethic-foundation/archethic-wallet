@@ -207,7 +207,19 @@ class _TxListWidgetState extends State<TxListWidget> {
                                                       context)),
                                     if (transaction.amount != null)
                                       Text(
-                                          '${CurrencyUtil.convertAmountFormated(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.amount!)} ',
+                                          CurrencyUtil.convertAmountFormated(
+                                              StateContainer.of(context)
+                                                  .curCurrency
+                                                  .currency
+                                                  .name,
+                                              StateContainer.of(context)
+                                                  .appWallet!
+                                                  .appKeychain!
+                                                  .getAccountSelected()!
+                                                  .balance!
+                                                  .tokenPrice!
+                                                  .amount!,
+                                              transaction.amount!),
                                           style: AppStyles
                                               .textStyleSize12W400Primary(
                                                   context)),
