@@ -87,7 +87,6 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
   String? _amountValidationText = '';
   String? _addressValidationText = '';
   String? _messageValidationText = '';
-  String? _globalValidationText = '';
   String? quickSendAmount;
   bool _addressValidAndUnfocused = false;
   bool _isContact = false;
@@ -421,14 +420,6 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
                                         )
                                       : const SizedBox(),
                                 ),
-                                Container(
-                                  alignment: const AlignmentDirectional(0, 0),
-                                  margin: const EdgeInsets.only(top: 3),
-                                  child: Text(_globalValidationText!,
-                                      style:
-                                          AppStyles.textStyleSize14W600Primary(
-                                              context)),
-                                ),
                               ],
                             ),
                           ],
@@ -627,7 +618,6 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
       _addressValidationText = '';
       _messageValidationText = '';
       _amountValidationText = '';
-      _globalValidationText = '';
     });
     // Validate amount
     if (_sendAmountController!.text.trim().isEmpty) {
@@ -663,7 +653,7 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
         if (sendAmount + feeEstimation > balanceRaw) {
           isValid = false;
           setState(() {
-            _globalValidationText = AppLocalization.of(context)!
+            _amountValidationText = AppLocalization.of(context)!
                 .insufficientBalance
                 .replaceAll(
                     '%1',
