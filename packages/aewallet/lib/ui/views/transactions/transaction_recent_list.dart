@@ -4,6 +4,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:decimal/decimal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -195,12 +196,12 @@ class _TxListWidgetState extends State<TxListWidget> {
                                       transaction.typeTx ==
                                               RecentTransaction.transferOutput
                                           ? AutoSizeText(
-                                              '-${transaction.amount!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                              '-${Decimal.parse(transaction.amount!.toString())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                               style: AppStyles
                                                   .textStyleSize12W400PrimaryRed(
                                                       context))
                                           : AutoSizeText(
-                                              '${transaction.amount!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                              '${Decimal.parse(transaction.amount!.toString())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                               style: AppStyles
                                                   .textStyleSize12W400PrimaryGreen(
                                                       context)),
@@ -247,12 +248,12 @@ class _TxListWidgetState extends State<TxListWidget> {
                                       transaction.typeTx ==
                                               RecentTransaction.transferOutput
                                           ? AutoSizeText(
-                                              '-${transaction.amount!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                              '-${Decimal.parse(transaction.amount!.toString())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                               style: AppStyles
                                                   .textStyleSize12W600Primary(
                                                       context))
                                           : AutoSizeText(
-                                              '${transaction.amount!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                              '${Decimal.parse(transaction.amount!.toString())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                               style: AppStyles
                                                   .textStyleSize12W400Primary(
                                                       context)),

@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:developer' as dev;
 
 // Package imports:
+import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
@@ -331,7 +332,7 @@ class AppService {
                 domain: 'UCOLedger',
                 titleInfo: 'Amount',
                 valueInfo:
-                    '${transaction.data!.ledger!.uco!.transfers![i].amount! / BigInt.from(100000000)} $cryptoCurrency'));
+                    '${Decimal.parse((transaction.data!.ledger!.uco!.transfers![i].amount! / BigInt.from(100000000)).toString())} $cryptoCurrency'));
           }
         }
       }
