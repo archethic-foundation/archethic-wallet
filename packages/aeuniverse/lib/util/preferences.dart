@@ -24,6 +24,7 @@ class Preferences {
   final Box<dynamic> _box;
 
   //
+  static const String _first_launch = 'archethic_first_launch';
   static const String _auth_method = 'archethic_auth_method';
   static const String _cur_currency = 'archethic_cur_currency';
   static const String _cur_language = 'archethic_cur_language';
@@ -119,6 +120,10 @@ class Preferences {
   Future<void> setLock(bool value) => _setValue(_lock, value);
 
   bool getLock() => _getValue(_lock, defaultValue: false);
+
+  Future<void> setFirstLaunch(bool value) => _setValue(_lock, value);
+
+  bool getFirstLaunch() => _getValue(_first_launch, defaultValue: true);
 
   Future<void> setPinPadShuffle(bool value) => _setValue(_pinPadShuffle, value);
 

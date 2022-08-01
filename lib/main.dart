@@ -6,6 +6,7 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 // Flutter imports:
+import 'package:core/util/vault.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -362,7 +363,15 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       return;
     }
     try {
-      // See if logged in already
+      // iOS key store is persistent, so if this is first launch then we will clear the keystore
+      bool firstLaunch = preferences.getFirstLaunch();
+      if (firstLaunch) {
+        Vault vault = await Vault.getInstance();
+        vault.clearAll();
+        preferences.clearAll();
+      }
+      await preferences.setFirstLaunch(false);
+
       bool isLoggedIn = false;
 
       final String? seed = await StateContainer.of(context).getSeed();
