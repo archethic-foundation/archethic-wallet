@@ -1,6 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -319,7 +321,11 @@ class _SetYubikeyState extends State<SetYubikey> {
             preferences.setShowBalances(true);
             preferences.setShowBlog(true);
             preferences.setActiveVibrations(true);
-            preferences.setActiveNotifications(true);
+            if (Platform.isIOS == true || Platform.isAndroid == true) {
+              preferences.setActiveNotifications(true);
+            } else {
+              preferences.setActiveNotifications(false);
+            }
             preferences.setPinPadShuffle(false);
             preferences.setShowPriceChart(true);
             preferences.setPrimaryCurrency(

@@ -2,6 +2,8 @@
 // ignore_for_file: always_specify_types
 
 // Flutter imports:
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -165,7 +167,14 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                       preferences.setShowBalances(true);
                                       preferences.setShowBlog(true);
                                       preferences.setActiveVibrations(true);
-                                      preferences.setActiveNotifications(true);
+                                      if (Platform.isIOS == true ||
+                                          Platform.isAndroid == true) {
+                                        preferences
+                                            .setActiveNotifications(true);
+                                      } else {
+                                        preferences
+                                            .setActiveNotifications(false);
+                                      }
                                       preferences.setPinPadShuffle(false);
                                       preferences.setShowPriceChart(true);
                                       preferences.setPrimaryCurrency(
@@ -232,7 +241,14 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                       preferences.setShowBalances(true);
                                       preferences.setShowBlog(true);
                                       preferences.setActiveVibrations(true);
-                                      preferences.setActiveNotifications(true);
+                                      if (Platform.isIOS == true ||
+                                          Platform.isAndroid == true) {
+                                        preferences
+                                            .setActiveNotifications(true);
+                                      } else {
+                                        preferences
+                                            .setActiveNotifications(false);
+                                      }
                                       preferences.setPinPadShuffle(false);
                                       preferences.setShowPriceChart(true);
                                       preferences.setPrimaryCurrency(

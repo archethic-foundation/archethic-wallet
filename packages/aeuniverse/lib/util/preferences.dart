@@ -121,7 +121,7 @@ class Preferences {
 
   bool getLock() => _getValue(_lock, defaultValue: false);
 
-  Future<void> setFirstLaunch(bool value) => _setValue(_lock, value);
+  Future<void> setFirstLaunch(bool value) => _setValue(_first_launch, value);
 
   bool getFirstLaunch() => _getValue(_first_launch, defaultValue: true);
 
