@@ -6,6 +6,8 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aewallet/bus/transaction_send_event.dart';
+import 'package:core/util/confirmations/subscription_channel.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -19,38 +21,39 @@ import 'package:aeuniverse/util/preferences.dart';
 import 'package:core/bus/authenticated_event.dart';
 import 'package:core/localization.dart';
 import 'package:core/model/authentication_method.dart';
-import 'package:core/service/app_service.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
-import 'package:aewallet/bus/token_add_event.dart';
 
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show TransactionStatus, ApiService;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
-class AddTokenConfirm extends StatefulWidget {
-  const AddTokenConfirm(
+class AddNFTCollectionConfirm extends StatefulWidget {
+  const AddNFTCollectionConfirm(
       {super.key,
       this.tokenName,
-      this.tokenInitialSupply,
+      this.tokenSymbol,
       required this.feeEstimation});
 
   final String? tokenName;
-  final int? tokenInitialSupply;
+  final String? tokenSymbol;
   final double? feeEstimation;
 
   @override
-  State<AddTokenConfirm> createState() => _AddTokenConfirmState();
+  State<AddNFTCollectionConfirm> createState() =>
+      _AddNFTCollectionConfirmState();
 }
 
-class _AddTokenConfirmState extends State<AddTokenConfirm> {
+class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
   bool? animationOpen;
 
+  SubscriptionChannel subscriptionChannel = SubscriptionChannel();
+
   StreamSubscription<AuthenticatedEvent>? _authSub;
-  StreamSubscription<TokenAddEvent>? _addTokenSub;
+  StreamSubscription<TransactionSendEvent>? _sendTxSub;
 
   void _registerBus() {
     _authSub = EventTaxiImpl.singleton()
@@ -61,14 +64,15 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
       }
     });
 
-    _addTokenSub = EventTaxiImpl.singleton()
-        .registerTo<TokenAddEvent>()
-        .listen((TokenAddEvent event) {
-      if (event.response! != 'pending') {
+    _sendTxSub = EventTaxiImpl.singleton()
+        .registerTo<TransactionSendEvent>()
+        .listen((TransactionSendEvent event) {
+      if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
         if (animationOpen!) {
           Navigator.of(context).pop();
         }
+
         UIUtil.showSnackbar(
             '${AppLocalization.of(context)!.sendError} (${event.response!})',
             context,
@@ -77,18 +81,27 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
         Navigator.of(context).pop();
       } else {
         UIUtil.showSnackbar(
-          AppLocalization.of(context)!.transferSuccess,
-          context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!,
-          duration: const Duration(milliseconds: 5000),
-        );
+            AppLocalization.of(context)!.transferSuccess,
+            context,
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!,
+            duration: const Duration(milliseconds: 5000));
         setState(() {
           StateContainer.of(context).requestUpdate();
         });
         Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
       }
     });
+  }
+
+  void _destroyBus() {
+    if (_authSub != null) {
+      _authSub!.cancel();
+    }
+    if (_sendTxSub != null) {
+      _sendTxSub!.cancel();
+    }
+    subscriptionChannel.close();
   }
 
   @override
@@ -100,12 +113,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
 
   @override
   void dispose() {
-    if (_authSub != null) {
-      _authSub!.cancel();
-    }
-    if (_addTokenSub != null) {
-      _addTokenSub!.cancel();
-    }
+    _destroyBus();
     super.dispose();
   }
 
@@ -143,33 +151,14 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          AppLocalization.of(context)!.addTokenHeader,
+                          AppLocalization.of(context)!.createNFTCollection,
                           style: AppStyles.textStyleSize24W700EquinoxPrimary(
                               context),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 15),
-                  Container(
-                    child: RichText(
-                      textAlign: TextAlign.start,
-                      text: TextSpan(
-                        text: '',
-                        children: <InlineSpan>[
-                          TextSpan(
-                            text: '(',
-                            style:
-                                AppStyles.textStyleSize14W100Primary(context),
-                          ),
-                          TextSpan(
-                              text: ')',
-                              style: AppStyles.textStyleSize14W100Primary(
-                                  context)),
-                        ],
-                      ),
-                    ),
-                  ),
+                  const SizedBox(height: 20),
                   Text(
                       '${AppLocalization.of(context)!.estimatedFees}: ${widget.feeEstimation} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                       style: AppStyles.textStyleSize14W100Primary(context)),
@@ -178,14 +167,14 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                       padding: const EdgeInsets.only(left: 30.0, right: 30.0),
                       child: Text(
                           AppLocalization.of(context)!
-                              .addTokenConfirmationMessage,
+                              .addNFTCollectionConfirmationMessage,
                           style:
                               AppStyles.textStyleSize14W600Primary(context))),
                   const SizedBox(
                     height: 20,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 40.0),
+                    padding: const EdgeInsets.only(left: 40.0, top: 10),
                     child: Row(
                       children: <Widget>[
                         Text(AppLocalization.of(context)!.tokenName,
@@ -198,13 +187,13 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 40.0),
+                    padding: const EdgeInsets.only(left: 40.0, top: 10),
                     child: Row(
                       children: <Widget>[
-                        Text(AppLocalization.of(context)!.tokenInitialSupply,
+                        Text(AppLocalization.of(context)!.tokenSymbol,
                             style:
                                 AppStyles.textStyleSize14W600Primary(context)),
-                        Text(widget.tokenInitialSupply!.toString(),
+                        Text(widget.tokenSymbol!,
                             style:
                                 AppStyles.textStyleSize14W100Primary(context)),
                       ],
@@ -263,30 +252,60 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
   Future<void> _doAdd() async {
     try {
       _showSendingAnimation(context);
-      final String? transactionChainSeed =
-          await StateContainer.of(context).getSeed();
+      final String? seed = await StateContainer.of(context).getSeed();
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
-      final TransactionStatus transactionStatus = await sl
-          .get<AppService>()
-          .addToken(
-              originPrivateKey,
-              transactionChainSeed!,
-              StateContainer.of(context)
-                  .appWallet!
-                  .appKeychain!
-                  .getAccountSelected()!
-                  .lastAddress!,
-              widget.tokenName!,
-              widget.tokenInitialSupply!,
-              StateContainer.of(context)
-                  .appWallet!
-                  .appKeychain!
-                  .getAccountSelected()!
-                  .name!);
-      EventTaxiImpl.singleton()
-          .fire(TokenAddEvent(response: transactionStatus.status));
+      final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
+      final String service =
+          'archethic-wallet-${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.name!}';
+      final int index = (await sl.get<ApiService>().getTransactionIndex(
+              uint8ListToHex(keychain.deriveAddress(service, index: 0))))
+          .chainLength!;
+
+      final Transaction transaction =
+          Transaction(type: 'token', data: Transaction.initData());
+      String content = tokenToJsonForTxDataContent(Token(
+          name: widget.tokenName,
+          supply: 0,
+          symbol: widget.tokenSymbol,
+          type: 'non-fungible'));
+      transaction.setContent(content);
+
+      Transaction signedTx = keychain
+          .buildTransaction(transaction, service, index)
+          .originSign(originPrivateKey);
+
+      TransactionStatus transactionStatus = TransactionStatus();
+
+      final Preferences preferences = await Preferences.getInstance();
+      await subscriptionChannel.connect(
+          await preferences.getNetwork().getPhoenixHttpLink(),
+          await preferences.getNetwork().getWebsocketUri());
+
+      subscriptionChannel.addSubscriptionTransactionConfirmed(
+          transaction.address!, waitConfirmations);
+
+      transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
     } catch (e) {
-      EventTaxiImpl.singleton().fire(TokenAddEvent(response: e.toString()));
+      EventTaxiImpl.singleton().fire(
+          TransactionSendEvent(response: e.toString(), nbConfirmations: 0));
+      subscriptionChannel.close();
     }
+  }
+
+  void waitConfirmations(QueryResult event) {
+    if (event.data != null &&
+        event.data!['transactionConfirmed'] != null &&
+        event.data!['transactionConfirmed']['nbConfirmations'] != null) {
+      EventTaxiImpl.singleton().fire(TransactionSendEvent(
+          response: 'ok',
+          nbConfirmations: event.data!['transactionConfirmed']
+              ['nbConfirmations']));
+    } else {
+      // TODO: Mettre un libellé plus clair
+      EventTaxiImpl.singleton().fire(
+        TransactionSendEvent(nbConfirmations: 0, response: 'ko'),
+      );
+    }
+    subscriptionChannel.close();
   }
 }

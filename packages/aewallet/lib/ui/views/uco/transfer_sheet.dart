@@ -1,11 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // ignore_for_file: avoid_unnecessary_containers
 
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
-import 'package:flutter/foundation.dart';
+import 'package:aewallet/model/token_transfer_wallet.dart';
+import 'package:core/model/data/account_token.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,7 +13,6 @@ import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/ui/widgets/components/app_text_field.dart';
 import 'package:aeuniverse/ui/widgets/components/buttons.dart';
-import 'package:aeuniverse/ui/widgets/components/icon_widget.dart';
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aeuniverse/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/contacts_dialog.dart';
@@ -48,8 +45,8 @@ import 'package:aewallet/ui/views/uco/transfer_confirm_sheet.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show AddressService, isHex, ApiService;
 
-class TransferUCOSheet extends StatefulWidget {
-  const TransferUCOSheet(
+class TransferSheet extends StatefulWidget {
+  const TransferSheet(
       {@required this.localCurrency,
       this.contact,
       this.address,
@@ -57,6 +54,7 @@ class TransferUCOSheet extends StatefulWidget {
       this.title,
       this.actionButtonTitle,
       this.primaryCurrency,
+      this.accountToken,
       super.key});
 
   final AvailableCurrency? localCurrency;
@@ -65,17 +63,18 @@ class TransferUCOSheet extends StatefulWidget {
   final String? quickSendAmount;
   final String? title;
   final String? actionButtonTitle;
+  final AccountToken? accountToken;
   final PrimaryCurrencySetting? primaryCurrency;
 
   @override
-  State<TransferUCOSheet> createState() => _TransferUCOSheetState();
+  State<TransferSheet> createState() => _TransferSheetState();
 }
 
 enum AddressStyle { text60, text90, primary }
 
 enum PrimaryCurrency { network, selected }
 
-class _TransferUCOSheetState extends State<TransferUCOSheet> {
+class _TransferSheetState extends State<TransferSheet> {
   FocusNode? _sendAddressFocusNode;
   TextEditingController? _sendAddressController;
   FocusNode? _sendAmountFocusNode;
@@ -101,6 +100,9 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
 
   List<UCOTransferWallet> ucoTransferList =
       List<UCOTransferWallet>.empty(growable: true);
+
+  List<TokenTransferWallet> tokenTransferList =
+      List<TokenTransferWallet>.empty(growable: true);
 
   @override
   void initState() {
@@ -301,32 +303,10 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
                     ),
                   ],
                 ),
-                if (kIsWeb || Platform.isMacOS || Platform.isWindows)
-                  Stack(
-                    children: <Widget>[
-                      const SizedBox(
-                        width: 60,
-                        height: 40,
-                      ),
-                      Container(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: InkWell(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: Column(
-                                children: <Widget>[
-                                  buildIconDataWidget(
-                                      context, Icons.close_outlined, 30, 30),
-                                ],
-                              ))),
-                    ],
-                  )
-                else
-                  const SizedBox(
-                    width: 60,
-                    height: 40,
-                  ),
+                const SizedBox(
+                  width: 60,
+                  height: 40,
+                ),
               ],
             ),
             Expanded(
@@ -380,17 +360,6 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
                                               context)),
                                 ),
                                 const SizedBox(height: 10),
-                                getEnterMessage(),
-                                Container(
-                                  alignment: const AlignmentDirectional(0, 0),
-                                  margin: const EdgeInsets.only(
-                                      left: 50, right: 40, top: 3),
-                                  child: Text(_messageValidationText!,
-                                      style:
-                                          AppStyles.textStyleSize14W600Primary(
-                                              context)),
-                                ),
-                                const SizedBox(height: 10),
                                 Container(
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: 30),
@@ -419,6 +388,17 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
                                                   context),
                                         )
                                       : const SizedBox(),
+                                ),
+                                const SizedBox(height: 10),
+                                getEnterMessage(),
+                                Container(
+                                  alignment: const AlignmentDirectional(0, 0),
+                                  margin: const EdgeInsets.only(
+                                      left: 50, right: 40, top: 3),
+                                  child: Text(_messageValidationText!,
+                                      style:
+                                          AppStyles.textStyleSize14W600Primary(
+                                              context)),
                                 ),
                               ],
                             ),
@@ -474,10 +454,17 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
                                           .getAccountSelected()!
                                           .lastAddress!,
                                       ucoTransferList: ucoTransferList,
+                                      tokenTransferList: tokenTransferList,
                                       title: widget.title,
-                                      typeTransfer: 'UCO',
+                                      typeTransfer: widget.accountToken == null
+                                          ? 'UCO'
+                                          : 'TOKEN',
                                       feeEstimation: feeEstimation,
                                       message: _messageController!.text.trim(),
+                                      symbol: widget.accountToken == null
+                                          ? null
+                                          : widget.accountToken!
+                                              .tokenInformations!.symbol!,
                                     ),
                                   );
                                 } else {
@@ -612,6 +599,7 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
   Future<bool> _validateRequest() async {
     bool isValid = true;
     UCOTransferWallet ucoTransfer = UCOTransferWallet();
+    TokenTransferWallet tokenTransfer = TokenTransferWallet();
     setState(() {
       _sendAmountFocusNode!.unfocus();
       _sendAddressFocusNode!.unfocus();
@@ -638,31 +626,68 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
         final String amount = _rawAmount == null
             ? _sendAmountController!.text
             : NumberUtil.getRawAsUsableString(_rawAmount!);
-        final double balanceRaw = StateContainer.of(context)
-            .appWallet!
-            .appKeychain!
-            .getAccountSelected()!
-            .balance!
-            .nativeTokenValue!;
+        double balanceRaw = 0;
         double sendAmount = 0;
-        if (primaryCurrency == PrimaryCurrency.network) {
+        if (widget.accountToken == null) {
+          balanceRaw = StateContainer.of(context)
+              .appWallet!
+              .appKeychain!
+              .getAccountSelected()!
+              .balance!
+              .nativeTokenValue!;
+
+          if (primaryCurrency == PrimaryCurrency.network) {
+            sendAmount = double.tryParse(amount)!;
+          } else {
+            sendAmount = priceConverted;
+          }
+          if (sendAmount + feeEstimation > balanceRaw) {
+            isValid = false;
+            setState(() {
+              _amountValidationText = AppLocalization.of(context)!
+                  .insufficientBalance
+                  .replaceAll(
+                      '%1',
+                      StateContainer.of(context)
+                          .curNetwork
+                          .getNetworkCryptoCurrencyLabel());
+            });
+          } else {
+            ucoTransfer.amount = BigInt.from(sendAmount * 100000000);
+          }
+        } else {
+          balanceRaw = widget.accountToken!.amount!.toDouble();
           sendAmount = double.tryParse(amount)!;
-        } else {
-          sendAmount = priceConverted;
-        }
-        if (sendAmount + feeEstimation > balanceRaw) {
-          isValid = false;
-          setState(() {
-            _amountValidationText = AppLocalization.of(context)!
-                .insufficientBalance
-                .replaceAll(
-                    '%1',
-                    StateContainer.of(context)
-                        .curNetwork
-                        .getNetworkCryptoCurrencyLabel());
-          });
-        } else {
-          ucoTransfer.amount = BigInt.from(sendAmount * 100000000);
+          if (sendAmount > balanceRaw) {
+            isValid = false;
+            setState(() {
+              _amountValidationText = AppLocalization.of(context)!
+                  .insufficientBalance
+                  .replaceAll(
+                      '%1', widget.accountToken!.tokenInformations!.symbol!);
+            });
+          } else {
+            if (feeEstimation >
+                StateContainer.of(context)
+                    .appWallet!
+                    .appKeychain!
+                    .getAccountSelected()!
+                    .balance!
+                    .nativeTokenValue!) {
+              isValid = false;
+              setState(() {
+                _amountValidationText = AppLocalization.of(context)!
+                    .insufficientBalance
+                    .replaceAll(
+                        '%1',
+                        StateContainer.of(context)
+                            .curNetwork
+                            .getNetworkCryptoCurrencyLabel());
+              });
+            } else {
+              tokenTransfer.amount = BigInt.from(sendAmount * 100000000);
+            }
+          }
         }
       }
     }
@@ -711,19 +736,37 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
 
     if (isValid) {
       ucoTransferList.clear();
-      if (contact != null) {
-        ucoTransfer.toContactName = contact.name!;
-        ucoTransfer.to = contact.address!;
+      tokenTransferList.clear();
+
+      String lastAddressRecipient = '';
+      if (widget.accountToken == null) {
+        if (contact != null) {
+          ucoTransfer.toContactName = contact.name!;
+          ucoTransfer.to = contact.address!;
+        } else {
+          ucoTransfer.to = _sendAddressController!.text.trim();
+        }
+
+        await sl.get<AddressService>().lastAddressFromAddress(ucoTransfer.to!);
+        if (lastAddressRecipient == '') {
+          lastAddressRecipient = ucoTransfer.to!;
+        }
       } else {
-        ucoTransfer.to = _sendAddressController!.text.trim();
+        if (contact != null) {
+          tokenTransfer.toContactName = contact.name!;
+          tokenTransfer.to = contact.address!;
+        } else {
+          tokenTransfer.to = _sendAddressController!.text.trim();
+        }
+        //
+        await sl
+            .get<AddressService>()
+            .lastAddressFromAddress(tokenTransfer.to!);
+        if (lastAddressRecipient == '') {
+          lastAddressRecipient = tokenTransfer.to!;
+        }
       }
-      //
-      String lastAddressRecipient = await sl
-          .get<AddressService>()
-          .lastAddressFromAddress(ucoTransfer.to!);
-      if (lastAddressRecipient == '') {
-        lastAddressRecipient = ucoTransfer.to!;
-      }
+
       if (lastAddressRecipient ==
           StateContainer.of(context)
               .appWallet!
@@ -742,7 +785,12 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
           _qrCodeButtonVisible = true;
         });
       } else {
-        ucoTransferList.add(ucoTransfer);
+        if (widget.accountToken == null) {
+          ucoTransferList.add(ucoTransfer);
+        } else {
+          tokenTransfer.token = widget.accountToken!.tokenInformations!.address;
+          tokenTransferList.add(tokenTransfer);
+        }
       }
     }
     return isValid;
@@ -789,9 +837,11 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
           textInputAction: TextInputAction.next,
           maxLines: null,
           autocorrect: false,
-          labelText: primaryCurrency == PrimaryCurrency.network
-              ? '${AppLocalization.of(context)!.enterAmount} (${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})'
-              : '${AppLocalization.of(context)!.enterAmount} (${StateContainer.of(context).curCurrency.currency.name})',
+          labelText: widget.accountToken == null
+              ? primaryCurrency == PrimaryCurrency.network
+                  ? '${AppLocalization.of(context)!.enterAmount} (${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})'
+                  : '${AppLocalization.of(context)!.enterAmount} (${StateContainer.of(context).curCurrency.currency.name})'
+              : '${AppLocalization.of(context)!.enterAmount} (${widget.accountToken!.tokenInformations!.symbol})',
           suffixButton: TextFieldButton(
             icon: FontAwesomeIcons.anglesUp,
             onPressed: () async {
@@ -856,29 +906,50 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
             }
           },
         ),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Container(
-            margin: const EdgeInsets.only(left: 40),
-            alignment: Alignment.centerLeft,
-            child: AutoSizeText(
-              '1 ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!} = ${CurrencyUtil.getAmountPlusSymbol(StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.fiatCurrencyCode!, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!)}',
-              style: AppStyles.textStyleSize14W100Primary(context),
-            ),
-          ),
-          _sendAmountController!.text.isNotEmpty
-              ? Container(
-                  margin: const EdgeInsets.only(right: 40),
-                  alignment: Alignment.centerRight,
-                  child: primaryCurrency == PrimaryCurrency.network
-                      ? Text('= ${_convertNetworkCurrencyToSelectedCurrency()}',
-                          textAlign: TextAlign.right,
-                          style: AppStyles.textStyleSize14W100Primary(context))
-                      : Text('= ${_convertSelectedCurrencyToNetworkCurrency()}',
-                          textAlign: TextAlign.right,
-                          style: AppStyles.textStyleSize14W100Primary(context)),
-                )
-              : const SizedBox(),
-        ]),
+        widget.accountToken == null
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 40),
+                    alignment: Alignment.centerLeft,
+                    child: AutoSizeText(
+                      '1 ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!} = ${CurrencyUtil.getAmountPlusSymbol(StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.fiatCurrencyCode!, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!)}',
+                      style: AppStyles.textStyleSize14W100Primary(context),
+                    ),
+                  ),
+                  _sendAmountController!.text.isNotEmpty
+                      ? Container(
+                          margin: const EdgeInsets.only(right: 40),
+                          alignment: Alignment.centerRight,
+                          child: primaryCurrency == PrimaryCurrency.network
+                              ? Text(
+                                  '= ${_convertNetworkCurrencyToSelectedCurrency()}',
+                                  textAlign: TextAlign.right,
+                                  style: AppStyles.textStyleSize14W100Primary(
+                                      context))
+                              : Text(
+                                  '= ${_convertSelectedCurrencyToNetworkCurrency()}',
+                                  textAlign: TextAlign.right,
+                                  style: AppStyles.textStyleSize14W100Primary(
+                                      context)),
+                        )
+                      : const SizedBox(),
+                ],
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 40),
+                    alignment: Alignment.centerLeft,
+                    child: AutoSizeText(
+                      '${widget.accountToken!.amount.toString()} ${widget.accountToken!.tokenInformations!.symbol}',
+                      style: AppStyles.textStyleSize14W100Primary(context),
+                    ),
+                  ),
+                ],
+              )
       ],
     );
   }
@@ -1114,20 +1185,36 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
           await StateContainer.of(context).getSeed();
       List<UCOTransferWallet> ucoTransferListForFee =
           List<UCOTransferWallet>.empty(growable: true);
-      ucoTransferListForFee.add(UCOTransferWallet(
+
+      List<TokenTransferWallet> tokenTransferListForFee =
+          List<TokenTransferWallet>.empty(growable: true);
+      if (widget.accountToken == null) {
+        ucoTransferListForFee.add(UCOTransferWallet(
+            amount: maxSend
+                ? BigInt.from(StateContainer.of(context)
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .balance!
+                        .nativeTokenValue! *
+                    100000000)
+                : BigInt.from(
+                    double.tryParse(_sendAmountController!.text)! * 100000000),
+            to: recipientAddress));
+      } else {
+        tokenTransferListForFee.add(TokenTransferWallet(
           amount: maxSend
-              ? BigInt.from(StateContainer.of(context)
-                      .appWallet!
-                      .appKeychain!
-                      .getAccountSelected()!
-                      .balance!
-                      .nativeTokenValue! *
-                  100000000)
+              ? BigInt.from(
+                  double.tryParse(widget.accountToken!.amount!.toString())!)
               : BigInt.from(
                   double.tryParse(_sendAmountController!.text)! * 100000000),
-          to: recipientAddress));
+          to: recipientAddress,
+          token: widget.accountToken!.tokenInformations!.address,
+        ));
+      }
+
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
-      fee = await sl.get<AppService>().getFeesEstimationUCO(
+      fee = await sl.get<AppService>().getFeesEstimation(
           originPrivateKey,
           transactionChainSeed!,
           StateContainer.of(context)
@@ -1136,6 +1223,7 @@ class _TransferUCOSheetState extends State<TransferUCOSheet> {
               .getAccountSelected()!
               .lastAddress!,
           ucoTransferListForFee,
+          tokenTransferListForFee,
           _messageController!.text);
     } catch (e) {
       fee = 0;

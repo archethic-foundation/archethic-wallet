@@ -15,11 +15,11 @@ dependencies:
     sdk: flutter
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^1.0.23
-  #archethic_lib_dart: 
-  #  git:
-  #    url: https://github.com/archethic-foundation/libdart.git
-  #    ref: master
+  #archethic_lib_dart: ^1.0.23
+  archethic_lib_dart: 
+    git:
+      url: https://github.com/archethic-foundation/libdart.git
+      ref: master
 
   # Localization
   intl: ^0.17.0

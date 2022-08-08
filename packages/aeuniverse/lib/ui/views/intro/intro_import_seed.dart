@@ -14,7 +14,7 @@ import 'package:core/model/data/price.dart';
 import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
-import 'package:core/util/keychain_util.dart';
+import 'package:aeuniverse/util/keychain_util.dart';
 import 'package:core/util/mnemonics.dart';
 import 'package:core/util/seeds.dart';
 import 'package:core/util/vault.dart';
@@ -604,7 +604,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AppLocalization.of(context)!.accountsHeader,
+                    AppLocalization.of(context)!.keychainHeader,
                     style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
                   ),
                   const SizedBox(

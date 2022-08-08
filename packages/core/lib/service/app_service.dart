@@ -5,6 +5,8 @@ import 'dart:async';
 import 'dart:developer' as dev;
 
 // Package imports:
+import 'package:core/model/data/account_token.dart';
+import 'package:core/model/data/token_informations.dart';
 import 'package:decimal/decimal.dart';
 import 'package:intl/intl.dart';
 
@@ -15,18 +17,7 @@ import 'package:core/model/data/recent_transaction.dart';
 import 'package:core/model/transaction_infos.dart';
 import 'package:core/util/get_it_instance.dart';
 
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show
-        uint8ListToHex,
-        ApiService,
-        Transaction,
-        Balance,
-        Keychain,
-        UCOTransfer,
-        TokenBalance,
-        TransactionStatus,
-        TransactionInput,
-        TransactionFee;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 class AppService {
   Future<List<Transaction>> getTransactionChain(
@@ -63,7 +54,7 @@ class AppService {
     final List<Transaction> transactionChain = await getTransactionChain(
         lastAddress,
         pagingAddress,
-        'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { content , ledger { uco { transfers { amount, to } } } }, inputs { from, type, spent, tokenAddress, amount, timestamp } ');
+        'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { content , ledger { uco { transfers { amount, to } }token {transfers {amount, to, token, tokenId } } } }, inputs { from, type, spent, tokenAddress, amount, timestamp }');
 
     final List<TransactionInput> transactionInputsGenesisAddress =
         await getTransactionInputs(genesisAddress,
@@ -74,29 +65,16 @@ class AppService {
 
     for (Transaction transaction in transactionChain) {
       String content = transaction.data!.content!.toLowerCase();
-      if (transaction.type!.toUpperCase() == 'Token') {
+      if (transaction.type! == 'token') {
         final RecentTransaction recentTransaction = RecentTransaction();
         recentTransaction.address = transaction.address;
-        recentTransaction.fee = 0;
         recentTransaction.timestamp = transaction.validationStamp!.timestamp!;
-
-        if (content.contains('initial supply:')) {
-          recentTransaction.tokenAddress = transaction.address;
-          recentTransaction.typeTx = RecentTransaction.tokenCreation;
-          recentTransaction.content = content
-              .substring(content.toLowerCase().indexOf('initial supply: '));
-        } else {
-          recentTransaction.typeTx = RecentTransaction.transferOutput;
-          recentTransaction.content = '';
-        }
-        if (content.contains('name:')) {
-          recentTransaction.tokenName =
-              content.substring(content.indexOf('name: ') + 'name: '.length);
-        } else {
-          recentTransaction.tokenName = '';
-        }
+        recentTransaction.typeTx = RecentTransaction.tokenCreation;
+        recentTransaction.content = transaction.data!.content;
         recentTransaction.fee =
             transaction.validationStamp!.ledgerOperations!.fee;
+        recentTransaction.tokenInformations = await recentTransaction
+            .getTokenInfo(transaction.data!.content, transaction.address);
         recentTransactions.add(recentTransaction);
       } else {
         if (transaction.type! == 'transfer') {
@@ -120,26 +98,48 @@ class AppService {
             recentTransaction.from = lastAddress;
             recentTransactions.add(recentTransaction);
           }
+          for (int i = 0;
+              i < transaction.data!.ledger!.token!.transfers!.length;
+              i++) {
+            final RecentTransaction recentTransaction = RecentTransaction();
+            recentTransaction.content = content;
+            recentTransaction.address = transaction.address;
+            recentTransaction.typeTx = RecentTransaction.transferOutput;
+            recentTransaction.amount = transaction
+                    .data!.ledger!.token!.transfers![i].amount!
+                    .toDouble() /
+                100000000;
+            recentTransaction.recipient =
+                transaction.data!.ledger!.token!.transfers![i].to!;
+            recentTransaction.fee =
+                transaction.validationStamp!.ledgerOperations!.fee;
+            recentTransaction.timestamp =
+                transaction.validationStamp!.timestamp!;
+            recentTransaction.from = lastAddress;
+            recentTransaction.tokenInformations =
+                await recentTransaction.getTokenInfo(
+                    null, transaction.data!.ledger!.token!.transfers![i].token);
+            recentTransactions.add(recentTransaction);
+          }
         }
       }
 
       if (transaction.inputs != null) {
         for (TransactionInput transactionInput in transaction.inputs!) {
-          if (transactionInput.from != transaction.address) {
+          if (transactionInput.from != transaction.address &&
+              transactionInput.type! != 'token') {
             final RecentTransaction recentTransaction = RecentTransaction();
             recentTransaction.address = transactionInput.from;
-            if (transactionInput.type!.toUpperCase() == 'Token') {
-              recentTransaction.tokenAddress = transactionInput.tokenAddress!;
-            } else {
-              recentTransaction.tokenAddress = '';
-            }
             recentTransaction.amount = transactionInput.amount!;
             recentTransaction.typeTx = RecentTransaction.transferInput;
             recentTransaction.from = transactionInput.from;
             recentTransaction.recipient = transaction.address;
             recentTransaction.timestamp = transactionInput.timestamp!;
-            recentTransaction.type = 'TransactionInput';
             recentTransaction.fee = 0;
+            recentTransaction.content = transaction.data!.content;
+            recentTransaction.tokenInformations =
+                await recentTransaction.getTokenInfo(
+                    recentTransaction.content!, recentTransaction.address);
             recentTransactions.add(recentTransaction);
           }
         }
@@ -150,17 +150,16 @@ class AppService {
     for (TransactionInput transaction in transactionInputsGenesisAddress) {
       final RecentTransaction recentTransaction = RecentTransaction();
       recentTransaction.address = transaction.from;
-      if (transaction.type!.toUpperCase() == 'Token') {
-        recentTransaction.tokenAddress = transaction.tokenAddress!;
-      } else {
-        recentTransaction.tokenAddress = '';
+      if (transaction.type! == 'token') {
+        String content =
+            await sl.get<ApiService>().getTransactionContent(transaction.from!);
+        recentTransaction.content = content;
       }
       recentTransaction.amount = transaction.amount!;
       recentTransaction.typeTx = RecentTransaction.transferInput;
       recentTransaction.from = transaction.from;
       recentTransaction.recipient = lastAddress;
       recentTransaction.timestamp = transaction.timestamp!;
-      recentTransaction.type = 'TransactionInput';
       recentTransaction.fee = 0;
       recentTransactions.add(recentTransaction);
     }
@@ -171,13 +170,40 @@ class AppService {
 
     for (int i = 0; i < recentTransactions.length; i++) {
       if (i <= 10) {
-        recentTransactions[i].content = await sl
-            .get<ApiService>()
-            .getTransactionContent(recentTransactions[i].address!);
+        recentTransactions[i].contactInformations =
+            await recentTransactions[i].getContactInformations();
       }
     }
 
     return recentTransactions.reversed.toList();
+  }
+
+  Future<List<AccountToken>> getFungiblesTokensList(String address) async {
+    Balance balance = await sl.get<ApiService>().fetchBalance(address);
+    final List<AccountToken> fungiblesTokensList =
+        List<AccountToken>.empty(growable: true);
+
+    if (balance.token != null) {
+      for (int i = 0; i < balance.token!.length; i++) {
+        String content = await sl
+            .get<ApiService>()
+            .getTransactionContent(balance.token![i].address!);
+        Token token = tokenFromJson(content);
+        TokenInformations tokenInformations = TokenInformations(
+            address: balance.token![i].address,
+            name: token.name,
+            type: 'fungible',
+            supply: token.supply! ~/ 100000000,
+            symbol: token.symbol);
+        AccountToken accountFungibleToken = AccountToken(
+            tokenInformations: tokenInformations,
+            amount: balance.token![i].amount!.toInt());
+        fungiblesTokensList.add(accountFungibleToken);
+      }
+      fungiblesTokensList.sort((a, b) =>
+          a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!));
+    }
+    return fungiblesTokensList;
   }
 
   Future<Balance> getBalanceGetResponse(String address) async {
@@ -194,72 +220,6 @@ class AppService {
       }
     }
     return balance;
-  }
-
-  Future<TransactionStatus> sendUCO(
-      String originPrivateKey,
-      String seed,
-      String address,
-      List<UCOTransfer> listUcoTransfer,
-      String accountName) async {
-    TransactionStatus transactionStatus = TransactionStatus();
-
-    try {
-      final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
-      final String service = 'archethic-wallet-$accountName';
-      final int index = (await sl.get<ApiService>().getTransactionIndex(
-              uint8ListToHex(keychain.deriveAddress(service, index: 0))))
-          .chainLength!;
-
-      final Transaction transaction =
-          Transaction(type: 'transfer', data: Transaction.initData());
-      for (UCOTransfer transfer in listUcoTransfer) {
-        transaction.addUCOTransfer(transfer.to, transfer.amount!);
-      }
-
-      Transaction signedTx = keychain
-          .buildTransaction(transaction, service, index)
-          .originSign(originPrivateKey);
-
-      transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
-    } catch (e) {
-      dev.log(e.toString());
-      transactionStatus.status = e.toString();
-    }
-    return transactionStatus;
-  }
-
-  Future<TransactionStatus> addToken(
-      String originPrivateKey,
-      String seed,
-      String address,
-      String name,
-      int initialSupply,
-      String accountName) async {
-    final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
-    final String service = 'archethic-wallet-$accountName';
-    final int index = (await sl.get<ApiService>().getTransactionIndex(
-            uint8ListToHex(keychain.deriveAddress(service, index: 0))))
-        .chainLength!;
-
-    TransactionStatus transactionStatus = TransactionStatus();
-
-    try {
-      String content = 'initial supply: $initialSupply\nname: $name';
-      final Transaction transaction =
-          Transaction(type: 'token', data: Transaction.initData())
-              .setContent(content);
-      Transaction signedTx = keychain
-          .buildTransaction(transaction, service, index)
-          .originSign(originPrivateKey);
-
-      transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
-    } catch (e) {
-      dev.log(e.toString());
-      transactionStatus.status = e.toString();
-    }
-
-    return transactionStatus;
   }
 
   Future<List<TransactionInfos>> getTransactionAllInfos(
@@ -359,12 +319,14 @@ class AppService {
                 valueInfo: transaction.data!.ledger!.token!.transfers![i].to!));
           }
           if (transaction.data!.ledger!.token!.transfers![i].amount != null) {
+            String content = await sl.get<ApiService>().getTransactionContent(
+                transaction.data!.ledger!.token!.transfers![i].token!);
+            Token token = tokenFromJson(content);
             transactionsInfos.add(TransactionInfos(
                 domain: 'TokenLedger',
                 titleInfo: 'Amount',
                 valueInfo:
-                    (transaction.data!.ledger!.token!.transfers![i].amount!)
-                        .toString()));
+                    '${Decimal.parse((transaction.data!.ledger!.token!.transfers![i].amount! / BigInt.from(100000000)).toString())} ${token.symbol!}'));
           }
         }
       }
@@ -372,11 +334,12 @@ class AppService {
     return transactionsInfos;
   }
 
-  Future<double> getFeesEstimationUCO(
+  Future<double> getFeesEstimation(
       String originPrivateKey,
       String transactionChainSeed,
       String address,
       List<UCOTransfer> listUcoTransfer,
+      List<TokenTransfer> listTokenTransfer,
       String content) async {
     final Transaction lastTransaction = await sl
         .get<ApiService>()
@@ -385,6 +348,11 @@ class AppService {
         Transaction(type: 'transfer', data: Transaction.initData());
     for (UCOTransfer transfer in listUcoTransfer) {
       transaction.addUCOTransfer(transfer.to, transfer.amount!);
+    }
+    for (TokenTransfer transfer in listTokenTransfer) {
+      transaction.addTokenTransfer(
+          transfer.to, transfer.amount!, transfer.token,
+          tokenId: transfer.tokenId == null ? 0 : transfer.tokenId!);
     }
     transaction.setContent(content);
     TransactionFee transactionFee = TransactionFee();
@@ -400,11 +368,12 @@ class AppService {
     return transactionFee.fee!;
   }
 
-  Future<double> getFeesEstimationAddToken(
+  Future<double> getFeesEstimationCreateToken(
       String originPrivateKey,
       String seed,
-      String address,
       String name,
+      String symbol,
+      String type,
       int initialSupply,
       String accountName) async {
     final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
@@ -415,7 +384,8 @@ class AppService {
 
     TransactionFee transactionFee = TransactionFee();
     try {
-      String content = 'initial supply: $initialSupply\nname: $name';
+      String content = tokenToJsonForTxDataContent(
+          Token(name: name, supply: initialSupply, symbol: symbol, type: type));
       final Transaction transaction =
           Transaction(type: 'token', data: Transaction.initData())
               .setContent(content);

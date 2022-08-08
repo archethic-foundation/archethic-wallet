@@ -20,13 +20,9 @@ class UCOTransferListWidget extends StatefulWidget {
     super.key,
     required this.listUcoTransfer,
     required this.feeEstimation,
-    this.onGet,
-    this.onDelete,
   });
 
   List<UCOTransferWallet>? listUcoTransfer;
-  final Function(UCOTransferWallet)? onGet;
-  final Function()? onDelete;
   final double? feeEstimation;
 
   @override

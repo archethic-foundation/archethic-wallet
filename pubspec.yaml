@@ -3,7 +3,7 @@ description: A place for all the DApps to live.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.3+252
+version: 1.0.4+256
 
 environment:
   sdk: '>=2.17.0 <3.0.0'
@@ -27,10 +27,10 @@ dependencies:
     sdk: flutter
 
   # Customize Flutter's default white native splash screen with background color and splash image. Supports dark mode, full screen, and more.
-  flutter_native_splash: ^2.2.3
+  flutter_native_splash: ^2.2.7
 
   # Hive is a lightweight and blazing fast key-value database written in pure Dart
-  hive: ^2.2.1
+  hive: ^2.2.3
   hive_flutter: ^1.1.0
 
   # A pure flutter toast library Support custom style/widget. Easy to use. You can use this library to achieve the same effect as Android toast

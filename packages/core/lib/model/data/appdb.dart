@@ -1,6 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Package imports:
+import 'package:core/model/data/account_token.dart';
+import 'package:core/model/data/token_informations.dart';
+import 'package:core/model/data/token_informations_property.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 // Project imports:
@@ -26,6 +29,9 @@ class DBHelper {
     Hive.registerAdapter(AppKeychainAdapter());
     Hive.registerAdapter(RecentTransactionAdapter());
     Hive.registerAdapter(PriceAdapter());
+    Hive.registerAdapter(AccountTokenAdapter());
+    Hive.registerAdapter(TokenInformationsAdapter());
+    Hive.registerAdapter(TokenInformationsPropertyAdapter());
   }
 
   // Contacts

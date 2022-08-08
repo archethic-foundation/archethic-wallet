@@ -21,11 +21,11 @@ dependencies:
   animate_do: ^2.1.0
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^1.0.23
-  #archethic_lib_dart: 
-  #  git:
-  #   url: https://github.com/archethic-foundation/libdart.git
-  #   ref: master
+  #archethic_lib_dart: ^1.0.23
+  archethic_lib_dart: 
+    git:
+     url: https://github.com/archethic-foundation/libdart.git
+     ref: master
 
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0
@@ -40,11 +40,8 @@ dependencies:
   event_taxi: ^1.0.0
 
   # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter.
-  phoenix_socket: ^0.5.3
-  gql_exec: ^0.4.0
-  gql_link: ^0.4.2
-  graphql_flutter: ^5.1.1-beta.3
-  
+  graphql_flutter: ^5.1.1-beta.4
+   
   flutter:
     sdk: flutter
 
@@ -64,29 +61,23 @@ dependencies:
       url: https://github.com/redDwarf03/dart_ghost.git
       ref: main
 
-  # Lazily load and display pages of items as the user scrolls down your screen.
-  infinite_scroll_pagination: ^3.2.0
-  
   # Localization
   intl: ^0.17.0
 
   # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
   ledger_dart_lib: ^0.1.2
 
+  # Customizable indicators for your PageViews.
+  page_view_indicators: ^2.0.0
+
   # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
   package_info_plus: ^1.4.2
-
-  # A handful collection of some cool progress indicators and text animators
-  progress_indicators: ^1.0.0
 
   # QR.Flutter is a Flutter library for simple and fast QR code rendering via a Widget or custom painter
   qr_flutter: ^4.0.0
 
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
-  share_plus: ^4.0.9
-
-  # A package to help you build highly customisable timelines with Flutter.
-  timeline_tile: ^2.0.0
+  share_plus: ^4.0.10
 
 dev_dependencies:
   flutter_lints: ^2.0.1

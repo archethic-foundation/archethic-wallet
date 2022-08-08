@@ -4,6 +4,8 @@
 // Flutter imports:
 import 'dart:io';
 
+import 'package:aeuniverse/ui/util/ui_util.dart';
+import 'package:aeuniverse/util/keychain_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -15,7 +17,6 @@ import 'package:core/model/device_lock_timeout.dart';
 import 'package:core/model/primary_currency.dart';
 import 'package:core/util/biometrics_util.dart';
 import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/keychain_util.dart';
 import 'package:core/util/vault.dart';
 
 // Project imports:
@@ -168,7 +169,8 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                       preferences.setShowBlog(true);
                                       preferences.setActiveVibrations(true);
                                       if (Platform.isIOS == true ||
-                                          Platform.isAndroid == true) {
+                                          Platform.isAndroid == true ||
+                                          Platform.isMacOS == true) {
                                         preferences
                                             .setActiveNotifications(true);
                                       } else {
@@ -242,7 +244,8 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                       preferences.setShowBlog(true);
                                       preferences.setActiveVibrations(true);
                                       if (Platform.isIOS == true ||
-                                          Platform.isAndroid == true) {
+                                          Platform.isAndroid == true ||
+                                          Platform.isMacOS == true) {
                                         preferences
                                             .setActiveNotifications(true);
                                       } else {
@@ -259,29 +262,46 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                               LockTimeoutOption.one));
                                       preferences.setAuthMethod(
                                           AuthenticationMethod(AuthMethod.pin));
+                                      bool error = false;
                                       if (widget.process == 'newWallet') {
-                                        await sl
-                                            .get<DBHelper>()
-                                            .clearAppWallet();
-                                        final Vault vault =
-                                            await Vault.getInstance();
-                                        await vault.setSeed(widget.seed!);
-                                        StateContainer.of(context).appWallet =
-                                            await KeychainUtil().newAppWallet(
-                                                widget.seed!, widget.name!);
-                                        await StateContainer.of(context)
-                                            .requestUpdate();
+                                        try {
+                                          await sl
+                                              .get<DBHelper>()
+                                              .clearAppWallet();
+                                          final Vault vault =
+                                              await Vault.getInstance();
+                                          await vault.setSeed(widget.seed!);
+                                          StateContainer.of(context).appWallet =
+                                              await KeychainUtil().newAppWallet(
+                                                  widget.seed!, widget.name!);
+                                          await StateContainer.of(context)
+                                              .requestUpdate();
+                                        } catch (e) {
+                                          error = true;
+                                          UIUtil.showSnackbar(
+                                              '${AppLocalization.of(context)!.sendError} ($e)',
+                                              context,
+                                              StateContainer.of(context)
+                                                  .curTheme
+                                                  .text!,
+                                              StateContainer.of(context)
+                                                  .curTheme
+                                                  .snackBarShadow!);
+                                        }
                                       }
-
-                                      StateContainer.of(context)
-                                          .checkTransactionInputs(
-                                              AppLocalization.of(context)!
-                                                  .transactionInputNotification);
-                                      Navigator.of(context)
-                                          .pushNamedAndRemoveUntil(
-                                        '/home',
-                                        (Route<dynamic> route) => false,
-                                      );
+                                      if (error == false) {
+                                        StateContainer.of(context)
+                                            .checkTransactionInputs(
+                                                AppLocalization.of(context)!
+                                                    .transactionInputNotification);
+                                        Navigator.of(context)
+                                            .pushNamedAndRemoveUntil(
+                                          '/home',
+                                          (Route<dynamic> route) => false,
+                                        );
+                                      } else {
+                                        Navigator.of(context).pop();
+                                      }
                                     }
                                     break;
                                   case AuthMethod.yubikeyWithYubicloud:

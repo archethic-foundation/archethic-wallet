@@ -7,6 +7,8 @@ import 'package:hive/hive.dart';
 import 'package:core/model/data/appdb.dart';
 import 'package:core/model/data/contact.dart';
 import 'package:core/util/get_it_instance.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:core/model/data/token_informations.dart';
 
 part 'recent_transaction.g.dart';
 
@@ -21,8 +23,6 @@ class RecentTransaction extends HiveObject {
     this.recipient,
     this.from,
     this.fee,
-    this.tokenName,
-    this.tokenAddress,
     this.content,
     this.timestamp,
     this.type,
@@ -61,14 +61,6 @@ class RecentTransaction extends HiveObject {
   @HiveField(6)
   String? from;
 
-  /// Token name: name of the Token if the type is Token
-  @HiveField(7)
-  String? tokenName;
-
-  /// Token address: address of the Token if the type is Token
-  @HiveField(8)
-  String? tokenAddress;
-
   /// Content: free zone for data hosting (string or hexadecimal)
   @HiveField(9)
   String? content;
@@ -77,6 +69,14 @@ class RecentTransaction extends HiveObject {
   @HiveField(10)
   String? type;
 
+  /// Token informations
+  @HiveField(11)
+  TokenInformations? tokenInformations;
+
+  /// Contact informations
+  @HiveField(12)
+  Contact? contactInformations;
+
   Map<String, dynamic> toJson() => <String, dynamic>{
         'address': address,
         'typeTx': typeTx,
@@ -84,37 +84,47 @@ class RecentTransaction extends HiveObject {
         'amount': amount,
         'fee': fee,
         'from': from,
-        'tokenAddress': tokenAddress,
-        'tokenName': tokenName,
         'content': content,
         'timestamp': timestamp,
         'type': type,
       };
 
-  Future<String> getRecipientContactName() async {
-    String recipientContactName = '';
+  Future<Contact?> getContactInformations() async {
+    contactInformations = null;
     if (recipient != null) {
       Contact? contact =
           await sl.get<DBHelper>().getContactWithAddress(recipient!);
       if (contact != null) {
-        recipientContactName = contact.name!.substring(1);
+        contactInformations = contact;
       }
     }
-
-    return recipientContactName;
+    return contactInformations;
   }
 
-  Future<String> get recipientDisplay async {
-    String recipientDisplay = await getRecipientContactName();
-    if (recipientDisplay != '') {
-      return recipientDisplay;
-    } else {
-      if (recipient != null) {
-        return recipient!;
-      } else {
-        return '';
-      }
+  Future<TokenInformations?> getTokenInfo(
+      String? content, String? address) async {
+    Token? token;
+    tokenInformations = null;
+    if (address == null) {
+      return tokenInformations;
     }
+    if (content == null || content == "") {
+      content = await sl.get<ApiService>().getTransactionContent(address);
+    }
+    if (content != "") {
+      try {
+        token = tokenFromJson(content);
+        tokenInformations = TokenInformations(
+            address: token.address,
+            name: token.name,
+            supply: token.supply! ~/ 100000000,
+            symbol: token.symbol,
+            tokenId: token.tokenId,
+            type: token.type);
+      } catch (e) {}
+    }
+
+    return tokenInformations;
   }
 
   factory RecentTransaction.fromJson(Map<String, dynamic> json) =>
@@ -125,8 +135,6 @@ class RecentTransaction extends HiveObject {
         amount: json['amount']?.toDouble(),
         fee: json['fee']?.toDouble(),
         from: json['from'],
-        tokenAddress: json['tokenAddress'],
-        tokenName: json['tokenName'],
         content: json['content'],
         timestamp: json['timestamp'],
         type: json['type'],

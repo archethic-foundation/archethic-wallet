@@ -708,14 +708,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "addToken": "Add Token",
-  "@addToken": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
-  "addTokenHeader": "Add Token",
-  "@addTokenHeader": {
+  "createToken": "Create a token",
+  "@createToken": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1602,8 +1596,8 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "accountsHeader": "Accounts",
-  "@accountsHeader": {
+  "keychainHeader": "Keychain",
+  "@keychainHeader": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1722,12 +1716,6 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "keychainSync": "Synchronization of your keychain in progress",
-  "@keychainSync": {
-    "type": "text",
-    "placeholders_order": [],
-    "placeholders": {}
-  },
   "messageInvalid": "Your message cannot contain (for the moment) special characters",
   "@messageInvalid": {
     "type": "text",
@@ -1760,6 +1748,60 @@
   },
   "amountZero": "Your amount should be > 0",
   "@amountZero": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "fungiblesTokensListNoTokenYet": "No token yet",
+  "@fungiblesTokensListNoTokenYet": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "fungiblesTokensListHeader": "Tokens",
+  "@fungiblesTokensListHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createFungibleToken": "Create a token",
+  "@createFungibleToken": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createNFTCollection": "Create collection of NFT",
+  "@createNFTCollection": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "tokenInitialSupplyTooHigh": "The initial supply is too high",
+  "@tokenInitialSupplyTooHigh": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "tokenSupply": "Supply: ",
+  "@tokenSupply": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "tokenSymbolMissing": "Choose a Symbol for the Token",
+  "@tokenSymbolMissing": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "tokenSymbol": "Symbol: ",
+  "@tokenSymbol": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "tokenSymbolHint": "Enter a symbol",
+  "@tokenSymbolHint": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

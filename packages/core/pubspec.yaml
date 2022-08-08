@@ -12,11 +12,11 @@ dependencies:
   animate_do: ^2.1.0
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^1.0.23
-  #archethic_lib_dart: 
-  #  git:
-  #    url: https://github.com/archethic-foundation/libdart.git
-  #    ref: master
+  #archethic_lib_dart: ^1.0.23
+  archethic_lib_dart: 
+    git:
+      url: https://github.com/archethic-foundation/libdart.git
+      ref: master
       
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0
@@ -27,6 +27,7 @@ dependencies:
   # Dart implementation of Bitcoin BIP39 Mnemonic code for generating deterministic keys
   bip39_mnemonic: ^3.0.4
 
+  # A BIP32 (https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) compatible library for Flutter writing by Dart.
   bip32: ^2.0.0
 
   # Utilities for converting between data representations. Provides a number of Sink, Codec, Decoder, and Encoder types
@@ -45,7 +46,7 @@ dependencies:
   expandable: ^5.0.1
   
   # A cross platform plugin for displaying local notifications.
-  flutter_local_notifications: ^9.6.1
+  flutter_local_notifications: ^9.7.0
 
   flutter:
     sdk: flutter
@@ -53,7 +54,7 @@ dependencies:
     sdk: flutter
 
   # Flutter Secure Storage provides API to store data in secure storage. Keychain is used in iOS, KeyStore based solution is used in Android
-  flutter_secure_storage: ^5.0.2
+  flutter_secure_storage: ^5.1.0
 
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files
   flutter_svg: ^1.1.0
@@ -68,14 +69,11 @@ dependencies:
   get_it: ^7.2.0
 
   # Hive is a lightweight and blazing fast key-value database written in pure Dart
-  hive: ^2.2.1
+  hive: ^2.2.3
   hive_flutter: ^1.1.0
 
   # A composable, multi-platform, Future-based API for HTTP requests
-  http: ^0.13.4
-
-  # Lazily load and display pages of items as the user scrolls down your screen.
-  infinite_scroll_pagination: ^3.2.0
+  http: ^0.13.5
 
   # Localization
   intl: ^0.17.0
@@ -88,7 +86,7 @@ dependencies:
   #    ref: main
 
   # Flutter plugin for Android and iOS devices to allow local authentication via fingerprint, touch ID, face ID, passcode, pin, or pattern
-  local_auth: ^2.1.0
+  local_auth: ^2.1.1
 
   # Flutter plugin for accessing the NFC features on Android and iOS.
   nfc_manager: ^3.1.1
@@ -97,8 +95,8 @@ dependencies:
   oktoast: ^3.2.0
 
   # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
-  package_info_plus: ^1.4.2
-  
+  package_info_plus: ^1.4.3
+
   # A Dart library implementing cryptographic algorithms and primitives, modeled on the BouncyCastle library
   pointycastle: ^3.6.1
   
@@ -109,16 +107,13 @@ dependencies:
   quiver: ^3.1.0
 
   # RxDart is an implementation of the popular reactiveX api for asynchronous programming, leveraging the native Dart Streams api.  
-  rxdart: ^0.27.4
+  rxdart: ^0.27.5
 
   # With the Flutter safe_device package, you can easily implement security steps such as Jailbroken, root, emulator and fake location detection.
   safe_device: ^1.1.1
 
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
-  share_plus: ^4.0.9
-
-  # A package to help you build highly customisable timelines with Flutter.
-  timeline_tile: ^2.0.0
+  share_plus: ^4.0.10
 
   # Tuple data structure
   tuple: ^2.0.0
@@ -134,7 +129,7 @@ dependencies:
 
 dev_dependencies:
   flutter_lints: ^2.0.1
-  build_runner: ^2.1.11
+  build_runner: ^2.2.0
   # A build system for Dart code generation and modular compilation
   hive_generator: ^1.1.3
   # Automatically organize your dart imports
@@ -142,7 +137,7 @@ dev_dependencies:
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl_generator: ^0.3.0
   # Automatically generate code for converting to and from JSON by annotating Dart classes.
-  json_serializable: ^6.2.0
+  json_serializable: ^6.3.1
   # A command-line tool that create Msix installer from your flutter windows-build files.
   msix: ^3.6.2
 

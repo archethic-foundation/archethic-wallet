@@ -1,4 +1,4 @@
-// ignore_for_file: cancel_subscriptions, always_specify_types
+// ignore_for_file: cancel_subscriptions, avoid_unnecessary_containers
 
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -6,7 +6,10 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aewallet/bus/transaction_send_event.dart';
+import 'package:core/util/confirmations/subscription_channel.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 // Package imports:
 import 'package:aeuniverse/appstate_container.dart';
@@ -23,53 +26,29 @@ import 'package:core/util/get_it_instance.dart';
 import 'package:core_ui/ui/util/dimens.dart';
 import 'package:core_ui/ui/util/routes.dart';
 import 'package:event_taxi/event_taxi.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 
 // Project imports:
-import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/model/token_transfer_wallet.dart';
-import 'package:aewallet/model/uco_transfer_wallet.dart';
-import 'package:aewallet/ui/views/tokens_fungibles/token_transfer_list.dart';
-import 'package:core/util/confirmations/subscription_channel.dart';
-import 'package:aewallet/ui/views/uco/uco_transfer_list.dart';
 
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show
-        TransactionStatus,
-        ApiService,
-        Transaction,
-        UCOTransfer,
-        TokenTransfer,
-        Keychain,
-        uint8ListToHex;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
-class TransferConfirmSheet extends StatefulWidget {
-  const TransferConfirmSheet(
+class AddTokenConfirm extends StatefulWidget {
+  const AddTokenConfirm(
       {super.key,
-      required this.lastAddress,
-      required this.typeTransfer,
-      required this.feeEstimation,
-      required this.symbol,
-      this.title,
-      this.ucoTransferList,
-      this.tokenTransferList,
-      this.message});
+      this.tokenName,
+      this.tokenSymbol,
+      this.tokenInitialSupply,
+      required this.feeEstimation});
 
-  final String? lastAddress;
-  final String? typeTransfer;
-  final String? title;
+  final String? tokenName;
+  final String? tokenSymbol;
+  final int? tokenInitialSupply;
   final double? feeEstimation;
-  final String? message;
-  final String? symbol;
-  final List<UCOTransferWallet>? ucoTransferList;
-  final List<TokenTransferWallet>? tokenTransferList;
 
   @override
-  State<TransferConfirmSheet> createState() => _TransferConfirmSheetState();
+  State<AddTokenConfirm> createState() => _AddTokenConfirmState();
 }
 
-class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
+class _AddTokenConfirmState extends State<AddTokenConfirm> {
   bool? animationOpen;
 
   SubscriptionChannel subscriptionChannel = SubscriptionChannel();
@@ -82,7 +61,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         .registerTo<AuthenticatedEvent>()
         .listen((AuthenticatedEvent event) {
       if (event.authType == AUTH_EVENT_TYPE.send) {
-        _doSend();
+        _doAdd();
       }
     });
 
@@ -151,95 +130,107 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      minimum:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
-      child: Column(
-        children: <Widget>[
-          Container(
-            margin: const EdgeInsets.only(top: 10),
-            height: 5,
-            width: MediaQuery.of(context).size.width * 0.15,
-            decoration: BoxDecoration(
-              color: StateContainer.of(context).curTheme.text60,
-              borderRadius: BorderRadius.circular(100.0),
+        minimum:
+            EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              height: 5,
+              width: MediaQuery.of(context).size.width * 0.15,
+              decoration: BoxDecoration(
+                color: StateContainer.of(context).curTheme.text60,
+                borderRadius: BorderRadius.circular(100.0),
+              ),
             ),
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        widget.title ??
-                            AppLocalization.of(context)!.transfering,
-                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                            context),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  child: widget.typeTransfer == 'UCO'
-                      ? UCOTransferListWidget(
-                          listUcoTransfer: widget.ucoTransferList,
-                          feeEstimation: widget.feeEstimation,
-                        )
-                      : widget.typeTransfer == 'TOKEN'
-                          ? TokenTransferListWidget(
-                              listTokenTransfer: widget.tokenTransferList,
-                              feeEstimation: widget.feeEstimation,
-                              symbol: widget.symbol,
-                            )
-                          : const SizedBox(),
-                ),
-                if (widget.message!.isNotEmpty)
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
                   Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: const EdgeInsets.only(
-                        left: 20, right: 20, top: 20.0, bottom: 20.0),
+                    margin: const EdgeInsets.only(top: 20.0),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          AppLocalization.of(context)!.sendMessageConfirmHeader,
-                          style: AppStyles.textStyleSize14W600Primary(context),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          widget.message!,
-                          style: AppStyles.textStyleSize14W600Primary(context),
+                          AppLocalization.of(context)!.createToken,
+                          style: AppStyles.textStyleSize24W700EquinoxPrimary(
+                              context),
                         ),
                       ],
                     ),
                   ),
-              ],
+                  const SizedBox(height: 20),
+                  Text(
+                      '${AppLocalization.of(context)!.estimatedFees}: ${widget.feeEstimation} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                      style: AppStyles.textStyleSize14W100Primary(context)),
+                  const SizedBox(height: 30),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                      child: Text(
+                          AppLocalization.of(context)!
+                              .addTokenConfirmationMessage,
+                          style:
+                              AppStyles.textStyleSize14W600Primary(context))),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 40.0, top: 10),
+                    child: Row(
+                      children: <Widget>[
+                        Text(AppLocalization.of(context)!.tokenName,
+                            style:
+                                AppStyles.textStyleSize14W600Primary(context)),
+                        Text(widget.tokenName!,
+                            style:
+                                AppStyles.textStyleSize14W100Primary(context)),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 40.0, top: 10),
+                    child: Row(
+                      children: <Widget>[
+                        Text(AppLocalization.of(context)!.tokenSymbol,
+                            style:
+                                AppStyles.textStyleSize14W600Primary(context)),
+                        Text(widget.tokenSymbol!,
+                            style:
+                                AppStyles.textStyleSize14W100Primary(context)),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 40.0, top: 10),
+                    child: Row(
+                      children: <Widget>[
+                        Text(AppLocalization.of(context)!.tokenInitialSupply,
+                            style:
+                                AppStyles.textStyleSize14W600Primary(context)),
+                        Text(widget.tokenInitialSupply!.toString(),
+                            style:
+                                AppStyles.textStyleSize14W100Primary(context)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 10.0),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    AppButton.buildAppButton(
-                      const Key('confirm'),
-                      context,
-                      AppButtonType.primary,
-                      AppLocalization.of(context)!.confirm,
-                      Dimens.buttonTopDimens,
-                      onPressed: () async {
+            Container(
+              margin: const EdgeInsets.only(top: 10.0),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      AppButton.buildAppButton(
+                          const Key('confirm'),
+                          context,
+                          AppButtonType.primary,
+                          AppLocalization.of(context)!.confirm,
+                          Dimens.buttonTopDimens, onPressed: () async {
+                        // Authenticate
                         final Preferences preferences =
                             await Preferences.getInstance();
-                        // Authenticate
                         final AuthenticationMethod authMethod =
                             preferences.getAuthMethod();
                         bool auth = await AuthFactory.authenticate(
@@ -250,38 +241,33 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                           EventTaxiImpl.singleton()
                               .fire(AuthenticatedEvent(AUTH_EVENT_TYPE.send));
                         }
-                      },
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    AppButton.buildAppButton(
-                        const Key('cancel'),
-                        context,
-                        AppButtonType.primary,
-                        AppLocalization.of(context)!.cancel,
-                        Dimens.buttonBottomDimens, onPressed: () {
-                      Navigator.of(context).pop();
-                    }),
-                  ],
-                ),
-              ],
+                      })
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      AppButton.buildAppButton(
+                          const Key('cancel'),
+                          context,
+                          AppButtonType.primary,
+                          AppLocalization.of(context)!.cancel,
+                          Dimens.buttonBottomDimens, onPressed: () {
+                        Navigator.of(context).pop();
+                      }),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ));
   }
 
-  Future<void> _doSend() async {
+  Future<void> _doAdd() async {
     try {
       _showSendingAnimation(context);
       final String? seed = await StateContainer.of(context).getSeed();
-      List<UCOTransferWallet> ucoTransferList = widget.ucoTransferList!;
-      List<TokenTransferWallet> tokenTransferList = widget.tokenTransferList!;
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
-
       final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
       final String service =
           'archethic-wallet-${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.name!}';
@@ -290,18 +276,14 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
           .chainLength!;
 
       final Transaction transaction =
-          Transaction(type: 'transfer', data: Transaction.initData());
-      for (UCOTransfer transfer in ucoTransferList) {
-        transaction.addUCOTransfer(transfer.to, transfer.amount!);
-      }
-      for (TokenTransfer transfer in tokenTransferList) {
-        transaction.addTokenTransfer(
-            transfer.to, transfer.amount!, transfer.token,
-            tokenId: transfer.tokenId == null ? 0 : transfer.tokenId!);
-      }
-      if (widget.message!.isNotEmpty) {
-        transaction.setContent(widget.message!);
-      }
+          Transaction(type: 'token', data: Transaction.initData());
+      String content = tokenToJsonForTxDataContent(Token(
+          name: widget.tokenName,
+          supply: widget.tokenInitialSupply! * 100000000,
+          type: 'fungible',
+          tokenId: 0,
+          symbol: widget.tokenSymbol));
+      transaction.setContent(content);
       Transaction signedTx = keychain
           .buildTransaction(transaction, service, index)
           .originSign(originPrivateKey);

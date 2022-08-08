@@ -154,32 +154,11 @@ class _LedgerSheetState extends State<LedgerSheet> {
                   ),
                 ],
               ),
-              if (kIsWeb || Platform.isMacOS || Platform.isWindows)
-                Stack(
-                  children: <Widget>[
-                    const SizedBox(
-                      width: 60,
-                      height: 40,
-                    ),
-                    Container(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Column(
-                              children: <Widget>[
-                                buildIconDataWidget(
-                                    context, Icons.close_outlined, 30, 30),
-                              ],
-                            ))),
-                  ],
-                )
-              else
-                const SizedBox(
-                  width: 60,
-                  height: 40,
-                ),
+
+              const SizedBox(
+                width: 60,
+                height: 40,
+              ),
             ],
           ),
 

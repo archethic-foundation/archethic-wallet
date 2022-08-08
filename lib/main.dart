@@ -52,8 +52,10 @@ Future<void> main() async {
       size: Size(393, 850),
       center: true,
       backgroundColor: Colors.transparent,
+      fullScreen: false,
+      title: 'Archethic Wallet',
       skipTaskbar: false,
-      titleBarStyle: TitleBarStyle.hidden,
+      titleBarStyle: TitleBarStyle.normal,
     );
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       windowManager.setResizable(false);

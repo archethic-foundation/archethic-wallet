@@ -23,12 +23,12 @@ class RecentTransactionAdapter extends TypeAdapter<RecentTransaction> {
       recipient: fields[3] as String?,
       from: fields[6] as String?,
       fee: fields[5] as double?,
-      tokenName: fields[7] as String?,
-      tokenAddress: fields[8] as String?,
       content: fields[9] as String?,
       timestamp: fields[4] as int?,
       type: fields[10] as String?,
-    );
+    )
+      ..tokenInformations = fields[11] as TokenInformations?
+      ..contactInformations = fields[12] as Contact?;
   }
 
   @override
@@ -49,14 +49,14 @@ class RecentTransactionAdapter extends TypeAdapter<RecentTransaction> {
       ..write(obj.fee)
       ..writeByte(6)
       ..write(obj.from)
-      ..writeByte(7)
-      ..write(obj.tokenName)
-      ..writeByte(8)
-      ..write(obj.tokenAddress)
       ..writeByte(9)
       ..write(obj.content)
       ..writeByte(10)
-      ..write(obj.type);
+      ..write(obj.type)
+      ..writeByte(11)
+      ..write(obj.tokenInformations)
+      ..writeByte(12)
+      ..write(obj.contactInformations);
   }
 
   @override

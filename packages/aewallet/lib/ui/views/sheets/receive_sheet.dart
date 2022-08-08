@@ -80,54 +80,33 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                   ),
                 ],
               ),
-              if (kIsWeb || Platform.isMacOS || Platform.isWindows)
-                Stack(
-                  children: <Widget>[
-                    const SizedBox(
-                      width: 60,
-                      height: 40,
-                    ),
-                    Container(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Column(
-                              children: <Widget>[
-                                buildIconDataWidget(
-                                    context, Icons.close_outlined, 30, 30),
-                              ],
-                            ))),
-                  ],
-                )
-              else
-                Container(
-                  width: 60,
-                  height: 50,
-                  margin:
-                      const EdgeInsetsDirectional.only(top: 10.0, start: 10.0),
-                  child: TextButton(
-                    onPressed: () {
-                      sl.get<HapticUtil>().feedback(FeedbackType.light,
-                          StateContainer.of(context).activeVibrations);
-                      Clipboard.setData(ClipboardData(
-                          text: StateContainer.of(context)
-                              .appWallet!
-                              .appKeychain!
-                              .getAccountSelected()!
-                              .lastAddress!));
-                      UIUtil.showSnackbar(
-                          AppLocalization.of(context)!.addressCopied,
-                          context,
-                          StateContainer.of(context).curTheme.text!,
-                          StateContainer.of(context).curTheme.snackBarShadow!);
-                    },
-                    child: FaIcon(FontAwesomeIcons.paste,
-                        size: 24,
-                        color: StateContainer.of(context).curTheme.text),
-                  ),
+
+              Container(
+                width: 60,
+                height: 50,
+                margin:
+                    const EdgeInsetsDirectional.only(top: 10.0, start: 10.0),
+                child: TextButton(
+                  onPressed: () {
+                    sl.get<HapticUtil>().feedback(FeedbackType.light,
+                        StateContainer.of(context).activeVibrations);
+                    Clipboard.setData(ClipboardData(
+                        text: StateContainer.of(context)
+                            .appWallet!
+                            .appKeychain!
+                            .getAccountSelected()!
+                            .lastAddress!));
+                    UIUtil.showSnackbar(
+                        AppLocalization.of(context)!.addressCopied,
+                        context,
+                        StateContainer.of(context).curTheme.text!,
+                        StateContainer.of(context).curTheme.snackBarShadow!);
+                  },
+                  child: FaIcon(FontAwesomeIcons.paste,
+                      size: 24,
+                      color: StateContainer.of(context).curTheme.text),
                 ),
+              ),
             ],
           ),
 

@@ -13,7 +13,7 @@ import 'package:core/model/data/appdb.dart';
 import 'package:core/model/device_lock_timeout.dart';
 import 'package:core/model/primary_currency.dart';
 import 'package:core/util/get_it_instance.dart';
-import 'package:core/util/keychain_util.dart';
+import 'package:aeuniverse/util/keychain_util.dart';
 import 'package:core/util/password_util.dart';
 import 'package:core/util/string_encryption.dart';
 import 'package:core/util/vault.dart';
@@ -496,7 +496,9 @@ class _SetPasswordState extends State<SetPassword> {
         preferences.setShowBalances(true);
         preferences.setShowBlog(true);
         preferences.setActiveVibrations(true);
-        if (Platform.isIOS == true || Platform.isAndroid == true) {
+        if (Platform.isIOS == true ||
+            Platform.isAndroid == true ||
+            Platform.isMacOS == true) {
           preferences.setActiveNotifications(true);
         } else {
           preferences.setActiveNotifications(false);

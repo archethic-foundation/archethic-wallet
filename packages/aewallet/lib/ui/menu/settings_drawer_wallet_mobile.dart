@@ -59,8 +59,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   Animation<Offset>? _securityOffsetFloat;
   AnimationController? _customController;
   Animation<Offset>? _customOffsetFloat;
-  AnimationController? _tokenController;
-  Animation<Offset>? _tokenOffsetFloat;
   AnimationController? _walletFAQController;
   Animation<Offset>? _walletFAQOffsetFloat;
   AnimationController? _aboutController;
@@ -82,7 +80,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   bool? _aboutOpen;
   bool? _contactsOpen;
   bool? _walletFAQOpen;
-  bool? _tokenOpen;
 
   bool _pinPadShuffleActive = false;
   bool _showBalancesActive = false;
@@ -101,7 +98,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     _customOpen = false;
     _aboutOpen = false;
     _walletFAQOpen = false;
-    _tokenOpen = false;
 
     // Determine if they have face or fingerprint enrolled, if not hide the setting
     sl.get<BiometricUtil>().hasBiometrics().then((bool hasBiometrics) {
@@ -147,10 +143,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
-    _tokenController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 220),
-    );
     _contactsOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_contactsController!);
@@ -166,9 +158,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     _walletFAQOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_walletFAQController!);
-    _tokenOffsetFloat =
-        Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
-            .animate(_tokenController!);
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
         versionString =
@@ -184,7 +173,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     _customController!.dispose();
     _aboutController!.dispose();
     _walletFAQController!.dispose();
-    _tokenController!.dispose();
     super.dispose();
   }
 
@@ -282,12 +270,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       });
       _walletFAQController!.reverse();
       return false;
-    } else if (_tokenOpen!) {
-      setState(() {
-        _tokenOpen = false;
-      });
-      _tokenController!.reverse();
-      return false;
     }
     return true;
   }
@@ -321,8 +303,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
             SlideTransition(
                 position: _walletFAQOffsetFloat!,
                 child: WalletFAQ(_walletFAQController!, _walletFAQOpen!)),
-            SlideTransition(
-                position: _tokenOffsetFloat!, child: buildTokenMenu(context)),
           ],
         ),
       ),
@@ -999,12 +979,16 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         preferences.setShowPriceChart(_showPriceChartActive);
                       });
                     }),
-                    if (Platform.isIOS == true || Platform.isAndroid == true)
+                    if (Platform.isIOS == true ||
+                        Platform.isAndroid == true ||
+                        Platform.isMacOS == true)
                       Divider(
                         height: 2,
                         color: StateContainer.of(context).curTheme.text15,
                       ),
-                    if (Platform.isIOS == true || Platform.isAndroid == true)
+                    if (Platform.isIOS == true ||
+                        Platform.isAndroid == true ||
+                        Platform.isMacOS == true)
                       AppSettings.buildSettingsListItemSwitch(
                           context,
                           AppLocalization.of(context)!.activateNotifications,
@@ -1198,125 +1182,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           'https://archethic.net/aewallet-privacy.html',
                           AppLocalization.of(context)!.aboutPrivacyPolicy);
                     }),
-                  ].where(notNull).toList(),
-                ),
-                //List Top Gradient End
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    height: 20.0,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: <Color>[
-                          StateContainer.of(context).curTheme.drawerBackground!,
-                          StateContainer.of(context).curTheme.backgroundDark00!
-                        ],
-                        begin: const AlignmentDirectional(0.5, -1.0),
-                        end: const AlignmentDirectional(0.5, 1.0),
-                      ),
-                    ),
-                  ),
-                ), //List Top Gradient End
-              ],
-            )),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildTokenMenu(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border(
-          right: BorderSide(
-              color: StateContainer.of(context).curTheme.text30!, width: 1),
-        ),
-        color: StateContainer.of(context).curTheme.drawerBackground,
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: StateContainer.of(context).curTheme.overlay30!,
-              offset: const Offset(-5, 0),
-              blurRadius: 20),
-        ],
-      ),
-      child: SafeArea(
-        minimum: const EdgeInsets.only(
-          top: 60,
-        ),
-        child: Column(
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(bottom: 10.0, top: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                    height: 40,
-                    width: 40,
-                    margin: const EdgeInsets.only(right: 10, left: 10),
-                    child: BackButton(
-                      key: const Key('back'),
-                      color: StateContainer.of(context).curTheme.text,
-                      onPressed: () {
-                        setState(() {
-                          _tokenOpen = false;
-                        });
-                        _tokenController!.reverse();
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: AutoSizeText(
-                      AppLocalization.of(context)!.tokenHeader,
-                      style:
-                          AppStyles.textStyleSize24W700EquinoxPrimary(context),
-                      maxLines: 2,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-                child: Stack(
-              children: <Widget>[
-                ListView(
-                  padding: const EdgeInsets.only(top: 15.0),
-                  children: <Widget>[
-                    /*Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.text15),
-                    AppSettings.buildSettingsListItemSingleLine(
-                        context,
-                        AppLocalization.of(context)!.addTokenHeader,
-                        AppStyles.textStyleSize16W600Primary(context),
-                        'packages/aewallet/assets/icons/addToken.png',
-                        StateContainer.of(context).curTheme.iconDrawer!,
-                        onPressed: () {
-                      Sheets.showAppHeightNineSheet(
-                          context: context, widget: const AddTokenSheet());
-                    }),
-                    Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.text15),
-                    AppSettings.buildSettingsListItemSingleLine(
-                        context,
-                        AppLocalization.of(context)!.transferToken,
-                        AppStyles.textStyleSize16W600Primary(context),
-                        'packages/aewallet/assets/icons/transferToken.png',
-                        StateContainer.of(context).curTheme.iconDrawer!,
-                        onPressed: () {
-                      /*Sheets.showAppHeightNineSheet(
-                          context: context,
-                          widget: TransferTokenSheet(
-                            contactsRef: StateContainer.of(context).contactsRef,
-                            title: AppLocalization.of(context).transferToken,
-                          ));*/
-                    }),*/
-                    Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.text15),
                   ].where(notNull).toList(),
                 ),
                 //List Top Gradient End

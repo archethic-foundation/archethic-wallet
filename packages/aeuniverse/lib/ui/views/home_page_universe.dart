@@ -1,10 +1,16 @@
-// ignore_for_file: cancel_subscriptions
+// ignore_for_file: cancel_subscriptions, prefer_const_constructors
 
 // Dart imports:
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
 
 // Flutter imports:
+import 'package:aeuniverse/ui/widgets/components/buttons.dart';
+import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
+import 'package:aewallet/ui/views/tokens_fungibles/add_token.dart';
+import 'package:aeuniverse/util/keychain_util.dart';
+import 'package:core_ui/ui/util/dimens.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,6 +19,7 @@ import 'package:aewallet/ui/menu/settings_drawer_wallet_mobile.dart';
 import 'package:aewallet/ui/views/accounts/account_list.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
 import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
+import 'package:aewallet/ui/views/tokens_fungibles/fungibles_tokens_list.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core/bus/account_changed_event.dart';
 import 'package:core/bus/disable_lock_timeout_event.dart';
@@ -26,16 +33,17 @@ import 'package:core_ui/ui/util/routes.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 
 // Project imports:
 import 'package:aeuniverse/appstate_container.dart';
 import 'package:aeuniverse/ui/util/styles.dart';
 import 'package:aeuniverse/ui/widgets/balance_infos.dart';
-import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aeuniverse/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aeuniverse/ui/widgets/logo.dart';
 import 'package:aeuniverse/util/preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:bottom_bar/bottom_bar.dart';
 
 class AppHomePageUniverse extends StatefulWidget {
   const AppHomePageUniverse({super.key});
@@ -58,11 +66,17 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
   ColorTween? colorTween;
   CurvedAnimation? curvedAnimation;
 
+  int bottomBarCurrentPage = 1;
+  PageController? bottomBarPageController;
+  TabController? tabController;
+
   @override
   void initState() {
     super.initState();
 
+    bottomBarPageController = PageController(initialPage: 1);
     accountIsPressed = false;
+    tabController = TabController(length: 2, vsync: this);
 
     _registerBus();
     WidgetsBinding.instance.addObserver(this);
@@ -187,7 +201,9 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
   void dispose() {
     _destroyBus();
     WidgetsBinding.instance.removeObserver(this);
+    tabController!.dispose();
     _placeholderCardAnimationController!.dispose();
+    bottomBarPageController!.dispose();
     super.dispose();
   }
 
@@ -251,16 +267,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
 
   @override
   Widget build(BuildContext context) {
-    double heightBalance = 60;
-    if (StateContainer.of(context).showBalance == false) {
-      heightBalance = 0;
-    }
-    double heightPriceChart = MediaQuery.of(context).size.height * 0.08 + 30;
-    if (StateContainer.of(context).showPriceChart == false) {
-      heightPriceChart = 0;
-    }
-    double heightBack = MediaQuery.of(context).size.height -
-        (171 + heightBalance + heightPriceChart);
+    bool isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return Responsive.isDesktop(context) == true
         ? Scaffold(
@@ -345,19 +353,6 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                           child: MenuWidgetWallet().buildContextMenu(context),
                         ),
                       ),
-                      /*SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Padding(
-                            padding: EdgeInsets.only(
-                                top: 200.0,
-                                left: Responsive.drawerWidth(context)),
-                            child: Column(
-                              children: [
-                                MenuWidgetWallet().buildMenuTxExplorer(context),
-                                const Expanded(child: TxListWidget()),
-                              ],
-                            )),
-                      ),*/
                       InkWell(
                         onTap: () async {
                           // await _networkDialog();
@@ -411,89 +406,183 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
           )
         : Scaffold(
             extendBodyBehindAppBar: true,
-            appBar: AppBar(
-              actions: [
-                StateContainer.of(context).showBalance
-                    ? IconButton(
-                        icon: const FaIcon(FontAwesomeIcons.eye),
-                        onPressed: () async {
-                          StateContainer.of(context).showBalance = false;
+            extendBody: true,
+            appBar: PreferredSize(
+              preferredSize: Size(MediaQuery.of(context).size.width, 50),
+              child: ClipRRect(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: AppBar(
+                    actions: [
+                      StateContainer.of(context).showBalance
+                          ? IconButton(
+                              icon: const FaIcon(FontAwesomeIcons.eye),
+                              onPressed: () async {
+                                StateContainer.of(context).showBalance = false;
 
-                          final Preferences preferences =
-                              await Preferences.getInstance();
-                          await preferences.setShowBalances(false);
-                        })
-                    : IconButton(
-                        icon: const FaIcon(FontAwesomeIcons.eyeLowVision),
-                        onPressed: () async {
-                          StateContainer.of(context).showBalance = true;
+                                final Preferences preferences =
+                                    await Preferences.getInstance();
+                                await preferences.setShowBalances(false);
+                              })
+                          : IconButton(
+                              icon: const FaIcon(FontAwesomeIcons.eyeLowVision),
+                              onPressed: () async {
+                                StateContainer.of(context).showBalance = true;
 
-                          final Preferences preferences =
-                              await Preferences.getInstance();
-                          await preferences.setShowBalances(true);
-                        }),
-                if (Platform.isWindows == false)
-                  StateContainer.of(context).activeNotifications
-                      ? IconButton(
-                          icon: const Icon(Icons.notifications_active_outlined),
-                          onPressed: () async {
-                            StateContainer.of(context).activeNotifications =
-                                false;
-                            if (StateContainer.of(context)
-                                    .timerCheckTransactionInputs !=
-                                null) {
+                                final Preferences preferences =
+                                    await Preferences.getInstance();
+                                await preferences.setShowBalances(true);
+                              }),
+                      if (Platform.isIOS == true ||
+                          Platform.isAndroid == true ||
+                          Platform.isMacOS == true)
+                        StateContainer.of(context).activeNotifications
+                            ? IconButton(
+                                icon: const Icon(
+                                    Icons.notifications_active_outlined),
+                                onPressed: () async {
+                                  StateContainer.of(context)
+                                      .activeNotifications = false;
+                                  if (StateContainer.of(context)
+                                          .timerCheckTransactionInputs !=
+                                      null) {
+                                    StateContainer.of(context)
+                                        .timerCheckTransactionInputs!
+                                        .cancel();
+                                  }
+                                  final Preferences preferences =
+                                      await Preferences.getInstance();
+                                  await preferences
+                                      .setActiveNotifications(false);
+                                })
+                            : IconButton(
+                                icon: const Icon(
+                                    Icons.notifications_off_outlined),
+                                onPressed: () async {
+                                  StateContainer.of(context)
+                                      .activeNotifications = true;
+
+                                  if (StateContainer.of(context)
+                                          .timerCheckTransactionInputs !=
+                                      null) {
+                                    StateContainer.of(context)
+                                        .timerCheckTransactionInputs!
+                                        .cancel();
+                                  }
+                                  StateContainer.of(context)
+                                      .checkTransactionInputs(
+                                          AppLocalization.of(context)!
+                                              .transactionInputNotification);
+                                  final Preferences preferences =
+                                      await Preferences.getInstance();
+                                  await preferences
+                                      .setActiveNotifications(true);
+                                })
+                    ],
+                    title: InkWell(
+                      onTap: () async {
+                        // await _networkDialog();
+                      },
+                      child: Column(
+                        children: [
+                          SvgPicture.asset(
+                            '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
+                            height: 30,
+                          ),
+                          Text(
                               StateContainer.of(context)
-                                  .timerCheckTransactionInputs!
-                                  .cancel();
-                            }
-                            final Preferences preferences =
-                                await Preferences.getInstance();
-                            await preferences.setActiveNotifications(false);
-                          })
-                      : IconButton(
-                          icon: const Icon(Icons.notifications_off_outlined),
-                          onPressed: () async {
-                            StateContainer.of(context).activeNotifications =
-                                true;
-
-                            if (StateContainer.of(context)
-                                    .timerCheckTransactionInputs !=
-                                null) {
-                              StateContainer.of(context)
-                                  .timerCheckTransactionInputs!
-                                  .cancel();
-                            }
-                            StateContainer.of(context).checkTransactionInputs(
-                                AppLocalization.of(context)!
-                                    .transactionInputNotification);
-                            final Preferences preferences =
-                                await Preferences.getInstance();
-                            await preferences.setActiveNotifications(true);
-                          })
-              ],
-              title: InkWell(
-                onTap: () async {
-                  // await _networkDialog();
-                },
-                child: Column(
-                  children: [
-                    SvgPicture.asset(
-                      '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
-                      height: 30,
+                                  .curNetwork
+                                  .getDisplayName(context),
+                              style: AppStyles.textStyleSize10W100Primary(
+                                  context)),
+                        ],
+                      ),
                     ),
-                    Text(
-                        StateContainer.of(context)
-                            .curNetwork
-                            .getDisplayName(context),
-                        style: AppStyles.textStyleSize10W100Primary(context)),
-                  ],
+                    backgroundColor: Colors.transparent,
+                    elevation: 0.0,
+                    centerTitle: true,
+                    iconTheme: IconThemeData(
+                        color: StateContainer.of(context).curTheme.text),
+                  ),
                 ),
               ),
-              backgroundColor: Colors.transparent,
-              elevation: 0.0,
-              centerTitle: true,
-              iconTheme: IconThemeData(
-                  color: StateContainer.of(context).curTheme.text),
+            ),
+            bottomNavigationBar: PreferredSize(
+              preferredSize: Size(MediaQuery.of(context).size.width, 22),
+              child: ClipRRect(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: BottomBar(
+                    selectedIndex: bottomBarCurrentPage,
+                    onTap: (int index) {
+                      bottomBarPageController!.jumpToPage(index);
+                      setState(() => bottomBarCurrentPage = index);
+                    },
+                    items: <BottomBarItem>[
+                      BottomBarItem(
+                          icon: const FaIcon(FontAwesomeIcons.keycdn),
+                          title: Text(
+                            AppLocalization.of(context)!.keychainHeader,
+                          ),
+                          backgroundColorOpacity: StateContainer.of(context)
+                              .curTheme
+                              .bottomBarBackgroundColorOpacity!,
+                          activeIconColor: StateContainer.of(context)
+                              .curTheme
+                              .bottomBarActiveIconColor!,
+                          activeTitleColor: StateContainer.of(context)
+                              .curTheme
+                              .bottomBarActiveTitleColor!,
+                          activeColor: StateContainer.of(context)
+                              .curTheme
+                              .bottomBarActiveColor!,
+                          inactiveColor: StateContainer.of(context)
+                              .curTheme
+                              .bottomBarInactiveIcon!),
+                      BottomBarItem(
+                          icon: const Icon(Icons.account_circle),
+                          title: Text(StateContainer.of(context)
+                              .appWallet!
+                              .appKeychain!
+                              .getAccountSelected()!
+                              .name!),
+                          backgroundColorOpacity: StateContainer.of(context)
+                              .curTheme
+                              .bottomBarBackgroundColorOpacity!,
+                          activeIconColor: StateContainer.of(context)
+                              .curTheme
+                              .bottomBarActiveIconColor!,
+                          activeTitleColor: StateContainer.of(context)
+                              .curTheme
+                              .bottomBarActiveTitleColor!,
+                          activeColor: StateContainer.of(context)
+                              .curTheme
+                              .bottomBarActiveColor!,
+                          inactiveColor: StateContainer.of(context)
+                              .curTheme
+                              .bottomBarInactiveIcon!),
+                      /* BottomBarItem(
+                          icon: const Icon(Icons.collections_bookmark),
+                          title: Text('Collection'),
+                          backgroundColorOpacity: StateContainer.of(context)
+                              .curTheme
+                              .bottomBarBackgroundColorOpacity!,
+                          activeIconColor: StateContainer.of(context)
+                              .curTheme
+                              .bottomBarActiveIconColor!,
+                          activeTitleColor: StateContainer.of(context)
+                              .curTheme
+                              .bottomBarActiveTitleColor!,
+                          activeColor: StateContainer.of(context)
+                              .curTheme
+                              .bottomBarActiveColor!,
+                          inactiveColor: StateContainer.of(context)
+                              .curTheme
+                              .bottomBarInactiveIcon!),*/
+                    ],
+                  ),
+                ),
+              ),
             ),
             drawerEdgeDragWidth: 0,
             resizeToAvoidBottomInset: false,
@@ -505,185 +594,328 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                 child: SettingsSheetWalletMobile(),
               ),
             ),
-            body: Column(
+            body: PageView(
+              controller: bottomBarPageController,
               children: [
-                Container(
-                  padding: const EdgeInsets.only(top: 120.0),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: <Color>[
-                        StateContainer.of(context).curTheme.backgroundMainTop!,
-                        StateContainer.of(context)
-                            .curTheme
-                            .backgroundMainBottom!
-                      ],
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 30,
-                            child: InkWell(
-                              onTap: () async {
-                                if (accountIsPressed == false) {
-                                  setState(() {
-                                    accountIsPressed = true;
-                                  });
-                                  sl.get<HapticUtil>().feedback(
-                                      FeedbackType.light,
-                                      StateContainer.of(context)
-                                          .activeVibrations);
-                                  Sheets.showAppHeightNineSheet(
-                                      context: context,
-                                      widget: AccountsListWidget(
-                                          appWallet: StateContainer.of(context)
-                                              .appWallet,
-                                          currencyName:
-                                              StateContainer.of(context)
-                                                  .curCurrency
-                                                  .currency
-                                                  .name,
-                                          seed: await StateContainer.of(context)
-                                              .getSeed()));
-                                  setState(() {
-                                    accountIsPressed = false;
-                                  });
-                                }
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
+                Column(
+                  children: [
+                    Expanded(
+                      /// REFRESH
+                      child: RefreshIndicator(
+                        backgroundColor:
+                            StateContainer.of(context).curTheme.backgroundDark,
+                        onRefresh: () => Future<void>.sync(() async {
+                          sl.get<HapticUtil>().feedback(FeedbackType.light,
+                              StateContainer.of(context).activeVibrations);
+                          StateContainer.of(context).appWallet =
+                              await KeychainUtil().getListAccountsFromKeychain(
+                                  StateContainer.of(context).appWallet,
+                                  await StateContainer.of(context).getSeed(),
                                   StateContainer.of(context)
-                                              .appWallet!
-                                              .appKeychain!
-                                              .getAccountSelected()!
-                                              .name !=
-                                          null
-                                      ? Align(
-                                          alignment: Alignment.center,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                StateContainer.of(context)
-                                                    .appWallet!
-                                                    .appKeychain!
-                                                    .getAccountSelected()!
-                                                    .name!,
-                                                style: AppStyles
-                                                    .textStyleSize20W700EquinoxPrimary(
-                                                        context),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      : const SizedBox(),
-                                ],
+                                      .curCurrency
+                                      .currency
+                                      .name,
+                                  StateContainer.of(context)
+                                      .appWallet!
+                                      .appKeychain!
+                                      .getAccountSelected()!
+                                      .balance!
+                                      .nativeTokenName!,
+                                  StateContainer.of(context)
+                                      .appWallet!
+                                      .appKeychain!
+                                      .getAccountSelected()!
+                                      .balance!
+                                      .tokenPrice!,
+                                  currentName: StateContainer.of(context)
+                                      .appWallet!
+                                      .appKeychain!
+                                      .getAccountSelected()!
+                                      .name);
+                        }),
+                        child: Column(
+                          children: <Widget>[
+                            /// BACKGROUND IMAGE
+                            Container(
+                              height: MediaQuery.of(context).size.height,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(StateContainer.of(context)
+                                        .curTheme
+                                        .background1Small!),
+                                    fit: BoxFit.fitHeight,
+                                    opacity: 0.7),
+                              ),
+                              child: SingleChildScrollView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 105.0, bottom: 100),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      /// ACCOUNTS LIST
+                                      AccountsListWidget(
+                                        appWallet: StateContainer.of(context)
+                                            .appWallet,
+                                        currencyName: StateContainer.of(context)
+                                            .curCurrency
+                                            .currency
+                                            .name,
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          StateContainer.of(context).showBalance
-                              ? BalanceInfosWidget().getBalance(context)
-                              : const SizedBox(),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          StateContainer.of(context).showPriceChart
-                              ? Stack(
-                                  children: <Widget>[
-                                    BalanceInfosWidget().buildInfos(context),
-                                  ],
-                                )
-                              : const SizedBox(),
-                        ],
+                          ],
+                        ),
                       ),
-                      StateContainer.of(context).showPriceChart
-                          ? BalanceInfosWidget().buildKPI(context)
-                          : const SizedBox(),
-                      Divider(
-                        height: 1,
-                        color: StateContainer.of(context).curTheme.text30,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: RefreshIndicator(
-                    backgroundColor:
-                        StateContainer.of(context).curTheme.backgroundDark,
-                    onRefresh: () => Future<void>.sync(() {
-                      sl.get<HapticUtil>().feedback(FeedbackType.light,
-                          StateContainer.of(context).activeVibrations);
-                      StateContainer.of(context).requestUpdate();
-                    }),
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: heightBack,
-                          child: Stack(
+                Column(
+                  children: [
+                    Expanded(
+                      /// REFRESH
+                      child: RefreshIndicator(
+                        backgroundColor:
+                            StateContainer.of(context).curTheme.backgroundDark,
+                        onRefresh: () => Future<void>.sync(() {
+                          sl.get<HapticUtil>().feedback(FeedbackType.light,
+                              StateContainer.of(context).activeVibrations);
+                          StateContainer.of(context).requestUpdate();
+                        }),
+                        child: ScrollConfiguration(
+                          behavior: ScrollConfiguration.of(context).copyWith(
+                            dragDevices: {
+                              PointerDeviceKind.touch,
+                              PointerDeviceKind.mouse,
+                            },
+                          ),
+                          child: Column(
                             children: <Widget>[
+                              /// BACKGROUND IMAGE
                               Container(
+                                height: MediaQuery.of(context).size.height,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(
                                           StateContainer.of(context)
                                               .curTheme
-                                              .background4Small!),
-                                      fit: BoxFit.none,
-                                      opacity: 0.8),
+                                              .background2Small!),
+                                      fit: BoxFit.fitHeight,
+                                      opacity: 0.7),
                                 ),
-                                child: Stack(
-                                  children: <Widget>[
-                                    SingleChildScrollView(
-                                      physics:
-                                          const AlwaysScrollableScrollPhysics(),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          const SizedBox(
-                                            height: 7,
+                                child: SingleChildScrollView(
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 105.0, bottom: 100),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        /// ACCOUNT SELECTED
+                                        SizedBox(
+                                          height: 30,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              StateContainer.of(context)
+                                                          .appWallet!
+                                                          .appKeychain!
+                                                          .getAccountSelected()!
+                                                          .name !=
+                                                      null
+                                                  ? Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            StateContainer.of(
+                                                                    context)
+                                                                .appWallet!
+                                                                .appKeychain!
+                                                                .getAccountSelected()!
+                                                                .name!,
+                                                            style: AppStyles
+                                                                .textStyleSize24W700EquinoxPrimary(
+                                                                    context),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  : const SizedBox(),
+                                            ],
                                           ),
-                                          MenuWidgetWallet()
-                                              .buildMainMenuIcons(context),
-                                          const SizedBox(
-                                            height: 15,
-                                          ),
-                                          const TxListWidget(),
-                                          // ignore: prefer_const_constructors
-                                          LastArticlesWidget(),
-                                          const SizedBox(
-                                            height: 30,
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+
+                                        /// BALANCE
+                                        StateContainer.of(context).showBalance
+                                            ? BalanceInfosWidget()
+                                                .getBalance(context)
+                                            : const SizedBox(),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+
+                                        /// PRICE CHART
+                                        StateContainer.of(context)
+                                                .showPriceChart
+                                            ? Stack(
+                                                children: <Widget>[
+                                                  BalanceInfosWidget()
+                                                      .buildInfos(context),
+                                                ],
+                                              )
+                                            : const SizedBox(),
+
+                                        /// KPI
+                                        StateContainer.of(context)
+                                                .showPriceChart
+                                            ? BalanceInfosWidget()
+                                                .buildKPI(context)
+                                            : const SizedBox(),
+
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+
+                                        /// ICONS
+                                        MenuWidgetWallet()
+                                            .buildMainMenuIcons(context),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+
+                                        ExpandablePageView(
+                                          // ignore: prefer_const_literals_to_create_immutables
+                                          children: [
+                                            FungiblesTokensListWidget(),
+
+                                            // ignore: prefer_const_literals_to_create_immutables
+                                            TxListWidget(),
+                                          ],
+                                        ),
+
+                                        /// BLOG
+                                        LastArticlesWidget(),
+                                        const SizedBox(
+                                          height: 30,
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ],
+                      ),
+                    )
+                  ],
+                ),
+                /*Column(
+                  children: [
+                    Expanded(
+                      /// REFRESH
+                      child: RefreshIndicator(
+                        backgroundColor:
+                            StateContainer.of(context).curTheme.backgroundDark,
+                        onRefresh: () => Future<void>.sync(() async {
+                          sl.get<HapticUtil>().feedback(FeedbackType.light,
+                              StateContainer.of(context).activeVibrations);
+                        }),
+                        child: Column(
+                          children: <Widget>[
+                            /// BACKGROUND IMAGE
+                            Container(
+                              height: MediaQuery.of(context).size.height,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(StateContainer.of(context)
+                                        .curTheme
+                                        .background1Small!),
+                                    fit: BoxFit.fitHeight,
+                                    opacity: 0.7),
+                              ),
+                              child: SingleChildScrollView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 105.0, bottom: 100),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      IconButton(
+                                        icon: Icon(Icons.abc),
+                                        onPressed: () {
+                                          Sheets.showAppHeightNineSheet(
+                                              context: context,
+                                              widget: AddNFTCollection(
+                                                primaryCurrency:
+                                                    StateContainer.of(context)
+                                                        .curPrimaryCurrency,
+                                              ));
+                                        },
+                                      )
+
+                                      /* Container(
+                                        height: 100,
+                                        child: AppButton.buildAppButton(
+                                            const Key('createNFTCollection'),
+                                            context,
+                                            AppButtonType.primary,
+                                            AppLocalization.of(context)!
+                                                .createNFTCollection,
+                                            Dimens.buttonBottomDimens,
+                                            onPressed: () {
+                                          Sheets.showAppHeightNineSheet(
+                                              context: context,
+                                              widget: AddNFTCollection(
+                                                primaryCurrency:
+                                                    StateContainer.of(context)
+
+                                                        .curPrimaryCurrency,
+                                              ));
+                                        }),
+                                      ),*/
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                )
+                  ],
+                ),*/
               ],
+              onPageChanged: (index) {
+                setState(() => bottomBarCurrentPage = index);
+              },
             ),
           );
   }
@@ -693,5 +925,186 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
         context, StateContainer.of(context).curNetwork))!;
     await StateContainer.of(context).requestUpdate();
     setState(() {});
+  }
+}
+
+class ExpandablePageView extends StatefulWidget {
+  final List<Widget>? children;
+
+  const ExpandablePageView({
+    super.key,
+    @required this.children,
+  });
+
+  @override
+  State<ExpandablePageView> createState() => _ExpandablePageViewState();
+}
+
+class _ExpandablePageViewState extends State<ExpandablePageView>
+    with TickerProviderStateMixin {
+  PageController? _pageController;
+  List<double>? _heights;
+  int _currentPage = 0;
+
+  double get _currentHeight => _heights![_currentPage];
+
+  @override
+  void initState() {
+    _heights = widget.children!.map((e) => 0.0).toList();
+    super.initState();
+    _pageController = PageController() //
+      ..addListener(() {
+        final newPage = _pageController!.page!.round();
+        if (_currentPage != newPage) {
+          setState(() => _currentPage = newPage);
+        }
+      });
+  }
+
+  @override
+  void dispose() {
+    _pageController!.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8.0),
+          color: Colors.transparent,
+          width: MediaQuery.of(context).size.width,
+          height: 80,
+          child: ContainedTabBarView(
+            tabBarProperties: TabBarProperties(
+                indicatorColor:
+                    StateContainer.of(context).curTheme.backgroundDarkest),
+            tabs: [
+              Text(AppLocalization.of(context)!.tokensHeader,
+                  style: AppStyles.textStyleSize14W600EquinoxPrimary(context)),
+              Text(AppLocalization.of(context)!.recentTransactionsHeader,
+                  style: AppStyles.textStyleSize14W600EquinoxPrimary(context)),
+            ],
+            // ignore: prefer_const_literals_to_create_immutables
+            views: [
+              const SizedBox(
+                height: 0,
+              ),
+              const SizedBox(
+                height: 0,
+              )
+            ],
+            onChange: (index) {
+              _pageController!.jumpToPage(index);
+            },
+          ),
+        ),
+        TweenAnimationBuilder<double>(
+          curve: Curves.easeInOutCubic,
+          duration: const Duration(milliseconds: 100),
+          tween: Tween<double>(begin: _heights![0], end: _currentHeight),
+          builder: (context, value, child) =>
+              SizedBox(height: value, child: child),
+          child: PageView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: _pageController,
+            children: _sizeReportingChildren
+                .asMap() //
+                .map((index, child) => MapEntry(index, child))
+                .values
+                .toList(),
+          ),
+        ),
+        if (_currentPage == 0)
+          Padding(
+            padding:
+                const EdgeInsets.only(top: 10.0, bottom: 10, left: 0, right: 0),
+            child: Row(
+              children: <Widget>[
+                AppButton.buildAppButton(
+                    const Key('createTokenFungible'),
+                    context,
+                    AppButtonType.primary,
+                    AppLocalization.of(context)!.createFungibleToken,
+                    Dimens.buttonBottomDimens, onPressed: () {
+                  Sheets.showAppHeightNineSheet(
+                      context: context,
+                      widget: AddTokenSheet(
+                        primaryCurrency:
+                            StateContainer.of(context).curPrimaryCurrency,
+                      ));
+                }),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+
+  List<Widget> get _sizeReportingChildren => widget.children!
+      .asMap() //
+      .map(
+        (index, child) => MapEntry(
+          index,
+          OverflowBox(
+            minHeight: 0,
+            maxHeight: double.infinity,
+            alignment: Alignment.topCenter,
+            child: SizeReportingWidget(
+              onSizeChange: (size) =>
+                  setState(() => _heights![index] = size.height),
+              child: Align(child: child),
+            ),
+          ),
+        ),
+      )
+      .values
+      .toList();
+}
+
+class SizeReportingWidget extends StatefulWidget {
+  final Widget child;
+  final ValueChanged<Size> onSizeChange;
+
+  const SizeReportingWidget({
+    key,
+    required this.child,
+    required this.onSizeChange,
+  }) : super(key: key);
+
+  @override
+  State<SizeReportingWidget> createState() => _SizeReportingWidgetState();
+}
+
+class _SizeReportingWidgetState extends State<SizeReportingWidget> {
+  final _widgetKey = GlobalKey();
+  Size? _oldSize;
+
+  @override
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) => _notifySize());
+    return NotificationListener<SizeChangedLayoutNotification>(
+      onNotification: (_) {
+        WidgetsBinding.instance.addPostFrameCallback((_) => _notifySize());
+        return true;
+      },
+      child: SizeChangedLayoutNotifier(
+        child: Container(
+          key: _widgetKey,
+          child: widget.child,
+        ),
+      ),
+    );
+  }
+
+  void _notifySize() {
+    final context = _widgetKey.currentContext;
+    if (context == null) return;
+    final size = context.size;
+    if (_oldSize != size) {
+      _oldSize = size;
+      widget.onSizeChange(size!);
+    }
   }
 }

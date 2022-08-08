@@ -24,13 +24,14 @@ class AccountAdapter extends TypeAdapter<Account> {
       lastAddress: fields[4] as String?,
       balance: fields[5] as AccountBalance?,
       recentTransactions: (fields[6] as List?)?.cast<RecentTransaction>(),
+      accountTokens: (fields[7] as List?)?.cast<AccountToken>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Account obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class AccountAdapter extends TypeAdapter<Account> {
       ..writeByte(5)
       ..write(obj.balance)
       ..writeByte(6)
-      ..write(obj.recentTransactions);
+      ..write(obj.recentTransactions)
+      ..writeByte(7)
+      ..write(obj.accountTokens);
   }
 
   @override

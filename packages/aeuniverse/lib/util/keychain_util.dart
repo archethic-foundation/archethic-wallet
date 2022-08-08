@@ -60,6 +60,8 @@ class KeychainUtil {
     final TransactionStatus transactionStatusKeychain =
         await sl.get<ApiService>().sendTx(keychainTransaction);
 
+    await Future.delayed(const Duration(seconds: 5));
+
     // ignore: unused_local_variable
     final TransactionStatus transactionStatusKeychainAccess =
         await sl.get<ApiService>().sendTx(accessKeychainTx);
@@ -87,8 +89,8 @@ class KeychainUtil {
     return appWallet;
   }
 
-  Future<AppWallet?> addAccountInKeyChain(
-      AppWallet? appWallet, String? seed, String? name, String currency) async {
+  Future<AppWallet?> addAccountInKeyChain(AppWallet? appWallet, String? seed,
+      String? name, String currency, String networkCurrency) async {
     Account? selectedAcct;
 
     final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
@@ -151,7 +153,7 @@ class KeychainUtil {
         balance: AccountBalance(
             fiatCurrencyCode: '',
             fiatCurrencyValue: 0,
-            nativeTokenName: '',
+            nativeTokenName: networkCurrency,
             nativeTokenValue: 0,
             tokenPrice: tokenPrice),
         selected: false,
@@ -240,6 +242,7 @@ class KeychainUtil {
         }
         if (loadBalance) {
           await accounts[i].updateBalance(tokenName, currency, tokenPrice);
+          await accounts[i].updateFungiblesTokens();
         }
       }
       final String genesisAddressKeychain =

@@ -106,6 +106,14 @@ class AppLocalization {
         name: 'recentTransactionsNoTransactionYet');
   }
 
+  String get fungiblesTokensListNoTokenYet {
+    return Intl.message('No token yet', name: 'fungiblesTokensListNoTokenYet');
+  }
+
+  String get fungiblesTokensListHeader {
+    return Intl.message('Tokens', name: 'fungiblesTokensListHeader');
+  }
+
   String get addressCopied {
     return Intl.message('Address Copied', name: 'addressCopied');
   }
@@ -896,12 +904,8 @@ class AppLocalization {
     return Intl.message('Archethic Blog', name: 'blogHeader');
   }
 
-  String get addToken {
-    return Intl.message('Add Token', name: 'addToken');
-  }
-
-  String get addTokenHeader {
-    return Intl.message('Add Token', name: 'addTokenHeader');
+  String get createToken {
+    return Intl.message('Create Token', name: 'createToken');
   }
 
   String get addTokenConfirmationMessage {
@@ -909,8 +913,14 @@ class AppLocalization {
         name: 'addTokenConfirmationMessage');
   }
 
-  String get tokenHeader {
-    return Intl.message('Token', name: 'tokenHeader');
+  String get addNFTCollectionConfirmationMessage {
+    return Intl.message(
+        'Do you confirm the creation of the following Collection?',
+        name: 'addNFTCollectionConfirmationMessage');
+  }
+
+  String get tokensHeader {
+    return Intl.message('Tokens', name: 'tokensHeader');
   }
 
   String get tokenHeaderDesc {
@@ -925,6 +935,14 @@ class AppLocalization {
     return Intl.message('Name: ', name: 'tokenName');
   }
 
+  String get tokenSymbol {
+    return Intl.message('Symbol: ', name: 'tokenSymbol');
+  }
+
+  String get tokenSymbolHint {
+    return Intl.message('Enter a symbol', name: 'tokenSymbolHint');
+  }
+
   String get tokenInitialSupplyHint {
     return Intl.message('Enter an initial supply',
         name: 'tokenInitialSupplyHint');
@@ -935,8 +953,17 @@ class AppLocalization {
         name: 'tokenNameMissing');
   }
 
+  String get tokenSymbolMissing {
+    return Intl.message('Choose a Symbol for the Token',
+        name: 'tokenSymbolMissing');
+  }
+
   String get tokenInitialSupply {
     return Intl.message('Initial supply: ', name: 'tokenInitialSupply');
+  }
+
+  String get tokenSupply {
+    return Intl.message('Supply: ', name: 'tokenSupply');
   }
 
   String get tokenInitialSupplyMissing {
@@ -947,6 +974,11 @@ class AppLocalization {
   String get tokenInitialSupplyPositive {
     return Intl.message('The initial supply should be > 0',
         name: 'tokenInitialSupplyPositive');
+  }
+
+  String get tokenInitialSupplyTooHigh {
+    return Intl.message('The initial supply is too high',
+        name: 'tokenInitialSupplyTooHigh');
   }
 
   String get nodeNumber {
@@ -1339,18 +1371,13 @@ class AppLocalization {
     return Intl.message('Account', name: 'accountHeader');
   }
 
-  String get accountsHeader {
-    return Intl.message('Accounts', name: 'accountsHeader');
+  String get keychainHeader {
+    return Intl.message('Keychain', name: 'keychainHeader');
   }
 
   String get accountsKeychainAddressHeader {
     return Intl.message('Your keychain\'s address',
         name: 'accountsKeychainAddressHeader');
-  }
-
-  String get keychainSync {
-    return Intl.message('Synchronization of your keychain in progress',
-        name: 'keychainSync');
   }
 
   String get newAccount {
@@ -1395,6 +1422,15 @@ class AppLocalization {
   String get appWalletInitInProgress {
     return Intl.message("Your wallet is being configured...",
         name: 'appWalletInitInProgress');
+  }
+
+  String get createFungibleToken {
+    return Intl.message('Create a token', name: 'createFungibleToken');
+  }
+
+  String get createNFTCollection {
+    return Intl.message('Create collection of NFT',
+        name: 'createNFTCollection');
   }
 }
 

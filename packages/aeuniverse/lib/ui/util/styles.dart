@@ -73,6 +73,14 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.text);
   }
 
+  static TextStyle textStyleSize10W600Primary(BuildContext context) {
+    return TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: AppFontSizes.size10,
+        fontWeight: FontWeight.w600,
+        color: StateContainer.of(context).curTheme.text!);
+  }
+
   static TextStyle textStyleSize14W600EquinoxMiddleButtonLabel(
       BuildContext context) {
     return TextStyle(

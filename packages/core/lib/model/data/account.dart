@@ -2,6 +2,7 @@
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:core/model/data/account_token.dart';
 import 'package:hive/hive.dart';
 
 // Project imports:
@@ -23,7 +24,8 @@ class Account extends HiveObject {
       this.selected = false,
       this.lastAddress,
       this.balance,
-      this.recentTransactions});
+      this.recentTransactions,
+      this.accountTokens});
 
   /// Account name - Primary Key
   @HiveField(0)
@@ -53,11 +55,21 @@ class Account extends HiveObject {
   @HiveField(6)
   List<RecentTransaction>? recentTransactions;
 
+  /// Tokens
+  @HiveField(7)
+  List<AccountToken>? accountTokens;
+
   Future<void> updateLastAddress() async {
     String lastAddressFromAddress =
         await sl.get<AddressService>().lastAddressFromAddress(genesisAddress!);
     lastAddress =
         lastAddressFromAddress == '' ? genesisAddress! : lastAddressFromAddress;
+    await updateAccount();
+  }
+
+  Future<void> updateFungiblesTokens() async {
+    accountTokens =
+        await sl.get<AppService>().getFungiblesTokensList(lastAddress!);
     await updateAccount();
   }
 

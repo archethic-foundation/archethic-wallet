@@ -2,6 +2,7 @@
 
 // Dart imports:
 import 'dart:async';
+import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -32,8 +33,7 @@ import 'package:aeuniverse/ui/themes/theme_dark.dart';
 import 'package:aeuniverse/util/preferences.dart';
 import 'package:aeuniverse/util/service_locator.dart';
 
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show TransactionInput;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 class _InheritedStateContainer extends InheritedWidget {
   const _InheritedStateContainer({
@@ -128,41 +128,64 @@ class StateContainerState extends State<StateContainer> {
   }
 
   void checkTransactionInputs(String message) {
-    if (appWallet != null) {
-      timerCheckTransactionInputs =
-          Timer.periodic(const Duration(seconds: 30), (Timer t) async {
-        List<Account>? accounts = appWallet!.appKeychain!.accounts;
-        accounts!.forEach((Account account) async {
-          final List<TransactionInput> transactionInputList = await sl
-              .get<AppService>()
-              .getTransactionInputs(
-                  account.lastAddress!, 'from, amount, timestamp');
+    if (Platform.isIOS == true ||
+        Platform.isAndroid == true ||
+        Platform.isMacOS == true) {
+      if (appWallet != null) {
+        timerCheckTransactionInputs =
+            Timer.periodic(const Duration(seconds: 30), (Timer t) async {
+          List<Account>? accounts = appWallet!.appKeychain!.accounts;
+          accounts!.forEach((Account account) async {
+            final List<TransactionInput> transactionInputList = await sl
+                .get<AppService>()
+                .getTransactionInputs(
+                    account.lastAddress!, 'from, amount, timestamp');
 
-          if (transactionInputList.length > 0) {
-            transactionInputList.forEach((TransactionInput transactionInput) {
-              if (account.lastLoadingTransactionInputs == null ||
-                  transactionInput.timestamp! >
-                      account.lastLoadingTransactionInputs!) {
-                account.updateLastLoadingTransactionInputs();
-                if (transactionInput.from != account.lastAddress) {
-                  NotificationsUtil.showNotification(
-                      title: 'Archethic',
-                      body: message
-                          .replaceAll('%1', transactionInput.amount.toString())
-                          .replaceAll('%2', 'UCO')
-                          .replaceAll('%3', account.name!),
-                      payload: account.name!);
+            if (transactionInputList.length > 0) {
+              transactionInputList.forEach((TransactionInput transactionInput) {
+                if (account.lastLoadingTransactionInputs == null ||
+                    transactionInput.timestamp! >
+                        account.lastLoadingTransactionInputs!) {
+                  account.updateLastLoadingTransactionInputs();
+                  if (transactionInput.from != account.lastAddress) {
+                    NotificationsUtil.showNotification(
+                        title: 'Archethic',
+                        body: message
+                            .replaceAll(
+                                '%1', transactionInput.amount.toString())
+                            .replaceAll('%2', 'UCO')
+                            .replaceAll('%3', account.name!),
+                        payload: account.name!);
+                  }
                 }
-              }
-            });
-          }
+              });
+            }
+          });
         });
-      });
+      }
     }
   }
 
   Future<List<Contact>> getContacts() async {
     return await sl.get<DBHelper>().getContacts();
+  }
+
+  Future<List<Token>> getTokenFungibles() async {
+    List<Token> tokensFungibles = <Token>[];
+    List<Transaction> transactions = await sl
+        .get<ApiService>()
+        .networkTransactions('token', 1, request: 'address, data { content }');
+
+    for (var transaction in transactions) {
+      Token token = tokenFromJson(transaction.data!.content!);
+      tokensFungibles.add(Token(
+          address: transaction.address,
+          name: token.name,
+          supply: token.supply,
+          type: 'fungible',
+          symbol: token.symbol));
+    }
+    return tokensFungibles;
   }
 
   // Change language
@@ -199,14 +222,18 @@ class StateContainerState extends State<StateContainer> {
     if (showPriceChart && chartInfos != null) {
       await chartInfos!.updateCoinsChart(curCurrency.currency.name);
     }
-    setState(() {
-      curTheme = theme.getTheme();
-    });
+    if (mounted) {
+      setState(() {
+        curTheme = theme.getTheme();
+      });
+    }
   }
 
   Future<void> requestUpdate(
       {String? pagingAddress = '', bool forceUpdateChart = true}) async {
     await appWallet!.appKeychain!.getAccountSelected()!.updateLastAddress();
+
+    await appWallet!.appKeychain!.getAccountSelected()!.updateFungiblesTokens();
 
     setState(() {
       balanceLoading = true;
