@@ -1,13 +1,35 @@
 {
-    "name": "Archethic Wallet",
-    "description": "Archethic Wallet",
-    "version": "0.2.25.1",
-    "content_security_policy": {
-        "extension_pages": "script-src 'self' ; object-src 'self'"
-    },
-    "action": {
-        "default_popup": "index.html",
-        "default_icon": "icons/Icon-192.png"
-    },
-    "manifest_version": 3
+  "name": "archethic_wallet",
+  "short_name": "archethic_wallet",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "description": "Archethic Wallet.",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false,
+  "icons": [
+      {
+          "src": "icons/Icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+      },
+      {
+          "src": "icons/Icon-512.png",
+          "sizes": "512x512",
+          "type": "image/png"
+      },
+      {
+          "src": "icons/Icon-maskable-192.png",
+          "sizes": "192x192",
+          "type": "image/png",
+          "purpose": "maskable"
+      },
+      {
+          "src": "icons/Icon-maskable-512.png",
+          "sizes": "512x512",
+          "type": "image/png",
+          "purpose": "maskable"
+      }
+  ]
 }

@@ -11,6 +11,7 @@ import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/add_token.dart';
 import 'package:aeuniverse/util/keychain_util.dart';
 import 'package:core_ui/ui/util/dimens.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -433,9 +434,10 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                     await Preferences.getInstance();
                                 await preferences.setShowBalances(true);
                               }),
-                      if (Platform.isIOS == true ||
-                          Platform.isAndroid == true ||
-                          Platform.isMacOS == true)
+                      if (!kIsWeb &&
+                          (Platform.isIOS == true ||
+                              Platform.isAndroid == true ||
+                              Platform.isMacOS == true))
                         StateContainer.of(context).activeNotifications
                             ? IconButton(
                                 icon: const Icon(

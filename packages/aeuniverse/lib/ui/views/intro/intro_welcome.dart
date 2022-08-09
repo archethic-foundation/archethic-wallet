@@ -51,7 +51,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                 image: DecorationImage(
                     image: AssetImage(
                         StateContainer.of(context).curTheme.background4Small!),
-                    fit: BoxFit.none,
+                    fit: BoxFit.fitHeight,
                     opacity: 0.8),
               ),
             ),

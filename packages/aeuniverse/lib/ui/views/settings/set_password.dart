@@ -3,6 +3,7 @@
 // Flutter imports:
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -496,9 +497,10 @@ class _SetPasswordState extends State<SetPassword> {
         preferences.setShowBalances(true);
         preferences.setShowBlog(true);
         preferences.setActiveVibrations(true);
-        if (Platform.isIOS == true ||
-            Platform.isAndroid == true ||
-            Platform.isMacOS == true) {
+        if (!kIsWeb &&
+            (Platform.isIOS == true ||
+                Platform.isAndroid == true ||
+                Platform.isMacOS == true)) {
           preferences.setActiveNotifications(true);
         } else {
           preferences.setActiveNotifications(false);

@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -128,9 +129,10 @@ class StateContainerState extends State<StateContainer> {
   }
 
   void checkTransactionInputs(String message) {
-    if (Platform.isIOS == true ||
-        Platform.isAndroid == true ||
-        Platform.isMacOS == true) {
+    if (!kIsWeb &&
+        (Platform.isIOS == true ||
+            Platform.isAndroid == true ||
+            Platform.isMacOS == true)) {
       if (appWallet != null) {
         timerCheckTransactionInputs =
             Timer.periodic(const Duration(seconds: 30), (Timer t) async {

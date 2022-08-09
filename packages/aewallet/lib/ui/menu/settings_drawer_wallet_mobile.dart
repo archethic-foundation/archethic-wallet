@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -979,16 +980,18 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         preferences.setShowPriceChart(_showPriceChartActive);
                       });
                     }),
-                    if (Platform.isIOS == true ||
-                        Platform.isAndroid == true ||
-                        Platform.isMacOS == true)
+                    if (!kIsWeb &&
+                        (Platform.isIOS == true ||
+                            Platform.isAndroid == true ||
+                            Platform.isMacOS == true))
                       Divider(
                         height: 2,
                         color: StateContainer.of(context).curTheme.text15,
                       ),
-                    if (Platform.isIOS == true ||
-                        Platform.isAndroid == true ||
-                        Platform.isMacOS == true)
+                    if (!kIsWeb &&
+                        (Platform.isIOS == true ||
+                            Platform.isAndroid == true ||
+                            Platform.isMacOS == true))
                       AppSettings.buildSettingsListItemSwitch(
                           context,
                           AppLocalization.of(context)!.activateNotifications,

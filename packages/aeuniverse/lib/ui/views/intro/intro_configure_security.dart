@@ -6,6 +6,7 @@ import 'dart:io';
 
 import 'package:aeuniverse/ui/util/ui_util.dart';
 import 'package:aeuniverse/util/keychain_util.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -243,9 +244,10 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                       preferences.setShowBalances(true);
                                       preferences.setShowBlog(true);
                                       preferences.setActiveVibrations(true);
-                                      if (Platform.isIOS == true ||
-                                          Platform.isAndroid == true ||
-                                          Platform.isMacOS == true) {
+                                      if (!kIsWeb &&
+                                          (Platform.isIOS == true ||
+                                              Platform.isAndroid == true ||
+                                              Platform.isMacOS == true)) {
                                         preferences
                                             .setActiveNotifications(true);
                                       } else {
