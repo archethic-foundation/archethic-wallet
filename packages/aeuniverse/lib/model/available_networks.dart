@@ -61,9 +61,9 @@ class NetworksSetting extends SettingSelectionItem {
   Future<String> getWebsocketUri() async {
     switch (network) {
       case AvailableNetworks.ArchethicMainNet:
-        return 'ws://mainnet.archethic.net/socket/websocket';
+        return 'wss://mainnet.archethic.net/socket/websocket';
       case AvailableNetworks.ArchethicTestNet:
-        return 'ws://testnet.archethic.net/socket/websocket';
+        return 'wss://testnet.archethic.net/socket/websocket';
       case AvailableNetworks.ArchethicDevNet:
         final Preferences preferences = await Preferences.getInstance();
         return '${preferences.getNetworkDevEndpoint().replaceAll('https:', 'ws:').replaceAll('http:', 'ws:')}/socket/websocket';
