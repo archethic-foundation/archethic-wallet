@@ -64,7 +64,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                               .curTheme
                               .numMnemonicBackground,
                           child: Text((entry.key + 1).toString(),
-                              style: AppStyles.textStyleSize16W400Primary(
+                              style: AppStyles.textStyleSize12W100Primary60(
                                   context)),
                         ),
                         label: Text(
@@ -72,7 +72,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                                 ? '•' * 6
                                 : entry.value,
                             style:
-                                AppStyles.textStyleSize16W400Primary(context)),
+                                AppStyles.textStyleSize12W400Primary(context)),
                       ));
                 }).toList()),
             // Tap to reveal or hide

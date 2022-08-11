@@ -131,52 +131,53 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           margin: const EdgeInsetsDirectional.only(
                               start: 20, end: 20, top: 15.0),
                           child: Wrap(
+                              spacing: 10,
                               alignment: WrapAlignment.start,
                               children: wordListSelected
                                   .asMap()
                                   .entries
                                   .map((MapEntry entry) {
-                                return Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 5.0, left: 5.0),
-                                    child: Chip(
-                                      avatar: CircleAvatar(
-                                        backgroundColor: Colors.grey.shade800,
-                                        child: Text((entry.key + 1).toString(),
-                                            style: AppStyles
-                                                .textStyleSize12W100Primary60(
-                                                    context)),
-                                      ),
-                                      label: Text(entry.value,
+                                return SizedBox(
+                                  height: 35,
+                                  child: Chip(
+                                    avatar: CircleAvatar(
+                                      backgroundColor: Colors.grey.shade800,
+                                      child: Text((entry.key + 1).toString(),
                                           style: AppStyles
-                                              .textStyleSize12W400Primary(
+                                              .textStyleSize12W100Primary60(
                                                   context)),
-                                      onDeleted: () {
-                                        setState(() {
-                                          wordListToSelect.add(entry.value);
-                                          wordListSelected.removeAt(entry.key);
-                                        });
-                                      },
-                                      deleteIconColor: Colors.white,
-                                    ));
+                                    ),
+                                    label: Text(entry.value,
+                                        style: AppStyles
+                                            .textStyleSize12W400Primary(
+                                                context)),
+                                    onDeleted: () {
+                                      setState(() {
+                                        wordListToSelect.add(entry.value);
+                                        wordListSelected.removeAt(entry.key);
+                                      });
+                                    },
+                                    deleteIconColor: Colors.white,
+                                  ),
+                                );
                               }).toList()),
                         ),
                         Divider(
-                          height: 0,
+                          height: 15,
                           color: StateContainer.of(context).curTheme.text60,
                         ),
                         Container(
                           margin: const EdgeInsetsDirectional.only(
                               start: 20, end: 20, top: 15.0),
                           child: Wrap(
-                              alignment: WrapAlignment.center,
+                              spacing: 10,
+                              alignment: WrapAlignment.start,
                               children: wordListToSelect
                                   .asMap()
                                   .entries
                                   .map((MapEntry entry) {
-                                return Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 5.0, left: 5.0),
+                                return SizedBox(
+                                    height: 35,
                                     child: GestureDetector(
                                         onTap: () {
                                           wordListSelected.add(entry.value);
