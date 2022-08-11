@@ -6,40 +6,42 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 // Flutter imports:
-import 'package:core/util/vault.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:aeuniverse/appstate_container.dart';
-import 'package:aeuniverse/ui/themes/theme_dark.dart';
-import 'package:aeuniverse/ui/util/styles.dart';
-import 'package:aeuniverse/ui/views/home_page_universe.dart';
-import 'package:aeuniverse/ui/views/intro/intro_backup_confirm.dart';
-import 'package:aeuniverse/ui/views/intro/intro_backup_seed.dart';
-import 'package:aeuniverse/ui/views/intro/intro_configure_security.dart';
-import 'package:aeuniverse/ui/views/intro/intro_import_seed.dart';
-import 'package:aeuniverse/ui/views/intro/intro_new_wallet_disclaimer.dart';
-import 'package:aeuniverse/ui/views/intro/intro_new_wallet_get_first_infos.dart';
-import 'package:aeuniverse/ui/views/intro/intro_password.dart';
-import 'package:aeuniverse/ui/views/intro/intro_welcome.dart';
-import 'package:aeuniverse/ui/views/intro/intro_yubikey.dart';
-import 'package:aeuniverse/ui/views/lock_screen.dart';
-import 'package:aeuniverse/ui/views/settings/update_password.dart';
-import 'package:aeuniverse/ui/views/settings/update_yubikey.dart';
-import 'package:aeuniverse/ui/widgets/components/picker_item.dart';
-import 'package:aeuniverse/util/preferences.dart';
-import 'package:core/localization.dart';
-import 'package:core/model/available_language.dart';
-import 'package:core/model/data/appdb.dart';
-import 'package:core/util/get_it_instance.dart';
-import 'package:core_ui/ui/util/routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:window_manager/window_manager.dart';
+
+// Project imports:
+import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/available_language.dart';
+import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/ui/themes/theme_dark.dart';
+import 'package:aewallet/ui/util/routes.dart';
+import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/views/home_page_universe.dart';
+import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
+import 'package:aewallet/ui/views/intro/intro_backup_seed.dart';
+import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
+import 'package:aewallet/ui/views/intro/intro_import_seed.dart';
+import 'package:aewallet/ui/views/intro/intro_new_wallet_disclaimer.dart';
+import 'package:aewallet/ui/views/intro/intro_new_wallet_get_first_infos.dart';
+import 'package:aewallet/ui/views/intro/intro_password.dart';
+import 'package:aewallet/ui/views/intro/intro_welcome.dart';
+import 'package:aewallet/ui/views/intro/intro_yubikey.dart';
+import 'package:aewallet/ui/views/lock_screen.dart';
+import 'package:aewallet/ui/views/settings/update_password.dart';
+import 'package:aewallet/ui/views/settings/update_yubikey.dart';
+import 'package:aewallet/ui/widgets/components/picker_item.dart';
+import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/preferences.dart';
+import 'package:aewallet/util/vault.dart';
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();

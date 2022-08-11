@@ -1,0 +1,134 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+
+// ignore_for_file: must_be_immutable
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:decimal/decimal.dart';
+
+// Project imports:
+import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/address.dart';
+import 'package:aewallet/model/uco_transfer_wallet.dart';
+import 'package:aewallet/ui/util/styles.dart';
+
+class UCOTransferListWidget extends StatefulWidget {
+  UCOTransferListWidget({
+    super.key,
+    required this.listUcoTransfer,
+    required this.feeEstimation,
+  });
+
+  List<UCOTransferWallet>? listUcoTransfer;
+  final double? feeEstimation;
+
+  @override
+  State<UCOTransferListWidget> createState() => _UCOTransferListWidgetState();
+}
+
+class _UCOTransferListWidgetState extends State<UCOTransferListWidget> {
+  @override
+  Widget build(BuildContext context) {
+    widget.listUcoTransfer!.sort(
+        (UCOTransferWallet a, UCOTransferWallet b) => a.to!.compareTo(b.to!));
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.9,
+      padding: const EdgeInsets.only(left: 3.5, right: 3.5),
+      child: Column(
+        children: [
+          SizedBox(
+            height: widget.listUcoTransfer!.length * 50,
+            child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: widget.listUcoTransfer!.length,
+              itemBuilder: (BuildContext context, int index) {
+                return displayUcoDetail(
+                    context, widget.listUcoTransfer![index]);
+              },
+            ),
+          ),
+          SizedBox(
+            height: 50,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text('+ ${AppLocalization.of(context)!.estimatedFees}',
+                        style: AppStyles.textStyleSize14W600Primary(context)),
+                  ],
+                ),
+                Text(
+                    '${widget.feeEstimation!.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                    style: AppStyles.textStyleSize14W600Primary(context)),
+              ],
+            ),
+          ),
+          Divider(height: 4, color: StateContainer.of(context).curTheme.text),
+          SizedBox(
+            height: 50,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text(AppLocalization.of(context)!.total,
+                        style: AppStyles.textStyleSize14W600Primary(context)),
+                  ],
+                ),
+                Text(
+                    '${(_getTotal()).toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                    style: AppStyles.textStyleSize14W600Primary(context)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget displayUcoDetail(BuildContext context, UCOTransferWallet ucoTransfer) {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Text(
+                    ucoTransfer.toContactName == null
+                        ? Address(ucoTransfer.to!).getShortString()
+                        : '${ucoTransfer.toContactName!}\n${Address(ucoTransfer.to!).getShortString()}',
+                    style: AppStyles.textStyleSize14W600Primary(context)),
+              ],
+            ),
+            Text(
+                '${(fromBigInt(ucoTransfer.amount!)).toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                style: AppStyles.textStyleSize14W600Primary(context)),
+          ],
+        ),
+      ],
+    );
+  }
+
+  double _getTotal() {
+    double totalAmount = 0.0;
+    for (int i = 0; i < widget.listUcoTransfer!.length; i++) {
+      double amount =
+          (Decimal.parse(widget.listUcoTransfer![i].amount!.toString()) /
+                  Decimal.parse('100000000'))
+              .toDouble();
+      totalAmount = (Decimal.parse(totalAmount.toString()) +
+              Decimal.parse(amount.toString()))
+          .toDouble();
+    }
+    totalAmount = (Decimal.parse(totalAmount.toString()) +
+            Decimal.parse(widget.feeEstimation!.toString()))
+        .toDouble();
+    return totalAmount;
+  }
+}

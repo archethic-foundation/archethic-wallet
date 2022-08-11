@@ -1,6 +1,0 @@
-name: aeroot
-
-packages:
-  - packages/**
-  - '*'
-  
