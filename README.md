@@ -9,7 +9,7 @@ This wallet includes the features of send and receive coins instantly to and fro
 No signup or KYC needed, you just control your service access keychain, protected by different security ways like PIN Code, Password, Yubikey devices and Biometrics</br>
 NB: Yubikey is a device that makes 2-factor authentification as simple as possible (see [yubico.com](https://www.yubico.com))</br>
 
-[![Download](assets/screenshots/Dl_here_github_wallet.png?v=20220718)](https://github.com/archethic-foundation/archethic-wallet/releases)
+[![Download](assets/screenshots/Dl_here_github_wallet.png?v=20220718)](https://www.archethic.net/aewallet.html)
 
 Archethic Wallet have features that are implemented:
 - Use of 24 Words Mnemonics.
@@ -45,7 +45,7 @@ To install Archethic Wallet in Android Devices:
 - Soon
 
 ### MacOS
-- Soon
+- Available
 
 ### iOS
 - Soon
