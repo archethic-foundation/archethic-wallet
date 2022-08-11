@@ -812,10 +812,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                         ExpandablePageView(
                                           // ignore: prefer_const_literals_to_create_immutables
                                           children: [
-                                            FungiblesTokensListWidget(),
-
-                                            // ignore: prefer_const_literals_to_create_immutables
                                             TxListWidget(),
+                                            FungiblesTokensListWidget(),
                                           ],
                                         ),
 
@@ -983,9 +981,9 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
                 indicatorColor:
                     StateContainer.of(context).curTheme.backgroundDarkest),
             tabs: [
-              Text(AppLocalization.of(context)!.tokensHeader,
-                  style: AppStyles.textStyleSize14W600EquinoxPrimary(context)),
               Text(AppLocalization.of(context)!.recentTransactionsHeader,
+                  style: AppStyles.textStyleSize14W600EquinoxPrimary(context)),
+              Text(AppLocalization.of(context)!.tokensHeader,
                   style: AppStyles.textStyleSize14W600EquinoxPrimary(context)),
             ],
             // ignore: prefer_const_literals_to_create_immutables
@@ -1018,7 +1016,7 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
                 .toList(),
           ),
         ),
-        if (_currentPage == 0)
+        if (_currentPage == 1)
           Padding(
             padding:
                 const EdgeInsets.only(top: 10.0, bottom: 10, left: 0, right: 0),
