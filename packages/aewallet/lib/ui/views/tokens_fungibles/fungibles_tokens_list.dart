@@ -1,11 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'dart:math';
-
 import 'package:aeuniverse/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/views/uco/transfer_sheet.dart';
 import 'package:core/model/data/account_token.dart';
-import 'package:core_ui/ui/util/hexagon.dart';
+import 'package:core/util/number_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -15,6 +12,7 @@ import 'package:core/localization.dart';
 import 'package:core/util/get_it_instance.dart';
 import 'package:core/util/haptic_util.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:intl/intl.dart';
 
 class FungiblesTokensListWidget extends StatefulWidget {
   const FungiblesTokensListWidget({super.key});
@@ -170,26 +168,17 @@ class _FungiblesTokensListWidgetState extends State<FungiblesTokensListWidget> {
                       const SizedBox(
                         width: 10,
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(accountFungibleToken.tokenInformations!.name!,
-                              style: AppStyles.textStyleSize12W600Primary(
-                                  context)),
-                          Text(
-                              '${AppLocalization.of(context)!.tokenSupply} ${accountFungibleToken.tokenInformations!.supply!}',
-                              style: AppStyles.textStyleSize12W400Primary(
-                                  context)),
-                        ],
-                      ),
+                      Text(accountFungibleToken.tokenInformations!.name!,
+                          style: AppStyles.textStyleSize12W600Primary(context)),
                     ],
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(accountFungibleToken.amount!.toString(),
+                      Text(
+                          NumberUtil.formatThousands(
+                              accountFungibleToken.amount!),
                           style: AppStyles.textStyleSize12W400Primary(context)),
                       Text(accountFungibleToken.tokenInformations!.symbol!,
                           style: AppStyles.textStyleSize12W600Primary(context)),

@@ -43,7 +43,7 @@ import 'package:aewallet/ui/views/uco/transfer_confirm_sheet.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show AddressService, isHex, ApiService;
+    show AddressService, isHex, ApiService, toBigInt;
 
 class TransferSheet extends StatefulWidget {
   const TransferSheet(
@@ -653,7 +653,7 @@ class _TransferSheetState extends State<TransferSheet> {
                           .getNetworkCryptoCurrencyLabel());
             });
           } else {
-            ucoTransfer.amount = BigInt.from(sendAmount * 100000000);
+            ucoTransfer.amount = toBigInt(sendAmount);
           }
         } else {
           balanceRaw = widget.accountToken!.amount!.toDouble();
@@ -685,7 +685,7 @@ class _TransferSheetState extends State<TransferSheet> {
                             .getNetworkCryptoCurrencyLabel());
               });
             } else {
-              tokenTransfer.amount = BigInt.from(sendAmount * 100000000);
+              tokenTransfer.amount = toBigInt(sendAmount);
             }
           }
         }
@@ -895,7 +895,8 @@ class _TransferSheetState extends State<TransferSheet> {
             },
           ),
           fadeSuffixOnCondition: true,
-          suffixShowFirstCondition: !_isMaxSend(),
+          suffixShowFirstCondition:
+              widget.accountToken == null && !_isMaxSend(),
           keyboardType: const TextInputType.numberWithOptions(
               signed: true, decimal: true),
           textAlign: TextAlign.center,
@@ -944,7 +945,7 @@ class _TransferSheetState extends State<TransferSheet> {
                     margin: const EdgeInsets.only(left: 40),
                     alignment: Alignment.centerLeft,
                     child: AutoSizeText(
-                      '${widget.accountToken!.amount.toString()} ${widget.accountToken!.tokenInformations!.symbol}',
+                      '${NumberUtil.formatThousands(widget.accountToken!.amount!)} ${widget.accountToken!.tokenInformations!.symbol}',
                       style: AppStyles.textStyleSize14W100Primary(context),
                     ),
                   ),
@@ -1191,23 +1192,20 @@ class _TransferSheetState extends State<TransferSheet> {
       if (widget.accountToken == null) {
         ucoTransferListForFee.add(UCOTransferWallet(
             amount: maxSend
-                ? BigInt.from(StateContainer.of(context)
+                ? toBigInt(StateContainer.of(context)
                         .appWallet!
                         .appKeychain!
                         .getAccountSelected()!
                         .balance!
-                        .nativeTokenValue! *
-                    100000000)
-                : BigInt.from(
-                    double.tryParse(_sendAmountController!.text)! * 100000000),
+                        .nativeTokenValue!)
+                    .toInt()
+                : toBigInt(double.tryParse(_sendAmountController!.text)!),
             to: recipientAddress));
       } else {
         tokenTransferListForFee.add(TokenTransferWallet(
           amount: maxSend
-              ? BigInt.from(
-                  double.tryParse(widget.accountToken!.amount!.toString())!)
-              : BigInt.from(
-                  double.tryParse(_sendAmountController!.text)! * 100000000),
+              ? widget.accountToken!.amount!
+              : toBigInt(double.tryParse(_sendAmountController!.text)),
           to: recipientAddress,
           token: widget.accountToken!.tokenInformations!.address,
         ));

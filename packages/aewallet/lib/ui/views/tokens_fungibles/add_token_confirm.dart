@@ -30,6 +30,7 @@ import 'package:event_taxi/event_taxi.dart';
 // Project imports:
 
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:core/util/number_util.dart';
 
 class AddTokenConfirm extends StatefulWidget {
   const AddTokenConfirm(
@@ -207,7 +208,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                         Text(AppLocalization.of(context)!.tokenInitialSupply,
                             style:
                                 AppStyles.textStyleSize14W600Primary(context)),
-                        Text(widget.tokenInitialSupply!.toString(),
+                        Text(NumberUtil.formatThousands(widget.tokenInitialSupply!),
                             style:
                                 AppStyles.textStyleSize14W100Primary(context)),
                       ],

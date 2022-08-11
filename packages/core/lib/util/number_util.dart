@@ -75,4 +75,10 @@ class NumberUtil {
     }
     return sanitized;
   }
+
+  /// Format a number with blank separator for each thousand
+  static String formatThousands(num input) {
+    NumberFormat formatterThousand = NumberFormat('#,###');
+    return formatterThousand.format(input).replaceAll(',', ' ');
+  }
 }

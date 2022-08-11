@@ -25,7 +25,8 @@ Uint8List getSignTxnAPDU(OnChainWalletData onChainWalletData,
   cla = hexToUint8List('E0');
   Uint8List ins = Uint8List(2);
   ins = hexToUint8List('08');
-  return concatUint8List([cla, ins, encodeInt32(addressIndex), signPayload]);
+  return concatUint8List(
+      [cla, ins, toByteArray(addressIndex, length: 4), signPayload]);
 }
 
 Uint8List getArchAddressAPDU(OnChainWalletData onChainWalletData) {

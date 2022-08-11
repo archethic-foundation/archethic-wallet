@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Package imports:
+import 'package:core/util/number_util.dart';
 import 'package:decimal/decimal.dart';
 import 'package:hive/hive.dart';
 
@@ -42,7 +43,7 @@ class AccountBalance extends HiveObject {
     if (fiatCurrencyValue == null) {
       return '';
     } else {
-      return fiatCurrencyValue.toString();
+      return NumberUtil.formatThousands(fiatCurrencyValue!);
     }
   }
 
@@ -50,7 +51,7 @@ class AccountBalance extends HiveObject {
     if (nativeTokenValue == null) {
       return '';
     } else {
-      return Decimal.parse(nativeTokenValue.toString()).toString();
+      return NumberUtil.formatThousands(nativeTokenValue!);
     }
   }
 
@@ -58,7 +59,7 @@ class AccountBalance extends HiveObject {
     if (tokenPrice == null || tokenPrice!.amount == null) {
       return '';
     } else {
-      return tokenPrice!.amount.toString();
+      return NumberUtil.formatThousands(tokenPrice!.amount!);
     }
   }
 

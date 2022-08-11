@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:core/util/number_util.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 
@@ -137,7 +138,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                     children: <Widget>[
                       transaction.typeTx == RecentTransaction.tokenCreation
                           ? AutoSizeText(
-                              '${Decimal.parse(transaction.tokenInformations!.supply!.toString())} ${transaction.tokenInformations!.symbol}',
+                              '${NumberUtil.formatThousands(transaction.tokenInformations!.supply!)} ${transaction.tokenInformations!.symbol}',
                               style: AppStyles.textStyleSize12W400PrimaryRed(
                                   context))
                           : StateContainer.of(context)
@@ -158,19 +159,19 @@ class _TxListWidgetState extends State<TxListWidget> {
                                         if (transaction.tokenInformations ==
                                             null)
                                           AutoSizeText(
-                                              '-${Decimal.parse(transaction.amount!.toString())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                              '-${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                               style: AppStyles
                                                   .textStyleSize12W400PrimaryRed(
                                                       context))
                                         else
                                           AutoSizeText(
-                                              '-${Decimal.parse(transaction.amount!.toString())} ${transaction.tokenInformations!.symbol!}',
+                                              '-${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
                                               style: AppStyles
                                                   .textStyleSize12W400PrimaryRed(
                                                       context))
                                       else
                                         AutoSizeText(
-                                            '${Decimal.parse(transaction.amount!.toString())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                            '${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                             style: AppStyles
                                                 .textStyleSize12W400PrimaryGreen(
                                                     context)),

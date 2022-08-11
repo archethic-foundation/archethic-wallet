@@ -91,7 +91,7 @@ class _TokenTransferListWidgetState extends State<TokenTransferListWidget> {
               ],
             ),
             Text(
-                '${(tokenTransfer.amount! / BigInt.from(100000000)).toStringAsFixed(0)} ${widget.symbol}',
+                '${(tokenTransfer.amount! / 100000000).toStringAsFixed(0)} ${widget.symbol}',
                 style: AppStyles.textStyleSize14W600Primary(context)),
           ],
         ),

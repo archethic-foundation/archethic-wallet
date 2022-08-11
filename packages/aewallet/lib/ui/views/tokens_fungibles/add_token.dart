@@ -301,9 +301,10 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                       signed: false, decimal: false),
                               style:
                                   AppStyles.textStyleSize16W600Primary(context),
-                              inputFormatters: <
-                                  LengthLimitingTextInputFormatter>[
-                                LengthLimitingTextInputFormatter(18),
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(23),
+                                FilteringTextInputFormatter.digitsOnly,
+                                ThousandsSeparatorInputFormatter()
                               ],
                               onChanged: (_) async {
                                 double fee = await getFee();
@@ -394,7 +395,8 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                       tokenSymbol: _symbolController!.text,
                                       feeEstimation: feeEstimation,
                                       tokenInitialSupply: int.tryParse(
-                                          _initialSupplyController!.text),
+                                          _initialSupplyController!.text
+                                              .replaceAll(' ', '')),
                                     ),
                                   );
                                 } else {
@@ -441,15 +443,18 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
             AppLocalization.of(context)!.tokenInitialSupplyMissing;
       });
     } else {
-      if (int.tryParse(_initialSupplyController!.text) == null ||
-          int.tryParse(_initialSupplyController!.text)! < 0) {
+      if (int.tryParse(_initialSupplyController!.text.replaceAll(' ', '')) ==
+              null ||
+          int.tryParse(_initialSupplyController!.text.replaceAll(' ', ''))! <=
+              0) {
         isValid = false;
         setState(() {
           _initialSupplyValidationText =
               AppLocalization.of(context)!.tokenInitialSupplyPositive;
         });
       } else {
-        if (int.tryParse(_initialSupplyController!.text)! > 92233720368) {
+        if (int.tryParse(_initialSupplyController!.text.replaceAll(' ', ''))! >
+            9999999999) {
           isValid = false;
           setState(() {
             _initialSupplyValidationText =
@@ -460,6 +465,26 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
     }
     // Estimation of fees
     feeEstimation = await getFee();
+
+    if (feeEstimation >
+        StateContainer.of(context)
+            .appWallet!
+            .appKeychain!
+            .getAccountSelected()!
+            .balance!
+            .nativeTokenValue!) {
+      isValid = false;
+      setState(() {
+        _initialSupplyValidationText = AppLocalization.of(context)!
+            .insufficientBalance
+            .replaceAll(
+                '%1',
+                StateContainer.of(context)
+                    .curNetwork
+                    .getNetworkCryptoCurrencyLabel());
+      });
+    }
+
     return isValid;
   }
 
@@ -479,7 +504,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
           _nameController!.text,
           _symbolController!.text,
           'fungible',
-          int.tryParse(_initialSupplyController!.text)!,
+          int.tryParse(_initialSupplyController!.text.replaceAll(' ', ''))!,
           StateContainer.of(context)
               .appWallet!
               .appKeychain!

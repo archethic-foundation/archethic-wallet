@@ -3,6 +3,7 @@
 // ignore_for_file: must_be_immutable
 
 // Flutter imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -106,7 +107,7 @@ class _UCOTransferListWidgetState extends State<UCOTransferListWidget> {
               ],
             ),
             Text(
-                '${(ucoTransfer.amount! / BigInt.from(100000000)).toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                '${(fromBigInt(ucoTransfer.amount!)).toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                 style: AppStyles.textStyleSize14W600Primary(context)),
           ],
         ),

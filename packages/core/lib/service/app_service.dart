@@ -7,7 +7,7 @@ import 'dart:developer' as dev;
 // Package imports:
 import 'package:core/model/data/account_token.dart';
 import 'package:core/model/data/token_informations.dart';
-import 'package:decimal/decimal.dart';
+import 'package:core/util/number_util.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
@@ -85,10 +85,8 @@ class AppService {
             recentTransaction.content = content;
             recentTransaction.address = transaction.address;
             recentTransaction.typeTx = RecentTransaction.transferOutput;
-            recentTransaction.amount = transaction
-                    .data!.ledger!.uco!.transfers![i].amount!
-                    .toDouble() /
-                100000000;
+            recentTransaction.amount =
+                transaction.data!.ledger!.uco!.transfers![i].amount!.toDouble();
             recentTransaction.recipient =
                 transaction.data!.ledger!.uco!.transfers![i].to!;
             recentTransaction.fee =
@@ -106,9 +104,8 @@ class AppService {
             recentTransaction.address = transaction.address;
             recentTransaction.typeTx = RecentTransaction.transferOutput;
             recentTransaction.amount = transaction
-                    .data!.ledger!.token!.transfers![i].amount!
-                    .toDouble() /
-                100000000;
+                .data!.ledger!.token!.transfers![i].amount!
+                .toDouble();
             recentTransaction.recipient =
                 transaction.data!.ledger!.token!.transfers![i].to!;
             recentTransaction.fee =
@@ -292,7 +289,7 @@ class AppService {
                 domain: 'UCOLedger',
                 titleInfo: 'Amount',
                 valueInfo:
-                    '${Decimal.parse((transaction.data!.ledger!.uco!.transfers![i].amount! / BigInt.from(100000000)).toString())} $cryptoCurrency'));
+                    '${NumberUtil.formatThousands(transaction.data!.ledger!.uco!.transfers![i].amount!)} $cryptoCurrency'));
           }
         }
       }
@@ -326,7 +323,7 @@ class AppService {
                 domain: 'TokenLedger',
                 titleInfo: 'Amount',
                 valueInfo:
-                    '${Decimal.parse((transaction.data!.ledger!.token!.transfers![i].amount! / BigInt.from(100000000)).toString())} ${token.symbol!}'));
+                    '${NumberUtil.formatThousands(transaction.data!.ledger!.token!.transfers![i].amount!)} ${token.symbol!}'));
           }
         }
       }
