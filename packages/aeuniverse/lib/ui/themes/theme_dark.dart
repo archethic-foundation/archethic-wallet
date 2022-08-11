@@ -154,7 +154,7 @@ class DarkTheme implements BaseTheme {
   Color? overlay30 = const Color(0xFF000000).withOpacity(0.3);
 
   @override
-  Color? numMnemonicBackground = const Color(0xFF05212B);
+  Color? numMnemonicBackground = Colors.grey.shade800;
 
   @override
   Color? activeTrackColorSwitch = const Color(0xFFFFFFFF);
