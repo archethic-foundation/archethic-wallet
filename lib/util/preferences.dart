@@ -39,8 +39,6 @@ class Preferences {
       'archethic_wallet_has_shown_root_warning';
   static const String _pin_attempts = 'archethic_wallet_pin_attempts';
   static const String _pin_lock_until = 'archethic_wallet_pin_lock_until';
-  static const String _version_app = 'archethic_wallet_version_app';
-
   static const String _pinPadShuffle = 'archethic_wallet_pinPadShuffle';
   static const String _showBalances = 'archethic_wallet_showBalances';
   static const String _showBlog = 'archethic_wallet_showBlog';
@@ -110,10 +108,6 @@ class Preferences {
 
   String getNetworkDevEndpoint() => _getValue(_cur_network_dev_endpoint,
       defaultValue: 'http://localhost:4000');
-
-  Future<void> setVersionApp(String v) => _setValue(_version_app, v);
-
-  String getVersionApp() => _getValue(_version_app, defaultValue: '');
 
   Future<void> setLanguageSeed(String v) => _setValue(_language_seed, v);
 
