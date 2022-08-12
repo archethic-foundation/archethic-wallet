@@ -170,27 +170,17 @@ class _IntroNewWalletDisclaimerState
                             FocusScope.of(context).requestFocus(nameFocusNode);
                           });
                         } else {
-                          if (nameController.text.contains(' ') ||
-                              nameController.text.contains('\\')) {
-                            setState(() {
-                              nameError = AppLocalization.of(context)!
-                                  .introNewWalletGetFirstInfosNameCharacterNonValid;
-                              FocusScope.of(context)
-                                  .requestFocus(nameFocusNode);
-                            });
-                          } else {
-                            AppDialogs.showConfirmDialog(
-                                context,
-                                AppLocalization.of(context)!.newAccount,
-                                AppLocalization.of(context)!
-                                    .newAccountConfirmation
-                                    .replaceAll('%1', nameController.text),
-                                AppLocalization.of(context)!.yes, () async {
-                              Navigator.of(context).pushNamed(
-                                  '/intro_backup_safety',
-                                  arguments: nameController.text);
-                            }, cancelText: AppLocalization.of(context)!.no);
-                          }
+                          AppDialogs.showConfirmDialog(
+                              context,
+                              AppLocalization.of(context)!.newAccount,
+                              AppLocalization.of(context)!
+                                  .newAccountConfirmation
+                                  .replaceAll('%1', nameController.text),
+                              AppLocalization.of(context)!.yes, () async {
+                            Navigator.of(context).pushNamed(
+                                '/intro_backup_safety',
+                                arguments: nameController.text);
+                          }, cancelText: AppLocalization.of(context)!.no);
                         }
                       },
                     ),

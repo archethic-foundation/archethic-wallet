@@ -33,8 +33,10 @@ class KeychainUtil {
     final String keychainSeed = uint8ListToHex(Uint8List.fromList(
         List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
 
+    String nameEncoded = Uri.encodeFull(name!);
+
     /// Default service for wallet
-    String kServiceName = 'archethic-wallet-$name';
+    String kServiceName = 'archethic-wallet-$nameEncoded';
     String kDerivationPathWithoutIndex = 'm/650\'/$kServiceName/';
     const String index = '0';
     String kDerivationPath = '$kDerivationPathWithoutIndex$index';
@@ -141,7 +143,9 @@ class KeychainUtil {
     final String genesisAddressKeychain =
         deriveAddress(uint8ListToHex(keychain.seed!), 0);
 
-    String kServiceName = 'archethic-wallet-$name';
+    String nameEncoded = Uri.encodeFull(name!);
+
+    String kServiceName = 'archethic-wallet-$nameEncoded';
     String kDerivationPathWithoutIndex = 'm/650\'/$kServiceName/';
     const String index = '0';
     String kDerivationPath = '$kDerivationPathWithoutIndex$index';
@@ -251,20 +255,22 @@ class KeychainUtil {
           String name = path.join('/');
           name = name.substring(0, name.length - 1);
 
+          String nameDecoded = Uri.decodeFull(name);
+
           Account account = Account(
               lastLoadingTransactionInputs:
                   DateTime.now().millisecondsSinceEpoch ~/
                       Duration.millisecondsPerSecond,
               lastAddress: uint8ListToHex(genesisAddress),
               genesisAddress: uint8ListToHex(genesisAddress),
-              name: name,
+              name: nameDecoded,
               balance: AccountBalance(
                   fiatCurrencyCode: '',
                   fiatCurrencyValue: 0,
                   nativeTokenName: '',
                   nativeTokenValue: 0),
               recentTransactions: []);
-          if (currentName == name) {
+          if (currentName == nameDecoded) {
             account.selected = true;
           } else {
             account.selected = false;

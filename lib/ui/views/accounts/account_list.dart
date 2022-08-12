@@ -278,104 +278,79 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                           nameFocusNode);
                                                 });
                                               } else {
-                                                if (nameController.text
-                                                        .contains(' ') ||
-                                                    nameController.text
-                                                        .contains('\\')) {
+                                                bool accountExists = false;
+                                                for (Account account
+                                                    in appWalletLive!
+                                                        .appKeychain!
+                                                        .accounts!) {
+                                                  if (account.name ==
+                                                      nameController.text) {
+                                                    accountExists = true;
+                                                  }
+                                                }
+                                                if (accountExists == true) {
                                                   setState(() {
-                                                    nameError = AppLocalization
-                                                            .of(context)!
-                                                        .introNewWalletGetFirstInfosNameCharacterNonValid;
+                                                    nameError =
+                                                        AppLocalization.of(
+                                                                context)!
+                                                            .addAccountExists;
                                                     FocusScope.of(context)
                                                         .requestFocus(
                                                             nameFocusNode);
-
-                                                    isPressed = false;
                                                   });
                                                 } else {
-                                                  {
-                                                    bool accountExists = false;
-                                                    for (Account account
-                                                        in appWalletLive!
-                                                            .appKeychain!
-                                                            .accounts!) {
-                                                      if (account.name ==
-                                                          nameController.text) {
-                                                        accountExists = true;
-                                                      }
-                                                    }
-                                                    if (accountExists == true) {
-                                                      setState(() {
-                                                        nameError =
-                                                            AppLocalization.of(
-                                                                    context)!
-                                                                .addAccountExists;
-                                                        FocusScope.of(context)
-                                                            .requestFocus(
-                                                                nameFocusNode);
-                                                      });
-                                                    } else {
-                                                      setState(() {
-                                                        isPressed = true;
-                                                      });
-                                                      AppDialogs
-                                                          .showConfirmDialog(
-                                                              context,
-                                                              AppLocalization.of(
-                                                                      context)!
-                                                                  .addAccount,
-                                                              AppLocalization
-                                                                      .of(
-                                                                          context)!
-                                                                  .addAccountConfirmation
-                                                                  .replaceAll(
-                                                                      '%1',
-                                                                      nameController
-                                                                          .text),
-                                                              AppLocalization
-                                                                      .of(
-                                                                          context)!
-                                                                  .yes,
-                                                              () async {
-                                                                await KeychainUtil().addAccountInKeyChain(
-                                                                    StateContainer.of(
-                                                                            context)
-                                                                        .appWallet!,
-                                                                    await StateContainer.of(
-                                                                            context)
-                                                                        .getSeed(),
-                                                                    nameController
-                                                                        .text,
-                                                                    StateContainer.of(
-                                                                            context)
-                                                                        .curCurrency
-                                                                        .currency
-                                                                        .name,
-                                                                    StateContainer.of(
-                                                                            context)
-                                                                        .curNetwork
-                                                                        .getNetworkCryptoCurrencyLabel());
+                                                  setState(() {
+                                                    isPressed = true;
+                                                  });
+                                                  AppDialogs.showConfirmDialog(
+                                                      context,
+                                                      AppLocalization.of(
+                                                              context)!
+                                                          .addAccount,
+                                                      AppLocalization.of(
+                                                              context)!
+                                                          .addAccountConfirmation
+                                                          .replaceAll(
+                                                              '%1',
+                                                              nameController
+                                                                  .text),
+                                                      AppLocalization.of(
+                                                              context)!
+                                                          .yes,
+                                                      () async {
+                                                        await KeychainUtil().addAccountInKeyChain(
+                                                            StateContainer.of(
+                                                                    context)
+                                                                .appWallet!,
+                                                            await StateContainer
+                                                                    .of(context)
+                                                                .getSeed(),
+                                                            nameController.text,
+                                                            StateContainer.of(
+                                                                    context)
+                                                                .curCurrency
+                                                                .currency
+                                                                .name,
+                                                            StateContainer.of(
+                                                                    context)
+                                                                .curNetwork
+                                                                .getNetworkCryptoCurrencyLabel());
 
-                                                                setState(() {
-                                                                  isPressed =
-                                                                      false;
-                                                                });
-                                                                Navigator.pop(
-                                                                    context,
-                                                                    true);
-                                                              },
-                                                              cancelText:
-                                                                  AppLocalization.of(
-                                                                          context)!
-                                                                      .no,
-                                                              cancelAction: () {
-                                                                setState(() {
-                                                                  isPressed =
-                                                                      false;
-                                                                });
-                                                              });
-                                                    }
-                                                  }
+                                                        setState(() {
+                                                          isPressed = false;
+                                                        });
+                                                        Navigator.pop(
+                                                            context, true);
+                                                      },
+                                                      cancelText:
+                                                          AppLocalization.of(
+                                                                  context)!
+                                                              .no,
+                                                      cancelAction: () {
+                                                        setState(() {
+                                                          isPressed = false;
+                                                        });
+                                                      });
                                                 }
                                               }
                                             }),
