@@ -11,18 +11,34 @@ NB: Yubikey is a device that makes 2-factor authentification as simple as possib
 
 [![Download](assets/screenshots/Dl_here_github_wallet.png?v=20220718)](https://www.archethic.net/aewallet.html)
 
-Archethic Wallet have features that are implemented:
-- Use of 24 Words Mnemonics.
+Archethic Wallet has implemented the following features:
+
+### Main features
 - Decentralized keychain management
-- Multi accounts management
-- Support for transactions (Sending and Receiving UCO Token)
-- Security access with Password, PIN, Yubikey, Face ID, Touch ID, Uniris Biometrics (soon)
-- Support for english and french Languages
-- Support for Multiple Currencies (Only views not as in multiple cryptocurrencies)
-- Multi themes
+- Multiple accounts' management
+- Creation of Fungible Tokens
+- Creation of NFTs
+- Support for transactions (Sending and Receiving UCO Token, Fungible Tokens and NFTs)
+- List of recent transactions
+- List of acquired tokens
+
+### Security
+- Security access with Password, PIN, Yubicloud OTP, Face ID, Touch ID, Uniris Biometrics (2023)
+- Use of 24 Words Mnemonics
+
+### Customization
+- Support for English and French Language
+- Support for multiple Currencies (view only, not meant as multiple cryptocurrencies wallet)
+- Multi themes (9 themes available)
+- UI customization
+
+### Other features
+- Local notifications
+- Access to exchanges to buy ERC20 UCO
+- Share address with QR Code or mobile share feature
 - Address book
 - UCO Price chart
-- Last Archethic's articles
+- Access latest Archethic blog articles
 
 ## Application Initial Screen
 ![Application Initial Screen](assets/screenshots/AppInit.png?v=20220711)(https://github.com/archethic-foundation/archethic-wallet/releases)
