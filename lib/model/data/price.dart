@@ -65,7 +65,9 @@ class Price extends HiveObject {
     }*/
     simplePriceResponse =
         await sl.get<ApiCoinsService>().getSimplePrice(currency);
-    price.amount = simplePriceResponse.localCurrencyPrice!;
+    price.amount = simplePriceResponse.localCurrencyPrice == null
+        ? 0
+        : simplePriceResponse.localCurrencyPrice!;
     price.lastLoading =
         DateTime.now().millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
     await sl.get<DBHelper>().updatePrice(price);

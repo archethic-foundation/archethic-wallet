@@ -725,7 +725,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                       children: <Widget>[
                                         /// ACCOUNT SELECTED
                                         SizedBox(
-                                          height: 30,
+                                          height: 35,
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
