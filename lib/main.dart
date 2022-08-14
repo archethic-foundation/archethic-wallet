@@ -6,6 +6,7 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 // Flutter imports:
+import 'package:aewallet/model/available_themes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -326,10 +327,12 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
         if (StateContainer.of(context).appWallet == null) {
           await StateContainer.of(context).logOut();
           StateContainer.of(context).curTheme = DarkTheme();
+          preferences.setTheme(ThemeSetting(ThemeOptions.dark));
           Navigator.of(context).pushReplacementNamed('/intro_welcome');
         }
         StateContainer.of(context).checkTransactionInputs(
             AppLocalization.of(context)!.transactionInputNotification);
+        StateContainer.of(context).curTheme = preferences.getTheme().getTheme();
         if (preferences.getLock() || preferences.shouldLock()) {
           Navigator.of(context).pushReplacementNamed('/lock_screen');
         } else {
@@ -338,12 +341,14 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
         }
       } else {
         StateContainer.of(context).curTheme = DarkTheme();
+        preferences.setTheme(ThemeSetting(ThemeOptions.dark));
         Navigator.of(context).pushReplacementNamed('/intro_welcome');
       }
     } catch (e) {
       dev.log(e.toString());
       await StateContainer.of(context).logOut();
       StateContainer.of(context).curTheme = DarkTheme();
+      preferences.setTheme(ThemeSetting(ThemeOptions.dark));
       Navigator.of(context).pushReplacementNamed('/intro_welcome');
     }
     FlutterNativeSplash.remove();
