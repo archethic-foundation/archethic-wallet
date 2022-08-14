@@ -7,7 +7,9 @@ import 'dart:math';
 import 'dart:typed_data';
 
 // Package imports:
+import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:event_taxi/event_taxi.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 // Project imports:
@@ -21,11 +23,45 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 
 class KeychainUtil {
-  SubscriptionChannel subscriptionChannel = SubscriptionChannel();
+  Future<Transaction?> createKeyChainAccess(
+      String? seed,
+      String? name,
+      String keychainAddress,
+      String originPrivateKey,
+      Keychain keychain,
+      SubscriptionChannel subscriptionChannel) async {
+    /// Create Keychain Access for wallet
+    final Transaction accessKeychainTx = sl
+        .get<ApiService>()
+        .newAccessKeychainTransaction(seed!, hexToUint8List(keychainAddress),
+            hexToUint8List(originPrivateKey));
 
-  Future<AppWallet?> newAppWallet(String? seed, String? name) async {
-    Account? selectedAcct;
+    void waitConfirmationsKeychainAccess(QueryResult event) {
+      Map<String, Object>? params = {
+        'keychainAddress': keychainAddress,
+        'keychain': keychain
+      };
 
+      waitConfirmations(event, TransactionSendEventType.keychainAccess,
+          params: params);
+    }
+
+    subscriptionChannel.addSubscriptionTransactionConfirmed(
+        accessKeychainTx.address!, waitConfirmationsKeychainAccess);
+
+    // ignore: unused_local_variable
+    final TransactionStatus transactionStatusKeychainAccess =
+        await sl.get<ApiService>().sendTx(accessKeychainTx);
+
+    return accessKeychainTx;
+  }
+
+  Future<void> createKeyChain(
+      String? seed,
+      String? name,
+      String originPrivateKey,
+      Preferences preferences,
+      SubscriptionChannel subscriptionChannel) async {
     /// Get Wallet KeyPair
     final KeyPair walletKeyPair = deriveKeyPair(seed!, 0);
 
@@ -41,8 +77,6 @@ class KeychainUtil {
     const String index = '0';
     String kDerivationPath = '$kDerivationPathWithoutIndex$index';
 
-    final String originPrivateKey = sl.get<ApiService>().getOriginKey();
-
     Keychain keychain = Keychain(hexToUint8List(keychainSeed), version: 1);
     keychain.addService(kServiceName, kDerivationPath);
 
@@ -56,80 +90,22 @@ class KeychainUtil {
             serviceName: kServiceName,
             derivationPath: kDerivationPath);
 
-    /// Create Keychain Access for wallet
-    final Transaction accessKeychainTx = sl
-        .get<ApiService>()
-        .newAccessKeychainTransaction(
-            seed,
-            hexToUint8List(keychainTransaction.address!),
-            hexToUint8List(originPrivateKey));
+    void waitConfirmationsKeychain(QueryResult event) {
+      Map<String, Object>? params = {
+        'keychainAddress': keychainTransaction.address!,
+        'originPrivateKey': originPrivateKey,
+        'keychain': keychain
+      };
+      waitConfirmations(event, TransactionSendEventType.keychain,
+          params: params);
+    }
 
-    final Preferences preferences = await Preferences.getInstance();
-
-    String websocketUri = await preferences.getNetwork().getWebsocketUri();
-
-    print('before sub');
-
-    await subscriptionChannel.connect(
-        await preferences.getNetwork().getPhoenixHttpLink(),
-        await preferences.getNetwork().getWebsocketUri());
-
-    Future.sync(() => subscriptionChannel.addSubscriptionTransactionConfirmed(
-        keychainTransaction.address!, waitConfirmations)).timeout(
-      const Duration(seconds: 5),
-      onTimeout: () => print('timeout'),
-    );
-
-    print('addsub KC ok');
+    subscriptionChannel.addSubscriptionTransactionConfirmed(
+        keychainTransaction.address!, waitConfirmationsKeychain);
 
     // ignore: unused_local_variable
     final TransactionStatus transactionStatusKeychain =
         await sl.get<ApiService>().sendTx(keychainTransaction);
-
-    print('sendTx KC');
-
-    Future.sync(() => subscriptionChannel.addSubscriptionTransactionConfirmed(
-        accessKeychainTx.address!, waitConfirmations)).timeout(
-      const Duration(seconds: 5),
-      onTimeout: () => print('timeout'),
-    );
-
-    print('addsub KC Access ok');
-
-    // ignore: unused_local_variable
-    final TransactionStatus transactionStatusKeychainAccess =
-        await sl.get<ApiService>().sendTx(accessKeychainTx);
-
-    print('sendTx KC Access');
-
-    //await Future.delayed(const Duration(seconds: 10));
-
-    // TODO: Crypt Seed
-    AppWallet appWallet = await sl
-        .get<DBHelper>()
-        .createAppWallet('', keychainTransaction.address!);
-
-    Uint8List genesisAddress = keychain.deriveAddress(kServiceName, index: 0);
-    selectedAcct = Account(
-        lastLoadingTransactionInputs: 0,
-        lastAddress: uint8ListToHex(genesisAddress),
-        genesisAddress: uint8ListToHex(genesisAddress),
-        name: name,
-        balance: AccountBalance(
-            fiatCurrencyCode: '',
-            fiatCurrencyValue: 0,
-            nativeTokenName: '',
-            nativeTokenValue: 0),
-        selected: true,
-        recentTransactions: []);
-    appWallet = await sl.get<DBHelper>().addAccount(selectedAcct);
-
-    if (subscriptionChannel != null) {
-      print('sub end close');
-      subscriptionChannel.close();
-    }
-
-    return appWallet;
   }
 
   Future<AppWallet?> addAccountInKeyChain(AppWallet? appWallet, String? seed,
@@ -314,16 +290,28 @@ class KeychainUtil {
     return appWallet;
   }
 
-  Future<void> waitConfirmations(QueryResult event) async {
-    print('wait confirmations');
+  void waitConfirmations(
+      QueryResult event, TransactionSendEventType transactionSendEventType,
+      {Map<String, Object>? params}) {
     if (event.data != null &&
         event.data!['transactionConfirmed'] != null &&
         event.data!['transactionConfirmed']['nbConfirmations'] != null) {
-      int nb = event.data!['transactionConfirmed']['nbConfirmations'];
-
-      print('ok $nb');
+      EventTaxiImpl.singleton().fire(
+        TransactionSendEvent(
+            transactionType: transactionSendEventType,
+            response: 'ok',
+            nbConfirmations: event.data!['transactionConfirmed']
+                ['nbConfirmations'],
+            params: params),
+      );
     } else {
-      print('ko');
+      // TODO: Mettre un libellé plus clair
+      EventTaxiImpl.singleton().fire(
+        TransactionSendEvent(
+            transactionType: transactionSendEventType,
+            nbConfirmations: 0,
+            response: 'ko'),
+      );
     }
   }
 }

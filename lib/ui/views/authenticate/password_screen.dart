@@ -131,7 +131,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                                   color:
                                       StateContainer.of(context).curTheme.text,
                                   onPressed: () {
-                                    Navigator.pop(context);
+                                    Navigator.pop(context, false);
                                   },
                                 ),
                               ),

@@ -2,9 +2,11 @@
 // ignore_for_file: constant_identifier_names
 
 // Dart imports:
+import 'dart:io';
 import 'dart:ui';
 
 // Package imports:
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
@@ -223,5 +225,28 @@ class Preferences {
 
   Future<void> clearAll() async {
     await _box.clear();
+  }
+
+  static Future<void> initWallet(
+      AuthenticationMethod authenticationMethod) async {
+    final Preferences preferences = await Preferences.getInstance();
+    preferences.setLock(true);
+    preferences.setShowBalances(true);
+    preferences.setShowBlog(true);
+    preferences.setActiveVibrations(true);
+    if (!kIsWeb &&
+        (Platform.isIOS == true ||
+            Platform.isAndroid == true ||
+            Platform.isMacOS == true)) {
+      preferences.setActiveNotifications(true);
+    } else {
+      preferences.setActiveNotifications(false);
+    }
+    preferences.setPinPadShuffle(false);
+    preferences.setShowPriceChart(true);
+    preferences.setPrimaryCurrency(
+        PrimaryCurrencySetting(AvailablePrimaryCurrency.native));
+    preferences.setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
+    preferences.setAuthMethod(authenticationMethod);
   }
 }

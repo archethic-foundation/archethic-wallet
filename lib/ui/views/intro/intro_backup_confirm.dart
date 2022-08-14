@@ -3,6 +3,18 @@
 // ignore_for_file: always_specify_types
 
 // Flutter imports:
+import 'dart:async';
+
+import 'package:aewallet/bus/authenticated_event.dart';
+import 'package:aewallet/bus/transaction_send_event.dart';
+import 'package:aewallet/model/data/app_wallet.dart';
+import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
+import 'package:aewallet/util/confirmations/subscription_channel.dart';
+import 'package:aewallet/util/keychain_util.dart';
+import 'package:aewallet/util/vault.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -37,9 +49,96 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   List<String> wordListSelected = List<String>.empty(growable: true);
   List<String> wordListToSelect = List<String>.empty(growable: true);
   List<String> originalWordsList = List<String>.empty(growable: true);
+
+  StreamSubscription<AuthenticatedEvent>? _authSub;
+  StreamSubscription<TransactionSendEvent>? _sendTxSub;
+  SubscriptionChannel subscriptionChannel = SubscriptionChannel();
+
+  void _registerBus() {
+    _authSub = EventTaxiImpl.singleton()
+        .registerTo<AuthenticatedEvent>()
+        .listen((AuthenticatedEvent event) async {
+      await createKeychain();
+    });
+
+    _sendTxSub = EventTaxiImpl.singleton()
+        .registerTo<TransactionSendEvent>()
+        .listen((TransactionSendEvent event) async {
+      if (event.response != 'ok' && event.nbConfirmations == 0) {
+        UIUtil.showSnackbar(
+            '${AppLocalization.of(context)!.sendError} (${event.response!})',
+            context,
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
+        Navigator.of(context).pop(false);
+      } else {
+        switch (event.transactionType) {
+          case TransactionSendEventType.keychain:
+            await KeychainUtil().createKeyChainAccess(
+              widget.seed!,
+              widget.name!,
+              event.params!['keychainAddress']! as String,
+              event.params!['originPrivateKey']! as String,
+              event.params!['keychain']! as Keychain,
+              subscriptionChannel,
+            );
+            break;
+          case TransactionSendEventType.keychainAccess:
+            bool error = false;
+            try {
+              StateContainer.of(context).appWallet = await AppWallet()
+                  .createNewAppWallet(
+                      event.params!['keychainAddress']! as String,
+                      event.params!['keychain']! as Keychain,
+                      widget.name!);
+            } catch (e) {
+              error = true;
+              UIUtil.showSnackbar(
+                  '${AppLocalization.of(context)!.sendError} ($e)',
+                  context,
+                  StateContainer.of(context).curTheme.text!,
+                  StateContainer.of(context).curTheme.snackBarShadow!);
+            }
+            if (error == false) {
+              await StateContainer.of(context).requestUpdate();
+
+              StateContainer.of(context).checkTransactionInputs(
+                  AppLocalization.of(context)!.transactionInputNotification);
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                '/home',
+                (Route<dynamic> route) => false,
+              );
+            } else {
+              Navigator.of(context).pop();
+            }
+            break;
+          default:
+            throw Exception('TransactionSendEventType doesn\'t exist');
+        }
+      }
+    });
+  }
+
+  void _destroyBus() {
+    if (_authSub != null) {
+      _authSub!.cancel();
+    }
+    if (_sendTxSub != null) {
+      _sendTxSub!.cancel();
+    }
+  }
+
+  @override
+  void dispose() {
+    _destroyBus();
+    subscriptionChannel.close();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
+    _registerBus();
     Preferences.getInstance().then((Preferences preferences) {
       setState(() {
         wordListToSelect = AppMnemomics.seedToMnemonic(widget.seed!,
@@ -278,7 +377,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
     );
   }
 
-  Future<void> _launchSecurityConfiguration() async {
+  Future<bool> _launchSecurityConfiguration() async {
     bool biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
     List<PickerItem> accessModes = [];
     accessModes.add(PickerItem(
@@ -322,11 +421,59 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
         StateContainer.of(context).curTheme.pickerItemIconEnabled,
         AuthMethod.yubikeyWithYubicloud,
         true));
-    Navigator.of(context).pushNamed('/intro_configure_security', arguments: {
-      'accessModes': accessModes,
-      'name': widget.name,
-      'seed': widget.seed,
-      'process': 'newWallet'
-    });
+
+    bool securityConfiguration = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) {
+      return IntroConfigureSecurity(
+        accessModes: accessModes,
+        name: widget.name,
+        seed: widget.seed,
+      );
+    }));
+
+    return securityConfiguration;
+  }
+
+  void _showSendingAnimation(BuildContext context) {
+    Navigator.of(context).push(AnimationLoadingOverlay(
+        AnimationType.send,
+        StateContainer.of(context).curTheme.animationOverlayStrong!,
+        StateContainer.of(context).curTheme.animationOverlayMedium!,
+        title: AppLocalization.of(context)!.appWalletInitInProgress));
+  }
+
+  Future<void> createKeychain() async {
+    _showSendingAnimation(context);
+
+    bool error = false;
+
+    try {
+      await sl.get<DBHelper>().clearAppWallet();
+      final Vault vault = await Vault.getInstance();
+      await vault.setSeed(widget.seed!);
+
+      final String originPrivateKey = sl.get<ApiService>().getOriginKey();
+
+      Preferences preferences = await Preferences.getInstance();
+
+      await subscriptionChannel.connect(
+          await preferences.getNetwork().getPhoenixHttpLink(),
+          await preferences.getNetwork().getWebsocketUri());
+
+      await KeychainUtil().createKeyChain(widget.seed!, widget.name!,
+          originPrivateKey, preferences, subscriptionChannel);
+    } catch (e) {
+      error = true;
+      UIUtil.showSnackbar(
+          '${AppLocalization.of(context)!.sendError} ($e)',
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!);
+    }
+
+    if (error == false) {
+    } else {
+      Navigator.of(context).pop();
+    }
   }
 }

@@ -4,6 +4,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:aewallet/util/vault.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -219,7 +220,7 @@ class _PinScreenState extends State<PinScreen>
             }
             if (_setCharacter(buttonText)) {
               // Mild delay so they can actually see the last dot get filled
-              Future<void>.delayed(const Duration(milliseconds: 50), () {
+              Future<void>.delayed(const Duration(milliseconds: 50), () async {
                 if (widget.type == PinOverlayType.enterPin) {
                   // Pin is not what was expected
                   if (_pin != widget.expectedPin) {
@@ -244,7 +245,9 @@ class _PinScreenState extends State<PinScreen>
                   } else {
                     // First and second pins match
                     if (_pin == _pinConfirmed) {
-                      Navigator.of(context).pop(_pin);
+                      final Vault vault = await Vault.getInstance();
+                      vault.setPin(_pin!);
+                      Navigator.of(context).pop(true);
                     } else {
                       sl.get<HapticUtil>().feedback(FeedbackType.error,
                           StateContainer.of(context).activeVibrations);

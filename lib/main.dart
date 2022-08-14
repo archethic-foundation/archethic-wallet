@@ -28,17 +28,11 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/home_page_universe.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_seed.dart';
-import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
 import 'package:aewallet/ui/views/intro/intro_import_seed.dart';
 import 'package:aewallet/ui/views/intro/intro_new_wallet_disclaimer.dart';
 import 'package:aewallet/ui/views/intro/intro_new_wallet_get_first_infos.dart';
-import 'package:aewallet/ui/views/intro/intro_password.dart';
 import 'package:aewallet/ui/views/intro/intro_welcome.dart';
-import 'package:aewallet/ui/views/intro/intro_yubikey.dart';
 import 'package:aewallet/ui/views/lock_screen.dart';
-import 'package:aewallet/ui/views/settings/update_password.dart';
-import 'package:aewallet/ui/views/settings/update_yubikey.dart';
-import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/vault.dart';
@@ -225,64 +219,6 @@ class _AppState extends State<App> {
                       ? null
                       : settings.arguments as String,
                 ),
-                settings: settings,
-              );
-            case '/intro_configure_security':
-              Map<String, dynamic> args =
-                  settings.arguments as Map<String, dynamic>;
-              return MaterialPageRoute<IntroConfigureSecurity>(
-                builder: (_) => IntroConfigureSecurity(
-                  accessModes: args['accessModes'] == null
-                      ? null
-                      : args['accessModes'] as List<PickerItem>,
-                  name: args['name'] == null ? null : args['name'] as String,
-                  seed: args['seed'] == null ? null : args['seed'] as String,
-                  process: args['process'] == null
-                      ? null
-                      : args['process'] as String,
-                ),
-                settings: settings,
-              );
-            case '/intro_password':
-              Map<String, String?> args =
-                  settings.arguments as Map<String, String?>;
-              return MaterialPageRoute(
-                builder: (_) => IntroPassword(
-                  name: args['name'] == null ? '' : args['name'] as String,
-                  seed: args['seed'] == null ? '' : args['seed'] as String,
-                  process:
-                      args['process'] == null ? '' : args['process'] as String,
-                ),
-                settings: settings,
-              );
-            case '/intro_yubikey':
-              Map<String, String?> args =
-                  settings.arguments as Map<String, String?>;
-              return MaterialPageRoute(
-                builder: (_) => IntroYubikey(
-                  name: args['name'] == null ? '' : args['name'] as String,
-                  seed: args['seed'] == null ? '' : args['seed'] as String,
-                  process:
-                      args['process'] == null ? '' : args['process'] as String,
-                ),
-                settings: settings,
-              );
-            case '/update_password':
-              Map<String, String?> args =
-                  settings.arguments as Map<String, String?>;
-              return MaterialPageRoute(
-                builder: (_) => UpdatePassword(
-                    name: args['name'] == null ? '' : args['name'] as String,
-                    seed: args['seed'] == null ? '' : args['seed'] as String),
-                settings: settings,
-              );
-            case '/update_yubikey':
-              Map<String, String?> args =
-                  settings.arguments as Map<String, String?>;
-              return MaterialPageRoute(
-                builder: (_) => UpdateYubikey(
-                    name: args['name'] == null ? '' : args['name'] as String,
-                    seed: args['seed'] == null ? '' : args['seed'] as String),
                 settings: settings,
               );
             case '/intro_import':

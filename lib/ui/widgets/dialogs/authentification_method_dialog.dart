@@ -1,6 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aewallet/ui/views/settings/set_password.dart';
+import 'package:aewallet/ui/views/settings/set_yubikey.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -13,7 +15,6 @@ import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
-import 'package:aewallet/util/vault.dart';
 
 class AuthentificationMethodDialog {
   static Future<void> getDialog(BuildContext context, bool hasBiometrics,
@@ -74,53 +75,65 @@ class AuthentificationMethodDialog {
                     }
                     break;
                   case AuthMethod.pin:
-                    final String pin = await Navigator.of(context).push(
+                    final bool authenticated = await Navigator.of(context).push(
                         MaterialPageRoute(builder: (BuildContext context) {
                       return const PinScreen(
                         PinOverlayType.newPin,
                       );
                     }));
-                    if (pin == '') {
+                    if (authenticated == false) {
                       Navigator.pop(context, value.value);
                       await getDialog(context, hasBiometrics, curAuthMethod);
                     } else {
-                      if (pin.length > 5) {
-                        final Vault vault = await Vault.getInstance();
-                        vault.setPin(pin);
-                        preferences.setAuthMethod(
-                            AuthenticationMethod(AuthMethod.pin));
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/home',
-                          (Route<dynamic> route) => false,
-                        );
-                      }
+                      preferences
+                          .setAuthMethod(AuthenticationMethod(AuthMethod.pin));
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/home',
+                        (Route<dynamic> route) => false,
+                      );
                     }
                     break;
                   case AuthMethod.password:
-                    await Navigator.of(context)
-                        .pushNamed('/update_password', arguments: {
-                      'name': StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .name,
-                      'seed': await StateContainer.of(context).getSeed()
-                    });
-                    Navigator.pop(context, value.value);
-                    await getDialog(context, hasBiometrics, curAuthMethod);
+                    String? seed = await StateContainer.of(context).getSeed();
+                    final bool authenticated = await Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return SetPassword(
+                          name: StateContainer.of(context)
+                              .appWallet!
+                              .appKeychain!
+                              .getAccountSelected()!
+                              .name,
+                          seed: seed);
+                    }));
+
+                    if (authenticated == false) {
+                      Navigator.pop(context, value.value);
+                      await getDialog(context, hasBiometrics, curAuthMethod);
+                    } else {
+                      preferences.setAuthMethod(
+                          AuthenticationMethod(AuthMethod.password));
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/home',
+                        (Route<dynamic> route) => false,
+                      );
+                    }
                     break;
                   case AuthMethod.yubikeyWithYubicloud:
-                    await Navigator.of(context)
-                        .pushNamed('/update_yubikey', arguments: {
-                      'name': StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .name,
-                      'seed': await StateContainer.of(context).getSeed()
-                    });
-                    Navigator.pop(context, value.value);
-                    await getDialog(context, hasBiometrics, curAuthMethod);
+                    final bool authenticated = await Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return SetYubikey();
+                    }));
+                    if (authenticated == false) {
+                      Navigator.pop(context, value.value);
+                      await getDialog(context, hasBiometrics, curAuthMethod);
+                    } else {
+                      preferences.setAuthMethod(AuthenticationMethod(
+                          AuthMethod.yubikeyWithYubicloud));
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/home',
+                        (Route<dynamic> route) => false,
+                      );
+                    }
                     break;
                   default:
                     Navigator.pop(context, value.value);

@@ -33,7 +33,6 @@ import 'package:aewallet/util/preferences.dart';
 
 // Project imports:
 
-
 class AddTokenConfirm extends StatefulWidget {
   const AddTokenConfirm(
       {super.key,
@@ -63,9 +62,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
         .listen((AuthenticatedEvent event) {
-      if (event.authType == AUTH_EVENT_TYPE.send) {
-        _doAdd();
-      }
+      _doAdd();
     });
 
     _sendTxSub = EventTaxiImpl.singleton()
@@ -243,8 +240,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                             activeVibrations:
                                 StateContainer.of(context).activeVibrations);
                         if (auth) {
-                          EventTaxiImpl.singleton()
-                              .fire(AuthenticatedEvent(AUTH_EVENT_TYPE.send));
+                          EventTaxiImpl.singleton().fire(AuthenticatedEvent());
                         }
                       })
                     ],
@@ -305,8 +301,10 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
 
       transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
     } catch (e) {
-      EventTaxiImpl.singleton().fire(
-          TransactionSendEvent(response: e.toString(), nbConfirmations: 0));
+      EventTaxiImpl.singleton().fire(TransactionSendEvent(
+          transactionType: TransactionSendEventType.token,
+          response: e.toString(),
+          nbConfirmations: 0));
       subscriptionChannel.close();
     }
   }
@@ -316,13 +314,17 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
         event.data!['transactionConfirmed'] != null &&
         event.data!['transactionConfirmed']['nbConfirmations'] != null) {
       EventTaxiImpl.singleton().fire(TransactionSendEvent(
+          transactionType: TransactionSendEventType.token,
           response: 'ok',
           nbConfirmations: event.data!['transactionConfirmed']
               ['nbConfirmations']));
     } else {
       // TODO: Mettre un libellé plus clair
       EventTaxiImpl.singleton().fire(
-        TransactionSendEvent(nbConfirmations: 0, response: 'ko'),
+        TransactionSendEvent(
+            transactionType: TransactionSendEventType.token,
+            nbConfirmations: 0,
+            response: 'ko'),
       );
     }
     subscriptionChannel.close();

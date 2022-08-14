@@ -1,11 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // ignore_for_file: always_specify_types
 
-// Dart imports:
-import 'dart:io';
-
-// Flutter imports:
-import 'package:flutter/foundation.dart';
+import 'package:aewallet/bus/authenticated_event.dart';
+import 'package:aewallet/ui/views/settings/set_password.dart';
+import 'package:aewallet/ui/views/settings/set_yubikey.dart';
+import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -15,33 +14,21 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/model/data/appdb.dart';
-import 'package:aewallet/model/device_lock_timeout.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
-import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/preferences.dart';
-import 'package:aewallet/util/vault.dart';
 
 class IntroConfigureSecurity extends StatefulWidget {
   final List<PickerItem>? accessModes;
   final String? name;
   final String? seed;
-  final String? process;
 
   const IntroConfigureSecurity(
-      {super.key,
-      this.accessModes,
-      required this.name,
-      required this.seed,
-      required this.process});
+      {super.key, this.accessModes, required this.name, required this.seed});
 
   @override
   State<IntroConfigureSecurity> createState() => _IntroConfigureSecurityState();
@@ -99,7 +86,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                 key: const Key('back'),
                                 color: StateContainer.of(context).curTheme.text,
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  Navigator.pop(context, false);
                                 },
                               ),
                             ),
@@ -151,170 +138,61 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                 if (_accessModesSelected == null) return;
                                 AuthMethod authMethod =
                                     _accessModesSelected!.value as AuthMethod;
+                                bool authenticated = false;
                                 switch (authMethod) {
                                   case AuthMethod.biometrics:
-                                    final bool authenticated = await sl
+                                    authenticated = await sl
                                         .get<BiometricUtil>()
                                         .authenticateWithBiometrics(
                                             context,
                                             AppLocalization.of(context)!
                                                 .unlockBiometrics);
-                                    if (authenticated) {
-                                      _showSendingAnimation(context);
-                                      final Preferences preferences =
-                                          await Preferences.getInstance();
-                                      preferences.setLock(true);
-                                      preferences.setShowBalances(true);
-                                      preferences.setShowBlog(true);
-                                      preferences.setActiveVibrations(true);
-                                      if (Platform.isIOS == true ||
-                                          Platform.isAndroid == true ||
-                                          Platform.isMacOS == true) {
-                                        preferences
-                                            .setActiveNotifications(true);
-                                      } else {
-                                        preferences
-                                            .setActiveNotifications(false);
-                                      }
-                                      preferences.setPinPadShuffle(false);
-                                      preferences.setShowPriceChart(true);
-                                      preferences.setPrimaryCurrency(
-                                          PrimaryCurrencySetting(
-                                              AvailablePrimaryCurrency.native));
-                                      preferences.setLockTimeout(
-                                          LockTimeoutSetting(
-                                              LockTimeoutOption.one));
-                                      preferences.setAuthMethod(
-                                          AuthenticationMethod(
-                                              AuthMethod.biometrics));
-                                      if (widget.process == 'newWallet') {
-                                        await sl
-                                            .get<DBHelper>()
-                                            .clearAppWallet();
-                                        final Vault vault =
-                                            await Vault.getInstance();
-                                        await vault.setSeed(widget.seed!);
-                                        StateContainer.of(context).appWallet =
-                                            await KeychainUtil().newAppWallet(
-                                                widget.seed!, widget.name!);
-                                        await StateContainer.of(context)
-                                            .requestUpdate();
-                                      }
-
-                                      StateContainer.of(context)
-                                          .checkTransactionInputs(
-                                              AppLocalization.of(context)!
-                                                  .transactionInputNotification);
-                                    }
-                                    await Navigator.of(context)
-                                        .pushNamedAndRemoveUntil(
-                                      '/home',
-                                      (Route<dynamic> route) => false,
-                                    );
                                     break;
                                   case AuthMethod.password:
-                                    Navigator.of(context).pushNamed(
-                                        '/intro_password',
-                                        arguments: {
-                                          'name': widget.name,
-                                          'seed': widget.seed,
-                                          'process': widget.process
-                                        });
+                                    authenticated = await Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (BuildContext context) {
+                                      return SetPassword(
+                                        header: AppLocalization.of(context)!
+                                            .setPasswordHeader,
+                                        description: AppLocalization.of(
+                                                context)!
+                                            .configureSecurityExplanationPassword,
+                                        name: widget.name!,
+                                        seed: widget.seed!,
+                                      );
+                                    }));
                                     break;
                                   case AuthMethod.pin:
-                                    final String pin =
-                                        await Navigator.of(context).push(
-                                            MaterialPageRoute(builder:
-                                                (BuildContext context) {
+                                    authenticated = await Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (BuildContext context) {
                                       return const PinScreen(
                                         PinOverlayType.newPin,
                                       );
                                     }));
-
-                                    if (pin.length > 5) {
-                                      _showSendingAnimation(context);
-                                      final Vault vault =
-                                          await Vault.getInstance();
-                                      vault.setPin(pin);
-                                      final Preferences preferences =
-                                          await Preferences.getInstance();
-                                      preferences.setLock(true);
-                                      preferences.setShowBalances(true);
-                                      preferences.setShowBlog(true);
-                                      preferences.setActiveVibrations(true);
-                                      if (!kIsWeb &&
-                                          (Platform.isIOS == true ||
-                                              Platform.isAndroid == true ||
-                                              Platform.isMacOS == true)) {
-                                        preferences
-                                            .setActiveNotifications(true);
-                                      } else {
-                                        preferences
-                                            .setActiveNotifications(false);
-                                      }
-                                      preferences.setPinPadShuffle(false);
-                                      preferences.setShowPriceChart(true);
-                                      preferences.setPrimaryCurrency(
-                                          PrimaryCurrencySetting(
-                                              AvailablePrimaryCurrency.native));
-                                      preferences.setLockTimeout(
-                                          LockTimeoutSetting(
-                                              LockTimeoutOption.one));
-                                      preferences.setAuthMethod(
-                                          AuthenticationMethod(AuthMethod.pin));
-                                      bool error = false;
-                                      if (widget.process == 'newWallet') {
-                                        try {
-                                          await sl
-                                              .get<DBHelper>()
-                                              .clearAppWallet();
-                                          final Vault vault =
-                                              await Vault.getInstance();
-                                          await vault.setSeed(widget.seed!);
-                                          StateContainer.of(context).appWallet =
-                                              await KeychainUtil().newAppWallet(
-                                                  widget.seed!, widget.name!);
-                                          await StateContainer.of(context)
-                                              .requestUpdate();
-                                        } catch (e) {
-                                          error = true;
-                                          UIUtil.showSnackbar(
-                                              '${AppLocalization.of(context)!.sendError} ($e)',
-                                              context,
-                                              StateContainer.of(context)
-                                                  .curTheme
-                                                  .text!,
-                                              StateContainer.of(context)
-                                                  .curTheme
-                                                  .snackBarShadow!);
-                                        }
-                                      }
-                                      if (error == false) {
-                                        StateContainer.of(context)
-                                            .checkTransactionInputs(
-                                                AppLocalization.of(context)!
-                                                    .transactionInputNotification);
-                                        Navigator.of(context)
-                                            .pushNamedAndRemoveUntil(
-                                          '/home',
-                                          (Route<dynamic> route) => false,
-                                        );
-                                      } else {
-                                        Navigator.of(context).pop();
-                                      }
-                                    }
                                     break;
                                   case AuthMethod.yubikeyWithYubicloud:
-                                    Navigator.of(context).pushNamed(
-                                        '/intro_yubikey',
-                                        arguments: {
-                                          'name': widget.name,
-                                          'seed': widget.seed,
-                                          'process': widget.process
-                                        });
+                                    authenticated = await Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (BuildContext context) {
+                                      return SetYubikey(
+                                        header: AppLocalization.of(context)!
+                                            .seYubicloudHeader,
+                                        description:
+                                            AppLocalization.of(context)!
+                                                .seYubicloudDescription,
+                                      );
+                                    }));
                                     break;
                                   default:
                                     break;
+                                }
+                                if (authenticated) {
+                                  await Preferences.initWallet(
+                                      AuthenticationMethod(authMethod));
+                                  EventTaxiImpl.singleton()
+                                      .fire(AuthenticatedEvent());
                                 }
                               },
                             ),
@@ -329,15 +207,5 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
         ),
       ),
     );
-  }
-
-  void _showSendingAnimation(BuildContext context) {
-    animationOpen = true;
-    Navigator.of(context).push(AnimationLoadingOverlay(
-        AnimationType.send,
-        StateContainer.of(context).curTheme.animationOverlayStrong!,
-        StateContainer.of(context).curTheme.animationOverlayMedium!,
-        onPoppedCallback: () => animationOpen = false,
-        title: AppLocalization.of(context)!.appWalletInitInProgress));
   }
 }
