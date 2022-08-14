@@ -171,7 +171,10 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                                               BorderRadius.circular(8),
                                         ),
                                         child: QrImage(
-                                          foregroundColor: Colors.white,
+                                          foregroundColor:
+                                              StateContainer.of(context)
+                                                  .curTheme
+                                                  .text,
                                           data: StateContainer.of(context)
                                               .appWallet!
                                               .appKeychain!

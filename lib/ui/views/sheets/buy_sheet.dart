@@ -92,7 +92,7 @@ class _BuySheetState extends State<BuySheet> {
                             },
                             child: SvgPicture.asset(
                               'assets/buy/Rubic.svg',
-                              color: Colors.white,
+                              color: StateContainer.of(context).curTheme.text,
                               height: 40,
                             ),
                           ),
@@ -106,7 +106,7 @@ class _BuySheetState extends State<BuySheet> {
                             },
                             child: Image.asset(
                               'assets/buy/Quickswap.png',
-                              color: Colors.white,
+                              color: StateContainer.of(context).curTheme.text,
                               height: 40,
                             ),
                           ),
@@ -118,7 +118,7 @@ class _BuySheetState extends State<BuySheet> {
                             },
                             child: Image.asset(
                               'assets/buy/Probit.png',
-                              color: Colors.white,
+                              color: StateContainer.of(context).curTheme.text,
                               height: 40,
                             ),
                           ),
@@ -130,7 +130,7 @@ class _BuySheetState extends State<BuySheet> {
                             },
                             child: Image.asset(
                               'assets/buy/Bithumb.png',
-                              color: Colors.white,
+                              color: StateContainer.of(context).curTheme.text,
                               height: 40,
                             ),
                           ),
@@ -144,7 +144,7 @@ class _BuySheetState extends State<BuySheet> {
                             },
                             child: SvgPicture.asset(
                               'assets/buy/Uniswap.svg',
-                              color: Colors.white,
+                              color: StateContainer.of(context).curTheme.text,
                               height: 40,
                             ),
                           ),
@@ -156,7 +156,7 @@ class _BuySheetState extends State<BuySheet> {
                             },
                             child: SvgPicture.asset(
                               'assets/buy/Zebitex.svg',
-                              color: Colors.white,
+                              color: StateContainer.of(context).curTheme.text,
                               height: 40,
                             ),
                           ),
@@ -170,7 +170,7 @@ class _BuySheetState extends State<BuySheet> {
                             },
                             child: Image.asset(
                               'assets/buy/Pancake.png',
-                              color: Colors.white,
+                              color: StateContainer.of(context).curTheme.text,
                               height: 40,
                             ),
                           ),
@@ -182,7 +182,7 @@ class _BuySheetState extends State<BuySheet> {
                             },
                             child: Image.asset(
                               'assets/buy/Zamio.png',
-                              color: Colors.white,
+                              color: StateContainer.of(context).curTheme.text,
                               height: 40,
                             ),
                           ),

@@ -554,7 +554,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                       decoration: ShapeDecoration(
                                         gradient: StateContainer.of(context)
                                             .curTheme
-                                            .gradientMainButton!,
+                                            .gradientHexagon!,
                                         shape: const StadiumBorder(),
                                         shadows: [
                                           BoxShadow(
@@ -571,7 +571,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                     Text(
                                         accountToken.tokenInformations!.symbol!,
                                         style: AppStyles
-                                            .textStyleSize10W600Primary(
+                                            .textStyleSize10W600Hexagon(
                                                 context)),
                                   ],
                                 ),

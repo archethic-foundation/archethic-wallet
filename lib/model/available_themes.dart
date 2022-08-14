@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aewallet/ui/themes/theme_flat.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -21,6 +22,7 @@ enum ThemeOptions {
   dark,
   emerald_green,
   fire_red,
+  flat,
   honey_orange,
   navy_blue,
   pearl_grey,
@@ -45,6 +47,8 @@ class ThemeSetting extends SettingSelectionItem {
         return 'Emerald green';
       case ThemeOptions.fire_red:
         return 'Fire red';
+      case ThemeOptions.flat:
+        return 'Flat';
       case ThemeOptions.honey_orange:
         return 'Honey orange';
       case ThemeOptions.navy_blue:
@@ -70,6 +74,8 @@ class ThemeSetting extends SettingSelectionItem {
         return EmeraldGreenTheme();
       case ThemeOptions.fire_red:
         return FireRedTheme();
+      case ThemeOptions.flat:
+        return FlatTheme();
       case ThemeOptions.honey_orange:
         return HoneyOrangeTheme();
       case ThemeOptions.navy_blue:

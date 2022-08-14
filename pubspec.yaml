@@ -200,6 +200,7 @@ flutter:
     - assets/themes/sapphire_blue/
     - assets/themes/dark/
     - assets/themes/emerald_green/
+    - assets/themes/flat/
     - assets/themes/sea_green/
     - assets/themes/navy_blue/
     - assets/themes/honey_orange/
@@ -230,6 +231,12 @@ flutter:
       fonts:
         - asset: assets/fonts/Equinox Bold.otf
         - asset: assets/fonts/Equinox Regular.otf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Bold.ttf
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Medium.ttf
+          weight: 400
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

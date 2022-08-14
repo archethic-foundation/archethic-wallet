@@ -15,6 +15,8 @@ abstract class BaseTheme {
   Color? mainButtonLabel;
   Color? middleButtonLabel;
   Gradient? gradientMainButton;
+  Gradient? gradientHexagon;
+  Color? textHexagon;
 
   // IconData Widget
   Color? iconDataWidgetBoxShadow;
