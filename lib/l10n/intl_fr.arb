@@ -15,6 +15,7 @@
 	"recentTransactionsHeader": "Transactions récentes",
 	"recentTransactionsNoTransactionYet": "Aucune transaction pour le moment",
 	"addressCopied": "Adresse copiée",
+	"amountCopied": "Montant copié",
 	"copyAddress": "Copier l'adresse",
 	"addressHint": "Entrer l'adresse",
 	"scanQrCode": "Scannez le QR code",

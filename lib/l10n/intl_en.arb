@@ -90,6 +90,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "amountCopied": "Amount copied",
+  "@amountCopied": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "copyAddress": "Copy Address",
   "@copyAddress": {
     "type": "text",

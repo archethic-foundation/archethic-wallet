@@ -15,6 +15,7 @@
 	"recentTransactionsHeader": "التحويلات الاخيرة",
 	"recentTransactionsNoTransactionYet": "لا توجد معاملات حتى الآن",
 	"addressCopied": "Adresse copiée",
+	"amountCopied": "Montant copié",
 	"copyAddress": "Copier l'adresse",
 	"addressHint": "Entrer l'adresse",
 	"scanQrCode": "Scannez le QR code",

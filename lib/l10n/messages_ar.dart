@@ -42,6 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "addressMissing" : MessageLookupByLibrary.simpleMessage("Entrez une adresse s\'il vous plaît"),
     "aeWebsiteLinkDesc" : MessageLookupByLibrary.simpleMessage("Visitez le site web d\'Archethic"),
     "aeWebsiteLinkHeader" : MessageLookupByLibrary.simpleMessage("Site web d\'Archethic"),
+    "amountCopied" : MessageLookupByLibrary.simpleMessage("Montant copié"),
     "amountMissing" : MessageLookupByLibrary.simpleMessage("Veuillez saisir un montant"),
     "amountZero" : MessageLookupByLibrary.simpleMessage("Your amount should be > 0"),
     "appWalletInitInProgress" : MessageLookupByLibrary.simpleMessage("Your wallet is being configured..."),

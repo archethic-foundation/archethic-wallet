@@ -118,6 +118,10 @@ class AppLocalization {
     return Intl.message('Address Copied', name: 'addressCopied');
   }
 
+  String get amountCopied {
+    return Intl.message('Amount copied', name: 'amountCopied');
+  }
+
   String get copyAddress {
     return Intl.message('Copy Address', name: 'copyAddress');
   }
