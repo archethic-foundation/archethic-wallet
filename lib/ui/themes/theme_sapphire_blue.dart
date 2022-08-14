@@ -15,6 +15,12 @@ class SapphireBlueTheme implements BaseTheme {
   @override
   String? displayName = 'Sapphire blue';
 
+  // Fonts
+  @override
+  String? mainFont = 'Equinox';
+  @override
+  String? secondaryFont = 'Montserrat';
+
   // Main Buttons
   @override
   Color? mainButtonLabel = const Color(0xFFFFFFFF);

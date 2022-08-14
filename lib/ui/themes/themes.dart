@@ -7,6 +7,10 @@ import 'package:flutter/services.dart';
 abstract class BaseTheme {
   String? displayName;
 
+  // Fonts
+  String? mainFont;
+  String? secondaryFont;
+
   // Main Buttons
   Color? mainButtonLabel;
   Color? middleButtonLabel;

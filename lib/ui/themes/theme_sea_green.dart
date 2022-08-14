@@ -15,6 +15,12 @@ class SeaGreenTheme implements BaseTheme {
   @override
   String? displayName = 'Sea green';
 
+  // Fonts
+  @override
+  String? mainFont = 'Equinox';
+  @override
+  String? secondaryFont = 'Montserrat';
+
   // Main Buttons
   @override
   Color? mainButtonLabel = const Color(0xFFFFFFFF);

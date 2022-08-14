@@ -15,6 +15,12 @@ class PearlGreyTheme implements BaseTheme {
   @override
   String? displayName = 'Pearl grey';
 
+  // Fonts
+  @override
+  String? mainFont = 'Equinox';
+  @override
+  String? secondaryFont = 'Montserrat';
+
   // Main Buttons
   @override
   Color? mainButtonLabel = const Color(0xFFFFFFFF);

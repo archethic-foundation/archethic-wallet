@@ -15,6 +15,12 @@ class EmeraldGreenTheme implements BaseTheme {
   @override
   String? displayName = 'Emerald_Green';
 
+  // Fonts
+  @override
+  String? mainFont = 'Equinox';
+  @override
+  String? secondaryFont = 'Montserrat';
+
   // Main Buttons
   @override
   Color? mainButtonLabel = const Color(0xFFFFFFFF);

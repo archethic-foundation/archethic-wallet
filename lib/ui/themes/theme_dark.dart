@@ -15,6 +15,12 @@ class DarkTheme implements BaseTheme {
   @override
   String? displayName = 'Dark';
 
+  // Fonts
+  @override
+  String? mainFont = 'Equinox';
+  @override
+  String? secondaryFont = 'Montserrat';
+
   // Main Buttons
   @override
   Color? mainButtonLabel = const Color(0xFFFFFFFF);

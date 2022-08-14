@@ -10,7 +10,7 @@ import 'package:aewallet/appstate_container.dart';
 class AppStyles {
   static TextStyle textStyleSize18W400EquinoxPrimary(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Equinox',
+      fontFamily: StateContainer.of(context).curTheme.mainFont,
       fontSize: AppFontSizes.size18,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.text!.withOpacity(0.7),
@@ -19,7 +19,7 @@ class AppStyles {
 
   static TextStyle textStyleSize16W200Primary(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size16,
         fontWeight: FontWeight.w200,
         color: StateContainer.of(context).curTheme.text);
@@ -27,7 +27,7 @@ class AppStyles {
 
   static TextStyle textStyleSize16W400Primary(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size16,
         fontWeight: FontWeight.w400,
         color: StateContainer.of(context).curTheme.text);
@@ -35,7 +35,7 @@ class AppStyles {
 
   static TextStyle textStyleSize16W400Primary60(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size16,
         fontWeight: FontWeight.w400,
         color: StateContainer.of(context).curTheme.text60);
@@ -43,7 +43,7 @@ class AppStyles {
 
   static TextStyle textStyleSize16W700Primary(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size16,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.text);
@@ -51,7 +51,7 @@ class AppStyles {
 
   static TextStyle textStyleSize16W100Primary60(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size16,
         fontWeight: FontWeight.w100,
         color: StateContainer.of(context).curTheme.text60);
@@ -59,7 +59,7 @@ class AppStyles {
 
   static TextStyle textStyleSize14W600Primary(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w600,
         color: StateContainer.of(context).curTheme.text);
@@ -67,7 +67,7 @@ class AppStyles {
 
   static TextStyle textStyleSize14W600EquinoxPrimary(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Equinox',
+        fontFamily: StateContainer.of(context).curTheme.mainFont,
         fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w600,
         color: StateContainer.of(context).curTheme.text);
@@ -75,7 +75,7 @@ class AppStyles {
 
   static TextStyle textStyleSize10W600Primary(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size10,
         fontWeight: FontWeight.w600,
         color: StateContainer.of(context).curTheme.text!);
@@ -84,7 +84,7 @@ class AppStyles {
   static TextStyle textStyleSize14W600EquinoxMiddleButtonLabel(
       BuildContext context) {
     return TextStyle(
-      fontFamily: 'Equinox',
+      fontFamily: StateContainer.of(context).curTheme.mainFont,
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.middleButtonLabel,
@@ -94,7 +94,7 @@ class AppStyles {
   static TextStyle textStyleSize14W600EquinoxPrimaryDisabled(
       BuildContext context) {
     return TextStyle(
-        fontFamily: 'Equinox',
+        fontFamily: StateContainer.of(context).curTheme.mainFont,
         fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w600,
         color: StateContainer.of(context).curTheme.text!.withOpacity(0.3));
@@ -102,7 +102,7 @@ class AppStyles {
 
   static TextStyle textStyleSize14W600PrimaryDisabled(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w600,
         color: StateContainer.of(context).curTheme.text!.withOpacity(0.3));
@@ -110,7 +110,7 @@ class AppStyles {
 
   static TextStyle textStyleSize12W400PrimaryDisabled(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size12,
         fontWeight: FontWeight.w400,
         color: StateContainer.of(context).curTheme.text!.withOpacity(0.3));
@@ -118,7 +118,7 @@ class AppStyles {
 
   static TextStyle textStyleSize18W600PrimaryDisabled(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size18,
         fontWeight: FontWeight.w600,
         color: StateContainer.of(context).curTheme.text!.withOpacity(0.3));
@@ -127,7 +127,7 @@ class AppStyles {
   static TextStyle textStyleSize18W600EquinoxPrimaryDisabled(
       BuildContext context) {
     return TextStyle(
-        fontFamily: 'Equinox',
+        fontFamily: StateContainer.of(context).curTheme.mainFont,
         fontSize: AppFontSizes.size18,
         fontWeight: FontWeight.w600,
         color: StateContainer.of(context).curTheme.text!.withOpacity(0.3));
@@ -136,7 +136,7 @@ class AppStyles {
   static TextStyle textStyleSize18W600EquinoxMainButtonLabelDisabled(
       BuildContext context) {
     return TextStyle(
-        fontFamily: 'Equinox',
+        fontFamily: StateContainer.of(context).curTheme.mainFont,
         fontSize: AppFontSizes.size18,
         fontWeight: FontWeight.w600,
         color: StateContainer.of(context)
@@ -147,7 +147,7 @@ class AppStyles {
 
   static TextStyle textStyleSize12W100PrimaryDisabled(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size12,
         fontWeight: FontWeight.w100,
         color: StateContainer.of(context).curTheme.text!.withOpacity(0.3));
@@ -155,7 +155,7 @@ class AppStyles {
 
   static TextStyle textStyleSize24W600Primary(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size24,
         fontWeight: FontWeight.w600,
         color: StateContainer.of(context).curTheme.text);
@@ -163,7 +163,7 @@ class AppStyles {
 
   static TextStyle textStyleSize14W600BackgroundDarkest(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w600,
         color: StateContainer.of(context).curTheme.backgroundDarkest);
@@ -171,7 +171,7 @@ class AppStyles {
 
   static TextStyle textStyleSize16W700BackgroundDarkest(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size16,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.backgroundDarkest);
@@ -179,7 +179,7 @@ class AppStyles {
 
   static TextStyle textStyleSize14W700Background(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.background);
@@ -187,7 +187,7 @@ class AppStyles {
 
   static TextStyle textStyleSize20W700Background(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size20,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.background);
@@ -195,7 +195,7 @@ class AppStyles {
 
   static TextStyle textStyleSize20W700Primary(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size20,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.text);
@@ -203,7 +203,7 @@ class AppStyles {
 
   static TextStyle textStyleSize20W700EquinoxPrimary(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Equinox',
+        fontFamily: StateContainer.of(context).curTheme.mainFont,
         fontSize: AppFontSizes.size20,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.text);
@@ -211,7 +211,7 @@ class AppStyles {
 
   static TextStyle textStyleSize20W700Green(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size20,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.positiveAmount);
@@ -219,7 +219,7 @@ class AppStyles {
 
   static TextStyle textStyleSize20W700Red(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size20,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.negativeAmount);
@@ -227,7 +227,7 @@ class AppStyles {
 
   static TextStyle textStyleSize14W700Primary(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.text);
@@ -235,7 +235,7 @@ class AppStyles {
 
   static TextStyle textStyleSize20W700Primary60(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size20,
         fontWeight: FontWeight.w700,
         color: StateContainer.of(context).curTheme.text60);
@@ -243,7 +243,7 @@ class AppStyles {
 
   static TextStyle textStyleSize14W100Text60(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.text60,
@@ -252,7 +252,7 @@ class AppStyles {
 
   static TextStyle textStyleSize14W700Text60(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.text60,
@@ -261,7 +261,7 @@ class AppStyles {
 
   static TextStyle textStyleSize14W100Primary(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.text,
@@ -270,7 +270,7 @@ class AppStyles {
 
   static TextStyle textStyleSize14W200Primary(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w200,
       color: StateContainer.of(context).curTheme.text,
@@ -279,7 +279,7 @@ class AppStyles {
 
   static TextStyle textStyleSize14W600Text60(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size14,
         fontWeight: FontWeight.w600,
         color: StateContainer.of(context).curTheme.text60);
@@ -287,7 +287,7 @@ class AppStyles {
 
   static TextStyle textStyleSize28W900Primary(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: AppFontSizes.size28,
         fontWeight: FontWeight.w900,
         color: StateContainer.of(context).curTheme.text);
@@ -295,7 +295,7 @@ class AppStyles {
 
   static TextStyle textStyleSize40W900Primary(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Montserrat',
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
         fontSize: 40,
         fontWeight: FontWeight.w900,
         color: StateContainer.of(context).curTheme.text);
@@ -303,7 +303,7 @@ class AppStyles {
 
   static TextStyle textStyleSize25W900EquinoxPrimary(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Equinox',
+        fontFamily: StateContainer.of(context).curTheme.mainFont,
         fontSize: 25,
         fontWeight: FontWeight.w900,
         letterSpacing: 1,
@@ -312,7 +312,7 @@ class AppStyles {
 
   static TextStyle textStyleSize25W900EquinoxPrimary30(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Equinox',
+        fontFamily: StateContainer.of(context).curTheme.mainFont,
         fontSize: 25,
         fontWeight: FontWeight.w900,
         letterSpacing: 1,
@@ -321,7 +321,7 @@ class AppStyles {
 
   static TextStyle textStyleSize35W900EquinoxPrimary(BuildContext context) {
     return TextStyle(
-        fontFamily: 'Equinox',
+        fontFamily: StateContainer.of(context).curTheme.mainFont,
         fontSize: 35,
         fontWeight: FontWeight.w900,
         color: StateContainer.of(context).curTheme.text);
@@ -329,7 +329,7 @@ class AppStyles {
 
   static TextStyle textStyleSize12W100PositiveValue(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w800,
       color: StateContainer.of(context).curTheme.positiveValue,
@@ -338,7 +338,7 @@ class AppStyles {
 
   static TextStyle textStyleSize16W100PositiveValue(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w800,
       color: StateContainer.of(context).curTheme.positiveValue,
@@ -347,7 +347,7 @@ class AppStyles {
 
   static TextStyle textStyleSize12W100NegativeValue(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w800,
       color: StateContainer.of(context).curTheme.negativeValue,
@@ -356,7 +356,7 @@ class AppStyles {
 
   static TextStyle textStyleSize16W100NegativeValue(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w800,
       color: StateContainer.of(context).curTheme.negativeValue,
@@ -365,7 +365,7 @@ class AppStyles {
 
   static TextStyle textStyleSize12W100Primary60(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       color: StateContainer.of(context).curTheme.text60,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
@@ -374,7 +374,7 @@ class AppStyles {
 
   static TextStyle textStyleSize12W100Primary(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       color: StateContainer.of(context).curTheme.text,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
@@ -383,7 +383,7 @@ class AppStyles {
 
   static TextStyle textStyleSize12W100Primary30(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       color: StateContainer.of(context).curTheme.text,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
@@ -392,7 +392,7 @@ class AppStyles {
 
   static TextStyle textStyleSize10W100Primary60(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       color: StateContainer.of(context).curTheme.text60,
       fontSize: AppFontSizes.size10,
       fontWeight: FontWeight.w100,
@@ -401,7 +401,7 @@ class AppStyles {
 
   static TextStyle textStyleSize10W100Primary(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       color: StateContainer.of(context).curTheme.text,
       fontSize: AppFontSizes.size10,
       fontWeight: FontWeight.w100,
@@ -409,8 +409,8 @@ class AppStyles {
   }
 
   static TextStyle textStyleSize10W100Transparent(BuildContext context) {
-    return const TextStyle(
-      fontFamily: 'Montserrat',
+    return TextStyle(
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       color: Colors.transparent,
       fontSize: AppFontSizes.size10,
       fontWeight: FontWeight.w100,
@@ -420,7 +420,7 @@ class AppStyles {
   static TextStyle textStyleSize12W100Text60(BuildContext context) {
     return TextStyle(
       fontSize: AppFontSizes.size12,
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.text60,
     );
@@ -428,7 +428,7 @@ class AppStyles {
 
   static TextStyle textStyleSize16W600Primary(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text,
@@ -437,7 +437,7 @@ class AppStyles {
 
   static TextStyle textStyleSize16W600EquinoxPrimary(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Equinox',
+      fontFamily: StateContainer.of(context).curTheme.mainFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text,
@@ -446,7 +446,7 @@ class AppStyles {
 
   static TextStyle textStyleSize16W400PrimarySuccess(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w400,
       color: StateContainer.of(context).curTheme.positiveValue,
@@ -454,8 +454,8 @@ class AppStyles {
   }
 
   static TextStyle textStyleSize16W600Red(BuildContext context) {
-    return const TextStyle(
-      fontFamily: 'Montserrat',
+    return TextStyle(
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
       color: Colors.red,
@@ -463,8 +463,8 @@ class AppStyles {
   }
 
   static TextStyle textStyleSize16W600EquinoxRed(BuildContext context) {
-    return const TextStyle(
-      fontFamily: 'Equinox',
+    return TextStyle(
+      fontFamily: StateContainer.of(context).curTheme.mainFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
       color: Colors.red,
@@ -473,7 +473,7 @@ class AppStyles {
 
   static TextStyle textStyleSize16W600Primary30(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text30,
@@ -482,7 +482,7 @@ class AppStyles {
 
   static TextStyle textStyleSize16W600EquinoxPrimary30(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Equinox',
+      fontFamily: StateContainer.of(context).curTheme.mainFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text30,
@@ -491,7 +491,7 @@ class AppStyles {
 
   static TextStyle textStyleSize16W200Primary30(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w200,
       color: StateContainer.of(context).curTheme.text30,
@@ -500,7 +500,7 @@ class AppStyles {
 
   static TextStyle textStyleSize12W600Primary(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text,
@@ -509,7 +509,7 @@ class AppStyles {
 
   static TextStyle textStyleSize12W400PrimaryRed(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
       color: StateContainer.of(context).curTheme.text,
@@ -518,7 +518,7 @@ class AppStyles {
 
   static TextStyle textStyleSize12W400PrimaryGreen(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
       color: StateContainer.of(context).curTheme.text,
@@ -527,7 +527,7 @@ class AppStyles {
 
   static TextStyle textStyleSize12W600Primary30(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text30,
@@ -536,7 +536,7 @@ class AppStyles {
 
   static TextStyle textStyleSize24W700Primary(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size24,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.text,
@@ -545,7 +545,7 @@ class AppStyles {
 
   static TextStyle textStyleSize24W700EquinoxPrimary(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Equinox',
+      fontFamily: StateContainer.of(context).curTheme.mainFont,
       fontSize: AppFontSizes.size24,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.text,
@@ -554,7 +554,7 @@ class AppStyles {
 
   static TextStyle textStyleSize28W700Primary(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size28,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.text,
@@ -563,7 +563,7 @@ class AppStyles {
 
   static TextStyle textStyleSize20W700Warning(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size20,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.warning,
@@ -572,7 +572,7 @@ class AppStyles {
 
   static TextStyle textStyleSize28W700Warning(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size28,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.warning,
@@ -581,7 +581,7 @@ class AppStyles {
 
   static TextStyle textStyleSize80W700Primary15(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: 80,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.text15,
@@ -590,7 +590,7 @@ class AppStyles {
 
   static TextStyle textStyleSize16W600Text45(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text45,
@@ -599,7 +599,7 @@ class AppStyles {
 
   static TextStyle textStyleSize12W100Text30(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.text30,
@@ -608,7 +608,7 @@ class AppStyles {
 
   static TextStyle textStyleSmallTextW100Primary(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.smallText(context),
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.text,
@@ -617,7 +617,7 @@ class AppStyles {
 
   static TextStyle textStyleSize18W600Primary(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size18,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text,
@@ -626,7 +626,7 @@ class AppStyles {
 
   static TextStyle textStyleSize18W600EquinoxPrimary(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Equinox',
+      fontFamily: StateContainer.of(context).curTheme.mainFont,
       fontSize: AppFontSizes.size18,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text,
@@ -636,7 +636,7 @@ class AppStyles {
   static TextStyle textStyleSize18W600EquinoxMainButtonLabel(
       BuildContext context) {
     return TextStyle(
-      fontFamily: 'Equinox',
+      fontFamily: StateContainer.of(context).curTheme.mainFont,
       fontSize: AppFontSizes.size18,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.mainButtonLabel,
@@ -645,7 +645,7 @@ class AppStyles {
 
   static TextStyle textStyleSmallTextW100Text30(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.smallText(context),
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.text30,
@@ -654,7 +654,7 @@ class AppStyles {
 
   static TextStyle textStyleSize16W100Primary(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w100,
       color: StateContainer.of(context).curTheme.text,
@@ -663,7 +663,7 @@ class AppStyles {
 
   static TextStyle textStyleSize12W400Primary(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
       color: StateContainer.of(context).curTheme.text,
@@ -672,7 +672,7 @@ class AppStyles {
 
   static TextStyle textStyleSize14W700Primary60(BuildContext context) {
     return TextStyle(
-      fontFamily: 'Montserrat',
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w700,
       color: StateContainer.of(context).curTheme.text60,

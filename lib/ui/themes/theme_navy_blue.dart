@@ -15,6 +15,12 @@ class NavyBlueTheme implements BaseTheme {
   @override
   String? displayName = 'Navy_Blue';
 
+  // Fonts
+  @override
+  String? mainFont = 'Equinox';
+  @override
+  String? secondaryFont = 'Montserrat';
+
   // Main Buttons
   @override
   Color? mainButtonLabel = const Color(0xFFFFFFFF);

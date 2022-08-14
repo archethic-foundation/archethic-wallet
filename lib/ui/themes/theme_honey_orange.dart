@@ -15,6 +15,12 @@ class HoneyOrangeTheme implements BaseTheme {
   @override
   String? displayName = 'Honey orange';
 
+  // Fonts
+  @override
+  String? mainFont = 'Equinox';
+  @override
+  String? secondaryFont = 'Montserrat';
+
   // Main Buttons
   @override
   Color? mainButtonLabel = const Color(0xFFFFFFFF);

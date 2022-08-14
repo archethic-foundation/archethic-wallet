@@ -15,6 +15,12 @@ class ByzantineVioletTheme implements BaseTheme {
   @override
   String? displayName = 'Byzantine violet';
 
+  // Fonts
+  @override
+  String? mainFont = 'Equinox';
+  @override
+  String? secondaryFont = 'Montserrat';
+
   // Main Buttons
   @override
   Color? mainButtonLabel = const Color(0xFFFFFFFF);
