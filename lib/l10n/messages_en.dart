@@ -73,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "chartOptionLabel30d" : MessageLookupByLibrary.simpleMessage("30d"),
     "chartOptionLabel60d" : MessageLookupByLibrary.simpleMessage("60d"),
     "chartOptionLabel7d" : MessageLookupByLibrary.simpleMessage("7d"),
+    "chartOptionLabelAll" : MessageLookupByLibrary.simpleMessage("All"),
     "close" : MessageLookupByLibrary.simpleMessage("Close"),
     "configureSecurityExplanation" : MessageLookupByLibrary.simpleMessage("To access to this application or to validate important manipulations, we offer several ways to protect yourself."),
     "configureSecurityExplanationBiometrics" : MessageLookupByLibrary.simpleMessage("It\'s a method of biometric identification that uses that body measures, in this case face and head, to verify the identity of a person through its facial biometric pattern and data."),

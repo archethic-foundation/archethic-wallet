@@ -21,7 +21,8 @@ class ChartInfos {
       this.priceChangePercentage200d,
       this.priceChangePercentage30d,
       this.priceChangePercentage60d,
-      this.priceChangePercentage7d});
+      this.priceChangePercentage7d,
+      this.priceChangePercentageAll});
 
   List<AssetHistoryInterval>? data;
   double? priceChangePercentage1h = 0;
@@ -32,6 +33,7 @@ class ChartInfos {
   double? priceChangePercentage60d = 0;
   double? priceChangePercentage7d = 0;
   double? priceChangePercentage24h = 0;
+  double? priceChangePercentageAll = 0;
 
   double? getPriceChangePercentage(String duration) {
     switch (duration) {
@@ -51,6 +53,8 @@ class ChartInfos {
         return priceChangePercentage60d;
       case '7d':
         return priceChangePercentage7d;
+      case 'all':
+        return priceChangePercentageAll;
       default:
         return priceChangePercentage1h;
     }
@@ -74,6 +78,8 @@ class ChartInfos {
         return AppLocalization.of(context)!.chartOptionLabel60d;
       case '7d':
         return AppLocalization.of(context)!.chartOptionLabel7d;
+      case 'all':
+        return AppLocalization.of(context)!.chartOptionLabelAll;
       default:
         return AppLocalization.of(context)!.chartOptionLabel1h;
     }
@@ -83,6 +89,7 @@ class ChartInfos {
       {String option = '1h'}) async {
     int nbDays = 0;
     int nbHours = 0;
+    bool all = false;
     switch (option) {
       case '1h':
         nbHours = 1;
@@ -107,6 +114,9 @@ class ChartInfos {
         break;
       case '1y':
         nbDays = 365;
+        break;
+      case 'all':
+        all = true;
         break;
       default:
         nbHours = 1;
@@ -194,10 +204,10 @@ class ChartInfos {
       }
       priceChangePercentage1h = 0;
       final CoinsPriceResponse coinsPriceResponse;
-      if (nbHours > 0) {
+      if (all == true) {
         DateTime now = DateTime.now();
         int from =
-            now.subtract(const Duration(hours: 1)).millisecondsSinceEpoch ~/
+            now.subtract(const Duration(days: 365000)).millisecondsSinceEpoch ~/
                 Duration.millisecondsPerSecond;
 
         int to = now.millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
@@ -205,14 +215,31 @@ class ChartInfos {
             .get<ApiCoinsService>()
             .getCoinsChartRange(currencyIso4217Code, from, to);
 
-        priceChangePercentage1h = ((coinsPriceResponse.prices!.last[1] /
+        priceChangePercentageAll = ((coinsPriceResponse.prices!.last[1] /
                     coinsPriceResponse.prices!.first[1]) -
                 1) *
             100;
       } else {
-        coinsPriceResponse = await sl
-            .get<ApiCoinsService>()
-            .getCoinsChart(currencyIso4217Code, nbDays);
+        if (nbHours > 0) {
+          DateTime now = DateTime.now();
+          int from =
+              now.subtract(const Duration(hours: 1)).millisecondsSinceEpoch ~/
+                  Duration.millisecondsPerSecond;
+
+          int to = now.millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
+          coinsPriceResponse = await sl
+              .get<ApiCoinsService>()
+              .getCoinsChartRange(currencyIso4217Code, from, to);
+
+          priceChangePercentage1h = ((coinsPriceResponse.prices!.last[1] /
+                      coinsPriceResponse.prices!.first[1]) -
+                  1) *
+              100;
+        } else {
+          coinsPriceResponse = await sl
+              .get<ApiCoinsService>()
+              .getCoinsChart(currencyIso4217Code, nbDays);
+        }
       }
 
       final List<AssetHistoryInterval> assetHistoryIntervalList =

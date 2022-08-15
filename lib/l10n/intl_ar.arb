@@ -211,6 +211,7 @@
 	"chartOptionLabel30d": "30j",
 	"chartOptionLabel60d": "60j",
 	"chartOptionLabel7d": "7j",
+	"chartOptionLabelAll": "All",
 	"chartOptionLabel24h": "24h",
 	"transactionChainExplorerHeader": "مستكشف سلسلة المعاملات",
 	"transactionChainExplorerDesc": "استكشف كل معاملة في سلسلتك.",

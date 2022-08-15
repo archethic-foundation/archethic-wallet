@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aewallet/ui/util/styles.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -113,6 +114,10 @@ class HistoryChart extends StatelessWidget {
                   title =
                       '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
                   break;
+                case 'all':
+                  title =
+                      '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
+                  break;
                 default:
                   title =
                       '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
@@ -178,6 +183,10 @@ class HistoryChart extends StatelessWidget {
                             title =
                                 '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
                             break;
+                          case 'all':
+                            title =
+                                '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
+                            break;
                           default:
                             title = '${dt.hour.toString().padLeft(2, '0')}h';
                             break;
@@ -187,6 +196,10 @@ class HistoryChart extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 8.0, left: 5),
                         child: Text(
                           title,
+                          style: const TextStyle(
+                            fontSize: AppFontSizes.size12,
+                            fontWeight: FontWeight.w100,
+                          ),
                         ),
                       );
                     }),
@@ -198,11 +211,19 @@ class HistoryChart extends StatelessWidget {
                     showTitles: true,
                     reservedSize: 60,
                     getTitlesWidget: (value, titleMeta) {
-                      return Padding(
-                          padding: const EdgeInsets.only(top: 8.0, left: 5),
-                          child: Text(
+                      final axisTitle = value == titleMeta.max ||
+                              value == titleMeta.min
+                          ? const SizedBox.shrink()
+                          : Text(
                               CurrencyUtil.getConvertedAmountWithNumberOfDigits(
-                                  currency, value, 3)));
+                                  currency, value, 3),
+                              style: const TextStyle(
+                                fontSize: AppFontSizes.size12,
+                                fontWeight: FontWeight.w100,
+                              ),
+                            );
+                      return SideTitleWidget(
+                          axisSide: titleMeta.axisSide, child: axisTitle);
                     }),
               )
             : AxisTitles(sideTitles: SideTitles(showTitles: false)),

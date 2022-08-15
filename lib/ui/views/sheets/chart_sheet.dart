@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -30,6 +31,7 @@ class ChartSheet extends StatefulWidget {
 class _ChartSheetState extends State<ChartSheet> {
   OptionChart? optionChartSelected;
 
+  int bottomBarCurrentPage = 0;
   @override
   void initState() {
     optionChartSelected = widget.optionChart;
@@ -130,75 +132,55 @@ class _ChartSheetState extends State<ChartSheet> {
         const SizedBox(
           height: 30,
         ),
+        Wrap(children: [
+          BottomBar(
+              selectedIndex: bottomBarCurrentPage,
+              curve: Curves.easeIn,
+              duration: const Duration(milliseconds: 500),
+              itemPadding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.only(right: 10, left: 10),
+              onTap: (int index) async {
+                sl.get<HapticUtil>().feedback(FeedbackType.light,
+                    StateContainer.of(context).activeVibrations);
+                await StateContainer.of(context).chartInfos!.updateCoinsChart(
+                    StateContainer.of(context).curCurrency.currency.name,
+                    option: widget.optionChartList[index].id);
+
+                setState(() {
+                  optionChartSelected = widget.optionChartList[index];
+                  StateContainer.of(context).idChartOption =
+                      widget.optionChartList[index].id;
+
+                  bottomBarCurrentPage = index;
+                });
+              },
+              items: widget.optionChartList.map((OptionChart optionChart) {
+                return BottomBarItem(
+                    icon: Text(
+                      optionChart.id,
+                      style: AppStyles.textStyleSize12W100Primary(context),
+                    ),
+                    backgroundColorOpacity: StateContainer.of(context)
+                        .curTheme
+                        .bottomBarBackgroundColorOpacity!,
+                    activeIconColor: StateContainer.of(context)
+                        .curTheme
+                        .bottomBarActiveIconColor!,
+                    activeTitleColor: StateContainer.of(context)
+                        .curTheme
+                        .bottomBarActiveTitleColor!,
+                    activeColor: StateContainer.of(context)
+                        .curTheme
+                        .bottomBarActiveColor!,
+                    inactiveColor: StateContainer.of(context)
+                        .curTheme
+                        .bottomBarInactiveIcon!);
+              }).toList()),
+        ]),
         if (StateContainer.of(context).chartInfos != null)
           BalanceInfosWidget().buildKPI(context)
         else
           const SizedBox(),
-        Expanded(
-          child: Center(
-            child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.8,
-                child: SafeArea(
-                  minimum: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).size.height * 0.035,
-                    top: 50,
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      Theme(
-                        data: Theme.of(context).copyWith(
-                            canvasColor: StateContainer.of(context)
-                                .curTheme
-                                .backgroundDark),
-                        child: DropdownButton<OptionChart>(
-                          elevation: 2,
-                          focusColor: Colors.white,
-                          isExpanded: false,
-                          value: optionChartSelected,
-                          style: TextStyle(
-                            color: StateContainer.of(context).curTheme.text,
-                          ),
-                          underline: const SizedBox(),
-                          iconEnabledColor: StateContainer.of(context)
-                              .curTheme
-                              .backgroundDark!,
-                          isDense: true,
-                          items: widget.optionChartList
-                              .map((OptionChart optionChart) {
-                            return DropdownMenuItem<OptionChart>(
-                              value: optionChart,
-                              child: Text(
-                                optionChart.label,
-                                style: AppStyles.textStyleSize20W700Primary(
-                                    context),
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (OptionChart? optionChart) async {
-                            sl.get<HapticUtil>().feedback(FeedbackType.light,
-                                StateContainer.of(context).activeVibrations);
-                            await StateContainer.of(context)
-                                .chartInfos!
-                                .updateCoinsChart(
-                                    StateContainer.of(context)
-                                        .curCurrency
-                                        .currency
-                                        .name,
-                                    option: optionChart!.id);
-
-                            setState(() {
-                              optionChartSelected = optionChart;
-                              StateContainer.of(context).idChartOption =
-                                  optionChart.id;
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                )),
-          ),
-        ),
       ],
     );
   }

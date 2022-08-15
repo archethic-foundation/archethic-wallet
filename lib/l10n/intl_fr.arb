@@ -213,6 +213,7 @@
 	"chartOptionLabel30d": "30j",
 	"chartOptionLabel60d": "60j",
 	"chartOptionLabel7d": "7j",
+	"chartOptionLabelAll": "Tout",
 	"chartOptionLabel24h": "24h",
 	"transactionChainExplorerHeader": "Explorateur de chaînes de transactions",
 	"transactionChainExplorerDesc": "Explorer chaque transaction contenue dans votre chaîne.",

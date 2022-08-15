@@ -1264,6 +1264,10 @@ class AppLocalization {
     return Intl.message('7d', name: 'chartOptionLabel7d');
   }
 
+  String get chartOptionLabelAll {
+    return Intl.message('All', name: 'chartOptionLabelAll');
+  }
+
   String get chartOptionLabel24h {
     return Intl.message('24h', name: 'chartOptionLabel24h');
   }

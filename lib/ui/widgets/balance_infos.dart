@@ -375,6 +375,7 @@ class BalanceInfosWidget {
           OptionChart('60d', ChartInfos.getChartOptionLabel(context, '60d')),
           OptionChart('200d', ChartInfos.getChartOptionLabel(context, '200d')),
           OptionChart('1y', ChartInfos.getChartOptionLabel(context, '1y')),
+          OptionChart('all', ChartInfos.getChartOptionLabel(context, 'all')),
         ];
         final OptionChart? optionChart;
         final String idChartOption = StateContainer.of(context).idChartOption!;
@@ -402,6 +403,9 @@ class BalanceInfosWidget {
             break;
           case '1y':
             optionChart = optionChartList[7];
+            break;
+          case 'all':
+            optionChart = optionChartList[8];
             break;
           default:
             optionChart = optionChartList[0];
