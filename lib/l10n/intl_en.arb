@@ -1224,6 +1224,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "chartOptionLabel1h": "1h",
+  "@chartOptionLabel1h": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "chartOptionLabel14d": "14d",
   "@chartOptionLabel14d": {
     "type": "text",

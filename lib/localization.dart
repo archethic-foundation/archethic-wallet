@@ -1236,6 +1236,10 @@ class AppLocalization {
     return Intl.message('Share', name: 'share');
   }
 
+  String get chartOptionLabel1h {
+    return Intl.message('1h', name: 'chartOptionLabel1h');
+  }
+
   String get chartOptionLabel14d {
     return Intl.message('14d', name: 'chartOptionLabel14d');
   }

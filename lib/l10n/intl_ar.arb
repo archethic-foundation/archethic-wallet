@@ -204,6 +204,7 @@
 	"buy": "يشترى",
 	"chart": "Cours",
 	"share": "Partager",
+	"chartOptionLabel1h": "1h",
 	"chartOptionLabel14d": "14j",
 	"chartOptionLabel1y": "1a",
 	"chartOptionLabel200d": "200j",

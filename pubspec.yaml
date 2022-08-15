@@ -74,7 +74,7 @@ dependencies:
   #archethic_lib_dart: ^1.0.23
   archethic_lib_dart: 
     git:
-     url: https://github.com/redDwarf03/libdart.git
+     url: https://github.com/archethic-foundation/libdart.git
      ref: master
 
   # Flutter widget that automatically resizes text to fit perfectly within its bounds

@@ -76,7 +76,7 @@ class StateContainerState extends State<StateContainer> {
   BaseTheme curTheme = DarkTheme();
 
   ChartInfos? chartInfos = ChartInfos();
-  String? idChartOption = '24h';
+  String? idChartOption = '1h';
 
   bool showBalance = false;
   bool showPriceChart = false;

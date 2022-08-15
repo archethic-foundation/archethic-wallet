@@ -14,6 +14,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
 class ChartInfos {
   ChartInfos(
       {this.data,
+      this.priceChangePercentage1h,
       this.priceChangePercentage24h,
       this.priceChangePercentage14d,
       this.priceChangePercentage1y,
@@ -23,6 +24,7 @@ class ChartInfos {
       this.priceChangePercentage7d});
 
   List<AssetHistoryInterval>? data;
+  double? priceChangePercentage1h = 0;
   double? priceChangePercentage14d = 0;
   double? priceChangePercentage1y = 0;
   double? priceChangePercentage200d = 0;
@@ -33,6 +35,10 @@ class ChartInfos {
 
   double? getPriceChangePercentage(String duration) {
     switch (duration) {
+      case '1h':
+        return priceChangePercentage1h;
+      case '24h':
+        return priceChangePercentage24h;
       case '14d':
         return priceChangePercentage14d;
       case '1y':
@@ -45,15 +51,17 @@ class ChartInfos {
         return priceChangePercentage60d;
       case '7d':
         return priceChangePercentage7d;
-      case '24h':
-        return priceChangePercentage24h;
       default:
-        return priceChangePercentage24h;
+        return priceChangePercentage1h;
     }
   }
 
   static String getChartOptionLabel(BuildContext context, String duration) {
     switch (duration) {
+      case '1h':
+        return AppLocalization.of(context)!.chartOptionLabel1h;
+      case '24h':
+        return AppLocalization.of(context)!.chartOptionLabel24h;
       case '14d':
         return AppLocalization.of(context)!.chartOptionLabel14d;
       case '1y':
@@ -66,17 +74,22 @@ class ChartInfos {
         return AppLocalization.of(context)!.chartOptionLabel60d;
       case '7d':
         return AppLocalization.of(context)!.chartOptionLabel7d;
-      case '24h':
-        return AppLocalization.of(context)!.chartOptionLabel24h;
       default:
-        return AppLocalization.of(context)!.chartOptionLabel24h;
+        return AppLocalization.of(context)!.chartOptionLabel1h;
     }
   }
 
   Future<void> updateCoinsChart(String currencyIso4217Code,
-      {String option = '24h'}) async {
-    int nbDays;
+      {String option = '1h'}) async {
+    int nbDays = 0;
+    int nbHours = 0;
     switch (option) {
+      case '1h':
+        nbHours = 1;
+        break;
+      case '24h':
+        nbDays = 1;
+        break;
       case '7d':
         nbDays = 7;
         break;
@@ -95,9 +108,8 @@ class ChartInfos {
       case '1y':
         nbDays = 365;
         break;
-      case '24h':
       default:
-        nbDays = 1;
+        nbHours = 1;
         break;
     }
     try {
@@ -180,10 +192,29 @@ class ChartInfos {
         priceChangePercentage7d =
             coinsCurrentDataResponse.marketData!.priceChangePercentage7D;
       }
+      priceChangePercentage1h = 0;
+      final CoinsPriceResponse coinsPriceResponse;
+      if (nbHours > 0) {
+        DateTime now = DateTime.now();
+        int from =
+            now.subtract(const Duration(hours: 1)).millisecondsSinceEpoch ~/
+                Duration.millisecondsPerSecond;
 
-      final CoinsPriceResponse coinsPriceResponse = await sl
-          .get<ApiCoinsService>()
-          .getCoinsChart(currencyIso4217Code, nbDays);
+        int to = now.millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
+        coinsPriceResponse = await sl
+            .get<ApiCoinsService>()
+            .getCoinsChartRange(currencyIso4217Code, from, to);
+
+        priceChangePercentage1h = ((coinsPriceResponse.prices!.last[1] /
+                    coinsPriceResponse.prices!.first[1]) -
+                1) *
+            100;
+      } else {
+        coinsPriceResponse = await sl
+            .get<ApiCoinsService>()
+            .getCoinsChart(currencyIso4217Code, nbDays);
+      }
+
       final List<AssetHistoryInterval> assetHistoryIntervalList =
           List<AssetHistoryInterval>.empty(growable: true);
       for (int i = 0; i < coinsPriceResponse.prices!.length; i = i + 1) {

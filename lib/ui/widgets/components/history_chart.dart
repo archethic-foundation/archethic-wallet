@@ -72,6 +72,8 @@ class HistoryChart extends StatelessWidget {
     return LineChartData(
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(
+          fitInsideHorizontally: true,
+          fitInsideVertically: true,
           tooltipPadding: const EdgeInsets.all(8),
           tooltipBgColor: tooltipBg.withOpacity(1),
           getTooltipItems: (List<LineBarSpot> touchedSpots) {
@@ -79,27 +81,41 @@ class HistoryChart extends StatelessWidget {
               String title = '';
               DateTime dt = intervals[touchedSpot.x.toInt()].time;
               switch (optionChartSelected) {
-                case '7d':
-                  title = '${dt.day}/${dt.month}';
-                  break;
-                case '14d':
-                  title = '${dt.day}/${dt.month}';
-                  break;
-                case '30d':
-                  title = '${dt.day}/${dt.month}';
-                  break;
-                case '60d':
-                  title = '${dt.day}/${dt.month}';
-                  break;
-                case '200d':
-                  title = '${dt.day}/${dt.month}/${dt.year}';
-                  break;
-                case '1y':
-                  title = '${dt.day}/${dt.month}/${dt.year}';
+                case '1h':
+                  title =
+                      '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
                   break;
                 case '24h':
+                  title =
+                      '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
+                  break;
+                case '7d':
+                  title =
+                      '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
+                  break;
+                case '14d':
+                  title =
+                      '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
+                  break;
+                case '30d':
+                  title =
+                      '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
+                  break;
+                case '60d':
+                  title =
+                      '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
+                  break;
+                case '200d':
+                  title =
+                      '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
+                  break;
+                case '1y':
+                  title =
+                      '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
+                  break;
                 default:
-                  title = '${dt.hour}:${dt.minute}';
+                  title =
+                      '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
                   break;
               }
               return LineTooltipItem(
@@ -131,29 +147,39 @@ class HistoryChart extends StatelessWidget {
                           value < intervals.length - intervals.length ~/ 4) {
                         DateTime dt = intervals[value.toInt()].time;
                         switch (optionChartSelected) {
-                          case '7d':
-                            title = '${dt.day}/${dt.month}';
-                            break;
-                          case '14d':
-                            title = '${dt.day}/${dt.month}';
-                            break;
-                          case '30d':
-                            title = '${dt.day}/${dt.month}';
-                            break;
-                          case '60d':
-                            title = '${dt.day}/${dt.month}';
-                            break;
-                          case '200d':
-                            title = '${dt.day}/${dt.month}/${dt.year}';
-                            break;
-                          case '1y':
-                            title = '${dt.day}/${dt.month}/${dt.year}';
+                          case '1h':
+                            title =
+                                '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
                             break;
                           case '24h':
-                            title = '${dt.hour}h';
+                            title = '${dt.hour.toString().padLeft(2, '0')}h';
+                            break;
+                          case '7d':
+                            title =
+                                '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
+                            break;
+                          case '14d':
+                            title =
+                                '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
+                            break;
+                          case '30d':
+                            title =
+                                '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
+                            break;
+                          case '60d':
+                            title =
+                                '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
+                            break;
+                          case '200d':
+                            title =
+                                '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
+                            break;
+                          case '1y':
+                            title =
+                                '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
                             break;
                           default:
-                            title = '${dt.hour}h';
+                            title = '${dt.hour.toString().padLeft(2, '0')}h';
                             break;
                         }
                       }

@@ -68,6 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "changeCurrencyHeader" : MessageLookupByLibrary.simpleMessage("Currency"),
     "chart" : MessageLookupByLibrary.simpleMessage("Chart"),
     "chartOptionLabel14d" : MessageLookupByLibrary.simpleMessage("14d"),
+    "chartOptionLabel1h" : MessageLookupByLibrary.simpleMessage("1h"),
     "chartOptionLabel1y" : MessageLookupByLibrary.simpleMessage("1y"),
     "chartOptionLabel200d" : MessageLookupByLibrary.simpleMessage("200d"),
     "chartOptionLabel24h" : MessageLookupByLibrary.simpleMessage("24h"),

@@ -367,6 +367,7 @@ class BalanceInfosWidget {
         await sl.get<HapticUtil>().feedback(
             FeedbackType.light, StateContainer.of(context).activeVibrations);
         optionChartList = <OptionChart>[
+          OptionChart('1h', ChartInfos.getChartOptionLabel(context, '1h')),
           OptionChart('24h', ChartInfos.getChartOptionLabel(context, '24h')),
           OptionChart('7d', ChartInfos.getChartOptionLabel(context, '7d')),
           OptionChart('14d', ChartInfos.getChartOptionLabel(context, '14d')),
@@ -378,25 +379,30 @@ class BalanceInfosWidget {
         final OptionChart? optionChart;
         final String idChartOption = StateContainer.of(context).idChartOption!;
         switch (idChartOption) {
-          case '7d':
-            optionChart = optionChartList[1];
-            break;
-          case '14d':
-            optionChart = optionChartList[2];
-            break;
-          case '30d':
-            optionChart = optionChartList[3];
-            break;
-          case '60d':
-            optionChart = optionChartList[4];
-            break;
-          case '200d':
-            optionChart = optionChartList[5];
-            break;
-          case '1y':
-            optionChart = optionChartList[6];
+          case '1h':
+            optionChart = optionChartList[0];
             break;
           case '24h':
+            optionChart = optionChartList[1];
+            break;
+          case '7d':
+            optionChart = optionChartList[2];
+            break;
+          case '14d':
+            optionChart = optionChartList[3];
+            break;
+          case '30d':
+            optionChart = optionChartList[4];
+            break;
+          case '60d':
+            optionChart = optionChartList[5];
+            break;
+          case '200d':
+            optionChart = optionChartList[6];
+            break;
+          case '1y':
+            optionChart = optionChartList[7];
+            break;
           default:
             optionChart = optionChartList[0];
             break;
