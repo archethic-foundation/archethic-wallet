@@ -17,9 +17,9 @@ class FlatTheme implements BaseTheme {
 
   // Fonts
   @override
-  String? mainFont = 'Roboto';
+  String? mainFont = 'OpenSans';
   @override
-  String? secondaryFont = 'Roboto';
+  String? secondaryFont = 'OpenSans';
 
   // Main Buttons
   @override
@@ -64,7 +64,7 @@ class FlatTheme implements BaseTheme {
 
   // Menu
   @override
-  Color? iconDrawer = const Color.fromARGB(255, 43, 43, 43);
+  Color? iconDrawer = const Color.fromARGB(255, 88, 88, 88);
   @override
   Color? iconDrawerBackground = const Color(0xFFFFFFFF).withOpacity(0.2);
   @override
@@ -72,42 +72,42 @@ class FlatTheme implements BaseTheme {
 
   // Icons Picker Items
   @override
-  Color? pickerItemIconEnabled = const Color.fromARGB(255, 43, 43, 43);
+  Color? pickerItemIconEnabled = const Color.fromARGB(255, 88, 88, 88);
   @override
   Color? pickerItemIconDisabled =
-      const Color.fromARGB(255, 43, 43, 43).withOpacity(0.6);
+      const Color.fromARGB(255, 88, 88, 88).withOpacity(0.6);
 
   // Icons TextField
   @override
-  Color? textFieldIcon = const Color.fromARGB(255, 43, 43, 43);
+  Color? textFieldIcon = const Color.fromARGB(255, 88, 88, 88);
 
   // Texts
   @override
-  Color? text = const Color.fromARGB(255, 43, 43, 43);
+  Color? text = const Color.fromARGB(255, 88, 88, 88);
   @override
-  Color? text60 = const Color.fromARGB(255, 43, 43, 43).withOpacity(0.6);
+  Color? text60 = const Color.fromARGB(255, 88, 88, 88).withOpacity(0.6);
   @override
-  Color? text45 = const Color.fromARGB(255, 43, 43, 43).withOpacity(0.45);
+  Color? text45 = const Color.fromARGB(255, 88, 88, 88).withOpacity(0.45);
   @override
-  Color? text30 = const Color.fromARGB(255, 43, 43, 43).withOpacity(0.3);
+  Color? text30 = const Color.fromARGB(255, 88, 88, 88).withOpacity(0.3);
   @override
-  Color? text20 = const Color.fromARGB(255, 43, 43, 43).withOpacity(0.2);
+  Color? text20 = const Color.fromARGB(255, 88, 88, 88).withOpacity(0.2);
   @override
-  Color? text15 = const Color.fromARGB(255, 43, 43, 43).withOpacity(0.15);
+  Color? text15 = const Color.fromARGB(255, 88, 88, 88).withOpacity(0.15);
   @override
-  Color? text10 = const Color.fromARGB(255, 43, 43, 43).withOpacity(0.1);
+  Color? text10 = const Color.fromARGB(255, 88, 88, 88).withOpacity(0.1);
   @override
-  Color? text05 = const Color.fromARGB(255, 43, 43, 43).withOpacity(0.05);
+  Color? text05 = const Color.fromARGB(255, 88, 88, 88).withOpacity(0.05);
   @override
-  Color? text03 = const Color.fromARGB(255, 43, 43, 43).withOpacity(0.03);
+  Color? text03 = const Color.fromARGB(255, 88, 88, 88).withOpacity(0.03);
   @override
-  Color? positiveValue = Colors.lightGreenAccent[400];
+  Color? positiveValue = Colors.green;
   @override
-  Color? negativeValue = Colors.redAccent[400];
+  Color? negativeValue = Colors.red;
   @override
-  Color? positiveAmount = Colors.greenAccent[400];
+  Color? positiveAmount = Colors.green;
   @override
-  Color? negativeAmount = Colors.redAccent[400];
+  Color? negativeAmount = Colors.red;
   @override
   Color? warning = Colors.yellow[600];
 
@@ -131,9 +131,9 @@ class FlatTheme implements BaseTheme {
   @override
   Color? backgroundDark = const Color(0xFFFFFFFF);
   @override
-  Color? backgroundDark00 = const Color(0xFF05212B).withOpacity(0.0);
+  Color? backgroundDark00 = const Color(0xFFFFFFFF).withOpacity(0.0);
   @override
-  Color? backgroundDarkest = const Color(0xFFFFFFFF);
+  Color? backgroundDarkest = const Color.fromARGB(255, 88, 88, 88);
 
   // Bottom Bar
   @override
@@ -168,12 +168,12 @@ class FlatTheme implements BaseTheme {
   Color? overlay30 = const Color(0xFFFFFFFF).withOpacity(0.3);
 
   @override
-  Color? numMnemonicBackground = Colors.grey.shade800;
+  Color? numMnemonicBackground = const Color(0xFFFFFFFF);
 
   @override
-  Color? activeTrackColorSwitch = const Color(0xFFFFFFFF);
+  Color? activeTrackColorSwitch = Colors.green;
   @override
-  Color? inactiveTrackColorSwitch = const Color(0xFFFFFFFF);
+  Color? inactiveTrackColorSwitch = Colors.grey;
 
   @override
   Brightness? brightness = Brightness.light;
@@ -196,8 +196,8 @@ class FlatTheme implements BaseTheme {
   @override
   Gradient? gradient = const LinearGradient(
     colors: <Color>[
-      Color.fromARGB(255, 43, 43, 43),
-      Color.fromARGB(255, 43, 43, 43)
+      Color.fromARGB(255, 88, 88, 88),
+      Color.fromARGB(255, 88, 88, 88)
     ],
     begin: Alignment(-1.0, 0.0),
     end: Alignment(1.0, 0.0),

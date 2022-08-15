@@ -107,7 +107,7 @@ Widget buildIconDataWidget(
           child: SizedBox(
             child: Icon(
               icon,
-              color: Colors.white.withOpacity(0.3),
+              color: StateContainer.of(context).curTheme.text!.withOpacity(0.3),
               size: width,
             ),
           ),

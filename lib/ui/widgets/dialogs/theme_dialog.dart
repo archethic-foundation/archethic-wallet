@@ -21,18 +21,25 @@ class ThemeDialog {
     final List<PickerItem> pickerItemsList =
         List<PickerItem>.empty(growable: true);
     for (var value in ThemeOptions.values) {
-      pickerItemsList.add(PickerItem(
-          ThemeSetting(value).getDisplayName(context),
-          null,
-          null,
-          null,
-          value,
-          true,
-          decorationImageItem: DecorationImage(
-              image: AssetImage(
-                  'assets/themes/${value.name}/v0${Random().nextInt(4) + 1}-waves-1100.jpg'),
-              opacity: 0.5,
-              fit: BoxFit.fitWidth)));
+      value == ThemeOptions.flat
+          ? pickerItemsList.add(PickerItem(
+              ThemeSetting(value).getDisplayName(context), null, null, null, value, true,
+              decorationImageItem: const DecorationImage(
+                  image: AssetImage('assets/themes/flat/bk-white.jpg'),
+                  opacity: 0.5,
+                  fit: BoxFit.fitWidth)))
+          : pickerItemsList.add(PickerItem(
+              ThemeSetting(value).getDisplayName(context),
+              null,
+              null,
+              null,
+              value,
+              true,
+              decorationImageItem: DecorationImage(
+                  image: AssetImage(
+                      'assets/themes/${value.name}/v0${Random().nextInt(4) + 1}-waves-1100.jpg'),
+                  opacity: 0.5,
+                  fit: BoxFit.fitWidth)));
     }
     return await showDialog<ThemeSetting>(
         barrierDismissible: false,
