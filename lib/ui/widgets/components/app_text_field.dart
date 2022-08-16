@@ -119,7 +119,7 @@ class _AppTextFieldState extends State<AppTextField> {
           Stack(
             alignment: AlignmentDirectional.center,
             children: <Widget>[
-              TextField(
+              TextFormField(
                 textAlign: widget.textAlign!,
                 keyboardAppearance: widget.keyboardAppearance,
                 autocorrect: widget.autocorrect!,
@@ -133,7 +133,7 @@ class _AppTextFieldState extends State<AppTextField> {
                 keyboardType: widget.keyboardType,
                 obscureText: widget.obscureText!,
                 autofocus: widget.autofocus!,
-                onSubmitted: (String text) {
+                onFieldSubmitted: (String text) {
                   if (widget.textInputAction == TextInputAction.done) {
                     FocusScope.of(context).unfocus();
                   }

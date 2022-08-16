@@ -308,7 +308,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                                 alignment:
                                                     AlignmentDirectional.center,
                                                 children: <Widget>[
-                                                  TextField(
+                                                  TextFormField(
                                                     controller:
                                                         textEditingController,
                                                     focusNode: focusNode,
