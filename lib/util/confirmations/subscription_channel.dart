@@ -39,7 +39,7 @@ class SubscriptionChannel {
   void addSubscriptionTransactionConfirmed(
       String address, Function(QueryResult) function) {
     final subscriptionDocument = gql(
-      'subscription { transactionConfirmed(address: "$address") { nbConfirmations } }',
+      'subscription { transactionConfirmed(address: "$address") { nbConfirmations, maxConfirmations } }',
     );
 
     Stream<QueryResult> subscription = client!.subscribe(

@@ -14,6 +14,8 @@
 	"transferTokenName": "Transfert %1",
 	"recentTransactionsHeader": "Transactions récentes",
 	"recentTransactionsNoTransactionYet": "Aucune transaction pour le moment",
+	"transactionConfirmed1": "Transaction confirmée avec %1 réplication sur %1",
+	"transactionConfirmed": "Transaction confirmée avec %1 réplications sur %2",
 	"addressCopied": "Adresse copiée",
 	"amountCopied": "Montant copié",
 	"copyAddress": "Copier l'adresse",

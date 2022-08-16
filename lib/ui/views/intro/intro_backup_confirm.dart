@@ -73,6 +73,20 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
             StateContainer.of(context).curTheme.snackBarShadow!);
         Navigator.of(context).pop(false);
       } else {
+        UIUtil.showSnackbar(
+            event.nbConfirmations == 1
+                ? AppLocalization.of(context)!
+                    .transactionConfirmed1
+                    .replaceAll('%1', event.nbConfirmations.toString())
+                    .replaceAll('%2', event.maxConfirmations.toString())
+                : AppLocalization.of(context)!
+                    .transactionConfirmed
+                    .replaceAll('%1', event.nbConfirmations.toString())
+                    .replaceAll('%2', event.maxConfirmations.toString()),
+            context,
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!);
+
         switch (event.transactionType) {
           case TransactionSendEventType.keychain:
             await KeychainUtil().createKeyChainAccess(

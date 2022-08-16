@@ -9,11 +9,13 @@ class TransactionSendEvent implements Event {
   TransactionSendEvent(
       {required this.transactionType,
       this.nbConfirmations,
+      this.maxConfirmations,
       this.response,
       this.params});
 
   final TransactionSendEventType? transactionType;
   final int? nbConfirmations;
+  final int? maxConfirmations;
   final String? response;
   final Map<String, Object>? params;
 }

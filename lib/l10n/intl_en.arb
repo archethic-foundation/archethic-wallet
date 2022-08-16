@@ -84,6 +84,18 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "transactionConfirmed1": "Transaction confirmed with %1 replication out of %2",
+  "@transactionConfirmed1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transactionConfirmed": "Transaction confirmed with %1 replications out of %2",
+  "@transactionConfirmed": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "addressCopied": "Address Copied",
   "@addressCopied": {
     "type": "text",

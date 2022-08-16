@@ -106,6 +106,16 @@ class AppLocalization {
         name: 'recentTransactionsNoTransactionYet');
   }
 
+  String get transactionConfirmed1 {
+    return Intl.message('Transaction confirmed with %1 replication out of %2',
+        name: 'transactionConfirmed1');
+  }
+
+  String get transactionConfirmed {
+    return Intl.message('Transaction confirmed with %1 replications out of %2',
+        name: 'transactionConfirmed');
+  }
+
   String get fungiblesTokensListNoTokenYet {
     return Intl.message('No token yet', name: 'fungiblesTokensListNoTokenYet');
   }

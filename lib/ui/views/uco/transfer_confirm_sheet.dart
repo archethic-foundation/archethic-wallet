@@ -101,7 +101,15 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         Navigator.of(context).pop();
       } else {
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.transferSuccess,
+            event.nbConfirmations == 1
+                ? AppLocalization.of(context)!
+                    .transactionConfirmed1
+                    .replaceAll('%1', event.nbConfirmations.toString())
+                    .replaceAll('%2', event.maxConfirmations.toString())
+                : AppLocalization.of(context)!
+                    .transactionConfirmed
+                    .replaceAll('%1', event.nbConfirmations.toString())
+                    .replaceAll('%2', event.maxConfirmations.toString()),
             context,
             StateContainer.of(context).curTheme.text!,
             StateContainer.of(context).curTheme.snackBarShadow!,
@@ -332,20 +340,28 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   }
 
   void waitConfirmations(QueryResult event) {
-    if (event.data != null &&
-        event.data!['transactionConfirmed'] != null &&
-        event.data!['transactionConfirmed']['nbConfirmations'] != null) {
+    int nbConfirmations = 0;
+    int maxConfirmations = 0;
+    if (event.data != null && event.data!['transactionConfirmed'] != null) {
+      if (event.data!['transactionConfirmed']['nbConfirmations'] != null) {
+        nbConfirmations =
+            event.data!['transactionConfirmed']['nbConfirmations'];
+      }
+      if (event.data!['transactionConfirmed']['maxConfirmations'] != null) {
+        maxConfirmations =
+            event.data!['transactionConfirmed']['maxConfirmations'];
+      }
       EventTaxiImpl.singleton().fire(TransactionSendEvent(
           transactionType: TransactionSendEventType.transfer,
           response: 'ok',
-          nbConfirmations: event.data!['transactionConfirmed']
-              ['nbConfirmations']));
+          nbConfirmations: nbConfirmations,
+          maxConfirmations: maxConfirmations));
     } else {
-      // TODO: Mettre un libellé plus clair
       EventTaxiImpl.singleton().fire(
         TransactionSendEvent(
             transactionType: TransactionSendEventType.transfer,
             nbConfirmations: 0,
+            maxConfirmations: 0,
             response: 'ko'),
       );
     }

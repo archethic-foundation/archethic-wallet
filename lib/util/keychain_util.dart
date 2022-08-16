@@ -293,23 +293,29 @@ class KeychainUtil {
   void waitConfirmations(
       QueryResult event, TransactionSendEventType transactionSendEventType,
       {Map<String, Object>? params}) {
-    if (event.data != null &&
-        event.data!['transactionConfirmed'] != null &&
-        event.data!['transactionConfirmed']['nbConfirmations'] != null) {
-      EventTaxiImpl.singleton().fire(
-        TransactionSendEvent(
-            transactionType: transactionSendEventType,
-            response: 'ok',
-            nbConfirmations: event.data!['transactionConfirmed']
-                ['nbConfirmations'],
-            params: params),
-      );
+    int nbConfirmations = 0;
+    int maxConfirmations = 0;
+    if (event.data != null && event.data!['transactionConfirmed'] != null) {
+      if (event.data!['transactionConfirmed']['nbConfirmations'] != null) {
+        nbConfirmations =
+            event.data!['transactionConfirmed']['nbConfirmations'];
+      }
+      if (event.data!['transactionConfirmed']['maxConfirmations'] != null) {
+        maxConfirmations =
+            event.data!['transactionConfirmed']['maxConfirmations'];
+      }
+      EventTaxiImpl.singleton().fire(TransactionSendEvent(
+          transactionType: transactionSendEventType,
+          response: 'ok',
+          nbConfirmations: nbConfirmations,
+          maxConfirmations: maxConfirmations,
+          params: params));
     } else {
-      // TODO: Mettre un libellé plus clair
       EventTaxiImpl.singleton().fire(
         TransactionSendEvent(
             transactionType: transactionSendEventType,
             nbConfirmations: 0,
+            maxConfirmations: 0,
             response: 'ko'),
       );
     }
