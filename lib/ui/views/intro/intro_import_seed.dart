@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -273,9 +274,9 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                                       language)
                                                   .list
                                                   .where((String option) {
-                                                return option.contains(
-                                                    textEditingValue.text
-                                                        .toLowerCase());
+                                                return option.contains(unorm
+                                                    .nfkd(textEditingValue.text
+                                                        .toLowerCase()));
                                               });
                                             },
                                             onSelected: (String selection) {

@@ -135,6 +135,8 @@ dependencies:
   # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart.
   fl_chart: ^0.55.1
 
+  # Unicode 8.0 Normalization - NFC, NFD, NFKC, NFKD
+  unorm_dart: ^0.2.0
 
   # This plugin allows Flutter desktop apps to resizing and repositioning the window
   window_manager: ^0.2.5
