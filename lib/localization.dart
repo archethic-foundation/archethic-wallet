@@ -879,6 +879,20 @@ class AppLocalization {
     return Intl.message('Invalid Password', name: 'invalidPassword');
   }
 
+  String get passwordStrengthWeak {
+    return Intl.message('Your password is weak.', name: 'passwordStrengthWeak');
+  }
+
+  String get passwordStrengthAlright {
+    return Intl.message('Your password is alright.',
+        name: 'passwordStrengthAlright');
+  }
+
+  String get passwordStrengthStrong {
+    return Intl.message('Your password is strong.',
+        name: 'passwordStrengthStrong');
+  }
+
   String get ok {
     return Intl.message('Ok', name: 'ok');
   }
@@ -1300,30 +1314,6 @@ class AppLocalization {
     return Intl.message(
         'In order to protect your account, make sure your password:',
         name: 'setPasswordDescription');
-  }
-
-  String get passwordAtLeast {
-    return Intl.message('- At least %1 characters.', name: 'passwordAtLeast');
-  }
-
-  String get passwordBreachDatabase {
-    return Intl.message(
-        '- Is not a member of the "Have I been Pwned" breach database.',
-        name: 'passwordBreachDatabase');
-  }
-
-  String get passwordNormalLetters {
-    return Intl.message('- At least %1 Letter.', name: 'passwordNormalLetters');
-  }
-
-  String get passwordNumericCharacters {
-    return Intl.message('- At least %1 Numeric character.',
-        name: 'passwordNumericCharacters');
-  }
-
-  String get passwordSpecialCharacters {
-    return Intl.message('- At least %1 Special character.',
-        name: 'passwordSpecialCharacters');
   }
 
   String get introNewWalletGetFirstInfosWelcome {

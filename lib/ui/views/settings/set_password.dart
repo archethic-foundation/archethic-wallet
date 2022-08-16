@@ -14,9 +14,9 @@ import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
-import 'package:aewallet/util/password_util.dart';
 import 'package:aewallet/util/string_encryption.dart';
 import 'package:aewallet/util/vault.dart';
+import 'package:password_strength/password_strength.dart';
 
 class SetPassword extends StatefulWidget {
   final String? header;
@@ -36,10 +36,10 @@ class _SetPasswordState extends State<SetPassword> {
   FocusNode? confirmPasswordFocusNode;
   TextEditingController? confirmPasswordController;
   bool? animationOpen;
+  double passwordStrength = 0;
 
   String? passwordError;
   bool? passwordsMatch;
-  bool? isPasswordCompromised;
   bool? setPasswordVisible;
   bool? confirmPasswordVisible;
 
@@ -149,119 +149,6 @@ class _SetPasswordState extends State<SetPassword> {
                                           textAlign: TextAlign.justify,
                                         ),
                                       ),
-                                      Container(
-                                        margin:
-                                            const EdgeInsetsDirectional.only(
-                                                start: 20, end: 20, top: 15),
-                                        child: Text(
-                                          AppLocalization.of(context)!
-                                              .setPasswordDescription,
-                                          style: AppStyles
-                                              .textStyleSize16W400Primary(
-                                                  context),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      ),
-                                      Container(
-                                        margin:
-                                            const EdgeInsetsDirectional.only(
-                                                start: 20, end: 20),
-                                        child: Text(
-                                          AppLocalization.of(context)!
-                                              .passwordAtLeast
-                                              .replaceAll('%1', '7'),
-                                          style: PasswordUtil.hasMinLength(
-                                                  setPasswordController!.text,
-                                                  7)
-                                              ? AppStyles
-                                                  .textStyleSize16W400PrimarySuccess(
-                                                      context)
-                                              : AppStyles
-                                                  .textStyleSize16W400Primary(
-                                                      context),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      ),
-                                      Container(
-                                        margin:
-                                            const EdgeInsetsDirectional.only(
-                                                start: 20, end: 20),
-                                        child: Text(
-                                          AppLocalization.of(context)!
-                                              .passwordNormalLetters
-                                              .replaceAll('%1', '1'),
-                                          style: PasswordUtil.hasMinNormalChar(
-                                                  setPasswordController!.text,
-                                                  1)
-                                              ? AppStyles
-                                                  .textStyleSize16W400PrimarySuccess(
-                                                      context)
-                                              : AppStyles
-                                                  .textStyleSize16W400Primary(
-                                                      context),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      ),
-                                      Container(
-                                        margin:
-                                            const EdgeInsetsDirectional.only(
-                                                start: 20, end: 20),
-                                        child: Text(
-                                          AppLocalization.of(context)!
-                                              .passwordNumericCharacters
-                                              .replaceAll('%1', '1'),
-                                          style: PasswordUtil.hasMinNumericChar(
-                                                  setPasswordController!.text,
-                                                  1)
-                                              ? AppStyles
-                                                  .textStyleSize16W400PrimarySuccess(
-                                                      context)
-                                              : AppStyles
-                                                  .textStyleSize16W400Primary(
-                                                      context),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      ),
-                                      Container(
-                                        margin:
-                                            const EdgeInsetsDirectional.only(
-                                                start: 20, end: 20),
-                                        child: Text(
-                                          AppLocalization.of(context)!
-                                              .passwordSpecialCharacters
-                                              .replaceAll('%1', '1'),
-                                          style: PasswordUtil.hasMinSpecialChar(
-                                                  setPasswordController!.text,
-                                                  1)
-                                              ? AppStyles
-                                                  .textStyleSize16W400PrimarySuccess(
-                                                      context)
-                                              : AppStyles
-                                                  .textStyleSize16W400Primary(
-                                                      context),
-                                          textAlign: TextAlign.justify,
-                                        ),
-                                      ),
-                                      Container(
-                                        margin:
-                                            const EdgeInsetsDirectional.only(
-                                                start: 20, end: 20),
-                                        child: Text(
-                                          AppLocalization.of(context)!
-                                              .passwordBreachDatabase,
-                                          style: isPasswordCompromised !=
-                                                      null &&
-                                                  isPasswordCompromised! ==
-                                                      false
-                                              ? AppStyles
-                                                  .textStyleSize16W400PrimarySuccess(
-                                                      context)
-                                              : AppStyles
-                                                  .textStyleSize16W400Primary(
-                                                      context),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      ),
                                     ],
                                   ),
                                 AppTextField(
@@ -274,17 +161,12 @@ class _SetPasswordState extends State<SetPassword> {
                                   maxLines: 1,
                                   autocorrect: false,
                                   onChanged: (String newText) async {
+                                    passwordStrength = estimatePasswordStrength(
+                                        setPasswordController!.text);
                                     if (passwordError != null) {
                                       setState(() {
                                         passwordError = null;
                                       });
-                                    }
-                                    if (newText.length >= 7) {
-                                      isPasswordCompromised = await PasswordUtil
-                                          .isPasswordCompromised(
-                                              setPasswordController!.text);
-                                    } else {
-                                      isPasswordCompromised = null;
                                     }
 
                                     if (confirmPasswordController!.text ==
@@ -322,6 +204,59 @@ class _SetPasswordState extends State<SetPassword> {
                                             !setPasswordVisible!;
                                       });
                                     },
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Container(
+                                    padding: EdgeInsets.only(
+                                      top: 10,
+                                      right: MediaQuery.of(context).size.width *
+                                          0.105,
+                                    ),
+                                    width: 150,
+                                    child: Column(
+                                      children: [
+                                        LinearProgressIndicator(
+                                          value: passwordStrength,
+                                          backgroundColor: Colors.grey[300],
+                                          color: passwordStrength <= 0.25
+                                              ? Colors.red
+                                              : passwordStrength <= 0.6
+                                                  ? Colors.orange
+                                                  : passwordStrength <= 0.8
+                                                      ? Colors.yellow
+                                                      : Colors.green,
+                                          minHeight: 5,
+                                        ),
+                                        passwordStrength <= 0.25
+                                            ? Text(
+                                                AppLocalization.of(context)!
+                                                    .passwordStrengthWeak,
+                                                textAlign: TextAlign.end,
+                                                style: AppStyles
+                                                    .textStyleSize12W100Primary(
+                                                        context),
+                                              )
+                                            : passwordStrength <= 0.8
+                                                ? Text(
+                                                    AppLocalization.of(context)!
+                                                        .passwordStrengthAlright,
+                                                    textAlign: TextAlign.end,
+                                                    style: AppStyles
+                                                        .textStyleSize12W100Primary(
+                                                            context),
+                                                  )
+                                                : Text(
+                                                    AppLocalization.of(context)!
+                                                        .passwordStrengthStrong,
+                                                    textAlign: TextAlign.end,
+                                                    style: AppStyles
+                                                        .textStyleSize12W100Primary(
+                                                            context),
+                                                  ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 AppTextField(
@@ -404,36 +339,10 @@ class _SetPasswordState extends State<SetPassword> {
                           AppButton.buildAppButton(
                               const Key('confirm'),
                               context,
-                              PasswordUtil.hasMinLength(
-                                              setPasswordController!.text, 1) ==
-                                          true &&
-                                      PasswordUtil.hasMinNormalChar(
-                                              setPasswordController!.text, 1) ==
-                                          true &&
-                                      PasswordUtil.hasMinNumericChar(
-                                              setPasswordController!.text, 1) ==
-                                          true &&
-                                      PasswordUtil.hasMinSpecialChar(
-                                              setPasswordController!.text, 1) ==
-                                          true
-                                  ? AppButtonType.primary
-                                  : AppButtonType.primaryOutline,
+                              AppButtonType.primary,
                               AppLocalization.of(context)!.confirm,
                               Dimens.buttonTopDimens, onPressed: () async {
-                            if (PasswordUtil.hasMinLength(
-                                        setPasswordController!.text, 1) ==
-                                    true &&
-                                PasswordUtil.hasMinNormalChar(
-                                        setPasswordController!.text, 1) ==
-                                    true &&
-                                PasswordUtil.hasMinNumericChar(
-                                        setPasswordController!.text, 1) ==
-                                    true &&
-                                PasswordUtil.hasMinSpecialChar(
-                                        setPasswordController!.text, 1) ==
-                                    true) {
-                              await _validateRequest();
-                            }
+                            await _validateRequest();
                           }),
                         ],
                       ),
