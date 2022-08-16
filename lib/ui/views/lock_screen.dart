@@ -124,9 +124,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
   Future<void> _authenticate({bool transitions = false}) async {
     final Preferences preferences = await Preferences.getInstance();
     final DateTime? lockUntil = preferences.getLockDate();
-    if (lockUntil == null) {
-      preferences.resetLockAttempts();
-    } else {
+    if (lockUntil != null) {
       final int countDown =
           lockUntil.difference(DateTime.now().toUtc()).inSeconds;
       if (countDown > 0) {
