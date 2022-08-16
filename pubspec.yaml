@@ -65,7 +65,7 @@ dependencies:
   validators: ^3.0.0
   
   # Yubico dart library for Dart/Flutter
-  yubidart: ^1.0.3
+  yubidart: ^1.0.4
 
   # Beautiful animations inspired on Animate.css, every animation is a widget that contains default but customizable values that look attractive.
   animate_do: ^2.1.0
