@@ -1,6 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -195,6 +197,32 @@ class _SetPasswordState extends State<SetPassword> {
                                   onSubmitted: (text) {
                                     confirmPasswordFocusNode!.requestFocus();
                                   },
+                                  prefixButton: TextFieldButton(
+                                    icon: Icons.shuffle_sharp,
+                                    onPressed: () {
+                                      setPasswordController!.text = '';
+                                      int passwordLength =
+                                          Random().nextInt(8) + 5;
+
+                                      String allowedChars =
+                                          'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#=+!£\$%&?[](){}';
+                                      int i = 0;
+                                      while (i < passwordLength.round()) {
+                                        int random = Random.secure()
+                                            .nextInt(allowedChars.length);
+                                        setPasswordController!.text +=
+                                            allowedChars[random];
+                                        i++;
+                                      }
+
+                                      setState(() {
+                                        setPasswordVisible = true;
+                                        passwordStrength =
+                                            estimatePasswordStrength(
+                                                setPasswordController!.text);
+                                      });
+                                    },
+                                  ),
                                   suffixButton: TextFieldButton(
                                     icon: setPasswordVisible!
                                         ? Icons.visibility
