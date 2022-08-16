@@ -300,6 +300,14 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
           transaction.address!, waitConfirmations);
 
       transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
+
+      if (transactionStatus.status == 'invalid') {
+        EventTaxiImpl.singleton().fire(TransactionSendEvent(
+            transactionType: TransactionSendEventType.token,
+            response: '',
+            nbConfirmations: 0));
+        subscriptionChannel.close();
+      }
     } catch (e) {
       EventTaxiImpl.singleton().fire(TransactionSendEvent(
           transactionType: TransactionSendEventType.token,
