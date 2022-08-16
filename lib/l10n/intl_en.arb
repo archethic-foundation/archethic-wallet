@@ -624,7 +624,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "importSecretPhraseHint": "Please enter your 24-word secret phrase below. Each word should be separated by a space.",
+  "importSecretPhraseHint": "Please enter your 24-word secret phrase below.",
   "@importSecretPhraseHint": {
     "type": "text",
     "placeholders_order": [],

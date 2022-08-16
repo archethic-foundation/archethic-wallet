@@ -340,7 +340,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                             .snackBarShadow!);
                                   });
                                 } else {
-                                  await _launchSecurityConfiguration();
+                                  await _launchSecurityConfiguration(
+                                      widget.name!, widget.seed!);
                                 }
                               }),
                       ],
@@ -361,7 +362,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                 AppLocalization.of(context)!
                                     .passBackupConfirmationMessage,
                                 AppLocalization.of(context)!.yes, () async {
-                              await _launchSecurityConfiguration();
+                              await _launchSecurityConfiguration(
+                                  widget.name!, widget.seed!);
                             });
                           },
                         )
@@ -377,7 +379,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
     );
   }
 
-  Future<bool> _launchSecurityConfiguration() async {
+  Future<bool> _launchSecurityConfiguration(String name, String seed) async {
     bool biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
     List<PickerItem> accessModes = [];
     accessModes.add(PickerItem(
@@ -426,8 +428,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
         .push(MaterialPageRoute(builder: (BuildContext context) {
       return IntroConfigureSecurity(
         accessModes: accessModes,
-        name: widget.name,
-        seed: widget.seed,
+        name: name,
+        seed: seed,
       );
     }));
 

@@ -751,8 +751,7 @@ class AppLocalization {
   }
 
   String get importSecretPhraseHint {
-    return Intl.message(
-        'Please enter your 24-word secret phrase below. Each word should be separated by a space.',
+    return Intl.message('Please enter your 24-word secret phrase below.',
         name: 'importSecretPhraseHint');
   }
 

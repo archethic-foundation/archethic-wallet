@@ -127,7 +127,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "go" : MessageLookupByLibrary.simpleMessage("Go !"),
     "iUnderstandTheRisks" : MessageLookupByLibrary.simpleMessage("Je comprends les risques"),
     "importSecretPhrase" : MessageLookupByLibrary.simpleMessage("Importer une phrase secrète"),
-    "importSecretPhraseHint" : MessageLookupByLibrary.simpleMessage("Veuillez entrer votre phrase secrète de 24 mots ci-dessous. Chaque mot doit être séparé par un espace."),
+    "importSecretPhraseHint" : MessageLookupByLibrary.simpleMessage("Veuillez entrer votre phrase secrète de 24 mots ci-dessous."),
     "importWallet" : MessageLookupByLibrary.simpleMessage("J\'ai déjà un portefeuille"),
     "informations" : MessageLookupByLibrary.simpleMessage("Informations"),
     "instantly" : MessageLookupByLibrary.simpleMessage("Immédiatement"),
