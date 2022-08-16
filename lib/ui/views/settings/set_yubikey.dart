@@ -69,6 +69,10 @@ class _SetYubikeyState extends State<SetYubikey> {
       resizeToAvoidBottomInset: true,
       body: Container(
         decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                  StateContainer.of(context).curTheme.background3Small!),
+              fit: BoxFit.fitHeight),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,

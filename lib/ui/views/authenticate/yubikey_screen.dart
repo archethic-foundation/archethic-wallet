@@ -199,6 +199,10 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                      StateContainer.of(context).curTheme.background5Small!),
+                  fit: BoxFit.fitHeight),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
