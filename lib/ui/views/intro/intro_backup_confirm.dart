@@ -2,38 +2,39 @@
 
 // ignore_for_file: always_specify_types
 
-// Flutter imports:
+// Dart imports:
 import 'dart:async';
 
-import 'package:aewallet/bus/authenticated_event.dart';
-import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/model/data/app_wallet.dart';
-import 'package:aewallet/model/data/appdb.dart';
-import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
-import 'package:aewallet/util/confirmations/subscription_channel.dart';
-import 'package:aewallet/util/keychain_util.dart';
-import 'package:aewallet/util/vault.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:event_taxi/event_taxi.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/bus/authenticated_event.dart';
+import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/model/data/app_wallet.dart';
+import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/biometrics_util.dart';
+import 'package:aewallet/util/confirmations/subscription_channel.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:aewallet/util/preferences.dart';
+import 'package:aewallet/util/vault.dart';
 
 class IntroBackupConfirm extends StatefulWidget {
   final String? name;

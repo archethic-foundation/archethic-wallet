@@ -6,7 +6,6 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 // Flutter imports:
-import 'package:aewallet/model/available_themes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -22,6 +21,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_language.dart';
+import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/themes/theme_dark.dart';
 import 'package:aewallet/ui/util/routes.dart';

@@ -1,21 +1,22 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // ignore_for_file: always_specify_types
 
-import 'package:aewallet/bus/authenticated_event.dart';
-import 'package:aewallet/ui/views/settings/set_password.dart';
-import 'package:aewallet/ui/views/settings/set_yubikey.dart';
-import 'package:event_taxi/event_taxi.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
+import 'package:aewallet/ui/views/settings/set_password.dart';
+import 'package:aewallet/ui/views/settings/set_yubikey.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/biometrics_util.dart';

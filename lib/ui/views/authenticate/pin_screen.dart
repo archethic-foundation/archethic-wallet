@@ -4,7 +4,6 @@
 import 'dart:math';
 
 // Flutter imports:
-import 'package:aewallet/util/vault.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -19,6 +18,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/preferences.dart';
+import 'package:aewallet/util/vault.dart';
 
 enum PinOverlayType { newPin, enterPin }
 

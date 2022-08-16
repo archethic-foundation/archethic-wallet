@@ -7,12 +7,12 @@ import 'dart:math';
 import 'dart:typed_data';
 
 // Package imports:
-import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 // Project imports:
+import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/app_wallet.dart';

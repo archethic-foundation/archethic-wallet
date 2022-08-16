@@ -5,8 +5,10 @@
 import 'dart:io';
 import 'dart:ui';
 
-// Package imports:
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 

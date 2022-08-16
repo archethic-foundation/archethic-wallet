@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:aewallet/ui/themes/theme_flat.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -10,6 +9,7 @@ import 'package:aewallet/ui/themes/theme_byzantine_violet.dart';
 import 'package:aewallet/ui/themes/theme_dark.dart';
 import 'package:aewallet/ui/themes/theme_emerald_green.dart';
 import 'package:aewallet/ui/themes/theme_fire_red.dart';
+import 'package:aewallet/ui/themes/theme_flat.dart';
 import 'package:aewallet/ui/themes/theme_honey_orange.dart';
 import 'package:aewallet/ui/themes/theme_navy_blue.dart';
 import 'package:aewallet/ui/themes/theme_pearl_grey.dart';

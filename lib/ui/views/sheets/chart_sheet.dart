@@ -1,18 +1,18 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:aewallet/model/chart_infos.dart';
-import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/chart_infos.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/balance_infos.dart';
 import 'package:aewallet/ui/widgets/components/history_chart.dart';

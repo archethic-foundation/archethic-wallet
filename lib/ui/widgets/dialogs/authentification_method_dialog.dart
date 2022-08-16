@@ -1,8 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:aewallet/ui/views/settings/set_password.dart';
-import 'package:aewallet/ui/views/settings/set_yubikey.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -11,6 +9,8 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
+import 'package:aewallet/ui/views/settings/set_password.dart';
+import 'package:aewallet/ui/views/settings/set_yubikey.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
