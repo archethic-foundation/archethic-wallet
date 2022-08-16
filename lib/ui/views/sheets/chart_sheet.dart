@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aewallet/model/chart_infos.dart';
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -35,6 +36,38 @@ class _ChartSheetState extends State<ChartSheet> {
   @override
   void initState() {
     optionChartSelected = widget.optionChart;
+    switch (optionChartSelected!.id) {
+      case '1h':
+        bottomBarCurrentPage = 0;
+        break;
+      case '24h':
+        bottomBarCurrentPage = 1;
+        break;
+      case '7d':
+        bottomBarCurrentPage = 2;
+        break;
+      case '14d':
+        bottomBarCurrentPage = 3;
+        break;
+      case '30d':
+        bottomBarCurrentPage = 4;
+        break;
+      case '60d':
+        bottomBarCurrentPage = 5;
+        break;
+      case '200d':
+        bottomBarCurrentPage = 6;
+        break;
+      case '1y':
+        bottomBarCurrentPage = 7;
+        break;
+      case 'all':
+        bottomBarCurrentPage = 8;
+        break;
+      default:
+        bottomBarCurrentPage = 0;
+        break;
+    }
     super.initState();
   }
 
@@ -157,7 +190,7 @@ class _ChartSheetState extends State<ChartSheet> {
               items: widget.optionChartList.map((OptionChart optionChart) {
                 return BottomBarItem(
                     icon: Text(
-                      optionChart.id,
+                      ChartInfos.getChartOptionLabel(context, optionChart.id),
                       style: AppStyles.textStyleSize12W100Primary(context),
                     ),
                     backgroundColorOpacity: StateContainer.of(context)
