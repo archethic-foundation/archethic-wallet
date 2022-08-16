@@ -1155,7 +1155,8 @@ class _TransferSheetState extends State<TransferSheet> {
 
   Future<double> getFee({maxSend = false}) async {
     double fee = 0;
-    if (double.tryParse(_sendAmountController!.text) == null) {
+    if (double.tryParse(_sendAmountController!.text) == null ||
+        double.tryParse(_sendAmountController!.text)! <= 0) {
       return fee;
     }
     final bool isContact = _sendAddressController!.text.startsWith('@');
@@ -1182,8 +1183,7 @@ class _TransferSheetState extends State<TransferSheet> {
       }
     }
     try {
-      final String? transactionChainSeed =
-          await StateContainer.of(context).getSeed();
+      final String? seed = await StateContainer.of(context).getSeed();
       List<UCOTransferWallet> ucoTransferListForFee =
           List<UCOTransferWallet>.empty(growable: true);
 
@@ -1214,7 +1214,7 @@ class _TransferSheetState extends State<TransferSheet> {
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
       fee = await sl.get<AppService>().getFeesEstimation(
           originPrivateKey,
-          transactionChainSeed!,
+          seed!,
           StateContainer.of(context)
               .appWallet!
               .appKeychain!
