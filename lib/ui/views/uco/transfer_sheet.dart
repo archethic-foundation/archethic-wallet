@@ -176,10 +176,10 @@ class _TransferSheetState extends State<TransferSheet> {
 
     // Set initial currency format
     _localCurrencyFormat = NumberFormat.currency(
-        locale:
-            CurrencyUtil.getLocale(widget.localCurrency!.toString()).toString(),
-        symbol:
-            CurrencyUtil.getCurrencySymbol(widget.localCurrency!.toString()));
+        locale: CurrencyUtil.getLocale(widget.localCurrency!.currency.name)
+            .toString(),
+        symbol: CurrencyUtil.getCurrencySymbol(
+            widget.localCurrency!.currency.name.toString()));
     // Set quick send amount
     if (quickSendAmount != null) {
       _sendAmountController!.text =
