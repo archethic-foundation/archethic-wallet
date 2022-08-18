@@ -6,6 +6,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aewallet/util/confirmations/confirmations_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -100,24 +101,28 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
             StateContainer.of(context).curTheme.snackBarShadow!);
         Navigator.of(context).pop();
       } else {
-        UIUtil.showSnackbar(
-            event.nbConfirmations == 1
-                ? AppLocalization.of(context)!
-                    .transactionConfirmed1
-                    .replaceAll('%1', event.nbConfirmations.toString())
-                    .replaceAll('%2', event.maxConfirmations.toString())
-                : AppLocalization.of(context)!
-                    .transactionConfirmed
-                    .replaceAll('%1', event.nbConfirmations.toString())
-                    .replaceAll('%2', event.maxConfirmations.toString()),
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!,
-            duration: const Duration(milliseconds: 5000));
-        setState(() {
-          StateContainer.of(context).requestUpdate();
-        });
-        Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+        if (event.response == 'ok' &&
+            ConfirmationsUtil.isEnoughConfirmations(
+                event.nbConfirmations!, event.maxConfirmations!)) {
+          UIUtil.showSnackbar(
+              event.nbConfirmations == 1
+                  ? AppLocalization.of(context)!
+                      .transactionConfirmed1
+                      .replaceAll('%1', event.nbConfirmations.toString())
+                      .replaceAll('%2', event.maxConfirmations.toString())
+                  : AppLocalization.of(context)!
+                      .transactionConfirmed
+                      .replaceAll('%1', event.nbConfirmations.toString())
+                      .replaceAll('%2', event.maxConfirmations.toString()),
+              context,
+              StateContainer.of(context).curTheme.text!,
+              StateContainer.of(context).curTheme.snackBarShadow!,
+              duration: const Duration(milliseconds: 5000));
+          setState(() {
+            StateContainer.of(context).requestUpdate();
+          });
+          Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+        }
       }
     });
   }

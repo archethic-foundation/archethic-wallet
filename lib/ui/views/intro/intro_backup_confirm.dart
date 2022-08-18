@@ -6,6 +6,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aewallet/util/confirmations/confirmations_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -54,6 +55,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   StreamSubscription<AuthenticatedEvent>? _authSub;
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
   SubscriptionChannel subscriptionChannel = SubscriptionChannel();
+  SubscriptionChannel subscriptionChannel2 = SubscriptionChannel();
 
   void _registerBus() {
     _authSub = EventTaxiImpl.singleton()
@@ -73,62 +75,71 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
             StateContainer.of(context).curTheme.snackBarShadow!);
         Navigator.of(context).pop(false);
       } else {
-        UIUtil.showSnackbar(
-            event.nbConfirmations == 1
-                ? AppLocalization.of(context)!
-                    .transactionConfirmed1
-                    .replaceAll('%1', event.nbConfirmations.toString())
-                    .replaceAll('%2', event.maxConfirmations.toString())
-                : AppLocalization.of(context)!
-                    .transactionConfirmed
-                    .replaceAll('%1', event.nbConfirmations.toString())
-                    .replaceAll('%2', event.maxConfirmations.toString()),
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+        if (event.response == 'ok' &&
+            ConfirmationsUtil.isEnoughConfirmations(
+                event.nbConfirmations!, event.maxConfirmations!)) {
+          UIUtil.showSnackbar(
+              event.nbConfirmations == 1
+                  ? AppLocalization.of(context)!
+                      .transactionConfirmed1
+                      .replaceAll('%1', event.nbConfirmations.toString())
+                      .replaceAll('%2', event.maxConfirmations.toString())
+                  : AppLocalization.of(context)!
+                      .transactionConfirmed
+                      .replaceAll('%1', event.nbConfirmations.toString())
+                      .replaceAll('%2', event.maxConfirmations.toString()),
+              context,
+              StateContainer.of(context).curTheme.text!,
+              StateContainer.of(context).curTheme.snackBarShadow!);
 
-        switch (event.transactionType) {
-          case TransactionSendEventType.keychain:
-            await KeychainUtil().createKeyChainAccess(
-              widget.seed!,
-              widget.name!,
-              event.params!['keychainAddress']! as String,
-              event.params!['originPrivateKey']! as String,
-              event.params!['keychain']! as Keychain,
-              subscriptionChannel,
-            );
-            break;
-          case TransactionSendEventType.keychainAccess:
-            bool error = false;
-            try {
-              StateContainer.of(context).appWallet = await AppWallet()
-                  .createNewAppWallet(
-                      event.params!['keychainAddress']! as String,
-                      event.params!['keychain']! as Keychain,
-                      widget.name!);
-            } catch (e) {
-              error = true;
-              UIUtil.showSnackbar(
-                  '${AppLocalization.of(context)!.sendError} ($e)',
-                  context,
-                  StateContainer.of(context).curTheme.text!,
-                  StateContainer.of(context).curTheme.snackBarShadow!);
-            }
-            if (error == false) {
-              await StateContainer.of(context).requestUpdate();
+          switch (event.transactionType) {
+            case TransactionSendEventType.keychain:
+              Preferences preferences = await Preferences.getInstance();
+              await subscriptionChannel2.connect(
+                  await preferences.getNetwork().getPhoenixHttpLink(),
+                  await preferences.getNetwork().getWebsocketUri());
 
-              StateContainer.of(context).checkTransactionInputs(
-                  AppLocalization.of(context)!.transactionInputNotification);
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                '/home',
-                (Route<dynamic> route) => false,
+              await KeychainUtil().createKeyChainAccess(
+                widget.seed!,
+                widget.name!,
+                event.params!['keychainAddress']! as String,
+                event.params!['originPrivateKey']! as String,
+                event.params!['keychain']! as Keychain,
+                subscriptionChannel2,
               );
-            } else {
-              Navigator.of(context).pop();
-            }
-            break;
-          default:
-            throw Exception('TransactionSendEventType doesn\'t exist');
+              break;
+            case TransactionSendEventType.keychainAccess:
+              bool error = false;
+              try {
+                StateContainer.of(context).appWallet = await AppWallet()
+                    .createNewAppWallet(
+                        event.params!['keychainAddress']! as String,
+                        event.params!['keychain']! as Keychain,
+                        widget.name!);
+              } catch (e) {
+                error = true;
+                UIUtil.showSnackbar(
+                    '${AppLocalization.of(context)!.sendError} ($e)',
+                    context,
+                    StateContainer.of(context).curTheme.text!,
+                    StateContainer.of(context).curTheme.snackBarShadow!);
+              }
+              if (error == false) {
+                await StateContainer.of(context).requestUpdate();
+
+                StateContainer.of(context).checkTransactionInputs(
+                    AppLocalization.of(context)!.transactionInputNotification);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/home',
+                  (Route<dynamic> route) => false,
+                );
+              } else {
+                Navigator.of(context).pop();
+              }
+              break;
+            default:
+              throw Exception('TransactionSendEventType doesn\'t exist');
+          }
         }
       }
     });
@@ -147,6 +158,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   void dispose() {
     _destroyBus();
     subscriptionChannel.close();
+    subscriptionChannel2.close();
     super.dispose();
   }
 

@@ -6,6 +6,8 @@ import 'dart:io';
 import 'dart:ui';
 
 // Flutter imports:
+import 'package:aewallet/ui/views/nft/add_nft_collection.dart';
+import 'package:aewallet/ui/views/nft/collections_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -563,7 +565,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                           inactiveColor: StateContainer.of(context)
                               .curTheme
                               .bottomBarInactiveIcon!),
-                      /* BottomBarItem(
+                      BottomBarItem(
                           icon: const Icon(Icons.collections_bookmark),
                           title: Text('Collection'),
                           backgroundColorOpacity: StateContainer.of(context)
@@ -580,7 +582,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                               .bottomBarActiveColor!,
                           inactiveColor: StateContainer.of(context)
                               .curTheme
-                              .bottomBarInactiveIcon!),*/
+                              .bottomBarInactiveIcon!),
                     ],
                   ),
                 ),
@@ -597,6 +599,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
               ),
             ),
             body: PageView(
+              physics: const NeverScrollableScrollPhysics(),
               controller: bottomBarPageController,
               children: [
                 Column(
@@ -834,7 +837,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                     )
                   ],
                 ),
-                /*Column(
+                Column(
                   children: [
                     Expanded(
                       /// REFRESH
@@ -842,8 +845,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                         backgroundColor:
                             StateContainer.of(context).curTheme.backgroundDark,
                         onRefresh: () => Future<void>.sync(() async {
-                          sl.get<HapticUtil>().feedback(FeedbackType.light,
-                              StateContainer.of(context).activeVibrations);
+                          // TODO
                         }),
                         child: Column(
                           children: <Widget>[
@@ -868,39 +870,11 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
-                                      IconButton(
-                                        icon: Icon(Icons.abc),
-                                        onPressed: () {
-                                          Sheets.showAppHeightNineSheet(
-                                              context: context,
-                                              widget: AddNFTCollection(
-                                                primaryCurrency:
-                                                    StateContainer.of(context)
-                                                        .curPrimaryCurrency,
-                                              ));
-                                        },
+                                      /// ACCOUNTS LIST
+                                      CollectionsListWidget(
+                                        appWallet: StateContainer.of(context)
+                                            .appWallet,
                                       )
-
-                                      /* Container(
-                                        height: 100,
-                                        child: AppButton.buildAppButton(
-                                            const Key('createNFTCollection'),
-                                            context,
-                                            AppButtonType.primary,
-                                            AppLocalization.of(context)!
-                                                .createNFTCollection,
-                                            Dimens.buttonBottomDimens,
-                                            onPressed: () {
-                                          Sheets.showAppHeightNineSheet(
-                                              context: context,
-                                              widget: AddNFTCollection(
-                                                primaryCurrency:
-                                                    StateContainer.of(context)
-
-                                                        .curPrimaryCurrency,
-                                              ));
-                                        }),
-                                      ),*/
                                     ],
                                   ),
                                 ),
@@ -911,7 +885,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                       ),
                     ),
                   ],
-                ),*/
+                ),
               ],
               onPageChanged: (index) {
                 setState(() => bottomBarCurrentPage = index);
