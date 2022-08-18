@@ -77,6 +77,8 @@ class StateContainerState extends State<StateContainer> {
 
   ChartInfos? chartInfos = ChartInfos();
   String? idChartOption = '1h';
+  int bottomBarCurrentPage = 1;
+  PageController? bottomBarPageController = PageController(initialPage: 1);
 
   bool showBalance = false;
   bool showPriceChart = false;
@@ -114,6 +116,7 @@ class StateContainerState extends State<StateContainer> {
     if (timerCheckTransactionInputs != null) {
       timerCheckTransactionInputs!.cancel();
     }
+    bottomBarPageController!.dispose();
     super.dispose();
   }
 

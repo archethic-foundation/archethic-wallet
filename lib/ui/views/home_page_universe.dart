@@ -69,15 +69,12 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
   ColorTween? colorTween;
   CurvedAnimation? curvedAnimation;
 
-  int bottomBarCurrentPage = 1;
-  PageController? bottomBarPageController;
   TabController? tabController;
 
   @override
   void initState() {
     super.initState();
 
-    bottomBarPageController = PageController(initialPage: 1);
     accountIsPressed = false;
     tabController = TabController(length: 2, vsync: this);
 
@@ -206,7 +203,6 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
     WidgetsBinding.instance.removeObserver(this);
     tabController!.dispose();
     _placeholderCardAnimationController!.dispose();
-    bottomBarPageController!.dispose();
     super.dispose();
   }
 
@@ -517,10 +513,14 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                   child: BottomBar(
-                    selectedIndex: bottomBarCurrentPage,
+                    selectedIndex:
+                        StateContainer.of(context).bottomBarCurrentPage,
                     onTap: (int index) {
-                      bottomBarPageController!.jumpToPage(index);
-                      setState(() => bottomBarCurrentPage = index);
+                      StateContainer.of(context)
+                          .bottomBarPageController!
+                          .jumpToPage(index);
+                      setState(() => StateContainer.of(context)
+                          .bottomBarCurrentPage = index);
                     },
                     items: <BottomBarItem>[
                       BottomBarItem(
@@ -600,7 +600,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
             ),
             body: PageView(
               physics: const NeverScrollableScrollPhysics(),
-              controller: bottomBarPageController,
+              controller: StateContainer.of(context).bottomBarPageController,
               children: [
                 Column(
                   children: [
@@ -888,7 +888,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                 ),
               ],
               onPageChanged: (index) {
-                setState(() => bottomBarCurrentPage = index);
+                setState(() =>
+                    StateContainer.of(context).bottomBarCurrentPage = index);
               },
             ),
           );
