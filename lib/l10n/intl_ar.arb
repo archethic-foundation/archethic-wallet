@@ -224,7 +224,7 @@
 	"nodeAuthorizationDate": "Authorization date: ",
 	"nodeEnrollmentDate": "Enrollment date: ",
 	"currencyOracleInfo": "Cet icône signifie que la conversion utilisera un oracle fourni par Archethic.",
-	"sendToMeError": "Vous ne pouvez pas envoyer de UCO dans votre propre portefeuille.",
+	"sendToMeError": "Vous ne pouvez pas envoyer de %1 dans votre propre portefeuille.",
 	"viewExplorer": "Voir dans l'explorer",
 	"total": "Total",
 	"seeAll": "Voir toutes les transactions",

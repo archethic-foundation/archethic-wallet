@@ -778,7 +778,7 @@ class _TransferSheetState extends State<TransferSheet> {
               .getAccountSelected()!
               .lastAddress!) {
         isValid = false;
-        setState(() {
+        if (widget.accountToken == null) {
           _addressValidationText = AppLocalization.of(context)!
               .sendToMeError
               .replaceAll(
@@ -786,6 +786,13 @@ class _TransferSheetState extends State<TransferSheet> {
                   StateContainer.of(context)
                       .curNetwork
                       .getNetworkCryptoCurrencyLabel());
+        } else {
+          _addressValidationText = AppLocalization.of(context)!
+              .sendToMeError
+              .replaceAll(
+                  '%1', widget.accountToken!.tokenInformations!.symbol!);
+        }
+        setState(() {
           _qrCodeButtonVisible = true;
         });
       } else {
