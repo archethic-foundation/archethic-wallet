@@ -80,66 +80,29 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
       width: double.infinity,
       height: MediaQuery.of(context).size.height - 200,
       child: Column(
-        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 15),
-                constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width - 140),
-                child: AutoSizeText(
-                  AppLocalization.of(context)!.keychainHeader,
-                  style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
-                  maxLines: 1,
-                  stepGranularity: 0.1,
-                ),
+          InkWell(
+            onTap: () {
+              sl.get<HapticUtil>().feedback(FeedbackType.light,
+                  StateContainer.of(context).activeVibrations);
+              Clipboard.setData(ClipboardData(
+                  text: appWalletLive!.appKeychain!.address!.toUpperCase()));
+              UIUtil.showSnackbar(
+                  AppLocalization.of(context)!.addressCopied,
+                  context,
+                  StateContainer.of(context).curTheme.text!,
+                  StateContainer.of(context).curTheme.snackBarShadow!);
+            },
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 15),
+              constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width - 140),
+              child: AutoSizeText(
+                AppLocalization.of(context)!.keychainHeader,
+                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
               ),
-            ],
-          ),
-          Container(
-            constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width - 140),
-            child: AutoSizeText(
-              AppLocalization.of(context)!.accountsKeychainAddressHeader,
-              style: AppStyles.textStyleSize12W100Primary(context),
-              maxLines: 1,
-              stepGranularity: 0.1,
             ),
           ),
-          InkWell(
-              onTap: () {
-                sl.get<HapticUtil>().feedback(FeedbackType.light,
-                    StateContainer.of(context).activeVibrations);
-                Clipboard.setData(ClipboardData(
-                    text: appWalletLive!.appKeychain!.address!.toUpperCase()));
-                UIUtil.showSnackbar(
-                    AppLocalization.of(context)!.addressCopied,
-                    context,
-                    StateContainer.of(context).curTheme.text!,
-                    StateContainer.of(context).curTheme.snackBarShadow!);
-              },
-              child: Column(
-                children: [
-                  AutoSizeText(
-                    appWalletLive!.appKeychain!.address!
-                        .toUpperCase()
-                        .substring(0, 34),
-                    style: AppStyles.textStyleSize12W100Primary(context),
-                    maxLines: 1,
-                    stepGranularity: 0.1,
-                  ),
-                  AutoSizeText(
-                    appWalletLive!.appKeychain!.address!
-                        .toUpperCase()
-                        .substring(34),
-                    style: AppStyles.textStyleSize12W100Primary(context),
-                    maxLines: 1,
-                    stepGranularity: 0.1,
-                  ),
-                ],
-              )),
           Expanded(
               key: expandedKey,
               child: Stack(
