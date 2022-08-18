@@ -294,7 +294,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                         Row(
                           children: [
                             AutoSizeText(
-                                'Create token ${transaction.tokenInformations!.name}',
+                                '${AppLocalization.of(context)!.tokenCreated}: ${transaction.tokenInformations!.name}',
                                 style: AppStyles.textStyleSize12W400PrimaryRed(
                                     context)),
                           ],
