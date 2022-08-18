@@ -78,7 +78,14 @@ class NumberUtil {
 
   /// Format a number with blank separator for each thousand
   static String formatThousands(num input) {
-    NumberFormat formatterThousand = NumberFormat('#,###');
+    NumberFormat formatterThousand;
+    if (input is double) {
+      formatterThousand = NumberFormat('#,##0.000000000', 'en_US');
+    } else {
+      formatterThousand = NumberFormat('#,##0', 'en_US');
+    }
+    formatterThousand.maximumFractionDigits = 8;
+    formatterThousand.minimumFractionDigits = 0;
     return formatterThousand.format(input).replaceAll(',', ' ');
   }
 }
