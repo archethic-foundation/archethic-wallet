@@ -542,12 +542,13 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
         text: TextSpan(
           text: '',
           children: <InlineSpan>[
-            TextSpan(
-              text: '(',
-              style: primary
-                  ? AppStyles.textStyleSize16W100Primary(context)
-                  : AppStyles.textStyleSize14W100Primary(context),
-            ),
+            if (primary == false)
+              TextSpan(
+                text: '(',
+                style: primary
+                    ? AppStyles.textStyleSize16W100Primary(context)
+                    : AppStyles.textStyleSize14W100Primary(context),
+              ),
             TextSpan(
               text:
                   '${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
@@ -555,12 +556,13 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                   ? AppStyles.textStyleSize16W700Primary(context)
                   : AppStyles.textStyleSize14W700Primary(context),
             ),
-            TextSpan(
-              text: ')',
-              style: primary
-                  ? AppStyles.textStyleSize16W100Primary(context)
-                  : AppStyles.textStyleSize14W100Primary(context),
-            ),
+            if (primary == false)
+              TextSpan(
+                text: ')',
+                style: primary
+                    ? AppStyles.textStyleSize16W100Primary(context)
+                    : AppStyles.textStyleSize14W100Primary(context),
+              ),
           ],
         ),
       ),
@@ -574,12 +576,13 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
         text: TextSpan(
           text: '',
           children: <InlineSpan>[
-            TextSpan(
-              text: '(',
-              style: primary
-                  ? AppStyles.textStyleSize16W100Primary(context)
-                  : AppStyles.textStyleSize14W100Primary(context),
-            ),
+            if (primary == false)
+              TextSpan(
+                text: '(',
+                style: primary
+                    ? AppStyles.textStyleSize16W100Primary(context)
+                    : AppStyles.textStyleSize14W100Primary(context),
+              ),
             TextSpan(
               text: CurrencyUtil.getConvertedAmount(
                   StateContainer.of(context).curCurrency.currency.name,
@@ -593,12 +596,13 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                   ? AppStyles.textStyleSize16W700Primary(context)
                   : AppStyles.textStyleSize14W700Primary(context),
             ),
-            TextSpan(
-              text: ')',
-              style: primary
-                  ? AppStyles.textStyleSize16W100Primary(context)
-                  : AppStyles.textStyleSize14W100Primary(context),
-            ),
+            if (primary == false)
+              TextSpan(
+                text: ')',
+                style: primary
+                    ? AppStyles.textStyleSize16W100Primary(context)
+                    : AppStyles.textStyleSize14W100Primary(context),
+              ),
           ],
         ),
       ),
