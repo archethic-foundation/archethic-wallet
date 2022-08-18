@@ -89,7 +89,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -115,6 +115,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
               children: <Widget>[
                 Expanded(
                   child: SingleChildScrollView(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
@@ -248,6 +249,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             children: <Widget>[
                               const SizedBox(height: 10),
                               GridView.count(
+                                  physics: const NeverScrollableScrollPhysics(),
                                   childAspectRatio: 1.2,
                                   padding:
                                       const EdgeInsets.only(top: 0, bottom: 0),
