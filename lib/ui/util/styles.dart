@@ -65,6 +65,14 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.text);
   }
 
+  static TextStyle textStyleSize14W600Primary60(BuildContext context) {
+    return TextStyle(
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
+        fontSize: AppFontSizes.size14,
+        fontWeight: FontWeight.w600,
+        color: StateContainer.of(context).curTheme.text!.withOpacity(0.6));
+  }
+
   static TextStyle textStyleSize14W600EquinoxPrimary(BuildContext context) {
     return TextStyle(
         fontFamily: StateContainer.of(context).curTheme.mainFont,
@@ -318,6 +326,15 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.text);
   }
 
+  static TextStyle textStyleSize25W900EquinoxPrimary60(BuildContext context) {
+    return TextStyle(
+        fontFamily: StateContainer.of(context).curTheme.mainFont,
+        fontSize: 25,
+        fontWeight: FontWeight.w900,
+        letterSpacing: 1,
+        color: StateContainer.of(context).curTheme.text!.withOpacity(0.6));
+  }
+
   static TextStyle textStyleSize25W900EquinoxPrimary30(BuildContext context) {
     return TextStyle(
         fontFamily: StateContainer.of(context).curTheme.mainFont,
@@ -512,6 +529,15 @@ class AppStyles {
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w600,
       color: StateContainer.of(context).curTheme.text,
+    );
+  }
+
+  static TextStyle textStyleSize12W600Primary60(BuildContext context) {
+    return TextStyle(
+      fontFamily: StateContainer.of(context).curTheme.secondaryFont,
+      fontSize: AppFontSizes.size12,
+      fontWeight: FontWeight.w600,
+      color: StateContainer.of(context).curTheme.text!.withOpacity(0.6),
     );
   }
 

@@ -67,39 +67,64 @@ class BalanceInfosWidget {
                                           context),
                                 ),
                               ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  AutoSizeText(
-                                    StateContainer.of(context)
-                                        .appWallet!
-                                        .appKeychain!
-                                        .getAccountSelected()!
-                                        .balance!
-                                        .nativeTokenValueToString(),
-                                    style: AppStyles
-                                        .textStyleSize25W900EquinoxPrimary(
-                                            context),
-                                  ),
-                                  AutoSizeText(
-                                    CurrencyUtil.getConvertedAmount(
-                                        StateContainer.of(context)
-                                            .curCurrency
-                                            .currency
-                                            .name,
-                                        StateContainer.of(context)
-                                            .appWallet!
-                                            .appKeychain!
-                                            .getAccountSelected()!
-                                            .balance!
-                                            .fiatCurrencyValue!),
-                                    textAlign: TextAlign.center,
-                                    style: AppStyles.textStyleSize12W600Primary(
-                                        context),
-                                  ),
-                                ],
-                              ),
+                              StateContainer.of(context).showBalance
+                                  ? Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        AutoSizeText(
+                                          StateContainer.of(context)
+                                              .appWallet!
+                                              .appKeychain!
+                                              .getAccountSelected()!
+                                              .balance!
+                                              .nativeTokenValueToString(),
+                                          style: AppStyles
+                                              .textStyleSize25W900EquinoxPrimary(
+                                                  context),
+                                        ),
+                                        AutoSizeText(
+                                          CurrencyUtil.getConvertedAmount(
+                                              StateContainer.of(context)
+                                                  .curCurrency
+                                                  .currency
+                                                  .name,
+                                              StateContainer.of(context)
+                                                  .appWallet!
+                                                  .appKeychain!
+                                                  .getAccountSelected()!
+                                                  .balance!
+                                                  .fiatCurrencyValue!),
+                                          textAlign: TextAlign.center,
+                                          style: AppStyles
+                                              .textStyleSize12W600Primary(
+                                                  context),
+                                        ),
+                                      ],
+                                    )
+                                  : Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        AutoSizeText(
+                                          '···········',
+                                          style: AppStyles
+                                              .textStyleSize25W900EquinoxPrimary60(
+                                                  context),
+                                        ),
+                                        AutoSizeText(
+                                          '···········',
+                                          textAlign: TextAlign.center,
+                                          style: AppStyles
+                                              .textStyleSize12W600Primary60(
+                                                  context),
+                                        ),
+                                      ],
+                                    ),
                             ],
                           )
                         : Row(

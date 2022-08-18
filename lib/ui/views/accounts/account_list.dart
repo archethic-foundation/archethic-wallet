@@ -80,6 +80,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
       width: double.infinity,
       height: MediaQuery.of(context).size.height - 200,
       child: Column(
+        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           InkWell(
             onTap: () {
@@ -353,6 +354,8 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
             await StateContainer.of(context)
                 .requestUpdate(forceUpdateChart: false);
           }
+          StateContainer.of(context).bottomBarCurrentPage = 1;
+          StateContainer.of(context).bottomBarPageController!.jumpToPage(1);
           Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
         },
         child: Container(
@@ -485,7 +488,29 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                     ],
                                                   ),
                                                 )
-                                          : const SizedBox(),
+                                          : Expanded(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: <Widget>[
+                                                  AutoSizeText(
+                                                    '···········',
+                                                    textAlign: TextAlign.center,
+                                                    style: AppStyles
+                                                        .textStyleSize14W600Primary60(
+                                                            context),
+                                                  ),
+                                                  AutoSizeText(
+                                                    '···········',
+                                                    style: AppStyles
+                                                        .textStyleSize14W600Primary60(
+                                                            context),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
                                     ],
                                   ),
                                 ),

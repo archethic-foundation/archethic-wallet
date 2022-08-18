@@ -121,7 +121,6 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                               : list.data!.length,
                                           itemBuilder: (BuildContext context,
                                               int index) {
-                                            // Build
                                             return buildInfo(
                                                 context, list.data![index]);
                                           },
@@ -168,109 +167,127 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
   }
 
   Widget buildInfo(BuildContext context, TransactionInfos transactionInfo) {
-    return Row(children: <Widget>[
-      Expanded(
-        child: Stack(
-          children: <Widget>[
-            if (transactionInfo.titleInfo == '')
-              const SizedBox()
-            else
-              Container(
-                  padding: const EdgeInsets.only(left: 10.0, top: 20),
-                  width: 50,
-                  height: 50,
-                  child: buildIconWidget(
-                      context,
-                      'assets/icons/txInfos/${transactionInfo.titleInfo}.png',
-                      50,
-                      50)),
-            if (transactionInfo.titleInfo == '')
-              Container(
-                padding: const EdgeInsets.only(left: 15.0, top: 15),
-                child: Column(
+    return (StateContainer.of(context).showBalance == true ||
+            (StateContainer.of(context).showBalance == false &&
+                transactionInfo.titleInfo != 'Amount'))
+        ? Row(
+            children: <Widget>[
+              Expanded(
+                child: Stack(
                   children: <Widget>[
-                    // Main Container
-                    Container(
-                      padding: const EdgeInsets.only(
-                          left: 45.0, right: 5, bottom: 15),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Row(
+                    if (transactionInfo.titleInfo == '')
+                      const SizedBox()
+                    else
+                      Container(
+                          padding: const EdgeInsets.only(left: 10.0, top: 20),
+                          width: 50,
+                          height: 50,
+                          child: buildIconWidget(
+                              context,
+                              'assets/icons/txInfos/${transactionInfo.titleInfo}.png',
+                              50,
+                              50)),
+                    if (transactionInfo.titleInfo == '')
+                      Container(
+                        padding: const EdgeInsets.only(left: 15.0, top: 15),
+                        child: Column(
+                          children: <Widget>[
+                            // Main Container
+                            Container(
+                              padding: const EdgeInsets.only(
+                                  left: 45.0, right: 5, bottom: 15),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: <Widget>[
+                                            Row(
+                                              children: <Widget>[
+                                                AutoSizeText(
+                                                  TransactionInfos
+                                                      .getDisplayName(
+                                                          context,
+                                                          transactionInfo
+                                                              .domain),
+                                                  style: AppStyles
+                                                      .textStyleSize16W600Primary(
+                                                          context),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Divider(
+                              height: 2,
+                              color: StateContainer.of(context).curTheme.text15,
+                            ),
+                          ],
+                        ),
+                      )
+                    else
+                      Container(
+                        padding: const EdgeInsets.only(left: 15.0, top: 15),
+                        child: Column(
+                          children: <Widget>[
+                            // Main Container
+                            Container(
+                              padding: const EdgeInsets.only(
+                                  left: 45.0, right: 5, bottom: 15),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         AutoSizeText(
                                             TransactionInfos.getDisplayName(
                                                 context,
-                                                transactionInfo.domain),
+                                                transactionInfo.titleInfo),
                                             style: AppStyles
-                                                .textStyleSize16W600Primary(
+                                                .textStyleSize14W600Primary(
+                                                    context)),
+                                        SelectableText(
+                                            transactionInfo.valueInfo,
+                                            style: AppStyles
+                                                .textStyleSize14W100Primary(
                                                     context)),
                                       ],
                                     ),
-                                  ],
-                                ),
-                              ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                  ],
-                ),
-              )
-            else
-              Container(
-                padding: const EdgeInsets.only(left: 15.0, top: 15),
-                child: Column(
-                  children: <Widget>[
-                    // Main Container
-                    Container(
-                      padding: const EdgeInsets.only(
-                          left: 45.0, right: 5, bottom: 15),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                AutoSizeText(
-                                    TransactionInfos.getDisplayName(
-                                        context, transactionInfo.titleInfo),
-                                    style: AppStyles.textStyleSize14W600Primary(
-                                        context)),
-                                SelectableText(transactionInfo.valueInfo,
-                                    style: AppStyles.textStyleSize14W100Primary(
-                                        context)),
-                              ],
+                            Divider(
+                              height: 2,
+                              color: StateContainer.of(context).curTheme.text15,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
                   ],
                 ),
               ),
-          ],
-        ),
-      ),
-    ]);
+            ],
+          )
+        : const SizedBox();
   }
 }

@@ -775,10 +775,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                         ),
 
                                         /// BALANCE
-                                        StateContainer.of(context).showBalance
-                                            ? BalanceInfosWidget()
-                                                .getBalance(context)
-                                            : const SizedBox(),
+                                        BalanceInfosWidget()
+                                            .getBalance(context),
                                         const SizedBox(
                                           height: 10,
                                         ),
