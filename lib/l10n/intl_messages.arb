@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-08-17T00:31:31.894747",
+  "@@last_modified": "2022-08-18T14:33:07.951580",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -1226,6 +1226,12 @@
   },
   "tokenSymbol": "Symbol: ",
   "@tokenSymbol": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "tokenSymbolMaxNumberCharacter": "4 characters maximum",
+  "@tokenSymbolMaxNumberCharacter": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

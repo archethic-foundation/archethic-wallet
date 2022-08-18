@@ -1818,6 +1818,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "tokenSymbolMaxNumberCharacter": "4 characters maximum",
+  "@tokenSymbolMaxNumberCharacter": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "tokenSymbolHint": "Enter a symbol",
   "@tokenSymbolHint": {
     "type": "text",

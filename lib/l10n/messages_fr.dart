@@ -247,6 +247,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tokenSupply" : MessageLookupByLibrary.simpleMessage("Offre: "),
     "tokenSymbol" : MessageLookupByLibrary.simpleMessage("Symbole: "),
     "tokenSymbolHint" : MessageLookupByLibrary.simpleMessage("Entrer un symbole"),
+    "tokenSymbolMaxNumberCharacter" : MessageLookupByLibrary.simpleMessage("4 caractères maximums"),
     "tokenSymbolMissing" : MessageLookupByLibrary.simpleMessage("Choisissez un symbole pour le jeton"),
     "tooManyFailedAttempts" : MessageLookupByLibrary.simpleMessage("Trop de tentatives de déverrouillage échouées.\nVeuillez réessayer svp."),
     "total" : MessageLookupByLibrary.simpleMessage("Total"),

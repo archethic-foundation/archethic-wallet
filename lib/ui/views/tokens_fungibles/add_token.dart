@@ -283,6 +283,17 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                               },
                             ),
                             Container(
+                              alignment: Alignment.centerLeft,
+                              margin: const EdgeInsets.only(
+                                  left: 40, top: 5, bottom: 5),
+                              child: Text(
+                                AppLocalization.of(context)!
+                                    .tokenSymbolMaxNumberCharacter,
+                                style: AppStyles.textStyleSize10W100Primary(
+                                    context),
+                              ),
+                            ),
+                            Container(
                               margin: const EdgeInsets.only(top: 5, bottom: 5),
                               child: Text(_symbolValidationText!,
                                   style: AppStyles.textStyleSize14W600Primary(

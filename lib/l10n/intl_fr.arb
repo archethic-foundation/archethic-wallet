@@ -303,6 +303,7 @@
 	"tokenSupply": "Offre: ",
 	"tokenInitialSupplyTooHigh": "L'offre est trop élevée",
 	"tokenSymbol": "Symbole: ",
+	"tokenSymbolMaxNumberCharacter": "4 caractères maximums",
 	"tokenSymbolHint": "Entrer un symbole",
 	"createNFTCollection": "Créer une collection de NFT",
 	"createFungibleToken": "Créer un jeton"

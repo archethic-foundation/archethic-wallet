@@ -966,6 +966,11 @@ class AppLocalization {
     return Intl.message('Symbol: ', name: 'tokenSymbol');
   }
 
+  String get tokenSymbolMaxNumberCharacter {
+    return Intl.message('4 characters maximum',
+        name: 'tokenSymbolMaxNumberCharacter');
+  }
+
   String get tokenSymbolHint {
     return Intl.message('Enter a symbol', name: 'tokenSymbolHint');
   }

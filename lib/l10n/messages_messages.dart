@@ -251,6 +251,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tokenSupply" : MessageLookupByLibrary.simpleMessage("Supply: "),
     "tokenSymbol" : MessageLookupByLibrary.simpleMessage("Symbol: "),
     "tokenSymbolHint" : MessageLookupByLibrary.simpleMessage("Enter a symbol"),
+    "tokenSymbolMaxNumberCharacter" : MessageLookupByLibrary.simpleMessage("4 characters maximum"),
     "tokenSymbolMissing" : MessageLookupByLibrary.simpleMessage("Choose a Symbol for the Token"),
     "tokensHeader" : MessageLookupByLibrary.simpleMessage("Tokens"),
     "tooManyFailedAttempts" : MessageLookupByLibrary.simpleMessage("Too many failed unlock attempts.\nPlease, try again"),
