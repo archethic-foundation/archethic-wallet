@@ -398,6 +398,10 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
               : Colors.transparent,
           child: Column(
             children: [
+              Divider(
+                height: 2,
+                color: StateContainer.of(context).curTheme.text15,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,

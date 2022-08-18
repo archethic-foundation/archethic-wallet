@@ -175,7 +175,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "nodeRewardAddress" : MessageLookupByLibrary.simpleMessage("Reward address : "),
     "nodesHeader" : MessageLookupByLibrary.simpleMessage("Nodes"),
     "nodesHeaderDesc" : MessageLookupByLibrary.simpleMessage("Nodes informations"),
-    "ok" : MessageLookupByLibrary.simpleMessage("Ok"),
+    "ok" : MessageLookupByLibrary.simpleMessage("OK"),
     "pass" : MessageLookupByLibrary.simpleMessage("Pass"),
     "passBackupConfirmationDisclaimer" : MessageLookupByLibrary.simpleMessage("DISCLAIMER"),
     "passBackupConfirmationMessage" : MessageLookupByLibrary.simpleMessage("We invite you to manually confirm the registration of your recovery phrase. In case of loss, you will lose your funds. As a reminder, Archethic does not keep any copy."),

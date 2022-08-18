@@ -192,7 +192,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                     // Main Container
                     Container(
                       padding: const EdgeInsets.only(
-                          left: 45.0, right: 5, bottom: 5),
+                          left: 45.0, right: 5, bottom: 15),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
@@ -238,7 +238,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                     // Main Container
                     Container(
                       padding: const EdgeInsets.only(
-                          left: 45.0, right: 5, bottom: 5),
+                          left: 45.0, right: 5, bottom: 15),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[

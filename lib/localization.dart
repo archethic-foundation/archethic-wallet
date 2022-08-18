@@ -903,7 +903,7 @@ class AppLocalization {
   }
 
   String get ok {
-    return Intl.message('Ok', name: 'ok');
+    return Intl.message('OK', name: 'ok');
   }
 
   String get addressInfos {
