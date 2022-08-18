@@ -218,6 +218,8 @@ class KeychainUtil {
 
       const String kDerivationPathWithoutService = 'm/650\'/archethic-wallet-';
 
+      Price tokenPrice = await Price.getCurrency(currency);
+
       /// Get all services for archethic blockchain
       keychain.services!.forEach((serviceName, service) async {
         if (service.derivationPath!.startsWith(kDerivationPathWithoutService)) {
@@ -244,7 +246,8 @@ class KeychainUtil {
                   fiatCurrencyCode: '',
                   fiatCurrencyValue: 0,
                   nativeTokenName: '',
-                  nativeTokenValue: 0),
+                  nativeTokenValue: 0,
+                  tokenPrice: tokenPrice),
               recentTransactions: []);
           if (currentName == nameDecoded) {
             account.selected = true;
@@ -267,6 +270,9 @@ class KeychainUtil {
           await accounts[i].updateBalance(tokenName, currency, tokenPrice);
           await accounts[i].updateFungiblesTokens();
         }
+        if (loadRecentTransactions) {
+          await accounts[i].updateRecentTransactions('', seed);
+        }
       }
       final String genesisAddressKeychain =
           deriveAddress(uint8ListToHex(keychain.seed!), 0);
@@ -276,11 +282,6 @@ class KeychainUtil {
           .getLastTransaction(genesisAddressKeychain, request: 'address');
       appWallet.appKeychain!.address = lastTransactionKeychain.address;
       appWallet.appKeychain!.accounts = accounts;
-      if (loadRecentTransactions) {
-        await appWallet.appKeychain!
-            .getAccountSelected()!
-            .updateRecentTransactions('', seed);
-      }
 
       await appWallet.save();
     } catch (e) {

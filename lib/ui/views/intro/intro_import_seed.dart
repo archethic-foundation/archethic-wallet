@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -396,6 +397,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             AppLocalization.of(context)!.ok,
                             Dimens.buttonTopDimens,
                             onPressed: () async {
+                              _showSendingAnimation(context);
                               setState(() {
                                 _mnemonicError = '';
                                 isPressed = true;
@@ -446,8 +448,8 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                               .curNetwork
                                               .getNetworkCryptoCurrencyLabel(),
                                           tokenPrice,
-                                          loadBalance: false,
-                                          loadRecentTransactions: false);
+                                          loadBalance: true,
+                                          loadRecentTransactions: true);
 
                                   StateContainer.of(context).appWallet =
                                       appWallet;
@@ -614,5 +616,13 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
           .appKeychain!
           .setAccountSelected(selection);
     }
+  }
+
+  void _showSendingAnimation(BuildContext context) {
+    Navigator.of(context).push(AnimationLoadingOverlay(
+      AnimationType.send,
+      StateContainer.of(context).curTheme.animationOverlayStrong!,
+      StateContainer.of(context).curTheme.animationOverlayMedium!,
+    ));
   }
 }
