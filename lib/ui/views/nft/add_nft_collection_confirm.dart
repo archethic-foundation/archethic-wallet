@@ -266,8 +266,12 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
       final String? seed = await StateContainer.of(context).getSeed();
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
       final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
-      final String service =
-          'archethic-wallet-${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.name!}';
+      String nameEncoded = Uri.encodeFull(StateContainer.of(context)
+          .appWallet!
+          .appKeychain!
+          .getAccountSelected()!
+          .name!);
+      final String service = 'archethic-wallet-$nameEncoded';
       final int index = (await sl.get<ApiService>().getTransactionIndex(
               uint8ListToHex(keychain.deriveAddress(service, index: 0))))
           .chainLength!;

@@ -45,7 +45,8 @@ class AppService {
         .getLastTransaction(lastAddress, request: 'chainLength');
     if (lastTransaction.chainLength! > 10) {
       final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
-      String serviceName = 'archethic-wallet-$name';
+      String nameEncoded = Uri.encodeFull(name);
+      String serviceName = 'archethic-wallet-$nameEncoded';
       pagingAddress = uint8ListToHex(keychain.deriveAddress(serviceName,
           index: lastTransaction.chainLength! - 10));
     }
@@ -53,7 +54,7 @@ class AppService {
     final List<Transaction> transactionChain = await getTransactionChain(
         lastAddress,
         pagingAddress,
-        'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { content , ledger { uco { transfers { amount, to } }token {transfers {amount, to, token, tokenId } } } }, inputs { from, type, spent, tokenAddress, amount, timestamp }');
+        'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { content , ledger { uco { transfers { amount, to } } token {transfers {amount, to, token, tokenId } } } }, inputs { from, type, spent, tokenAddress, tokenId, amount, timestamp }');
 
     final List<TransactionInput> transactionInputsGenesisAddress =
         await getTransactionInputs(genesisAddress,
@@ -93,6 +94,8 @@ class AppService {
             recentTransaction.timestamp =
                 transaction.validationStamp!.timestamp!;
             recentTransaction.from = lastAddress;
+            recentTransaction.tokenInformations =
+                await recentTransaction.getTokenInfo('', transaction.address);
             recentTransactions.add(recentTransaction);
           }
           for (int i = 0;
@@ -133,9 +136,8 @@ class AppService {
             recentTransaction.timestamp = transactionInput.timestamp!;
             recentTransaction.fee = 0;
             recentTransaction.content = transaction.data!.content;
-            recentTransaction.tokenInformations =
-                await recentTransaction.getTokenInfo(
-                    recentTransaction.content!, recentTransaction.address);
+            recentTransaction.tokenInformations = await recentTransaction
+                .getTokenInfo('', transactionInput.tokenAddress);
             recentTransactions.add(recentTransaction);
           }
         }
@@ -157,6 +159,8 @@ class AppService {
       recentTransaction.recipient = lastAddress;
       recentTransaction.timestamp = transaction.timestamp!;
       recentTransaction.fee = 0;
+      recentTransaction.tokenInformations =
+          await recentTransaction.getTokenInfo('', recentTransaction.address);
       recentTransactions.add(recentTransaction);
     }
 
@@ -181,25 +185,57 @@ class AppService {
 
     if (balance.token != null) {
       for (int i = 0; i < balance.token!.length; i++) {
-        String content = await sl
-            .get<ApiService>()
-            .getTransactionContent(balance.token![i].address!);
-        Token token = tokenFromJson(content);
-        TokenInformations tokenInformations = TokenInformations(
-            address: balance.token![i].address,
-            name: token.name,
-            type: 'fungible',
-            supply: token.supply! ~/ 100000000,
-            symbol: token.symbol);
-        AccountToken accountFungibleToken = AccountToken(
-            tokenInformations: tokenInformations,
-            amount: balance.token![i].amount!.toInt());
-        fungiblesTokensList.add(accountFungibleToken);
+        if (balance.token![i].tokenId == 0) {
+          String content = await sl
+              .get<ApiService>()
+              .getTransactionContent(balance.token![i].address!);
+          Token token = tokenFromJson(content);
+          TokenInformations tokenInformations = TokenInformations(
+              address: balance.token![i].address,
+              name: token.name,
+              type: token.type,
+              supply: token.supply! ~/ 100000000,
+              symbol: token.symbol);
+          AccountToken accountFungibleToken = AccountToken(
+              tokenInformations: tokenInformations,
+              amount: balance.token![i].amount!.toInt());
+          fungiblesTokensList.add(accountFungibleToken);
+        }
       }
       fungiblesTokensList.sort((a, b) =>
           a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!));
     }
     return fungiblesTokensList;
+  }
+
+  Future<List<AccountToken>> getNFTList(String address) async {
+    Balance balance = await sl.get<ApiService>().fetchBalance(address);
+    final List<AccountToken> nftList = List<AccountToken>.empty(growable: true);
+
+    if (balance.token != null) {
+      for (int i = 0; i < balance.token!.length; i++) {
+        if (balance.token![i].tokenId! > 0) {
+          String content = await sl
+              .get<ApiService>()
+              .getTransactionContent(balance.token![i].address!);
+          Token token = tokenFromJson(content);
+          TokenInformations tokenInformations = TokenInformations(
+              address: balance.token![i].address,
+              name: token.name,
+              tokenId: token.tokenId,
+              type: token.type,
+              supply: token.supply! ~/ 100000000,
+              symbol: token.symbol);
+          AccountToken accountNFT = AccountToken(
+              tokenInformations: tokenInformations,
+              amount: balance.token![i].amount!.toInt());
+          nftList.add(accountNFT);
+        }
+      }
+      nftList.sort((a, b) =>
+          a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!));
+    }
+    return nftList;
   }
 
   Future<Balance> getBalanceGetResponse(String address) async {
@@ -373,7 +409,8 @@ class AppService {
       int initialSupply,
       String accountName) async {
     final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
-    final String service = 'archethic-wallet-$accountName';
+    String nameEncoded = Uri.encodeFull(accountName);
+    final String service = 'archethic-wallet-$nameEncoded';
     final int index = (await sl.get<ApiService>().getTransactionIndex(
             uint8ListToHex(keychain.deriveAddress(service, index: 0))))
         .chainLength!;
