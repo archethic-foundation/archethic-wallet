@@ -137,10 +137,15 @@ class _TxListWidgetState extends State<TxListWidget> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       transaction.typeTx == RecentTransaction.tokenCreation
-                          ? AutoSizeText(
-                              '${NumberUtil.formatThousands(transaction.tokenInformations!.supply!)} ${transaction.tokenInformations!.symbol}',
-                              style: AppStyles.textStyleSize12W400PrimaryRed(
-                                  context))
+                          ? StateContainer.of(context).showBalance
+                              ? AutoSizeText(
+                                  '${NumberUtil.formatThousands(transaction.tokenInformations!.supply!)} ${transaction.tokenInformations!.symbol}',
+                                  style:
+                                      AppStyles.textStyleSize12W400PrimaryRed(
+                                          context))
+                              : AutoSizeText('···········',
+                                  style: AppStyles.textStyleSize12W600Primary60(
+                                      context))
                           : StateContainer.of(context)
                                       .curPrimaryCurrency
                                       .primaryCurrency
@@ -213,52 +218,74 @@ class _TxListWidgetState extends State<TxListWidget> {
                                                     context)),
                                   ],
                                 )
-                              : Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    if (transaction.amount != null)
-                                      transaction
-                                                  .typeTx ==
-                                              RecentTransaction.transferOutput
-                                          ? AutoSizeText(
-                                              '-${CurrencyUtil.convertAmountFormated(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.amount!)}',
-                                              style: AppStyles
-                                                  .textStyleSize12W400PrimaryRed(
-                                                      context))
-                                          : AutoSizeText(
-                                              CurrencyUtil
-                                                  .convertAmountFormated(
-                                                      StateContainer.of(context)
-                                                          .curCurrency
-                                                          .currency
-                                                          .name,
-                                                      StateContainer.of(context)
-                                                          .appWallet!
-                                                          .appKeychain!
-                                                          .getAccountSelected()!
-                                                          .balance!
-                                                          .tokenPrice!
-                                                          .amount!,
-                                                      transaction.amount!),
-                                              style: AppStyles
-                                                  .textStyleSize12W400PrimaryGreen(
-                                                      context)),
-                                    if (transaction.amount != null)
-                                      transaction.typeTx ==
-                                              RecentTransaction.transferOutput
-                                          ? AutoSizeText(
-                                              '-${Decimal.parse(transaction.amount!.toString())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                              style: AppStyles
-                                                  .textStyleSize12W600Primary(
-                                                      context))
-                                          : AutoSizeText(
-                                              '${Decimal.parse(transaction.amount!.toString())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                              style: AppStyles
-                                                  .textStyleSize12W400Primary(
-                                                      context)),
-                                  ],
-                                ),
+                              : (StateContainer.of(context).showBalance == true)
+                                  ? Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        if (transaction.amount != null)
+                                          transaction.typeTx ==
+                                                  RecentTransaction
+                                                      .transferOutput
+                                              ? AutoSizeText(
+                                                  '-${CurrencyUtil.convertAmountFormated(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.amount!)}',
+                                                  style: AppStyles
+                                                      .textStyleSize12W400PrimaryRed(
+                                                          context))
+                                              : AutoSizeText(
+                                                  CurrencyUtil
+                                                      .convertAmountFormated(
+                                                          StateContainer.of(
+                                                                  context)
+                                                              .curCurrency
+                                                              .currency
+                                                              .name,
+                                                          StateContainer.of(
+                                                                  context)
+                                                              .appWallet!
+                                                              .appKeychain!
+                                                              .getAccountSelected()!
+                                                              .balance!
+                                                              .tokenPrice!
+                                                              .amount!,
+                                                          transaction.amount!),
+                                                  style: AppStyles
+                                                      .textStyleSize12W400PrimaryGreen(
+                                                          context)),
+                                        if (transaction.amount != null)
+                                          transaction.typeTx ==
+                                                  RecentTransaction
+                                                      .transferOutput
+                                              ? AutoSizeText(
+                                                  '-${Decimal.parse(transaction.amount!.toString())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                                  style: AppStyles
+                                                      .textStyleSize12W600Primary(
+                                                          context))
+                                              : AutoSizeText(
+                                                  '${Decimal.parse(transaction.amount!.toString())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                                  style: AppStyles
+                                                      .textStyleSize12W400Primary(
+                                                          context)),
+                                      ],
+                                    )
+                                  : Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        AutoSizeText('···········',
+                                            style: AppStyles
+                                                .textStyleSize12W600Primary60(
+                                                    context)),
+                                        AutoSizeText('···········',
+                                            style: AppStyles
+                                                .textStyleSize12W600Primary60(
+                                                    context))
+                                      ],
+                                    ),
                     ],
                   ),
                   Column(
@@ -332,24 +359,30 @@ class _TxListWidgetState extends State<TxListWidget> {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
-                              StateContainer.of(context)
-                                          .curPrimaryCurrency
-                                          .primaryCurrency
-                                          .name ==
-                                      PrimaryCurrencySetting(
-                                              AvailablePrimaryCurrency.native)
-                                          .primaryCurrency
-                                          .name
-                                  ? Text(
-                                      '${AppLocalization.of(context)!.txListFees} ${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.fee!, 8)})',
-                                      style:
-                                          AppStyles.textStyleSize12W400Primary(
-                                              context))
-                                  : Text(
-                                      '${AppLocalization.of(context)!.txListFees} ${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.fee!, 8)} (${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})',
-                                      style:
-                                          AppStyles.textStyleSize12W400Primary(
-                                              context)),
+                              if (StateContainer.of(context).showBalance == true)
+                                StateContainer.of(context)
+                                            .curPrimaryCurrency
+                                            .primaryCurrency
+                                            .name ==
+                                        PrimaryCurrencySetting(
+                                                AvailablePrimaryCurrency.native)
+                                            .primaryCurrency
+                                            .name
+                                    ? Text(
+                                        '${AppLocalization.of(context)!.txListFees} ${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()} (${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.fee!, 8)})',
+                                        style:
+                                            AppStyles.textStyleSize12W400Primary(
+                                                context))
+                                    : Text(
+                                        '${AppLocalization.of(context)!.txListFees} ${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.fee!, 8)} (${transaction.fee!} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})',
+                                        style:
+                                            AppStyles.textStyleSize12W400Primary(
+                                                context))
+                              else
+                                Text('···········',
+                                    style:
+                                        AppStyles.textStyleSize12W600Primary60(
+                                            context))
                             ]),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,

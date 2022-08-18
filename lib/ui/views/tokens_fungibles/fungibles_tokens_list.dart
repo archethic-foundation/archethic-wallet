@@ -175,18 +175,35 @@ class _FungiblesTokensListWidgetState extends State<FungiblesTokensListWidget> {
                           style: AppStyles.textStyleSize12W600Primary(context)),
                     ],
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                          NumberUtil.formatThousands(
-                              accountFungibleToken.amount!),
-                          style: AppStyles.textStyleSize12W400Primary(context)),
-                      Text(accountFungibleToken.tokenInformations!.symbol!,
-                          style: AppStyles.textStyleSize12W600Primary(context)),
-                    ],
-                  ),
+                  (StateContainer.of(context).showBalance == true)
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                                NumberUtil.formatThousands(
+                                    accountFungibleToken.amount!),
+                                style: AppStyles.textStyleSize12W400Primary(
+                                    context)),
+                            Text(
+                                accountFungibleToken.tokenInformations!.symbol!,
+                                style: AppStyles.textStyleSize12W600Primary(
+                                    context)),
+                          ],
+                        )
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text('···········',
+                                style: AppStyles.textStyleSize12W600Primary60(
+                                    context)),
+                            Text(
+                                accountFungibleToken.tokenInformations!.symbol!,
+                                style: AppStyles.textStyleSize12W600Primary(
+                                    context)),
+                          ],
+                        )
                 ],
               ),
             ),
