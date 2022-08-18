@@ -152,6 +152,8 @@ class _ChartSheetState extends State<ChartSheet> {
                           StateContainer.of(context).curTheme.backgroundDark!,
                       tooltipText:
                           AppStyles.textStyleSize12W100Primary(context),
+                      axisTextStyle:
+                          AppStyles.textStyleSize12W100Primary(context),
                       optionChartSelected:
                           StateContainer.of(context).idChartOption!,
                       currency:

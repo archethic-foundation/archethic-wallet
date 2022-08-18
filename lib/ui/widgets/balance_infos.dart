@@ -474,6 +474,8 @@ class BalanceInfosWidget {
                               .backgroundDark!,
                           tooltipText:
                               AppStyles.textStyleSize12W100Primary(context),
+                          axisTextStyle:
+                              AppStyles.textStyleSize12W100Primary(context),
                           optionChartSelected:
                               StateContainer.of(context).idChartOption!,
                           currency: StateContainer.of(context)

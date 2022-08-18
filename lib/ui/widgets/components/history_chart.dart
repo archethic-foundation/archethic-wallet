@@ -20,6 +20,7 @@ class HistoryChart extends StatelessWidget {
       required this.gradientColorsBar,
       required this.tooltipBg,
       required this.tooltipText,
+      required this.axisTextStyle,
       required this.optionChartSelected,
       required this.currency,
       required this.completeChart})
@@ -30,6 +31,7 @@ class HistoryChart extends StatelessWidget {
   final Gradient gradientColorsBar;
   final Color tooltipBg;
   final TextStyle tooltipText;
+  final TextStyle axisTextStyle;
   final String optionChartSelected;
   final String currency;
   final bool completeChart;
@@ -196,10 +198,7 @@ class HistoryChart extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 8.0, left: 5),
                         child: Text(
                           title,
-                          style: const TextStyle(
-                            fontSize: AppFontSizes.size12,
-                            fontWeight: FontWeight.w100,
-                          ),
+                          style: axisTextStyle,
                         ),
                       );
                     }),
@@ -217,10 +216,7 @@ class HistoryChart extends StatelessWidget {
                           : Text(
                               CurrencyUtil.getConvertedAmountWithNumberOfDigits(
                                   currency, value, 3),
-                              style: const TextStyle(
-                                fontSize: AppFontSizes.size12,
-                                fontWeight: FontWeight.w100,
-                              ),
+                              style: axisTextStyle,
                             );
                       return SideTitleWidget(
                           axisSide: titleMeta.axisSide, child: axisTitle);
