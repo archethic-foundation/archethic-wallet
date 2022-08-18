@@ -204,14 +204,16 @@ class StateContainerState extends State<StateContainer> {
         price = tokenPrice;
         curCurrency = currency;
       });
-      await chartInfos!.updateCoinsChart(curCurrency.currency.name);
+      await chartInfos!
+          .updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
     }
   }
 
   // Change theme
   Future<void> updateTheme(ThemeSetting theme) async {
     if (showPriceChart && chartInfos != null) {
-      await chartInfos!.updateCoinsChart(curCurrency.currency.name);
+      await chartInfos!
+          .updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
     }
     if (mounted) {
       setState(() {
@@ -251,7 +253,8 @@ class StateContainerState extends State<StateContainer> {
     });
 
     if (forceUpdateChart && showPriceChart) {
-      await chartInfos!.updateCoinsChart(curCurrency.currency.name);
+      await chartInfos!
+          .updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
     }
   }
 
