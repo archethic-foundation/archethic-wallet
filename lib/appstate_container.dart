@@ -132,22 +132,30 @@ class StateContainerState extends State<StateContainer> {
           accounts!.forEach((Account account) async {
             final List<TransactionInput> transactionInputList = await sl
                 .get<AppService>()
-                .getTransactionInputs(
-                    account.lastAddress!, 'from, amount, timestamp');
+                .getTransactionInputs(account.lastAddress!,
+                    'from, amount, timestamp, tokenAddress ');
 
             if (transactionInputList.length > 0) {
-              transactionInputList.forEach((TransactionInput transactionInput) {
+              transactionInputList
+                  .forEach((TransactionInput transactionInput) async {
                 if (account.lastLoadingTransactionInputs == null ||
                     transactionInput.timestamp! >
                         account.lastLoadingTransactionInputs!) {
                   account.updateLastLoadingTransactionInputs();
                   if (transactionInput.from != account.lastAddress) {
+                    String symbol = 'UCO';
+                    if (transactionInput.tokenAddress != null) {
+                      symbol = (await sl
+                              .get<ApiService>()
+                              .getToken(transactionInput.tokenAddress!))
+                          .symbol!;
+                    }
                     NotificationsUtil.showNotification(
                         title: 'Archethic',
                         body: message
                             .replaceAll(
                                 '%1', transactionInput.amount.toString())
-                            .replaceAll('%2', 'UCO')
+                            .replaceAll('%2', symbol)
                             .replaceAll('%3', account.name!),
                         payload: account.name!);
                   }
