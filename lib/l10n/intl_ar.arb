@@ -308,5 +308,6 @@
 	"tokenSymbolMaxNumberCharacter": "4 characters maximum",
 	"tokenSymbolHint": "Enter a symbol",
 	"token": "token",
-	"tokens": "tokens"
+	"tokens": "tokens",
+	"accountsListDescription": "Your keychain contains the following services and accounts."
 }

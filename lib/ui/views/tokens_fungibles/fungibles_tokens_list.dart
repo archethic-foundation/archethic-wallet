@@ -111,10 +111,17 @@ class _FungiblesTokensListWidgetState extends State<FungiblesTokensListWidget> {
         children: [
           Card(
             shape: RoundedRectangleBorder(
+              side: BorderSide(
+                  color: StateContainer.of(context)
+                      .curTheme
+                      .backgroundFungiblesTokensListCard!,
+                  width: 1.0),
               borderRadius: BorderRadius.circular(10.0),
             ),
             elevation: 0,
-            color: Colors.white.withOpacity(0.1),
+            color: StateContainer.of(context)
+                .curTheme
+                .backgroundFungiblesTokensListCard,
             child: Container(
               padding: const EdgeInsets.all(9.5),
               width: MediaQuery.of(context).size.width,

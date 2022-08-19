@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "aboutWalletServiceTerms" : MessageLookupByLibrary.simpleMessage("Wallet Service Terms"),
     "accountHeader" : MessageLookupByLibrary.simpleMessage("Account"),
     "accountsKeychainAddressHeader" : MessageLookupByLibrary.simpleMessage("Your keychain\'s address"),
+    "accountsListDescription" : MessageLookupByLibrary.simpleMessage("Your keychain contains the following services and accounts."),
     "activateNotifications" : MessageLookupByLibrary.simpleMessage("Activate notifications"),
     "activateVibrations" : MessageLookupByLibrary.simpleMessage("Activate vibrations"),
     "add" : MessageLookupByLibrary.simpleMessage("Add"),

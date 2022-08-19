@@ -308,5 +308,6 @@
 	"createNFTCollection": "Créer une collection de NFT",
 	"createFungibleToken": "Créer un jeton",
 	"token": "jeton",
-	"tokens": "jetons"
+	"tokens": "jetons",
+	"accountsListDescription": "Votre porte clés contient les services et comptes suivants."
 }

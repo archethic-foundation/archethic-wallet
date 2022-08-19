@@ -133,6 +133,22 @@ class SeaGreenTheme implements BaseTheme {
   @override
   Color? backgroundDarkest = const Color(0xFF009D78);
 
+  @override
+  Color? backgroundAccountsListCard = Colors.transparent;
+  @override
+  Color? backgroundAccountsListCardSelected = Colors.white.withOpacity(0.1);
+  @override
+  Color? backgroundRecentTxListCardTransferOutput =
+      Colors.white.withOpacity(0.1);
+  @override
+  Color? backgroundRecentTxListCardTokenCreation =
+      Colors.blueAccent[100]!.withOpacity(0.1);
+  @override
+  Color? backgroundRecentTxListCardTransferInput =
+      Colors.greenAccent[100]!.withOpacity(0.1);
+  @override
+  Color? backgroundFungiblesTokensListCard = Colors.white.withOpacity(0.1);
+
   // Bottom Bar
   @override
   num? bottomBarBackgroundColorOpacity = 0.2;

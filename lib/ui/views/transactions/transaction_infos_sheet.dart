@@ -139,7 +139,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                           AppButtonType.primary,
                                           AppLocalization.of(context)!
                                               .viewExplorer,
-                                          Dimens.buttonTopDimens,
+                                          Dimens.buttonBottomDimens,
                                           icon: Icon(
                                             Icons.more_horiz,
                                             color: StateContainer.of(context)

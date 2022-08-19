@@ -133,6 +133,22 @@ class PearlGreyTheme implements BaseTheme {
   @override
   Color? backgroundDarkest = const Color(0xFFFFFFFF);
 
+  @override
+  Color? backgroundAccountsListCard = Colors.transparent;
+  @override
+  Color? backgroundAccountsListCardSelected = Colors.grey.withOpacity(0.1);
+  @override
+  Color? backgroundRecentTxListCardTransferOutput =
+      Colors.grey.withOpacity(0.1);
+  @override
+  Color? backgroundRecentTxListCardTokenCreation =
+      Colors.blueAccent[100]!.withOpacity(0.1);
+  @override
+  Color? backgroundRecentTxListCardTransferInput =
+      Colors.green.withOpacity(0.1);
+  @override
+  Color? backgroundFungiblesTokensListCard = Colors.grey.withOpacity(0.1);
+
   // Bottom Bar
   @override
   num? bottomBarBackgroundColorOpacity = 0.2;

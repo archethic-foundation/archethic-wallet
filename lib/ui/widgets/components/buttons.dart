@@ -231,9 +231,10 @@ class AppButton {
           child: Container(
             width: 400,
             decoration: ShapeDecoration(
-                gradient: StateContainer.of(context).curTheme.gradient!,
-                shape: const StadiumBorder()),
-            height: 55,
+              gradient: StateContainer.of(context).curTheme.gradient!,
+              shape: const StadiumBorder(),
+            ),
+            height: 35,
             margin: EdgeInsetsDirectional.fromSTEB(
                 dimens[0], dimens[1], dimens[2], dimens[3]),
             child: icon == null

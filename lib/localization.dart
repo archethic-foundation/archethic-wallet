@@ -1388,6 +1388,12 @@ class AppLocalization {
         name: 'accountsKeychainAddressHeader');
   }
 
+  String get accountsListDescription {
+    return Intl.message(
+        'Your keychain contains the following services and accounts.',
+        name: 'accountsListDescription');
+  }
+
   String get newAccount {
     return Intl.message('New account', name: 'newAccount');
   }

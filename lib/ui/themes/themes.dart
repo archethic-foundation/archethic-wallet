@@ -73,6 +73,13 @@ abstract class BaseTheme {
   String? background4Small;
   String? background5Small;
 
+  Color? backgroundAccountsListCard;
+  Color? backgroundAccountsListCardSelected;
+  Color? backgroundRecentTxListCardTransferOutput;
+  Color? backgroundRecentTxListCardTokenCreation;
+  Color? backgroundRecentTxListCardTransferInput;
+  Color? backgroundFungiblesTokensListCard;
+
   // Bottom Bar
   num? bottomBarBackgroundColorOpacity;
   Color? bottomBarActiveIconColor;

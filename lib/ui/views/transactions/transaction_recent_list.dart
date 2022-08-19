@@ -119,14 +119,33 @@ class _TxListWidgetState extends State<TxListWidget> {
         children: [
           Card(
             shape: RoundedRectangleBorder(
+              side: BorderSide(
+                  color: transaction.typeTx == RecentTransaction.transferOutput
+                      ? StateContainer.of(context)
+                          .curTheme
+                          .backgroundRecentTxListCardTransferOutput!
+                      : transaction.typeTx! == RecentTransaction.tokenCreation
+                          ? StateContainer.of(context)
+                              .curTheme
+                              .backgroundRecentTxListCardTokenCreation!
+                          : StateContainer.of(context)
+                              .curTheme
+                              .backgroundRecentTxListCardTransferInput!,
+                  width: 1.0),
               borderRadius: BorderRadius.circular(10.0),
             ),
             elevation: 0,
             color: transaction.typeTx == RecentTransaction.transferOutput
-                ? Colors.white.withOpacity(0.1)
+                ? StateContainer.of(context)
+                    .curTheme
+                    .backgroundRecentTxListCardTransferOutput
                 : transaction.typeTx! == RecentTransaction.tokenCreation
-                    ? Colors.blueAccent[100]!.withOpacity(0.1)
-                    : Colors.greenAccent[100]!.withOpacity(0.1),
+                    ? StateContainer.of(context)
+                        .curTheme
+                        .backgroundRecentTxListCardTokenCreation
+                    : StateContainer.of(context)
+                        .curTheme
+                        .backgroundRecentTxListCardTransferInput,
             child: Container(
               padding: const EdgeInsets.all(9.5),
               width: MediaQuery.of(context).size.width,

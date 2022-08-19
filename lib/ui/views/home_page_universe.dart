@@ -681,7 +681,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                       const AlwaysScrollableScrollPhysics(),
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 100.0, bottom: 50),
+                                        top: 40.0, bottom: 50),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,

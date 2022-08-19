@@ -67,220 +67,250 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        for (int i = 0; i < appWalletLive!.appKeychain!.accounts!.length; i++)
-          _buildAccountListItem(
-              context, appWalletLive!.appKeychain!.accounts![i], setState),
-        Row(
-          children: <Widget>[
-            appWalletLive!.appKeychain!.accounts!.length >= kMaxAccounts
-                ? const SizedBox()
-                : AppButton.buildAppButtonTiny(
-                    const Key('addAccount'),
-                    context,
-                    AppButtonType.primary,
-                    AppLocalization.of(context)!.addAccount,
-                    Dimens.buttonBottomDimens,
-                    onPressed: () async {
-                      FocusNode nameFocusNode = FocusNode();
-                      TextEditingController nameController =
-                          TextEditingController();
-                      String? nameError;
-                      await showDialog(
-                          context: expandedKey.currentContext!,
-                          builder: (BuildContext context) {
-                            return StatefulBuilder(
-                              builder: (context, setState) {
-                                return AlertDialog(
-                                  title: Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 10.0),
-                                    child: Column(children: [
-                                      Text(
-                                        AppLocalization.of(context)!
-                                            .introNewWalletGetFirstInfosNameRequest,
-                                        style: AppStyles
-                                            .textStyleSize16W400Primary(
-                                                context),
-                                      ),
-                                    ]),
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(16.0)),
-                                      side: BorderSide(
-                                          color: StateContainer.of(context)
-                                              .curTheme
-                                              .text45!)),
-                                  content: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          AppTextField(
-                                            topMargin: 0,
-                                            leftMargin: 0,
-                                            rightMargin: 0,
-                                            focusNode: nameFocusNode,
-                                            autocorrect: false,
-                                            controller: nameController,
-                                            keyboardType: TextInputType.text,
-                                            style: AppStyles
-                                                .textStyleSize14W600Primary(
-                                                    context),
-                                            inputFormatters: <
-                                                TextInputFormatter>[
-                                              LengthLimitingTextInputFormatter(
-                                                  20),
-                                              UpperCaseTextFormatter(),
-                                            ],
-                                          ),
-                                          nameError != null
-                                              ? SizedBox(
-                                                  height: 40,
-                                                  child: Text(nameError!,
-                                                      style: AppStyles
-                                                          .textStyleSize14W600Primary(
-                                                              context)),
-                                                )
-                                              : const SizedBox(
-                                                  height: 40,
+    return Stack(
+      children: [
+        Container(
+          padding: const EdgeInsets.only(top: 40),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 36, right: 36, bottom: 20),
+                child: Text(
+                    AppLocalization.of(context)!.accountsListDescription,
+                    textAlign: TextAlign.justify,
+                    style: AppStyles.textStyleSize12W400Primary(context)),
+              ),
+              for (int i = 0;
+                  i < appWalletLive!.appKeychain!.accounts!.length;
+                  i++)
+                _buildAccountListItem(context,
+                    appWalletLive!.appKeychain!.accounts![i], setState),
+              Row(
+                children: <Widget>[
+                  appWalletLive!.appKeychain!.accounts!.length >= kMaxAccounts
+                      ? const SizedBox()
+                      : AppButton.buildAppButtonTiny(
+                          const Key('addAccount'),
+                          context,
+                          AppButtonType.primary,
+                          AppLocalization.of(context)!.addAccount,
+                          Dimens.buttonBottomDimens,
+                          onPressed: () async {
+                            FocusNode nameFocusNode = FocusNode();
+                            TextEditingController nameController =
+                                TextEditingController();
+                            String? nameError;
+                            await showDialog(
+                                context: expandedKey.currentContext!,
+                                builder: (BuildContext context) {
+                                  return StatefulBuilder(
+                                    builder: (context, setState) {
+                                      return AlertDialog(
+                                        title: Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 10.0),
+                                          child: Column(children: [
+                                            Text(
+                                              AppLocalization.of(context)!
+                                                  .introNewWalletGetFirstInfosNameRequest,
+                                              style: AppStyles
+                                                  .textStyleSize16W400Primary(
+                                                      context),
+                                            ),
+                                          ]),
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(16.0)),
+                                            side: BorderSide(
+                                                color:
+                                                    StateContainer.of(context)
+                                                        .curTheme
+                                                        .text45!)),
+                                        content: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                AppTextField(
+                                                  topMargin: 0,
+                                                  leftMargin: 0,
+                                                  rightMargin: 0,
+                                                  focusNode: nameFocusNode,
+                                                  autocorrect: false,
+                                                  controller: nameController,
+                                                  keyboardType:
+                                                      TextInputType.text,
+                                                  style: AppStyles
+                                                      .textStyleSize14W600Primary(
+                                                          context),
+                                                  inputFormatters: <
+                                                      TextInputFormatter>[
+                                                    LengthLimitingTextInputFormatter(
+                                                        20),
+                                                    UpperCaseTextFormatter(),
+                                                  ],
                                                 ),
-                                          Text(
-                                            AppLocalization.of(context)!
-                                                .introNewWalletGetFirstInfosNameInfos,
-                                            style: AppStyles
-                                                .textStyleSize14W600Primary(
-                                                    context),
-                                            textAlign: TextAlign.justify,
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          AppButton.buildAppButton(
-                                              const Key('addName'),
-                                              context,
-                                              isPressed == false
-                                                  ? AppButtonType.primary
-                                                  : AppButtonType
-                                                      .primaryOutline,
-                                              AppLocalization.of(context)!.ok,
-                                              Dimens.buttonBottomDimens,
-                                              onPressed: () async {
-                                            if (isPressed == true) {
-                                              return;
-                                            }
-                                            nameError = '';
-                                            if (nameController.text.isEmpty) {
-                                              setState(() {
-                                                nameError = AppLocalization.of(
-                                                        context)!
-                                                    .introNewWalletGetFirstInfosNameBlank;
-                                                FocusScope.of(context)
-                                                    .requestFocus(
-                                                        nameFocusNode);
-                                              });
-                                            } else {
-                                              bool accountExists = false;
-                                              for (Account account
-                                                  in appWalletLive!
-                                                      .appKeychain!.accounts!) {
-                                                if (account.name ==
-                                                    nameController.text) {
-                                                  accountExists = true;
-                                                }
-                                              }
-                                              if (accountExists == true) {
-                                                setState(() {
-                                                  nameError =
-                                                      AppLocalization.of(
-                                                              context)!
-                                                          .addAccountExists;
-                                                  FocusScope.of(context)
-                                                      .requestFocus(
-                                                          nameFocusNode);
-                                                });
-                                              } else {
-                                                setState(() {
-                                                  isPressed = true;
-                                                });
-                                                AppDialogs.showConfirmDialog(
+                                                nameError != null
+                                                    ? SizedBox(
+                                                        height: 40,
+                                                        child: Text(nameError!,
+                                                            style: AppStyles
+                                                                .textStyleSize14W600Primary(
+                                                                    context)),
+                                                      )
+                                                    : const SizedBox(
+                                                        height: 40,
+                                                      ),
+                                                Text(
+                                                  AppLocalization.of(context)!
+                                                      .introNewWalletGetFirstInfosNameInfos,
+                                                  style: AppStyles
+                                                      .textStyleSize14W600Primary(
+                                                          context),
+                                                  textAlign: TextAlign.justify,
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                AppButton.buildAppButton(
+                                                    const Key('addName'),
                                                     context,
+                                                    isPressed == false
+                                                        ? AppButtonType.primary
+                                                        : AppButtonType
+                                                            .primaryOutline,
                                                     AppLocalization.of(context)!
-                                                        .addAccount,
-                                                    AppLocalization.of(context)!
-                                                        .addAccountConfirmation
-                                                        .replaceAll(
-                                                            '%1',
-                                                            nameController
-                                                                .text),
-                                                    AppLocalization.of(context)!
-                                                        .yes,
-                                                    () async {
-                                                      await KeychainUtil()
-                                                          .addAccountInKeyChain(
-                                                              StateContainer.of(
-                                                                      context)
-                                                                  .appWallet!,
-                                                              await StateContainer
-                                                                      .of(
-                                                                          context)
-                                                                  .getSeed(),
-                                                              nameController
-                                                                  .text,
-                                                              StateContainer.of(
-                                                                      context)
-                                                                  .curCurrency
-                                                                  .currency
-                                                                  .name,
-                                                              StateContainer.of(
-                                                                      context)
-                                                                  .curNetwork
-                                                                  .getNetworkCryptoCurrencyLabel());
-
-                                                      setState(() {
-                                                        isPressed = false;
-                                                      });
-                                                      Navigator.pop(
-                                                          context, true);
-                                                    },
-                                                    cancelText:
-                                                        AppLocalization.of(
-                                                                context)!
-                                                            .no,
-                                                    cancelAction: () {
-                                                      setState(() {
-                                                        isPressed = false;
-                                                      });
+                                                        .ok,
+                                                    Dimens.buttonBottomDimens,
+                                                    onPressed: () async {
+                                                  if (isPressed == true) {
+                                                    return;
+                                                  }
+                                                  nameError = '';
+                                                  if (nameController
+                                                      .text.isEmpty) {
+                                                    setState(() {
+                                                      nameError = AppLocalization
+                                                              .of(context)!
+                                                          .introNewWalletGetFirstInfosNameBlank;
+                                                      FocusScope.of(context)
+                                                          .requestFocus(
+                                                              nameFocusNode);
                                                     });
-                                              }
-                                            }
-                                          }),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
-                          });
-                      setState(() {
-                        appWalletLive!.appKeychain!.accounts!
-                            .sort((a, b) => a.name!.compareTo(b.name!));
-                      });
-                    },
-                  ),
-          ],
+                                                  } else {
+                                                    bool accountExists = false;
+                                                    for (Account account
+                                                        in appWalletLive!
+                                                            .appKeychain!
+                                                            .accounts!) {
+                                                      if (account.name ==
+                                                          nameController.text) {
+                                                        accountExists = true;
+                                                      }
+                                                    }
+                                                    if (accountExists == true) {
+                                                      setState(() {
+                                                        nameError =
+                                                            AppLocalization.of(
+                                                                    context)!
+                                                                .addAccountExists;
+                                                        FocusScope.of(context)
+                                                            .requestFocus(
+                                                                nameFocusNode);
+                                                      });
+                                                    } else {
+                                                      setState(() {
+                                                        isPressed = true;
+                                                      });
+                                                      AppDialogs
+                                                          .showConfirmDialog(
+                                                              context,
+                                                              AppLocalization.of(
+                                                                      context)!
+                                                                  .addAccount,
+                                                              AppLocalization
+                                                                      .of(
+                                                                          context)!
+                                                                  .addAccountConfirmation
+                                                                  .replaceAll(
+                                                                      '%1',
+                                                                      nameController
+                                                                          .text),
+                                                              AppLocalization
+                                                                      .of(
+                                                                          context)!
+                                                                  .yes,
+                                                              () async {
+                                                                await KeychainUtil().addAccountInKeyChain(
+                                                                    StateContainer.of(
+                                                                            context)
+                                                                        .appWallet!,
+                                                                    await StateContainer.of(
+                                                                            context)
+                                                                        .getSeed(),
+                                                                    nameController
+                                                                        .text,
+                                                                    StateContainer.of(
+                                                                            context)
+                                                                        .curCurrency
+                                                                        .currency
+                                                                        .name,
+                                                                    StateContainer.of(
+                                                                            context)
+                                                                        .curNetwork
+                                                                        .getNetworkCryptoCurrencyLabel());
+
+                                                                setState(() {
+                                                                  isPressed =
+                                                                      false;
+                                                                });
+                                                                Navigator.pop(
+                                                                    context,
+                                                                    true);
+                                                              },
+                                                              cancelText:
+                                                                  AppLocalization.of(
+                                                                          context)!
+                                                                      .no,
+                                                              cancelAction: () {
+                                                                setState(() {
+                                                                  isPressed =
+                                                                      false;
+                                                                });
+                                                              });
+                                                    }
+                                                  }
+                                                }),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                });
+                            setState(() {
+                              appWalletLive!.appKeychain!.accounts!
+                                  .sort((a, b) => a.name!.compareTo(b.name!));
+                            });
+                          },
+                        ),
+                ],
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -289,7 +319,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
   Widget _buildAccountListItem(
       BuildContext context, Account account, StateSetter setState) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10),
+      padding: const EdgeInsets.only(left: 26, right: 26, bottom: 8),
       child: InkWell(
         onTap: () async {
           sl.get<HapticUtil>().feedback(
@@ -308,15 +338,26 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
         },
         child: Card(
           shape: RoundedRectangleBorder(
+            side: BorderSide(
+                color: StateContainer.of(context)
+                    .curTheme
+                    .backgroundAccountsListCardSelected!,
+                width: 1.0),
             borderRadius: BorderRadius.circular(10.0),
           ),
           elevation: 0,
-          color: Colors.white.withOpacity(0.1),
+          color: StateContainer.of(context)
+              .curTheme
+              .backgroundAccountsListCardSelected,
           child: Container(
             height: 70,
             color: account.selected!
-                ? Colors.white.withOpacity(0.1)
-                : Colors.transparent,
+                ? StateContainer.of(context)
+                    .curTheme
+                    .backgroundAccountsListCardSelected
+                : StateContainer.of(context)
+                    .curTheme
+                    .backgroundAccountsListCard,
             child: Column(
               children: [
                 Row(
@@ -339,7 +380,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                 children: <Widget>[
                                   SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width - 50,
+                                        MediaQuery.of(context).size.width - 80,
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
