@@ -244,7 +244,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             height: 40,
                           ),
                         SizedBox(
-                          height: 530,
+                          height: MediaQuery.of(context).size.height,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
