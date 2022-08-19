@@ -681,7 +681,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                       const AlwaysScrollableScrollPhysics(),
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 40.0, bottom: 50),
+                                        top: kToolbarHeight + kTextTabBarHeight,
+                                        bottom: 50),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
@@ -748,7 +749,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                       const AlwaysScrollableScrollPhysics(),
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 60.0, bottom: 50),
+                                        top: kToolbarHeight + kTextTabBarHeight,
+                                        bottom: 50),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
@@ -843,7 +845,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                 physics: const AlwaysScrollableScrollPhysics(),
                                 child: Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 60.0, bottom: 50),
+                                      top: kToolbarHeight + kTextTabBarHeight,
+                                      bottom: 50),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
