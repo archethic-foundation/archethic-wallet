@@ -3,7 +3,7 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.4+259
+version: 1.0.4+260
 
 environment:
   sdk: '>=2.17.0 <3.0.0'
@@ -178,10 +178,15 @@ dev_dependencies:
   json_serializable: ^6.3.1
   # A command-line tool that create Msix installer from your flutter windows-build files.
   msix: ^3.6.3
+  flutter_launcher_icons: ^0.10.0
 
 flutter_icons:
   android: true
   ios: true
+  image_path: "assets/logo_ref_icon.png"
+  adaptive_icon_background: "#000000"
+  min_sdk_android: 21 
+  remove_alpha_ios: true
 
 msix_config:
   display_name: Archethic Wallet
