@@ -68,9 +68,10 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      key: expandedKey,
       children: [
         Container(
-          padding: const EdgeInsets.only(top: 40),
+          padding: const EdgeInsets.only(top: 40, bottom: 50),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
