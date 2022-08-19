@@ -1829,5 +1829,17 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "token": "token",
+  "@token": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "tokens": "tokens",
+  "@tokens": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

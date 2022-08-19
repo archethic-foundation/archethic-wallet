@@ -84,6 +84,14 @@ class AppLocalization {
     return Intl.message('Update', name: 'update');
   }
 
+  String get token {
+    return Intl.message('token', name: 'token');
+  }
+
+  String get tokens {
+    return Intl.message('tokens', name: 'tokens');
+  }
+
   String get transferTokens {
     return Intl.message('Send %1', name: 'transferTokens');
   }

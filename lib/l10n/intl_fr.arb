@@ -306,5 +306,7 @@
 	"tokenSymbolMaxNumberCharacter": "4 caractères maximums",
 	"tokenSymbolHint": "Entrer un symbole",
 	"createNFTCollection": "Créer une collection de NFT",
-	"createFungibleToken": "Créer un jeton"
+	"createFungibleToken": "Créer un jeton",
+	"token": "jeton",
+	"tokens": "jetons"
 }

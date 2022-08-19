@@ -412,7 +412,11 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                                 .accountTokens!
                                                                 .isNotEmpty)
                                                           AutoSizeText(
-                                                            '${account.accountTokens!.length} tokens',
+                                                            account.accountTokens!
+                                                                        .length >
+                                                                    1
+                                                                ? '${account.accountTokens!.length} ${AppLocalization.of(context)!.tokens}'
+                                                                : '${account.accountTokens!.length} ${AppLocalization.of(context)!.token}',
                                                             style: AppStyles
                                                                 .textStyleSize12W400Primary(
                                                                     context),
@@ -456,7 +460,11 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                                 .accountTokens!
                                                                 .isNotEmpty)
                                                           AutoSizeText(
-                                                            '${account.accountTokens!.length} tokens',
+                                                            account.accountTokens!
+                                                                        .length >
+                                                                    1
+                                                                ? '${account.accountTokens!.length} ${AppLocalization.of(context)!.tokens}'
+                                                                : '${account.accountTokens!.length} ${AppLocalization.of(context)!.token}',
                                                             style: AppStyles
                                                                 .textStyleSize12W400Primary(
                                                                     context),

@@ -551,9 +551,6 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                     items: <BottomBarItem>[
                       BottomBarItem(
                           icon: const FaIcon(FontAwesomeIcons.keycdn),
-                          title: Text(
-                            AppLocalization.of(context)!.keychainHeader,
-                          ),
                           backgroundColorOpacity: StateContainer.of(context)
                               .curTheme
                               .bottomBarBackgroundColorOpacity!,
@@ -571,11 +568,6 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                               .bottomBarInactiveIcon!),
                       BottomBarItem(
                           icon: const Icon(Icons.account_circle),
-                          title: Text(StateContainer.of(context)
-                              .appWallet!
-                              .appKeychain!
-                              .getAccountSelected()!
-                              .name!),
                           backgroundColorOpacity: StateContainer.of(context)
                               .curTheme
                               .bottomBarBackgroundColorOpacity!,
@@ -593,7 +585,6 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                               .bottomBarInactiveIcon!),
                       BottomBarItem(
                           icon: const Icon(Icons.collections_bookmark),
-                          title: Text('Collection'),
                           backgroundColorOpacity: StateContainer.of(context)
                               .curTheme
                               .bottomBarBackgroundColorOpacity!,

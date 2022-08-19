@@ -306,5 +306,7 @@
 	"tokenSymbolMissing": "Choose a Symbol for the Token",
 	"tokenSymbol": "Symbol: ",
 	"tokenSymbolMaxNumberCharacter": "4 characters maximum",
-	"tokenSymbolHint": "Enter a symbol"
+	"tokenSymbolHint": "Enter a symbol",
+	"token": "token",
+	"tokens": "tokens"
 }
