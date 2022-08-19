@@ -782,6 +782,13 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                                 .buildKPI(context)
                                             : const SizedBox(),
 
+                                        Divider(
+                                          height: 1,
+                                          color: StateContainer.of(context)
+                                              .curTheme
+                                              .backgroundDarkest!
+                                              .withOpacity(0.1),
+                                        ),
                                         const SizedBox(
                                           height: 15,
                                         ),
@@ -792,7 +799,13 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                         const SizedBox(
                                           height: 15,
                                         ),
-
+                                        Divider(
+                                          height: 1,
+                                          color: StateContainer.of(context)
+                                              .curTheme
+                                              .backgroundDarkest!
+                                              .withOpacity(0.1),
+                                        ),
                                         ExpandablePageView(
                                           // ignore: prefer_const_literals_to_create_immutables
                                           children: [
