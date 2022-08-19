@@ -281,6 +281,7 @@ class KeychainUtil {
           .get<ApiService>()
           .getLastTransaction(genesisAddressKeychain, request: 'address');
       appWallet.appKeychain!.address = lastTransactionKeychain.address;
+      accounts.sort((a, b) => a.name!.compareTo(b.name!));
       appWallet.appKeychain!.accounts = accounts;
 
       await appWallet.save();

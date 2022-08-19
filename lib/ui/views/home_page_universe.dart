@@ -505,15 +505,18 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                             ),
                           )
                         : StateContainer.of(context).bottomBarCurrentPage == 1
-                            ? AutoSizeText(
-                                StateContainer.of(context)
-                                    .appWallet!
-                                    .appKeychain!
-                                    .getAccountSelected()!
-                                    .name!,
-                                style:
-                                    AppStyles.textStyleSize24W700EquinoxPrimary(
-                                        context),
+                            ? FittedBox(
+                                fit: BoxFit.fitWidth,
+                                child: Text(
+                                  StateContainer.of(context)
+                                      .appWallet!
+                                      .appKeychain!
+                                      .getAccountSelected()!
+                                      .name!,
+                                  style: AppStyles
+                                      .textStyleSize24W700EquinoxPrimary(
+                                          context),
+                                ),
                               )
                             : AutoSizeText(
                                 'Collection',
@@ -659,6 +662,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                       .appKeychain!
                                       .getAccountSelected()!
                                       .name);
+                          setState(() {});
                         }),
                         child: ScrollConfiguration(
                           behavior: ScrollConfiguration.of(context).copyWith(

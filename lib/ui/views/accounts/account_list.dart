@@ -70,15 +70,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        for (int i = 0;
-            i <
-                StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!
-                    .accountTokens!
-                    .length;
-            i++)
+        for (int i = 0; i < appWalletLive!.appKeychain!.accounts!.length; i++)
           _buildAccountListItem(
               context, appWalletLive!.appKeychain!.accounts![i], setState),
         Row(
@@ -414,6 +406,17 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                               .textStyleSize12W400Primary(
                                                                   context),
                                                         ),
+                                                        if (account.accountTokens !=
+                                                                null &&
+                                                            account
+                                                                .accountTokens!
+                                                                .isNotEmpty)
+                                                          AutoSizeText(
+                                                            '${account.accountTokens!.length} tokens',
+                                                            style: AppStyles
+                                                                .textStyleSize12W400Primary(
+                                                                    context),
+                                                          ),
                                                       ],
                                                     ),
                                                   )
@@ -472,6 +475,12 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                       '···········',
                                                       textAlign:
                                                           TextAlign.center,
+                                                      style: AppStyles
+                                                          .textStyleSize12W600Primary60(
+                                                              context),
+                                                    ),
+                                                    AutoSizeText(
+                                                      '···········',
                                                       style: AppStyles
                                                           .textStyleSize12W600Primary60(
                                                               context),

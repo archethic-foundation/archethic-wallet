@@ -94,8 +94,6 @@ class AppService {
             recentTransaction.timestamp =
                 transaction.validationStamp!.timestamp!;
             recentTransaction.from = lastAddress;
-            recentTransaction.tokenInformations =
-                await recentTransaction.getTokenInfo('', transaction.address);
             recentTransactions.add(recentTransaction);
           }
           for (int i = 0;
@@ -160,7 +158,7 @@ class AppService {
       recentTransaction.timestamp = transaction.timestamp!;
       recentTransaction.fee = 0;
       recentTransaction.tokenInformations =
-          await recentTransaction.getTokenInfo('', recentTransaction.address);
+          await recentTransaction.getTokenInfo('', transaction.tokenAddress);
       recentTransactions.add(recentTransaction);
     }
 
@@ -185,22 +183,20 @@ class AppService {
 
     if (balance.token != null) {
       for (int i = 0; i < balance.token!.length; i++) {
-        if (balance.token![i].tokenId == 0) {
-          String content = await sl
-              .get<ApiService>()
-              .getTransactionContent(balance.token![i].address!);
-          Token token = tokenFromJson(content);
-          TokenInformations tokenInformations = TokenInformations(
-              address: balance.token![i].address,
-              name: token.name,
-              type: token.type,
-              supply: token.supply! ~/ 100000000,
-              symbol: token.symbol);
-          AccountToken accountFungibleToken = AccountToken(
-              tokenInformations: tokenInformations,
-              amount: balance.token![i].amount!.toInt());
-          fungiblesTokensList.add(accountFungibleToken);
-        }
+        String content = await sl
+            .get<ApiService>()
+            .getTransactionContent(balance.token![i].address!);
+        Token token = tokenFromJson(content);
+        TokenInformations tokenInformations = TokenInformations(
+            address: balance.token![i].address,
+            name: token.name,
+            type: token.type,
+            supply: token.supply! ~/ 100000000,
+            symbol: token.symbol);
+        AccountToken accountFungibleToken = AccountToken(
+            tokenInformations: tokenInformations,
+            amount: balance.token![i].amount!.toInt());
+        fungiblesTokensList.add(accountFungibleToken);
       }
       fungiblesTokensList.sort((a, b) =>
           a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!));
