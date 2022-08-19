@@ -242,6 +242,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tokenSymbolMaxNumberCharacter" : MessageLookupByLibrary.simpleMessage("4 characters maximum"),
     "tokenSymbolMissing" : MessageLookupByLibrary.simpleMessage("Choose a Symbol for the Token"),
     "tokens" : MessageLookupByLibrary.simpleMessage("tokens"),
+    "tokensHeader" : MessageLookupByLibrary.simpleMessage("Tokens"),
     "tooManyFailedAttempts" : MessageLookupByLibrary.simpleMessage("Too many failed unlock attempts.\nPlease, try again"),
     "total" : MessageLookupByLibrary.simpleMessage("Total"),
     "transactionBuyHeader" : MessageLookupByLibrary.simpleMessage("Buy UCO here"),

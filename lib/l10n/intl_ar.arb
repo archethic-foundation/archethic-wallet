@@ -309,5 +309,6 @@
 	"tokenSymbolHint": "Enter a symbol",
 	"token": "token",
 	"tokens": "tokens",
-	"accountsListDescription": "Your keychain contains the following services and accounts."
+	"accountsListDescription": "Your keychain contains the following services and accounts.",
+	"tokensHeader": "Tokens"
 }
