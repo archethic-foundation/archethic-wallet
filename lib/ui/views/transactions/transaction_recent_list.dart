@@ -140,9 +140,8 @@ class _TxListWidgetState extends State<TxListWidget> {
                           ? StateContainer.of(context).showBalance
                               ? AutoSizeText(
                                   '${NumberUtil.formatThousands(transaction.tokenInformations!.supply!)} ${transaction.tokenInformations!.symbol}',
-                                  style:
-                                      AppStyles.textStyleSize12W400PrimaryRed(
-                                          context))
+                                  style: AppStyles.textStyleSize12W400Primary(
+                                      context))
                               : AutoSizeText('···········',
                                   style: AppStyles.textStyleSize12W600Primary60(
                                       context))
@@ -166,25 +165,24 @@ class _TxListWidgetState extends State<TxListWidget> {
                                           if (transaction.tokenInformations == null)
                                             AutoSizeText(
                                                 '-${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                                style: AppStyles.textStyleSize12W400PrimaryRed(
+                                                style: AppStyles.textStyleSize12W400Primary(
                                                     context))
                                           else
                                             AutoSizeText(
                                                 '-${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
-                                                style: AppStyles.textStyleSize12W400PrimaryRed(
+                                                style: AppStyles.textStyleSize12W400Primary(
                                                     context))
                                         else if (transaction.tokenInformations ==
                                             null)
                                           AutoSizeText(
                                               '${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                              style:
-                                                  AppStyles.textStyleSize12W400PrimaryGreen(
-                                                      context))
+                                              style: AppStyles.textStyleSize12W400Primary(
+                                                  context))
                                         else
                                           AutoSizeText(
                                               '${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
                                               style:
-                                                  AppStyles.textStyleSize12W400PrimaryRed(
+                                                  AppStyles.textStyleSize12W400Primary(
                                                       context))
                                       else
                                         AutoSizeText('···········',
@@ -232,7 +230,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                                               ? AutoSizeText(
                                                   '-${CurrencyUtil.convertAmountFormated(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, transaction.amount!)}',
                                                   style: AppStyles
-                                                      .textStyleSize12W400PrimaryRed(
+                                                      .textStyleSize12W400Primary(
                                                           context))
                                               : AutoSizeText(
                                                   CurrencyUtil
@@ -252,7 +250,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                                                               .amount!,
                                                           transaction.amount!),
                                                   style: AppStyles
-                                                      .textStyleSize12W400PrimaryGreen(
+                                                      .textStyleSize12W400Primary(
                                                           context)),
                                         if (transaction.amount != null)
                                           transaction.typeTx ==
@@ -261,7 +259,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                                               ? AutoSizeText(
                                                   '-${Decimal.parse(transaction.amount!.toString())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                                   style: AppStyles
-                                                      .textStyleSize12W600Primary(
+                                                      .textStyleSize12W400Primary(
                                                           context))
                                               : AutoSizeText(
                                                   '${Decimal.parse(transaction.amount!.toString())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
@@ -295,7 +293,7 @@ class _TxListWidgetState extends State<TxListWidget> {
                           children: [
                             AutoSizeText(
                                 '${AppLocalization.of(context)!.tokenCreated}: ${transaction.tokenInformations!.name}',
-                                style: AppStyles.textStyleSize12W400PrimaryRed(
+                                style: AppStyles.textStyleSize12W400Primary(
                                     context)),
                           ],
                         ),

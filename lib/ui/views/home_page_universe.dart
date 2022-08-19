@@ -6,6 +6,7 @@ import 'dart:io';
 import 'dart:ui';
 
 // Flutter imports:
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/add_nft_collection.dart';
 import 'package:aewallet/ui/views/nft/collections_list.dart';
 import 'package:flutter/foundation.dart';
@@ -16,6 +17,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:event_taxi/event_taxi.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -266,9 +268,6 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
-
     return Responsive.isDesktop(context) == true
         ? Scaffold(
             extendBodyBehindAppBar: true,
@@ -479,25 +478,49 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                       .setActiveNotifications(true);
                                 })
                     ],
-                    title: InkWell(
-                      onTap: () async {
-                        // await _networkDialog();
-                      },
-                      child: Column(
-                        children: [
-                          SvgPicture.asset(
-                            '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
-                            height: 30,
-                          ),
-                          Text(
-                              StateContainer.of(context)
-                                  .curNetwork
-                                  .getDisplayName(context),
-                              style: AppStyles.textStyleSize10W100Primary(
-                                  context)),
-                        ],
-                      ),
-                    ),
+                    title: StateContainer.of(context).bottomBarCurrentPage == 0
+                        ? InkWell(
+                            onTap: () {
+                              sl.get<HapticUtil>().feedback(FeedbackType.light,
+                                  StateContainer.of(context).activeVibrations);
+                              Clipboard.setData(ClipboardData(
+                                  text: StateContainer.of(context)
+                                      .appWallet!
+                                      .appKeychain!
+                                      .address!
+                                      .toUpperCase()));
+                              UIUtil.showSnackbar(
+                                  AppLocalization.of(context)!.addressCopied,
+                                  context,
+                                  StateContainer.of(context).curTheme.text!,
+                                  StateContainer.of(context)
+                                      .curTheme
+                                      .snackBarShadow!);
+                            },
+                            child: AutoSizeText(
+                              AppLocalization.of(context)!.keychainHeader,
+                              style:
+                                  AppStyles.textStyleSize24W700EquinoxPrimary(
+                                      context),
+                            ),
+                          )
+                        : StateContainer.of(context).bottomBarCurrentPage == 1
+                            ? AutoSizeText(
+                                StateContainer.of(context)
+                                    .appWallet!
+                                    .appKeychain!
+                                    .getAccountSelected()!
+                                    .name!,
+                                style:
+                                    AppStyles.textStyleSize24W700EquinoxPrimary(
+                                        context),
+                              )
+                            : AutoSizeText(
+                                'Collection',
+                                style:
+                                    AppStyles.textStyleSize24W700EquinoxPrimary(
+                                        context),
+                              ),
                     backgroundColor: Colors.transparent,
                     elevation: 0.0,
                     centerTitle: true,
@@ -594,7 +617,6 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
             drawer: SizedBox(
               width: Responsive.drawerWidth(context),
               child: const Drawer(
-                // TODO: dependencies issue
                 child: SettingsSheetWalletMobile(),
               ),
             ),
@@ -638,44 +660,56 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                       .getAccountSelected()!
                                       .name);
                         }),
-                        child: Column(
-                          children: <Widget>[
-                            /// BACKGROUND IMAGE
-                            Container(
-                              height: MediaQuery.of(context).size.height,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(StateContainer.of(context)
-                                        .curTheme
-                                        .background1Small!),
-                                    fit: BoxFit.fitHeight,
-                                    opacity: 0.7),
-                              ),
-                              child: SingleChildScrollView(
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 105.0, bottom: 100),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      /// ACCOUNTS LIST
-                                      AccountsListWidget(
-                                        appWallet: StateContainer.of(context)
-                                            .appWallet,
-                                        currencyName: StateContainer.of(context)
-                                            .curCurrency
-                                            .currency
-                                            .name,
-                                      )
-                                    ],
+                        child: ScrollConfiguration(
+                          behavior: ScrollConfiguration.of(context).copyWith(
+                            dragDevices: {
+                              PointerDeviceKind.touch,
+                              PointerDeviceKind.mouse,
+                            },
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              /// BACKGROUND IMAGE
+                              Container(
+                                height: MediaQuery.of(context).size.height,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          StateContainer.of(context)
+                                              .curTheme
+                                              .background1Small!),
+                                      fit: BoxFit.fitHeight,
+                                      opacity: 0.7),
+                                ),
+                                child: SingleChildScrollView(
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 100.0, bottom: 50),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        /// ACCOUNTS LIST
+                                        AccountsListWidget(
+                                          appWallet: StateContainer.of(context)
+                                              .appWallet,
+                                          currencyName:
+                                              StateContainer.of(context)
+                                                  .curCurrency
+                                                  .currency
+                                                  .name,
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -719,61 +753,13 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                       const AlwaysScrollableScrollPhysics(),
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 105.0, bottom: 100),
+                                        top: 60.0, bottom: 50),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: <Widget>[
-                                        /// ACCOUNT SELECTED
-                                        SizedBox(
-                                          height: 35,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              StateContainer.of(context)
-                                                          .appWallet!
-                                                          .appKeychain!
-                                                          .getAccountSelected()!
-                                                          .name !=
-                                                      null
-                                                  ? Align(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            StateContainer.of(
-                                                                    context)
-                                                                .appWallet!
-                                                                .appKeychain!
-                                                                .getAccountSelected()!
-                                                                .name!,
-                                                            style: AppStyles
-                                                                .textStyleSize24W700EquinoxPrimary(
-                                                                    context),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    )
-                                                  : const SizedBox(),
-                                            ],
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-
                                         /// BALANCE
                                         BalanceInfosWidget()
                                             .getBalance(context),
@@ -862,7 +848,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                 physics: const AlwaysScrollableScrollPhysics(),
                                 child: Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 105.0, bottom: 100),
+                                      top: 60.0, bottom: 50),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
@@ -995,7 +981,7 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
                 const EdgeInsets.only(top: 10.0, bottom: 10, left: 0, right: 0),
             child: Row(
               children: <Widget>[
-                AppButton.buildAppButton(
+                AppButton.buildAppButtonTiny(
                     const Key('createTokenFungible'),
                     context,
                     AppButtonType.primary,

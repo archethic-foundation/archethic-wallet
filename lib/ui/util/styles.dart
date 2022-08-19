@@ -161,6 +161,18 @@ class AppStyles {
             .withOpacity(0.3));
   }
 
+  static TextStyle textStyleSize12W400EquinoxMainButtonLabelDisabled(
+      BuildContext context) {
+    return TextStyle(
+        fontFamily: StateContainer.of(context).curTheme.mainFont,
+        fontSize: AppFontSizes.size12,
+        fontWeight: FontWeight.w400,
+        color: StateContainer.of(context)
+            .curTheme
+            .mainButtonLabel!
+            .withOpacity(0.3));
+  }
+
   static TextStyle textStyleSize12W100PrimaryDisabled(BuildContext context) {
     return TextStyle(
         fontFamily: StateContainer.of(context).curTheme.secondaryFont,
@@ -673,6 +685,16 @@ class AppStyles {
       fontFamily: StateContainer.of(context).curTheme.mainFont,
       fontSize: AppFontSizes.size18,
       fontWeight: FontWeight.w600,
+      color: StateContainer.of(context).curTheme.mainButtonLabel,
+    );
+  }
+
+  static TextStyle textStyleSize12W400EquinoxMainButtonLabel(
+      BuildContext context) {
+    return TextStyle(
+      fontFamily: StateContainer.of(context).curTheme.mainFont,
+      fontSize: AppFontSizes.size12,
+      fontWeight: FontWeight.w400,
       color: StateContainer.of(context).curTheme.mainButtonLabel,
     );
   }
