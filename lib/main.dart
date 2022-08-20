@@ -305,14 +305,14 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
     }
     try {
       // iOS key store is persistent, so if this is first launch then we will clear the keystore
-      bool firstLaunch = preferences.getFirstLaunch();
+      /*bool firstLaunch = preferences.getFirstLaunch();
       if (firstLaunch) {
         Vault vault = await Vault.getInstance();
         vault.clearAll();
         preferences.clearAll();
       }
       await preferences.setFirstLaunch(false);
-
+      */
       bool isLoggedIn = false;
 
       final String? seed = await StateContainer.of(context).getSeed();
