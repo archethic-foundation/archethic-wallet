@@ -59,11 +59,9 @@ class Account extends HiveObject {
   @HiveField(7)
   List<AccountToken>? accountTokens;
 
-  List<AccountToken>? getAccountCollectionsNFT() {
-    return accountTokens!.where((AccountToken accountToken) {
-      return accountToken.tokenInformations!.type == 'non-fungible';
-    }).toList();
-  }
+  /// NFT
+  @HiveField(8)
+  List<AccountToken>? accountNFT;
 
   Future<void> updateLastAddress() async {
     String lastAddressFromAddress =

@@ -35,13 +35,9 @@ import 'package:aewallet/util/preferences.dart';
 
 class AddNFTCollectionConfirm extends StatefulWidget {
   const AddNFTCollectionConfirm(
-      {super.key,
-      this.tokenName,
-      this.tokenSymbol,
-      required this.feeEstimation});
+      {super.key, required this.token, required this.feeEstimation});
 
-  final String? tokenName;
-  final String? tokenSymbol;
+  final Token? token;
   final double? feeEstimation;
 
   @override
@@ -192,7 +188,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                         Text(AppLocalization.of(context)!.tokenName,
                             style:
                                 AppStyles.textStyleSize14W600Primary(context)),
-                        Text(widget.tokenName!,
+                        Text(widget.token!.name!,
                             style:
                                 AppStyles.textStyleSize14W100Primary(context)),
                       ],
@@ -205,7 +201,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                         Text(AppLocalization.of(context)!.tokenSymbol,
                             style:
                                 AppStyles.textStyleSize14W600Primary(context)),
-                        Text(widget.tokenSymbol!,
+                        Text(widget.token!.symbol!,
                             style:
                                 AppStyles.textStyleSize14W100Primary(context)),
                       ],
@@ -279,9 +275,10 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
       final Transaction transaction =
           Transaction(type: 'token', data: Transaction.initData());
       String content = tokenToJsonForTxDataContent(Token(
-          name: widget.tokenName,
-          supply: 0,
-          symbol: widget.tokenSymbol,
+          name: widget.token!.name!,
+          supply: widget.token!.tokenProperties!.length * 100000000,
+          symbol: widget.token!.symbol!,
+          tokenProperties: widget.token!.tokenProperties,
           type: 'non-fungible'));
       transaction.setContent(content);
 

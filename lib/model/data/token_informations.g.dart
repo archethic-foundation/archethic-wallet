@@ -22,9 +22,10 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
       supply: fields[2] as int?,
       type: fields[3] as String?,
       symbol: fields[4] as String?,
-      tokenId: fields[5] as int?,
-      tokenInformationsProperties:
-          (fields[6] as List?)?.cast<TokenInformationsProperty>(),
+      tokenProperties: (fields[8] as List?)
+          ?.map((dynamic e) => (e as List).cast<TokenInformationsProperty>())
+          .toList(),
+      onChain: fields[7] as bool?,
     );
   }
 
@@ -42,10 +43,10 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
       ..write(obj.type)
       ..writeByte(4)
       ..write(obj.symbol)
-      ..writeByte(5)
-      ..write(obj.tokenId)
-      ..writeByte(6)
-      ..write(obj.tokenInformationsProperties);
+      ..writeByte(7)
+      ..write(obj.onChain)
+      ..writeByte(8)
+      ..write(obj.tokenProperties);
   }
 
   @override

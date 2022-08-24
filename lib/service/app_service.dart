@@ -218,7 +218,6 @@ class AppService {
           TokenInformations tokenInformations = TokenInformations(
               address: balance.token![i].address,
               name: token.name,
-              tokenId: token.tokenId,
               type: token.type,
               supply: token.supply! ~/ 100000000,
               symbol: token.symbol);
@@ -396,14 +395,8 @@ class AppService {
     return transactionFee.fee!;
   }
 
-  Future<double> getFeesEstimationCreateToken(
-      String originPrivateKey,
-      String seed,
-      String name,
-      String symbol,
-      String type,
-      int initialSupply,
-      String accountName) async {
+  Future<double> getFeesEstimationCreateToken(String originPrivateKey,
+      String seed, Token token, String accountName) async {
     final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
     String nameEncoded = Uri.encodeFull(accountName);
     final String service = 'archethic-wallet-$nameEncoded';
@@ -413,8 +406,12 @@ class AppService {
 
     TransactionFee transactionFee = TransactionFee();
     try {
-      String content = tokenToJsonForTxDataContent(
-          Token(name: name, supply: initialSupply, symbol: symbol, type: type));
+      String content = tokenToJsonForTxDataContent(Token(
+          name: token.name,
+          supply: token.supply,
+          symbol: token.symbol,
+          type: token.type,
+          tokenProperties: token.tokenProperties));
       final Transaction transaction =
           Transaction(type: 'token', data: Transaction.initData())
               .setContent(content);

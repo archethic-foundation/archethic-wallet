@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' show ApiService;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -509,13 +509,16 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
     try {
       final String? seed = await StateContainer.of(context).getSeed();
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
+      Token token = Token(
+          name: _nameController!.text,
+          supply:
+              int.tryParse(_initialSupplyController!.text.replaceAll(' ', ''))!,
+          type: 'fungible',
+          symbol: _symbolController!.text);
       fee = await sl.get<AppService>().getFeesEstimationCreateToken(
           originPrivateKey,
           seed!,
-          _nameController!.text,
-          _symbolController!.text,
-          'fungible',
-          int.tryParse(_initialSupplyController!.text.replaceAll(' ', ''))!,
+          token,
           StateContainer.of(context)
               .appWallet!
               .appKeychain!

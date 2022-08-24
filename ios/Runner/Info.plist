@@ -31,6 +31,8 @@
 			<key>NSAllowsArbitraryLoadsInWebContent</key>
 			<true/>
 		</dict>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Photo library permission is required for upload photo to create NFT.</string>
 		<key>NSCameraUsageDescription</key>
 		<string>Camera permission is required for barcode scanning.</string>
 		<key>NSFaceIDUsageDescription</key>

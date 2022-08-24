@@ -2,6 +2,10 @@
 // Package imports:
 
 // Package imports:
+import 'dart:convert';
+import 'dart:typed_data';
+
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive/hive.dart';
 
 // Project imports:
@@ -17,8 +21,8 @@ class TokenInformations extends HiveObject {
       this.supply,
       this.type,
       this.symbol,
-      this.tokenId,
-      this.tokenInformationsProperties});
+      this.tokenProperties,
+      this.onChain});
 
   /// Address of token
   @HiveField(0)
@@ -40,11 +44,50 @@ class TokenInformations extends HiveObject {
   @HiveField(4)
   String? symbol;
 
-  /// Token id
-  @HiveField(5)
-  int? tokenId;
+  /// Token on chain or in creation
+  @HiveField(7)
+  bool? onChain;
 
   /// Token Properties
-  @HiveField(6)
-  List<TokenInformationsProperty>? tokenInformationsProperties;
+  @HiveField(8)
+  List<List<TokenInformationsProperty>>? tokenProperties;
+
+  TokenInformations tokenToTokenInformations(Token token) {
+    address = token.address;
+    name = token.name;
+    supply = token.supply;
+    type = token.type;
+    symbol = token.symbol;
+    for (List<TokenProperty> tokenPropertyList in token.tokenProperties!) {
+      List<TokenInformationsProperty> tokenInformationsPropertyList =
+          List<TokenInformationsProperty>.empty(growable: true);
+      for (TokenProperty tokenProperty in tokenPropertyList) {
+        TokenInformationsProperty tokenInformationsProperty =
+            TokenInformationsProperty(
+                name: tokenProperty.name, value: tokenProperty.value);
+        tokenInformationsPropertyList.add(tokenInformationsProperty);
+      }
+      tokenProperties!.add(tokenInformationsPropertyList);
+    }
+    tokenProperties = tokenProperties;
+
+    return this;
+  }
+
+  Uint8List? getImage() {
+    Uint8List? imageDecoded;
+    if (tokenProperties != null) {
+      for (List<TokenInformationsProperty> tokenInformationsPropertyList
+          in tokenProperties!) {
+        for (TokenInformationsProperty tokenInformationsProperty
+            in tokenInformationsPropertyList) {
+          if (tokenInformationsProperty.name == 'file') {
+            imageDecoded = base64Decode(tokenInformationsProperty.value!);
+            return imageDecoded;
+          }
+        }
+      }
+    }
+    return imageDecoded;
+  }
 }

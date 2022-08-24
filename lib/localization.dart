@@ -1446,6 +1446,71 @@ class AppLocalization {
     return Intl.message('Create collection of NFT',
         name: 'createNFTCollection');
   }
+
+  String get createNFT {
+    return Intl.message('Create a NFT', name: 'createNFT');
+  }
+
+  String get saveNFTCollectionInLocal {
+    return Intl.message('Save collection in local',
+        name: 'saveNFTCollectionInLocal');
+  }
+
+  String get addNFTFile {
+    return Intl.message('Add a NFT', name: 'addNFTFile');
+  }
+
+  String get addNFTProperty {
+    return Intl.message('Add property', name: 'addNFTProperty');
+  }
+
+  String get nftNameHint {
+    return Intl.message('Enter a name', name: 'nftNameHint');
+  }
+
+  String get nftDescriptionHint {
+    return Intl.message('Enter a description', name: 'nftDescriptionHint');
+  }
+
+  String get nftPropertyNameHint {
+    return Intl.message('Enter a name', name: 'nftPropertyNameHint');
+  }
+
+  String get nftPropertyValueHint {
+    return Intl.message('Enter a value', name: 'nftPropertyValueHint');
+  }
+
+  String get nftAddStep1 {
+    return Intl.message('1) Import from', name: 'nftAddStep1');
+  }
+
+  String get nftAddStep2 {
+    return Intl.message('2) Enter information', name: 'nftAddStep2');
+  }
+
+  String get nftAddStep3 {
+    return Intl.message('3) Add properties (optional)', name: 'nftAddStep3');
+  }
+
+  String get nftAddImportFile {
+    return Intl.message('File', name: 'nftAddImportFile');
+  }
+
+  String get nftAddImportPhoto {
+    return Intl.message('Photo', name: 'nftAddImportPhoto');
+  }
+
+  String get nftAddImportUrl {
+    return Intl.message('Url', name: 'nftAddImportUrl');
+  }
+
+  String get nftAddPreview {
+    return Intl.message('Your NFT (Preview)', name: 'nftAddPreview');
+  }
+
+  String get nftAddFileSize {
+    return Intl.message('Size: ', name: 'nftAddFileSize');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
