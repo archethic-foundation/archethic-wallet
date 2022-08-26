@@ -16,10 +16,14 @@ class AccountToken extends HiveObject {
   });
 
   /// Amount
-  @HiveField(2)
-  int? amount;
+  //@HiveField(2)
+  //int? amount;
 
   /// Token informations
   @HiveField(7)
   TokenInformations? tokenInformations;
+
+  /// Amount
+  @HiveField(8)
+  double? amount;
 }

@@ -117,7 +117,7 @@ class RecentTransaction extends HiveObject {
         tokenInformations = TokenInformations(
             address: token.address,
             name: token.name,
-            supply: token.supply! ~/ 100000000,
+            supply: fromBigInt(token.supply!).toDouble(),
             symbol: token.symbol,
             type: token.type);
       } catch (e) {}

@@ -19,7 +19,7 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
     return TokenInformations(
       address: fields[0] as String?,
       name: fields[1] as String?,
-      supply: fields[2] as int?,
+      supply: fields[9] as double?,
       type: fields[3] as String?,
       symbol: fields[4] as String?,
       tokenProperties: (fields[8] as List?)
@@ -37,8 +37,6 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
       ..write(obj.address)
       ..writeByte(1)
       ..write(obj.name)
-      ..writeByte(2)
-      ..write(obj.supply)
       ..writeByte(3)
       ..write(obj.type)
       ..writeByte(4)
@@ -46,7 +44,9 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
       ..writeByte(7)
       ..write(obj.onChain)
       ..writeByte(8)
-      ..write(obj.tokenProperties);
+      ..write(obj.tokenProperties)
+      ..writeByte(9)
+      ..write(obj.supply);
   }
 
   @override

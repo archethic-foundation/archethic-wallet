@@ -72,7 +72,8 @@ class AppService {
         recentTransaction.typeTx = RecentTransaction.tokenCreation;
         recentTransaction.content = transaction.data!.content;
         recentTransaction.fee =
-            transaction.validationStamp!.ledgerOperations!.fee;
+            fromBigInt(transaction.validationStamp!.ledgerOperations!.fee!)
+                .toDouble();
         recentTransaction.tokenInformations = await recentTransaction
             .getTokenInfo(transaction.data!.content, transaction.address);
         recentTransactions.add(recentTransaction);
@@ -86,11 +87,14 @@ class AppService {
             recentTransaction.address = transaction.address;
             recentTransaction.typeTx = RecentTransaction.transferOutput;
             recentTransaction.amount =
-                transaction.data!.ledger!.uco!.transfers![i].amount!.toDouble();
+                fromBigInt(transaction.data!.ledger!.uco!.transfers![i].amount!)
+                    .toDouble();
+
             recentTransaction.recipient =
                 transaction.data!.ledger!.uco!.transfers![i].to!;
             recentTransaction.fee =
-                transaction.validationStamp!.ledgerOperations!.fee;
+                fromBigInt(transaction.validationStamp!.ledgerOperations!.fee!)
+                    .toDouble();
             recentTransaction.timestamp =
                 transaction.validationStamp!.timestamp!;
             recentTransaction.from = lastAddress;
@@ -103,13 +107,14 @@ class AppService {
             recentTransaction.content = content;
             recentTransaction.address = transaction.address;
             recentTransaction.typeTx = RecentTransaction.transferOutput;
-            recentTransaction.amount = transaction
-                .data!.ledger!.token!.transfers![i].amount!
+            recentTransaction.amount = fromBigInt(
+                    transaction.data!.ledger!.token!.transfers![i].amount!)
                 .toDouble();
             recentTransaction.recipient =
                 transaction.data!.ledger!.token!.transfers![i].to!;
             recentTransaction.fee =
-                transaction.validationStamp!.ledgerOperations!.fee;
+                fromBigInt(transaction.validationStamp!.ledgerOperations!.fee!)
+                    .toDouble();
             recentTransaction.timestamp =
                 transaction.validationStamp!.timestamp!;
             recentTransaction.from = lastAddress;
@@ -127,7 +132,8 @@ class AppService {
               transactionInput.type! != 'token') {
             final RecentTransaction recentTransaction = RecentTransaction();
             recentTransaction.address = transactionInput.from;
-            recentTransaction.amount = transactionInput.amount!;
+            recentTransaction.amount =
+                fromBigInt(transactionInput.amount!).toDouble();
             recentTransaction.typeTx = RecentTransaction.transferInput;
             recentTransaction.from = transactionInput.from;
             recentTransaction.recipient = transaction.address;
@@ -151,7 +157,7 @@ class AppService {
             await sl.get<ApiService>().getTransactionContent(transaction.from!);
         recentTransaction.content = content;
       }
-      recentTransaction.amount = transaction.amount!;
+      recentTransaction.amount = fromBigInt(transaction.amount!).toDouble();
       recentTransaction.typeTx = RecentTransaction.transferInput;
       recentTransaction.from = transaction.from;
       recentTransaction.recipient = lastAddress;
@@ -191,11 +197,11 @@ class AppService {
             address: balance.token![i].address,
             name: token.name,
             type: token.type,
-            supply: token.supply! ~/ 100000000,
+            supply: fromBigInt(token.supply!).toDouble(),
             symbol: token.symbol);
         AccountToken accountFungibleToken = AccountToken(
             tokenInformations: tokenInformations,
-            amount: balance.token![i].amount!.toInt());
+            amount: fromBigInt(balance.token![i].amount!).toDouble());
         fungiblesTokensList.add(accountFungibleToken);
       }
       fungiblesTokensList.sort((a, b) =>
@@ -219,11 +225,11 @@ class AppService {
               address: balance.token![i].address,
               name: token.name,
               type: token.type,
-              supply: token.supply! ~/ 100000000,
+              supply: fromBigInt(token.supply!).toDouble(),
               symbol: token.symbol);
           AccountToken accountNFT = AccountToken(
               tokenInformations: tokenInformations,
-              amount: balance.token![i].amount!.toInt());
+              amount: fromBigInt(balance.token![i].amount!).toDouble());
           nftList.add(accountNFT);
         }
       }
@@ -319,7 +325,7 @@ class AppService {
                 domain: 'UCOLedger',
                 titleInfo: 'Amount',
                 valueInfo:
-                    '${NumberUtil.formatThousands(transaction.data!.ledger!.uco!.transfers![i].amount!)} $cryptoCurrency'));
+                    '${NumberUtil.formatThousands(fromBigInt(transaction.data!.ledger!.uco!.transfers![i].amount!))} $cryptoCurrency'));
           }
         }
       }
@@ -353,7 +359,7 @@ class AppService {
                 domain: 'TokenLedger',
                 titleInfo: 'Amount',
                 valueInfo:
-                    '${NumberUtil.formatThousands(transaction.data!.ledger!.token!.transfers![i].amount!)} ${token.symbol!}'));
+                    '${NumberUtil.formatThousands(fromBigInt(transaction.data!.ledger!.token!.transfers![i].amount!))} ${token.symbol!}'));
           }
         }
       }
@@ -392,7 +398,7 @@ class AppService {
     } catch (e) {
       dev.log(e.toString());
     }
-    return transactionFee.fee!;
+    return fromBigInt(transactionFee.fee!).toDouble();
   }
 
   Future<double> getFeesEstimationCreateToken(String originPrivateKey,
@@ -423,6 +429,6 @@ class AppService {
     } catch (e) {
       dev.log(e.toString());
     }
-    return transactionFee.fee!;
+    return fromBigInt(transactionFee.fee!).toDouble();
   }
 }

@@ -181,30 +181,30 @@ class _TxListWidgetState extends State<TxListWidget> {
                                         if (transaction.typeTx ==
                                             RecentTransaction.transferOutput)
                                           if (transaction.tokenInformations == null)
-                                            AutoSizeText(
-                                                '-${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                                style: AppStyles.textStyleSize12W400Primary(
-                                                    context))
+                                            transaction.amount! > 1000000
+                                                ? AutoSizeText('-${NumberUtil.formatThousands(transaction.amount!.round())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                                    style: AppStyles.textStyleSize12W400Primary(
+                                                        context))
+                                                : AutoSizeText('-${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                                    style: AppStyles.textStyleSize12W400Primary(
+                                                        context))
                                           else
-                                            AutoSizeText(
-                                                '-${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
-                                                style: AppStyles.textStyleSize12W400Primary(
-                                                    context))
+                                            transaction.amount! > 1000000
+                                                ? AutoSizeText('-${NumberUtil.formatThousands(transaction.amount!.round())} ${transaction.tokenInformations!.symbol!}',
+                                                    style: AppStyles.textStyleSize12W400Primary(
+                                                        context))
+                                                : AutoSizeText('-${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
+                                                    style: AppStyles.textStyleSize12W400Primary(
+                                                        context))
                                         else if (transaction.tokenInformations ==
                                             null)
-                                          AutoSizeText(
-                                              '${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                              style: AppStyles.textStyleSize12W400Primary(
-                                                  context))
+                                          transaction.amount! > 1000000
+                                              ? AutoSizeText('${NumberUtil.formatThousands(transaction.amount!.round())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}', style: AppStyles.textStyleSize12W400Primary(context))
+                                              : AutoSizeText('${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}', style: AppStyles.textStyleSize12W400Primary(context))
                                         else
-                                          AutoSizeText(
-                                              '${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
-                                              style:
-                                                  AppStyles.textStyleSize12W400Primary(
-                                                      context))
+                                          transaction.amount! > 1000000 ? AutoSizeText('${NumberUtil.formatThousands(transaction.amount!.round())} ${transaction.tokenInformations!.symbol!}', style: AppStyles.textStyleSize12W400Primary(context)) : AutoSizeText('${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}', style: AppStyles.textStyleSize12W400Primary(context))
                                       else
-                                        AutoSizeText('···········',
-                                            style: AppStyles.textStyleSize12W600Primary60(context)),
+                                        AutoSizeText('···········', style: AppStyles.textStyleSize12W600Primary60(context)),
                                     if (transaction.tokenInformations == null &&
                                         transaction.amount != null)
                                       if (StateContainer.of(context)

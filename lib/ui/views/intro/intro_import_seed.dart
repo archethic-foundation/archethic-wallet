@@ -4,6 +4,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -460,10 +461,17 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                       accounts.length == 0) {
                                     setState(() {
                                       _mnemonicIsValid = false;
-                                      _mnemonicError =
-                                          AppLocalization.of(context)!
-                                              .noKeychain;
                                     });
+                                    UIUtil.showSnackbar(
+                                        AppLocalization.of(context)!.noKeychain,
+                                        context,
+                                        StateContainer.of(context)
+                                            .curTheme
+                                            .text!,
+                                        StateContainer.of(context)
+                                            .curTheme
+                                            .snackBarShadow!);
+                                    Navigator.of(context).pop();
                                   } else {
                                     accounts.sort(
                                         (a, b) => a.name!.compareTo(b.name!));
@@ -479,9 +487,15 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                 } catch (e) {
                                   setState(() {
                                     _mnemonicIsValid = false;
-                                    _mnemonicError =
-                                        AppLocalization.of(context)!.noKeychain;
                                   });
+                                  UIUtil.showSnackbar(
+                                      AppLocalization.of(context)!.noKeychain,
+                                      context,
+                                      StateContainer.of(context).curTheme.text!,
+                                      StateContainer.of(context)
+                                          .curTheme
+                                          .snackBarShadow!);
+                                  Navigator.of(context).pop();
                                 }
                               }
 

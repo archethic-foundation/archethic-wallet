@@ -276,7 +276,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
           Transaction(type: 'token', data: Transaction.initData());
       String content = tokenToJsonForTxDataContent(Token(
           name: widget.token!.name!,
-          supply: widget.token!.tokenProperties!.length * 100000000,
+          supply: toBigInt(widget.token!.tokenProperties!.length),
           symbol: widget.token!.symbol!,
           tokenProperties: widget.token!.tokenProperties,
           type: 'non-fungible'));

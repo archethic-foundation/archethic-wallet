@@ -50,7 +50,11 @@ class AccountBalance extends HiveObject {
     if (nativeTokenValue == null) {
       return '';
     } else {
-      return NumberUtil.formatThousands(nativeTokenValue!);
+      if (nativeTokenValue! > 1000000) {
+        return NumberUtil.formatThousands(nativeTokenValue!.round());
+      } else {
+        return NumberUtil.formatThousands(nativeTokenValue!);
+      }
     }
   }
 

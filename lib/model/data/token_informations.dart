@@ -33,8 +33,8 @@ class TokenInformations extends HiveObject {
   String? name;
 
   /// Supply
-  @HiveField(2)
-  int? supply;
+  // @HiveField(2)
+  // int? supply;
 
   /// Type
   @HiveField(3)
@@ -52,10 +52,14 @@ class TokenInformations extends HiveObject {
   @HiveField(8)
   List<List<TokenInformationsProperty>>? tokenProperties;
 
+  /// Supply
+  @HiveField(9)
+  double? supply;
+
   TokenInformations tokenToTokenInformations(Token token) {
     address = token.address;
     name = token.name;
-    supply = token.supply;
+    supply = fromBigInt(token.supply).toDouble();
     type = token.type;
     symbol = token.symbol;
     for (List<TokenProperty> tokenPropertyList in token.tokenProperties!) {

@@ -583,7 +583,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                           inactiveColor: StateContainer.of(context)
                               .curTheme
                               .bottomBarInactiveIcon!),
-                      BottomBarItem(
+                      /*BottomBarItem(
                           icon: const Icon(Icons.collections_bookmark),
                           backgroundColorOpacity: StateContainer.of(context)
                               .curTheme
@@ -599,7 +599,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                               .bottomBarActiveColor!,
                           inactiveColor: StateContainer.of(context)
                               .curTheme
-                              .bottomBarInactiveIcon!),
+                              .bottomBarInactiveIcon!),*/
                     ],
                   ),
                 ),
@@ -831,7 +831,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                     )
                   ],
                 ),
-                Column(
+                /*Column(
                   children: [
                     Expanded(
                       /// REFRESH
@@ -865,7 +865,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
-                                      /// ACCOUNTS LIST
+                                      /// COLLECTION
                                       CollectionsListWidget(
                                         appWallet: StateContainer.of(context)
                                             .appWallet,
@@ -880,7 +880,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                       ),
                     ),
                   ],
-                ),
+                ),*/
               ],
               onPageChanged: (index) {
                 setState(() =>

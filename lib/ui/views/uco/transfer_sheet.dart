@@ -1215,7 +1215,7 @@ class _TransferSheetState extends State<TransferSheet> {
       } else {
         tokenTransferListForFee.add(TokenTransferWallet(
           amount: maxSend
-              ? widget.accountToken!.amount!
+              ? toBigInt(widget.accountToken!.amount!)
               : toBigInt(double.tryParse(_sendAmountController!.text)),
           to: recipientAddress,
           token: widget.accountToken!.tokenInformations!.address,

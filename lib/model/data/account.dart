@@ -83,11 +83,13 @@ class Account extends HiveObject {
         await sl.get<AppService>().getBalanceGetResponse(lastAddress!);
     double fiatCurrencyValue = 0;
     if (balanceGetResponse.uco != null && price.amount != null) {
-      fiatCurrencyValue = balanceGetResponse.uco! * price.amount!;
+      fiatCurrencyValue = fromBigInt(balanceGetResponse.uco!) * price.amount!;
     }
     final AccountBalance accountBalance = AccountBalance(
         nativeTokenName: tokenName,
-        nativeTokenValue: balanceGetResponse.uco,
+        nativeTokenValue: balanceGetResponse.uco == null
+            ? 0
+            : fromBigInt(balanceGetResponse.uco!).toDouble(),
         fiatCurrencyCode: fiatCurrencyCode,
         fiatCurrencyValue: fiatCurrencyValue,
         tokenPrice: price);

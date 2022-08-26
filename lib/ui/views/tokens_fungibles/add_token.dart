@@ -314,8 +314,8 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                   AppStyles.textStyleSize16W600Primary(context),
                               inputFormatters: [
                                 LengthLimitingTextInputFormatter(23),
-                                FilteringTextInputFormatter.digitsOnly,
-                                ThousandsSeparatorInputFormatter()
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d+\.?\d{0,8}')),
                               ],
                               onChanged: (_) async {
                                 double fee = await getFee();
@@ -405,7 +405,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                       tokenName: _nameController!.text,
                                       tokenSymbol: _symbolController!.text,
                                       feeEstimation: feeEstimation,
-                                      tokenInitialSupply: int.tryParse(
+                                      tokenInitialSupply: double.tryParse(
                                           _initialSupplyController!.text
                                               .replaceAll(' ', '')),
                                     ),
@@ -454,9 +454,10 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
             AppLocalization.of(context)!.tokenInitialSupplyMissing;
       });
     } else {
-      if (int.tryParse(_initialSupplyController!.text.replaceAll(' ', '')) ==
+      if (double.tryParse(_initialSupplyController!.text.replaceAll(' ', '')) ==
               null ||
-          int.tryParse(_initialSupplyController!.text.replaceAll(' ', ''))! <=
+          double.tryParse(
+                  _initialSupplyController!.text.replaceAll(' ', ''))! <=
               0) {
         isValid = false;
         setState(() {
@@ -464,7 +465,8 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
               AppLocalization.of(context)!.tokenInitialSupplyPositive;
         });
       } else {
-        if (int.tryParse(_initialSupplyController!.text.replaceAll(' ', ''))! >
+        if (double.tryParse(
+                _initialSupplyController!.text.replaceAll(' ', ''))! >
             9999999999) {
           isValid = false;
           setState(() {
@@ -511,8 +513,8 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
       Token token = Token(
           name: _nameController!.text,
-          supply:
-              int.tryParse(_initialSupplyController!.text.replaceAll(' ', ''))!,
+          supply: toBigInt(double.tryParse(
+              _initialSupplyController!.text.replaceAll(' ', ''))),
           type: 'fungible',
           symbol: _symbolController!.text);
       fee = await sl.get<AppService>().getFeesEstimationCreateToken(

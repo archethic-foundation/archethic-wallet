@@ -2,6 +2,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -40,7 +41,7 @@ class _TokenTransferListWidgetState extends State<TokenTransferListWidget> {
       child: Column(
         children: [
           SizedBox(
-            height: widget.listTokenTransfer!.length * 50,
+            height: widget.listTokenTransfer!.length * 60,
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               itemCount: widget.listTokenTransfer!.length,
@@ -75,24 +76,28 @@ class _TokenTransferListWidgetState extends State<TokenTransferListWidget> {
   Widget displayTokenDetail(
       BuildContext context, TokenTransferWallet tokenTransfer) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Text(
-                    tokenTransfer.toContactName == null
-                        ? Address(tokenTransfer.to!).getShortString()
-                        : '${tokenTransfer.toContactName!}\n${Address(tokenTransfer.to!).getShortString()}',
-                    style: AppStyles.textStyleSize14W600Primary(context)),
-              ],
-            ),
+            Text(AppLocalization.of(context)!.txListTo,
+                style: AppStyles.textStyleSize14W600Primary(context)),
             Text(
-                '${(tokenTransfer.amount! / 100000000).toStringAsFixed(0)} ${widget.symbol}',
+                tokenTransfer.toContactName == null
+                    ? Address(tokenTransfer.to!).getShortString()
+                    : '${tokenTransfer.toContactName!}\n${Address(tokenTransfer.to!).getShortString()}',
                 style: AppStyles.textStyleSize14W600Primary(context)),
           ],
         ),
+        const SizedBox(
+          height: 20,
+        ),
+        Text(
+            '${fromBigInt(tokenTransfer.amount!).toStringAsFixed(8)} ${widget.symbol}',
+            style: AppStyles.textStyleSize14W600Primary(context)),
       ],
     );
   }

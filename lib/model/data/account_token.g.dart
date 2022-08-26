@@ -18,7 +18,7 @@ class AccountTokenAdapter extends TypeAdapter<AccountToken> {
     };
     return AccountToken(
       tokenInformations: fields[7] as TokenInformations?,
-      amount: fields[2] as int?,
+      amount: fields[8] as double?,
     );
   }
 
@@ -26,10 +26,10 @@ class AccountTokenAdapter extends TypeAdapter<AccountToken> {
   void write(BinaryWriter writer, AccountToken obj) {
     writer
       ..writeByte(2)
-      ..writeByte(2)
-      ..write(obj.amount)
       ..writeByte(7)
-      ..write(obj.tokenInformations);
+      ..write(obj.tokenInformations)
+      ..writeByte(8)
+      ..write(obj.amount);
   }
 
   @override

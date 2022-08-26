@@ -3,6 +3,7 @@
 // ignore_for_file: must_be_immutable
 
 // Flutter imports:
+import 'package:aewallet/util/number_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -41,7 +42,7 @@ class _UCOTransferListWidgetState extends State<UCOTransferListWidget> {
       child: Column(
         children: [
           SizedBox(
-            height: widget.listUcoTransfer!.length * 50,
+            height: widget.listUcoTransfer!.length * 60,
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               itemCount: widget.listUcoTransfer!.length,
@@ -81,7 +82,7 @@ class _UCOTransferListWidgetState extends State<UCOTransferListWidget> {
                   ],
                 ),
                 Text(
-                    '${(_getTotal()).toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                    '${(NumberUtil.formatThousands(_getTotal()))} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                     style: AppStyles.textStyleSize14W600Primary(context)),
               ],
             ),
@@ -93,24 +94,28 @@ class _UCOTransferListWidgetState extends State<UCOTransferListWidget> {
 
   Widget displayUcoDetail(BuildContext context, UCOTransferWallet ucoTransfer) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Text(
-                    ucoTransfer.toContactName == null
-                        ? Address(ucoTransfer.to!).getShortString()
-                        : '${ucoTransfer.toContactName!}\n${Address(ucoTransfer.to!).getShortString()}',
-                    style: AppStyles.textStyleSize14W600Primary(context)),
-              ],
-            ),
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(AppLocalization.of(context)!.txListTo,
+                style: AppStyles.textStyleSize14W600Primary(context)),
             Text(
-                '${(fromBigInt(ucoTransfer.amount!)).toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                ucoTransfer.toContactName == null
+                    ? Address(ucoTransfer.to!).getShortString()
+                    : '${ucoTransfer.toContactName!}\n${Address(ucoTransfer.to!).getShortString()}',
                 style: AppStyles.textStyleSize14W600Primary(context)),
           ],
         ),
+        const SizedBox(
+          height: 20,
+        ),
+        Text(
+            '${(NumberUtil.formatThousands(fromBigInt(ucoTransfer.amount!)))} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+            style: AppStyles.textStyleSize14W600Primary(context)),
       ],
     );
   }

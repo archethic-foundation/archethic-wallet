@@ -44,7 +44,7 @@ class AddTokenConfirm extends StatefulWidget {
 
   final String? tokenName;
   final String? tokenSymbol;
-  final int? tokenInitialSupply;
+  final double? tokenInitialSupply;
   final double? feeEstimation;
 
   @override
@@ -297,7 +297,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
           Transaction(type: 'token', data: Transaction.initData());
       String content = tokenToJsonForTxDataContent(Token(
           name: widget.tokenName,
-          supply: widget.tokenInitialSupply! * 100000000,
+          supply: toBigInt(widget.tokenInitialSupply!),
           type: 'fungible',
           symbol: widget.tokenSymbol));
       transaction.setContent(content);
