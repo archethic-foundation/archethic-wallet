@@ -1,0 +1,40 @@
+Archethic Wallet - Version Bug Bounty 1.0.4 Build 264
+
+🚀 Features
+- Fungible Token’s management
+- Add max number of confirmations
+- Password - add random password generation
+- Import wallet - use autocompletion
+- Password - add status bars showing whether password is strong, medium, easy
+- Add flat theme
+- Price Chart - Add 1h + all chart 
+- Add a possibility to copy balances
+
+👷‍♂️ Enhancements
+- UI Updates
+- Move message when users have not UCO enough
+- Don’t display the @ before the contact’s name in the tx list
+- Don't start transaction inputs scan with desktop platforms
+- Very small amount of trx not displayed correctly
+- upgrade Android version SDK 33
+- Removal of the package-based architecture
+- Flat theme - improve UI
+- Manage token symbol in receive notification
+- Show/Hide amounts - improve option
+- When users click on an account in account list screen, go back to the main screen
+- Token creation screen : Inform the user of the maximum length of a symbol
+- Remove parenthesis in balance widgets for the main information
+
+🐛 Bugfixes
+- After import keychain with many accounts, if user would to change account in accountList screen, an error appears
+- Token creation doesn't work with service name contained special characters
+- Send screens : Symbol currency is not correct
+- Chart - wrong chart appears on main screen
+- Send a token to yourself. Error message display "UCO" instead of symbol
+- Lock Screen - do not reset the number of attempts if users back
+- Sometimes OTP with yubikey doesn't work
+- Manage balanceFee API errors
+- Price chart - Fix the UI issue with the low value of the ordinate
+- Block the wallet creation process when keychain is not create in the blockchain
+- Samsung Smart Suggestion crash when entering text to send UCOs
+- Wallet not responding when sending UCO to address starting with [1-9]
