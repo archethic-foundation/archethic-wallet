@@ -153,11 +153,12 @@ class StateContainerState extends State<StateContainer> {
                     NotificationsUtil.showNotification(
                         title: 'Archethic',
                         body: message
-                            .replaceAll(
-                                '%1', transactionInput.amount.toString())
+                            .replaceAll('%1',
+                                fromBigInt(transactionInput.amount).toString())
                             .replaceAll('%2', symbol)
                             .replaceAll('%3', account.name!),
                         payload: account.name!);
+                    await requestUpdate(forceUpdateChart: false);
                   }
                 }
               });
