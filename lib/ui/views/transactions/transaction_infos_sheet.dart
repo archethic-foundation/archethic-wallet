@@ -189,54 +189,53 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                               50)),
                     if (transactionInfo.titleInfo == '')
                       Container(
-                        padding: const EdgeInsets.only(left: 15.0, top: 15),
-                        child: Column(
-                          children: <Widget>[
-                            // Main Container
-                            Container(
-                              padding: const EdgeInsets.only(
-                                  left: 45.0, right: 5, bottom: 15),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: <Widget>[
-                                            Row(
-                                              children: <Widget>[
-                                                AutoSizeText(
-                                                  TransactionInfos
-                                                      .getDisplayName(
-                                                          context,
-                                                          transactionInfo
-                                                              .domain),
-                                                  style: AppStyles
-                                                      .textStyleSize16W600Primary(
-                                                          context),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                        color: StateContainer.of(context).curTheme.text05,
+                        child: Container(
+                          padding: const EdgeInsets.only(left: 15.0, top: 15),
+                          child: Column(
+                            children: <Widget>[
+                              // Main Container
+                              Container(
+                                padding: const EdgeInsets.only(
+                                    left: 45.0, right: 5, bottom: 15),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: <Widget>[
+                                              Row(
+                                                children: <Widget>[
+                                                  AutoSizeText(
+                                                    TransactionInfos
+                                                        .getDisplayName(
+                                                            context,
+                                                            transactionInfo
+                                                                .domain),
+                                                    style: AppStyles
+                                                        .textStyleSize16W600Primary(
+                                                            context),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            Divider(
-                              height: 2,
-                              color: StateContainer.of(context).curTheme.text15,
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       )
                     else
@@ -276,13 +275,13 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                 ],
                               ),
                             ),
-                            Divider(
-                              height: 2,
-                              color: StateContainer.of(context).curTheme.text15,
-                            ),
                           ],
                         ),
                       ),
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.text15,
+                    ),
                   ],
                 ),
               ),

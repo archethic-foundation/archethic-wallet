@@ -331,13 +331,22 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                 ListView(
                   padding: const EdgeInsets.only(top: 15.0),
                   children: <Widget>[
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.text15,
+                    ),
                     Container(
-                      alignment: Alignment.center,
-                      margin: const EdgeInsetsDirectional.only(
-                          top: 10.0, bottom: 10.0),
-                      child: Text(AppLocalization.of(context)!.manage,
-                          style: AppStyles.textStyleSize20W700EquinoxPrimary(
-                              context)),
+                      decoration: BoxDecoration(
+                        color: StateContainer.of(context).curTheme.text05,
+                      ),
+                      child: Container(
+                        alignment: Alignment.center,
+                        margin: const EdgeInsetsDirectional.only(
+                            top: 15.0, bottom: 15.0),
+                        child: Text(AppLocalization.of(context)!.manage,
+                            style: AppStyles.textStyleSize20W700EquinoxPrimary(
+                                context)),
+                      ),
                     ),
                     if (StateContainer.of(context)
                         .appWallet!
@@ -399,12 +408,17 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       color: StateContainer.of(context).curTheme.text15,
                     ),
                     Container(
-                      alignment: Alignment.center,
-                      margin: const EdgeInsetsDirectional.only(
-                          top: 20.0, bottom: 10.0),
-                      child: Text(AppLocalization.of(context)!.preferences,
-                          style: AppStyles.textStyleSize20W700EquinoxPrimary(
-                              context)),
+                      decoration: BoxDecoration(
+                        color: StateContainer.of(context).curTheme.text05,
+                      ),
+                      child: Container(
+                        alignment: Alignment.center,
+                        margin: const EdgeInsetsDirectional.only(
+                            top: 15.0, bottom: 15.0),
+                        child: Text(AppLocalization.of(context)!.preferences,
+                            style: AppStyles.textStyleSize20W700EquinoxPrimary(
+                                context)),
+                      ),
                     ),
                     Divider(
                       height: 2,
@@ -443,12 +457,17 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       color: StateContainer.of(context).curTheme.text15,
                     ),
                     Container(
-                      alignment: Alignment.center,
-                      margin: const EdgeInsetsDirectional.only(
-                          top: 20.0, bottom: 10.0),
-                      child: Text(AppLocalization.of(context)!.informations,
-                          style: AppStyles.textStyleSize20W700EquinoxPrimary(
-                              context)),
+                      decoration: BoxDecoration(
+                        color: StateContainer.of(context).curTheme.text05,
+                      ),
+                      child: Container(
+                        alignment: Alignment.center,
+                        margin: const EdgeInsetsDirectional.only(
+                            top: 15.0, bottom: 15.0),
+                        child: Text(AppLocalization.of(context)!.informations,
+                            style: AppStyles.textStyleSize20W700EquinoxPrimary(
+                                context)),
+                      ),
                     ),
                     Divider(
                       height: 2,
@@ -627,12 +646,22 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                 ListView(
                   padding: const EdgeInsets.only(top: 15.0),
                   children: <Widget>[
+                    Divider(
+                      height: 2,
+                      color: StateContainer.of(context).curTheme.text15,
+                    ),
                     Container(
-                      alignment: Alignment.center,
-                      margin: const EdgeInsetsDirectional.only(bottom: 10),
-                      child: Text(AppLocalization.of(context)!.preferences,
-                          style: AppStyles.textStyleSize20W700EquinoxPrimary(
-                              context)),
+                      decoration: BoxDecoration(
+                        color: StateContainer.of(context).curTheme.text05,
+                      ),
+                      child: Container(
+                        alignment: Alignment.center,
+                        margin: const EdgeInsetsDirectional.only(
+                            top: 15, bottom: 15),
+                        child: Text(AppLocalization.of(context)!.preferences,
+                            style: AppStyles.textStyleSize20W700EquinoxPrimary(
+                                context)),
+                      ),
                     ),
                     /*Divider(
                       height: 2,
@@ -865,11 +894,17 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                   padding: const EdgeInsets.only(top: 15.0),
                   children: <Widget>[
                     Container(
-                      alignment: Alignment.center,
-                      margin: const EdgeInsetsDirectional.only(bottom: 10),
-                      child: Text(AppLocalization.of(context)!.preferences,
-                          style: AppStyles.textStyleSize20W700EquinoxPrimary(
-                              context)),
+                      decoration: BoxDecoration(
+                        color: StateContainer.of(context).curTheme.text05,
+                      ),
+                      child: Container(
+                        alignment: Alignment.center,
+                        margin: const EdgeInsetsDirectional.only(
+                            top: 20, bottom: 10),
+                        child: Text(AppLocalization.of(context)!.preferences,
+                            style: AppStyles.textStyleSize20W700EquinoxPrimary(
+                                context)),
+                      ),
                     ),
                     Divider(
                       height: 2,

@@ -109,8 +109,7 @@ class NetworkDialog {
                                           .curTheme
                                           .text45!)),
                               content: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   Column(
@@ -152,9 +151,12 @@ class NetworkDialog {
                                           : const SizedBox(),
                                     ],
                                   ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
                                   Row(
                                     children: [
-                                      AppButton.buildAppButton(
+                                      AppButton.buildAppButtonTiny(
                                         const Key('addEndpoint'),
                                         context,
                                         AppButtonType.primary,
