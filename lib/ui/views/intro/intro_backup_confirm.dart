@@ -140,6 +140,13 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
             default:
               throw Exception('TransactionSendEventType doesn\'t exist');
           }
+        } else {
+          UIUtil.showSnackbar(
+              AppLocalization.of(context)!.notEnoughConfirmations,
+              context,
+              StateContainer.of(context).curTheme.text!,
+              StateContainer.of(context).curTheme.snackBarShadow!);
+          Navigator.of(context).pop();
         }
       }
     });

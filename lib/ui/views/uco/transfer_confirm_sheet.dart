@@ -122,6 +122,13 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
             StateContainer.of(context).requestUpdate();
           });
           Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+        } else {
+          UIUtil.showSnackbar(
+              AppLocalization.of(context)!.notEnoughConfirmations,
+              context,
+              StateContainer.of(context).curTheme.text!,
+              StateContainer.of(context).curTheme.snackBarShadow!);
+          Navigator.of(context).pop();
         }
       }
     });

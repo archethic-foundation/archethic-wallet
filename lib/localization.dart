@@ -1516,6 +1516,12 @@ class AppLocalization {
     return Intl.message('(Conversion provided by Archethic Oracles)',
         name: 'conversionOraclePromotion');
   }
+
+  String get notEnoughConfirmations {
+    return Intl.message(
+        'The application could not be completed due to lack of consensus',
+        name: 'notEnoughConfirmations');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
