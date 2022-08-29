@@ -1511,6 +1511,11 @@ class AppLocalization {
   String get nftAddFileSize {
     return Intl.message('Size: ', name: 'nftAddFileSize');
   }
+
+  String get conversionOraclePromotion {
+    return Intl.message('(Conversion provided by Archethic Oracles)',
+        name: 'conversionOraclePromotion');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {

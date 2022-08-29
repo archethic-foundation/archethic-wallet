@@ -33,10 +33,10 @@ class Price extends HiveObject {
     price.useOracleUcoPrice = false;
     // if eur or usd, use Archethic Oracle
     // Provide a way to get the last value of an oracle #451
-    /*if (currency == 'EUR' || currency == 'USD') {
+    if (currency == 'EUR' || currency == 'USD') {
       try {
         final OracleUcoPrice oracleUcoPrice =
-            await sl.get<OracleService>().getLastOracleUcoPrice();
+            await sl.get<OracleService>().getOracleData();
         if (oracleUcoPrice.uco == null || oracleUcoPrice.uco!.eur == 0) {
           simplePriceResponse =
               await sl.get<ApiCoinsService>().getSimplePrice(currency);
@@ -62,7 +62,7 @@ class Price extends HiveObject {
     } else {
       simplePriceResponse =
           await sl.get<ApiCoinsService>().getSimplePrice(currency);
-    }*/
+    }
     simplePriceResponse =
         await sl.get<ApiCoinsService>().getSimplePrice(currency);
     price.amount = simplePriceResponse.localCurrencyPrice == null
