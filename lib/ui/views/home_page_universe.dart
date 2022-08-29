@@ -541,10 +541,12 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                   child: BottomBar(
                     selectedIndex:
                         StateContainer.of(context).bottomBarCurrentPage,
-                    onTap: (int index) {
+                    onTap: (int index) async {
                       StateContainer.of(context)
                           .bottomBarPageController!
                           .jumpToPage(index);
+                      Preferences preferences = await Preferences.getInstance();
+                      preferences.setMainScreenCurrentPage(index);
                       setState(() => StateContainer.of(context)
                           .bottomBarCurrentPage = index);
                     },

@@ -51,6 +51,8 @@ class Preferences {
   static const String _activeNotifications =
       'archethic_wallet_activeNotifications';
   static const String _language_seed = 'archethic_wallet_language_seed';
+  static const String _main_screen_current_page =
+      'archethic_wallet_main_screen_current_page';
 
   // This doesn't have to be a singleton.
   // We just want to make sure that the box is open, before we start getting/setting objects on it
@@ -148,6 +150,12 @@ class Preferences {
 
   bool getActiveNotifications() =>
       _getValue(_activeNotifications, defaultValue: true);
+
+  Future<void> setMainScreenCurrentPage(int value) =>
+      _setValue(_main_screen_current_page, value);
+
+  int getMainScreenCurrentPage() =>
+      _getValue(_main_screen_current_page, defaultValue: 1);
 
   Future<void> setShowPriceChart(bool value) =>
       _setValue(_showPriceChart, value);

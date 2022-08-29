@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:aewallet/util/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -334,7 +335,12 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                 .requestUpdate(forceUpdateChart: false);
           }
           StateContainer.of(context).bottomBarCurrentPage = 1;
-          StateContainer.of(context).bottomBarPageController!.jumpToPage(1);
+          StateContainer.of(context)
+              .bottomBarPageController!
+              .jumpToPage(StateContainer.of(context).bottomBarCurrentPage);
+          Preferences preferences = await Preferences.getInstance();
+          preferences.setMainScreenCurrentPage(
+              StateContainer.of(context).bottomBarCurrentPage);
           Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
         },
         child: Card(

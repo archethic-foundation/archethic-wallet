@@ -96,6 +96,8 @@ class StateContainerState extends State<StateContainer> {
         setState(() {
           curCurrency = preferences.getCurrency(deviceLocale);
           updateCurrency(curCurrency).then((_) {
+            bottomBarPageController = PageController(
+                initialPage: preferences.getMainScreenCurrentPage());
             curLanguage = preferences.getLanguage();
             curPrimaryCurrency = preferences.getPrimaryCurrency();
             curNetwork = preferences.getNetwork();

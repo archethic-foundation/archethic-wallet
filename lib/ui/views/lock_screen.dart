@@ -41,6 +41,12 @@ class _AppLockScreenState extends State<AppLockScreen> {
       Navigator.of(context)
           .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
     }
+    Preferences preferences = await Preferences.getInstance();
+    StateContainer.of(context).bottomBarCurrentPage =
+        preferences.getMainScreenCurrentPage();
+    StateContainer.of(context).bottomBarPageController = PageController(
+        initialPage: StateContainer.of(context).bottomBarCurrentPage);
+
     StateContainer.of(context).requestUpdate();
     Navigator.of(context).pushNamedAndRemoveUntil(
       '/home_transition',
