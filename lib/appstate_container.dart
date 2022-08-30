@@ -242,6 +242,8 @@ class StateContainerState extends State<StateContainer> {
 
     await appWallet!.appKeychain!.getAccountSelected()!.updateFungiblesTokens();
 
+    await appWallet!.appKeychain!.getAccountSelected()!.updateNFT();
+
     setState(() {
       balanceLoading = true;
       recentTransactionsLoading = true;

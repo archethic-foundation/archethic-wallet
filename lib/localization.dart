@@ -1148,6 +1148,10 @@ class AppLocalization {
     return Intl.message('Token Created', name: 'tokenCreated');
   }
 
+  String get nftCreated {
+    return Intl.message('NFT Created', name: 'nftCreated');
+  }
+
   String get version {
     return Intl.message('Version :', name: 'version');
   }

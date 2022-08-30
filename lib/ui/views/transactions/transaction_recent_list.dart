@@ -304,10 +304,15 @@ class _TxListWidgetState extends State<TxListWidget> {
                       if (transaction.typeTx == RecentTransaction.tokenCreation)
                         Row(
                           children: [
-                            AutoSizeText(
-                                '${AppLocalization.of(context)!.tokenCreated}: ${transaction.tokenInformations!.name}',
-                                style: AppStyles.textStyleSize12W400Primary(
-                                    context)),
+                            transaction.tokenInformations!.type == 'fungible'
+                                ? AutoSizeText(
+                                    '${AppLocalization.of(context)!.tokenCreated}: ${transaction.tokenInformations!.name}',
+                                    style: AppStyles.textStyleSize12W400Primary(
+                                        context))
+                                : AutoSizeText(
+                                    '${AppLocalization.of(context)!.nftCreated}: ${transaction.tokenInformations!.name}',
+                                    style: AppStyles.textStyleSize12W400Primary(
+                                        context)),
                           ],
                         ),
                       if (transaction.typeTx ==

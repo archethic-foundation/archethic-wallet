@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:developer' as dev;
 
 // Package imports:
+import 'package:aewallet/model/data/token_informations_property.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:intl/intl.dart';
 
@@ -193,16 +194,32 @@ class AppService {
             .get<ApiService>()
             .getTransactionContent(balance.token![i].address!);
         Token token = tokenFromJson(content);
-        TokenInformations tokenInformations = TokenInformations(
-            address: balance.token![i].address,
-            name: token.name,
-            type: token.type,
-            supply: fromBigInt(token.supply!).toDouble(),
-            symbol: token.symbol);
-        AccountToken accountFungibleToken = AccountToken(
-            tokenInformations: tokenInformations,
-            amount: fromBigInt(balance.token![i].amount!).toDouble());
-        fungiblesTokensList.add(accountFungibleToken);
+        if (token.type == 'fungible') {
+          List<List<TokenInformationsProperty>>? tokenPropertiesList =
+              List<List<TokenInformationsProperty>>.empty(growable: true);
+          List<TokenInformationsProperty> propertiesList =
+              List<TokenInformationsProperty>.empty(growable: true);
+          for (TokenProperty element in token.tokenProperties![0]) {
+            TokenInformationsProperty tokenInformationsProperty =
+                TokenInformationsProperty();
+            tokenInformationsProperty.name = element.name;
+            tokenInformationsProperty.value = element.value;
+            propertiesList.add(tokenInformationsProperty);
+          }
+          tokenPropertiesList.add(propertiesList);
+          TokenInformations tokenInformations = TokenInformations(
+              address: balance.token![i].address,
+              name: token.name,
+              type: token.type,
+              supply: fromBigInt(token.supply!).toDouble(),
+              symbol: token.symbol,
+              tokenProperties: tokenPropertiesList,
+              onChain: true);
+          AccountToken accountFungibleToken = AccountToken(
+              tokenInformations: tokenInformations,
+              amount: fromBigInt(balance.token![i].amount!).toDouble());
+          fungiblesTokensList.add(accountFungibleToken);
+        }
       }
       fungiblesTokensList.sort((a, b) =>
           a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!));
@@ -221,16 +238,33 @@ class AppService {
               .get<ApiService>()
               .getTransactionContent(balance.token![i].address!);
           Token token = tokenFromJson(content);
-          TokenInformations tokenInformations = TokenInformations(
-              address: balance.token![i].address,
-              name: token.name,
-              type: token.type,
-              supply: fromBigInt(token.supply!).toDouble(),
-              symbol: token.symbol);
-          AccountToken accountNFT = AccountToken(
-              tokenInformations: tokenInformations,
-              amount: fromBigInt(balance.token![i].amount!).toDouble());
-          nftList.add(accountNFT);
+          if (token.type == 'non-fungible') {
+            List<List<TokenInformationsProperty>>? tokenPropertiesList =
+                List<List<TokenInformationsProperty>>.empty(growable: true);
+            List<TokenInformationsProperty> propertiesList =
+                List<TokenInformationsProperty>.empty(growable: true);
+            for (TokenProperty element in token.tokenProperties![0]) {
+              TokenInformationsProperty tokenInformationsProperty =
+                  TokenInformationsProperty();
+              tokenInformationsProperty.name = element.name;
+              tokenInformationsProperty.value = element.value;
+              propertiesList.add(tokenInformationsProperty);
+            }
+            tokenPropertiesList.add(propertiesList);
+
+            TokenInformations tokenInformations = TokenInformations(
+                address: balance.token![i].address,
+                name: token.name,
+                type: token.type,
+                supply: fromBigInt(token.supply!).toDouble(),
+                symbol: token.symbol,
+                tokenProperties: tokenPropertiesList,
+                onChain: true);
+            AccountToken accountNFT = AccountToken(
+                tokenInformations: tokenInformations,
+                amount: fromBigInt(balance.token![i].amount!).toDouble());
+            nftList.add(accountNFT);
+          }
         }
       }
       nftList.sort((a, b) =>

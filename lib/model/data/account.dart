@@ -77,6 +77,11 @@ class Account extends HiveObject {
     await updateAccount();
   }
 
+  Future<void> updateNFT() async {
+    accountNFT = await sl.get<AppService>().getNFTList(lastAddress!);
+    await updateAccount();
+  }
+
   Future<void> updateBalance(
       String tokenName, String fiatCurrencyCode, Price price) async {
     final Balance balanceGetResponse =

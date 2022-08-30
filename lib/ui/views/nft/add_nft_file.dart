@@ -9,8 +9,13 @@ import 'package:aewallet/bus/nft_file_add_event.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/model/data/token_informations_property.dart';
+import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/nft/add_nft_file_confirm.dart';
+import 'package:aewallet/ui/views/nft/nft_preview.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
+import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
+import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:file_picker/file_picker.dart';
@@ -37,10 +42,12 @@ import 'package:image_picker/image_picker.dart';
 class AddNFTFile extends StatefulWidget {
   const AddNFTFile({
     required this.process,
+    this.primaryCurrency,
     super.key,
   });
 
   final AddNFTFileProcess? process;
+  final PrimaryCurrencySetting? primaryCurrency;
 
   @override
   State<AddNFTFile> createState() => _AddNFTFileState();
@@ -142,6 +149,13 @@ class _AddNFTFileState extends State<AddNFTFile> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      if (widget.process == AddNFTFileProcess.single)
+                        Container(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: BalanceIndicatorWidget(
+                              primaryCurrency: widget.primaryCurrency,
+                              displaySwitchButton: false),
+                        ),
                       Text(
                         AppLocalization.of(context)!.nftAddStep1,
                         style: AppStyles.textStyleSize14W600Primary(context),
@@ -252,49 +266,6 @@ class _AddNFTFileState extends State<AddNFTFile> {
                             ),
                           ),
                         ),
-                      Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.text15,
-                      ),
-                      SizedBox(
-                        height: 40,
-                        child: InkWell(
-                          onTap: () {
-                            importSelection = 3;
-                            setState(() {});
-                          },
-                          child: Row(
-                            children: <Widget>[
-                              SizedBox(
-                                width: 30,
-                                child: FaIcon(
-                                  FontAwesomeIcons.globe,
-                                  size: 18,
-                                  color:
-                                      StateContainer.of(context).curTheme.text,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Text(
-                                AppLocalization.of(context)!.nftAddImportUrl,
-                                style: AppStyles.textStyleSize12W400Primary(
-                                    context),
-                              ),
-                              const SizedBox(
-                                width: 30,
-                              ),
-                              if (importSelection == 3)
-                                const Icon(
-                                  Icons.check_circle,
-                                  size: 16,
-                                  color: Colors.green,
-                                )
-                            ],
-                          ),
-                        ),
-                      ),
                       Divider(
                         height: 2,
                         color: StateContainer.of(context).curTheme.text15,
@@ -446,7 +417,15 @@ class _AddNFTFileState extends State<AddNFTFile> {
                           ),
                         ],
                       ),
-                      if (file != null) getNFTPreview(context),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      if (file != null)
+                        NFTPreviewWidget(
+                            nftName: nftNameController!.text,
+                            nftDescription: nftDescriptionController!.text,
+                            nftFile: File(file!.path).readAsBytesSync(),
+                            nftProperties: tokenProperties),
                     ],
                   ),
                 ),
@@ -476,6 +455,7 @@ class _AddNFTFileState extends State<AddNFTFile> {
                           if (widget.process == AddNFTFileProcess.collection) {
                             EventTaxiImpl.singleton().fire(NftFileAddEvent(
                                 tokenProperties: tokenProperties));
+                            Navigator.of(context).pop();
                           } else {
                             Token token = Token(
                                 name: nftNameController!.text,
@@ -486,43 +466,11 @@ class _AddNFTFileState extends State<AddNFTFile> {
                                 List<List<TokenProperty>>.empty(growable: true);
                             token.tokenProperties!.add(tokenProperties);
 
-                            TokenInformations tokenInformations =
-                                TokenInformations();
-                            tokenInformations.tokenProperties =
-                                List<List<TokenInformationsProperty>>.empty(
-                                    growable: true);
-                            tokenInformations.tokenToTokenInformations(token);
-                            tokenInformations.onChain = false;
-                            if (StateContainer.of(context)
-                                    .appWallet!
-                                    .appKeychain!
-                                    .getAccountSelected()!
-                                    .accountNFT ==
-                                null) {
-                              StateContainer.of(context)
-                                      .appWallet!
-                                      .appKeychain!
-                                      .getAccountSelected()!
-                                      .accountNFT =
-                                  List<AccountToken>.empty(growable: true);
-                            }
-                            StateContainer.of(context)
-                                .appWallet!
-                                .appKeychain!
-                                .getAccountSelected()!
-                                .accountNFT!
-                                .add(AccountToken(
-                                    tokenInformations: tokenInformations));
-                            UIUtil.showSnackbar(
-                                'Saved',
-                                context,
-                                StateContainer.of(context).curTheme.text!,
-                                StateContainer.of(context)
-                                    .curTheme
-                                    .snackBarShadow!);
+                            Sheets.showAppHeightNineSheet(
+                              context: context,
+                              widget: AddNFTFileConfirm(token: token),
+                            );
                           }
-
-                          Navigator.of(context).pop();
                         },
                       ),
                     ],
@@ -566,58 +514,6 @@ class _AddNFTFileState extends State<AddNFTFile> {
     }
 
     return isValid;
-  }
-
-  Widget getNFTPreview(BuildContext context) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: Column(
-        children: [
-          Text(
-            nftNameController!.text,
-            style: AppStyles.textStyleSize12W600Primary(context),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: Image.file(file!, fit: BoxFit.cover),
-          ),
-          Text(
-            '${AppLocalization.of(context)!.nftAddFileSize} ${filesize(file!.lengthSync())}',
-            style: AppStyles.textStyleSize12W400Primary(context),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            nftDescriptionController!.text,
-            style: AppStyles.textStyleSize12W600Primary(context),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Wrap(
-              alignment: WrapAlignment.center,
-              children: tokenProperties
-                  .asMap()
-                  .entries
-                  .map((MapEntry<dynamic, TokenProperty> entry) {
-                return Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Chip(
-                      label: Text('${entry.value.name!}: ${entry.value.value!}',
-                          style: AppStyles.textStyleSize12W400Primary(context)),
-                      onDeleted: () {
-                        setState(() {
-                          tokenProperties.removeAt(entry.key);
-                        });
-                      },
-                      deleteIconColor: StateContainer.of(context).curTheme.text,
-                    ));
-              }).toList()),
-        ],
-      ),
-    );
   }
 
   void setFileProperties(File file, {bool copyNFTName = false}) {

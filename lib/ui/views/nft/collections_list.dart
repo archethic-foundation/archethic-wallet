@@ -1,10 +1,16 @@
 // Flutter imports:
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/add_nft_collection.dart';
 import 'package:aewallet/ui/views/nft/add_nft_file.dart';
+import 'package:aewallet/ui/views/nft/nft_card.dart';
+import 'package:aewallet/ui/views/nft/nft_preview.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -23,6 +29,14 @@ class CollectionsListWidget extends StatefulWidget {
 }
 
 class _CollectionsListWidgetState extends State<CollectionsListWidget> {
+  List<AccountToken> nftList = List<AccountToken>.empty(growable: true);
+
+  @override
+  void initState() {
+    nftList = widget.appWallet!.appKeychain!.getAccountSelected()!.accountNFT!;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -31,71 +45,57 @@ class _CollectionsListWidgetState extends State<CollectionsListWidget> {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          if (StateContainer.of(context)
-                  .appWallet!
-                  .appKeychain!
-                  .getAccountSelected()!
-                  .accountNFT !=
-              null)
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2),
-                      primary: false,
-                      shrinkWrap: true,
-                      itemCount: StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .accountNFT!
-                          .length,
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      itemBuilder: (context, index) {
-                        TokenInformations tokenInformations =
-                            StateContainer.of(context)
-                                .appWallet!
-                                .appKeychain!
-                                .getAccountSelected()!
-                                .accountNFT![index]
-                                .tokenInformations!;
-                        return Card(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                                color: StateContainer.of(context)
-                                    .curTheme
-                                    .backgroundAccountsListCardSelected!,
-                                width: 1.0),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          elevation: 0,
-                          color: StateContainer.of(context)
-                              .curTheme
-                              .backgroundAccountsListCardSelected,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: tokenInformations.supply == 100000000
-                                ? AspectRatio(
-                                    aspectRatio: 1,
-                                    child: Image.memory(
-                                      tokenInformations.getImage()!,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )
-                                : Text(
-                                    tokenInformations.name!,
-                                    style: AppStyles.textStyleSize16W600Primary(
-                                        context),
-                                  ),
-                          ),
-                        );
-                      }),
-                ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
+                    primary: false,
+                    shrinkWrap: true,
+                    itemCount: nftList.length,
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    itemBuilder: (context, index) {
+                      TokenInformations tokenInformations =
+                          nftList[index].tokenInformations!;
+
+                      Uint8List file = base64Decode(tokenInformations
+                          .tokenProperties![0]
+                          .where((element) => element.name == 'file')
+                          .first
+                          .value!);
+
+                      return NFTCard(
+                        name: tokenInformations.name!,
+                        description: tokenInformations.tokenProperties![0]
+                            .where((element) => element.name == 'description')
+                            .first
+                            .value!,
+                        image: file,
+                        heroTag: tokenInformations.name!,
+                        onTap: (() {
+                          Sheets.showAppHeightNineSheet(
+                            context: context,
+                            widget: NFTPreviewWidget(
+                                nftName: tokenInformations.name,
+                                nftDescription: tokenInformations
+                                    .tokenProperties![0]
+                                    .where((element) =>
+                                        element.name == 'description')
+                                    .first
+                                    .value,
+                                nftFile: file,
+                                nftProperties:
+                                    List<TokenProperty>.empty(growable: true)),
+                          );
+                        }),
+                      );
+                    }),
               ),
             ),
+          ),
           Row(
             children: <Widget>[
               AppButton.buildAppButtonTiny(
@@ -106,8 +106,11 @@ class _CollectionsListWidgetState extends State<CollectionsListWidget> {
                   Dimens.buttonBottomDimens, onPressed: () {
                 Sheets.showAppHeightNineSheet(
                     context: context,
-                    widget:
-                        const AddNFTFile(process: AddNFTFileProcess.single));
+                    widget: AddNFTFile(
+                      process: AddNFTFileProcess.single,
+                      primaryCurrency:
+                          StateContainer.of(context).curPrimaryCurrency,
+                    ));
               }),
             ],
           ),

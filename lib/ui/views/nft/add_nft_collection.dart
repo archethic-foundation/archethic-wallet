@@ -15,6 +15,7 @@ import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/add_nft_file.dart';
 import 'package:aewallet/ui/views/nft/nft_card.dart';
+import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,7 +23,6 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -37,9 +37,7 @@ import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
-import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 
 class AddNFTCollection extends StatefulWidget {
   const AddNFTCollection({
@@ -53,8 +51,6 @@ class AddNFTCollection extends StatefulWidget {
   State<AddNFTCollection> createState() => _AddNFTCollectionState();
 }
 
-enum PrimaryCurrency { network, selected }
-
 class _AddNFTCollectionState extends State<AddNFTCollection> {
   FocusNode? collectionNameFocusNode;
   FocusNode? collectionSymbolFocusNode;
@@ -66,7 +62,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
   double feeEstimation = 0.0;
   bool? _isPressed;
   bool validRequest = true;
-  PrimaryCurrency primaryCurrency = PrimaryCurrency.network;
+
   int? supply;
   Token? token = Token(
       name: '',
@@ -97,14 +93,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
     _registerBus();
 
     super.initState();
-    if (widget.primaryCurrency!.primaryCurrency.name ==
-        PrimaryCurrencySetting(AvailablePrimaryCurrency.native)
-            .primaryCurrency
-            .name) {
-      primaryCurrency = PrimaryCurrency.network;
-    } else {
-      primaryCurrency = PrimaryCurrency.selected;
-    }
+
     _isPressed = false;
     collectionNameFocusNode = FocusNode();
     collectionSymbolFocusNode = FocusNode();
@@ -170,54 +159,9 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                           const SizedBox(
                             height: 15,
                           ),
-                          StateContainer.of(context).showBalance
-                              ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    primaryCurrency == PrimaryCurrency.selected
-                                        ? Column(
-                                            children: [
-                                              _balanceSelected(context, true),
-                                              _balanceNetwork(context, false),
-                                            ],
-                                          )
-                                        : Column(
-                                            children: [
-                                              _balanceNetwork(context, true),
-                                              _balanceSelected(context, false),
-                                            ],
-                                          ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(Icons.change_circle),
-                                      alignment: Alignment.centerRight,
-                                      color: StateContainer.of(context)
-                                          .curTheme
-                                          .textFieldIcon,
-                                      onPressed: () {
-                                        sl.get<HapticUtil>().feedback(
-                                            FeedbackType.light,
-                                            StateContainer.of(context)
-                                                .activeVibrations);
-                                        if (primaryCurrency ==
-                                            PrimaryCurrency.network) {
-                                          setState(() {
-                                            primaryCurrency =
-                                                PrimaryCurrency.selected;
-                                          });
-                                        } else {
-                                          setState(() {
-                                            primaryCurrency =
-                                                PrimaryCurrency.network;
-                                          });
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                )
-                              : const SizedBox(),
+                          BalanceIndicatorWidget(
+                              primaryCurrency: widget.primaryCurrency,
+                              displaySwitchButton: false),
                         ],
                       ),
                     ),
@@ -548,80 +492,6 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
       fee = 0;
     }
     return fee;
-  }
-
-  Widget _balanceNetwork(BuildContext context, bool primary) {
-    return Container(
-      child: RichText(
-        textAlign: TextAlign.start,
-        text: TextSpan(
-          text: '',
-          children: <InlineSpan>[
-            if (primary == false)
-              TextSpan(
-                text: '(',
-                style: primary
-                    ? AppStyles.textStyleSize16W100Primary(context)
-                    : AppStyles.textStyleSize14W100Primary(context),
-              ),
-            TextSpan(
-              text:
-                  '${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
-              style: primary
-                  ? AppStyles.textStyleSize16W700Primary(context)
-                  : AppStyles.textStyleSize14W700Primary(context),
-            ),
-            if (primary == false)
-              TextSpan(
-                text: ')',
-                style: primary
-                    ? AppStyles.textStyleSize16W100Primary(context)
-                    : AppStyles.textStyleSize14W100Primary(context),
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _balanceSelected(BuildContext context, bool primary) {
-    return Container(
-      child: RichText(
-        textAlign: TextAlign.start,
-        text: TextSpan(
-          text: '',
-          children: <InlineSpan>[
-            if (primary == false)
-              TextSpan(
-                text: '(',
-                style: primary
-                    ? AppStyles.textStyleSize16W100Primary(context)
-                    : AppStyles.textStyleSize14W100Primary(context),
-              ),
-            TextSpan(
-              text: CurrencyUtil.getConvertedAmount(
-                  StateContainer.of(context).curCurrency.currency.name,
-                  StateContainer.of(context)
-                      .appWallet!
-                      .appKeychain!
-                      .getAccountSelected()!
-                      .balance!
-                      .fiatCurrencyValue!),
-              style: primary
-                  ? AppStyles.textStyleSize16W700Primary(context)
-                  : AppStyles.textStyleSize14W700Primary(context),
-            ),
-            if (primary == false)
-              TextSpan(
-                text: ')',
-                style: primary
-                    ? AppStyles.textStyleSize16W100Primary(context)
-                    : AppStyles.textStyleSize14W100Primary(context),
-              ),
-          ],
-        ),
-      ),
-    );
   }
 
   Widget getNFTListPreview(BuildContext context) {

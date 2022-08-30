@@ -5,6 +5,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,7 +13,6 @@ import 'package:flutter/services.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -27,9 +27,7 @@ import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
-import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 
 class AddTokenSheet extends StatefulWidget {
   const AddTokenSheet({
@@ -42,8 +40,6 @@ class AddTokenSheet extends StatefulWidget {
   @override
   State<AddTokenSheet> createState() => _AddTokenSheetState();
 }
-
-enum PrimaryCurrency { network, selected }
 
 class _AddTokenSheetState extends State<AddTokenSheet> {
   FocusNode? _nameFocusNode;
@@ -61,19 +57,11 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
   double feeEstimation = 0.0;
   bool? _isPressed;
   bool validRequest = true;
-  PrimaryCurrency primaryCurrency = PrimaryCurrency.network;
 
   @override
   void initState() {
     super.initState();
-    if (widget.primaryCurrency!.primaryCurrency.name ==
-        PrimaryCurrencySetting(AvailablePrimaryCurrency.native)
-            .primaryCurrency
-            .name) {
-      primaryCurrency = PrimaryCurrency.network;
-    } else {
-      primaryCurrency = PrimaryCurrency.selected;
-    }
+
     _isPressed = false;
     _nameFocusNode = FocusNode();
     _symbolFocusNode = FocusNode();
@@ -147,54 +135,9 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                           const SizedBox(
                             height: 15,
                           ),
-                          StateContainer.of(context).showBalance
-                              ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    primaryCurrency == PrimaryCurrency.selected
-                                        ? Column(
-                                            children: [
-                                              _balanceSelected(context, true),
-                                              _balanceNetwork(context, false),
-                                            ],
-                                          )
-                                        : Column(
-                                            children: [
-                                              _balanceNetwork(context, true),
-                                              _balanceSelected(context, false),
-                                            ],
-                                          ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(Icons.change_circle),
-                                      alignment: Alignment.centerRight,
-                                      color: StateContainer.of(context)
-                                          .curTheme
-                                          .textFieldIcon,
-                                      onPressed: () {
-                                        sl.get<HapticUtil>().feedback(
-                                            FeedbackType.light,
-                                            StateContainer.of(context)
-                                                .activeVibrations);
-                                        if (primaryCurrency ==
-                                            PrimaryCurrency.network) {
-                                          setState(() {
-                                            primaryCurrency =
-                                                PrimaryCurrency.selected;
-                                          });
-                                        } else {
-                                          setState(() {
-                                            primaryCurrency =
-                                                PrimaryCurrency.network;
-                                          });
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                )
-                              : const SizedBox(),
+                          BalanceIndicatorWidget(
+                              primaryCurrency: widget.primaryCurrency,
+                              displaySwitchButton: false),
                         ],
                       ),
                     ),
@@ -530,79 +473,5 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
       fee = 0;
     }
     return fee;
-  }
-
-  Widget _balanceNetwork(BuildContext context, bool primary) {
-    return Container(
-      child: RichText(
-        textAlign: TextAlign.start,
-        text: TextSpan(
-          text: '',
-          children: <InlineSpan>[
-            if (primary == false)
-              TextSpan(
-                text: '(',
-                style: primary
-                    ? AppStyles.textStyleSize16W100Primary(context)
-                    : AppStyles.textStyleSize14W100Primary(context),
-              ),
-            TextSpan(
-              text:
-                  '${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
-              style: primary
-                  ? AppStyles.textStyleSize16W700Primary(context)
-                  : AppStyles.textStyleSize14W700Primary(context),
-            ),
-            if (primary == false)
-              TextSpan(
-                text: ')',
-                style: primary
-                    ? AppStyles.textStyleSize16W100Primary(context)
-                    : AppStyles.textStyleSize14W100Primary(context),
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _balanceSelected(BuildContext context, bool primary) {
-    return Container(
-      child: RichText(
-        textAlign: TextAlign.start,
-        text: TextSpan(
-          text: '',
-          children: <InlineSpan>[
-            if (primary == false)
-              TextSpan(
-                text: '(',
-                style: primary
-                    ? AppStyles.textStyleSize16W100Primary(context)
-                    : AppStyles.textStyleSize14W100Primary(context),
-              ),
-            TextSpan(
-              text: CurrencyUtil.getConvertedAmount(
-                  StateContainer.of(context).curCurrency.currency.name,
-                  StateContainer.of(context)
-                      .appWallet!
-                      .appKeychain!
-                      .getAccountSelected()!
-                      .balance!
-                      .fiatCurrencyValue!),
-              style: primary
-                  ? AppStyles.textStyleSize16W700Primary(context)
-                  : AppStyles.textStyleSize14W700Primary(context),
-            ),
-            if (primary == false)
-              TextSpan(
-                text: ')',
-                style: primary
-                    ? AppStyles.textStyleSize16W100Primary(context)
-                    : AppStyles.textStyleSize14W100Primary(context),
-              ),
-          ],
-        ),
-      ),
-    );
   }
 }
