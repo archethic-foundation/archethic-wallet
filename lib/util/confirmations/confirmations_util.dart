@@ -2,13 +2,14 @@
 
 class ConfirmationsUtil {
   static bool isEnoughConfirmations(int nbConfirmations, int maxConfirmations) {
-    if (maxConfirmations == 0 && nbConfirmations == 0) {
+    /*if (maxConfirmations == 0 && nbConfirmations == 0) {
       return false;
     } else {
       if (maxConfirmations == 0 && nbConfirmations > 0) {
         return true;
       } else {
         if (nbConfirmations > 0 && maxConfirmations <= 3) {
+          if (nbConfirmations > 0 && maxConfirmations <= 3) {
           return true;
         } else {
           if ((maxConfirmations / 3).ceil() <= nbConfirmations) {
@@ -18,6 +19,12 @@ class ConfirmationsUtil {
           }
         }
       }
+    }
+  }*/
+    if (nbConfirmations > 0) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
