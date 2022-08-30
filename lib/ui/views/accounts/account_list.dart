@@ -117,7 +117,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                               AppLocalization.of(context)!
                                                   .introNewWalletGetFirstInfosNameRequest,
                                               style: AppStyles
-                                                  .textStyleSize16W400Primary(
+                                                  .textStyleSize12W400Primary(
                                                       context),
                                             ),
                                           ]),
@@ -132,8 +132,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                         .curTheme
                                                         .text45!)),
                                         content: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: <Widget>[
@@ -154,7 +153,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                   keyboardType:
                                                       TextInputType.text,
                                                   style: AppStyles
-                                                      .textStyleSize14W600Primary(
+                                                      .textStyleSize12W600Primary(
                                                           context),
                                                   inputFormatters: <
                                                       TextInputFormatter>[
@@ -168,7 +167,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                         height: 40,
                                                         child: Text(nameError!,
                                                             style: AppStyles
-                                                                .textStyleSize14W600Primary(
+                                                                .textStyleSize12W600Primary(
                                                                     context)),
                                                       )
                                                     : const SizedBox(
@@ -178,15 +177,18 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                   AppLocalization.of(context)!
                                                       .introNewWalletGetFirstInfosNameInfos,
                                                   style: AppStyles
-                                                      .textStyleSize14W600Primary(
+                                                      .textStyleSize12W600Primary(
                                                           context),
                                                   textAlign: TextAlign.justify,
                                                 ),
                                               ],
                                             ),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
                                             Row(
                                               children: [
-                                                AppButton.buildAppButton(
+                                                AppButton.buildAppButtonTiny(
                                                     const Key('addName'),
                                                     context,
                                                     isPressed == false
