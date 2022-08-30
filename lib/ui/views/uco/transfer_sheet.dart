@@ -2,6 +2,7 @@
 // ignore_for_file: avoid_unnecessary_containers
 
 // Flutter imports:
+import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -72,8 +73,6 @@ class TransferSheet extends StatefulWidget {
 
 enum AddressStyle { text60, text90, primary }
 
-enum PrimaryCurrency { network, selected }
-
 class _TransferSheetState extends State<TransferSheet> {
   FocusNode? _sendAddressFocusNode;
   TextEditingController? _sendAddressController;
@@ -95,7 +94,6 @@ class _TransferSheetState extends State<TransferSheet> {
   bool validRequest = true;
   double feeEstimation = 0.0;
   bool? _isPressed;
-  PrimaryCurrency primaryCurrency = PrimaryCurrency.network;
   double priceConverted = 0.0;
 
   List<UCOTransferWallet> ucoTransferList =
@@ -104,6 +102,8 @@ class _TransferSheetState extends State<TransferSheet> {
   List<TokenTransferWallet> tokenTransferList =
       List<TokenTransferWallet>.empty(growable: true);
 
+  PrimaryCurrency primaryCurrencySelected = PrimaryCurrency.native;
+
   @override
   void initState() {
     super.initState();
@@ -111,10 +111,11 @@ class _TransferSheetState extends State<TransferSheet> {
         PrimaryCurrencySetting(AvailablePrimaryCurrency.native)
             .primaryCurrency
             .name) {
-      primaryCurrency = PrimaryCurrency.network;
+      primaryCurrencySelected = PrimaryCurrency.native;
     } else {
-      primaryCurrency = PrimaryCurrency.selected;
+      primaryCurrencySelected = PrimaryCurrency.fiat;
     }
+
     _isPressed = false;
     _sendAmountFocusNode = FocusNode();
     _sendAddressFocusNode = FocusNode();
@@ -249,55 +250,13 @@ class _TransferSheetState extends State<TransferSheet> {
                           const SizedBox(
                             height: 15,
                           ),
-                          StateContainer.of(context).showBalance
-                              ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    primaryCurrency == PrimaryCurrency.selected
-                                        ? Column(
-                                            children: [
-                                              _balanceSelected(context, true),
-                                              _balanceNetwork(context, false),
-                                            ],
-                                          )
-                                        : Column(
-                                            children: [
-                                              _balanceNetwork(context, true),
-                                              _balanceSelected(context, false),
-                                            ],
-                                          ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(Icons.change_circle),
-                                      alignment: Alignment.centerRight,
-                                      color: StateContainer.of(context)
-                                          .curTheme
-                                          .textFieldIcon,
-                                      onPressed: () {
-                                        sl.get<HapticUtil>().feedback(
-                                            FeedbackType.light,
-                                            StateContainer.of(context)
-                                                .activeVibrations);
-                                        _sendAmountController!.text = '';
-                                        if (primaryCurrency ==
-                                            PrimaryCurrency.network) {
-                                          setState(() {
-                                            primaryCurrency =
-                                                PrimaryCurrency.selected;
-                                          });
-                                        } else {
-                                          setState(() {
-                                            primaryCurrency =
-                                                PrimaryCurrency.network;
-                                          });
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                )
-                              : const SizedBox(),
+                          BalanceIndicatorWidget(
+                              primaryCurrency: widget.primaryCurrency,
+                              onPrimaryCurrencySelected: (value) {
+                                setState(() {
+                                  primaryCurrencySelected = value;
+                                });
+                              }),
                         ],
                       ),
                     ),
@@ -500,7 +459,7 @@ class _TransferSheetState extends State<TransferSheet> {
           .getAccountSelected()!
           .balance!
           .nativeTokenValue!;
-      if (primaryCurrency == PrimaryCurrency.network) {
+      if (primaryCurrencySelected == PrimaryCurrency.native) {
         if (double.tryParse(amount)! + feeEstimation == balanceRaw) {
           return true;
         } else {
@@ -522,80 +481,6 @@ class _TransferSheetState extends State<TransferSheet> {
     } catch (e) {
       return false;
     }
-  }
-
-  Widget _balanceNetwork(BuildContext context, bool primary) {
-    return Container(
-      child: RichText(
-        textAlign: TextAlign.start,
-        text: TextSpan(
-          text: '',
-          children: <InlineSpan>[
-            if (primary == false)
-              TextSpan(
-                text: '(',
-                style: primary
-                    ? AppStyles.textStyleSize16W100Primary(context)
-                    : AppStyles.textStyleSize14W100Primary(context),
-              ),
-            TextSpan(
-              text:
-                  '${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
-              style: primary
-                  ? AppStyles.textStyleSize16W700Primary(context)
-                  : AppStyles.textStyleSize14W700Primary(context),
-            ),
-            if (primary == false)
-              TextSpan(
-                text: ')',
-                style: primary
-                    ? AppStyles.textStyleSize16W100Primary(context)
-                    : AppStyles.textStyleSize14W100Primary(context),
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _balanceSelected(BuildContext context, bool primary) {
-    return Container(
-      child: RichText(
-        textAlign: TextAlign.start,
-        text: TextSpan(
-          text: '',
-          children: <InlineSpan>[
-            if (primary == false)
-              TextSpan(
-                text: '(',
-                style: primary
-                    ? AppStyles.textStyleSize16W100Primary(context)
-                    : AppStyles.textStyleSize14W100Primary(context),
-              ),
-            TextSpan(
-              text: CurrencyUtil.getConvertedAmount(
-                  StateContainer.of(context).curCurrency.currency.name,
-                  StateContainer.of(context)
-                      .appWallet!
-                      .appKeychain!
-                      .getAccountSelected()!
-                      .balance!
-                      .fiatCurrencyValue!),
-              style: primary
-                  ? AppStyles.textStyleSize16W700Primary(context)
-                  : AppStyles.textStyleSize14W700Primary(context),
-            ),
-            if (primary == false)
-              TextSpan(
-                text: ')',
-                style: primary
-                    ? AppStyles.textStyleSize16W100Primary(context)
-                    : AppStyles.textStyleSize14W100Primary(context),
-              ),
-          ],
-        ),
-      ),
-    );
   }
 
   /// Validate form data to see if valid
@@ -640,7 +525,7 @@ class _TransferSheetState extends State<TransferSheet> {
               .balance!
               .nativeTokenValue!;
 
-          if (primaryCurrency == PrimaryCurrency.network) {
+          if (primaryCurrencySelected == PrimaryCurrency.native) {
             sendAmount = double.tryParse(amount)!;
           } else {
             sendAmount = priceConverted;
@@ -818,7 +703,11 @@ class _TransferSheetState extends State<TransferSheet> {
           inputFormatters: [
             LengthLimitingTextInputFormatter(16),
             CurrencyFormatter(
-                maxDecimalDigits: primaryCurrency == PrimaryCurrency.network
+                maxDecimalDigits: widget
+                            .primaryCurrency!.primaryCurrency.name ==
+                        PrimaryCurrencySetting(AvailablePrimaryCurrency.native)
+                            .primaryCurrency
+                            .name
                     ? 8
                     : _localCurrencyFormat!.decimalDigits!),
             LocalCurrencyFormatter(
@@ -849,7 +738,7 @@ class _TransferSheetState extends State<TransferSheet> {
           maxLines: null,
           autocorrect: false,
           labelText: widget.accountToken == null
-              ? primaryCurrency == PrimaryCurrency.network
+              ? primaryCurrencySelected == PrimaryCurrency.native
                   ? '${AppLocalization.of(context)!.enterAmount} (${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()})'
                   : '${AppLocalization.of(context)!.enterAmount} (${StateContainer.of(context).curCurrency.currency.name})'
               : '${AppLocalization.of(context)!.enterAmount} (${widget.accountToken!.tokenInformations!.symbol})',
@@ -861,7 +750,7 @@ class _TransferSheetState extends State<TransferSheet> {
               double fee = await getFee(maxSend: true);
 
               double sendAmount = 0;
-              if (primaryCurrency == PrimaryCurrency.network) {
+              if (primaryCurrencySelected == PrimaryCurrency.native) {
                 sendAmount = StateContainer.of(context)
                         .appWallet!
                         .appKeychain!
@@ -934,7 +823,8 @@ class _TransferSheetState extends State<TransferSheet> {
                       ? Container(
                           margin: const EdgeInsets.only(right: 40),
                           alignment: Alignment.centerRight,
-                          child: primaryCurrency == PrimaryCurrency.network
+                          child: primaryCurrencySelected ==
+                                  PrimaryCurrency.native
                               ? Text(
                                   '= ${_convertNetworkCurrencyToSelectedCurrency()}',
                                   textAlign: TextAlign.right,
