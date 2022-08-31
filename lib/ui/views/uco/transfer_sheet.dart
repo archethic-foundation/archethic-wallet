@@ -863,8 +863,11 @@ class _TransferSheetState extends State<TransferSheet> {
       maxLines: 4,
       labelText:
           '${AppLocalization.of(context)!.sendMessageHeader} (${_messageController!.text.length}/200)',
-      onChanged: (String text) {
-        setState(() {});
+      onChanged: (String text) async {
+        double fee = await getFee();
+        setState(() {
+          feeEstimation = fee;
+        });
       },
       keyboardType: TextInputType.text,
       textAlign: TextAlign.left,

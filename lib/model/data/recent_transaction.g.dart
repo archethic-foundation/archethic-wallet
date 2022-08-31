@@ -26,6 +26,7 @@ class RecentTransactionAdapter extends TypeAdapter<RecentTransaction> {
       content: fields[9] as String?,
       timestamp: fields[4] as int?,
       type: fields[10] as String?,
+      decryptedSecret: (fields[14] as List?)?.cast<String>(),
     )
       ..tokenInformations = fields[11] as TokenInformations?
       ..contactInformations = fields[12] as Contact?;
@@ -34,7 +35,7 @@ class RecentTransactionAdapter extends TypeAdapter<RecentTransaction> {
   @override
   void write(BinaryWriter writer, RecentTransaction obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.address)
       ..writeByte(1)
@@ -56,7 +57,9 @@ class RecentTransactionAdapter extends TypeAdapter<RecentTransaction> {
       ..writeByte(11)
       ..write(obj.tokenInformations)
       ..writeByte(12)
-      ..write(obj.contactInformations);
+      ..write(obj.contactInformations)
+      ..writeByte(14)
+      ..write(obj.decryptedSecret);
   }
 
   @override

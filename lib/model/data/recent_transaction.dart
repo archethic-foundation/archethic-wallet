@@ -16,17 +16,17 @@ part 'recent_transaction.g.dart';
 
 @HiveType(typeId: 6)
 class RecentTransaction extends HiveObject {
-  RecentTransaction({
-    this.address,
-    this.typeTx,
-    this.amount,
-    this.recipient,
-    this.from,
-    this.fee,
-    this.content,
-    this.timestamp,
-    this.type,
-  });
+  RecentTransaction(
+      {this.address,
+      this.typeTx,
+      this.amount,
+      this.recipient,
+      this.from,
+      this.fee,
+      this.content,
+      this.timestamp,
+      this.type,
+      this.decryptedSecret});
 
   /// Types of transaction
   static const int transferInput = 1;
@@ -77,6 +77,10 @@ class RecentTransaction extends HiveObject {
   @HiveField(12)
   Contact? contactInformations;
 
+  /// Decrypted Secret
+  @HiveField(14)
+  List<String>? decryptedSecret;
+
   Map<String, dynamic> toJson() => <String, dynamic>{
         'address': address,
         'typeTx': typeTx,
@@ -87,6 +91,7 @@ class RecentTransaction extends HiveObject {
         'content': content,
         'timestamp': timestamp,
         'type': type,
+        'decryptedSecret': decryptedSecret
       };
 
   Future<Contact?> getContactInformations() async {
@@ -128,14 +133,14 @@ class RecentTransaction extends HiveObject {
 
   factory RecentTransaction.fromJson(Map<String, dynamic> json) =>
       RecentTransaction(
-        address: json['address'],
-        typeTx: json['typeTx']?.toInt(),
-        recipient: json['recipient'],
-        amount: json['amount']?.toDouble(),
-        fee: json['fee']?.toDouble(),
-        from: json['from'],
-        content: json['content'],
-        timestamp: json['timestamp'],
-        type: json['type'],
-      );
+          address: json['address'],
+          typeTx: json['typeTx']?.toInt(),
+          recipient: json['recipient'],
+          amount: json['amount']?.toDouble(),
+          fee: json['fee']?.toDouble(),
+          from: json['from'],
+          content: json['content'],
+          timestamp: json['timestamp'],
+          type: json['type'],
+          decryptedSecret: json['decryptedSecret']);
 }

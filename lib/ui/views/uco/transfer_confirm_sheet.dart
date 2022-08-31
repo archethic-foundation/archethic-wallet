@@ -4,6 +4,8 @@
 
 // Dart imports:
 import 'dart:async';
+import 'dart:math';
+import 'dart:typed_data';
 
 // Flutter imports:
 import 'package:aewallet/util/confirmations/confirmations_util.dart';
@@ -35,15 +37,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show
-        TransactionStatus,
-        ApiService,
-        Transaction,
-        UCOTransfer,
-        TokenTransfer,
-        Keychain,
-        uint8ListToHex;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 class TransferConfirmSheet extends StatefulWidget {
   const TransferConfirmSheet(
@@ -320,9 +314,48 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
             transfer.to, transfer.amount!, transfer.token,
             tokenId: transfer.tokenId == null ? 0 : transfer.tokenId!);
       }
+
       if (widget.message!.isNotEmpty) {
-        transaction.setContent(widget.message!);
+        final String aesKey = uint8ListToHex(Uint8List.fromList(
+            List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
+
+        final KeyPair walletKeyPair = deriveKeyPair(seed, 0);
+
+        List<String> authorizedPublicKeys = List<String>.empty(growable: true);
+        authorizedPublicKeys.add(uint8ListToHex(walletKeyPair.publicKey));
+
+        for (UCOTransfer transfer in ucoTransferList) {
+          final List<Transaction> firstTxListRecipient = await sl
+              .get<ApiService>()
+              .getTransactionChain(transfer.to!, request: 'previousPublicKey');
+          if (firstTxListRecipient.isNotEmpty) {
+            authorizedPublicKeys
+                .add(firstTxListRecipient.first.previousPublicKey!);
+          }
+        }
+
+        for (TokenTransfer transfer in tokenTransferList) {
+          final List<Transaction> firstTxListRecipient = await sl
+              .get<ApiService>()
+              .getTransactionChain(transfer.to!, request: 'previousPublicKey');
+          if (firstTxListRecipient.isNotEmpty) {
+            authorizedPublicKeys
+                .add(firstTxListRecipient.first.previousPublicKey!);
+          }
+        }
+
+        final List<AuthorizedKey> authorizedKeys =
+            List<AuthorizedKey>.empty(growable: true);
+        for (String key in authorizedPublicKeys) {
+          authorizedKeys.add(AuthorizedKey(
+              encryptedSecretKey: uint8ListToHex(ecEncrypt(aesKey, key)),
+              publicKey: key));
+        }
+
+        transaction.addOwnership(
+            aesEncrypt(widget.message!, aesKey), authorizedKeys);
       }
+
       Transaction signedTx = keychain
           .buildTransaction(transaction, service, index)
           .originSign(originPrivateKey);

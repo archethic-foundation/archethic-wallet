@@ -405,8 +405,8 @@ class _TxListWidgetState extends State<TxListWidget> {
                         children: [
                           if (transaction.typeTx !=
                                   RecentTransaction.tokenCreation &&
-                              transaction.content != null &&
-                              transaction.content != '')
+                              transaction.decryptedSecret != null &&
+                              transaction.decryptedSecret!.isNotEmpty)
                             AutoSizeText(
                                 AppLocalization.of(context)!
                                     .messageInTxTransfer,

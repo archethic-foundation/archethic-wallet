@@ -43,7 +43,8 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                 DateFormat.yMEd(Localizations.localeOf(context).languageCode),
                 StateContainer.of(context)
                     .curNetwork
-                    .getNetworkCryptoCurrencyLabel()),
+                    .getNetworkCryptoCurrencyLabel(),
+                context),
             builder: (BuildContext context,
                 AsyncSnapshot<List<TransactionInfos>> list) {
               return Column(

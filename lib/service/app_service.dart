@@ -2,11 +2,16 @@
 
 // Dart imports:
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer' as dev;
+import 'dart:math';
+import 'dart:typed_data';
 
 // Package imports:
+import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/model/data/token_informations_property.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
@@ -55,7 +60,7 @@ class AppService {
     final List<Transaction> transactionChain = await getTransactionChain(
         lastAddress,
         pagingAddress,
-        'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { content , ledger { uco { transfers { amount, to } } token {transfers {amount, to, token, tokenId } } } }, inputs { from, type, spent, tokenAddress, tokenId, amount, timestamp }');
+        'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } }, content , ledger { uco { transfers { amount, to } } token {transfers {amount, to, token, tokenId } } } }, inputs { from, type, spent, tokenAddress, tokenId, amount, timestamp }');
 
     final List<TransactionInput> transactionInputsGenesisAddress =
         await getTransactionInputs(genesisAddress,
@@ -99,6 +104,30 @@ class AppService {
             recentTransaction.timestamp =
                 transaction.validationStamp!.timestamp!;
             recentTransaction.from = lastAddress;
+            recentTransaction.decryptedSecret =
+                List<String>.empty(growable: true);
+            if (transaction.data!.ownerships != null) {
+              final KeyPair keypair = deriveKeyPair(seed, 0);
+              for (Ownership ownership in transaction.data!.ownerships!) {
+                final AuthorizedKey authorizedPublicKey =
+                    ownership.authorizedPublicKeys!.firstWhere(
+                        (AuthorizedKey authKey) =>
+                            authKey.publicKey!.toUpperCase() ==
+                            uint8ListToHex(keypair.publicKey).toUpperCase(),
+                        orElse: () => AuthorizedKey());
+                if (authorizedPublicKey.encryptedSecretKey != null) {
+                  final Uint8List aesKey = ecDecrypt(
+                      authorizedPublicKey.encryptedSecretKey,
+                      keypair.privateKey);
+                  final Uint8List decryptedSecret =
+                      aesDecrypt(ownership.secret, aesKey);
+
+                  recentTransaction.decryptedSecret!
+                      .add(utf8.decode(decryptedSecret));
+                }
+              }
+            }
+
             recentTransactions.add(recentTransaction);
           }
           for (int i = 0;
@@ -122,6 +151,31 @@ class AppService {
             recentTransaction.tokenInformations =
                 await recentTransaction.getTokenInfo(
                     null, transaction.data!.ledger!.token!.transfers![i].token);
+
+            recentTransaction.decryptedSecret =
+                List<String>.empty(growable: true);
+            if (transaction.data!.ownerships != null) {
+              final KeyPair keypair = deriveKeyPair(seed, 0);
+              for (Ownership ownership in transaction.data!.ownerships!) {
+                final AuthorizedKey authorizedPublicKey =
+                    ownership.authorizedPublicKeys!.firstWhere(
+                        (AuthorizedKey authKey) =>
+                            authKey.publicKey!.toUpperCase() ==
+                            uint8ListToHex(keypair.publicKey).toUpperCase(),
+                        orElse: () => AuthorizedKey());
+                if (authorizedPublicKey.encryptedSecretKey != null) {
+                  final Uint8List aesKey = ecDecrypt(
+                      authorizedPublicKey.encryptedSecretKey,
+                      keypair.privateKey);
+                  final Uint8List decryptedSecret =
+                      aesDecrypt(ownership.secret, aesKey);
+
+                  recentTransaction.decryptedSecret!
+                      .add(utf8.decode(decryptedSecret));
+                }
+              }
+            }
+
             recentTransactions.add(recentTransaction);
           }
         }
@@ -157,6 +211,29 @@ class AppService {
         String content =
             await sl.get<ApiService>().getTransactionContent(transaction.from!);
         recentTransaction.content = content;
+      }
+      recentTransaction.decryptedSecret = List<String>.empty(growable: true);
+      List<Ownership> ownerships = await sl
+          .get<ApiService>()
+          .getTransactionOwnerships(recentTransaction.address!);
+      if (ownerships.isNotEmpty) {
+        final KeyPair keypair = deriveKeyPair(seed, 0);
+        for (Ownership ownership in ownerships) {
+          final AuthorizedKey authorizedPublicKey =
+              ownership.authorizedPublicKeys!.firstWhere(
+                  (AuthorizedKey authKey) =>
+                      authKey.publicKey!.toUpperCase() ==
+                      uint8ListToHex(keypair.publicKey).toUpperCase(),
+                  orElse: () => AuthorizedKey());
+          if (authorizedPublicKey.encryptedSecretKey != null) {
+            final Uint8List aesKey = ecDecrypt(
+                authorizedPublicKey.encryptedSecretKey, keypair.privateKey);
+            final Uint8List decryptedSecret =
+                aesDecrypt(ownership.secret, aesKey);
+            recentTransaction.decryptedSecret!
+                .add(utf8.decode(decryptedSecret));
+          }
+        }
       }
       recentTransaction.amount = fromBigInt(transaction.amount!).toDouble();
       recentTransaction.typeTx = RecentTransaction.transferInput;
@@ -199,12 +276,14 @@ class AppService {
               List<List<TokenInformationsProperty>>.empty(growable: true);
           List<TokenInformationsProperty> propertiesList =
               List<TokenInformationsProperty>.empty(growable: true);
-          for (TokenProperty element in token.tokenProperties![0]) {
-            TokenInformationsProperty tokenInformationsProperty =
-                TokenInformationsProperty();
-            tokenInformationsProperty.name = element.name;
-            tokenInformationsProperty.value = element.value;
-            propertiesList.add(tokenInformationsProperty);
+          if (token.tokenProperties!.isNotEmpty) {
+            for (TokenProperty element in token.tokenProperties![0]) {
+              TokenInformationsProperty tokenInformationsProperty =
+                  TokenInformationsProperty();
+              tokenInformationsProperty.name = element.name;
+              tokenInformationsProperty.value = element.value;
+              propertiesList.add(tokenInformationsProperty);
+            }
           }
           tokenPropertiesList.add(propertiesList);
           TokenInformations tokenInformations = TokenInformations(
@@ -243,13 +322,16 @@ class AppService {
                 List<List<TokenInformationsProperty>>.empty(growable: true);
             List<TokenInformationsProperty> propertiesList =
                 List<TokenInformationsProperty>.empty(growable: true);
-            for (TokenProperty element in token.tokenProperties![0]) {
-              TokenInformationsProperty tokenInformationsProperty =
-                  TokenInformationsProperty();
-              tokenInformationsProperty.name = element.name;
-              tokenInformationsProperty.value = element.value;
-              propertiesList.add(tokenInformationsProperty);
+            if (token.tokenProperties!.isNotEmpty) {
+              for (TokenProperty element in token.tokenProperties![0]) {
+                TokenInformationsProperty tokenInformationsProperty =
+                    TokenInformationsProperty();
+                tokenInformationsProperty.name = element.name;
+                tokenInformationsProperty.value = element.value;
+                propertiesList.add(tokenInformationsProperty);
+              }
             }
+
             tokenPropertiesList.add(propertiesList);
 
             TokenInformations tokenInformations = TokenInformations(
@@ -290,7 +372,10 @@ class AppService {
   }
 
   Future<List<TransactionInfos>> getTransactionAllInfos(
-      String address, DateFormat dateFormat, String cryptoCurrency) async {
+      String address,
+      DateFormat dateFormat,
+      String cryptoCurrency,
+      BuildContext context) async {
     // ignore: prefer_final_locals
     List<TransactionInfos> transactionsInfos =
         List<TransactionInfos>.empty(growable: true);
@@ -322,6 +407,28 @@ class AppService {
             domain: 'Data',
             titleInfo: 'Code',
             valueInfo: transaction.data!.code!));
+      }
+      if (transaction.data!.ownerships != null) {
+        String? seed = await StateContainer.of(context).getSeed();
+        final KeyPair keypair = deriveKeyPair(seed!, 0);
+        for (Ownership ownership in transaction.data!.ownerships!) {
+          final AuthorizedKey authorizedPublicKey =
+              ownership.authorizedPublicKeys!.firstWhere(
+                  (AuthorizedKey authKey) =>
+                      authKey.publicKey!.toUpperCase() ==
+                      uint8ListToHex(keypair.publicKey).toUpperCase(),
+                  orElse: () => AuthorizedKey());
+          if (authorizedPublicKey.encryptedSecretKey != null) {
+            final Uint8List aesKey = ecDecrypt(
+                authorizedPublicKey.encryptedSecretKey, keypair.privateKey);
+            final Uint8List decryptedSecret =
+                aesDecrypt(ownership.secret, aesKey);
+            transactionsInfos.add(TransactionInfos(
+                domain: 'Data',
+                titleInfo: 'Secret',
+                valueInfo: utf8.decode(decryptedSecret)));
+          }
+        }
       }
       if (transaction.data!.ledger != null &&
           transaction.data!.ledger!.uco != null &&
@@ -403,11 +510,11 @@ class AppService {
 
   Future<double> getFeesEstimation(
       String originPrivateKey,
-      String transactionChainSeed,
+      String seed,
       String address,
       List<UCOTransfer> listUcoTransfer,
       List<TokenTransfer> listTokenTransfer,
-      String content) async {
+      String message) async {
     final Transaction lastTransaction = await sl
         .get<ApiService>()
         .getLastTransaction(address, request: 'chainLength');
@@ -421,10 +528,49 @@ class AppService {
           transfer.to, transfer.amount!, transfer.token,
           tokenId: transfer.tokenId == null ? 0 : transfer.tokenId!);
     }
-    transaction.setContent(content);
+    if (message.isNotEmpty) {
+      final String aesKey = uint8ListToHex(Uint8List.fromList(
+          List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
+
+      final KeyPair walletKeyPair = deriveKeyPair(seed, 0);
+
+      List<String> authorizedPublicKeys = List<String>.empty(growable: true);
+      authorizedPublicKeys.add(uint8ListToHex(walletKeyPair.publicKey));
+
+      for (UCOTransfer transfer in listUcoTransfer) {
+        final List<Transaction> firstTxListRecipient = await sl
+            .get<ApiService>()
+            .getTransactionChain(transfer.to!, request: 'previousPublicKey');
+        if (firstTxListRecipient.isNotEmpty) {
+          authorizedPublicKeys
+              .add(firstTxListRecipient.first.previousPublicKey!);
+        }
+      }
+
+      for (TokenTransfer transfer in listTokenTransfer) {
+        final List<Transaction> firstTxListRecipient = await sl
+            .get<ApiService>()
+            .getTransactionChain(transfer.to!, request: 'previousPublicKey');
+        if (firstTxListRecipient.isNotEmpty) {
+          authorizedPublicKeys
+              .add(firstTxListRecipient.first.previousPublicKey!);
+        }
+      }
+
+      final List<AuthorizedKey> authorizedKeys =
+          List<AuthorizedKey>.empty(growable: true);
+      for (String key in authorizedPublicKeys) {
+        authorizedKeys.add(AuthorizedKey(
+            encryptedSecretKey: uint8ListToHex(ecEncrypt(aesKey, key)),
+            publicKey: key));
+      }
+
+      transaction.addOwnership(aesEncrypt(message, aesKey), authorizedKeys);
+    }
+
     TransactionFee transactionFee = TransactionFee();
     transaction
-        .build(transactionChainSeed, lastTransaction.chainLength!)
+        .build(seed, lastTransaction.chainLength!)
         .originSign(originPrivateKey);
     try {
       transactionFee =
