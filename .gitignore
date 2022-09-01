@@ -135,3 +135,7 @@ windows/certificates/archethic_wallet.key
 windows/certificates/archethic_wallet.pfx
 windows/certificates/mdp.txt
 windows/certificates/mykeyname.key
+macos/fastlane/Appfile
+macos/archethic_wallet.app/
+macos/archethic_wallet.app.dSYM.zip
+macos/archethic_wallet.pkg
