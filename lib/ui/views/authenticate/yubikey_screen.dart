@@ -261,7 +261,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                                 child: Text(buttonNFCLabel,
                                     style: AppStyles.textStyleSize16W200Primary(
                                         context)),
-                                onPressed: () {
+                                onPressed: () async {
                                   sl.get<HapticUtil>().feedback(
                                       FeedbackType.light,
                                       StateContainer.of(context)
@@ -271,7 +271,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                                         AppLocalization.of(context)!
                                             .yubikeyConnectHoldNearDevice;
                                   });
-                                  _tagRead();
+                                  await _tagRead();
                                 })
                           else
                             Container(
