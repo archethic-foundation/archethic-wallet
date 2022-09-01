@@ -518,12 +518,6 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                     // final directory = await getApplicationDocumentsDirectory();
                     // file = File(base64Decode(tokenProperty.value));
                     imageDecoded = base64Decode(tokenProperty.value!);
-                    image = Image.memory(
-                      imageDecoded,
-                      width: MediaQuery.of(context).size.width,
-                      height: 150,
-                      fit: BoxFit.cover,
-                    );
                     break;
                   case 'type/mime':
                     typeMime = tokenProperty.value!;

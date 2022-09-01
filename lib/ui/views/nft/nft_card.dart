@@ -27,17 +27,9 @@ class NFTCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Hero(
-            tag: heroTag,
-            child: AspectRatio(
-              aspectRatio: 1,
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.memory(
-                    image,
-                    fit: BoxFit.cover,
-                  )),
-            ),
+          Image.memory(
+            image,
+            fit: BoxFit.fill,
           ),
           const SizedBox(height: 2),
           Text(

@@ -2,6 +2,7 @@
 
 // Dart imports:
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
@@ -519,7 +520,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                 ),
                               )
                             : AutoSizeText(
-                                'Collection',
+                                'NFT',
                                 style:
                                     AppStyles.textStyleSize24W700EquinoxPrimary(
                                         context),
@@ -585,7 +586,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                           inactiveColor: StateContainer.of(context)
                               .curTheme
                               .bottomBarInactiveIcon!),
-                      BottomBarItem(
+                      /* BottomBarItem(
                           icon: const Icon(Icons.collections_bookmark),
                           backgroundColorOpacity: StateContainer.of(context)
                               .curTheme
@@ -601,7 +602,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                               .bottomBarActiveColor!,
                           inactiveColor: StateContainer.of(context)
                               .curTheme
-                              .bottomBarInactiveIcon!),
+                              .bottomBarInactiveIcon!),*/
                     ],
                   ),
                 ),
@@ -833,7 +834,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                     )
                   ],
                 ),
-                Column(
+                /* Column(
                   children: [
                     Expanded(
                       /// REFRESH
@@ -867,7 +868,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
-                                      /// COLLECTION
+                                      /// NFT
                                       CollectionsListWidget(
                                         appWallet: StateContainer.of(context)
                                             .appWallet,
@@ -882,7 +883,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                       ),
                     ),
                   ],
-                ),
+                ),*/
               ],
               onPageChanged: (index) {
                 setState(() =>

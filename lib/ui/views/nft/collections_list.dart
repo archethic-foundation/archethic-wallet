@@ -1,13 +1,11 @@
 // Flutter imports:
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/token_informations.dart';
-import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/views/nft/add_nft_collection.dart';
+import 'package:aewallet/model/data/token_informations_property.dart';
 import 'package:aewallet/ui/views/nft/add_nft_file.dart';
-import 'package:aewallet/ui/views/nft/nft_card.dart';
+import 'package:aewallet/ui/views/nft/nft_card2.dart';
 import 'package:aewallet/ui/views/nft/nft_preview.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -41,14 +39,14 @@ class _CollectionsListWidgetState extends State<CollectionsListWidget> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height - 200,
+      height: MediaQuery.of(context).size.height - 180,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.only(top: 30),
+                padding: const EdgeInsets.only(top: 10),
                 child: GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -56,39 +54,53 @@ class _CollectionsListWidgetState extends State<CollectionsListWidget> {
                     primary: false,
                     shrinkWrap: true,
                     itemCount: nftList.length,
-                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.only(top: 20, bottom: 50),
                     itemBuilder: (context, index) {
                       TokenInformations tokenInformations =
                           nftList[index].tokenInformations!;
 
-                      Uint8List file = base64Decode(tokenInformations
-                          .tokenProperties![0]
-                          .where((element) => element.name == 'file')
-                          .first
-                          .value!);
-
-                      return NFTCard(
+                      return NFTCard2(
                         name: tokenInformations.name!,
                         description: tokenInformations.tokenProperties![0]
                             .where((element) => element.name == 'description')
                             .first
                             .value!,
-                        image: file,
+                        imageBase64: tokenInformations.tokenProperties![0]
+                            .where((element) => element.name == 'file')
+                            .first
+                            .value!,
                         heroTag: tokenInformations.name!,
                         onTap: (() {
-                          Sheets.showAppHeightNineSheet(
+                          Sheets.showAppHeightEightSheet(
                             context: context,
-                            widget: NFTPreviewWidget(
-                                nftName: tokenInformations.name,
-                                nftDescription: tokenInformations
-                                    .tokenProperties![0]
-                                    .where((element) =>
-                                        element.name == 'description')
-                                    .first
-                                    .value,
-                                nftFile: file,
-                                nftProperties:
-                                    List<TokenProperty>.empty(growable: true)),
+                            builder: (BuildContext context) {
+                              List<TokenProperty> tokenProperties =
+                                  List<TokenProperty>.empty(growable: true);
+                              for (TokenInformationsProperty tokenInformationsProperty
+                                  in tokenInformations.tokenProperties![0]) {
+                                TokenProperty tokenProperty = TokenProperty(
+                                    name: tokenInformationsProperty.name,
+                                    value: tokenInformationsProperty.value);
+                                tokenProperties.add(tokenProperty);
+                              }
+
+                              return NFTPreviewWidget(
+                                  nftName: tokenInformations.name,
+                                  nftDescription: tokenInformations
+                                      .tokenProperties![0]
+                                      .where((element) =>
+                                          element.name == 'description')
+                                      .first
+                                      .value,
+                                  nftFile: base64Decode(tokenInformations
+                                      .tokenProperties![0]
+                                      .where(
+                                          (element) => element.name == 'file')
+                                      .first
+                                      .value!),
+                                  nftProperties: tokenProperties,
+                                  nftPropertiesDeleteAction: false);
+                            },
                           );
                         }),
                       );
@@ -98,23 +110,24 @@ class _CollectionsListWidgetState extends State<CollectionsListWidget> {
           ),
           Row(
             children: <Widget>[
-              AppButton.buildAppButtonTiny(
+              AppButton.buildAppButton(
                   const Key('createNFT'),
                   context,
                   AppButtonType.primary,
                   AppLocalization.of(context)!.createNFT,
                   Dimens.buttonBottomDimens, onPressed: () {
                 Sheets.showAppHeightNineSheet(
-                    context: context,
-                    widget: AddNFTFile(
-                      process: AddNFTFileProcess.single,
-                      primaryCurrency:
-                          StateContainer.of(context).curPrimaryCurrency,
-                    ));
+                  context: context,
+                  widget: AddNFTFile(
+                    process: AddNFTFileProcess.single,
+                    primaryCurrency:
+                        StateContainer.of(context).curPrimaryCurrency,
+                  ),
+                );
               }),
             ],
           ),
-          Row(
+          /*Row(
             children: <Widget>[
               AppButton.buildAppButtonTiny(
                   const Key('createNFTCollection'),
@@ -130,7 +143,7 @@ class _CollectionsListWidgetState extends State<CollectionsListWidget> {
                     ));
               }),
             ],
-          ),
+          ),*/
         ],
       ),
     );

@@ -513,6 +513,11 @@ class AppLocalization {
         name: 'currencyOracleInfo');
   }
 
+  String get nftAddPhotoFormatInfo {
+    return Intl.message('The accepted formats are: JPG, PNG, GIF, WEBP, BMP.',
+        name: 'nftAddPhotoFormatInfo');
+  }
+
   String get changeCurrencyHeader {
     return Intl.message('Currency', name: 'changeCurrencyHeader');
   }
