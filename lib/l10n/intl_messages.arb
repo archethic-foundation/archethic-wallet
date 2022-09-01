@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-08-19T22:37:32.574582",
+  "@@last_modified": "2022-08-28T20:11:33.086313",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -1868,6 +1868,108 @@
   },
   "createNFTCollection": "Create collection of NFT",
   "@createNFTCollection": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createNFT": "Create a NFT",
+  "@createNFT": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "saveNFTCollectionInLocal": "Save collection in local",
+  "@saveNFTCollectionInLocal": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addNFTFile": "Add a NFT",
+  "@addNFTFile": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addNFTProperty": "Add property",
+  "@addNFTProperty": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftNameHint": "Enter a name",
+  "@nftNameHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftDescriptionHint": "Enter a description",
+  "@nftDescriptionHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftPropertyNameHint": "Enter a name",
+  "@nftPropertyNameHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftPropertyValueHint": "Enter a value",
+  "@nftPropertyValueHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddStep1": "1) Import from",
+  "@nftAddStep1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddStep2": "2) Enter information",
+  "@nftAddStep2": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddStep3": "3) Add properties (optional)",
+  "@nftAddStep3": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddImportFile": "File",
+  "@nftAddImportFile": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddImportPhoto": "Photo",
+  "@nftAddImportPhoto": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddImportUrl": "Url",
+  "@nftAddImportUrl": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddPreview": "Your NFT (Preview)",
+  "@nftAddPreview": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddFileSize": "Size: ",
+  "@nftAddFileSize": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "conversionOraclePromotion": "(Conversion provided by Archethic Oracles)",
+  "@conversionOraclePromotion": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
