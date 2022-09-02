@@ -81,11 +81,11 @@ class _AddNFTFileState extends State<AddNFTFileConfirm> {
           UIUtil.showSnackbar(
               event.nbConfirmations == 1
                   ? AppLocalization.of(context)!
-                      .transactionConfirmed1
+                      .nftCreationTransactionConfirmed1
                       .replaceAll('%1', event.nbConfirmations.toString())
                       .replaceAll('%2', event.maxConfirmations.toString())
                   : AppLocalization.of(context)!
-                      .transactionConfirmed
+                      .nftCreationTransactionConfirmed
                       .replaceAll('%1', event.nbConfirmations.toString())
                       .replaceAll('%2', event.maxConfirmations.toString()),
               context,

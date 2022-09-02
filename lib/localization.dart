@@ -114,6 +114,40 @@ class AppLocalization {
         name: 'recentTransactionsNoTransactionYet');
   }
 
+  String get keychainCreationTransactionConfirmed1 {
+    return Intl.message(
+        'Your keychain has been created with %1 confirmation on %2',
+        name: 'keychainCreationTransactionConfirmed1');
+  }
+
+  String get keychainCreationTransactionConfirmed {
+    return Intl.message(
+        'Your keychain has been created with %1 confirmations on %2',
+        name: 'keychainCreationTransactionConfirmed');
+  }
+
+  String get keychainAccessCreationTransactionConfirmed1 {
+    return Intl.message(
+        'Accesses to your keychain have been created with %1 confirmation on %2',
+        name: 'keychainAccessCreationTransactionConfirmed1');
+  }
+
+  String get keychainAccessCreationTransactionConfirmed {
+    return Intl.message(
+        'Accesses to your keychain have been created with %1 confirmations on %2',
+        name: 'keychainAccessCreationTransactionConfirmed');
+  }
+
+  String get nftCreationTransactionConfirmed1 {
+    return Intl.message('Your NFT has been created with %1 confirmation on %2',
+        name: 'nftCreationTransactionConfirmed1');
+  }
+
+  String get nftCreationTransactionConfirmed {
+    return Intl.message('Your NFT has been created with %1 confirmation on %2',
+        name: 'nftCreationTransactionConfirmed');
+  }
+
   String get transactionConfirmed1 {
     return Intl.message('Transaction confirmed with %1 replication out of %2',
         name: 'transactionConfirmed1');
