@@ -18,23 +18,15 @@ import 'package:aewallet/model/data/app_wallet.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 
-class CollectionsListWidget extends StatefulWidget {
+class NFTListWidget extends StatefulWidget {
   final AppWallet? appWallet;
-  const CollectionsListWidget({super.key, this.appWallet});
+  const NFTListWidget({super.key, this.appWallet});
 
   @override
-  State<CollectionsListWidget> createState() => _CollectionsListWidgetState();
+  State<NFTListWidget> createState() => _NFTListWidgetState();
 }
 
-class _CollectionsListWidgetState extends State<CollectionsListWidget> {
-  List<AccountToken> nftList = List<AccountToken>.empty(growable: true);
-
-  @override
-  void initState() {
-    nftList = widget.appWallet!.appKeychain!.getAccountSelected()!.accountNFT!;
-    super.initState();
-  }
-
+class _NFTListWidgetState extends State<NFTListWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -53,11 +45,17 @@ class _CollectionsListWidgetState extends State<CollectionsListWidget> {
                             crossAxisCount: 2),
                     primary: false,
                     shrinkWrap: true,
-                    itemCount: nftList.length,
+                    itemCount: widget.appWallet!.appKeychain!
+                        .getAccountSelected()!
+                        .accountNFT!
+                        .length,
                     padding: const EdgeInsets.only(top: 20, bottom: 50),
                     itemBuilder: (context, index) {
-                      TokenInformations tokenInformations =
-                          nftList[index].tokenInformations!;
+                      TokenInformations tokenInformations = widget
+                          .appWallet!.appKeychain!
+                          .getAccountSelected()!
+                          .accountNFT![index]
+                          .tokenInformations!;
 
                       return NFTCard2(
                         name: tokenInformations.name!,
