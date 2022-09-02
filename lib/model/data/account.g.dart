@@ -25,7 +25,8 @@ class AccountAdapter extends TypeAdapter<Account> {
       balance: fields[5] as AccountBalance?,
       recentTransactions: (fields[6] as List?)?.cast<RecentTransaction>(),
       accountTokens: (fields[7] as List?)?.cast<AccountToken>(),
-    )..accountNFT = (fields[8] as List?)?.cast<AccountToken>();
+      accountNFT: (fields[8] as List?)?.cast<AccountToken>(),
+    );
   }
 
   @override

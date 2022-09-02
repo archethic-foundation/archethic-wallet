@@ -25,7 +25,8 @@ class Account extends HiveObject {
       this.lastAddress,
       this.balance,
       this.recentTransactions,
-      this.accountTokens});
+      this.accountTokens,
+      this.accountNFT});
 
   /// Account name - Primary Key
   @HiveField(0)
