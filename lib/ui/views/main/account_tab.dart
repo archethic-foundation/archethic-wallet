@@ -1,0 +1,129 @@
+import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/ui/menu/menu_widget_wallet.dart';
+import 'package:aewallet/ui/views/blog/last_articles_list.dart';
+import 'package:aewallet/ui/views/home_page_universe.dart';
+import 'package:aewallet/ui/views/tokens_fungibles/fungibles_tokens_list.dart';
+import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
+import 'package:aewallet/ui/widgets/balance_infos.dart';
+import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/haptic_util.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+
+class AccountTab extends StatelessWidget {
+  const AccountTab({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          /// REFRESH
+          child: RefreshIndicator(
+            backgroundColor: StateContainer.of(context).curTheme.backgroundDark,
+            onRefresh: () => Future<void>.sync(() {
+              sl.get<HapticUtil>().feedback(FeedbackType.light,
+                  StateContainer.of(context).activeVibrations);
+              StateContainer.of(context).requestUpdate();
+            }),
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(
+                dragDevices: {
+                  PointerDeviceKind.touch,
+                  PointerDeviceKind.mouse,
+                },
+              ),
+              child: Column(
+                children: <Widget>[
+                  /// BACKGROUND IMAGE
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(StateContainer.of(context)
+                              .curTheme
+                              .background2Small!),
+                          fit: BoxFit.fitHeight,
+                          opacity: 0.7),
+                    ),
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: kToolbarHeight + kTextTabBarHeight,
+                            bottom: 50),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            /// BALANCE
+                            BalanceInfosWidget().getBalance(context),
+                            const SizedBox(
+                              height: 10,
+                            ),
+
+                            /// PRICE CHART
+                            StateContainer.of(context).showPriceChart
+                                ? Stack(
+                                    children: <Widget>[
+                                      BalanceInfosWidget().buildInfos(context),
+                                    ],
+                                  )
+                                : const SizedBox(),
+
+                            /// KPI
+                            StateContainer.of(context).showPriceChart
+                                ? BalanceInfosWidget().buildKPI(context)
+                                : const SizedBox(),
+
+                            Divider(
+                              height: 1,
+                              color: StateContainer.of(context)
+                                  .curTheme
+                                  .backgroundDarkest!
+                                  .withOpacity(0.1),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+
+                            /// ICONS
+                            MenuWidgetWallet().buildMainMenuIcons(context),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Divider(
+                              height: 1,
+                              color: StateContainer.of(context)
+                                  .curTheme
+                                  .backgroundDarkest!
+                                  .withOpacity(0.1),
+                            ),
+                            ExpandablePageView(
+                              // ignore: prefer_const_literals_to_create_immutables
+                              children: [
+                                TxListWidget(),
+                                FungiblesTokensListWidget(),
+                              ],
+                            ),
+
+                            /// BLOG
+                            LastArticlesWidget(),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}

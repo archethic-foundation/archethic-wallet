@@ -8,8 +8,11 @@ import 'dart:ui';
 
 // Flutter imports:
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/main/account_tab.dart';
+import 'package:aewallet/ui/views/main/accounts_list_tab.dart';
+import 'package:aewallet/ui/views/main/nft_tab.dart';
 import 'package:aewallet/ui/views/nft/add_nft_collection.dart';
-import 'package:aewallet/ui/views/nft/collections_list.dart';
+import 'package:aewallet/ui/views/nft/nft_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -586,7 +589,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                           inactiveColor: StateContainer.of(context)
                               .curTheme
                               .bottomBarInactiveIcon!),
-                      /* BottomBarItem(
+                      BottomBarItem(
                           icon: const Icon(Icons.collections_bookmark),
                           backgroundColorOpacity: StateContainer.of(context)
                               .curTheme
@@ -602,7 +605,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                               .bottomBarActiveColor!,
                           inactiveColor: StateContainer.of(context)
                               .curTheme
-                              .bottomBarInactiveIcon!),*/
+                              .bottomBarInactiveIcon!),
                     ],
                   ),
                 ),
@@ -620,271 +623,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
             body: PageView(
               physics: const NeverScrollableScrollPhysics(),
               controller: StateContainer.of(context).bottomBarPageController,
-              children: [
-                Column(
-                  children: [
-                    Expanded(
-                      /// REFRESH
-                      child: RefreshIndicator(
-                        backgroundColor:
-                            StateContainer.of(context).curTheme.backgroundDark,
-                        onRefresh: () => Future<void>.sync(() async {
-                          sl.get<HapticUtil>().feedback(FeedbackType.light,
-                              StateContainer.of(context).activeVibrations);
-                          StateContainer.of(context).appWallet =
-                              await KeychainUtil().getListAccountsFromKeychain(
-                                  StateContainer.of(context).appWallet,
-                                  await StateContainer.of(context).getSeed(),
-                                  StateContainer.of(context)
-                                      .curCurrency
-                                      .currency
-                                      .name,
-                                  StateContainer.of(context)
-                                      .appWallet!
-                                      .appKeychain!
-                                      .getAccountSelected()!
-                                      .balance!
-                                      .nativeTokenName!,
-                                  StateContainer.of(context)
-                                      .appWallet!
-                                      .appKeychain!
-                                      .getAccountSelected()!
-                                      .balance!
-                                      .tokenPrice!,
-                                  currentName: StateContainer.of(context)
-                                      .appWallet!
-                                      .appKeychain!
-                                      .getAccountSelected()!
-                                      .name);
-                          setState(() {});
-                        }),
-                        child: ScrollConfiguration(
-                          behavior: ScrollConfiguration.of(context).copyWith(
-                            dragDevices: {
-                              PointerDeviceKind.touch,
-                              PointerDeviceKind.mouse,
-                            },
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              /// BACKGROUND IMAGE
-                              Container(
-                                height: MediaQuery.of(context).size.height,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          StateContainer.of(context)
-                                              .curTheme
-                                              .background1Small!),
-                                      fit: BoxFit.fitHeight,
-                                      opacity: 0.7),
-                                ),
-                                child: SingleChildScrollView(
-                                  physics:
-                                      const AlwaysScrollableScrollPhysics(),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: kToolbarHeight + kTextTabBarHeight,
-                                        bottom: 50),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        /// ACCOUNTS LIST
-                                        AccountsListWidget(
-                                          appWallet: StateContainer.of(context)
-                                              .appWallet,
-                                          currencyName:
-                                              StateContainer.of(context)
-                                                  .curCurrency
-                                                  .currency
-                                                  .name,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Expanded(
-                      /// REFRESH
-                      child: RefreshIndicator(
-                        backgroundColor:
-                            StateContainer.of(context).curTheme.backgroundDark,
-                        onRefresh: () => Future<void>.sync(() {
-                          sl.get<HapticUtil>().feedback(FeedbackType.light,
-                              StateContainer.of(context).activeVibrations);
-                          StateContainer.of(context).requestUpdate();
-                        }),
-                        child: ScrollConfiguration(
-                          behavior: ScrollConfiguration.of(context).copyWith(
-                            dragDevices: {
-                              PointerDeviceKind.touch,
-                              PointerDeviceKind.mouse,
-                            },
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              /// BACKGROUND IMAGE
-                              Container(
-                                height: MediaQuery.of(context).size.height,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          StateContainer.of(context)
-                                              .curTheme
-                                              .background2Small!),
-                                      fit: BoxFit.fitHeight,
-                                      opacity: 0.7),
-                                ),
-                                child: SingleChildScrollView(
-                                  physics:
-                                      const AlwaysScrollableScrollPhysics(),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: kToolbarHeight + kTextTabBarHeight,
-                                        bottom: 50),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        /// BALANCE
-                                        BalanceInfosWidget()
-                                            .getBalance(context),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-
-                                        /// PRICE CHART
-                                        StateContainer.of(context)
-                                                .showPriceChart
-                                            ? Stack(
-                                                children: <Widget>[
-                                                  BalanceInfosWidget()
-                                                      .buildInfos(context),
-                                                ],
-                                              )
-                                            : const SizedBox(),
-
-                                        /// KPI
-                                        StateContainer.of(context)
-                                                .showPriceChart
-                                            ? BalanceInfosWidget()
-                                                .buildKPI(context)
-                                            : const SizedBox(),
-
-                                        Divider(
-                                          height: 1,
-                                          color: StateContainer.of(context)
-                                              .curTheme
-                                              .backgroundDarkest!
-                                              .withOpacity(0.1),
-                                        ),
-                                        const SizedBox(
-                                          height: 15,
-                                        ),
-
-                                        /// ICONS
-                                        MenuWidgetWallet()
-                                            .buildMainMenuIcons(context),
-                                        const SizedBox(
-                                          height: 15,
-                                        ),
-                                        Divider(
-                                          height: 1,
-                                          color: StateContainer.of(context)
-                                              .curTheme
-                                              .backgroundDarkest!
-                                              .withOpacity(0.1),
-                                        ),
-                                        ExpandablePageView(
-                                          // ignore: prefer_const_literals_to_create_immutables
-                                          children: [
-                                            TxListWidget(),
-                                            FungiblesTokensListWidget(),
-                                          ],
-                                        ),
-
-                                        /// BLOG
-                                        LastArticlesWidget(),
-                                        const SizedBox(
-                                          height: 30,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                /* Column(
-                  children: [
-                    Expanded(
-                      /// REFRESH
-                      child: RefreshIndicator(
-                        backgroundColor:
-                            StateContainer.of(context).curTheme.backgroundDark,
-                        onRefresh: () => Future<void>.sync(() async {
-                          // TODO
-                        }),
-                        child: Column(
-                          children: <Widget>[
-                            /// BACKGROUND IMAGE
-                            Container(
-                              height: MediaQuery.of(context).size.height,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(StateContainer.of(context)
-                                        .curTheme
-                                        .background1Small!),
-                                    fit: BoxFit.fitHeight,
-                                    opacity: 0.7),
-                              ),
-                              child: SingleChildScrollView(
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: kToolbarHeight + kTextTabBarHeight,
-                                      bottom: 50),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      /// NFT
-                                      CollectionsListWidget(
-                                        appWallet: StateContainer.of(context)
-                                            .appWallet,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),*/
-              ],
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [AccountsListTab(), AccountTab(), NFTTab()],
               onPageChanged: (index) {
                 setState(() =>
                     StateContainer.of(context).bottomBarCurrentPage = index);
