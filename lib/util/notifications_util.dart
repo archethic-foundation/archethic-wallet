@@ -18,7 +18,7 @@ class NotificationsUtil {
   }
 
   static Future init() async {
-    const android = AndroidInitializationSettings('@drawable/ic_notification');
+    const android = AndroidInitializationSettings('@drawable/ic_stat');
     const iOS = IOSInitializationSettings();
     const macOS = MacOSInitializationSettings();
     const settings =
