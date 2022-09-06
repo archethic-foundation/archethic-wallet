@@ -258,5 +258,6 @@ class Preferences {
         PrimaryCurrencySetting(AvailablePrimaryCurrency.native));
     preferences.setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
     preferences.setAuthMethod(authenticationMethod);
+    preferences.setMainScreenCurrentPage(1);
   }
 }
