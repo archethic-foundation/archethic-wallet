@@ -65,6 +65,14 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.text);
   }
 
+  static TextStyle textStyleSize14W400TextDark(BuildContext context) {
+    return TextStyle(
+        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
+        fontSize: AppFontSizes.size14,
+        fontWeight: FontWeight.w400,
+        color: StateContainer.of(context).curTheme.textDark);
+  }
+
   static TextStyle textStyleSize14W600Primary60(BuildContext context) {
     return TextStyle(
         fontFamily: StateContainer.of(context).curTheme.secondaryFont,
