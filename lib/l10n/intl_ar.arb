@@ -310,5 +310,17 @@
 	"token": "token",
 	"tokens": "tokens",
 	"accountsListDescription": "Your keychain contains the following services and accounts.",
-	"tokensHeader": "Tokens"
+	"tokensHeader": "Tokens",
+	"nft": "NFT",
+	"transferNFT": "Transfer NFT",
+	"keychainCreationTransactionConfirmed1": "Your keychain has been created with %1 confirmation on %2",
+	"keychainCreationTransactionConfirmed": "Your keychain has been created with %1 confirmations on %2",
+	"keychainAccessCreationTransactionConfirmed1": "Accesses to your keychain have been created with %1 confirmation on %2",
+	"keychainAccessCreationTransactionConfirmed": "Accesses to your keychain have been created with %1 confirmations on %2",
+	"nftCreationTransactionConfirmed1": "Your NFT has been created with %1 confirmation on %2",
+	"nftCreationTransactionConfirmed": "Your NFT has been created with %1 confirmation on %2",
+	"nftAddPhotoFormatInfo": "The accepted formats are: JPG, PNG, GIF, WEBP, BMP.",
+	"nftCreated": "NFT Created",
+	"nftTabDescriptionHeader": "This space allows you to access your NFTs or to create them directly from images, photos or pdf documents. You can also transfer them to any address.",
+	"notEnoughConfirmations": "The application could not be completed due to lack of consensus"
 }

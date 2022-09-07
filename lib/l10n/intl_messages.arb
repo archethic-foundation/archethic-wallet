@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-08-28T20:11:33.086313",
+  "@@last_modified": "2022-09-07T22:01:58.830822",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -84,6 +84,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "nft": "NFT",
+  "@nft": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "transferTokens": "Send %1",
   "@transferTokens": {
     "type": "text",
@@ -92,6 +98,12 @@
   },
   "transferToken": "Transfer Token",
   "@transferToken": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transferNFT": "Transfer NFT",
+  "@transferNFT": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -110,6 +122,42 @@
   },
   "recentTransactionsNoTransactionYet": "No transaction yet",
   "@recentTransactionsNoTransactionYet": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "keychainCreationTransactionConfirmed1": "Your keychain has been created with %1 confirmation on %2",
+  "@keychainCreationTransactionConfirmed1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "keychainCreationTransactionConfirmed": "Your keychain has been created with %1 confirmations on %2",
+  "@keychainCreationTransactionConfirmed": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "keychainAccessCreationTransactionConfirmed1": "Accesses to your keychain have been created with %1 confirmation on %2",
+  "@keychainAccessCreationTransactionConfirmed1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "keychainAccessCreationTransactionConfirmed": "Accesses to your keychain have been created with %1 confirmations on %2",
+  "@keychainAccessCreationTransactionConfirmed": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCreationTransactionConfirmed1": "Your NFT has been created with %1 confirmation on %2",
+  "@nftCreationTransactionConfirmed1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCreationTransactionConfirmed": "Your NFT has been created with %1 confirmation on %2",
+  "@nftCreationTransactionConfirmed": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -626,6 +674,12 @@
   },
   "currencyOracleInfo": "This icon means that the conversion will use an oracle provided by Archethic.",
   "@currencyOracleInfo": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddPhotoFormatInfo": "The accepted formats are: JPG, PNG, GIF, WEBP, BMP.",
+  "@nftAddPhotoFormatInfo": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1476,6 +1530,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "nftCreated": "NFT Created",
+  "@nftCreated": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "version": "Version :",
   "@version": {
     "type": "text",
@@ -1884,6 +1944,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "nftTabDescriptionHeader": "This space allows you to access your NFTs or to create them directly from images, photos or pdf documents. You can also transfer them to any address.",
+  "@nftTabDescriptionHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "addNFTFile": "Add a NFT",
   "@addNFTFile": {
     "type": "text",
@@ -1970,6 +2036,12 @@
   },
   "conversionOraclePromotion": "(Conversion provided by Archethic Oracles)",
   "@conversionOraclePromotion": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "notEnoughConfirmations": "The application could not be completed due to lack of consensus",
+  "@notEnoughConfirmations": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

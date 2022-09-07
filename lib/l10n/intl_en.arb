@@ -1853,5 +1853,77 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "nft": "NFT",
+  "@nft": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transferNFT": "Transfer NFT",
+  "@transferNFT": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "keychainCreationTransactionConfirmed1": "Your keychain has been created with %1 confirmation on %2",
+  "@keychainCreationTransactionConfirmed1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "keychainCreationTransactionConfirmed": "Your keychain has been created with %1 confirmations on %2",
+  "@keychainCreationTransactionConfirmed": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "keychainAccessCreationTransactionConfirmed1": "Accesses to your keychain have been created with %1 confirmation on %2",
+  "@keychainAccessCreationTransactionConfirmed1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "keychainAccessCreationTransactionConfirmed": "Accesses to your keychain have been created with %1 confirmations on %2",
+  "@keychainAccessCreationTransactionConfirmed": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCreationTransactionConfirmed1": "Your NFT has been created with %1 confirmation on %2",
+  "@nftCreationTransactionConfirmed1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCreationTransactionConfirmed": "Your NFT has been created with %1 confirmation on %2",
+  "@nftCreationTransactionConfirmed": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftAddPhotoFormatInfo": "The accepted formats are: JPG, PNG, GIF, WEBP, BMP.",
+  "@nftAddPhotoFormatInfo": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCreated": "NFT Created",
+  "@nftCreated": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftTabDescriptionHeader": "This space allows you to access your NFTs or to create them directly from images, photos or pdf documents. You can also transfer them to any address.",
+  "@nftTabDescriptionHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "notEnoughConfirmations": "The application could not be completed due to lack of consensus",
+  "@notEnoughConfirmations": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }
