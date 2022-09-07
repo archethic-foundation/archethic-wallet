@@ -584,7 +584,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                           inactiveColor: StateContainer.of(context)
                               .curTheme
                               .bottomBarInactiveIcon!),
-                      BottomBarItem(
+                      /* BottomBarItem(
                           icon: const Icon(Icons.collections_bookmark),
                           backgroundColorOpacity: StateContainer.of(context)
                               .curTheme
@@ -600,7 +600,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
                               .bottomBarActiveColor!,
                           inactiveColor: StateContainer.of(context)
                               .curTheme
-                              .bottomBarInactiveIcon!),
+                              .bottomBarInactiveIcon!),*/
                     ],
                   ),
                 ),
@@ -619,7 +619,10 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
               physics: const NeverScrollableScrollPhysics(),
               controller: StateContainer.of(context).bottomBarPageController,
               // ignore: prefer_const_literals_to_create_immutables
-              children: [AccountsListTab(), AccountTab(), NFTTab()],
+              children: [
+                AccountsListTab(), AccountTab()
+                //, NFTTab()
+              ],
               onPageChanged: (index) {
                 setState(() =>
                     StateContainer.of(context).bottomBarCurrentPage = index);
