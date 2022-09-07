@@ -109,6 +109,9 @@ class PearlGreyTheme implements BaseTheme {
   @override
   Color? warning = Colors.yellow[600];
 
+  @override
+  Color? textDark = const Color(0xFF000000);
+
   // Sheet
   @override
   Color? sheetBackground = const Color(0xFFC7D1DA).withOpacity(0.7);

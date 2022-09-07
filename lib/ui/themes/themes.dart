@@ -52,6 +52,8 @@ abstract class BaseTheme {
   Color? negativeAmount;
   Color? warning;
 
+  Color? textDark;
+
   // Sheet
   Color? sheetBackground;
 

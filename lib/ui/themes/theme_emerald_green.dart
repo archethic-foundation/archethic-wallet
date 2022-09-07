@@ -109,6 +109,9 @@ class EmeraldGreenTheme implements BaseTheme {
   @override
   Color? warning = Colors.yellow[600];
 
+  @override
+  Color? textDark = const Color(0xFFFFFFFF);
+
   // Sheet
   @override
   Color? sheetBackground = const Color(0xFF473B53).withOpacity(0.7);

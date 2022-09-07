@@ -109,6 +109,9 @@ class SapphireBlueTheme implements BaseTheme {
   @override
   Color? warning = Colors.yellow[600];
 
+  @override
+  Color? textDark = const Color(0xFFFFFFFF);
+
   // Sheet
   @override
   Color? sheetBackground = const Color(0xFF1B55A7).withOpacity(0.7);

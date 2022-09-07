@@ -109,6 +109,9 @@ class ByzantineVioletTheme implements BaseTheme {
   @override
   Color? warning = Colors.yellow[600];
 
+  @override
+  Color? textDark = const Color(0xFFFFFFFF);
+
   // Sheet
   @override
   Color? sheetBackground = const Color(0xFF571150).withOpacity(0.7);
