@@ -145,6 +145,13 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
 
                 StateContainer.of(context).checkTransactionInputs(
                     AppLocalization.of(context)!.transactionInputNotification);
+                Preferences preferences = await Preferences.getInstance();
+                StateContainer.of(context).bottomBarCurrentPage =
+                    preferences.getMainScreenCurrentPage();
+                StateContainer.of(context).bottomBarPageController =
+                    PageController(
+                        initialPage:
+                            StateContainer.of(context).bottomBarCurrentPage);
                 Navigator.of(context).pushNamedAndRemoveUntil(
                   '/home',
                   (Route<dynamic> route) => false,
