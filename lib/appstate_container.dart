@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
+import 'package:aewallet/util/nft_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -79,6 +80,8 @@ class StateContainerState extends State<StateContainer> {
   String? idChartOption = '1h';
   int bottomBarCurrentPage = 1;
   PageController? bottomBarPageController = PageController(initialPage: 1);
+
+  List<Uint8List>? imagesNFT = List<Uint8List>.empty(growable: true);
 
   bool showBalance = false;
   bool showPriceChart = false;
@@ -243,6 +246,9 @@ class StateContainerState extends State<StateContainer> {
     await appWallet!.appKeychain!.getAccountSelected()!.updateFungiblesTokens();
 
     await appWallet!.appKeychain!.getAccountSelected()!.updateNFT();
+
+    //imagesNFT = await NFTUtil.getImagesFromTokenAddressList(
+    //    appWallet!.appKeychain!.getAccountSelected()!.accountNFT!);
 
     setState(() {
       balanceLoading = true;

@@ -92,12 +92,20 @@ class AppLocalization {
     return Intl.message('tokens', name: 'tokens');
   }
 
+  String get nft {
+    return Intl.message('NFT', name: 'nft');
+  }
+
   String get transferTokens {
     return Intl.message('Send %1', name: 'transferTokens');
   }
 
   String get transferToken {
     return Intl.message('Transfer Token', name: 'transferToken');
+  }
+
+  String get transferNFT {
+    return Intl.message('Transfer NFT', name: 'transferNFT');
   }
 
   String get transferTokenName {
@@ -1497,6 +1505,12 @@ class AppLocalization {
   String get saveNFTCollectionInLocal {
     return Intl.message('Save collection in local',
         name: 'saveNFTCollectionInLocal');
+  }
+
+  String get nftTabDescriptionHeader {
+    return Intl.message(
+        'This space allows you to access your NFTs or to create them directly from images, photos or pdf documents. You can also transfer them to any address.',
+        name: 'nftTabDescriptionHeader');
   }
 
   String get addNFTFile {

@@ -7,10 +7,7 @@ part 'token_informations_property.g.dart';
 
 @HiveType(typeId: 10)
 class TokenInformationsProperty extends HiveObject {
-  TokenInformationsProperty({
-    this.name,
-    this.value,
-  });
+  TokenInformationsProperty({this.name, this.value, this.decryptedValueBase64});
 
   /// Key
   @HiveField(0)
@@ -19,4 +16,8 @@ class TokenInformationsProperty extends HiveObject {
   /// Value
   @HiveField(1)
   String? value;
+
+  /// Decrypted Value
+  @HiveField(2)
+  List<int>? decryptedValueBase64;
 }

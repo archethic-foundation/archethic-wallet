@@ -138,6 +138,13 @@ class _TransferSheetState extends State<TransferSheet> {
       _sendAddressStyle = AddressStyle.text90;
       _addressValidAndUnfocused = true;
     }
+
+    if ((widget.accountToken != null &&
+        widget.accountToken!.tokenInformations != null &&
+        widget.accountToken!.tokenInformations!.type == 'non-fungible')) {
+      _sendAmountController!.text = '1';
+    }
+
     // On amount focus change
     _sendAmountFocusNode!.addListener(() {
       if (_sendAmountFocusNode!.hasFocus) {
@@ -290,19 +297,26 @@ class _TransferSheetState extends State<TransferSheet> {
                         child: Column(
                           children: <Widget>[
                             const SizedBox(height: 25),
-                            Column(
-                              children: <Widget>[
-                                getEnterAmountContainer(),
-                                Container(
-                                  alignment: const AlignmentDirectional(0, 0),
-                                  margin: const EdgeInsets.only(top: 3),
-                                  child: Text(_amountValidationText!,
-                                      style:
-                                          AppStyles.textStyleSize14W600Primary(
-                                              context)),
-                                ),
-                              ],
-                            ),
+                            if (widget.accountToken == null ||
+                                (widget.accountToken != null &&
+                                    widget.accountToken!.tokenInformations !=
+                                        null &&
+                                    widget.accountToken!.tokenInformations!
+                                            .type ==
+                                        'fungible'))
+                              Column(
+                                children: <Widget>[
+                                  getEnterAmountContainer(),
+                                  Container(
+                                    alignment: const AlignmentDirectional(0, 0),
+                                    margin: const EdgeInsets.only(top: 3),
+                                    child: Text(_amountValidationText!,
+                                        style: AppStyles
+                                            .textStyleSize14W600Primary(
+                                                context)),
+                                  ),
+                                ],
+                              ),
                             Column(
                               children: <Widget>[
                                 Container(
@@ -685,6 +699,8 @@ class _TransferSheetState extends State<TransferSheet> {
           ucoTransferList.add(ucoTransfer);
         } else {
           tokenTransfer.token = widget.accountToken!.tokenInformations!.address;
+          // TODO: Warning about collection
+          tokenTransfer.tokenId = 1;
           tokenTransferList.add(tokenTransfer);
         }
       }

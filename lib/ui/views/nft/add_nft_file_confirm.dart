@@ -92,9 +92,9 @@ class _AddNFTFileState extends State<AddNFTFileConfirm> {
               StateContainer.of(context).curTheme.text!,
               StateContainer.of(context).curTheme.snackBarShadow!,
               duration: const Duration(milliseconds: 5000));
-          setState(() {
-            StateContainer.of(context).requestUpdate();
-          });
+
+          StateContainer.of(context).requestUpdate();
+
           Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
         } else {
           UIUtil.showSnackbar(
@@ -215,8 +215,13 @@ class _AddNFTFileState extends State<AddNFTFileConfirm> {
                     ),
                     NFTPreviewWidget(
                         nftName: widget.token.name,
+                        context: context,
                         nftDescription: widget.token.tokenProperties![0]
                             .where((element) => element.name == 'description')
+                            .first
+                            .value,
+                        nftTypeMime: widget.token.tokenProperties![0]
+                            .where((element) => element.name == 'type/mime')
                             .first
                             .value,
                         nftFile: base64Decode(widget.token.tokenProperties![0]

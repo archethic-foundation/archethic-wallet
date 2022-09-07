@@ -359,7 +359,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
               .curTheme
               .backgroundAccountsListCardSelected,
           child: Container(
-            height: 70,
+            height: 80,
             color: account.selected!
                 ? StateContainer.of(context)
                     .curTheme
@@ -467,6 +467,16 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                                     1
                                                                 ? '${account.accountTokens!.length} ${AppLocalization.of(context)!.tokens}'
                                                                 : '${account.accountTokens!.length} ${AppLocalization.of(context)!.token}',
+                                                            style: AppStyles
+                                                                .textStyleSize12W400Primary(
+                                                                    context),
+                                                          ),
+                                                        if (account.accountNFT !=
+                                                                null &&
+                                                            account.accountNFT!
+                                                                .isNotEmpty)
+                                                          AutoSizeText(
+                                                            '${account.accountNFT!.length} ${AppLocalization.of(context)!.nft}',
                                                             style: AppStyles
                                                                 .textStyleSize12W400Primary(
                                                                     context),

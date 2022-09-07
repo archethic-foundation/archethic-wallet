@@ -18,6 +18,7 @@ class TokenInformations extends HiveObject {
   TokenInformations(
       {this.address,
       this.name,
+      this.id,
       this.supply,
       this.type,
       this.symbol,
@@ -56,9 +57,14 @@ class TokenInformations extends HiveObject {
   @HiveField(9)
   double? supply;
 
+  /// Token's Id
+  @HiveField(10)
+  String? id;
+
   TokenInformations tokenToTokenInformations(Token token) {
     address = token.address;
     name = token.name;
+    id = token.id;
     supply = fromBigInt(token.supply).toDouble();
     type = token.type;
     symbol = token.symbol;

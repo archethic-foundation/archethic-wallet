@@ -20,17 +20,20 @@ class TokenInformationsPropertyAdapter
     return TokenInformationsProperty(
       name: fields[0] as String?,
       value: fields[1] as String?,
+      decryptedValueBase64: (fields[2] as List?)?.cast<int>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, TokenInformationsProperty obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.value);
+      ..write(obj.value)
+      ..writeByte(2)
+      ..write(obj.decryptedValueBase64);
   }
 
   @override

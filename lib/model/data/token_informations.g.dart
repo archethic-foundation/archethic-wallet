@@ -19,6 +19,7 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
     return TokenInformations(
       address: fields[0] as String?,
       name: fields[1] as String?,
+      id: fields[10] as String?,
       supply: fields[9] as double?,
       type: fields[3] as String?,
       symbol: fields[4] as String?,
@@ -32,7 +33,7 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
   @override
   void write(BinaryWriter writer, TokenInformations obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.address)
       ..writeByte(1)
@@ -46,7 +47,9 @@ class TokenInformationsAdapter extends TypeAdapter<TokenInformations> {
       ..writeByte(8)
       ..write(obj.tokenProperties)
       ..writeByte(9)
-      ..write(obj.supply);
+      ..write(obj.supply)
+      ..writeByte(10)
+      ..write(obj.id);
   }
 
   @override

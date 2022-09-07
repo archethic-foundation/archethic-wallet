@@ -7,6 +7,7 @@ import 'dart:io';
 
 import 'package:aewallet/bus/nft_file_add_event.dart';
 import 'package:aewallet/model/primary_currency.dart';
+import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/views/nft/add_nft_file_confirm.dart';
 import 'package:aewallet/ui/views/nft/nft_preview.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
@@ -72,6 +73,8 @@ class _AddNFTFileState extends State<AddNFTFile> {
       List<TokenProperty>.empty(growable: true);
   String addNFTPropertyMessage = '';
   String addNFTMessage = '';
+  double feeEstimation = 0.0;
+  Token token = Token();
 
   @override
   void initState() {
@@ -164,7 +167,7 @@ class _AddNFTFileState extends State<AddNFTFile> {
                       const SizedBox(
                         height: 10,
                       ),
-                      /*SizedBox(
+                      SizedBox(
                         height: 40,
                         child: InkWell(
                           onTap: () async {
@@ -209,7 +212,7 @@ class _AddNFTFileState extends State<AddNFTFile> {
                             ],
                           ),
                         ),
-                      ),*/
+                      ),
                       if (kIsWeb == false &&
                           (Platform.isAndroid || Platform.isIOS))
                         Divider(
@@ -333,8 +336,12 @@ class _AddNFTFileState extends State<AddNFTFile> {
                         inputFormatters: <LengthLimitingTextInputFormatter>[
                           LengthLimitingTextInputFormatter(40),
                         ],
-                        onChanged: (_) {
-                          setState(() {});
+                        onChanged: (_) async {
+                          double fee = await getFee(context);
+                          // Always reset the error message to be less annoying
+                          setState(() {
+                            feeEstimation = fee;
+                          });
                         },
                       ),
                       AppTextField(
@@ -350,8 +357,12 @@ class _AddNFTFileState extends State<AddNFTFile> {
                         inputFormatters: <LengthLimitingTextInputFormatter>[
                           LengthLimitingTextInputFormatter(100),
                         ],
-                        onChanged: (_) {
-                          setState(() {});
+                        onChanged: (_) async {
+                          double fee = await getFee(context);
+                          // Always reset the error message to be less annoying
+                          setState(() {
+                            feeEstimation = fee;
+                          });
                         },
                       ),
                       const SizedBox(
@@ -374,8 +385,12 @@ class _AddNFTFileState extends State<AddNFTFile> {
                         labelText:
                             AppLocalization.of(context)!.nftPropertyNameHint,
                         autocorrect: false,
-                        onChanged: (_) {
-                          setState(() {});
+                        onChanged: (_) async {
+                          double fee = await getFee(context);
+                          // Always reset the error message to be less annoying
+                          setState(() {
+                            feeEstimation = fee;
+                          });
                         },
                         keyboardType: TextInputType.text,
                         style: AppStyles.textStyleSize16W600Primary(context),
@@ -391,8 +406,12 @@ class _AddNFTFileState extends State<AddNFTFile> {
                         labelText:
                             AppLocalization.of(context)!.nftPropertyValueHint,
                         autocorrect: false,
-                        onChanged: (_) {
-                          setState(() {});
+                        onChanged: (_) async {
+                          double fee = await getFee(context);
+                          // Always reset the error message to be less annoying
+                          setState(() {
+                            feeEstimation = fee;
+                          });
                         },
                         keyboardType: TextInputType.text,
                         style: AppStyles.textStyleSize16W600Primary(context),
@@ -416,13 +435,15 @@ class _AddNFTFileState extends State<AddNFTFile> {
                                   context,
                                   AppButtonType.primary,
                                   AppLocalization.of(context)!.addNFTProperty,
-                                  Dimens.buttonBottomDimens, onPressed: () {
+                                  Dimens.buttonBottomDimens,
+                                  onPressed: () async {
                                   if (validateAddNFTProperty() == true) {
                                     tokenProperties.sort(
                                         (TokenProperty a, TokenProperty b) => a
                                             .name!
                                             .toLowerCase()
                                             .compareTo(b.name!.toLowerCase()));
+                                    double fee = await getFee(context);
                                     setState(() {
                                       tokenProperties.add(TokenProperty(
                                           name: nftPropertyNameController!.text,
@@ -432,6 +453,7 @@ class _AddNFTFileState extends State<AddNFTFile> {
                                       nftPropertyValueController!.text = '';
                                       FocusScope.of(context).requestFocus(
                                           nftPropertyNameFocusNode);
+                                      feeEstimation = fee;
                                     });
                                   }
                                 })
@@ -444,6 +466,28 @@ class _AddNFTFileState extends State<AddNFTFile> {
                                   onPressed: () {})
                         ],
                       ),
+                      feeEstimation > 0
+                          ? Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 30, right: 30),
+                              child: Text(
+                                '${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                style: AppStyles.textStyleSize14W100Primary(
+                                    context),
+                                textAlign: TextAlign.justify,
+                              ),
+                            )
+                          : Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 30, right: 30),
+                              child: Text(
+                                AppLocalization.of(context)!
+                                    .estimatedFeesAddTokenNote,
+                                style: AppStyles.textStyleSize14W100Primary(
+                                    context),
+                                textAlign: TextAlign.justify,
+                              ),
+                            ),
                       const SizedBox(
                         height: 30,
                       ),
@@ -462,7 +506,9 @@ class _AddNFTFileState extends State<AddNFTFile> {
                       if (file != null)
                         NFTPreviewWidget(
                             nftName: nftNameController!.text,
+                            context: context,
                             nftDescription: nftDescriptionController!.text,
+                            nftTypeMime: typeMime,
                             nftFile: File(file!.path).readAsBytesSync(),
                             nftProperties: tokenProperties),
                     ],
@@ -482,32 +528,14 @@ class _AddNFTFileState extends State<AddNFTFile> {
                         AppLocalization.of(context)!.addNFTFile,
                         Dimens.buttonTopDimens,
                         onPressed: () async {
-                          if (validateAddNFT() == true) {
-                            tokenProperties.add(
-                                TokenProperty(name: 'file', value: file64));
-                            tokenProperties.add(TokenProperty(
-                                name: 'name', value: nftNameController!.text));
-                            tokenProperties.add(TokenProperty(
-                                name: 'description',
-                                value: nftDescriptionController!.text));
-                            tokenProperties.add(TokenProperty(
-                                name: 'type/mime', value: typeMime));
+                          updateToken();
+                          if (await validateAddNFT(context) == true) {
                             if (widget.process ==
                                 AddNFTFileProcess.collection) {
                               EventTaxiImpl.singleton().fire(NftFileAddEvent(
                                   tokenProperties: tokenProperties));
                               Navigator.of(context).pop();
                             } else {
-                              Token token = Token(
-                                  name: nftNameController!.text,
-                                  supply: 100000000,
-                                  symbol: '',
-                                  type: 'non-fungible');
-                              token.tokenProperties =
-                                  List<List<TokenProperty>>.empty(
-                                      growable: true);
-                              token.tokenProperties!.add(tokenProperties);
-
                               Sheets.showAppHeightNineSheet(
                                 context: context,
                                 widget: AddNFTFileConfirm(token: token),
@@ -559,7 +587,7 @@ class _AddNFTFileState extends State<AddNFTFile> {
     return isValid;
   }
 
-  bool validateAddNFT() {
+  Future<bool> validateAddNFT(BuildContext context) async {
     bool isValid = true;
     setState(() {
       addNFTMessage = '';
@@ -577,9 +605,10 @@ class _AddNFTFileState extends State<AddNFTFile> {
           isValid = false;
         });
       } else {
-        if (MimeUtil.imageTypeMimeImage.contains(typeMime) == false) {
+        if (MimeUtil.isImage(typeMime) == false &&
+            MimeUtil.isPdf(typeMime) == false) {
           setState(() {
-            addNFTMessage = 'Le format de la photo n\'est pas pris en charge.';
+            addNFTMessage = 'Le format n\'est pas pris en charge.';
             isValid = false;
           });
         } else {
@@ -588,6 +617,27 @@ class _AddNFTFileState extends State<AddNFTFile> {
               addNFTMessage = 'Le NFT ne peut excéder 2.5 Mo.';
               isValid = false;
             });
+          } else {
+            // Estimation of fees
+            feeEstimation = await getFee(context);
+            if (feeEstimation >
+                StateContainer.of(context)
+                    .appWallet!
+                    .appKeychain!
+                    .getAccountSelected()!
+                    .balance!
+                    .nativeTokenValue!) {
+              isValid = false;
+              setState(() {
+                addNFTMessage = AppLocalization.of(context)!
+                    .insufficientBalance
+                    .replaceAll(
+                        '%1',
+                        StateContainer.of(context)
+                            .curNetwork
+                            .getNetworkCryptoCurrencyLabel());
+              });
+            }
           }
         }
       }
@@ -607,5 +657,49 @@ class _AddNFTFileState extends State<AddNFTFile> {
           extension(file.path).replaceAll('.', ''))![0];
     } catch (e) {}
     setState(() {});
+  }
+
+  Future<double> getFee(BuildContext context) async {
+    double fee = 0;
+
+    if (nftNameController!.text.isEmpty) {
+      return fee;
+    }
+    try {
+      final String? seed = await StateContainer.of(context).getSeed();
+      final String originPrivateKey = sl.get<ApiService>().getOriginKey();
+      updateToken();
+      fee = await sl.get<AppService>().getFeesEstimationCreateToken(
+          originPrivateKey,
+          seed!,
+          token,
+          StateContainer.of(context)
+              .appWallet!
+              .appKeychain!
+              .getAccountSelected()!
+              .name!);
+    } catch (e) {
+      fee = 0;
+    }
+    return fee;
+  }
+
+  void updateToken() {
+    tokenProperties.clear();
+    tokenProperties.add(TokenProperty(name: 'file', value: file64));
+    tokenProperties
+        .add(TokenProperty(name: 'name', value: nftNameController!.text));
+    tokenProperties.add(TokenProperty(
+        name: 'description', value: nftDescriptionController!.text));
+    tokenProperties.add(TokenProperty(name: 'type/mime', value: typeMime));
+
+    token = Token(
+        name: nftNameController!.text,
+        supply: 100000000,
+        symbol: '',
+        id: "1",
+        type: 'non-fungible');
+    token.tokenProperties = List<List<TokenProperty>>.empty(growable: true);
+    token.tokenProperties!.add(tokenProperties);
   }
 }
