@@ -311,7 +311,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       }
       for (TokenTransfer transfer in tokenTransferList) {
         transaction.addTokenTransfer(
-            transfer.to, transfer.amount!, transfer.token,
+            transfer.to, transfer.amount!, transfer.tokenAddress,
             tokenId: transfer.tokenId == null ? 0 : transfer.tokenId!);
       }
 

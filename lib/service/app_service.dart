@@ -60,7 +60,7 @@ class AppService {
     final List<Transaction> transactionChain = await getTransactionChain(
         lastAddress,
         pagingAddress,
-        'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } }, content , ledger { uco { transfers { amount, to } } token {transfers {amount, to, token, tokenId } } } }, inputs { from, type, spent, tokenAddress, tokenId, amount, timestamp }');
+        'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } }, content , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, inputs { from, type, spent, tokenAddress, tokenId, amount, timestamp }');
 
     final List<TransactionInput> transactionInputsGenesisAddress =
         await getTransactionInputs(genesisAddress,
@@ -150,7 +150,9 @@ class AppService {
             recentTransaction.from = lastAddress;
             recentTransaction.tokenInformations =
                 await recentTransaction.getTokenInfo(
-                    null, transaction.data!.ledger!.token!.transfers![i].token);
+                    null,
+                    transaction
+                        .data!.ledger!.token!.transfers![i].tokenAddress);
 
             recentTransaction.decryptedSecret =
                 List<String>.empty(growable: true);
@@ -184,7 +186,8 @@ class AppService {
       if (transaction.inputs != null) {
         for (TransactionInput transactionInput in transaction.inputs!) {
           if (transactionInput.from != transaction.address &&
-              transactionInput.type! != 'token') {
+              (transactionInput.tokenAddress == null ||
+                  transactionInput.from != transactionInput.tokenAddress)) {
             final RecentTransaction recentTransaction = RecentTransaction();
             recentTransaction.address = transactionInput.from;
             recentTransaction.amount =
@@ -479,12 +482,13 @@ class AppService {
         for (int i = 0;
             i < transaction.data!.ledger!.token!.transfers!.length;
             i++) {
-          if (transaction.data!.ledger!.token!.transfers![i].token != null) {
+          if (transaction.data!.ledger!.token!.transfers![i].tokenAddress !=
+              null) {
             transactionsInfos.add(TransactionInfos(
                 domain: 'TokenLedger',
                 titleInfo: 'Token',
-                valueInfo:
-                    transaction.data!.ledger!.token!.transfers![i].token!));
+                valueInfo: transaction
+                    .data!.ledger!.token!.transfers![i].tokenAddress!));
           }
           if (transaction.data!.ledger!.token!.transfers![i].to != null) {
             transactionsInfos.add(TransactionInfos(
@@ -494,7 +498,7 @@ class AppService {
           }
           if (transaction.data!.ledger!.token!.transfers![i].amount != null) {
             String content = await sl.get<ApiService>().getTransactionContent(
-                transaction.data!.ledger!.token!.transfers![i].token!);
+                transaction.data!.ledger!.token!.transfers![i].tokenAddress!);
             Token token = tokenFromJson(content);
             transactionsInfos.add(TransactionInfos(
                 domain: 'TokenLedger',
@@ -525,7 +529,7 @@ class AppService {
     }
     for (TokenTransfer transfer in listTokenTransfer) {
       transaction.addTokenTransfer(
-          transfer.to, transfer.amount!, transfer.token,
+          transfer.to, transfer.amount!, transfer.tokenAddress,
           tokenId: transfer.tokenId == null ? 0 : transfer.tokenId!);
     }
     if (message.isNotEmpty) {

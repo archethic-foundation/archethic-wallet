@@ -2,7 +2,10 @@
 // ignore_for_file: avoid_unnecessary_containers
 
 // Flutter imports:
+import 'dart:io';
+
 import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -698,9 +701,15 @@ class _TransferSheetState extends State<TransferSheet> {
         if (widget.accountToken == null) {
           ucoTransferList.add(ucoTransfer);
         } else {
-          tokenTransfer.token = widget.accountToken!.tokenInformations!.address;
+          tokenTransfer.tokenAddress =
+              widget.accountToken!.tokenInformations!.address;
           // TODO: Warning about collection
-          tokenTransfer.tokenId = 1;
+          if (widget.accountToken!.tokenInformations!.type == 'fungible') {
+            tokenTransfer.tokenId = 0;
+          } else {
+            tokenTransfer.tokenId = 1;
+          }
+
           tokenTransferList.add(tokenTransfer);
         }
       }
@@ -932,67 +941,69 @@ class _TransferSheetState extends State<TransferSheet> {
         ),
         fadePrefixOnCondition: true,
         prefixShowFirstCondition: true,
-        suffixButton: TextFieldButton(
-          icon: FontAwesomeIcons.qrcode,
-          onPressed: () async {
-            if (!_qrCodeButtonVisible) {
-              return;
-            }
-            sl.get<HapticUtil>().feedback(FeedbackType.light,
-                StateContainer.of(context).activeVibrations);
-            UIUtil.cancelLockEvent();
-            final String? scanResult =
-                await UserDataUtil.getQRData(DataType.address, context);
-            QRScanErrs.errorList;
-            if (scanResult == null) {
-              UIUtil.showSnackbar(
-                  AppLocalization.of(context)!.qrInvalidAddress,
-                  context,
-                  StateContainer.of(context).curTheme.text!,
-                  StateContainer.of(context).curTheme.snackBarShadow!);
-            } else if (QRScanErrs.errorList.contains(scanResult)) {
-              UIUtil.showSnackbar(
-                  scanResult,
-                  context,
-                  StateContainer.of(context).curTheme.text!,
-                  StateContainer.of(context).curTheme.snackBarShadow!);
-              return;
-            } else {
-              // Is a URI
-              final Address address = Address(scanResult);
-              // See if this address belongs to a contact
-              final Contact? contact;
+        suffixButton: kIsWeb == false && (Platform.isIOS || Platform.isAndroid)
+            ? TextFieldButton(
+                icon: FontAwesomeIcons.qrcode,
+                onPressed: () async {
+                  if (!_qrCodeButtonVisible) {
+                    return;
+                  }
+                  sl.get<HapticUtil>().feedback(FeedbackType.light,
+                      StateContainer.of(context).activeVibrations);
+                  UIUtil.cancelLockEvent();
+                  final String? scanResult =
+                      await UserDataUtil.getQRData(DataType.address, context);
+                  QRScanErrs.errorList;
+                  if (scanResult == null) {
+                    UIUtil.showSnackbar(
+                        AppLocalization.of(context)!.qrInvalidAddress,
+                        context,
+                        StateContainer.of(context).curTheme.text!,
+                        StateContainer.of(context).curTheme.snackBarShadow!);
+                  } else if (QRScanErrs.errorList.contains(scanResult)) {
+                    UIUtil.showSnackbar(
+                        scanResult,
+                        context,
+                        StateContainer.of(context).curTheme.text!,
+                        StateContainer.of(context).curTheme.snackBarShadow!);
+                    return;
+                  } else {
+                    // Is a URI
+                    final Address address = Address(scanResult);
+                    // See if this address belongs to a contact
+                    final Contact? contact;
 
-              contact = await sl
-                  .get<DBHelper>()
-                  .getContactWithAddress(address.address);
+                    contact = await sl
+                        .get<DBHelper>()
+                        .getContactWithAddress(address.address);
 
-              if (contact != null) {
-                setState(() {
-                  _isContact = true;
-                  _addressValidationText = '';
-                  _sendAddressStyle = AddressStyle.primary;
-                  _qrCodeButtonVisible = false;
-                });
-                if (contact.name != null) {
-                  _sendAddressController!.text = contact.name!;
-                }
-              } else {
-                setState(() {
-                  _isContact = false;
-                  _addressValidationText = '';
-                  _sendAddressStyle = AddressStyle.text90;
-                  _qrCodeButtonVisible = false;
-                });
-                _sendAddressController!.text = address.address;
-                _sendAddressFocusNode!.unfocus();
-                setState(() {
-                  _addressValidAndUnfocused = true;
-                });
-              }
-            }
-          },
-        ),
+                    if (contact != null) {
+                      setState(() {
+                        _isContact = true;
+                        _addressValidationText = '';
+                        _sendAddressStyle = AddressStyle.primary;
+                        _qrCodeButtonVisible = false;
+                      });
+                      if (contact.name != null) {
+                        _sendAddressController!.text = contact.name!;
+                      }
+                    } else {
+                      setState(() {
+                        _isContact = false;
+                        _addressValidationText = '';
+                        _sendAddressStyle = AddressStyle.text90;
+                        _qrCodeButtonVisible = false;
+                      });
+                      _sendAddressController!.text = address.address;
+                      _sendAddressFocusNode!.unfocus();
+                      setState(() {
+                        _addressValidAndUnfocused = true;
+                      });
+                    }
+                  }
+                },
+              )
+            : null,
         fadeSuffixOnCondition: true,
         suffixShowFirstCondition: _qrCodeButtonVisible,
         style: _sendAddressStyle == AddressStyle.text60
@@ -1127,7 +1138,7 @@ class _TransferSheetState extends State<TransferSheet> {
               ? toBigInt(widget.accountToken!.amount!)
               : toBigInt(double.tryParse(_sendAmountController!.text)),
           to: recipientAddress,
-          token: widget.accountToken!.tokenInformations!.address,
+          tokenAddress: widget.accountToken!.tokenInformations!.address,
         ));
       }
 
