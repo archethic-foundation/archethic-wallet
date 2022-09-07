@@ -307,7 +307,7 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
                         .getAccountSelected()!
                         .lastAddress!
                         .toUpperCase();
-                    Share.share('$textToShare ',
+                    Share.share(textToShare,
                         sharePositionOrigin:
                             box!.localToGlobal(Offset.zero) & box.size);
                   }),
