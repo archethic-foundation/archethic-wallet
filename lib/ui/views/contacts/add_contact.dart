@@ -1,6 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -207,26 +210,30 @@ class _AddContactSheetState extends State<AddContactSheet> {
                   maxLines: null,
                   autocorrect: false,
                   labelText: AppLocalization.of(context)!.addressHint,
-                  prefixButton: TextFieldButton(
-                      icon: FontAwesomeIcons.qrcode,
-                      onPressed: () async {
-                        sl.get<HapticUtil>().feedback(FeedbackType.light,
-                            StateContainer.of(context).activeVibrations);
-                        UIUtil.cancelLockEvent();
-                        final String? scanResult = await UserDataUtil.getQRData(
-                            DataType.address, context);
-                        if (!QRScanErrs.errorList.contains(scanResult)) {
-                          if (mounted) {
-                            setState(() {
-                              _addressController!.text = scanResult!;
-                              _addressValidationText = '';
-                              _addressValid = true;
-                              _addressValidAndUnfocused = true;
-                            });
-                            _addressFocusNode!.unfocus();
-                          }
-                        }
-                      }),
+                  prefixButton: kIsWeb == false &&
+                          (Platform.isIOS || Platform.isAndroid)
+                      ? TextFieldButton(
+                          icon: FontAwesomeIcons.qrcode,
+                          onPressed: () async {
+                            sl.get<HapticUtil>().feedback(FeedbackType.light,
+                                StateContainer.of(context).activeVibrations);
+                            UIUtil.cancelLockEvent();
+                            final String? scanResult =
+                                await UserDataUtil.getQRData(
+                                    DataType.address, context);
+                            if (!QRScanErrs.errorList.contains(scanResult)) {
+                              if (mounted) {
+                                setState(() {
+                                  _addressController!.text = scanResult!;
+                                  _addressValidationText = '';
+                                  _addressValid = true;
+                                  _addressValidAndUnfocused = true;
+                                });
+                                _addressFocusNode!.unfocus();
+                              }
+                            }
+                          })
+                      : null,
                   fadePrefixOnCondition: true,
                   prefixShowFirstCondition: _showPasteButton,
                   suffixButton: TextFieldButton(
