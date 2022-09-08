@@ -162,7 +162,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
         versionString =
-            '${AppLocalization.of(context)!.version} ${packageInfo.version}';
+            '${AppLocalization.of(context)!.version} ${packageInfo.version} - ${AppLocalization.of(context)!.build} ${packageInfo.buildNumber}';
       });
     });
   }

@@ -1226,6 +1226,10 @@ class AppLocalization {
     return Intl.message('Version :', name: 'version');
   }
 
+  String get build {
+    return Intl.message('Build :', name: 'build');
+  }
+
   String get settings {
     return Intl.message('Settings', name: 'settings');
   }

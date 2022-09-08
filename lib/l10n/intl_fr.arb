@@ -326,5 +326,6 @@
 	"addTokenConfirmed1": "Les jetons ont été créés avec %1 confirmation on %2",
 	"addTokenConfirmed": "Les jetons ont été créés avec %1 confirmations on %2",
 	"transferConfirmed1": "Le transfert a été effectué avec %1 confirmation on %2",
-	"transferConfirmed": "Le transfert a été effectué avec %1 confirmations on %2"
+	"transferConfirmed": "Le transfert a été effectué avec %1 confirmations on %2",
+	"build": "Build :"
 }

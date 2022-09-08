@@ -63,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "biometricsMethod" : MessageLookupByLibrary.simpleMessage("Biométrie"),
     "biometricsUnirisMethod" : MessageLookupByLibrary.simpleMessage("Biométrie d\'Uniris (Prochainement...)"),
     "blogHeader" : MessageLookupByLibrary.simpleMessage("Le blog d\'Archethic"),
+    "build" : MessageLookupByLibrary.simpleMessage("Build :"),
     "buy" : MessageLookupByLibrary.simpleMessage("Acheter"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Annuler"),
     "changeCurrencyDesc" : MessageLookupByLibrary.simpleMessage("Sélectionner la monnaie fiduciaire que vous souhaitez afficher aux côtés de %1"),

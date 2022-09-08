@@ -1949,5 +1949,11 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "build": "Build :",
+  "@build": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }
