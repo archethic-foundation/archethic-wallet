@@ -322,5 +322,9 @@
 	"nftAddPhotoFormatInfo": "Les formats acceptés sont: JPG, PNG, GIF, WEBP, BMP.",
 	"nftCreated": "NFT Créé",
 	"nftTabDescriptionHeader": "Cet espace vous permet d'accéder à vos NFT ou de les créer directement à partir d'images, de photos ou de documents pdf. Vous pouvez également les transférer à n'importe quelle adresse.",
-	"notEnoughConfirmations": "La demande n'a pas pu être complétée en raison d'un manque de consensus"
+	"notEnoughConfirmations": "La demande n'a pas pu être complétée en raison d'un manque de consensus",
+	"addTokenConfirmed1": "Les jetons ont été créés avec %1 confirmation on %2",
+	"addTokenConfirmed": "Les jetons ont été créés avec %1 confirmations on %2",
+	"transferConfirmed1": "Le transfert a été effectué avec %1 confirmation on %2",
+	"transferConfirmed": "Le transfert a été effectué avec %1 confirmations on %2"
 }

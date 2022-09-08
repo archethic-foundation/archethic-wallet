@@ -152,7 +152,7 @@ class AppLocalization {
   }
 
   String get nftCreationTransactionConfirmed {
-    return Intl.message('Your NFT has been created with %1 confirmation on %2',
+    return Intl.message('Your NFT has been created with %1 confirmations on %2',
         name: 'nftCreationTransactionConfirmed');
   }
 
@@ -164,6 +164,29 @@ class AppLocalization {
   String get transactionConfirmed {
     return Intl.message('Transaction confirmed with %1 replications out of %2',
         name: 'transactionConfirmed');
+  }
+
+  String get addTokenConfirmed1 {
+    return Intl.message('The token has been created with %1 confirmation on %2',
+        name: 'addTokenConfirmed1');
+  }
+
+  String get addTokenConfirmed {
+    return Intl.message(
+        'The token has been created with %1 confirmations on %2',
+        name: 'addTokenConfirmed');
+  }
+
+  String get transferConfirmed1 {
+    return Intl.message(
+        'The transfer has been created with %1 confirmation on %2',
+        name: 'transferConfirmed1');
+  }
+
+  String get transferConfirmed {
+    return Intl.message(
+        'The transfer has been created with %1 confirmations on %2',
+        name: 'transferConfirmed');
   }
 
   String get fungiblesTokensListNoTokenYet {

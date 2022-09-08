@@ -1896,7 +1896,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftCreationTransactionConfirmed": "Your NFT has been created with %1 confirmation on %2",
+  "nftCreationTransactionConfirmed": "Your NFT has been created with %1 confirmations on %2",
   "@nftCreationTransactionConfirmed": {
     "type": "text",
     "placeholders_order": [],
@@ -1922,6 +1922,30 @@
   },
   "notEnoughConfirmations": "The application could not be completed due to lack of consensus",
   "@notEnoughConfirmations": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addTokenConfirmed1": "Tokens were created with %1 confirmation on %2",
+  "@addTokenConfirmed1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addTokenConfirmed": "Tokens were created with %1 confirmations on %2",
+  "@addTokenConfirmed": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transferConfirmed1": "The transfer was made with %1 confirmation on %2",
+  "@transferConfirmed1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transferConfirmed": "The transfer was made with %1 confirmations on %2",
+  "@transferConfirmed": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

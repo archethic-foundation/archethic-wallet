@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-09-07T22:01:58.830822",
+  "@@last_modified": "2022-09-08T22:54:00.453756",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -156,7 +156,7 @@
     "placeholders_order": [],
     "placeholders": {}
   },
-  "nftCreationTransactionConfirmed": "Your NFT has been created with %1 confirmation on %2",
+  "nftCreationTransactionConfirmed": "Your NFT has been created with %1 confirmations on %2",
   "@nftCreationTransactionConfirmed": {
     "type": "text",
     "placeholders_order": [],
@@ -170,6 +170,30 @@
   },
   "transactionConfirmed": "Transaction confirmed with %1 replications out of %2",
   "@transactionConfirmed": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addTokenConfirmed1": "The token has been created with %1 confirmation on %2",
+  "@addTokenConfirmed1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addTokenConfirmed": "The token has been created with %1 confirmations on %2",
+  "@addTokenConfirmed": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transferConfirmed1": "The transfer has been created with %1 confirmation on %2",
+  "@transferConfirmed1": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "transferConfirmed": "The transfer has been created with %1 confirmations on %2",
+  "@transferConfirmed": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
