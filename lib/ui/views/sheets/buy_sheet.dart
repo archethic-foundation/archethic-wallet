@@ -1,74 +1,25 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_svg/svg.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 
-class BuySheet extends StatefulWidget {
+class BuySheet extends StatelessWidget {
   const BuySheet({super.key});
 
-  @override
-  State<BuySheet> createState() => _BuySheetState();
-}
-
-class _BuySheetState extends State<BuySheet> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        // A row for the address text and close button
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            //Empty SizedBox
-            const SizedBox(
-              width: 60,
-              height: 40,
-            ),
-            Column(
-              children: <Widget>[
-                // Sheet handle
-                Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  height: 5,
-                  width: MediaQuery.of(context).size.width * 0.15,
-                  decoration: BoxDecoration(
-                    color: StateContainer.of(context).curTheme.text60,
-                    borderRadius: BorderRadius.circular(100.0),
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(
-              width: 60,
-              height: 40,
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: AutoSizeText(
-                AppLocalization.of(context)!.transactionBuyHeader,
-                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
-              ),
-            ),
-          ],
-        ),
+        SheetHeader(title: AppLocalization.of(context)!.transactionBuyHeader),
         Expanded(
           child: Center(
             child: Stack(

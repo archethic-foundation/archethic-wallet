@@ -22,13 +22,9 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/number_util.dart';
 
-class TxListWidget extends StatefulWidget {
+class TxListWidget extends StatelessWidget {
   const TxListWidget({super.key});
-  @override
-  State<TxListWidget> createState() => _TxListWidgetState();
-}
 
-class _TxListWidgetState extends State<TxListWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(

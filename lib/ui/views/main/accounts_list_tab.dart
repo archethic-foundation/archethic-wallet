@@ -7,14 +7,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class AccountsListTab extends StatefulWidget {
+class AccountsListTab extends StatelessWidget {
   const AccountsListTab({super.key});
 
-  @override
-  State<AccountsListTab> createState() => _AccountsListTabState();
-}
-
-class _AccountsListTabState extends State<AccountsListTab> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -48,7 +43,6 @@ class _AccountsListTabState extends State<AccountsListTab> {
                           .appKeychain!
                           .getAccountSelected()!
                           .name);
-              setState(() {});
             }),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(

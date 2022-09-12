@@ -16,7 +16,7 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 
 class LastArticlesWidget extends StatefulWidget {
-  const LastArticlesWidget({Key? key}) : super(key: key);
+  const LastArticlesWidget({super.key});
 
   @override
   LastArticlesWidgetState createState() => LastArticlesWidgetState();
@@ -83,7 +83,7 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
                     onTap: () {
                       UIUtil.showWebview(context, blogUrl, '');
                     },
-                    child: buildIconDataWidget(
+                    child: IconWidget.buildIconDataWidget(
                         context, Icons.arrow_circle_right_outlined, 20, 20),
                   ),
                 ],

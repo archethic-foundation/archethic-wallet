@@ -111,7 +111,7 @@ class _SetYubikeyState extends State<SetYubikey> {
                           ],
                         ),
                         Container(
-                          child: buildIconWidget(
+                          child: IconWidget.build(
                               context, 'assets/icons/digital-key.png', 90, 90),
                         ),
                         Expanded(

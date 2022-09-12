@@ -75,7 +75,7 @@ class _IntroNewWalletDisclaimerState extends State<IntroNewWalletDisclaimer> {
                         ),
                         Container(
                           margin: const EdgeInsetsDirectional.only(),
-                          child: buildIconWidget(
+                          child: IconWidget.build(
                             context,
                             'assets/icons/warning.png',
                             90,

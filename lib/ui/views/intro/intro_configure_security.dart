@@ -94,7 +94,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                           ],
                         ),
                         Container(
-                          child: buildIconWidget(
+                          child: IconWidget.build(
                               context, 'assets/icons/finger-print.png', 90, 90),
                         ),
                         Container(

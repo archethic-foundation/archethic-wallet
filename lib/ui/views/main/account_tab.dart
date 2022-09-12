@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class AccountTab extends StatelessWidget {
-  const AccountTab({Key? key}) : super(key: key);
+  const AccountTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +89,7 @@ class AccountTab extends StatelessWidget {
                             ),
 
                             /// ICONS
-                            MenuWidgetWallet().buildMainMenuIcons(context),
+                            MenuWidgetWallet(),
                             const SizedBox(
                               height: 15,
                             ),
@@ -100,8 +100,7 @@ class AccountTab extends StatelessWidget {
                                   .backgroundDarkest!
                                   .withOpacity(0.1),
                             ),
-                            ExpandablePageView(
-                              // ignore: prefer_const_literals_to_create_immutables
+                            const ExpandablePageView(
                               children: [
                                 TxListWidget(),
                                 FungiblesTokensListWidget(),

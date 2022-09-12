@@ -102,7 +102,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          buildIconWidget(
+                          IconWidget.build(
                               context, 'assets/icons/key-ring.png', 90, 90),
                           const SizedBox(
                             height: 30,

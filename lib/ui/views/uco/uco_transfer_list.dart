@@ -17,7 +17,7 @@ import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:aewallet/ui/util/styles.dart';
 
-class UCOTransferListWidget extends StatefulWidget {
+class UCOTransferListWidget extends StatelessWidget {
   UCOTransferListWidget({
     super.key,
     required this.listUcoTransfer,
@@ -28,13 +28,8 @@ class UCOTransferListWidget extends StatefulWidget {
   final double? feeEstimation;
 
   @override
-  State<UCOTransferListWidget> createState() => _UCOTransferListWidgetState();
-}
-
-class _UCOTransferListWidgetState extends State<UCOTransferListWidget> {
-  @override
   Widget build(BuildContext context) {
-    widget.listUcoTransfer!.sort(
+    listUcoTransfer!.sort(
         (UCOTransferWallet a, UCOTransferWallet b) => a.to!.compareTo(b.to!));
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
@@ -42,13 +37,12 @@ class _UCOTransferListWidgetState extends State<UCOTransferListWidget> {
       child: Column(
         children: [
           SizedBox(
-            height: widget.listUcoTransfer!.length * 60,
+            height: listUcoTransfer!.length * 60,
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: widget.listUcoTransfer!.length,
+              itemCount: listUcoTransfer!.length,
               itemBuilder: (BuildContext context, int index) {
-                return displayUcoDetail(
-                    context, widget.listUcoTransfer![index]);
+                return displayUcoDetail(context, listUcoTransfer![index]);
               },
             ),
           ),
@@ -64,7 +58,7 @@ class _UCOTransferListWidgetState extends State<UCOTransferListWidget> {
                   ],
                 ),
                 Text(
-                    '${widget.feeEstimation!.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                    '${feeEstimation!.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                     style: AppStyles.textStyleSize14W600Primary(context)),
               ],
             ),
@@ -122,17 +116,16 @@ class _UCOTransferListWidgetState extends State<UCOTransferListWidget> {
 
   double _getTotal() {
     double totalAmount = 0.0;
-    for (int i = 0; i < widget.listUcoTransfer!.length; i++) {
-      double amount =
-          (Decimal.parse(widget.listUcoTransfer![i].amount!.toString()) /
-                  Decimal.parse('100000000'))
-              .toDouble();
+    for (int i = 0; i < listUcoTransfer!.length; i++) {
+      double amount = (Decimal.parse(listUcoTransfer![i].amount!.toString()) /
+              Decimal.parse('100000000'))
+          .toDouble();
       totalAmount = (Decimal.parse(totalAmount.toString()) +
               Decimal.parse(amount.toString()))
           .toDouble();
     }
     totalAmount = (Decimal.parse(totalAmount.toString()) +
-            Decimal.parse(widget.feeEstimation!.toString()))
+            Decimal.parse(feeEstimation!.toString()))
         .toDouble();
     return totalAmount;
   }

@@ -168,7 +168,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                           ],
                         ),
                         Container(
-                          child: buildIconWidget(
+                          child: IconWidget.build(
                               context, 'assets/icons/key-word.png', 90, 90),
                         ),
                         Container(

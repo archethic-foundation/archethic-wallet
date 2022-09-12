@@ -240,7 +240,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          buildIconWidget(
+                          IconWidget.build(
                               context, 'assets/icons/digital-key.png', 90, 90),
                           const SizedBox(
                             height: 30,

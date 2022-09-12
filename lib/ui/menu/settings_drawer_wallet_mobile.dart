@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
+import 'package:aewallet/util/mnemonics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,6 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/contacts/contact_list.dart';
 import 'package:aewallet/ui/views/settings/backupseed_sheet.dart';
-import 'package:aewallet/ui/views/settings/wallet_faq_widget.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/dialogs/authentification_method_dialog.dart';
@@ -60,8 +60,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   Animation<Offset>? _securityOffsetFloat;
   AnimationController? _customController;
   Animation<Offset>? _customOffsetFloat;
-  AnimationController? _walletFAQController;
-  Animation<Offset>? _walletFAQOffsetFloat;
   AnimationController? _aboutController;
   Animation<Offset>? _aboutOffsetFloat;
 
@@ -80,7 +78,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   bool? _customOpen;
   bool? _aboutOpen;
   bool? _contactsOpen;
-  bool? _walletFAQOpen;
 
   bool _pinPadShuffleActive = false;
   bool _showBalancesActive = false;
@@ -98,7 +95,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     _securityOpen = false;
     _customOpen = false;
     _aboutOpen = false;
-    _walletFAQOpen = false;
 
     // Determine if they have face or fingerprint enrolled, if not hide the setting
     sl.get<BiometricUtil>().hasBiometrics().then((bool hasBiometrics) {
@@ -140,10 +136,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       vsync: this,
       duration: const Duration(milliseconds: 220),
     );
-    _walletFAQController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 220),
-    );
     _contactsOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_contactsController!);
@@ -156,9 +148,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     _aboutOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
             .animate(_aboutController!);
-    _walletFAQOffsetFloat =
-        Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
-            .animate(_walletFAQController!);
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
         versionString =
@@ -173,7 +162,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     _securityController!.dispose();
     _customController!.dispose();
     _aboutController!.dispose();
-    _walletFAQController!.dispose();
     super.dispose();
   }
 
@@ -200,22 +188,18 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   Future<void> _lockDialog() async {
     _curUnlockSetting =
         (await LockDialog.getDialog(context, _curUnlockSetting))!;
-    setState(() {});
   }
 
   Future<void> _currencyDialog() async {
     await CurrencyDialog.getDialog(context);
-    setState(() {});
   }
 
   Future<void> _languageDialog() async {
     await LanguageDialog.getDialog(context);
-    setState(() {});
   }
 
   Future<void> _primaryCurrencyDialog() async {
     await PrimaryCurrencyDialog.getDialog(context);
-    setState(() {});
   }
 
   Future<void> _networkDialog() async {
@@ -224,52 +208,35 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     if (ns != null) {
       _curNetworksSetting = ns;
       await StateContainer.of(context).requestUpdate();
-      setState(() {});
     }
   }
 
   Future<void> _lockTimeoutDialog() async {
     _curTimeoutSetting =
         (await LockTimeoutDialog.getDialog(context, _curTimeoutSetting))!;
-    setState(() {});
   }
 
   Future<void> _themeDialog() async {
     _curThemeSetting =
         (await ThemeDialog.getDialog(context, _curThemeSetting))!;
-    setState(() {});
   }
 
   Future<bool> _onBackButtonPressed() async {
     if (_contactsOpen!) {
-      setState(() {
-        _contactsOpen = false;
-      });
+      _contactsOpen = false;
       _contactsController!.reverse();
       return false;
     } else if (_securityOpen!) {
-      setState(() {
-        _securityOpen = false;
-      });
+      _securityOpen = false;
       _securityController!.reverse();
       return false;
     } else if (_customOpen!) {
-      setState(() {
-        _customOpen = false;
-      });
+      _customOpen = false;
       _customController!.reverse();
       return false;
     } else if (_aboutOpen!) {
-      setState(() {
-        _aboutOpen = false;
-      });
+      _aboutOpen = false;
       _aboutController!.reverse();
-      return false;
-    } else if (_walletFAQOpen!) {
-      setState(() {
-        _walletFAQOpen = false;
-      });
-      _walletFAQController!.reverse();
       return false;
     }
     return true;
@@ -301,9 +268,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                 position: _customOffsetFloat!, child: buildCustomMenu(context)),
             SlideTransition(
                 position: _aboutOffsetFloat!, child: buildAboutMenu(context)),
-            SlideTransition(
-                position: _walletFAQOffsetFloat!,
-                child: WalletFAQ(_walletFAQController!, _walletFAQOpen!)),
           ],
         ),
       ),
@@ -398,9 +362,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         iconColor: StateContainer.of(context)
                             .curTheme
                             .iconDrawer!, onPressed: () {
-                      setState(() {
-                        _contactsOpen = true;
-                      });
+                      _contactsOpen = true;
                       _contactsController!.forward();
                     }),
                     Divider(
@@ -431,9 +393,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         'assets/icons/encrypted.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () {
-                      setState(() {
-                        _securityOpen = true;
-                      });
+                      _securityOpen = true;
                       _securityController!.forward();
                     }),
                     Divider(
@@ -447,9 +407,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         'assets/icons/brush.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () {
-                      setState(() {
-                        _customOpen = true;
-                      });
+                      _customOpen = true;
                       _customController!.forward();
                     }),
                     Divider(
@@ -469,23 +427,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                                 context)),
                       ),
                     ),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemSingleLineWithInfos(
-                        context,
-                        AppLocalization.of(context)!.walletFAQHeader,
-                        AppLocalization.of(context)!.walletFAQDesc,
-                        icon: 'assets/icons/faq.png',
-                        iconColor: StateContainer.of(context)
-                            .curTheme
-                            .iconDrawer!, onPressed: () {
-                      setState(() {
-                        _walletFAQOpen = true;
-                      });
-                      _walletFAQController!.forward();
-                    }),
                     Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,
@@ -529,9 +470,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         'assets/icons/help.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () {
-                      setState(() {
-                        _aboutOpen = true;
-                      });
+                      _aboutOpen = true;
                       _aboutController!.forward();
                     }),
                     Divider(
@@ -622,9 +561,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           key: const Key('back'),
                           color: StateContainer.of(context).curTheme.text,
                           onPressed: () {
-                            setState(() {
-                              _securityOpen = false;
-                            });
+                            _securityOpen = false;
                             _securityController!.reverse();
                           },
                         ),
@@ -736,13 +673,15 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                             activeVibrations:
                                 StateContainer.of(context).activeVibrations);
                         if (auth) {
-                          StateContainer.of(context)
-                              .getSeed()
-                              .then((String? seed) {
-                            Sheets.showAppHeightNineSheet(
-                                context: context,
-                                widget: AppSeedBackupSheet(seed!));
-                          });
+                          String? seed =
+                              await StateContainer.of(context).getSeed();
+                          List<String> mnemonic = AppMnemomics.seedToMnemonic(
+                              seed!,
+                              languageCode: preferences.getLanguageSeed());
+
+                          Sheets.showAppHeightNineSheet(
+                              context: context,
+                              widget: AppSeedBackupSheet(mnemonic));
                         }
                       }),
                     ]),
@@ -870,9 +809,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           key: const Key('back'),
                           color: StateContainer.of(context).curTheme.text,
                           onPressed: () {
-                            setState(() {
-                              _customOpen = false;
-                            });
+                            _customOpen = false;
                             _customController!.reverse();
                           },
                         ),
@@ -1140,9 +1077,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       key: const Key('back'),
                       color: StateContainer.of(context).curTheme.text,
                       onPressed: () {
-                        setState(() {
-                          _aboutOpen = false;
-                        });
+                        _aboutOpen = false;
                         _aboutController!.reverse();
                       },
                     ),

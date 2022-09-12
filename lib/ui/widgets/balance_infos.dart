@@ -485,7 +485,7 @@ class BalanceInfosWidget {
                         style: AppStyles.textStyleSize14W600EquinoxPrimary(
                             context),
                       ),
-                      buildIconDataWidget(
+                      IconWidget.buildIconDataWidget(
                           context, Icons.arrow_circle_right_outlined, 20, 20),
                     ],
                   )),
@@ -612,7 +612,7 @@ class BalanceInfosWidget {
                             AppLocalization.of(context)!.currencyOracleInfo,
                           );
                         },
-                        child: buildIconWidget(
+                        child: IconWidget.build(
                           context,
                           'assets/icons/oracle.png',
                           15,

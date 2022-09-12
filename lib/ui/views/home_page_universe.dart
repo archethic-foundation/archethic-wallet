@@ -2,29 +2,18 @@
 
 // Dart imports:
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:ui';
 
 // Flutter imports:
-import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
 import 'package:aewallet/ui/views/main/accounts_list_tab.dart';
+import 'package:aewallet/ui/views/main/main_appbar.dart';
+import 'package:aewallet/ui/views/main/main_bottombar.dart';
 import 'package:aewallet/ui/views/main/nft_tab.dart';
-import 'package:aewallet/ui/views/nft/add_nft_collection.dart';
-import 'package:aewallet/ui/views/nft/nft_list.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bottom_bar/bottom_bar.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:event_taxi/event_taxi.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -32,20 +21,15 @@ import 'package:aewallet/bus/account_changed_event.dart';
 import 'package:aewallet/bus/disable_lock_timeout_event.dart';
 import 'package:aewallet/bus/notifications_event.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/ui/menu/menu_widget_wallet.dart';
 import 'package:aewallet/ui/menu/settings_drawer_wallet_mobile.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/add_token.dart';
-import 'package:aewallet/ui/widgets/balance_infos.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
-import 'package:aewallet/ui/widgets/logo.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:aewallet/util/preferences.dart';
 
@@ -267,368 +251,30 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
 
   @override
   Widget build(BuildContext context) {
-    return Responsive.isDesktop(context) == true
-        ? Scaffold(
-            extendBodyBehindAppBar: true,
-            drawerEdgeDragWidth: 0,
-            resizeToAvoidBottomInset: false,
-            backgroundColor: StateContainer.of(context).curTheme.background,
-            body: SingleChildScrollView(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: <Color>[
-                      StateContainer.of(context).curTheme.backgroundMainTop!,
-                      StateContainer.of(context).curTheme.backgroundMainBottom!
-                    ],
-                  ),
-                ),
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: Stack(
-                    children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(StateContainer.of(context)
-                                  .curTheme
-                                  .background4Small!),
-                              fit: BoxFit.none,
-                              opacity: 0.8),
-                        ),
-                      ),
-                      SizedBox(
-                        width: Responsive.drawerWidth(context),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 20.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              getLogo(context),
-                              const SizedBox(height: 20),
-                              Stack(
-                                children: <Widget>[
-                                  Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.08,
-                                    alignment: Alignment.centerRight,
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 10.0),
-                                      child: AutoSizeText(
-                                        StateContainer.of(context)
-                                            .curNetwork
-                                            .getNetworkCryptoCurrencyLabel(),
-                                        style: AppStyles
-                                            .textStyleSize80W700Primary15(
-                                                context),
-                                      ),
-                                    ),
-                                  ),
-                                  BalanceInfosWidget().buildInfos(context),
-                                ],
-                              ),
-                              BalanceInfosWidget().buildKPI(context),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            top: 180.0,
-                          ),
-                          child: MenuWidgetWallet().buildContextMenu(context),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () async {
-                          // await _networkDialog();
-                        },
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 100,
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                top: 20.0,
-                                left: Responsive.drawerWidth(context)),
-                            child: Column(
-                              children: [
-                                SvgPicture.asset(
-                                  '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
-                                  height: 30,
-                                ),
-                                Text(
-                                    StateContainer.of(context)
-                                        .curNetwork
-                                        .getDisplayName(context),
-                                    style: AppStyles.textStyleSize10W100Primary(
-                                        context)),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: 140,
-                        child: Padding(
-                            padding: EdgeInsets.only(
-                                top: 70.0,
-                                left: Responsive.drawerWidth(context)),
-                            child:
-                                MenuWidgetWallet().buildMainMenuIcons(context)),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Padding(
-                            padding: const EdgeInsets.only(top: 20.0),
-                            child: MenuWidgetWallet()
-                                .buildSecondMenuIcons(context)),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          )
-        : Scaffold(
-            extendBodyBehindAppBar: true,
-            extendBody: true,
-            appBar: PreferredSize(
-              preferredSize: Size(MediaQuery.of(context).size.width, 50),
-              child: ClipRRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: AppBar(
-                    actions: [
-                      StateContainer.of(context).showBalance
-                          ? IconButton(
-                              icon: const FaIcon(FontAwesomeIcons.eye),
-                              onPressed: () async {
-                                StateContainer.of(context).showBalance = false;
-
-                                final Preferences preferences =
-                                    await Preferences.getInstance();
-                                await preferences.setShowBalances(false);
-                              })
-                          : IconButton(
-                              icon: const FaIcon(FontAwesomeIcons.eyeLowVision),
-                              onPressed: () async {
-                                StateContainer.of(context).showBalance = true;
-
-                                final Preferences preferences =
-                                    await Preferences.getInstance();
-                                await preferences.setShowBalances(true);
-                              }),
-                      if (!kIsWeb &&
-                          (Platform.isIOS == true ||
-                              Platform.isAndroid == true ||
-                              Platform.isMacOS == true))
-                        StateContainer.of(context).activeNotifications
-                            ? IconButton(
-                                icon: const Icon(
-                                    Icons.notifications_active_outlined),
-                                onPressed: () async {
-                                  StateContainer.of(context)
-                                      .activeNotifications = false;
-                                  if (StateContainer.of(context)
-                                          .timerCheckTransactionInputs !=
-                                      null) {
-                                    StateContainer.of(context)
-                                        .timerCheckTransactionInputs!
-                                        .cancel();
-                                  }
-                                  final Preferences preferences =
-                                      await Preferences.getInstance();
-                                  await preferences
-                                      .setActiveNotifications(false);
-                                })
-                            : IconButton(
-                                icon: const Icon(
-                                    Icons.notifications_off_outlined),
-                                onPressed: () async {
-                                  StateContainer.of(context)
-                                      .activeNotifications = true;
-
-                                  if (StateContainer.of(context)
-                                          .timerCheckTransactionInputs !=
-                                      null) {
-                                    StateContainer.of(context)
-                                        .timerCheckTransactionInputs!
-                                        .cancel();
-                                  }
-                                  StateContainer.of(context)
-                                      .checkTransactionInputs(
-                                          AppLocalization.of(context)!
-                                              .transactionInputNotification);
-                                  final Preferences preferences =
-                                      await Preferences.getInstance();
-                                  await preferences
-                                      .setActiveNotifications(true);
-                                })
-                    ],
-                    title: StateContainer.of(context).bottomBarCurrentPage == 0
-                        ? InkWell(
-                            onTap: () {
-                              sl.get<HapticUtil>().feedback(FeedbackType.light,
-                                  StateContainer.of(context).activeVibrations);
-                              Clipboard.setData(ClipboardData(
-                                  text: StateContainer.of(context)
-                                      .appWallet!
-                                      .appKeychain!
-                                      .address!
-                                      .toUpperCase()));
-                              UIUtil.showSnackbar(
-                                  AppLocalization.of(context)!.addressCopied,
-                                  context,
-                                  StateContainer.of(context).curTheme.text!,
-                                  StateContainer.of(context)
-                                      .curTheme
-                                      .snackBarShadow!);
-                            },
-                            child: AutoSizeText(
-                              AppLocalization.of(context)!.keychainHeader,
-                              style:
-                                  AppStyles.textStyleSize24W700EquinoxPrimary(
-                                      context),
-                            ),
-                          )
-                        : StateContainer.of(context).bottomBarCurrentPage == 1
-                            ? FittedBox(
-                                fit: BoxFit.fitWidth,
-                                child: Text(
-                                  StateContainer.of(context)
-                                      .appWallet!
-                                      .appKeychain!
-                                      .getAccountSelected()!
-                                      .name!,
-                                  style: AppStyles
-                                      .textStyleSize24W700EquinoxPrimary(
-                                          context),
-                                ),
-                              )
-                            : AutoSizeText(
-                                'NFT',
-                                style:
-                                    AppStyles.textStyleSize24W700EquinoxPrimary(
-                                        context),
-                              ),
-                    backgroundColor: Colors.transparent,
-                    elevation: 0.0,
-                    centerTitle: true,
-                    iconTheme: IconThemeData(
-                        color: StateContainer.of(context).curTheme.text),
-                  ),
-                ),
-              ),
-            ),
-            bottomNavigationBar: PreferredSize(
-              preferredSize: Size(MediaQuery.of(context).size.width, 22),
-              child: ClipRRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: BottomBar(
-                    selectedIndex:
-                        StateContainer.of(context).bottomBarCurrentPage,
-                    onTap: (int index) async {
-                      StateContainer.of(context)
-                          .bottomBarPageController!
-                          .jumpToPage(index);
-                      Preferences preferences = await Preferences.getInstance();
-                      preferences.setMainScreenCurrentPage(index);
-                      setState(() => StateContainer.of(context)
-                          .bottomBarCurrentPage = index);
-                    },
-                    items: <BottomBarItem>[
-                      BottomBarItem(
-                          icon: const FaIcon(FontAwesomeIcons.keycdn),
-                          backgroundColorOpacity: StateContainer.of(context)
-                              .curTheme
-                              .bottomBarBackgroundColorOpacity!,
-                          activeIconColor: StateContainer.of(context)
-                              .curTheme
-                              .bottomBarActiveIconColor!,
-                          activeTitleColor: StateContainer.of(context)
-                              .curTheme
-                              .bottomBarActiveTitleColor!,
-                          activeColor: StateContainer.of(context)
-                              .curTheme
-                              .bottomBarActiveColor!,
-                          inactiveColor: StateContainer.of(context)
-                              .curTheme
-                              .bottomBarInactiveIcon!),
-                      BottomBarItem(
-                          icon: const Icon(Icons.account_circle),
-                          backgroundColorOpacity: StateContainer.of(context)
-                              .curTheme
-                              .bottomBarBackgroundColorOpacity!,
-                          activeIconColor: StateContainer.of(context)
-                              .curTheme
-                              .bottomBarActiveIconColor!,
-                          activeTitleColor: StateContainer.of(context)
-                              .curTheme
-                              .bottomBarActiveTitleColor!,
-                          activeColor: StateContainer.of(context)
-                              .curTheme
-                              .bottomBarActiveColor!,
-                          inactiveColor: StateContainer.of(context)
-                              .curTheme
-                              .bottomBarInactiveIcon!),
-                      /* BottomBarItem(
-                          icon: const Icon(Icons.collections_bookmark),
-                          backgroundColorOpacity: StateContainer.of(context)
-                              .curTheme
-                              .bottomBarBackgroundColorOpacity!,
-                          activeIconColor: StateContainer.of(context)
-                              .curTheme
-                              .bottomBarActiveIconColor!,
-                          activeTitleColor: StateContainer.of(context)
-                              .curTheme
-                              .bottomBarActiveTitleColor!,
-                          activeColor: StateContainer.of(context)
-                              .curTheme
-                              .bottomBarActiveColor!,
-                          inactiveColor: StateContainer.of(context)
-                              .curTheme
-                              .bottomBarInactiveIcon!),*/
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            drawerEdgeDragWidth: 0,
-            resizeToAvoidBottomInset: false,
-            backgroundColor: StateContainer.of(context).curTheme.background,
-            drawer: SizedBox(
-              width: Responsive.drawerWidth(context),
-              child: const Drawer(
-                child: SettingsSheetWalletMobile(),
-              ),
-            ),
-            body: PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: StateContainer.of(context).bottomBarPageController,
-              // ignore: prefer_const_literals_to_create_immutables
-              children: [
-                AccountsListTab(), AccountTab()
-                //, NFTTab()
-              ],
-              onPageChanged: (index) {
-                setState(() =>
-                    StateContainer.of(context).bottomBarCurrentPage = index);
-              },
-            ),
-          );
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      appBar: MainAppBar(),
+      bottomNavigationBar: MainBottomBar(),
+      drawerEdgeDragWidth: 0,
+      resizeToAvoidBottomInset: false,
+      backgroundColor: StateContainer.of(context).curTheme.background,
+      drawer: SizedBox(
+        width: Responsive.drawerWidth(context),
+        child: const Drawer(
+          child: SettingsSheetWalletMobile(),
+        ),
+      ),
+      body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: StateContainer.of(context).bottomBarPageController,
+        children: const [AccountsListTab(), AccountTab(), NFTTab()],
+        onPageChanged: (index) {
+          setState(
+              () => StateContainer.of(context).bottomBarCurrentPage = index);
+        },
+      ),
+    );
   }
 
   Future<void> _networkDialog() async {

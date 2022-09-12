@@ -43,8 +43,8 @@ class AppSettings {
             children: <Widget>[
               Container(
                   margin: const EdgeInsetsDirectional.only(end: 13.0),
-                  child:
-                      buildIconWidget(context, icon, 30, 30, color: iconColor)),
+                  child: IconWidget.build(context, icon, 30, 30,
+                      color: iconColor)),
               Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +100,7 @@ class AppSettings {
             Container(
                 margin: const EdgeInsetsDirectional.only(end: 13.0),
                 child:
-                    buildIconWidget(context, icon, 30, 30, color: iconColor)),
+                    IconWidget.build(context, icon, 30, 30, color: iconColor)),
             Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,7 +167,7 @@ class AppSettings {
             Container(
                 margin: const EdgeInsetsDirectional.only(end: 13.0),
                 child:
-                    buildIconWidget(context, icon!, 30, 30, color: iconColor)),
+                    IconWidget.build(context, icon!, 30, 30, color: iconColor)),
             Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,8 +224,8 @@ class AppSettings {
             Container(
               margin: const EdgeInsetsDirectional.only(end: 13.0),
               child: Container(
-                  child:
-                      buildIconWidget(context, icon, 30, 30, color: iconColor)),
+                  child: IconWidget.build(context, icon, 30, 30,
+                      color: iconColor)),
             ),
             SizedBox(
               width: Responsive.drawerWidth(context) - 100,
@@ -261,7 +261,7 @@ class AppSettings {
             Container(
                 margin: const EdgeInsetsDirectional.only(end: 13.0),
                 child:
-                    buildIconWidget(context, icon, 30, 30, color: iconColor)),
+                    IconWidget.build(context, icon, 30, 30, color: iconColor)),
             SizedBox(
               width: Responsive.drawerWidth(context) - 130,
               child: Text(

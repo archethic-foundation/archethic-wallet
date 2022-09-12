@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,14 +23,9 @@ import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 
-class ReceiveSheet extends StatefulWidget {
+class ReceiveSheet extends StatelessWidget {
   const ReceiveSheet({super.key});
 
-  @override
-  State<ReceiveSheet> createState() => _ReceiveSheetState();
-}
-
-class _ReceiveSheetState extends State<ReceiveSheet> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -37,76 +33,33 @@ class _ReceiveSheetState extends State<ReceiveSheet> {
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
-          // A row for the address text and close button
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              //Empty SizedBox
-              const SizedBox(
-                width: 60,
+          SheetHeader(
+            title: AppLocalization.of(context)!.receive,
+            widgetRight: Container(
+              width: 60,
+              height: 50,
+              margin: const EdgeInsetsDirectional.only(top: 10.0, start: 10.0),
+              child: TextButton(
+                onPressed: () {
+                  sl.get<HapticUtil>().feedback(FeedbackType.light,
+                      StateContainer.of(context).activeVibrations);
+                  Clipboard.setData(ClipboardData(
+                      text: StateContainer.of(context)
+                          .appWallet!
+                          .appKeychain!
+                          .getAccountSelected()!
+                          .lastAddress!));
+                  UIUtil.showSnackbar(
+                      AppLocalization.of(context)!.addressCopied,
+                      context,
+                      StateContainer.of(context).curTheme.text!,
+                      StateContainer.of(context).curTheme.snackBarShadow!);
+                },
+                child: FaIcon(FontAwesomeIcons.paste,
+                    size: 24, color: StateContainer.of(context).curTheme.text),
               ),
-              Column(
-                children: <Widget>[
-                  // Sheet handle
-                  Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    height: 5,
-                    width: MediaQuery.of(context).size.width * 0.15,
-                    decoration: BoxDecoration(
-                      color: StateContainer.of(context).curTheme.text60,
-                      borderRadius: BorderRadius.circular(100.0),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 15.0),
-                    constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width - 140),
-                    child: Column(
-                      children: <Widget>[
-                        AutoSizeText(
-                          AppLocalization.of(context)!.receive,
-                          style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                              context),
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          stepGranularity: 0.1,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-
-              Container(
-                width: 60,
-                height: 50,
-                margin:
-                    const EdgeInsetsDirectional.only(top: 10.0, start: 10.0),
-                child: TextButton(
-                  onPressed: () {
-                    sl.get<HapticUtil>().feedback(FeedbackType.light,
-                        StateContainer.of(context).activeVibrations);
-                    Clipboard.setData(ClipboardData(
-                        text: StateContainer.of(context)
-                            .appWallet!
-                            .appKeychain!
-                            .getAccountSelected()!
-                            .lastAddress!));
-                    UIUtil.showSnackbar(
-                        AppLocalization.of(context)!.addressCopied,
-                        context,
-                        StateContainer.of(context).curTheme.text!,
-                        StateContainer.of(context).curTheme.snackBarShadow!);
-                  },
-                  child: FaIcon(FontAwesomeIcons.paste,
-                      size: 24,
-                      color: StateContainer.of(context).curTheme.text),
-                ),
-              ),
-            ],
+            ),
           ),
-
           Expanded(
             child: SingleChildScrollView(
               child: SafeArea(

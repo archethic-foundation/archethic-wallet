@@ -12,7 +12,7 @@ import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/token_transfer_wallet.dart';
 import 'package:aewallet/ui/util/styles.dart';
 
-class TokenTransferListWidget extends StatefulWidget {
+class TokenTransferListWidget extends StatelessWidget {
   TokenTransferListWidget({
     super.key,
     required this.listTokenTransfer,
@@ -25,29 +25,21 @@ class TokenTransferListWidget extends StatefulWidget {
   final String? symbol;
 
   @override
-  State<TokenTransferListWidget> createState() =>
-      _TokenTransferListWidgetState();
-}
-
-class _TokenTransferListWidgetState extends State<TokenTransferListWidget> {
-  @override
   Widget build(BuildContext context) {
-    widget.listTokenTransfer!.sort(
-        (TokenTransferWallet a, TokenTransferWallet b) =>
-            a.to!.compareTo(b.to!));
+    listTokenTransfer!.sort((TokenTransferWallet a, TokenTransferWallet b) =>
+        a.to!.compareTo(b.to!));
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
       padding: const EdgeInsets.only(left: 3.5, right: 3.5),
       child: Column(
         children: [
           SizedBox(
-            height: widget.listTokenTransfer!.length * 60,
+            height: listTokenTransfer!.length * 60,
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: widget.listTokenTransfer!.length,
+              itemCount: listTokenTransfer!.length,
               itemBuilder: (BuildContext context, int index) {
-                return displayTokenDetail(
-                    context, widget.listTokenTransfer![index]);
+                return displayTokenDetail(context, listTokenTransfer![index]);
               },
             ),
           ),
@@ -63,7 +55,7 @@ class _TokenTransferListWidgetState extends State<TokenTransferListWidget> {
                   ],
                 ),
                 Text(
-                    '${widget.feeEstimation!.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                    '${feeEstimation!.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                     style: AppStyles.textStyleSize14W600Primary(context)),
               ],
             ),
@@ -96,7 +88,7 @@ class _TokenTransferListWidgetState extends State<TokenTransferListWidget> {
           height: 20,
         ),
         Text(
-            '${fromBigInt(tokenTransfer.amount!).toStringAsFixed(8)} ${widget.symbol}',
+            '${fromBigInt(tokenTransfer.amount!).toStringAsFixed(8)} ${symbol}',
             style: AppStyles.textStyleSize14W600Primary(context)),
       ],
     );

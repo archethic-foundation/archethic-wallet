@@ -11,21 +11,20 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/ui/menu/settings_drawer_wallet_mobile.dart';
-import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
 import 'package:aewallet/ui/views/uco/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
-import 'package:aewallet/ui/widgets/menu/abstract_menu_widget.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 
-class MenuWidgetWallet extends AbstractMenuWidget {
+class MenuWidgetWallet extends StatelessWidget {
+  const MenuWidgetWallet({super.key});
+
   @override
-  Widget buildMainMenuIcons(BuildContext context) {
+  Widget build(BuildContext context) {
     return StatefulBuilder(
       builder: (context, setState) {
         return Card(
@@ -70,7 +69,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                             },
                             child: Column(
                               children: <Widget>[
-                                buildIconDataWidget(context,
+                                IconWidget.buildIconDataWidget(context,
                                     Icons.arrow_circle_up_outlined, 40, 40),
                                 const SizedBox(height: 5),
                                 Text(AppLocalization.of(context)!.send,
@@ -82,7 +81,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                     : Container(
                         child: Column(
                         children: <Widget>[
-                          buildIconDataWidget(
+                          IconWidget.buildIconDataWidget(
                               context, Icons.arrow_circle_up_outlined, 40, 40,
                               enabled: false),
                           const SizedBox(height: 5),
@@ -110,7 +109,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                     },
                     child: Column(
                       children: <Widget>[
-                        buildIconDataWidget(
+                        IconWidget.buildIconDataWidget(
                             context, Icons.arrow_circle_down_outlined, 40, 40),
                         const SizedBox(height: 5),
                         Text(AppLocalization.of(context)!.receive,
@@ -131,7 +130,7 @@ class MenuWidgetWallet extends AbstractMenuWidget {
                         },
                         child: Column(
                           children: <Widget>[
-                            buildIconDataWidget(context,
+                            IconWidget.buildIconDataWidget(context,
                                 Icons.add_circle_outline_outlined, 40, 40),
                             const SizedBox(height: 5),
                             Text(AppLocalization.of(context)!.buy,
@@ -164,22 +163,6 @@ class MenuWidgetWallet extends AbstractMenuWidget {
           ),
         );
       },
-    );
-  }
-
-  @override
-  Widget buildSecondMenuIcons(BuildContext context) {
-    return const SizedBox();
-  }
-
-  @override
-  Widget buildContextMenu(BuildContext context) {
-    return SizedBox(
-      width: Responsive.drawerWidth(context),
-      child: const Drawer(
-        // TODO: dependencies issue
-        child: SettingsSheetWalletMobile(),
-      ),
     );
   }
 }

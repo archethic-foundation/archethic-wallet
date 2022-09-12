@@ -17,14 +17,9 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/number_util.dart';
 
-class FungiblesTokensListWidget extends StatefulWidget {
+class FungiblesTokensListWidget extends StatelessWidget {
   const FungiblesTokensListWidget({super.key});
-  @override
-  State<FungiblesTokensListWidget> createState() =>
-      _FungiblesTokensListWidgetState();
-}
 
-class _FungiblesTokensListWidgetState extends State<FungiblesTokensListWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
