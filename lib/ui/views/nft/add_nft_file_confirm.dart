@@ -4,6 +4,7 @@
 // Flutter imports:
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
@@ -13,6 +14,7 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/nft/nft_preview.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/confirmations/confirmations_util.dart';
 import 'package:aewallet/util/confirmations/subscription_channel.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -20,9 +22,6 @@ import 'package:aewallet/util/preferences.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -35,10 +34,14 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 class AddNFTFileConfirm extends StatefulWidget {
   const AddNFTFileConfirm({
     required this.token,
+    required this.filePreview,
+    required this.sizeFile,
     super.key,
   });
 
   final Token token;
+  final Uint8List filePreview;
+  final int sizeFile;
 
   @override
   State<AddNFTFileConfirm> createState() => _AddNFTFileState();
@@ -148,51 +151,8 @@ class _AddNFTFileState extends State<AddNFTFileConfirm> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const SizedBox(
-                width: 60,
-              ),
-              Column(
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    height: 5,
-                    width: MediaQuery.of(context).size.width * 0.15,
-                    decoration: BoxDecoration(
-                      color: StateContainer.of(context).curTheme.text60,
-                      borderRadius: BorderRadius.circular(100.0),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 15.0),
-                    constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width - 140),
-                    child: Column(
-                      children: <Widget>[
-                        AutoSizeText(
-                          AppLocalization.of(context)!.addNFTFile,
-                          style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                              context),
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          stepGranularity: 0.1,
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                width: 60,
-                height: 40,
-              ),
-            ],
+          SheetHeader(
+            title: AppLocalization.of(context)!.addNFTFile,
           ),
           Expanded(
             child: Container(
@@ -224,10 +184,8 @@ class _AddNFTFileState extends State<AddNFTFileConfirm> {
                             .where((element) => element.name == 'type/mime')
                             .first
                             .value,
-                        nftFile: base64Decode(widget.token.tokenProperties![0]
-                            .where((element) => element.name == 'file')
-                            .first
-                            .value!),
+                        nftFile: widget.filePreview,
+                        nftSize: widget.sizeFile,
                         nftProperties: widget.token.tokenProperties![0]),
                   ],
                 ),

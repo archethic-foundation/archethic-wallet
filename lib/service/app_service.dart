@@ -352,8 +352,8 @@ class AppService {
           }
         }
       }
-      // nftList.sort((a, b) =>
-      //     a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!));
+      nftList.sort((a, b) =>
+          a.tokenInformations!.name!.compareTo(b.tokenInformations!.name!));
     }
     return nftList;
   }

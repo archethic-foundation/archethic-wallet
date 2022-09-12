@@ -27,34 +27,22 @@ class NFTCard2 extends StatelessWidget {
 
   final VoidCallback onTap;
 
-  /* if (MimeUtil.isImage(widget.typeMime) == true) {
-      imageToDisplay = Image.memory(
-        widget.fileDecrypted,
-        height: 150,
-        fit: BoxFit.fitHeight,
-      );
-    } else {
-      if (MimeUtil.isPdf(widget.typeMime) == true) {
-        PdfDocument.openData(
-          widget.fileDecrypted,
-        ).then((PdfDocument pdfDocument) {
-          pdfDocument.getPage(1).then((PdfPage pdfPage) {
-            pdfPage
-                .render(width: pdfPage.width, height: pdfPage.height)
-                .then((PdfPageImage? pdfPageImage) {
-              imageToDisplay = Image.memory(
-                pdfPageImage!.bytes,
-                height: 150,
-                fit: BoxFit.fitHeight,
-              );
-            });
-          });
-        });
-      }
-    }*/
-
   @override
   Widget build(BuildContext context) {
+    Uint8List? fileDecryptedFinal = fileDecrypted;
+    if (MimeUtil.isPdf(typeMime) == true) {
+      PdfDocument.openData(
+        fileDecrypted!,
+      ).then((PdfDocument pdfDocument) {
+        pdfDocument.getPage(1).then((PdfPage pdfPage) {
+          pdfPage
+              .render(width: pdfPage.width, height: pdfPage.height)
+              .then((PdfPageImage? pdfPageImage) {
+            fileDecryptedFinal = pdfPageImage!.bytes;
+          });
+        });
+      });
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -87,7 +75,7 @@ class NFTCard2 extends StatelessWidget {
                       child: fileDecrypted == null
                           ? const SizedBox()
                           : Image.memory(
-                              fileDecrypted!,
+                              fileDecryptedFinal!,
                               height: 150,
                               fit: BoxFit.fitHeight,
                             ),

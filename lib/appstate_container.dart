@@ -247,8 +247,8 @@ class StateContainerState extends State<StateContainer> {
 
     await appWallet!.appKeychain!.getAccountSelected()!.updateNFT();
 
-    //imagesNFT = await NFTUtil.getImagesFromTokenAddressList(
-    //    appWallet!.appKeychain!.getAccountSelected()!.accountNFT!);
+    imagesNFT = await NFTUtil.getImagesFromTokenAddressList(
+        appWallet!.appKeychain!.getAccountSelected()!.accountNFT!);
 
     setState(() {
       balanceLoading = true;

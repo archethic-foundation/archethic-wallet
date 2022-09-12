@@ -11,7 +11,6 @@ import 'package:aewallet/util/nft_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
-import 'package:pdfx/pdfx.dart';
 
 class NFTPreviewWidget extends StatefulWidget {
   const NFTPreviewWidget(
@@ -22,6 +21,7 @@ class NFTPreviewWidget extends StatefulWidget {
       this.nftFile,
       this.nftTypeMime,
       this.nftProperties,
+      this.nftSize = 0,
       this.context,
       this.nftPropertiesDeleteAction = true});
 
@@ -32,6 +32,7 @@ class NFTPreviewWidget extends StatefulWidget {
   final String? nftTypeMime;
   final List<TokenProperty>? nftProperties;
   final BuildContext? context;
+  final int nftSize;
   final bool nftPropertiesDeleteAction;
 
   @override
@@ -39,39 +40,6 @@ class NFTPreviewWidget extends StatefulWidget {
 }
 
 class _NFTPreviewWidgetState extends State<NFTPreviewWidget> {
-  Image? imageToDisplay;
-
-  @override
-  void initState() {
-    /* if (MimeUtil.isImage(widget.nftTypeMime) == true) {
-      imageToDisplay = Image.memory(
-        widget.nftFile!,
-        width: MediaQuery.of(widget.context!).size.width,
-        fit: BoxFit.fitWidth,
-      );
-    } else {
-      if (MimeUtil.isPdf(widget.nftTypeMime) == true) {
-        PdfDocument.openData(
-          widget.nftFile!,
-        ).then((PdfDocument pdfDocument) {
-          pdfDocument.getPage(1).then((PdfPage pdfPage) {
-            pdfPage
-                .render(width: pdfPage.width, height: pdfPage.height)
-                .then((PdfPageImage? pdfPageImage) {
-              imageToDisplay = Image.memory(
-                pdfPageImage!.bytes,
-                height: 150,
-                fit: BoxFit.fitHeight,
-              );
-            });
-          });
-        });
-      }
-    }*/
-
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Hero(
@@ -91,9 +59,9 @@ class _NFTPreviewWidgetState extends State<NFTPreviewWidget> {
               const SizedBox(
                 height: 10,
               ),
-              if (widget.nftFile != null)
-                if (MimeUtil.isImage(widget.nftTypeMime) == true ||
-                    MimeUtil.isPdf(widget.nftTypeMime) == true)
+              if (MimeUtil.isImage(widget.nftTypeMime) == true ||
+                  MimeUtil.isPdf(widget.nftTypeMime) == true)
+                if (widget.nftAddress != null)
                   FutureBuilder<Uint8List?>(
                       future:
                           NFTUtil.getImageFromTokenAddress(widget.nftAddress!),
@@ -106,7 +74,7 @@ class _NFTPreviewWidgetState extends State<NFTPreviewWidget> {
                                   width: 1,
                                 ),
                               ),
-                              child: imageToDisplay = Image.memory(
+                              child: Image.memory(
                                 snapshot.data!,
                                 width:
                                     MediaQuery.of(widget.context!).size.width,
@@ -116,10 +84,24 @@ class _NFTPreviewWidgetState extends State<NFTPreviewWidget> {
                           return const Center(
                               child: CircularProgressIndicator());
                         }
-                      }),
+                      })
+                else
+                  Container(
+                    decoration: BoxDecoration(
+                      color: StateContainer.of(context).curTheme.text,
+                      border: Border.all(
+                        width: 1,
+                      ),
+                    ),
+                    child: Image.memory(
+                      widget.nftFile!,
+                      width: MediaQuery.of(widget.context!).size.width,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
               if (widget.nftFile != null)
                 Text(
-                  '${AppLocalization.of(context)!.nftAddFileSize} ${filesize(widget.nftFile!.length)}',
+                  '${AppLocalization.of(context)!.nftAddFileSize} ${filesize(widget.nftSize)}',
                   style: AppStyles.textStyleSize12W400Primary(context),
                 ),
               if (widget.nftFile != null) const SizedBox(height: 10),

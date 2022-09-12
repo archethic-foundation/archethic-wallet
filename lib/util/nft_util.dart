@@ -19,7 +19,6 @@ class NFTUtil {
   static Future<Uint8List?> getImageFromTokenAddress(
     String address,
   ) async {
-    final Completer<Uint8List> completer = Completer<Uint8List>();
     Uint8List? imageDecoded;
     final Token token = await sl
         .get<ApiService>()
@@ -34,13 +33,11 @@ class NFTUtil {
         }
       }
     }
-    completer.complete(imageDecoded);
-    return completer.future;
+    return imageDecoded;
   }
 
   static Future<List<Uint8List>?> getImagesFromTokenAddressList(
       List<AccountToken> accountTokenList) async {
-    final Completer<List<Uint8List>> completer = Completer<List<Uint8List>>();
     List<Uint8List> imageDecodedList = List<Uint8List>.empty(growable: true);
     for (AccountToken accountToken in accountTokenList) {
       Uint8List? imageDecoded = await getImageFromTokenAddress(
@@ -48,7 +45,6 @@ class NFTUtil {
 
       imageDecodedList.add(imageDecoded!);
     }
-
-    return completer.future;
+    return imageDecodedList;
   }
 }

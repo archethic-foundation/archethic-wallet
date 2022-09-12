@@ -1,5 +1,11 @@
 import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/localization.dart';
+import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/views/nft/add_nft_file.dart';
 import 'package:aewallet/ui/views/nft/nft_list.dart';
+import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/nft_util.dart';
@@ -7,14 +13,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
-class NFTTab extends StatefulWidget {
-  const NFTTab({Key? key}) : super(key: key);
+class NFTTab extends StatelessWidget {
+  const NFTTab({super.key});
 
-  @override
-  State<NFTTab> createState() => NFTTabState();
-}
-
-class NFTTabState extends State<NFTTab> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,8 +40,6 @@ class NFTTabState extends State<NFTTab> {
                           .appKeychain!
                           .getAccountSelected()!
                           .accountNFT!);
-
-              setState(() {});
             }),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(
@@ -68,15 +67,49 @@ class NFTTabState extends State<NFTTab> {
                         padding: const EdgeInsets.only(
                             top: kToolbarHeight + kTextTabBarHeight,
                             bottom: 50),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            /// NFT
-                            NFTListWidget(
-                                images: StateContainer.of(context).imagesNFT!)
-                          ],
-                        ),
+                        child: StateContainer.of(context)
+                                .appWallet!
+                                .appKeychain!
+                                .getAccountSelected()!
+                                .accountNFT!
+                                .isEmpty
+                            ? Column(
+                                children: <Widget>[
+                                  getHeaderListEmpty(context),
+                                  Row(
+                                    children: <Widget>[
+                                      AppButton.buildAppButton(
+                                          const Key('createNFT'),
+                                          context,
+                                          AppButtonType.primary,
+                                          AppLocalization.of(context)!
+                                              .createNFT,
+                                          Dimens.buttonBottomDimens,
+                                          onPressed: () {
+                                        Sheets.showAppHeightNineSheet(
+                                          context: context,
+                                          widget: AddNFTFile(
+                                            process: AddNFTFileProcess.single,
+                                            primaryCurrency:
+                                                StateContainer.of(context)
+                                                    .curPrimaryCurrency,
+                                          ),
+                                        );
+                                      }),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  getHeader(context),
+                                  NFTListWidget(
+                                      images: StateContainer.of(context)
+                                          .imagesNFT!),
+                                ],
+                              ),
                       ),
                     ),
                   ),
@@ -86,6 +119,81 @@ class NFTTabState extends State<NFTTab> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget getHeaderListEmpty(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, top: 150, bottom: 30, right: 20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Card(
+            elevation: 5,
+            shadowColor: Colors.black,
+            margin: const EdgeInsets.only(left: 8, right: 8, bottom: 10),
+            color: StateContainer.of(context).curTheme.backgroundDark,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+              side: const BorderSide(color: Colors.white10, width: 1),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(25),
+              child: Image.asset(
+                'assets/images/nft-create-new.jpg',
+              ),
+            ),
+          ),
+          Text(
+            AppLocalization.of(context)!.nftTabDescriptionHeader,
+            style: AppStyles.textStyleSize14W600Primary(context),
+            textAlign: TextAlign.justify,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget getHeader(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Column(
+        children: [
+          Card(
+            margin: const EdgeInsets.only(left: 8, right: 8, bottom: 10),
+            color: StateContainer.of(context).curTheme.backgroundDark,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+              side: const BorderSide(color: Colors.white10, width: 1),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(25),
+              child: Stack(
+                alignment: Alignment.centerLeft,
+                children: [
+                  Opacity(
+                    opacity: 0.3,
+                    child: Image.asset(
+                      'assets/images/nft-create-new.jpg',
+                      height: 60,
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Text(
+                      AppLocalization.of(context)!.nftTabDescriptionHeader,
+                      style: AppStyles.textStyleSize12W400TextDark(context),
+                      textAlign: TextAlign.justify,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

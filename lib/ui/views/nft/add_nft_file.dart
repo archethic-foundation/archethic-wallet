@@ -13,6 +13,8 @@ import 'package:aewallet/ui/views/nft/nft_preview.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/network_indicator.dart';
+import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -22,9 +24,6 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -39,6 +38,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mime_dart/mime_dart.dart';
 import 'package:path/path.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pdfx/pdfx.dart';
 
 class AddNFTFile extends StatefulWidget {
   const AddNFTFile({
@@ -59,6 +59,9 @@ enum AddNFTFileProcess { single, collection }
 class _AddNFTFileState extends State<AddNFTFile> {
   File? file;
   String file64 = '';
+  Uint8List? fileDecodedForPreview;
+  Uint8List? fileDecoded;
+  int sizeFile = 0;
   String typeMime = '';
   FocusNode? nftNameFocusNode;
   FocusNode? nftDescriptionFocusNode;
@@ -74,10 +77,12 @@ class _AddNFTFileState extends State<AddNFTFile> {
   String addNFTPropertyMessage = '';
   String addNFTMessage = '';
   double feeEstimation = 0.0;
+  bool? _isPressed;
   Token token = Token();
 
   @override
   void initState() {
+    _isPressed = false;
     nftNameFocusNode = FocusNode();
     nftDescriptionFocusNode = FocusNode();
     nftPropertyNameFocusNode = FocusNode();
@@ -99,52 +104,19 @@ class _AddNFTFileState extends State<AddNFTFile> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(
-                  width: 60,
-                ),
-                Column(
-                  children: <Widget>[
-                    Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      height: 5,
-                      width: MediaQuery.of(context).size.width * 0.15,
-                      decoration: BoxDecoration(
-                        color: StateContainer.of(context).curTheme.text60,
-                        borderRadius: BorderRadius.circular(100.0),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 15.0),
-                      constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width - 140),
-                      child: Column(
-                        children: <Widget>[
-                          AutoSizeText(
-                            AppLocalization.of(context)!.addNFTFile,
-                            style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                                context),
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            stepGranularity: 0.1,
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  width: 60,
-                  height: 40,
-                ),
-              ],
-            ),
+            SheetHeader(
+                title: AppLocalization.of(context)!.addNFTFile,
+                widgetBeforeTitle: widget.process == AddNFTFileProcess.single
+                    ? const NetworkIndicator()
+                    : null,
+                widgetAfterTitle: widget.process == AddNFTFileProcess.single
+                    ? Container(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: BalanceIndicatorWidget(
+                            primaryCurrency: widget.primaryCurrency,
+                            displaySwitchButton: false),
+                      )
+                    : null),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 80),
@@ -153,13 +125,6 @@ class _AddNFTFileState extends State<AddNFTFile> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (widget.process == AddNFTFileProcess.single)
-                        Container(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: BalanceIndicatorWidget(
-                              primaryCurrency: widget.primaryCurrency,
-                              displaySwitchButton: false),
-                        ),
                       Text(
                         AppLocalization.of(context)!.nftAddStep1,
                         style: AppStyles.textStyleSize14W600Primary(context),
@@ -177,7 +142,7 @@ class _AddNFTFileState extends State<AddNFTFile> {
 
                             if (result != null) {
                               file = File(result.files.single.path!);
-                              setFileProperties(file!);
+                              await setFileProperties(file!);
                             } else {
                               // User canceled the picker
                             }
@@ -233,7 +198,7 @@ class _AddNFTFileState extends State<AddNFTFile> {
                               if (pickedFile != null) {
                                 importSelection = 2;
                                 file = File(pickedFile.path);
-                                setFileProperties(file!);
+                                await setFileProperties(file!);
                               }
                             },
                             child: Container(
@@ -334,7 +299,7 @@ class _AddNFTFileState extends State<AddNFTFile> {
                         keyboardType: TextInputType.text,
                         style: AppStyles.textStyleSize16W600Primary(context),
                         inputFormatters: <LengthLimitingTextInputFormatter>[
-                          LengthLimitingTextInputFormatter(40),
+                          LengthLimitingTextInputFormatter(30),
                         ],
                         onChanged: (_) async {
                           double fee = await getFee(context);
@@ -355,7 +320,7 @@ class _AddNFTFileState extends State<AddNFTFile> {
                         keyboardType: TextInputType.text,
                         style: AppStyles.textStyleSize16W600Primary(context),
                         inputFormatters: <LengthLimitingTextInputFormatter>[
-                          LengthLimitingTextInputFormatter(100),
+                          LengthLimitingTextInputFormatter(40),
                         ],
                         onChanged: (_) async {
                           double fee = await getFee(context);
@@ -395,7 +360,7 @@ class _AddNFTFileState extends State<AddNFTFile> {
                         keyboardType: TextInputType.text,
                         style: AppStyles.textStyleSize16W600Primary(context),
                         inputFormatters: <LengthLimitingTextInputFormatter>[
-                          LengthLimitingTextInputFormatter(40),
+                          LengthLimitingTextInputFormatter(20),
                         ],
                       ),
                       AppTextField(
@@ -416,7 +381,7 @@ class _AddNFTFileState extends State<AddNFTFile> {
                         keyboardType: TextInputType.text,
                         style: AppStyles.textStyleSize16W600Primary(context),
                         inputFormatters: <LengthLimitingTextInputFormatter>[
-                          LengthLimitingTextInputFormatter(40),
+                          LengthLimitingTextInputFormatter(20),
                         ],
                       ),
                       Align(
@@ -509,7 +474,8 @@ class _AddNFTFileState extends State<AddNFTFile> {
                             context: context,
                             nftDescription: nftDescriptionController!.text,
                             nftTypeMime: typeMime,
-                            nftFile: File(file!.path).readAsBytesSync(),
+                            nftFile: fileDecodedForPreview,
+                            nftSize: sizeFile,
                             nftProperties: tokenProperties),
                     ],
                   ),
@@ -521,29 +487,56 @@ class _AddNFTFileState extends State<AddNFTFile> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      AppButton.buildAppButton(
-                        const Key('addNFTFile'),
-                        context,
-                        AppButtonType.primary,
-                        AppLocalization.of(context)!.addNFTFile,
-                        Dimens.buttonTopDimens,
-                        onPressed: () async {
-                          updateToken();
-                          if (await validateAddNFT(context) == true) {
-                            if (widget.process ==
-                                AddNFTFileProcess.collection) {
-                              EventTaxiImpl.singleton().fire(NftFileAddEvent(
-                                  tokenProperties: tokenProperties));
-                              Navigator.of(context).pop();
-                            } else {
-                              Sheets.showAppHeightNineSheet(
-                                context: context,
-                                widget: AddNFTFileConfirm(token: token),
-                              );
-                            }
-                          }
-                        },
-                      ),
+                      _isPressed == true
+                          ? AppButton.buildAppButton(
+                              const Key('addNFTFile'),
+                              context,
+                              AppButtonType.primaryOutline,
+                              AppLocalization.of(context)!.addNFTFile,
+                              Dimens.buttonTopDimens,
+                              onPressed: () async {},
+                            )
+                          : AppButton.buildAppButton(
+                              const Key('addNFTFile'),
+                              context,
+                              AppButtonType.primary,
+                              AppLocalization.of(context)!.addNFTFile,
+                              Dimens.buttonTopDimens,
+                              onPressed: () async {
+                                setState(() {
+                                  _isPressed = true;
+                                });
+                                updateToken();
+                                if (await validateAddNFT(context) == true) {
+                                  if (widget.process ==
+                                      AddNFTFileProcess.collection) {
+                                    EventTaxiImpl.singleton().fire(
+                                        NftFileAddEvent(
+                                            tokenProperties: tokenProperties));
+                                    Navigator.of(context).pop();
+                                  } else {
+                                    Sheets.showAppHeightNineSheet(
+                                      context: context,
+                                      widget: AddNFTFileConfirm(
+                                          token: token,
+                                          filePreview: fileDecodedForPreview!,
+                                          sizeFile: sizeFile),
+                                      onDisposed: () {
+                                        if (mounted) {
+                                          setState(() {
+                                            _isPressed = false;
+                                          });
+                                        }
+                                      },
+                                    );
+                                  }
+                                } else {
+                                  setState(() {
+                                    _isPressed = false;
+                                  });
+                                }
+                              },
+                            ),
                     ],
                   ),
                 ],
@@ -646,16 +639,33 @@ class _AddNFTFileState extends State<AddNFTFile> {
     return isValid;
   }
 
-  void setFileProperties(File file, {bool copyNFTName = false}) {
+  Future<void> setFileProperties(File file, {bool copyNFTName = false}) async {
     if (copyNFTName == true) {
       nftNameController!.text = basename(file.path);
     }
-    final bytes = File(file.path).readAsBytesSync();
-    file64 = base64Encode(bytes);
+    fileDecoded = File(file.path).readAsBytesSync();
+    file64 = base64Encode(fileDecoded!);
+    sizeFile = fileDecoded!.length;
+
     try {
       typeMime = Mime.getTypesFromExtension(
           extension(file.path).replaceAll('.', ''))![0];
     } catch (e) {}
+
+    if (MimeUtil.isImage(typeMime) == true) {
+      fileDecodedForPreview = fileDecoded;
+    } else {
+      if (MimeUtil.isPdf(typeMime) == true) {
+        PdfDocument pdfDocument = await PdfDocument.openData(
+          File(file.path).readAsBytesSync(),
+        );
+        PdfPage pdfPage = await pdfDocument.getPage(1);
+
+        PdfPageImage? pdfPageImage =
+            await pdfPage.render(width: pdfPage.width, height: pdfPage.height);
+        fileDecodedForPreview = pdfPageImage!.bytes;
+      }
+    }
     setState(() {});
   }
 

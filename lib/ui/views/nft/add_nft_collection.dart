@@ -16,13 +16,13 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/add_nft_file.dart';
 import 'package:aewallet/ui/views/nft/nft_card.dart';
 import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
+import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -121,57 +121,11 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(
-                  width: 60,
-                ),
-                Column(
-                  children: <Widget>[
-                    Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      height: 5,
-                      width: MediaQuery.of(context).size.width * 0.15,
-                      decoration: BoxDecoration(
-                        color: StateContainer.of(context).curTheme.text60,
-                        borderRadius: BorderRadius.circular(100.0),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 15.0),
-                      constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width - 140),
-                      child: Column(
-                        children: <Widget>[
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          AutoSizeText(
-                            AppLocalization.of(context)!.createNFTCollection,
-                            style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                                context),
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            stepGranularity: 0.1,
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          BalanceIndicatorWidget(
-                              primaryCurrency: widget.primaryCurrency,
-                              displaySwitchButton: false),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  width: 60,
-                  height: 40,
-                ),
-              ],
+            SheetHeader(
+              title: AppLocalization.of(context)!.createNFTCollection,
+              widgetBeforeTitle: BalanceIndicatorWidget(
+                  primaryCurrency: widget.primaryCurrency,
+                  displaySwitchButton: false),
             ),
             Expanded(
               child: Container(
