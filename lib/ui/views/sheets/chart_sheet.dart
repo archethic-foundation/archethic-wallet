@@ -1,11 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:animate_do/animate_do.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
@@ -75,48 +75,8 @@ class _ChartSheetState extends State<ChartSheet> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            //Empty SizedBox
-            const SizedBox(
-              width: 60,
-              height: 40,
-            ),
-            Column(
-              children: <Widget>[
-                // Sheet handle
-                Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  height: 5,
-                  width: MediaQuery.of(context).size.width * 0.15,
-                  decoration: BoxDecoration(
-                    color: StateContainer.of(context).curTheme.text10,
-                    borderRadius: BorderRadius.circular(100.0),
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(
-              width: 60,
-              height: 40,
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: AutoSizeText(
-                AppLocalization.of(context)!.chart,
-                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
-              ),
-            ),
-          ],
+        SheetHeader(
+          title: AppLocalization.of(context)!.chart,
         ),
         FadeIn(
           duration: const Duration(milliseconds: 1000),

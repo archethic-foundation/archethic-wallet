@@ -3,6 +3,7 @@
 // Flutter imports:
 import 'dart:io';
 
+import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -103,47 +104,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
-          // Top row of the sheet which contains the header and the scan qr button
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const SizedBox(
-                width: 60,
-                height: 40,
-              ),
-              Column(
-                children: <Widget>[
-                  // Sheet handle
-                  Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    height: 5,
-                    width: MediaQuery.of(context).size.width * 0.15,
-                    decoration: BoxDecoration(
-                      color: StateContainer.of(context).curTheme.text10,
-                      borderRadius: BorderRadius.circular(100.0),
-                    ),
-                  ),
-                ],
-              ), // Empty SizedBox
-              const SizedBox(
-                width: 60,
-                height: 40,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              // The header of the sheet
-              AutoSizeText(
-                AppLocalization.of(context)!.addContact,
-                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                stepGranularity: 0.1,
-              ),
-            ],
+          SheetHeader(
+            title: AppLocalization.of(context)!.addContact,
           ),
           const SizedBox(height: 30),
           Container(

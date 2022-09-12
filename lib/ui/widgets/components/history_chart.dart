@@ -9,7 +9,6 @@ import 'package:fl_chart/fl_chart.dart';
 
 // Project imports:
 import 'package:aewallet/model/asset_history_interval.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/currency_util.dart';
 
 class HistoryChart extends StatelessWidget {

@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -49,50 +50,8 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                 AsyncSnapshot<List<TransactionInfos>> list) {
               return Column(
                 children: <Widget>[
-                  // A row for the address text and close button
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      //Empty SizedBox
-                      const SizedBox(
-                        width: 60,
-                        height: 40,
-                      ),
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            height: 5,
-                            width: MediaQuery.of(context).size.width * 0.15,
-                            decoration: BoxDecoration(
-                              color: StateContainer.of(context).curTheme.text10,
-                              borderRadius: BorderRadius.circular(100.0),
-                            ),
-                          ),
-                        ],
-                      ),
-                      //Empty SizedBox
-                      const SizedBox(
-                        width: 60,
-                        height: 40,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        padding: const EdgeInsets.only(
-                            left: 10.0, right: 10.0, bottom: 10),
-                        child: AutoSizeText(
-                          AppLocalization.of(context)!.transactionInfosHeader,
-                          style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                              context),
-                        ),
-                      ),
-                    ],
+                  SheetHeader(
+                    title: AppLocalization.of(context)!.transactionInfosHeader,
                   ),
                   Expanded(
                     child: Center(
@@ -183,7 +142,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                           padding: const EdgeInsets.only(left: 10.0, top: 20),
                           width: 50,
                           height: 50,
-                          child: buildIconWidget(
+                          child: IconWidget.build(
                               context,
                               'assets/icons/txInfos/${transactionInfo.titleInfo}.png',
                               50,

@@ -5,6 +5,8 @@
 import 'dart:io';
 
 import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
+import 'package:aewallet/ui/widgets/components/network_indicator.dart';
+import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +14,6 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:decimal/decimal.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -208,75 +209,16 @@ class _TransferSheetState extends State<TransferSheet> {
             EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
         child: Column(
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(
-                  width: 60,
-                ),
-                Column(
-                  children: <Widget>[
-                    Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      height: 5,
-                      width: MediaQuery.of(context).size.width * 0.15,
-                      decoration: BoxDecoration(
-                        color: StateContainer.of(context).curTheme.text60,
-                        borderRadius: BorderRadius.circular(100.0),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 15.0),
-                      constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width - 140),
-                      child: Column(
-                        children: <Widget>[
-                          Column(
-                            children: [
-                              SvgPicture.asset(
-                                '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
-                                height: 30,
-                              ),
-                              Text(
-                                  StateContainer.of(context)
-                                      .curNetwork
-                                      .getDisplayName(context),
-                                  style: AppStyles.textStyleSize10W100Primary(
-                                      context)),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ), // Header
-                          AutoSizeText(
-                            widget.title ?? AppLocalization.of(context)!.send,
-                            style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                                context),
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            stepGranularity: 0.1,
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          BalanceIndicatorWidget(
-                              primaryCurrency: widget.primaryCurrency,
-                              onPrimaryCurrencySelected: (value) {
-                                setState(() {
-                                  primaryCurrencySelected = value;
-                                });
-                              }),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  width: 60,
-                  height: 40,
-                ),
-              ],
+            SheetHeader(
+              title: widget.title ?? AppLocalization.of(context)!.send,
+              widgetBeforeTitle: const NetworkIndicator(),
+              widgetAfterTitle: BalanceIndicatorWidget(
+                  primaryCurrency: widget.primaryCurrency,
+                  onPrimaryCurrencySelected: (value) {
+                    setState(() {
+                      primaryCurrencySelected = value;
+                    });
+                  }),
             ),
             Expanded(
               child: Container(

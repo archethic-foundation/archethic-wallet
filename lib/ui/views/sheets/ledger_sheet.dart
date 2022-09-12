@@ -2,21 +2,19 @@
 
 // Dart imports:
 import 'dart:io';
-import 'dart:typed_data';
 
 // Flutter imports:
+import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:convert/convert.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
 // Project imports:
-import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
@@ -114,55 +112,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
-          // A row for the address text and close button
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              //Empty SizedBox
-              const SizedBox(
-                width: 60,
-              ),
-              Column(
-                children: <Widget>[
-                  // Sheet handle
-                  Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    height: 5,
-                    width: MediaQuery.of(context).size.width * 0.15,
-                    decoration: BoxDecoration(
-                      color: StateContainer.of(context).curTheme.text60,
-                      borderRadius: BorderRadius.circular(100.0),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 15.0),
-                    constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width - 140),
-                    child: Column(
-                      children: <Widget>[
-                        // Header
-                        AutoSizeText(
-                          'Ledger - Tests',
-                          style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                              context),
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          stepGranularity: 0.1,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(
-                width: 60,
-                height: 40,
-              ),
-            ],
-          ),
-
+          SheetHeader(title: 'Ledger - Tests'),
           Expanded(
             child: Container(
                 margin: const EdgeInsets.only(top: 60, bottom: 10),

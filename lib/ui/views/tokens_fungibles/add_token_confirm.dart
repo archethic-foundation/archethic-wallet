@@ -6,6 +6,8 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aewallet/ui/widgets/components/network_indicator.dart';
+import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/confirmations/confirmations_util.dart';
 import 'package:flutter/material.dart';
 
@@ -88,11 +90,11 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
           UIUtil.showSnackbar(
               event.nbConfirmations == 1
                   ? AppLocalization.of(context)!
-                      .transactionConfirmed1
+                      .addTokenConfirmed1
                       .replaceAll('%1', event.nbConfirmations.toString())
                       .replaceAll('%2', event.maxConfirmations.toString())
                   : AppLocalization.of(context)!
-                      .transactionConfirmed
+                      .addTokenConfirmed
                       .replaceAll('%1', event.nbConfirmations.toString())
                       .replaceAll('%2', event.maxConfirmations.toString()),
               context,
@@ -154,31 +156,14 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
             EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
         child: Column(
           children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(top: 10),
-              height: 5,
-              width: MediaQuery.of(context).size.width * 0.15,
-              decoration: BoxDecoration(
-                color: StateContainer.of(context).curTheme.text60,
-                borderRadius: BorderRadius.circular(100.0),
-              ),
+            SheetHeader(
+              title: AppLocalization.of(context)!.createToken,
+              widgetBeforeTitle: const NetworkIndicator(),
             ),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.only(top: 20.0),
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          AppLocalization.of(context)!.createToken,
-                          style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                              context),
-                        ),
-                      ],
-                    ),
-                  ),
                   const SizedBox(height: 20),
                   Text(
                       '${AppLocalization.of(context)!.estimatedFees}: ${widget.feeEstimation} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
@@ -321,6 +306,18 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
 
       subscriptionChannel.addSubscriptionTransactionConfirmed(
           transaction.address!, waitConfirmations);
+
+      /*TransactionSender transactionSender = TransactionSender.init();
+      transactionSender
+          .on(
+              'confirmation',
+              (int nbConfirmations, int maxConfirmations) =>
+                  {print('nbConfirmations: $nbConfirmations')})
+          .on('error',
+              (String context, String reason) => {print('error: $reason')})
+          .on('sent', () => {print('success')})
+          .sendTx(signedTx, await preferences.getNetwork().getPhoenixHttpLink(),
+              await preferences.getNetwork().getWebsocketUri());*/
 
       transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
 

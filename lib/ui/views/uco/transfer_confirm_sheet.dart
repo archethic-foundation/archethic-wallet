@@ -8,6 +8,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 // Flutter imports:
+import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/confirmations/confirmations_util.dart';
 import 'package:flutter/material.dart';
 
@@ -167,32 +168,13 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
-          Container(
-            margin: const EdgeInsets.only(top: 10),
-            height: 5,
-            width: MediaQuery.of(context).size.width * 0.15,
-            decoration: BoxDecoration(
-              color: StateContainer.of(context).curTheme.text60,
-              borderRadius: BorderRadius.circular(100.0),
-            ),
+          SheetHeader(
+            title: widget.title ?? AppLocalization.of(context)!.transfering,
           ),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        widget.title ??
-                            AppLocalization.of(context)!.transfering,
-                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                            context),
-                      ),
-                    ],
-                  ),
-                ),
                 const SizedBox(
                   height: 20,
                 ),
