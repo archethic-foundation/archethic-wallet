@@ -89,7 +89,7 @@ class AccountTab extends StatelessWidget {
                             ),
 
                             /// ICONS
-                            MenuWidgetWallet(),
+                            const MenuWidgetWallet(),
                             const SizedBox(
                               height: 15,
                             ),
@@ -108,7 +108,7 @@ class AccountTab extends StatelessWidget {
                             ),
 
                             /// BLOG
-                            LastArticlesWidget(),
+                            const LastArticlesWidget(),
                             const SizedBox(
                               height: 30,
                             ),

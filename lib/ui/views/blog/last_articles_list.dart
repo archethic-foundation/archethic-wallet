@@ -25,8 +25,20 @@ class LastArticlesWidget extends StatefulWidget {
 class LastArticlesWidgetState extends State<LastArticlesWidget> {
   PageController? pageController;
   double pageOffset = 0;
-  List<GhostPost>? posts;
+
   String blogUrl = 'https://blog.archethic.net';
+
+  /// API KEY Hard coded
+  /// From official doc: https://ghost.org/docs/content-api/
+  /// "Content API keys are provided via a query parameter in the URL.
+  /// These keys are safe for use in browsers and other insecure environments,
+  /// as they only ever provide access to public data. Sites in private mode should consider
+  /// where they share any keys they create."
+  final GhostContentAPI api = GhostContentAPI(
+    url: 'https://blog.archethic.net',
+    key: 'aeec92562cfcb3f27993205631',
+    version: 'v3',
+  );
 
   @override
   void initState() {
@@ -35,23 +47,6 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
     pageController!.addListener(() {
       setState(() => pageOffset = pageController!.page!);
     });
-
-    /// API KEY Hard coded
-    /// From official doc: https://ghost.org/docs/content-api/
-    /// "Content API keys are provided via a query parameter in the URL.
-    /// These keys are safe for use in browsers and other insecure environments,
-    /// as they only ever provide access to public data. Sites in private mode should consider
-    /// where they share any keys they create."
-    final GhostContentAPI api = GhostContentAPI(
-      url: blogUrl,
-      key: 'aeec92562cfcb3f27993205631',
-      version: 'v3',
-    );
-
-    api.posts.browse(
-      limit: 5,
-      include: <String>['tags', 'authors'],
-    ).then((value) => posts = value);
   }
 
   @override
@@ -62,7 +57,7 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (StateContainer.of(context).showBlog == true && posts != null) {
+    if (StateContainer.of(context).showBlog == true) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -90,32 +85,56 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
               ),
             ),
           ),
-          SizedBox(
-            height: 255,
-            child: PageView.builder(
-              controller: pageController,
-              itemCount: posts!.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    UIUtil.showWebview(context, posts![index].url!, '');
-                  },
-                  child: Center(
-                    child: SlidingCard(
-                        name: posts![index].title!,
-                        date: DateFormat.yMMMEd(
-                                Localizations.localeOf(context).languageCode)
-                            .format(posts![index].publishedAt!.toLocal())
-                            .toString(),
-                        author: posts![index].authors![0].name!,
-                        assetName: posts![index].featureImage,
-                        offset: pageOffset - index),
-                  ),
-                );
-              },
-            ),
-          ),
+          FutureBuilder<List<GhostPost>>(
+              future: api.posts.browse(
+                limit: 5,
+                include: <String>['tags', 'authors'],
+              ),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return SizedBox(
+                    height: 255,
+                    child: PageView.builder(
+                      controller: pageController,
+                      itemCount: snapshot.data!.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            UIUtil.showWebview(
+                                context, snapshot.data![index].url!, '');
+                          },
+                          child: Center(
+                            child: SlidingCard(
+                                name: snapshot.data![index].title!,
+                                date: DateFormat.yMMMEd(
+                                        Localizations.localeOf(context)
+                                            .languageCode)
+                                    .format(snapshot.data![index].publishedAt!
+                                        .toLocal())
+                                    .toString(),
+                                author: snapshot.data![index].authors![0].name!,
+                                assetName: snapshot.data![index].featureImage,
+                                offset: pageOffset - index),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                } else {
+                  return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: const [
+                        SizedBox(
+                          height: 50,
+                        ),
+                        SizedBox(
+                          height: 250,
+                        )
+                      ]);
+                }
+              })
         ],
       );
     } else {

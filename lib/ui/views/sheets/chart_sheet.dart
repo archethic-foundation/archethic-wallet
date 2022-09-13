@@ -148,6 +148,8 @@ class _ChartSheetState extends State<ChartSheet> {
 
                   bottomBarCurrentPage = index;
                 });
+                await StateContainer.of(context)
+                    .requestUpdate(forceUpdateChart: true);
               },
               items: widget.optionChartList.map((OptionChart optionChart) {
                 return BottomBarItem(
