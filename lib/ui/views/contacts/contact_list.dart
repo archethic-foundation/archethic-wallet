@@ -291,7 +291,7 @@ class _ContactsListState extends State<ContactsList> {
               // Contact info
               Expanded(
                 child: Container(
-                  height: 55,
+                  height: 65,
                   margin: const EdgeInsetsDirectional.only(start: 2.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
