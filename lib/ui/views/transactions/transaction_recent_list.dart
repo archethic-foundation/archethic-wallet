@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aewallet/ui/views/contacts/add_contact.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -62,7 +63,7 @@ class TxListWidget extends StatelessWidget {
     );
   }
 
-  static Container getLign(BuildContext context, int num) {
+  Container getLign(BuildContext context, int num) {
     return Container(
       color: Colors.transparent,
       width: MediaQuery.of(context).size.width,
@@ -101,15 +102,30 @@ class TxListWidget extends StatelessWidget {
     );
   }
 
-  static Widget displayTxDetailTransfer(
+  Widget displayTxDetailTransfer(
       BuildContext context, RecentTransaction transaction) {
-    return InkWell(
+    String? contactAddress;
+    if (transaction.typeTx == RecentTransaction.transferOutput) {
+      contactAddress = transaction.recipient;
+    } else {
+      if (transaction.typeTx == RecentTransaction.transferInput) {
+        contactAddress = transaction.from;
+      }
+    }
+    return GestureDetector(
       onTap: () {
         sl.get<HapticUtil>().feedback(
             FeedbackType.light, StateContainer.of(context).activeVibrations);
         Sheets.showAppHeightNineSheet(
             context: context,
             widget: TransactionInfosSheet(transaction.address!));
+      },
+      onLongPress: () {
+        if (transaction.contactInformations == null && contactAddress != null) {
+          Sheets.showAppHeightNineSheet(
+              context: context,
+              widget: AddContactSheet(address: contactAddress));
+        }
       },
       child: Column(
         children: [

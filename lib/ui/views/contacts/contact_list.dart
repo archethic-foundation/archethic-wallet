@@ -281,14 +281,12 @@ class _ContactsListState extends State<ContactsList> {
           height: 2,
           color: StateContainer.of(context).curTheme.text15,
         ),
-        // Main Container
         Container(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
           margin: const EdgeInsetsDirectional.only(start: 10.0, end: 10.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              // Contact info
               Expanded(
                 child: Container(
                   height: 65,
@@ -297,10 +295,8 @@ class _ContactsListState extends State<ContactsList> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      //Contact name
                       Text(contact.name!,
                           style: AppStyles.textStyleSize16W600Primary(context)),
-                      //Contact address
                       Text(
                         contact.address!,
                         style: AppStyles.textStyleSize12W100Text60(context),
