@@ -338,10 +338,16 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
                 indicatorColor:
                     StateContainer.of(context).curTheme.backgroundDarkest),
             tabs: [
-              Text(AppLocalization.of(context)!.recentTransactionsHeader,
-                  style: AppStyles.textStyleSize14W600EquinoxPrimary(context)),
-              Text(AppLocalization.of(context)!.tokensHeader,
-                  style: AppStyles.textStyleSize14W600EquinoxPrimary(context)),
+              Text(
+                AppLocalization.of(context)!.recentTransactionsHeader,
+                style: AppStyles.textStyleSize14W600EquinoxPrimary(context),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                AppLocalization.of(context)!.tokensHeader,
+                style: AppStyles.textStyleSize14W600EquinoxPrimary(context),
+                textAlign: TextAlign.center,
+              ),
             ],
             // ignore: prefer_const_literals_to_create_immutables
             views: [
