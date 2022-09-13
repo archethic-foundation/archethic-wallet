@@ -91,7 +91,7 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
             ),
           ),
           SizedBox(
-            height: 250,
+            height: 255,
             child: PageView.builder(
               controller: pageController,
               itemCount: posts!.length,
