@@ -1,4 +1,7 @@
 // Flutter imports:
+import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
+import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:flutter/material.dart';
@@ -304,7 +307,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
       BuildContext context, Account account, StateSetter setState) {
     return Padding(
       padding: const EdgeInsets.only(left: 26, right: 26, bottom: 8),
-      child: InkWell(
+      child: GestureDetector(
         onTap: () async {
           sl.get<HapticUtil>().feedback(
               FeedbackType.light, StateContainer.of(context).activeVibrations);
@@ -324,6 +327,19 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
           preferences.setMainScreenCurrentPage(
               StateContainer.of(context).bottomBarCurrentPage);
           Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+        },
+        onLongPress: () {
+          sl.get<HapticUtil>().feedback(
+              FeedbackType.light, StateContainer.of(context).activeVibrations);
+          Sheets.showAppHeightNineSheet(
+              context: context,
+              widget: ReceiveSheet(address: account.lastAddress),
+              onDisposed: () {
+                setState(() {
+                  StateContainer.of(context)
+                      .requestUpdate(forceUpdateChart: false);
+                });
+              });
         },
         child: Card(
           shape: RoundedRectangleBorder(

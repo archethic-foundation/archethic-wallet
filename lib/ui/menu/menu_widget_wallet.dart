@@ -99,7 +99,12 @@ class MenuWidgetWallet extends StatelessWidget {
                           StateContainer.of(context).activeVibrations);
                       Sheets.showAppHeightNineSheet(
                           context: context,
-                          widget: const ReceiveSheet(),
+                          widget: ReceiveSheet(
+                              address: StateContainer.of(context)
+                                  .appWallet!
+                                  .appKeychain!
+                                  .getAccountSelected()!
+                                  .lastAddress!),
                           onDisposed: () {
                             setState(() {
                               StateContainer.of(context)

@@ -24,7 +24,9 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 
 class ReceiveSheet extends StatelessWidget {
-  const ReceiveSheet({super.key});
+  const ReceiveSheet({this.address, super.key});
+
+  final String? address;
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +45,7 @@ class ReceiveSheet extends StatelessWidget {
                 onPressed: () {
                   sl.get<HapticUtil>().feedback(FeedbackType.light,
                       StateContainer.of(context).activeVibrations);
-                  Clipboard.setData(ClipboardData(
-                      text: StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .lastAddress!));
+                  Clipboard.setData(ClipboardData(text: address));
                   UIUtil.showSnackbar(
                       AppLocalization.of(context)!.addressCopied,
                       context,
@@ -72,12 +69,7 @@ class ReceiveSheet extends StatelessWidget {
                       onPressed: () {
                         sl.get<HapticUtil>().feedback(FeedbackType.light,
                             StateContainer.of(context).activeVibrations);
-                        Clipboard.setData(ClipboardData(
-                            text: StateContainer.of(context)
-                                .appWallet!
-                                .appKeychain!
-                                .getAccountSelected()!
-                                .lastAddress!));
+                        Clipboard.setData(ClipboardData(text: address));
                         UIUtil.showSnackbar(
                             AppLocalization.of(context)!.addressCopied,
                             context,
@@ -128,11 +120,7 @@ class ReceiveSheet extends StatelessWidget {
                                               StateContainer.of(context)
                                                   .curTheme
                                                   .text,
-                                          data: StateContainer.of(context)
-                                              .appWallet!
-                                              .appKeychain!
-                                              .getAccountSelected()!
-                                              .lastAddress!,
+                                          data: address!,
                                           version: QrVersions.auto,
                                           size: 150.0,
                                           gapless: false,
@@ -146,12 +134,7 @@ class ReceiveSheet extends StatelessWidget {
                                           children: <Widget>[
                                             AutoSizeText(
                                                 CaseChange.toUpperCase(
-                                                    StateContainer.of(context)
-                                                        .appWallet!
-                                                        .appKeychain!
-                                                        .getAccountSelected()!
-                                                        .lastAddress!
-                                                        .substring(0, 16),
+                                                    address!.substring(0, 16),
                                                     StateContainer.of(context)
                                                         .curLanguage
                                                         .getLocaleString()),
@@ -160,12 +143,7 @@ class ReceiveSheet extends StatelessWidget {
                                                         context)),
                                             AutoSizeText(
                                                 CaseChange.toUpperCase(
-                                                    StateContainer.of(context)
-                                                        .appWallet!
-                                                        .appKeychain!
-                                                        .getAccountSelected()!
-                                                        .lastAddress!
-                                                        .substring(16, 32),
+                                                    address!.substring(16, 32),
                                                     StateContainer.of(context)
                                                         .curLanguage
                                                         .getLocaleString()),
@@ -174,12 +152,7 @@ class ReceiveSheet extends StatelessWidget {
                                                         context)),
                                             AutoSizeText(
                                                 CaseChange.toUpperCase(
-                                                    StateContainer.of(context)
-                                                        .appWallet!
-                                                        .appKeychain!
-                                                        .getAccountSelected()!
-                                                        .lastAddress!
-                                                        .substring(32, 48),
+                                                    address!.substring(32, 48),
                                                     StateContainer.of(context)
                                                         .curLanguage
                                                         .getLocaleString()),
@@ -188,12 +161,7 @@ class ReceiveSheet extends StatelessWidget {
                                                         context)),
                                             AutoSizeText(
                                                 CaseChange.toUpperCase(
-                                                    StateContainer.of(context)
-                                                        .appWallet!
-                                                        .appKeychain!
-                                                        .getAccountSelected()!
-                                                        .lastAddress!
-                                                        .substring(48),
+                                                    address!.substring(48),
                                                     StateContainer.of(context)
                                                         .curLanguage
                                                         .getLocaleString()),
@@ -235,7 +203,7 @@ class ReceiveSheet extends StatelessWidget {
                       ), onPressed: () async {
                     UIUtil.showWebview(
                         context,
-                        '${await StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.lastAddress!}',
+                        '${await StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${address!}',
                         '');
                   }),
                 ],
@@ -254,12 +222,7 @@ class ReceiveSheet extends StatelessWidget {
                       ), onPressed: () {
                     final RenderBox? box =
                         context.findRenderObject() as RenderBox?;
-                    final String textToShare = StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
-                        .lastAddress!
-                        .toUpperCase();
+                    final String textToShare = address!.toUpperCase();
                     Share.share(textToShare,
                         sharePositionOrigin:
                             box!.localToGlobal(Offset.zero) & box.size);
