@@ -14,16 +14,10 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 
-class IntroNewWalletDisclaimer extends StatefulWidget {
+class IntroNewWalletDisclaimer extends StatelessWidget {
   final String? name;
   const IntroNewWalletDisclaimer({super.key, this.name});
 
-  @override
-  State<IntroNewWalletDisclaimer> createState() =>
-      _IntroNewWalletDisclaimerState();
-}
-
-class _IntroNewWalletDisclaimerState extends State<IntroNewWalletDisclaimer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -185,7 +179,7 @@ class _IntroNewWalletDisclaimerState extends State<IntroNewWalletDisclaimer> {
                         AppLocalization.of(context)!.understandButton,
                         Dimens.buttonBottomDimens, onPressed: () {
                       Navigator.of(context)
-                          .pushNamed('/intro_backup', arguments: widget.name);
+                          .pushNamed('/intro_backup', arguments: name);
                     }),
                   ],
                 ),
