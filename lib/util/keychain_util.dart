@@ -7,6 +7,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 // Package imports:
+import 'package:aewallet/model/data/contact.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -190,6 +191,12 @@ class KeychainUtil {
 
     await appWallet.save();
 
+    final Contact newContact = Contact(
+        name: '@$name',
+        address: uint8ListToHex(genesisAddress),
+        type: 'keychainService');
+    await sl.get<DBHelper>().saveContact(newContact);
+
     return appWallet;
   }
 
@@ -256,6 +263,16 @@ class KeychainUtil {
           }
 
           accounts.add(account);
+
+          try {
+            await sl.get<DBHelper>().getContactWithName(account.name!);
+          } catch (e) {
+            final Contact newContact = Contact(
+                name: '@$nameDecoded',
+                address: uint8ListToHex(genesisAddress),
+                type: 'keychainService');
+            await sl.get<DBHelper>().saveContact(newContact);
+          }
         }
       });
 
