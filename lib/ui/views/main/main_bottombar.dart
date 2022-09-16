@@ -1,3 +1,4 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
 
 import 'package:aewallet/appstate_container.dart';
@@ -5,8 +6,6 @@ import 'package:aewallet/util/preferences.dart';
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-/// SPDX-License-Identifier: AGPL-3.0-or-later
 
 class MainBottomBar extends StatelessWidget {
   const MainBottomBar({super.key});
