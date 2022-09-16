@@ -249,7 +249,7 @@ class ByzantineVioletTheme implements BaseTheme {
   @override
   Decoration getDecorationSheet() {
     return BoxDecoration(
-      color: text60,
+      color: text20,
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(25.0),
         topRight: Radius.circular(25.0),

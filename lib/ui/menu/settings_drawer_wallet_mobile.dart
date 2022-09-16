@@ -277,11 +277,16 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   Widget buildMainSettings(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: StateContainer.of(context).curTheme.drawerBackground!,
-          border: Border(
-            right: BorderSide(
-                color: StateContainer.of(context).curTheme.text30!, width: 1),
-          )),
+        color: StateContainer.of(context).curTheme.drawerBackground!,
+        gradient: LinearGradient(
+          colors: <Color>[
+            StateContainer.of(context).curTheme.drawerBackground!,
+            StateContainer.of(context).curTheme.backgroundDark00!,
+          ],
+          begin: const Alignment(0.0, 0.0),
+          end: const Alignment(5.0, 0.0),
+        ),
+      ),
       child: SafeArea(
         minimum: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top + 30,
@@ -479,42 +484,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     const SizedBox(height: 30),
                   ].where(notNull).toList(),
                 ),
-                //List Top Gradient End
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    height: 20.0,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: <Color>[
-                          StateContainer.of(context).curTheme.drawerBackground!,
-                          StateContainer.of(context).curTheme.backgroundDark00!
-                        ],
-                        begin: const AlignmentDirectional(0.5, -1.0),
-                        end: const AlignmentDirectional(0.5, 1.0),
-                      ),
-                    ),
-                  ),
-                ), //List Top Gradient End
-                //List Bottom Gradient
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    height: 30.0,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: <Color>[
-                          StateContainer.of(context).curTheme.backgroundDark00!,
-                          StateContainer.of(context).curTheme.drawerBackground!
-                        ],
-                        begin: const AlignmentDirectional(0.5, -1),
-                        end: const AlignmentDirectional(0.5, 0.5),
-                      ),
-                    ),
-                  ),
-                ), //List Bottom Gradient End
               ],
             )),
           ],
@@ -527,16 +496,14 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     return Container(
       decoration: BoxDecoration(
         color: StateContainer.of(context).curTheme.drawerBackground,
-        border: Border(
-          right: BorderSide(
-              color: StateContainer.of(context).curTheme.text30!, width: 1),
+        gradient: LinearGradient(
+          colors: <Color>[
+            StateContainer.of(context).curTheme.drawerBackground!,
+            StateContainer.of(context).curTheme.backgroundDark!,
+          ],
+          begin: const Alignment(0.0, 0.0),
+          end: const Alignment(5.0, 0.0),
         ),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: StateContainer.of(context).curTheme.overlay30!,
-              offset: const Offset(-5, 0),
-              blurRadius: 20),
-        ],
       ),
       child: SafeArea(
         minimum: const EdgeInsets.only(
@@ -746,24 +713,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                     ),
                   ].where(notNull).toList(),
                 ),
-                //List Top Gradient End
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    height: 20.0,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: <Color>[
-                          StateContainer.of(context).curTheme.drawerBackground!,
-                          StateContainer.of(context).curTheme.backgroundDark00!
-                        ],
-                        begin: const AlignmentDirectional(0.5, -1.0),
-                        end: const AlignmentDirectional(0.5, 1.0),
-                      ),
-                    ),
-                  ),
-                ), //List Top Gradient End
               ],
             )),
           ],
@@ -776,16 +725,14 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     return Container(
       decoration: BoxDecoration(
         color: StateContainer.of(context).curTheme.drawerBackground,
-        border: Border(
-          right: BorderSide(
-              color: StateContainer.of(context).curTheme.text30!, width: 1),
+        gradient: LinearGradient(
+          colors: <Color>[
+            StateContainer.of(context).curTheme.drawerBackground!,
+            StateContainer.of(context).curTheme.backgroundDark!,
+          ],
+          begin: const Alignment(0.0, 0.0),
+          end: const Alignment(5.0, 0.0),
         ),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: StateContainer.of(context).curTheme.overlay30!,
-              offset: const Offset(-5, 0),
-              blurRadius: 20),
-        ],
       ),
       child: SafeArea(
         minimum: const EdgeInsets.only(
@@ -1046,17 +993,15 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   Widget buildAboutMenu(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border(
-          right: BorderSide(
-              color: StateContainer.of(context).curTheme.text30!, width: 1),
-        ),
         color: StateContainer.of(context).curTheme.drawerBackground,
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: StateContainer.of(context).curTheme.overlay30!,
-              offset: const Offset(-5, 0),
-              blurRadius: 20),
-        ],
+        gradient: LinearGradient(
+          colors: <Color>[
+            StateContainer.of(context).curTheme.drawerBackground!,
+            StateContainer.of(context).curTheme.backgroundDark!,
+          ],
+          begin: const Alignment(0.0, 0.0),
+          end: const Alignment(5.0, 0.0),
+        ),
       ),
       child: SafeArea(
         minimum: const EdgeInsets.only(
