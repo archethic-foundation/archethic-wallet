@@ -186,6 +186,7 @@ class AppService {
       if (transaction.inputs != null) {
         for (TransactionInput transactionInput in transaction.inputs!) {
           if (transactionInput.from != transaction.address &&
+              transactionInput.spent == false &&
               (transactionInput.tokenAddress == null ||
                   transactionInput.from != transactionInput.tokenAddress)) {
             final RecentTransaction recentTransaction = RecentTransaction();
