@@ -93,7 +93,7 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return SizedBox(
-                    height: 255,
+                    height: 260,
                     child: PageView.builder(
                       controller: pageController,
                       itemCount: snapshot.data!.length,
@@ -180,7 +180,7 @@ class SlidingCard extends StatelessWidget {
         margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
         color: StateContainer.of(context).curTheme.backgroundDark,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(15),
           side: const BorderSide(color: Colors.white10, width: 1),
         ),
         child: Column(
@@ -189,7 +189,7 @@ class SlidingCard extends StatelessWidget {
           children: <Widget>[
             ClipRRect(
               borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(25)),
+                  const BorderRadius.vertical(top: Radius.circular(15)),
               child: assetName == null
                   ? SizedBox(
                       width: MediaQuery.of(context).size.width,
