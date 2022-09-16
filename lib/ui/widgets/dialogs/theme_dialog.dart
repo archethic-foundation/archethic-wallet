@@ -57,20 +57,22 @@ class ThemeDialog {
                 borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                 side: BorderSide(
                     color: StateContainer.of(context).curTheme.text45!)),
-            content: PickerWidget(
-              pickerItems: pickerItemsList,
-              selectedIndex: curThemeSetting.getIndex(),
-              onSelected: (value) async {
-                if (curThemeSetting !=
-                    ThemeSetting(value.value as ThemeOptions)) {
-                  preferences
-                      .setTheme(ThemeSetting(value.value as ThemeOptions));
-                  await StateContainer.of(context)
-                      .updateTheme(ThemeSetting(value.value as ThemeOptions));
-                  curThemeSetting = ThemeSetting(value.value as ThemeOptions);
-                }
-                Navigator.pop(context, curThemeSetting);
-              },
+            content: SingleChildScrollView(
+              child: PickerWidget(
+                pickerItems: pickerItemsList,
+                selectedIndex: curThemeSetting.getIndex(),
+                onSelected: (value) async {
+                  if (curThemeSetting !=
+                      ThemeSetting(value.value as ThemeOptions)) {
+                    preferences
+                        .setTheme(ThemeSetting(value.value as ThemeOptions));
+                    await StateContainer.of(context)
+                        .updateTheme(ThemeSetting(value.value as ThemeOptions));
+                    curThemeSetting = ThemeSetting(value.value as ThemeOptions);
+                  }
+                  Navigator.pop(context, curThemeSetting);
+                },
+              ),
             ),
           );
         });
