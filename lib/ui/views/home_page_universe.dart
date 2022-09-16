@@ -309,7 +309,7 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
   void initState() {
     _heights = widget.children!.map((e) => 0.0).toList();
     super.initState();
-    _pageController = PageController() //
+    _pageController = PageController()
       ..addListener(() {
         final newPage = _pageController!.page!.round();
         if (_currentPage != newPage) {

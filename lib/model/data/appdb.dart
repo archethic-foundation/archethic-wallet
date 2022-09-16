@@ -1,6 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Package imports:
+import 'package:aewallet/util/get_it_instance.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 // Project imports:
@@ -57,12 +59,24 @@ class DBHelper {
   }
 
   Future<Contact?> getContactWithAddress(String address) async {
+    String? lastAddress = (await sl
+            .get<ApiService>()
+            .getLastTransaction(address, request: 'address'))
+        .address;
+    lastAddress ??= address;
+
     final Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
     final List<Contact> contactsList = box.values.toList();
 
     Contact? contactSelected;
     for (Contact contact in contactsList) {
-      if (contact.address!.toLowerCase().contains(address.toLowerCase())) {
+      String lastAddressContact = (await sl
+              .get<ApiService>()
+              .getLastTransaction(contact.address!, request: 'address'))
+          .address!;
+      if (lastAddressContact
+          .toLowerCase()
+          .contains(lastAddress.toLowerCase())) {
         contactSelected = contact;
       }
     }
@@ -98,11 +112,28 @@ class DBHelper {
   }
 
   Future<bool> contactExistsWithAddress(String address) async {
+    String? lastAddress = (await sl
+            .get<ApiService>()
+            .getLastTransaction(address, request: 'address'))
+        .address;
+    if (lastAddress == '') {
+      lastAddress = address;
+    }
+
     final Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
     final List<Contact> contactsList = box.values.toList();
     bool contactExists = false;
     for (Contact contact in contactsList) {
-      if (contact.address!.toLowerCase().contains(address.toLowerCase())) {
+      String lastAddressContact = (await sl
+              .get<ApiService>()
+              .getLastTransaction(contact.address!, request: 'address'))
+          .address!;
+      if (lastAddressContact == '') {
+        lastAddressContact = contact.address!;
+      }
+      if (lastAddressContact
+          .toLowerCase()
+          .contains(lastAddress!.toLowerCase())) {
         contactExists = true;
       }
     }
@@ -112,13 +143,13 @@ class DBHelper {
   Future<void> saveContact(Contact contact) async {
     // ignore: prefer_final_locals
     Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
-    await box.put(contact.address, contact);
+    await box.put(contact.name, contact);
   }
 
   Future<void> deleteContact(Contact contact) async {
     // ignore: prefer_final_locals
     Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
-    await box.delete(contact.address);
+    await box.delete(contact.name);
   }
 
   Future<void> clearContacts() async {

@@ -19,17 +19,20 @@ class ContactAdapter extends TypeAdapter<Contact> {
     return Contact(
       name: fields[0] as String?,
       address: fields[1] as String?,
+      type: fields[4] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Contact obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.address);
+      ..write(obj.address)
+      ..writeByte(4)
+      ..write(obj.type);
   }
 
   @override

@@ -7,7 +7,7 @@ part 'contact.g.dart';
 
 @HiveType(typeId: 0)
 class Contact extends HiveObject {
-  Contact({required this.name, required this.address});
+  Contact({required this.name, required this.address, required this.type});
 
   /// Name
   @HiveField(0)
@@ -16,4 +16,8 @@ class Contact extends HiveObject {
   /// Address
   @HiveField(1)
   String? address;
+
+  /// Type contact - Keychain Service / External contact
+  @HiveField(4)
+  String? type;
 }

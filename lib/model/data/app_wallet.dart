@@ -4,6 +4,7 @@
 import 'dart:typed_data';
 
 // Package imports:
+import 'package:aewallet/model/data/contact.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive/hive.dart';
 
@@ -58,6 +59,12 @@ class AppWallet extends HiveObject {
         selected: true,
         recentTransactions: []);
     appWallet = await sl.get<DBHelper>().addAccount(selectedAcct);
+
+    final Contact newContact = Contact(
+        name: '@$name',
+        address: uint8ListToHex(genesisAddress),
+        type: 'keychainService');
+    await sl.get<DBHelper>().saveContact(newContact);
 
     return appWallet;
   }

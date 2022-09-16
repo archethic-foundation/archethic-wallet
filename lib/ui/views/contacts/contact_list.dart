@@ -27,6 +27,7 @@ import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ContactsList extends StatefulWidget {
   ContactsList(this.contactsController, this.contactsOpen, {super.key});
@@ -114,10 +115,6 @@ class _ContactsListState extends State<ContactsList> {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-          border: Border(
-            right: BorderSide(
-                color: StateContainer.of(context).curTheme.text30!, width: 1),
-          ),
           color: StateContainer.of(context).curTheme.drawerBackground,
           boxShadow: <BoxShadow>[
             BoxShadow(
@@ -289,17 +286,38 @@ class _ContactsListState extends State<ContactsList> {
             children: <Widget>[
               Expanded(
                 child: Container(
-                  height: 65,
+                  height: 30,
                   margin: const EdgeInsetsDirectional.only(start: 2.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(contact.name!,
-                          style: AppStyles.textStyleSize16W600Primary(context)),
-                      Text(
-                        contact.address!,
-                        style: AppStyles.textStyleSize12W100Text60(context),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          contact.type == 'keychainService'
+                              ? FaIcon(
+                                  FontAwesomeIcons.keycdn,
+                                  color: StateContainer.of(context)
+                                      .curTheme
+                                      .iconDrawer!,
+                                  size: 16,
+                                )
+                              : Icon(
+                                  Icons.person,
+                                  color: StateContainer.of(context)
+                                      .curTheme
+                                      .iconDrawer!,
+                                  size: 16,
+                                ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(contact.name!.replaceFirst('@', ''),
+                              style: AppStyles.textStyleSize14W200Primary(
+                                  context)),
+                        ],
                       ),
                     ],
                   ),

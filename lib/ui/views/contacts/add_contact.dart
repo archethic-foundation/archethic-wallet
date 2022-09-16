@@ -293,7 +293,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
                     if (await validateForm()) {
                       final Contact newContact = Contact(
                           name: _nameController!.text,
-                          address: widget.address ?? _addressController!.text);
+                          address: widget.address ?? _addressController!.text,
+                          type: 'externalContact');
                       await sl.get<DBHelper>().saveContact(newContact);
 
                       EventTaxiImpl.singleton()

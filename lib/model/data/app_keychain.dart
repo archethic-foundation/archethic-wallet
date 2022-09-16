@@ -51,4 +51,13 @@ class AppKeychain extends HiveObject {
     }
     return null;
   }
+
+  Account? getAccountWithName(String name) {
+    for (Account account in accounts!) {
+      if (name == account.name) {
+        return account;
+      }
+    }
+    return null;
+  }
 }
