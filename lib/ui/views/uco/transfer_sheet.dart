@@ -595,7 +595,9 @@ class _TransferSheetState extends State<TransferSheet> {
           ucoTransfer.to = _sendAddressController!.text.trim();
         }
 
-        await sl.get<AddressService>().lastAddressFromAddress(ucoTransfer.to!);
+        lastAddressRecipient = await sl
+            .get<AddressService>()
+            .lastAddressFromAddress(ucoTransfer.to!);
         if (lastAddressRecipient == '') {
           lastAddressRecipient = ucoTransfer.to!;
         }
@@ -607,7 +609,7 @@ class _TransferSheetState extends State<TransferSheet> {
           tokenTransfer.to = _sendAddressController!.text.trim();
         }
         //
-        await sl
+        lastAddressRecipient = await sl
             .get<AddressService>()
             .lastAddressFromAddress(tokenTransfer.to!);
         if (lastAddressRecipient == '') {

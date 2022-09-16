@@ -63,20 +63,22 @@ class DBHelper {
             .get<ApiService>()
             .getLastTransaction(address, request: 'address'))
         .address;
-    lastAddress ??= address;
-
+    if (lastAddress == null || lastAddress == '') {
+      lastAddress = address;
+    }
     final Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
     final List<Contact> contactsList = box.values.toList();
 
     Contact? contactSelected;
     for (Contact contact in contactsList) {
-      String lastAddressContact = (await sl
+      String? lastAddressContact = (await sl
               .get<ApiService>()
               .getLastTransaction(contact.address!, request: 'address'))
-          .address!;
-      if (lastAddressContact
-          .toLowerCase()
-          .contains(lastAddress.toLowerCase())) {
+          .address;
+      if (lastAddressContact == null || lastAddressContact == '') {
+        lastAddressContact = contact.address!;
+      }
+      if (lastAddressContact.toLowerCase() == lastAddress.toLowerCase()) {
         contactSelected = contact;
       }
     }
@@ -116,7 +118,7 @@ class DBHelper {
             .get<ApiService>()
             .getLastTransaction(address, request: 'address'))
         .address;
-    if (lastAddress == '') {
+    if (lastAddress == null || lastAddress == '') {
       lastAddress = address;
     }
 
@@ -133,7 +135,7 @@ class DBHelper {
       }
       if (lastAddressContact
           .toLowerCase()
-          .contains(lastAddress!.toLowerCase())) {
+          .contains(lastAddress.toLowerCase())) {
         contactExists = true;
       }
     }
