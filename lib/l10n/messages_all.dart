@@ -10,12 +10,15 @@
 // ignore_for_file:comment_references
 // ignore_for_file:avoid_catches_without_on_clauses
 
+// Dart imports:
 import 'dart:async';
 
+// Package imports:
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 import 'package:intl/src/intl_helpers.dart';
 
+// Project imports:
 import 'messages_ar.dart' as messages_ar;
 import 'messages_en.dart' as messages_en;
 import 'messages_fr.dart' as messages_fr;

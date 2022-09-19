@@ -7,34 +7,34 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 // Flutter imports:
-import 'package:aewallet/bus/nft_file_add_event.dart';
-import 'package:aewallet/model/data/account_token.dart';
-import 'package:aewallet/model/data/token_informations.dart';
-import 'package:aewallet/model/data/token_informations_property.dart';
-import 'package:aewallet/ui/util/routes.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/nft/add_nft_file.dart';
-import 'package:aewallet/ui/views/nft/nft_card.dart';
-import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
-import 'package:aewallet/ui/widgets/components/sheet_header.dart';
-import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/bus/nft_file_add_event.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/account_token.dart';
+import 'package:aewallet/model/data/token_informations.dart';
+import 'package:aewallet/model/data/token_informations_property.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
+import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/add_nft_collection_confirm.dart';
+import 'package:aewallet/ui/views/nft/add_nft_file.dart';
+import 'package:aewallet/ui/views/nft/nft_card.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
+import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/get_it_instance.dart';

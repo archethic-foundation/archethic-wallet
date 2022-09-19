@@ -1,46 +1,24 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
+// Dart imports:
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/model/token_property_with_access_infos.dart';
-import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
-import 'package:aewallet/ui/views/nft/add_public_key.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
-import 'package:aewallet/util/user_data_util.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:exif/exif.dart';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/bus/authenticated_event.dart';
-import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/nft_category.dart';
-import 'package:aewallet/model/primary_currency.dart';
-import 'package:aewallet/service/app_service.dart';
-import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/routes.dart';
-import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/nft/nft_preview.dart';
-import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
-import 'package:aewallet/ui/widgets/components/dialog.dart';
-import 'package:aewallet/util/confirmations/confirmations_util.dart';
-import 'package:aewallet/util/confirmations/subscription_channel%20copy.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
-import 'package:aewallet/util/mime_util.dart';
-import 'package:aewallet/util/preferences.dart';
+// Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:collection/collection.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:event_taxi/event_taxi.dart';
+import 'package:exif/exif.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:filesize/filesize.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -48,7 +26,36 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mime_dart/mime_dart.dart';
 import 'package:path/path.dart' as path;
 import 'package:pdfx/pdfx.dart';
-import 'package:collection/collection.dart';
+
+// Project imports:
+import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/bus/authenticated_event.dart';
+import 'package:aewallet/bus/transaction_send_event.dart';
+import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/model/nft_category.dart';
+import 'package:aewallet/model/primary_currency.dart';
+import 'package:aewallet/model/token_property_with_access_infos.dart';
+import 'package:aewallet/service/app_service.dart';
+import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/routes.dart';
+import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
+import 'package:aewallet/ui/views/nft/add_public_key.dart';
+import 'package:aewallet/ui/views/nft/nft_preview.dart';
+import 'package:aewallet/ui/widgets/components/app_text_field.dart';
+import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
+import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/sheet_util.dart';
+import 'package:aewallet/util/confirmations/confirmations_util.dart';
+import 'package:aewallet/util/confirmations/subscription_channel%20copy.dart';
+import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/haptic_util.dart';
+import 'package:aewallet/util/mime_util.dart';
+import 'package:aewallet/util/preferences.dart';
+import 'package:aewallet/util/user_data_util.dart';
 
 enum NFTCreationProcessType { single, collection }
 

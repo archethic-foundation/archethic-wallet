@@ -1,7 +1,11 @@
+// Dart imports:
 import 'dart:typed_data';
 
-import 'package:aewallet/ui/util/styles.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:aewallet/ui/util/styles.dart';
 
 class NFTCard extends StatelessWidget {
   const NFTCard({

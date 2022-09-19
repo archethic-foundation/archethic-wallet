@@ -6,10 +6,10 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 // Package imports:
-import 'package:aewallet/model/data/account_token.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 // Project imports:
+import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 
 RegExp _base64 = RegExp(

@@ -1,14 +1,10 @@
 // Flutter imports:
-import 'package:aewallet/model/data/contact.dart';
-import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
-import 'package:aewallet/util/haptic_util.dart';
-import 'package:aewallet/util/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -16,18 +12,22 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/app_wallet.dart';
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/views/sheets/receive_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/keychain_util.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:aewallet/util/preferences.dart';
 
 class AccountsListWidget extends StatefulWidget {
   final String? currencyName;

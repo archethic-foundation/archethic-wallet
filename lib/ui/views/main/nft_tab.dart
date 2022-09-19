@@ -1,5 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+// Flutter imports:
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+
+// Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -7,9 +15,6 @@ import 'package:aewallet/ui/views/nft/nft_category_menu.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/nft_util.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class NFTTab extends StatelessWidget {
   const NFTTab({super.key});

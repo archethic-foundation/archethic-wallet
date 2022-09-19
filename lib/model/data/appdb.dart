@@ -1,8 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Package imports:
-import 'package:aewallet/model/data/nft_infos_off_chain.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -13,10 +11,12 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/app_keychain.dart';
 import 'package:aewallet/model/data/app_wallet.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/model/data/token_informations_property.dart';
+import 'package:aewallet/util/get_it_instance.dart';
 
 class DBHelper {
   static const String contactsTable = 'contacts';

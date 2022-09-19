@@ -1,3 +1,11 @@
+// Flutter imports:
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+
+// Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/menu/menu_widget_wallet.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
@@ -7,9 +15,6 @@ import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
 import 'package:aewallet/ui/widgets/balance_infos.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class AccountTab extends StatelessWidget {
   const AccountTab({super.key});

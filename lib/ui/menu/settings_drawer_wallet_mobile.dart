@@ -6,7 +6,6 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
-import 'package:aewallet/util/mnemonics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -42,6 +41,7 @@ import 'package:aewallet/ui/widgets/dialogs/theme_dialog.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/mnemonics.dart';
 import 'package:aewallet/util/preferences.dart';
 
 class SettingsSheetWalletMobile extends StatefulWidget {

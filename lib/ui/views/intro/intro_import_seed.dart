@@ -4,8 +4,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -25,8 +23,10 @@ import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';

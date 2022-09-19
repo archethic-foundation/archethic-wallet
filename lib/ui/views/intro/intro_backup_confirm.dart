@@ -6,7 +6,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:aewallet/util/confirmations/confirmations_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -30,6 +29,7 @@ import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/biometrics_util.dart';
+import 'package:aewallet/util/confirmations/confirmations_util.dart';
 import 'package:aewallet/util/confirmations/subscription_channel.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';

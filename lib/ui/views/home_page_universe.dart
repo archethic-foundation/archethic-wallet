@@ -4,11 +4,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:aewallet/ui/views/main/account_tab.dart';
-import 'package:aewallet/ui/views/main/accounts_list_tab.dart';
-import 'package:aewallet/ui/views/main/main_appbar.dart';
-import 'package:aewallet/ui/views/main/main_bottombar.dart';
-import 'package:aewallet/ui/views/main/nft_tab.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -26,6 +21,11 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/views/main/account_tab.dart';
+import 'package:aewallet/ui/views/main/accounts_list_tab.dart';
+import 'package:aewallet/ui/views/main/main_appbar.dart';
+import 'package:aewallet/ui/views/main/main_bottombar.dart';
+import 'package:aewallet/ui/views/main/nft_tab.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/add_token.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';

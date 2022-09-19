@@ -1,35 +1,38 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 // ignore_for_file: avoid_unnecessary_containers
 
-// Flutter imports:
+// Dart imports:
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:event_taxi/event_taxi.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+
+// Project imports:
+import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
+import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
+import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/nft/nft_preview.dart';
+import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/confirmations/confirmations_util.dart';
 import 'package:aewallet/util/confirmations/subscription_channel.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:event_taxi/event_taxi.dart';
-import 'package:flutter/material.dart';
-
-// Project imports:
-import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/localization.dart';
-import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 
 class AddNFTFileConfirm extends StatefulWidget {
   const AddNFTFileConfirm({

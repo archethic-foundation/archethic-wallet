@@ -4,7 +4,6 @@
 import 'dart:typed_data';
 
 // Package imports:
-import 'package:aewallet/model/data/contact.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive/hive.dart';
 
@@ -13,6 +12,7 @@ import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/app_keychain.dart';
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 
 part 'app_wallet.g.dart';

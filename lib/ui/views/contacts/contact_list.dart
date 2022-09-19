@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -27,7 +28,6 @@ import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ContactsList extends StatefulWidget {
   ContactsList(this.contactsController, this.contactsOpen, {super.key});

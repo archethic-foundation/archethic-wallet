@@ -1,10 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/ui/util/styles.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
 import 'package:flutter_svg/svg.dart';
+
+// Project imports:
+import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/ui/util/styles.dart';
 
 class NetworkIndicator extends StatelessWidget {
   const NetworkIndicator({super.key});

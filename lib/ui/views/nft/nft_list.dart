@@ -1,26 +1,29 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:typed_data';
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:collection/collection.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+
+// Project imports:
+import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/model/data/token_informations_property.dart';
+import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/nft_card2.dart';
 import 'package:aewallet/ui/views/nft/nft_creation_process.dart';
 import 'package:aewallet/ui/views/nft/nft_preview.dart';
 import 'package:aewallet/ui/views/uco/transfer_sheet.dart';
+import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:flutter/material.dart';
-
-// Project imports:
-import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/localization.dart';
-import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/widgets/components/buttons.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:collection/collection.dart';
 
 class NFTList extends StatefulWidget {
   const NFTList({super.key, this.images, this.currentNftCategoryIndex});

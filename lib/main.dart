@@ -6,9 +6,6 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 // Flutter imports:
-import 'package:aewallet/model/primary_currency.dart';
-import 'package:aewallet/ui/views/nft/nft_creation_process.dart';
-import 'package:aewallet/ui/views/nft/nft_list_per_category.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -26,6 +23,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/theme_dark.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -37,6 +35,8 @@ import 'package:aewallet/ui/views/intro/intro_new_wallet_disclaimer.dart';
 import 'package:aewallet/ui/views/intro/intro_new_wallet_get_first_infos.dart';
 import 'package:aewallet/ui/views/intro/intro_welcome.dart';
 import 'package:aewallet/ui/views/lock_screen.dart';
+import 'package:aewallet/ui/views/nft/nft_creation_process.dart';
+import 'package:aewallet/ui/views/nft/nft_list_per_category.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 

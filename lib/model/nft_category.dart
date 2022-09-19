@@ -1,7 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/localization.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:aewallet/localization.dart';
 
 class NftCategory {
   NftCategory({this.id, this.name, this.image});

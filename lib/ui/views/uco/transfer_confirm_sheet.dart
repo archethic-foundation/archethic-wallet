@@ -8,11 +8,10 @@ import 'dart:math';
 import 'dart:typed_data';
 
 // Flutter imports:
-import 'package:aewallet/ui/widgets/components/sheet_header.dart';
-import 'package:aewallet/util/confirmations/confirmations_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -33,12 +32,11 @@ import 'package:aewallet/ui/views/tokens_fungibles/token_transfer_list.dart';
 import 'package:aewallet/ui/views/uco/uco_transfer_list.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/sheet_header.dart';
+import 'package:aewallet/util/confirmations/confirmations_util.dart';
 import 'package:aewallet/util/confirmations/subscription_channel.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 class TransferConfirmSheet extends StatefulWidget {
   const TransferConfirmSheet(

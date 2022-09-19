@@ -1,13 +1,17 @@
+// Dart imports:
 import 'dart:async';
 
+// Package imports:
+import "package:gql/ast.dart" as ast;
+import "package:gql/language.dart" as lang;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_lib_dart/src/utils/logs.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:http/http.dart' as http show Response, post;
+
+// Project imports:
 import 'package:aewallet/util/confirmations/phoenix_link.dart';
 import 'package:aewallet/util/confirmations/subscription_channel.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import "package:gql/language.dart" as lang;
-import "package:gql/ast.dart" as ast;
-import 'package:archethic_lib_dart/src/utils/logs.dart';
-import 'package:http/http.dart' as http show Response, post;
 
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 

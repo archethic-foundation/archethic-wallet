@@ -7,7 +7,6 @@ import 'dart:math';
 import 'dart:typed_data';
 
 // Package imports:
-import 'package:aewallet/model/data/contact.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -18,6 +17,7 @@ import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/app_wallet.dart';
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/util/confirmations/subscription_channel.dart';
 import 'package:aewallet/util/get_it_instance.dart';
