@@ -37,20 +37,6 @@ class ByzantineVioletTheme implements BaseTheme {
     transform: GradientRotation(pi / 9),
   );
 
-  @override
-  Color? textHexagon = const Color(0xFFFFFFFF);
-
-  @override
-  Gradient? gradientHexagon = const LinearGradient(
-    colors: <Color>[
-      Color(0xFF00A4DB),
-      Color(0xFFCC00FF),
-    ],
-    begin: Alignment(-1.0, 0.0),
-    end: Alignment(1.0, 0.0),
-    transform: GradientRotation(pi / 9),
-  );
-
   // IconData Widget
   @override
   Color? iconDataWidgetBoxShadow = const Color(0xFFFFFFFF).withOpacity(0.5);

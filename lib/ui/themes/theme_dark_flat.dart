@@ -11,15 +11,15 @@ import 'package:flutter/services.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/widgets/components/gradient_shadow_box_decoration.dart';
 
-class SeaGreenTheme implements BaseTheme {
+class DarkFlatTheme implements BaseTheme {
   @override
-  String? displayName = 'Sea green';
+  String? displayName = 'DarkFlat';
 
   // Fonts
   @override
-  String? mainFont = 'Equinox';
+  String? mainFont = 'OpenSans';
   @override
-  String? secondaryFont = 'Montserrat';
+  String? secondaryFont = 'OpenSans';
 
   // Main Buttons
   @override
@@ -29,8 +29,8 @@ class SeaGreenTheme implements BaseTheme {
   @override
   Gradient? gradientMainButton = const LinearGradient(
     colors: <Color>[
-      Color(0xFF00A4DB),
-      Color(0xFFCC00FF),
+      Color.fromARGB(255, 43, 43, 43),
+      Color.fromARGB(255, 43, 43, 43)
     ],
     begin: Alignment(-1.0, 0.0),
     end: Alignment(1.0, 0.0),
@@ -39,21 +39,22 @@ class SeaGreenTheme implements BaseTheme {
 
   // IconData Widget
   @override
-  Color? iconDataWidgetBoxShadow = const Color(0xFFFFFFFF).withOpacity(0.5);
+  Color? iconDataWidgetBoxShadow = const Color(0xFFFFFFFF).withOpacity(0.1);
   @override
   Color? iconDataWidgetIconGradientLeft = const Color(0xFF00A4DB);
   @override
   Color? iconDataWidgetIconGradientRight = const Color(0xFFCC00FF);
   @override
-  Color? iconDataWidgetIconBackground = const Color(0xFFFFFFFF);
+  Color? iconDataWidgetIconBackground =
+      const Color(0xFFFFFFFF).withOpacity(0.1);
 
   // Menu
   @override
-  Color? iconDrawer = const Color.fromARGB(255, 0, 71, 55);
+  Color? iconDrawer = const Color(0xFFFFFFFF);
   @override
-  Color? iconDrawerBackground = const Color(0xFFFFFFFF).withOpacity(0.8);
+  Color? iconDrawerBackground = const Color(0xFFFFFFFF).withOpacity(0.2);
   @override
-  Color? drawerBackground = const Color(0xFF062F31);
+  Color? drawerBackground = const Color(0xFF05212B);
 
   // Icons Picker Items
   @override
@@ -100,27 +101,27 @@ class SeaGreenTheme implements BaseTheme {
 
   // Sheet
   @override
-  Color? sheetBackground = const Color(0xFF062F31).withOpacity(0.7);
+  Color? sheetBackground = const Color(0xFF000000).withOpacity(0.7);
 
   // SnackBar
   @override
-  Color? snackBarShadow = const Color(0xFF062F31).withOpacity(0.8);
+  Color? snackBarShadow = const Color(0xFF000000).withOpacity(0.8);
 
   // Background
   @override
-  Color? backgroundMainTop = const Color(0xFF062F31);
+  Color? backgroundMainTop = const Color(0xFF000000);
   @override
-  Color? backgroundMainBottom = const Color(0xFF062F31);
+  Color? backgroundMainBottom = const Color(0xFF000000);
   @override
-  Color? background = const Color(0xFF062F31);
+  Color? background = const Color(0xFF000000);
   @override
-  Color? background40 = const Color(0xFF062F31).withOpacity(0.4);
+  Color? background40 = const Color(0xFF000000).withOpacity(0.4);
   @override
-  Color? backgroundDark = const Color(0xFF062F31);
+  Color? backgroundDark = const Color(0xFF000000);
   @override
-  Color? backgroundDark00 = const Color(0xFF062F31).withOpacity(0.0);
+  Color? backgroundDark00 = const Color(0xFF05212B).withOpacity(0.0);
   @override
-  Color? backgroundDarkest = const Color(0xFF009D78);
+  Color? backgroundDarkest = const Color(0xFFFFFFFF);
 
   @override
   Color? backgroundAccountsListCard = Colors.transparent;
@@ -142,7 +143,7 @@ class SeaGreenTheme implements BaseTheme {
   @override
   num? bottomBarBackgroundColorOpacity = 0.2;
   @override
-  Color? bottomBarActiveIconColor = const Color(0xFF062F31);
+  Color? bottomBarActiveIconColor = const Color(0xFF000000);
   @override
   Color? bottomBarActiveTitleColor = const Color(0xFFFFFFFF).withOpacity(0.8);
   @override
@@ -151,27 +152,27 @@ class SeaGreenTheme implements BaseTheme {
   Color? bottomBarInactiveIcon = const Color(0xFFFFFFFF);
 
   @override
-  String? background1Small = 'assets/themes/sea_green/v01-waves-1100.jpg';
+  String? background1Small = 'assets/themes/dark_flat/bk-flat.jpg';
   @override
-  String? background2Small = 'assets/themes/sea_green/v02-waves-1100.jpg';
+  String? background2Small = 'assets/themes/dark_flat/bk-flat.jpg';
   @override
-  String? background3Small = 'assets/themes/sea_green/v03-waves-1100.jpg';
+  String? background3Small = 'assets/themes/dark_flat/bk-flat.jpg';
   @override
-  String? background4Small = 'assets/themes/sea_green/v04-waves-1100.jpg';
+  String? background4Small = 'assets/themes/dark_flat/bk-flat.jpg';
   @override
-  String? background5Small = 'assets/themes/sea_green/v05-waves-1100.jpg';
+  String? background5Small = 'assets/themes/dark_flat/bk-flat.jpg';
 
   // Animation Overlay
   @override
-  Color? animationOverlayMedium = const Color(0xFF062F31).withOpacity(0.7);
+  Color? animationOverlayMedium = const Color(0xFF000000).withOpacity(0.7);
   @override
-  Color? animationOverlayStrong = const Color(0xFF062F31).withOpacity(0.85);
+  Color? animationOverlayStrong = const Color(0xFF000000).withOpacity(0.85);
 
   @override
-  Color? overlay30 = const Color(0xFF062F31).withOpacity(0.3);
+  Color? overlay30 = const Color(0xFF000000).withOpacity(0.3);
 
   @override
-  Color? numMnemonicBackground = const Color(0xFF062F31);
+  Color? numMnemonicBackground = Colors.grey.shade800;
 
   @override
   Color? activeTrackColorSwitch = const Color(0xFFFFFFFF);
@@ -190,7 +191,7 @@ class SeaGreenTheme implements BaseTheme {
   BoxShadow? boxShadowButton = const BoxShadow(color: Colors.transparent);
 
   @override
-  String? assetsFolder = 'assets/themes/sea_green/';
+  String? assetsFolder = 'assets/themes/dark_flat/';
   @override
   String? logo = 'logo';
   @override
@@ -217,8 +218,8 @@ class SeaGreenTheme implements BaseTheme {
       backgroundBlendMode: BlendMode.dstIn,
       gradient: const LinearGradient(
         colors: <Color>[
-          Color(0xFF062F31),
-          Color(0xFF009D78),
+          Color(0xFF00A4DB),
+          Color(0xFFCC00FF),
         ],
         begin: Alignment(-1.0, 0.0),
         end: Alignment(1.0, 0.0),
@@ -236,9 +237,7 @@ class SeaGreenTheme implements BaseTheme {
         topRight: Radius.circular(25.0),
       ),
       image: DecorationImage(
-          image: AssetImage(background2Small!),
-          fit: BoxFit.fitHeight,
-          opacity: 0.8),
+          image: AssetImage(background2Small!), fit: BoxFit.fitHeight),
     );
   }
 }

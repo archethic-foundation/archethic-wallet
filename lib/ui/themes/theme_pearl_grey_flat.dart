@@ -11,15 +11,15 @@ import 'package:flutter/services.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/widgets/components/gradient_shadow_box_decoration.dart';
 
-class SeaGreenTheme implements BaseTheme {
+class PearlGreyFlatTheme implements BaseTheme {
   @override
-  String? displayName = 'Sea green';
+  String? displayName = 'Pearl grey';
 
   // Fonts
   @override
-  String? mainFont = 'Equinox';
+  String? mainFont = 'OpenSans';
   @override
-  String? secondaryFont = 'Montserrat';
+  String? secondaryFont = 'OpenSans';
 
   // Main Buttons
   @override
@@ -29,8 +29,8 @@ class SeaGreenTheme implements BaseTheme {
   @override
   Gradient? gradientMainButton = const LinearGradient(
     colors: <Color>[
-      Color(0xFF00A4DB),
-      Color(0xFFCC00FF),
+      Color.fromARGB(255, 43, 43, 43),
+      Color.fromARGB(255, 43, 43, 43)
     ],
     begin: Alignment(-1.0, 0.0),
     end: Alignment(1.0, 0.0),
@@ -39,7 +39,7 @@ class SeaGreenTheme implements BaseTheme {
 
   // IconData Widget
   @override
-  Color? iconDataWidgetBoxShadow = const Color(0xFFFFFFFF).withOpacity(0.5);
+  Color? iconDataWidgetBoxShadow = const Color(0xFFFFFFFF).withOpacity(0.1);
   @override
   Color? iconDataWidgetIconGradientLeft = const Color(0xFF00A4DB);
   @override
@@ -49,11 +49,11 @@ class SeaGreenTheme implements BaseTheme {
 
   // Menu
   @override
-  Color? iconDrawer = const Color.fromARGB(255, 0, 71, 55);
+  Color? iconDrawer = const Color(0xFF151515);
   @override
-  Color? iconDrawerBackground = const Color(0xFFFFFFFF).withOpacity(0.8);
+  Color? iconDrawerBackground = const Color(0xFFFFFFFF);
   @override
-  Color? drawerBackground = const Color(0xFF062F31);
+  Color? drawerBackground = const Color(0xFFC7D1DA);
 
   // Icons Picker Items
   @override
@@ -63,115 +63,115 @@ class SeaGreenTheme implements BaseTheme {
 
   // Icons TextField
   @override
-  Color? textFieldIcon = const Color(0xFFFFFFFF);
+  Color? textFieldIcon = const Color(0xff000000);
 
   // Texts
   @override
-  Color? text = const Color(0xFFFFFFFF);
+  Color? text = const Color(0xFF151515);
   @override
-  Color? text60 = const Color(0xFFFFFFFF).withOpacity(0.6);
+  Color? text60 = const Color(0xFF151515).withOpacity(0.6);
   @override
-  Color? text45 = const Color(0xFFFFFFFF).withOpacity(0.45);
+  Color? text45 = const Color(0xFF151515).withOpacity(0.45);
   @override
-  Color? text30 = const Color(0xFFFFFFFF).withOpacity(0.3);
+  Color? text30 = const Color(0xFF151515).withOpacity(0.3);
   @override
-  Color? text20 = const Color(0xFFFFFFFF).withOpacity(0.2);
+  Color? text20 = const Color(0xFF151515).withOpacity(0.2);
   @override
-  Color? text15 = const Color(0xFFFFFFFF).withOpacity(0.15);
+  Color? text15 = const Color(0xFF151515).withOpacity(0.15);
   @override
-  Color? text10 = const Color(0xFFFFFFFF).withOpacity(0.1);
+  Color? text10 = const Color(0xFF151515).withOpacity(0.1);
   @override
-  Color? text05 = const Color(0xFFFFFFFF).withOpacity(0.05);
+  Color? text05 = const Color(0xFF151515).withOpacity(0.05);
   @override
-  Color? text03 = const Color(0xFFFFFFFF).withOpacity(0.03);
+  Color? text03 = const Color(0xFF151515).withOpacity(0.03);
   @override
-  Color? positiveValue = Colors.lightGreenAccent[400];
+  Color? positiveValue = const Color.fromARGB(255, 0, 129, 67);
   @override
   Color? negativeValue = Colors.redAccent[400];
   @override
-  Color? positiveAmount = Colors.greenAccent[400];
+  Color? positiveAmount = const Color.fromARGB(255, 0, 129, 67);
   @override
   Color? negativeAmount = Colors.redAccent[400];
   @override
   Color? warning = Colors.yellow[600];
 
   @override
-  Color? textDark = const Color(0xFFFFFFFF);
+  Color? textDark = const Color(0xFF000000);
 
   // Sheet
   @override
-  Color? sheetBackground = const Color(0xFF062F31).withOpacity(0.7);
+  Color? sheetBackground = const Color(0xFFC7D1DA).withOpacity(0.7);
 
   // SnackBar
   @override
-  Color? snackBarShadow = const Color(0xFF062F31).withOpacity(0.8);
+  Color? snackBarShadow = const Color(0xFFC7D1DA).withOpacity(0.8);
 
   // Background
   @override
-  Color? backgroundMainTop = const Color(0xFF062F31);
+  Color? backgroundMainTop = const Color(0xFFC7D1DA);
   @override
-  Color? backgroundMainBottom = const Color(0xFF062F31);
+  Color? backgroundMainBottom = const Color(0xFFC7D1DA);
   @override
-  Color? background = const Color(0xFF062F31);
+  Color? background = const Color(0xFFC7D1DA);
   @override
-  Color? background40 = const Color(0xFF062F31).withOpacity(0.4);
+  Color? background40 = const Color(0xFFC7D1DA).withOpacity(0.4);
   @override
-  Color? backgroundDark = const Color(0xFF062F31);
+  Color? backgroundDark = const Color(0xFFC7D1DA);
   @override
-  Color? backgroundDark00 = const Color(0xFF062F31).withOpacity(0.0);
+  Color? backgroundDark00 = const Color(0xFFC7D1DA).withOpacity(0.0);
   @override
-  Color? backgroundDarkest = const Color(0xFF009D78);
+  Color? backgroundDarkest = const Color(0xFFFFFFFF);
 
   @override
   Color? backgroundAccountsListCard = Colors.transparent;
   @override
-  Color? backgroundAccountsListCardSelected = Colors.white.withOpacity(0.1);
+  Color? backgroundAccountsListCardSelected = Colors.grey.withOpacity(0.1);
   @override
   Color? backgroundRecentTxListCardTransferOutput =
-      Colors.white.withOpacity(0.1);
+      Colors.grey.withOpacity(0.1);
   @override
   Color? backgroundRecentTxListCardTokenCreation =
       Colors.blueAccent[100]!.withOpacity(0.1);
   @override
   Color? backgroundRecentTxListCardTransferInput =
-      Colors.greenAccent[100]!.withOpacity(0.1);
+      Colors.green.withOpacity(0.1);
   @override
-  Color? backgroundFungiblesTokensListCard = Colors.white.withOpacity(0.1);
+  Color? backgroundFungiblesTokensListCard = Colors.grey.withOpacity(0.1);
 
   // Bottom Bar
   @override
   num? bottomBarBackgroundColorOpacity = 0.2;
   @override
-  Color? bottomBarActiveIconColor = const Color(0xFF062F31);
+  Color? bottomBarActiveIconColor = const Color(0xff000000);
   @override
-  Color? bottomBarActiveTitleColor = const Color(0xFFFFFFFF).withOpacity(0.8);
+  Color? bottomBarActiveTitleColor = const Color(0xff000000).withOpacity(0.8);
   @override
   Color? bottomBarActiveColor = const Color(0xFFFFFFFF);
   @override
-  Color? bottomBarInactiveIcon = const Color(0xFFFFFFFF);
+  Color? bottomBarInactiveIcon = const Color(0xff000000);
 
   @override
-  String? background1Small = 'assets/themes/sea_green/v01-waves-1100.jpg';
+  String? background1Small = 'assets/themes/pearl_grey_flat/bk-flat.jpg';
   @override
-  String? background2Small = 'assets/themes/sea_green/v02-waves-1100.jpg';
+  String? background2Small = 'assets/themes/pearl_grey_flat/bk-flat.jpg';
   @override
-  String? background3Small = 'assets/themes/sea_green/v03-waves-1100.jpg';
+  String? background3Small = 'assets/themes/pearl_grey_flat/bk-flat.jpg';
   @override
-  String? background4Small = 'assets/themes/sea_green/v04-waves-1100.jpg';
+  String? background4Small = 'assets/themes/pearl_grey_flat/bk-flat.jpg';
   @override
-  String? background5Small = 'assets/themes/sea_green/v05-waves-1100.jpg';
+  String? background5Small = 'assets/themes/pearl_grey_flat/bk-flat.jpg';
 
   // Animation Overlay
   @override
-  Color? animationOverlayMedium = const Color(0xFF062F31).withOpacity(0.7);
+  Color? animationOverlayMedium = const Color(0xFFC7D1DA).withOpacity(0.7);
   @override
-  Color? animationOverlayStrong = const Color(0xFF062F31).withOpacity(0.85);
+  Color? animationOverlayStrong = const Color(0xFFC7D1DA).withOpacity(0.85);
 
   @override
-  Color? overlay30 = const Color(0xFF062F31).withOpacity(0.3);
+  Color? overlay30 = const Color(0xFFC7D1DA).withOpacity(0.3);
 
   @override
-  Color? numMnemonicBackground = const Color(0xFF062F31);
+  Color? numMnemonicBackground = const Color(0xFFC7D1DA);
 
   @override
   Color? activeTrackColorSwitch = const Color(0xFFFFFFFF);
@@ -190,7 +190,7 @@ class SeaGreenTheme implements BaseTheme {
   BoxShadow? boxShadowButton = const BoxShadow(color: Colors.transparent);
 
   @override
-  String? assetsFolder = 'assets/themes/sea_green/';
+  String? assetsFolder = 'assets/themes/pearl_grey/';
   @override
   String? logo = 'logo';
   @override
@@ -217,8 +217,8 @@ class SeaGreenTheme implements BaseTheme {
       backgroundBlendMode: BlendMode.dstIn,
       gradient: const LinearGradient(
         colors: <Color>[
-          Color(0xFF062F31),
-          Color(0xFF009D78),
+          Color(0xFFC7D1DA),
+          Color(0xFFFFFFFF),
         ],
         begin: Alignment(-1.0, 0.0),
         end: Alignment(1.0, 0.0),

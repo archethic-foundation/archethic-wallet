@@ -11,15 +11,15 @@ import 'package:flutter/services.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/widgets/components/gradient_shadow_box_decoration.dart';
 
-class SeaGreenTheme implements BaseTheme {
+class SeaGreenFlatTheme implements BaseTheme {
   @override
   String? displayName = 'Sea green';
 
   // Fonts
   @override
-  String? mainFont = 'Equinox';
+  String? mainFont = 'OpenSans';
   @override
-  String? secondaryFont = 'Montserrat';
+  String? secondaryFont = 'OpenSans';
 
   // Main Buttons
   @override
@@ -29,8 +29,8 @@ class SeaGreenTheme implements BaseTheme {
   @override
   Gradient? gradientMainButton = const LinearGradient(
     colors: <Color>[
-      Color(0xFF00A4DB),
-      Color(0xFFCC00FF),
+      Color.fromARGB(255, 43, 43, 43),
+      Color.fromARGB(255, 43, 43, 43)
     ],
     begin: Alignment(-1.0, 0.0),
     end: Alignment(1.0, 0.0),
@@ -151,15 +151,15 @@ class SeaGreenTheme implements BaseTheme {
   Color? bottomBarInactiveIcon = const Color(0xFFFFFFFF);
 
   @override
-  String? background1Small = 'assets/themes/sea_green/v01-waves-1100.jpg';
+  String? background1Small = 'assets/themes/sea_green_flat/bk-flat.jpg';
   @override
-  String? background2Small = 'assets/themes/sea_green/v02-waves-1100.jpg';
+  String? background2Small = 'assets/themes/sea_green_flat/bk-flat.jpg';
   @override
-  String? background3Small = 'assets/themes/sea_green/v03-waves-1100.jpg';
+  String? background3Small = 'assets/themes/sea_green_flat/bk-flat.jpg';
   @override
-  String? background4Small = 'assets/themes/sea_green/v04-waves-1100.jpg';
+  String? background4Small = 'assets/themes/sea_green_flat/bk-flat.jpg';
   @override
-  String? background5Small = 'assets/themes/sea_green/v05-waves-1100.jpg';
+  String? background5Small = 'assets/themes/sea_green_flat/bk-flat.jpg';
 
   // Animation Overlay
   @override

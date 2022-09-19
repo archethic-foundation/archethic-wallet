@@ -97,14 +97,6 @@ class AppStyles {
         color: StateContainer.of(context).curTheme.text!);
   }
 
-  static TextStyle textStyleSize10W600Hexagon(BuildContext context) {
-    return TextStyle(
-        fontFamily: StateContainer.of(context).curTheme.secondaryFont,
-        fontSize: AppFontSizes.size10,
-        fontWeight: FontWeight.w600,
-        color: StateContainer.of(context).curTheme.textHexagon!);
-  }
-
   static TextStyle textStyleSize14W600EquinoxMiddleButtonLabel(
       BuildContext context) {
     return TextStyle(

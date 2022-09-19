@@ -239,15 +239,24 @@ flutter:
     - assets/buy/
     - assets/images/
     - assets/themes/sapphire_blue/
+    - assets/themes/sapphire_blue_flat/
     - assets/themes/dark/
+    - assets/themes/dark_flat/
     - assets/themes/emerald_green/
+    - assets/themes/emerald_green_flat/
     - assets/themes/flat/
     - assets/themes/sea_green/
+    - assets/themes/sea_green_flat/
     - assets/themes/navy_blue/
+    - assets/themes/navy_blue_flat/
     - assets/themes/honey_orange/
+    - assets/themes/honey_orange_flat/
     - assets/themes/byzantine_violet/
+    - assets/themes/byzantine_violet_flat/
     - assets/themes/fire_red/
+    - assets/themes/fire_red_flat/
     - assets/themes/pearl_grey/
+    - assets/themes/pearl_grey_flat/
 
   fonts:
     - family: Montserrat
