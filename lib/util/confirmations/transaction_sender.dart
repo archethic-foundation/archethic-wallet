@@ -10,7 +10,6 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:http/http.dart' as http show Response, post;
 
 // Project imports:
-import 'package:aewallet/util/confirmations/phoenix_link.dart';
 import 'package:aewallet/util/confirmations/subscription_channel.dart';
 
 /// SPDX-License-Identifier: AGPL-3.0-or-later
