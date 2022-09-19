@@ -6,10 +6,13 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 // Flutter imports:
+import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/util/case_converter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
 
 // Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -298,33 +301,37 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
 
   Future<void> checkLoggedIn() async {
     final Preferences preferences = await Preferences.getInstance();
-    if (!kIsWeb &&
-        !Platform.isMacOS &&
-        !Platform.isWindows &&
-        !Platform.isLinux) {
-      // Check if device is rooted or jailbroken, show user a warning informing them of the risks if so
-      /*if (!preferences.getHasSeenRootWarning() &&
-          (await SafeDevice.isJailBroken)) {
-        AppDialogs.showConfirmDialog(
-            context,
-            CaseChange.toUpperCase(AppLocalization.of(context)!.warning,
-                StateContainer.of(context).curLanguage.getLocaleString()),
-            AppLocalization.of(context)!.rootWarning,
-            AppLocalization.of(context)!.iUnderstandTheRisks.toUpperCase(),
-            () async {
-              preferences.setHasSeenRootWarning();
-              checkLoggedIn();
-            },
-            cancelText: AppLocalization.of(context)!.exit.toUpperCase(),
-            cancelAction: () {
-              if (!kIsWeb && Platform.isIOS) {
-                exit(0);
-              } else {
-                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-              }
-            });
-        return;
-      }*/
+    bool jailbroken;
+    bool developerMode;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      jailbroken = await FlutterJailbreakDetection.jailbroken;
+      developerMode = await FlutterJailbreakDetection.developerMode;
+    } on PlatformException {
+      jailbroken = false;
+      developerMode = false;
+    }
+
+    if (!preferences.getHasSeenRootWarning() && (jailbroken || developerMode)) {
+      AppDialogs.showConfirmDialog(
+          context,
+          CaseChange.toUpperCase(AppLocalization.of(context)!.warning,
+              StateContainer.of(context).curLanguage.getLocaleString()),
+          AppLocalization.of(context)!.rootWarning,
+          AppLocalization.of(context)!.iUnderstandTheRisks.toUpperCase(),
+          () async {
+            preferences.setHasSeenRootWarning();
+            checkLoggedIn();
+          },
+          cancelText: AppLocalization.of(context)!.exit.toUpperCase(),
+          cancelAction: () {
+            if (!kIsWeb && Platform.isIOS) {
+              exit(0);
+            } else {
+              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+            }
+          });
+      return;
     }
 
     if (!_hasCheckedLoggedIn!) {
