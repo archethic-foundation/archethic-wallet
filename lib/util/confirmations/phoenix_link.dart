@@ -42,7 +42,6 @@ class PhoenixLink extends Link {
 
   @override
   Stream<Response> request(Request request, [NextLink? forward]) async* {
-    assert(forward == null, '$this does not support a NextLink (got $forward)');
     final payload = _serializer.serializeRequest(request);
     String? phoenixSubscriptionId;
     StreamSubscription<Response>? websocketSubscription;
@@ -71,6 +70,8 @@ class PhoenixLink extends Link {
       } else if (pushResponse.isError) {
         throw _parser.parseError(pushResponse.response as Map<String, dynamic>);
       }
+    } catch (e) {
+      print(e);
     } finally {
       await websocketSubscription?.cancel();
       await streamController?.close();
