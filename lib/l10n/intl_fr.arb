@@ -327,5 +327,20 @@
 	"addTokenConfirmed": "Les jetons ont été créés avec %1 confirmations on %2",
 	"transferConfirmed1": "Le transfert a été effectué avec %1 confirmation on %2",
 	"transferConfirmed": "Le transfert a été effectué avec %1 confirmations on %2",
-	"build": "Build :"
+	"build": "Build :",
+	"nftCategoryArt": "Art",
+	"nftCategoryAccess": "Accès",
+	"nftCategoryDoc": "Doc",
+	"nftCategoryCollectibles": "Collections",
+	"nftCategoryMusic": "Musique",
+	"nftCategoryLoyaltyCard": "Cartes de fidélité",
+	"conversionOraclePromotion": "(Conversion fournie par les oracles Archethic)",
+	"nftCreationProcessTabImportHeader": "Import",
+	"nftCreationProcessTabDescriptionHeader": "Description",
+	"nftCreationProcessTabPropertiesHeader": "Propriétés",
+	"nftCreationProcessTabConfirmationHeader": "Confirmation",
+	"estimatedFeesAddNFTNote": "Les frais seront estimés lorsque le NFT sera défini.",
+	"addPublicKeyHeader": "Ajouter des accès",
+	"publicKeyAddHint": "Entrer une clé publique",
+	"nftWithoutCategory": "Sans catégorie"
 }

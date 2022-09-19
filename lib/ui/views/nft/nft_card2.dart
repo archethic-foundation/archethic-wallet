@@ -4,8 +4,12 @@ import 'dart:typed_data';
 
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/mime_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pdfx/pdfx.dart';
 
 class NFTCard2 extends StatelessWidget {
@@ -46,6 +50,27 @@ class NFTCard2 extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 12.0, left: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  name,
+                  style: AppStyles.textStyleSize12W400Primary(context),
+                ),
+                if (description != '') const SizedBox(height: 5),
+                if (description != '')
+                  Text(
+                    description,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppStyles.textStyleSize12W400Primary(context),
+                  ),
+              ],
+            ),
+          ),
+        ),
         GestureDetector(
           onTap: onTap,
           child: Card(
@@ -85,23 +110,50 @@ class NFTCard2 extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 12.0, left: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  name,
-                  style: AppStyles.textStyleSize12W400Primary(context),
-                ),
-                if (description != '') const SizedBox(height: 5),
-                if (description != '')
-                  Text(
-                    description,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppStyles.textStyleSize12W400Primary(context),
+        Padding(
+          padding: const EdgeInsets.only(right: 10, top: 5),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: (() async {
+                    sl.get<HapticUtil>().feedback(FeedbackType.light,
+                        StateContainer.of(context).activeVibrations);
+                    await StateContainer.of(context)
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .updateNftInfosOffChain(
+                            tokenAddress: address, like: false);
+                  }),
+                  child: const Icon(
+                    Icons.verified,
+                    color: Colors.blue,
+                    size: 20,
                   ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                InkWell(
+                  onTap: (() async {
+                    sl.get<HapticUtil>().feedback(FeedbackType.light,
+                        StateContainer.of(context).activeVibrations);
+                    await StateContainer.of(context)
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .updateNftInfosOffChain(
+                            tokenAddress: address, like: false);
+                  }),
+                  child: const FaIcon(
+                    FontAwesomeIcons.star,
+                    color: Colors.yellow,
+                    size: 18,
+                  ),
+                ),
               ],
             ),
           ),

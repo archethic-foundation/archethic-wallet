@@ -4,8 +4,8 @@ import 'dart:typed_data';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/model/data/token_informations_property.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/nft/add_nft_file.dart';
 import 'package:aewallet/ui/views/nft/nft_card2.dart';
+import 'package:aewallet/ui/views/nft/nft_creation_process.dart';
 import 'package:aewallet/ui/views/nft/nft_preview.dart';
 import 'package:aewallet/ui/views/uco/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -20,19 +20,24 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:collection/collection.dart';
 
-class NFTListWidget extends StatefulWidget {
-  const NFTListWidget({super.key, this.images});
+class NFTList extends StatefulWidget {
+  const NFTList({super.key, this.images, this.currentNftCategoryIndex});
   final List<Uint8List>? images;
+  final int? currentNftCategoryIndex;
 
   @override
-  State<NFTListWidget> createState() => _NFTListWidgetState();
+  State<NFTList> createState() => _NFTListState();
 }
 
-class _NFTListWidgetState extends State<NFTListWidget> {
+final GlobalKey expandedKey = GlobalKey();
+
+class _NFTListState extends State<NFTList> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      key: expandedKey,
       width: double.infinity,
       height: MediaQuery.of(context).size.height,
       child: Column(
@@ -50,7 +55,7 @@ class _NFTListWidgetState extends State<NFTListWidget> {
                       .appWallet!
                       .appKeychain!
                       .getAccountSelected()!
-                      .accountNFT!
+                      .getAccountNFTFiltered(widget.currentNftCategoryIndex!)
                       .length,
                   padding: const EdgeInsets.only(top: 20, bottom: 20),
                   itemBuilder: (context, index) {
@@ -59,7 +64,8 @@ class _NFTListWidgetState extends State<NFTListWidget> {
                             .appWallet!
                             .appKeychain!
                             .getAccountSelected()!
-                            .accountNFT![index]
+                            .getAccountNFTFiltered(
+                                widget.currentNftCategoryIndex!)[index]
                             .tokenInformations!;
 
                     return NFTCard2(
@@ -69,11 +75,26 @@ class _NFTListWidgetState extends State<NFTListWidget> {
                               ? null
                               : widget.images![index],
                       address: tokenInformations.address!,
-                      typeMime: tokenInformations.tokenProperties![0]
-                          .where((element) => element.name == 'type/mime')
-                          .first
-                          .value!,
-                      description: '',
+                      typeMime: tokenInformations.tokenProperties == null ||
+                              tokenInformations.tokenProperties![0]
+                                      .firstWhereOrNull((element) =>
+                                          element.name == 'type/mime') ==
+                                  null
+                          ? ''
+                          : tokenInformations.tokenProperties![0]
+                              .where((element) => element.name == 'type/mime')
+                              .first
+                              .value!,
+                      description: tokenInformations.tokenProperties == null ||
+                              tokenInformations.tokenProperties![0]
+                                      .firstWhereOrNull((element) =>
+                                          element.name == 'description') ==
+                                  null
+                          ? ''
+                          : tokenInformations.tokenProperties![0]
+                              .where((element) => element.name == 'description')
+                              .first
+                              .value!,
                       onTap: (() {
                         List<TokenProperty> tokenProperties =
                             List<TokenProperty>.empty(growable: true);
@@ -105,20 +126,31 @@ class _NFTListWidgetState extends State<NFTListWidget> {
                                     NFTPreviewWidget(
                                         nftName: tokenInformations.name,
                                         nftAddress: tokenInformations.address,
+                                        nftSize: widget.images![index].length,
                                         context: context,
                                         nftDescription: tokenInformations
-                                            .tokenProperties![0]
-                                            .where((element) =>
-                                                element.name == 'description')
-                                            .first
-                                            .value,
+                                                        .tokenProperties ==
+                                                    null ||
+                                                tokenInformations.tokenProperties![0].firstWhereOrNull((element) => element.name == 'description') ==
+                                                    null
+                                            ? null
+                                            : tokenInformations.tokenProperties![0]
+                                                .where((element) =>
+                                                    element.name ==
+                                                    'description')
+                                                .first
+                                                .value,
                                         nftTypeMime: tokenInformations
-                                            .tokenProperties![0]
-                                            .where((element) =>
-                                                element.name == 'type/mime')
-                                            .first
-                                            .value,
-                                        nftProperties: tokenProperties,
+                                                        .tokenProperties ==
+                                                    null ||
+                                                tokenInformations.tokenProperties![0].firstWhereOrNull((element) => element.name == 'type/mime') ==
+                                                    null
+                                            ? null
+                                            : tokenInformations
+                                                .tokenProperties![0]
+                                                .where((element) => element.name == 'type/mime')
+                                                .first
+                                                .value,
                                         nftPropertiesDeleteAction: false),
                                     Row(
                                       children: <Widget>[
@@ -195,15 +227,23 @@ class _NFTListWidgetState extends State<NFTListWidget> {
                   context,
                   AppButtonType.primary,
                   AppLocalization.of(context)!.createNFT,
-                  Dimens.buttonBottomDimens, onPressed: () {
-                Sheets.showAppHeightNineSheet(
+                  Dimens.buttonBottomDimens, onPressed: () async {
+                /* Sheets.showAppHeightNineSheet(
                   context: context,
                   widget: AddNFTFile(
                     process: AddNFTFileProcess.single,
                     primaryCurrency:
                         StateContainer.of(context).curPrimaryCurrency,
                   ),
-                );
+                );*/
+                sl.get<HapticUtil>().feedback(FeedbackType.light,
+                    StateContainer.of(context).activeVibrations);
+                Navigator.of(context).pushNamed('/nft_creation', arguments: {
+                  'currentNftCategoryIndex': widget.currentNftCategoryIndex!,
+                  'process': NFTCreationProcessType.single,
+                  'primaryCurrency':
+                      StateContainer.of(context).curPrimaryCurrency
+                });
               }),
             ],
           ),

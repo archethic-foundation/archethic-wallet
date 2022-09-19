@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Package imports:
+import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive/hive.dart';
 
@@ -12,6 +13,7 @@ import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:collection/collection.dart';
 
 part 'account.g.dart';
 
@@ -64,6 +66,10 @@ class Account extends HiveObject {
   @HiveField(8)
   List<AccountToken>? accountNFT;
 
+  /// NFT Info Off Chain
+  @HiveField(10)
+  List<NftInfosOffChain>? nftInfosOffChainList;
+
   Future<void> updateLastAddress() async {
     String lastAddressFromAddress =
         await sl.get<AddressService>().lastAddressFromAddress(genesisAddress!);
@@ -80,6 +86,12 @@ class Account extends HiveObject {
 
   Future<void> updateNFT() async {
     accountNFT = await sl.get<AppService>().getNFTList(lastAddress!);
+    if (accountNFT != null) {
+      for (AccountToken accountToken in accountNFT!) {
+        await updateNftInfosOffChain(
+            tokenId: accountToken.tokenInformations!.id!);
+      }
+    }
     await updateAccount();
   }
 
@@ -120,5 +132,79 @@ class Account extends HiveObject {
 
   Future<void> updateAccount() async {
     await sl.get<DBHelper>().updateAccount(this);
+  }
+
+  Future<void> updateNftInfosOffChain(
+      {String? tokenAddress,
+      String? tokenId,
+      int? categoryNftIndex = 0,
+      bool? like = false}) async {
+    if (tokenId == null) {
+      Token token = await sl.get<ApiService>().getToken(tokenAddress!);
+      tokenId = token.id;
+    }
+    nftInfosOffChainList ??= List<NftInfosOffChain>.empty(growable: true);
+    if (nftInfosOffChainList!
+        .where((element) => element.id == tokenId)
+        .isEmpty) {
+      nftInfosOffChainList!.add(NftInfosOffChain(
+          id: tokenId, categoryNftIndex: categoryNftIndex, like: like));
+    } else {
+      nftInfosOffChainList![nftInfosOffChainList!
+              .indexWhere((element) => element.id == tokenId)] =
+          NftInfosOffChain(
+              id: tokenId, categoryNftIndex: categoryNftIndex, like: like);
+    }
+    await updateAccount();
+  }
+
+  List<AccountToken> getAccountNFTFiltered(int categoryNftIndex, {bool? like}) {
+    List<AccountToken> accountNFTFiltered =
+        List<AccountToken>.empty(growable: true);
+    if (accountNFT == null) {
+      return accountNFTFiltered;
+    } else {
+      if (nftInfosOffChainList == null || nftInfosOffChainList!.isEmpty) {
+        return accountNFT!;
+      } else {
+        for (AccountToken accountToken in accountNFT!) {
+          NftInfosOffChain? nftInfosOffChain = nftInfosOffChainList!
+              .where(
+                  (element) => element.id == accountToken.tokenInformations!.id)
+              .firstOrNull;
+          if (nftInfosOffChain != null &&
+              nftInfosOffChain.categoryNftIndex == categoryNftIndex) {
+            if (like == null) {
+              accountNFTFiltered.add(accountToken);
+            } else {
+              if (nftInfosOffChain.like == like) {
+                accountNFTFiltered.add(accountToken);
+              }
+            }
+          }
+        }
+        return accountNFTFiltered;
+      }
+    }
+  }
+
+  int getNbNFTInCategory(int categoryNftIndex) {
+    int count = 0;
+    if (nftInfosOffChainList == null || nftInfosOffChainList!.isEmpty) {
+      return count;
+    } else {
+      for (AccountToken accountToken in accountNFT!) {
+        NftInfosOffChain? nftInfosOffChain = nftInfosOffChainList!
+            .where(
+                (element) => element.id == accountToken.tokenInformations!.id)
+            .firstOrNull;
+        if (nftInfosOffChain != null &&
+            nftInfosOffChain.categoryNftIndex == categoryNftIndex) {
+          count++;
+        }
+      }
+    }
+
+    return count;
   }
 }

@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Package imports:
+import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -34,6 +35,7 @@ class DBHelper {
     Hive.registerAdapter(AccountTokenAdapter());
     Hive.registerAdapter(TokenInformationsAdapter());
     Hive.registerAdapter(TokenInformationsPropertyAdapter());
+    Hive.registerAdapter(NftInfosOffChainAdapter());
   }
 
   // Contacts

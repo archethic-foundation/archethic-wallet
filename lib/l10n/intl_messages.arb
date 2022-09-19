@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2022-09-08T23:04:00.660477",
+  "@@last_modified": "2022-09-19T22:32:21.411231",
   "welcomeText": "Welcome to Internet of Trust.\n\nArchethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "@welcomeText": {
     "type": "text",
@@ -614,6 +614,12 @@
   },
   "estimatedFeesAddTokenNote": "Note: The fees will be estimated when the name and the initial supply are specified.",
   "@estimatedFeesAddTokenNote": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "estimatedFeesAddNFTNote": "Fees will be estimated when the NFT is defined.",
+  "@estimatedFeesAddNFTNote": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
@@ -1710,6 +1716,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "addPublicKeyHeader": "Add access",
+  "@addPublicKeyHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "transactionsAllListHeader": "Transactions",
   "@transactionsAllListHeader": {
     "type": "text",
@@ -1998,6 +2010,12 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "publicKeyAddHint": "Enter a public key",
+  "@publicKeyAddHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "nftDescriptionHint": "Enter a description",
   "@nftDescriptionHint": {
     "type": "text",
@@ -2064,8 +2082,80 @@
     "placeholders_order": [],
     "placeholders": {}
   },
+  "nftWithoutCategory": "Without category",
+  "@nftWithoutCategory": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryArt": "Art",
+  "@nftCategoryArt": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryAccess": "Access",
+  "@nftCategoryAccess": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryDoc": "Doc",
+  "@nftCategoryDoc": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryCollectibles": "Collectibles",
+  "@nftCategoryCollectibles": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryMusic": "Music",
+  "@nftCategoryMusic": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryLoyaltyCard": "Loyalty Cards",
+  "@nftCategoryLoyaltyCard": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
   "conversionOraclePromotion": "(Conversion provided by Archethic Oracles)",
   "@conversionOraclePromotion": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCreationProcessTabImportHeader": "Import",
+  "@nftCreationProcessTabImportHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCreationProcessTabDescriptionHeader": "Description",
+  "@nftCreationProcessTabDescriptionHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCreationProcessTabPropertiesHeader": "Properties",
+  "@nftCreationProcessTabPropertiesHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCreationProcessTabConfirmationHeader": "Confirmation",
+  "@nftCreationProcessTabConfirmationHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "createNFTConfirmation": "Are you sure you want to create this NFT?",
+  "@createNFTConfirmation": {
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}

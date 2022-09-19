@@ -6,6 +6,9 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 // Flutter imports:
+import 'package:aewallet/model/primary_currency.dart';
+import 'package:aewallet/ui/views/nft/nft_creation_process.dart';
+import 'package:aewallet/ui/views/nft/nft_list_per_category.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -243,6 +246,33 @@ class _AppState extends State<App> {
             case '/lock_screen_transition':
               return MaterialPageRoute<AppLockScreen>(
                 builder: (_) => const AppLockScreen(),
+                settings: settings,
+              );
+            case '/nft_list_per_category':
+              return MaterialPageRoute<NFTListPerCategory>(
+                builder: (_) => NFTListPerCategory(
+                  currentNftCategoryIndex: settings.arguments == null
+                      ? null
+                      : settings.arguments as int,
+                ),
+                settings: settings,
+              );
+            case '/nft_creation':
+              Map<String, dynamic> args =
+                  settings.arguments as Map<String, dynamic>;
+              return MaterialPageRoute<NFTCreationProcess>(
+                builder: (_) => NFTCreationProcess(
+                  currentNftCategoryIndex:
+                      args['currentNftCategoryIndex'] == null
+                          ? null
+                          : args['currentNftCategoryIndex'] as int,
+                  process: args['process'] == null
+                      ? null
+                      : args['process'] as NFTCreationProcessType,
+                  primaryCurrency: args['primaryCurrency'] == null
+                      ? null
+                      : args['primaryCurrency'] as PrimaryCurrencySetting,
+                ),
                 settings: settings,
               );
             default:

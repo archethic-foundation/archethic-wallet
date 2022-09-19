@@ -174,19 +174,19 @@ class _AddNFTFileState extends State<AddNFTFileConfirm> {
                       height: 20,
                     ),
                     NFTPreviewWidget(
-                        nftName: widget.token.name,
-                        context: context,
-                        nftDescription: widget.token.tokenProperties![0]
-                            .where((element) => element.name == 'description')
-                            .first
-                            .value,
-                        nftTypeMime: widget.token.tokenProperties![0]
-                            .where((element) => element.name == 'type/mime')
-                            .first
-                            .value,
-                        nftFile: widget.filePreview,
-                        nftSize: widget.sizeFile,
-                        nftProperties: widget.token.tokenProperties![0]),
+                      nftName: widget.token.name,
+                      context: context,
+                      nftDescription: widget.token.tokenProperties![0]
+                          .where((element) => element.name == 'description')
+                          .first
+                          .value,
+                      nftTypeMime: widget.token.tokenProperties![0]
+                          .where((element) => element.name == 'type/mime')
+                          .first
+                          .value,
+                      nftFile: widget.filePreview,
+                      nftSize: widget.sizeFile,
+                    ),
                   ],
                 ),
               ),

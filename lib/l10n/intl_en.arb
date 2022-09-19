@@ -1955,5 +1955,95 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "nftCategoryArt": "Art",
+  "@nftCategoryArt": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryAccess": "Access",
+  "@nftCategoryAccess": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryDoc": "Doc",
+  "@nftCategoryDoc": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryCollectibles": "Collectibles",
+  "@nftCategoryCollectibles": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryMusic": "Music",
+  "@nftCategoryMusic": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryLoyaltyCard": "Loyalty Cards",
+  "@nftCategoryLoyaltyCard": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "conversionOraclePromotion": "(Conversion provided by Archethic Oracles)",
+  "@conversionOraclePromotion": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCreationProcessTabImportHeader": "Import",
+  "@nftCreationProcessTabImportHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCreationProcessTabDescriptionHeader": "Description",
+  "@nftCreationProcessTabDescriptionHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCreationProcessTabPropertiesHeader": "Properties",
+  "@nftCreationProcessTabPropertiesHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCreationProcessTabConfirmationHeader": "Confirmation",
+  "@nftCreationProcessTabConfirmationHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "estimatedFeesAddNFTNote": "Fees will be estimated when the NFT is defined.",
+  "@estimatedFeesAddNFTNote": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addPublicKeyHeader": "Add access",
+  "@addPublicKeyHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "publicKeyAddHint": "Enter a public key",
+  "@publicKeyAddHint": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftWithoutCategory": "Without category",
+  "@nftWithoutCategory": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

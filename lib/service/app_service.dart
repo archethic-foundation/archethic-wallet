@@ -340,6 +340,7 @@ class AppService {
 
             TokenInformations tokenInformations = TokenInformations(
                 address: balance.token![i].address,
+                id: token.id,
                 name: token.name,
                 type: token.type,
                 supply: fromBigInt(token.supply!).toDouble(),

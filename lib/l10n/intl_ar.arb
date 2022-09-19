@@ -327,5 +327,20 @@
 	"addTokenConfirmed": "Tokens were created with %1 confirmations on %2",
 	"transferConfirmed1": "The transfer was made with %1 confirmation on %2",
 	"transferConfirmed": "The transfer was made with %1 confirmations on %2",
-	"build": "Build :"
+	"build": "Build :",
+	"nftCategoryArt": "Art",
+	"nftCategoryAccess": "Access",
+	"nftCategoryDoc": "Doc",
+	"nftCategoryCollectibles": "Collectibles",
+	"nftCategoryMusic": "Music",
+	"nftCategoryLoyaltyCard": "Loyalty Cards",
+	"conversionOraclePromotion": "(Conversion provided by Archethic Oracles)",
+	"nftCreationProcessTabImportHeader": "Import",
+	"nftCreationProcessTabDescriptionHeader": "Description",
+	"nftCreationProcessTabPropertiesHeader": "Properties",
+	"nftCreationProcessTabConfirmationHeader": "Confirmation",
+	"estimatedFeesAddNFTNote": "Fees will be estimated when the NFT is defined.",
+	"addPublicKeyHeader": "Add access",
+	"publicKeyAddHint": "Enter a public key",
+	"nftWithoutCategory": "Without category"
 }

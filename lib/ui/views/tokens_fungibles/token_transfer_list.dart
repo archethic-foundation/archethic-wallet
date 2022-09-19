@@ -34,7 +34,7 @@ class TokenTransferListWidget extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: listTokenTransfer!.length * 60,
+            height: listTokenTransfer!.length * 70,
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               itemCount: listTokenTransfer!.length,
@@ -87,8 +87,7 @@ class TokenTransferListWidget extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        Text(
-            '${fromBigInt(tokenTransfer.amount!).toStringAsFixed(8)} ${symbol}',
+        Text('${fromBigInt(tokenTransfer.amount!).toStringAsFixed(8)} $symbol',
             style: AppStyles.textStyleSize14W600Primary(context)),
       ],
     );

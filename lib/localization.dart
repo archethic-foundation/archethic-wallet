@@ -519,6 +519,11 @@ class AppLocalization {
         name: 'estimatedFeesAddTokenNote');
   }
 
+  String get estimatedFeesAddNFTNote {
+    return Intl.message('Fees will be estimated when the NFT is defined.',
+        name: 'estimatedFeesAddNFTNote');
+  }
+
   String get pinCreateTitle {
     return Intl.message('Create a 6-digit pin', name: 'pinCreateTitle');
   }
@@ -1330,6 +1335,10 @@ class AppLocalization {
     return Intl.message('Buy UCO here', name: 'transactionBuyHeader');
   }
 
+  String get addPublicKeyHeader {
+    return Intl.message('Add access', name: 'addPublicKeyHeader');
+  }
+
   String get transactionsAllListHeader {
     return Intl.message('Transactions', name: 'transactionsAllListHeader');
   }
@@ -1552,6 +1561,10 @@ class AppLocalization {
     return Intl.message('Enter a name', name: 'nftNameHint');
   }
 
+  String get publicKeyAddHint {
+    return Intl.message('Enter a public key', name: 'publicKeyAddHint');
+  }
+
   String get nftDescriptionHint {
     return Intl.message('Enter a description', name: 'nftDescriptionHint');
   }
@@ -1596,9 +1609,65 @@ class AppLocalization {
     return Intl.message('Size: ', name: 'nftAddFileSize');
   }
 
+  String get nftWithoutCategory {
+    return Intl.message('Without category', name: 'nftWithoutCategory');
+  }
+
+  String get nftCategoryArt {
+    return Intl.message('Art', name: 'nftCategoryArt');
+  }
+
+  String get nftCategoryAccess {
+    return Intl.message('Access', name: 'nftCategoryAccess');
+  }
+
+  String get nftCategoryDoc {
+    return Intl.message('Doc', name: 'nftCategoryDoc');
+  }
+
+  String get nftCategoryCollectibles {
+    return Intl.message('Collectibles', name: 'nftCategoryCollectibles');
+  }
+
+  String get nftCategoryMusic {
+    return Intl.message('Music', name: 'nftCategoryMusic');
+  }
+
+  String get nftCategoryPhoto {
+    return Intl.message('Photo', name: 'nftCategoryPhoto');
+  }
+
+  String get nftCategoryLoyaltyCard {
+    return Intl.message('Loyalty Cards', name: 'nftCategoryLoyaltyCard');
+  }
+
   String get conversionOraclePromotion {
     return Intl.message('(Conversion provided by Archethic Oracles)',
         name: 'conversionOraclePromotion');
+  }
+
+  String get nftCreationProcessTabImportHeader {
+    return Intl.message('Import', name: 'nftCreationProcessTabImportHeader');
+  }
+
+  String get nftCreationProcessTabDescriptionHeader {
+    return Intl.message('Description',
+        name: 'nftCreationProcessTabDescriptionHeader');
+  }
+
+  String get nftCreationProcessTabPropertiesHeader {
+    return Intl.message('Properties',
+        name: 'nftCreationProcessTabPropertiesHeader');
+  }
+
+  String get nftCreationProcessTabConfirmationHeader {
+    return Intl.message('Confirmation',
+        name: 'nftCreationProcessTabConfirmationHeader');
+  }
+
+  String get createNFTConfirmation {
+    return Intl.message('Are you sure you want to create this NFT?',
+        name: 'createNFTConfirmation');
   }
 
   String get notEnoughConfirmations {
