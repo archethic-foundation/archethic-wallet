@@ -301,37 +301,34 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
 
   Future<void> checkLoggedIn() async {
     final Preferences preferences = await Preferences.getInstance();
-    bool jailbroken;
-    bool developerMode;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
+    bool jailbroken = false;
+    bool developerMode = false;
+    if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
       jailbroken = await FlutterJailbreakDetection.jailbroken;
       developerMode = await FlutterJailbreakDetection.developerMode;
-    } on PlatformException {
-      jailbroken = false;
-      developerMode = false;
-    }
 
-    if (!preferences.getHasSeenRootWarning() && (jailbroken || developerMode)) {
-      AppDialogs.showConfirmDialog(
-          context,
-          CaseChange.toUpperCase(AppLocalization.of(context)!.warning,
-              StateContainer.of(context).curLanguage.getLocaleString()),
-          AppLocalization.of(context)!.rootWarning,
-          AppLocalization.of(context)!.iUnderstandTheRisks.toUpperCase(),
-          () async {
-            preferences.setHasSeenRootWarning();
-            checkLoggedIn();
-          },
-          cancelText: AppLocalization.of(context)!.exit.toUpperCase(),
-          cancelAction: () {
-            if (!kIsWeb && Platform.isIOS) {
-              exit(0);
-            } else {
-              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-            }
-          });
-      return;
+      if (!preferences.getHasSeenRootWarning() &&
+          (jailbroken || developerMode)) {
+        AppDialogs.showConfirmDialog(
+            context,
+            CaseChange.toUpperCase(AppLocalization.of(context)!.warning,
+                StateContainer.of(context).curLanguage.getLocaleString()),
+            AppLocalization.of(context)!.rootWarning,
+            AppLocalization.of(context)!.iUnderstandTheRisks.toUpperCase(),
+            () async {
+              preferences.setHasSeenRootWarning();
+              checkLoggedIn();
+            },
+            cancelText: AppLocalization.of(context)!.exit.toUpperCase(),
+            cancelAction: () {
+              if (!kIsWeb && Platform.isIOS) {
+                exit(0);
+              } else {
+                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+              }
+            });
+        return;
+      }
     }
 
     if (!_hasCheckedLoggedIn!) {
