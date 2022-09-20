@@ -2,6 +2,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'package:aewallet/util/number_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -89,7 +90,8 @@ class TokenTransferListWidget extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        Text('${fromBigInt(tokenTransfer.amount!).toStringAsFixed(8)} $symbol',
+        Text(
+            '${NumberUtil.formatThousands(fromBigInt(tokenTransfer.amount!))} $symbol',
             style: AppStyles.textStyleSize14W600Primary(context)),
       ],
     );
