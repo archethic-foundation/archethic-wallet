@@ -220,14 +220,16 @@ flutter_icons:
 
 msix_config:
   display_name: Archethic Wallet
-  publisher_display_name: Archethic Technologies
-  identity_name: mainnet.archethic.net
-  msix_version: 1.0.4.0
+  publisher_display_name: Archethic Technologies SARL
+  identity_name: ArchethicTechnologiesSARL.ArchethicWallet
+  publisher: CN=9687A561-7463-4BA7-BD4D-A04574BAF854
+  msix_version: 1.0.7282.0
   icons_background_color: "#000000"
+  languages: en-us
+  store: true
   logo_path: windows/icons/Icon-512.png
   # See https://docs.microsoft.com/en-us/windows/uwp/packaging/app-capability-declarations
-  capabilities: "internetClient,webcam,USB,Bluetooth"
-  output_name: ArchethicWallet
+  capabilities: "internetClient,webcam,USB"
 
 # The following section is specific to Flutter.
 flutter:
