@@ -44,7 +44,6 @@ class _NFTListState extends State<NFTList> {
       width: double.infinity,
       height: MediaQuery.of(context).size.height,
       child: Column(
-        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           SingleChildScrollView(
             child: Padding(
@@ -155,6 +154,9 @@ class _NFTListState extends State<NFTList> {
                                                 .first
                                                 .value,
                                         nftPropertiesDeleteAction: false),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
                                     Row(
                                       children: <Widget>[
                                         AppButton.buildAppButtonTiny(

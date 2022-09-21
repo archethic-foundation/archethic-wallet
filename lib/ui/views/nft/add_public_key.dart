@@ -110,11 +110,12 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                             labelText:
                                 AppLocalization.of(context)!.publicKeyAddHint,
                             autocorrect: false,
+                            maxLines: 3,
                             keyboardType: TextInputType.text,
                             style:
                                 AppStyles.textStyleSize16W600Primary(context),
                             inputFormatters: <LengthLimitingTextInputFormatter>[
-                              LengthLimitingTextInputFormatter(30),
+                              LengthLimitingTextInputFormatter(68),
                             ],
                             onChanged: (_) {
                               setState(() {});
@@ -250,7 +251,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
   }
 
   Widget _buildLine(BuildContext context, String publicKey) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.only(bottom: 8),
       child: GestureDetector(
         onTap: () async {},
@@ -282,7 +283,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                       children: [
                         Container(
                           padding: const EdgeInsets.only(top: 10),
-                          width: MediaQuery.of(context).size.width - 80,
+                          width: MediaQuery.of(context).size.width - 50,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -292,7 +293,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   AutoSizeText(
-                                    publicKey,
+                                    '${publicKey.substring(0, 15)}...${publicKey.substring(publicKey.length - 15)}',
                                     style: AppStyles.textStyleSize12W600Primary(
                                         context),
                                   ),

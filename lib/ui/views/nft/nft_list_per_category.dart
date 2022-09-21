@@ -16,6 +16,11 @@ class NFTListPerCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<NftCategory> nftCategories = StateContainer.of(context)
+        .appWallet!
+        .appKeychain!
+        .getAccountSelected()!
+        .getListNftCategory(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -68,7 +73,7 @@ class NFTListPerCategory extends StatelessWidget {
                         children: [
                           Hero(
                             tag:
-                                'nftCategory${NftCategory.getList(context)[currentNftCategoryIndex!].name!}',
+                                'nftCategory${nftCategories[currentNftCategoryIndex!].name!}',
                             child: Card(
                               elevation: 5,
                               shadowColor: Colors.black,
@@ -83,8 +88,7 @@ class NFTListPerCategory extends StatelessWidget {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15),
                                 child: Image.asset(
-                                  NftCategory.getList(
-                                          context)[currentNftCategoryIndex!]
+                                  nftCategories[currentNftCategoryIndex!]
                                       .image!,
                                   width: 50,
                                 ),
@@ -92,9 +96,7 @@ class NFTListPerCategory extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            NftCategory.getList(
-                                    context)[currentNftCategoryIndex!]
-                                .name!,
+                            nftCategories[currentNftCategoryIndex!].name!,
                             textAlign: TextAlign.center,
                             style:
                                 AppStyles.textStyleSize12W100Primary(context),

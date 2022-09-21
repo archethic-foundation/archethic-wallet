@@ -189,9 +189,6 @@ dependencies:
   # A flutter package for creating badges. Badges can be used for an additional marker for any widget, e.g. show a number of items in a shopping cart.
   badges: ^2.0.3
 
-  # A flutter package to let users easily add a dashed border around any widget.
-  dotted_border: ^2.0.0+2
-
 dev_dependencies:
   flutter_lints: ^2.0.1
   build_runner: ^2.2.0

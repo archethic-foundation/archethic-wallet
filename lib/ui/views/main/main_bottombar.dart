@@ -67,7 +67,7 @@ class MainBottomBar extends StatelessWidget {
                   inactiveColor: StateContainer.of(context)
                       .curTheme
                       .bottomBarInactiveIcon!),
-              /* BottomBarItem(
+              BottomBarItem(
                   icon: const Icon(Icons.collections_bookmark),
                   backgroundColorOpacity: StateContainer.of(context)
                       .curTheme
@@ -82,7 +82,7 @@ class MainBottomBar extends StatelessWidget {
                       StateContainer.of(context).curTheme.bottomBarActiveColor!,
                   inactiveColor: StateContainer.of(context)
                       .curTheme
-                      .bottomBarInactiveIcon!),*/
+                      .bottomBarInactiveIcon!),
             ],
           ),
         ),

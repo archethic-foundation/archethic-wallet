@@ -1339,6 +1339,11 @@ class AppLocalization {
     return Intl.message('Add access', name: 'addPublicKeyHeader');
   }
 
+  String get customizeCategoryListHeader {
+    return Intl.message('Customize categories',
+        name: 'customizeCategoryListHeader');
+  }
+
   String get transactionsAllListHeader {
     return Intl.message('Transactions', name: 'transactionsAllListHeader');
   }
@@ -1555,6 +1560,11 @@ class AppLocalization {
 
   String get addNFTProperty {
     return Intl.message('Add property', name: 'addNFTProperty');
+  }
+
+  String get addNftNewCategory {
+    return Intl.message('Add new category (Soon...)',
+        name: 'addNftNewCategory');
   }
 
   String get nftNameHint {

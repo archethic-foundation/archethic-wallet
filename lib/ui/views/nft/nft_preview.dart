@@ -109,25 +109,29 @@ class NFTPreviewWidget extends StatelessWidget {
                   nftDescription!,
                   style: AppStyles.textStyleSize14W600Primary(context),
                 ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
-                child: Wrap(
-                    alignment: WrapAlignment.start,
-                    children: tokenPropertyWithAccessInfos!.asMap().entries.map(
-                        (MapEntry<dynamic, TokenPropertyWithAccessInfos>
-                            entry) {
-                      return entry.value.tokenProperty!.name != 'file' &&
-                              entry.value.tokenProperty!.name !=
-                                  'description' &&
-                              entry.value.tokenProperty!.name != 'name' &&
-                              entry.value.tokenProperty!.name != 'type/mime'
-                          ? Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: _buildTokenProperty(context, entry.value),
-                            )
-                          : const SizedBox();
-                    }).toList()),
-              ),
+              if (tokenPropertyWithAccessInfos != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+                  child: Wrap(
+                      alignment: WrapAlignment.start,
+                      children: tokenPropertyWithAccessInfos!
+                          .asMap()
+                          .entries
+                          .map((MapEntry<dynamic, TokenPropertyWithAccessInfos>
+                              entry) {
+                        return entry.value.tokenProperty!.name != 'file' &&
+                                entry.value.tokenProperty!.name !=
+                                    'description' &&
+                                entry.value.tokenProperty!.name != 'name' &&
+                                entry.value.tokenProperty!.name != 'type/mime'
+                            ? Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child:
+                                    _buildTokenProperty(context, entry.value),
+                              )
+                            : const SizedBox();
+                      }).toList()),
+                ),
             ],
           ),
         ),

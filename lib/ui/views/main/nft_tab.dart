@@ -112,7 +112,12 @@ class NFTTab extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const NftCategoryMenu(),
+                        NftCategoryMenu(
+                            nftCategories: StateContainer.of(context)
+                                .appWallet!
+                                .appKeychain!
+                                .getAccountSelected()!
+                                .getListNftCategory(context)),
                       ],
                     ),
                   ),

@@ -1,8 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Package imports:
+import 'package:aewallet/model/nft_category.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 // Project imports:
@@ -70,6 +72,35 @@ class Account extends HiveObject {
   @HiveField(10)
   List<NftInfosOffChain>? nftInfosOffChainList;
 
+  /// List of NFT category
+  @HiveField(11)
+  List<int>? nftCategoryList;
+
+  List<NftCategory> getListNftCategory(BuildContext context) {
+    List<NftCategory> nftCategoryListCustomized =
+        List<NftCategory>.empty(growable: true);
+    if (nftCategoryList == null) {
+      return NftCategory.getListByDefault(context);
+    } else {
+      for (int nftCategoryId in nftCategoryList!) {
+        nftCategoryListCustomized.add(
+            NftCategory.getListByDefault(context).elementAt(nftCategoryId));
+      }
+      return nftCategoryListCustomized;
+    }
+  }
+
+  Future<void> updateNftCategoryList(
+      List<NftCategory> nftCategoryListCustomized) async {
+    nftCategoryList ??= List<int>.empty(growable: true);
+    nftCategoryList!.clear();
+    for (NftCategory nftCategory in nftCategoryListCustomized) {
+      nftCategoryList!.add(nftCategory.id!);
+    }
+
+    await updateAccount();
+  }
+
   Future<void> updateLastAddress() async {
     String lastAddressFromAddress =
         await sl.get<AddressService>().lastAddressFromAddress(genesisAddress!);
@@ -86,12 +117,6 @@ class Account extends HiveObject {
 
   Future<void> updateNFT() async {
     accountNFT = await sl.get<AppService>().getNFTList(lastAddress!);
-    if (accountNFT != null) {
-      for (AccountToken accountToken in accountNFT!) {
-        await updateNftInfosOffChain(
-            tokenId: accountToken.tokenInformations!.id!);
-      }
-    }
     await updateAccount();
   }
 
@@ -137,7 +162,7 @@ class Account extends HiveObject {
   Future<void> updateNftInfosOffChain(
       {String? tokenAddress,
       String? tokenId,
-      int? categoryNftIndex = 0,
+      int? categoryNftIndex,
       bool? like = false}) async {
     if (tokenId == null) {
       Token token = await sl.get<ApiService>().getToken(tokenAddress!);

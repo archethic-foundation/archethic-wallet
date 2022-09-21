@@ -5,6 +5,8 @@ import 'dart:io';
 import 'dart:ui';
 
 // Flutter imports:
+import 'package:aewallet/ui/views/nft/configure_category_list.dart';
+import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,25 +40,39 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: AppBar(
             actions: [
-              StateContainer.of(context).showBalance
+              StateContainer.of(context).bottomBarCurrentPage == 2
                   ? IconButton(
-                      icon: const FaIcon(FontAwesomeIcons.eye),
+                      icon: const FaIcon(FontAwesomeIcons.gear),
                       onPressed: () async {
-                        StateContainer.of(context).showBalance = false;
-
-                        final Preferences preferences =
-                            await Preferences.getInstance();
-                        await preferences.setShowBalances(false);
+                        sl.get<HapticUtil>().feedback(FeedbackType.light,
+                            StateContainer.of(context).activeVibrations);
+                        Sheets.showAppHeightNineSheet(
+                            context: context,
+                            widget: const ConfigureCategoryList());
                       })
-                  : IconButton(
-                      icon: const FaIcon(FontAwesomeIcons.eyeLowVision),
-                      onPressed: () async {
-                        StateContainer.of(context).showBalance = true;
+                  : StateContainer.of(context).showBalance
+                      ? IconButton(
+                          icon: const FaIcon(FontAwesomeIcons.eye),
+                          onPressed: () async {
+                            sl.get<HapticUtil>().feedback(FeedbackType.light,
+                                StateContainer.of(context).activeVibrations);
+                            StateContainer.of(context).showBalance = false;
 
-                        final Preferences preferences =
-                            await Preferences.getInstance();
-                        await preferences.setShowBalances(true);
-                      }),
+                            final Preferences preferences =
+                                await Preferences.getInstance();
+                            await preferences.setShowBalances(false);
+                          })
+                      : IconButton(
+                          icon: const FaIcon(FontAwesomeIcons.eyeLowVision),
+                          onPressed: () async {
+                            sl.get<HapticUtil>().feedback(FeedbackType.light,
+                                StateContainer.of(context).activeVibrations);
+                            StateContainer.of(context).showBalance = true;
+
+                            final Preferences preferences =
+                                await Preferences.getInstance();
+                            await preferences.setShowBalances(true);
+                          }),
               if (!kIsWeb &&
                   (Platform.isIOS == true ||
                       Platform.isAndroid == true ||
@@ -65,6 +81,8 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ? IconButton(
                         icon: const Icon(Icons.notifications_active_outlined),
                         onPressed: () async {
+                          sl.get<HapticUtil>().feedback(FeedbackType.light,
+                              StateContainer.of(context).activeVibrations);
                           StateContainer.of(context).activeNotifications =
                               false;
                           if (StateContainer.of(context)
@@ -81,6 +99,8 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                     : IconButton(
                         icon: const Icon(Icons.notifications_off_outlined),
                         onPressed: () async {
+                          sl.get<HapticUtil>().feedback(FeedbackType.light,
+                              StateContainer.of(context).activeVibrations);
                           StateContainer.of(context).activeNotifications = true;
 
                           if (StateContainer.of(context)

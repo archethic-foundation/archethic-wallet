@@ -4,12 +4,12 @@
 import 'dart:typed_data';
 
 // Flutter imports:
+import 'package:aewallet/util/nft_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pdfx/pdfx.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -39,20 +39,6 @@ class NFTCard2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Uint8List? fileDecryptedFinal = fileDecrypted;
-    if (MimeUtil.isPdf(typeMime) == true) {
-      PdfDocument.openData(
-        fileDecrypted!,
-      ).then((PdfDocument pdfDocument) {
-        pdfDocument.getPage(1).then((PdfPage pdfPage) {
-          pdfPage
-              .render(width: pdfPage.width, height: pdfPage.height)
-              .then((PdfPageImage? pdfPageImage) {
-            fileDecryptedFinal = pdfPageImage!.bytes;
-          });
-        });
-      });
-    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -66,12 +52,14 @@ class NFTCard2 extends StatelessWidget {
                   name,
                   style: AppStyles.textStyleSize12W400Primary(context),
                 ),
-                if (description != '') const SizedBox(height: 5),
                 if (description != '')
-                  Text(
-                    description,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppStyles.textStyleSize12W400Primary(context),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: Text(
+                      description,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppStyles.textStyleSize12W400Primary(context),
+                    ),
                   ),
               ],
             ),
@@ -94,24 +82,46 @@ class NFTCard2 extends StatelessWidget {
               children: <Widget>[
                 if (MimeUtil.isImage(typeMime) == true ||
                     MimeUtil.isPdf(typeMime) == true)
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: Container(
+                  if (address != null)
+                    FutureBuilder<Uint8List?>(
+                        future: NFTUtil.getImageFromTokenAddress(address),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                      color: StateContainer.of(context)
+                                          .curTheme
+                                          .text,
+                                      border: Border.all(
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: Image.memory(
+                                      snapshot.data!,
+                                      height: 130,
+                                      fit: BoxFit.fitHeight,
+                                    )));
+                          } else {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+                        })
+                  else
+                    Container(
                       decoration: BoxDecoration(
                         color: StateContainer.of(context).curTheme.text,
                         border: Border.all(
                           width: 1,
                         ),
                       ),
-                      child: fileDecrypted == null
-                          ? const SizedBox()
-                          : Image.memory(
-                              fileDecryptedFinal!,
-                              height: 150,
-                              fit: BoxFit.fitHeight,
-                            ),
+                      child: Image.memory(
+                        fileDecrypted!,
+                        height: 130,
+                        fit: BoxFit.fitHeight,
+                      ),
                     ),
-                  ),
               ],
             ),
           ),

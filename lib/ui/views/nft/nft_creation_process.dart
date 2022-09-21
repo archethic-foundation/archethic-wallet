@@ -4,6 +4,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -113,6 +114,21 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
 
   StreamSubscription<AuthenticatedEvent>? _authSub;
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
+
+  FocusNode nftPropertyNameStoreFocusNode = FocusNode();
+  TextEditingController nftPropertyNameStoreController =
+      TextEditingController();
+  FocusNode nftPropertyIdCardFocusNode = FocusNode();
+  TextEditingController nftPropertyIdCardController = TextEditingController();
+  FocusNode nftPropertyExpiryDateFocusNode = FocusNode();
+  TextEditingController nftPropertyxpiryDateController =
+      TextEditingController();
+
+  FocusNode nftPropertyAuthorFocusNode = FocusNode();
+  TextEditingController nftPropertyAuthorController = TextEditingController();
+  FocusNode nftPropertyCompositorFocusNode = FocusNode();
+  TextEditingController nftPropertyCompositorController =
+      TextEditingController();
 
   @override
   void initState() {
@@ -293,7 +309,11 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.asset(
-                                NftCategory.getList(context)[
+                                StateContainer.of(context)
+                                    .appWallet!
+                                    .appKeychain!
+                                    .getAccountSelected()!
+                                    .getListNftCategory(context)[
                                         widget.currentNftCategoryIndex!]
                                     .image!,
                                 width: 40,
@@ -583,7 +603,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                         shape: RoundedRectangleBorder(
                           side: tokenPropertyAsset!.publicKeysList != null &&
                                   tokenPropertyAsset!.publicKeysList!.isNotEmpty
-                              ? BorderSide(color: Colors.redAccent, width: 2.0)
+                              ? const BorderSide(
+                                  color: Colors.redAccent, width: 2.0)
                               : BorderSide(
                                   color: StateContainer.of(context)
                                       .curTheme
@@ -1007,6 +1028,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                   textAlign: TextAlign.justify,
                 ),
               ),
+              getCategoryTemplateForm(context, widget.currentNftCategoryIndex!),
               AppTextField(
                 focusNode: nftPropertyNameFocusNode,
                 controller: nftPropertyNameController,
@@ -1179,7 +1201,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+                padding: const EdgeInsets.only(top: 20),
                 child: Wrap(
                     alignment: WrapAlignment.start,
                     children: tokenPropertyWithAccessInfosList
@@ -1510,6 +1532,16 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                           });
                                         });
                                   } else {
+                                    UIUtil.showSnackbar(
+                                        addNFTMessage,
+                                        context,
+                                        StateContainer.of(context)
+                                            .curTheme
+                                            .text!,
+                                        StateContainer.of(context)
+                                            .curTheme
+                                            .snackBarShadow!);
+
                                     setState(() {
                                       isPressed = false;
                                     });
@@ -1693,7 +1725,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
     if (MimeUtil.isImage(typeMime) == true) {
       fileDecodedForPreview = fileDecoded;
 
-      final data = await readExifFromBytes(fileDecoded!);
+      /*final data = await readExifFromBytes(fileDecoded!);
 
       for (final entry in data.entries) {
         tokenPropertyWithAccessInfosList.add(TokenPropertyWithAccessInfos(
@@ -1704,7 +1736,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                 a.tokenProperty!.name!
                     .toLowerCase()
                     .compareTo(b.tokenProperty!.name!.toLowerCase()));
-      }
+      }*/
     } else {
       if (MimeUtil.isPdf(typeMime) == true) {
         PdfDocument pdfDocument = await PdfDocument.openData(
@@ -1880,12 +1912,62 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
 
       final Transaction transaction =
           Transaction(type: 'token', data: Transaction.initData());
+
+      final String aesKey = uint8ListToHex(Uint8List.fromList(
+          List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
+      final KeyPair walletKeyPair = deriveKeyPair(seed, 0);
+
+      for (TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
+          in tokenPropertyWithAccessInfosList) {
+        if (tokenPropertyWithAccessInfos.publicKeysList != null &&
+            tokenPropertyWithAccessInfos.publicKeysList!.isNotEmpty) {
+          List<String> authorizedPublicKeys =
+              List<String>.empty(growable: true);
+          authorizedPublicKeys.add(uint8ListToHex(walletKeyPair.publicKey));
+
+          for (String publicKey
+              in tokenPropertyWithAccessInfos.publicKeysList!) {
+            authorizedPublicKeys.add(publicKey);
+          }
+
+          final List<AuthorizedKey> authorizedKeys =
+              List<AuthorizedKey>.empty(growable: true);
+          for (String key in authorizedPublicKeys) {
+            authorizedKeys.add(AuthorizedKey(
+                encryptedSecretKey: uint8ListToHex(ecEncrypt(aesKey, key)),
+                publicKey: key));
+          }
+
+          transaction.addOwnership(
+              aesEncrypt(
+                  tokenPropertyWithAccessInfos.tokenProperty!
+                      .toJson()
+                      .toString(),
+                  aesKey),
+              authorizedKeys);
+        }
+      }
+
+      List<TokenProperty> clearTokenPropertyList =
+          List<TokenProperty>.empty(growable: true);
+      for (TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
+          in tokenPropertyWithAccessInfosList) {
+        if (tokenPropertyWithAccessInfos.publicKeysList == null ||
+            tokenPropertyWithAccessInfos.publicKeysList!.isEmpty) {
+          clearTokenPropertyList
+              .add(tokenPropertyWithAccessInfos.tokenProperty!);
+        }
+      }
+      List<List<TokenProperty>> nftProperties =
+          List<List<TokenProperty>>.empty(growable: true);
+      nftProperties.add(clearTokenPropertyList);
+
       String content = tokenToJsonForTxDataContent(Token(
           name: token.name,
           supply: token.supply,
           type: token.type,
           symbol: token.symbol,
-          tokenProperties: token.tokenProperties));
+          tokenProperties: nftProperties));
       transaction.setContent(content);
       Transaction signedTx = keychain
           .buildTransaction(transaction, service, index)
@@ -1951,5 +2033,153 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       );
     }
     subscriptionChannel.close();
+  }
+
+  Widget getCategoryTemplateForm(
+      BuildContext context, int _currentNftCategoryIndex) {
+    switch (_currentNftCategoryIndex) {
+      case 4:
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(0),
+              child: Text(
+                'Properties required by the category:',
+                style: AppStyles.textStyleSize12W100Primary(context),
+                textAlign: TextAlign.justify,
+              ),
+            ),
+            getNftPropertyAppTextField(nftPropertyAuthorFocusNode,
+                nftPropertyAuthorController, 'Compositor', 'Compositor'),
+            getNftPropertyAppTextField(nftPropertyCompositorFocusNode,
+                nftPropertyCompositorController, 'Author', 'Author'),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Divider(
+                height: 2,
+                color: StateContainer.of(context).curTheme.text15,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                'Optional properties:',
+                style: AppStyles.textStyleSize12W100Primary(context),
+                textAlign: TextAlign.justify,
+              ),
+            ),
+          ],
+        );
+      case 6:
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(0),
+              child: Text(
+                'Properties required by the category:',
+                style: AppStyles.textStyleSize12W100Primary(context),
+                textAlign: TextAlign.justify,
+              ),
+            ),
+            getNftPropertyAppTextField(
+                nftPropertyNameStoreFocusNode,
+                nftPropertyNameStoreController,
+                'Name of the store',
+                'Name of the store'),
+            getNftPropertyAppTextField(nftPropertyIdCardFocusNode,
+                nftPropertyIdCardController, 'Id Card', 'Id Card'),
+            getNftPropertyAppTextField(nftPropertyExpiryDateFocusNode,
+                nftPropertyxpiryDateController, 'Expiry date', 'Expiry Date'),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Divider(
+                height: 2,
+                color: StateContainer.of(context).curTheme.text15,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                'Optional properties:',
+                style: AppStyles.textStyleSize12W100Primary(context),
+                textAlign: TextAlign.justify,
+              ),
+            ),
+          ],
+        );
+
+      default:
+        return const SizedBox();
+    }
+  }
+
+  Widget getNftPropertyAppTextField(
+      FocusNode focusNode,
+      TextEditingController textEditingController,
+      String hint,
+      String propertyKey) {
+    return AppTextField(
+      focusNode: focusNode,
+      controller: textEditingController,
+      cursorColor: StateContainer.of(context).curTheme.text,
+      textInputAction: TextInputAction.next,
+      labelText: hint,
+      autocorrect: false,
+      keyboardType: TextInputType.text,
+      style: AppStyles.textStyleSize16W600Primary(context),
+      inputFormatters: <LengthLimitingTextInputFormatter>[
+        LengthLimitingTextInputFormatter(30),
+      ],
+      onChanged: (text) {
+        if (text == '') {
+          tokenPropertyWithAccessInfosList.removeWhere(
+              (element) => element.tokenProperty!.name == propertyKey);
+        } else {
+          tokenPropertyWithAccessInfosList.removeWhere(
+              (element) => element.tokenProperty!.name == propertyKey);
+          tokenPropertyWithAccessInfosList.add(TokenPropertyWithAccessInfos(
+              tokenProperty: TokenProperty(
+                  name: propertyKey, value: textEditingController.text)));
+          tokenPropertyWithAccessInfosList.sort((TokenPropertyWithAccessInfos a,
+                  TokenPropertyWithAccessInfos b) =>
+              a.tokenProperty!.name!
+                  .toLowerCase()
+                  .compareTo(b.tokenProperty!.name!.toLowerCase()));
+        }
+
+        setState(() {});
+      },
+      suffixButton: kIsWeb == false && (Platform.isIOS || Platform.isAndroid)
+          ? TextFieldButton(
+              icon: FontAwesomeIcons.qrcode,
+              onPressed: () async {
+                sl.get<HapticUtil>().feedback(FeedbackType.light,
+                    StateContainer.of(context).activeVibrations);
+                UIUtil.cancelLockEvent();
+                final String? scanResult =
+                    await UserDataUtil.getQRData(DataType.raw, context);
+                QRScanErrs.errorList;
+                if (scanResult == null) {
+                  UIUtil.showSnackbar(
+                      AppLocalization.of(context)!.qrInvalidAddress,
+                      context,
+                      StateContainer.of(context).curTheme.text!,
+                      StateContainer.of(context).curTheme.snackBarShadow!);
+                } else if (QRScanErrs.errorList.contains(scanResult)) {
+                  UIUtil.showSnackbar(
+                      scanResult,
+                      context,
+                      StateContainer.of(context).curTheme.text!,
+                      StateContainer.of(context).curTheme.snackBarShadow!);
+                  return;
+                } else {
+                  setState(() {
+                    textEditingController.text = scanResult;
+                  });
+                }
+              },
+            )
+          : null,
+    );
   }
 }

@@ -13,7 +13,7 @@ class NftCategory {
   String? name;
   String? image;
 
-  static List<NftCategory> getList(BuildContext context) {
+  static List<NftCategory> getListByDefault(BuildContext context) {
     return [
       NftCategory(
           id: 0,
