@@ -1,6 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'dart:async';
+
+import 'package:aewallet/bus/refresh_event.dart';
+import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -16,8 +20,41 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/nft_util.dart';
 
-class NFTTab extends StatelessWidget {
+class NFTTab extends StatefulWidget {
   const NFTTab({super.key});
+
+  @override
+  State<NFTTab> createState() => _NFTTabState();
+}
+
+class _NFTTabState extends State<NFTTab> {
+  StreamSubscription<RefreshEvent>? _refreshSub;
+
+  @override
+  void initState() {
+    _registerBus();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _destroyBus();
+    super.dispose();
+  }
+
+  void _registerBus() {
+    _refreshSub = EventTaxiImpl.singleton()
+        .registerTo<RefreshEvent>()
+        .listen((RefreshEvent event) {
+      setState(() {});
+    });
+  }
+
+  void _destroyBus() {
+    if (_refreshSub != null) {
+      _refreshSub!.cancel();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

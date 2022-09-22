@@ -2,10 +2,12 @@
 
 // Flutter imports:
 import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/bus/refresh_event.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
+import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -13,15 +15,19 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 
 class ConfigureCategoryList extends StatefulWidget {
-  const ConfigureCategoryList({
-    super.key,
-  });
+  const ConfigureCategoryList({super.key});
 
   @override
   State<ConfigureCategoryList> createState() => _ConfigureCategoryListState();
 }
 
 class _ConfigureCategoryListState extends State<ConfigureCategoryList> {
+  @override
+  void dispose() {
+    EventTaxiImpl.singleton().fire(RefreshEvent());
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,7 +43,7 @@ class _ConfigureCategoryListState extends State<ConfigureCategoryList> {
                 top: 20,
               ),
               child: ReorderableWidget(
-                nftCategoryToSort: StateContainer.of(context)
+                nftCategory: StateContainer.of(context)
                     .appWallet!
                     .appKeychain!
                     .getAccountSelected()!
@@ -52,9 +58,9 @@ class _ConfigureCategoryListState extends State<ConfigureCategoryList> {
 }
 
 class ReorderableWidget extends StatefulWidget {
-  const ReorderableWidget({super.key, required this.nftCategoryToSort});
+  const ReorderableWidget({super.key, required this.nftCategory});
 
-  final List<NftCategory> nftCategoryToSort;
+  final List<NftCategory> nftCategory;
 
   @override
   State<ReorderableWidget> createState() => _ReorderableWidgetState();
@@ -64,10 +70,14 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
   List<NftCategory>? nftCategoryToHidden =
       List<NftCategory>.empty(growable: true);
 
+  List<NftCategory>? nftCategoryToSort =
+      List<NftCategory>.empty(growable: true);
+
   @override
   Widget build(BuildContext context) {
     nftCategoryToHidden = NftCategory.getListByDefault(context);
-    for (NftCategory nftCategory in widget.nftCategoryToSort) {
+    nftCategoryToSort = widget.nftCategory;
+    for (NftCategory nftCategory in nftCategoryToSort!) {
       nftCategoryToHidden!
           .removeWhere((element) => element.id == nftCategory.id);
     }
@@ -95,19 +105,18 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
               physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 20),
               onReorder: ((oldIndex, newIndex) async {
-                setState(() {
-                  final nftCategory =
-                      widget.nftCategoryToSort.removeAt(oldIndex);
-                  widget.nftCategoryToSort.insert(newIndex, nftCategory);
-                });
+                final nftCategory = nftCategoryToSort!.removeAt(oldIndex);
+                newIndex -= 1;
+                nftCategoryToSort!.insert(newIndex, nftCategory);
+                setState(() {});
                 await StateContainer.of(context)
                     .appWallet!
                     .appKeychain!
                     .getAccountSelected()!
-                    .updateNftCategoryList(widget.nftCategoryToSort);
+                    .updateNftCategoryList(nftCategoryToSort!);
               }),
               children: [
-                for (NftCategory nftCategory in widget.nftCategoryToSort)
+                for (NftCategory nftCategory in nftCategoryToSort!)
                   Column(
                     key: ValueKey(nftCategory),
                     children: [
@@ -117,7 +126,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                             ? IconButton(
                                 icon: const Icon(Icons.remove_circle),
                                 onPressed: (() async {
-                                  widget.nftCategoryToSort.removeWhere(
+                                  nftCategoryToSort!.removeWhere(
                                     (element) => element.id == nftCategory.id,
                                   );
                                   setState(() {});
@@ -126,7 +135,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                                       .appKeychain!
                                       .getAccountSelected()!
                                       .updateNftCategoryList(
-                                          widget.nftCategoryToSort);
+                                          nftCategoryToSort!);
                                 }),
                                 color: Colors.redAccent[400]!.withOpacity(0.5))
                             : const SizedBox(),
@@ -164,7 +173,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                                   nftCategoryToHidden!.removeWhere(
                                     (element) => element.id == nftCategory.id,
                                   );
-                                  widget.nftCategoryToSort.add(nftCategory);
+                                  nftCategoryToSort!.add(nftCategory);
 
                                   setState(() {});
                                   await StateContainer.of(context)
@@ -172,7 +181,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                                       .appKeychain!
                                       .getAccountSelected()!
                                       .updateNftCategoryList(
-                                          widget.nftCategoryToSort);
+                                          nftCategoryToSort!);
                                 }),
                                 color:
                                     Colors.greenAccent[400]!.withOpacity(0.5))),
