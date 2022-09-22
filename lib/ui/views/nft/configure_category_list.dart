@@ -105,10 +105,13 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
               physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 20),
               onReorder: ((oldIndex, newIndex) async {
-                final nftCategory = nftCategoryToSort!.removeAt(oldIndex);
-                newIndex -= 1;
-                nftCategoryToSort!.insert(newIndex, nftCategory);
-                setState(() {});
+                if (oldIndex < newIndex) {
+                  newIndex -= 1;
+                }
+                setState(() {
+                  final nftCategory = nftCategoryToSort!.removeAt(oldIndex);
+                  nftCategoryToSort!.insert(newIndex, nftCategory);
+                });
                 await StateContainer.of(context)
                     .appWallet!
                     .appKeychain!
