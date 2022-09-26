@@ -19,7 +19,7 @@ class NftInfosOffChainAdapter extends TypeAdapter<NftInfosOffChain> {
     return NftInfosOffChain(
       id: fields[0] as String?,
       categoryNftIndex: fields[3] as int?,
-      like: fields[2] as bool?,
+      favorite: fields[4] as bool?,
     );
   }
 
@@ -29,10 +29,10 @@ class NftInfosOffChainAdapter extends TypeAdapter<NftInfosOffChain> {
       ..writeByte(3)
       ..writeByte(0)
       ..write(obj.id)
-      ..writeByte(2)
-      ..write(obj.like)
       ..writeByte(3)
-      ..write(obj.categoryNftIndex);
+      ..write(obj.categoryNftIndex)
+      ..writeByte(4)
+      ..write(obj.favorite);
   }
 
   @override

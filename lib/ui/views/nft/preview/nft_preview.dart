@@ -4,6 +4,7 @@
 import 'dart:typed_data';
 
 // Flutter imports:
+import 'package:aewallet/model/data/token_informations.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -16,124 +17,120 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/mime_util.dart';
-import 'package:aewallet/util/nft_util.dart';
+import 'package:aewallet/util/token_util.dart';
 
 class NFTPreviewWidget extends StatelessWidget {
   const NFTPreviewWidget(
       {super.key,
-      this.nftName,
-      this.nftAddress,
-      this.nftDescription,
       this.nftFile,
-      this.nftTypeMime,
       this.tokenPropertyWithAccessInfos,
       this.nftSize = 0,
-      this.context,
+      required this.tokenInformations,
       this.nftPropertiesDeleteAction = true});
 
-  final String? nftName;
-  final String? nftAddress;
-  final String? nftDescription;
   final Uint8List? nftFile;
-  final String? nftTypeMime;
+
   final List<TokenPropertyWithAccessInfos>? tokenPropertyWithAccessInfos;
-  final BuildContext? context;
   final int nftSize;
   final bool nftPropertiesDeleteAction;
 
+  final TokenInformations tokenInformations;
+
   @override
   Widget build(BuildContext context) {
-    return Hero(
-      tag: nftName!,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                nftName!,
-                style: AppStyles.textStyleSize18W600Primary(context),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              if (MimeUtil.isImage(nftTypeMime) == true ||
-                  MimeUtil.isPdf(nftTypeMime) == true)
-                if (nftAddress != null)
-                  FutureBuilder<Uint8List?>(
-                      future: NFTUtil.getImageFromTokenAddress(nftAddress!),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Container(
-                              decoration: BoxDecoration(
-                                color: StateContainer.of(context).curTheme.text,
-                                border: Border.all(
-                                  width: 1,
-                                ),
+    String description =
+        TokenUtil.getPropertyValue(tokenInformations, 'description');
+    String typeMime =
+        TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              tokenInformations.name!,
+              style: AppStyles.textStyleSize18W600Primary(context),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            if (MimeUtil.isImage(typeMime) == true ||
+                MimeUtil.isPdf(typeMime) == true)
+              if (tokenInformations.address != null)
+                FutureBuilder<Uint8List?>(
+                    future: TokenUtil.getImageFromTokenAddress(
+                        tokenInformations.address!, typeMime),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return Container(
+                            decoration: BoxDecoration(
+                              color: StateContainer.of(context).curTheme.text,
+                              border: Border.all(
+                                width: 1,
                               ),
-                              child: Image.memory(
-                                snapshot.data!,
-                                width: MediaQuery.of(context).size.width,
-                                fit: BoxFit.fitWidth,
-                              ));
-                        } else {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
-                      })
-                else
-                  Container(
-                    decoration: BoxDecoration(
-                      color: StateContainer.of(context).curTheme.text,
-                      border: Border.all(
-                        width: 1,
-                      ),
-                    ),
-                    child: Image.memory(
-                      nftFile!,
-                      width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.fitWidth,
+                            ),
+                            child: Image.memory(
+                              snapshot.data!,
+                              width: MediaQuery.of(context).size.width,
+                              fit: BoxFit.fitWidth,
+                            ));
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    })
+              else
+                Container(
+                  decoration: BoxDecoration(
+                    color: StateContainer.of(context).curTheme.text,
+                    border: Border.all(
+                      width: 1,
                     ),
                   ),
-              if (nftSize > 0)
-                Text(
-                  '${AppLocalization.of(context)!.nftAddFileSize} ${filesize(nftSize)}',
-                  style: AppStyles.textStyleSize12W400Primary(context),
+                  child: Image.memory(
+                    nftFile!,
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
-              if (nftDescription != null) const SizedBox(height: 10),
-              if (nftDescription != null)
-                Text(
-                  nftDescription!,
+            if (nftSize > 0)
+              Text(
+                '${AppLocalization.of(context)!.nftAddFileSize} ${filesize(nftSize)}',
+                style: AppStyles.textStyleSize12W400Primary(context),
+              ),
+            if (description != '')
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text(
+                  description,
                   style: AppStyles.textStyleSize14W600Primary(context),
                 ),
-              if (tokenPropertyWithAccessInfos != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
-                  child: Wrap(
-                      alignment: WrapAlignment.start,
-                      children: tokenPropertyWithAccessInfos!
-                          .asMap()
-                          .entries
-                          .map((MapEntry<dynamic, TokenPropertyWithAccessInfos>
-                              entry) {
-                        return entry.value.tokenProperty!.name != 'file' &&
-                                entry.value.tokenProperty!.name !=
-                                    'description' &&
-                                entry.value.tokenProperty!.name != 'name' &&
-                                entry.value.tokenProperty!.name != 'type/mime'
-                            ? Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child:
-                                    _buildTokenProperty(context, entry.value),
-                              )
-                            : const SizedBox();
-                      }).toList()),
-                ),
-            ],
-          ),
+              ),
+            if (tokenPropertyWithAccessInfos != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+                child: Wrap(
+                    alignment: WrapAlignment.start,
+                    children: tokenPropertyWithAccessInfos!.asMap().entries.map(
+                        (MapEntry<dynamic, TokenPropertyWithAccessInfos>
+                            entry) {
+                      return entry.value.tokenProperty!.keys.first != 'file' &&
+                              entry.value.tokenProperty!.keys.first !=
+                                  'description' &&
+                              entry.value.tokenProperty!.keys.first != 'name' &&
+                              entry.value.tokenProperty!.keys.first !=
+                                  'type/mime'
+                          ? Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: _buildTokenProperty(context, entry.value),
+                            )
+                          : const SizedBox();
+                    }).toList()),
+              ),
+          ],
         ),
       ),
     );
@@ -179,7 +176,7 @@ class NFTPreviewWidget extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 20),
                               child: AutoSizeText(
                                 tokenPropertyWithAccessInfos
-                                    .tokenProperty!.name!,
+                                    .tokenProperty!.keys.first,
                                 style: AppStyles.textStyleSize12W600Primary(
                                     context),
                               ),
@@ -189,7 +186,7 @@ class NFTPreviewWidget extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 20),
                               child: AutoSizeText(
                                 tokenPropertyWithAccessInfos
-                                    .tokenProperty!.value!,
+                                    .tokenProperty!.values.first,
                                 style: AppStyles.textStyleSize12W400Primary(
                                     context),
                               ),

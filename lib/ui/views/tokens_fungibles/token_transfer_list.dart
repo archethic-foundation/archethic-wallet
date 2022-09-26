@@ -37,7 +37,7 @@ class TokenTransferListWidget extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: listTokenTransfer!.length * 70,
+            height: listTokenTransfer!.length * 90,
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               itemCount: listTokenTransfer!.length,

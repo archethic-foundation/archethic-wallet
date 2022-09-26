@@ -243,26 +243,27 @@ class _TransferSheetState extends State<TransferSheet> {
                         child: Column(
                           children: <Widget>[
                             const SizedBox(height: 25),
-                            if (widget.accountToken == null ||
-                                (widget.accountToken != null &&
-                                    widget.accountToken!.tokenInformations !=
-                                        null &&
-                                    widget.accountToken!.tokenInformations!
-                                            .type ==
-                                        'fungible'))
-                              Column(
-                                children: <Widget>[
+                            Column(
+                              children: <Widget>[
+                                if (widget.accountToken == null ||
+                                    (widget.accountToken != null &&
+                                        widget.accountToken!
+                                                .tokenInformations !=
+                                            null &&
+                                        widget.accountToken!.tokenInformations!
+                                                .type ==
+                                            'fungible'))
                                   getEnterAmountContainer(),
-                                  Container(
-                                    alignment: const AlignmentDirectional(0, 0),
-                                    margin: const EdgeInsets.only(top: 3),
-                                    child: Text(_amountValidationText!,
-                                        style: AppStyles
-                                            .textStyleSize14W600Primary(
-                                                context)),
-                                  ),
-                                ],
-                              ),
+                                Container(
+                                  alignment: const AlignmentDirectional(0, 0),
+                                  margin: const EdgeInsets.only(top: 3),
+                                  child: Text(_amountValidationText!,
+                                      style:
+                                          AppStyles.textStyleSize14W600Primary(
+                                              context)),
+                                ),
+                              ],
+                            ),
                             Column(
                               children: <Widget>[
                                 Container(

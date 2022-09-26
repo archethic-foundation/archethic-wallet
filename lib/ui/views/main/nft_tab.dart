@@ -18,7 +18,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/nft_category_menu.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:aewallet/util/nft_util.dart';
+import 'package:aewallet/util/token_util.dart';
 
 class NFTTab extends StatefulWidget {
   const NFTTab({super.key});
@@ -72,14 +72,6 @@ class _NFTTabState extends State<NFTTab> {
                   .appKeychain!
                   .getAccountSelected()!
                   .updateNFT();
-
-              StateContainer.of(context).imagesNFT =
-                  await NFTUtil.getImagesFromTokenAddressList(
-                      StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .accountNFT!);
             }),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(

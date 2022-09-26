@@ -80,7 +80,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
 
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
-        .listen((TransactionSendEvent event) {
+        .listen((TransactionSendEvent event) async {
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
         if (animationOpen!) {
@@ -111,6 +111,20 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
               StateContainer.of(context).curTheme.text!,
               StateContainer.of(context).curTheme.snackBarShadow!,
               duration: const Duration(milliseconds: 5000));
+          if (widget.typeTransfer == 'TOKEN') {
+            Transaction transaction = await sl
+                .get<ApiService>()
+                .getLastTransaction((event.transactionAddress!));
+
+            Token token = await sl.get<ApiService>().getToken(
+                transaction.data!.ledger!.token!.transfers![0].tokenAddress!,
+                request: 'id');
+            StateContainer.of(context)
+                .appWallet!
+                .appKeychain!
+                .getAccountSelected()!
+                .removeftInfosOffChain(token.id);
+          }
           setState(() {
             StateContainer.of(context).requestUpdate();
           });
@@ -347,8 +361,12 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
           await preferences.getNetwork().getPhoenixHttpLink(),
           await preferences.getNetwork().getWebsocketUri());
 
+      void waitConfirmationsTrf(QueryResult event) {
+        waitConfirmations(event, transactionAddress: signedTx.address);
+      }
+
       subscriptionChannel.addSubscriptionTransactionConfirmed(
-          transaction.address!, waitConfirmations);
+          transaction.address!, waitConfirmationsTrf);
 
       transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
 
@@ -368,7 +386,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
     }
   }
 
-  void waitConfirmations(QueryResult event) {
+  void waitConfirmations(QueryResult event, {String? transactionAddress}) {
     int nbConfirmations = 0;
     int maxConfirmations = 0;
     if (event.data != null && event.data!['transactionConfirmed'] != null) {
@@ -384,6 +402,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
           transactionType: TransactionSendEventType.transfer,
           response: 'ok',
           nbConfirmations: nbConfirmations,
+          transactionAddress: transactionAddress,
           maxConfirmations: maxConfirmations));
     } else {
       EventTaxiImpl.singleton().fire(

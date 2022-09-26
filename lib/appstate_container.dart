@@ -28,7 +28,7 @@ import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/themes/theme_dark.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/nft_util.dart';
+import 'package:aewallet/util/token_util.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/service_locator.dart';
@@ -80,8 +80,6 @@ class StateContainerState extends State<StateContainer> {
   String? idChartOption = '1h';
   int bottomBarCurrentPage = 1;
   PageController? bottomBarPageController = PageController(initialPage: 1);
-
-  List<Uint8List>? imagesNFT = List<Uint8List>.empty(growable: true);
 
   bool showBalance = false;
   bool showPriceChart = false;
@@ -246,9 +244,6 @@ class StateContainerState extends State<StateContainer> {
     await appWallet!.appKeychain!.getAccountSelected()!.updateFungiblesTokens();
 
     await appWallet!.appKeychain!.getAccountSelected()!.updateNFT();
-
-    imagesNFT = await NFTUtil.getImagesFromTokenAddressList(
-        appWallet!.appKeychain!.getAccountSelected()!.accountNFT!);
 
     setState(() {
       balanceLoading = true;

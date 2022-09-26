@@ -36,7 +36,7 @@ class _ConfigureCategoryListState extends State<ConfigureCategoryList> {
             title: AppLocalization.of(context)!.customizeCategoryListHeader),
         Center(
           child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.8,
+            height: MediaQuery.of(context).size.height * 0.7,
             child: SafeArea(
               minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
@@ -124,10 +124,15 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                     key: ValueKey(nftCategory),
                     children: [
                       ListTile(
-                        title: Text(nftCategory.name!),
+                        title: Text(
+                          nftCategory.name!,
+                          style: AppStyles.textStyleSize12W400Primary(context),
+                        ),
                         leading: nftCategory.id != 0
                             ? IconButton(
                                 icon: const Icon(Icons.remove_circle),
+                                hoverColor:
+                                    StateContainer.of(context).curTheme.text,
                                 onPressed: (() async {
                                   nftCategoryToSort!.removeWhere(
                                     (element) => element.id == nftCategory.id,
@@ -142,6 +147,10 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                                 }),
                                 color: Colors.redAccent[400]!.withOpacity(0.5))
                             : const SizedBox(),
+                        trailing: ReorderableDragStartListener(
+                          index: nftCategoryToSort!.indexOf(nftCategory),
+                          child: const Icon(Icons.drag_handle),
+                        ),
                       ),
                       const Divider(
                         height: 1,
@@ -169,7 +178,11 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                       key: ValueKey(nftCategory),
                       children: [
                         ListTile(
-                            title: Text(nftCategory.name!),
+                            title: Text(
+                              nftCategory.name!,
+                              style:
+                                  AppStyles.textStyleSize12W400Primary(context),
+                            ),
                             leading: IconButton(
                                 icon: const Icon(Icons.add_circle),
                                 onPressed: (() async {

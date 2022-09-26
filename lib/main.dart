@@ -301,7 +301,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
 
   Future<void> checkLoggedIn() async {
     final Preferences preferences = await Preferences.getInstance();
-    bool jailbroken = false;
+    /*bool jailbroken = false;
     bool developerMode = false;
     if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
       jailbroken = await FlutterJailbreakDetection.jailbroken;
@@ -329,7 +329,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
             });
         return;
       }
-    }
+    }*/
 
     if (!_hasCheckedLoggedIn!) {
       _hasCheckedLoggedIn = true;

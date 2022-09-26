@@ -109,7 +109,6 @@ class NFTListPerCategory extends StatelessWidget {
                 Expanded(
                   child: SingleChildScrollView(
                     child: NFTList(
-                        images: StateContainer.of(context).imagesNFT!,
                         currentNftCategoryIndex: currentNftCategoryIndex),
                   ),
                 ),

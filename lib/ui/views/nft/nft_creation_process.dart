@@ -7,6 +7,8 @@ import 'dart:io';
 import 'dart:math';
 
 // Flutter imports:
+import 'package:aewallet/model/data/token_informations.dart';
+import 'package:aewallet/util/token_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,7 +36,6 @@ import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
 import 'package:aewallet/service/app_service.dart';
@@ -44,7 +45,6 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/nft/add_public_key.dart';
-import 'package:aewallet/ui/views/nft/nft_preview.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
@@ -102,8 +102,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
   List<TokenPropertyWithAccessInfos> tokenPropertyWithAccessInfosList =
       List<TokenPropertyWithAccessInfos>.empty(growable: true);
   TokenPropertyWithAccessInfos? tokenPropertyAsset =
-      TokenPropertyWithAccessInfos(
-          tokenProperty: TokenProperty(name: 'file', value: ''));
+      TokenPropertyWithAccessInfos(tokenProperty: <String, String>{'file': ''});
 
   Token token = Token();
   int tabActiveIndex = 0;
@@ -224,7 +223,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
               .updateNftInfosOffChain(
                   tokenAddress: event.transactionAddress!,
                   categoryNftIndex: widget.currentNftCategoryIndex!,
-                  like: false);
+                  favorite: false);
 
           StateContainer.of(context).requestUpdate();
 
@@ -636,7 +635,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                                 const EdgeInsets.only(left: 20),
                                             child: AutoSizeText(
                                               tokenPropertyAsset!
-                                                  .tokenProperty!.name!,
+                                                  .tokenProperty!.keys.first,
                                               style: AppStyles
                                                   .textStyleSize12W600Primary(
                                                       context),
@@ -648,7 +647,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                                 const EdgeInsets.only(left: 20),
                                             child: AutoSizeText(
                                               tokenPropertyAsset!
-                                                  .tokenProperty!.value!,
+                                                  .tokenProperty!.values.first,
                                               style: AppStyles
                                                   .textStyleSize12W400Primary(
                                                       context),
@@ -813,10 +812,12 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                             file64 = '';
                                             tokenPropertyWithAccessInfosList
                                                 .removeWhere((element) =>
-                                                    element
-                                                        .tokenProperty!.name ==
+                                                    element.tokenProperty!.keys
+                                                        .first ==
                                                     tokenPropertyAsset!
-                                                        .tokenProperty!.name);
+                                                        .tokenProperty!
+                                                        .keys
+                                                        .first);
                                             setState(() {});
                                           });
                                         },
@@ -847,9 +848,18 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                       fit: BoxFit.fitWidth,
                     ),
                   ),
-                if (file != null &&
-                    (MimeUtil.isImage(typeMime) == true ||
-                        MimeUtil.isPdf(typeMime) == true))
+                if (file != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Format: $typeMime',
+                        style: AppStyles.textStyleSize12W400Primary(context),
+                      ),
+                    ),
+                  ),
+                if (file != null)
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Align(
@@ -901,11 +911,12 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
               ],
               onChanged: (text) {
                 tokenPropertyWithAccessInfosList.removeWhere(
-                    (element) => element.tokenProperty!.name == 'name');
+                    (element) => element.tokenProperty!.keys.first == 'name');
                 tokenPropertyWithAccessInfosList.add(
                     TokenPropertyWithAccessInfos(
-                        tokenProperty: TokenProperty(
-                            name: 'name', value: nftNameController!.text)));
+                        tokenProperty: <String, String>{
+                      'name': nftNameController!.text
+                    }));
               },
               suffixButton: kIsWeb == false &&
                       (Platform.isIOS || Platform.isAndroid)
@@ -957,13 +968,13 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                 LengthLimitingTextInputFormatter(40),
               ],
               onChanged: (text) {
-                tokenPropertyWithAccessInfosList.removeWhere(
-                    (element) => element.tokenProperty!.name == 'description');
+                tokenPropertyWithAccessInfosList.removeWhere((element) =>
+                    element.tokenProperty!.keys.first == 'description');
                 tokenPropertyWithAccessInfosList.add(
                     TokenPropertyWithAccessInfos(
-                        tokenProperty: TokenProperty(
-                            name: 'description',
-                            value: nftDescriptionController!.text)));
+                        tokenProperty: <String, String>{
+                      'description': nftDescriptionController!.text
+                    }));
               },
               suffixButton: kIsWeb == false &&
                       (Platform.isIOS || Platform.isAndroid)
@@ -1157,23 +1168,22 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                             tokenPropertyWithAccessInfosList.sort(
                                 (TokenPropertyWithAccessInfos a,
                                         TokenPropertyWithAccessInfos b) =>
-                                    a.tokenProperty!.name!
+                                    a.tokenProperty!.keys.first
                                         .toLowerCase()
-                                        .compareTo(b.tokenProperty!.name!
+                                        .compareTo(b.tokenProperty!.keys.first
                                             .toLowerCase()));
 
-                            setState(() {
-                              tokenPropertyWithAccessInfosList.add(
-                                  TokenPropertyWithAccessInfos(
-                                      tokenProperty: TokenProperty(
-                                          name: nftPropertyNameController!.text,
-                                          value: nftPropertyValueController!
-                                              .text)));
-                              nftPropertyNameController!.text = '';
-                              nftPropertyValueController!.text = '';
-                              FocusScope.of(context)
-                                  .requestFocus(nftPropertyNameFocusNode);
-                            });
+                            tokenPropertyWithAccessInfosList.add(
+                                TokenPropertyWithAccessInfos(
+                                    tokenProperty: <String, dynamic>{
+                                  nftPropertyNameController!.text:
+                                      nftPropertyValueController!.text
+                                }));
+                            nftPropertyNameController!.text = '';
+                            nftPropertyValueController!.text = '';
+                            FocusScope.of(context)
+                                .requestFocus(nftPropertyNameFocusNode);
+                            setState(() {});
                           }
                         })
                       : AppButton.buildAppButtonTiny(
@@ -1209,13 +1219,14 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                         .entries
                         .map((MapEntry<dynamic, TokenPropertyWithAccessInfos>
                             entry) {
-                      return entry.value.tokenProperty!.name != 'file' &&
-                              entry.value.tokenProperty!.name !=
+                      return entry.value.tokenProperty!.keys.first != 'file' &&
+                              entry.value.tokenProperty!.keys.first !=
                                   'description' &&
-                              entry.value.tokenProperty!.name != 'name' &&
-                              entry.value.tokenProperty!.name != 'type/mime' &&
+                              entry.value.tokenProperty!.keys.first != 'name' &&
+                              entry.value.tokenProperty!.keys.first !=
+                                  'type/mime' &&
                               (nftPropertySearchController!.text.isNotEmpty &&
-                                      entry.value.tokenProperty!.name!
+                                      entry.value.tokenProperty!.keys.first
                                           .toLowerCase()
                                           .contains(nftPropertySearchController!
                                               .text
@@ -1275,7 +1286,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                               padding: const EdgeInsets.only(left: 20),
                               child: AutoSizeText(
                                 tokenPropertyWithAccessInfos
-                                    .tokenProperty!.name!,
+                                    .tokenProperty!.keys.first,
                                 style: AppStyles.textStyleSize12W600Primary(
                                     context),
                               ),
@@ -1285,7 +1296,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                               padding: const EdgeInsets.only(left: 20),
                               child: AutoSizeText(
                                 tokenPropertyWithAccessInfos
-                                    .tokenProperty!.value!,
+                                    .tokenProperty!.values.first,
                                 style: AppStyles.textStyleSize12W400Primary(
                                     context),
                               ),
@@ -1425,9 +1436,9 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
 
                               tokenPropertyWithAccessInfosList.removeWhere(
                                   (element) =>
-                                      element.tokenProperty!.name ==
+                                      element.tokenProperty!.keys.first ==
                                       tokenPropertyWithAccessInfos
-                                          .tokenProperty!.name);
+                                          .tokenProperty!.keys.first);
                               setState(() {});
                             });
                           },
@@ -1591,17 +1602,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 20),
-                                          child: AutoSizeText(
-                                            tokenPropertyAsset!
-                                                .tokenProperty!.name!,
-                                            style: AppStyles
-                                                .textStyleSize12W600Primary(
-                                                    context),
-                                          ),
-                                        ),
                                         tokenPropertyAsset!.publicKeysList !=
                                                     null &&
                                                 tokenPropertyAsset!
@@ -1615,7 +1615,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width -
-                                                            180,
+                                                            100,
                                                     padding:
                                                         const EdgeInsets.only(
                                                             left: 20),
@@ -1631,7 +1631,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width -
-                                                            180,
+                                                            100,
                                                     padding:
                                                         const EdgeInsets.only(
                                                             left: 20),
@@ -1646,7 +1646,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width -
-                                                    180,
+                                                    100,
                                                 padding: const EdgeInsets.only(
                                                     left: 20),
                                                 child: AutoSizeText(
@@ -1668,31 +1668,92 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                     ),
                   ),
                 ),
-              NFTPreviewWidget(
-                  nftPropertiesDeleteAction: false,
-                  nftName: token.name,
-                  context: context,
-                  nftDescription: token.tokenProperties == null ||
-                          token.tokenProperties![0].firstWhereOrNull(
-                                  (element) => element.name == 'description') ==
-                              null
-                      ? null
-                      : token.tokenProperties![0]
-                          .firstWhere(
-                              (element) => element.name == 'description')
-                          .value!,
-                  nftTypeMime: token.tokenProperties == null ||
-                          token.tokenProperties![0].firstWhereOrNull(
-                                  (element) => element.name == 'type/mime') ==
-                              null
-                      ? null
-                      : token.tokenProperties![0]
-                          .firstWhere((element) => element.name == 'type/mime')
-                          .value!,
-                  nftFile: fileDecodedForPreview,
-                  nftSize: sizeFile,
-                  tokenPropertyWithAccessInfos:
-                      tokenPropertyWithAccessInfosList),
+              if (token.name != '')
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Text(
+                    token.name!,
+                    style: AppStyles.textStyleSize14W600Primary(context),
+                  ),
+                ),
+              if (nftDescriptionController!.text != '')
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Text(
+                    nftDescriptionController!.text,
+                    style: AppStyles.textStyleSize12W400Primary(context),
+                  ),
+                ),
+              if (file != null &&
+                  (MimeUtil.isImage(typeMime) == true ||
+                      MimeUtil.isPdf(typeMime) == true))
+                Padding(
+                  padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: StateContainer.of(context).curTheme.text,
+                      border: Border.all(
+                        width: 1,
+                      ),
+                    ),
+                    child: Image.memory(
+                      fileDecodedForPreview!,
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                ),
+              if (file != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Format: $typeMime',
+                      style: AppStyles.textStyleSize12W400Primary(context),
+                    ),
+                  ),
+                ),
+              if (file != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      '${AppLocalization.of(context)!.nftAddFileSize} ${filesize(sizeFile)}',
+                      style: AppStyles.textStyleSize12W400Primary(context),
+                    ),
+                  ),
+                ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                child: Wrap(
+                    alignment: WrapAlignment.start,
+                    children: tokenPropertyWithAccessInfosList
+                        .asMap()
+                        .entries
+                        .map((MapEntry<dynamic, TokenPropertyWithAccessInfos>
+                            entry) {
+                      return entry.value.tokenProperty!.keys.first != 'file' &&
+                              entry.value.tokenProperty!.keys.first !=
+                                  'description' &&
+                              entry.value.tokenProperty!.keys.first != 'name' &&
+                              entry.value.tokenProperty!.keys.first !=
+                                  'type/mime' &&
+                              (nftPropertySearchController!.text.isNotEmpty &&
+                                      entry.value.tokenProperty!.keys.first
+                                          .toLowerCase()
+                                          .contains(nftPropertySearchController!
+                                              .text
+                                              .toLowerCase()) ||
+                                  nftPropertySearchController!.text.isEmpty)
+                          ? Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: _buildTokenProperty(context, entry.value),
+                            )
+                          : const SizedBox();
+                    }).toList()),
+              ),
             ],
           ),
         ),
@@ -1708,18 +1769,18 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
     sizeFile = fileDecoded!.length;
 
     tokenPropertyWithAccessInfosList
-        .removeWhere((element) => element.tokenProperty!.name == 'file');
+        .removeWhere((element) => element.tokenProperty!.keys.first == 'file');
     tokenPropertyWithAccessInfosList.add(TokenPropertyWithAccessInfos(
-        tokenProperty: TokenProperty(name: 'file', value: file64)));
+        tokenProperty: <String, String>{'file': file64}));
 
     try {
       typeMime = Mime.getTypesFromExtension(
           path.extension(file.path).replaceAll('.', ''))![0];
 
-      tokenPropertyWithAccessInfosList
-          .removeWhere((element) => element.tokenProperty!.name == 'type/mime');
+      tokenPropertyWithAccessInfosList.removeWhere(
+          (element) => element.tokenProperty!.keys.first == 'type/mime');
       tokenPropertyWithAccessInfosList.add(TokenPropertyWithAccessInfos(
-          tokenProperty: TokenProperty(name: 'type/mime', value: typeMime)));
+          tokenProperty: <String, String>{'type/mime': typeMime}));
     } catch (e) {}
 
     if (MimeUtil.isImage(typeMime) == true) {
@@ -1772,7 +1833,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       } else {
         for (TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
             in tokenPropertyWithAccessInfosList) {
-          if (tokenPropertyWithAccessInfos.tokenProperty!.name ==
+          if (tokenPropertyWithAccessInfos.tokenProperty!.keys.first ==
               nftPropertyNameController!.text) {
             setState(() {
               addNFTPropertyMessage = 'Le nom existe déjà';
@@ -1792,15 +1853,14 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         supply: 100000000,
         symbol: '',
         id: '1',
-        type: 'non-fungible');
-    token.tokenProperties = List<List<TokenProperty>>.empty(growable: true);
-    List<TokenProperty> tokenProperties =
-        List<TokenProperty>.empty(growable: true);
+        type: 'non-fungible',
+        tokenProperties: {});
+
     for (TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
         in tokenPropertyWithAccessInfosList) {
-      tokenProperties.add(tokenPropertyWithAccessInfos.tokenProperty!);
+      token.tokenProperties!
+          .addAll(tokenPropertyWithAccessInfos.tokenProperty!);
     }
-    token.tokenProperties!.add(tokenProperties);
   }
 
   double getFee(BuildContext context) {
@@ -1939,35 +1999,28 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
           }
 
           transaction.addOwnership(
-              aesEncrypt(
-                  tokenPropertyWithAccessInfos.tokenProperty!
-                      .toJson()
-                      .toString(),
+              aesEncrypt(tokenPropertyWithAccessInfos.tokenProperty!.toString(),
                   aesKey),
               authorizedKeys);
         }
       }
 
-      List<TokenProperty> clearTokenPropertyList =
-          List<TokenProperty>.empty(growable: true);
+      Map<String, dynamic>? clearTokenPropertyList = {};
       for (TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
           in tokenPropertyWithAccessInfosList) {
         if (tokenPropertyWithAccessInfos.publicKeysList == null ||
             tokenPropertyWithAccessInfos.publicKeysList!.isEmpty) {
           clearTokenPropertyList
-              .add(tokenPropertyWithAccessInfos.tokenProperty!);
+              .addAll(tokenPropertyWithAccessInfos.tokenProperty!);
         }
       }
-      List<List<TokenProperty>> nftProperties =
-          List<List<TokenProperty>>.empty(growable: true);
-      nftProperties.add(clearTokenPropertyList);
 
       String content = tokenToJsonForTxDataContent(Token(
           name: token.name,
           supply: token.supply,
           type: token.type,
           symbol: token.symbol,
-          tokenProperties: nftProperties));
+          tokenProperties: clearTokenPropertyList));
       transaction.setContent(content);
       Transaction signedTx = keychain
           .buildTransaction(transaction, service, index)
@@ -2133,18 +2186,17 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       onChanged: (text) {
         if (text == '') {
           tokenPropertyWithAccessInfosList.removeWhere(
-              (element) => element.tokenProperty!.name == propertyKey);
+              (element) => element.tokenProperty!.keys.first == propertyKey);
         } else {
           tokenPropertyWithAccessInfosList.removeWhere(
-              (element) => element.tokenProperty!.name == propertyKey);
+              (element) => element.tokenProperty!.keys.first == propertyKey);
           tokenPropertyWithAccessInfosList.add(TokenPropertyWithAccessInfos(
-              tokenProperty: TokenProperty(
-                  name: propertyKey, value: textEditingController.text)));
+              tokenProperty: {propertyKey: textEditingController.text}));
           tokenPropertyWithAccessInfosList.sort((TokenPropertyWithAccessInfos a,
                   TokenPropertyWithAccessInfos b) =>
-              a.tokenProperty!.name!
+              a.tokenProperty!.keys.first
                   .toLowerCase()
-                  .compareTo(b.tokenProperty!.name!.toLowerCase()));
+                  .compareTo(b.tokenProperty!.keys.first.toLowerCase()));
         }
 
         setState(() {});

@@ -291,7 +291,8 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
           name: widget.tokenName,
           supply: toBigInt(widget.tokenInitialSupply!),
           type: 'fungible',
-          symbol: widget.tokenSymbol));
+          symbol: widget.tokenSymbol,
+          tokenProperties: {}));
       transaction.setContent(content);
       Transaction signedTx = keychain
           .buildTransaction(transaction, service, index)

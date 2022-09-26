@@ -39,14 +39,14 @@ class NftCategoryMenu extends StatelessWidget {
                 .appWallet!
                 .appKeychain!
                 .getAccountSelected()!
-                .getNbNFTInCategory(nftCategories[index].id!);
+                .getNbNFTInCategory(index);
 
             return InkWell(
               onTap: (() {
                 sl.get<HapticUtil>().feedback(FeedbackType.light,
                     StateContainer.of(context).activeVibrations);
-                Navigator.of(context).pushNamed('/nft_list_per_category',
-                    arguments: nftCategories[index].id!);
+                Navigator.of(context)
+                    .pushNamed('/nft_list_per_category', arguments: index);
               }),
               child: Column(
                 children: [

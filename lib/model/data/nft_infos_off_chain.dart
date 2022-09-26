@@ -7,17 +7,17 @@ part 'nft_infos_off_chain.g.dart';
 
 @HiveType(typeId: 11)
 class NftInfosOffChain extends HiveObject {
-  NftInfosOffChain({this.id, this.categoryNftIndex, this.like});
+  NftInfosOffChain({this.id, this.categoryNftIndex, this.favorite});
 
   /// Token's Id
   @HiveField(0)
   String? id;
 
-  /// Like
-  @HiveField(2)
-  bool? like;
-
   /// Category Nft
   @HiveField(3)
   int? categoryNftIndex;
+
+  /// Favorite
+  @HiveField(4)
+  bool? favorite;
 }

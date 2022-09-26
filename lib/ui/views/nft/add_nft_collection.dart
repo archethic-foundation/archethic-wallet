@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 // Flutter imports:
+import 'package:aewallet/service/token_informations_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -29,8 +30,6 @@ import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/add_nft_collection_confirm.dart';
-import 'package:aewallet/ui/views/nft/add_nft_file.dart';
-import 'package:aewallet/ui/views/nft/nft_card.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
@@ -69,7 +68,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
       supply: 1,
       symbol: '',
       type: 'non-fungible',
-      tokenProperties: List<List<TokenProperty>>.empty(growable: true));
+      tokenProperties: {});
 
   StreamSubscription<NftFileAddEvent>? _nftFileAddEventSub;
 
@@ -77,7 +76,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
     _nftFileAddEventSub = EventTaxiImpl.singleton()
         .registerTo<NftFileAddEvent>()
         .listen((NftFileAddEvent event) {
-      token!.tokenProperties!.add(event.tokenProperties!);
+      token!.tokenProperties!.addAll(event.tokenProperties!);
       setState(() {});
     });
   }
@@ -250,11 +249,10 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                                 if (validRequest) {
                                   TokenInformations tokenInformations =
                                       TokenInformations();
-                                  tokenInformations.tokenProperties = List<
-                                          List<
-                                              TokenInformationsProperty>>.empty(
-                                      growable: true);
-                                  tokenInformations
+                                  tokenInformations.tokenProperties =
+                                      List<TokenInformationsProperty>.empty(
+                                          growable: true);
+                                  tokenInformations = TokenInformationsService
                                       .tokenToTokenInformations(token!);
                                   tokenInformations.onChain = false;
                                   if (StateContainer.of(context)
@@ -376,10 +374,10 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                             AppButtonType.primary,
                             AppLocalization.of(context)!.addNFTFile,
                             Dimens.buttonBottomDimens, onPressed: () {
-                            Sheets.showAppHeightNineSheet(
+                            /* Sheets.showAppHeightNineSheet(
                                 context: context,
                                 widget: const AddNFTFile(
-                                    process: AddNFTFileProcess.collection));
+                                    process: AddNFTFileProcess.collection));*/
                           })
                         : AppButton.buildAppButtonTiny(
                             const Key('addNFT'),
@@ -460,39 +458,41 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
             },
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              List<TokenProperty> properties = token!.tokenProperties![index];
+              Map<String, dynamic>? properties = token!.tokenProperties!;
               Image? image;
               String name = '';
               String typeMime = '';
               String description = '';
               Uint8List? imageDecoded;
-              for (TokenProperty tokenProperty in properties) {
-                switch (tokenProperty.name) {
+              properties.forEach((key, value) {
+                switch (key) {
                   case 'file':
                     // final directory = await getApplicationDocumentsDirectory();
                     // file = File(base64Decode(tokenProperty.value));
-                    imageDecoded = base64Decode(tokenProperty.value!);
+                    imageDecoded = base64Decode(value);
                     break;
                   case 'type/mime':
-                    typeMime = tokenProperty.value!;
+                    typeMime = value;
                     break;
                   case 'name':
-                    name = tokenProperty.value!;
+                    name = value;
                     break;
                   case 'description':
-                    description = tokenProperty.value!;
+                    description = value;
                     break;
                   default:
                     break;
                 }
-              }
-              return NFTCard(
+              });
+
+              return SizedBox();
+              /*return NFTCard(
                 onTap: () {},
                 heroTag: name,
                 image: imageDecoded!,
                 description: description,
                 name: name,
-              );
+              );*/
             }),
       ],
     );

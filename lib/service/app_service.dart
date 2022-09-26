@@ -276,20 +276,17 @@ class AppService {
         Token token =
             await sl.get<ApiService>().getToken(balance.token![i].address!);
         if (token.type == 'fungible') {
-          List<List<TokenInformationsProperty>>? tokenPropertiesList =
-              List<List<TokenInformationsProperty>>.empty(growable: true);
           List<TokenInformationsProperty> propertiesList =
               List<TokenInformationsProperty>.empty(growable: true);
           if (token.tokenProperties != null &&
               token.tokenProperties!.isNotEmpty) {
-            for (TokenProperty element in token.tokenProperties![0]) {
+            token.tokenProperties!.forEach((key, value) {
               TokenInformationsProperty tokenInformationsProperty =
                   TokenInformationsProperty();
-              tokenInformationsProperty.name = element.name;
-              tokenInformationsProperty.value = element.value;
+              tokenInformationsProperty.name = key;
+              tokenInformationsProperty.value = value;
               propertiesList.add(tokenInformationsProperty);
-            }
-            tokenPropertiesList.add(propertiesList);
+            });
           }
 
           TokenInformations tokenInformations = TokenInformations(
@@ -298,7 +295,7 @@ class AppService {
               type: token.type,
               supply: fromBigInt(token.supply!).toDouble(),
               symbol: token.symbol,
-              tokenProperties: tokenPropertiesList,
+              tokenProperties: propertiesList,
               onChain: true);
           AccountToken accountFungibleToken = AccountToken(
               tokenInformations: tokenInformations,
@@ -322,22 +319,19 @@ class AppService {
           Token token =
               await sl.get<ApiService>().getToken(balance.token![i].address!);
           if (token.type == 'non-fungible') {
-            List<List<TokenInformationsProperty>>? tokenPropertiesList =
-                List<List<TokenInformationsProperty>>.empty(growable: true);
             List<TokenInformationsProperty> propertiesList =
                 List<TokenInformationsProperty>.empty(growable: true);
             if (token.tokenProperties != null &&
                 token.tokenProperties!.isNotEmpty) {
-              for (TokenProperty element in token.tokenProperties![0]) {
+              token.tokenProperties!.forEach((key, value) {
                 TokenInformationsProperty tokenInformationsProperty =
                     TokenInformationsProperty();
-                if (element.name != 'file') {
-                  tokenInformationsProperty.name = element.name;
-                  tokenInformationsProperty.value = element.value;
+                if (key != 'file') {
+                  tokenInformationsProperty.name = key;
+                  tokenInformationsProperty.value = value;
                   propertiesList.add(tokenInformationsProperty);
                 }
-              }
-              tokenPropertiesList.add(propertiesList);
+              });
             }
 
             TokenInformations tokenInformations = TokenInformations(
@@ -347,7 +341,7 @@ class AppService {
                 type: token.type,
                 supply: fromBigInt(token.supply!).toDouble(),
                 symbol: token.symbol,
-                tokenProperties: tokenPropertiesList,
+                tokenProperties: propertiesList,
                 onChain: true);
             AccountToken accountNFT = AccountToken(
                 tokenInformations: tokenInformations,

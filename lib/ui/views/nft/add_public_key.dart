@@ -89,9 +89,9 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                       child: Column(
                         children: <Widget>[
                           Text(widget.tokenPropertyWithAccessInfos
-                              .tokenProperty!.name!),
+                              .tokenProperty!.keys.first),
                           Text(widget.tokenPropertyWithAccessInfos
-                              .tokenProperty!.value!),
+                              .tokenProperty!.values.first),
                           Padding(
                             padding: const EdgeInsets.only(top: 20, bottom: 20),
                             child: Text(
