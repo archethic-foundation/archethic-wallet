@@ -109,7 +109,11 @@ class AppService {
             recentTransaction.decryptedSecret =
                 List<String>.empty(growable: true);
             if (transaction.data!.ownerships != null) {
-              final KeyPair keypair = deriveKeyPair(seed, 0);
+              String nameEncoded = Uri.encodeFull(name);
+              String serviceName = 'archethic-wallet-$nameEncoded';
+              final Keychain keychain =
+                  await sl.get<ApiService>().getKeychain(seed);
+              final KeyPair keypair = keychain.deriveKeypair(serviceName);
               for (Ownership ownership in transaction.data!.ownerships!) {
                 final AuthorizedKey authorizedPublicKey =
                     ownership.authorizedPublicKeys!.firstWhere(
@@ -159,7 +163,11 @@ class AppService {
             recentTransaction.decryptedSecret =
                 List<String>.empty(growable: true);
             if (transaction.data!.ownerships != null) {
-              final KeyPair keypair = deriveKeyPair(seed, 0);
+              String nameEncoded = Uri.encodeFull(name);
+              String serviceName = 'archethic-wallet-$nameEncoded';
+              final Keychain keychain =
+                  await sl.get<ApiService>().getKeychain(seed);
+              final KeyPair keypair = keychain.deriveKeypair(serviceName);
               for (Ownership ownership in transaction.data!.ownerships!) {
                 final AuthorizedKey authorizedPublicKey =
                     ownership.authorizedPublicKeys!.firstWhere(
@@ -203,6 +211,36 @@ class AppService {
             recentTransaction.content = transaction.data!.content;
             recentTransaction.tokenInformations = await recentTransaction
                 .getTokenInfo('', transactionInput.tokenAddress);
+            recentTransaction.decryptedSecret =
+                List<String>.empty(growable: true);
+            List<Ownership> ownerships = await sl
+                .get<ApiService>()
+                .getTransactionOwnerships(transactionInput.from!);
+            if (ownerships.isNotEmpty) {
+              String nameEncoded = Uri.encodeFull(name);
+              String serviceName = 'archethic-wallet-$nameEncoded';
+              final Keychain keychain =
+                  await sl.get<ApiService>().getKeychain(seed);
+              final KeyPair keypair = keychain.deriveKeypair(serviceName);
+              for (Ownership ownership in ownerships) {
+                final AuthorizedKey authorizedPublicKey =
+                    ownership.authorizedPublicKeys!.firstWhere(
+                        (AuthorizedKey authKey) =>
+                            authKey.publicKey!.toUpperCase() ==
+                            uint8ListToHex(keypair.publicKey).toUpperCase(),
+                        orElse: () => AuthorizedKey());
+                if (authorizedPublicKey.encryptedSecretKey != null) {
+                  final Uint8List aesKey = ecDecrypt(
+                      authorizedPublicKey.encryptedSecretKey,
+                      keypair.privateKey);
+                  final Uint8List decryptedSecret =
+                      aesDecrypt(ownership.secret, aesKey);
+                  recentTransaction.decryptedSecret!
+                      .add(utf8.decode(decryptedSecret));
+                }
+              }
+            }
+
             recentTransactions.add(recentTransaction);
           }
         }
@@ -223,7 +261,10 @@ class AppService {
           .get<ApiService>()
           .getTransactionOwnerships(recentTransaction.address!);
       if (ownerships.isNotEmpty) {
-        final KeyPair keypair = deriveKeyPair(seed, 0);
+        String nameEncoded = Uri.encodeFull(name);
+        String serviceName = 'archethic-wallet-$nameEncoded';
+        final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
+        final KeyPair keypair = keychain.deriveKeypair(serviceName);
         for (Ownership ownership in ownerships) {
           final AuthorizedKey authorizedPublicKey =
               ownership.authorizedPublicKeys!.firstWhere(
@@ -376,7 +417,8 @@ class AppService {
       String address,
       DateFormat dateFormat,
       String cryptoCurrency,
-      BuildContext context) async {
+      BuildContext context,
+      String name) async {
     // ignore: prefer_final_locals
     List<TransactionInfos> transactionsInfos =
         List<TransactionInfos>.empty(growable: true);
@@ -411,7 +453,12 @@ class AppService {
       }
       if (transaction.data!.ownerships != null) {
         String? seed = await StateContainer.of(context).getSeed();
-        final KeyPair keypair = deriveKeyPair(seed!, 0);
+
+        String nameEncoded = Uri.encodeFull(name);
+        String serviceName = 'archethic-wallet-$nameEncoded';
+        final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
+        final KeyPair keypair = keychain.deriveKeypair(serviceName);
+
         for (Ownership ownership in transaction.data!.ownerships!) {
           final AuthorizedKey authorizedPublicKey =
               ownership.authorizedPublicKeys!.firstWhere(
@@ -516,7 +563,8 @@ class AppService {
       String address,
       List<UCOTransfer> listUcoTransfer,
       List<TokenTransfer> listTokenTransfer,
-      String message) async {
+      String message,
+      String name) async {
     final Transaction lastTransaction = await sl
         .get<ApiService>()
         .getLastTransaction(address, request: 'chainLength');
@@ -534,7 +582,10 @@ class AppService {
       final String aesKey = uint8ListToHex(Uint8List.fromList(
           List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
 
-      final KeyPair walletKeyPair = deriveKeyPair(seed, 0);
+      String nameEncoded = Uri.encodeFull(name);
+      String serviceName = 'archethic-wallet-$nameEncoded';
+      final Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
+      final KeyPair walletKeyPair = keychain.deriveKeypair(serviceName);
 
       List<String> authorizedPublicKeys = List<String>.empty(growable: true);
       authorizedPublicKeys.add(uint8ListToHex(walletKeyPair.publicKey));

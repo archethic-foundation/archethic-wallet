@@ -6,13 +6,10 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 // Flutter imports:
-import 'package:aewallet/ui/widgets/components/dialog.dart';
-import 'package:aewallet/util/case_converter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
 
 // Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -103,8 +100,8 @@ class _AppState extends State<App> {
               StateContainer.of(context).curTheme.backgroundDark,
           primaryColor: StateContainer.of(context).curTheme.text,
           backgroundColor: StateContainer.of(context).curTheme.background,
-          fontFamily: 'Montserrat',
-          brightness: Brightness.dark,
+          fontFamily: StateContainer.of(context).curTheme.secondaryFont,
+          brightness: StateContainer.of(context).curTheme.brightness,
         ),
         // ignore: always_specify_types
         localizationsDelegates: [

@@ -37,7 +37,7 @@ class UCOTransferListWidget extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: listUcoTransfer!.length * 60,
+            height: listUcoTransfer!.length * 90,
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               itemCount: listUcoTransfer!.length,

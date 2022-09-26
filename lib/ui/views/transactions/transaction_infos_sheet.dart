@@ -45,7 +45,12 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                 StateContainer.of(context)
                     .curNetwork
                     .getNetworkCryptoCurrencyLabel(),
-                context),
+                context,
+                StateContainer.of(context)
+                    .appWallet!
+                    .appKeychain!
+                    .getAccountSelected()!
+                    .name!),
             builder: (BuildContext context,
                 AsyncSnapshot<List<TransactionInfos>> list) {
               return Column(

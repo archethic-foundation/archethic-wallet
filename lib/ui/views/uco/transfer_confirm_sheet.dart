@@ -313,7 +313,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         final String aesKey = uint8ListToHex(Uint8List.fromList(
             List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
 
-        final KeyPair walletKeyPair = deriveKeyPair(seed, 0);
+        final KeyPair walletKeyPair = keychain.deriveKeypair(service);
 
         List<String> authorizedPublicKeys = List<String>.empty(growable: true);
         authorizedPublicKeys.add(uint8ListToHex(walletKeyPair.publicKey));

@@ -1099,7 +1099,12 @@ class _TransferSheetState extends State<TransferSheet> {
               .lastAddress!,
           ucoTransferListForFee,
           tokenTransferListForFee,
-          _messageController!.text);
+          _messageController!.text,
+          StateContainer.of(context)
+              .appWallet!
+              .appKeychain!
+              .getAccountSelected()!
+              .name!);
     } catch (e) {
       fee = 0;
     }

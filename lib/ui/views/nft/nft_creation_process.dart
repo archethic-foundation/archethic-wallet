@@ -7,8 +7,7 @@ import 'dart:io';
 import 'dart:math';
 
 // Flutter imports:
-import 'package:aewallet/model/data/token_informations.dart';
-import 'package:aewallet/util/token_util.dart';
+import 'package:aewallet/model/nft_category.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,10 +15,8 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:collection/collection.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:event_taxi/event_taxi.dart';
-import 'package:exif/exif.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -408,7 +405,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: Text(
-                    'Import a photo, a document, a piece of information, or any other element that you wish to transform into a non-fungible token.',
+                    NftCategory.getDescriptionHearder(
+                        context, widget.currentNftCategoryIndex!),
                     style: AppStyles.textStyleSize12W100Primary(context),
                     textAlign: TextAlign.justify,
                   ),
@@ -532,10 +530,11 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                       ),
                     ),
                   ),
-                Divider(
-                  height: 2,
-                  color: StateContainer.of(context).curTheme.text15,
-                ),
+                if (kIsWeb == false && (Platform.isAndroid || Platform.isIOS))
+                  Divider(
+                    height: 2,
+                    color: StateContainer.of(context).curTheme.text15,
+                  ),
                 if (kIsWeb == false && (Platform.isAndroid || Platform.isIOS))
                   SizedBox(
                     height: 40,
@@ -1975,7 +1974,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
 
       final String aesKey = uint8ListToHex(Uint8List.fromList(
           List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
-      final KeyPair walletKeyPair = deriveKeyPair(seed, 0);
+
+      final KeyPair walletKeyPair = keychain.deriveKeypair(service);
 
       for (TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
           in tokenPropertyWithAccessInfosList) {
