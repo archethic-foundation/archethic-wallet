@@ -96,13 +96,26 @@ class RecentTransaction extends HiveObject {
 
   Future<Contact?> getContactInformations() async {
     contactInformations = null;
-    if (recipient != null) {
-      Contact? contact =
-          await sl.get<DBHelper>().getContactWithAddress(recipient!);
-      if (contact != null) {
-        contactInformations = contact;
+    if (typeTx == RecentTransaction.transferInput) {
+      if (recipient != null) {
+        Contact? contact =
+            await sl.get<DBHelper>().getContactWithAddress(from!);
+        if (contact != null) {
+          contactInformations = contact;
+        }
+      }
+    } else {
+      if (typeTx == RecentTransaction.transferOutput) {
+        if (from != null) {
+          Contact? contact =
+              await sl.get<DBHelper>().getContactWithAddress(recipient!);
+          if (contact != null) {
+            contactInformations = contact;
+          }
+        }
       }
     }
+
     return contactInformations;
   }
 

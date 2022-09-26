@@ -340,7 +340,13 @@ class TxListWidget extends StatelessWidget {
                               else
                                 Text(
                                     AppLocalization.of(context)!.txListFrom +
-                                        Address(transaction.from!)
+                                        Address(transaction
+                                                        .contactInformations ==
+                                                    null
+                                                ? transaction.from!
+                                                : transaction
+                                                    .contactInformations!.name!
+                                                    .replaceFirst('@', ''))
                                             .getShortString4(),
                                     style: AppStyles.textStyleSize12W400Primary(
                                         context))
@@ -363,7 +369,8 @@ class TxListWidget extends StatelessWidget {
                                                     null
                                                 ? transaction.recipient!
                                                 : transaction
-                                                    .contactInformations!.name!)
+                                                    .contactInformations!.name!
+                                                    .replaceFirst('@', ''))
                                             .getShortString4(),
                                     style: AppStyles.textStyleSize12W400Primary(
                                         context))

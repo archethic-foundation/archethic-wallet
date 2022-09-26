@@ -61,6 +61,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                             final Preferences preferences =
                                 await Preferences.getInstance();
                             await preferences.setShowBalances(false);
+                            StateContainer.of(context).updateState();
                           })
                       : IconButton(
                           icon: const FaIcon(FontAwesomeIcons.eyeLowVision),
@@ -72,6 +73,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                             final Preferences preferences =
                                 await Preferences.getInstance();
                             await preferences.setShowBalances(true);
+                            StateContainer.of(context).updateState();
                           }),
               if (!kIsWeb &&
                   (Platform.isIOS == true ||

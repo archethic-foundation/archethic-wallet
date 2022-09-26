@@ -28,7 +28,6 @@ import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/themes/theme_dark.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/token_util.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/service_locator.dart';
@@ -235,6 +234,10 @@ class StateContainerState extends State<StateContainer> {
         curTheme = theme.getTheme();
       });
     }
+  }
+
+  void updateState() {
+    setState(() {});
   }
 
   Future<void> requestUpdate(
