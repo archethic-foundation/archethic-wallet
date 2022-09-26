@@ -77,8 +77,13 @@ class DBHelper {
               .get<ApiService>()
               .getLastTransaction(contact.address!, request: 'address'))
           .address;
+
       if (lastAddressContact == null || lastAddressContact == '') {
         lastAddressContact = contact.address!;
+      } else {
+        Contact contactToUpdate = contact;
+        contactToUpdate.address = lastAddressContact;
+        await sl.get<DBHelper>().saveContact(contactToUpdate);
       }
       if (lastAddressContact.toLowerCase() == lastAddress.toLowerCase()) {
         contactSelected = contact;

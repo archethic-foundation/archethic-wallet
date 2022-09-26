@@ -20,8 +20,8 @@ class ContactsDialog {
         List<PickerItem>.empty(growable: true);
     List<Contact> contacts = await StateContainer.of(context).getContacts();
     for (var contact in contacts) {
-      pickerItemsList.add(PickerItem(contact.name!.substring(1),
-          contact.address, null, null, contact, true));
+      pickerItemsList.add(PickerItem(
+          contact.name!.substring(1), null, null, null, contact, true));
     }
     return await showDialog<Contact>(
         context: context,
@@ -57,7 +57,7 @@ class ContactsDialog {
                           for (var contact in contacts) {
                             pickerItemsList.add(PickerItem(
                                 contact.name!.substring(1),
-                                contact.address,
+                                null,
                                 null,
                                 null,
                                 contact,

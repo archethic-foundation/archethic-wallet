@@ -69,7 +69,8 @@ class ContactDetailsSheet {
                                     .then((_) {
                                   EventTaxiImpl.singleton().fire(
                                       ContactRemovedEvent(contact: contact));
-
+                                  StateContainer.of(context)
+                                      .requestUpdate(forceUpdateChart: false);
                                   UIUtil.showSnackbar(
                                       AppLocalization.of(context)!
                                           .contactRemoved

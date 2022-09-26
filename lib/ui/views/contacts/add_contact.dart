@@ -122,7 +122,6 @@ class _AddContactSheetState extends State<AddContactSheet> {
           Expanded(
             child: Column(
               children: <Widget>[
-                // Enter Name Container
                 AppTextField(
                   topMargin: MediaQuery.of(context).size.height * 0.14,
                   focusNode: _nameFocusNode,
@@ -149,13 +148,12 @@ class _AddContactSheetState extends State<AddContactSheet> {
                     }
                   },
                 ),
-                // Enter Name Error Container
+
                 Container(
                   margin: const EdgeInsets.only(top: 5, bottom: 5),
                   child: Text(_nameValidationText!,
                       style: AppStyles.textStyleSize14W600Primary(context)),
                 ),
-                // Enter Address container
                 AppTextField(
                   padding: !_shouldShowTextField()
                       ? const EdgeInsets.symmetric(
@@ -297,7 +295,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
                           address: widget.address ?? _addressController!.text,
                           type: 'externalContact');
                       await sl.get<DBHelper>().saveContact(newContact);
-
+                      StateContainer.of(context)
+                          .requestUpdate(forceUpdateChart: false);
                       EventTaxiImpl.singleton()
                           .fire(ContactAddedEvent(contact: newContact));
                       UIUtil.showSnackbar(
