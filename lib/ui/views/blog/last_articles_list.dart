@@ -93,7 +93,7 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return SizedBox(
-                    height: 260,
+                    height: 270,
                     child: PageView.builder(
                       controller: pageController,
                       itemCount: snapshot.data!.length,
