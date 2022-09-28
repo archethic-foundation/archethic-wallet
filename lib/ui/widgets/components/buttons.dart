@@ -95,7 +95,8 @@ class AppButton {
           child: Container(
             width: 400,
             decoration: ShapeDecoration(
-                gradient: StateContainer.of(context).curTheme.gradient!,
+                gradient:
+                    StateContainer.of(context).curTheme.gradientMainButton!,
                 shape: const StadiumBorder()),
             height: 55,
             margin: EdgeInsetsDirectional.fromSTEB(
@@ -232,7 +233,7 @@ class AppButton {
           child: Container(
             width: 400,
             decoration: ShapeDecoration(
-              gradient: StateContainer.of(context).curTheme.gradient!,
+              gradient: StateContainer.of(context).curTheme.gradientMainButton!,
               shape: const StadiumBorder(),
             ),
             height: 35,
