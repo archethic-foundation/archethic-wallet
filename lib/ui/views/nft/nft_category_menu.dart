@@ -45,8 +45,8 @@ class NftCategoryMenu extends StatelessWidget {
               onTap: (() {
                 sl.get<HapticUtil>().feedback(FeedbackType.light,
                     StateContainer.of(context).activeVibrations);
-                Navigator.of(context)
-                    .pushNamed('/nft_list_per_category', arguments: index);
+                Navigator.of(context).pushNamed('/nft_list_per_category',
+                    arguments: nftCategories[index].id);
               }),
               child: Column(
                 children: [

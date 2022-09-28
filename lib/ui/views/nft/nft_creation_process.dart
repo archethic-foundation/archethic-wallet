@@ -8,6 +8,7 @@ import 'dart:math';
 
 // Flutter imports:
 import 'package:aewallet/model/nft_category.dart';
+import 'package:aewallet/ui/views/nft/get_public_key.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -817,6 +818,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                                         .tokenProperty!
                                                         .keys
                                                         .first);
+                                            tokenPropertyAsset!.publicKeysList!
+                                                .clear();
                                             setState(() {});
                                           });
                                         },
@@ -1233,7 +1236,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                   nftPropertySearchController!.text.isEmpty)
                           ? Padding(
                               padding: const EdgeInsets.all(5.0),
-                              child: _buildTokenProperty(context, entry.value),
+                              child: _buildTokenProperty(context, entry.value,
+                                  readOnly: false),
                             )
                           : const SizedBox();
                     }).toList()),
@@ -1246,7 +1250,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
   }
 
   Widget _buildTokenProperty(BuildContext context,
-      TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos) {
+      TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos,
+      {bool readOnly = false}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: GestureDetector(
@@ -1380,70 +1385,83 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                           onPressed: () {
                             sl.get<HapticUtil>().feedback(FeedbackType.light,
                                 StateContainer.of(context).activeVibrations);
-                            Sheets.showAppHeightNineSheet(
-                                context: context,
-                                widget: AddPublicKey(
-                                  tokenPropertyWithAccessInfos:
-                                      tokenPropertyWithAccessInfos,
-                                  returnPublicKeys:
-                                      (List<String> publicKeysList) {
-                                    tokenPropertyWithAccessInfos
-                                        .publicKeysList = publicKeysList;
+                            if (readOnly) {
+                              Sheets.showAppHeightNineSheet(
+                                  context: context,
+                                  widget: GetPublicKeys(
+                                    tokenPropertyWithAccessInfos:
+                                        tokenPropertyWithAccessInfos,
+                                  ));
+                            } else {
+                              Sheets.showAppHeightNineSheet(
+                                  context: context,
+                                  widget: AddPublicKey(
+                                    tokenPropertyWithAccessInfos:
+                                        tokenPropertyWithAccessInfos,
+                                    returnPublicKeys:
+                                        (List<String> publicKeysList) {
+                                      tokenPropertyWithAccessInfos
+                                          .publicKeysList = publicKeysList;
 
-                                    setState(() {});
-                                  },
-                                ));
+                                      setState(() {});
+                                    },
+                                  ));
+                            }
                           },
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 5),
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: StateContainer.of(context)
-                              .curTheme
-                              .backgroundDark!
-                              .withOpacity(0.3),
-                          border: Border.all(
-                              color: StateContainer.of(context)
-                                  .curTheme
-                                  .backgroundDarkest!
-                                  .withOpacity(0.2),
-                              width: 2),
-                        ),
-                        child: IconButton(
-                          icon: Icon(Icons.close,
-                              color: StateContainer.of(context)
-                                  .curTheme
-                                  .backgroundDarkest!,
-                              size: 21),
-                          onPressed: () {
-                            sl.get<HapticUtil>().feedback(FeedbackType.light,
-                                StateContainer.of(context).activeVibrations);
-                            AppDialogs.showConfirmDialog(
-                                context,
-                                'Delete property',
-                                'Are you sure ?',
-                                AppLocalization.of(context)!.deleteOption, () {
+                    if (readOnly == false)
+                      Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.0),
+                            color: StateContainer.of(context)
+                                .curTheme
+                                .backgroundDark!
+                                .withOpacity(0.3),
+                            border: Border.all(
+                                color: StateContainer.of(context)
+                                    .curTheme
+                                    .backgroundDarkest!
+                                    .withOpacity(0.2),
+                                width: 2),
+                          ),
+                          child: IconButton(
+                            icon: Icon(Icons.close,
+                                color: StateContainer.of(context)
+                                    .curTheme
+                                    .backgroundDarkest!,
+                                size: 21),
+                            onPressed: () {
                               sl.get<HapticUtil>().feedback(FeedbackType.light,
                                   StateContainer.of(context).activeVibrations);
+                              AppDialogs.showConfirmDialog(
+                                  context,
+                                  'Delete property',
+                                  'Are you sure ?',
+                                  AppLocalization.of(context)!.deleteOption,
+                                  () {
+                                sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    StateContainer.of(context)
+                                        .activeVibrations);
 
-                              tokenPropertyWithAccessInfosList.removeWhere(
-                                  (element) =>
-                                      element.tokenProperty!.keys.first ==
-                                      tokenPropertyWithAccessInfos
-                                          .tokenProperty!.keys.first);
-                              setState(() {});
-                            });
-                          },
+                                tokenPropertyWithAccessInfosList.removeWhere(
+                                    (element) =>
+                                        element.tokenProperty!.keys.first ==
+                                        tokenPropertyWithAccessInfos
+                                            .tokenProperty!.keys.first);
+                                setState(() {});
+                              });
+                            },
+                          ),
                         ),
                       ),
-                    ),
                   ],
                 ),
               ],
@@ -1748,7 +1766,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                   nftPropertySearchController!.text.isEmpty)
                           ? Padding(
                               padding: const EdgeInsets.all(5.0),
-                              child: _buildTokenProperty(context, entry.value),
+                              child: _buildTokenProperty(context, entry.value,
+                                  readOnly: true),
                             )
                           : const SizedBox();
                     }).toList()),

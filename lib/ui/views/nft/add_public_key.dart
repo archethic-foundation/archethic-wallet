@@ -4,6 +4,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -202,14 +203,30 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                           FeedbackType.light,
                                           StateContainer.of(context)
                                               .activeVibrations);
-                                      setState(() {
-                                        publicKeys!.add(
-                                            publicKeyAccessController!.text);
-                                        publicKeys!.sort((a, b) => a
-                                            .toLowerCase()
-                                            .compareTo(b.toLowerCase()));
-                                        publicKeyAccessController!.text = '';
-                                      });
+                                      if (publicKeyAccessController!
+                                                  .text.length <
+                                              68 ||
+                                          !isHex(publicKeyAccessController!
+                                              .text)) {
+                                        UIUtil.showSnackbar(
+                                            'The public key is not valid.',
+                                            context,
+                                            StateContainer.of(context)
+                                                .curTheme
+                                                .text!,
+                                            StateContainer.of(context)
+                                                .curTheme
+                                                .snackBarShadow!);
+                                      } else {
+                                        setState(() {
+                                          publicKeys!.add(
+                                              publicKeyAccessController!.text);
+                                          publicKeys!.sort((a, b) => a
+                                              .toLowerCase()
+                                              .compareTo(b.toLowerCase()));
+                                          publicKeyAccessController!.text = '';
+                                        });
+                                      }
                                     })
                                   : AppButton.buildAppButtonTiny(
                                       const Key('addPublicKey'),

@@ -1339,6 +1339,10 @@ class AppLocalization {
     return Intl.message('Add access', name: 'addPublicKeyHeader');
   }
 
+  String get getPublicKeyHeader {
+    return Intl.message('Access', name: 'getPublicKeyHeader');
+  }
+
   String get customizeCategoryListHeader {
     return Intl.message('Customize categories',
         name: 'customizeCategoryListHeader');
