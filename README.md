@@ -47,16 +47,16 @@ All news about wallet are available on the [Archethic Youtube Channel](https://w
 ## How to install Archethic Wallet
 
 ### Android
-- Available on Google Play Store
+- [Available on Google Play Store](https://play.google.com/store/apps/details?id=net.archethic.archethic_wallet)
 
 ### Windows
-- Available on Microsoft Store
+- [Available on Microsoft Store](https://apps.microsoft.com/store/detail/archethic-wallet/9N33TTVRJZXF)
 
 ### MacOS
-- Available on MacOS Store
+- [Available on MacOS Store](https://apps.apple.com/app/archethic-wallet/id6443334906)
 
 ### iOS
-- Available on Apple Store
+- [Available on Apple Store](https://apps.apple.com/app/apple-store/id6443334906)
 
 ### WebApp
 - Soon
