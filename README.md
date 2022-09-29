@@ -9,8 +9,6 @@ This wallet includes the features of send and receive coins instantly to and fro
 No signup or KYC needed, you just control your service access keychain, protected by different security ways like PIN Code, Password, Yubikey devices and Biometrics</br>
 NB: Yubikey is a device that makes 2-factor authentification as simple as possible (see [yubico.com](https://www.yubico.com))</br>
 
-[![Download](assets/screenshots/Dl_here_github_wallet.png?v=20220718)](https://www.archethic.net/aewallet.html)
-
 Archethic Wallet has implemented the following features:
 
 ### Main features
@@ -41,7 +39,7 @@ Archethic Wallet has implemented the following features:
 - Access latest Archethic blog articles
 
 ## Application Initial Screen
-![Application Initial Screen](assets/screenshots/AppInit.png?v=20220711)(https://github.com/archethic-foundation/archethic-wallet/releases)
+![Application Initial Screen](assets/screenshots/AppInit.png?v=20220929)
 
 ## Informations
 All news about wallet are available on the [Archethic Youtube Channel](https://www.youtube.com/playlist?list=PL6GQEJjcIwHChTok4CJyw3lsmlvoJLnZK)
@@ -49,22 +47,16 @@ All news about wallet are available on the [Archethic Youtube Channel](https://w
 ## How to install Archethic Wallet
 
 ### Android
-
-To install Archethic Wallet in Android Devices:
-- Download the APK file for application for your platform from [releases](https://github.com/archethic-foundation/archethic_mobile_wallet/releases).
-- Click on the downloaded file and Click on Install
-    - If asks for permission to install from unknown sources
-        - Goto Settings and Allow Installation from unknown sources for browser or file manager.
-- Once installed open the application and proceed as per instructions the application.
+- Available on Google Play Store
 
 ### Windows
-- Soon
+- Available on Microsoft Store
 
 ### MacOS
-- Available
+- Available on MacOS Store
 
 ### iOS
-- Soon
+- Available on Apple Store
 
 ### WebApp
 - Soon
