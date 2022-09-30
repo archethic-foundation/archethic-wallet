@@ -268,8 +268,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: StateContainer.of(context).bottomBarPageController,
-        children: const [AccountsListTab(), AccountTab(), NFTTab()],
-        //children: const [AccountsListTab(), AccountTab()],
+        //children: const [AccountsListTab(), AccountTab(), NFTTab()],
+        children: const [AccountsListTab(), AccountTab()],
         onPageChanged: (index) {
           setState(
               () => StateContainer.of(context).bottomBarCurrentPage = index);
