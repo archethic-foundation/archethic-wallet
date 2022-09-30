@@ -96,6 +96,9 @@ class DBHelper {
     final Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
     final List<Contact> contactsList = box.values.toList();
     Contact? contactSelected;
+    if (name.startsWith('@') == false) {
+      name = '@$name';
+    }
     for (Contact contact in contactsList) {
       if (contact.name!.toLowerCase() == name.toLowerCase()) {
         contactSelected = contact;
