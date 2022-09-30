@@ -190,10 +190,11 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         Navigator.of(context).pop();
 
         UIUtil.showSnackbar(
-            '${AppLocalization.of(context)!.sendError} (${event.response!})',
+            event.response!,
             context,
             StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+            StateContainer.of(context).curTheme.snackBarShadow!,
+            duration: const Duration(seconds: 5));
         Navigator.of(context).pop();
       } else {
         if (event.response == 'ok' &&
@@ -2059,6 +2060,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       subscriptionChannel.addSubscriptionTransactionConfirmed(
           transaction.address!, waitConfirmationsNFT);
 
+      await Future.delayed(const Duration(seconds: 1));
+
       transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
 
       if (transactionStatus.status == 'invalid') {
@@ -2068,10 +2071,16 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
             nbConfirmations: 0));
         subscriptionChannel.close();
       }
-    } catch (e) {
+    } on ArchethicConnectionException {
       EventTaxiImpl.singleton().fire(TransactionSendEvent(
           transactionType: TransactionSendEventType.token,
-          response: e.toString(),
+          response: AppLocalization.of(context)!.noConnection,
+          nbConfirmations: 0));
+      subscriptionChannel.close();
+    } on Exception {
+      EventTaxiImpl.singleton().fire(TransactionSendEvent(
+          transactionType: TransactionSendEventType.token,
+          response: AppLocalization.of(context)!.keychainNotExistWarning,
           nbConfirmations: 0));
       subscriptionChannel.close();
     }

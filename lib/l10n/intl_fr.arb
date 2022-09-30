@@ -342,5 +342,11 @@
 	"estimatedFeesAddNFTNote": "Les frais seront estimés lorsque le NFT sera défini.",
 	"addPublicKeyHeader": "Ajouter des accès",
 	"publicKeyAddHint": "Entrer une clé publique",
-	"nftWithoutCategory": "Sans catégorie"
+	"nftWithoutCategory": "Sans catégorie",
+	"getPublicKeyHeader": "Accès",
+	"customizeCategoryListHeader": "Personnaliser les catégories",
+	"addNftNewCategory": "Ajouter une nouvelle catégorie (A venir...)",
+	"nftCategoryPhoto": "Photo",
+	"keychainNotExistWarning": "Pour votre information, le mainnet a été réinitialisé exceptionnellement dans le cadre du programme actuel de bug bounty. Nous nous excusons pour la gêne occasionnée et vous invitons à supprimer votre portefeuille et à en recréer un.",
+	"noConnection": "La connexion au réseau n'a pas pu aboutir. Veuillez vérifier vos paramètres réseaux."
 }

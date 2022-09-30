@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -245,23 +247,63 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                               context)!
                                                           .yes,
                                                       () async {
-                                                        await KeychainUtil().addAccountInKeyChain(
-                                                            StateContainer.of(
-                                                                    context)
-                                                                .appWallet!,
-                                                            await StateContainer
-                                                                    .of(context)
-                                                                .getSeed(),
-                                                            nameController.text,
-                                                            StateContainer.of(
-                                                                    context)
-                                                                .curCurrency
-                                                                .currency
-                                                                .name,
-                                                            StateContainer.of(
-                                                                    context)
-                                                                .curNetwork
-                                                                .getNetworkCryptoCurrencyLabel());
+                                                        try {
+                                                          await KeychainUtil().addAccountInKeyChain(
+                                                              StateContainer.of(
+                                                                      context)
+                                                                  .appWallet!,
+                                                              await StateContainer
+                                                                      .of(
+                                                                          context)
+                                                                  .getSeed(),
+                                                              nameController
+                                                                  .text,
+                                                              StateContainer.of(
+                                                                      context)
+                                                                  .curCurrency
+                                                                  .currency
+                                                                  .name,
+                                                              StateContainer.of(
+                                                                      context)
+                                                                  .curNetwork
+                                                                  .getNetworkCryptoCurrencyLabel());
+                                                        } on ArchethicConnectionException {
+                                                          UIUtil.showSnackbar(
+                                                              AppLocalization.of(
+                                                                      context)!
+                                                                  .noConnection,
+                                                              context,
+                                                              StateContainer.of(
+                                                                      context)
+                                                                  .curTheme
+                                                                  .text!,
+                                                              StateContainer.of(
+                                                                      context)
+                                                                  .curTheme
+                                                                  .snackBarShadow!,
+                                                              duration:
+                                                                  const Duration(
+                                                                      seconds:
+                                                                          5));
+                                                        } on Exception {
+                                                          UIUtil.showSnackbar(
+                                                              AppLocalization.of(
+                                                                      context)!
+                                                                  .keychainNotExistWarning,
+                                                              context,
+                                                              StateContainer.of(
+                                                                      context)
+                                                                  .curTheme
+                                                                  .text!,
+                                                              StateContainer.of(
+                                                                      context)
+                                                                  .curTheme
+                                                                  .snackBarShadow!,
+                                                              duration:
+                                                                  const Duration(
+                                                                      seconds:
+                                                                          5));
+                                                        }
 
                                                         setState(() {
                                                           isPressed = false;

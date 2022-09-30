@@ -8,6 +8,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 // Flutter imports:
+import 'package:aewallet/service/app_service.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -88,10 +89,11 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         }
 
         UIUtil.showSnackbar(
-            '${AppLocalization.of(context)!.sendError} (${event.response!})',
+            event.response!,
             context,
             StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+            StateContainer.of(context).curTheme.snackBarShadow!,
+            duration: const Duration(seconds: 5));
         Navigator.of(context).pop();
       } else {
         if (event.response == 'ok' &&
@@ -368,6 +370,8 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       subscriptionChannel.addSubscriptionTransactionConfirmed(
           transaction.address!, waitConfirmationsTrf);
 
+      await Future.delayed(const Duration(seconds: 1));
+
       transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
 
       if (transactionStatus.status == 'invalid') {
@@ -377,10 +381,16 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
             nbConfirmations: 0));
         subscriptionChannel.close();
       }
-    } catch (e) {
+    } on ArchethicConnectionException {
       EventTaxiImpl.singleton().fire(TransactionSendEvent(
-          transactionType: TransactionSendEventType.transfer,
-          response: e.toString(),
+          transactionType: TransactionSendEventType.token,
+          response: AppLocalization.of(context)!.noConnection,
+          nbConfirmations: 0));
+      subscriptionChannel.close();
+    } on Exception {
+      EventTaxiImpl.singleton().fire(TransactionSendEvent(
+          transactionType: TransactionSendEventType.token,
+          response: AppLocalization.of(context)!.keychainNotExistWarning,
           nbConfirmations: 0));
       subscriptionChannel.close();
     }

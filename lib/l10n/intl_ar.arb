@@ -342,5 +342,11 @@
 	"estimatedFeesAddNFTNote": "Fees will be estimated when the NFT is defined.",
 	"addPublicKeyHeader": "Add access",
 	"publicKeyAddHint": "Enter a public key",
-	"nftWithoutCategory": "Without category"
+	"nftWithoutCategory": "Without category",
+	"getPublicKeyHeader": "Access",
+	"customizeCategoryListHeader": "Customize categories",
+	"addNftNewCategory": "Add new category (Soon...)",
+	"nftCategoryPhoto": "Photo",
+	"keychainNotExistWarning": "For your information, the mainnet has been exceptionally reset as part of the current bug bounty program. We apologize for the inconvenience and invite you to delete your wallet and recreate one.",
+	"noConnection": "The connection to the network could not be completed. Please check your network settings."
 }

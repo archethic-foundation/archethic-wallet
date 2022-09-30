@@ -6,6 +6,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aewallet/service/app_service.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -71,10 +72,11 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
         }
 
         UIUtil.showSnackbar(
-            '${AppLocalization.of(context)!.sendError} (${event.response!})',
+            event.response!,
             context,
             StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+            StateContainer.of(context).curTheme.snackBarShadow!,
+            duration: const Duration(seconds: 5));
         Navigator.of(context).pop();
       } else {
         if (event.response == 'ok' &&
@@ -286,6 +288,8 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
       subscriptionChannel.addSubscriptionTransactionConfirmed(
           transaction.address!, waitConfirmations);
 
+      await Future.delayed(const Duration(seconds: 1));
+
       transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
 
       if (transactionStatus.status == 'invalid') {
@@ -295,10 +299,16 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
             nbConfirmations: 0));
         subscriptionChannel.close();
       }
-    } catch (e) {
+    } on ArchethicConnectionException {
       EventTaxiImpl.singleton().fire(TransactionSendEvent(
           transactionType: TransactionSendEventType.token,
-          response: e.toString(),
+          response: AppLocalization.of(context)!.noConnection,
+          nbConfirmations: 0));
+      subscriptionChannel.close();
+    } on Exception {
+      EventTaxiImpl.singleton().fire(TransactionSendEvent(
+          transactionType: TransactionSendEventType.token,
+          response: AppLocalization.of(context)!.keychainNotExistWarning,
           nbConfirmations: 0));
       subscriptionChannel.close();
     }

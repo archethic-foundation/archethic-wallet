@@ -2045,5 +2045,41 @@
     "type": "text",
     "placeholders_order": [],
     "placeholders": {}
+  },
+  "getPublicKeyHeader": "Access",
+  "@getPublicKeyHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "customizeCategoryListHeader": "Customize categories",
+  "@customizeCategoryListHeader": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "addNftNewCategory": "Add new category (Soon...)",
+  "@addNftNewCategory": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "nftCategoryPhoto": "Photo",
+  "@nftCategoryPhoto": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "keychainNotExistWarning": "For your information, the mainnet has been reset exceptionally as part of the current bug bounty program. We apologize for the inconvenience and invite you to delete your wallet and recreate one.",
+  "@keychainNotExistWarning": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "noConnection": "The connection to the network could not be completed. Please check your network settings.",
+  "@noConnection": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
   }
 }

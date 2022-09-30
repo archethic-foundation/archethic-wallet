@@ -7,6 +7,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 // Package imports:
+import 'package:aewallet/service/app_service.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -49,6 +50,8 @@ class KeychainUtil {
 
     subscriptionChannel.addSubscriptionTransactionConfirmed(
         accessKeychainTx.address!, waitConfirmationsKeychainAccess);
+
+    await Future.delayed(const Duration(seconds: 1));
 
     // ignore: unused_local_variable
     final TransactionStatus transactionStatusKeychainAccess =
@@ -103,6 +106,8 @@ class KeychainUtil {
 
     subscriptionChannel.addSubscriptionTransactionConfirmed(
         keychainTransaction.address!, waitConfirmationsKeychain);
+
+    await Future.delayed(const Duration(seconds: 1));
 
     // ignore: unused_local_variable
     final TransactionStatus transactionStatusKeychain =

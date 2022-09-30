@@ -8,6 +8,10 @@ import 'dart:math';
 import 'dart:typed_data';
 
 // Flutter imports:
+import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/model/data/app_wallet.dart';
+import 'package:aewallet/model/data/price.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -663,5 +667,155 @@ class AppService {
       dev.log(e.toString());
     }
     return fromBigInt(transactionFee.fee!).toDouble();
+  }
+
+  Future<Keychain> getKeychain(String seed) async {
+    // Keychain keychain;
+    // try {
+    Keychain keychain = await sl.get<ApiService>().getKeychain(seed);
+    return keychain;
+    /*} catch (e) {
+      final String originPrivateKey = sl.get<ApiService>().getOriginKey();
+
+      /// Get Wallet KeyPair
+      final KeyPair walletKeyPair = deriveKeyPair(seed, 0);
+
+      /// Generate keyChain Seed from random value
+      final String keychainSeed = uint8ListToHex(Uint8List.fromList(
+          List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
+
+      AppWallet? appWallet = await sl.get<DBHelper>().getAppWallet();
+      List<Account> accountsList = appWallet!.appKeychain!.accounts!;
+
+      bool first = true;
+      Uint8List genesisAddress;
+      for (Account account in accountsList) {
+        Price tokenPrice =
+            await Price.getCurrency(account.balance!.fiatCurrencyCode!);
+
+        String nameEncoded = Uri.encodeFull(account.name!);
+
+        /// Default service for wallet
+        String kServiceName = 'archethic-wallet-$nameEncoded';
+        String kDerivationPathWithoutIndex = 'm/650\'/$kServiceName/';
+        const String index = '0';
+        String kDerivationPath = '$kDerivationPathWithoutIndex$index';
+
+        if (first) {
+          first = false;
+
+          Keychain keychain =
+              Keychain(hexToUint8List(keychainSeed), version: 1);
+          keychain.addService(kServiceName, kDerivationPath);
+
+          /// Create Keychain from keyChain seed and wallet public key to encrypt secret
+          final Transaction keychainTransaction = sl
+              .get<ApiService>()
+              .newKeychainTransaction(
+                  keychainSeed,
+                  <String>[uint8ListToHex(walletKeyPair.publicKey)],
+                  hexToUint8List(originPrivateKey),
+                  serviceName: kServiceName,
+                  derivationPath: kDerivationPath);
+
+          // ignore: unused_local_variable
+          final TransactionStatus transactionStatusKeychain =
+              await sl.get<ApiService>().sendTx(keychainTransaction);
+
+          await Future.delayed(const Duration(seconds: 5));
+
+          final Transaction accessKeychainTx = sl
+              .get<ApiService>()
+              .newAccessKeychainTransaction(
+                  seed,
+                  hexToUint8List(keychainTransaction.address!),
+                  hexToUint8List(originPrivateKey));
+
+          // ignore: unused_local_variable
+          final TransactionStatus transactionStatusKeychainAccess =
+              await sl.get<ApiService>().sendTx(accessKeychainTx);
+
+          genesisAddress = keychain.deriveAddress(kServiceName, index: 0);
+          print('(first) genesisAddress: ${uint8ListToHex(genesisAddress)}');
+        } else {
+          final Keychain keychain =
+              await sl.get<ApiService>().getKeychain(seed);
+
+          final String genesisAddressKeychain =
+              deriveAddress(uint8ListToHex(keychain.seed!), 0);
+
+          keychain.addService(kServiceName, kDerivationPath);
+
+          final Transaction lastTransactionKeychain = await sl
+              .get<ApiService>()
+              .getLastTransaction(genesisAddressKeychain,
+                  request:
+                      'chainLength, data { content, ownerships { authorizedPublicKeys { publicKey } } }');
+
+          final String aesKey = uint8ListToHex(Uint8List.fromList(
+              List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
+
+          Transaction keychainTransaction =
+              Transaction(type: 'keychain', data: Transaction.initData())
+                  .setContent(jsonEncode(keychain.toDID()));
+
+          final List<AuthorizedKey> authorizedKeys =
+              List<AuthorizedKey>.empty(growable: true);
+          List<AuthorizedKey> authorizedKeysList = lastTransactionKeychain
+              .data!.ownerships![0].authorizedPublicKeys!;
+          authorizedKeysList.forEach((AuthorizedKey authorizedKey) {
+            authorizedKeys.add(AuthorizedKey(
+                encryptedSecretKey:
+                    uint8ListToHex(ecEncrypt(aesKey, authorizedKey.publicKey)),
+                publicKey: authorizedKey.publicKey));
+          });
+
+          keychainTransaction.addOwnership(
+              aesEncrypt(keychain.encode(), aesKey), authorizedKeys);
+
+          keychainTransaction
+              .build(uint8ListToHex(keychain.seed!),
+                  lastTransactionKeychain.chainLength!)
+              .originSign(originPrivateKey);
+
+          // ignore: unused_local_variable
+          final TransactionStatus transactionStatusKeychain =
+              await sl.get<ApiService>().sendTx(keychainTransaction);
+
+          genesisAddress = keychain.deriveAddress(kServiceName, index: 0);
+          print(
+              '(not first) genesisAddress: ${uint8ListToHex(genesisAddress)}');
+        }
+
+        Account selectedAcct = Account(
+            lastLoadingTransactionInputs: 0,
+            lastAddress: uint8ListToHex(genesisAddress),
+            genesisAddress: uint8ListToHex(genesisAddress),
+            name: account.name,
+            balance: AccountBalance(
+                fiatCurrencyCode: '',
+                fiatCurrencyValue: 0,
+                nativeTokenName: account.balance!.nativeTokenName,
+                nativeTokenValue: 0,
+                tokenPrice: tokenPrice),
+            selected: false,
+            recentTransactions: []);
+
+        appWallet.appKeychain!.accounts!
+            .removeWhere((element) => element.name == selectedAcct.name);
+        appWallet.appKeychain!.accounts!.add(selectedAcct);
+        await appWallet.save();
+
+        final Contact newContact = Contact(
+            name: '@${account.name}',
+            address: uint8ListToHex(genesisAddress),
+            type: 'keychainService');
+        await sl.get<DBHelper>().deleteContact(newContact);
+        await sl.get<DBHelper>().saveContact(newContact);
+      }
+
+      keychain = await getKeychain(seed);
+      return keychain;
+    }*/
   }
 }

@@ -1689,6 +1689,18 @@ class AppLocalization {
         'The application could not be completed due to lack of consensus',
         name: 'notEnoughConfirmations');
   }
+
+  String get keychainNotExistWarning {
+    return Intl.message(
+        'For your information, the mainnet has been reset exceptionally as part of the current bug bounty program. We apologize for the inconvenience and invite you to delete your wallet and recreate one.',
+        name: 'keychainNotExistWarning');
+  }
+
+  String get noConnection {
+    return Intl.message(
+        'The connection to the network could not be completed. Please check your network settings.',
+        name: 'noConnection');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
