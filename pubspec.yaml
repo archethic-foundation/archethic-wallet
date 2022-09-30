@@ -3,7 +3,7 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.8+286
+version: 1.0.8+287
 
 environment:
   sdk: '>=2.17.0 <3.0.0'
@@ -71,11 +71,11 @@ dependencies:
   animate_do: ^2.1.0
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  #archethic_lib_dart: ^1.0.25
-  archethic_lib_dart: 
-    git:
-     url: https://github.com/archethic-foundation/libdart.git
-     ref: master
+  archethic_lib_dart: ^1.0.26
+  #archethic_lib_dart: 
+  #  git:
+  #   url: https://github.com/archethic-foundation/libdart.git
+  #   ref: master
 
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0
