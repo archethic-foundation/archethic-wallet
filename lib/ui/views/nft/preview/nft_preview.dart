@@ -4,7 +4,6 @@
 import 'dart:typed_data';
 
 // Flutter imports:
-import 'package:aewallet/model/data/token_informations.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -14,6 +13,7 @@ import 'package:filesize/filesize.dart';
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/mime_util.dart';

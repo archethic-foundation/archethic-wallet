@@ -7,8 +7,6 @@ import 'dart:io';
 import 'dart:math';
 
 // Flutter imports:
-import 'package:aewallet/model/nft_category.dart';
-import 'package:aewallet/ui/views/nft/get_public_key.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,6 +32,7 @@ import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
 import 'package:aewallet/service/app_service.dart';
@@ -43,6 +42,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/nft/add_public_key.dart';
+import 'package:aewallet/ui/views/nft/get_public_key.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';

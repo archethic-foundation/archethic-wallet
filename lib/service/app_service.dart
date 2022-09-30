@@ -8,10 +8,6 @@ import 'dart:math';
 import 'dart:typed_data';
 
 // Flutter imports:
-import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/data/account_balance.dart';
-import 'package:aewallet/model/data/app_wallet.dart';
-import 'package:aewallet/model/data/price.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -20,9 +16,13 @@ import 'package:intl/intl.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
+import 'package:aewallet/model/data/app_wallet.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/model/data/token_informations_property.dart';

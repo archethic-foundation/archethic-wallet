@@ -1,18 +1,19 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-// Flutter imports:
+// Dart imports:
 import 'dart:async';
 
-import 'package:aewallet/bus/refresh_event.dart';
-import 'package:event_taxi/event_taxi.dart';
+// Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/bus/refresh_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/nft_category_menu.dart';

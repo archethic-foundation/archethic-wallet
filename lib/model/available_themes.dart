@@ -1,29 +1,29 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:aewallet/ui/themes/theme_byzantine_violet_flat.dart';
-import 'package:aewallet/ui/themes/theme_dark_flat.dart';
-import 'package:aewallet/ui/themes/theme_emerald_green_flat.dart';
-import 'package:aewallet/ui/themes/theme_fire_red_flat.dart';
-import 'package:aewallet/ui/themes/theme_honey_orange_flat.dart';
-import 'package:aewallet/ui/themes/theme_navy_blue_flat.dart';
-import 'package:aewallet/ui/themes/theme_pearl_grey_flat.dart';
-import 'package:aewallet/ui/themes/theme_sapphire_blue_flat.dart';
-import 'package:aewallet/ui/themes/theme_sea_green_flat.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:aewallet/model/setting_item.dart';
 import 'package:aewallet/ui/themes/theme_byzantine_violet.dart';
+import 'package:aewallet/ui/themes/theme_byzantine_violet_flat.dart';
 import 'package:aewallet/ui/themes/theme_dark.dart';
+import 'package:aewallet/ui/themes/theme_dark_flat.dart';
 import 'package:aewallet/ui/themes/theme_emerald_green.dart';
+import 'package:aewallet/ui/themes/theme_emerald_green_flat.dart';
 import 'package:aewallet/ui/themes/theme_fire_red.dart';
+import 'package:aewallet/ui/themes/theme_fire_red_flat.dart';
 import 'package:aewallet/ui/themes/theme_flat.dart';
 import 'package:aewallet/ui/themes/theme_honey_orange.dart';
+import 'package:aewallet/ui/themes/theme_honey_orange_flat.dart';
 import 'package:aewallet/ui/themes/theme_navy_blue.dart';
+import 'package:aewallet/ui/themes/theme_navy_blue_flat.dart';
 import 'package:aewallet/ui/themes/theme_pearl_grey.dart';
+import 'package:aewallet/ui/themes/theme_pearl_grey_flat.dart';
 import 'package:aewallet/ui/themes/theme_sapphire_blue.dart';
+import 'package:aewallet/ui/themes/theme_sapphire_blue_flat.dart';
 import 'package:aewallet/ui/themes/theme_sea_green.dart';
+import 'package:aewallet/ui/themes/theme_sea_green_flat.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 
 enum ThemeOptions {

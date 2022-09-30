@@ -6,14 +6,14 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 // Package imports:
-import 'package:aewallet/model/data/token_informations.dart';
-import 'package:aewallet/util/mime_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:collection/collection.dart';
+import 'package:pdfx/pdfx.dart';
 
 // Project imports:
+import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:pdfx/pdfx.dart';
+import 'package:aewallet/util/mime_util.dart';
 
 RegExp _base64 = RegExp(
     r'^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$');

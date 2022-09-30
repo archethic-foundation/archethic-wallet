@@ -7,7 +7,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 // Flutter imports:
-import 'package:aewallet/service/token_informations_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -24,6 +23,7 @@ import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/model/data/token_informations_property.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/service/app_service.dart';
+import 'package:aewallet/service/token_informations_service.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/routes.dart';

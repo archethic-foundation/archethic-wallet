@@ -2,7 +2,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
-import 'package:aewallet/util/number_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -14,6 +13,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/token_transfer_wallet.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/util/number_util.dart';
 
 class TokenTransferListWidget extends StatelessWidget {
   TokenTransferListWidget({

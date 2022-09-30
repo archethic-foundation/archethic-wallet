@@ -5,9 +5,10 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 // Package imports:
-import 'package:aewallet/model/data/token_informations.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+
 // Project imports:
+import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/model/data/token_informations_property.dart';
 
 class TokenInformationsService {

@@ -5,8 +5,6 @@ import 'dart:io';
 import 'dart:ui';
 
 // Flutter imports:
-import 'package:aewallet/ui/views/nft/configure_category_list.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +19,8 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/nft/configure_category_list.dart';
+import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/preferences.dart';

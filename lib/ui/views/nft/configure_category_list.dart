@@ -1,20 +1,23 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-// Flutter imports:
+// Dart imports:
 import 'dart:io';
 
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:event_taxi/event_taxi.dart';
+
+// Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/refresh_event.dart';
+import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
-import 'package:event_taxi/event_taxi.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
-// Project imports:
-import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 
 class ConfigureCategoryList extends StatefulWidget {

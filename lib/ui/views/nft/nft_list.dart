@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:aewallet/model/data/account_token.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -8,11 +7,12 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
+import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/nft/preview/nft_card.dart';
 import 'package:aewallet/ui/views/nft/nft_creation_process.dart';
+import 'package:aewallet/ui/views/nft/preview/nft_card.dart';
 import 'package:aewallet/ui/views/nft/preview/nft_preview.dart';
 import 'package:aewallet/ui/views/uco/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';

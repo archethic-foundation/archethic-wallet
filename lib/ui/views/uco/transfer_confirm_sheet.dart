@@ -8,7 +8,6 @@ import 'dart:math';
 import 'dart:typed_data';
 
 // Flutter imports:
-import 'package:aewallet/service/app_service.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -24,6 +23,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/token_transfer_wallet.dart';
 import 'package:aewallet/model/uco_transfer_wallet.dart';
+import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';

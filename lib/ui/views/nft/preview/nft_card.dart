@@ -4,9 +4,6 @@
 import 'dart:typed_data';
 
 // Flutter imports:
-import 'package:aewallet/model/data/nft_infos_off_chain.dart';
-import 'package:aewallet/model/data/token_informations.dart';
-import 'package:aewallet/util/token_util.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -14,10 +11,13 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
+import 'package:aewallet/model/data/nft_infos_off_chain.dart';
+import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/mime_util.dart';
+import 'package:aewallet/util/token_util.dart';
 
 class NFTCard extends StatelessWidget {
   const NFTCard({

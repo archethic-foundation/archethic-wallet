@@ -1,10 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
 // Package imports:
-import 'package:aewallet/model/nft_category.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 // Project imports:
@@ -14,6 +15,7 @@ import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/model/data/recent_transaction.dart';
+import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 
