@@ -15,6 +15,7 @@ Xcode : notarize App : Archive/Distribute app/Deveoper ID/Upload/Automatically s
 # windows
 flutter build windows
 flutter pub run msix:create -c windows/certificates/archethic_wallet.pfx -p password12345
+flutter pub run msix:create
 # https://www.advancedinstaller.com/install-test-certificate-from-msix.html
 # chrome extension
 flutter build web --web-renderer html --csp
