@@ -12,8 +12,7 @@ import 'package:flutter/material.dart';
 class CurrencyDialog {
   static Future<AvailableCurrencyEnum?> getDialog(BuildContext context) async {
     final preferences = await Preferences.getInstance();
-    final pickerItemsList =
-        List<PickerItem>.empty(growable: true);
+    final pickerItemsList = List<PickerItem>.empty(growable: true);
 
     for (final value in AvailableCurrencyEnum.values) {
       pickerItemsList.add(
@@ -24,7 +23,7 @@ class CurrencyDialog {
           null,
           value,
           true,
-          subLabel: value.name == 'USD' || value.name == 'EUR'
+          subLabel: value.name == 'usd' || value.name == 'eur'
               ? AppLocalization.of(context)!.conversionOraclePromotion
               : null,
         ),

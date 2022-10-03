@@ -23,30 +23,30 @@ class Preferences {
   final Box<dynamic> _box;
 
   //
-  static const String _first_launch = 'archethic_wallet_first_launch';
-  static const String _auth_method = 'archethic_wallet_auth_method';
-  static const String _cur_currency = 'archethic_wallet_cur_currency';
-  static const String _cur_language = 'archethic_wallet_cur_language';
-  static const String _cur_primary_setting =
+  static const String firstLaunch = 'archethic_wallet_first_launch';
+  static const String authMethod = 'archethic_wallet_auth_method';
+  static const String curCurrency = 'archethic_wallet_cur_currency';
+  static const String curLanguage = 'archethic_wallet_cur_language';
+  static const String curPrimarySetting =
       'archethic_wallet_cur_primary_setting';
-  static const String _cur_network = 'archethic_wallet_cur_network';
-  static const String _cur_network_dev_endpoint = '_cur_network_dev_endpoint';
-  static const String _cur_theme = 'archethic_wallet_cur_theme';
-  static const String _lock = 'archethic_wallet_lock';
-  static const String _lock_timeout = 'archethic_wallet_lock_timeout';
-  static const String _has_shown_root_warning =
+  static const String curNetwork = 'archethic_wallet_cur_network';
+  static const String curNetworkDevEndpoint = '_cur_network_dev_endpoint';
+  static const String curTheme = 'archethic_wallet_cur_theme';
+  static const String lock = 'archethic_wallet_lock';
+  static const String lockTimeout = 'archethic_wallet_lock_timeout';
+  static const String hasShownRootWarning =
       'archethic_wallet_has_shown_root_warning';
-  static const String _pin_attempts = 'archethic_wallet_pin_attempts';
-  static const String _pin_lock_until = 'archethic_wallet_pin_lock_until';
-  static const String _pinPadShuffle = 'archethic_wallet_pinPadShuffle';
-  static const String _showBalances = 'archethic_wallet_showBalances';
-  static const String _showBlog = 'archethic_wallet_showBlog';
-  static const String _showPriceChart = 'archethic_wallet_showPriceChart';
-  static const String _activeVibrations = 'archethic_wallet_activeVibrations';
-  static const String _activeNotifications =
+  static const String pinAttempts = 'archethic_wallet_pin_attempts';
+  static const String pinLockUntil = 'archethic_wallet_pin_lock_until';
+  static const String pinPadShuffle = 'archethic_wallet_pinPadShuffle';
+  static const String showBalances = 'archethic_wallet_showBalances';
+  static const String showBlog = 'archethic_wallet_showBlog';
+  static const String showPriceChart = 'archethic_wallet_showPriceChart';
+  static const String activeVibrations = 'archethic_wallet_activeVibrations';
+  static const String activeNotifications =
       'archethic_wallet_activeNotifications';
-  static const String _language_seed = 'archethic_wallet_language_seed';
-  static const String _main_screen_current_page =
+  static const String languageSeed = 'archethic_wallet_language_seed';
+  static const String mainScreenCurrentPage =
       'archethic_wallet_main_screen_current_page';
 
   // This doesn't have to be a singleton.
@@ -63,138 +63,136 @@ class Preferences {
 
   Future<void> _removeValue<T>(dynamic key) => _box.delete(key);
 
-  Future<void> setHasSeenRootWarning() =>
-      _setValue(_has_shown_root_warning, true);
+  Future<void> setHasSeenRootWarning() => _setValue(hasShownRootWarning, true);
 
   bool getHasSeenRootWarning() =>
-      _getValue(_has_shown_root_warning, defaultValue: false);
+      _getValue(hasShownRootWarning, defaultValue: false);
 
   Future<void> setAuthMethod(AuthenticationMethod method) =>
-      _setValue(_auth_method, method.getIndex());
+      _setValue(authMethod, method.getIndex());
 
   AuthenticationMethod getAuthMethod() => AuthenticationMethod(
-        AuthMethod.values[
-            _getValue(_auth_method, defaultValue: AuthMethod.pin.index)],
+        AuthMethod
+            .values[_getValue(authMethod, defaultValue: AuthMethod.pin.index)],
       );
 
   Future<void> setCurrency(AvailableCurrency currency) =>
-      _setValue(_cur_currency, currency.getIndex());
+      _setValue(curCurrency, currency.getIndex());
 
   AvailableCurrency getCurrency(Locale deviceLocale) => AvailableCurrency(
         AvailableCurrencyEnum.values[_getValue(
-          _cur_currency,
+          curCurrency,
           defaultValue:
               AvailableCurrency.getBestForLocale(deviceLocale).currency.index,
         )],
       );
 
   Future<void> setLanguage(LanguageSetting language) =>
-      _setValue(_cur_language, language.getIndex());
+      _setValue(curLanguage, language.getIndex());
 
   LanguageSetting getLanguage() => LanguageSetting(
         AvailableLanguage.values[_getValue(
-          _cur_language,
-          defaultValue: AvailableLanguage.DEFAULT.index,
+          curLanguage,
+          defaultValue: AvailableLanguage.systemDefault.index,
         )],
       );
 
   Future<void> setPrimaryCurrency(PrimaryCurrencySetting primarySetting) =>
-      _setValue(_cur_primary_setting, primarySetting.getIndex());
+      _setValue(curPrimarySetting, primarySetting.getIndex());
 
   PrimaryCurrencySetting getPrimaryCurrency() => PrimaryCurrencySetting(
         AvailablePrimaryCurrency.values[_getValue(
-          _cur_primary_setting,
+          curPrimarySetting,
           defaultValue: AvailablePrimaryCurrency.native.index,
         )],
       );
 
   Future<void> setNetwork(NetworksSetting network) =>
-      _setValue(_cur_network, network.getIndex());
+      _setValue(curNetwork, network.getIndex());
 
   NetworksSetting getNetwork() => NetworksSetting(
         AvailableNetworks.values[_getValue(
-          _cur_network,
+          curNetwork,
           defaultValue: AvailableNetworks.archethicMainNet.index,
         )],
       );
 
   Future<void> setNetworkDevEndpoint(String s) =>
-      _setValue(_cur_network_dev_endpoint, s);
+      _setValue(curNetworkDevEndpoint, s);
 
   String getNetworkDevEndpoint() => _getValue(
-        _cur_network_dev_endpoint,
+        curNetworkDevEndpoint,
         defaultValue: 'http://localhost:4000',
       );
 
-  Future<void> setLanguageSeed(String v) => _setValue(_language_seed, v);
+  Future<void> setLanguageSeed(String v) => _setValue(languageSeed, v);
 
-  String getLanguageSeed() => _getValue(_language_seed, defaultValue: '');
+  String getLanguageSeed() => _getValue(languageSeed, defaultValue: '');
 
-  Future<void> setLock(bool value) => _setValue(_lock, value);
+  Future<void> setLock(bool value) => _setValue(lock, value);
 
-  bool getLock() => _getValue(_lock, defaultValue: false);
+  bool getLock() => _getValue(lock, defaultValue: false);
 
-  Future<void> setFirstLaunch(bool value) => _setValue(_first_launch, value);
+  Future<void> setFirstLaunch(bool value) => _setValue(firstLaunch, value);
 
-  bool getFirstLaunch() => _getValue(_first_launch, defaultValue: true);
+  bool getFirstLaunch() => _getValue(firstLaunch, defaultValue: true);
 
-  Future<void> setPinPadShuffle(bool value) => _setValue(_pinPadShuffle, value);
+  Future<void> setPinPadShuffle(bool value) => _setValue(pinPadShuffle, value);
 
-  bool getPinPadShuffle() => _getValue(_pinPadShuffle, defaultValue: false);
+  bool getPinPadShuffle() => _getValue(pinPadShuffle, defaultValue: false);
 
-  Future<void> setShowBalances(bool value) => _setValue(_showBalances, value);
+  Future<void> setShowBalances(bool value) => _setValue(showBalances, value);
 
-  bool getShowBalances() => _getValue(_showBalances, defaultValue: true);
+  bool getShowBalances() => _getValue(showBalances, defaultValue: true);
 
-  Future<void> setShowBlog(bool value) => _setValue(_showBlog, value);
+  Future<void> setShowBlog(bool value) => _setValue(showBlog, value);
 
-  bool getShowBlog() => _getValue(_showBlog, defaultValue: true);
+  bool getShowBlog() => _getValue(showBlog, defaultValue: true);
 
   Future<void> setActiveVibrations(bool value) =>
-      _setValue(_activeVibrations, value);
+      _setValue(activeVibrations, value);
 
-  bool getActiveVibrations() =>
-      _getValue(_activeVibrations, defaultValue: true);
+  bool getActiveVibrations() => _getValue(activeVibrations, defaultValue: true);
 
   Future<void> setActiveNotifications(bool value) =>
-      _setValue(_activeNotifications, value);
+      _setValue(activeNotifications, value);
 
   bool getActiveNotifications() =>
-      _getValue(_activeNotifications, defaultValue: true);
+      _getValue(activeNotifications, defaultValue: true);
 
   Future<void> setMainScreenCurrentPage(int value) =>
-      _setValue(_main_screen_current_page, value);
+      _setValue(mainScreenCurrentPage, value);
 
   int getMainScreenCurrentPage() =>
-      _getValue(_main_screen_current_page, defaultValue: 1);
+      _getValue(mainScreenCurrentPage, defaultValue: 1);
 
   Future<void> setShowPriceChart(bool value) =>
-      _setValue(_showPriceChart, value);
+      _setValue(showPriceChart, value);
 
-  bool getShowPriceChart() => _getValue(_showPriceChart, defaultValue: true);
+  bool getShowPriceChart() => _getValue(showPriceChart, defaultValue: true);
 
   Future<void> setLockTimeout(LockTimeoutSetting setting) =>
-      _setValue(_lock_timeout, setting.getIndex());
+      _setValue(lockTimeout, setting.getIndex());
 
   LockTimeoutSetting getLockTimeout() => LockTimeoutSetting(
         LockTimeoutOption.values[_getValue(
-          _lock_timeout,
+          lockTimeout,
           defaultValue: LockTimeoutOption.one.index,
         )],
       );
 
-  int getLockAttempts() => _getValue(_pin_attempts, defaultValue: 0);
+  int getLockAttempts() => _getValue(pinAttempts, defaultValue: 0);
 
   Future<void> incrementLockAttempts() =>
-      _setValue(_pin_attempts, getLockAttempts() + 1);
+      _setValue(pinAttempts, getLockAttempts() + 1);
 
   Future<void> resetLockAttempts() async {
-    _removeValue(_pin_attempts);
-    _removeValue(_pin_lock_until);
+    _removeValue(pinAttempts);
+    _removeValue(pinLockUntil);
   }
 
   bool shouldLock() {
-    if (_getValue(_pin_lock_until) != null || getLockAttempts() >= 5) {
+    if (_getValue(pinLockUntil) != null || getLockAttempts() >= 5) {
       return true;
     }
     return false;
@@ -205,7 +203,7 @@ class Preferences {
     if (attempts >= 20) {
       // 4+ failed attempts
       _setValue(
-        _pin_lock_until,
+        pinLockUntil,
         DateFormat.yMd()
             .add_jms()
             .format(DateTime.now().toUtc().add(const Duration(hours: 24))),
@@ -213,7 +211,7 @@ class Preferences {
     } else if (attempts >= 15) {
       // 3 failed attempts
       _setValue(
-        _pin_lock_until,
+        pinLockUntil,
         DateFormat.yMd()
             .add_jms()
             .format(DateTime.now().toUtc().add(const Duration(minutes: 15))),
@@ -221,14 +219,14 @@ class Preferences {
     } else if (attempts >= 10) {
       // 2 failed attempts
       _setValue(
-        _pin_lock_until,
+        pinLockUntil,
         DateFormat.yMd()
             .add_jms()
             .format(DateTime.now().toUtc().add(const Duration(minutes: 5))),
       );
     } else if (attempts >= 5) {
       _setValue(
-        _pin_lock_until,
+        pinLockUntil,
         DateFormat.yMd()
             .add_jms()
             .format(DateTime.now().toUtc().add(const Duration(minutes: 1))),
@@ -237,7 +235,7 @@ class Preferences {
   }
 
   DateTime? getLockDate() {
-    final lockDateStr = _getValue(_pin_lock_until);
+    final lockDateStr = _getValue(pinLockUntil);
     if (lockDateStr != null) {
       return DateFormat.yMd().add_jms().parseUtc(lockDateStr);
     } else {
@@ -246,11 +244,11 @@ class Preferences {
   }
 
   Future<void> setTheme(ThemeSetting theme) =>
-      _setValue(_cur_theme, theme.getIndex());
+      _setValue(curTheme, theme.getIndex());
 
   ThemeSetting getTheme() => ThemeSetting(
-        ThemeOptions.values[
-            _getValue(_cur_theme, defaultValue: ThemeOptions.dark.index)],
+        ThemeOptions
+            .values[_getValue(curTheme, defaultValue: ThemeOptions.dark.index)],
       );
 
   Future<void> clearAll() async {

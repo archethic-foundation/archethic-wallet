@@ -7,79 +7,79 @@ import 'package:intl/intl.dart';
 class CurrencyUtil {
   static String getDisplayNameNoSymbol(String currency) {
     switch (currency) {
-      case 'ARS':
+      case 'ars':
         return 'Argentine Peso';
-      case 'AUD':
+      case 'aud':
         return 'Australian Dollar';
-      case 'BRL':
+      case 'brl':
         return 'Brazilian Real';
-      case 'CAD':
+      case 'cad':
         return 'Canadian Dollar';
-      case 'CHF':
+      case 'chf':
         return 'Swiss Franc';
-      case 'CLP':
+      case 'clp':
         return 'Chilean Peso';
-      case 'CNY':
+      case 'cny':
         return 'Chinese Yuan';
-      case 'CZK':
+      case 'czk':
         return 'Czech Koruna';
-      case 'DKK':
+      case 'dkk':
         return 'Danish Krone';
-      case 'EUR':
+      case 'eur':
         return 'Euro';
-      case 'GBP':
+      case 'gbp':
         return 'Great Britain Pound';
-      case 'HKD':
+      case 'hkd':
         return 'Hong Kong Dollar';
-      case 'HUF':
+      case 'huf':
         return 'Hungarian Forint';
-      case 'IDR':
+      case 'idr':
         return 'Indonesian Rupiah';
-      case 'ILS':
+      case 'ils':
         return 'Israeli Shekel';
-      case 'INR':
+      case 'inr':
         return 'Indian Rupee';
-      case 'JPY':
+      case 'jpy':
         return 'Japanese Yen';
-      case 'KRW':
+      case 'krw':
         return 'South Korean Won';
-      case 'KWD':
+      case 'kwd':
         return 'Kuwaiti Dinar';
-      case 'MXN':
+      case 'mxn':
         return 'Mexican Peso';
-      case 'MYR':
+      case 'myr':
         return 'Malaysian Ringgit';
-      case 'NOK':
+      case 'nok':
         return 'Norwegian Krone';
-      case 'NZD':
+      case 'nzd':
         return 'New Zealand Dollar';
-      case 'PHP':
+      case 'php':
         return 'Philippine Peso';
-      case 'PKR':
+      case 'pkr':
         return 'Pakistani Rupee';
-      case 'PLN':
+      case 'pln':
         return 'Polish Zloty';
-      case 'RUB':
+      case 'rub':
         return 'Russian Ruble';
-      case 'SAR':
+      case 'sar':
         return 'Saudi Riyal';
-      case 'SEK':
+      case 'sek':
         return 'Swedish Krona';
-      case 'SGD':
+      case 'sgd':
         return 'Singapore Dollar';
-      case 'THB':
+      case 'thb':
         return 'Thai Baht';
-      case 'TRY':
+      case 'tli':
         return 'Turkish Lira';
-      case 'TWD':
+      case 'twd':
         return 'Taiwan Dollar';
-      case 'AED':
+      case 'aed':
         return 'UAE Dirham';
-      case 'ZAR':
+      case 'zar':
         return 'South African Rand';
-      case 'BTC':
+      case 'btc':
         return 'Bitcoin';
-      case 'USD':
+      case 'usd':
       default:
         return 'US Dollar';
     }
@@ -87,79 +87,79 @@ class CurrencyUtil {
 
   static String getCurrencySymbol(String currency) {
     switch (currency) {
-      case 'ARS':
+      case 'ars':
         return r'$';
-      case 'AUD':
+      case 'aud':
         return r'$';
-      case 'BRL':
+      case 'brl':
         return r'R$';
-      case 'CAD':
+      case 'cad':
         return r'$';
-      case 'CHF':
-        return 'CHF';
-      case 'CLP':
+      case 'chf':
+        return 'chf';
+      case 'clp':
         return r'$';
-      case 'CNY':
+      case 'cny':
         return '¥';
-      case 'CZK':
+      case 'czk':
         return 'Kč';
-      case 'DKK':
+      case 'dkk':
         return 'kr.';
-      case 'EUR':
+      case 'eur':
         return '€';
-      case 'GBP':
+      case 'gbp':
         return '£';
-      case 'HKD':
+      case 'hkd':
         return r'HK$';
-      case 'HUF':
+      case 'huf':
         return 'Ft';
-      case 'IDR':
+      case 'idr':
         return 'Rp';
-      case 'ILS':
+      case 'ils':
         return '₪';
-      case 'INR':
+      case 'inr':
         return '₹';
-      case 'JPY':
+      case 'jpy':
         return '¥';
-      case 'KRW':
+      case 'krw':
         return '₩';
-      case 'KWD':
+      case 'kwd':
         return 'KD';
-      case 'MXN':
+      case 'mxn':
         return r'$';
-      case 'MYR':
+      case 'myr':
         return 'RM';
-      case 'NOK':
+      case 'nok':
         return 'kr';
-      case 'NZD':
+      case 'nzd':
         return r'$';
-      case 'PHP':
+      case 'php':
         return '₱';
-      case 'PKR':
+      case 'pkr':
         return 'Rs';
-      case 'PLN':
+      case 'pln':
         return 'zł';
-      case 'RUB':
+      case 'rub':
         return '\u20BD';
-      case 'SAR':
+      case 'sar':
         return 'SR';
-      case 'SEK':
+      case 'sek':
         return 'kr';
-      case 'SGD':
+      case 'sgd':
         return r'$';
-      case 'THB':
-        return 'THB';
-      case 'TRY':
+      case 'thb':
+        return 'thb';
+      case 'tli':
         return '₺';
-      case 'TWD':
+      case 'twd':
         return r'NT$';
-      case 'AED':
+      case 'aed':
         return 'د.إ';
-      case 'ZAR':
+      case 'zar':
         return r'R$';
-      case 'BTC':
-        return 'BTC';
-      case 'USD':
+      case 'btc':
+        return 'btc';
+      case 'usd':
       default:
         return r'$';
     }
@@ -167,88 +167,88 @@ class CurrencyUtil {
 
   static Locale getLocale(String currency) {
     switch (currency) {
-      case 'ARS':
+      case 'ars':
         return const Locale('es', 'AR');
-      case 'AUD':
+      case 'aud':
         return const Locale('en', 'AU');
-      case 'BRL':
+      case 'brl':
         return const Locale('pt', 'BR');
-      case 'CAD':
+      case 'cad':
         return const Locale('en', 'CA');
-      case 'CHF':
+      case 'chf':
         return const Locale('de', 'CH');
-      case 'CLP':
+      case 'clp':
         return const Locale('es', 'CL');
-      case 'CNY':
+      case 'cny':
         return const Locale('zh', 'CN');
-      case 'CZK':
+      case 'czk':
         return const Locale('cs', 'CZ');
-      case 'DKK':
+      case 'dkk':
         return const Locale('da', 'DK');
-      case 'EUR':
+      case 'eur':
         return const Locale('fr', 'FR');
-      case 'GBP':
+      case 'gbp':
         return const Locale('en', 'GB');
-      case 'HKD':
+      case 'hkd':
         return const Locale('zh', 'HK');
-      case 'HUF':
+      case 'huf':
         return const Locale('hu', 'HU');
-      case 'IDR':
+      case 'idr':
         return const Locale('id', 'ID');
-      case 'ILS':
+      case 'ils':
         return const Locale('he', 'IL');
-      case 'INR':
+      case 'inr':
         return const Locale('hi', 'IN');
-      case 'JPY':
+      case 'jpy':
         return const Locale('ja', 'JP');
-      case 'KRW':
+      case 'krw':
         return const Locale('ko', 'KR');
-      case 'KWD':
+      case 'kwd':
         return const Locale('ar', 'KW');
-      case 'MXN':
+      case 'mxn':
         return const Locale('es', 'MX');
-      case 'MYR':
+      case 'myr':
         return const Locale('ta', 'MY');
-      case 'NOK':
+      case 'nok':
         return const Locale('no', 'NO');
-      case 'NZD':
+      case 'nzd':
         return const Locale('en', 'NZ');
-      case 'PHP':
+      case 'php':
         return const Locale('tl', 'PH');
-      case 'PKR':
+      case 'pkr':
         return const Locale('ur', 'PK');
-      case 'PLN':
+      case 'pln':
         return const Locale('pl', 'PL');
-      case 'RUB':
+      case 'rub':
         return const Locale('ru', 'RU');
-      case 'SAR':
+      case 'sar':
         return const Locale('ar', 'SA');
-      case 'SEK':
+      case 'sek':
         return const Locale('sv', 'SE');
-      case 'SGD':
+      case 'sgd':
         return const Locale('zh', 'SG');
-      case 'THB':
+      case 'thb':
         return const Locale('th', 'TH');
-      case 'TRY':
+      case 'tli':
         return const Locale('tr', 'TR');
-      case 'TWD':
+      case 'twd':
         return const Locale('en', 'TW');
-      case 'AED':
+      case 'aed':
         return const Locale('ar', 'AE');
       case 'VES':
         return const Locale('es', 'VE');
-      case 'ZAR':
+      case 'zar':
         return const Locale('en', 'ZA');
-      case 'USD':
+      case 'usd':
       default:
         return const Locale('en', 'US');
     }
   }
 
   static String getConvertedAmount(String currency, double amount) {
-    if (currency == 'BTC') {
+    if (currency == 'btc') {
       return '${amount.toStringAsFixed(8)} ${CurrencyUtil.getCurrencySymbol(currency)}';
-    } else if (currency == 'EUR') {
+    } else if (currency == 'eur') {
       return '${amount.toStringAsFixed(NumberFormat.currency(locale: CurrencyUtil.getLocale(currency).toString(), symbol: CurrencyUtil.getCurrencySymbol(currency)).decimalDigits!)} ${CurrencyUtil.getCurrencySymbol(currency)}';
     } else {
       return NumberFormat.currency(
@@ -263,7 +263,7 @@ class CurrencyUtil {
     double amount,
     int numberOfDigits,
   ) {
-    if (currency == 'BTC') {
+    if (currency == 'btc') {
       return '${amount.toStringAsFixed(8)} ${CurrencyUtil.getCurrencySymbol(currency)}';
     } else {
       return NumberFormat.currency(
