@@ -104,7 +104,6 @@ class _LedgerScreenState extends State<LedgerScreen> {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           IconWidget.build(
                             context,

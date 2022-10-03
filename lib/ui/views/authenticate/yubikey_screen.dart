@@ -251,7 +251,6 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           IconWidget.build(
                             context,
@@ -341,8 +340,6 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                                 LengthLimitingTextInputFormatter(45),
                               ],
                               keyboardType: TextInputType.text,
-                              obscureText: false,
-                              textAlign: TextAlign.center,
                               style:
                                   AppStyles.textStyleSize16W600Primary(context),
                               suffixButton: TextFieldButton(

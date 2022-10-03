@@ -51,7 +51,6 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Row(
                           children: <Widget>[
@@ -100,7 +99,6 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                           alignment: Alignment.bottomLeft,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel1,

@@ -60,7 +60,7 @@ String stringEncryptBase64(String string, String? seed) {
   final keyndIV = _deriveKeyAndIV(seed!, salt);
   final key = Key(keyndIV.item1);
   final iv = IV(keyndIV.item2);
-  final encrypter = Encrypter(AES(key, mode: AESMode.cbc, padding: 'PKCS7'));
+  final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
   final encrypted = encrypter.encrypt(string, iv: iv);
   final Uint8List encryptedBytesWithSalt = Uint8List.fromList(
     _createUint8ListFromString('Salted__') + salt + encrypted.bytes,
@@ -76,6 +76,6 @@ String stringDecryptBase64(String string, String? seed) {
   final keyndIV = _deriveKeyAndIV(seed!, salt);
   final key = Key(keyndIV.item1);
   final iv = IV(keyndIV.item2);
-  final encrypter = Encrypter(AES(key, mode: AESMode.cbc, padding: 'PKCS7'));
+  final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
   return encrypter.decrypt64(base64.encode(encryptedBytes), iv: iv);
 }

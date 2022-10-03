@@ -196,7 +196,6 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
           ),
           Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(
                   height: 20,
@@ -225,7 +224,6 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       bottom: 20,
                     ),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
@@ -317,7 +315,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       );
       final String service = 'archethic-wallet-$nameEncoded';
       final int index = (await sl.get<ApiService>().getTransactionIndex(
-                uint8ListToHex(keychain.deriveAddress(service, index: 0)),
+                uint8ListToHex(keychain.deriveAddress(service)),
               ))
           .chainLength!;
 

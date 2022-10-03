@@ -68,7 +68,6 @@ class NftCategoryMenu extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15),
                             side: const BorderSide(
                               color: Colors.white10,
-                              width: 1,
                             ),
                           ),
                           child: ClipRRect(
@@ -83,7 +82,6 @@ class NftCategoryMenu extends StatelessWidget {
                           child: Badge(
                             toAnimate: false,
                             badgeContent: Text(count.toString()),
-                            badgeColor: Colors.red,
                           ),
                         ),
                     ],

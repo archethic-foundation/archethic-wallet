@@ -121,7 +121,6 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -224,7 +223,6 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             style:
                                 AppStyles.textStyleSize28W700Primary(context),
                             maxLines: 1,
-                            minFontSize: 12,
                             stepGranularity: 0.1,
                           ),
                         ),
@@ -262,14 +260,11 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               const SizedBox(height: 10),
                               GridView.count(
                                 physics: const NeverScrollableScrollPhysics(),
                                 childAspectRatio: 1.2,
-                                padding:
-                                    const EdgeInsets.only(top: 0, bottom: 0),
                                 shrinkWrap: true,
                                 crossAxisCount: 4,
                                 children: List.generate(24, (index) {
@@ -487,8 +482,6 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                         .curNetwork
                                         .getNetworkCryptoCurrencyLabel(),
                                     tokenPrice,
-                                    loadBalance: true,
-                                    loadRecentTransactions: true,
                                   );
 
                                   StateContainer.of(context).appWallet =
@@ -646,7 +639,6 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(

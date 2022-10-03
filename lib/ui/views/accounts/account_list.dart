@@ -76,7 +76,6 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
       key: expandedKey,
       padding: const EdgeInsets.only(top: 40, bottom: 50),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left: 36, right: 36, bottom: 20),
@@ -140,17 +139,12 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                   ),
                                   content: Column(
                                     mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
                                         children: <Widget>[
                                           AppTextField(
-                                            topMargin: 0,
                                             leftMargin: 0,
                                             rightMargin: 0,
                                             focusNode: nameFocusNode,
@@ -431,7 +425,6 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
               color: StateContainer.of(context)
                   .curTheme
                   .backgroundAccountsListCardSelected!,
-              width: 1,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
@@ -452,21 +445,17 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(
                       margin:
                           const EdgeInsetsDirectional.only(bottom: 10, top: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   SizedBox(
                                     width:

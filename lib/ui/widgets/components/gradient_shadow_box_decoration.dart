@@ -411,7 +411,6 @@ class _BoxDecorationPainter extends BoxPainter {
       BoxShadow(
         blurRadius: 30,
         spreadRadius: 15,
-        color: Colors.black,
       ),
     ];
 

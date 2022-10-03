@@ -63,8 +63,6 @@ class AccountTab extends StatelessWidget {
                           bottom: 50,
                         ),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             /// BALANCE
                             BalanceInfosWidget().getBalance(context),

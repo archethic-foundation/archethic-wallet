@@ -197,7 +197,6 @@ class _AppTextFieldState extends State<AppTextField> {
               ),
               // Buttons
               Column(
-                mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

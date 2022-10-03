@@ -32,8 +32,6 @@ class SeaGreenTheme implements BaseTheme {
       Color(0xFF00A4DB),
       Color(0xFFCC00FF),
     ],
-    begin: Alignment(-1, 0),
-    end: Alignment(1, 0),
     transform: GradientRotation(pi / 9),
   );
 
@@ -202,8 +200,6 @@ class SeaGreenTheme implements BaseTheme {
       Color(0xFF00A4DB),
       Color(0xFFCC00FF),
     ],
-    begin: Alignment(-1, 0),
-    end: Alignment(1, 0),
     transform: GradientRotation(pi / 9),
   );
 
@@ -220,8 +216,6 @@ class SeaGreenTheme implements BaseTheme {
           Color(0xFF062F31),
           Color(0xFF009D78),
         ],
-        begin: Alignment(-1, 0),
-        end: Alignment(1, 0),
         transform: GradientRotation(pi / 9),
       ),
     );

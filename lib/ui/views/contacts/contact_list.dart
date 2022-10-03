@@ -171,8 +171,6 @@ class _ContactsListState extends State<ContactsList> {
               padding: const EdgeInsets.only(left: 15, right: 15),
               child: AppTextField(
                 controller: searchNameController,
-                autofocus: false,
-                maxLines: 1,
                 autocorrect: false,
                 labelText: AppLocalization.of(context)!.searchField,
                 keyboardType: TextInputType.text,
@@ -299,7 +297,6 @@ class _ContactsListState extends State<ContactsList> {
             padding: const EdgeInsets.symmetric(vertical: 4),
             margin: const EdgeInsetsDirectional.only(start: 10, end: 10),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(
                   child: Container(
@@ -310,8 +307,6 @@ class _ContactsListState extends State<ContactsList> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             contact.type == 'keychainService'
                                 ? FaIcon(

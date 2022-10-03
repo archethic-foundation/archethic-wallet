@@ -49,7 +49,6 @@ class ContactsDialog {
                     focusNode: searchNameFocusNode,
                     controller: searchNameController,
                     autofocus: true,
-                    maxLines: 1,
                     autocorrect: false,
                     labelText: AppLocalization.of(context)!.searchField,
                     keyboardType: TextInputType.text,

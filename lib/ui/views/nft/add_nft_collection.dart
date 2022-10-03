@@ -129,7 +129,6 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: SingleChildScrollView(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       collectionInfos(context, bottom),

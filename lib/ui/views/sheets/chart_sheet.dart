@@ -155,8 +155,7 @@ class _ChartSheetState extends State<ChartSheet> {
 
                   bottomBarCurrentPage = index;
                 });
-                await StateContainer.of(context)
-                    .requestUpdate(forceUpdateChart: true);
+                await StateContainer.of(context).requestUpdate();
               },
               items: widget.optionChartList.map((OptionChart optionChart) {
                 return BottomBarItem(

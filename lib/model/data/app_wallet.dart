@@ -45,8 +45,7 @@ class AppWallet extends HiveObject {
     /// Default service for wallet
     final String kServiceName = 'archethic-wallet-$nameEncoded';
 
-    final Uint8List genesisAddress =
-        keychain.deriveAddress(kServiceName, index: 0);
+    final Uint8List genesisAddress = keychain.deriveAddress(kServiceName);
     selectedAcct = Account(
       lastLoadingTransactionInputs: 0,
       lastAddress: uint8ListToHex(genesisAddress),

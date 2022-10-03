@@ -124,12 +124,10 @@ class NetworkDialog {
                           ),
                           content: Column(
                             mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   AppTextField(
                                     leftMargin: 0,

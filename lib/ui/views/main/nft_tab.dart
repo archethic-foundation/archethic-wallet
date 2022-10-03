@@ -96,7 +96,6 @@ class _NFTTabState extends State<NFTTab> {
                     child: CustomScrollView(
                       slivers: <Widget>[
                         SliverAppBar(
-                          pinned: false,
                           stretch: true,
                           automaticallyImplyLeading: false,
                           backgroundColor: Colors.transparent,

@@ -203,10 +203,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                               labelText: AppLocalization.of(context)!
                                   .tokenInitialSupplyHint,
                               keyboardType:
-                                  const TextInputType.numberWithOptions(
-                                signed: false,
-                                decimal: false,
-                              ),
+                                  const TextInputType.numberWithOptions(),
                               style:
                                   AppStyles.textStyleSize16W600Primary(context),
                               inputFormatters: [

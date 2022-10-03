@@ -38,7 +38,6 @@ class AppButton {
               shape: const StadiumBorder(),
               shadows: [
                 BoxShadow(
-                  blurStyle: BlurStyle.normal,
                   color: Colors.black.withOpacity(0.5),
                   blurRadius: 7,
                   spreadRadius: 1,
@@ -214,7 +213,6 @@ class AppButton {
               shape: const StadiumBorder(),
               shadows: [
                 BoxShadow(
-                  blurStyle: BlurStyle.normal,
                   color: Colors.black.withOpacity(0.5),
                   blurRadius: 7,
                   spreadRadius: 1,

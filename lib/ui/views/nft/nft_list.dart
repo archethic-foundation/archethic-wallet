@@ -79,7 +79,6 @@ class _NFTListState extends State<NFTList> {
                             content: SingleChildScrollView(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   NFTPreviewWidget(
                                     tokenInformations: tokenInformations,

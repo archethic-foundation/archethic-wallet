@@ -442,7 +442,6 @@ class _PinScreenState extends State<PinScreen>
                     top: MediaQuery.of(context).size.height * 0.05,
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Container(

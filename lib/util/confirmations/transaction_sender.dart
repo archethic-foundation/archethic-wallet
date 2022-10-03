@@ -191,9 +191,8 @@ class TransactionSender {
     final ast.DocumentNode documentNode = lang.parseString(
       'subscription { transactionError(address: "$address") { context, reason } }',
     );
-    final Operation operation =
-        Operation(operationName: null, document: documentNode);
-    final Request request = Request(operation: operation, variables: const {});
+    final Operation operation = Operation(document: documentNode);
+    final Request request = Request(operation: operation);
     return absintheSocket.client!.link.request(request);
   }
 

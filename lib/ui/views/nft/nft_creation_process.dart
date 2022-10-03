@@ -223,7 +223,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
               .updateNftInfosOffChain(
                 tokenAddress: event.transactionAddress,
                 categoryNftIndex: widget.currentNftCategoryIndex,
-                favorite: false,
               );
 
           StateContainer.of(context).requestUpdate();
@@ -268,7 +267,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
           builder: (BuildContext context, BoxConstraints constraints) =>
               SafeArea(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Row(
@@ -310,7 +308,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                               borderRadius: BorderRadius.circular(10),
                               side: const BorderSide(
                                 color: Colors.white10,
-                                width: 1,
                               ),
                             ),
                             child: ClipRRect(
@@ -347,7 +344,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                         labelColor: StateContainer.of(context).curTheme.text,
                         labelStyle:
                             AppStyles.textStyleSize10W100Primary(context),
-                        labelPadding: const EdgeInsets.all(0),
                         indicatorSize: TabBarIndicatorSize.label,
                         indicatorColor:
                             StateContainer.of(context).curTheme.text,
@@ -412,11 +408,9 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         child: SizedBox(
           height: MediaQuery.of(context).size.height + 200,
           child: Container(
-            padding:
-                const EdgeInsets.only(top: 20, bottom: 0, left: 20, right: 20),
+            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
             height: MediaQuery.of(context).size.height,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
@@ -637,7 +631,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                   color: StateContainer.of(context)
                                       .curTheme
                                       .backgroundAccountsListCardSelected!,
-                                  width: 1,
                                 ),
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -653,7 +646,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Column(
                                 children: [
@@ -892,9 +884,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                   Container(
                     decoration: BoxDecoration(
                       color: StateContainer.of(context).curTheme.text,
-                      border: Border.all(
-                        width: 1,
-                      ),
+                      border: Border.all(),
                     ),
                     child: Image.memory(
                       fileDecodedForPreview!,
@@ -906,7 +896,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Align(
-                      alignment: Alignment.center,
                       child: Text(
                         'Format: $typeMime',
                         style: AppStyles.textStyleSize12W400Primary(context),
@@ -917,7 +906,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Align(
-                      alignment: Alignment.center,
                       child: Text(
                         '${AppLocalization.of(context)!.nftAddFileSize} ${filesize(sizeFile)}',
                         style: AppStyles.textStyleSize12W400Primary(context),
@@ -937,10 +925,9 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       return const SizedBox();
     } else {
       return Container(
-        padding: const EdgeInsets.only(top: 20, bottom: 0, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
         height: MediaQuery.of(context).size.height,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
@@ -1084,10 +1071,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
     } else {
       return SingleChildScrollView(
         child: Container(
-          padding:
-              const EdgeInsets.only(top: 20, bottom: 0, left: 20, right: 20),
+          padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
@@ -1218,7 +1203,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                         : null,
               ),
               Align(
-                alignment: Alignment.center,
                 child: Text(
                   addNFTPropertyMessage,
                   textAlign: TextAlign.center,
@@ -1280,8 +1264,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                 padding: const EdgeInsets.only(left: 15, right: 15),
                 child: AppTextField(
                   controller: nftPropertySearchController,
-                  autofocus: false,
-                  maxLines: 1,
                   autocorrect: false,
                   labelText: AppLocalization.of(context)!.searchField,
                   keyboardType: TextInputType.text,
@@ -1294,7 +1276,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: Wrap(
-                  alignment: WrapAlignment.start,
                   children:
                       tokenPropertyWithAccessInfosList.asMap().entries.map((
                     MapEntry<dynamic, TokenPropertyWithAccessInfos> entry,
@@ -1318,7 +1299,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                             child: _buildTokenProperty(
                               context,
                               entry.value,
-                              readOnly: false,
                             ),
                           )
                         : const SizedBox();
@@ -1351,7 +1331,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                     color: StateContainer.of(context)
                         .curTheme
                         .backgroundAccountsListCardSelected!,
-                    width: 1,
                   ),
             borderRadius: BorderRadius.circular(10),
           ),
@@ -1363,7 +1342,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
             padding: const EdgeInsets.only(top: 10, bottom: 10, right: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Column(
                   children: [
@@ -1587,7 +1565,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                   ? Padding(
                       padding: const EdgeInsets.only(
                         top: 20,
-                        bottom: 0,
                         left: 20,
                         right: 20,
                       ),
@@ -1600,7 +1577,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                   : Padding(
                       padding: const EdgeInsets.only(
                         top: 20,
-                        bottom: 0,
                         left: 20,
                         right: 20,
                       ),
@@ -1713,7 +1689,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                 color: StateContainer.of(context)
                                     .curTheme
                                     .backgroundAccountsListCardSelected!,
-                                width: 1,
                               ),
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -1729,7 +1704,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Column(
                               children: [
@@ -1835,9 +1809,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                   child: Container(
                     decoration: BoxDecoration(
                       color: StateContainer.of(context).curTheme.text,
-                      border: Border.all(
-                        width: 1,
-                      ),
+                      border: Border.all(),
                     ),
                     child: Image.memory(
                       fileDecodedForPreview!,
@@ -1850,7 +1822,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Align(
-                    alignment: Alignment.center,
                     child: Text(
                       'Format: $typeMime',
                       style: AppStyles.textStyleSize12W400Primary(context),
@@ -1861,7 +1832,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Align(
-                    alignment: Alignment.center,
                     child: Text(
                       '${AppLocalization.of(context)!.nftAddFileSize} ${filesize(sizeFile)}',
                       style: AppStyles.textStyleSize12W400Primary(context),
@@ -1871,7 +1841,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                 child: Wrap(
-                  alignment: WrapAlignment.start,
                   children:
                       tokenPropertyWithAccessInfosList.asMap().entries.map((
                     MapEntry<dynamic, TokenPropertyWithAccessInfos> entry,
@@ -2127,7 +2096,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       );
       final String service = 'archethic-wallet-$nameEncoded';
       final int index = (await sl.get<ApiService>().getTransactionIndex(
-                uint8ListToHex(keychain.deriveAddress(service, index: 0)),
+                uint8ListToHex(keychain.deriveAddress(service)),
               ))
           .chainLength!;
 

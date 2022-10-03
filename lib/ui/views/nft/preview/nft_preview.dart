@@ -49,8 +49,6 @@ class NFTPreviewWidget extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
               tokenInformations.name!,
@@ -72,9 +70,7 @@ class NFTPreviewWidget extends StatelessWidget {
                       return Container(
                         decoration: BoxDecoration(
                           color: StateContainer.of(context).curTheme.text,
-                          border: Border.all(
-                            width: 1,
-                          ),
+                          border: Border.all(),
                         ),
                         child: Image.memory(
                           snapshot.data!,
@@ -91,9 +87,7 @@ class NFTPreviewWidget extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     color: StateContainer.of(context).curTheme.text,
-                    border: Border.all(
-                      width: 1,
-                    ),
+                    border: Border.all(),
                   ),
                   child: Image.memory(
                     nftFile!,
@@ -118,7 +112,6 @@ class NFTPreviewWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
                 child: Wrap(
-                  alignment: WrapAlignment.start,
                   children: tokenPropertyWithAccessInfos!.asMap().entries.map((
                     MapEntry<dynamic, TokenPropertyWithAccessInfos> entry,
                   ) {
@@ -159,7 +152,6 @@ class NFTPreviewWidget extends StatelessWidget {
                     color: StateContainer.of(context)
                         .curTheme
                         .backgroundAccountsListCardSelected!,
-                    width: 1,
                   ),
             borderRadius: BorderRadius.circular(10),
           ),
@@ -171,7 +163,6 @@ class NFTPreviewWidget extends StatelessWidget {
             padding: const EdgeInsets.only(top: 10, bottom: 10, right: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Column(
                   children: [

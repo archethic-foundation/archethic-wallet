@@ -97,7 +97,6 @@ class _SetPasswordState extends State<SetPassword> {
                 children: <Widget>[
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Row(
                           children: <Widget>[
@@ -127,7 +126,6 @@ class _SetPasswordState extends State<SetPassword> {
                         Expanded(
                           child: SingleChildScrollView(
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 if (widget.header != null)
@@ -149,7 +147,6 @@ class _SetPasswordState extends State<SetPassword> {
                                   ),
                                 if (widget.description != null)
                                   Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
@@ -178,7 +175,6 @@ class _SetPasswordState extends State<SetPassword> {
                                   focusNode: setPasswordFocusNode,
                                   controller: setPasswordController,
                                   textInputAction: TextInputAction.next,
-                                  maxLines: 1,
                                   autocorrect: false,
                                   onChanged: (String newText) async {
                                     passwordStrength = estimatePasswordStrength(
@@ -209,7 +205,6 @@ class _SetPasswordState extends State<SetPassword> {
                                       .createPasswordHint,
                                   keyboardType: TextInputType.text,
                                   obscureText: !setPasswordVisible!,
-                                  textAlign: TextAlign.center,
                                   style: AppStyles.textStyleSize16W700Primary(
                                     context,
                                   ),
@@ -316,7 +311,6 @@ class _SetPasswordState extends State<SetPassword> {
                                   focusNode: confirmPasswordFocusNode,
                                   controller: confirmPasswordController,
                                   textInputAction: TextInputAction.done,
-                                  maxLines: 1,
                                   autocorrect: false,
                                   onChanged: (String newText) {
                                     if (passwordError != null) {
@@ -343,7 +337,6 @@ class _SetPasswordState extends State<SetPassword> {
                                       .confirmPasswordHint,
                                   keyboardType: TextInputType.text,
                                   obscureText: !confirmPasswordVisible!,
-                                  textAlign: TextAlign.center,
                                   style: AppStyles.textStyleSize16W700Primary(
                                     context,
                                   ),

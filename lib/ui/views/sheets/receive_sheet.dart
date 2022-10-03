@@ -98,8 +98,6 @@ class ReceiveSheet extends StatelessWidget {
                                 padding: const EdgeInsets.all(5),
                                 child: SingleChildScrollView(
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Container(
@@ -129,7 +127,6 @@ class ReceiveSheet extends StatelessWidget {
                                                   .curTheme
                                                   .text,
                                           data: address!,
-                                          version: QrVersions.auto,
                                           size: 150,
                                           gapless: false,
                                         ),
@@ -207,7 +204,6 @@ class ReceiveSheet extends StatelessWidget {
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Row(
                 children: <Widget>[
