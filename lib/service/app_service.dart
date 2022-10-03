@@ -32,12 +32,11 @@ class AppService {
     String? pagingAddress,
     String? request,
   ) async {
-    final transactionChain =
-        await sl.get<ApiService>().getTransactionChain(
-              address,
-              pagingAddress: pagingAddress ?? '',
-              request: request!,
-            );
+    final transactionChain = await sl.get<ApiService>().getTransactionChain(
+          address,
+          pagingAddress: pagingAddress ?? '',
+          request: request!,
+        );
     return transactionChain;
   }
 
@@ -79,14 +78,12 @@ class AppService {
       'address, type, validationStamp { timestamp, ledgerOperations { fee } }, data { ownerships { secret, authorizedPublicKeys { encryptedSecretKey, publicKey } }, content , ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }, inputs { from, type, spent, tokenAddress, tokenId, amount, timestamp }',
     );
 
-    final transactionInputsGenesisAddress =
-        await getTransactionInputs(
+    final transactionInputsGenesisAddress = await getTransactionInputs(
       genesisAddress,
       'from, type, spent, tokenAddress, amount, timestamp',
     );
 
-    final recentTransactions =
-        List<RecentTransaction>.empty(growable: true);
+    final recentTransactions = List<RecentTransaction>.empty(growable: true);
 
     for (final transaction in transactionChain) {
       final content = transaction.data!.content!.toLowerCase();
@@ -111,8 +108,8 @@ class AppService {
               ..address = transaction.address
               ..typeTx = RecentTransaction.transferOutput
               ..amount = fromBigInt(
-                      transaction.data!.ledger!.uco!.transfers![i].amount,)
-                  .toDouble()
+                transaction.data!.ledger!.uco!.transfers![i].amount,
+              ).toDouble()
               ..recipient = transaction.data!.ledger!.uco!.transfers![i].to
               ..fee =
                   fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
@@ -123,8 +120,7 @@ class AppService {
             if (transaction.data!.ownerships != null) {
               final nameEncoded = Uri.encodeFull(name);
               final serviceName = 'archethic-wallet-$nameEncoded';
-              final keychain =
-                  await sl.get<ApiService>().getKeychain(seed);
+              final keychain = await sl.get<ApiService>().getKeychain(seed);
               final keypair = keychain.deriveKeypair(serviceName);
               for (final ownership in transaction.data!.ownerships!) {
                 final authorizedPublicKey =
@@ -139,8 +135,7 @@ class AppService {
                     authorizedPublicKey.encryptedSecretKey,
                     keypair.privateKey,
                   );
-                  final decryptedSecret =
-                      aesDecrypt(ownership.secret, aesKey);
+                  final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
 
                   recentTransaction.decryptedSecret!
                       .add(utf8.decode(decryptedSecret));
@@ -174,8 +169,7 @@ class AppService {
             if (transaction.data!.ownerships != null) {
               final nameEncoded = Uri.encodeFull(name);
               final serviceName = 'archethic-wallet-$nameEncoded';
-              final keychain =
-                  await sl.get<ApiService>().getKeychain(seed);
+              final keychain = await sl.get<ApiService>().getKeychain(seed);
               final keypair = keychain.deriveKeypair(serviceName);
               for (final ownership in transaction.data!.ownerships!) {
                 final authorizedPublicKey =
@@ -190,8 +184,7 @@ class AppService {
                     authorizedPublicKey.encryptedSecretKey,
                     keypair.privateKey,
                   );
-                  final decryptedSecret =
-                      aesDecrypt(ownership.secret, aesKey);
+                  final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
 
                   recentTransaction.decryptedSecret!
                       .add(utf8.decode(decryptedSecret));
@@ -228,8 +221,7 @@ class AppService {
             if (ownerships.isNotEmpty) {
               final nameEncoded = Uri.encodeFull(name);
               final serviceName = 'archethic-wallet-$nameEncoded';
-              final keychain =
-                  await sl.get<ApiService>().getKeychain(seed);
+              final keychain = await sl.get<ApiService>().getKeychain(seed);
               final keypair = keychain.deriveKeypair(serviceName);
               for (final ownership in ownerships) {
                 final authorizedPublicKey =
@@ -244,8 +236,7 @@ class AppService {
                     authorizedPublicKey.encryptedSecretKey,
                     keypair.privateKey,
                   );
-                  final decryptedSecret =
-                      aesDecrypt(ownership.secret, aesKey);
+                  final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
                   recentTransaction.decryptedSecret!
                       .add(utf8.decode(decryptedSecret));
                 }
@@ -259,8 +250,7 @@ class AppService {
     }
 
     // Transaction inputs for genesisAddress
-    for (final transaction
-        in transactionInputsGenesisAddress) {
+    for (final transaction in transactionInputsGenesisAddress) {
       final recentTransaction = RecentTransaction()
         ..address = transaction.from
         ..amount = fromBigInt(transaction.amount).toDouble()
@@ -296,8 +286,7 @@ class AppService {
               authorizedPublicKey.encryptedSecretKey,
               keypair.privateKey,
             );
-            final decryptedSecret =
-                aesDecrypt(ownership.secret, aesKey);
+            final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
             recentTransaction.decryptedSecret!
                 .add(utf8.decode(decryptedSecret));
           }
@@ -327,8 +316,7 @@ class AppService {
 
   Future<List<AccountToken>> getFungiblesTokensList(String address) async {
     final balance = await sl.get<ApiService>().fetchBalance(address);
-    final fungiblesTokensList =
-        List<AccountToken>.empty(growable: true);
+    final fungiblesTokensList = List<AccountToken>.empty(growable: true);
 
     if (balance.token != null) {
       for (var i = 0; i < balance.token!.length; i++) {
@@ -340,8 +328,7 @@ class AppService {
           if (token.tokenProperties != null &&
               token.tokenProperties!.isNotEmpty) {
             token.tokenProperties!.forEach((key, value) {
-              final tokenInformationsProperty =
-                  TokenInformationsProperty();
+              final tokenInformationsProperty = TokenInformationsProperty();
               tokenInformationsProperty.name = key;
               tokenInformationsProperty.value = value;
               propertiesList.add(tokenInformationsProperty);
@@ -387,8 +374,7 @@ class AppService {
             if (token.tokenProperties != null &&
                 token.tokenProperties!.isNotEmpty) {
               token.tokenProperties!.forEach((key, value) {
-                final tokenInformationsProperty =
-                    TokenInformationsProperty();
+                final tokenInformationsProperty = TokenInformationsProperty();
                 if (key != 'file') {
                   tokenInformationsProperty.name = key;
                   tokenInformationsProperty.value = value;
@@ -427,8 +413,7 @@ class AppService {
     var balance =
         Balance(uco: 0, token: List<TokenBalance>.empty(growable: true));
     balance = await sl.get<ApiService>().fetchBalance(address);
-    final balanceTokenList =
-        List<TokenBalance>.empty(growable: true);
+    final balanceTokenList = List<TokenBalance>.empty(growable: true);
     if (balance.token != null) {
       for (var i = 0; i < balance.token!.length; i++) {
         var balanceToken = TokenBalance();
@@ -447,8 +432,7 @@ class AppService {
     String name,
   ) async {
     // ignore: prefer_final_locals
-    var transactionsInfos =
-        List<TransactionInfos>.empty(growable: true);
+    var transactionsInfos = List<TransactionInfos>.empty(growable: true);
 
     // ignore: prefer_final_locals
     var transaction =
@@ -515,8 +499,7 @@ class AppService {
               authorizedPublicKey.encryptedSecretKey,
               keypair.privateKey,
             );
-            final decryptedSecret =
-                aesDecrypt(ownership.secret, aesKey);
+            final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
             transactionsInfos.add(
               TransactionInfos(
                 domain: 'Data',
@@ -544,10 +527,9 @@ class AppService {
           if (transaction.data!.ledger!.uco!.transfers![i].to != null) {
             var recipientContactName = '';
 
-            final contact =
-                await sl.get<DBHelper>().getContactWithAddress(
-                      transaction.data!.ledger!.uco!.transfers![i].to!,
-                    );
+            final contact = await sl.get<DBHelper>().getContactWithAddress(
+                  transaction.data!.ledger!.uco!.transfers![i].to!,
+                );
             if (contact != null) {
               recipientContactName = contact.name!.substring(1);
             }
@@ -618,9 +600,7 @@ class AppService {
             );
           }
           if (transaction.data!.ledger!.token!.transfers![i].amount != null) {
-            final content = await sl
-                .get<ApiService>()
-                .getTransactionContent(
+            final content = await sl.get<ApiService>().getTransactionContent(
                   transaction.data!.ledger!.token!.transfers![i].tokenAddress!,
                 );
             final token = tokenFromJson(content);
@@ -676,8 +656,7 @@ class AppService {
       final keychain = await sl.get<ApiService>().getKeychain(seed);
       final walletKeyPair = keychain.deriveKeypair(serviceName);
 
-      final authorizedPublicKeys =
-          List<String>.empty(growable: true);
+      final authorizedPublicKeys = List<String>.empty(growable: true);
       authorizedPublicKeys.add(uint8ListToHex(walletKeyPair.publicKey));
 
       for (final transfer in listUcoTransfer) {
@@ -700,8 +679,7 @@ class AppService {
         }
       }
 
-      final authorizedKeys =
-          List<AuthorizedKey>.empty(growable: true);
+      final authorizedKeys = List<AuthorizedKey>.empty(growable: true);
       for (final key in authorizedPublicKeys) {
         authorizedKeys.add(
           AuthorizedKey(
@@ -847,7 +825,8 @@ class AppService {
               .get<ApiService>()
               .getLastTransaction(genesisAddressKeychain,
                   request:
-                      'chainLength, data { content, ownerships { authorizedPublicKeys { publicKey } } }');
+                      'chainLength, data { content, ownerships
+                       { authorizedPublicKeys { publicKey } } }');
 
           final String aesKey = uint8ListToHex(Uint8List.fromList(
               List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
