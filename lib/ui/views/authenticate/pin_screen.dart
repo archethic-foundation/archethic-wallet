@@ -328,7 +328,7 @@ class _PinScreenState extends State<PinScreen>
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
+      body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(

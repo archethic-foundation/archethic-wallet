@@ -67,7 +67,7 @@ class NFTPreviewWidget extends StatelessWidget {
                   ),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
-                      return Container(
+                      return DecoratedBox(
                         decoration: BoxDecoration(
                           color: StateContainer.of(context).curTheme.text,
                           border: Border.all(),
@@ -84,7 +84,7 @@ class NFTPreviewWidget extends StatelessWidget {
                   },
                 )
               else
-                Container(
+                DecoratedBox(
                   decoration: BoxDecoration(
                     color: StateContainer.of(context).curTheme.text,
                     border: Border.all(),

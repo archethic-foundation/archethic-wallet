@@ -80,7 +80,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
-          Container(
+          DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,

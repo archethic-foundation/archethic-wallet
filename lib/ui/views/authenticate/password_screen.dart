@@ -90,7 +90,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
-          Container(
+          DecoratedBox(
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(

@@ -37,7 +37,7 @@ class BalanceInfosWidget {
           borderRadius: BorderRadius.circular(10),
           child: Card(
             color: Colors.transparent,
-            child: Container(
+            child: DecoratedBox(
               decoration:
                   StateContainer.of(context).curTheme.getDecorationBalance(),
               child: SizedBox(

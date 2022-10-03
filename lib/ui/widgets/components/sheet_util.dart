@@ -34,7 +34,7 @@ class Sheets {
     bgColor ??= StateContainer.of(context).curTheme.sheetBackground;
     final _AppHeightNineModalRoute<T> route = _AppHeightNineModalRoute<T>(
       builder: (BuildContext context) {
-        return Container(
+        return DecoratedBox(
           decoration: StateContainer.of(context).curTheme.getDecorationSheet(),
           child: TweenAnimationBuilder(
             tween: Tween<double>(begin: 0, end: 1),
@@ -234,7 +234,7 @@ class _AppHeightNineModalRoute<T> extends PopupRoute<T> {
                 onClosing: () => Navigator.pop(context),
                 builder: (BuildContext context) => BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-                  child: Container(
+                  child: DecoratedBox(
                     decoration: BoxDecoration(
                       color: color!.withOpacity(0.7),
                       borderRadius: BorderRadius.only(
@@ -371,7 +371,7 @@ class _AppHeightEightModalRoute<T> extends PopupRoute<T> {
             child: BottomSheet(
               animationController: _animationController,
               onClosing: () => Navigator.pop(context),
-              builder: (BuildContext context) => Container(
+              builder: (BuildContext context) => DecoratedBox(
                 decoration: BoxDecoration(
                   color: color,
                   borderRadius: BorderRadius.only(

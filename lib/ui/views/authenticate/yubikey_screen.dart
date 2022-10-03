@@ -208,7 +208,7 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
-          Container(
+          DecoratedBox(
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(

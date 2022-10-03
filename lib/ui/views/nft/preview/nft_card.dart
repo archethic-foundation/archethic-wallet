@@ -75,7 +75,7 @@ class NFTCard extends StatelessWidget {
                       if (snapshot.hasData) {
                         return ClipRRect(
                           borderRadius: BorderRadius.circular(15),
-                          child: Container(
+                          child: DecoratedBox(
                             decoration: BoxDecoration(
                               color: StateContainer.of(context).curTheme.text,
                               border: Border.all(),

@@ -117,7 +117,7 @@ class _ContactsListState extends State<ContactsList> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: StateContainer.of(context).curTheme.drawerBackground,
         boxShadow: <BoxShadow>[

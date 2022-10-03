@@ -167,7 +167,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
       backgroundColor: StateContainer.of(context).curTheme.backgroundDarkest,
       body: Stack(
         children: <Widget>[
-          Container(
+          DecoratedBox(
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
