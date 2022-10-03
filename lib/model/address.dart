@@ -4,7 +4,8 @@
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show addressFormatControl;
 
-// Object to represent an account address or address URI, and provide useful utilities
+// Object to represent an account address or address URI,
+// and provide useful utilities
 class Address {
   Address(String value) {
     _address = value;

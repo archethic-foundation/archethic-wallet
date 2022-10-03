@@ -62,8 +62,7 @@ class _PinScreenState extends State<PinScreen>
   late List<IconData> _dotStates;
   String? _pin;
   String? _pinConfirmed;
-  late bool
-      _awaitingConfirmation; // true if pin has been entered once, false if not entered once
+  late bool _awaitingConfirmation;
   late String _header;
   int _failedAttempts = 0;
   final List<int> _listPinNumber = <int>[1, 2, 3, 4, 5, 6, 7, 8, 9, 0];

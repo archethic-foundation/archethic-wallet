@@ -60,7 +60,8 @@ class RecentTransaction extends HiveObject {
   @HiveField(2)
   double? amount;
 
-  /// Recipients: For non asset transfers, the list of recipients of the transaction (e.g Smart contract interactions)
+  /// Recipients: For non asset transfers, the list of recipients
+  /// of the transaction (e.g Smart contract interactions)
   @HiveField(3)
   String? recipient;
 
@@ -113,8 +114,7 @@ class RecentTransaction extends HiveObject {
     contactInformations = null;
     if (typeTx == RecentTransaction.transferInput) {
       if (recipient != null) {
-        final contact =
-            await sl.get<DBHelper>().getContactWithAddress(from!);
+        final contact = await sl.get<DBHelper>().getContactWithAddress(from!);
         if (contact != null) {
           contactInformations = contact;
         }

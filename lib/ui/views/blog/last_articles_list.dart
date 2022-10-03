@@ -32,7 +32,8 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
   /// From official doc: https://ghost.org/docs/content-api/
   /// "Content API keys are provided via a query parameter in the URL.
   /// These keys are safe for use in browsers and other insecure environments,
-  /// as they only ever provide access to public data. Sites in private mode should consider
+  /// as they only ever provide access to public data.
+  /// Sites in private mode should consider
   /// where they share any keys they create."
   final GhostContentAPI api = GhostContentAPI(
     url: 'https://blog.archethic.net',

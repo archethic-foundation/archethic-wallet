@@ -96,7 +96,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     _customOpen = false;
     _aboutOpen = false;
 
-    // Determine if they have face or fingerprint enrolled, if not hide the setting
+    // Determine if they have face or fingerprint enrolled,
+    // if not hide the setting
     sl.get<BiometricUtil>().hasBiometrics().then((bool hasBiometrics) {
       setState(() {
         _hasBiometrics = hasBiometrics;

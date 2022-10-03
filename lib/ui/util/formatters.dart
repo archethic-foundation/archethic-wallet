@@ -50,7 +50,8 @@ class CurrencyFormatter extends TextInputFormatter {
     }
 
     final splitStr = workingText.split(decimalSeparator);
-    // If this string contains more than 1 decimal, move all characters to after the first decimal
+    // If this string contains more than 1 decimal, move all characters
+    // to after the first decimal
     if (splitStr.length > 2) {
       returnOriginal = false;
 
