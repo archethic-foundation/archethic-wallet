@@ -32,8 +32,8 @@ class ByzantineVioletFlatTheme implements BaseTheme {
       Color.fromARGB(255, 43, 43, 43),
       Color.fromARGB(255, 43, 43, 43)
     ],
-    begin: Alignment(-1.0, 0.0),
-    end: Alignment(1.0, 0.0),
+    begin: Alignment(-1, 0),
+    end: Alignment(1, 0),
     transform: GradientRotation(pi / 9),
   );
 
@@ -118,7 +118,7 @@ class ByzantineVioletFlatTheme implements BaseTheme {
   @override
   Color? backgroundDark = const Color(0xFF571150);
   @override
-  Color? backgroundDark00 = const Color(0xFF571150).withOpacity(0.0);
+  Color? backgroundDark00 = const Color(0xFF571150).withOpacity(0);
   @override
   Color? backgroundDarkest = const Color(0xFFCD195B);
 
@@ -202,8 +202,8 @@ class ByzantineVioletFlatTheme implements BaseTheme {
       Color(0xFF00A4DB),
       Color(0xFFCC00FF),
     ],
-    begin: Alignment(-1.0, 0.0),
-    end: Alignment(1.0, 0.0),
+    begin: Alignment(-1, 0),
+    end: Alignment(1, 0),
     transform: GradientRotation(pi / 9),
   );
 
@@ -220,8 +220,8 @@ class ByzantineVioletFlatTheme implements BaseTheme {
           Color(0xFF571150),
           Color(0xFFCD195B),
         ],
-        begin: Alignment(-1.0, 0.0),
-        end: Alignment(1.0, 0.0),
+        begin: Alignment(-1, 0),
+        end: Alignment(1, 0),
         transform: GradientRotation(pi / 9),
       ),
     );
@@ -232,8 +232,8 @@ class ByzantineVioletFlatTheme implements BaseTheme {
     return BoxDecoration(
       color: text20,
       borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(25.0),
-        topRight: Radius.circular(25.0),
+        topLeft: Radius.circular(25),
+        topRight: Radius.circular(25),
       ),
       image: DecorationImage(
         image: AssetImage(background2Small!),

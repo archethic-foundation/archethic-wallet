@@ -24,16 +24,15 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 
 class IntroConfigureSecurity extends StatefulWidget {
-  final List<PickerItem>? accessModes;
-  final String? name;
-  final String? seed;
-
   const IntroConfigureSecurity({
     super.key,
     this.accessModes,
     required this.name,
     required this.seed,
   });
+  final List<PickerItem>? accessModes;
+  final String? name;
+  final String? seed;
 
   @override
   State<IntroConfigureSecurity> createState() => _IntroConfigureSecurityState();
@@ -125,7 +124,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                           margin: const EdgeInsetsDirectional.only(
                             start: 20,
                             end: 20,
-                            top: 15.0,
+                            top: 15,
                           ),
                           child: AutoSizeText(
                             AppLocalization.of(context)!
@@ -153,7 +152,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                   _accessModesSelected = value;
                                 });
                                 if (_accessModesSelected == null) return;
-                                AuthMethod authMethod =
+                                final AuthMethod authMethod =
                                     _accessModesSelected!.value as AuthMethod;
                                 bool authenticated = false;
                                 switch (authMethod) {
@@ -178,8 +177,8 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                               context,
                                             )!
                                                 .configureSecurityExplanationPassword,
-                                            name: widget.name!,
-                                            seed: widget.seed!,
+                                            name: widget.name,
+                                            seed: widget.seed,
                                           );
                                         },
                                       ),

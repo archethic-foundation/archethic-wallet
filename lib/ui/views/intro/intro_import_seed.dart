@@ -78,9 +78,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   }
 
   void _destroyBus() {
-    if (_authSub != null) {
-      _authSub!.cancel();
-    }
+    _authSub?.cancel();
   }
 
   @override
@@ -158,7 +156,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                                 .activeVibrations,
                                           );
 
-                                      Preferences preferences =
+                                      final Preferences preferences =
                                           await Preferences.getInstance();
                                       preferences.setLanguageSeed('en');
                                       setState(() {
@@ -191,7 +189,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                                 .activeVibrations,
                                           );
 
-                                      Preferences preferences =
+                                      final Preferences preferences =
                                           await Preferences.getInstance();
                                       preferences.setLanguageSeed('fr');
                                       setState(() {
@@ -234,7 +232,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                           margin: EdgeInsets.only(
                             left: smallScreen(context) ? 30 : 40,
                             right: smallScreen(context) ? 30 : 40,
-                            top: 15.0,
+                            top: 15,
                           ),
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -333,7 +331,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                               });
                                             }
                                           },
-                                          fieldViewBuilder: ((
+                                          fieldViewBuilder: (
                                             context,
                                             textEditingController,
                                             focusNode,
@@ -392,13 +390,13 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                                       gradient:
                                                           StateContainer.of(
                                                         context,
-                                                      ).curTheme.gradient!,
+                                                      ).curTheme.gradient,
                                                     ),
                                                   ),
                                                 )
                                               ],
                                             );
-                                          }),
+                                          },
                                         ),
                                       ],
                                     ),
@@ -438,7 +436,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                               });
 
                               _mnemonicIsValid = true;
-                              for (var word in phrase) {
+                              for (final word in phrase) {
                                 if (word.trim() == '') {
                                   _mnemonicIsValid = false;
                                   _mnemonicError = AppLocalization.of(context)!
@@ -460,13 +458,15 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                               if (_mnemonicIsValid == true) {
                                 await sl.get<DBHelper>().clearAppWallet();
                                 StateContainer.of(context).appWallet = null;
-                                String seed = AppMnemomics.mnemonicListToSeed(
+                                final String seed =
+                                    AppMnemomics.mnemonicListToSeed(
                                   phrase,
                                   languageCode: language,
                                 );
                                 final Vault vault = await Vault.getInstance();
                                 vault.setSeed(seed);
-                                Price tokenPrice = await Price.getCurrency(
+                                final Price tokenPrice =
+                                    await Price.getCurrency(
                                   StateContainer.of(context)
                                       .curCurrency
                                       .currency
@@ -474,8 +474,9 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                 );
 
                                 try {
-                                  AppWallet? appWallet = await KeychainUtil()
-                                      .getListAccountsFromKeychain(
+                                  final AppWallet? appWallet =
+                                      await KeychainUtil()
+                                          .getListAccountsFromKeychain(
                                     StateContainer.of(context).appWallet,
                                     seed,
                                     StateContainer.of(context)
@@ -492,7 +493,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
 
                                   StateContainer.of(context).appWallet =
                                       appWallet;
-                                  List<Account>? accounts =
+                                  final List<Account>? accounts =
                                       appWallet!.appKeychain!.accounts;
 
                                   if (accounts == null || accounts.isEmpty) {
@@ -554,8 +555,9 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   }
 
   Future<bool> _launchSecurityConfiguration(String name, String seed) async {
-    bool biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
-    List<PickerItem> accessModes = [];
+    final bool biometricsAvalaible =
+        await sl.get<BiometricUtil>().hasBiometrics();
+    final List<PickerItem> accessModes = [];
     accessModes.add(
       PickerItem(
         AuthenticationMethod(AuthMethod.pin).getDisplayName(context),
@@ -613,7 +615,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
       ),
     );
 
-    bool securityConfiguration = await Navigator.of(context).push(
+    final bool securityConfiguration = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) {
           return IntroConfigureSecurity(
@@ -631,7 +633,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   Future<void> _accountsDialog(List<Account> accounts) async {
     final List<PickerItem> pickerItemsList =
         List<PickerItem>.empty(growable: true);
-    for (Account account in accounts) {
+    for (final Account account in accounts) {
       pickerItemsList
           .add(PickerItem(account.name!, null, null, null, account, true));
     }
@@ -642,7 +644,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
+            padding: const EdgeInsets.only(bottom: 10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -667,7 +669,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
             ),
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
               color: StateContainer.of(context).curTheme.text45!,
             ),

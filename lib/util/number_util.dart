@@ -12,7 +12,7 @@ class NumberUtil {
   /// @return Decimal value 1.000000000000000000000000000000
   ///
   static Decimal getRawAsUsableDecimal(String raw) {
-    final Decimal amount = Decimal.parse(raw.toString());
+    final Decimal amount = Decimal.parse(raw);
     return amount;
   }
 
@@ -73,7 +73,7 @@ class NumberUtil {
           sanitized = sanitized + input[i];
         }
       } catch (e) {
-        /// TODO shouldn't we return default value ? or maybe null ?
+        // TODO(Chralu): shouldn't we return default value ? or maybe null ?
       }
     }
     return sanitized;

@@ -76,7 +76,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
     );
     _placeholderCardAnimationController!
         .addListener(_animationControllerListener);
-    _opacityAnimation = Tween<double>(begin: 1.0, end: 0.4).animate(
+    _opacityAnimation = Tween<double>(begin: 1, end: 0.4).animate(
       CurvedAnimation(
         parent: _placeholderCardAnimationController!,
         curve: Curves.easeIn,
@@ -87,7 +87,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
     _placeholderCardAnimationController!.forward();
   }
 
-  listenNotifications() =>
+  StreamSubscription<String?> listenNotifications() =>
       NotificationsUtil.onNotifications.stream.listen(onClickedNotification);
 
   void onClickedNotification(String? payload) {
@@ -278,7 +278,8 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
     );
   }
 
-  // TODO remove ?
+  // TODO(reddwarf03): WIP, https://github.com/archethic-foundation/archethic-wallet/issues/144
+  // ignore: unused_element
   Future<void> _networkDialog() async {
     StateContainer.of(context).curNetwork = (await NetworkDialog.getDialog(
       context,
@@ -290,12 +291,11 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
 }
 
 class ExpandablePageView extends StatefulWidget {
-  final List<Widget>? children;
-
   const ExpandablePageView({
     super.key,
     @required this.children,
   });
+  final List<Widget>? children;
 
   @override
   State<ExpandablePageView> createState() => _ExpandablePageViewState();
@@ -333,7 +333,7 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           color: Colors.transparent,
           width: MediaQuery.of(context).size.width,
           height: 80,
@@ -387,7 +387,7 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
         if (_currentPage == 1)
           Padding(
             padding:
-                const EdgeInsets.only(top: 10.0, bottom: 10, left: 0, right: 0),
+                const EdgeInsets.only(top: 10, bottom: 10, left: 0, right: 0),
             child: Row(
               children: <Widget>[
                 AppButton.buildAppButtonTiny(
@@ -435,14 +435,13 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
 }
 
 class SizeReportingWidget extends StatefulWidget {
-  final Widget child;
-  final ValueChanged<Size> onSizeChange;
-
   const SizeReportingWidget({
-    key,
+    super.key,
     required this.child,
     required this.onSizeChange,
-  }) : super(key: key);
+  });
+  final Widget child;
+  final ValueChanged<Size> onSizeChange;
 
   @override
   State<SizeReportingWidget> createState() => _SizeReportingWidgetState();

@@ -247,7 +247,8 @@ class UIUtil {
     String address, {
     TextStyle? textStyle,
   }) {
-    textStyle = textStyle ?? AppStyles.textStyleSize14W100Primary(context);
+    final TextStyle resolvedTextStyle =
+        textStyle ?? AppStyles.textStyleSize14W100Primary(context);
     final String stringPartOne = address.substring(0, 22);
     final String stringPartTwo = address.substring(22, 44);
     final String stringPartThree = address.substring(44, 64);
@@ -255,15 +256,15 @@ class UIUtil {
       children: <Widget>[
         Text(
           stringPartOne,
-          style: textStyle,
+          style: resolvedTextStyle,
         ),
         Text(
           stringPartTwo,
-          style: textStyle,
+          style: resolvedTextStyle,
         ),
         Text(
           stringPartThree,
-          style: textStyle,
+          style: resolvedTextStyle,
         ),
       ],
     );
@@ -328,6 +329,7 @@ class UIUtil {
     });
   }
 
+  // TODO(Chralu): duplicate with [AppStyles.smallScreen] ?
   static bool smallScreen(BuildContext context) {
     if (MediaQuery.of(context).size.height < 667) {
       return true;

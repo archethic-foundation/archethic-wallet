@@ -38,9 +38,9 @@ import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/vault.dart';
 
 class IntroBackupConfirm extends StatefulWidget {
+  const IntroBackupConfirm({required this.name, required this.seed, super.key});
   final String? name;
   final String? seed;
-  const IntroBackupConfirm({required this.name, required this.seed, super.key});
 
   @override
   State<IntroBackupConfirm> createState() => _IntroBackupConfirmState();
@@ -99,15 +99,15 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                 duration: const Duration(milliseconds: 5000),
               );
 
-              Preferences preferences = await Preferences.getInstance();
+              final Preferences preferences = await Preferences.getInstance();
               await subscriptionChannel2.connect(
                 await preferences.getNetwork().getPhoenixHttpLink(),
                 await preferences.getNetwork().getWebsocketUri(),
               );
 
               await KeychainUtil().createKeyChainAccess(
-                widget.seed!,
-                widget.name!,
+                widget.seed,
+                widget.name,
                 event.params!['keychainAddress']! as String,
                 event.params!['originPrivateKey']! as String,
                 event.params!['keychain']! as Keychain,
@@ -137,7 +137,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                     await AppWallet().createNewAppWallet(
                   event.params!['keychainAddress']! as String,
                   event.params!['keychain']! as Keychain,
-                  widget.name!,
+                  widget.name,
                 );
               } catch (e) {
                 error = true;
@@ -154,7 +154,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                 StateContainer.of(context).checkTransactionInputs(
                   AppLocalization.of(context)!.transactionInputNotification,
                 );
-                Preferences preferences = await Preferences.getInstance();
+                final Preferences preferences = await Preferences.getInstance();
                 StateContainer.of(context).bottomBarCurrentPage =
                     preferences.getMainScreenCurrentPage();
                 StateContainer.of(context).bottomBarPageController =
@@ -170,7 +170,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
               }
               break;
             default:
-              throw Exception('TransactionSendEventType doesn\'t exist');
+              throw Exception("TransactionSendEventType doesn't exist");
           }
         } else {
           UIUtil.showSnackbar(
@@ -186,12 +186,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   }
 
   void _destroyBus() {
-    if (_authSub != null) {
-      _authSub!.cancel();
-    }
-    if (_sendTxSub != null) {
-      _sendTxSub!.cancel();
-    }
+    _authSub?.cancel();
+    _sendTxSub?.cancel();
   }
 
   @override
@@ -291,7 +287,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           margin: const EdgeInsetsDirectional.only(
                             start: 20,
                             end: 20,
-                            top: 15.0,
+                            top: 15,
                           ),
                           child: AutoSizeText(
                             AppLocalization.of(context)!
@@ -307,7 +303,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           margin: const EdgeInsetsDirectional.only(
                             start: 20,
                             end: 20,
-                            top: 15.0,
+                            top: 15,
                           ),
                           child: Wrap(
                             spacing: 10,
@@ -355,7 +351,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           margin: const EdgeInsetsDirectional.only(
                             start: 20,
                             end: 20,
-                            top: 15.0,
+                            top: 15,
                           ),
                           child: Wrap(
                             spacing: 10,
@@ -482,8 +478,9 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   }
 
   Future<bool> _launchSecurityConfiguration(String name, String seed) async {
-    bool biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
-    List<PickerItem> accessModes = [];
+    final bool biometricsAvalaible =
+        await sl.get<BiometricUtil>().hasBiometrics();
+    final List<PickerItem> accessModes = [];
     accessModes.add(
       PickerItem(
         AuthenticationMethod(AuthMethod.pin).getDisplayName(context),
@@ -541,7 +538,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
       ),
     );
 
-    bool securityConfiguration = await Navigator.of(context).push(
+    final bool securityConfiguration = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) {
           return IntroConfigureSecurity(
@@ -579,7 +576,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
 
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
 
-      Preferences preferences = await Preferences.getInstance();
+      final Preferences preferences = await Preferences.getInstance();
 
       await subscriptionChannel.connect(
         await preferences.getNetwork().getPhoenixHttpLink(),
@@ -587,8 +584,8 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
       );
 
       await KeychainUtil().createKeyChain(
-        widget.seed!,
-        widget.name!,
+        widget.seed,
+        widget.name,
         originPrivateKey,
         preferences,
         subscriptionChannel,

@@ -54,7 +54,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
   String? _initialSupplyValidationText;
 
   bool? animationOpen;
-  double feeEstimation = 0.0;
+  double feeEstimation = 0;
   bool? _isPressed;
   bool validRequest = true;
 
@@ -130,7 +130,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                 LengthLimitingTextInputFormatter(40),
                               ],
                               onChanged: (_) async {
-                                double fee = await getFee();
+                                final double fee = await getFee();
                                 // Always reset the error message to be less annoying
                                 setState(() {
                                   feeEstimation = fee;
@@ -163,7 +163,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                 LengthLimitingTextInputFormatter(4),
                               ],
                               onChanged: (_) async {
-                                double fee = await getFee();
+                                final double fee = await getFee();
                                 // Always reset the error message to be less annoying
                                 setState(() {
                                   feeEstimation = fee;
@@ -216,7 +216,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                 ),
                               ],
                               onChanged: (_) async {
-                                double fee = await getFee();
+                                final double fee = await getFee();
                                 // Always reset the error message to be less annoying
                                 setState(() {
                                   feeEstimation = fee;
@@ -419,7 +419,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
     try {
       final String? seed = await StateContainer.of(context).getSeed();
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
-      Token token = Token(
+      final Token token = Token(
         name: _nameController!.text,
         supply: toBigInt(
           double.tryParse(

@@ -41,13 +41,14 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 
 Future<void> main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  final WidgetsBinding widgetsBinding =
+      WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await DBHelper.setupDatabase();
   if (!kIsWeb && (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
     await windowManager.ensureInitialized();
 
-    WindowOptions windowOptions = const WindowOptions(
+    const WindowOptions windowOptions = WindowOptions(
       size: Size(370, 800),
       center: true,
       backgroundColor: Colors.transparent,
@@ -211,18 +212,14 @@ class _AppState extends State<App> {
             case '/intro_backup':
               return MaterialPageRoute<IntroBackupSeedPage>(
                 builder: (_) => IntroBackupSeedPage(
-                  name: settings.arguments == null
-                      ? null
-                      : settings.arguments as String,
+                  name: settings.arguments as String?,
                 ),
                 settings: settings,
               );
             case '/intro_backup_safety':
               return MaterialPageRoute<IntroNewWalletDisclaimer>(
                 builder: (_) => IntroNewWalletDisclaimer(
-                  name: settings.arguments == null
-                      ? null
-                      : settings.arguments as String,
+                  name: settings.arguments as String?,
                 ),
                 settings: settings,
               );
@@ -232,8 +229,8 @@ class _AppState extends State<App> {
                 settings: settings,
               );
             case '/intro_backup_confirm':
-              Map<String, dynamic> args =
-                  settings.arguments as Map<String, dynamic>;
+              final Map<String, dynamic> args =
+                  settings.arguments as Map<String, dynamic>? ?? {};
               return MaterialPageRoute<IntroBackupConfirm>(
                 builder: (_) => IntroBackupConfirm(
                   name: args['name'] == null ? null : args['name'] as String,
@@ -254,15 +251,13 @@ class _AppState extends State<App> {
             case '/nft_list_per_category':
               return MaterialPageRoute<NFTListPerCategory>(
                 builder: (_) => NFTListPerCategory(
-                  currentNftCategoryIndex: settings.arguments == null
-                      ? null
-                      : settings.arguments as int,
+                  currentNftCategoryIndex: settings.arguments as int?,
                 ),
                 settings: settings,
               );
             case '/nft_creation':
-              Map<String, dynamic> args =
-                  settings.arguments as Map<String, dynamic>;
+              final Map<String, dynamic> args =
+                  settings.arguments as Map<String, dynamic>? ?? {};
               return MaterialPageRoute<NFTCreationProcess>(
                 builder: (_) => NFTCreationProcess(
                   currentNftCategoryIndex:

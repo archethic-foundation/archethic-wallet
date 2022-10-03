@@ -15,8 +15,8 @@ import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 
 class IntroNewWalletDisclaimer extends StatelessWidget {
-  final String? name;
   const IntroNewWalletDisclaimer({super.key, this.name});
+  final String? name;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +95,7 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                           margin: const EdgeInsetsDirectional.only(
                             start: 20,
                             end: 20,
-                            top: 15.0,
+                            top: 15,
                           ),
                           alignment: Alignment.bottomLeft,
                           child: Column(

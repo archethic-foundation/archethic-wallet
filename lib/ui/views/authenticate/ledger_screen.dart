@@ -35,10 +35,10 @@ class _LedgerScreenState extends State<LedgerScreen> {
   String method = '';
   String originPubKey = '';
 
-  void update() async {
+  Future<void> update() async {
     switch (method) {
       case 'getPubKey':
-        String responseHex =
+        final String responseHex =
             hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase();
         originPubKey = responseHex.substring(4, responseHex.length - 4);
         method = 'signTxn';
@@ -46,7 +46,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
       case 'signTxn':
         log(
           hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase(),
-        ); // TODO is is useful ?
+        ); // TODO(Chralu): is this useful ?
         break;
       default:
     }
@@ -153,8 +153,8 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             ),
                                           ),
                                           onPressed: () async {
-                                            String addressIndex = '';
-                                            // TODO: A Revoir
+                                            const String addressIndex = '';
+                                            // TODO(redDwarf03): To review
                                             /*String addressIndex =
                                                 StateContainer.of(context)
                                                     .selectedAccount
@@ -166,7 +166,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                               type: 'transfer',
                                               data: Transaction.initData(),
                                             );
-                                            for (UCOTransfer transfer
+                                            for (final UCOTransfer transfer
                                                 in widget.ucoTransferList!) {
                                               transaction.addUCOTransfer(
                                                 transfer.to,
@@ -198,7 +198,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                   lastTransaction.chainLength!,
                                                 )
                                                 .originSign(originPrivateKey);
-                                            OnChainWalletData
+                                            final OnChainWalletData
                                                 onChainWalletData =
                                                 walletEncoder(originPubKey);
 
@@ -209,7 +209,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                               hashType,
                                               int.tryParse(addressIndex)!,
                                             );
-                                            log('signTxn:${uint8ListToHex(signTxn)}'); // TODO is this useful ?
+                                            log('signTxn:${uint8ListToHex(signTxn)}'); // TODO(Chralu): is this useful ?
                                             await sl
                                                 .get<LedgerNanoSImpl>()
                                                 .connectLedger(signTxn);

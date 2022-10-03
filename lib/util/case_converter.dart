@@ -9,9 +9,9 @@ class CaseChange {
   static String toUpperCase(String input, String languageCode) {
     final Locale locale = Locale(languageCode);
     if (locale.languageCode == 'tr') {
-      input = input.replaceAll('i', 'İ');
+      return input.replaceAll('i', 'İ').toUpperCase();
     } else if (locale.languageCode == 'de') {
-      input = input.replaceAll('ß', 'SS');
+      return input.replaceAll('ß', 'SS').toUpperCase();
     }
     return input.toUpperCase();
   }

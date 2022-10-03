@@ -63,7 +63,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                 alignment: WrapAlignment.center,
                 children: widget.wordList.asMap().entries.map((MapEntry entry) {
                   return Padding(
-                    padding: const EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(5),
                     child: Chip(
                       avatar: CircleAvatar(
                         backgroundColor: StateContainer.of(context)

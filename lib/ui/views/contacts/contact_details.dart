@@ -32,6 +32,7 @@ class ContactDetailsSheet {
 
   Contact contact;
 
+  // TODO(Chralu): transform to [Widget] subclass
   void mainBottomSheet(BuildContext context) {
     Sheets.showAppHeightEightSheet(
       context: context,
@@ -52,8 +53,8 @@ class ContactDetailsSheet {
                         width: 50,
                         height: 50,
                         margin: const EdgeInsetsDirectional.only(
-                          top: 10.0,
-                          start: 10.0,
+                          top: 10,
+                          start: 10,
                         ),
                         child: TextButton(
                           onPressed: () {
@@ -102,7 +103,7 @@ class ContactDetailsSheet {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 25.0),
+                        margin: const EdgeInsets.only(top: 25),
                         constraints: BoxConstraints(
                           maxWidth: MediaQuery.of(context).size.width - 140,
                         ),
@@ -125,8 +126,8 @@ class ContactDetailsSheet {
                         width: 50,
                         height: 50,
                         margin: const EdgeInsetsDirectional.only(
-                          top: 10.0,
-                          start: 10.0,
+                          top: 10,
+                          start: 10,
                         ),
                         child: TextButton(
                           onPressed: () {
@@ -185,7 +186,7 @@ class ContactDetailsSheet {
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
                               gradient:
-                                  StateContainer.of(context).curTheme.gradient!,
+                                  StateContainer.of(context).curTheme.gradient,
                             ),
                           ),
                           const SizedBox(height: 50),
@@ -227,7 +228,7 @@ class ContactDetailsSheet {
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
                               gradient:
-                                  StateContainer.of(context).curTheme.gradient!,
+                                  StateContainer.of(context).curTheme.gradient,
                             ),
                           ),
                         ],

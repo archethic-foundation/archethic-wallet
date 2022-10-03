@@ -88,7 +88,7 @@ class _IntroNewWalletDisclaimerState
                           margin: const EdgeInsetsDirectional.only(
                             start: 20,
                             end: 20,
-                            top: 15.0,
+                            top: 15,
                           ),
                           alignment: Alignment.bottomLeft,
                           child: Column(

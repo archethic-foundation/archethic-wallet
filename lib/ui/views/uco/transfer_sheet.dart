@@ -98,9 +98,9 @@ class _TransferSheetState extends State<TransferSheet> {
   NumberFormat? _localCurrencyFormat;
   String? _rawAmount;
   bool validRequest = true;
-  double feeEstimation = 0.0;
+  double feeEstimation = 0;
   bool? _isPressed;
-  double priceConverted = 0.0;
+  double priceConverted = 0;
 
   List<UCOTransferWallet> ucoTransferList =
       List<UCOTransferWallet>.empty(growable: true);
@@ -145,9 +145,9 @@ class _TransferSheetState extends State<TransferSheet> {
       _addressValidAndUnfocused = true;
     }
 
-    if ((widget.accountToken != null &&
+    if (widget.accountToken != null &&
         widget.accountToken!.tokenInformations != null &&
-        widget.accountToken!.tokenInformations!.type == 'non-fungible')) {
+        widget.accountToken!.tokenInformations!.type == 'non-fungible') {
       _sendAmountController!.text = '1';
     }
 
@@ -194,7 +194,7 @@ class _TransferSheetState extends State<TransferSheet> {
       locale: CurrencyUtil.getLocale(widget.localCurrency!.currency.name)
           .toString(),
       symbol: CurrencyUtil.getCurrencySymbol(
-        widget.localCurrency!.currency.name.toString(),
+        widget.localCurrency!.currency.name,
       ),
     );
     // Set quick send amount
@@ -395,7 +395,7 @@ class _TransferSheetState extends State<TransferSheet> {
                                           .appWallet!
                                           .appKeychain!
                                           .getAccountSelected()!
-                                          .lastAddress!,
+                                          .lastAddress,
                                       ucoTransferList: ucoTransferList,
                                       tokenTransferList: tokenTransferList,
                                       title: widget.title,
@@ -471,8 +471,8 @@ class _TransferSheetState extends State<TransferSheet> {
   /// @returns true if valid, false otherwise
   Future<bool> _validateRequest() async {
     bool isValid = true;
-    UCOTransferWallet ucoTransfer = UCOTransferWallet();
-    TokenTransferWallet tokenTransfer = TokenTransferWallet();
+    final UCOTransferWallet ucoTransfer = UCOTransferWallet();
+    final TokenTransferWallet tokenTransfer = TokenTransferWallet();
     setState(() {
       _sendAmountFocusNode!.unfocus();
       _sendAddressFocusNode!.unfocus();
@@ -487,7 +487,7 @@ class _TransferSheetState extends State<TransferSheet> {
         _amountValidationText = AppLocalization.of(context)!.amountMissing;
       });
     } else {
-      if (double.tryParse((_sendAmountController!.text))! <= 0) {
+      if (double.tryParse(_sendAmountController!.text)! <= 0) {
         isValid = false;
         setState(() {
           _amountValidationText = AppLocalization.of(context)!.amountZero;
@@ -529,7 +529,7 @@ class _TransferSheetState extends State<TransferSheet> {
             ucoTransfer.amount = toBigInt(sendAmount);
           }
         } else {
-          balanceRaw = widget.accountToken!.amount!.toDouble();
+          balanceRaw = widget.accountToken!.amount!;
           sendAmount = double.tryParse(amount)!;
           if (sendAmount > balanceRaw) {
             isValid = false;
@@ -615,8 +615,8 @@ class _TransferSheetState extends State<TransferSheet> {
       String lastAddressRecipient = '';
       if (widget.accountToken == null) {
         if (contact != null) {
-          ucoTransfer.toContactName = contact.name!;
-          ucoTransfer.to = contact.address!;
+          ucoTransfer.toContactName = contact.name;
+          ucoTransfer.to = contact.address;
         } else {
           ucoTransfer.to = _sendAddressController!.text.trim();
         }
@@ -629,8 +629,8 @@ class _TransferSheetState extends State<TransferSheet> {
         }
       } else {
         if (contact != null) {
-          tokenTransfer.toContactName = contact.name!;
-          tokenTransfer.to = contact.address!;
+          tokenTransfer.toContactName = contact.name;
+          tokenTransfer.to = contact.address;
         } else {
           tokenTransfer.to = _sendAddressController!.text.trim();
         }
@@ -674,7 +674,7 @@ class _TransferSheetState extends State<TransferSheet> {
         } else {
           tokenTransfer.tokenAddress =
               widget.accountToken!.tokenInformations!.address;
-          // TODO: Warning about collection
+          // TODO(redDwarf03): Warning about collection
           if (widget.accountToken!.tokenInformations!.type == 'fungible') {
             tokenTransfer.tokenId = 0;
           } else {
@@ -713,9 +713,9 @@ class _TransferSheetState extends State<TransferSheet> {
             FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,8}')),
           ],
           onChanged: (String text) async {
-            double? amount = double.tryParse(text);
+            final double? amount = double.tryParse(text);
             if (amount != null && amount > 0) {
-              double fee = await getFee();
+              final double fee = await getFee();
               // Always reset the error message to be less annoying
               setState(() {
                 feeEstimation = fee;
@@ -747,7 +747,7 @@ class _TransferSheetState extends State<TransferSheet> {
                     FeedbackType.light,
                     StateContainer.of(context).activeVibrations,
                   );
-              double fee = await getFee(maxSend: true);
+              final double fee = await getFee(maxSend: true);
 
               double sendAmount = 0;
               if (primaryCurrencySelected == PrimaryCurrency.native) {
@@ -760,7 +760,7 @@ class _TransferSheetState extends State<TransferSheet> {
                     fee;
                 _sendAmountController!.text = sendAmount.toStringAsFixed(8);
               } else {
-                double selectedCurrencyFee = StateContainer.of(context)
+                final double selectedCurrencyFee = StateContainer.of(context)
                         .appWallet!
                         .appKeychain!
                         .getAccountSelected()!
@@ -871,7 +871,7 @@ class _TransferSheetState extends State<TransferSheet> {
       labelText:
           '${AppLocalization.of(context)!.sendMessageHeader} (${_messageController!.text.length}/200)',
       onChanged: (String text) async {
-        double fee = await getFee();
+        final double fee = await getFee();
         setState(() {
           feeEstimation = fee;
         });
@@ -888,7 +888,7 @@ class _TransferSheetState extends State<TransferSheet> {
   AppTextField getEnterAddressContainer() {
     return AppTextField(
       padding: _addressValidAndUnfocused
-          ? const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0)
+          ? const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
           : EdgeInsets.zero,
       textAlign: TextAlign.center,
       focusNode: _sendAddressFocusNode,
@@ -912,11 +912,11 @@ class _TransferSheetState extends State<TransferSheet> {
                 StateContainer.of(context).activeVibrations,
               );
 
-          Contact? contact = await ContactsDialog.getDialog(context);
+          final Contact? contact = await ContactsDialog.getDialog(context);
           if (contact != null && contact.name != null) {
             _sendAddressController!.text = contact.name!;
             _sendAddressStyle = AddressStyle.text90;
-            double fee = await getFee();
+            final double fee = await getFee();
             setState(() {
               feeEstimation = fee;
             });
@@ -939,7 +939,6 @@ class _TransferSheetState extends State<TransferSheet> {
                 UIUtil.cancelLockEvent();
                 final String? scanResult =
                     await UserDataUtil.getQRData(DataType.address, context);
-                QRScanErrs.errorList;
                 if (scanResult == null) {
                   UIUtil.showSnackbar(
                     AppLocalization.of(context)!.qrInvalidAddress,
@@ -1000,7 +999,7 @@ class _TransferSheetState extends State<TransferSheet> {
               ? AppStyles.textStyleSize14W700Primary(context)
               : AppStyles.textStyleSize14W700Primary(context),
       onChanged: (String text) async {
-        double fee = await getFee();
+        final double fee = await getFee();
         if (text.isNotEmpty) {
           setState(() {
             feeEstimation = fee;
@@ -1076,7 +1075,7 @@ class _TransferSheetState extends State<TransferSheet> {
     );
   }
 
-  Future<double> getFee({maxSend = false}) async {
+  Future<double> getFee({bool maxSend = false}) async {
     double fee = 0;
     if (double.tryParse(_sendAmountController!.text) == null ||
         double.tryParse(_sendAmountController!.text)! <= 0) {
@@ -1090,7 +1089,7 @@ class _TransferSheetState extends State<TransferSheet> {
     } else {
       if (isContact) {
         try {
-          Contact? contact = await sl
+          final Contact contact = await sl
               .get<DBHelper>()
               .getContactWithName(_sendAddressController!.text);
           if (contact.address != null) {
@@ -1107,10 +1106,10 @@ class _TransferSheetState extends State<TransferSheet> {
     }
     try {
       final String? seed = await StateContainer.of(context).getSeed();
-      List<UCOTransferWallet> ucoTransferListForFee =
+      final List<UCOTransferWallet> ucoTransferListForFee =
           List<UCOTransferWallet>.empty(growable: true);
 
-      List<TokenTransferWallet> tokenTransferListForFee =
+      final List<TokenTransferWallet> tokenTransferListForFee =
           List<TokenTransferWallet>.empty(growable: true);
       if (widget.accountToken == null) {
         ucoTransferListForFee.add(
@@ -1122,9 +1121,9 @@ class _TransferSheetState extends State<TransferSheet> {
                         .appKeychain!
                         .getAccountSelected()!
                         .balance!
-                        .nativeTokenValue!,
-                  ).toInt()
-                : toBigInt(double.tryParse(_sendAmountController!.text)!),
+                        .nativeTokenValue,
+                  )
+                : toBigInt(double.tryParse(_sendAmountController!.text)),
             to: recipientAddress,
           ),
         );
@@ -1132,7 +1131,7 @@ class _TransferSheetState extends State<TransferSheet> {
         tokenTransferListForFee.add(
           TokenTransferWallet(
             amount: maxSend
-                ? toBigInt(widget.accountToken!.amount!)
+                ? toBigInt(widget.accountToken!.amount)
                 : toBigInt(double.tryParse(_sendAmountController!.text)),
             to: recipientAddress,
             tokenAddress: widget.accountToken!.tokenInformations!.address,
@@ -1186,7 +1185,7 @@ class _TransferSheetState extends State<TransferSheet> {
   }
 
   String _convertNetworkCurrencyToSelectedCurrency() {
-    String convertedAmt = NumberUtil.sanitizeNumber(
+    final String convertedAmt = NumberUtil.sanitizeNumber(
       _sendAmountController!.text,
       maxDecimalDigits: _localCurrencyFormat!.decimalDigits!,
     );

@@ -53,22 +53,10 @@ enum AvailableCurrencyEnum {
 class AvailableCurrency extends SettingSelectionItem {
   AvailableCurrency(this.currency);
 
-  AvailableCurrencyEnum currency;
-
-  @override
-  String getDisplayName(BuildContext context) {
-    return '${CurrencyUtil.getCurrencySymbol(currency.name)} ${CurrencyUtil.getDisplayNameNoSymbol(currency.name)}';
-  }
-
-  // For saving to shared prefs
-  int getIndex() {
-    return currency.index;
-  }
-
   // Get best currency for a given locale
   // Default to USD
-  static AvailableCurrency getBestForLocale(Locale locale) {
-    for (AvailableCurrencyEnum value in AvailableCurrencyEnum.values) {
+  factory AvailableCurrency.getBestForLocale(Locale locale) {
+    for (final AvailableCurrencyEnum value in AvailableCurrencyEnum.values) {
       final AvailableCurrency currency = AvailableCurrency(value);
       if (locale.countryCode == null) {
         // Special cases
@@ -104,5 +92,17 @@ class AvailableCurrency extends SettingSelectionItem {
     }
 
     return AvailableCurrency(AvailableCurrencyEnum.USD);
+  }
+
+  AvailableCurrencyEnum currency;
+
+  @override
+  String getDisplayName(BuildContext context) {
+    return '${CurrencyUtil.getCurrencySymbol(currency.name)} ${CurrencyUtil.getDisplayNameNoSymbol(currency.name)}';
+  }
+
+  // For saving to shared prefs
+  int getIndex() {
+    return currency.index;
   }
 }

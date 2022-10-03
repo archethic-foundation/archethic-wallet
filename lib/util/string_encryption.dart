@@ -21,7 +21,7 @@ Uint8List _genRandomWithNonZero(int seedLength) {
 }
 
 Uint8List _createUint8ListFromString(String s) {
-  var ret = Uint8List(s.length);
+  final ret = Uint8List(s.length);
   for (var i = 0; i < s.length; i++) {
     ret[i] = s.codeUnitAt(i);
   }
@@ -32,7 +32,7 @@ Tuple2<Uint8List, Uint8List> _deriveKeyAndIV(
   String passphrase,
   Uint8List salt,
 ) {
-  var password = _createUint8ListFromString(passphrase);
+  final password = _createUint8ListFromString(passphrase);
   Uint8List concatenatedHashes = Uint8List(0);
   Uint8List currentHash = Uint8List(0);
   bool enoughBytesForKey = false;
@@ -50,30 +50,30 @@ Tuple2<Uint8List, Uint8List> _deriveKeyAndIV(
     if (concatenatedHashes.length >= 48) enoughBytesForKey = true;
   }
 
-  var keyBtyes = concatenatedHashes.sublist(0, 32);
-  var ivBtyes = concatenatedHashes.sublist(32, 48);
+  final keyBtyes = concatenatedHashes.sublist(0, 32);
+  final ivBtyes = concatenatedHashes.sublist(32, 48);
   return Tuple2(keyBtyes, ivBtyes);
 }
 
 String stringEncryptBase64(String string, String? seed) {
   final salt = _genRandomWithNonZero(8);
-  var keyndIV = _deriveKeyAndIV(seed!, salt);
+  final keyndIV = _deriveKeyAndIV(seed!, salt);
   final key = Key(keyndIV.item1);
   final iv = IV(keyndIV.item2);
   final encrypter = Encrypter(AES(key, mode: AESMode.cbc, padding: 'PKCS7'));
   final encrypted = encrypter.encrypt(string, iv: iv);
-  Uint8List encryptedBytesWithSalt = Uint8List.fromList(
+  final Uint8List encryptedBytesWithSalt = Uint8List.fromList(
     _createUint8ListFromString('Salted__') + salt + encrypted.bytes,
   );
   return base64.encode(encryptedBytesWithSalt);
 }
 
 String stringDecryptBase64(String string, String? seed) {
-  Uint8List encryptedBytesWithSalt = base64.decode(string);
-  Uint8List encryptedBytes =
+  final Uint8List encryptedBytesWithSalt = base64.decode(string);
+  final Uint8List encryptedBytes =
       encryptedBytesWithSalt.sublist(16, encryptedBytesWithSalt.length);
   final salt = encryptedBytesWithSalt.sublist(8, 16);
-  var keyndIV = _deriveKeyAndIV(seed!, salt);
+  final keyndIV = _deriveKeyAndIV(seed!, salt);
   final key = Key(keyndIV.item1);
   final iv = IV(keyndIV.item2);
   final encrypter = Encrypter(AES(key, mode: AESMode.cbc, padding: 'PKCS7'));

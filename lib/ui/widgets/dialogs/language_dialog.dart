@@ -14,8 +14,9 @@ import 'package:aewallet/util/preferences.dart';
 class LanguageDialog {
   static Future<AvailableLanguage?> getDialog(BuildContext context) async {
     final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList = List<PickerItem>.empty(growable: true);
-    for (var value in AvailableLanguage.values) {
+    final List<PickerItem> pickerItemsList =
+        List<PickerItem>.empty(growable: true);
+    for (final value in AvailableLanguage.values) {
       pickerItemsList.add(
         PickerItem(
           LanguageSetting(value).getDisplayName(context),
@@ -34,26 +35,28 @@ class LanguageDialog {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
+            padding: const EdgeInsets.only(bottom: 10),
             child: Text(
               AppLocalization.of(context)!.language,
               style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
             ),
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
               color: StateContainer.of(context).curTheme.text45!,
             ),
           ),
           content: PickerWidget(
             pickerItems: pickerItemsList,
-            selectedIndex: StateContainer.of(context).curLanguage.language.index,
+            selectedIndex:
+                StateContainer.of(context).curLanguage.language.index,
             onSelected: (value) {
               preferences.setLanguage(
                 LanguageSetting(value.value as AvailableLanguage),
               );
-              if (StateContainer.of(context).curLanguage.language != value.value) {
+              if (StateContainer.of(context).curLanguage.language !=
+                  value.value) {
                 StateContainer.of(context).updateLanguage(
                   LanguageSetting(value.value as AvailableLanguage),
                 );

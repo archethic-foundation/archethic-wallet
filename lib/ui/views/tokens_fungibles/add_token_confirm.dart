@@ -181,7 +181,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                 ),
                 const SizedBox(height: 30),
                 Padding(
-                  padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                  padding: const EdgeInsets.only(left: 30, right: 30),
                   child: Text(
                     AppLocalization.of(context)!.addTokenConfirmationMessage,
                     style: AppStyles.textStyleSize14W600Primary(context),
@@ -191,7 +191,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                   height: 20,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 40.0, top: 10),
+                  padding: const EdgeInsets.only(left: 40, top: 10),
                   child: Row(
                     children: <Widget>[
                       Text(
@@ -206,7 +206,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 40.0, top: 10),
+                  padding: const EdgeInsets.only(left: 40, top: 10),
                   child: Row(
                     children: <Widget>[
                       Text(
@@ -221,7 +221,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 40.0, top: 10),
+                  padding: const EdgeInsets.only(left: 40, top: 10),
                   child: Row(
                     children: <Widget>[
                       Text(
@@ -241,7 +241,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: 10.0),
+            margin: const EdgeInsets.only(top: 10),
             child: Column(
               children: <Widget>[
                 Row(
@@ -258,7 +258,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                             await Preferences.getInstance();
                         final AuthenticationMethod authMethod =
                             preferences.getAuthMethod();
-                        bool auth = await AuthFactory.authenticate(
+                        final bool auth = await AuthFactory.authenticate(
                           context,
                           authMethod,
                           activeVibrations:
@@ -299,7 +299,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
       final String? seed = await StateContainer.of(context).getSeed();
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
       final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
-      String nameEncoded = Uri.encodeFull(
+      final String nameEncoded = Uri.encodeFull(
         StateContainer.of(context)
             .appWallet!
             .appKeychain!
@@ -314,17 +314,17 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
 
       final Transaction transaction =
           Transaction(type: 'token', data: Transaction.initData());
-      String content = tokenToJsonForTxDataContent(
+      final String content = tokenToJsonForTxDataContent(
         Token(
           name: widget.tokenName,
-          supply: toBigInt(widget.tokenInitialSupply!),
+          supply: toBigInt(widget.tokenInitialSupply),
           type: 'fungible',
           symbol: widget.tokenSymbol,
           tokenProperties: {},
         ),
       );
       transaction.setContent(content);
-      Transaction signedTx = keychain
+      final Transaction signedTx = keychain
           .buildTransaction(transaction, service, index)
           .originSign(originPrivateKey);
 

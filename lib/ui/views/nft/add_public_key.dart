@@ -134,7 +134,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                       StateContainer.of(context)
                                           .activeVibrations,
                                     );
-                                Contact? contact =
+                                final Contact? contact =
                                     await ContactsDialog.getDialog(context);
                                 if (contact != null && contact.name != null) {
                                   publicKeyAccessController!.text =
@@ -159,7 +159,6 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                         DataType.raw,
                                         context,
                                       );
-                                      QRScanErrs.errorList;
                                       if (scanResult == null) {
                                         UIUtil.showSnackbar(
                                           AppLocalization.of(context)!
@@ -272,7 +271,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                     .entries
                                     .map((MapEntry<dynamic, String> entry) {
                                   return Padding(
-                                    padding: const EdgeInsets.all(5.0),
+                                    padding: const EdgeInsets.all(5),
                                     child: _buildLine(context, entry.value),
                                   );
                                 }).toList(),
@@ -303,9 +302,9 @@ class _AddPublicKeyState extends State<AddPublicKey> {
               color: StateContainer.of(context)
                   .curTheme
                   .backgroundAccountsListCardSelected!,
-              width: 1.0,
+              width: 1,
             ),
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(10),
           ),
           elevation: 0,
           color: StateContainer.of(context)
@@ -351,8 +350,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                       height: 40,
                                       width: 40,
                                       decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
+                                        borderRadius: BorderRadius.circular(15),
                                         color: StateContainer.of(context)
                                             .curTheme
                                             .backgroundDark!
@@ -370,7 +368,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                           Icons.close,
                                           color: StateContainer.of(context)
                                               .curTheme
-                                              .backgroundDarkest!,
+                                              .backgroundDarkest,
                                           size: 21,
                                         ),
                                         onPressed: () {

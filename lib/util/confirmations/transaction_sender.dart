@@ -69,10 +69,11 @@ class TransactionSender {
   int? timeout;
   int nbConfirmationReceived;
 
+  // TODO(reddwarf03): Change String with Enum
   /// Add listener on specific event
   /// @param {String} event Event to subscribe
   /// @param {Function} func Function to call when event triggered
-  TransactionSender on(String event, Function func) {
+  void on(String event, Function func) {
     switch (event) {
       case 'sent':
         onSent!.add(func as Function());
@@ -87,7 +88,7 @@ class TransactionSender {
         break;
 
       case 'fullConfirmation':
-        onFullConfirmation!.add(func) as Function(int);
+        onFullConfirmation!.add(func as Function(int));
         break;
 
       case 'error':
@@ -101,8 +102,6 @@ class TransactionSender {
       default:
         throw 'Event $event is not supported';
     }
-
-    return this;
   }
 
   /// Send a transaction to the network
@@ -121,7 +120,7 @@ class TransactionSender {
     if (sendTxTimeout <= 0) {
       throw 'sendTxTimeout must be an integer greater than 0';
     }
-    SubscriptionChannel subscriptionChannel = SubscriptionChannel();
+    final SubscriptionChannel subscriptionChannel = SubscriptionChannel();
     await subscriptionChannel.connect(phoenixHttpLink, websocketUri);
 
     absintheSocket = subscriptionChannel;
@@ -139,7 +138,7 @@ class TransactionSender {
         (String context, String reason) => handleError(context, reason),
       );
     } catch (err) {
-      for (Function function in onError!) {
+      for (final Function function in onError!) {
         function(senderContext, err.toString());
       }
     }
@@ -169,7 +168,7 @@ class TransactionSender {
     return completer.future;
   }
 
-  /// TODO implement
+  // TODO(Chralu): implement
   Stream<Response>? waitConfirmations(
     String address,
     SubscriptionChannel absintheSocket,
@@ -189,12 +188,12 @@ class TransactionSender {
     SubscriptionChannel absintheSocket,
     Function function,
   ) {
-    ast.DocumentNode documentNode = lang.parseString(
+    final ast.DocumentNode documentNode = lang.parseString(
       'subscription { transactionError(address: "$address") { context, reason } }',
     );
-    Operation? operation =
+    final Operation operation =
         Operation(operationName: null, document: documentNode);
-    Request request = Request(operation: operation, variables: const {});
+    final Request request = Request(operation: operation, variables: const {});
     return absintheSocket.client!.link.request(request);
   }
 
@@ -234,7 +233,7 @@ class TransactionSender {
   withAbsintheSocket.cancel(absintheSocket, confirmationNotifier);
   withAbsintheSocket.cancel(absintheSocket, errorNotifier);
 */
-    for (var func in onError!) {
+    for (final func in onError!) {
       func(context, reason);
     }
   }
@@ -248,7 +247,7 @@ class TransactionSender {
 
         case 'confirmation':
           onConfirmation = List<Function>.empty(growable: true);
-          absintheSocket!.client;
+          // absintheSocket!.client;
           // withAbsintheSocket.cancel(
           //     this.absintheSocket, this.confirmationNotifier);
           break;

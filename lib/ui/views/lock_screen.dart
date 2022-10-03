@@ -41,7 +41,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
       Navigator.of(context)
           .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
     }
-    Preferences preferences = await Preferences.getInstance();
+    final Preferences preferences = await Preferences.getInstance();
     StateContainer.of(context).bottomBarCurrentPage =
         preferences.getMainScreenCurrentPage();
     StateContainer.of(context).bottomBarPageController = PageController(
@@ -89,9 +89,9 @@ class _AppLockScreenState extends State<AppLockScreen> {
       } else {
         hoursStr = hours.toString();
       }
-      count = count % 3600;
+      final int remainingSeconds = count % 3600;
       String minutesStr = '';
-      final int minutes = count ~/ 60;
+      final int minutes = remainingSeconds ~/ 60;
       if (minutes < 10) {
         minutesStr = '0$minutes';
       } else {
@@ -143,7 +143,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
       _lockedOut = false;
     });
     final AuthenticationMethod authMethod = preferences.getAuthMethod();
-    bool auth = await AuthFactory.authenticate(
+    final bool auth = await AuthFactory.authenticate(
       context,
       authMethod,
       transitions: transitions,

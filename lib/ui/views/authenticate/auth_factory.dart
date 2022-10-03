@@ -27,18 +27,18 @@ class AuthFactory {
   }) async {
     bool auth = false;
     switch (authMethod.method) {
-      case (AuthMethod.yubikeyWithYubicloud):
+      case AuthMethod.yubikeyWithYubicloud:
         auth =
             await _authenticateWithYubikey(context, transitions: transitions);
         break;
-      case (AuthMethod.password):
+      case AuthMethod.password:
         auth =
             await _authenticateWithPassword(context, transitions: transitions);
         break;
-      case (AuthMethod.pin):
+      case AuthMethod.pin:
         auth = await _authenticateWithPin(context, transitions: transitions);
         break;
-      case (AuthMethod.biometrics):
+      case AuthMethod.biometrics:
         final bool hasBiometrics =
             await sl.get<BiometricUtil>().hasBiometrics();
         if (hasBiometrics) {
@@ -116,7 +116,7 @@ class AuthFactory {
     final String? expectedPin = vault.getPin();
     bool auth = false;
     if (transitions) {
-      // TODO: add the description
+      // TODO(redDwarf03): add the description
       auth = await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (BuildContext context) {

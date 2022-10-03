@@ -56,7 +56,7 @@ class AppMnemomics {
 
   /// Validate a specific menmonic word
   static bool isValidWord(String word, {String languageCode = 'en'}) {
-    bip39.Language language = getLanguage(languageCode);
+    final bip39.Language language = getLanguage(languageCode);
     return language.isValid(word);
   }
 

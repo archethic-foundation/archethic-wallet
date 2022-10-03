@@ -86,7 +86,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
   Widget build(BuildContext context) {
     nftCategoryToHidden = NftCategory.getListByDefault(context);
     nftCategoryToSort = widget.nftCategory;
-    for (NftCategory nftCategory in nftCategoryToSort!) {
+    for (final NftCategory nftCategory in nftCategoryToSort!) {
       nftCategoryToHidden!
           .removeWhere((element) => element.id == nftCategory.id);
     }
@@ -113,7 +113,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                onReorder: ((oldIndex, newIndex) async {
+                onReorder: (oldIndex, newIndex) async {
                   if (oldIndex < newIndex) {
                     newIndex -= 1;
                   }
@@ -126,7 +126,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                       .appKeychain!
                       .getAccountSelected()!
                       .updateNftCategoryList(nftCategoryToSort!);
-                }),
+                },
                 children: [
                   for (NftCategory nftCategory in nftCategoryToSort!)
                     Column(
@@ -143,7 +143,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                                   icon: const Icon(Icons.remove_circle),
                                   hoverColor:
                                       StateContainer.of(context).curTheme.text,
-                                  onPressed: (() async {
+                                  onPressed: () async {
                                     nftCategoryToSort!.removeWhere(
                                       (element) => element.id == nftCategory.id,
                                     );
@@ -155,7 +155,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                                         .updateNftCategoryList(
                                           nftCategoryToSort!,
                                         );
-                                  }),
+                                  },
                                   color:
                                       Colors.redAccent[400]!.withOpacity(0.5),
                                 )
@@ -201,7 +201,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                             ),
                             leading: IconButton(
                               icon: const Icon(Icons.add_circle),
-                              onPressed: (() async {
+                              onPressed: () async {
                                 nftCategoryToHidden!.removeWhere(
                                   (element) => element.id == nftCategory.id,
                                 );
@@ -215,7 +215,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
                                     .updateNftCategoryList(
                                       nftCategoryToSort!,
                                     );
-                              }),
+                              },
                               color: Colors.greenAccent[400]!.withOpacity(0.5),
                             ),
                           ),

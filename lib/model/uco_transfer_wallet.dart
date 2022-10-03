@@ -7,8 +7,6 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 class UCOTransferWallet extends UCOTransfer {
   UCOTransferWallet({super.amount, super.to, this.toContactName});
 
-  String? toContactName;
-
   factory UCOTransferWallet.fromJson(Map<String, dynamic> json) =>
       UCOTransferWallet(
         amount:
@@ -16,6 +14,8 @@ class UCOTransferWallet extends UCOTransfer {
         to: json['to'],
         toContactName: json['toContactName'],
       );
+
+  String? toContactName;
 
   @override
   Map<String, dynamic> toJson() =>

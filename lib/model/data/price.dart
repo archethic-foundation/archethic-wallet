@@ -28,7 +28,7 @@ class Price extends HiveObject {
 
   // Change currency
   static Future<Price> getCurrency(String currency) async {
-    Price price = Price();
+    final Price price = Price();
     SimplePriceResponse simplePriceResponse = SimplePriceResponse();
     price.useOracleUcoPrice = false;
     // if eur or usd, use Archethic Oracle

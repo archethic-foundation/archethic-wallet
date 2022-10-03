@@ -11,12 +11,12 @@ import 'package:aewallet/ui/views/nft/nft_list.dart';
 import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
 
 class NFTListPerCategory extends StatelessWidget {
-  final int? currentNftCategoryIndex;
   const NFTListPerCategory({super.key, this.currentNftCategoryIndex});
+  final int? currentNftCategoryIndex;
 
   @override
   Widget build(BuildContext context) {
-    List<NftCategory> nftCategories = StateContainer.of(context)
+    final List<NftCategory> nftCategories = StateContainer.of(context)
         .appWallet!
         .appKeychain!
         .getAccountSelected()!

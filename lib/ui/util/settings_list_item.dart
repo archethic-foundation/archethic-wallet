@@ -40,12 +40,12 @@ class AppSettings {
           onPressed();
         },
         child: Container(
-          height: 55.0,
-          margin: const EdgeInsetsDirectional.only(start: 10.0),
+          height: 55,
+          margin: const EdgeInsetsDirectional.only(start: 10),
           child: Row(
             children: <Widget>[
               Container(
-                margin: const EdgeInsetsDirectional.only(end: 13.0),
+                margin: const EdgeInsetsDirectional.only(end: 13),
                 child: IconWidget.build(
                   context,
                   icon,
@@ -108,12 +108,12 @@ class AppSettings {
         onPressed();
       },
       child: Container(
-        height: 65.0,
-        margin: const EdgeInsetsDirectional.only(start: 10.0),
+        height: 65,
+        margin: const EdgeInsetsDirectional.only(start: 10),
         child: Row(
           children: <Widget>[
             Container(
-              margin: const EdgeInsetsDirectional.only(end: 13.0),
+              margin: const EdgeInsetsDirectional.only(end: 13),
               child: IconWidget.build(context, icon, 30, 30, color: iconColor),
             ),
             Column(
@@ -181,12 +181,12 @@ class AppSettings {
         }
       },
       child: Container(
-        height: 60.0,
-        margin: const EdgeInsetsDirectional.only(start: 10.0),
+        height: 60,
+        margin: const EdgeInsetsDirectional.only(start: 10),
         child: Row(
           children: <Widget>[
             Container(
-              margin: const EdgeInsetsDirectional.only(end: 13.0),
+              margin: const EdgeInsetsDirectional.only(end: 13),
               child: IconWidget.build(context, icon!, 30, 30, color: iconColor),
             ),
             Column(
@@ -245,12 +245,12 @@ class AppSettings {
         }
       },
       child: Container(
-        height: 50.0,
-        margin: const EdgeInsetsDirectional.only(start: 10.0),
+        height: 50,
+        margin: const EdgeInsetsDirectional.only(start: 10),
         child: Row(
           children: <Widget>[
             Container(
-              margin: const EdgeInsetsDirectional.only(end: 13.0),
+              margin: const EdgeInsetsDirectional.only(end: 13),
               child: Container(
                 child: IconWidget.build(
                   context,
@@ -295,12 +295,12 @@ class AppSettings {
             );
       },
       child: Container(
-        height: 50.0,
-        margin: const EdgeInsetsDirectional.only(start: 10.0),
+        height: 50,
+        margin: const EdgeInsetsDirectional.only(start: 10),
         child: Row(
           children: <Widget>[
             Container(
-              margin: const EdgeInsetsDirectional.only(end: 13.0),
+              margin: const EdgeInsetsDirectional.only(end: 13),
               child: IconWidget.build(context, icon, 30, 30, color: iconColor),
             ),
             SizedBox(
@@ -318,8 +318,7 @@ class AppSettings {
                         FeedbackType.light,
                         StateContainer.of(context).activeVibrations,
                       );
-                  isSwitched = value;
-                  onChanged(isSwitched);
+                  onChanged(value);
                 } else {
                   return;
                 }
@@ -328,7 +327,7 @@ class AppSettings {
                   StateContainer.of(context).curTheme.inactiveTrackColorSwitch,
               activeTrackColor:
                   StateContainer.of(context).curTheme.activeTrackColorSwitch,
-              activeColor: StateContainer.of(context).curTheme.backgroundDark!,
+              activeColor: StateContainer.of(context).curTheme.backgroundDark,
             )
           ],
         ),

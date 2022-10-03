@@ -17,7 +17,7 @@ import 'package:aewallet/bus/otp_event.dart';
 
 class NFCUtil {
   /// hasNFC()
-  /// @returns [true] if device has NFC available, [false] otherwise
+  /// @returns true if device has NFC available, false otherwise
   Future<bool> hasNFC() async {
     if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
       return NfcManager.instance.isAvailable();

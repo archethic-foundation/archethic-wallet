@@ -91,17 +91,17 @@ class CurrencyUtil {
   static String getCurrencySymbol(String currency) {
     switch (currency) {
       case 'ARS':
-        return '\$';
+        return r'$';
       case 'AUD':
-        return '\$';
+        return r'$';
       case 'BRL':
-        return 'R\$';
+        return r'R$';
       case 'CAD':
-        return '\$';
+        return r'$';
       case 'CHF':
         return 'CHF';
       case 'CLP':
-        return '\$';
+        return r'$';
       case 'CNY':
         return '¥';
       case 'CZK':
@@ -113,7 +113,7 @@ class CurrencyUtil {
       case 'GBP':
         return '£';
       case 'HKD':
-        return 'HK\$';
+        return r'HK$';
       case 'HUF':
         return 'Ft';
       case 'IDR':
@@ -129,13 +129,13 @@ class CurrencyUtil {
       case 'KWD':
         return 'KD';
       case 'MXN':
-        return '\$';
+        return r'$';
       case 'MYR':
         return 'RM';
       case 'NOK':
         return 'kr';
       case 'NZD':
-        return '\$';
+        return r'$';
       case 'PHP':
         return '₱';
       case 'PKR':
@@ -149,22 +149,22 @@ class CurrencyUtil {
       case 'SEK':
         return 'kr';
       case 'SGD':
-        return '\$';
+        return r'$';
       case 'THB':
         return 'THB';
       case 'TRY':
         return '₺';
       case 'TWD':
-        return 'NT\$';
+        return r'NT$';
       case 'AED':
         return 'د.إ';
       case 'ZAR':
-        return 'R\$';
+        return r'R$';
       case 'BTC':
         return 'BTC';
       case 'USD':
       default:
-        return '\$';
+        return r'$';
     }
   }
 
@@ -302,7 +302,7 @@ class CurrencyUtil {
     double price,
     double amount,
   ) {
-    double amountConverted = convertAmount(price, amount);
+    final double amountConverted = convertAmount(price, amount);
     return getConvertedAmount(currency, amountConverted);
   }
 
@@ -312,7 +312,7 @@ class CurrencyUtil {
     double amount,
     int numberOfDigits,
   ) {
-    double amountConverted = convertAmount(price, amount);
+    final double amountConverted = convertAmount(price, amount);
     return getConvertedAmountWithNumberOfDigits(
       currency,
       amountConverted,

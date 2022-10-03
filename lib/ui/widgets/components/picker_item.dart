@@ -13,16 +13,6 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 
 class PickerItem {
-  String label;
-  String? description;
-  String? icon;
-  Color? iconColor;
-  Object value;
-  DecorationImage? decorationImageItem;
-  bool enabled;
-  bool displayed;
-  String? subLabel;
-
   PickerItem(
     this.label,
     this.description,
@@ -34,19 +24,28 @@ class PickerItem {
     this.decorationImageItem,
     this.subLabel,
   });
+  String label;
+  String? description;
+  String? icon;
+  Color? iconColor;
+  Object value;
+  DecorationImage? decorationImageItem;
+  bool enabled;
+  bool displayed;
+  String? subLabel;
 }
 
+// TODO(Chralu): specify [PickerItem.value] types (thanks to Generics)
 class PickerWidget extends StatefulWidget {
-  final ValueChanged<PickerItem>? onSelected;
-  final List<PickerItem>? pickerItems;
-  final int selectedIndex;
-
   const PickerWidget({
     super.key,
     this.pickerItems,
     this.onSelected,
     this.selectedIndex = -1,
   });
+  final ValueChanged<PickerItem>? onSelected;
+  final List<PickerItem>? pickerItems;
+  final int selectedIndex;
 
   @override
   State<PickerWidget> createState() => _PickerWidgetState();
@@ -63,7 +62,7 @@ class _PickerWidgetState extends State<PickerWidget> {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          PickerItem pickerItem = widget.pickerItems![index];
+          final PickerItem pickerItem = widget.pickerItems![index];
           bool isItemSelected;
           if (selectedIndex != -1) {
             isItemSelected = index == selectedIndex;
@@ -96,7 +95,7 @@ class _PickerWidgetState extends State<PickerWidget> {
                   borderRadius: const BorderRadius.all(Radius.circular(12)),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,

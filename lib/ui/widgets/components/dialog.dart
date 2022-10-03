@@ -35,7 +35,7 @@ class AppDialogs {
             style: AppStyles.textStyleSize20W700EquinoxPrimary(context),
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
               color: StateContainer.of(context).curTheme.text45!,
             ),
@@ -101,7 +101,7 @@ class AppDialogs {
             style: AppStyles.textStyleSize20W700Primary(context),
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
               color: StateContainer.of(context).curTheme.text45!,
             ),
@@ -176,7 +176,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   @override
   void didComplete(void result) {
     if (onPoppedCallback != null) {
-      onPoppedCallback!();
+      onPoppedCallback?.call();
     }
     super.didComplete(result);
   }
@@ -217,7 +217,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
       children: <Widget>[
         Container(
           margin: type == AnimationType.send
-              ? const EdgeInsets.only(bottom: 10.0, left: 90, right: 90)
+              ? const EdgeInsets.only(bottom: 10, left: 90, right: 90)
               : EdgeInsets.zero,
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height / 2,
@@ -239,8 +239,8 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
 }
 
 class PulsatingCircleLogo extends StatefulWidget {
-  final String? title;
   const PulsatingCircleLogo({super.key, this.title});
+  final String? title;
 
   @override
   State<PulsatingCircleLogo> createState() => PulsatingCircleLogoState();
@@ -255,7 +255,7 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
   void initState() {
     _animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
-    _animation = Tween(begin: 0.0, end: 12.0).animate(
+    _animation = Tween(begin: 0, end: 12).animate(
       CurvedAnimation(parent: _animationController!, curve: Curves.easeOut),
     );
     _animationController!.repeat(reverse: true);

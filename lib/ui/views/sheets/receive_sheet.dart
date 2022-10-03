@@ -40,7 +40,7 @@ class ReceiveSheet extends StatelessWidget {
             widgetRight: Container(
               width: 60,
               height: 50,
-              margin: const EdgeInsetsDirectional.only(top: 10.0, start: 10.0),
+              margin: const EdgeInsetsDirectional.only(top: 10, start: 10),
               child: TextButton(
                 onPressed: () {
                   sl.get<HapticUtil>().feedback(
@@ -90,12 +90,12 @@ class ReceiveSheet extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(15.0),
+                          padding: const EdgeInsets.all(15),
                           child: Material(
                             borderRadius: BorderRadius.circular(16),
                             child: SizedBox(
                               child: Padding(
-                                padding: const EdgeInsets.all(5.0),
+                                padding: const EdgeInsets.all(5),
                                 child: SingleChildScrollView(
                                   child: Column(
                                     crossAxisAlignment:
@@ -130,7 +130,7 @@ class ReceiveSheet extends StatelessWidget {
                                                   .text,
                                           data: address!,
                                           version: QrVersions.auto,
-                                          size: 150.0,
+                                          size: 150,
                                           gapless: false,
                                         ),
                                       ),

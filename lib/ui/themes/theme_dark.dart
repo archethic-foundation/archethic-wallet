@@ -32,8 +32,8 @@ class DarkTheme implements BaseTheme {
       Color(0xFF00A4DB),
       Color(0xFFCC00FF),
     ],
-    begin: Alignment(-1.0, 0.0),
-    end: Alignment(1.0, 0.0),
+    begin: Alignment(-1, 0),
+    end: Alignment(1, 0),
     transform: GradientRotation(pi / 9),
   );
 
@@ -119,7 +119,7 @@ class DarkTheme implements BaseTheme {
   @override
   Color? backgroundDark = const Color(0xFF000000);
   @override
-  Color? backgroundDark00 = const Color(0xFF05212B).withOpacity(0.0);
+  Color? backgroundDark00 = const Color(0xFF05212B).withOpacity(0);
   @override
   Color? backgroundDarkest = const Color(0xFFFFFFFF);
 
@@ -203,8 +203,8 @@ class DarkTheme implements BaseTheme {
       Color(0xFF00A4DB),
       Color(0xFFCC00FF),
     ],
-    begin: Alignment(-1.0, 0.0),
-    end: Alignment(1.0, 0.0),
+    begin: Alignment(-1, 0),
+    end: Alignment(1, 0),
     transform: GradientRotation(pi / 9),
   );
 
@@ -221,8 +221,8 @@ class DarkTheme implements BaseTheme {
           Color(0xFF00A4DB),
           Color(0xFFCC00FF),
         ],
-        begin: Alignment(-1.0, 0.0),
-        end: Alignment(1.0, 0.0),
+        begin: Alignment(-1, 0),
+        end: Alignment(1, 0),
         transform: GradientRotation(pi / 9),
       ),
     );
@@ -233,8 +233,8 @@ class DarkTheme implements BaseTheme {
     return BoxDecoration(
       color: text20,
       borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(25.0),
-        topRight: Radius.circular(25.0),
+        topLeft: Radius.circular(25),
+        topRight: Radius.circular(25),
       ),
       image: DecorationImage(
         image: AssetImage(background2Small!),

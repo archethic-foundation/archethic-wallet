@@ -51,9 +51,7 @@ class _NFTTabState extends State<NFTTab> {
   }
 
   void _destroyBus() {
-    if (_refreshSub != null) {
-      _refreshSub!.cancel();
-    }
+    _refreshSub?.cancel();
   }
 
   @override
@@ -102,7 +100,7 @@ class _NFTTabState extends State<NFTTab> {
                           stretch: true,
                           automaticallyImplyLeading: false,
                           backgroundColor: Colors.transparent,
-                          expandedHeight: 260.0,
+                          expandedHeight: 260,
                           flexibleSpace: FlexibleSpaceBar(
                             expandedTitleScale: 1,
                             stretchModes: const [

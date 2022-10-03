@@ -9,8 +9,8 @@ import 'package:flutter/foundation.dart';
 class ScreenUtil {
   static bool isDesktopMode() {
     if (kIsWeb) {
-      if ((defaultTargetPlatform == TargetPlatform.iOS ||
-          defaultTargetPlatform == TargetPlatform.android)) {
+      if (defaultTargetPlatform == TargetPlatform.iOS ||
+          defaultTargetPlatform == TargetPlatform.android) {
         return false;
       } else {
         return true;
