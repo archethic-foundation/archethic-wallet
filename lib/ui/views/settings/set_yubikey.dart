@@ -131,8 +131,7 @@ class _SetYubikeyState extends State<SetYubikey> {
                                       end: 20,
                                       top: 10,
                                     ),
-                                    alignment:
-                                        const AlignmentDirectional(-1, 0),
+                                    alignment: AlignmentDirectional.centerStart,
                                     child: AutoSizeText(
                                       widget.header!,
                                       style:
@@ -161,7 +160,7 @@ class _SetYubikeyState extends State<SetYubikey> {
                                   child: getClientIDContainer(),
                                 ),
                                 Container(
-                                  alignment: const AlignmentDirectional(0, 0),
+                                  alignment: AlignmentDirectional.center,
                                   margin: const EdgeInsets.only(top: 3),
                                   child: Text(
                                     _clientIDValidationText,
@@ -174,7 +173,7 @@ class _SetYubikeyState extends State<SetYubikey> {
                                   child: getClientAPIKeyContainer(),
                                 ),
                                 Container(
-                                  alignment: const AlignmentDirectional(0, 0),
+                                  alignment: AlignmentDirectional.center,
                                   margin: const EdgeInsets.only(top: 3),
                                   child: Text(
                                     _clientAPIKeyValidationText,

@@ -202,8 +202,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                               textInputAction: TextInputAction.next,
                               labelText: AppLocalization.of(context)!
                                   .tokenInitialSupplyHint,
-                              keyboardType:
-                                  const TextInputType.numberWithOptions(),
+                              keyboardType: TextInputType.number,
                               style:
                                   AppStyles.textStyleSize16W600Primary(context),
                               inputFormatters: [

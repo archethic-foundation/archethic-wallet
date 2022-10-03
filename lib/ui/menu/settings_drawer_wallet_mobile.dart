@@ -137,16 +137,16 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       duration: const Duration(milliseconds: 220),
     );
     _contactsOffsetFloat =
-        Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
+        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
             .animate(_contactsController!);
     _securityOffsetFloat =
-        Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
+        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
             .animate(_securityController!);
     _customOffsetFloat =
-        Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
+        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
             .animate(_customController!);
     _aboutOffsetFloat =
-        Tween<Offset>(begin: const Offset(1.1, 0), end: const Offset(0, 0))
+        Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
             .animate(_aboutController!);
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
@@ -294,7 +294,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
             StateContainer.of(context).curTheme.drawerBackground!,
             StateContainer.of(context).curTheme.backgroundDark00!,
           ],
-          begin: const Alignment(0, 0),
+          begin: Alignment.center,
           end: const Alignment(5, 0),
         ),
       ),
@@ -540,7 +540,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
             StateContainer.of(context).curTheme.drawerBackground!,
             StateContainer.of(context).curTheme.backgroundDark!,
           ],
-          begin: const Alignment(0, 0),
+          begin: Alignment.center,
           end: const Alignment(5, 0),
         ),
       ),
@@ -800,7 +800,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
             StateContainer.of(context).curTheme.drawerBackground!,
             StateContainer.of(context).curTheme.backgroundDark!,
           ],
-          begin: const Alignment(0, 0),
+          begin: Alignment.center,
           end: const Alignment(5, 0),
         ),
       ),
@@ -1099,7 +1099,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
             StateContainer.of(context).curTheme.drawerBackground!,
             StateContainer.of(context).curTheme.backgroundDark!,
           ],
-          begin: const Alignment(0, 0),
+          begin: Alignment.center,
           end: const Alignment(5, 0),
         ),
       ),

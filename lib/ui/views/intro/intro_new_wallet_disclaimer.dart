@@ -71,7 +71,6 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                           ],
                         ),
                         Container(
-                          margin: const EdgeInsetsDirectional.only(),
                           child: IconWidget.build(
                             context,
                             'assets/icons/warning.png',

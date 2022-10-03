@@ -154,7 +154,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   String? title;
 
   @override
-  Duration get transitionDuration => const Duration();
+  Duration get transitionDuration => Duration.zero;
 
   @override
   bool get opaque => false;

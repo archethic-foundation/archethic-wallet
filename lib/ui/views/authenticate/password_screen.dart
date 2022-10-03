@@ -211,7 +211,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                             ),
                           // Error Container
                           Container(
-                            alignment: const AlignmentDirectional(0, 0),
+                            alignment: AlignmentDirectional.center,
                             margin: const EdgeInsets.only(top: 3),
                             child: Text(
                               passwordError == null ? '' : passwordError!,

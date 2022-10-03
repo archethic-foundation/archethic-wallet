@@ -135,8 +135,7 @@ class _SetPasswordState extends State<SetPassword> {
                                       end: 20,
                                       top: 10,
                                     ),
-                                    alignment:
-                                        const AlignmentDirectional(-1, 0),
+                                    alignment: AlignmentDirectional.centerStart,
                                     child: AutoSizeText(
                                       widget.header!,
                                       style:
@@ -355,7 +354,7 @@ class _SetPasswordState extends State<SetPassword> {
                                 const SizedBox(height: 20),
                                 // Error Text
                                 Container(
-                                  alignment: const AlignmentDirectional(0, 0),
+                                  alignment: AlignmentDirectional.center,
                                   margin: const EdgeInsets.only(top: 3),
                                   child: Text(
                                     passwordError == null ? '' : passwordError!,

@@ -282,7 +282,7 @@ class _PinScreenState extends State<PinScreen>
               ),
             ],
           ),
-          alignment: const AlignmentDirectional(0, 0),
+          alignment: AlignmentDirectional.center,
           child: Text(
             buttonText,
             textAlign: TextAlign.center,
@@ -564,7 +564,7 @@ class _PinScreenState extends State<PinScreen>
                                       ),
                                     ],
                                   ),
-                                  alignment: const AlignmentDirectional(0, 0),
+                                  alignment: AlignmentDirectional.center,
                                   child: FaIcon(
                                     Icons.backspace,
                                     color: StateContainer.of(context)

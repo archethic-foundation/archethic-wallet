@@ -217,7 +217,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             end: smallScreen(context) ? 30 : 40,
                             top: 10,
                           ),
-                          alignment: const AlignmentDirectional(-1, 0),
+                          alignment: AlignmentDirectional.centerStart,
                           child: AutoSizeText(
                             AppLocalization.of(context)!.importSecretPhrase,
                             style:
