@@ -272,8 +272,7 @@ class _SetPasswordState extends State<SetPassword> {
                                                       : Colors.green,
                                           minHeight: 5,
                                         ),
-                                        passwordStrength <= 0.25
-                                            ? Text(
+                                        if (passwordStrength <= 0.25) Text(
                                                 AppLocalization.of(context)!
                                                     .passwordStrengthWeak,
                                                 textAlign: TextAlign.end,
@@ -281,8 +280,7 @@ class _SetPasswordState extends State<SetPassword> {
                                                     .textStyleSize12W100Primary(
                                                   context,
                                                 ),
-                                              )
-                                            : passwordStrength <= 0.8
+                                              ) else passwordStrength <= 0.8
                                                 ? Text(
                                                     AppLocalization.of(context)!
                                                         .passwordStrengthAlright,

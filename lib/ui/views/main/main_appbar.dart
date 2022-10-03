@@ -40,8 +40,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: AppBar(
             actions: [
-              StateContainer.of(context).bottomBarCurrentPage == 2
-                  ? IconButton(
+              if (StateContainer.of(context).bottomBarCurrentPage == 2) IconButton(
                       icon: const FaIcon(FontAwesomeIcons.gear),
                       onPressed: () async {
                         sl.get<HapticUtil>().feedback(
@@ -53,8 +52,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                           widget: const ConfigureCategoryList(),
                         );
                       },
-                    )
-                  : StateContainer.of(context).showBalance
+                    ) else StateContainer.of(context).showBalance
                       ? IconButton(
                           icon: const FaIcon(FontAwesomeIcons.eye),
                           onPressed: () async {

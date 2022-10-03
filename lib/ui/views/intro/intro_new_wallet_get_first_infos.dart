@@ -130,8 +130,7 @@ class _IntroNewWalletDisclaimerState
                                   UpperCaseTextFormatter(),
                                 ],
                               ),
-                              nameError != null
-                                  ? SizedBox(
+                              if (nameError != null) SizedBox(
                                       height: 40,
                                       child: Text(
                                         nameError!,
@@ -140,8 +139,7 @@ class _IntroNewWalletDisclaimerState
                                           context,
                                         ),
                                       ),
-                                    )
-                                  : const SizedBox(
+                                    ) else const SizedBox(
                                       height: 40,
                                     ),
                               AutoSizeText(

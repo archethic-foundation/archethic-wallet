@@ -308,15 +308,13 @@ class _ContactsListState extends State<ContactsList> {
                       children: <Widget>[
                         Row(
                           children: [
-                            contact.type == 'keychainService'
-                                ? FaIcon(
+                            if (contact.type == 'keychainService') FaIcon(
                                     FontAwesomeIcons.keycdn,
                                     color: StateContainer.of(context)
                                         .curTheme
                                         .iconDrawer,
                                     size: 16,
-                                  )
-                                : Icon(
+                                  ) else Icon(
                                     Icons.person,
                                     color: StateContainer.of(context)
                                         .curTheme

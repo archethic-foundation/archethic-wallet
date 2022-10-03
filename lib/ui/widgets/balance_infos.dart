@@ -66,8 +66,7 @@ class BalanceInfosWidget {
                                 ),
                               ),
                             ),
-                            StateContainer.of(context).showBalance
-                                ? Column(
+                            if (StateContainer.of(context).showBalance) Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
@@ -103,8 +102,7 @@ class BalanceInfosWidget {
                                         ),
                                       ),
                                     ],
-                                  )
-                                : Column(
+                                  ) else Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
@@ -145,8 +143,7 @@ class BalanceInfosWidget {
                                 ),
                               ),
                             ),
-                            StateContainer.of(context).showBalance
-                                ? Column(
+                            if (StateContainer.of(context).showBalance) Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
@@ -177,8 +174,7 @@ class BalanceInfosWidget {
                                         ),
                                       ),
                                     ],
-                                  )
-                                : Column(
+                                  ) else Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
@@ -595,16 +591,14 @@ class BalanceInfosWidget {
                       : AppStyles.textStyleSize12W100NegativeValue(context),
                 ),
                 const SizedBox(width: 5),
-                StateContainer.of(context).chartInfos!.getPriceChangePercentage(
+                if (StateContainer.of(context).chartInfos!.getPriceChangePercentage(
                               StateContainer.of(context).idChartOption!,
                             )! >=
-                        0
-                    ? FaIcon(
+                        0) FaIcon(
                         FontAwesomeIcons.caretUp,
                         color:
                             StateContainer.of(context).curTheme.positiveValue,
-                      )
-                    : FaIcon(
+                      ) else FaIcon(
                         FontAwesomeIcons.caretDown,
                         color:
                             StateContainer.of(context).curTheme.negativeValue,
@@ -622,14 +616,13 @@ class BalanceInfosWidget {
                 const SizedBox(
                   width: 10,
                 ),
-                StateContainer.of(context)
+                if (StateContainer.of(context)
                         .appWallet!
                         .appKeychain!
                         .getAccountSelected()!
                         .balance!
                         .tokenPrice!
-                        .useOracleUcoPrice!
-                    ? InkWell(
+                        .useOracleUcoPrice!) InkWell(
                         onTap: () {
                           sl.get<HapticUtil>().feedback(
                                 FeedbackType.light,
@@ -647,8 +640,7 @@ class BalanceInfosWidget {
                           15,
                           15,
                         ),
-                      )
-                    : const SizedBox(),
+                      ) else const SizedBox(),
               ],
             ),
           ),

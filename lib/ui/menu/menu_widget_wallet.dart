@@ -39,13 +39,12 @@ class MenuWidgetWallet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                StateContainer.of(context)
+                if (StateContainer.of(context)
                         .appWallet!
                         .appKeychain!
                         .getAccountSelected()!
                         .balance!
-                        .isNativeTokenValuePositive()
-                    ? Padding(
+                        .isNativeTokenValuePositive()) Padding(
                         padding: const EdgeInsets.only(left: 10, right: 10),
                         child: InkWell(
                           onTap: () {
@@ -90,8 +89,7 @@ class MenuWidgetWallet extends StatelessWidget {
                             ],
                           ),
                         ),
-                      )
-                    : Container(
+                      ) else Container(
                         child: Column(
                           children: <Widget>[
                             IconWidget.buildIconDataWidget(

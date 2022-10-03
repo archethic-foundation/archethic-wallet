@@ -150,8 +150,7 @@ class NetworkDialog {
                                       context,
                                     ),
                                   ),
-                                  endpointError != null
-                                      ? Container(
+                                  if (endpointError != null) Container(
                                           margin: const EdgeInsets.only(
                                             top: 5,
                                             bottom: 5,
@@ -163,8 +162,7 @@ class NetworkDialog {
                                               context,
                                             ),
                                           ),
-                                        )
-                                      : const SizedBox(),
+                                        ) else const SizedBox(),
                                 ],
                               ),
                               const SizedBox(

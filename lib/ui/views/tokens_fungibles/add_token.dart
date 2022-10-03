@@ -228,8 +228,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                 ),
                               ),
                             ),
-                            feeEstimation > 0
-                                ? Padding(
+                            if (feeEstimation > 0) Padding(
                                     padding: const EdgeInsets.only(
                                       left: 30,
                                       right: 30,
@@ -242,8 +241,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                       ),
                                       textAlign: TextAlign.justify,
                                     ),
-                                  )
-                                : Padding(
+                                  ) else Padding(
                                     padding: const EdgeInsets.only(
                                       left: 30,
                                       right: 30,
@@ -271,16 +269,14 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      _isPressed == true
-                          ? AppButton.buildAppButton(
+                      if (_isPressed == true) AppButton.buildAppButton(
                               const Key('createToken'),
                               context,
                               AppButtonType.primaryOutline,
                               AppLocalization.of(context)!.createToken,
                               Dimens.buttonTopDimens,
                               onPressed: () {},
-                            )
-                          : AppButton.buildAppButton(
+                            ) else AppButton.buildAppButton(
                               const Key('createToken'),
                               context,
                               AppButtonType.primary,

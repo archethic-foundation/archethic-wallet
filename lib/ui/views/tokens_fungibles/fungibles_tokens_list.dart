@@ -191,8 +191,7 @@ class FungiblesTokensListWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  (StateContainer.of(context).showBalance == true)
-                      ? Column(
+                  if (StateContainer.of(context).showBalance == true) Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
@@ -211,8 +210,7 @@ class FungiblesTokensListWidget extends StatelessWidget {
                               ),
                             ),
                           ],
-                        )
-                      : Column(
+                        ) else Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [

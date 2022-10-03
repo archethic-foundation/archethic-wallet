@@ -194,8 +194,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
               ),
             ),
           ),
-          kIsWeb || Platform.isMacOS
-              ? Column(
+          if (kIsWeb || Platform.isMacOS) Column(
                   children: <Widget>[
                     Row(
                       children: <Widget>[
@@ -281,8 +280,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                       ],
                     ),
                   ],
-                )
-              : const SizedBox(),
+                ) else const SizedBox(),
         ],
       ),
     );

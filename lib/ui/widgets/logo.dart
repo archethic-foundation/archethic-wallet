@@ -36,12 +36,8 @@ Widget getLogo(BuildContext context) {
                       ),
                     ),
         ),
-        ScreenUtil.isDesktopMode() == true
-            ? const SizedBox(width: 20)
-            : const SizedBox(),
-        ScreenUtil.isDesktopMode() == true
-            ? const Text('Archethic Wallet')
-            : const SizedBox(),
+        if (ScreenUtil.isDesktopMode() == true) const SizedBox(width: 20) else const SizedBox(),
+        if (ScreenUtil.isDesktopMode() == true) const Text('Archethic Wallet') else const SizedBox(),
       ],
     ),
   );

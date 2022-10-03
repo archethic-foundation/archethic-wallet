@@ -54,14 +54,12 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
         ? Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              primaryCurrency == PrimaryCurrency.native
-                  ? Column(
+              if (primaryCurrency == PrimaryCurrency.native) Column(
                       children: [
                         _balanceNative(context, true),
                         _balanceFiat(context, false),
                       ],
-                    )
-                  : Column(
+                    ) else Column(
                       children: [
                         _balanceFiat(context, true),
                         _balanceNative(context, false),

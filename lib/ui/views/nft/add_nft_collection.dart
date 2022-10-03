@@ -133,8 +133,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                     children: [
                       collectionInfos(context, bottom),
                       getNFTListPreview(context),
-                      feeEstimation > 0
-                          ? Padding(
+                      if (feeEstimation > 0) Padding(
                               padding:
                                   const EdgeInsets.only(left: 30, right: 30),
                               child: Text(
@@ -144,8 +143,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                                 ),
                                 textAlign: TextAlign.justify,
                               ),
-                            )
-                          : Padding(
+                            ) else Padding(
                               padding:
                                   const EdgeInsets.only(left: 30, right: 30),
                               child: Text(
@@ -167,19 +165,17 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      _isPressed == true ||
+                      if (_isPressed == true ||
                               (_isPressed == false &&
                                   (collectionNameController!.text.isEmpty ||
-                                      collectionSymbolController!.text.isEmpty))
-                          ? AppButton.buildAppButton(
+                                      collectionSymbolController!.text.isEmpty))) AppButton.buildAppButton(
                               const Key('createNFTCollection'),
                               context,
                               AppButtonType.primaryOutline,
                               AppLocalization.of(context)!.createNFTCollection,
                               Dimens.buttonTopDimens,
                               onPressed: () {},
-                            )
-                          : AppButton.buildAppButton(
+                            ) else AppButton.buildAppButton(
                               const Key('createNFTCollection'),
                               context,
                               AppButtonType.primary,
@@ -220,11 +216,10 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                   ),
                   Row(
                     children: <Widget>[
-                      _isPressed == true ||
+                      if (_isPressed == true ||
                               (_isPressed == false &&
                                   (collectionNameController!.text.isEmpty ||
-                                      collectionSymbolController!.text.isEmpty))
-                          ? AppButton.buildAppButton(
+                                      collectionSymbolController!.text.isEmpty))) AppButton.buildAppButton(
                               const Key('saveNFTCollectionInLocal'),
                               context,
                               AppButtonType.primaryOutline,
@@ -232,8 +227,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                                   .saveNFTCollectionInLocal,
                               Dimens.buttonBottomDimens,
                               onPressed: () {},
-                            )
-                          : AppButton.buildAppButton(
+                            ) else AppButton.buildAppButton(
                               const Key('saveNFTCollectionInLocal'),
                               context,
                               AppButtonType.primary,
@@ -373,9 +367,8 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                 ),
                 Row(
                   children: <Widget>[
-                    collectionNameController!.text.isNotEmpty &&
-                            collectionSymbolController!.text.isNotEmpty
-                        ? AppButton.buildAppButtonTiny(
+                    if (collectionNameController!.text.isNotEmpty &&
+                            collectionSymbolController!.text.isNotEmpty) AppButton.buildAppButtonTiny(
                             const Key('addNFT'),
                             context,
                             AppButtonType.primary,
@@ -387,8 +380,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                                 widget: const AddNFTFile(
                                     process: AddNFTFileProcess.collection));*/
                             },
-                          )
-                        : AppButton.buildAppButtonTiny(
+                          ) else AppButton.buildAppButtonTiny(
                             const Key('addNFT'),
                             context,
                             AppButtonType.primaryOutline,

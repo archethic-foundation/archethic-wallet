@@ -210,16 +210,14 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      isPressed == true
-                          ? AppButton.buildAppButton(
+                      if (isPressed == true) AppButton.buildAppButton(
                               const Key('iveBackedItUp'),
                               context,
                               AppButtonType.primaryOutline,
                               AppLocalization.of(context)!.iveBackedItUp,
                               Dimens.buttonBottomDimens,
                               onPressed: () {},
-                            )
-                          : AppButton.buildAppButton(
+                            ) else AppButton.buildAppButton(
                               const Key('iveBackedItUp'),
                               context,
                               AppButtonType.primary,
