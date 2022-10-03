@@ -35,7 +35,6 @@ class NFTCard extends StatelessWidget {
     final String typeMime =
         TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Expanded(
           child: Padding(
@@ -60,11 +59,10 @@ class NFTCard extends StatelessWidget {
             color: StateContainer.of(context).curTheme.backgroundDark,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25),
-              side: const BorderSide(color: Colors.white10, width: 1),
+              side: const BorderSide(color: Colors.white10),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 if (MimeUtil.isImage(typeMime) == true ||
                     MimeUtil.isPdf(typeMime) == true)
@@ -80,9 +78,7 @@ class NFTCard extends StatelessWidget {
                           child: Container(
                             decoration: BoxDecoration(
                               color: StateContainer.of(context).curTheme.text,
-                              border: Border.all(
-                                width: 1,
-                              ),
+                              border: Border.all(),
                             ),
                             child: Image.memory(
                               snapshot.data!,
@@ -129,7 +125,6 @@ class _NFTCardBottomState extends State<NFTCardBottom> {
         .getAccountSelected()!
         .getftInfosOffChain(widget.tokenInformations.id);
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(right: 10, top: 5),

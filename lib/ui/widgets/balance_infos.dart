@@ -53,7 +53,6 @@ class BalanceInfosWidget {
                           ).primaryCurrency.name
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
@@ -130,7 +129,6 @@ class BalanceInfosWidget {
                         )
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
@@ -496,7 +494,6 @@ class BalanceInfosWidget {
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       AppLocalization.of(context)!.priceChartHeader,

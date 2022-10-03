@@ -117,13 +117,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Row(
                             children: <Widget>[
@@ -166,7 +164,6 @@ class _PasswordScreenState extends State<PasswordScreen> {
                             focusNode: enterPasswordFocusNode,
                             controller: enterPasswordController,
                             textInputAction: TextInputAction.go,
-                            maxLines: 1,
                             autocorrect: false,
                             autofocus: true,
                             onChanged: (String newText) {
@@ -183,7 +180,6 @@ class _PasswordScreenState extends State<PasswordScreen> {
                                 AppLocalization.of(context)!.enterPasswordHint,
                             keyboardType: TextInputType.text,
                             obscureText: !enterPasswordVisible!,
-                            textAlign: TextAlign.center,
                             style:
                                 AppStyles.textStyleSize16W700Primary(context),
                             suffixButton: TextFieldButton(

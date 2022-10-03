@@ -60,7 +60,6 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
     if (StateContainer.of(context).showBlog == true) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
             height: 50,
@@ -68,7 +67,6 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     AppLocalization.of(context)!.blogHeader,
@@ -101,7 +99,6 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
                   child: PageView.builder(
                     controller: pageController,
                     itemCount: snapshot.data!.length,
-                    scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
@@ -131,7 +128,6 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
               } else {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: const [
                     SizedBox(
                       height: 50,
@@ -149,7 +145,6 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
     } else {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: const [
           SizedBox(
             height: 50,
@@ -190,11 +185,10 @@ class SlidingCard extends StatelessWidget {
         color: StateContainer.of(context).curTheme.backgroundDark,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
-          side: const BorderSide(color: Colors.white10, width: 1),
+          side: const BorderSide(color: Colors.white10),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             ClipRRect(
               borderRadius:

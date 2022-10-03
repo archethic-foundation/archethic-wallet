@@ -64,7 +64,6 @@ class _IntroNewWalletDisclaimerState
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Row(
                           children: <Widget>[
@@ -93,7 +92,6 @@ class _IntroNewWalletDisclaimerState
                           alignment: Alignment.bottomLeft,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               const SizedBox(
                                 height: 30,
@@ -118,7 +116,6 @@ class _IntroNewWalletDisclaimerState
                                 textAlign: TextAlign.left,
                               ),
                               AppTextField(
-                                topMargin: 0,
                                 leftMargin: 0,
                                 rightMargin: 0,
                                 focusNode: nameFocusNode,

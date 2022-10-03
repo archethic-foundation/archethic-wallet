@@ -154,7 +154,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   String? title;
 
   @override
-  Duration get transitionDuration => const Duration(milliseconds: 0);
+  Duration get transitionDuration => const Duration();
 
   @override
   bool get opaque => false;
@@ -216,7 +216,9 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
-          margin: type == AnimationType.send ? const EdgeInsets.only(bottom: 10, left: 90, right: 90) : EdgeInsets.zero,
+          margin: type == AnimationType.send
+              ? const EdgeInsets.only(bottom: 10, left: 90, right: 90)
+              : EdgeInsets.zero,
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height / 2,
           child: _getAnimation(context),
@@ -244,13 +246,15 @@ class PulsatingCircleLogo extends StatefulWidget {
   State<PulsatingCircleLogo> createState() => PulsatingCircleLogoState();
 }
 
-class PulsatingCircleLogoState extends State<PulsatingCircleLogo> with SingleTickerProviderStateMixin {
+class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
+    with SingleTickerProviderStateMixin {
   AnimationController? _animationController;
   Animation<double>? _animation;
 
   @override
   void initState() {
-    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
     _animation = Tween<double>(begin: 0, end: 12).animate(
       CurvedAnimation(parent: _animationController!, curve: Curves.easeOut),
     );
@@ -307,7 +311,9 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo> with SingleTic
           height: 40,
         ),
         Text(
-          widget.title != null ? widget.title! : AppLocalization.of(context)!.pleaseWait,
+          widget.title != null
+              ? widget.title!
+              : AppLocalization.of(context)!.pleaseWait,
           textAlign: TextAlign.center,
           style: AppStyles.textStyleSize16W600EquinoxPrimary(context),
         )

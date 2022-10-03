@@ -133,7 +133,6 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                                       ),
                                     ),
                                     value: checkedValue,
-                                    tristate: false,
                                     onChanged: (newValue) {
                                       setState(() {
                                         checkedValue = newValue!;

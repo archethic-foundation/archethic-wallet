@@ -149,8 +149,6 @@ class _LedgerSheetState extends State<LedgerSheet> {
                           LengthLimitingTextInputFormatter(500),
                         ],
                         keyboardType: TextInputType.text,
-                        obscureText: false,
-                        textAlign: TextAlign.center,
                         style: AppStyles.textStyleSize16W600Primary(context),
                       ),
                       const SizedBox(

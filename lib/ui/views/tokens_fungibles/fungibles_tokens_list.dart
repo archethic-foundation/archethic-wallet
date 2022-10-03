@@ -116,7 +116,6 @@ class FungiblesTokensListWidget extends StatelessWidget {
                 color: StateContainer.of(context)
                     .curTheme
                     .backgroundFungiblesTokensListCard!,
-                width: 1,
               ),
               borderRadius: BorderRadius.circular(10),
             ),
@@ -129,7 +128,6 @@ class FungiblesTokensListWidget extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
                     children: [

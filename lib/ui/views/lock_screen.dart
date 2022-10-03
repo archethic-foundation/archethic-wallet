@@ -196,7 +196,6 @@ class _AppLockScreenState extends State<AppLockScreen> {
                 children: <Widget>[
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -317,7 +316,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                   FeedbackType.light,
                                   StateContainer.of(context).activeVibrations,
                                 );
-                            _authenticate(transitions: false);
+                            _authenticate();
                           }
                         },
                         disabled: _lockedOut,

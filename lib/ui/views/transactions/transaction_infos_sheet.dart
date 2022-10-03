@@ -181,7 +181,6 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                   bottom: 15,
                                 ),
                                 child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Expanded(
                                       child: Column(
@@ -191,8 +190,6 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
                                             children: <Widget>[
                                               Row(
                                                 children: <Widget>[
@@ -234,7 +231,6 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                 bottom: 15,
                               ),
                               child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   Expanded(
                                     child: Column(

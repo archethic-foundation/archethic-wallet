@@ -77,7 +77,6 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
                                 right: 10,
                               ),
                               child: Wrap(
-                                alignment: WrapAlignment.start,
                                 children: publicKeys!
                                     .asMap()
                                     .entries
@@ -111,7 +110,6 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
             color: StateContainer.of(context)
                 .curTheme
                 .backgroundAccountsListCardSelected!,
-            width: 1,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -126,7 +124,6 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Column(
                     children: [

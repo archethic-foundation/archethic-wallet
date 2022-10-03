@@ -172,7 +172,6 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
           ),
           Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(height: 20),
                 Text(
@@ -308,7 +307,7 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
       );
       final String service = 'archethic-wallet-$nameEncoded';
       final int index = (await sl.get<ApiService>().getTransactionIndex(
-                uint8ListToHex(keychain.deriveAddress(service, index: 0)),
+                uint8ListToHex(keychain.deriveAddress(service)),
               ))
           .chainLength!;
 

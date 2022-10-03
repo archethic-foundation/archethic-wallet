@@ -150,7 +150,6 @@ class TxListWidget extends StatelessWidget {
                         : StateContainer.of(context)
                             .curTheme
                             .backgroundRecentTxListCardTransferInput!,
-                width: 1,
               ),
               borderRadius: BorderRadius.circular(10),
             ),
@@ -431,7 +430,6 @@ class TxListWidget extends StatelessWidget {
                         const SizedBox()
                       else
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             if (transaction.from == null)
                               const Text('')
@@ -457,7 +455,6 @@ class TxListWidget extends StatelessWidget {
                         const SizedBox()
                       else
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             if (transaction.recipient == null)
                               const Text('')
@@ -478,7 +475,6 @@ class TxListWidget extends StatelessWidget {
                           ],
                         ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Text(
                             DateFormat.yMMMEd(
@@ -496,7 +492,6 @@ class TxListWidget extends StatelessWidget {
                       ),
                       if (transaction.typeTx != RecentTransaction.transferInput)
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             if (StateContainer.of(context).showBalance == true)
                               StateContainer.of(context)
@@ -530,7 +525,6 @@ class TxListWidget extends StatelessWidget {
                           ],
                         ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           if (transaction.typeTx !=
                                   RecentTransaction.tokenCreation &&

@@ -82,7 +82,6 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                 children: <Widget>[
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -118,7 +117,6 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                       seed = AppSeeds.generateSeed();
                                       mnemonic = AppMnemomics.seedToMnemonic(
                                         seed!,
-                                        languageCode: 'en',
                                       );
                                       final Preferences preferences =
                                           await Preferences.getInstance();

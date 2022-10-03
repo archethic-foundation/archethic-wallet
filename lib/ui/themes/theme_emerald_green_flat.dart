@@ -32,8 +32,6 @@ class EmeraldGreenFlatTheme implements BaseTheme {
       Color.fromARGB(255, 43, 43, 43),
       Color.fromARGB(255, 43, 43, 43)
     ],
-    begin: Alignment(-1, 0),
-    end: Alignment(1, 0),
     transform: GradientRotation(pi / 9),
   );
 
@@ -202,8 +200,6 @@ class EmeraldGreenFlatTheme implements BaseTheme {
       Color(0xFF00A4DB),
       Color(0xFFCC00FF),
     ],
-    begin: Alignment(-1, 0),
-    end: Alignment(1, 0),
     transform: GradientRotation(pi / 9),
   );
 
@@ -220,8 +216,6 @@ class EmeraldGreenFlatTheme implements BaseTheme {
           Color(0xFF473B53),
           Color(0xFF228B77),
         ],
-        begin: Alignment(-1, 0),
-        end: Alignment(1, 0),
         transform: GradientRotation(pi / 9),
       ),
     );

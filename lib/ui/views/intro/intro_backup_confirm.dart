@@ -267,7 +267,6 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
@@ -307,7 +306,6 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           ),
                           child: Wrap(
                             spacing: 10,
-                            alignment: WrapAlignment.start,
                             children: wordListSelected
                                 .asMap()
                                 .entries
@@ -355,7 +353,6 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                           ),
                           child: Wrap(
                             spacing: 10,
-                            alignment: WrapAlignment.start,
                             children: wordListToSelect
                                 .asMap()
                                 .entries
@@ -388,7 +385,6 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Row(
                       children: <Widget>[

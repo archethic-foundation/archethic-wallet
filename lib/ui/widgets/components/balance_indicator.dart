@@ -99,7 +99,6 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
 
   Widget _balanceNative(BuildContext context, bool primary) {
     return RichText(
-      textAlign: TextAlign.start,
       text: TextSpan(
         text: '',
         children: <InlineSpan>[
@@ -131,7 +130,6 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
 
   Widget _balanceFiat(BuildContext context, bool primary) {
     return RichText(
-      textAlign: TextAlign.start,
       text: TextSpan(
         text: '',
         children: <InlineSpan>[

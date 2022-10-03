@@ -123,7 +123,6 @@ class AuthFactory {
             return PinScreen(
               PinOverlayType.enterPin,
               expectedPin: expectedPin!,
-              description: '',
             );
           },
         ),
@@ -135,7 +134,6 @@ class AuthFactory {
             return PinScreen(
               PinOverlayType.enterPin,
               expectedPin: expectedPin!,
-              description: '',
             );
           },
         ),

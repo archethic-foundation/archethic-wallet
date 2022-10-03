@@ -81,8 +81,6 @@ class AccountsListTab extends StatelessWidget {
                           bottom: 50,
                         ),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             /// ACCOUNTS LIST
                             AccountsListWidget(

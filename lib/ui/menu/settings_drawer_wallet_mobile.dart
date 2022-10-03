@@ -1147,7 +1147,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       Padding(
                         padding: const EdgeInsets.only(left: 20, bottom: 10),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Text(
                               versionString,

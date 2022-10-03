@@ -95,7 +95,6 @@ class _SetYubikeyState extends State<SetYubikey> {
                 children: <Widget>[
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Row(
                           children: <Widget>[
@@ -123,7 +122,6 @@ class _SetYubikeyState extends State<SetYubikey> {
                         Expanded(
                           child: SingleChildScrollView(
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 if (widget.header != null)

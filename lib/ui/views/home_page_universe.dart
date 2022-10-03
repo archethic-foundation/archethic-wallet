@@ -386,8 +386,7 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
         ),
         if (_currentPage == 1)
           Padding(
-            padding:
-                const EdgeInsets.only(top: 10, bottom: 10, left: 0, right: 0),
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: Row(
               children: <Widget>[
                 AppButton.buildAppButtonTiny(

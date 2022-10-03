@@ -88,7 +88,6 @@ class NFTListPerCategory extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(15),
                                 side: const BorderSide(
                                   color: Colors.white10,
-                                  width: 1,
                                 ),
                               ),
                               child: ClipRRect(

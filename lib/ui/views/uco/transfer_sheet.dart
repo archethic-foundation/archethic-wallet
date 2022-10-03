@@ -802,7 +802,6 @@ class _TransferSheetState extends State<TransferSheet> {
             signed: true,
             decimal: true,
           ),
-          textAlign: TextAlign.center,
           onSubmitted: (String text) {
             FocusScope.of(context).unfocus();
             if (!Address(_sendAddressController!.text).isValid()) {
@@ -890,7 +889,6 @@ class _TransferSheetState extends State<TransferSheet> {
       padding: _addressValidAndUnfocused
           ? const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
           : EdgeInsets.zero,
-      textAlign: TextAlign.center,
       focusNode: _sendAddressFocusNode,
       controller: _sendAddressController,
       cursorColor: StateContainer.of(context).curTheme.text,

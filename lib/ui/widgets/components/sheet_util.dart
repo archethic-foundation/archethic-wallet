@@ -110,7 +110,6 @@ class _AppHeightNineSheetLayout extends SingleChildLayoutDelegate {
       return BoxConstraints(
         minWidth: constraints.maxWidth,
         maxWidth: constraints.maxWidth,
-        minHeight: 0,
         maxHeight: constraints.maxHeight * 0.95,
       );
     }
@@ -121,14 +120,12 @@ class _AppHeightNineSheetLayout extends SingleChildLayoutDelegate {
       return BoxConstraints(
         minWidth: constraints.maxWidth,
         maxWidth: constraints.maxWidth,
-        minHeight: 0,
         maxHeight: constraints.maxHeight * 0.8,
       );
     } else {
       return BoxConstraints(
         minWidth: constraints.maxWidth,
         maxWidth: constraints.maxWidth,
-        minHeight: 0,
         maxHeight: constraints.maxHeight * 0.9,
       );
     }
@@ -278,7 +275,6 @@ class _AppHeightEightSheetLayout extends SingleChildLayoutDelegate {
       return BoxConstraints(
         minWidth: constraints.maxWidth,
         maxWidth: constraints.maxWidth,
-        minHeight: 0,
         maxHeight: constraints.maxHeight * 0.9,
       );
     }
@@ -286,14 +282,12 @@ class _AppHeightEightSheetLayout extends SingleChildLayoutDelegate {
       return BoxConstraints(
         minWidth: constraints.maxWidth,
         maxWidth: constraints.maxWidth,
-        minHeight: 0,
         maxHeight: constraints.maxHeight * 0.7,
       );
     } else {
       return BoxConstraints(
         minWidth: constraints.maxWidth,
         maxWidth: constraints.maxWidth,
-        minHeight: 0,
         maxHeight: constraints.maxHeight * 0.8,
       );
     }

@@ -32,8 +32,6 @@ class FlatTheme implements BaseTheme {
       Color.fromARGB(255, 43, 43, 43),
       Color.fromARGB(255, 43, 43, 43)
     ],
-    begin: Alignment(-1, 0),
-    end: Alignment(1, 0),
     transform: GradientRotation(pi / 9),
   );
 
@@ -204,8 +202,6 @@ class FlatTheme implements BaseTheme {
       Color.fromARGB(255, 88, 88, 88),
       Color.fromARGB(255, 88, 88, 88)
     ],
-    begin: Alignment(-1, 0),
-    end: Alignment(1, 0),
     transform: GradientRotation(pi / 9),
   );
 
@@ -222,8 +218,6 @@ class FlatTheme implements BaseTheme {
           Colors.transparent,
           Colors.transparent,
         ],
-        begin: Alignment(-1, 0),
-        end: Alignment(1, 0),
         transform: GradientRotation(pi / 9),
       ),
     );

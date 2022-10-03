@@ -204,8 +204,7 @@ class KeychainUtil {
 
     final Price tokenPrice = await Price.getCurrency(currency);
 
-    final Uint8List genesisAddress =
-        keychain.deriveAddress(kServiceName, index: 0);
+    final Uint8List genesisAddress = keychain.deriveAddress(kServiceName);
     selectedAcct = Account(
       lastLoadingTransactionInputs: 0,
       lastAddress: uint8ListToHex(genesisAddress),
@@ -218,7 +217,6 @@ class KeychainUtil {
         nativeTokenValue: 0,
         tokenPrice: tokenPrice,
       ),
-      selected: false,
       recentTransactions: [],
     );
 
@@ -277,8 +275,7 @@ class KeychainUtil {
       /// Get all services for archethic blockchain
       keychain.services!.forEach((serviceName, service) async {
         if (service.derivationPath!.startsWith(kDerivationPathWithoutService)) {
-          final Uint8List genesisAddress =
-              keychain.deriveAddress(serviceName, index: 0);
+          final Uint8List genesisAddress = keychain.deriveAddress(serviceName);
 
           final List<String> path = service.derivationPath!
               .replaceAll(kDerivationPathWithoutService, '')

@@ -32,8 +32,6 @@ class FireRedTheme implements BaseTheme {
       Color(0xFF00A4DB),
       Color(0xFFCC00FF),
     ],
-    begin: Alignment(-1, 0),
-    end: Alignment(1, 0),
     transform: GradientRotation(pi / 9),
   );
 
@@ -202,8 +200,6 @@ class FireRedTheme implements BaseTheme {
       Color(0xFF00A4DB),
       Color(0xFFCC00FF),
     ],
-    begin: Alignment(-1, 0),
-    end: Alignment(1, 0),
     transform: GradientRotation(pi / 9),
   );
 
@@ -220,8 +216,6 @@ class FireRedTheme implements BaseTheme {
           Color(0xFF6B0036),
           Color(0xFFCF2329),
         ],
-        begin: Alignment(-1, 0),
-        end: Alignment(1, 0),
         transform: GradientRotation(pi / 9),
       ),
     );

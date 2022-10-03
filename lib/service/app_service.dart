@@ -92,14 +92,13 @@ class AppService {
     for (final Transaction transaction in transactionChain) {
       final String content = transaction.data!.content!.toLowerCase();
       if (transaction.type! == 'token') {
-        final RecentTransaction recentTransaction = RecentTransaction();
-        recentTransaction.address = transaction.address;
-        recentTransaction.timestamp = transaction.validationStamp!.timestamp;
-        recentTransaction.typeTx = RecentTransaction.tokenCreation;
-        recentTransaction.content = transaction.data!.content;
-        recentTransaction.fee =
-            fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
-                .toDouble();
+        final RecentTransaction recentTransaction = RecentTransaction()
+          ..address = transaction.address
+          ..timestamp = transaction.validationStamp!.timestamp
+          ..typeTx = RecentTransaction.tokenCreation
+          ..content = transaction.data!.content
+          ..fee = fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
+              .toDouble();
         recentTransaction.tokenInformations = await recentTransaction
             .getTokenInfo(transaction.data!.content, transaction.address);
         recentTransactions.add(recentTransaction);
@@ -108,24 +107,20 @@ class AppService {
           for (int i = 0;
               i < transaction.data!.ledger!.uco!.transfers!.length;
               i++) {
-            final RecentTransaction recentTransaction = RecentTransaction();
-            recentTransaction.content = content;
-            recentTransaction.address = transaction.address;
-            recentTransaction.typeTx = RecentTransaction.transferOutput;
-            recentTransaction.amount =
-                fromBigInt(transaction.data!.ledger!.uco!.transfers![i].amount)
-                    .toDouble();
-
-            recentTransaction.recipient =
-                transaction.data!.ledger!.uco!.transfers![i].to;
-            recentTransaction.fee =
-                fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
-                    .toDouble();
-            recentTransaction.timestamp =
-                transaction.validationStamp!.timestamp;
-            recentTransaction.from = lastAddress;
-            recentTransaction.decryptedSecret =
-                List<String>.empty(growable: true);
+            final RecentTransaction recentTransaction = RecentTransaction()
+              ..content = content
+              ..address = transaction.address
+              ..typeTx = RecentTransaction.transferOutput
+              ..amount = fromBigInt(
+                      transaction.data!.ledger!.uco!.transfers![i].amount)
+                  .toDouble()
+              ..recipient = transaction.data!.ledger!.uco!.transfers![i].to
+              ..fee =
+                  fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
+                      .toDouble()
+              ..timestamp = transaction.validationStamp!.timestamp
+              ..from = lastAddress
+              ..decryptedSecret = List<String>.empty(growable: true);
             if (transaction.data!.ownerships != null) {
               final String nameEncoded = Uri.encodeFull(name);
               final String serviceName = 'archethic-wallet-$nameEncoded';
@@ -153,7 +148,6 @@ class AppService {
                 }
               }
             }
-
             recentTransactions.add(recentTransaction);
           }
           for (int i = 0;
@@ -217,20 +211,18 @@ class AppService {
               transactionInput.spent == false &&
               (transactionInput.tokenAddress == null ||
                   transactionInput.from != transactionInput.tokenAddress)) {
-            final RecentTransaction recentTransaction = RecentTransaction();
-            recentTransaction.address = transactionInput.from;
-            recentTransaction.amount =
-                fromBigInt(transactionInput.amount).toDouble();
-            recentTransaction.typeTx = RecentTransaction.transferInput;
-            recentTransaction.from = transactionInput.from;
-            recentTransaction.recipient = transaction.address;
-            recentTransaction.timestamp = transactionInput.timestamp;
-            recentTransaction.fee = 0;
-            recentTransaction.content = transaction.data!.content;
+            final RecentTransaction recentTransaction = RecentTransaction()
+              ..address = transactionInput.from
+              ..amount = fromBigInt(transactionInput.amount).toDouble()
+              ..typeTx = RecentTransaction.transferInput
+              ..from = transactionInput.from
+              ..recipient = transaction.address
+              ..timestamp = transactionInput.timestamp
+              ..fee = 0
+              ..content = transaction.data!.content
+              ..decryptedSecret = List<String>.empty(growable: true);
             recentTransaction.tokenInformations = await recentTransaction
                 .getTokenInfo('', transactionInput.tokenAddress);
-            recentTransaction.decryptedSecret =
-                List<String>.empty(growable: true);
             final List<Ownership> ownerships = await sl
                 .get<ApiService>()
                 .getTransactionOwnerships(transactionInput.from!);
@@ -270,8 +262,14 @@ class AppService {
     // Transaction inputs for genesisAddress
     for (final TransactionInput transaction
         in transactionInputsGenesisAddress) {
-      final RecentTransaction recentTransaction = RecentTransaction();
-      recentTransaction.address = transaction.from;
+      final RecentTransaction recentTransaction = RecentTransaction()
+        ..address = transaction.from
+        ..amount = fromBigInt(transaction.amount).toDouble()
+        ..typeTx = RecentTransaction.transferInput
+        ..from = transaction.from
+        ..recipient = lastAddress
+        ..timestamp = transaction.timestamp
+        ..fee = 0;
       if (transaction.type! == 'token') {
         final String content =
             await sl.get<ApiService>().getTransactionContent(transaction.from!);
@@ -306,12 +304,7 @@ class AppService {
           }
         }
       }
-      recentTransaction.amount = fromBigInt(transaction.amount).toDouble();
-      recentTransaction.typeTx = RecentTransaction.transferInput;
-      recentTransaction.from = transaction.from;
-      recentTransaction.recipient = lastAddress;
-      recentTransaction.timestamp = transaction.timestamp;
-      recentTransaction.fee = 0;
+
       recentTransaction.tokenInformations =
           await recentTransaction.getTokenInfo('', transaction.tokenAddress);
       recentTransactions.add(recentTransaction);
@@ -745,7 +738,7 @@ class AppService {
     final String nameEncoded = Uri.encodeFull(accountName);
     final String service = 'archethic-wallet-$nameEncoded';
     final int index = (await sl.get<ApiService>().getTransactionIndex(
-              uint8ListToHex(keychain.deriveAddress(service, index: 0)),
+              uint8ListToHex(keychain.deriveAddress(service)),
             ))
         .chainLength!;
 

@@ -211,7 +211,6 @@ class ContactDetailsSheet {
                             child: UIUtil.threeLinetextStyleSmallestW400Text(
                               context,
                               contact.address!,
-                              type: ThreeLineAddressTextType.primary,
                             ),
                           ),
                           const SizedBox(height: 5),
