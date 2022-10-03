@@ -109,7 +109,7 @@ class _AppState extends State<App> {
           GlobalWidgetsLocalizations.delegate
         ],
         locale: StateContainer.of(context).curLanguage.language ==
-                AvailableLanguage.DEFAULT
+                AvailableLanguage.systemDefault
             ? null
             : StateContainer.of(context).curLanguage.getLocale(),
         supportedLocales: const <Locale>[

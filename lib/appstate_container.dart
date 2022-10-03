@@ -62,8 +62,9 @@ class StateContainerState extends State<StateContainer> {
   bool recentTransactionsLoading = false;
   bool balanceLoading = false;
   Locale deviceLocale = const Locale('en', 'US');
-  AvailableCurrency curCurrency = AvailableCurrency(AvailableCurrencyEnum.USD);
-  LanguageSetting curLanguage = LanguageSetting(AvailableLanguage.DEFAULT);
+  AvailableCurrency curCurrency = AvailableCurrency(AvailableCurrencyEnum.usd);
+  LanguageSetting curLanguage =
+      LanguageSetting(AvailableLanguage.systemDefault);
   PrimaryCurrencySetting curPrimaryCurrency =
       PrimaryCurrencySetting(AvailablePrimaryCurrency.native);
   NetworksSetting curNetwork =
@@ -212,8 +213,7 @@ class StateContainerState extends State<StateContainer> {
   // Change currency
   Future<void> updateCurrency(AvailableCurrency currency) async {
     if (appWallet != null) {
-      final tokenPrice =
-          await Price.getCurrency(curCurrency.currency.name);
+      final tokenPrice = await Price.getCurrency(curCurrency.currency.name);
       appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice =
           tokenPrice;
       appWallet!.save();

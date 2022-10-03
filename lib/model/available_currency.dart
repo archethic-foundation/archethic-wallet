@@ -5,43 +5,43 @@ import 'package:aewallet/util/currency_util.dart';
 import 'package:flutter/material.dart';
 
 enum AvailableCurrencyEnum {
-  USD,
-  ARS,
-  AUD,
-  BRL,
-  BTC,
-  CAD,
-  CHF,
-  CLP,
-  CNY,
-  CZK,
-  DKK,
-  EUR,
-  GBP,
-  HKD,
-  HUF,
-  IDR,
-  ILS,
-  INR,
-  JPY,
-  KRW,
-  KWD,
-  MXN,
-  MYR,
-  NOK,
-  NZD,
-  PHP,
-  PKR,
-  PLN,
-  RUB,
-  SAR,
-  SEK,
-  SGD,
-  THB,
-  TRY,
-  TWD,
-  AED,
-  ZAR
+  usd,
+  ars,
+  aud,
+  brl,
+  btc,
+  cad,
+  chf,
+  clp,
+  cny,
+  czk,
+  dkk,
+  eur,
+  gbp,
+  hkd,
+  huf,
+  idr,
+  ils,
+  inr,
+  jpy,
+  krw,
+  kwd,
+  mxn,
+  myr,
+  nok,
+  nzd,
+  php,
+  pkr,
+  pln,
+  rub,
+  sar,
+  sek,
+  sgd,
+  thb,
+  tli,
+  twd,
+  aed,
+  zar
 }
 
 /// Represent the available authentication methods our app supports
@@ -49,7 +49,7 @@ class AvailableCurrency extends SettingSelectionItem {
   AvailableCurrency(this.currency);
 
   // Get best currency for a given locale
-  // Default to USD
+  // Default to usd
   factory AvailableCurrency.getBestForLocale(Locale locale) {
     for (final value in AvailableCurrencyEnum.values) {
       final currency = AvailableCurrency(value);
@@ -76,7 +76,7 @@ class AvailableCurrency extends SettingSelectionItem {
           'SI',
           'ES'
         ].contains(locale.countryCode)) {
-          return AvailableCurrency(AvailableCurrencyEnum.EUR);
+          return AvailableCurrency(AvailableCurrencyEnum.eur);
         } else if (CurrencyUtil.getLocale(currency.toString())
                 .countryCode!
                 .toUpperCase() ==
@@ -86,7 +86,7 @@ class AvailableCurrency extends SettingSelectionItem {
       }
     }
 
-    return AvailableCurrency(AvailableCurrencyEnum.USD);
+    return AvailableCurrency(AvailableCurrencyEnum.usd);
   }
 
   AvailableCurrencyEnum currency;
