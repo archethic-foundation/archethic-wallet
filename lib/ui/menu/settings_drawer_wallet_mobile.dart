@@ -174,7 +174,10 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
       case AppLifecycleState.resumed:
         super.didChangeAppLifecycleState(state);
         break;
-      default:
+      case AppLifecycleState.detached:
+        super.didChangeAppLifecycleState(state);
+        break;
+      case AppLifecycleState.inactive:
         super.didChangeAppLifecycleState(state);
         break;
     }
@@ -208,8 +211,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   // TODO(Chralu): is this useful ?
   // ignore: unused_element
   Future<void> _networkDialog() async {
-    final ns =
-        await NetworkDialog.getDialog(context, _curNetworksSetting);
+    final ns = await NetworkDialog.getDialog(context, _curNetworksSetting);
     if (ns != null) {
       _curNetworksSetting = ns;
       await StateContainer.of(context).requestUpdate();
@@ -685,8 +687,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                             onPressed: () async {
                               final preferences =
                                   await Preferences.getInstance();
-                              final authMethod =
-                                  preferences.getAuthMethod();
+                              final authMethod = preferences.getAuthMethod();
 
                               final auth = await AuthFactory.authenticate(
                                 context,
@@ -697,8 +698,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                               if (auth) {
                                 final seed =
                                     await StateContainer.of(context).getSeed();
-                                final mnemonic =
-                                    AppMnemomics.seedToMnemonic(
+                                final mnemonic = AppMnemomics.seedToMnemonic(
                                   seed!,
                                   languageCode: preferences.getLanguageSeed(),
                                 );
@@ -725,8 +725,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           StateContainer.of(context).curTheme.iconDrawer!,
                           _pinPadShuffleActive,
                           onChanged: (bool isSwitched) async {
-                            final preferences =
-                                await Preferences.getInstance();
+                            final preferences = await Preferences.getInstance();
                             setState(() {
                               _pinPadShuffleActive = isSwitched;
                               preferences.setPinPadShuffle(isSwitched);
@@ -934,8 +933,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         StateContainer.of(context).curTheme.iconDrawer!,
                         _showBalancesActive,
                         onChanged: (bool isSwitched) async {
-                          final preferences =
-                              await Preferences.getInstance();
+                          final preferences = await Preferences.getInstance();
                           setState(() {
                             _showBalancesActive = isSwitched;
                             StateContainer.of(context).showBalance =
@@ -955,8 +953,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         StateContainer.of(context).curTheme.iconDrawer!,
                         _showBlogActive,
                         onChanged: (bool isSwitched) async {
-                          final preferences =
-                              await Preferences.getInstance();
+                          final preferences = await Preferences.getInstance();
                           setState(() {
                             _showBlogActive = isSwitched;
                             StateContainer.of(context).showBlog =
@@ -976,8 +973,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         StateContainer.of(context).curTheme.iconDrawer!,
                         _showPriceChartActive,
                         onChanged: (bool isSwitched) async {
-                          final preferences =
-                              await Preferences.getInstance();
+                          final preferences = await Preferences.getInstance();
                           setState(() {
                             _showPriceChartActive = isSwitched;
                             StateContainer.of(context).showPriceChart =
@@ -1006,8 +1002,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           StateContainer.of(context).curTheme.iconDrawer!,
                           _notificationsActive,
                           onChanged: (bool isSwitched) async {
-                            final preferences =
-                                await Preferences.getInstance();
+                            final preferences = await Preferences.getInstance();
                             setState(() {
                               _notificationsActive = isSwitched;
                               StateContainer.of(context).activeNotifications =
@@ -1042,8 +1037,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         StateContainer.of(context).curTheme.iconDrawer!,
                         _vibrationActive,
                         onChanged: (bool isSwitched) async {
-                          final preferences =
-                              await Preferences.getInstance();
+                          final preferences = await Preferences.getInstance();
                           setState(() {
                             _vibrationActive = isSwitched;
                             StateContainer.of(context).activeVibrations =

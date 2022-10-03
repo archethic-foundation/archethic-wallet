@@ -30,8 +30,6 @@ class LockTimeoutSetting extends SettingSelectionItem {
         return AppLocalization.of(context)!.xMinutes.replaceAll('%1', '30');
       case LockTimeoutOption.sixty:
         return AppLocalization.of(context)!.xMinutes.replaceAll('%1', '60');
-      default:
-        return AppLocalization.of(context)!.xMinute.replaceAll('%1', '1');
     }
   }
 
@@ -48,8 +46,6 @@ class LockTimeoutSetting extends SettingSelectionItem {
       case LockTimeoutOption.thirty:
         return const Duration(minutes: 30);
       case LockTimeoutOption.sixty:
-        return const Duration(minutes: 1);
-      default:
         return const Duration(minutes: 1);
     }
   }

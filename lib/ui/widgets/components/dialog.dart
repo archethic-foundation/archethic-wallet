@@ -201,12 +201,6 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
         return PulsatingCircleLogo(
           title: title,
         );
-      default:
-        return CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(
-            StateContainer.of(context).curTheme.text60!,
-          ),
-        );
     }
   }
 

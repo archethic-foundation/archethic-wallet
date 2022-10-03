@@ -23,8 +23,6 @@ class NetworksSetting extends SettingSelectionItem {
         return 'Archethic Test Network';
       case AvailableNetworks.archethicDevNet:
         return 'Archethic Dev Network';
-      default:
-        return 'Unknown Network';
     }
   }
 
@@ -37,8 +35,6 @@ class NetworksSetting extends SettingSelectionItem {
       case AvailableNetworks.archethicDevNet:
         final preferences = await Preferences.getInstance();
         return preferences.getNetworkDevEndpoint();
-      default:
-        return '';
     }
   }
 
@@ -51,8 +47,6 @@ class NetworksSetting extends SettingSelectionItem {
       case AvailableNetworks.archethicDevNet:
         final preferences = await Preferences.getInstance();
         return '${preferences.getNetworkDevEndpoint()}/socket/websocket';
-      default:
-        return '';
     }
   }
 
@@ -65,8 +59,6 @@ class NetworksSetting extends SettingSelectionItem {
       case AvailableNetworks.archethicDevNet:
         final preferences = await Preferences.getInstance();
         return '${preferences.getNetworkDevEndpoint().replaceAll('https:', 'ws:').replaceAll('http:', 'ws:')}/socket/websocket';
-      default:
-        return '';
     }
   }
 
@@ -78,8 +70,6 @@ class NetworksSetting extends SettingSelectionItem {
         return 'UCO';
       case AvailableNetworks.archethicDevNet:
         return 'UCO';
-      default:
-        return 'Unknown Crypto Currency';
     }
   }
 

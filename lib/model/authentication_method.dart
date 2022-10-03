@@ -72,7 +72,7 @@ class AuthenticationMethod extends SettingSelectionItem {
         return 'assets/icons/digital-key.png';
       case AuthMethod.password:
         return 'assets/icons/password.png';
-      default:
+      case AuthMethod.ledger:
         return 'assets/icons/password.png';
     }
   }

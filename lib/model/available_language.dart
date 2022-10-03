@@ -26,7 +26,7 @@ class LanguageSetting extends SettingSelectionItem {
         return 'Français (fr)';
       //case AvailableLanguage.ARABIC:
       //  return 'Arabic (ar)';
-      default:
+      case AvailableLanguage.DEFAULT:
         return AppLocalization.of(context)!.systemDefault;
     }
   }
@@ -39,7 +39,7 @@ class LanguageSetting extends SettingSelectionItem {
         return 'fr';
       //case AvailableLanguage.ARABIC:
       //  return 'ar';
-      default:
+      case AvailableLanguage.DEFAULT:
         return 'DEFAULT';
     }
   }

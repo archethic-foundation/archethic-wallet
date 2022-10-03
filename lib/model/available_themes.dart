@@ -95,8 +95,6 @@ class ThemeSetting extends SettingSelectionItem {
         return 'Sapphire Blue Flat';
       case ThemeOptions.seaGreenFlat:
         return 'Sea Green Flat';
-      default:
-        return 'Dark';
     }
   }
 
@@ -140,16 +138,11 @@ class ThemeSetting extends SettingSelectionItem {
         return SapphireBlueFlatTheme();
       case ThemeOptions.seaGreenFlat:
         return SeaGreenFlatTheme();
-      default:
-        return DarkTheme();
     }
   }
 
   String getIcon() {
-    switch (theme) {
-      default:
-        return 'assets/themes/dark/logo_alone.png';
-    }
+    return 'assets/themes/dark/logo_alone.png';
   }
 
   int getIndex() {

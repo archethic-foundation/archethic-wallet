@@ -81,7 +81,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
               event.nbConfirmations!,
               event.maxConfirmations!,
             )) {
-          switch (event.transactionType) {
+          switch (event.transactionType!) {
             case TransactionSendEventType.keychain:
               UIUtil.showSnackbar(
                 event.nbConfirmations == 1
@@ -169,8 +169,10 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                 Navigator.of(context).pop();
               }
               break;
-            default:
-              throw Exception("TransactionSendEventType doesn't exist");
+            case TransactionSendEventType.transfer:
+              break;
+            case TransactionSendEventType.token:
+              break;
           }
         } else {
           UIUtil.showSnackbar(
@@ -474,8 +476,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   }
 
   Future<bool> _launchSecurityConfiguration(String name, String seed) async {
-    final biometricsAvalaible =
-        await sl.get<BiometricUtil>().hasBiometrics();
+    final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
     final accessModes = <PickerItem>[];
     accessModes.add(
       PickerItem(

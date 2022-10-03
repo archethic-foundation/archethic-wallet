@@ -211,7 +211,9 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                       ),
                                     );
                                     break;
-                                  default:
+                                  case AuthMethod.biometricsUniris:
+                                    break;
+                                  case AuthMethod.ledger:
                                     break;
                                 }
                                 if (authenticated) {
