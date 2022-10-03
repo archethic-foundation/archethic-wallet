@@ -21,6 +21,7 @@ class AppSeeds {
     const String chars = 'abcdef0123456789';
     final Random rng = Random.secure();
     for (int i = 0; i < 64; i++) {
+      // ignore: use_string_buffers
       result += chars[rng.nextInt(chars.length)];
     }
     return result.toUpperCase();

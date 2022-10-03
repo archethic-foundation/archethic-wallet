@@ -29,7 +29,7 @@ class MenuWidgetWallet extends StatelessWidget {
       builder: (context, setState) {
         return Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(10),
           ),
           elevation: 0,
           color: Colors.transparent,
@@ -46,7 +46,7 @@ class MenuWidgetWallet extends StatelessWidget {
                         .balance!
                         .isNativeTokenValuePositive()
                     ? Padding(
-                        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                        padding: const EdgeInsets.only(left: 10, right: 10),
                         child: InkWell(
                           onTap: () {
                             sl.get<HapticUtil>().feedback(
@@ -113,7 +113,7 @@ class MenuWidgetWallet extends StatelessWidget {
                         ),
                       ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                  padding: const EdgeInsets.only(left: 10, right: 10),
                   child: InkWell(
                     onTap: () {
                       sl.get<HapticUtil>().feedback(
@@ -127,7 +127,7 @@ class MenuWidgetWallet extends StatelessWidget {
                               .appWallet!
                               .appKeychain!
                               .getAccountSelected()!
-                              .lastAddress!,
+                              .lastAddress,
                         ),
                         onDisposed: () {
                           setState(() {
@@ -157,7 +157,7 @@ class MenuWidgetWallet extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 5.0, right: 10.0),
+                  padding: const EdgeInsets.only(left: 5, right: 10),
                   child: InkWell(
                     onTap: () {
                       sl.get<HapticUtil>().feedback(

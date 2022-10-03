@@ -80,12 +80,12 @@ class Account extends HiveObject {
   List<int>? nftCategoryList;
 
   List<NftCategory> getListNftCategory(BuildContext context) {
-    List<NftCategory> nftCategoryListCustomized =
+    final List<NftCategory> nftCategoryListCustomized =
         List<NftCategory>.empty(growable: true);
     if (nftCategoryList == null) {
       return NftCategory.getListByDefault(context);
     } else {
-      for (int nftCategoryId in nftCategoryList!) {
+      for (final int nftCategoryId in nftCategoryList!) {
         nftCategoryListCustomized.add(
           NftCategory.getListByDefault(context).elementAt(nftCategoryId),
         );
@@ -99,7 +99,7 @@ class Account extends HiveObject {
   ) async {
     nftCategoryList ??= List<int>.empty(growable: true);
     nftCategoryList!.clear();
-    for (NftCategory nftCategory in nftCategoryListCustomized) {
+    for (final NftCategory nftCategory in nftCategoryListCustomized) {
       nftCategoryList!.add(nftCategory.id!);
     }
 
@@ -107,7 +107,7 @@ class Account extends HiveObject {
   }
 
   Future<void> updateLastAddress() async {
-    String lastAddressFromAddress =
+    final String lastAddressFromAddress =
         await sl.get<AddressService>().lastAddressFromAddress(genesisAddress!);
     lastAddress =
         lastAddressFromAddress == '' ? genesisAddress! : lastAddressFromAddress;
@@ -125,7 +125,7 @@ class Account extends HiveObject {
 
     bool nftInfosOffChainExist = false;
     if (accountNFT != null) {
-      for (AccountToken accountToken in accountNFT!) {
+      for (final AccountToken accountToken in accountNFT!) {
         if (nftInfosOffChainList == null) {
           nftInfosOffChainList = List<NftInfosOffChain>.empty(growable: true);
           nftInfosOffChainList!.add(
@@ -136,7 +136,7 @@ class Account extends HiveObject {
             ),
           );
         }
-        for (NftInfosOffChain nftInfosOffChain in nftInfosOffChainList!) {
+        for (final NftInfosOffChain nftInfosOffChain in nftInfosOffChainList!) {
           nftInfosOffChainExist = false;
           if (accountToken.tokenInformations!.id == nftInfosOffChain.id) {
             nftInfosOffChainExist = true;
@@ -166,13 +166,13 @@ class Account extends HiveObject {
         await sl.get<AppService>().getBalanceGetResponse(lastAddress!);
     double fiatCurrencyValue = 0;
     if (balanceGetResponse.uco != null && price.amount != null) {
-      fiatCurrencyValue = fromBigInt(balanceGetResponse.uco!) * price.amount!;
+      fiatCurrencyValue = fromBigInt(balanceGetResponse.uco) * price.amount!;
     }
     final AccountBalance accountBalance = AccountBalance(
       nativeTokenName: tokenName,
       nativeTokenValue: balanceGetResponse.uco == null
           ? 0
-          : fromBigInt(balanceGetResponse.uco!).toDouble(),
+          : fromBigInt(balanceGetResponse.uco).toDouble(),
       fiatCurrencyCode: fiatCurrencyCode,
       fiatCurrencyValue: fiatCurrencyValue,
       tokenPrice: price,
@@ -204,14 +204,14 @@ class Account extends HiveObject {
 
   Future<void> updateNftInfosOffChainFavorite(String? tokenId) async {
     if (nftInfosOffChainList == null) {
-      List<NftInfosOffChain> nftInfosOffChainList =
+      final List<NftInfosOffChain> nftInfosOffChainList =
           List<NftInfosOffChain>.empty(growable: true);
-      NftInfosOffChain nftInfosOffChain =
+      final NftInfosOffChain nftInfosOffChain =
           NftInfosOffChain(categoryNftIndex: 0, favorite: false, id: tokenId);
       nftInfosOffChainList.add(nftInfosOffChain);
       await updateAccount();
     } else {
-      for (NftInfosOffChain nftInfosOffChain in nftInfosOffChainList!) {
+      for (final NftInfosOffChain nftInfosOffChain in nftInfosOffChainList!) {
         if (nftInfosOffChain.id == tokenId) {
           if (nftInfosOffChain.favorite != null) {
             nftInfosOffChain.favorite = !nftInfosOffChain.favorite!;
@@ -226,13 +226,13 @@ class Account extends HiveObject {
 
   NftInfosOffChain? getftInfosOffChain(String? tokenId) {
     if (nftInfosOffChainList == null) {
-      List<NftInfosOffChain> nftInfosOffChainList =
+      final List<NftInfosOffChain> nftInfosOffChainList =
           List<NftInfosOffChain>.empty(growable: true);
-      NftInfosOffChain nftInfosOffChain =
+      final NftInfosOffChain nftInfosOffChain =
           NftInfosOffChain(categoryNftIndex: 0, favorite: false, id: tokenId);
       nftInfosOffChainList.add(nftInfosOffChain);
     } else {
-      for (NftInfosOffChain nftInfosOffChain in nftInfosOffChainList!) {
+      for (final NftInfosOffChain nftInfosOffChain in nftInfosOffChainList!) {
         if (nftInfosOffChain.id == tokenId) {
           return nftInfosOffChain;
         }
@@ -242,7 +242,7 @@ class Account extends HiveObject {
   }
 
   Future<void> removeftInfosOffChain(String? tokenId) async {
-    for (NftInfosOffChain nftInfosOffChain in nftInfosOffChainList!) {
+    for (final NftInfosOffChain nftInfosOffChain in nftInfosOffChainList!) {
       if (nftInfosOffChain.id == tokenId) {
         nftInfosOffChain.delete();
       }
@@ -256,25 +256,25 @@ class Account extends HiveObject {
     int? categoryNftIndex,
     bool? favorite = false,
   }) async {
-    if (tokenId == null) {
-      Token token = await sl.get<ApiService>().getToken(tokenAddress!);
-      tokenId = token.id;
-    }
+    final localOrRemoteToken =
+        tokenId ?? (await sl.get<ApiService>().getToken(tokenAddress!)).id;
+
     nftInfosOffChainList ??= List<NftInfosOffChain>.empty(growable: true);
     if (nftInfosOffChainList!
-        .where((element) => element.id == tokenId)
+        .where((element) => element.id == localOrRemoteToken)
         .isEmpty) {
       nftInfosOffChainList!.add(
         NftInfosOffChain(
-          id: tokenId,
+          id: localOrRemoteToken,
           categoryNftIndex: categoryNftIndex,
           favorite: favorite,
         ),
       );
     } else {
       nftInfosOffChainList![nftInfosOffChainList!
-          .indexWhere((element) => element.id == tokenId)] = NftInfosOffChain(
-        id: tokenId,
+              .indexWhere((element) => element.id == localOrRemoteToken)] =
+          NftInfosOffChain(
+        id: localOrRemoteToken,
         categoryNftIndex: categoryNftIndex,
         favorite: favorite,
       );
@@ -286,7 +286,7 @@ class Account extends HiveObject {
     int categoryNftIndex, {
     bool? favorite,
   }) {
-    List<AccountToken> accountNFTFiltered =
+    final List<AccountToken> accountNFTFiltered =
         List<AccountToken>.empty(growable: true);
     if (accountNFT == null) {
       return accountNFTFiltered;
@@ -294,8 +294,8 @@ class Account extends HiveObject {
       if (nftInfosOffChainList == null || nftInfosOffChainList!.isEmpty) {
         return accountNFT!;
       } else {
-        for (AccountToken accountToken in accountNFT!) {
-          NftInfosOffChain? nftInfosOffChain = nftInfosOffChainList!
+        for (final AccountToken accountToken in accountNFT!) {
+          final NftInfosOffChain? nftInfosOffChain = nftInfosOffChainList!
               .where(
                 (element) => element.id == accountToken.tokenInformations!.id,
               )
@@ -321,8 +321,8 @@ class Account extends HiveObject {
     if (nftInfosOffChainList == null || nftInfosOffChainList!.isEmpty) {
       return count;
     } else {
-      for (AccountToken accountToken in accountNFT!) {
-        NftInfosOffChain? nftInfosOffChain = nftInfosOffChainList!
+      for (final AccountToken accountToken in accountNFT!) {
+        final NftInfosOffChain? nftInfosOffChain = nftInfosOffChainList!
             .where(
               (element) => element.id == accountToken.tokenInformations!.id,
             )

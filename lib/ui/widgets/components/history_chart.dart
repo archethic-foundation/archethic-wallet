@@ -13,7 +13,7 @@ import 'package:aewallet/util/currency_util.dart';
 
 class HistoryChart extends StatelessWidget {
   const HistoryChart({
-    Key? key,
+    super.key,
     required this.intervals,
     required this.gradientColors,
     required this.gradientColorsBar,
@@ -23,7 +23,7 @@ class HistoryChart extends StatelessWidget {
     required this.optionChartSelected,
     required this.currency,
     required this.completeChart,
-  }) : super(key: key);
+  });
 
   final List<AssetHistoryInterval> intervals;
   final Gradient gradientColors;
@@ -36,7 +36,7 @@ class HistoryChart extends StatelessWidget {
   final bool completeChart;
 
   double get maxY {
-    double max = intervals.fold<double>(
+    final double max = intervals.fold<double>(
       0,
       (acc, i) => i.price > acc ? i.price.toDouble() : acc,
     );
@@ -44,7 +44,7 @@ class HistoryChart extends StatelessWidget {
   }
 
   double get minY {
-    double min = intervals.fold<double>(
+    final double min = intervals.fold<double>(
       double.maxFinite,
       (acc, i) => i.price < acc ? i.price.toDouble() : acc,
     );
@@ -52,7 +52,7 @@ class HistoryChart extends StatelessWidget {
   }
 
   LineChartData get _chartData {
-    LineChartBarData barData = LineChartBarData(
+    final LineChartBarData barData = LineChartBarData(
       spots: intervals
           .mapIndexed<FlSpot>(
             (idx, i) => FlSpot(
@@ -81,7 +81,7 @@ class HistoryChart extends StatelessWidget {
           getTooltipItems: (List<LineBarSpot> touchedSpots) {
             return touchedSpots.map((LineBarSpot touchedSpot) {
               String title = '';
-              DateTime dt = intervals[touchedSpot.x.toInt()].time;
+              final DateTime dt = intervals[touchedSpot.x.toInt()].time;
               switch (optionChartSelected) {
                 case '1h':
                   title =
@@ -151,7 +151,7 @@ class HistoryChart extends StatelessWidget {
                     String title = '';
                     if (value != 0 &&
                         value < intervals.length - intervals.length ~/ 4) {
-                      DateTime dt = intervals[value.toInt()].time;
+                      final DateTime dt = intervals[value.toInt()].time;
                       switch (optionChartSelected) {
                         case '1h':
                           title =
@@ -194,7 +194,7 @@ class HistoryChart extends StatelessWidget {
                       }
                     }
                     return Padding(
-                      padding: const EdgeInsets.only(top: 8.0, left: 5),
+                      padding: const EdgeInsets.only(top: 8, left: 5),
                       child: Text(
                         title,
                         style: axisTextStyle,
@@ -232,7 +232,7 @@ class HistoryChart extends StatelessWidget {
       ),
       gridData: FlGridData(
         drawVerticalLine: false,
-        drawHorizontalLine: completeChart ? true : false,
+        drawHorizontalLine: completeChart,
       ),
       maxY: maxY,
       minY: minY,

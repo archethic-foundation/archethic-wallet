@@ -53,7 +53,7 @@ class _PinScreenState extends State<PinScreen>
   static const int maxAttempts = 5;
 
   int _pinLength = 6;
-  double buttonSize = 70.0;
+  double buttonSize = 70;
 
   String pinEnterTitle = '';
   String pinCreateTitle = '';
@@ -104,7 +104,7 @@ class _PinScreenState extends State<PinScreen>
       );
       final Animation<double> curve =
           CurvedAnimation(parent: _controller!, curve: ShakeCurve());
-      _animation = Tween(begin: 0.0, end: 25.0).animate(curve)
+      _animation = Tween<double>(begin: 0, end: 25).animate(curve)
         ..addStatusListener((status) {
           if (status == AnimationStatus.completed) {
             if (widget.type == PinOverlayType.enterPin) {
@@ -300,7 +300,7 @@ class _PinScreenState extends State<PinScreen>
         FaIcon(
           _dotStates![i],
           color: StateContainer.of(context).curTheme.text,
-          size: 15.0,
+          size: 15,
         ),
       );
     }
@@ -571,7 +571,7 @@ class _PinScreenState extends State<PinScreen>
                                     color: StateContainer.of(context)
                                         .curTheme
                                         .text,
-                                    size: 20.0,
+                                    size: 20,
                                   ),
                                 ),
                               ),

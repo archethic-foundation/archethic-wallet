@@ -43,7 +43,7 @@ class BalanceInfosWidget {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.95,
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
+                  padding: const EdgeInsets.only(right: 10),
                   child: StateContainer.of(context)
                               .curPrimaryCurrency
                               .primaryCurrency
@@ -56,7 +56,7 @@ class BalanceInfosWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 10.0),
+                              padding: const EdgeInsets.only(left: 10),
                               child: AutoSizeText(
                                 StateContainer.of(context)
                                     .curNetwork
@@ -133,7 +133,7 @@ class BalanceInfosWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 10.0),
+                              padding: const EdgeInsets.only(left: 10),
                               child: AutoSizeText(
                                 StateContainer.of(context)
                                     .appWallet!
@@ -493,7 +493,7 @@ class BalanceInfosWidget {
           child: Stack(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -516,8 +516,7 @@ class BalanceInfosWidget {
               FadeIn(
                 duration: const Duration(milliseconds: 1000),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 30, right: 30.0, top: 10),
+                  padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
                   child: StateContainer.of(context).chartInfos != null &&
                           StateContainer.of(context).chartInfos!.data != null
                       ? HistoryChart(
@@ -538,10 +537,10 @@ class BalanceInfosWidget {
                               StateContainer.of(context)
                                   .curTheme
                                   .text!
-                                  .withOpacity(0.0),
+                                  .withOpacity(0),
                             ],
-                            begin: const Alignment(0.0, 0.0),
-                            end: const Alignment(0.0, 1.0),
+                            begin: const Alignment(0, 0),
+                            end: const Alignment(0, 1),
                           ),
                           tooltipBg: StateContainer.of(context)
                               .curTheme
@@ -578,7 +577,7 @@ class BalanceInfosWidget {
           width: MediaQuery.of(context).size.width,
           alignment: Alignment.bottomLeft,
           child: Padding(
-            padding: const EdgeInsets.only(left: 10.0, top: 5.0),
+            padding: const EdgeInsets.only(left: 10, top: 5),
             child: Row(
               children: <Widget>[
                 AutoSizeText(

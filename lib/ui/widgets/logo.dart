@@ -13,7 +13,7 @@ import 'package:aewallet/util/screen_util.dart';
 
 Widget getLogo(BuildContext context) {
   return Container(
-    padding: const EdgeInsets.only(left: 10.0),
+    padding: const EdgeInsets.only(left: 10),
     child: Row(
       children: [
         InkWell(

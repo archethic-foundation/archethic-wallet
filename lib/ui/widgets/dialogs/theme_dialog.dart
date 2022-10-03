@@ -20,8 +20,9 @@ class ThemeDialog {
     ThemeSetting curThemeSetting,
   ) async {
     final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList = List<PickerItem>.empty(growable: true);
-    for (var value in ThemeOptions.values) {
+    final List<PickerItem> pickerItemsList =
+        List<PickerItem>.empty(growable: true);
+    for (final value in ThemeOptions.values) {
       value == ThemeOptions.flat ||
               value == ThemeOptions.byzantineVioletFlat ||
               value == ThemeOptions.darkFlat ||
@@ -73,14 +74,14 @@ class ThemeDialog {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
+            padding: const EdgeInsets.only(bottom: 10),
             child: Text(
               AppLocalization.of(context)!.themeHeader,
               style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
             ),
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
               color: StateContainer.of(context).curTheme.text45!,
             ),
@@ -90,12 +91,14 @@ class ThemeDialog {
               pickerItems: pickerItemsList,
               selectedIndex: curThemeSetting.getIndex(),
               onSelected: (value) async {
-                if (curThemeSetting != ThemeSetting(value.value as ThemeOptions)) {
-                  preferences.setTheme(ThemeSetting(value.value as ThemeOptions));
-                  await StateContainer.of(context).updateTheme(ThemeSetting(value.value as ThemeOptions));
-                  curThemeSetting = ThemeSetting(value.value as ThemeOptions);
+                final ThemeSetting selectedThemeSettings =
+                    ThemeSetting(value.value as ThemeOptions);
+                if (curThemeSetting != selectedThemeSettings) {
+                  preferences.setTheme(selectedThemeSettings);
+                  await StateContainer.of(context)
+                      .updateTheme(selectedThemeSettings);
                 }
-                Navigator.pop(context, curThemeSetting);
+                Navigator.pop(context, selectedThemeSettings);
               },
             ),
           ),

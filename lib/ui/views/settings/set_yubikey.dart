@@ -21,11 +21,6 @@ import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/vault.dart';
 
 class SetYubikey extends StatefulWidget {
-  final String? header;
-  final String? description;
-  final String? apiKey;
-  final String? clientID;
-
   const SetYubikey({
     super.key,
     this.header,
@@ -33,6 +28,10 @@ class SetYubikey extends StatefulWidget {
     this.apiKey,
     this.clientID,
   });
+  final String? header;
+  final String? description;
+  final String? apiKey;
+  final String? clientID;
 
   @override
   State<SetYubikey> createState() => _SetYubikeyState();
@@ -149,7 +148,7 @@ class _SetYubikeyState extends State<SetYubikey> {
                                     margin: const EdgeInsetsDirectional.only(
                                       start: 20,
                                       end: 20,
-                                      top: 15.0,
+                                      top: 15,
                                     ),
                                     child: Text(
                                       widget.description!,
@@ -305,11 +304,11 @@ class _SetYubikeyState extends State<SetYubikey> {
           });
         }
       } else {
-        Vault vault = await Vault.getInstance();
+        final Vault vault = await Vault.getInstance();
         vault.setYubikeyClientAPIKey(_clientAPIKeyController!.text);
         vault.setYubikeyClientID(_clientIDController!.text);
 
-        bool auth = await AuthFactory.authenticate(
+        final bool auth = await AuthFactory.authenticate(
           context,
           AuthenticationMethod(AuthMethod.yubikeyWithYubicloud),
           activeVibrations: StateContainer.of(context).activeVibrations,

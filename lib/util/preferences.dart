@@ -266,25 +266,24 @@ class Preferences {
     AuthenticationMethod authenticationMethod,
   ) async {
     final Preferences preferences = await Preferences.getInstance();
-    preferences.setLock(true);
-    preferences.setShowBalances(true);
-    preferences.setShowBlog(true);
-    preferences.setActiveVibrations(true);
-    if (!kIsWeb &&
-        (Platform.isIOS == true ||
-            Platform.isAndroid == true ||
-            Platform.isMacOS == true)) {
-      preferences.setActiveNotifications(true);
-    } else {
-      preferences.setActiveNotifications(false);
-    }
-    preferences.setPinPadShuffle(false);
-    preferences.setShowPriceChart(true);
-    preferences.setPrimaryCurrency(
-      PrimaryCurrencySetting(AvailablePrimaryCurrency.native),
-    );
-    preferences.setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
-    preferences.setAuthMethod(authenticationMethod);
-    preferences.setMainScreenCurrentPage(1);
+    preferences
+      ..setLock(true)
+      ..setShowBalances(true)
+      ..setShowBlog(true)
+      ..setActiveVibrations(true)
+      ..setActiveNotifications(
+        !kIsWeb &&
+            (Platform.isIOS == true ||
+                Platform.isAndroid == true ||
+                Platform.isMacOS == true),
+      )
+      ..setPinPadShuffle(false)
+      ..setShowPriceChart(true)
+      ..setPrimaryCurrency(
+        PrimaryCurrencySetting(AvailablePrimaryCurrency.native),
+      )
+      ..setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one))
+      ..setAuthMethod(authenticationMethod)
+      ..setMainScreenCurrentPage(1);
   }
 }

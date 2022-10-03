@@ -116,9 +116,9 @@ class FungiblesTokensListWidget extends StatelessWidget {
                 color: StateContainer.of(context)
                     .curTheme
                     .backgroundFungiblesTokensListCard!,
-                width: 1.0,
+                width: 1,
               ),
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(10),
             ),
             elevation: 0,
             color: StateContainer.of(context)
@@ -138,7 +138,7 @@ class FungiblesTokensListWidget extends StatelessWidget {
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
+                          borderRadius: BorderRadius.circular(15),
                           color: StateContainer.of(context)
                               .curTheme
                               .backgroundDark!
@@ -156,7 +156,7 @@ class FungiblesTokensListWidget extends StatelessWidget {
                             Icons.arrow_circle_up_outlined,
                             color: StateContainer.of(context)
                                 .curTheme
-                                .backgroundDarkest!,
+                                .backgroundDarkest,
                             size: 21,
                           ),
                           onPressed: () {

@@ -85,9 +85,9 @@ class _ChartSheetState extends State<ChartSheet> {
           duration: const Duration(milliseconds: 1000),
           child: Container(
             height: MediaQuery.of(context).size.height * 0.45,
-            padding: const EdgeInsets.only(top: 20.0),
+            padding: const EdgeInsets.only(top: 20),
             child: Padding(
-              padding: const EdgeInsets.only(right: 5.0, left: 5.0),
+              padding: const EdgeInsets.only(right: 5, left: 5),
               child: StateContainer.of(context).chartInfos != null
                   ? HistoryChart(
                       intervals: StateContainer.of(context).chartInfos!.data!,
@@ -106,10 +106,10 @@ class _ChartSheetState extends State<ChartSheet> {
                           StateContainer.of(context)
                               .curTheme
                               .text!
-                              .withOpacity(0.0),
+                              .withOpacity(0),
                         ],
-                        begin: const Alignment(0.0, 0.0),
-                        end: const Alignment(0.0, 1.0),
+                        begin: const Alignment(0, 0),
+                        end: const Alignment(0, 1),
                       ),
                       tooltipBg:
                           StateContainer.of(context).curTheme.backgroundDark!,
@@ -169,15 +169,14 @@ class _ChartSheetState extends State<ChartSheet> {
                       .bottomBarBackgroundColorOpacity!,
                   activeIconColor: StateContainer.of(context)
                       .curTheme
-                      .bottomBarActiveIconColor!,
+                      .bottomBarActiveIconColor,
                   activeTitleColor: StateContainer.of(context)
                       .curTheme
-                      .bottomBarActiveTitleColor!,
+                      .bottomBarActiveTitleColor,
                   activeColor:
                       StateContainer.of(context).curTheme.bottomBarActiveColor!,
-                  inactiveColor: StateContainer.of(context)
-                      .curTheme
-                      .bottomBarInactiveIcon!,
+                  inactiveColor:
+                      StateContainer.of(context).curTheme.bottomBarInactiveIcon,
                 );
               }).toList(),
             ),

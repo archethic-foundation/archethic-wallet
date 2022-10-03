@@ -34,7 +34,7 @@ class AppButton {
           child: Container(
             width: 400,
             decoration: ShapeDecoration(
-              gradient: StateContainer.of(context).curTheme.gradientMainButton!,
+              gradient: StateContainer.of(context).curTheme.gradientMainButton,
               shape: const StadiumBorder(),
               shadows: [
                 BoxShadow(
@@ -58,7 +58,7 @@ class AppButton {
                     key: key,
                     style: TextButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     child: AutoSizeText(
@@ -86,7 +86,7 @@ class AppButton {
                     key: key,
                     style: TextButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     icon: icon,
@@ -118,7 +118,7 @@ class AppButton {
           child: Container(
             width: 400,
             decoration: ShapeDecoration(
-              gradient: StateContainer.of(context).curTheme.gradientMainButton!,
+              gradient: StateContainer.of(context).curTheme.gradientMainButton,
               shape: const StadiumBorder(),
             ),
             height: 55,
@@ -133,7 +133,7 @@ class AppButton {
                     key: key,
                     style: TextButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     child: AutoSizeText(
@@ -162,7 +162,7 @@ class AppButton {
                     style: TextButton.styleFrom(
                       foregroundColor: StateContainer.of(context).curTheme.text,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     icon: icon,
@@ -210,7 +210,7 @@ class AppButton {
           child: Container(
             width: 400,
             decoration: ShapeDecoration(
-              gradient: StateContainer.of(context).curTheme.gradientMainButton!,
+              gradient: StateContainer.of(context).curTheme.gradientMainButton,
               shape: const StadiumBorder(),
               shadows: [
                 BoxShadow(
@@ -234,7 +234,7 @@ class AppButton {
                     key: key,
                     style: TextButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     child: AutoSizeText(
@@ -263,7 +263,7 @@ class AppButton {
                     style: TextButton.styleFrom(
                       foregroundColor: StateContainer.of(context).curTheme.text,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     icon: icon,
@@ -295,7 +295,7 @@ class AppButton {
           child: Container(
             width: 400,
             decoration: ShapeDecoration(
-              gradient: StateContainer.of(context).curTheme.gradientMainButton!,
+              gradient: StateContainer.of(context).curTheme.gradientMainButton,
               shape: const StadiumBorder(),
             ),
             height: 35,
@@ -310,7 +310,7 @@ class AppButton {
                     key: key,
                     style: TextButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     child: AutoSizeText(
@@ -338,7 +338,7 @@ class AppButton {
                     key: key,
                     style: TextButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     icon: icon,

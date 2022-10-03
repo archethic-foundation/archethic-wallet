@@ -41,7 +41,7 @@ class KeychainUtil {
             );
 
     void waitConfirmationsKeychainAccess(QueryResult event) {
-      Map<String, Object>? params = {
+      final Map<String, Object> params = {
         'keychainAddress': keychainAddress,
         'keychain': keychain
       };
@@ -84,15 +84,16 @@ class KeychainUtil {
       ),
     );
 
-    String nameEncoded = Uri.encodeFull(name!);
+    final String nameEncoded = Uri.encodeFull(name!);
 
     /// Default service for wallet
-    String kServiceName = 'archethic-wallet-$nameEncoded';
-    String kDerivationPathWithoutIndex = 'm/650\'/$kServiceName/';
+    final String kServiceName = 'archethic-wallet-$nameEncoded';
+    final String kDerivationPathWithoutIndex = "m/650'/$kServiceName/";
     const String index = '0';
-    String kDerivationPath = '$kDerivationPathWithoutIndex$index';
+    final String kDerivationPath = '$kDerivationPathWithoutIndex$index';
 
-    Keychain keychain = Keychain(hexToUint8List(keychainSeed), version: 1);
+    final Keychain keychain =
+        Keychain(hexToUint8List(keychainSeed), version: 1);
     keychain.addService(kServiceName, kDerivationPath);
 
     /// Create Keychain from keyChain seed and wallet public key to encrypt secret
@@ -106,7 +107,7 @@ class KeychainUtil {
             );
 
     void waitConfirmationsKeychain(QueryResult event) {
-      Map<String, Object>? params = {
+      final Map<String, Object> params = {
         'keychainAddress': keychainTransaction.address!,
         'originPrivateKey': originPrivateKey,
         'keychain': keychain
@@ -146,12 +147,12 @@ class KeychainUtil {
     final String genesisAddressKeychain =
         deriveAddress(uint8ListToHex(keychain.seed!), 0);
 
-    String nameEncoded = Uri.encodeFull(name!);
+    final String nameEncoded = Uri.encodeFull(name!);
 
-    String kServiceName = 'archethic-wallet-$nameEncoded';
-    String kDerivationPathWithoutIndex = 'm/650\'/$kServiceName/';
+    final String kServiceName = 'archethic-wallet-$nameEncoded';
+    final String kDerivationPathWithoutIndex = "m/650'/$kServiceName/";
     const String index = '0';
-    String kDerivationPath = '$kDerivationPathWithoutIndex$index';
+    final String kDerivationPath = '$kDerivationPathWithoutIndex$index';
     keychain.addService(kServiceName, kDerivationPath);
 
     final Transaction lastTransactionKeychain =
@@ -167,15 +168,15 @@ class KeychainUtil {
       ),
     );
 
-    Transaction keychainTransaction =
+    final Transaction keychainTransaction =
         Transaction(type: 'keychain', data: Transaction.initData())
             .setContent(jsonEncode(keychain.toDID()));
 
     final List<AuthorizedKey> authorizedKeys =
         List<AuthorizedKey>.empty(growable: true);
-    List<AuthorizedKey> authorizedKeysList =
+    final List<AuthorizedKey> authorizedKeysList =
         lastTransactionKeychain.data!.ownerships![0].authorizedPublicKeys!;
-    for (var authorizedKey in authorizedKeysList) {
+    for (final authorizedKey in authorizedKeysList) {
       authorizedKeys.add(
         AuthorizedKey(
           encryptedSecretKey:
@@ -201,9 +202,10 @@ class KeychainUtil {
     final TransactionStatus transactionStatusKeychain =
         await sl.get<ApiService>().sendTx(keychainTransaction);
 
-    Price tokenPrice = await Price.getCurrency(currency);
+    final Price tokenPrice = await Price.getCurrency(currency);
 
-    Uint8List genesisAddress = keychain.deriveAddress(kServiceName, index: 0);
+    final Uint8List genesisAddress =
+        keychain.deriveAddress(kServiceName, index: 0);
     selectedAcct = Account(
       lastLoadingTransactionInputs: 0,
       lastAddress: uint8ListToHex(genesisAddress),
@@ -250,7 +252,7 @@ class KeychainUtil {
     bool loadBalance = true,
     bool loadRecentTransactions = true,
   }) async {
-    List<Account> accounts = List<Account>.empty(growable: true);
+    final List<Account> accounts = List<Account>.empty(growable: true);
 
     try {
       /// Get KeyChain Wallet
@@ -260,7 +262,7 @@ class KeychainUtil {
       if (appWallet == null) {
         final String addressKeychain =
             deriveAddress(uint8ListToHex(keychain.seed!), 0);
-        Transaction lastTransaction =
+        final Transaction lastTransaction =
             await sl.get<ApiService>().getLastTransaction(addressKeychain);
 
         appWallet = await sl
@@ -268,14 +270,14 @@ class KeychainUtil {
             .createAppWallet('', lastTransaction.address!);
       }
 
-      const String kDerivationPathWithoutService = 'm/650\'/archethic-wallet-';
+      const String kDerivationPathWithoutService = "m/650'/archethic-wallet-";
 
-      Price tokenPrice = await Price.getCurrency(currency);
+      final Price tokenPrice = await Price.getCurrency(currency);
 
       /// Get all services for archethic blockchain
       keychain.services!.forEach((serviceName, service) async {
         if (service.derivationPath!.startsWith(kDerivationPathWithoutService)) {
-          Uint8List genesisAddress =
+          final Uint8List genesisAddress =
               keychain.deriveAddress(serviceName, index: 0);
 
           final List<String> path = service.derivationPath!
@@ -285,9 +287,9 @@ class KeychainUtil {
           String name = path.join('/');
           name = name.substring(0, name.length - 1);
 
-          String nameDecoded = Uri.decodeFull(name);
+          final String nameDecoded = Uri.decodeFull(name);
 
-          Account account = Account(
+          final Account account = Account(
             lastLoadingTransactionInputs:
                 DateTime.now().millisecondsSinceEpoch ~/
                     Duration.millisecondsPerSecond,
@@ -325,7 +327,7 @@ class KeychainUtil {
       });
 
       for (int i = 0; i < accounts.length; i++) {
-        String? lastAddress = await sl
+        final String lastAddress = await sl
             .get<AddressService>()
             .lastAddressFromAddress(accounts[i].genesisAddress!);
         if (lastAddress.isNotEmpty) {

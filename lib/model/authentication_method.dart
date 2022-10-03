@@ -37,8 +37,6 @@ class AuthenticationMethod extends SettingSelectionItem {
         return AppLocalization.of(context)!.ledgerMethod;
       case AuthMethod.password:
         return AppLocalization.of(context)!.passwordMethod;
-      default:
-        return AppLocalization.of(context)!.pinMethod;
     }
   }
 
@@ -59,8 +57,6 @@ class AuthenticationMethod extends SettingSelectionItem {
       case AuthMethod.password:
         return AppLocalization.of(context)!
             .configureSecurityExplanationPassword;
-      default:
-        return AppLocalization.of(context)!.configureSecurityExplanationPIN;
     }
   }
 

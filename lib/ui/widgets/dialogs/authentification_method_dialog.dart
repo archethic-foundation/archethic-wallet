@@ -25,7 +25,7 @@ class AuthentificationMethodDialog {
     final Preferences preferences = await Preferences.getInstance();
     final List<PickerItem> pickerItemsList =
         List<PickerItem>.empty(growable: true);
-    for (var value in AuthMethod.values) {
+    for (final value in AuthMethod.values) {
       bool displayed = false;
       if (value != AuthMethod.ledger) {
         if ((hasBiometrics && value == AuthMethod.biometrics) ||
@@ -40,7 +40,7 @@ class AuthentificationMethodDialog {
           AuthenticationMethod.getIcon(value),
           StateContainer.of(context).curTheme.pickerItemIconEnabled,
           value,
-          value == AuthMethod.biometricsUniris ? false : true,
+          value != AuthMethod.biometricsUniris,
           displayed: displayed,
         ),
       );
@@ -54,7 +54,7 @@ class AuthentificationMethodDialog {
             style: AppStyles.textStyleSize20W700EquinoxPrimary(context),
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
               color: StateContainer.of(context).curTheme.text45!,
             ),
@@ -66,7 +66,7 @@ class AuthentificationMethodDialog {
               onSelected: (value) async {
                 switch (value.value) {
                   case AuthMethod.biometrics:
-                    bool auth = await sl
+                    final bool auth = await sl
                         .get<BiometricUtil>()
                         .authenticateWithBiometrics(
                           context,
@@ -108,7 +108,8 @@ class AuthentificationMethodDialog {
                     }
                     break;
                   case AuthMethod.password:
-                    String? seed = await StateContainer.of(context).getSeed();
+                    final String? seed =
+                        await StateContainer.of(context).getSeed();
                     final bool authenticated = await Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {

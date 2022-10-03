@@ -17,8 +17,9 @@ class LockDialog {
     UnlockSetting curUnlockSetting,
   ) async {
     final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList = List<PickerItem>.empty(growable: true);
-    for (var value in UnlockOption.values) {
+    final List<PickerItem> pickerItemsList =
+        List<PickerItem>.empty(growable: true);
+    for (final value in UnlockOption.values) {
       pickerItemsList.add(
         PickerItem(
           UnlockSetting(value).getDisplayName(context),
@@ -40,7 +41,7 @@ class LockDialog {
             style: AppStyles.textStyleSize20W700EquinoxPrimary(context),
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
               color: StateContainer.of(context).curTheme.text45!,
             ),
@@ -50,18 +51,21 @@ class LockDialog {
               pickerItems: pickerItemsList,
               selectedIndex: curUnlockSetting.setting.index,
               onSelected: (value) {
-                switch (value.value) {
+                final pickedOption = value.value as UnlockOption;
+
+                switch (pickedOption) {
                   case UnlockOption.yes:
                     preferences.setLock(true);
-                    curUnlockSetting = UnlockSetting(UnlockOption.yes);
                     break;
                   case UnlockOption.no:
                     preferences.setLock(false);
-                    curUnlockSetting = UnlockSetting(UnlockOption.no);
                     break;
                 }
 
-                Navigator.pop(context, curUnlockSetting);
+                Navigator.pop(
+                  context,
+                  UnlockSetting(pickedOption),
+                );
               },
             ),
           ),

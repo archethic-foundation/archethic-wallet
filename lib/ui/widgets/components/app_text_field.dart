@@ -25,9 +25,7 @@ class TextFieldButton extends StatelessWidget {
       width: 48,
       child: TextButton(
         onPressed: () {
-          if (onPressed != null) {
-            onPressed!();
-          }
+          onPressed?.call();
         },
         child: FaIcon(
           icon,
@@ -193,7 +191,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   height: 1,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    gradient: StateContainer.of(context).curTheme.gradient!,
+                    gradient: StateContainer.of(context).curTheme.gradient,
                   ),
                 ),
               ),

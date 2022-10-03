@@ -82,7 +82,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                       physics:
                                           const AlwaysScrollableScrollPhysics(),
                                       padding: const EdgeInsets.only(
-                                        top: 15.0,
+                                        top: 15,
                                         bottom: 15,
                                       ),
                                       itemCount: list.data == null
@@ -156,7 +156,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                       const SizedBox()
                     else
                       Container(
-                        padding: const EdgeInsets.only(left: 10.0, top: 20),
+                        padding: const EdgeInsets.only(left: 10, top: 20),
                         width: 50,
                         height: 50,
                         child: IconWidget.build(
@@ -170,13 +170,13 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                       Container(
                         color: StateContainer.of(context).curTheme.text05,
                         child: Container(
-                          padding: const EdgeInsets.only(left: 15.0, top: 15),
+                          padding: const EdgeInsets.only(left: 15, top: 15),
                           child: Column(
                             children: <Widget>[
                               // Main Container
                               Container(
                                 padding: const EdgeInsets.only(
-                                  left: 45.0,
+                                  left: 45,
                                   right: 5,
                                   bottom: 15,
                                 ),
@@ -223,13 +223,13 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                       )
                     else
                       Container(
-                        padding: const EdgeInsets.only(left: 15.0, top: 15),
+                        padding: const EdgeInsets.only(left: 15, top: 15),
                         child: Column(
                           children: <Widget>[
                             // Main Container
                             Container(
                               padding: const EdgeInsets.only(
-                                left: 45.0,
+                                left: 45,
                                 right: 5,
                                 bottom: 15,
                               ),

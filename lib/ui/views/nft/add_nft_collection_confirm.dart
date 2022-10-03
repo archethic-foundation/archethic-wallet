@@ -175,7 +175,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                 ),
                 const SizedBox(height: 30),
                 Padding(
-                  padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                  padding: const EdgeInsets.only(left: 30, right: 30),
                   child: Text(
                     AppLocalization.of(context)!
                         .addNFTCollectionConfirmationMessage,
@@ -186,7 +186,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                   height: 20,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 40.0, top: 10),
+                  padding: const EdgeInsets.only(left: 40, top: 10),
                   child: Row(
                     children: <Widget>[
                       Text(
@@ -201,7 +201,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 40.0, top: 10),
+                  padding: const EdgeInsets.only(left: 40, top: 10),
                   child: Row(
                     children: <Widget>[
                       Text(
@@ -219,7 +219,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: 10.0),
+            margin: const EdgeInsets.only(top: 10),
             child: Column(
               children: <Widget>[
                 Row(
@@ -236,7 +236,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                             await Preferences.getInstance();
                         final AuthenticationMethod authMethod =
                             preferences.getAuthMethod();
-                        bool auth = await AuthFactory.authenticate(
+                        final bool auth = await AuthFactory.authenticate(
                           context,
                           authMethod,
                           activeVibrations:
@@ -277,7 +277,7 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
       final String? seed = await StateContainer.of(context).getSeed();
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
       final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
-      String nameEncoded = Uri.encodeFull(
+      final String nameEncoded = Uri.encodeFull(
         StateContainer.of(context)
             .appWallet!
             .appKeychain!
@@ -292,18 +292,18 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
 
       final Transaction transaction =
           Transaction(type: 'token', data: Transaction.initData());
-      String content = tokenToJsonForTxDataContent(
+      final String content = tokenToJsonForTxDataContent(
         Token(
-          name: widget.token!.name!,
+          name: widget.token!.name,
           supply: toBigInt(widget.token!.tokenProperties!.length),
-          symbol: widget.token!.symbol!,
+          symbol: widget.token!.symbol,
           tokenProperties: widget.token!.tokenProperties,
           type: 'non-fungible',
         ),
       );
       transaction.setContent(content);
 
-      Transaction signedTx = keychain
+      final Transaction signedTx = keychain
           .buildTransaction(transaction, service, index)
           .originSign(originPrivateKey);
 

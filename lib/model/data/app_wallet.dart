@@ -35,17 +35,18 @@ class AppWallet extends HiveObject {
     String? name,
   ) async {
     Account? selectedAcct;
-    String seed = '';
+    const String seed = '';
 
     AppWallet appWallet =
         await sl.get<DBHelper>().createAppWallet(seed, keychainAddress);
 
-    String nameEncoded = Uri.encodeFull(name!);
+    final String nameEncoded = Uri.encodeFull(name!);
 
     /// Default service for wallet
-    String kServiceName = 'archethic-wallet-$nameEncoded';
+    final String kServiceName = 'archethic-wallet-$nameEncoded';
 
-    Uint8List genesisAddress = keychain.deriveAddress(kServiceName, index: 0);
+    final Uint8List genesisAddress =
+        keychain.deriveAddress(kServiceName, index: 0);
     selectedAcct = Account(
       lastLoadingTransactionInputs: 0,
       lastAddress: uint8ListToHex(genesisAddress),

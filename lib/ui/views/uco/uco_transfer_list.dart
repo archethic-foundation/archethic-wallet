@@ -82,7 +82,7 @@ class UCOTransferListWidget extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  '${(NumberUtil.formatThousands(_getTotal()))} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                  '${NumberUtil.formatThousands(_getTotal())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                   style: AppStyles.textStyleSize14W600Primary(context),
                 ),
               ],
@@ -118,7 +118,7 @@ class UCOTransferListWidget extends StatelessWidget {
           height: 20,
         ),
         Text(
-          '${(NumberUtil.formatThousands(fromBigInt(ucoTransfer.amount!)))} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+          '${NumberUtil.formatThousands(fromBigInt(ucoTransfer.amount))} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
           style: AppStyles.textStyleSize14W600Primary(context),
         ),
       ],
@@ -126,18 +126,18 @@ class UCOTransferListWidget extends StatelessWidget {
   }
 
   double _getTotal() {
-    double totalAmount = 0.0;
+    double totalAmount = 0;
     for (int i = 0; i < listUcoTransfer!.length; i++) {
-      double amount = (Decimal.parse(listUcoTransfer![i].amount!.toString()) /
-              Decimal.parse('100000000'))
-          .toDouble();
+      final double amount =
+          (Decimal.parse(listUcoTransfer![i].amount!.toString()) /
+                  Decimal.parse('100000000'))
+              .toDouble();
       totalAmount = (Decimal.parse(totalAmount.toString()) +
               Decimal.parse(amount.toString()))
           .toDouble();
     }
-    totalAmount = (Decimal.parse(totalAmount.toString()) +
+    return (Decimal.parse(totalAmount.toString()) +
             Decimal.parse(feeEstimation!.toString()))
         .toDouble();
-    return totalAmount;
   }
 }

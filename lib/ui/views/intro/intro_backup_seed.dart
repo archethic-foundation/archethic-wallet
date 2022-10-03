@@ -22,8 +22,8 @@ import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/seeds.dart';
 
 class IntroBackupSeedPage extends StatefulWidget {
-  final String? name;
   const IntroBackupSeedPage({super.key, this.name});
+  final String? name;
 
   @override
   State<IntroBackupSeedPage> createState() => _IntroBackupSeedState();
@@ -120,7 +120,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                         seed!,
                                         languageCode: 'en',
                                       );
-                                      Preferences preferences =
+                                      final Preferences preferences =
                                           await Preferences.getInstance();
                                       preferences.setLanguageSeed('en');
                                       setState(() {
@@ -157,7 +157,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                         seed!,
                                         languageCode: 'fr',
                                       );
-                                      Preferences preferences =
+                                      final Preferences preferences =
                                           await Preferences.getInstance();
                                       preferences.setLanguageSeed('fr');
                                       setState(() {

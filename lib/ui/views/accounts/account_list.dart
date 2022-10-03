@@ -31,9 +31,9 @@ import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/preferences.dart';
 
 class AccountsListWidget extends StatefulWidget {
+  const AccountsListWidget({super.key, this.currencyName, this.appWallet});
   final String? currencyName;
   final AppWallet? appWallet;
-  const AccountsListWidget({super.key, this.currencyName, this.appWallet});
 
   @override
   State<AccountsListWidget> createState() => _AccountsListWidgetState();
@@ -56,8 +56,8 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
         .sort((a, b) => a.name!.compareTo(b.name!));
   }
 
-  void _changeAccount(Account account, StateSetter setState) async {
-    for (var a in appWalletLive!.appKeychain!.accounts!) {
+  Future<void> _changeAccount(Account account, StateSetter setState) async {
+    for (final a in appWalletLive!.appKeychain!.accounts!) {
       if (a.selected!) {
         setState(() {
           a.selected = false;
@@ -103,8 +103,8 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                       AppLocalization.of(context)!.addAccount,
                       Dimens.buttonBottomDimens,
                       onPressed: () async {
-                        FocusNode nameFocusNode = FocusNode();
-                        TextEditingController nameController =
+                        final FocusNode nameFocusNode = FocusNode();
+                        final TextEditingController nameController =
                             TextEditingController();
                         String? nameError;
                         await showDialog(
@@ -114,8 +114,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                               builder: (context, setState) {
                                 return AlertDialog(
                                   title: Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 10.0),
+                                    padding: const EdgeInsets.only(bottom: 10),
                                     child: Column(
                                       children: [
                                         Text(
@@ -131,7 +130,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                   ),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: const BorderRadius.all(
-                                      Radius.circular(16.0),
+                                      Radius.circular(16),
                                     ),
                                     side: BorderSide(
                                       color: StateContainer.of(context)
@@ -225,7 +224,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                 });
                                               } else {
                                                 bool accountExists = false;
-                                                for (Account account
+                                                for (final Account account
                                                     in appWalletLive!
                                                         .appKeychain!
                                                         .accounts!) {
@@ -274,7 +273,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                             .addAccountInKeyChain(
                                                           StateContainer.of(
                                                             context,
-                                                          ).appWallet!,
+                                                          ).appWallet,
                                                           await StateContainer
                                                               .of(
                                                             context,
@@ -404,7 +403,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
           StateContainer.of(context)
               .bottomBarPageController!
               .jumpToPage(StateContainer.of(context).bottomBarCurrentPage);
-          Preferences preferences = await Preferences.getInstance();
+          final Preferences preferences = await Preferences.getInstance();
           preferences.setMainScreenCurrentPage(
             StateContainer.of(context).bottomBarCurrentPage,
           );
@@ -432,9 +431,9 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
               color: StateContainer.of(context)
                   .curTheme
                   .backgroundAccountsListCardSelected!,
-              width: 1.0,
+              width: 1,
             ),
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(10),
           ),
           elevation: 0,
           color: StateContainer.of(context)

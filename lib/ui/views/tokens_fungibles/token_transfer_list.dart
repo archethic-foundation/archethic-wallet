@@ -100,7 +100,7 @@ class TokenTransferListWidget extends StatelessWidget {
           height: 20,
         ),
         Text(
-          '${NumberUtil.formatThousands(fromBigInt(tokenTransfer.amount!))} $symbol',
+          '${NumberUtil.formatThousands(fromBigInt(tokenTransfer.amount))} $symbol',
           style: AppStyles.textStyleSize14W600Primary(context),
         ),
       ],

@@ -48,11 +48,11 @@ class SheetHeader extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.15,
                   decoration: BoxDecoration(
                     color: StateContainer.of(context).curTheme.text60,
-                    borderRadius: BorderRadius.circular(100.0),
+                    borderRadius: BorderRadius.circular(100),
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 15.0),
+                  margin: const EdgeInsets.only(top: 15),
                   constraints: BoxConstraints(
                     maxWidth: MediaQuery.of(context).size.width - 140,
                   ),
@@ -61,7 +61,7 @@ class SheetHeader extends StatelessWidget {
                       if (widgetBeforeTitle != null)
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10),
-                          child: widgetBeforeTitle!,
+                          child: widgetBeforeTitle,
                         ),
                       AutoSizeText(
                         title,
@@ -75,7 +75,7 @@ class SheetHeader extends StatelessWidget {
                       if (widgetAfterTitle != null)
                         Padding(
                           padding: const EdgeInsets.only(top: 10),
-                          child: widgetAfterTitle!,
+                          child: widgetAfterTitle,
                         ),
                     ],
                   ),

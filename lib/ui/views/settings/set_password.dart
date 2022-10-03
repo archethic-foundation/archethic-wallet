@@ -23,11 +23,6 @@ import 'package:aewallet/util/string_encryption.dart';
 import 'package:aewallet/util/vault.dart';
 
 class SetPassword extends StatefulWidget {
-  final String? header;
-  final String? description;
-  final String? name;
-  final String? seed;
-
   const SetPassword({
     super.key,
     this.header,
@@ -35,6 +30,10 @@ class SetPassword extends StatefulWidget {
     this.name,
     this.seed,
   });
+  final String? header;
+  final String? description;
+  final String? name;
+  final String? seed;
   @override
   State<SetPassword> createState() => _SetPasswordState();
 }
@@ -159,7 +158,7 @@ class _SetPasswordState extends State<SetPassword> {
                                             const EdgeInsetsDirectional.only(
                                           start: 20,
                                           end: 20,
-                                          top: 15.0,
+                                          top: 15,
                                         ),
                                         child: Text(
                                           widget.description!,
@@ -221,14 +220,14 @@ class _SetPasswordState extends State<SetPassword> {
                                     icon: Icons.shuffle_sharp,
                                     onPressed: () {
                                       setPasswordController!.text = '';
-                                      int passwordLength =
+                                      final int passwordLength =
                                           Random().nextInt(8) + 5;
 
-                                      String allowedChars =
-                                          'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#=+!£\$%&?[](){}';
+                                      const String allowedChars =
+                                          r'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#=+!£$%&?[](){}';
                                       int i = 0;
-                                      while (i < passwordLength.round()) {
-                                        int random = Random.secure()
+                                      while (i < passwordLength) {
+                                        final int random = Random.secure()
                                             .nextInt(allowedChars.length);
                                         setPasswordController!.text +=
                                             allowedChars[random];
@@ -427,7 +426,7 @@ class _SetPasswordState extends State<SetPassword> {
         });
       }
     } else {
-      Vault vault = await Vault.getInstance();
+      final Vault vault = await Vault.getInstance();
       vault.setPassword(
         stringEncryptBase64(setPasswordController!.text, widget.seed),
       );

@@ -161,8 +161,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
                   AppTextField(
                     padding: !_shouldShowTextField()
                         ? const EdgeInsets.symmetric(
-                            horizontal: 25.0,
-                            vertical: 15.0,
+                            horizontal: 25,
+                            vertical: 15,
                           )
                         : EdgeInsets.zero,
                     focusNode: _addressFocusNode,

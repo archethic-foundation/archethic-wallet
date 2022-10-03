@@ -12,13 +12,29 @@ import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/preferences.dart';
 
 class LockTimeoutDialog {
+  static Future<LockTimeoutSetting> _updateLockTimeout(
+    LockTimeoutSetting timeoutSettings,
+    LockTimeoutOption lockTimeoutOption,
+  ) async {
+    final Preferences preferences = await Preferences.getInstance();
+
+    if (timeoutSettings.setting != lockTimeoutOption) {
+      await preferences.setLockTimeout(
+        LockTimeoutSetting(lockTimeoutOption),
+      );
+      return LockTimeoutSetting(lockTimeoutOption);
+    }
+
+    return timeoutSettings;
+  }
+
   static Future<LockTimeoutSetting?> getDialog(
     BuildContext context,
     LockTimeoutSetting curTimeoutSetting,
   ) async {
-    final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList = List<PickerItem>.empty(growable: true);
-    for (var value in LockTimeoutOption.values) {
+    final List<PickerItem> pickerItemsList =
+        List<PickerItem>.empty(growable: true);
+    for (final value in LockTimeoutOption.values) {
       pickerItemsList.add(
         PickerItem(
           LockTimeoutSetting(value).getDisplayName(context),
@@ -36,14 +52,14 @@ class LockTimeoutDialog {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
+            padding: const EdgeInsets.only(bottom: 10),
             child: Text(
               AppLocalization.of(context)!.autoLockHeader,
               style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
             ),
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
               color: StateContainer.of(context).curTheme.text45!,
             ),
@@ -52,14 +68,12 @@ class LockTimeoutDialog {
             child: PickerWidget(
               pickerItems: pickerItemsList,
               selectedIndex: curTimeoutSetting.setting.index,
-              onSelected: (value) {
-                if (curTimeoutSetting.setting != value.value as LockTimeoutOption) {
-                  preferences.setLockTimeout(
-                    LockTimeoutSetting(value.value as LockTimeoutOption),
-                  );
-                  curTimeoutSetting = LockTimeoutSetting(value.value as LockTimeoutOption);
-                }
-                Navigator.pop(context, curTimeoutSetting);
+              onSelected: (value) async {
+                final updatedSettings = await _updateLockTimeout(
+                  curTimeoutSetting,
+                  value.value as LockTimeoutOption,
+                );
+                Navigator.pop(context, updatedSettings);
               },
             ),
           ),

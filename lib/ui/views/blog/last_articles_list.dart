@@ -65,7 +65,7 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
           SizedBox(
             height: 50,
             child: Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+              padding: const EdgeInsets.only(left: 10, right: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -113,15 +113,13 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
                         },
                         child: Center(
                           child: SlidingCard(
-                            name: snapshot.data![index].title!,
+                            name: snapshot.data![index].title,
                             date: DateFormat.yMMMEd(
                               Localizations.localeOf(context).languageCode,
-                            )
-                                .format(
-                                  snapshot.data![index].publishedAt!.toLocal(),
-                                )
-                                .toString(),
-                            author: snapshot.data![index].authors![0].name!,
+                            ).format(
+                              snapshot.data![index].publishedAt!.toLocal(),
+                            ),
+                            author: snapshot.data![index].authors![0].name,
                             assetName: snapshot.data![index].featureImage,
                             offset: pageOffset - index,
                           ),
@@ -166,24 +164,23 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
 }
 
 class SlidingCard extends StatelessWidget {
+  const SlidingCard({
+    super.key,
+    @required this.name,
+    @required this.date,
+    @required this.assetName,
+    @required this.offset,
+    @required this.author,
+  });
   final String? name;
   final String? date;
   final String? assetName;
   final double? offset;
   final String? author;
 
-  const SlidingCard({
-    Key? key,
-    @required this.name,
-    @required this.date,
-    @required this.assetName,
-    @required this.offset,
-    @required this.author,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    double gauss = math.exp(-(math.pow((offset!.abs() - 0.5), 2) / 0.08));
+    final double gauss = math.exp(-(math.pow(offset!.abs() - 0.5, 2) / 0.08));
     return Transform.translate(
       offset: Offset(-32 * gauss * offset!.sign, 0),
       child: Card(
@@ -231,23 +228,22 @@ class SlidingCard extends StatelessWidget {
 }
 
 class CardContent extends StatelessWidget {
+  const CardContent({
+    super.key,
+    @required this.name,
+    @required this.date,
+    @required this.offset,
+    @required this.author,
+  });
   final String? name;
   final String? date;
   final double? offset;
   final String? author;
 
-  const CardContent({
-    Key? key,
-    @required this.name,
-    @required this.date,
-    @required this.offset,
-    @required this.author,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

@@ -205,9 +205,10 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     await PrimaryCurrencyDialog.getDialog(context);
   }
 
-  /// TODO is this useful ?
+  // TODO(Chralu): is this useful ?
+  // ignore: unused_element
   Future<void> _networkDialog() async {
-    NetworksSetting? ns =
+    final NetworksSetting? ns =
         await NetworkDialog.getDialog(context, _curNetworksSetting);
     if (ns != null) {
       _curNetworksSetting = ns;
@@ -283,17 +284,18 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     );
   }
 
+  // TODO(Chralu): convert to [Widget] subclass
   Widget buildMainSettings(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: StateContainer.of(context).curTheme.drawerBackground!,
+        color: StateContainer.of(context).curTheme.drawerBackground,
         gradient: LinearGradient(
           colors: <Color>[
             StateContainer.of(context).curTheme.drawerBackground!,
             StateContainer.of(context).curTheme.backgroundDark00!,
           ],
-          begin: const Alignment(0.0, 0.0),
-          end: const Alignment(5.0, 0.0),
+          begin: const Alignment(0, 0),
+          end: const Alignment(5, 0),
         ),
       ),
       child: SafeArea(
@@ -307,7 +309,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
               child: Stack(
                 children: <Widget>[
                   ListView(
-                    padding: const EdgeInsets.only(top: 15.0),
+                    padding: const EdgeInsets.only(top: 15),
                     children: <Widget>[
                       Divider(
                         height: 2,
@@ -320,8 +322,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         child: Container(
                           alignment: Alignment.center,
                           margin: const EdgeInsetsDirectional.only(
-                            top: 15.0,
-                            bottom: 15.0,
+                            top: 15,
+                            bottom: 15,
                           ),
                           child: Text(
                             AppLocalization.of(context)!.manage,
@@ -379,7 +381,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         AppLocalization.of(context)!.addressBookDesc,
                         icon: 'assets/icons/address-book.png',
                         iconColor:
-                            StateContainer.of(context).curTheme.iconDrawer!,
+                            StateContainer.of(context).curTheme.iconDrawer,
                         onPressed: () {
                           _contactsOpen = true;
                           _contactsController!.forward();
@@ -396,8 +398,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         child: Container(
                           alignment: Alignment.center,
                           margin: const EdgeInsetsDirectional.only(
-                            top: 15.0,
-                            bottom: 15.0,
+                            top: 15,
+                            bottom: 15,
                           ),
                           child: Text(
                             AppLocalization.of(context)!.preferences,
@@ -448,8 +450,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         child: Container(
                           alignment: Alignment.center,
                           margin: const EdgeInsetsDirectional.only(
-                            top: 15.0,
-                            bottom: 15.0,
+                            top: 15,
+                            bottom: 15,
                           ),
                           child: Text(
                             AppLocalization.of(context)!.informations,
@@ -469,7 +471,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         AppLocalization.of(context)!.aeWebsiteLinkDesc,
                         icon: 'assets/icons/home.png',
                         iconColor:
-                            StateContainer.of(context).curTheme.iconDrawer!,
+                            StateContainer.of(context).curTheme.iconDrawer,
                         onPressed: () async {
                           UIUtil.showWebview(
                             context,
@@ -488,7 +490,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         AppLocalization.of(context)!.labLinkDesc,
                         icon: 'assets/icons/microscope.png',
                         iconColor:
-                            StateContainer.of(context).curTheme.iconDrawer!,
+                            StateContainer.of(context).curTheme.iconDrawer,
                         onPressed: () async {
                           UIUtil.showWebview(
                             context,
@@ -528,6 +530,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     );
   }
 
+  // TODO(Chralu): convert to [Widget] subclass
   Widget buildSecurityMenu(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -537,8 +540,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
             StateContainer.of(context).curTheme.drawerBackground!,
             StateContainer.of(context).curTheme.backgroundDark!,
           ],
-          begin: const Alignment(0.0, 0.0),
-          end: const Alignment(5.0, 0.0),
+          begin: const Alignment(0, 0),
+          end: const Alignment(5, 0),
         ),
       ),
       child: SafeArea(
@@ -549,7 +552,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
           children: <Widget>[
             // Back button and Security Text
             Container(
-              margin: const EdgeInsets.only(bottom: 10.0, top: 5),
+              margin: const EdgeInsets.only(bottom: 10, top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -585,7 +588,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
               child: Stack(
                 children: <Widget>[
                   ListView(
-                    padding: const EdgeInsets.only(top: 15.0),
+                    padding: const EdgeInsets.only(top: 15),
                     children: <Widget>[
                       Divider(
                         height: 2,
@@ -685,16 +688,16 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                               final AuthenticationMethod authMethod =
                                   preferences.getAuthMethod();
 
-                              bool auth = await AuthFactory.authenticate(
+                              final bool auth = await AuthFactory.authenticate(
                                 context,
                                 authMethod,
                                 activeVibrations:
                                     StateContainer.of(context).activeVibrations,
                               );
                               if (auth) {
-                                String? seed =
+                                final String? seed =
                                     await StateContainer.of(context).getSeed();
-                                List<String> mnemonic =
+                                final List<String> mnemonic =
                                     AppMnemomics.seedToMnemonic(
                                   seed!,
                                   languageCode: preferences.getLanguageSeed(),
@@ -787,6 +790,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     );
   }
 
+  // TODO(Chralu): convert to [Widget] subclass
   Widget buildCustomMenu(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -796,8 +800,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
             StateContainer.of(context).curTheme.drawerBackground!,
             StateContainer.of(context).curTheme.backgroundDark!,
           ],
-          begin: const Alignment(0.0, 0.0),
-          end: const Alignment(5.0, 0.0),
+          begin: const Alignment(0, 0),
+          end: const Alignment(5, 0),
         ),
       ),
       child: SafeArea(
@@ -807,7 +811,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
         child: Column(
           children: <Widget>[
             Container(
-              margin: const EdgeInsets.only(bottom: 10.0, top: 5),
+              margin: const EdgeInsets.only(bottom: 10, top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -842,7 +846,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
               child: Stack(
                 children: <Widget>[
                   ListView(
-                    padding: const EdgeInsets.only(top: 15.0),
+                    padding: const EdgeInsets.only(top: 15),
                     children: <Widget>[
                       Container(
                         decoration: BoxDecoration(
@@ -1058,7 +1062,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                   Align(
                     alignment: Alignment.topCenter,
                     child: Container(
-                      height: 20.0,
+                      height: 20,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -1070,8 +1074,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                                 .curTheme
                                 .backgroundDark00!
                           ],
-                          begin: const AlignmentDirectional(0.5, -1.0),
-                          end: const AlignmentDirectional(0.5, 1.0),
+                          begin: const AlignmentDirectional(0.5, -1),
+                          end: const AlignmentDirectional(0.5, 1),
                         ),
                       ),
                     ),
@@ -1085,6 +1089,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     );
   }
 
+  // TODO(Chralu): convert to [Widget] subclass
   Widget buildAboutMenu(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -1094,8 +1099,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
             StateContainer.of(context).curTheme.drawerBackground!,
             StateContainer.of(context).curTheme.backgroundDark!,
           ],
-          begin: const Alignment(0.0, 0.0),
-          end: const Alignment(5.0, 0.0),
+          begin: const Alignment(0, 0),
+          end: const Alignment(5, 0),
         ),
       ),
       child: SafeArea(
@@ -1105,7 +1110,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
         child: Column(
           children: <Widget>[
             Container(
-              margin: const EdgeInsets.only(bottom: 10.0, top: 5),
+              margin: const EdgeInsets.only(bottom: 10, top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -1137,11 +1142,10 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
               child: Stack(
                 children: <Widget>[
                   ListView(
-                    padding: const EdgeInsets.only(top: 15.0),
+                    padding: const EdgeInsets.only(top: 15),
                     children: <Widget>[
                       Padding(
-                        padding:
-                            const EdgeInsets.only(left: 20.0, bottom: 10.0),
+                        padding: const EdgeInsets.only(left: 20, bottom: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
@@ -1217,7 +1221,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                   Align(
                     alignment: Alignment.topCenter,
                     child: Container(
-                      height: 20.0,
+                      height: 20,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -1229,8 +1233,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                                 .curTheme
                                 .backgroundDark00!
                           ],
-                          begin: const AlignmentDirectional(0.5, -1.0),
-                          end: const AlignmentDirectional(0.5, 1.0),
+                          begin: const AlignmentDirectional(0.5, -1),
+                          end: const AlignmentDirectional(0.5, 1),
                         ),
                       ),
                     ),

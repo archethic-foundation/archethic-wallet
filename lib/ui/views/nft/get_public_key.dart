@@ -83,7 +83,7 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
                                     .entries
                                     .map((MapEntry<dynamic, String> entry) {
                                   return Padding(
-                                    padding: const EdgeInsets.all(5.0),
+                                    padding: const EdgeInsets.all(5),
                                     child: _buildLine(context, entry.value),
                                   );
                                 }).toList(),
@@ -111,9 +111,9 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
             color: StateContainer.of(context)
                 .curTheme
                 .backgroundAccountsListCardSelected!,
-            width: 1.0,
+            width: 1,
           ),
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(10),
         ),
         elevation: 0,
         color: StateContainer.of(context)

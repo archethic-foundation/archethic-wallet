@@ -39,9 +39,9 @@ class NFTPreviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String description =
+    final String description =
         TokenUtil.getPropertyValue(tokenInformations, 'description');
-    String typeMime =
+    final String typeMime =
         TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
 
     return Padding(
@@ -128,7 +128,7 @@ class NFTPreviewWidget extends StatelessWidget {
                             entry.value.tokenProperty!.keys.first != 'name' &&
                             entry.value.tokenProperty!.keys.first != 'type/mime'
                         ? Padding(
-                            padding: const EdgeInsets.all(5.0),
+                            padding: const EdgeInsets.all(5),
                             child: _buildTokenProperty(context, entry.value),
                           )
                         : const SizedBox();
@@ -154,14 +154,14 @@ class NFTPreviewWidget extends StatelessWidget {
           shape: RoundedRectangleBorder(
             side: tokenPropertyWithAccessInfos.publicKeysList != null &&
                     tokenPropertyWithAccessInfos.publicKeysList!.isNotEmpty
-                ? const BorderSide(color: Colors.redAccent, width: 2.0)
+                ? const BorderSide(color: Colors.redAccent, width: 2)
                 : BorderSide(
                     color: StateContainer.of(context)
                         .curTheme
                         .backgroundAccountsListCardSelected!,
-                    width: 1.0,
+                    width: 1,
                   ),
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(10),
           ),
           elevation: 0,
           color: StateContainer.of(context)

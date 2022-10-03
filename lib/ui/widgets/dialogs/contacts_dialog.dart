@@ -13,12 +13,13 @@ import 'package:aewallet/ui/widgets/components/picker_item.dart';
 
 class ContactsDialog {
   static Future<Contact?> getDialog(BuildContext context) async {
-    FocusNode? searchNameFocusNode = FocusNode();
-    TextEditingController? searchNameController = TextEditingController();
+    final FocusNode searchNameFocusNode = FocusNode();
+    final TextEditingController searchNameController = TextEditingController();
 
-    final List<PickerItem> pickerItemsList = List<PickerItem>.empty(growable: true);
+    final List<PickerItem> pickerItemsList =
+        List<PickerItem>.empty(growable: true);
     List<Contact> contacts = await StateContainer.of(context).getContacts();
-    for (var contact in contacts) {
+    for (final contact in contacts) {
       pickerItemsList.add(
         PickerItem(
           contact.name!.substring(1),
@@ -36,7 +37,7 @@ class ContactsDialog {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              insetPadding: const EdgeInsets.only(top: 100.0, bottom: 100.0),
+              insetPadding: const EdgeInsets.only(top: 100, bottom: 100),
               alignment: Alignment.topCenter,
               title: Column(
                 children: [
@@ -58,11 +59,11 @@ class ContactsDialog {
                       setState(
                         () {
                           contacts = contacts.where((Contact contact) {
-                            var contactName = contact.name!.toLowerCase();
+                            final contactName = contact.name!.toLowerCase();
                             return contactName.contains(text);
                           }).toList();
                           pickerItemsList.clear();
-                          for (var contact in contacts) {
+                          for (final contact in contacts) {
                             pickerItemsList.add(
                               PickerItem(
                                 contact.name!.substring(1),
@@ -81,7 +82,7 @@ class ContactsDialog {
                 ],
               ),
               shape: RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
                 side: BorderSide(
                   color: StateContainer.of(context).curTheme.text45!,
                 ),

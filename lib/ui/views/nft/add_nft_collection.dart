@@ -56,7 +56,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
   String? collectionNameValidationText;
   String? collectionSymbolValidationText;
 
-  double feeEstimation = 0.0;
+  double feeEstimation = 0;
   bool? _isPressed;
   bool validRequest = true;
 
@@ -81,9 +81,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
   }
 
   void _destroyBus() {
-    if (_nftFileAddEventSub != null) {
-      _nftFileAddEventSub!.cancel();
-    }
+    _nftFileAddEventSub?.cancel();
   }
 
   @override
@@ -331,7 +329,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                     LengthLimitingTextInputFormatter(40),
                   ],
                   onChanged: (String text) async {
-                    double fee = await getFee(context);
+                    final double fee = await getFee(context);
                     // Always reset the error message to be less annoying
                     setState(() {
                       feeEstimation = fee;
@@ -360,7 +358,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                     LengthLimitingTextInputFormatter(4),
                   ],
                   onChanged: (String text) async {
-                    double fee = await getFee(context);
+                    final double fee = await getFee(context);
                     // Always reset the error message to be less annoying
                     setState(() {
                       feeEstimation = fee;
@@ -461,7 +459,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
     return fee;
   }
 
-  /// TODO implement [NFTListPreview] [Widget]
+  // TODO(Chralu): implement [NFTListPreview] [Widget]
   Widget getNFTListPreview(BuildContext context) {
     return Column(
       children: <Widget>[

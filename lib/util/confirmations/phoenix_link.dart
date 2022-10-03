@@ -8,12 +8,6 @@ import 'package:phoenix_socket/phoenix_socket.dart';
 
 /// a link for subscriptions (or also mutations/queries) over phoenix channels
 class PhoenixLink extends Link {
-  /// the underlying phoenix channel
-  final PhoenixChannel channel;
-
-  final RequestSerializer _serializer;
-  final ResponseParser _parser;
-
   /// create a new [PhoenixLink] using an established PhoenixChannel [channel].
   /// You can use the static [createChannel] method to create a [PhoenixChannel]
   /// from a websocket URI and optional parameters (e.g. for authentication)
@@ -23,6 +17,12 @@ class PhoenixLink extends Link {
     RequestSerializer serializer = const RequestSerializer(),
   })  : _serializer = serializer,
         _parser = parser;
+
+  /// the underlying phoenix channel
+  final PhoenixChannel channel;
+
+  final RequestSerializer _serializer;
+  final ResponseParser _parser;
 
   /// create a new phoenix socket from the given websocketUri,
   /// connect to it, and create a channel, and join it

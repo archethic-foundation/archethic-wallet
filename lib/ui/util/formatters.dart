@@ -54,7 +54,7 @@ class CurrencyFormatter extends TextInputFormatter {
     if (splitStr.length > 2) {
       returnOriginal = false;
 
-      for (String val in splitStr) {
+      for (final String val in splitStr) {
         if (splitStr.indexOf(val) > 1) {
           splitStr[1] += val;
         }
@@ -148,7 +148,7 @@ class ContactInputFormatter extends TextInputFormatter {
     final List<String> splitStr = workingText.split('@');
     // If this string contains more than 1 @, remove all but the first one
     if (splitStr.length > 2) {
-      workingText = '@${workingText.replaceAll(r'@', '')}';
+      workingText = '@${workingText.replaceAll('@', '')}';
     }
 
     // If nothing changed, return original
@@ -236,7 +236,8 @@ class ThousandsSeparatorInputFormatter extends TextInputFormatter {
       newValueText = newValueText.substring(0, newValueText.length - 1);
     }
 
-    int selectionIndex = newValue.text.length - newValue.selection.extentOffset;
+    final int selectionIndex =
+        newValue.text.length - newValue.selection.extentOffset;
     final chars = newValueText.split('');
 
     String newString = '';
@@ -248,7 +249,7 @@ class ThousandsSeparatorInputFormatter extends TextInputFormatter {
     }
 
     return TextEditingValue(
-      text: newString.toString(),
+      text: newString,
       selection: TextSelection.collapsed(
         offset: newString.length - selectionIndex,
       ),

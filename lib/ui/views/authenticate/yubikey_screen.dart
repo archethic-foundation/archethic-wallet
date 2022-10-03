@@ -39,7 +39,7 @@ class YubikeyScreen extends StatefulWidget {
 class _YubikeyScreenState extends State<YubikeyScreen> {
   StreamSubscription<OTPReceiveEvent>? _otpReceiveSub;
 
-  double buttonSize = 100.0;
+  double buttonSize = 100;
 
   VerificationResponse verificationResponse = VerificationResponse();
 
@@ -76,9 +76,8 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
 
   @override
   void dispose() {
-    if (_otpReceiveSub != null) {
-      _otpReceiveSub!.cancel();
-    }
+    _otpReceiveSub?.cancel();
+
     super.dispose();
   }
 

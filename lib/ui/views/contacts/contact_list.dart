@@ -97,7 +97,7 @@ class _ContactsListState extends State<ContactsList> {
 
   void _updateContacts() {
     sl.get<DBHelper>().getContacts().then((List<Contact> contacts) {
-      for (Contact c in contacts) {
+      for (final Contact c in contacts) {
         if (!contacts.contains(c)) {
           setState(() {
             contacts.add(c);
@@ -136,7 +136,7 @@ class _ContactsListState extends State<ContactsList> {
         child: Column(
           children: <Widget>[
             Container(
-              margin: const EdgeInsets.only(bottom: 10.0, top: 5),
+              margin: const EdgeInsets.only(bottom: 10, top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -168,7 +168,7 @@ class _ContactsListState extends State<ContactsList> {
               ),
             ),
             Container(
-              padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+              padding: const EdgeInsets.only(left: 15, right: 15),
               child: AppTextField(
                 controller: searchNameController,
                 autofocus: false,
@@ -184,7 +184,7 @@ class _ContactsListState extends State<ContactsList> {
                   setState(() {
                     contactsToDisplay =
                         contactsToDisplay!.where((Contact contact) {
-                      var contactName = contact.name!.toLowerCase();
+                      final contactName = contact.name!.toLowerCase();
                       return contactName.contains(text);
                     }).toList();
                   });
@@ -198,8 +198,8 @@ class _ContactsListState extends State<ContactsList> {
                   ListView.builder(
                     physics: const AlwaysScrollableScrollPhysics(),
                     padding: const EdgeInsets.only(
-                      left: 15.0,
-                      top: 15.0,
+                      left: 15,
+                      top: 15,
                       bottom: 15,
                     ),
                     itemCount: contactsToDisplay!.length,
@@ -215,7 +215,7 @@ class _ContactsListState extends State<ContactsList> {
                   Align(
                     alignment: Alignment.topCenter,
                     child: Container(
-                      height: 20.0,
+                      height: 20,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -227,8 +227,8 @@ class _ContactsListState extends State<ContactsList> {
                                 .curTheme
                                 .backgroundDark00!
                           ],
-                          begin: const AlignmentDirectional(0.5, -1.0),
-                          end: const AlignmentDirectional(0.5, 1.0),
+                          begin: const AlignmentDirectional(0.5, -1),
+                          end: const AlignmentDirectional(0.5, 1),
                         ),
                       ),
                     ),
@@ -237,7 +237,7 @@ class _ContactsListState extends State<ContactsList> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      height: 15.0,
+                      height: 15,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -249,8 +249,8 @@ class _ContactsListState extends State<ContactsList> {
                                 .curTheme
                                 .drawerBackground!,
                           ],
-                          begin: const AlignmentDirectional(0.5, -1.0),
-                          end: const AlignmentDirectional(0.5, 1.0),
+                          begin: const AlignmentDirectional(0.5, -1),
+                          end: const AlignmentDirectional(0.5, 1),
                         ),
                       ),
                     ),
@@ -296,15 +296,15 @@ class _ContactsListState extends State<ContactsList> {
             color: StateContainer.of(context).curTheme.text15,
           ),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
-            margin: const EdgeInsetsDirectional.only(start: 10.0, end: 10.0),
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            margin: const EdgeInsetsDirectional.only(start: 10, end: 10),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(
                   child: Container(
                     height: 30,
-                    margin: const EdgeInsetsDirectional.only(start: 2.0),
+                    margin: const EdgeInsetsDirectional.only(start: 2),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -318,14 +318,14 @@ class _ContactsListState extends State<ContactsList> {
                                     FontAwesomeIcons.keycdn,
                                     color: StateContainer.of(context)
                                         .curTheme
-                                        .iconDrawer!,
+                                        .iconDrawer,
                                     size: 16,
                                   )
                                 : Icon(
                                     Icons.person,
                                     color: StateContainer.of(context)
                                         .curTheme
-                                        .iconDrawer!,
+                                        .iconDrawer,
                                     size: 16,
                                   ),
                             const SizedBox(

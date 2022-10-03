@@ -77,8 +77,8 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                             child: Center(
                               child: Container(
                                 padding: const EdgeInsets.only(
-                                  left: 20.0,
-                                  right: 20.0,
+                                  left: 20,
+                                  right: 20,
                                 ),
                                 child: SizedBox(
                                   height: 200,

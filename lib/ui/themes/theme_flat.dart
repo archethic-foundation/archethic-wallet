@@ -32,8 +32,8 @@ class FlatTheme implements BaseTheme {
       Color.fromARGB(255, 43, 43, 43),
       Color.fromARGB(255, 43, 43, 43)
     ],
-    begin: Alignment(-1.0, 0.0),
-    end: Alignment(1.0, 0.0),
+    begin: Alignment(-1, 0),
+    end: Alignment(1, 0),
     transform: GradientRotation(pi / 9),
   );
 
@@ -120,7 +120,7 @@ class FlatTheme implements BaseTheme {
   @override
   Color? backgroundDark = const Color(0xFFFFFFFF);
   @override
-  Color? backgroundDark00 = const Color(0xFFFFFFFF).withOpacity(0.0);
+  Color? backgroundDark00 = const Color(0xFFFFFFFF).withOpacity(0);
   @override
   Color? backgroundDarkest = const Color.fromARGB(255, 88, 88, 88);
 
@@ -204,8 +204,8 @@ class FlatTheme implements BaseTheme {
       Color.fromARGB(255, 88, 88, 88),
       Color.fromARGB(255, 88, 88, 88)
     ],
-    begin: Alignment(-1.0, 0.0),
-    end: Alignment(1.0, 0.0),
+    begin: Alignment(-1, 0),
+    end: Alignment(1, 0),
     transform: GradientRotation(pi / 9),
   );
 
@@ -222,8 +222,8 @@ class FlatTheme implements BaseTheme {
           Colors.transparent,
           Colors.transparent,
         ],
-        begin: Alignment(-1.0, 0.0),
-        end: Alignment(1.0, 0.0),
+        begin: Alignment(-1, 0),
+        end: Alignment(1, 0),
         transform: GradientRotation(pi / 9),
       ),
     );
@@ -234,8 +234,8 @@ class FlatTheme implements BaseTheme {
     return BoxDecoration(
       color: text20,
       borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(25.0),
-        topRight: Radius.circular(25.0),
+        topLeft: Radius.circular(25),
+        topRight: Radius.circular(25),
       ),
       image: DecorationImage(
         image: AssetImage(background2Small!),

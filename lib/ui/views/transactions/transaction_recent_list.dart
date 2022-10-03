@@ -150,9 +150,9 @@ class TxListWidget extends StatelessWidget {
                         : StateContainer.of(context)
                             .curTheme
                             .backgroundRecentTxListCardTransferInput!,
-                width: 1.0,
+                width: 1,
               ),
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(10),
             ),
             elevation: 0,
             color: transaction.typeTx == RecentTransaction.transferOutput
@@ -483,14 +483,11 @@ class TxListWidget extends StatelessWidget {
                           Text(
                             DateFormat.yMMMEd(
                               Localizations.localeOf(context).languageCode,
-                            )
-                                .add_Hms()
-                                .format(
+                            ).add_Hms().format(
                                   DateTime.fromMillisecondsSinceEpoch(
                                     transaction.timestamp! * 1000,
                                   ).toLocal(),
-                                )
-                                .toString(),
+                                ),
                             style: AppStyles.textStyleSize12W400Primary(
                               context,
                             ),

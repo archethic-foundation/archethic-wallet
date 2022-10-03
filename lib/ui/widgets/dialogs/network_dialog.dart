@@ -24,13 +24,14 @@ class NetworkDialog {
     BuildContext context,
     NetworksSetting curNetworksSetting,
   ) async {
-    FocusNode endpointFocusNode = FocusNode();
-    TextEditingController endpointController = TextEditingController();
+    final FocusNode endpointFocusNode = FocusNode();
+    final TextEditingController endpointController = TextEditingController();
     String? endpointError;
 
     final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList = List<PickerItem>.empty(growable: true);
-    for (var value in AvailableNetworks.values) {
+    final List<PickerItem> pickerItemsList =
+        List<PickerItem>.empty(growable: true);
+    for (final value in AvailableNetworks.values) {
       pickerItemsList.add(
         PickerItem(
           NetworksSetting(value).getDisplayName(context),
@@ -49,14 +50,14 @@ class NetworkDialog {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
+            padding: const EdgeInsets.only(bottom: 10),
             child: Text(
               AppLocalization.of(context)!.networksHeader,
               style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
             ),
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
               color: StateContainer.of(context).curTheme.text45!,
             ),
@@ -69,10 +70,12 @@ class NetworkDialog {
                 NetworksSetting(value.value as AvailableNetworks),
               );
 
-              curNetworksSetting = NetworksSetting(value.value as AvailableNetworks);
-              StateContainer.of(context).curNetwork = curNetworksSetting;
+              final selectedNetworkSettings =
+                  NetworksSetting(value.value as AvailableNetworks);
+              StateContainer.of(context).curNetwork = selectedNetworkSettings;
 
-              if (value.value as AvailableNetworks == AvailableNetworks.archethicDevNet) {
+              if (value.value as AvailableNetworks ==
+                  AvailableNetworks.archethicDevNet) {
                 endpointController.text = preferences.getNetworkDevEndpoint();
                 await showDialog<AvailableNetworks>(
                   barrierDismissible: false,
@@ -82,7 +85,7 @@ class NetworkDialog {
                       builder: (context, setState) {
                         return AlertDialog(
                           title: Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
+                            padding: const EdgeInsets.only(bottom: 10),
                             child: Column(
                               children: [
                                 SvgPicture.asset(
@@ -90,7 +93,9 @@ class NetworkDialog {
                                   height: 30,
                                 ),
                                 Text(
-                                  StateContainer.of(context).curNetwork.getDisplayName(context),
+                                  StateContainer.of(context)
+                                      .curNetwork
+                                      .getDisplayName(context),
                                   style: AppStyles.textStyleSize10W100Primary(
                                     context,
                                   ),
@@ -99,7 +104,8 @@ class NetworkDialog {
                                   height: 20,
                                 ),
                                 Text(
-                                  AppLocalization.of(context)!.enterEndpointHeader,
+                                  AppLocalization.of(context)!
+                                      .enterEndpointHeader,
                                   style: AppStyles.textStyleSize16W400Primary(
                                     context,
                                   ),
@@ -109,10 +115,11 @@ class NetworkDialog {
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: const BorderRadius.all(
-                              Radius.circular(16.0),
+                              Radius.circular(16),
                             ),
                             side: BorderSide(
-                              color: StateContainer.of(context).curTheme.text45!,
+                              color:
+                                  StateContainer.of(context).curTheme.text45!,
                             ),
                           ),
                           content: Column(
@@ -120,7 +127,8 @@ class NetworkDialog {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   AppTextField(
@@ -128,7 +136,8 @@ class NetworkDialog {
                                     rightMargin: 0,
                                     focusNode: endpointFocusNode,
                                     controller: endpointController,
-                                    labelText: AppLocalization.of(context)!.enterEndpoint,
+                                    labelText: AppLocalization.of(context)!
+                                        .enterEndpoint,
                                     keyboardType: TextInputType.text,
                                     style: AppStyles.textStyleSize14W600Primary(
                                       context,
@@ -151,7 +160,8 @@ class NetworkDialog {
                                           ),
                                           child: Text(
                                             endpointError!,
-                                            style: AppStyles.textStyleSize14W600Primary(
+                                            style: AppStyles
+                                                .textStyleSize14W600Primary(
                                               context,
                                             ),
                                           ),
@@ -174,7 +184,9 @@ class NetworkDialog {
                                       endpointError = '';
                                       if (endpointController.text.isEmpty) {
                                         setState(() {
-                                          endpointError = AppLocalization.of(context)!.enterEndpointBlank;
+                                          endpointError =
+                                              AppLocalization.of(context)!
+                                                  .enterEndpointBlank;
                                           FocusScope.of(context).requestFocus(
                                             endpointFocusNode,
                                           );
@@ -185,7 +197,9 @@ class NetworkDialog {
                                             ).isAbsolute ==
                                             false) {
                                           setState(() {
-                                            endpointError = AppLocalization.of(context)!.enterEndpointNotValid;
+                                            endpointError =
+                                                AppLocalization.of(context)!
+                                                    .enterEndpointNotValid;
                                             FocusScope.of(context).requestFocus(
                                               endpointFocusNode,
                                             );
@@ -211,7 +225,7 @@ class NetworkDialog {
               }
               await setupServiceLocator();
 
-              Navigator.pop(context, curNetworksSetting);
+              Navigator.pop(context, selectedNetworkSettings);
             },
           ),
         );

@@ -15,8 +15,8 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 
 class NftCategoryMenu extends StatelessWidget {
-  final List<NftCategory> nftCategories;
   const NftCategoryMenu({super.key, required this.nftCategories});
+  final List<NftCategory> nftCategories;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class NftCategoryMenu extends StatelessWidget {
                 .getNbNFTInCategory(index);
 
             return InkWell(
-              onTap: (() {
+              onTap: () {
                 sl.get<HapticUtil>().feedback(
                       FeedbackType.light,
                       StateContainer.of(context).activeVibrations,
@@ -51,7 +51,7 @@ class NftCategoryMenu extends StatelessWidget {
                   '/nft_list_per_category',
                   arguments: nftCategories[index].id,
                 );
-              }),
+              },
               child: Column(
                 children: [
                   Stack(

@@ -51,7 +51,9 @@ class StateContainer extends StatefulWidget {
   final Widget child;
 
   static StateContainerState of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<_InheritedStateContainer>()!.data;
+    return context
+        .dependOnInheritedWidgetOfExactType<_InheritedStateContainer>()!
+        .data;
   }
 
   @override
@@ -67,8 +69,10 @@ class StateContainerState extends State<StateContainer> {
   Locale deviceLocale = const Locale('en', 'US');
   AvailableCurrency curCurrency = AvailableCurrency(AvailableCurrencyEnum.USD);
   LanguageSetting curLanguage = LanguageSetting(AvailableLanguage.DEFAULT);
-  PrimaryCurrencySetting curPrimaryCurrency = PrimaryCurrencySetting(AvailablePrimaryCurrency.native);
-  NetworksSetting curNetwork = NetworksSetting(AvailableNetworks.archethicMainNet);
+  PrimaryCurrencySetting curPrimaryCurrency =
+      PrimaryCurrencySetting(AvailablePrimaryCurrency.native);
+  NetworksSetting curNetwork =
+      NetworksSetting(AvailableNetworks.archethicMainNet);
   BaseTheme curTheme = DarkTheme();
 
   ChartInfos? chartInfos = ChartInfos();
@@ -120,25 +124,34 @@ class StateContainerState extends State<StateContainer> {
   }
 
   void checkTransactionInputs(String message) {
-    if (!kIsWeb && (Platform.isIOS == true || Platform.isAndroid == true || Platform.isMacOS == true)) {
+    if (!kIsWeb &&
+        (Platform.isIOS == true ||
+            Platform.isAndroid == true ||
+            Platform.isMacOS == true)) {
       if (appWallet != null) {
-        timerCheckTransactionInputs = Timer.periodic(const Duration(seconds: 30), (Timer t) async {
-          List<Account>? accounts = appWallet!.appKeychain!.accounts;
-          for (var account in accounts!) {
-            final List<TransactionInput> transactionInputList = await sl.get<AppService>().getTransactionInputs(
-                  account.lastAddress!,
-                  'from, amount, timestamp, tokenAddress ',
-                );
+        timerCheckTransactionInputs =
+            Timer.periodic(const Duration(seconds: 30), (Timer t) async {
+          final List<Account>? accounts = appWallet!.appKeychain!.accounts;
+          for (final account in accounts!) {
+            final List<TransactionInput> transactionInputList =
+                await sl.get<AppService>().getTransactionInputs(
+                      account.lastAddress!,
+                      'from, amount, timestamp, tokenAddress ',
+                    );
 
             if (transactionInputList.isNotEmpty) {
-              for (var transactionInput in transactionInputList) {
+              for (final transactionInput in transactionInputList) {
                 if (account.lastLoadingTransactionInputs == null ||
-                    transactionInput.timestamp! > account.lastLoadingTransactionInputs!) {
+                    transactionInput.timestamp! >
+                        account.lastLoadingTransactionInputs!) {
                   account.updateLastLoadingTransactionInputs();
                   if (transactionInput.from != account.lastAddress) {
                     String symbol = 'UCO';
                     if (transactionInput.tokenAddress != null) {
-                      symbol = (await sl.get<ApiService>().getToken(transactionInput.tokenAddress!)).symbol!;
+                      symbol = (await sl
+                              .get<ApiService>()
+                              .getToken(transactionInput.tokenAddress!))
+                          .symbol!;
                     }
                     NotificationsUtil.showNotification(
                       title: 'Archethic',
@@ -149,7 +162,7 @@ class StateContainerState extends State<StateContainer> {
                           )
                           .replaceAll('%2', symbol)
                           .replaceAll('%3', account.name!),
-                      payload: account.name!,
+                      payload: account.name,
                     );
                     await requestUpdate(forceUpdateChart: false);
                   }
@@ -167,12 +180,13 @@ class StateContainerState extends State<StateContainer> {
   }
 
   Future<List<Token>> getTokenFungibles() async {
-    List<Token> tokensFungibles = <Token>[];
-    List<Transaction> transactions =
-        await sl.get<ApiService>().networkTransactions('token', 1, request: 'address, data { content }');
+    final List<Token> tokensFungibles = <Token>[];
+    final List<Transaction> transactions = await sl
+        .get<ApiService>()
+        .networkTransactions('token', 1, request: 'address, data { content }');
 
-    for (var transaction in transactions) {
-      Token token = tokenFromJson(transaction.data!.content!);
+    for (final transaction in transactions) {
+      final Token token = tokenFromJson(transaction.data!.content!);
       tokensFungibles.add(
         Token(
           address: transaction.address,
@@ -203,21 +217,25 @@ class StateContainerState extends State<StateContainer> {
   // Change currency
   Future<void> updateCurrency(AvailableCurrency currency) async {
     if (appWallet != null) {
-      Price tokenPrice = await Price.getCurrency(curCurrency.currency.name);
-      appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice = tokenPrice;
+      final Price tokenPrice =
+          await Price.getCurrency(curCurrency.currency.name);
+      appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice =
+          tokenPrice;
       appWallet!.save();
       setState(() {
         price = tokenPrice;
         curCurrency = currency;
       });
-      await chartInfos!.updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
+      await chartInfos!
+          .updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
     }
   }
 
   // Change theme
   Future<void> updateTheme(ThemeSetting theme) async {
     if (showPriceChart && chartInfos != null) {
-      await chartInfos!.updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
+      await chartInfos!
+          .updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
     }
     if (mounted) {
       setState(() {
@@ -245,7 +263,7 @@ class StateContainerState extends State<StateContainer> {
       recentTransactionsLoading = true;
     });
 
-    Price tokenPrice = await Price.getCurrency(curCurrency.currency.name);
+    final Price tokenPrice = await Price.getCurrency(curCurrency.currency.name);
     await appWallet!.appKeychain!.getAccountSelected()!.updateBalance(
           curNetwork.getNetworkCryptoCurrencyLabel(),
           curCurrency.currency.name,
@@ -256,15 +274,18 @@ class StateContainerState extends State<StateContainer> {
       balanceLoading = false;
     });
 
-    String? seed = await getSeed();
-    await appWallet!.appKeychain!.getAccountSelected()!.updateRecentTransactions(pagingAddress!, seed!);
+    final String? seed = await getSeed();
+    await appWallet!.appKeychain!
+        .getAccountSelected()!
+        .updateRecentTransactions(pagingAddress!, seed!);
 
     setState(() {
       recentTransactionsLoading = false;
     });
 
     if (forceUpdateChart && showPriceChart) {
-      await chartInfos!.updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
+      await chartInfos!
+          .updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
     }
   }
 
@@ -280,7 +301,7 @@ class StateContainerState extends State<StateContainer> {
 
   Future<String?> getSeed() async {
     final Vault vault = await Vault.getInstance();
-    String? seed = vault.getSeed();
+    final String? seed = vault.getSeed();
     return seed;
   }
 

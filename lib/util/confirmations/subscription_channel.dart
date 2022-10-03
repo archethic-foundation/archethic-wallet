@@ -30,7 +30,7 @@ class SubscriptionChannel {
       channel: channel!,
     );
 
-    var link = Link.split(
+    final link = Link.split(
       (request) => request.isSubscription,
       phoenixLink,
       phoenixHttpLink,
@@ -49,7 +49,7 @@ class SubscriptionChannel {
       'subscription { transactionConfirmed(address: "$address") { nbConfirmations, maxConfirmations } }',
     );
 
-    Stream<QueryResult> subscription = client!.subscribe(
+    final Stream<QueryResult> subscription = client!.subscribe(
       SubscriptionOptions(document: subscriptionDocument),
     );
     subscription.listen(function);

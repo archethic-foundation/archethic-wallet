@@ -33,7 +33,7 @@ final GlobalKey expandedKey = GlobalKey();
 class _NFTListState extends State<NFTList> {
   @override
   Widget build(BuildContext context) {
-    List<AccountToken> accountTokenList = StateContainer.of(context)
+    final List<AccountToken> accountTokenList = StateContainer.of(context)
         .appWallet!
         .appKeychain!
         .getAccountSelected()!
@@ -56,12 +56,12 @@ class _NFTListState extends State<NFTList> {
                 itemCount: accountTokenList.length,
                 padding: const EdgeInsets.only(top: 20, bottom: 20),
                 itemBuilder: (context, index) {
-                  TokenInformations tokenInformations =
+                  final TokenInformations tokenInformations =
                       accountTokenList[index].tokenInformations!;
 
                   return NFTCard(
                     tokenInformations: tokenInformations,
-                    onTap: (() {
+                    onTap: () {
                       showDialog(
                         barrierDismissible: true,
                         context: context,
@@ -69,7 +69,7 @@ class _NFTListState extends State<NFTList> {
                           return AlertDialog(
                             shape: RoundedRectangleBorder(
                               borderRadius: const BorderRadius.all(
-                                Radius.circular(16.0),
+                                Radius.circular(16),
                               ),
                               side: BorderSide(
                                 color:
@@ -157,7 +157,7 @@ class _NFTListState extends State<NFTList> {
                           );
                         },
                       );
-                    }),
+                    },
                   );
                 },
               ),

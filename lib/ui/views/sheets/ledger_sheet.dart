@@ -165,7 +165,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                         height: 10,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+                        padding: const EdgeInsets.only(right: 10, left: 10),
                         child: SelectableText(
                           response,
                           style: AppStyles.textStyleSize16W200Primary(context),
@@ -233,7 +233,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                                 isHex(enterPayloadController!.text) == false) {
                               info = 'The payload is not valid.';
                             } else {
-                              Uint8List getArchAddress = transport(
+                              final Uint8List getArchAddress = transport(
                                 0xe0,
                                 0x04,
                                 0x00,
@@ -265,7 +265,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                                 isHex(enterPayloadController!.text) == false) {
                               info = 'The payload is not valid.';
                             } else {
-                              Uint8List signTxn = transport(
+                              final Uint8List signTxn = transport(
                                 0xe0,
                                 0x08,
                                 0x00,

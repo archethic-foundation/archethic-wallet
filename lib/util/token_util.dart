@@ -29,7 +29,7 @@ class TokenUtil {
     final Token token =
         await sl.get<ApiService>().getToken(address, request: 'properties');
     if (token.tokenProperties != null && token.tokenProperties!.isNotEmpty) {
-      Map<String, dynamic> list = token.tokenProperties!;
+      final Map<String, dynamic> list = token.tokenProperties!;
       list.forEach((key, value) {
         if (key == 'file') {
           if (_base64.hasMatch(value) == true) {
@@ -41,12 +41,12 @@ class TokenUtil {
 
     if (valueFileDecoded != null) {
       if (MimeUtil.isPdf(typeMime) == true) {
-        PdfDocument pdfDocument = await PdfDocument.openData(
+        final PdfDocument pdfDocument = await PdfDocument.openData(
           valueFileDecoded!,
         );
-        PdfPage pdfPage = await pdfDocument.getPage(1);
+        final PdfPage pdfPage = await pdfDocument.getPage(1);
 
-        PdfPageImage? pdfPageImage =
+        final PdfPageImage? pdfPageImage =
             await pdfPage.render(width: pdfPage.width, height: pdfPage.height);
         imageDecoded = pdfPageImage!.bytes;
       } else {

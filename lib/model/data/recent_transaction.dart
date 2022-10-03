@@ -29,6 +29,20 @@ class RecentTransaction extends HiveObject {
     this.decryptedSecret,
   });
 
+  factory RecentTransaction.fromJson(Map<String, dynamic> json) =>
+      RecentTransaction(
+        address: json['address'],
+        typeTx: json['typeTx']?.toInt(),
+        recipient: json['recipient'],
+        amount: json['amount']?.toDouble(),
+        fee: json['fee']?.toDouble(),
+        from: json['from'],
+        content: json['content'],
+        timestamp: json['timestamp'],
+        type: json['type'],
+        decryptedSecret: json['decryptedSecret'],
+      );
+
   /// Types of transaction
   static const int transferInput = 1;
   static const int transferOutput = 2;
@@ -99,7 +113,7 @@ class RecentTransaction extends HiveObject {
     contactInformations = null;
     if (typeTx == RecentTransaction.transferInput) {
       if (recipient != null) {
-        Contact? contact =
+        final Contact? contact =
             await sl.get<DBHelper>().getContactWithAddress(from!);
         if (contact != null) {
           contactInformations = contact;
@@ -108,7 +122,7 @@ class RecentTransaction extends HiveObject {
     } else {
       if (typeTx == RecentTransaction.transferOutput) {
         if (from != null) {
-          Contact? contact =
+          final Contact? contact =
               await sl.get<DBHelper>().getContactWithAddress(recipient!);
           if (contact != null) {
             contactInformations = contact;
@@ -120,47 +134,34 @@ class RecentTransaction extends HiveObject {
     return contactInformations;
   }
 
-  /// TODO refacto
-  ///   - Move that method in a dedicated [Provider]
+  // TODO(Chralu): Move that method in a dedicated [Provider]
   Future<TokenInformations?> getTokenInfo(
     String? content,
     String? address,
   ) async {
     Token? token;
-    tokenInformations = null;
     if (address == null) {
-      return tokenInformations;
-    }
-    if (content == null || content == '') {
-      content = await sl.get<ApiService>().getTransactionContent(address);
-    }
-    if (content != '') {
-      try {
-        token = tokenFromJson(content);
-        tokenInformations = TokenInformations(
-          address: token.address,
-          name: token.name,
-          supply: fromBigInt(token.supply!).toDouble(),
-          symbol: token.symbol,
-          type: token.type,
-        );
-      } catch (e) {}
+      return null;
     }
 
-    return tokenInformations;
-  }
+    final String localOrRemoteContent = (content == null || content.isEmpty)
+        ? await sl.get<ApiService>().getTransactionContent(address)
+        : content;
 
-  factory RecentTransaction.fromJson(Map<String, dynamic> json) =>
-      RecentTransaction(
-        address: json['address'],
-        typeTx: json['typeTx']?.toInt(),
-        recipient: json['recipient'],
-        amount: json['amount']?.toDouble(),
-        fee: json['fee']?.toDouble(),
-        from: json['from'],
-        content: json['content'],
-        timestamp: json['timestamp'],
-        type: json['type'],
-        decryptedSecret: json['decryptedSecret'],
+    if (localOrRemoteContent.isEmpty) {
+      return null;
+    }
+    try {
+      token = tokenFromJson(localOrRemoteContent);
+      return TokenInformations(
+        address: token.address,
+        name: token.name,
+        supply: fromBigInt(token.supply).toDouble(),
+        symbol: token.symbol,
+        type: token.type,
       );
+    } catch (e) {
+      return null;
+    }
+  }
 }

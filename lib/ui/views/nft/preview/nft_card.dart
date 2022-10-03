@@ -21,10 +21,10 @@ import 'package:aewallet/util/token_util.dart';
 
 class NFTCard extends StatelessWidget {
   const NFTCard({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.tokenInformations,
-  }) : super(key: key);
+  });
 
   final VoidCallback onTap;
 
@@ -32,14 +32,14 @@ class NFTCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String typeMime =
+    final String typeMime =
         TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(top: 12.0, left: 12),
+            padding: const EdgeInsets.only(top: 12, left: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -110,9 +110,9 @@ class NFTCard extends StatelessWidget {
 
 class NFTCardBottom extends StatefulWidget {
   const NFTCardBottom({
-    Key? key,
+    super.key,
     required this.tokenInformations,
-  }) : super(key: key);
+  });
 
   final TokenInformations tokenInformations;
 
@@ -123,7 +123,7 @@ class NFTCardBottom extends StatefulWidget {
 class _NFTCardBottomState extends State<NFTCardBottom> {
   @override
   Widget build(BuildContext context) {
-    NftInfosOffChain? nftInfosOffChain = StateContainer.of(context)
+    final NftInfosOffChain? nftInfosOffChain = StateContainer.of(context)
         .appWallet!
         .appKeychain!
         .getAccountSelected()!
@@ -160,7 +160,7 @@ class _NFTCardBottomState extends State<NFTCardBottom> {
                   width: 10,
                 ),*/
                 InkWell(
-                  onTap: (() async {
+                  onTap: () async {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
                           StateContainer.of(context).activeVibrations,
@@ -174,7 +174,7 @@ class _NFTCardBottomState extends State<NFTCardBottom> {
                           widget.tokenInformations.id,
                         );
                     setState(() {});
-                  }),
+                  },
                   child: nftInfosOffChain == null ||
                           nftInfosOffChain.favorite == false
                       ? Icon(

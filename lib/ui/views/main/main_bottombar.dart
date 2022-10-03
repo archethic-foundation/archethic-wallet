@@ -30,7 +30,7 @@ class MainBottomBar extends StatelessWidget {
               StateContainer.of(context)
                   .bottomBarPageController!
                   .jumpToPage(index);
-              Preferences preferences = await Preferences.getInstance();
+              final Preferences preferences = await Preferences.getInstance();
               preferences.setMainScreenCurrentPage(index);
               StateContainer.of(context).bottomBarCurrentPage = index;
             },
@@ -42,14 +42,14 @@ class MainBottomBar extends StatelessWidget {
                     .bottomBarBackgroundColorOpacity!,
                 activeIconColor: StateContainer.of(context)
                     .curTheme
-                    .bottomBarActiveIconColor!,
+                    .bottomBarActiveIconColor,
                 activeTitleColor: StateContainer.of(context)
                     .curTheme
-                    .bottomBarActiveTitleColor!,
+                    .bottomBarActiveTitleColor,
                 activeColor:
                     StateContainer.of(context).curTheme.bottomBarActiveColor!,
                 inactiveColor:
-                    StateContainer.of(context).curTheme.bottomBarInactiveIcon!,
+                    StateContainer.of(context).curTheme.bottomBarInactiveIcon,
               ),
               BottomBarItem(
                 icon: const Icon(Icons.account_circle),
@@ -58,14 +58,14 @@ class MainBottomBar extends StatelessWidget {
                     .bottomBarBackgroundColorOpacity!,
                 activeIconColor: StateContainer.of(context)
                     .curTheme
-                    .bottomBarActiveIconColor!,
+                    .bottomBarActiveIconColor,
                 activeTitleColor: StateContainer.of(context)
                     .curTheme
-                    .bottomBarActiveTitleColor!,
+                    .bottomBarActiveTitleColor,
                 activeColor:
                     StateContainer.of(context).curTheme.bottomBarActiveColor!,
                 inactiveColor:
-                    StateContainer.of(context).curTheme.bottomBarInactiveIcon!,
+                    StateContainer.of(context).curTheme.bottomBarInactiveIcon,
               ),
               /*BottomBarItem(
                   icon: const Icon(Icons.collections_bookmark),

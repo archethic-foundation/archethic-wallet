@@ -11,11 +11,11 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show ApiCoinsService, CoinsPriceResponse, CoinsCurrentDataResponse;
 
-/// TODO refacto
-/// - [ChartInfos] should become immutable
-/// - a StateNotifier should hold
-///   - [ChartInfos] state
-///   - an [updateCoinChart] method
+// TODO(Chralu): refacto
+// - [ChartInfos] should become immutable
+// - a StateNotifier should hold
+//   - [ChartInfos] state
+//   - an [updateCoinChart] method
 class ChartInfos {
   ChartInfos({
     this.data,
@@ -213,12 +213,13 @@ class ChartInfos {
       priceChangePercentage1h = 0;
       final CoinsPriceResponse coinsPriceResponse;
       if (all == true) {
-        DateTime now = DateTime.now();
-        int from =
+        final DateTime now = DateTime.now();
+        final int from =
             now.subtract(const Duration(days: 365000)).millisecondsSinceEpoch ~/
                 Duration.millisecondsPerSecond;
 
-        int to = now.millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
+        final int to =
+            now.millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
         coinsPriceResponse = await sl
             .get<ApiCoinsService>()
             .getCoinsChartRange(currencyIso4217Code, from, to);
@@ -229,12 +230,13 @@ class ChartInfos {
             100;
       } else {
         if (nbHours > 0) {
-          DateTime now = DateTime.now();
-          int from =
+          final DateTime now = DateTime.now();
+          final int from =
               now.subtract(const Duration(hours: 1)).millisecondsSinceEpoch ~/
                   Duration.millisecondsPerSecond;
 
-          int to = now.millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
+          final int to =
+              now.millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
           coinsPriceResponse = await sl
               .get<ApiCoinsService>()
               .getCoinsChartRange(currencyIso4217Code, from, to);
@@ -253,7 +255,7 @@ class ChartInfos {
       final List<AssetHistoryInterval> assetHistoryIntervalList =
           List<AssetHistoryInterval>.empty(growable: true);
       for (int i = 0; i < coinsPriceResponse.prices!.length; i = i + 1) {
-        AssetHistoryInterval assetHistoryInterval = AssetHistoryInterval(
+        final AssetHistoryInterval assetHistoryInterval = AssetHistoryInterval(
           price: coinsPriceResponse.prices![i][1],
           time: DateTime.fromMillisecondsSinceEpoch(
             coinsPriceResponse.prices![i][0].toInt(),

@@ -37,13 +37,13 @@ class Sheets {
         return Container(
           decoration: StateContainer.of(context).curTheme.getDecorationSheet(),
           child: TweenAnimationBuilder(
-            tween: Tween(begin: 0.0, end: 1.0),
+            tween: Tween<double>(begin: 0, end: 1),
             duration: const Duration(milliseconds: 500),
             builder: (context, double value, child) {
               return ShaderMask(
                 shaderCallback: (rect) {
                   return RadialGradient(
-                    radius: (value * 5),
+                    radius: value * 5,
                     colors: const [
                       Colors.white,
                       Colors.white,
@@ -60,10 +60,10 @@ class Sheets {
           ),
         );
       },
-      color: color!,
+      color: color,
       radius: radius,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-      bgColor: bgColor!,
+      bgColor: bgColor,
       animationDurationMs: animationDurationMs,
       closeOnTap: closeOnTap,
       onDisposed: onDisposed,
@@ -110,7 +110,7 @@ class _AppHeightNineSheetLayout extends SingleChildLayoutDelegate {
       return BoxConstraints(
         minWidth: constraints.maxWidth,
         maxWidth: constraints.maxWidth,
-        minHeight: 0.0,
+        minHeight: 0,
         maxHeight: constraints.maxHeight * 0.95,
       );
     }
@@ -121,14 +121,14 @@ class _AppHeightNineSheetLayout extends SingleChildLayoutDelegate {
       return BoxConstraints(
         minWidth: constraints.maxWidth,
         maxWidth: constraints.maxWidth,
-        minHeight: 0.0,
+        minHeight: 0,
         maxHeight: constraints.maxHeight * 0.8,
       );
     } else {
       return BoxConstraints(
         minWidth: constraints.maxWidth,
         maxWidth: constraints.maxWidth,
-        minHeight: 0.0,
+        minHeight: 0,
         maxHeight: constraints.maxHeight * 0.9,
       );
     }
@@ -136,7 +136,7 @@ class _AppHeightNineSheetLayout extends SingleChildLayoutDelegate {
 
   @override
   Offset getPositionForChild(Size size, Size childSize) {
-    return Offset(0.0, size.height - childSize.height * progress);
+    return Offset(0, size.height - childSize.height * progress);
   }
 
   @override
@@ -178,7 +178,7 @@ class _AppHeightNineModalRoute<T> extends PopupRoute<T> {
   @override
   void didComplete(T? result) {
     if (onDisposed != null) {
-      onDisposed!();
+      onDisposed?.call();
     }
     super.didComplete(result);
   }
@@ -278,7 +278,7 @@ class _AppHeightEightSheetLayout extends SingleChildLayoutDelegate {
       return BoxConstraints(
         minWidth: constraints.maxWidth,
         maxWidth: constraints.maxWidth,
-        minHeight: 0.0,
+        minHeight: 0,
         maxHeight: constraints.maxHeight * 0.9,
       );
     }
@@ -286,14 +286,14 @@ class _AppHeightEightSheetLayout extends SingleChildLayoutDelegate {
       return BoxConstraints(
         minWidth: constraints.maxWidth,
         maxWidth: constraints.maxWidth,
-        minHeight: 0.0,
+        minHeight: 0,
         maxHeight: constraints.maxHeight * 0.7,
       );
     } else {
       return BoxConstraints(
         minWidth: constraints.maxWidth,
         maxWidth: constraints.maxWidth,
-        minHeight: 0.0,
+        minHeight: 0,
         maxHeight: constraints.maxHeight * 0.8,
       );
     }
@@ -301,7 +301,7 @@ class _AppHeightEightSheetLayout extends SingleChildLayoutDelegate {
 
   @override
   Offset getPositionForChild(Size size, Size childSize) {
-    return Offset(0.0, size.height - childSize.height * progress);
+    return Offset(0, size.height - childSize.height * progress);
   }
 
   @override

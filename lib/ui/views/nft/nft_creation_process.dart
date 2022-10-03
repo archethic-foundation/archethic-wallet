@@ -59,16 +59,15 @@ import 'package:aewallet/util/user_data_util.dart';
 enum NFTCreationProcessType { single, collection }
 
 class NFTCreationProcess extends StatefulWidget {
-  final int? currentNftCategoryIndex;
-  final NFTCreationProcessType? process;
-  final PrimaryCurrencySetting? primaryCurrency;
-
   const NFTCreationProcess({
     super.key,
     this.currentNftCategoryIndex,
     this.process,
     this.primaryCurrency,
   });
+  final int? currentNftCategoryIndex;
+  final NFTCreationProcessType? process;
+  final PrimaryCurrencySetting? primaryCurrency;
 
   @override
   State<NFTCreationProcess> createState() => _NFTCreationProcessState();
@@ -105,7 +104,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
 
   Token token = Token();
   int tabActiveIndex = 0;
-  double feeEstimation = 0.0;
+  double feeEstimation = 0;
   bool? isPressed;
 
   SubscriptionChannel subscriptionChannel = SubscriptionChannel();
@@ -158,13 +157,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
   }
 
   void _destroyBus() {
-    if (_authSub != null) {
-      _authSub!.cancel();
-    }
-    if (_sendTxSub != null) {
-      _sendTxSub!.cancel();
-    }
-    subscriptionChannel.close();
+    _authSub?.cancel();
+    _sendTxSub?.cancel();
   }
 
   void _showSendingAnimation(BuildContext context) {
@@ -227,8 +221,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
               .appKeychain!
               .getAccountSelected()!
               .updateNftInfosOffChain(
-                tokenAddress: event.transactionAddress!,
-                categoryNftIndex: widget.currentNftCategoryIndex!,
+                tokenAddress: event.transactionAddress,
+                categoryNftIndex: widget.currentNftCategoryIndex,
                 favorite: false,
               );
 
@@ -388,14 +382,14 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                         enterPropertiesTab(context),
                         confirmationTab(context)
                       ],
-                      onChange: ((index) {
+                      onChange: (index) {
                         updateToken();
                         tabActiveIndex = index;
                         if (tabActiveIndex == 3) {
                           feeEstimation = getFee(context);
                         }
                         setState(() {});
-                      }),
+                      },
                     ),
                   ),
                 ),
@@ -441,7 +435,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                   child: InkWell(
                     onTap: () async {
                       importSelection = 1;
-                      FilePickerResult? result =
+                      final FilePickerResult? result =
                           await FilePicker.platform.pickFiles();
 
                       if (result != null) {
@@ -491,7 +485,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                     height: 40,
                     child: InkWell(
                       onTap: () async {
-                        XFile? pickedFile = await ImagePicker().pickImage(
+                        final XFile? pickedFile = await ImagePicker().pickImage(
                           source: ImageSource.gallery,
                           maxWidth: 1800,
                           maxHeight: 1800,
@@ -572,7 +566,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                     height: 40,
                     child: InkWell(
                       onTap: () async {
-                        XFile? pickedFile = await ImagePicker().pickImage(
+                        final XFile? pickedFile = await ImagePicker().pickImage(
                           source: ImageSource.camera,
                           maxWidth: 1800,
                           maxHeight: 1800,
@@ -637,15 +631,15 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                   tokenPropertyAsset!.publicKeysList!.isNotEmpty
                               ? const BorderSide(
                                   color: Colors.redAccent,
-                                  width: 2.0,
+                                  width: 2,
                                 )
                               : BorderSide(
                                   color: StateContainer.of(context)
                                       .curTheme
                                       .backgroundAccountsListCardSelected!,
-                                  width: 1.0,
+                                  width: 1,
                                 ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         elevation: 0,
                         color: StateContainer.of(context)
@@ -771,8 +765,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                       height: 40,
                                       width: 40,
                                       decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
+                                        borderRadius: BorderRadius.circular(15),
                                         color: StateContainer.of(context)
                                             .curTheme
                                             .backgroundDark!
@@ -790,7 +783,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                           Icons.key,
                                           color: StateContainer.of(context)
                                               .curTheme
-                                              .backgroundDarkest!,
+                                              .backgroundDarkest,
                                           size: 21,
                                         ),
                                         onPressed: () {
@@ -826,8 +819,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                       height: 40,
                                       width: 40,
                                       decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
+                                        borderRadius: BorderRadius.circular(15),
                                         color: StateContainer.of(context)
                                             .curTheme
                                             .backgroundDark!
@@ -845,7 +837,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                           Icons.close,
                                           color: StateContainer.of(context)
                                               .curTheme
-                                              .backgroundDarkest!,
+                                              .backgroundDarkest,
                                           size: 21,
                                         ),
                                         onPressed: () {
@@ -995,7 +987,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                         UIUtil.cancelLockEvent();
                         final String? scanResult =
                             await UserDataUtil.getQRData(DataType.raw, context);
-                        QRScanErrs.errorList;
                         if (scanResult == null) {
                           UIUtil.showSnackbar(
                             AppLocalization.of(context)!.qrInvalidAddress,
@@ -1057,7 +1048,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                         UIUtil.cancelLockEvent();
                         final String? scanResult =
                             await UserDataUtil.getQRData(DataType.raw, context);
-                        QRScanErrs.errorList;
                         if (scanResult == null) {
                           UIUtil.showSnackbar(
                             AppLocalization.of(context)!.qrInvalidAddress,
@@ -1139,7 +1129,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                 DataType.raw,
                                 context,
                               );
-                              QRScanErrs.errorList;
                               if (scanResult == null) {
                                 UIUtil.showSnackbar(
                                   AppLocalization.of(context)!.qrInvalidAddress,
@@ -1199,7 +1188,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                 DataType.raw,
                                 context,
                               );
-                              QRScanErrs.errorList;
                               if (scanResult == null) {
                                 UIUtil.showSnackbar(
                                   AppLocalization.of(context)!.qrInvalidAddress,
@@ -1289,7 +1277,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                 ],
               ),
               Container(
-                padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                padding: const EdgeInsets.only(left: 15, right: 15),
                 child: AppTextField(
                   controller: nftPropertySearchController,
                   autofocus: false,
@@ -1326,7 +1314,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                         ) ||
                                 nftPropertySearchController!.text.isEmpty)
                         ? Padding(
-                            padding: const EdgeInsets.all(5.0),
+                            padding: const EdgeInsets.all(5),
                             child: _buildTokenProperty(
                               context,
                               entry.value,
@@ -1358,14 +1346,14 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
           shape: RoundedRectangleBorder(
             side: tokenPropertyWithAccessInfos.publicKeysList != null &&
                     tokenPropertyWithAccessInfos.publicKeysList!.isNotEmpty
-                ? const BorderSide(color: Colors.redAccent, width: 2.0)
+                ? const BorderSide(color: Colors.redAccent, width: 2)
                 : BorderSide(
                     color: StateContainer.of(context)
                         .curTheme
                         .backgroundAccountsListCardSelected!,
-                    width: 1.0,
+                    width: 1,
                   ),
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(10),
           ),
           elevation: 0,
           color: StateContainer.of(context)
@@ -1467,7 +1455,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
+                          borderRadius: BorderRadius.circular(15),
                           color: StateContainer.of(context)
                               .curTheme
                               .backgroundDark!
@@ -1485,7 +1473,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                             Icons.key,
                             color: StateContainer.of(context)
                                 .curTheme
-                                .backgroundDarkest!,
+                                .backgroundDarkest,
                             size: 21,
                           ),
                           onPressed: () {
@@ -1529,7 +1517,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                           height: 40,
                           width: 40,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.0),
+                            borderRadius: BorderRadius.circular(15),
                             color: StateContainer.of(context)
                                 .curTheme
                                 .backgroundDark!
@@ -1547,7 +1535,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                               Icons.close,
                               color: StateContainer.of(context)
                                   .curTheme
-                                  .backgroundDarkest!,
+                                  .backgroundDarkest,
                               size: 21,
                             ),
                             onPressed: () {
@@ -1665,7 +1653,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                             await Preferences.getInstance();
                                         final AuthenticationMethod authMethod =
                                             preferences.getAuthMethod();
-                                        bool auth =
+                                        final bool auth =
                                             await AuthFactory.authenticate(
                                           context,
                                           authMethod,
@@ -1719,15 +1707,15 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                 tokenPropertyAsset!.publicKeysList!.isNotEmpty
                             ? const BorderSide(
                                 color: Colors.redAccent,
-                                width: 2.0,
+                                width: 2,
                               )
                             : BorderSide(
                                 color: StateContainer.of(context)
                                     .curTheme
                                     .backgroundAccountsListCardSelected!,
-                                width: 1.0,
+                                width: 1,
                               ),
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       elevation: 0,
                       color: StateContainer.of(context)
@@ -1903,7 +1891,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                         ) ||
                                 nftPropertySearchController!.text.isEmpty)
                         ? Padding(
-                            padding: const EdgeInsets.all(5.0),
+                            padding: const EdgeInsets.all(5),
                             child: _buildTokenProperty(
                               context,
                               entry.value,
@@ -1968,12 +1956,12 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       }*/
     } else {
       if (MimeUtil.isPdf(typeMime) == true) {
-        PdfDocument pdfDocument = await PdfDocument.openData(
+        final PdfDocument pdfDocument = await PdfDocument.openData(
           File(file.path).readAsBytesSync(),
         );
-        PdfPage pdfPage = await pdfDocument.getPage(1);
+        final PdfPage pdfPage = await pdfDocument.getPage(1);
 
-        PdfPageImage? pdfPageImage =
+        final PdfPageImage? pdfPageImage =
             await pdfPage.render(width: pdfPage.width, height: pdfPage.height);
         fileDecodedForPreview = pdfPageImage!.bytes;
       }
@@ -1999,7 +1987,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
           isValid = false;
         });
       } else {
-        for (TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
+        for (final TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
             in tokenPropertyWithAccessInfosList) {
           if (tokenPropertyWithAccessInfos.tokenProperty!.keys.first ==
               nftPropertyNameController!.text) {
@@ -2025,7 +2013,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       tokenProperties: {},
     );
 
-    for (TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
+    for (final TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
         in tokenPropertyWithAccessInfosList) {
       token.tokenProperties!
           .addAll(tokenPropertyWithAccessInfos.tokenProperty!);
@@ -2086,7 +2074,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         if (MimeUtil.isImage(typeMime) == false &&
             MimeUtil.isPdf(typeMime) == false) {
           setState(() {
-            addNFTMessage = 'Le format n\'est pas pris en charge.';
+            addNFTMessage = "Le format n'est pas pris en charge.";
             isValid = false;
           });
         } else {
@@ -2130,7 +2118,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       final String? seed = await StateContainer.of(context).getSeed();
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
       final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
-      String nameEncoded = Uri.encodeFull(
+      final String nameEncoded = Uri.encodeFull(
         StateContainer.of(context)
             .appWallet!
             .appKeychain!
@@ -2154,22 +2142,22 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
 
       final KeyPair walletKeyPair = keychain.deriveKeypair(service);
 
-      for (TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
+      for (final TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
           in tokenPropertyWithAccessInfosList) {
         if (tokenPropertyWithAccessInfos.publicKeysList != null &&
             tokenPropertyWithAccessInfos.publicKeysList!.isNotEmpty) {
-          List<String> authorizedPublicKeys =
+          final List<String> authorizedPublicKeys =
               List<String>.empty(growable: true);
           authorizedPublicKeys.add(uint8ListToHex(walletKeyPair.publicKey));
 
-          for (String publicKey
+          for (final String publicKey
               in tokenPropertyWithAccessInfos.publicKeysList!) {
             authorizedPublicKeys.add(publicKey);
           }
 
           final List<AuthorizedKey> authorizedKeys =
               List<AuthorizedKey>.empty(growable: true);
-          for (String key in authorizedPublicKeys) {
+          for (final String key in authorizedPublicKeys) {
             authorizedKeys.add(
               AuthorizedKey(
                 encryptedSecretKey: uint8ListToHex(ecEncrypt(aesKey, key)),
@@ -2188,8 +2176,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         }
       }
 
-      Map<String, dynamic>? clearTokenPropertyList = {};
-      for (TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
+      final Map<String, dynamic> clearTokenPropertyList = {};
+      for (final TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
           in tokenPropertyWithAccessInfosList) {
         if (tokenPropertyWithAccessInfos.publicKeysList == null ||
             tokenPropertyWithAccessInfos.publicKeysList!.isEmpty) {
@@ -2198,7 +2186,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         }
       }
 
-      String content = tokenToJsonForTxDataContent(
+      final String content = tokenToJsonForTxDataContent(
         Token(
           name: token.name,
           supply: token.supply,
@@ -2208,7 +2196,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         ),
       );
       transaction.setContent(content);
-      Transaction signedTx = keychain
+      final Transaction signedTx = keychain
           .buildTransaction(transaction, service, index)
           .originSign(originPrivateKey);
 
@@ -2451,7 +2439,6 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                 UIUtil.cancelLockEvent();
                 final String? scanResult =
                     await UserDataUtil.getQRData(DataType.raw, context);
-                QRScanErrs.errorList;
                 if (scanResult == null) {
                   UIUtil.showSnackbar(
                     AppLocalization.of(context)!.qrInvalidAddress,
