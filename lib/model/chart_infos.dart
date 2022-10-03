@@ -95,9 +95,9 @@ class ChartInfos {
     String currencyIso4217Code, {
     String option = '1h',
   }) async {
-    int nbDays = 0;
-    int nbHours = 0;
-    bool all = false;
+    var nbDays = 0;
+    var nbHours = 0;
+    var all = false;
     switch (option) {
       case '1h':
         nbHours = 1;
@@ -131,7 +131,7 @@ class ChartInfos {
         break;
     }
     try {
-      final CoinsCurrentDataResponse coinsCurrentDataResponse =
+      final coinsCurrentDataResponse =
           await sl.get<ApiCoinsService>().getCoinsCurrentData(marketData: true);
       if (coinsCurrentDataResponse
                   .marketData!.priceChangePercentage24HInCurrency![
@@ -213,12 +213,12 @@ class ChartInfos {
       priceChangePercentage1h = 0;
       final CoinsPriceResponse coinsPriceResponse;
       if (all == true) {
-        final DateTime now = DateTime.now();
-        final int from =
+        final now = DateTime.now();
+        final from =
             now.subtract(const Duration(days: 365000)).millisecondsSinceEpoch ~/
                 Duration.millisecondsPerSecond;
 
-        final int to =
+        final to =
             now.millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
         coinsPriceResponse = await sl
             .get<ApiCoinsService>()
@@ -230,12 +230,12 @@ class ChartInfos {
             100;
       } else {
         if (nbHours > 0) {
-          final DateTime now = DateTime.now();
-          final int from =
+          final now = DateTime.now();
+          final from =
               now.subtract(const Duration(hours: 1)).millisecondsSinceEpoch ~/
                   Duration.millisecondsPerSecond;
 
-          final int to =
+          final to =
               now.millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
           coinsPriceResponse = await sl
               .get<ApiCoinsService>()
@@ -252,10 +252,10 @@ class ChartInfos {
         }
       }
 
-      final List<AssetHistoryInterval> assetHistoryIntervalList =
+      final assetHistoryIntervalList =
           List<AssetHistoryInterval>.empty(growable: true);
-      for (int i = 0; i < coinsPriceResponse.prices!.length; i = i + 1) {
-        final AssetHistoryInterval assetHistoryInterval = AssetHistoryInterval(
+      for (var i = 0; i < coinsPriceResponse.prices!.length; i = i + 1) {
+        final assetHistoryInterval = AssetHistoryInterval(
           price: coinsPriceResponse.prices![i][1],
           time: DateTime.fromMillisecondsSinceEpoch(
             coinsPriceResponse.prices![i][0].toInt(),

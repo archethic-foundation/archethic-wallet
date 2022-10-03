@@ -14,8 +14,8 @@ import 'package:aewallet/util/preferences.dart';
 
 class CurrencyDialog {
   static Future<AvailableCurrencyEnum?> getDialog(BuildContext context) async {
-    final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList =
+    final preferences = await Preferences.getInstance();
+    final pickerItemsList =
         List<PickerItem>.empty(growable: true);
 
     for (final value in AvailableCurrencyEnum.values) {
@@ -68,7 +68,7 @@ class CurrencyDialog {
                 StateContainer.of(context).curCurrency =
                     AvailableCurrency(value.value as AvailableCurrencyEnum);
 
-                final Price tokenPrice = await Price.getCurrency(
+                final tokenPrice = await Price.getCurrency(
                   StateContainer.of(context).curCurrency.currency.name,
                 );
                 await StateContainer.of(context)

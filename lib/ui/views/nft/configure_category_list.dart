@@ -86,7 +86,7 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
   Widget build(BuildContext context) {
     nftCategoryToHidden = NftCategory.getListByDefault(context);
     nftCategoryToSort = widget.nftCategory;
-    for (final NftCategory nftCategory in nftCategoryToSort!) {
+    for (final nftCategory in nftCategoryToSort!) {
       nftCategoryToHidden!
           .removeWhere((element) => element.id == nftCategory.id);
     }

@@ -15,18 +15,18 @@ Uint8List getSignTxnAPDU(
   int hashType,
   int addressIndex,
 ) {
-  Uint8List payload = concatUint8List([
+  var payload = concatUint8List([
     hexToUint8List(onChainWalletData.encodedWalletKey!),
     hexToUint8List(onChainWalletData.encryptedWallet!)
   ]);
   log(uint8ListToHex(transaction.originSignaturePayload()));
   payload = concatUint8List([transaction.originSignaturePayload(), payload]);
-  final Uint8List payloadLength =
+  final payloadLength =
       hexToUint8List(payload.lengthInBytes.toRadixString(16));
-  final Uint8List signPayload = concatUint8List([payloadLength, payload]);
-  Uint8List cla = Uint8List(2);
+  final signPayload = concatUint8List([payloadLength, payload]);
+  var cla = Uint8List(2);
   cla = hexToUint8List('E0');
-  Uint8List ins = Uint8List(2);
+  var ins = Uint8List(2);
   ins = hexToUint8List('08');
   return concatUint8List(
     [cla, ins, toByteArray(addressIndex, length: 4), signPayload],
@@ -34,13 +34,13 @@ Uint8List getSignTxnAPDU(
 }
 
 Uint8List getArchAddressAPDU(OnChainWalletData onChainWalletData) {
-  final Uint8List payload = concatUint8List([
+  final payload = concatUint8List([
     hexToUint8List(onChainWalletData.encodedWalletKey!),
     hexToUint8List(onChainWalletData.encryptedWallet!)
   ]);
-  final Uint8List payloadLength =
+  final payloadLength =
       hexToUint8List(payload.lengthInBytes.toRadixString(16));
-  final Uint8List addressPayload = concatUint8List([payloadLength, payload]);
+  final addressPayload = concatUint8List([payloadLength, payload]);
   return transport(0xe0, 0x04, 0x00, 0x00, addressPayload);
 }
 

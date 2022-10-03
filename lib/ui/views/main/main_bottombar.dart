@@ -30,7 +30,7 @@ class MainBottomBar extends StatelessWidget {
               StateContainer.of(context)
                   .bottomBarPageController!
                   .jumpToPage(index);
-              final Preferences preferences = await Preferences.getInstance();
+              final preferences = await Preferences.getInstance();
               preferences.setMainScreenCurrentPage(index);
               StateContainer.of(context).bottomBarCurrentPage = index;
             },

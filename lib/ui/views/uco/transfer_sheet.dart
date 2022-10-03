@@ -206,7 +206,7 @@ class _TransferSheetState extends State<TransferSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final double bottom = MediaQuery.of(context).viewInsets.bottom;
+    final bottom = MediaQuery.of(context).viewInsets.bottom;
     // The main column that holds everything
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -434,10 +434,10 @@ class _TransferSheetState extends State<TransferSheet> {
       return false;
     }
     try {
-      final String amount = _rawAmount == null
+      final amount = _rawAmount == null
           ? _sendAmountController!.text
           : NumberUtil.getRawAsUsableString(_rawAmount!);
-      final double balanceRaw = StateContainer.of(context)
+      final balanceRaw = StateContainer.of(context)
           .appWallet!
           .appKeychain!
           .getAccountSelected()!
@@ -470,9 +470,9 @@ class _TransferSheetState extends State<TransferSheet> {
   /// Validate form data to see if valid
   /// @returns true if valid, false otherwise
   Future<bool> _validateRequest() async {
-    bool isValid = true;
-    final UCOTransferWallet ucoTransfer = UCOTransferWallet();
-    final TokenTransferWallet tokenTransfer = TokenTransferWallet();
+    var isValid = true;
+    final ucoTransfer = UCOTransferWallet();
+    final tokenTransfer = TokenTransferWallet();
     setState(() {
       _sendAmountFocusNode!.unfocus();
       _sendAddressFocusNode!.unfocus();
@@ -496,11 +496,11 @@ class _TransferSheetState extends State<TransferSheet> {
         // Estimation of fees
         feeEstimation = await getFee();
 
-        final String amount = _rawAmount == null
+        final amount = _rawAmount == null
             ? _sendAmountController!.text
             : NumberUtil.getRawAsUsableString(_rawAmount!);
-        double balanceRaw = 0;
-        double sendAmount = 0;
+        var balanceRaw = 0.0;
+        var sendAmount = 0.0;
         if (widget.accountToken == null) {
           balanceRaw = StateContainer.of(context)
               .appWallet!
@@ -566,7 +566,7 @@ class _TransferSheetState extends State<TransferSheet> {
       }
     }
     // Validate address
-    final bool isContact = _sendAddressController!.text.startsWith('@');
+    final isContact = _sendAddressController!.text.startsWith('@');
     Contact? contact;
     if (_sendAddressController!.text.trim().isEmpty) {
       isValid = false;
@@ -612,7 +612,7 @@ class _TransferSheetState extends State<TransferSheet> {
       ucoTransferList.clear();
       tokenTransferList.clear();
 
-      String lastAddressRecipient = '';
+      var lastAddressRecipient = '';
       if (widget.accountToken == null) {
         if (contact != null) {
           ucoTransfer.toContactName = contact.name;
@@ -713,9 +713,9 @@ class _TransferSheetState extends State<TransferSheet> {
             FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,8}')),
           ],
           onChanged: (String text) async {
-            final double? amount = double.tryParse(text);
+            final amount = double.tryParse(text);
             if (amount != null && amount > 0) {
-              final double fee = await getFee();
+              final fee = await getFee();
               // Always reset the error message to be less annoying
               setState(() {
                 feeEstimation = fee;
@@ -747,9 +747,9 @@ class _TransferSheetState extends State<TransferSheet> {
                     FeedbackType.light,
                     StateContainer.of(context).activeVibrations,
                   );
-              final double fee = await getFee(maxSend: true);
+              final fee = await getFee(maxSend: true);
 
-              double sendAmount = 0;
+              var sendAmount = 0.0;
               if (primaryCurrencySelected == PrimaryCurrency.native) {
                 sendAmount = StateContainer.of(context)
                         .appWallet!
@@ -760,7 +760,7 @@ class _TransferSheetState extends State<TransferSheet> {
                     fee;
                 _sendAmountController!.text = sendAmount.toStringAsFixed(8);
               } else {
-                final double selectedCurrencyFee = StateContainer.of(context)
+                final selectedCurrencyFee = StateContainer.of(context)
                         .appWallet!
                         .appKeychain!
                         .getAccountSelected()!
@@ -870,7 +870,7 @@ class _TransferSheetState extends State<TransferSheet> {
       labelText:
           '${AppLocalization.of(context)!.sendMessageHeader} (${_messageController!.text.length}/200)',
       onChanged: (String text) async {
-        final double fee = await getFee();
+        final fee = await getFee();
         setState(() {
           feeEstimation = fee;
         });
@@ -910,11 +910,11 @@ class _TransferSheetState extends State<TransferSheet> {
                 StateContainer.of(context).activeVibrations,
               );
 
-          final Contact? contact = await ContactsDialog.getDialog(context);
+          final contact = await ContactsDialog.getDialog(context);
           if (contact != null && contact.name != null) {
             _sendAddressController!.text = contact.name!;
             _sendAddressStyle = AddressStyle.text90;
-            final double fee = await getFee();
+            final fee = await getFee();
             setState(() {
               feeEstimation = fee;
             });
@@ -935,7 +935,7 @@ class _TransferSheetState extends State<TransferSheet> {
                       StateContainer.of(context).activeVibrations,
                     );
                 UIUtil.cancelLockEvent();
-                final String? scanResult =
+                final scanResult =
                     await UserDataUtil.getQRData(DataType.address, context);
                 if (scanResult == null) {
                   UIUtil.showSnackbar(
@@ -954,7 +954,7 @@ class _TransferSheetState extends State<TransferSheet> {
                   return;
                 } else {
                   // Is a URI
-                  final Address address = Address(scanResult);
+                  final address = Address(scanResult);
                   // See if this address belongs to a contact
                   final Contact? contact;
 
@@ -997,7 +997,7 @@ class _TransferSheetState extends State<TransferSheet> {
               ? AppStyles.textStyleSize14W700Primary(context)
               : AppStyles.textStyleSize14W700Primary(context),
       onChanged: (String text) async {
-        final double fee = await getFee();
+        final fee = await getFee();
         if (text.isNotEmpty) {
           setState(() {
             feeEstimation = fee;
@@ -1007,7 +1007,7 @@ class _TransferSheetState extends State<TransferSheet> {
             feeEstimation = fee;
           });
         }
-        final bool isContact = text.startsWith('@');
+        final isContact = text.startsWith('@');
         // Switch to contact mode if starts with @
         if (isContact) {
           setState(() {
@@ -1074,20 +1074,20 @@ class _TransferSheetState extends State<TransferSheet> {
   }
 
   Future<double> getFee({bool maxSend = false}) async {
-    double fee = 0;
+    var fee = 0.0;
     if (double.tryParse(_sendAmountController!.text) == null ||
         double.tryParse(_sendAmountController!.text)! <= 0) {
       return fee;
     }
-    final bool isContact = _sendAddressController!.text.startsWith('@');
-    String recipientAddress = '';
+    final isContact = _sendAddressController!.text.startsWith('@');
+    var recipientAddress = '';
     if (_sendAddressController!.text.isEmpty ||
         (!isContact && !isHex(_sendAddressController!.text))) {
       return fee;
     } else {
       if (isContact) {
         try {
-          final Contact contact = await sl
+          final contact = await sl
               .get<DBHelper>()
               .getContactWithName(_sendAddressController!.text);
           if (contact.address != null) {
@@ -1103,11 +1103,11 @@ class _TransferSheetState extends State<TransferSheet> {
       }
     }
     try {
-      final String? seed = await StateContainer.of(context).getSeed();
-      final List<UCOTransferWallet> ucoTransferListForFee =
+      final seed = await StateContainer.of(context).getSeed();
+      final ucoTransferListForFee =
           List<UCOTransferWallet>.empty(growable: true);
 
-      final List<TokenTransferWallet> tokenTransferListForFee =
+      final tokenTransferListForFee =
           List<TokenTransferWallet>.empty(growable: true);
       if (widget.accountToken == null) {
         ucoTransferListForFee.add(
@@ -1137,7 +1137,7 @@ class _TransferSheetState extends State<TransferSheet> {
         );
       }
 
-      final String originPrivateKey = sl.get<ApiService>().getOriginKey();
+      final originPrivateKey = sl.get<ApiService>().getOriginKey();
       fee = await sl.get<AppService>().getFeesEstimation(
             originPrivateKey,
             seed!,
@@ -1162,7 +1162,7 @@ class _TransferSheetState extends State<TransferSheet> {
   }
 
   String _convertSelectedCurrencyToNetworkCurrency() {
-    String convertedAmt = _sendAmountController!.text.replaceAll(',', '.');
+    var convertedAmt = _sendAmountController!.text.replaceAll(',', '.');
     convertedAmt = NumberUtil.sanitizeNumber(convertedAmt);
     if (convertedAmt.isEmpty || double.tryParse(convertedAmt) == 0) {
       return '';
@@ -1183,7 +1183,7 @@ class _TransferSheetState extends State<TransferSheet> {
   }
 
   String _convertNetworkCurrencyToSelectedCurrency() {
-    final String convertedAmt = NumberUtil.sanitizeNumber(
+    final convertedAmt = NumberUtil.sanitizeNumber(
       _sendAmountController!.text,
       maxDecimalDigits: _localCurrencyFormat.decimalDigits!,
     );

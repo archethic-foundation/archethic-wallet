@@ -20,7 +20,7 @@ class NftCategoryMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey expandedKey = GlobalKey();
+    final expandedKey = GlobalKey();
 
     return SliverPadding(
       key: expandedKey,
@@ -33,7 +33,7 @@ class NftCategoryMenu extends StatelessWidget {
         delegate: SliverChildBuilderDelegate(
           childCount: nftCategories.length,
           (context, index) {
-            int count = 0;
+            var count = 0;
 
             count = StateContainer.of(context)
                 .appWallet!

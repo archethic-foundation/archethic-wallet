@@ -12,9 +12,9 @@ import 'package:tuple/tuple.dart';
 
 Uint8List _genRandomWithNonZero(int seedLength) {
   final random = Random.secure();
-  const int randomMax = 245;
-  final Uint8List uint8list = Uint8List(seedLength);
-  for (int i = 0; i < seedLength; i++) {
+  const randomMax = 245;
+  final uint8list = Uint8List(seedLength);
+  for (var i = 0; i < seedLength; i++) {
     uint8list[i] = random.nextInt(randomMax) + 1;
   }
   return uint8list;
@@ -33,10 +33,10 @@ Tuple2<Uint8List, Uint8List> _deriveKeyAndIV(
   Uint8List salt,
 ) {
   final password = _createUint8ListFromString(passphrase);
-  Uint8List concatenatedHashes = Uint8List(0);
-  Uint8List currentHash = Uint8List(0);
-  bool enoughBytesForKey = false;
-  Uint8List preHash = Uint8List(0);
+  var concatenatedHashes = Uint8List(0);
+  var currentHash = Uint8List(0);
+  var enoughBytesForKey = false;
+  var preHash = Uint8List(0);
 
   while (!enoughBytesForKey) {
     if (currentHash.isNotEmpty) {
@@ -62,15 +62,15 @@ String stringEncryptBase64(String string, String? seed) {
   final iv = IV(keyndIV.item2);
   final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
   final encrypted = encrypter.encrypt(string, iv: iv);
-  final Uint8List encryptedBytesWithSalt = Uint8List.fromList(
+  final encryptedBytesWithSalt = Uint8List.fromList(
     _createUint8ListFromString('Salted__') + salt + encrypted.bytes,
   );
   return base64.encode(encryptedBytesWithSalt);
 }
 
 String stringDecryptBase64(String string, String? seed) {
-  final Uint8List encryptedBytesWithSalt = base64.decode(string);
-  final Uint8List encryptedBytes =
+  final encryptedBytesWithSalt = base64.decode(string);
+  final encryptedBytes =
       encryptedBytesWithSalt.sublist(16, encryptedBytesWithSalt.length);
   final salt = encryptedBytesWithSalt.sublist(8, 16);
   final keyndIV = _deriveKeyAndIV(seed!, salt);

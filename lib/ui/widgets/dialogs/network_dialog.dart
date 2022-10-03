@@ -24,12 +24,12 @@ class NetworkDialog {
     BuildContext context,
     NetworksSetting curNetworksSetting,
   ) async {
-    final FocusNode endpointFocusNode = FocusNode();
-    final TextEditingController endpointController = TextEditingController();
+    final endpointFocusNode = FocusNode();
+    final endpointController = TextEditingController();
     String? endpointError;
 
-    final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList =
+    final preferences = await Preferences.getInstance();
+    final pickerItemsList =
         List<PickerItem>.empty(growable: true);
     for (final value in AvailableNetworks.values) {
       pickerItemsList.add(

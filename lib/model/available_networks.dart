@@ -35,7 +35,7 @@ class NetworksSetting extends SettingSelectionItem {
       case AvailableNetworks.archethicTestNet:
         return 'https://testnet.archethic.net';
       case AvailableNetworks.archethicDevNet:
-        final Preferences preferences = await Preferences.getInstance();
+        final preferences = await Preferences.getInstance();
         return preferences.getNetworkDevEndpoint();
       default:
         return '';
@@ -49,7 +49,7 @@ class NetworksSetting extends SettingSelectionItem {
       case AvailableNetworks.archethicTestNet:
         return 'https://testnet.archethic.net/socket/websocket';
       case AvailableNetworks.archethicDevNet:
-        final Preferences preferences = await Preferences.getInstance();
+        final preferences = await Preferences.getInstance();
         return '${preferences.getNetworkDevEndpoint()}/socket/websocket';
       default:
         return '';
@@ -63,7 +63,7 @@ class NetworksSetting extends SettingSelectionItem {
       case AvailableNetworks.archethicTestNet:
         return 'wss://testnet.archethic.net/socket/websocket';
       case AvailableNetworks.archethicDevNet:
-        final Preferences preferences = await Preferences.getInstance();
+        final preferences = await Preferences.getInstance();
         return '${preferences.getNetworkDevEndpoint().replaceAll('https:', 'ws:').replaceAll('http:', 'ws:')}/socket/websocket';
       default:
         return '';

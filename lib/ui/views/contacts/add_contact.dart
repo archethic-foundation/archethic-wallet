@@ -187,7 +187,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                                     StateContainer.of(context).activeVibrations,
                                   );
                               UIUtil.cancelLockEvent();
-                              final String? scanResult =
+                              final scanResult =
                                   await UserDataUtil.getQRData(
                                 DataType.address,
                                 context,
@@ -218,7 +218,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                               FeedbackType.light,
                               StateContainer.of(context).activeVibrations,
                             );
-                        final String? data =
+                        final data =
                             await UserDataUtil.getClipboardText(
                           DataType.address,
                         );
@@ -312,7 +312,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                       Dimens.buttonTopDimens,
                       onPressed: () async {
                         if (await validateForm()) {
-                          final Contact newContact = Contact(
+                          final newContact = Contact(
                             name: _nameController!.text,
                             address: widget.address ?? _addressController!.text,
                             type: 'externalContact',
@@ -346,7 +346,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
   }
 
   Future<bool> validateForm() async {
-    bool isValid = true;
+    var isValid = true;
     _nameValidationText = '';
     _addressValidationText = '';
     // Address Validations
@@ -364,7 +364,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
         });
       } else {
         _addressFocusNode!.unfocus();
-        final bool addressExists = await sl
+        final addressExists = await sl
             .get<DBHelper>()
             .contactExistsWithAddress(_addressController!.text);
         if (addressExists) {
@@ -383,7 +383,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
         _nameValidationText = AppLocalization.of(context)!.contactNameMissing;
       });
     } else {
-      final bool nameExists =
+      final nameExists =
           await sl.get<DBHelper>().contactExistsWithName(_nameController!.text);
       if (nameExists) {
         setState(() {

@@ -168,7 +168,7 @@ class _PinScreenState extends State<PinScreen>
         _pin = _pin! + character;
       });
     }
-    for (int i = 0; i < _dotStates.length; i++) {
+    for (var i = 0; i < _dotStates.length; i++) {
       if (_dotStates[i] == FontAwesomeIcons.minus) {
         setState(() {
           _dotStates[i] = FontAwesomeIcons.solidCircle;
@@ -184,8 +184,8 @@ class _PinScreenState extends State<PinScreen>
 
   void _backSpace() {
     if (_dotStates[0] != FontAwesomeIcons.minus) {
-      int lastFilledIndex = 0;
-      for (int i = 0; i < _dotStates.length; i++) {
+      var lastFilledIndex = 0;
+      for (var i = 0; i < _dotStates.length; i++) {
         if (_dotStates[i] == FontAwesomeIcons.solidCircle) {
           if (i == _dotStates.length ||
               _dotStates[i + 1] == FontAwesomeIcons.minus) {
@@ -256,7 +256,7 @@ class _PinScreenState extends State<PinScreen>
                 } else {
                   // First and second pins match
                   if (_pin == _pinConfirmed) {
-                    final Vault vault = await Vault.getInstance();
+                    final vault = await Vault.getInstance();
                     vault.setPin(_pin!);
                     Navigator.of(context).pop(true);
                   } else {
@@ -294,8 +294,8 @@ class _PinScreenState extends State<PinScreen>
   }
 
   List<Widget> _buildPinDots() {
-    final List<Widget> ret = List<Widget>.empty(growable: true);
-    for (int i = 0; i < _pinLength; i++) {
+    final ret = List<Widget>.empty(growable: true);
+    for (var i = 0; i < _pinLength; i++) {
       ret.add(
         FaIcon(
           _dotStates[i],

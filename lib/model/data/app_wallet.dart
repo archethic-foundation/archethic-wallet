@@ -1,7 +1,3 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
-import 'dart:typed_data';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -35,17 +31,17 @@ class AppWallet extends HiveObject {
     String? name,
   ) async {
     Account? selectedAcct;
-    const String seed = '';
+    const seed = '';
 
-    AppWallet appWallet =
+    var appWallet =
         await sl.get<DBHelper>().createAppWallet(seed, keychainAddress);
 
-    final String nameEncoded = Uri.encodeFull(name!);
+    final nameEncoded = Uri.encodeFull(name!);
 
     /// Default service for wallet
-    final String kServiceName = 'archethic-wallet-$nameEncoded';
+    final kServiceName = 'archethic-wallet-$nameEncoded';
 
-    final Uint8List genesisAddress = keychain.deriveAddress(kServiceName);
+    final genesisAddress = keychain.deriveAddress(kServiceName);
     selectedAcct = Account(
       lastLoadingTransactionInputs: 0,
       lastAddress: uint8ListToHex(genesisAddress),
@@ -62,7 +58,7 @@ class AppWallet extends HiveObject {
     );
     appWallet = await sl.get<DBHelper>().addAccount(selectedAcct);
 
-    final Contact newContact = Contact(
+    final newContact = Contact(
       name: '@$name',
       address: uint8ListToHex(genesisAddress),
       type: 'keychainService',

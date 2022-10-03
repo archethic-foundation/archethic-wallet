@@ -113,7 +113,7 @@ class RecentTransaction extends HiveObject {
     contactInformations = null;
     if (typeTx == RecentTransaction.transferInput) {
       if (recipient != null) {
-        final Contact? contact =
+        final contact =
             await sl.get<DBHelper>().getContactWithAddress(from!);
         if (contact != null) {
           contactInformations = contact;
@@ -122,7 +122,7 @@ class RecentTransaction extends HiveObject {
     } else {
       if (typeTx == RecentTransaction.transferOutput) {
         if (from != null) {
-          final Contact? contact =
+          final contact =
               await sl.get<DBHelper>().getContactWithAddress(recipient!);
           if (contact != null) {
             contactInformations = contact;
@@ -144,7 +144,7 @@ class RecentTransaction extends HiveObject {
       return null;
     }
 
-    final String localOrRemoteContent = (content == null || content.isEmpty)
+    final localOrRemoteContent = (content == null || content.isEmpty)
         ? await sl.get<ApiService>().getTransactionContent(address)
         : content;
 

@@ -57,7 +57,7 @@ class Preferences {
   // This doesn't have to be a singleton.
   // We just want to make sure that the box is open, before we start getting/setting objects on it
   static Future<Preferences> getInstance() async {
-    final Box<dynamic> box = await Hive.openBox<dynamic>(_preferencesBox);
+    final box = await Hive.openBox<dynamic>(_preferencesBox);
     return Preferences._(box);
   }
 
@@ -206,7 +206,7 @@ class Preferences {
   }
 
   Future<void> updateLockDate() async {
-    final int attempts = getLockAttempts();
+    final attempts = getLockAttempts();
     if (attempts >= 20) {
       // 4+ failed attempts
       _setValue(
@@ -242,7 +242,7 @@ class Preferences {
   }
 
   DateTime? getLockDate() {
-    final String? lockDateStr = _getValue(_pin_lock_until);
+    final lockDateStr = _getValue(_pin_lock_until);
     if (lockDateStr != null) {
       return DateFormat.yMd().add_jms().parseUtc(lockDateStr);
     } else {
@@ -265,7 +265,7 @@ class Preferences {
   static Future<void> initWallet(
     AuthenticationMethod authenticationMethod,
   ) async {
-    final Preferences preferences = await Preferences.getInstance();
+    final preferences = await Preferences.getInstance();
     preferences
       ..setLock(true)
       ..setShowBalances(true)

@@ -18,7 +18,6 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -253,11 +252,11 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
                       Dimens.buttonTopDimens,
                       onPressed: () async {
                         // Authenticate
-                        final Preferences preferences =
+                        final preferences =
                             await Preferences.getInstance();
-                        final AuthenticationMethod authMethod =
+                        final authMethod =
                             preferences.getAuthMethod();
-                        final bool auth = await AuthFactory.authenticate(
+                        final auth = await AuthFactory.authenticate(
                           context,
                           authMethod,
                           activeVibrations:
@@ -295,25 +294,25 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
   Future<void> _doAdd() async {
     try {
       _showSendingAnimation(context);
-      final String? seed = await StateContainer.of(context).getSeed();
-      final String originPrivateKey = sl.get<ApiService>().getOriginKey();
-      final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
-      final String nameEncoded = Uri.encodeFull(
+      final seed = await StateContainer.of(context).getSeed();
+      final originPrivateKey = sl.get<ApiService>().getOriginKey();
+      final keychain = await sl.get<ApiService>().getKeychain(seed!);
+      final nameEncoded = Uri.encodeFull(
         StateContainer.of(context)
             .appWallet!
             .appKeychain!
             .getAccountSelected()!
             .name!,
       );
-      final String service = 'archethic-wallet-$nameEncoded';
-      final int index = (await sl.get<ApiService>().getTransactionIndex(
+      final service = 'archethic-wallet-$nameEncoded';
+      final index = (await sl.get<ApiService>().getTransactionIndex(
                 uint8ListToHex(keychain.deriveAddress(service)),
               ))
           .chainLength!;
 
-      final Transaction transaction =
+      final transaction =
           Transaction(type: 'token', data: Transaction.initData());
-      final String content = tokenToJsonForTxDataContent(
+      final content = tokenToJsonForTxDataContent(
         Token(
           name: widget.tokenName,
           supply: toBigInt(widget.tokenInitialSupply),
@@ -323,13 +322,13 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
         ),
       );
       transaction.setContent(content);
-      final Transaction signedTx = keychain
+      final signedTx = keychain
           .buildTransaction(transaction, service, index)
           .originSign(originPrivateKey);
 
-      TransactionStatus transactionStatus = TransactionStatus();
+      var transactionStatus = TransactionStatus();
 
-      final Preferences preferences = await Preferences.getInstance();
+      final preferences = await Preferences.getInstance();
       await subscriptionChannel.connect(
         await preferences.getNetwork().getPhoenixHttpLink(),
         await preferences.getNetwork().getWebsocketUri(),
@@ -388,8 +387,8 @@ class _AddTokenConfirmState extends State<AddTokenConfirm> {
   }
 
   void waitConfirmations(QueryResult event) {
-    int nbConfirmations = 0;
-    int maxConfirmations = 0;
+    var nbConfirmations = 0;
+    var maxConfirmations = 0;
     if (event.data != null && event.data!['transactionConfirmed'] != null) {
       if (event.data!['transactionConfirmed']['nbConfirmations'] != null) {
         nbConfirmations =

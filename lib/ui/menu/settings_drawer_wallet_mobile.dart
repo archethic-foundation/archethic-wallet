@@ -208,7 +208,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   // TODO(Chralu): is this useful ?
   // ignore: unused_element
   Future<void> _networkDialog() async {
-    final NetworksSetting? ns =
+    final ns =
         await NetworkDialog.getDialog(context, _curNetworksSetting);
     if (ns != null) {
       _curNetworksSetting = ns;
@@ -683,21 +683,21 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                             'assets/icons/key-word.png',
                             StateContainer.of(context).curTheme.iconDrawer!,
                             onPressed: () async {
-                              final Preferences preferences =
+                              final preferences =
                                   await Preferences.getInstance();
-                              final AuthenticationMethod authMethod =
+                              final authMethod =
                                   preferences.getAuthMethod();
 
-                              final bool auth = await AuthFactory.authenticate(
+                              final auth = await AuthFactory.authenticate(
                                 context,
                                 authMethod,
                                 activeVibrations:
                                     StateContainer.of(context).activeVibrations,
                               );
                               if (auth) {
-                                final String? seed =
+                                final seed =
                                     await StateContainer.of(context).getSeed();
-                                final List<String> mnemonic =
+                                final mnemonic =
                                     AppMnemomics.seedToMnemonic(
                                   seed!,
                                   languageCode: preferences.getLanguageSeed(),
@@ -725,7 +725,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           StateContainer.of(context).curTheme.iconDrawer!,
                           _pinPadShuffleActive,
                           onChanged: (bool isSwitched) async {
-                            final Preferences preferences =
+                            final preferences =
                                 await Preferences.getInstance();
                             setState(() {
                               _pinPadShuffleActive = isSwitched;
@@ -934,7 +934,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         StateContainer.of(context).curTheme.iconDrawer!,
                         _showBalancesActive,
                         onChanged: (bool isSwitched) async {
-                          final Preferences preferences =
+                          final preferences =
                               await Preferences.getInstance();
                           setState(() {
                             _showBalancesActive = isSwitched;
@@ -955,7 +955,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         StateContainer.of(context).curTheme.iconDrawer!,
                         _showBlogActive,
                         onChanged: (bool isSwitched) async {
-                          final Preferences preferences =
+                          final preferences =
                               await Preferences.getInstance();
                           setState(() {
                             _showBlogActive = isSwitched;
@@ -976,7 +976,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         StateContainer.of(context).curTheme.iconDrawer!,
                         _showPriceChartActive,
                         onChanged: (bool isSwitched) async {
-                          final Preferences preferences =
+                          final preferences =
                               await Preferences.getInstance();
                           setState(() {
                             _showPriceChartActive = isSwitched;
@@ -1006,7 +1006,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                           StateContainer.of(context).curTheme.iconDrawer!,
                           _notificationsActive,
                           onChanged: (bool isSwitched) async {
-                            final Preferences preferences =
+                            final preferences =
                                 await Preferences.getInstance();
                             setState(() {
                               _notificationsActive = isSwitched;
@@ -1042,7 +1042,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         StateContainer.of(context).curTheme.iconDrawer!,
                         _vibrationActive,
                         onChanged: (bool isSwitched) async {
-                          final Preferences preferences =
+                          final preferences =
                               await Preferences.getInstance();
                           setState(() {
                             _vibrationActive = isSwitched;

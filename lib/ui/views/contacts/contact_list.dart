@@ -97,7 +97,7 @@ class _ContactsListState extends State<ContactsList> {
 
   void _updateContacts() {
     sl.get<DBHelper>().getContacts().then((List<Contact> contacts) {
-      for (final Contact c in contacts) {
+      for (final c in contacts) {
         if (!contacts.contains(c)) {
           setState(() {
             contacts.add(c);

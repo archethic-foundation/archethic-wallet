@@ -54,8 +54,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
   }
 
   Future<void> _verifyPassword() async {
-    final Vault vault = await Vault.getInstance();
-    final Preferences preferences = await Preferences.getInstance();
+    final vault = await Vault.getInstance();
+    final preferences = await Preferences.getInstance();
 
     if (enterPasswordController!.text ==
         stringDecryptBase64(

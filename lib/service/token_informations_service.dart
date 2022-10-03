@@ -13,7 +13,7 @@ import 'package:aewallet/model/data/token_informations_property.dart';
 
 class TokenInformationsService {
   static TokenInformations tokenToTokenInformations(Token token) {
-    final TokenInformations tokenInformations = TokenInformations();
+    final tokenInformations = TokenInformations();
 
     tokenInformations.address = token.address;
     tokenInformations.name = token.name;
@@ -22,7 +22,7 @@ class TokenInformationsService {
     tokenInformations.type = token.type;
     tokenInformations.symbol = token.symbol;
     token.tokenProperties!.forEach((key, value) {
-      final TokenInformationsProperty tokenInformationsProperty =
+      final tokenInformationsProperty =
           TokenInformationsProperty(name: key, value: value);
       tokenInformations.tokenProperties!.add(tokenInformationsProperty);
     });
@@ -32,7 +32,7 @@ class TokenInformationsService {
   Uint8List? getImage(TokenInformations tokenInformations) {
     Uint8List? imageDecoded;
     if (tokenInformations.tokenProperties != null) {
-      for (final TokenInformationsProperty tokenInformationsProperty
+      for (final tokenInformationsProperty
           in tokenInformations.tokenProperties!) {
         if (tokenInformationsProperty.name == 'file') {
           return imageDecoded = base64Decode(tokenInformationsProperty.value!);

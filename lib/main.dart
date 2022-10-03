@@ -41,14 +41,14 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 
 Future<void> main() async {
-  final WidgetsBinding widgetsBinding =
+  final widgetsBinding =
       WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await DBHelper.setupDatabase();
   if (!kIsWeb && (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
     await windowManager.ensureInitialized();
 
-    const WindowOptions windowOptions = WindowOptions(
+    const windowOptions = WindowOptions(
       size: Size(370, 800),
       center: true,
       backgroundColor: Colors.transparent,
@@ -229,7 +229,7 @@ class _AppState extends State<App> {
                 settings: settings,
               );
             case '/intro_backup_confirm':
-              final Map<String, dynamic> args =
+              final args =
                   settings.arguments as Map<String, dynamic>? ?? {};
               return MaterialPageRoute<IntroBackupConfirm>(
                 builder: (_) => IntroBackupConfirm(
@@ -256,7 +256,7 @@ class _AppState extends State<App> {
                 settings: settings,
               );
             case '/nft_creation':
-              final Map<String, dynamic> args =
+              final args =
                   settings.arguments as Map<String, dynamic>? ?? {};
               return MaterialPageRoute<NFTCreationProcess>(
                 builder: (_) => NFTCreationProcess(
@@ -295,7 +295,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
   late bool _hasCheckedLoggedIn;
 
   Future<void> checkLoggedIn() async {
-    final Preferences preferences = await Preferences.getInstance();
+    final preferences = await Preferences.getInstance();
     /*bool jailbroken = false;
     bool developerMode = false;
     if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
@@ -341,9 +341,9 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       }
       await preferences.setFirstLaunch(false);
       */
-      bool isLoggedIn = false;
+      var isLoggedIn = false;
 
-      final String? seed = await StateContainer.of(context).getSeed();
+      final seed = await StateContainer.of(context).getSeed();
 
       if (seed != null) {
         isLoggedIn = true;

@@ -26,7 +26,7 @@ class CurrencyFormatter extends TextInputFormatter {
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    bool returnOriginal = true;
+    var returnOriginal = true;
     if (newValue.text.contains(decimalSeparator) ||
         newValue.text.contains(commaSeparator)) {
       returnOriginal = false;
@@ -37,7 +37,7 @@ class CurrencyFormatter extends TextInputFormatter {
       return newValue;
     }
 
-    String workingText =
+    var workingText =
         newValue.text.replaceAll(commaSeparator, decimalSeparator);
     // if contains more than 2 decimals in newValue, return oldValue
     if (decimalSeparator.allMatches(workingText).length > 1) {
@@ -49,12 +49,12 @@ class CurrencyFormatter extends TextInputFormatter {
       workingText = '0$workingText';
     }
 
-    final List<String> splitStr = workingText.split(decimalSeparator);
+    final splitStr = workingText.split(decimalSeparator);
     // If this string contains more than 1 decimal, move all characters to after the first decimal
     if (splitStr.length > 2) {
       returnOriginal = false;
 
-      for (final String val in splitStr) {
+      for (final val in splitStr) {
         if (splitStr.indexOf(val) > 1) {
           splitStr[1] += val;
         }
@@ -70,7 +70,7 @@ class CurrencyFormatter extends TextInputFormatter {
         );
       }
     }
-    final String newText = splitStr[0] +
+    final newText = splitStr[0] +
         decimalSeparator +
         splitStr[1].substring(0, maxDecimalDigits);
     return newValue.copyWith(
@@ -102,8 +102,8 @@ class LocalCurrencyFormatter extends TextInputFormatter {
     // Ensure our input is in the right formatting here
     if (active) {
       // Make local currency = symbol + amount with correct decimal separator
-      final String curText = newValue.text;
-      String shouldBeText =
+      final curText = newValue.text;
+      var shouldBeText =
           NumberUtil.sanitizeNumber(curText.replaceAll(',', '.'));
       shouldBeText = currencyFormat.currencySymbol +
           shouldBeText.replaceAll('.', currencyFormat.symbols.DECIMAL_SEP);
@@ -115,8 +115,8 @@ class LocalCurrencyFormatter extends TextInputFormatter {
       }
     } else {
       // Make crypto amount have no symbol and formatted as US locale
-      final String curText = newValue.text;
-      final String shouldBeText =
+      final curText = newValue.text;
+      final shouldBeText =
           NumberUtil.sanitizeNumber(curText.replaceAll(',', '.'));
       if (shouldBeText != curText) {
         return newValue.copyWith(
@@ -140,12 +140,12 @@ class ContactInputFormatter extends TextInputFormatter {
       return newValue;
     }
 
-    String workingText = newValue.text;
+    var workingText = newValue.text;
     if (!workingText.startsWith('@')) {
       workingText = '@$workingText';
     }
 
-    final List<String> splitStr = workingText.split('@');
+    final splitStr = workingText.split('@');
     // If this string contains more than 1 @, remove all but the first one
     if (splitStr.length > 2) {
       workingText = '@${workingText.replaceAll('@', '')}';
@@ -229,19 +229,19 @@ class ThousandsSeparatorInputFormatter extends TextInputFormatter {
       return newValue.copyWith(text: '');
     }
 
-    String newValueText = newValue.text.replaceAll(separator, '');
+    var newValueText = newValue.text.replaceAll(separator, '');
 
     if (oldValue.text.endsWith(separator) &&
         oldValue.text.length == newValue.text.length + 1) {
       newValueText = newValueText.substring(0, newValueText.length - 1);
     }
 
-    final int selectionIndex =
+    final selectionIndex =
         newValue.text.length - newValue.selection.extentOffset;
     final chars = newValueText.split('');
 
-    String newString = '';
-    for (int i = chars.length - 1; i >= 0; i--) {
+    var newString = '';
+    for (var i = chars.length - 1; i >= 0; i--) {
       if ((chars.length - 1 - i) % 3 == 0 && i != chars.length - 1) {
         newString = separator + newString;
       }

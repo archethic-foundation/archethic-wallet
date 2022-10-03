@@ -13,12 +13,12 @@ import 'package:aewallet/ui/widgets/components/picker_item.dart';
 
 class ContactsDialog {
   static Future<Contact?> getDialog(BuildContext context) async {
-    final FocusNode searchNameFocusNode = FocusNode();
-    final TextEditingController searchNameController = TextEditingController();
+    final searchNameFocusNode = FocusNode();
+    final searchNameController = TextEditingController();
 
-    final List<PickerItem> pickerItemsList =
+    final pickerItemsList =
         List<PickerItem>.empty(growable: true);
-    List<Contact> contacts = await StateContainer.of(context).getContacts();
+    var contacts = await StateContainer.of(context).getContacts();
     for (final contact in contacts) {
       pickerItemsList.add(
         PickerItem(

@@ -19,8 +19,8 @@ class ThemeDialog {
     BuildContext context,
     ThemeSetting curThemeSetting,
   ) async {
-    final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList =
+    final preferences = await Preferences.getInstance();
+    final pickerItemsList =
         List<PickerItem>.empty(growable: true);
     for (final value in ThemeOptions.values) {
       value == ThemeOptions.flat ||
@@ -91,7 +91,7 @@ class ThemeDialog {
               pickerItems: pickerItemsList,
               selectedIndex: curThemeSetting.getIndex(),
               onSelected: (value) async {
-                final ThemeSetting selectedThemeSettings =
+                final selectedThemeSettings =
                     ThemeSetting(value.value as ThemeOptions);
                 if (curThemeSetting != selectedThemeSettings) {
                   preferences.setTheme(selectedThemeSettings);

@@ -33,7 +33,7 @@ class KeychainUtil {
     SubscriptionChannel subscriptionChannel,
   ) async {
     /// Create Keychain Access for wallet
-    final Transaction accessKeychainTx =
+    final accessKeychainTx =
         sl.get<ApiService>().newAccessKeychainTransaction(
               seed!,
               hexToUint8List(keychainAddress),
@@ -41,7 +41,7 @@ class KeychainUtil {
             );
 
     void waitConfirmationsKeychainAccess(QueryResult event) {
-      final Map<String, Object> params = {
+      final params = <String, Object>{
         'keychainAddress': keychainAddress,
         'keychain': keychain
       };
@@ -61,7 +61,7 @@ class KeychainUtil {
     await Future.delayed(const Duration(seconds: 1));
 
     // ignore: unused_local_variable
-    final TransactionStatus transactionStatusKeychainAccess =
+    final transactionStatusKeychainAccess =
         await sl.get<ApiService>().sendTx(accessKeychainTx);
 
     return accessKeychainTx;
@@ -75,29 +75,29 @@ class KeychainUtil {
     SubscriptionChannel subscriptionChannel,
   ) async {
     /// Get Wallet KeyPair
-    final KeyPair walletKeyPair = deriveKeyPair(seed!, 0);
+    final walletKeyPair = deriveKeyPair(seed!, 0);
 
     /// Generate keyChain Seed from random value
-    final String keychainSeed = uint8ListToHex(
+    final keychainSeed = uint8ListToHex(
       Uint8List.fromList(
         List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
       ),
     );
 
-    final String nameEncoded = Uri.encodeFull(name!);
+    final nameEncoded = Uri.encodeFull(name!);
 
     /// Default service for wallet
-    final String kServiceName = 'archethic-wallet-$nameEncoded';
-    final String kDerivationPathWithoutIndex = "m/650'/$kServiceName/";
-    const String index = '0';
-    final String kDerivationPath = '$kDerivationPathWithoutIndex$index';
+    final kServiceName = 'archethic-wallet-$nameEncoded';
+    final kDerivationPathWithoutIndex = "m/650'/$kServiceName/";
+    const index = '0';
+    final kDerivationPath = '$kDerivationPathWithoutIndex$index';
 
-    final Keychain keychain =
+    final keychain =
         Keychain(hexToUint8List(keychainSeed), version: 1);
     keychain.addService(kServiceName, kDerivationPath);
 
     /// Create Keychain from keyChain seed and wallet public key to encrypt secret
-    final Transaction keychainTransaction =
+    final keychainTransaction =
         sl.get<ApiService>().newKeychainTransaction(
               keychainSeed,
               <String>[uint8ListToHex(walletKeyPair.publicKey)],
@@ -107,7 +107,7 @@ class KeychainUtil {
             );
 
     void waitConfirmationsKeychain(QueryResult event) {
-      final Map<String, Object> params = {
+      final params = <String, Object>{
         'keychainAddress': keychainTransaction.address!,
         'originPrivateKey': originPrivateKey,
         'keychain': keychain
@@ -127,7 +127,7 @@ class KeychainUtil {
     await Future.delayed(const Duration(seconds: 1));
 
     // ignore: unused_local_variable
-    final TransactionStatus transactionStatusKeychain =
+    final transactionStatusKeychain =
         await sl.get<ApiService>().sendTx(keychainTransaction);
   }
 
@@ -140,41 +140,41 @@ class KeychainUtil {
   ) async {
     Account? selectedAcct;
 
-    final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
+    final keychain = await sl.get<ApiService>().getKeychain(seed!);
 
-    final String originPrivateKey = sl.get<ApiService>().getOriginKey();
+    final originPrivateKey = sl.get<ApiService>().getOriginKey();
 
-    final String genesisAddressKeychain =
+    final genesisAddressKeychain =
         deriveAddress(uint8ListToHex(keychain.seed!), 0);
 
-    final String nameEncoded = Uri.encodeFull(name!);
+    final nameEncoded = Uri.encodeFull(name!);
 
-    final String kServiceName = 'archethic-wallet-$nameEncoded';
-    final String kDerivationPathWithoutIndex = "m/650'/$kServiceName/";
-    const String index = '0';
-    final String kDerivationPath = '$kDerivationPathWithoutIndex$index';
+    final kServiceName = 'archethic-wallet-$nameEncoded';
+    final kDerivationPathWithoutIndex = "m/650'/$kServiceName/";
+    const index = '0';
+    final kDerivationPath = '$kDerivationPathWithoutIndex$index';
     keychain.addService(kServiceName, kDerivationPath);
 
-    final Transaction lastTransactionKeychain =
+    final lastTransactionKeychain =
         await sl.get<ApiService>().getLastTransaction(
               genesisAddressKeychain,
               request:
                   'chainLength, data { content, ownerships { authorizedPublicKeys { publicKey } } }',
             );
 
-    final String aesKey = uint8ListToHex(
+    final aesKey = uint8ListToHex(
       Uint8List.fromList(
         List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
       ),
     );
 
-    final Transaction keychainTransaction =
+    final keychainTransaction =
         Transaction(type: 'keychain', data: Transaction.initData())
             .setContent(jsonEncode(keychain.toDID()));
 
-    final List<AuthorizedKey> authorizedKeys =
+    final authorizedKeys =
         List<AuthorizedKey>.empty(growable: true);
-    final List<AuthorizedKey> authorizedKeysList =
+    final authorizedKeysList =
         lastTransactionKeychain.data!.ownerships![0].authorizedPublicKeys!;
     for (final authorizedKey in authorizedKeysList) {
       authorizedKeys.add(
@@ -199,12 +199,12 @@ class KeychainUtil {
         .originSign(originPrivateKey);
 
     // ignore: unused_local_variable
-    final TransactionStatus transactionStatusKeychain =
+    final transactionStatusKeychain =
         await sl.get<ApiService>().sendTx(keychainTransaction);
 
-    final Price tokenPrice = await Price.getCurrency(currency);
+    final tokenPrice = await Price.getCurrency(currency);
 
-    final Uint8List genesisAddress = keychain.deriveAddress(kServiceName);
+    final genesisAddress = keychain.deriveAddress(kServiceName);
     selectedAcct = Account(
       lastLoadingTransactionInputs: 0,
       lastAddress: uint8ListToHex(genesisAddress),
@@ -223,14 +223,14 @@ class KeychainUtil {
     appWallet!.appKeychain!.accounts!.add(selectedAcct);
     appWallet.appKeychain!.accounts!.sort((a, b) => a.name!.compareTo(b.name!));
 
-    final Transaction lastTransactionKeychainAddress = await sl
+    final lastTransactionKeychainAddress = await sl
         .get<ApiService>()
         .getLastTransaction(genesisAddressKeychain, request: 'address');
     appWallet.appKeychain!.address = lastTransactionKeychainAddress.address;
 
     await appWallet.save();
 
-    final Contact newContact = Contact(
+    final newContact = Contact(
       name: '@$name',
       address: uint8ListToHex(genesisAddress),
       type: 'keychainService',
@@ -250,18 +250,18 @@ class KeychainUtil {
     bool loadBalance = true,
     bool loadRecentTransactions = true,
   }) async {
-    final List<Account> accounts = List<Account>.empty(growable: true);
+    final accounts = List<Account>.empty(growable: true);
 
     AppWallet currentAppWallet;
     try {
       /// Get KeyChain Wallet
-      final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
+      final keychain = await sl.get<ApiService>().getKeychain(seed!);
 
       /// Creation of a new appWallet
       if (appWallet == null) {
-        final String addressKeychain =
+        final addressKeychain =
             deriveAddress(uint8ListToHex(keychain.seed!), 0);
-        final Transaction lastTransaction =
+        final lastTransaction =
             await sl.get<ApiService>().getLastTransaction(addressKeychain);
 
         currentAppWallet = await sl
@@ -271,25 +271,25 @@ class KeychainUtil {
         currentAppWallet = appWallet;
       }
 
-      const String kDerivationPathWithoutService = "m/650'/archethic-wallet-";
+      const kDerivationPathWithoutService = "m/650'/archethic-wallet-";
 
-      final Price tokenPrice = await Price.getCurrency(currency);
+      final tokenPrice = await Price.getCurrency(currency);
 
       /// Get all services for archethic blockchain
       keychain.services!.forEach((serviceName, service) async {
         if (service.derivationPath!.startsWith(kDerivationPathWithoutService)) {
-          final Uint8List genesisAddress = keychain.deriveAddress(serviceName);
+          final genesisAddress = keychain.deriveAddress(serviceName);
 
-          final List<String> path = service.derivationPath!
+          final path = service.derivationPath!
               .replaceAll(kDerivationPathWithoutService, '')
               .split('/');
           path.last = '';
-          String name = path.join('/');
+          var name = path.join('/');
           name = name.substring(0, name.length - 1);
 
-          final String nameDecoded = Uri.decodeFull(name);
+          final nameDecoded = Uri.decodeFull(name);
 
-          final Account account = Account(
+          final account = Account(
             lastLoadingTransactionInputs:
                 DateTime.now().millisecondsSinceEpoch ~/
                     Duration.millisecondsPerSecond,
@@ -316,7 +316,7 @@ class KeychainUtil {
           try {
             await sl.get<DBHelper>().getContactWithName(account.name!);
           } catch (e) {
-            final Contact newContact = Contact(
+            final newContact = Contact(
               name: '@$nameDecoded',
               address: uint8ListToHex(genesisAddress),
               type: 'keychainService',
@@ -326,8 +326,8 @@ class KeychainUtil {
         }
       });
 
-      for (int i = 0; i < accounts.length; i++) {
-        final String lastAddress = await sl
+      for (var i = 0; i < accounts.length; i++) {
+        final lastAddress = await sl
             .get<AddressService>()
             .lastAddressFromAddress(accounts[i].genesisAddress!);
         if (lastAddress.isNotEmpty) {
@@ -341,10 +341,10 @@ class KeychainUtil {
           await accounts[i].updateRecentTransactions('', seed);
         }
       }
-      final String genesisAddressKeychain =
+      final genesisAddressKeychain =
           deriveAddress(uint8ListToHex(keychain.seed!), 0);
 
-      final Transaction lastTransactionKeychain = await sl
+      final lastTransactionKeychain = await sl
           .get<ApiService>()
           .getLastTransaction(genesisAddressKeychain, request: 'address');
       currentAppWallet.appKeychain!.address = lastTransactionKeychain.address;
@@ -364,8 +364,8 @@ class KeychainUtil {
     TransactionSendEventType transactionSendEventType, {
     Map<String, Object>? params,
   }) {
-    int nbConfirmations = 0;
-    int maxConfirmations = 0;
+    var nbConfirmations = 0;
+    var maxConfirmations = 0;
     if (event.data != null && event.data!['transactionConfirmed'] != null) {
       if (event.data!['transactionConfirmed']['nbConfirmations'] != null) {
         nbConfirmations =

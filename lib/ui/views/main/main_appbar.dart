@@ -64,7 +64,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 );
                             StateContainer.of(context).showBalance = false;
 
-                            final Preferences preferences =
+                            final preferences =
                                 await Preferences.getInstance();
                             await preferences.setShowBalances(false);
                             StateContainer.of(context).updateState();
@@ -79,7 +79,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 );
                             StateContainer.of(context).showBalance = true;
 
-                            final Preferences preferences =
+                            final preferences =
                                 await Preferences.getInstance();
                             await preferences.setShowBalances(true);
                             StateContainer.of(context).updateState();
@@ -106,7 +106,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 .timerCheckTransactionInputs!
                                 .cancel();
                           }
-                          final Preferences preferences =
+                          final preferences =
                               await Preferences.getInstance();
                           await preferences.setActiveNotifications(false);
                         },
@@ -131,7 +131,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                             AppLocalization.of(context)!
                                 .transactionInputNotification,
                           );
-                          final Preferences preferences =
+                          final preferences =
                               await Preferences.getInstance();
                           await preferences.setActiveNotifications(true);
                         },

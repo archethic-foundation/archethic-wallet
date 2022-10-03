@@ -25,7 +25,7 @@ class AuthFactory {
     bool transitions = false,
     bool activeVibrations = false,
   }) async {
-    bool auth = false;
+    var auth = false;
     switch (authMethod.method) {
       case AuthMethod.yubikeyWithYubicloud:
         auth =
@@ -39,7 +39,7 @@ class AuthFactory {
         auth = await _authenticateWithPin(context, transitions: transitions);
         break;
       case AuthMethod.biometrics:
-        final bool hasBiometrics =
+        final hasBiometrics =
             await sl.get<BiometricUtil>().hasBiometrics();
         if (hasBiometrics) {
           auth = await _authenticateWithBiometrics(context);
@@ -60,7 +60,7 @@ class AuthFactory {
     BuildContext context, {
     bool transitions = false,
   }) async {
-    bool auth = false;
+    var auth = false;
     if (transitions) {
       auth = await Navigator.of(context).push(
         MaterialPageRoute(
@@ -86,7 +86,7 @@ class AuthFactory {
     BuildContext context, {
     bool transitions = false,
   }) async {
-    bool auth = false;
+    var auth = false;
     if (transitions) {
       auth = await Navigator.of(context).push(
         MaterialPageRoute(
@@ -112,9 +112,9 @@ class AuthFactory {
     BuildContext context, {
     bool transitions = false,
   }) async {
-    final Vault vault = await Vault.getInstance();
-    final String? expectedPin = vault.getPin();
-    bool auth = false;
+    final vault = await Vault.getInstance();
+    final expectedPin = vault.getPin();
+    var auth = false;
     if (transitions) {
       // TODO(redDwarf03): add the description
       auth = await Navigator.of(context).push(
@@ -144,7 +144,7 @@ class AuthFactory {
   }
 
   static Future<bool> _authenticateWithBiometrics(BuildContext context) async {
-    final bool auth = await sl.get<BiometricUtil>().authenticateWithBiometrics(
+    final auth = await sl.get<BiometricUtil>().authenticateWithBiometrics(
           context,
           AppLocalization.of(context)!.unlockBiometrics,
         );

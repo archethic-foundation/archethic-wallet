@@ -25,8 +25,8 @@ class OneOrThreeLineAddressText extends StatelessWidget {
   Widget build(BuildContext context) {
     // One line for small displays
     if (MediaQuery.of(context).size.height < 667) {
-      final String stringPartOne = address!.substring(0, 12);
-      final String stringPartFive = address!.substring(36);
+      final stringPartOne = address!.substring(0, 12);
+      final stringPartFive = address!.substring(36);
       switch (type!) {
         case AddressTextType.primary60:
           return Column(
@@ -81,11 +81,11 @@ class OneOrThreeLineAddressText extends StatelessWidget {
       }
     }
     // Three line
-    String stringPartOne = '';
-    String stringPartTwo = '';
-    String stringPartThree = '';
-    String stringPartFour = '';
-    String stringPartFive = '';
+    var stringPartOne = '';
+    var stringPartTwo = '';
+    var stringPartThree = '';
+    var stringPartFour = '';
+    var stringPartFive = '';
     if (address!.length >= 12) {
       stringPartOne = address!.substring(0, 12);
     } else {

@@ -32,7 +32,7 @@ class Sheets {
     assert(radius > 0.0);
     color ??= StateContainer.of(context).curTheme.backgroundDark;
     bgColor ??= StateContainer.of(context).curTheme.sheetBackground;
-    final _AppHeightNineModalRoute<T> route = _AppHeightNineModalRoute<T>(
+    final route = _AppHeightNineModalRoute<T>(
       builder: (BuildContext context) {
         return DecoratedBox(
           decoration: StateContainer.of(context).curTheme.getDecorationSheet(),

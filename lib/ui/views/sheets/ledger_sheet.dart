@@ -231,7 +231,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                                 isHex(enterPayloadController!.text) == false) {
                               info = 'The payload is not valid.';
                             } else {
-                              final Uint8List getArchAddress = transport(
+                              final getArchAddress = transport(
                                 0xe0,
                                 0x04,
                                 0x00,
@@ -263,7 +263,7 @@ class _LedgerSheetState extends State<LedgerSheet> {
                                 isHex(enterPayloadController!.text) == false) {
                               info = 'The payload is not valid.';
                             } else {
-                              final Uint8List signTxn = transport(
+                              final signTxn = transport(
                                 0xe0,
                                 0x08,
                                 0x00,

@@ -125,12 +125,11 @@ class UCOTransferListWidget extends StatelessWidget {
   }
 
   double _getTotal() {
-    double totalAmount = 0;
-    for (int i = 0; i < listUcoTransfer!.length; i++) {
-      final double amount =
-          (Decimal.parse(listUcoTransfer![i].amount!.toString()) /
-                  Decimal.parse('100000000'))
-              .toDouble();
+    var totalAmount = 0.0;
+    for (var i = 0; i < listUcoTransfer!.length; i++) {
+      final amount = (Decimal.parse(listUcoTransfer![i].amount!.toString()) /
+              Decimal.parse('100000000'))
+          .toDouble();
       totalAmount = (Decimal.parse(totalAmount.toString()) +
               Decimal.parse(amount.toString()))
           .toDouble();

@@ -26,10 +26,10 @@ class TokenUtil {
   ) async {
     Uint8List? valueFileDecoded;
     Uint8List? imageDecoded;
-    final Token token =
+    final token =
         await sl.get<ApiService>().getToken(address, request: 'properties');
     if (token.tokenProperties != null && token.tokenProperties!.isNotEmpty) {
-      final Map<String, dynamic> list = token.tokenProperties!;
+      final list = token.tokenProperties!;
       list.forEach((key, value) {
         if (key == 'file') {
           if (_base64.hasMatch(value) == true) {
@@ -41,12 +41,12 @@ class TokenUtil {
 
     if (valueFileDecoded != null) {
       if (MimeUtil.isPdf(typeMime) == true) {
-        final PdfDocument pdfDocument = await PdfDocument.openData(
+        final pdfDocument = await PdfDocument.openData(
           valueFileDecoded!,
         );
-        final PdfPage pdfPage = await pdfDocument.getPage(1);
+        final pdfPage = await pdfDocument.getPage(1);
 
-        final PdfPageImage? pdfPageImage =
+        final pdfPageImage =
             await pdfPage.render(width: pdfPage.width, height: pdfPage.height);
         imageDecoded = pdfPageImage!.bytes;
       } else {
@@ -60,7 +60,7 @@ class TokenUtil {
     TokenInformations tokenInformations,
     String nameProperty,
   ) {
-    String value = '';
+    var value = '';
     if (tokenInformations.tokenProperties != null &&
         tokenInformations.tokenProperties!
                 .firstWhereOrNull((element) => element.name == nameProperty) !=

@@ -301,11 +301,11 @@ class _SetYubikeyState extends State<SetYubikey> {
           });
         }
       } else {
-        final Vault vault = await Vault.getInstance();
+        final vault = await Vault.getInstance();
         vault.setYubikeyClientAPIKey(_clientAPIKeyController!.text);
         vault.setYubikeyClientID(_clientIDController!.text);
 
-        final bool auth = await AuthFactory.authenticate(
+        final auth = await AuthFactory.authenticate(
           context,
           AuthenticationMethod(AuthMethod.yubikeyWithYubicloud),
           activeVibrations: StateContainer.of(context).activeVibrations,

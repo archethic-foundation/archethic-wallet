@@ -62,7 +62,7 @@ class _PickerWidgetState extends State<PickerWidget> {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          final PickerItem pickerItem = widget.pickerItems![index];
+          final pickerItem = widget.pickerItems![index];
           bool isItemSelected;
           if (selectedIndex != -1) {
             isItemSelected = index == selectedIndex;

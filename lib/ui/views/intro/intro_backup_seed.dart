@@ -118,7 +118,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                       mnemonic = AppMnemomics.seedToMnemonic(
                                         seed!,
                                       );
-                                      final Preferences preferences =
+                                      final preferences =
                                           await Preferences.getInstance();
                                       preferences.setLanguageSeed('en');
                                       setState(() {
@@ -155,7 +155,7 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                         seed!,
                                         languageCode: 'fr',
                                       );
-                                      final Preferences preferences =
+                                      final preferences =
                                           await Preferences.getInstance();
                                       preferences.setLanguageSeed('fr');
                                       setState(() {

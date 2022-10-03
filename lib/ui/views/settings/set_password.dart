@@ -214,14 +214,14 @@ class _SetPasswordState extends State<SetPassword> {
                                     icon: Icons.shuffle_sharp,
                                     onPressed: () {
                                       setPasswordController!.text = '';
-                                      final int passwordLength =
+                                      final passwordLength =
                                           Random().nextInt(8) + 5;
 
-                                      const String allowedChars =
+                                      const allowedChars =
                                           r'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#=+!£$%&?[](){}';
-                                      int i = 0;
+                                      var i = 0;
                                       while (i < passwordLength) {
-                                        final int random = Random.secure()
+                                        final random = Random.secure()
                                             .nextInt(allowedChars.length);
                                         setPasswordController!.text +=
                                             allowedChars[random];
@@ -418,7 +418,7 @@ class _SetPasswordState extends State<SetPassword> {
         });
       }
     } else {
-      final Vault vault = await Vault.getInstance();
+      final vault = await Vault.getInstance();
       vault.setPassword(
         stringEncryptBase64(setPasswordController!.text, widget.seed),
       );

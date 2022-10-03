@@ -22,11 +22,11 @@ class AuthentificationMethodDialog {
     bool hasBiometrics,
     AuthenticationMethod curAuthMethod,
   ) async {
-    final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList =
+    final preferences = await Preferences.getInstance();
+    final pickerItemsList =
         List<PickerItem>.empty(growable: true);
     for (final value in AuthMethod.values) {
-      bool displayed = false;
+      var displayed = false;
       if (value != AuthMethod.ledger) {
         if ((hasBiometrics && value == AuthMethod.biometrics) ||
             value != AuthMethod.biometrics) {
@@ -66,7 +66,7 @@ class AuthentificationMethodDialog {
               onSelected: (value) async {
                 switch (value.value) {
                   case AuthMethod.biometrics:
-                    final bool auth = await sl
+                    final auth = await sl
                         .get<BiometricUtil>()
                         .authenticateWithBiometrics(
                           context,
@@ -108,7 +108,7 @@ class AuthentificationMethodDialog {
                     }
                     break;
                   case AuthMethod.password:
-                    final String? seed =
+                    final seed =
                         await StateContainer.of(context).getSeed();
                     final bool authenticated = await Navigator.of(context).push(
                       MaterialPageRoute(

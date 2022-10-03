@@ -20,7 +20,7 @@ class SubscriptionChannel {
     String phoenixHttpLinkEndpoint,
     String websocketUriEndpoint,
   ) async {
-    final HttpLink phoenixHttpLink = HttpLink(
+    final phoenixHttpLink = HttpLink(
       phoenixHttpLinkEndpoint,
     );
 
@@ -49,15 +49,15 @@ class SubscriptionChannel {
       'subscription { transactionConfirmed(address: "$address") { nbConfirmations, maxConfirmations } }',
     );
 
-    final Stream<QueryResult> subscription = client!.subscribe(
+    final subscription = client!.subscribe(
       SubscriptionOptions(document: subscriptionDocument),
     );
     subscription.listen(function);
   }
 
   Future<Message> onPushReply(Push push) async {
-    final Completer<Message> completer = Completer<Message>();
-    final Message result = await channel!.onPushReply(push.replyEvent);
+    final completer = Completer<Message>();
+    final result = await channel!.onPushReply(push.replyEvent);
     completer.complete(result);
     return completer.future;
   }

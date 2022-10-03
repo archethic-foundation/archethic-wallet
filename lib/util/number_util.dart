@@ -12,7 +12,7 @@ class NumberUtil {
   /// @return Decimal value 1.000000000000000000000000000000
   ///
   static Decimal getRawAsUsableDecimal(String raw) {
-    final Decimal amount = Decimal.parse(raw);
+    final amount = Decimal.parse(raw);
     return amount;
   }
 
@@ -22,21 +22,21 @@ class NumberUtil {
   /// @returns 1
   ///
   static String getRawAsUsableString(String raw) {
-    final NumberFormat nf =
+    final nf =
         NumberFormat.currency(locale: 'en_US', decimalDigits: 6, symbol: '');
-    String asString = nf.format(
+    var asString = nf.format(
       double.tryParse(getRawAsUsableDecimal(raw).truncate().toString()),
     );
-    final List<String> split = asString.split('.');
+    final split = asString.split('.');
     if (split.length > 1) {
       // Remove trailing 0s from this
       if (int.parse(split[1]) == 0) {
         asString = split[0];
       } else {
-        String newStr = '${split[0]}.';
-        String digits = split[1];
-        int endIndex = digits.length;
-        for (int i = 1; i <= digits.length; i++) {
+        var newStr = '${split[0]}.';
+        var digits = split[1];
+        var endIndex = digits.length;
+        for (var i = 1; i <= digits.length; i++) {
           if (int.parse(digits[digits.length - i]) == 0) {
             endIndex--;
           } else {
@@ -56,16 +56,16 @@ class NumberUtil {
   /// @param amount $1,512
   /// @returns 1.512
   static String sanitizeNumber(String input, {int maxDecimalDigits = 8}) {
-    String sanitized = '';
-    String inputSplitted = input;
-    final List<String> splitStr = inputSplitted.split('.');
+    var sanitized = '';
+    var inputSplitted = input;
+    final splitStr = inputSplitted.split('.');
     if (splitStr.length > 1) {
       if (splitStr[1].length > maxDecimalDigits) {
         splitStr[1] = splitStr[1].substring(0, maxDecimalDigits);
         inputSplitted = '${splitStr[0]}.${splitStr[1]}';
       }
     }
-    for (int i = 0; i < inputSplitted.length; i++) {
+    for (var i = 0; i < inputSplitted.length; i++) {
       try {
         if (inputSplitted[i] == '.') {
           sanitized = sanitized + inputSplitted[i];

@@ -29,12 +29,12 @@ class Vault {
   // We just want to make sure that the box is open, before we start getting/setting objects on it
   static Future<Vault> getInstance() async {
     try {
-      const FlutterSecureStorage secureStorage = FlutterSecureStorage();
+      const secureStorage = FlutterSecureStorage();
       final Uint8List encryptionKey;
-      String? secureKey =
+      var secureKey =
           await secureStorage.read(key: 'archethic_wallet_secure_key');
       if (secureKey == null || secureKey.isEmpty) {
-        final List<int> key = Hive.generateSecureKey();
+        final key = Hive.generateSecureKey();
         encryptionKey = Uint8List.fromList(key);
         secureKey = base64UrlEncode(key);
         await secureStorage.write(
@@ -44,7 +44,7 @@ class Vault {
       } else {
         encryptionKey = base64Url.decode(secureKey);
       }
-      final Box<dynamic> encryptedBox = await Hive.openBox<dynamic>(
+      final encryptedBox = await Hive.openBox<dynamic>(
         _vaultBox,
         encryptionCipher: HiveAesCipher(encryptionKey),
       );

@@ -28,8 +28,8 @@ class NFCUtil {
 
   /// authenticateWithNFCYubikey()
   Future<void> authenticateWithNFCYubikey(BuildContext context) async {
-    String otp = '';
-    final bool hasNFCEnrolled = await hasNFC();
+    var otp = '';
+    final hasNFCEnrolled = await hasNFC();
     if (hasNFCEnrolled) {
       await NfcManager.instance.startSession(
         alertMessage: 'Yubikey OTP Validation',

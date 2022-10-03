@@ -40,8 +40,8 @@ class DBHelper {
 
   // Contacts
   Future<List<Contact>> getContacts() async {
-    final Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
-    final List<Contact> contactsList = box.values.toList();
+    final box = await Hive.openBox<Contact>(contactsTable);
+    final contactsList = box.values.toList();
     contactsList.sort(
       (Contact a, Contact b) =>
           a.name!.toLowerCase().compareTo(b.name!.toLowerCase()),
@@ -50,11 +50,11 @@ class DBHelper {
   }
 
   Future<List<Contact>> getContactsWithNameLike(String pattern) async {
-    final Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
-    final List<Contact> contactsList = box.values.toList();
+    final box = await Hive.openBox<Contact>(contactsTable);
+    final contactsList = box.values.toList();
     // ignore: prefer_final_locals
-    List<Contact> contactsListSelected = List<Contact>.empty(growable: true);
-    for (final Contact contact in contactsList) {
+    var contactsListSelected = List<Contact>.empty(growable: true);
+    for (final contact in contactsList) {
       if (contact.name!.contains(pattern)) {
         contactsListSelected.add(contact);
       }
@@ -64,19 +64,19 @@ class DBHelper {
 
   // TODO(redDwarf03): review this method's goal.
   Future<Contact?> getContactWithAddress(String address) async {
-    String? lastAddress = (await sl
+    var lastAddress = (await sl
             .get<ApiService>()
             .getLastTransaction(address, request: 'address'))
         .address;
     if (lastAddress == null || lastAddress == '') {
       lastAddress = address;
     }
-    final Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
-    final List<Contact> contactsList = box.values.toList();
+    final box = await Hive.openBox<Contact>(contactsTable);
+    final contactsList = box.values.toList();
 
     Contact? contactSelected;
-    for (final Contact contact in contactsList) {
-      String? lastAddressContact = (await sl
+    for (final contact in contactsList) {
+      var lastAddressContact = (await sl
               .get<ApiService>()
               .getLastTransaction(contact.address!, request: 'address'))
           .address;
@@ -84,7 +84,7 @@ class DBHelper {
       if (lastAddressContact == null || lastAddressContact == '') {
         lastAddressContact = contact.address!;
       } else {
-        final Contact contactToUpdate = contact;
+        final contactToUpdate = contact;
         contactToUpdate.address = lastAddressContact;
         await sl.get<DBHelper>().saveContact(contactToUpdate);
       }
@@ -96,12 +96,12 @@ class DBHelper {
   }
 
   Future<Contact> getContactWithName(String name) async {
-    final Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
-    final List<Contact> contactsList = box.values.toList();
+    final box = await Hive.openBox<Contact>(contactsTable);
+    final contactsList = box.values.toList();
     Contact? contactSelected;
     final nameWithAt = name.startsWith('@') ? name : '@$name';
 
-    for (final Contact contact in contactsList) {
+    for (final contact in contactsList) {
       if (contact.name!.toLowerCase() == nameWithAt.toLowerCase()) {
         contactSelected = contact;
       }
@@ -114,10 +114,10 @@ class DBHelper {
   }
 
   Future<bool> contactExistsWithName(String name) async {
-    final Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
-    final List<Contact> contactsList = box.values.toList();
-    bool contactExists = false;
-    for (final Contact contact in contactsList) {
+    final box = await Hive.openBox<Contact>(contactsTable);
+    final contactsList = box.values.toList();
+    var contactExists = false;
+    for (final contact in contactsList) {
       if (contact.name!.toLowerCase() == name.toLowerCase()) {
         contactExists = true;
       }
@@ -126,7 +126,7 @@ class DBHelper {
   }
 
   Future<bool> contactExistsWithAddress(String address) async {
-    String? lastAddress = (await sl
+    var lastAddress = (await sl
             .get<ApiService>()
             .getLastTransaction(address, request: 'address'))
         .address;
@@ -134,11 +134,11 @@ class DBHelper {
       lastAddress = address;
     }
 
-    final Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
-    final List<Contact> contactsList = box.values.toList();
-    bool contactExists = false;
-    for (final Contact contact in contactsList) {
-      String lastAddressContact = (await sl
+    final box = await Hive.openBox<Contact>(contactsTable);
+    final contactsList = box.values.toList();
+    var contactExists = false;
+    for (final contact in contactsList) {
+      var lastAddressContact = (await sl
               .get<ApiService>()
               .getLastTransaction(contact.address!, request: 'address'))
           .address!;
@@ -156,42 +156,42 @@ class DBHelper {
 
   Future<void> saveContact(Contact contact) async {
     // ignore: prefer_final_locals
-    Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
+    var box = await Hive.openBox<Contact>(contactsTable);
     await box.put(contact.name, contact);
   }
 
   Future<void> deleteContact(Contact contact) async {
     // ignore: prefer_final_locals
-    Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
+    var box = await Hive.openBox<Contact>(contactsTable);
     await box.delete(contact.name);
   }
 
   Future<void> clearContacts() async {
     // ignore: prefer_final_locals
-    Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
+    var box = await Hive.openBox<Contact>(contactsTable);
     await box.clear();
   }
 
   Future<AppWallet> addAccount(Account account) async {
-    final Box<AppWallet> box = await Hive.openBox<AppWallet>(appWalletTable);
-    final AppWallet appWallet = box.get(0)!;
+    final box = await Hive.openBox<AppWallet>(appWalletTable);
+    final appWallet = box.get(0)!;
     appWallet.appKeychain!.accounts!.add(account);
     await box.putAt(0, appWallet);
     return appWallet;
   }
 
   Future<AppWallet> clearAccount() async {
-    final Box<AppWallet> box = await Hive.openBox<AppWallet>(appWalletTable);
-    final AppWallet appWallet = box.get(0)!;
+    final box = await Hive.openBox<AppWallet>(appWalletTable);
+    final appWallet = box.get(0)!;
     appWallet.appKeychain!.accounts!.clear();
     await box.putAt(0, appWallet);
     return appWallet;
   }
 
   Future<AppWallet> changeAccount(Account account) async {
-    final Box<AppWallet> box = await Hive.openBox<AppWallet>(appWalletTable);
-    final AppWallet appWallet = box.get(0)!;
-    for (int i = 0; i < appWallet.appKeychain!.accounts!.length; i++) {
+    final box = await Hive.openBox<AppWallet>(appWalletTable);
+    final appWallet = box.get(0)!;
+    for (var i = 0; i < appWallet.appKeychain!.accounts!.length; i++) {
       if (appWallet.appKeychain!.accounts![i].name == account.name) {
         appWallet.appKeychain!.accounts![i].selected = true;
       } else {
@@ -207,10 +207,10 @@ class DBHelper {
     AccountBalance balance,
   ) async {
     // ignore: prefer_final_locals
-    Box<AppWallet> box = await Hive.openBox<AppWallet>(appWalletTable);
-    final AppWallet appWallet = box.get(0)!;
-    final List<Account> accounts = appWallet.appKeychain!.accounts!;
-    for (final Account account in accounts) {
+    var box = await Hive.openBox<AppWallet>(appWalletTable);
+    final appWallet = box.get(0)!;
+    final accounts = appWallet.appKeychain!.accounts!;
+    for (final account in accounts) {
       if (selectedAccount.name == account.name) {
         account.balance = balance;
         await box.putAt(0, appWallet);
@@ -221,10 +221,10 @@ class DBHelper {
 
   Future<void> updateAccount(Account selectedAccount) async {
     // ignore: prefer_final_locals
-    Box<AppWallet> box = await Hive.openBox<AppWallet>(appWalletTable);
-    final AppWallet appWallet = box.get(0)!;
-    final List<Account> accounts = appWallet.appKeychain!.accounts!;
-    for (Account account in accounts) {
+    var box = await Hive.openBox<AppWallet>(appWalletTable);
+    final appWallet = box.get(0)!;
+    final accounts = appWallet.appKeychain!.accounts!;
+    for (var account in accounts) {
       if (selectedAccount.name == account.name) {
         account = selectedAccount;
         await box.putAt(0, appWallet);
@@ -235,23 +235,23 @@ class DBHelper {
 
   Future<void> clearAppWallet() async {
     // ignore: prefer_final_locals
-    Box<AppWallet> box = await Hive.openBox<AppWallet>(appWalletTable);
+    var box = await Hive.openBox<AppWallet>(appWalletTable);
     await box.clear();
   }
 
   Future<AppWallet> createAppWallet(String seed, String keyChainAddress) async {
     // ignore: prefer_final_locals
-    Box<AppWallet> box = await Hive.openBox<AppWallet>(appWalletTable);
-    final AppKeychain appKeychain =
+    var box = await Hive.openBox<AppWallet>(appWalletTable);
+    final appKeychain =
         AppKeychain(address: keyChainAddress, accounts: <Account>[]);
-    final AppWallet appWallet = AppWallet(seed: seed, appKeychain: appKeychain);
+    final appWallet = AppWallet(seed: seed, appKeychain: appKeychain);
     await box.add(appWallet);
     return appWallet;
   }
 
   Future<AppWallet?> getAppWallet() async {
     // ignore: prefer_final_locals
-    Box<AppWallet> box = await Hive.openBox<AppWallet>(appWalletTable);
+    var box = await Hive.openBox<AppWallet>(appWalletTable);
     return box.getAt(0);
   }
 
@@ -263,7 +263,7 @@ class DBHelper {
 
   Future<void> updatePrice(Price price) async {
     // ignore: prefer_final_locals
-    Box<Price> box = await Hive.openBox<Price>(priceTable);
+    var box = await Hive.openBox<Price>(priceTable);
     if (box.isEmpty) {
       await box.add(price);
     } else {
@@ -273,13 +273,13 @@ class DBHelper {
 
   Future<Price?> getPrice() async {
     // ignore: prefer_final_locals
-    Box<Price> box = await Hive.openBox<Price>(priceTable);
+    var box = await Hive.openBox<Price>(priceTable);
     return box.getAt(0);
   }
 
   Future<void> clearPrice() async {
     // ignore: prefer_final_locals
-    Box<Price> box = await Hive.openBox<Price>(priceTable);
+    var box = await Hive.openBox<Price>(priceTable);
     await box.clear();
   }
 }

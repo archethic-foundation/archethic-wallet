@@ -18,7 +18,6 @@ import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/data/app_wallet.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -155,7 +154,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                                 .activeVibrations,
                                           );
 
-                                      final Preferences preferences =
+                                      final preferences =
                                           await Preferences.getInstance();
                                       preferences.setLanguageSeed('en');
                                       setState(() {
@@ -188,7 +187,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                                 .activeVibrations,
                                           );
 
-                                      final Preferences preferences =
+                                      final preferences =
                                           await Preferences.getInstance();
                                       preferences.setLanguageSeed('fr');
                                       setState(() {
@@ -453,14 +452,14 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                               if (_mnemonicIsValid == true) {
                                 await sl.get<DBHelper>().clearAppWallet();
                                 StateContainer.of(context).appWallet = null;
-                                final String seed =
+                                final seed =
                                     AppMnemomics.mnemonicListToSeed(
                                   phrase,
                                   languageCode: language,
                                 );
-                                final Vault vault = await Vault.getInstance();
+                                final vault = await Vault.getInstance();
                                 vault.setSeed(seed);
-                                final Price tokenPrice =
+                                final tokenPrice =
                                     await Price.getCurrency(
                                   StateContainer.of(context)
                                       .curCurrency
@@ -469,7 +468,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                 );
 
                                 try {
-                                  final AppWallet? appWallet =
+                                  final appWallet =
                                       await KeychainUtil()
                                           .getListAccountsFromKeychain(
                                     StateContainer.of(context).appWallet,
@@ -486,7 +485,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
 
                                   StateContainer.of(context).appWallet =
                                       appWallet;
-                                  final List<Account>? accounts =
+                                  final accounts =
                                       appWallet!.appKeychain!.accounts;
 
                                   if (accounts == null || accounts.isEmpty) {
@@ -548,9 +547,9 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   }
 
   Future<bool> _launchSecurityConfiguration(String name, String seed) async {
-    final bool biometricsAvalaible =
+    final biometricsAvalaible =
         await sl.get<BiometricUtil>().hasBiometrics();
-    final List<PickerItem> accessModes = [];
+    final accessModes = <PickerItem>[];
     accessModes.add(
       PickerItem(
         AuthenticationMethod(AuthMethod.pin).getDisplayName(context),
@@ -624,14 +623,14 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   }
 
   Future<void> _accountsDialog(List<Account> accounts) async {
-    final List<PickerItem> pickerItemsList =
+    final pickerItemsList =
         List<PickerItem>.empty(growable: true);
-    for (final Account account in accounts) {
+    for (final account in accounts) {
       pickerItemsList
           .add(PickerItem(account.name!, null, null, null, account, true));
     }
 
-    final Account? selection = await showDialog<Account>(
+    final selection = await showDialog<Account>(
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {

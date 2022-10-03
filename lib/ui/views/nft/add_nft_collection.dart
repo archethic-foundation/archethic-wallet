@@ -109,7 +109,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
 
   @override
   Widget build(BuildContext context) {
-    final double bottom = MediaQuery.of(context).viewInsets.bottom;
+    final bottom = MediaQuery.of(context).viewInsets.bottom;
     return TapOutsideUnfocus(
       child: SafeArea(
         minimum:
@@ -247,8 +247,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
 
                                 validRequest = await _validateRequest(context);
                                 if (validRequest) {
-                                  TokenInformations tokenInformations =
-                                      TokenInformations();
+                                  var tokenInformations = TokenInformations();
                                   tokenInformations.tokenProperties =
                                       List<TokenInformationsProperty>.empty(
                                     growable: true,
@@ -328,7 +327,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                     LengthLimitingTextInputFormatter(40),
                   ],
                   onChanged: (String text) async {
-                    final double fee = await getFee(context);
+                    final fee = await getFee(context);
                     // Always reset the error message to be less annoying
                     setState(() {
                       feeEstimation = fee;
@@ -357,7 +356,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                     LengthLimitingTextInputFormatter(4),
                   ],
                   onChanged: (String text) async {
-                    final double fee = await getFee(context);
+                    final fee = await getFee(context);
                     // Always reset the error message to be less annoying
                     setState(() {
                       feeEstimation = fee;
@@ -408,7 +407,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
   }
 
   Future<bool> _validateRequest(BuildContext context) async {
-    bool isValid = true;
+    var isValid = true;
     setState(() {
       collectionNameValidationText = '';
       collectionSymbolValidationText = '';
@@ -434,14 +433,14 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
   }
 
   Future<double> getFee(BuildContext context) async {
-    double fee = 0;
+    var fee = 0.0;
     if (collectionSymbolController!.text.isEmpty ||
         collectionNameController!.text.isEmpty) {
       return fee;
     }
     try {
-      final String? seed = await StateContainer.of(context).getSeed();
-      final String originPrivateKey = sl.get<ApiService>().getOriginKey();
+      final seed = await StateContainer.of(context).getSeed();
+      final originPrivateKey = sl.get<ApiService>().getOriginKey();
       fee = await sl.get<AppService>().getFeesEstimationCreateToken(
             originPrivateKey,
             seed!,

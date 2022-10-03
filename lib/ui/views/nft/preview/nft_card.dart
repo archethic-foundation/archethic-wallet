@@ -11,7 +11,6 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -32,7 +31,7 @@ class NFTCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String typeMime =
+    final typeMime =
         TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
     return Column(
       children: <Widget>[
@@ -119,7 +118,7 @@ class NFTCardBottom extends StatefulWidget {
 class _NFTCardBottomState extends State<NFTCardBottom> {
   @override
   Widget build(BuildContext context) {
-    final NftInfosOffChain? nftInfosOffChain = StateContainer.of(context)
+    final nftInfosOffChain = StateContainer.of(context)
         .appWallet!
         .appKeychain!
         .getAccountSelected()!
