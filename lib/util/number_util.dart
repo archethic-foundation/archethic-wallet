@@ -25,7 +25,8 @@ class NumberUtil {
     final NumberFormat nf =
         NumberFormat.currency(locale: 'en_US', decimalDigits: 6, symbol: '');
     String asString = nf.format(
-        double.tryParse(getRawAsUsableDecimal(raw).truncate().toString()));
+      double.tryParse(getRawAsUsableDecimal(raw).truncate().toString()),
+    );
     final List<String> split = asString.split('.');
     if (split.length > 1) {
       // Remove trailing 0s from this
@@ -71,7 +72,9 @@ class NumberUtil {
           int.parse(input[i]);
           sanitized = sanitized + input[i];
         }
-      } catch (e) {}
+      } catch (e) {
+        /// TODO shouldn't we return default value ? or maybe null ?
+      }
     }
     return sanitized;
   }

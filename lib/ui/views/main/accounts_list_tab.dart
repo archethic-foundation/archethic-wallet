@@ -24,30 +24,33 @@ class AccountsListTab extends StatelessWidget {
           child: RefreshIndicator(
             backgroundColor: StateContainer.of(context).curTheme.backgroundDark,
             onRefresh: () => Future<void>.sync(() async {
-              sl.get<HapticUtil>().feedback(FeedbackType.light,
-                  StateContainer.of(context).activeVibrations);
-              StateContainer.of(context).appWallet = await KeychainUtil()
-                  .getListAccountsFromKeychain(
-                      StateContainer.of(context).appWallet,
-                      await StateContainer.of(context).getSeed(),
-                      StateContainer.of(context).curCurrency.currency.name,
-                      StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .balance!
-                          .nativeTokenName!,
-                      StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .balance!
-                          .tokenPrice!,
-                      currentName: StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .name);
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    StateContainer.of(context).activeVibrations,
+                  );
+              StateContainer.of(context).appWallet =
+                  await KeychainUtil().getListAccountsFromKeychain(
+                StateContainer.of(context).appWallet,
+                await StateContainer.of(context).getSeed(),
+                StateContainer.of(context).curCurrency.currency.name,
+                StateContainer.of(context)
+                    .appWallet!
+                    .appKeychain!
+                    .getAccountSelected()!
+                    .balance!
+                    .nativeTokenName!,
+                StateContainer.of(context)
+                    .appWallet!
+                    .appKeychain!
+                    .getAccountSelected()!
+                    .balance!
+                    .tokenPrice!,
+                currentName: StateContainer.of(context)
+                    .appWallet!
+                    .appKeychain!
+                    .getAccountSelected()!
+                    .name,
+              );
             }),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(
@@ -63,18 +66,20 @@ class AccountsListTab extends StatelessWidget {
                     height: MediaQuery.of(context).size.height,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage(StateContainer.of(context)
-                              .curTheme
-                              .background1Small!),
-                          fit: BoxFit.fitHeight,
-                          opacity: 0.7),
+                        image: AssetImage(
+                          StateContainer.of(context).curTheme.background1Small!,
+                        ),
+                        fit: BoxFit.fitHeight,
+                        opacity: 0.7,
+                      ),
                     ),
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            top: kToolbarHeight + kTextTabBarHeight,
-                            bottom: 50),
+                          top: kToolbarHeight + kTextTabBarHeight,
+                          bottom: 50,
+                        ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,

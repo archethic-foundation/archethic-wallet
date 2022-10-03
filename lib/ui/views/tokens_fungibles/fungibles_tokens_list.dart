@@ -38,8 +38,9 @@ class FungiblesTokensListWidget extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(top: 26),
               child: Text(
-                  AppLocalization.of(context)!.fungiblesTokensListNoTokenYet,
-                  style: AppStyles.textStyleSize14W600Primary(context)),
+                AppLocalization.of(context)!.fungiblesTokensListNoTokenYet,
+                style: AppStyles.textStyleSize14W600Primary(context),
+              ),
             ),
           ),
         for (int i = 0;
@@ -61,56 +62,62 @@ class FungiblesTokensListWidget extends StatelessWidget {
       color: Colors.transparent,
       width: MediaQuery.of(context).size.width,
       child: Padding(
-          padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
-          child: (StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .accountTokens!
-                          .isNotEmpty &&
-                      StateContainer.of(context)
-                              .appWallet!
-                              .appKeychain!
-                              .getAccountSelected()!
-                              .accountTokens!
-                              .length >
-                          num) ||
-                  (StateContainer.of(context).recentTransactionsLoading ==
-                          true &&
-                      StateContainer.of(context)
-                              .appWallet!
-                              .appKeychain!
-                              .getAccountSelected()!
-                              .accountTokens!
-                              .length >
-                          num)
-              ? displayTxDetailTransfer(
-                  context,
-                  StateContainer.of(context)
-                      .appWallet!
-                      .appKeychain!
-                      .getAccountSelected()!
-                      .accountTokens![num])
-              : const SizedBox()),
+        padding: const EdgeInsets.only(left: 26, right: 26, top: 6),
+        child: (StateContainer.of(context)
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .accountTokens!
+                        .isNotEmpty &&
+                    StateContainer.of(context)
+                            .appWallet!
+                            .appKeychain!
+                            .getAccountSelected()!
+                            .accountTokens!
+                            .length >
+                        num) ||
+                (StateContainer.of(context).recentTransactionsLoading == true &&
+                    StateContainer.of(context)
+                            .appWallet!
+                            .appKeychain!
+                            .getAccountSelected()!
+                            .accountTokens!
+                            .length >
+                        num)
+            ? displayTxDetailTransfer(
+                context,
+                StateContainer.of(context)
+                    .appWallet!
+                    .appKeychain!
+                    .getAccountSelected()!
+                    .accountTokens![num],
+              )
+            : const SizedBox(),
+      ),
     );
   }
 
   static Widget displayTxDetailTransfer(
-      BuildContext context, AccountToken accountFungibleToken) {
+    BuildContext context,
+    AccountToken accountFungibleToken,
+  ) {
     return InkWell(
       onTap: () {
         sl.get<HapticUtil>().feedback(
-            FeedbackType.light, StateContainer.of(context).activeVibrations);
+              FeedbackType.light,
+              StateContainer.of(context).activeVibrations,
+            );
       },
       child: Column(
         children: [
           Card(
             shape: RoundedRectangleBorder(
               side: BorderSide(
-                  color: StateContainer.of(context)
-                      .curTheme
-                      .backgroundFungiblesTokensListCard!,
-                  width: 1.0),
+                color: StateContainer.of(context)
+                    .curTheme
+                    .backgroundFungiblesTokensListCard!,
+                width: 1.0,
+              ),
               borderRadius: BorderRadius.circular(10.0),
             ),
             elevation: 0,
@@ -137,35 +144,42 @@ class FungiblesTokensListWidget extends StatelessWidget {
                               .backgroundDark!
                               .withOpacity(0.3),
                           border: Border.all(
-                              color: StateContainer.of(context)
-                                  .curTheme
-                                  .backgroundDarkest!
-                                  .withOpacity(0.2),
-                              width: 2),
+                            color: StateContainer.of(context)
+                                .curTheme
+                                .backgroundDarkest!
+                                .withOpacity(0.2),
+                            width: 2,
+                          ),
                         ),
                         child: IconButton(
-                          icon: Icon(Icons.arrow_circle_up_outlined,
-                              color: StateContainer.of(context)
-                                  .curTheme
-                                  .backgroundDarkest!,
-                              size: 21),
+                          icon: Icon(
+                            Icons.arrow_circle_up_outlined,
+                            color: StateContainer.of(context)
+                                .curTheme
+                                .backgroundDarkest!,
+                            size: 21,
+                          ),
                           onPressed: () {
-                            sl.get<HapticUtil>().feedback(FeedbackType.light,
-                                StateContainer.of(context).activeVibrations);
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  StateContainer.of(context).activeVibrations,
+                                );
                             Sheets.showAppHeightNineSheet(
                               context: context,
                               widget: TransferSheet(
-                                  accountToken: accountFungibleToken,
-                                  primaryCurrency: StateContainer.of(context)
-                                      .curPrimaryCurrency,
-                                  title: AppLocalization.of(context)!
-                                      .transferTokens
-                                      .replaceAll(
-                                          '%1',
-                                          accountFungibleToken
-                                              .tokenInformations!.symbol!),
-                                  localCurrency:
-                                      StateContainer.of(context).curCurrency),
+                                accountToken: accountFungibleToken,
+                                primaryCurrency: StateContainer.of(context)
+                                    .curPrimaryCurrency,
+                                title: AppLocalization.of(context)!
+                                    .transferTokens
+                                    .replaceAll(
+                                      '%1',
+                                      accountFungibleToken
+                                          .tokenInformations!.symbol!,
+                                    ),
+                                localCurrency:
+                                    StateContainer.of(context).curCurrency,
+                              ),
                             );
                           },
                         ),
@@ -173,8 +187,10 @@ class FungiblesTokensListWidget extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      Text(accountFungibleToken.tokenInformations!.name!,
-                          style: AppStyles.textStyleSize12W600Primary(context)),
+                      Text(
+                        accountFungibleToken.tokenInformations!.name!,
+                        style: AppStyles.textStyleSize12W600Primary(context),
+                      ),
                     ],
                   ),
                   (StateContainer.of(context).showBalance == true)
@@ -183,27 +199,37 @@ class FungiblesTokensListWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                                NumberUtil.formatThousands(
-                                    accountFungibleToken.amount!),
-                                style: AppStyles.textStyleSize12W400Primary(
-                                    context)),
+                              NumberUtil.formatThousands(
+                                accountFungibleToken.amount!,
+                              ),
+                              style: AppStyles.textStyleSize12W400Primary(
+                                context,
+                              ),
+                            ),
                             Text(
-                                accountFungibleToken.tokenInformations!.symbol!,
-                                style: AppStyles.textStyleSize12W600Primary(
-                                    context)),
+                              accountFungibleToken.tokenInformations!.symbol!,
+                              style: AppStyles.textStyleSize12W600Primary(
+                                context,
+                              ),
+                            ),
                           ],
                         )
                       : Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text('···········',
-                                style: AppStyles.textStyleSize12W600Primary60(
-                                    context)),
                             Text(
-                                accountFungibleToken.tokenInformations!.symbol!,
-                                style: AppStyles.textStyleSize12W600Primary(
-                                    context)),
+                              '···········',
+                              style: AppStyles.textStyleSize12W600Primary60(
+                                context,
+                              ),
+                            ),
+                            Text(
+                              accountFungibleToken.tokenInformations!.symbol!,
+                              style: AppStyles.textStyleSize12W600Primary(
+                                context,
+                              ),
+                            ),
                           ],
                         )
                 ],

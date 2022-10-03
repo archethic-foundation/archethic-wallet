@@ -25,9 +25,11 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(
-                  StateContainer.of(context).curTheme.background1Small!),
-              fit: BoxFit.fitHeight),
+            image: AssetImage(
+              StateContainer.of(context).curTheme.background1Small!,
+            ),
+            fit: BoxFit.fitHeight,
+          ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -41,8 +43,9 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
           builder: (BuildContext context, BoxConstraints constraints) =>
               SafeArea(
             minimum: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.035,
-                top: MediaQuery.of(context).size.height * 0.075),
+              bottom: MediaQuery.of(context).size.height * 0.035,
+              top: MediaQuery.of(context).size.height * 0.075,
+            ),
             child: Column(
               children: <Widget>[
                 Expanded(
@@ -54,7 +57,8 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                           children: <Widget>[
                             Container(
                               margin: EdgeInsetsDirectional.only(
-                                  start: smallScreen(context) ? 15 : 20),
+                                start: smallScreen(context) ? 15 : 20,
+                              ),
                               height: 50,
                               width: 50,
                               child: BackButton(
@@ -89,7 +93,10 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                         ),
                         Container(
                           margin: const EdgeInsetsDirectional.only(
-                              start: 20, end: 20, top: 15.0),
+                            start: 20,
+                            end: 20,
+                            top: 15.0,
+                          ),
                           alignment: Alignment.bottomLeft,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,7 +105,8 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel1,
                                 style: AppStyles.textStyleSize16W600Primary(
-                                    context),
+                                  context,
+                                ),
                               ),
                               Divider(
                                 height: 30,
@@ -108,7 +116,8 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel2,
                                 style: AppStyles.textStyleSize16W600Primary(
-                                    context),
+                                  context,
+                                ),
                               ),
                               const SizedBox(
                                 height: 30,
@@ -116,7 +125,8 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel3,
                                 style: AppStyles.textStyleSize14W600Primary(
-                                    context),
+                                  context,
+                                ),
                                 textAlign: TextAlign.justify,
                               ),
                               Divider(
@@ -127,7 +137,8 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel4,
                                 style: AppStyles.textStyleSize16W600Primary(
-                                    context),
+                                  context,
+                                ),
                               ),
                               const SizedBox(
                                 height: 30,
@@ -135,7 +146,8 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel5,
                                 style: AppStyles.textStyleSize14W600Primary(
-                                    context),
+                                  context,
+                                ),
                                 textAlign: TextAlign.justify,
                               ),
                               Divider(
@@ -146,7 +158,8 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel6,
                                 style: AppStyles.textStyleSize16W600Primary(
-                                    context),
+                                  context,
+                                ),
                               ),
                               const SizedBox(
                                 height: 30,
@@ -154,7 +167,8 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                               AutoSizeText(
                                 AppLocalization.of(context)!.backupSafetyLabel7,
                                 style: AppStyles.textStyleSize14W600Primary(
-                                    context),
+                                  context,
+                                ),
                                 textAlign: TextAlign.justify,
                               ),
                               const SizedBox(
@@ -173,14 +187,16 @@ class IntroNewWalletDisclaimer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     AppButton.buildAppButton(
-                        const Key('understandButton'),
-                        context,
-                        AppButtonType.primary,
-                        AppLocalization.of(context)!.understandButton,
-                        Dimens.buttonBottomDimens, onPressed: () {
-                      Navigator.of(context)
-                          .pushNamed('/intro_backup', arguments: name);
-                    }),
+                      const Key('understandButton'),
+                      context,
+                      AppButtonType.primary,
+                      AppLocalization.of(context)!.understandButton,
+                      Dimens.buttonBottomDimens,
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed('/intro_backup', arguments: name);
+                      },
+                    ),
                   ],
                 ),
               ],

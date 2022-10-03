@@ -87,8 +87,9 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
               title: AppLocalization.of(context)!.createFungibleToken,
               widgetBeforeTitle: const NetworkIndicator(),
               widgetAfterTitle: BalanceIndicatorWidget(
-                  primaryCurrency: widget.primaryCurrency,
-                  displaySwitchButton: false),
+                primaryCurrency: widget.primaryCurrency,
+                displaySwitchButton: false,
+              ),
             ),
             Expanded(
               child: Container(
@@ -138,9 +139,12 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                             ),
                             Container(
                               margin: const EdgeInsets.only(top: 5, bottom: 5),
-                              child: Text(_nameValidationText!,
-                                  style: AppStyles.textStyleSize14W600Primary(
-                                      context)),
+                              child: Text(
+                                _nameValidationText!,
+                                style: AppStyles.textStyleSize14W600Primary(
+                                  context,
+                                ),
+                              ),
                             ),
                             AppTextField(
                               focusNode: _symbolFocusNode,
@@ -169,19 +173,26 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                             Container(
                               alignment: Alignment.centerLeft,
                               margin: const EdgeInsets.only(
-                                  left: 40, top: 5, bottom: 5),
+                                left: 40,
+                                top: 5,
+                                bottom: 5,
+                              ),
                               child: Text(
                                 AppLocalization.of(context)!
                                     .tokenSymbolMaxNumberCharacter,
                                 style: AppStyles.textStyleSize10W100Primary(
-                                    context),
+                                  context,
+                                ),
                               ),
                             ),
                             Container(
                               margin: const EdgeInsets.only(top: 5, bottom: 5),
-                              child: Text(_symbolValidationText!,
-                                  style: AppStyles.textStyleSize14W600Primary(
-                                      context)),
+                              child: Text(
+                                _symbolValidationText!,
+                                style: AppStyles.textStyleSize14W600Primary(
+                                  context,
+                                ),
+                              ),
                             ),
                             AppTextField(
                               focusNode: _initialSupplyFocusNode,
@@ -193,13 +204,16 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                   .tokenInitialSupplyHint,
                               keyboardType:
                                   const TextInputType.numberWithOptions(
-                                      signed: false, decimal: false),
+                                signed: false,
+                                decimal: false,
+                              ),
                               style:
                                   AppStyles.textStyleSize16W600Primary(context),
                               inputFormatters: [
                                 LengthLimitingTextInputFormatter(23),
                                 FilteringTextInputFormatter.allow(
-                                    RegExp(r'^\d+\.?\d{0,8}')),
+                                  RegExp(r'^\d+\.?\d{0,8}'),
+                                ),
                               ],
                               onChanged: (_) async {
                                 double fee = await getFee();
@@ -214,30 +228,37 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                               child: Text(
                                 _initialSupplyValidationText!,
                                 style: AppStyles.textStyleSize14W600Primary(
-                                    context),
+                                  context,
+                                ),
                               ),
                             ),
                             feeEstimation > 0
                                 ? Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 30, right: 30),
+                                      left: 30,
+                                      right: 30,
+                                    ),
                                     child: Text(
                                       '${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                       style:
                                           AppStyles.textStyleSize14W100Primary(
-                                              context),
+                                        context,
+                                      ),
                                       textAlign: TextAlign.justify,
                                     ),
                                   )
                                 : Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 30, right: 30),
+                                      left: 30,
+                                      right: 30,
+                                    ),
                                     child: Text(
                                       AppLocalization.of(context)!
                                           .estimatedFeesAddTokenNote,
                                       style:
                                           AppStyles.textStyleSize14W100Primary(
-                                              context),
+                                        context,
+                                      ),
                                       textAlign: TextAlign.justify,
                                     ),
                                   ),
@@ -290,8 +311,9 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                       tokenSymbol: _symbolController!.text,
                                       feeEstimation: feeEstimation,
                                       tokenInitialSupply: double.tryParse(
-                                          _initialSupplyController!.text
-                                              .replaceAll(' ', '')),
+                                        _initialSupplyController!.text
+                                            .replaceAll(' ', ''),
+                                      ),
                                     ),
                                   );
                                 } else {
@@ -341,7 +363,8 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
       if (double.tryParse(_initialSupplyController!.text.replaceAll(' ', '')) ==
               null ||
           double.tryParse(
-                  _initialSupplyController!.text.replaceAll(' ', ''))! <=
+                _initialSupplyController!.text.replaceAll(' ', ''),
+              )! <=
               0) {
         isValid = false;
         setState(() {
@@ -350,7 +373,8 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
         });
       } else {
         if (double.tryParse(
-                _initialSupplyController!.text.replaceAll(' ', ''))! >
+              _initialSupplyController!.text.replaceAll(' ', ''),
+            )! >
             9999999999) {
           isValid = false;
           setState(() {
@@ -372,13 +396,13 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
             .nativeTokenValue!) {
       isValid = false;
       setState(() {
-        _initialSupplyValidationText = AppLocalization.of(context)!
-            .insufficientBalance
-            .replaceAll(
-                '%1',
-                StateContainer.of(context)
-                    .curNetwork
-                    .getNetworkCryptoCurrencyLabel());
+        _initialSupplyValidationText =
+            AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                  '%1',
+                  StateContainer.of(context)
+                      .curNetwork
+                      .getNetworkCryptoCurrencyLabel(),
+                );
       });
     }
 
@@ -396,20 +420,25 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
       final String? seed = await StateContainer.of(context).getSeed();
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
       Token token = Token(
-          name: _nameController!.text,
-          supply: toBigInt(double.tryParse(
-              _initialSupplyController!.text.replaceAll(' ', ''))),
-          type: 'fungible',
-          symbol: _symbolController!.text);
+        name: _nameController!.text,
+        supply: toBigInt(
+          double.tryParse(
+            _initialSupplyController!.text.replaceAll(' ', ''),
+          ),
+        ),
+        type: 'fungible',
+        symbol: _symbolController!.text,
+      );
       fee = await sl.get<AppService>().getFeesEstimationCreateToken(
-          originPrivateKey,
-          seed!,
-          token,
-          StateContainer.of(context)
-              .appWallet!
-              .appKeychain!
-              .getAccountSelected()!
-              .name!);
+            originPrivateKey,
+            seed!,
+            token,
+            StateContainer.of(context)
+                .appWallet!
+                .appKeychain!
+                .getAccountSelected()!
+                .name!,
+          );
     } catch (e) {
       fee = 0;
     }

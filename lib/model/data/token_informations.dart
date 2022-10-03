@@ -10,15 +10,16 @@ part 'token_informations.g.dart';
 
 @HiveType(typeId: 9)
 class TokenInformations extends HiveObject {
-  TokenInformations(
-      {this.address,
-      this.name,
-      this.id,
-      this.supply,
-      this.type,
-      this.symbol,
-      this.tokenProperties,
-      this.onChain});
+  TokenInformations({
+    this.address,
+    this.name,
+    this.id,
+    this.supply,
+    this.type,
+    this.symbol,
+    this.tokenProperties,
+    this.onChain,
+  });
 
   /// Address of token
   @HiveField(0)

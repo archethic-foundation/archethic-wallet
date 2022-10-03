@@ -11,10 +11,11 @@ import 'package:aewallet/util/number_util.dart';
 
 /// Input formatter for Crypto/Fiat amounts
 class CurrencyFormatter extends TextInputFormatter {
-  CurrencyFormatter(
-      {this.commaSeparator = ',',
-      this.decimalSeparator = '.',
-      this.maxDecimalDigits = 2});
+  CurrencyFormatter({
+    this.commaSeparator = ',',
+    this.decimalSeparator = '.',
+    this.maxDecimalDigits = 2,
+  });
 
   String commaSeparator;
   String decimalSeparator;
@@ -22,7 +23,9 @@ class CurrencyFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     bool returnOriginal = true;
     if (newValue.text.contains(decimalSeparator) ||
         newValue.text.contains(commaSeparator)) {
@@ -39,8 +42,9 @@ class CurrencyFormatter extends TextInputFormatter {
     // if contains more than 2 decimals in newValue, return oldValue
     if (decimalSeparator.allMatches(workingText).length > 1) {
       return newValue.copyWith(
-          text: oldValue.text,
-          selection: TextSelection.collapsed(offset: oldValue.text.length));
+        text: oldValue.text,
+        selection: TextSelection.collapsed(offset: oldValue.text.length),
+      );
     } else if (workingText.startsWith(decimalSeparator)) {
       workingText = '0$workingText';
     }
@@ -61,16 +65,18 @@ class CurrencyFormatter extends TextInputFormatter {
         return newValue;
       } else {
         return newValue.copyWith(
-            text: workingText,
-            selection: TextSelection.collapsed(offset: workingText.length));
+          text: workingText,
+          selection: TextSelection.collapsed(offset: workingText.length),
+        );
       }
     }
     final String newText = splitStr[0] +
         decimalSeparator +
         splitStr[1].substring(0, maxDecimalDigits);
     return newValue.copyWith(
-        text: newText,
-        selection: TextSelection.collapsed(offset: newText.length));
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
   }
 }
 
@@ -82,12 +88,16 @@ class LocalCurrencyFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     if (newValue.text.trim() == currencyFormat.currencySymbol.trim() ||
         newValue.text.isEmpty) {
       // Return empty string
       return newValue.copyWith(
-          text: '', selection: const TextSelection.collapsed(offset: 0));
+        text: '',
+        selection: const TextSelection.collapsed(offset: 0),
+      );
     }
     // Ensure our input is in the right formatting here
     if (active) {
@@ -99,8 +109,9 @@ class LocalCurrencyFormatter extends TextInputFormatter {
           shouldBeText.replaceAll('.', currencyFormat.symbols.DECIMAL_SEP);
       if (shouldBeText != curText) {
         return newValue.copyWith(
-            text: shouldBeText,
-            selection: TextSelection.collapsed(offset: shouldBeText.length));
+          text: shouldBeText,
+          selection: TextSelection.collapsed(offset: shouldBeText.length),
+        );
       }
     } else {
       // Make crypto amount have no symbol and formatted as US locale
@@ -109,8 +120,9 @@ class LocalCurrencyFormatter extends TextInputFormatter {
           NumberUtil.sanitizeNumber(curText.replaceAll(',', '.'));
       if (shouldBeText != curText) {
         return newValue.copyWith(
-            text: shouldBeText,
-            selection: TextSelection.collapsed(offset: shouldBeText.length));
+          text: shouldBeText,
+          selection: TextSelection.collapsed(offset: shouldBeText.length),
+        );
       }
     }
     return newValue;
@@ -121,7 +133,9 @@ class LocalCurrencyFormatter extends TextInputFormatter {
 class ContactInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     if (newValue.selection.baseOffset == 0) {
       return newValue;
     }
@@ -143,8 +157,9 @@ class ContactInputFormatter extends TextInputFormatter {
     }
 
     return newValue.copyWith(
-        text: workingText,
-        selection: TextSelection.collapsed(offset: workingText.length));
+      text: workingText,
+      selection: TextSelection.collapsed(offset: workingText.length),
+    );
   }
 }
 
@@ -152,7 +167,9 @@ class ContactInputFormatter extends TextInputFormatter {
 class SingleSpaceInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     if (newValue.selection.baseOffset == 0) {
       return newValue;
     }
@@ -174,7 +191,9 @@ class SingleSpaceInputFormatter extends TextInputFormatter {
 class UpperCaseTextFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     return TextEditingValue(
       text: newValue.text.toUpperCase(),
       selection: newValue.selection,
@@ -186,7 +205,9 @@ class UpperCaseTextFormatter extends TextInputFormatter {
 class LowerCaseTextFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     return TextEditingValue(
       text: newValue.text.toLowerCase(),
       selection: newValue.selection,
@@ -200,9 +221,11 @@ class ThousandsSeparatorInputFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     // Short-circuit if the new value is empty
-    if (newValue.text.length == 0) {
+    if (newValue.text.isEmpty) {
       return newValue.copyWith(text: '');
     }
 

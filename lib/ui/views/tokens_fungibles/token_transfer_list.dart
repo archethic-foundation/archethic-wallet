@@ -29,8 +29,9 @@ class TokenTransferListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    listTokenTransfer!.sort((TokenTransferWallet a, TokenTransferWallet b) =>
-        a.to!.compareTo(b.to!));
+    listTokenTransfer!.sort(
+      (TokenTransferWallet a, TokenTransferWallet b) => a.to!.compareTo(b.to!),
+    );
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
       padding: const EdgeInsets.only(left: 3.5, right: 3.5),
@@ -53,13 +54,16 @@ class TokenTransferListWidget extends StatelessWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Text('+ ${AppLocalization.of(context)!.estimatedFees}',
-                        style: AppStyles.textStyleSize14W600Primary(context)),
+                    Text(
+                      '+ ${AppLocalization.of(context)!.estimatedFees}',
+                      style: AppStyles.textStyleSize14W600Primary(context),
+                    ),
                   ],
                 ),
                 Text(
-                    '${feeEstimation!.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                    style: AppStyles.textStyleSize14W600Primary(context)),
+                  '${feeEstimation!.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                  style: AppStyles.textStyleSize14W600Primary(context),
+                ),
               ],
             ),
           ),
@@ -69,7 +73,9 @@ class TokenTransferListWidget extends StatelessWidget {
   }
 
   Widget displayTokenDetail(
-      BuildContext context, TokenTransferWallet tokenTransfer) {
+    BuildContext context,
+    TokenTransferWallet tokenTransfer,
+  ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -78,21 +84,25 @@ class TokenTransferListWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            Text(AppLocalization.of(context)!.txListTo,
-                style: AppStyles.textStyleSize14W600Primary(context)),
             Text(
-                tokenTransfer.toContactName == null
-                    ? Address(tokenTransfer.to!).getShortString()
-                    : '${tokenTransfer.toContactName!}\n${Address(tokenTransfer.to!).getShortString()}',
-                style: AppStyles.textStyleSize14W600Primary(context)),
+              AppLocalization.of(context)!.txListTo,
+              style: AppStyles.textStyleSize14W600Primary(context),
+            ),
+            Text(
+              tokenTransfer.toContactName == null
+                  ? Address(tokenTransfer.to!).getShortString()
+                  : '${tokenTransfer.toContactName!}\n${Address(tokenTransfer.to!).getShortString()}',
+              style: AppStyles.textStyleSize14W600Primary(context),
+            ),
           ],
         ),
         const SizedBox(
           height: 20,
         ),
         Text(
-            '${NumberUtil.formatThousands(fromBigInt(tokenTransfer.amount!))} $symbol',
-            style: AppStyles.textStyleSize14W600Primary(context)),
+          '${NumberUtil.formatThousands(fromBigInt(tokenTransfer.amount!))} $symbol',
+          style: AppStyles.textStyleSize14W600Primary(context),
+        ),
       ],
     );
   }

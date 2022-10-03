@@ -24,9 +24,11 @@ enum OneLineAddressTextType { primary60, primary, success }
 // ignore: avoid_classes_with_only_static_members
 class UIUtil {
   static Widget threeLinetextStyleSmallestW400Text(
-      BuildContext context, String address,
-      {ThreeLineAddressTextType type = ThreeLineAddressTextType.primary,
-      String? contactName}) {
+    BuildContext context,
+    String address, {
+    ThreeLineAddressTextType type = ThreeLineAddressTextType.primary,
+    String? contactName,
+  }) {
     String stringPartOne = '';
     String stringPartTwo = '';
     String stringPartThree = '';
@@ -104,8 +106,9 @@ class UIUtil {
                     style: AppStyles.textStyleSize14W100Text60(context),
                   ),
                   TextSpan(
-                      text: stringPartFive,
-                      style: AppStyles.textStyleSize14W100Text60(context)),
+                    text: stringPartFive,
+                    style: AppStyles.textStyleSize14W100Text60(context),
+                  ),
                 ],
               ),
             )
@@ -116,8 +119,10 @@ class UIUtil {
             ? RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                    text: contactName,
-                    style: AppStyles.textStyleSize14W100Primary(context)))
+                  text: contactName,
+                  style: AppStyles.textStyleSize14W100Primary(context),
+                ),
+              )
             : const SizedBox();
         return Column(
           children: <Widget>[
@@ -175,8 +180,10 @@ class UIUtil {
   }
 
   static Widget oneLinetextStyleSmallestW400Text(
-      BuildContext context, String address,
-      {OneLineAddressTextType type = OneLineAddressTextType.primary}) {
+    BuildContext context,
+    String address, {
+    OneLineAddressTextType type = OneLineAddressTextType.primary,
+  }) {
     final String stringPartOne = address.substring(0, 12);
     final String stringPartFive = address.substring(59);
     switch (type) {
@@ -235,8 +242,11 @@ class UIUtil {
     }
   }
 
-  static Widget threeLineSeedText(BuildContext context, String address,
-      {TextStyle? textStyle}) {
+  static Widget threeLineSeedText(
+    BuildContext context,
+    String address, {
+    TextStyle? textStyle,
+  }) {
     textStyle = textStyle ?? AppStyles.textStyleSize14W100Primary(context);
     final String stringPartOne = address.substring(0, 22);
     final String stringPartTwo = address.substring(22, 44);
@@ -259,16 +269,21 @@ class UIUtil {
     );
   }
 
-  static void showSnackbar(String content, BuildContext context,
-      Color boxDecorationColor, Color boxShadowColor,
-      {Duration duration = const Duration(milliseconds: 3500)}) {
+  static void showSnackbar(
+    String content,
+    BuildContext context,
+    Color boxDecorationColor,
+    Color boxShadowColor, {
+    Duration duration = const Duration(milliseconds: 3500),
+  }) {
     showToastWidget(
       Align(
         alignment: Alignment.topCenter,
         child: Container(
           margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * 0.05,
-              horizontal: 14),
+            vertical: MediaQuery.of(context).size.height * 0.05,
+            horizontal: 14,
+          ),
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
           width: MediaQuery.of(context).size.width - 30,
           decoration: BoxDecoration(
@@ -276,10 +291,11 @@ class UIUtil {
             borderRadius: BorderRadius.circular(10),
             boxShadow: <BoxShadow>[
               BoxShadow(
-                  color: boxShadowColor,
-                  offset: const Offset(0, 15),
-                  blurRadius: 30,
-                  spreadRadius: -5),
+                color: boxShadowColor,
+                offset: const Offset(0, 15),
+                blurRadius: 30,
+                spreadRadius: -5,
+              ),
             ],
           ),
           child: Text(
@@ -321,7 +337,10 @@ class UIUtil {
   }
 
   static Future<void> showWebview(
-      BuildContext context, String url, String title) async {
+    BuildContext context,
+    String url,
+    String title,
+  ) async {
     await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   }
 }

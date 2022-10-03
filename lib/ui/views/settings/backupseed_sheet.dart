@@ -17,40 +17,42 @@ class AppSeedBackupSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TapOutsideUnfocus(
-        child: LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
-        minimum:
-            EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
-        child: Column(
-          children: <Widget>[
-            SheetHeader(
-              title: AppLocalization.of(context)!.recoveryPhrase,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: Column(
-                      children: <Widget>[
-                        mnemonic != null
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: 30),
-                                child: MnemonicDisplay(
-                                  wordList: mnemonic!,
-                                  obscureSeed: true,
-                                ),
-                              )
-                            : const SizedBox()
-                      ],
-                    ),
-                  ),
-                ],
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
+          minimum: EdgeInsets.only(
+            bottom: MediaQuery.of(context).size.height * 0.035,
+          ),
+          child: Column(
+            children: <Widget>[
+              SheetHeader(
+                title: AppLocalization.of(context)!.recoveryPhrase,
               ),
-            ),
-          ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        children: <Widget>[
+                          mnemonic != null
+                              ? Padding(
+                                  padding: const EdgeInsets.only(top: 30),
+                                  child: MnemonicDisplay(
+                                    wordList: mnemonic!,
+                                    obscureSeed: true,
+                                  ),
+                                )
+                              : const SizedBox()
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 }

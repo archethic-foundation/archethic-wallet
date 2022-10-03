@@ -52,16 +52,17 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show AddressService, isHex, ApiService, toBigInt;
 
 class TransferSheet extends StatefulWidget {
-  const TransferSheet(
-      {@required this.localCurrency,
-      this.contact,
-      this.address,
-      this.quickSendAmount,
-      this.title,
-      this.actionButtonTitle,
-      this.primaryCurrency,
-      this.accountToken,
-      super.key});
+  const TransferSheet({
+    @required this.localCurrency,
+    this.contact,
+    this.address,
+    this.quickSendAmount,
+    this.title,
+    this.actionButtonTitle,
+    this.primaryCurrency,
+    this.accountToken,
+    super.key,
+  });
 
   final AvailableCurrency? localCurrency;
   final Contact? contact;
@@ -173,7 +174,8 @@ class _TransferSheetState extends State<TransferSheet> {
     _sendAddressFocusNode!.addListener(() {
       if (_sendAddressFocusNode!.hasFocus) {
         _sendAddressController!.selection = TextSelection.fromPosition(
-            TextPosition(offset: _sendAddressController!.text.length));
+          TextPosition(offset: _sendAddressController!.text.length),
+        );
         if (_sendAddressController!.text.startsWith('@')) {
           sl
               .get<DBHelper>()
@@ -189,10 +191,12 @@ class _TransferSheetState extends State<TransferSheet> {
 
     // Set initial currency format
     _localCurrencyFormat = NumberFormat.currency(
-        locale: CurrencyUtil.getLocale(widget.localCurrency!.currency.name)
-            .toString(),
-        symbol: CurrencyUtil.getCurrencySymbol(
-            widget.localCurrency!.currency.name.toString()));
+      locale: CurrencyUtil.getLocale(widget.localCurrency!.currency.name)
+          .toString(),
+      symbol: CurrencyUtil.getCurrencySymbol(
+        widget.localCurrency!.currency.name.toString(),
+      ),
+    );
     // Set quick send amount
     if (quickSendAmount != null) {
       _sendAmountController!.text =
@@ -214,12 +218,13 @@ class _TransferSheetState extends State<TransferSheet> {
               title: widget.title ?? AppLocalization.of(context)!.send,
               widgetBeforeTitle: const NetworkIndicator(),
               widgetAfterTitle: BalanceIndicatorWidget(
-                  primaryCurrency: widget.primaryCurrency,
-                  onPrimaryCurrencySelected: (value) {
-                    setState(() {
-                      primaryCurrencySelected = value;
-                    });
-                  }),
+                primaryCurrency: widget.primaryCurrency,
+                onPrimaryCurrencySelected: (value) {
+                  setState(() {
+                    primaryCurrencySelected = value;
+                  });
+                },
+              ),
             ),
             Expanded(
               child: Container(
@@ -257,10 +262,12 @@ class _TransferSheetState extends State<TransferSheet> {
                                 Container(
                                   alignment: const AlignmentDirectional(0, 0),
                                   margin: const EdgeInsets.only(top: 3),
-                                  child: Text(_amountValidationText!,
-                                      style:
-                                          AppStyles.textStyleSize14W600Primary(
-                                              context)),
+                                  child: Text(
+                                    _amountValidationText!,
+                                    style: AppStyles.textStyleSize14W600Primary(
+                                      context,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -273,39 +280,50 @@ class _TransferSheetState extends State<TransferSheet> {
                                 Container(
                                   alignment: const AlignmentDirectional(0, 0),
                                   margin: const EdgeInsets.only(
-                                      left: 50, right: 40, top: 3),
-                                  child: Text(_addressValidationText!,
-                                      style:
-                                          AppStyles.textStyleSize14W600Primary(
-                                              context)),
+                                    left: 50,
+                                    right: 40,
+                                    top: 3,
+                                  ),
+                                  child: Text(
+                                    _addressValidationText!,
+                                    style: AppStyles.textStyleSize14W600Primary(
+                                      context,
+                                    ),
+                                  ),
                                 ),
                                 const SizedBox(height: 10),
                                 Container(
                                   margin: const EdgeInsets.symmetric(
-                                      horizontal: 30),
+                                    horizontal: 30,
+                                  ),
                                   child: feeEstimation > 0
                                       ? Text(
                                           '+ ${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                           style: AppStyles
                                               .textStyleSize14W100Primary(
-                                                  context),
+                                            context,
+                                          ),
                                         )
                                       : Text(
                                           AppLocalization.of(context)!
                                               .estimatedFeesNote,
                                           style: AppStyles
                                               .textStyleSize14W100Primary(
-                                                  context)),
+                                            context,
+                                          ),
+                                        ),
                                 ),
                                 Container(
                                   margin: const EdgeInsets.symmetric(
-                                      horizontal: 30),
+                                    horizontal: 30,
+                                  ),
                                   child: feeEstimation > 0
                                       ? Text(
                                           '(${CurrencyUtil.convertAmountFormatedWithNumberOfDigits(StateContainer.of(context).curCurrency.currency.name, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!, feeEstimation, 8)})',
                                           style: AppStyles
                                               .textStyleSize14W100Primary(
-                                                  context),
+                                            context,
+                                          ),
                                         )
                                       : const SizedBox(),
                                 ),
@@ -314,11 +332,16 @@ class _TransferSheetState extends State<TransferSheet> {
                                 Container(
                                   alignment: const AlignmentDirectional(0, 0),
                                   margin: const EdgeInsets.only(
-                                      left: 50, right: 40, top: 3),
-                                  child: Text(_messageValidationText!,
-                                      style:
-                                          AppStyles.textStyleSize14W600Primary(
-                                              context)),
+                                    left: 50,
+                                    right: 40,
+                                    top: 3,
+                                  ),
+                                  child: Text(
+                                    _messageValidationText!,
+                                    style: AppStyles.textStyleSize14W600Primary(
+                                      context,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -494,13 +517,13 @@ class _TransferSheetState extends State<TransferSheet> {
           if (sendAmount + feeEstimation > balanceRaw) {
             isValid = false;
             setState(() {
-              _amountValidationText = AppLocalization.of(context)!
-                  .insufficientBalance
-                  .replaceAll(
-                      '%1',
-                      StateContainer.of(context)
-                          .curNetwork
-                          .getNetworkCryptoCurrencyLabel());
+              _amountValidationText =
+                  AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                        '%1',
+                        StateContainer.of(context)
+                            .curNetwork
+                            .getNetworkCryptoCurrencyLabel(),
+                      );
             });
           } else {
             ucoTransfer.amount = toBigInt(sendAmount);
@@ -511,10 +534,11 @@ class _TransferSheetState extends State<TransferSheet> {
           if (sendAmount > balanceRaw) {
             isValid = false;
             setState(() {
-              _amountValidationText = AppLocalization.of(context)!
-                  .insufficientBalance
-                  .replaceAll(
-                      '%1', widget.accountToken!.tokenInformations!.symbol!);
+              _amountValidationText =
+                  AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                        '%1',
+                        widget.accountToken!.tokenInformations!.symbol!,
+                      );
             });
           } else {
             if (feeEstimation >
@@ -526,13 +550,13 @@ class _TransferSheetState extends State<TransferSheet> {
                     .nativeTokenValue!) {
               isValid = false;
               setState(() {
-                _amountValidationText = AppLocalization.of(context)!
-                    .insufficientBalance
-                    .replaceAll(
-                        '%1',
-                        StateContainer.of(context)
-                            .curNetwork
-                            .getNetworkCryptoCurrencyLabel());
+                _amountValidationText =
+                    AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                          '%1',
+                          StateContainer.of(context)
+                              .curNetwork
+                              .getNetworkCryptoCurrencyLabel(),
+                        );
               });
             } else {
               tokenTransfer.amount = toBigInt(sendAmount);
@@ -627,18 +651,19 @@ class _TransferSheetState extends State<TransferSheet> {
               .lastAddress!) {
         isValid = false;
         if (widget.accountToken == null) {
-          _addressValidationText = AppLocalization.of(context)!
-              .sendToMeError
-              .replaceAll(
-                  '%1',
-                  StateContainer.of(context)
-                      .curNetwork
-                      .getNetworkCryptoCurrencyLabel());
+          _addressValidationText =
+              AppLocalization.of(context)!.sendToMeError.replaceAll(
+                    '%1',
+                    StateContainer.of(context)
+                        .curNetwork
+                        .getNetworkCryptoCurrencyLabel(),
+                  );
         } else {
-          _addressValidationText = AppLocalization.of(context)!
-              .sendToMeError
-              .replaceAll(
-                  '%1', widget.accountToken!.tokenInformations!.symbol!);
+          _addressValidationText =
+              AppLocalization.of(context)!.sendToMeError.replaceAll(
+                    '%1',
+                    widget.accountToken!.tokenInformations!.symbol!,
+                  );
         }
         setState(() {
           _qrCodeButtonVisible = true;
@@ -674,15 +699,17 @@ class _TransferSheetState extends State<TransferSheet> {
           inputFormatters: [
             LengthLimitingTextInputFormatter(16),
             CurrencyFormatter(
-                maxDecimalDigits: widget
-                            .primaryCurrency!.primaryCurrency.name ==
-                        PrimaryCurrencySetting(AvailablePrimaryCurrency.native)
-                            .primaryCurrency
-                            .name
-                    ? 8
-                    : _localCurrencyFormat!.decimalDigits!),
+              maxDecimalDigits: widget.primaryCurrency!.primaryCurrency.name ==
+                      PrimaryCurrencySetting(AvailablePrimaryCurrency.native)
+                          .primaryCurrency
+                          .name
+                  ? 8
+                  : _localCurrencyFormat!.decimalDigits!,
+            ),
             LocalCurrencyFormatter(
-                active: false, currencyFormat: _localCurrencyFormat!),
+              active: false,
+              currencyFormat: _localCurrencyFormat!,
+            ),
             FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,8}')),
           ],
           onChanged: (String text) async {
@@ -716,8 +743,10 @@ class _TransferSheetState extends State<TransferSheet> {
           suffixButton: TextFieldButton(
             icon: FontAwesomeIcons.anglesUp,
             onPressed: () async {
-              sl.get<HapticUtil>().feedback(FeedbackType.light,
-                  StateContainer.of(context).activeVibrations);
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    StateContainer.of(context).activeVibrations,
+                  );
               double fee = await getFee(maxSend: true);
 
               double sendAmount = 0;
@@ -762,14 +791,17 @@ class _TransferSheetState extends State<TransferSheet> {
 
               feeEstimation = await getFee();
               _sendAddressController!.selection = TextSelection.fromPosition(
-                  TextPosition(offset: _sendAddressController!.text.length));
+                TextPosition(offset: _sendAddressController!.text.length),
+              );
             },
           ),
           fadeSuffixOnCondition: true,
           suffixShowFirstCondition:
               widget.accountToken == null && !_isMaxSend(),
           keyboardType: const TextInputType.numberWithOptions(
-              signed: true, decimal: true),
+            signed: true,
+            decimal: true,
+          ),
           textAlign: TextAlign.center,
           onSubmitted: (String text) {
             FocusScope.of(context).unfocus();
@@ -800,12 +832,16 @@ class _TransferSheetState extends State<TransferSheet> {
                                   '= ${_convertNetworkCurrencyToSelectedCurrency()}',
                                   textAlign: TextAlign.right,
                                   style: AppStyles.textStyleSize14W100Primary(
-                                      context))
+                                    context,
+                                  ),
+                                )
                               : Text(
                                   '= ${_convertSelectedCurrencyToNetworkCurrency()}',
                                   textAlign: TextAlign.right,
                                   style: AppStyles.textStyleSize14W100Primary(
-                                      context)),
+                                    context,
+                                  ),
+                                ),
                         )
                       : const SizedBox(),
                 ],
@@ -851,183 +887,193 @@ class _TransferSheetState extends State<TransferSheet> {
 
   AppTextField getEnterAddressContainer() {
     return AppTextField(
-        padding: _addressValidAndUnfocused
-            ? const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0)
-            : EdgeInsets.zero,
-        textAlign: TextAlign.center,
-        focusNode: _sendAddressFocusNode,
-        controller: _sendAddressController,
-        cursorColor: StateContainer.of(context).curTheme.text,
-        inputFormatters: <LengthLimitingTextInputFormatter>[
-          if (_isContact)
-            LengthLimitingTextInputFormatter(20)
-          else
-            LengthLimitingTextInputFormatter(68),
-        ],
-        textInputAction: TextInputAction.done,
-        maxLines: null,
-        autocorrect: false,
-        labelText: AppLocalization.of(context)!.enterAddress,
-        prefixButton: TextFieldButton(
-          icon: FontAwesomeIcons.at,
-          onPressed: () async {
-            sl.get<HapticUtil>().feedback(FeedbackType.light,
-                StateContainer.of(context).activeVibrations);
+      padding: _addressValidAndUnfocused
+          ? const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0)
+          : EdgeInsets.zero,
+      textAlign: TextAlign.center,
+      focusNode: _sendAddressFocusNode,
+      controller: _sendAddressController,
+      cursorColor: StateContainer.of(context).curTheme.text,
+      inputFormatters: <LengthLimitingTextInputFormatter>[
+        if (_isContact)
+          LengthLimitingTextInputFormatter(20)
+        else
+          LengthLimitingTextInputFormatter(68),
+      ],
+      textInputAction: TextInputAction.done,
+      maxLines: null,
+      autocorrect: false,
+      labelText: AppLocalization.of(context)!.enterAddress,
+      prefixButton: TextFieldButton(
+        icon: FontAwesomeIcons.at,
+        onPressed: () async {
+          sl.get<HapticUtil>().feedback(
+                FeedbackType.light,
+                StateContainer.of(context).activeVibrations,
+              );
 
-            Contact? contact = await ContactsDialog.getDialog(context);
-            if (contact != null && contact.name != null) {
-              _sendAddressController!.text = contact.name!;
-              _sendAddressStyle = AddressStyle.text90;
-              double fee = await getFee();
-              setState(() {
-                feeEstimation = fee;
-              });
-            }
-          },
-        ),
-        fadePrefixOnCondition: true,
-        prefixShowFirstCondition: true,
-        suffixButton: kIsWeb == false && (Platform.isIOS || Platform.isAndroid)
-            ? TextFieldButton(
-                icon: FontAwesomeIcons.qrcode,
-                onPressed: () async {
-                  if (!_qrCodeButtonVisible) {
-                    return;
-                  }
-                  sl.get<HapticUtil>().feedback(FeedbackType.light,
-                      StateContainer.of(context).activeVibrations);
-                  UIUtil.cancelLockEvent();
-                  final String? scanResult =
-                      await UserDataUtil.getQRData(DataType.address, context);
-                  QRScanErrs.errorList;
-                  if (scanResult == null) {
-                    UIUtil.showSnackbar(
-                        AppLocalization.of(context)!.qrInvalidAddress,
-                        context,
-                        StateContainer.of(context).curTheme.text!,
-                        StateContainer.of(context).curTheme.snackBarShadow!);
-                  } else if (QRScanErrs.errorList.contains(scanResult)) {
-                    UIUtil.showSnackbar(
-                        scanResult,
-                        context,
-                        StateContainer.of(context).curTheme.text!,
-                        StateContainer.of(context).curTheme.snackBarShadow!);
-                    return;
-                  } else {
-                    // Is a URI
-                    final Address address = Address(scanResult);
-                    // See if this address belongs to a contact
-                    final Contact? contact;
-
-                    contact = await sl
-                        .get<DBHelper>()
-                        .getContactWithAddress(address.address);
-
-                    if (contact != null) {
-                      setState(() {
-                        _isContact = true;
-                        _addressValidationText = '';
-                        _sendAddressStyle = AddressStyle.primary;
-                        _qrCodeButtonVisible = false;
-                      });
-                      if (contact.name != null) {
-                        _sendAddressController!.text = contact.name!;
-                      }
-                    } else {
-                      setState(() {
-                        _isContact = false;
-                        _addressValidationText = '';
-                        _sendAddressStyle = AddressStyle.text90;
-                        _qrCodeButtonVisible = false;
-                      });
-                      _sendAddressController!.text = address.address;
-                      _sendAddressFocusNode!.unfocus();
-                      setState(() {
-                        _addressValidAndUnfocused = true;
-                      });
-                    }
-                  }
-                },
-              )
-            : null,
-        fadeSuffixOnCondition: true,
-        suffixShowFirstCondition: _qrCodeButtonVisible,
-        style: _sendAddressStyle == AddressStyle.text60
-            ? AppStyles.textStyleSize14W700Text60(context)
-            : _sendAddressStyle == AddressStyle.text90
-                ? AppStyles.textStyleSize14W700Primary(context)
-                : AppStyles.textStyleSize14W700Primary(context),
-        onChanged: (String text) async {
-          double fee = await getFee();
-          if (text.isNotEmpty) {
+          Contact? contact = await ContactsDialog.getDialog(context);
+          if (contact != null && contact.name != null) {
+            _sendAddressController!.text = contact.name!;
+            _sendAddressStyle = AddressStyle.text90;
+            double fee = await getFee();
             setState(() {
               feeEstimation = fee;
             });
-          } else {
-            setState(() {
-              feeEstimation = fee;
-            });
-          }
-          final bool isContact = text.startsWith('@');
-          // Switch to contact mode if starts with @
-          if (isContact) {
-            setState(() {
-              _isContact = true;
-            });
-            sl
-                .get<DBHelper>()
-                .getContactsWithNameLike(text)
-                .then((List<Contact> matchedList) {});
-          } else {
-            setState(() {
-              _isContact = false;
-            });
-          }
-          // Always reset the error message to be less annoying
-          setState(() {
-            _addressValidationText = '';
-          });
-          if (!isContact && Address(text).isValid()) {
-            //_sendAddressFocusNode.unfocus();
-            setState(() {
-              _sendAddressStyle = AddressStyle.text90;
-              _addressValidationText = '';
-              _qrCodeButtonVisible = true;
-            });
-          } else if (!isContact) {
-            setState(() {
-              _sendAddressStyle = AddressStyle.text60;
-              _qrCodeButtonVisible = true;
-            });
-          } else {
-            try {
-              await sl.get<DBHelper>().getContactWithName(text);
-              setState(() {
-                _qrCodeButtonVisible = false;
-                _addressValidationText = '';
-                _sendAddressStyle = AddressStyle.primary;
-              });
-            } on Exception {
-              setState(() {
-                _sendAddressStyle = AddressStyle.text60;
-              });
-            }
           }
         },
-        overrideTextFieldWidget: _addressValidAndUnfocused
-            ? GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _addressValidAndUnfocused = false;
-                    _addressValidationText = '';
-                  });
-                  Future<void>.delayed(const Duration(milliseconds: 50), () {
-                    FocusScope.of(context).requestFocus(_sendAddressFocusNode);
-                  });
-                },
-                child: UIUtil.threeLinetextStyleSmallestW400Text(
-                    context, _sendAddressController!.text))
-            : null);
+      ),
+      fadePrefixOnCondition: true,
+      prefixShowFirstCondition: true,
+      suffixButton: kIsWeb == false && (Platform.isIOS || Platform.isAndroid)
+          ? TextFieldButton(
+              icon: FontAwesomeIcons.qrcode,
+              onPressed: () async {
+                if (!_qrCodeButtonVisible) {
+                  return;
+                }
+                sl.get<HapticUtil>().feedback(
+                      FeedbackType.light,
+                      StateContainer.of(context).activeVibrations,
+                    );
+                UIUtil.cancelLockEvent();
+                final String? scanResult =
+                    await UserDataUtil.getQRData(DataType.address, context);
+                QRScanErrs.errorList;
+                if (scanResult == null) {
+                  UIUtil.showSnackbar(
+                    AppLocalization.of(context)!.qrInvalidAddress,
+                    context,
+                    StateContainer.of(context).curTheme.text!,
+                    StateContainer.of(context).curTheme.snackBarShadow!,
+                  );
+                } else if (QRScanErrs.errorList.contains(scanResult)) {
+                  UIUtil.showSnackbar(
+                    scanResult,
+                    context,
+                    StateContainer.of(context).curTheme.text!,
+                    StateContainer.of(context).curTheme.snackBarShadow!,
+                  );
+                  return;
+                } else {
+                  // Is a URI
+                  final Address address = Address(scanResult);
+                  // See if this address belongs to a contact
+                  final Contact? contact;
+
+                  contact = await sl
+                      .get<DBHelper>()
+                      .getContactWithAddress(address.address);
+
+                  if (contact != null) {
+                    setState(() {
+                      _isContact = true;
+                      _addressValidationText = '';
+                      _sendAddressStyle = AddressStyle.primary;
+                      _qrCodeButtonVisible = false;
+                    });
+                    if (contact.name != null) {
+                      _sendAddressController!.text = contact.name!;
+                    }
+                  } else {
+                    setState(() {
+                      _isContact = false;
+                      _addressValidationText = '';
+                      _sendAddressStyle = AddressStyle.text90;
+                      _qrCodeButtonVisible = false;
+                    });
+                    _sendAddressController!.text = address.address;
+                    _sendAddressFocusNode!.unfocus();
+                    setState(() {
+                      _addressValidAndUnfocused = true;
+                    });
+                  }
+                }
+              },
+            )
+          : null,
+      fadeSuffixOnCondition: true,
+      suffixShowFirstCondition: _qrCodeButtonVisible,
+      style: _sendAddressStyle == AddressStyle.text60
+          ? AppStyles.textStyleSize14W700Text60(context)
+          : _sendAddressStyle == AddressStyle.text90
+              ? AppStyles.textStyleSize14W700Primary(context)
+              : AppStyles.textStyleSize14W700Primary(context),
+      onChanged: (String text) async {
+        double fee = await getFee();
+        if (text.isNotEmpty) {
+          setState(() {
+            feeEstimation = fee;
+          });
+        } else {
+          setState(() {
+            feeEstimation = fee;
+          });
+        }
+        final bool isContact = text.startsWith('@');
+        // Switch to contact mode if starts with @
+        if (isContact) {
+          setState(() {
+            _isContact = true;
+          });
+          sl
+              .get<DBHelper>()
+              .getContactsWithNameLike(text)
+              .then((List<Contact> matchedList) {});
+        } else {
+          setState(() {
+            _isContact = false;
+          });
+        }
+        // Always reset the error message to be less annoying
+        setState(() {
+          _addressValidationText = '';
+        });
+        if (!isContact && Address(text).isValid()) {
+          //_sendAddressFocusNode.unfocus();
+          setState(() {
+            _sendAddressStyle = AddressStyle.text90;
+            _addressValidationText = '';
+            _qrCodeButtonVisible = true;
+          });
+        } else if (!isContact) {
+          setState(() {
+            _sendAddressStyle = AddressStyle.text60;
+            _qrCodeButtonVisible = true;
+          });
+        } else {
+          try {
+            await sl.get<DBHelper>().getContactWithName(text);
+            setState(() {
+              _qrCodeButtonVisible = false;
+              _addressValidationText = '';
+              _sendAddressStyle = AddressStyle.primary;
+            });
+          } on Exception {
+            setState(() {
+              _sendAddressStyle = AddressStyle.text60;
+            });
+          }
+        }
+      },
+      overrideTextFieldWidget: _addressValidAndUnfocused
+          ? GestureDetector(
+              onTap: () {
+                setState(() {
+                  _addressValidAndUnfocused = false;
+                  _addressValidationText = '';
+                });
+                Future<void>.delayed(const Duration(milliseconds: 50), () {
+                  FocusScope.of(context).requestFocus(_sendAddressFocusNode);
+                });
+              },
+              child: UIUtil.threeLinetextStyleSmallestW400Text(
+                context,
+                _sendAddressController!.text,
+              ),
+            )
+          : null,
+    );
   }
 
   Future<double> getFee({maxSend = false}) async {
@@ -1067,44 +1113,51 @@ class _TransferSheetState extends State<TransferSheet> {
       List<TokenTransferWallet> tokenTransferListForFee =
           List<TokenTransferWallet>.empty(growable: true);
       if (widget.accountToken == null) {
-        ucoTransferListForFee.add(UCOTransferWallet(
+        ucoTransferListForFee.add(
+          UCOTransferWallet(
             amount: maxSend
-                ? toBigInt(StateContainer.of(context)
+                ? toBigInt(
+                    StateContainer.of(context)
                         .appWallet!
                         .appKeychain!
                         .getAccountSelected()!
                         .balance!
-                        .nativeTokenValue!)
-                    .toInt()
+                        .nativeTokenValue!,
+                  ).toInt()
                 : toBigInt(double.tryParse(_sendAmountController!.text)!),
-            to: recipientAddress));
+            to: recipientAddress,
+          ),
+        );
       } else {
-        tokenTransferListForFee.add(TokenTransferWallet(
-          amount: maxSend
-              ? toBigInt(widget.accountToken!.amount!)
-              : toBigInt(double.tryParse(_sendAmountController!.text)),
-          to: recipientAddress,
-          tokenAddress: widget.accountToken!.tokenInformations!.address,
-        ));
+        tokenTransferListForFee.add(
+          TokenTransferWallet(
+            amount: maxSend
+                ? toBigInt(widget.accountToken!.amount!)
+                : toBigInt(double.tryParse(_sendAmountController!.text)),
+            to: recipientAddress,
+            tokenAddress: widget.accountToken!.tokenInformations!.address,
+          ),
+        );
       }
 
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
       fee = await sl.get<AppService>().getFeesEstimation(
-          originPrivateKey,
-          seed!,
-          StateContainer.of(context)
-              .appWallet!
-              .appKeychain!
-              .getAccountSelected()!
-              .lastAddress!,
-          ucoTransferListForFee,
-          tokenTransferListForFee,
-          _messageController!.text,
-          StateContainer.of(context)
-              .appWallet!
-              .appKeychain!
-              .getAccountSelected()!
-              .name!);
+            originPrivateKey,
+            seed!,
+            StateContainer.of(context)
+                .appWallet!
+                .appKeychain!
+                .getAccountSelected()!
+                .lastAddress!,
+            ucoTransferListForFee,
+            tokenTransferListForFee,
+            _messageController!.text,
+            StateContainer.of(context)
+                .appWallet!
+                .appKeychain!
+                .getAccountSelected()!
+                .name!,
+          );
     } catch (e) {
       fee = 0;
     }
@@ -1112,38 +1165,44 @@ class _TransferSheetState extends State<TransferSheet> {
   }
 
   String _convertSelectedCurrencyToNetworkCurrency() {
-    String convertedAmt = _sendAmountController!.text.replaceAll(",", ".");
+    String convertedAmt = _sendAmountController!.text.replaceAll(',', '.');
     convertedAmt = NumberUtil.sanitizeNumber(convertedAmt);
     if (convertedAmt.isEmpty || double.tryParse(convertedAmt) == 0) {
       return '';
     }
     priceConverted = (Decimal.parse(convertedAmt) /
-            Decimal.parse(StateContainer.of(context)
-                .appWallet!
-                .appKeychain!
-                .getAccountSelected()!
-                .balance!
-                .tokenPrice!
-                .amount!
-                .toString()))
+            Decimal.parse(
+              StateContainer.of(context)
+                  .appWallet!
+                  .appKeychain!
+                  .getAccountSelected()!
+                  .balance!
+                  .tokenPrice!
+                  .amount!
+                  .toString(),
+            ))
         .toDouble();
     return '${priceConverted.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}';
   }
 
   String _convertNetworkCurrencyToSelectedCurrency() {
-    String convertedAmt = NumberUtil.sanitizeNumber(_sendAmountController!.text,
-        maxDecimalDigits: _localCurrencyFormat!.decimalDigits!);
+    String convertedAmt = NumberUtil.sanitizeNumber(
+      _sendAmountController!.text,
+      maxDecimalDigits: _localCurrencyFormat!.decimalDigits!,
+    );
     if (convertedAmt.isEmpty) {
       return '';
     }
-    priceConverted = (Decimal.parse(StateContainer.of(context)
-                .appWallet!
-                .appKeychain!
-                .getAccountSelected()!
-                .balance!
-                .tokenPrice!
-                .amount!
-                .toString()) *
+    priceConverted = (Decimal.parse(
+              StateContainer.of(context)
+                  .appWallet!
+                  .appKeychain!
+                  .getAccountSelected()!
+                  .balance!
+                  .tokenPrice!
+                  .amount!
+                  .toString(),
+            ) *
             Decimal.parse(convertedAmt))
         .toDouble();
     return _localCurrencyFormat!.format(priceConverted);

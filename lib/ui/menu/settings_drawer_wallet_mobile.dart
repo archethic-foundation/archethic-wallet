@@ -182,7 +182,10 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
 
   Future<void> _authMethodDialog() async {
     await AuthentificationMethodDialog.getDialog(
-        context, _hasBiometrics, _curAuthMethod);
+      context,
+      _hasBiometrics,
+      _curAuthMethod,
+    );
   }
 
   Future<void> _lockDialog() async {
@@ -202,6 +205,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     await PrimaryCurrencyDialog.getDialog(context);
   }
 
+  /// TODO is this useful ?
   Future<void> _networkDialog() async {
     NetworksSetting? ns =
         await NetworkDialog.getDialog(context, _curNetworksSetting);
@@ -262,12 +266,17 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
               ),
             ),
             SlideTransition(
-                position: _securityOffsetFloat!,
-                child: buildSecurityMenu(context)),
+              position: _securityOffsetFloat!,
+              child: buildSecurityMenu(context),
+            ),
             SlideTransition(
-                position: _customOffsetFloat!, child: buildCustomMenu(context)),
+              position: _customOffsetFloat!,
+              child: buildCustomMenu(context),
+            ),
             SlideTransition(
-                position: _aboutOffsetFloat!, child: buildAboutMenu(context)),
+              position: _aboutOffsetFloat!,
+              child: buildAboutMenu(context),
+            ),
           ],
         ),
       ),
@@ -295,41 +304,46 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
           children: <Widget>[
             // Settings items
             Expanded(
-                child: Stack(
-              children: <Widget>[
-                ListView(
-                  padding: const EdgeInsets.only(top: 15.0),
-                  children: <Widget>[
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: StateContainer.of(context).curTheme.text05,
-                      ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        margin: const EdgeInsetsDirectional.only(
-                            top: 15.0, bottom: 15.0),
-                        child: Text(AppLocalization.of(context)!.manage,
-                            style: AppStyles.textStyleSize20W700EquinoxPrimary(
-                                context)),
-                      ),
-                    ),
-                    if (StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
-                        .balance!
-                        .isNativeTokenValuePositive())
+              child: Stack(
+                children: <Widget>[
+                  ListView(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    children: <Widget>[
                       Divider(
                         height: 2,
                         color: StateContainer.of(context).curTheme.text15,
-                      )
-                    else
-                      const SizedBox(),
-                    /* if (StateContainer.of(context).wallet != null &&
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: StateContainer.of(context).curTheme.text05,
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsetsDirectional.only(
+                            top: 15.0,
+                            bottom: 15.0,
+                          ),
+                          child: Text(
+                            AppLocalization.of(context)!.manage,
+                            style: AppStyles.textStyleSize20W700EquinoxPrimary(
+                              context,
+                            ),
+                          ),
+                        ),
+                      ),
+                      if (StateContainer.of(context)
+                          .appWallet!
+                          .appKeychain!
+                          .getAccountSelected()!
+                          .balance!
+                          .isNativeTokenValuePositive())
+                        Divider(
+                          height: 2,
+                          color: StateContainer.of(context).curTheme.text15,
+                        )
+                      else
+                        const SizedBox(),
+                      /* if (StateContainer.of(context).wallet != null &&
                         StateContainer.of(context)
                                 .wallet!
                                 .accountBalance
@@ -359,133 +373,155 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,
                     ),*/
-                    AppSettings.buildSettingsListItemSingleLineWithInfos(
+                      AppSettings.buildSettingsListItemSingleLineWithInfos(
                         context,
                         AppLocalization.of(context)!.addressBookHeader,
                         AppLocalization.of(context)!.addressBookDesc,
                         icon: 'assets/icons/address-book.png',
-                        iconColor: StateContainer.of(context)
-                            .curTheme
-                            .iconDrawer!, onPressed: () {
-                      _contactsOpen = true;
-                      _contactsController!.forward();
-                    }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: StateContainer.of(context).curTheme.text05,
+                        iconColor:
+                            StateContainer.of(context).curTheme.iconDrawer!,
+                        onPressed: () {
+                          _contactsOpen = true;
+                          _contactsController!.forward();
+                        },
                       ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        margin: const EdgeInsetsDirectional.only(
-                            top: 15.0, bottom: 15.0),
-                        child: Text(AppLocalization.of(context)!.preferences,
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: StateContainer.of(context).curTheme.text05,
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsetsDirectional.only(
+                            top: 15.0,
+                            bottom: 15.0,
+                          ),
+                          child: Text(
+                            AppLocalization.of(context)!.preferences,
                             style: AppStyles.textStyleSize20W700EquinoxPrimary(
-                                context)),
+                              context,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemSingleLine(
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.securityHeader,
                         AppStyles.textStyleSize16W600EquinoxPrimary(context),
                         'assets/icons/encrypted.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () {
-                      _securityOpen = true;
-                      _securityController!.forward();
-                    }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemSingleLine(
+                          _securityOpen = true;
+                          _securityController!.forward();
+                        },
+                      ),
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.customHeader,
                         AppStyles.textStyleSize16W600EquinoxPrimary(context),
                         'assets/icons/brush.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () {
-                      _customOpen = true;
-                      _customController!.forward();
-                    }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: StateContainer.of(context).curTheme.text05,
+                          _customOpen = true;
+                          _customController!.forward();
+                        },
                       ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        margin: const EdgeInsetsDirectional.only(
-                            top: 15.0, bottom: 15.0),
-                        child: Text(AppLocalization.of(context)!.informations,
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: StateContainer.of(context).curTheme.text05,
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsetsDirectional.only(
+                            top: 15.0,
+                            bottom: 15.0,
+                          ),
+                          child: Text(
+                            AppLocalization.of(context)!.informations,
                             style: AppStyles.textStyleSize20W700EquinoxPrimary(
-                                context)),
+                              context,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemSingleLineWithInfos(
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemSingleLineWithInfos(
                         context,
                         AppLocalization.of(context)!.aeWebsiteLinkHeader,
                         AppLocalization.of(context)!.aeWebsiteLinkDesc,
                         icon: 'assets/icons/home.png',
-                        iconColor: StateContainer.of(context)
-                            .curTheme
-                            .iconDrawer!, onPressed: () async {
-                      UIUtil.showWebview(context, 'https://www.archethic.net',
-                          AppLocalization.of(context)!.aeWebsiteLinkHeader);
-                    }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemSingleLineWithInfos(
+                        iconColor:
+                            StateContainer.of(context).curTheme.iconDrawer!,
+                        onPressed: () async {
+                          UIUtil.showWebview(
+                            context,
+                            'https://www.archethic.net',
+                            AppLocalization.of(context)!.aeWebsiteLinkHeader,
+                          );
+                        },
+                      ),
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemSingleLineWithInfos(
                         context,
                         AppLocalization.of(context)!.labLinkHeader,
                         AppLocalization.of(context)!.labLinkDesc,
                         icon: 'assets/icons/microscope.png',
-                        iconColor: StateContainer.of(context)
-                            .curTheme
-                            .iconDrawer!, onPressed: () async {
-                      UIUtil.showWebview(
-                          context,
-                          'https://www.archethic.net/lab.html',
-                          AppLocalization.of(context)!.labLinkHeader);
-                    }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemSingleLine(
+                        iconColor:
+                            StateContainer.of(context).curTheme.iconDrawer!,
+                        onPressed: () async {
+                          UIUtil.showWebview(
+                            context,
+                            'https://www.archethic.net/lab.html',
+                            AppLocalization.of(context)!.labLinkHeader,
+                          );
+                        },
+                      ),
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutHeader,
                         AppStyles.textStyleSize16W600EquinoxPrimary(context),
                         'assets/icons/help.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () {
-                      _aboutOpen = true;
-                      _aboutController!.forward();
-                    }),
-                    Divider(
+                          _aboutOpen = true;
+                          _aboutController!.forward();
+                        },
+                      ),
+                      Divider(
                         height: 2,
-                        color: StateContainer.of(context).curTheme.text15),
-                    const SizedBox(height: 30),
-                  ].where(notNull).toList(),
-                ),
-              ],
-            )),
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      const SizedBox(height: 30),
+                    ].where(notNull).toList(),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -537,7 +573,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       Text(
                         AppLocalization.of(context)!.securityHeader,
                         style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                            context),
+                          context,
+                        ),
                       ),
                     ],
                   ),
@@ -545,29 +582,34 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
               ),
             ),
             Expanded(
-                child: Stack(
-              children: <Widget>[
-                ListView(
-                  padding: const EdgeInsets.only(top: 15.0),
-                  children: <Widget>[
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: StateContainer.of(context).curTheme.text05,
+              child: Stack(
+                children: <Widget>[
+                  ListView(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    children: <Widget>[
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
                       ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        margin: const EdgeInsetsDirectional.only(
-                            top: 15, bottom: 15),
-                        child: Text(AppLocalization.of(context)!.preferences,
+                      Container(
+                        decoration: BoxDecoration(
+                          color: StateContainer.of(context).curTheme.text05,
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsetsDirectional.only(
+                            top: 15,
+                            bottom: 15,
+                          ),
+                          child: Text(
+                            AppLocalization.of(context)!.preferences,
                             style: AppStyles.textStyleSize20W700EquinoxPrimary(
-                                context)),
+                              context,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    /*Divider(
+                      /*Divider(
                       height: 2,
                       color: StateContainer.of(context).curTheme.text15,
                     ),
@@ -578,143 +620,167 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         'assets/icons/url.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
                         _networkDialog),*/
-                    // Authentication Method
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemWithDefaultValue(
+                      // Authentication Method
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemWithDefaultValue(
                         context,
                         AppLocalization.of(context)!.authMethod,
                         _curAuthMethod,
                         'assets/icons/authentLaunch.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
-                        _authMethodDialog),
-                    // Authenticate on Launch
+                        _authMethodDialog,
+                      ),
+                      // Authenticate on Launch
 
-                    Column(children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Divider(
+                            height: 2,
+                            color: StateContainer.of(context).curTheme.text15,
+                          ),
+                          AppSettings.buildSettingsListItemWithDefaultValue(
+                            context,
+                            AppLocalization.of(context)!.lockAppSetting,
+                            _curUnlockSetting,
+                            'assets/icons/authentication.png',
+                            StateContainer.of(context).curTheme.iconDrawer!,
+                            _lockDialog,
+                          ),
+                        ],
+                      ),
                       Divider(
-                          height: 2,
-                          color: StateContainer.of(context).curTheme.text15),
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      // Authentication Timer
                       AppSettings.buildSettingsListItemWithDefaultValue(
-                          context,
-                          AppLocalization.of(context)!.lockAppSetting,
-                          _curUnlockSetting,
-                          'assets/icons/authentication.png',
-                          StateContainer.of(context).curTheme.iconDrawer!,
-                          _lockDialog),
-                    ]),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    // Authentication Timer
-                    AppSettings.buildSettingsListItemWithDefaultValue(
-                      context,
-                      AppLocalization.of(context)!.autoLockHeader,
-                      _curTimeoutSetting,
-                      'assets/icons/autoLock.png',
-                      StateContainer.of(context).curTheme.iconDrawer!,
-                      _lockTimeoutDialog,
-                      disabled: _curUnlockSetting.setting == UnlockOption.no,
-                    ),
-                    Column(children: <Widget>[
-                      Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.text15,
+                        context,
+                        AppLocalization.of(context)!.autoLockHeader,
+                        _curTimeoutSetting,
+                        'assets/icons/autoLock.png',
+                        StateContainer.of(context).curTheme.iconDrawer!,
+                        _lockTimeoutDialog,
+                        disabled: _curUnlockSetting.setting == UnlockOption.no,
                       ),
-                      AppSettings.buildSettingsListItemSingleLine(
-                          context,
-                          AppLocalization.of(context)!.backupSecretPhrase,
-                          AppStyles.textStyleSize16W600EquinoxPrimary(context),
-                          'assets/icons/key-word.png',
-                          StateContainer.of(context).curTheme.iconDrawer!,
-                          onPressed: () async {
-                        final Preferences preferences =
-                            await Preferences.getInstance();
-                        final AuthenticationMethod authMethod =
-                            preferences.getAuthMethod();
+                      Column(
+                        children: <Widget>[
+                          Divider(
+                            height: 2,
+                            color: StateContainer.of(context).curTheme.text15,
+                          ),
+                          AppSettings.buildSettingsListItemSingleLine(
+                            context,
+                            AppLocalization.of(context)!.backupSecretPhrase,
+                            AppStyles.textStyleSize16W600EquinoxPrimary(
+                              context,
+                            ),
+                            'assets/icons/key-word.png',
+                            StateContainer.of(context).curTheme.iconDrawer!,
+                            onPressed: () async {
+                              final Preferences preferences =
+                                  await Preferences.getInstance();
+                              final AuthenticationMethod authMethod =
+                                  preferences.getAuthMethod();
 
-                        bool auth = await AuthFactory.authenticate(
-                            context, authMethod,
-                            activeVibrations:
-                                StateContainer.of(context).activeVibrations);
-                        if (auth) {
-                          String? seed =
-                              await StateContainer.of(context).getSeed();
-                          List<String> mnemonic = AppMnemomics.seedToMnemonic(
-                              seed!,
-                              languageCode: preferences.getLanguageSeed());
+                              bool auth = await AuthFactory.authenticate(
+                                context,
+                                authMethod,
+                                activeVibrations:
+                                    StateContainer.of(context).activeVibrations,
+                              );
+                              if (auth) {
+                                String? seed =
+                                    await StateContainer.of(context).getSeed();
+                                List<String> mnemonic =
+                                    AppMnemomics.seedToMnemonic(
+                                  seed!,
+                                  languageCode: preferences.getLanguageSeed(),
+                                );
 
-                          Sheets.showAppHeightNineSheet(
-                              context: context,
-                              widget: AppSeedBackupSheet(mnemonic));
-                        }
-                      }),
-                    ]),
-                    if (_curAuthMethod.method == AuthMethod.pin)
-                      Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.text15,
+                                Sheets.showAppHeightNineSheet(
+                                  context: context,
+                                  widget: AppSeedBackupSheet(mnemonic),
+                                );
+                              }
+                            },
+                          ),
+                        ],
                       ),
-                    if (_curAuthMethod.method == AuthMethod.pin)
-                      AppSettings.buildSettingsListItemSwitch(
+                      if (_curAuthMethod.method == AuthMethod.pin)
+                        Divider(
+                          height: 2,
+                          color: StateContainer.of(context).curTheme.text15,
+                        ),
+                      if (_curAuthMethod.method == AuthMethod.pin)
+                        AppSettings.buildSettingsListItemSwitch(
                           context,
                           AppLocalization.of(context)!.pinPadShuffle,
                           'assets/icons/shuffle.png',
                           StateContainer.of(context).curTheme.iconDrawer!,
                           _pinPadShuffleActive,
                           onChanged: (bool isSwitched) async {
-                        final Preferences preferences =
-                            await Preferences.getInstance();
-                        setState(() {
-                          _pinPadShuffleActive = isSwitched;
-                          preferences.setPinPadShuffle(isSwitched);
-                        });
-                      }),
+                            final Preferences preferences =
+                                await Preferences.getInstance();
+                            setState(() {
+                              _pinPadShuffleActive = isSwitched;
+                              preferences.setPinPadShuffle(isSwitched);
+                            });
+                          },
+                        ),
 
-                    Divider(
+                      Divider(
                         height: 2,
-                        color: StateContainer.of(context).curTheme.text15),
-                    AppSettings.buildSettingsListItemSingleLine(
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.removeWallet,
                         AppStyles.textStyleSize16W600EquinoxRed(context),
                         'assets/icons/rubbish.png',
-                        Colors.red, onPressed: () {
-                      AppDialogs.showConfirmDialog(
-                          context,
-                          CaseChange.toUpperCase(
-                              AppLocalization.of(context)!.warning,
-                              StateContainer.of(context)
-                                  .curLanguage
-                                  .getLocaleString()),
-                          AppLocalization.of(context)!.removeWalletDetail,
-                          AppLocalization.of(context)!
-                              .removeWalletAction
-                              .toUpperCase(), () {
-                        // Show another confirm dialog
-                        AppDialogs.showConfirmDialog(
-                            context,
-                            AppLocalization.of(context)!.removeWalletAreYouSure,
-                            AppLocalization.of(context)!
-                                .removeWalletReassurance,
-                            AppLocalization.of(context)!.yes, () async {
-                          await StateContainer.of(context).logOut();
-                          StateContainer.of(context).curTheme = DarkTheme();
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/', (Route<dynamic> route) => false);
-                        });
-                      });
-                    }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                  ].where(notNull).toList(),
-                ),
-              ],
-            )),
+                        Colors.red,
+                        onPressed: () {
+                          AppDialogs.showConfirmDialog(
+                              context,
+                              CaseChange.toUpperCase(
+                                AppLocalization.of(context)!.warning,
+                                StateContainer.of(context)
+                                    .curLanguage
+                                    .getLocaleString(),
+                              ),
+                              AppLocalization.of(context)!.removeWalletDetail,
+                              AppLocalization.of(context)!
+                                  .removeWalletAction
+                                  .toUpperCase(), () {
+                            // Show another confirm dialog
+                            AppDialogs.showConfirmDialog(
+                                context,
+                                AppLocalization.of(context)!
+                                    .removeWalletAreYouSure,
+                                AppLocalization.of(context)!
+                                    .removeWalletReassurance,
+                                AppLocalization.of(context)!.yes, () async {
+                              await StateContainer.of(context).logOut();
+                              StateContainer.of(context).curTheme = DarkTheme();
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                '/',
+                                (Route<dynamic> route) => false,
+                              );
+                            });
+                          });
+                        },
+                      ),
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                    ].where(notNull).toList(),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -764,7 +830,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                       Text(
                         AppLocalization.of(context)!.customHeader,
                         style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                            context),
+                          context,
+                        ),
                       ),
                     ],
                   ),
@@ -772,218 +839,246 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
               ),
             ),
             Expanded(
-                child: Stack(
-              children: <Widget>[
-                ListView(
-                  padding: const EdgeInsets.only(top: 15.0),
-                  children: <Widget>[
-                    Container(
-                      decoration: BoxDecoration(
-                        color: StateContainer.of(context).curTheme.text05,
-                      ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        margin: const EdgeInsetsDirectional.only(
-                            top: 20, bottom: 10),
-                        child: Text(AppLocalization.of(context)!.preferences,
+              child: Stack(
+                children: <Widget>[
+                  ListView(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                          color: StateContainer.of(context).curTheme.text05,
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsetsDirectional.only(
+                            top: 20,
+                            bottom: 10,
+                          ),
+                          child: Text(
+                            AppLocalization.of(context)!.preferences,
                             style: AppStyles.textStyleSize20W700EquinoxPrimary(
-                                context)),
+                              context,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemWithDefaultValueWithInfos(
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings
+                          .buildSettingsListItemWithDefaultValueWithInfos(
                         context,
                         AppLocalization.of(context)!.changeCurrencyHeader,
                         AppLocalization.of(context)!
                             .changeCurrencyDesc
                             .replaceAll(
-                                '%1',
-                                StateContainer.of(context)
-                                    .curNetwork
-                                    .getNetworkCryptoCurrencyLabel()),
+                              '%1',
+                              StateContainer.of(context)
+                                  .curNetwork
+                                  .getNetworkCryptoCurrencyLabel(),
+                            ),
                         StateContainer.of(context).curCurrency,
                         'assets/icons/money-currency.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
-                        _currencyDialog),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemWithDefaultValue(
+                        _currencyDialog,
+                      ),
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemWithDefaultValue(
                         context,
                         AppLocalization.of(context)!.primaryCurrency,
                         StateContainer.of(context).curPrimaryCurrency,
                         'assets/icons/exchange.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
-                        _primaryCurrencyDialog),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemWithDefaultValue(
+                        _primaryCurrencyDialog,
+                      ),
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemWithDefaultValue(
                         context,
                         AppLocalization.of(context)!.language,
                         StateContainer.of(context).curLanguage,
                         'assets/icons/languages.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
-                        _languageDialog),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemWithDefaultValue(
+                        _languageDialog,
+                      ),
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemWithDefaultValue(
                         context,
                         AppLocalization.of(context)!.themeHeader,
                         _curThemeSetting,
                         'assets/icons/themes.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
-                        _themeDialog),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemSwitch(
+                        _themeDialog,
+                      ),
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemSwitch(
                         context,
                         AppLocalization.of(context)!.showBalances,
                         'assets/icons/shy.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
                         _showBalancesActive,
                         onChanged: (bool isSwitched) async {
-                      final Preferences preferences =
-                          await Preferences.getInstance();
-                      setState(() {
-                        _showBalancesActive = isSwitched;
-                        StateContainer.of(context).showBalance =
-                            _showBalancesActive;
-                        preferences.setShowBalances(_showBalancesActive);
-                      });
-                    }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemSwitch(
+                          final Preferences preferences =
+                              await Preferences.getInstance();
+                          setState(() {
+                            _showBalancesActive = isSwitched;
+                            StateContainer.of(context).showBalance =
+                                _showBalancesActive;
+                            preferences.setShowBalances(_showBalancesActive);
+                          });
+                        },
+                      ),
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemSwitch(
                         context,
                         AppLocalization.of(context)!.showBlog,
                         'assets/icons/blog.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
-                        _showBlogActive, onChanged: (bool isSwitched) async {
-                      final Preferences preferences =
-                          await Preferences.getInstance();
-                      setState(() {
-                        _showBlogActive = isSwitched;
-                        StateContainer.of(context).showBlog = _showBlogActive;
-                        preferences.setShowBlog(_showBlogActive);
-                      });
-                    }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemSwitch(
+                        _showBlogActive,
+                        onChanged: (bool isSwitched) async {
+                          final Preferences preferences =
+                              await Preferences.getInstance();
+                          setState(() {
+                            _showBlogActive = isSwitched;
+                            StateContainer.of(context).showBlog =
+                                _showBlogActive;
+                            preferences.setShowBlog(_showBlogActive);
+                          });
+                        },
+                      ),
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemSwitch(
                         context,
                         AppLocalization.of(context)!.showPriceChart,
                         'assets/icons/statistics.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
                         _showPriceChartActive,
                         onChanged: (bool isSwitched) async {
-                      final Preferences preferences =
-                          await Preferences.getInstance();
-                      setState(() {
-                        _showPriceChartActive = isSwitched;
-                        StateContainer.of(context).showPriceChart =
-                            _showPriceChartActive;
-                        preferences.setShowPriceChart(_showPriceChartActive);
-                      });
-                    }),
-                    if (!kIsWeb &&
-                        (Platform.isIOS == true ||
-                            Platform.isAndroid == true ||
-                            Platform.isMacOS == true))
-                      Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.text15,
+                          final Preferences preferences =
+                              await Preferences.getInstance();
+                          setState(() {
+                            _showPriceChartActive = isSwitched;
+                            StateContainer.of(context).showPriceChart =
+                                _showPriceChartActive;
+                            preferences
+                                .setShowPriceChart(_showPriceChartActive);
+                          });
+                        },
                       ),
-                    if (!kIsWeb &&
-                        (Platform.isIOS == true ||
-                            Platform.isAndroid == true ||
-                            Platform.isMacOS == true))
-                      AppSettings.buildSettingsListItemSwitch(
+                      if (!kIsWeb &&
+                          (Platform.isIOS == true ||
+                              Platform.isAndroid == true ||
+                              Platform.isMacOS == true))
+                        Divider(
+                          height: 2,
+                          color: StateContainer.of(context).curTheme.text15,
+                        ),
+                      if (!kIsWeb &&
+                          (Platform.isIOS == true ||
+                              Platform.isAndroid == true ||
+                              Platform.isMacOS == true))
+                        AppSettings.buildSettingsListItemSwitch(
                           context,
                           AppLocalization.of(context)!.activateNotifications,
                           'assets/icons/notification-bell.png',
                           StateContainer.of(context).curTheme.iconDrawer!,
                           _notificationsActive,
                           onChanged: (bool isSwitched) async {
-                        final Preferences preferences =
-                            await Preferences.getInstance();
-                        setState(() {
-                          _notificationsActive = isSwitched;
-                          StateContainer.of(context).activeNotifications =
-                              _notificationsActive;
-                          if (StateContainer.of(context)
-                                  .timerCheckTransactionInputs !=
-                              null) {
-                            StateContainer.of(context)
-                                .timerCheckTransactionInputs!
-                                .cancel();
-                          }
-                          if (_notificationsActive) {
-                            StateContainer.of(context).checkTransactionInputs(
-                                AppLocalization.of(context)!
-                                    .transactionInputNotification);
-                          }
-                          preferences
-                              .setActiveNotifications(_notificationsActive);
-                        });
-                      }),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),
-                    AppSettings.buildSettingsListItemSwitch(
+                            final Preferences preferences =
+                                await Preferences.getInstance();
+                            setState(() {
+                              _notificationsActive = isSwitched;
+                              StateContainer.of(context).activeNotifications =
+                                  _notificationsActive;
+                              if (StateContainer.of(context)
+                                      .timerCheckTransactionInputs !=
+                                  null) {
+                                StateContainer.of(context)
+                                    .timerCheckTransactionInputs!
+                                    .cancel();
+                              }
+                              if (_notificationsActive) {
+                                StateContainer.of(context)
+                                    .checkTransactionInputs(
+                                  AppLocalization.of(context)!
+                                      .transactionInputNotification,
+                                );
+                              }
+                              preferences
+                                  .setActiveNotifications(_notificationsActive);
+                            });
+                          },
+                        ),
+                      Divider(
+                        height: 2,
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemSwitch(
                         context,
                         AppLocalization.of(context)!.activateVibrations,
                         'assets/icons/vibrate.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
-                        _vibrationActive, onChanged: (bool isSwitched) async {
-                      final Preferences preferences =
-                          await Preferences.getInstance();
-                      setState(() {
-                        _vibrationActive = isSwitched;
-                        StateContainer.of(context).activeVibrations =
-                            _vibrationActive;
-                        preferences.setActiveVibrations(_vibrationActive);
-                      });
-                    }),
-                    Divider(
+                        _vibrationActive,
+                        onChanged: (bool isSwitched) async {
+                          final Preferences preferences =
+                              await Preferences.getInstance();
+                          setState(() {
+                            _vibrationActive = isSwitched;
+                            StateContainer.of(context).activeVibrations =
+                                _vibrationActive;
+                            preferences.setActiveVibrations(_vibrationActive);
+                          });
+                        },
+                      ),
+                      Divider(
                         height: 2,
-                        color: StateContainer.of(context).curTheme.text15),
-                  ].where(notNull).toList(),
-                ),
-                //List Top Gradient End
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    height: 20.0,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: <Color>[
-                          StateContainer.of(context).curTheme.drawerBackground!,
-                          StateContainer.of(context).curTheme.backgroundDark00!
-                        ],
-                        begin: const AlignmentDirectional(0.5, -1.0),
-                        end: const AlignmentDirectional(0.5, 1.0),
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                    ].where(notNull).toList(),
+                  ),
+                  //List Top Gradient End
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      height: 20.0,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: <Color>[
+                            StateContainer.of(context)
+                                .curTheme
+                                .drawerBackground!,
+                            StateContainer.of(context)
+                                .curTheme
+                                .backgroundDark00!
+                          ],
+                          begin: const AlignmentDirectional(0.5, -1.0),
+                          end: const AlignmentDirectional(0.5, 1.0),
+                        ),
                       ),
                     ),
-                  ),
-                ), //List Top Gradient End
-              ],
-            )),
+                  ), //List Top Gradient End
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -1039,26 +1134,31 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
               ),
             ),
             Expanded(
-                child: Stack(
-              children: <Widget>[
-                ListView(
-                  padding: const EdgeInsets.only(top: 15.0),
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0, bottom: 10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Text(versionString,
+              child: Stack(
+                children: <Widget>[
+                  ListView(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    children: <Widget>[
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 20.0, bottom: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              versionString,
                               style: AppStyles.textStyleSize14W100Primary(
-                                  context)),
-                        ],
+                                context,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Divider(
+                      Divider(
                         height: 2,
-                        color: StateContainer.of(context).curTheme.text15),
-                    AppSettings.buildSettingsListItemSingleLine(
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!
                             .aboutGeneralTermsAndConditions,
@@ -1066,62 +1166,78 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         'assets/icons/terms-and-conditions.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () async {
-                      UIUtil.showWebview(
-                          context,
-                          'https://archethic.net',
-                          AppLocalization.of(context)!
-                              .aboutGeneralTermsAndConditions);
-                    }),
-                    Divider(
+                          UIUtil.showWebview(
+                            context,
+                            'https://archethic.net',
+                            AppLocalization.of(context)!
+                                .aboutGeneralTermsAndConditions,
+                          );
+                        },
+                      ),
+                      Divider(
                         height: 2,
-                        color: StateContainer.of(context).curTheme.text15),
-                    AppSettings.buildSettingsListItemSingleLine(
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutWalletServiceTerms,
                         AppStyles.textStyleSize16W600Primary(context),
                         'assets/icons/walletServiceTerms.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () async {
-                      UIUtil.showWebview(context, 'https://archethic.net',
-                          AppLocalization.of(context)!.aboutWalletServiceTerms);
-                    }),
-                    Divider(
+                          UIUtil.showWebview(
+                            context,
+                            'https://archethic.net',
+                            AppLocalization.of(context)!
+                                .aboutWalletServiceTerms,
+                          );
+                        },
+                      ),
+                      Divider(
                         height: 2,
-                        color: StateContainer.of(context).curTheme.text15),
-                    AppSettings.buildSettingsListItemSingleLine(
+                        color: StateContainer.of(context).curTheme.text15,
+                      ),
+                      AppSettings.buildSettingsListItemSingleLine(
                         context,
                         AppLocalization.of(context)!.aboutPrivacyPolicy,
                         AppStyles.textStyleSize16W600Primary(context),
                         'assets/icons/privacyPolicy.png',
                         StateContainer.of(context).curTheme.iconDrawer!,
                         onPressed: () async {
-                      UIUtil.showWebview(
-                          context,
-                          'https://archethic.net/aewallet-privacy.html',
-                          AppLocalization.of(context)!.aboutPrivacyPolicy);
-                    }),
-                  ].where(notNull).toList(),
-                ),
-                //List Top Gradient End
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    height: 20.0,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: <Color>[
-                          StateContainer.of(context).curTheme.drawerBackground!,
-                          StateContainer.of(context).curTheme.backgroundDark00!
-                        ],
-                        begin: const AlignmentDirectional(0.5, -1.0),
-                        end: const AlignmentDirectional(0.5, 1.0),
+                          UIUtil.showWebview(
+                            context,
+                            'https://archethic.net/aewallet-privacy.html',
+                            AppLocalization.of(context)!.aboutPrivacyPolicy,
+                          );
+                        },
+                      ),
+                    ].where(notNull).toList(),
+                  ),
+                  //List Top Gradient End
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      height: 20.0,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: <Color>[
+                            StateContainer.of(context)
+                                .curTheme
+                                .drawerBackground!,
+                            StateContainer.of(context)
+                                .curTheme
+                                .backgroundDark00!
+                          ],
+                          begin: const AlignmentDirectional(0.5, -1.0),
+                          end: const AlignmentDirectional(0.5, 1.0),
+                        ),
                       ),
                     ),
-                  ),
-                ), //List Top Gradient End
-              ],
-            )),
+                  ), //List Top Gradient End
+                ],
+              ),
+            ),
           ],
         ),
       ),

@@ -28,8 +28,13 @@ class SetPassword extends StatefulWidget {
   final String? name;
   final String? seed;
 
-  const SetPassword(
-      {super.key, this.header, this.description, this.name, this.seed});
+  const SetPassword({
+    super.key,
+    this.header,
+    this.description,
+    this.name,
+    this.seed,
+  });
   @override
   State<SetPassword> createState() => _SetPasswordState();
 }
@@ -67,9 +72,11 @@ class _SetPasswordState extends State<SetPassword> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(
-                  StateContainer.of(context).curTheme.background1Small!),
-              fit: BoxFit.fitHeight),
+            image: AssetImage(
+              StateContainer.of(context).curTheme.background1Small!,
+            ),
+            fit: BoxFit.fitHeight,
+          ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -84,8 +91,9 @@ class _SetPasswordState extends State<SetPassword> {
             builder: (BuildContext context, BoxConstraints constraints) =>
                 SafeArea(
               minimum: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.035,
-                  top: MediaQuery.of(context).size.height * 0.075),
+                bottom: MediaQuery.of(context).size.height * 0.035,
+                top: MediaQuery.of(context).size.height * 0.075,
+              ),
               child: Column(
                 children: <Widget>[
                   Expanded(
@@ -111,7 +119,11 @@ class _SetPasswordState extends State<SetPassword> {
                         ),
                         Container(
                           child: IconWidget.build(
-                              context, 'assets/icons/password.png', 90, 90),
+                            context,
+                            'assets/icons/password.png',
+                            90,
+                            90,
+                          ),
                         ),
                         Expanded(
                           child: SingleChildScrollView(
@@ -132,7 +144,8 @@ class _SetPasswordState extends State<SetPassword> {
                                       widget.header!,
                                       style:
                                           AppStyles.textStyleSize20W700Warning(
-                                              context),
+                                        context,
+                                      ),
                                     ),
                                   ),
                                 if (widget.description != null)
@@ -144,12 +157,16 @@ class _SetPasswordState extends State<SetPassword> {
                                       Container(
                                         margin:
                                             const EdgeInsetsDirectional.only(
-                                                start: 20, end: 20, top: 15.0),
+                                          start: 20,
+                                          end: 20,
+                                          top: 15.0,
+                                        ),
                                         child: Text(
                                           widget.description!,
                                           style: AppStyles
                                               .textStyleSize16W600Primary(
-                                                  context),
+                                            context,
+                                          ),
                                           textAlign: TextAlign.justify,
                                         ),
                                       ),
@@ -166,7 +183,8 @@ class _SetPasswordState extends State<SetPassword> {
                                   autocorrect: false,
                                   onChanged: (String newText) async {
                                     passwordStrength = estimatePasswordStrength(
-                                        setPasswordController!.text);
+                                      setPasswordController!.text,
+                                    );
                                     if (passwordError != null) {
                                       setState(() {
                                         passwordError = null;
@@ -194,7 +212,8 @@ class _SetPasswordState extends State<SetPassword> {
                                   obscureText: !setPasswordVisible!,
                                   textAlign: TextAlign.center,
                                   style: AppStyles.textStyleSize16W700Primary(
-                                      context),
+                                    context,
+                                  ),
                                   onSubmitted: (text) {
                                     confirmPasswordFocusNode!.requestFocus();
                                   },
@@ -220,7 +239,8 @@ class _SetPasswordState extends State<SetPassword> {
                                         setPasswordVisible = true;
                                         passwordStrength =
                                             estimatePasswordStrength(
-                                                setPasswordController!.text);
+                                          setPasswordController!.text,
+                                        );
                                       });
                                     },
                                   ),
@@ -266,7 +286,8 @@ class _SetPasswordState extends State<SetPassword> {
                                                 textAlign: TextAlign.end,
                                                 style: AppStyles
                                                     .textStyleSize12W100Primary(
-                                                        context),
+                                                  context,
+                                                ),
                                               )
                                             : passwordStrength <= 0.8
                                                 ? Text(
@@ -275,7 +296,8 @@ class _SetPasswordState extends State<SetPassword> {
                                                     textAlign: TextAlign.end,
                                                     style: AppStyles
                                                         .textStyleSize12W100Primary(
-                                                            context),
+                                                      context,
+                                                    ),
                                                   )
                                                 : Text(
                                                     AppLocalization.of(context)!
@@ -283,7 +305,8 @@ class _SetPasswordState extends State<SetPassword> {
                                                     textAlign: TextAlign.end,
                                                     style: AppStyles
                                                         .textStyleSize12W100Primary(
-                                                            context),
+                                                      context,
+                                                    ),
                                                   ),
                                       ],
                                     ),
@@ -323,7 +346,8 @@ class _SetPasswordState extends State<SetPassword> {
                                   obscureText: !confirmPasswordVisible!,
                                   textAlign: TextAlign.center,
                                   style: AppStyles.textStyleSize16W700Primary(
-                                      context),
+                                    context,
+                                  ),
                                   suffixButton: TextFieldButton(
                                     icon: confirmPasswordVisible!
                                         ? Icons.visibility
@@ -342,12 +366,11 @@ class _SetPasswordState extends State<SetPassword> {
                                   alignment: const AlignmentDirectional(0, 0),
                                   margin: const EdgeInsets.only(top: 3),
                                   child: Text(
-                                      passwordError == null
-                                          ? ''
-                                          : passwordError!,
-                                      style:
-                                          AppStyles.textStyleSize14W600Primary(
-                                              context)),
+                                    passwordError == null ? '' : passwordError!,
+                                    style: AppStyles.textStyleSize14W600Primary(
+                                      context,
+                                    ),
+                                  ),
                                 ),
                                 const SizedBox(
                                   height: 40,
@@ -367,13 +390,15 @@ class _SetPasswordState extends State<SetPassword> {
                       Row(
                         children: <Widget>[
                           AppButton.buildAppButton(
-                              const Key('confirm'),
-                              context,
-                              AppButtonType.primary,
-                              AppLocalization.of(context)!.confirm,
-                              Dimens.buttonTopDimens, onPressed: () async {
-                            await _validateRequest();
-                          }),
+                            const Key('confirm'),
+                            context,
+                            AppButtonType.primary,
+                            AppLocalization.of(context)!.confirm,
+                            Dimens.buttonTopDimens,
+                            onPressed: () async {
+                              await _validateRequest();
+                            },
+                          ),
                         ],
                       ),
                     ],
@@ -404,7 +429,8 @@ class _SetPasswordState extends State<SetPassword> {
     } else {
       Vault vault = await Vault.getInstance();
       vault.setPassword(
-          stringEncryptBase64(setPasswordController!.text, widget.seed));
+        stringEncryptBase64(setPasswordController!.text, widget.seed),
+      );
       Navigator.of(context).pop(true);
     }
   }

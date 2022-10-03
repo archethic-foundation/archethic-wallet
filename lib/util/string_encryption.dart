@@ -29,7 +29,9 @@ Uint8List _createUint8ListFromString(String s) {
 }
 
 Tuple2<Uint8List, Uint8List> _deriveKeyAndIV(
-    String passphrase, Uint8List salt) {
+  String passphrase,
+  Uint8List salt,
+) {
   var password = _createUint8ListFromString(passphrase);
   Uint8List concatenatedHashes = Uint8List(0);
   Uint8List currentHash = Uint8List(0);
@@ -37,7 +39,7 @@ Tuple2<Uint8List, Uint8List> _deriveKeyAndIV(
   Uint8List preHash = Uint8List(0);
 
   while (!enoughBytesForKey) {
-    if (currentHash.length > 0) {
+    if (currentHash.isNotEmpty) {
       preHash = Uint8List.fromList(currentHash + password + salt);
     } else {
       preHash = Uint8List.fromList(password + salt);
@@ -58,10 +60,11 @@ String stringEncryptBase64(String string, String? seed) {
   var keyndIV = _deriveKeyAndIV(seed!, salt);
   final key = Key(keyndIV.item1);
   final iv = IV(keyndIV.item2);
-  final encrypter = Encrypter(AES(key, mode: AESMode.cbc, padding: "PKCS7"));
+  final encrypter = Encrypter(AES(key, mode: AESMode.cbc, padding: 'PKCS7'));
   final encrypted = encrypter.encrypt(string, iv: iv);
   Uint8List encryptedBytesWithSalt = Uint8List.fromList(
-      _createUint8ListFromString("Salted__") + salt + encrypted.bytes);
+    _createUint8ListFromString('Salted__') + salt + encrypted.bytes,
+  );
   return base64.encode(encryptedBytesWithSalt);
 }
 
@@ -73,6 +76,6 @@ String stringDecryptBase64(String string, String? seed) {
   var keyndIV = _deriveKeyAndIV(seed!, salt);
   final key = Key(keyndIV.item1);
   final iv = IV(keyndIV.item2);
-  final encrypter = Encrypter(AES(key, mode: AESMode.cbc, padding: "PKCS7"));
+  final encrypter = Encrypter(AES(key, mode: AESMode.cbc, padding: 'PKCS7'));
   return encrypter.decrypt64(base64.encode(encryptedBytes), iv: iv);
 }

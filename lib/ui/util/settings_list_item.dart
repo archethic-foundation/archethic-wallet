@@ -21,19 +21,22 @@ import 'package:aewallet/util/haptic_util.dart';
 class AppSettings {
   //Settings item with a dropdown option
   static Widget buildSettingsListItemWithDefaultValue(
-      BuildContext context,
-      String heading,
-      SettingSelectionItem defaultMethod,
-      String icon,
-      Color iconColor,
-      Function onPressed,
-      {bool disabled = false}) {
+    BuildContext context,
+    String heading,
+    SettingSelectionItem defaultMethod,
+    String icon,
+    Color iconColor,
+    Function onPressed, {
+    bool disabled = false,
+  }) {
     return IgnorePointer(
       ignoring: disabled,
       child: TextButton(
         onPressed: () {
           sl.get<HapticUtil>().feedback(
-              FeedbackType.light, StateContainer.of(context).activeVibrations);
+                FeedbackType.light,
+                StateContainer.of(context).activeVibrations,
+              );
           onPressed();
         },
         child: Container(
@@ -42,34 +45,43 @@ class AppSettings {
           child: Row(
             children: <Widget>[
               Container(
-                  margin: const EdgeInsetsDirectional.only(end: 13.0),
-                  child: IconWidget.build(context, icon, 30, 30,
-                      color: iconColor)),
+                margin: const EdgeInsetsDirectional.only(end: 13.0),
+                child: IconWidget.build(
+                  context,
+                  icon,
+                  30,
+                  30,
+                  color: iconColor,
+                ),
+              ),
               Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      width: Responsive.drawerWidth(context) - 100,
-                      child: Text(
-                        heading,
-                        style: disabled
-                            ? AppStyles.textStyleSize16W600EquinoxPrimary30(
-                                context)
-                            : AppStyles.textStyleSize16W600EquinoxPrimary(
-                                context),
-                      ),
-                    ),
-                    AutoSizeText(
-                      defaultMethod.getDisplayName(context),
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    width: Responsive.drawerWidth(context) - 100,
+                    child: Text(
+                      heading,
                       style: disabled
-                          ? AppStyles.textStyleSize12W100Primary30(context)
-                          : AppStyles.textStyleSize12W100Primary(context),
-                      maxLines: 1,
-                      stepGranularity: 0.1,
-                      minFontSize: 8,
+                          ? AppStyles.textStyleSize16W600EquinoxPrimary30(
+                              context,
+                            )
+                          : AppStyles.textStyleSize16W600EquinoxPrimary(
+                              context,
+                            ),
                     ),
-                  ]),
+                  ),
+                  AutoSizeText(
+                    defaultMethod.getDisplayName(context),
+                    style: disabled
+                        ? AppStyles.textStyleSize12W100Primary30(context)
+                        : AppStyles.textStyleSize12W100Primary(context),
+                    maxLines: 1,
+                    stepGranularity: 0.1,
+                    minFontSize: 8,
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -78,18 +90,21 @@ class AppSettings {
   }
 
   static Widget buildSettingsListItemWithDefaultValueWithInfos(
-      BuildContext context,
-      String heading,
-      String info,
-      SettingSelectionItem defaultMethod,
-      String icon,
-      Color iconColor,
-      Function onPressed,
-      {bool disabled = false}) {
+    BuildContext context,
+    String heading,
+    String info,
+    SettingSelectionItem defaultMethod,
+    String icon,
+    Color iconColor,
+    Function onPressed, {
+    bool disabled = false,
+  }) {
     return TextButton(
       onPressed: () {
         sl.get<HapticUtil>().feedback(
-            FeedbackType.light, StateContainer.of(context).activeVibrations);
+              FeedbackType.light,
+              StateContainer.of(context).activeVibrations,
+            );
         onPressed();
       },
       child: Container(
@@ -98,43 +113,47 @@ class AppSettings {
         child: Row(
           children: <Widget>[
             Container(
-                margin: const EdgeInsetsDirectional.only(end: 13.0),
-                child:
-                    IconWidget.build(context, icon, 30, 30, color: iconColor)),
+              margin: const EdgeInsetsDirectional.only(end: 13.0),
+              child: IconWidget.build(context, icon, 30, 30, color: iconColor),
+            ),
             Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                      width: Responsive.drawerWidth(context) - 70,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            heading,
-                            style: AppStyles.textStyleSize16W600EquinoxPrimary(
-                                context),
-                          ),
-                          Text(
-                            defaultMethod.getDisplayName(context),
-                            style: disabled
-                                ? AppStyles.textStyleSize12W100Primary30(
-                                    context)
-                                : AppStyles.textStyleSize12W100Primary(context),
-                          ),
-                        ],
-                      )),
-                  SizedBox(
-                    width: Responsive.drawerWidth(context) - 80,
-                    child: AutoSizeText(
-                      info,
-                      maxLines: 5,
-                      stepGranularity: 0.1,
-                      minFontSize: 8,
-                      style: AppStyles.textStyleSize12W100Primary(context),
-                    ),
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: Responsive.drawerWidth(context) - 70,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        heading,
+                        style: AppStyles.textStyleSize16W600EquinoxPrimary(
+                          context,
+                        ),
+                      ),
+                      Text(
+                        defaultMethod.getDisplayName(context),
+                        style: disabled
+                            ? AppStyles.textStyleSize12W100Primary30(
+                                context,
+                              )
+                            : AppStyles.textStyleSize12W100Primary(context),
+                      ),
+                    ],
                   ),
-                ]),
+                ),
+                SizedBox(
+                  width: Responsive.drawerWidth(context) - 80,
+                  child: AutoSizeText(
+                    info,
+                    maxLines: 5,
+                    stepGranularity: 0.1,
+                    minFontSize: 8,
+                    style: AppStyles.textStyleSize12W100Primary(context),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -153,7 +172,9 @@ class AppSettings {
       onPressed: () {
         if (onPressed != null) {
           sl.get<HapticUtil>().feedback(
-              FeedbackType.light, StateContainer.of(context).activeVibrations);
+                FeedbackType.light,
+                StateContainer.of(context).activeVibrations,
+              );
           onPressed();
         } else {
           return;
@@ -165,32 +186,32 @@ class AppSettings {
         child: Row(
           children: <Widget>[
             Container(
-                margin: const EdgeInsetsDirectional.only(end: 13.0),
-                child:
-                    IconWidget.build(context, icon!, 30, 30, color: iconColor)),
+              margin: const EdgeInsetsDirectional.only(end: 13.0),
+              child: IconWidget.build(context, icon!, 30, 30, color: iconColor),
+            ),
             Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    width: Responsive.drawerWidth(context) - 100,
-                    child: Text(
-                      heading,
-                      style:
-                          AppStyles.textStyleSize16W600EquinoxPrimary(context),
-                    ),
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: Responsive.drawerWidth(context) - 100,
+                  child: Text(
+                    heading,
+                    style: AppStyles.textStyleSize16W600EquinoxPrimary(context),
                   ),
-                  SizedBox(
-                    width: Responsive.drawerWidth(context) - 100,
-                    child: AutoSizeText(
-                      info,
-                      maxLines: 5,
-                      stepGranularity: 0.1,
-                      minFontSize: 8,
-                      style: AppStyles.textStyleSize12W100Primary(context),
-                    ),
+                ),
+                SizedBox(
+                  width: Responsive.drawerWidth(context) - 100,
+                  child: AutoSizeText(
+                    info,
+                    maxLines: 5,
+                    stepGranularity: 0.1,
+                    minFontSize: 8,
+                    style: AppStyles.textStyleSize12W100Primary(context),
                   ),
-                ]),
+                ),
+              ],
+            ),
             FaIcon(
               FontAwesomeIcons.chevronRight,
               color: StateContainer.of(context).curTheme.iconDrawer,
@@ -203,14 +224,21 @@ class AppSettings {
   }
 
   //Settings item without any dropdown option but rather a direct functionality
-  static Widget buildSettingsListItemSingleLine(BuildContext context,
-      String heading, TextStyle headingStyle, String icon, Color iconColor,
-      {Function? onPressed}) {
+  static Widget buildSettingsListItemSingleLine(
+    BuildContext context,
+    String heading,
+    TextStyle headingStyle,
+    String icon,
+    Color iconColor, {
+    Function? onPressed,
+  }) {
     return TextButton(
       onPressed: () {
         if (onPressed != null) {
           sl.get<HapticUtil>().feedback(
-              FeedbackType.light, StateContainer.of(context).activeVibrations);
+                FeedbackType.light,
+                StateContainer.of(context).activeVibrations,
+              );
           onPressed();
         } else {
           return;
@@ -224,8 +252,14 @@ class AppSettings {
             Container(
               margin: const EdgeInsetsDirectional.only(end: 13.0),
               child: Container(
-                  child: IconWidget.build(context, icon, 30, 30,
-                      color: iconColor)),
+                child: IconWidget.build(
+                  context,
+                  icon,
+                  30,
+                  30,
+                  color: iconColor,
+                ),
+              ),
             ),
             SizedBox(
               width: Responsive.drawerWidth(context) - 100,
@@ -245,13 +279,20 @@ class AppSettings {
     );
   }
 
-  static Widget buildSettingsListItemSwitch(BuildContext context,
-      String heading, String icon, Color iconColor, bool isSwitched,
-      {Function? onChanged}) {
+  static Widget buildSettingsListItemSwitch(
+    BuildContext context,
+    String heading,
+    String icon,
+    Color iconColor,
+    bool isSwitched, {
+    Function? onChanged,
+  }) {
     return TextButton(
       onPressed: () {
         sl.get<HapticUtil>().feedback(
-            FeedbackType.light, StateContainer.of(context).activeVibrations);
+              FeedbackType.light,
+              StateContainer.of(context).activeVibrations,
+            );
       },
       child: Container(
         height: 50.0,
@@ -259,9 +300,9 @@ class AppSettings {
         child: Row(
           children: <Widget>[
             Container(
-                margin: const EdgeInsetsDirectional.only(end: 13.0),
-                child:
-                    IconWidget.build(context, icon, 30, 30, color: iconColor)),
+              margin: const EdgeInsetsDirectional.only(end: 13.0),
+              child: IconWidget.build(context, icon, 30, 30, color: iconColor),
+            ),
             SizedBox(
               width: Responsive.drawerWidth(context) - 130,
               child: Text(
@@ -270,24 +311,25 @@ class AppSettings {
               ),
             ),
             Switch(
-                value: isSwitched,
-                onChanged: (bool value) {
-                  if (onChanged != null) {
-                    sl.get<HapticUtil>().feedback(FeedbackType.light,
-                        StateContainer.of(context).activeVibrations);
-                    isSwitched = value;
-                    onChanged(isSwitched);
-                  } else {
-                    return;
-                  }
-                },
-                inactiveTrackColor: StateContainer.of(context)
-                    .curTheme
-                    .inactiveTrackColorSwitch,
-                activeTrackColor:
-                    StateContainer.of(context).curTheme.activeTrackColorSwitch,
-                activeColor:
-                    StateContainer.of(context).curTheme.backgroundDark!)
+              value: isSwitched,
+              onChanged: (bool value) {
+                if (onChanged != null) {
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.light,
+                        StateContainer.of(context).activeVibrations,
+                      );
+                  isSwitched = value;
+                  onChanged(isSwitched);
+                } else {
+                  return;
+                }
+              },
+              inactiveTrackColor:
+                  StateContainer.of(context).curTheme.inactiveTrackColorSwitch,
+              activeTrackColor:
+                  StateContainer.of(context).curTheme.activeTrackColorSwitch,
+              activeColor: StateContainer.of(context).curTheme.backgroundDark!,
+            )
           ],
         ),
       ),

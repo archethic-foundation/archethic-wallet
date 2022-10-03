@@ -11,13 +11,14 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/util/styles.dart';
 
 class SheetHeader extends StatelessWidget {
-  const SheetHeader(
-      {super.key,
-      required this.title,
-      this.widgetLeft,
-      this.widgetRight,
-      this.widgetBeforeTitle,
-      this.widgetAfterTitle});
+  const SheetHeader({
+    super.key,
+    required this.title,
+    this.widgetLeft,
+    this.widgetRight,
+    this.widgetBeforeTitle,
+    this.widgetAfterTitle,
+  });
 
   final String title;
   final Widget? widgetLeft;
@@ -53,25 +54,29 @@ class SheetHeader extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 15.0),
                   constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width - 140),
+                    maxWidth: MediaQuery.of(context).size.width - 140,
+                  ),
                   child: Column(
                     children: <Widget>[
                       if (widgetBeforeTitle != null)
                         Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: widgetBeforeTitle!),
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: widgetBeforeTitle!,
+                        ),
                       AutoSizeText(
                         title,
                         style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                            context),
+                          context,
+                        ),
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         stepGranularity: 0.1,
                       ),
                       if (widgetAfterTitle != null)
                         Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: widgetAfterTitle!),
+                          padding: const EdgeInsets.only(top: 10),
+                          child: widgetAfterTitle!,
+                        ),
                     ],
                   ),
                 ),

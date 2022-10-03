@@ -16,17 +16,18 @@ part 'recent_transaction.g.dart';
 
 @HiveType(typeId: 6)
 class RecentTransaction extends HiveObject {
-  RecentTransaction(
-      {this.address,
-      this.typeTx,
-      this.amount,
-      this.recipient,
-      this.from,
-      this.fee,
-      this.content,
-      this.timestamp,
-      this.type,
-      this.decryptedSecret});
+  RecentTransaction({
+    this.address,
+    this.typeTx,
+    this.amount,
+    this.recipient,
+    this.from,
+    this.fee,
+    this.content,
+    this.timestamp,
+    this.type,
+    this.decryptedSecret,
+  });
 
   /// Types of transaction
   static const int transferInput = 1;
@@ -119,25 +120,30 @@ class RecentTransaction extends HiveObject {
     return contactInformations;
   }
 
+  /// TODO refacto
+  ///   - Move that method in a dedicated [Provider]
   Future<TokenInformations?> getTokenInfo(
-      String? content, String? address) async {
+    String? content,
+    String? address,
+  ) async {
     Token? token;
     tokenInformations = null;
     if (address == null) {
       return tokenInformations;
     }
-    if (content == null || content == "") {
+    if (content == null || content == '') {
       content = await sl.get<ApiService>().getTransactionContent(address);
     }
-    if (content != "") {
+    if (content != '') {
       try {
         token = tokenFromJson(content);
         tokenInformations = TokenInformations(
-            address: token.address,
-            name: token.name,
-            supply: fromBigInt(token.supply!).toDouble(),
-            symbol: token.symbol,
-            type: token.type);
+          address: token.address,
+          name: token.name,
+          supply: fromBigInt(token.supply!).toDouble(),
+          symbol: token.symbol,
+          type: token.type,
+        );
       } catch (e) {}
     }
 
@@ -146,14 +152,15 @@ class RecentTransaction extends HiveObject {
 
   factory RecentTransaction.fromJson(Map<String, dynamic> json) =>
       RecentTransaction(
-          address: json['address'],
-          typeTx: json['typeTx']?.toInt(),
-          recipient: json['recipient'],
-          amount: json['amount']?.toDouble(),
-          fee: json['fee']?.toDouble(),
-          from: json['from'],
-          content: json['content'],
-          timestamp: json['timestamp'],
-          type: json['type'],
-          decryptedSecret: json['decryptedSecret']);
+        address: json['address'],
+        typeTx: json['typeTx']?.toInt(),
+        recipient: json['recipient'],
+        amount: json['amount']?.toDouble(),
+        fee: json['fee']?.toDouble(),
+        from: json['from'],
+        content: json['content'],
+        timestamp: json['timestamp'],
+        type: json['type'],
+        decryptedSecret: json['decryptedSecret'],
+      );
 }

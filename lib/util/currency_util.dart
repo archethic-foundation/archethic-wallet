@@ -255,27 +255,32 @@ class CurrencyUtil {
       return '${amount.toStringAsFixed(NumberFormat.currency(locale: CurrencyUtil.getLocale(currency).toString(), symbol: CurrencyUtil.getCurrencySymbol(currency)).decimalDigits!)} ${CurrencyUtil.getCurrencySymbol(currency)}';
     } else {
       return NumberFormat.currency(
-              locale: CurrencyUtil.getLocale(currency).toString(),
-              symbol: CurrencyUtil.getCurrencySymbol(currency))
-          .format(amount);
+        locale: CurrencyUtil.getLocale(currency).toString(),
+        symbol: CurrencyUtil.getCurrencySymbol(currency),
+      ).format(amount);
     }
   }
 
   static String getConvertedAmountWithNumberOfDigits(
-      String currency, double amount, int numberOfDigits) {
+    String currency,
+    double amount,
+    int numberOfDigits,
+  ) {
     if (currency == 'BTC') {
       return '${amount.toStringAsFixed(8)} ${CurrencyUtil.getCurrencySymbol(currency)}';
     } else {
       return NumberFormat.currency(
-              locale: CurrencyUtil.getLocale(currency).toString(),
-              symbol: CurrencyUtil.getCurrencySymbol(currency),
-              decimalDigits: numberOfDigits)
-          .format(amount);
+        locale: CurrencyUtil.getLocale(currency).toString(),
+        symbol: CurrencyUtil.getCurrencySymbol(currency),
+        decimalDigits: numberOfDigits,
+      ).format(amount);
     }
   }
 
-  static String getAmountDisplay(double amount,
-      {String? networkCryptoCurrencyLabel = ''}) {
+  static String getAmountDisplay(
+    double amount, {
+    String? networkCryptoCurrencyLabel = '',
+  }) {
     if (networkCryptoCurrencyLabel!.isEmpty) {
       return amount.toString();
     } else {
@@ -293,15 +298,25 @@ class CurrencyUtil {
   }
 
   static String convertAmountFormated(
-      String currency, double price, double amount) {
+    String currency,
+    double price,
+    double amount,
+  ) {
     double amountConverted = convertAmount(price, amount);
     return getConvertedAmount(currency, amountConverted);
   }
 
   static String convertAmountFormatedWithNumberOfDigits(
-      String currency, double price, double amount, int numberOfDigits) {
+    String currency,
+    double price,
+    double amount,
+    int numberOfDigits,
+  ) {
     double amountConverted = convertAmount(price, amount);
     return getConvertedAmountWithNumberOfDigits(
-        currency, amountConverted, numberOfDigits);
+      currency,
+      amountConverted,
+      numberOfDigits,
+    );
   }
 }

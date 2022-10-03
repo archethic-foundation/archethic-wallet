@@ -11,12 +11,13 @@ part 'account_balance.g.dart';
 
 @HiveType(typeId: 5)
 class AccountBalance extends HiveObject {
-  AccountBalance(
-      {this.nativeTokenValue,
-      this.nativeTokenName,
-      this.fiatCurrencyValue,
-      this.fiatCurrencyCode,
-      this.tokenPrice});
+  AccountBalance({
+    this.nativeTokenValue,
+    this.nativeTokenName,
+    this.fiatCurrencyValue,
+    this.fiatCurrencyCode,
+    this.tokenPrice,
+  });
 
   /// Native Token - Value
   @HiveField(0)

@@ -43,17 +43,23 @@ class ReceiveSheet extends StatelessWidget {
               margin: const EdgeInsetsDirectional.only(top: 10.0, start: 10.0),
               child: TextButton(
                 onPressed: () {
-                  sl.get<HapticUtil>().feedback(FeedbackType.light,
-                      StateContainer.of(context).activeVibrations);
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.light,
+                        StateContainer.of(context).activeVibrations,
+                      );
                   Clipboard.setData(ClipboardData(text: address));
                   UIUtil.showSnackbar(
-                      AppLocalization.of(context)!.addressCopied,
-                      context,
-                      StateContainer.of(context).curTheme.text!,
-                      StateContainer.of(context).curTheme.snackBarShadow!);
+                    AppLocalization.of(context)!.addressCopied,
+                    context,
+                    StateContainer.of(context).curTheme.text!,
+                    StateContainer.of(context).curTheme.snackBarShadow!,
+                  );
                 },
-                child: FaIcon(FontAwesomeIcons.paste,
-                    size: 24, color: StateContainer.of(context).curTheme.text),
+                child: FaIcon(
+                  FontAwesomeIcons.paste,
+                  size: 24,
+                  color: StateContainer.of(context).curTheme.text,
+                ),
               ),
             ),
           ),
@@ -67,16 +73,17 @@ class ReceiveSheet extends StatelessWidget {
                   children: <Widget>[
                     TextButton(
                       onPressed: () {
-                        sl.get<HapticUtil>().feedback(FeedbackType.light,
-                            StateContainer.of(context).activeVibrations);
+                        sl.get<HapticUtil>().feedback(
+                              FeedbackType.light,
+                              StateContainer.of(context).activeVibrations,
+                            );
                         Clipboard.setData(ClipboardData(text: address));
                         UIUtil.showSnackbar(
-                            AppLocalization.of(context)!.addressCopied,
-                            context,
-                            StateContainer.of(context).curTheme.text!,
-                            StateContainer.of(context)
-                                .curTheme
-                                .snackBarShadow!);
+                          AppLocalization.of(context)!.addressCopied,
+                          context,
+                          StateContainer.of(context).curTheme.text!,
+                          StateContainer.of(context).curTheme.snackBarShadow!,
+                        );
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -103,7 +110,8 @@ class ReceiveSheet extends StatelessWidget {
                                               .addressInfos,
                                           style: AppStyles
                                               .textStyleSize16W700Primary(
-                                                  context),
+                                            context,
+                                          ),
                                         ),
                                       ),
                                       Container(
@@ -133,41 +141,53 @@ class ReceiveSheet extends StatelessWidget {
                                         child: Column(
                                           children: <Widget>[
                                             AutoSizeText(
-                                                CaseChange.toUpperCase(
-                                                    address!.substring(0, 16),
-                                                    StateContainer.of(context)
-                                                        .curLanguage
-                                                        .getLocaleString()),
-                                                style: AppStyles
-                                                    .textStyleSize12W100Primary(
-                                                        context)),
+                                              CaseChange.toUpperCase(
+                                                address!.substring(0, 16),
+                                                StateContainer.of(context)
+                                                    .curLanguage
+                                                    .getLocaleString(),
+                                              ),
+                                              style: AppStyles
+                                                  .textStyleSize12W100Primary(
+                                                context,
+                                              ),
+                                            ),
                                             AutoSizeText(
-                                                CaseChange.toUpperCase(
-                                                    address!.substring(16, 32),
-                                                    StateContainer.of(context)
-                                                        .curLanguage
-                                                        .getLocaleString()),
-                                                style: AppStyles
-                                                    .textStyleSize12W100Primary(
-                                                        context)),
+                                              CaseChange.toUpperCase(
+                                                address!.substring(16, 32),
+                                                StateContainer.of(context)
+                                                    .curLanguage
+                                                    .getLocaleString(),
+                                              ),
+                                              style: AppStyles
+                                                  .textStyleSize12W100Primary(
+                                                context,
+                                              ),
+                                            ),
                                             AutoSizeText(
-                                                CaseChange.toUpperCase(
-                                                    address!.substring(32, 48),
-                                                    StateContainer.of(context)
-                                                        .curLanguage
-                                                        .getLocaleString()),
-                                                style: AppStyles
-                                                    .textStyleSize12W100Primary(
-                                                        context)),
+                                              CaseChange.toUpperCase(
+                                                address!.substring(32, 48),
+                                                StateContainer.of(context)
+                                                    .curLanguage
+                                                    .getLocaleString(),
+                                              ),
+                                              style: AppStyles
+                                                  .textStyleSize12W100Primary(
+                                                context,
+                                              ),
+                                            ),
                                             AutoSizeText(
-                                                CaseChange.toUpperCase(
-                                                    address!.substring(48),
-                                                    StateContainer.of(context)
-                                                        .curLanguage
-                                                        .getLocaleString()),
-                                                style: AppStyles
-                                                    .textStyleSize12W100Primary(
-                                                        context)),
+                                              CaseChange.toUpperCase(
+                                                address!.substring(48),
+                                                StateContainer.of(context)
+                                                    .curLanguage
+                                                    .getLocaleString(),
+                                              ),
+                                              style: AppStyles
+                                                  .textStyleSize12W100Primary(
+                                                context,
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -192,41 +212,48 @@ class ReceiveSheet extends StatelessWidget {
               Row(
                 children: <Widget>[
                   AppButton.buildAppButton(
-                      const Key('viewExplorer'),
-                      context,
-                      AppButtonType.primary,
-                      AppLocalization.of(context)!.viewExplorer,
-                      Dimens.buttonTopDimens,
-                      icon: Icon(
-                        Icons.more_horiz,
-                        color: StateContainer.of(context).curTheme.text,
-                      ), onPressed: () async {
-                    UIUtil.showWebview(
+                    const Key('viewExplorer'),
+                    context,
+                    AppButtonType.primary,
+                    AppLocalization.of(context)!.viewExplorer,
+                    Dimens.buttonTopDimens,
+                    icon: Icon(
+                      Icons.more_horiz,
+                      color: StateContainer.of(context).curTheme.text,
+                    ),
+                    onPressed: () async {
+                      UIUtil.showWebview(
                         context,
                         '${await StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${address!}',
-                        '');
-                  }),
+                        '',
+                      );
+                    },
+                  ),
                 ],
               ),
               Row(
                 children: <Widget>[
                   AppButton.buildAppButton(
-                      const Key('share'),
-                      context,
-                      AppButtonType.primary,
-                      AppLocalization.of(context)!.share,
-                      Dimens.buttonBottomDimens,
-                      icon: Icon(
-                        Icons.share,
-                        color: StateContainer.of(context).curTheme.text,
-                      ), onPressed: () {
-                    final RenderBox? box =
-                        context.findRenderObject() as RenderBox?;
-                    final String textToShare = address!.toUpperCase();
-                    Share.share(textToShare,
+                    const Key('share'),
+                    context,
+                    AppButtonType.primary,
+                    AppLocalization.of(context)!.share,
+                    Dimens.buttonBottomDimens,
+                    icon: Icon(
+                      Icons.share,
+                      color: StateContainer.of(context).curTheme.text,
+                    ),
+                    onPressed: () {
+                      final RenderBox? box =
+                          context.findRenderObject() as RenderBox?;
+                      final String textToShare = address!.toUpperCase();
+                      Share.share(
+                        textToShare,
                         sharePositionOrigin:
-                            box!.localToGlobal(Offset.zero) & box.size);
-                  }),
+                            box!.localToGlobal(Offset.zero) & box.size,
+                      );
+                    },
+                  ),
                 ],
               ),
             ],

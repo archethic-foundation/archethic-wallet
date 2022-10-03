@@ -47,23 +47,26 @@ class AppWallet extends HiveObject {
 
     Uint8List genesisAddress = keychain.deriveAddress(kServiceName, index: 0);
     selectedAcct = Account(
-        lastLoadingTransactionInputs: 0,
-        lastAddress: uint8ListToHex(genesisAddress),
-        genesisAddress: uint8ListToHex(genesisAddress),
-        name: name,
-        balance: AccountBalance(
-            fiatCurrencyCode: '',
-            fiatCurrencyValue: 0,
-            nativeTokenName: '',
-            nativeTokenValue: 0),
-        selected: true,
-        recentTransactions: []);
+      lastLoadingTransactionInputs: 0,
+      lastAddress: uint8ListToHex(genesisAddress),
+      genesisAddress: uint8ListToHex(genesisAddress),
+      name: name,
+      balance: AccountBalance(
+        fiatCurrencyCode: '',
+        fiatCurrencyValue: 0,
+        nativeTokenName: '',
+        nativeTokenValue: 0,
+      ),
+      selected: true,
+      recentTransactions: [],
+    );
     appWallet = await sl.get<DBHelper>().addAccount(selectedAcct);
 
     final Contact newContact = Contact(
-        name: '@$name',
-        address: uint8ListToHex(genesisAddress),
-        type: 'keychainService');
+      name: '@$name',
+      address: uint8ListToHex(genesisAddress),
+      type: 'keychainService',
+    );
     await sl.get<DBHelper>().saveContact(newContact);
 
     return appWallet;

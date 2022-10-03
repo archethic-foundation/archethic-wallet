@@ -16,13 +16,11 @@ class BiometricUtil {
   ///
   /// @returns [true] if device has fingerprint/faceID available and registered, [false] otherwise
   Future<bool> hasBiometrics() async {
-    if (!kIsWeb &&
-        (Platform.isIOS || Platform.isAndroid || Platform.isWindows)) {
+    if (!kIsWeb && (Platform.isIOS || Platform.isAndroid || Platform.isWindows)) {
       final LocalAuthentication localAuth = LocalAuthentication();
       final bool canCheck = await localAuth.canCheckBiometrics;
       if (canCheck) {
-        final List<BiometricType> availableBiometrics =
-            await localAuth.getAvailableBiometrics();
+        final List<BiometricType> availableBiometrics = await localAuth.getAvailableBiometrics();
         if (availableBiometrics.contains(BiometricType.face) ||
             availableBiometrics.contains(BiometricType.fingerprint) ||
             availableBiometrics.contains(BiometricType.strong) ||
@@ -42,14 +40,19 @@ class BiometricUtil {
   /// @param [message] Message shown to user in FaceID/TouchID popup
   /// @returns [true] if successfully authenticated, [false] otherwise
   Future<bool> authenticateWithBiometrics(
-      BuildContext context, String message) async {
+    BuildContext context,
+    String message,
+  ) async {
     final bool hasBiometricsEnrolled = await hasBiometrics();
     if (hasBiometricsEnrolled) {
       final LocalAuthentication localAuth = LocalAuthentication();
-      return await localAuth.authenticate(
-          localizedReason: message,
-          options: const AuthenticationOptions(
-              useErrorDialogs: false, biometricOnly: true));
+      return localAuth.authenticate(
+        localizedReason: message,
+        options: const AuthenticationOptions(
+          useErrorDialogs: false,
+          biometricOnly: true,
+        ),
+      );
     }
     return false;
   }

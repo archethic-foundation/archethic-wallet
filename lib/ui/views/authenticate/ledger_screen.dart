@@ -1,6 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Flutter imports:
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +44,9 @@ class _LedgerScreenState extends State<LedgerScreen> {
         method = 'signTxn';
         break;
       case 'signTxn':
-        print(hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase());
+        log(
+          hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase(),
+        ); // TODO is is useful ?
         break;
       default:
     }
@@ -103,7 +107,11 @@ class _LedgerScreenState extends State<LedgerScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           IconWidget.build(
-                              context, 'assets/icons/key-ring.png', 90, 90),
+                            context,
+                            'assets/icons/key-ring.png',
+                            90,
+                            90,
+                          ),
                           const SizedBox(
                             height: 30,
                           ),
@@ -121,23 +129,29 @@ class _LedgerScreenState extends State<LedgerScreen> {
                           kIsWeb
                               ? method == 'getPubKey'
                                   ? ElevatedButton(
-                                      child: Text('Ledger - Get Public Key',
-                                          style: AppStyles
-                                              .textStyleSize16W200Primary(
-                                                  context)),
+                                      child: Text(
+                                        'Ledger - Get Public Key',
+                                        style: AppStyles
+                                            .textStyleSize16W200Primary(
+                                          context,
+                                        ),
+                                      ),
                                       onPressed: () async {
                                         method = 'getPubKey';
                                         await sl
                                             .get<LedgerNanoSImpl>()
                                             .connectLedger(getPubKeyAPDU());
-                                      })
+                                      },
+                                    )
                                   : method == 'signTxn'
                                       ? ElevatedButton(
                                           child: Text(
-                                              'Ledger - Verify transaction',
-                                              style: AppStyles
-                                                  .textStyleSize16W200Primary(
-                                                      context)),
+                                            'Ledger - Verify transaction',
+                                            style: AppStyles
+                                                .textStyleSize16W200Primary(
+                                              context,
+                                            ),
+                                          ),
                                           onPressed: () async {
                                             String addressIndex = '';
                                             // TODO: A Revoir
@@ -149,26 +163,29 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                     .padLeft(8, '0');*/
                                             final Transaction transaction =
                                                 Transaction(
-                                                    type: 'transfer',
-                                                    data:
-                                                        Transaction.initData());
+                                              type: 'transfer',
+                                              data: Transaction.initData(),
+                                            );
                                             for (UCOTransfer transfer
                                                 in widget.ucoTransferList!) {
                                               transaction.addUCOTransfer(
-                                                  transfer.to,
-                                                  transfer.amount!);
+                                                transfer.to,
+                                                transfer.amount!,
+                                              );
                                             }
                                             final Transaction lastTransaction =
                                                 await sl
                                                     .get<ApiService>()
                                                     .getLastTransaction(
-                                                        StateContainer.of(
-                                                                context)
-                                                            .appWallet!
-                                                            .appKeychain!
-                                                            .getAccountSelected()!
-                                                            .lastAddress!,
-                                                        request: 'chainLength');
+                                                      StateContainer.of(
+                                                        context,
+                                                      )
+                                                          .appWallet!
+                                                          .appKeychain!
+                                                          .getAccountSelected()!
+                                                          .lastAddress!,
+                                                      request: 'chainLength',
+                                                    );
                                             final String? transactionChainSeed =
                                                 await StateContainer.of(context)
                                                     .getSeed();
@@ -177,9 +194,9 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                 .getOriginKey();
                                             transaction
                                                 .build(
-                                                    transactionChainSeed!,
-                                                    lastTransaction
-                                                        .chainLength!)
+                                                  transactionChainSeed!,
+                                                  lastTransaction.chainLength!,
+                                                )
                                                 .originSign(originPrivateKey);
                                             OnChainWalletData
                                                 onChainWalletData =
@@ -187,16 +204,17 @@ class _LedgerScreenState extends State<LedgerScreen> {
 
                                             const hashType = 0;
                                             final signTxn = getSignTxnAPDU(
-                                                onChainWalletData,
-                                                transaction,
-                                                hashType,
-                                                int.tryParse(addressIndex)!);
-                                            print(
-                                                'signTxn:${uint8ListToHex(signTxn)}');
+                                              onChainWalletData,
+                                              transaction,
+                                              hashType,
+                                              int.tryParse(addressIndex)!,
+                                            );
+                                            log('signTxn:${uint8ListToHex(signTxn)}'); // TODO is this useful ?
                                             await sl
                                                 .get<LedgerNanoSImpl>()
                                                 .connectLedger(signTxn);
-                                          })
+                                          },
+                                        )
                                       : const SizedBox()
                               : const SizedBox(),
                         ],

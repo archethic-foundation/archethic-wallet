@@ -44,37 +44,47 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ? IconButton(
                       icon: const FaIcon(FontAwesomeIcons.gear),
                       onPressed: () async {
-                        sl.get<HapticUtil>().feedback(FeedbackType.light,
-                            StateContainer.of(context).activeVibrations);
+                        sl.get<HapticUtil>().feedback(
+                              FeedbackType.light,
+                              StateContainer.of(context).activeVibrations,
+                            );
                         Sheets.showAppHeightNineSheet(
-                            context: context,
-                            widget: const ConfigureCategoryList());
-                      })
+                          context: context,
+                          widget: const ConfigureCategoryList(),
+                        );
+                      },
+                    )
                   : StateContainer.of(context).showBalance
                       ? IconButton(
                           icon: const FaIcon(FontAwesomeIcons.eye),
                           onPressed: () async {
-                            sl.get<HapticUtil>().feedback(FeedbackType.light,
-                                StateContainer.of(context).activeVibrations);
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  StateContainer.of(context).activeVibrations,
+                                );
                             StateContainer.of(context).showBalance = false;
 
                             final Preferences preferences =
                                 await Preferences.getInstance();
                             await preferences.setShowBalances(false);
                             StateContainer.of(context).updateState();
-                          })
+                          },
+                        )
                       : IconButton(
                           icon: const FaIcon(FontAwesomeIcons.eyeLowVision),
                           onPressed: () async {
-                            sl.get<HapticUtil>().feedback(FeedbackType.light,
-                                StateContainer.of(context).activeVibrations);
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  StateContainer.of(context).activeVibrations,
+                                );
                             StateContainer.of(context).showBalance = true;
 
                             final Preferences preferences =
                                 await Preferences.getInstance();
                             await preferences.setShowBalances(true);
                             StateContainer.of(context).updateState();
-                          }),
+                          },
+                        ),
               if (!kIsWeb &&
                   (Platform.isIOS == true ||
                       Platform.isAndroid == true ||
@@ -83,8 +93,10 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ? IconButton(
                         icon: const Icon(Icons.notifications_active_outlined),
                         onPressed: () async {
-                          sl.get<HapticUtil>().feedback(FeedbackType.light,
-                              StateContainer.of(context).activeVibrations);
+                          sl.get<HapticUtil>().feedback(
+                                FeedbackType.light,
+                                StateContainer.of(context).activeVibrations,
+                              );
                           StateContainer.of(context).activeNotifications =
                               false;
                           if (StateContainer.of(context)
@@ -97,12 +109,15 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                           final Preferences preferences =
                               await Preferences.getInstance();
                           await preferences.setActiveNotifications(false);
-                        })
+                        },
+                      )
                     : IconButton(
                         icon: const Icon(Icons.notifications_off_outlined),
                         onPressed: () async {
-                          sl.get<HapticUtil>().feedback(FeedbackType.light,
-                              StateContainer.of(context).activeVibrations);
+                          sl.get<HapticUtil>().feedback(
+                                FeedbackType.light,
+                                StateContainer.of(context).activeVibrations,
+                              );
                           StateContainer.of(context).activeNotifications = true;
 
                           if (StateContainer.of(context)
@@ -113,29 +128,37 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 .cancel();
                           }
                           StateContainer.of(context).checkTransactionInputs(
-                              AppLocalization.of(context)!
-                                  .transactionInputNotification);
+                            AppLocalization.of(context)!
+                                .transactionInputNotification,
+                          );
                           final Preferences preferences =
                               await Preferences.getInstance();
                           await preferences.setActiveNotifications(true);
-                        })
+                        },
+                      )
             ],
             title: StateContainer.of(context).bottomBarCurrentPage == 0
                 ? InkWell(
                     onTap: () {
-                      sl.get<HapticUtil>().feedback(FeedbackType.light,
-                          StateContainer.of(context).activeVibrations);
-                      Clipboard.setData(ClipboardData(
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            StateContainer.of(context).activeVibrations,
+                          );
+                      Clipboard.setData(
+                        ClipboardData(
                           text: StateContainer.of(context)
                               .appWallet!
                               .appKeychain!
                               .address!
-                              .toUpperCase()));
+                              .toUpperCase(),
+                        ),
+                      );
                       UIUtil.showSnackbar(
-                          AppLocalization.of(context)!.addressCopied,
-                          context,
-                          StateContainer.of(context).curTheme.text!,
-                          StateContainer.of(context).curTheme.snackBarShadow!);
+                        AppLocalization.of(context)!.addressCopied,
+                        context,
+                        StateContainer.of(context).curTheme.text!,
+                        StateContainer.of(context).curTheme.snackBarShadow!,
+                      );
                     },
                     child: AutoSizeText(
                       AppLocalization.of(context)!.keychainHeader,
@@ -153,13 +176,15 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                               .getAccountSelected()!
                               .name!,
                           style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                              context),
+                            context,
+                          ),
                         ),
                       )
                     : AutoSizeText(
                         'NFT',
                         style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                            context),
+                          context,
+                        ),
                       ),
             backgroundColor: Colors.transparent,
             elevation: 0.0,

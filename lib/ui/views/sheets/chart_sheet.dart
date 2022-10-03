@@ -20,8 +20,11 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 
 class ChartSheet extends StatefulWidget {
-  const ChartSheet(
-      {super.key, required this.optionChartList, required this.optionChart});
+  const ChartSheet({
+    super.key,
+    required this.optionChartList,
+    required this.optionChart,
+  });
 
   final List<OptionChart> optionChartList;
   final OptionChart? optionChart;
@@ -127,19 +130,23 @@ class _ChartSheetState extends State<ChartSheet> {
         const SizedBox(
           height: 30,
         ),
-        Wrap(children: [
-          BottomBar(
+        Wrap(
+          children: [
+            BottomBar(
               selectedIndex: bottomBarCurrentPage,
               curve: Curves.easeIn,
               duration: const Duration(milliseconds: 500),
               itemPadding: const EdgeInsets.all(10),
               padding: const EdgeInsets.only(right: 10, left: 10),
               onTap: (int index) async {
-                sl.get<HapticUtil>().feedback(FeedbackType.light,
-                    StateContainer.of(context).activeVibrations);
+                sl.get<HapticUtil>().feedback(
+                      FeedbackType.light,
+                      StateContainer.of(context).activeVibrations,
+                    );
                 await StateContainer.of(context).chartInfos!.updateCoinsChart(
-                    StateContainer.of(context).curCurrency.currency.name,
-                    option: widget.optionChartList[index].id);
+                      StateContainer.of(context).curCurrency.currency.name,
+                      option: widget.optionChartList[index].id,
+                    );
 
                 setState(() {
                   optionChartSelected = widget.optionChartList[index];
@@ -153,27 +160,29 @@ class _ChartSheetState extends State<ChartSheet> {
               },
               items: widget.optionChartList.map((OptionChart optionChart) {
                 return BottomBarItem(
-                    icon: Text(
-                      ChartInfos.getChartOptionLabel(context, optionChart.id),
-                      style: AppStyles.textStyleSize12W100Primary(context),
-                    ),
-                    backgroundColorOpacity: StateContainer.of(context)
-                        .curTheme
-                        .bottomBarBackgroundColorOpacity!,
-                    activeIconColor: StateContainer.of(context)
-                        .curTheme
-                        .bottomBarActiveIconColor!,
-                    activeTitleColor: StateContainer.of(context)
-                        .curTheme
-                        .bottomBarActiveTitleColor!,
-                    activeColor: StateContainer.of(context)
-                        .curTheme
-                        .bottomBarActiveColor!,
-                    inactiveColor: StateContainer.of(context)
-                        .curTheme
-                        .bottomBarInactiveIcon!);
-              }).toList()),
-        ]),
+                  icon: Text(
+                    ChartInfos.getChartOptionLabel(context, optionChart.id),
+                    style: AppStyles.textStyleSize12W100Primary(context),
+                  ),
+                  backgroundColorOpacity: StateContainer.of(context)
+                      .curTheme
+                      .bottomBarBackgroundColorOpacity!,
+                  activeIconColor: StateContainer.of(context)
+                      .curTheme
+                      .bottomBarActiveIconColor!,
+                  activeTitleColor: StateContainer.of(context)
+                      .curTheme
+                      .bottomBarActiveTitleColor!,
+                  activeColor:
+                      StateContainer.of(context).curTheme.bottomBarActiveColor!,
+                  inactiveColor: StateContainer.of(context)
+                      .curTheme
+                      .bottomBarInactiveIcon!,
+                );
+              }).toList(),
+            ),
+          ],
+        ),
         if (StateContainer.of(context).chartInfos != null)
           BalanceInfosWidget().buildKPI(context)
         else

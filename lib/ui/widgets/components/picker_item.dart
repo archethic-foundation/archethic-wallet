@@ -23,9 +23,17 @@ class PickerItem {
   bool displayed;
   String? subLabel;
 
-  PickerItem(this.label, this.description, this.icon, this.iconColor,
-      this.value, this.enabled,
-      {this.displayed = true, this.decorationImageItem, this.subLabel});
+  PickerItem(
+    this.label,
+    this.description,
+    this.icon,
+    this.iconColor,
+    this.value,
+    this.enabled, {
+    this.displayed = true,
+    this.decorationImageItem,
+    this.subLabel,
+  });
 }
 
 class PickerWidget extends StatefulWidget {
@@ -33,11 +41,15 @@ class PickerWidget extends StatefulWidget {
   final List<PickerItem>? pickerItems;
   final int selectedIndex;
 
-  const PickerWidget(
-      {super.key, this.pickerItems, this.onSelected, this.selectedIndex = -1});
+  const PickerWidget({
+    super.key,
+    this.pickerItems,
+    this.onSelected,
+    this.selectedIndex = -1,
+  });
 
   @override
-  _PickerWidgetState createState() => _PickerWidgetState();
+  State<PickerWidget> createState() => _PickerWidgetState();
 }
 
 class _PickerWidgetState extends State<PickerWidget> {
@@ -62,8 +74,10 @@ class _PickerWidgetState extends State<PickerWidget> {
             return InkWell(
               onTap: () {
                 if (widget.pickerItems![index].enabled) {
-                  sl.get<HapticUtil>().feedback(FeedbackType.light,
-                      StateContainer.of(context).activeVibrations);
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.light,
+                        StateContainer.of(context).activeVibrations,
+                      );
                   selectedIndex = index;
                   widget.onSelected!(widget.pickerItems![index]);
                   setState(() {});
@@ -75,9 +89,10 @@ class _PickerWidgetState extends State<PickerWidget> {
                 decoration: BoxDecoration(
                   image: pickerItem.decorationImageItem,
                   border: Border.all(
-                      color: isItemSelected
-                          ? Colors.green
-                          : StateContainer.of(context).curTheme.text30!),
+                    color: isItemSelected
+                        ? Colors.green
+                        : StateContainer.of(context).curTheme.text30!,
+                  ),
                   borderRadius: const BorderRadius.all(Radius.circular(12)),
                 ),
                 child: Padding(
@@ -98,14 +113,16 @@ class _PickerWidgetState extends State<PickerWidget> {
                                   child: widget.pickerItems![index].iconColor ==
                                           null
                                       ? Image.asset(pickerItem.icon!)
-                                      : Image.asset(pickerItem.icon!,
+                                      : Image.asset(
+                                          pickerItem.icon!,
                                           color:
                                               widget.pickerItems![index].enabled
                                                   ? widget.pickerItems![index]
                                                       .iconColor
                                                   : StateContainer.of(context)
                                                       .curTheme
-                                                      .pickerItemIconDisabled),
+                                                      .pickerItemIconDisabled,
+                                        ),
                                 ),
                           const SizedBox(width: 10),
                           Expanded(
@@ -113,29 +130,34 @@ class _PickerWidgetState extends State<PickerWidget> {
                               children: [
                                 Align(
                                   alignment: Alignment.centerLeft,
-                                  child: Text(pickerItem.label,
-                                      style: widget.pickerItems![index].enabled
-                                          ? AppStyles
-                                              .textStyleSize14W600Primary(
-                                                  context)
-                                          : AppStyles
-                                              .textStyleSize14W600PrimaryDisabled(
-                                                  context)),
+                                  child: Text(
+                                    pickerItem.label,
+                                    style: widget.pickerItems![index].enabled
+                                        ? AppStyles.textStyleSize14W600Primary(
+                                            context,
+                                          )
+                                        : AppStyles
+                                            .textStyleSize14W600PrimaryDisabled(
+                                            context,
+                                          ),
+                                  ),
                                 ),
                                 widget.pickerItems![index].subLabel != null
                                     ? Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                            widget
-                                                .pickerItems![index].subLabel!,
-                                            style: widget
-                                                    .pickerItems![index].enabled
-                                                ? AppStyles
-                                                    .textStyleSize12W400Primary(
-                                                        context)
-                                                : AppStyles
-                                                    .textStyleSize12W400PrimaryDisabled(
-                                                        context)),
+                                          widget.pickerItems![index].subLabel!,
+                                          style: widget
+                                                  .pickerItems![index].enabled
+                                              ? AppStyles
+                                                  .textStyleSize12W400Primary(
+                                                  context,
+                                                )
+                                              : AppStyles
+                                                  .textStyleSize12W400PrimaryDisabled(
+                                                  context,
+                                                ),
+                                        ),
                                       )
                                     : const SizedBox(),
                               ],

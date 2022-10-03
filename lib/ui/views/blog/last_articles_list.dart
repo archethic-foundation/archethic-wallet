@@ -79,76 +79,88 @@ class LastArticlesWidgetState extends State<LastArticlesWidget> {
                       UIUtil.showWebview(context, blogUrl, '');
                     },
                     child: IconWidget.buildIconDataWidget(
-                        context, Icons.arrow_circle_right_outlined, 20, 20),
+                      context,
+                      Icons.arrow_circle_right_outlined,
+                      20,
+                      20,
+                    ),
                   ),
                 ],
               ),
             ),
           ),
           FutureBuilder<List<GhostPost>>(
-              future: api.posts.browse(
-                limit: 5,
-                include: <String>['tags', 'authors'],
-              ),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return SizedBox(
-                    height: 280,
-                    child: PageView.builder(
-                      controller: pageController,
-                      itemCount: snapshot.data!.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            UIUtil.showWebview(
-                                context, snapshot.data![index].url!, '');
-                          },
-                          child: Center(
-                            child: SlidingCard(
-                                name: snapshot.data![index].title!,
-                                date: DateFormat.yMMMEd(
-                                        Localizations.localeOf(context)
-                                            .languageCode)
-                                    .format(snapshot.data![index].publishedAt!
-                                        .toLocal())
-                                    .toString(),
-                                author: snapshot.data![index].authors![0].name!,
-                                assetName: snapshot.data![index].featureImage,
-                                offset: pageOffset - index),
+            future: api.posts.browse(
+              limit: 5,
+              include: <String>['tags', 'authors'],
+            ),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return SizedBox(
+                  height: 280,
+                  child: PageView.builder(
+                    controller: pageController,
+                    itemCount: snapshot.data!.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          UIUtil.showWebview(
+                            context,
+                            snapshot.data![index].url!,
+                            '',
+                          );
+                        },
+                        child: Center(
+                          child: SlidingCard(
+                            name: snapshot.data![index].title!,
+                            date: DateFormat.yMMMEd(
+                              Localizations.localeOf(context).languageCode,
+                            )
+                                .format(
+                                  snapshot.data![index].publishedAt!.toLocal(),
+                                )
+                                .toString(),
+                            author: snapshot.data![index].authors![0].name!,
+                            assetName: snapshot.data![index].featureImage,
+                            offset: pageOffset - index,
                           ),
-                        );
-                      },
-                    ),
-                  );
-                } else {
-                  return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
-                        SizedBox(
-                          height: 50,
                         ),
-                        SizedBox(
-                          height: 250,
-                        )
-                      ]);
-                }
-              })
+                      );
+                    },
+                  ),
+                );
+              } else {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: const [
+                    SizedBox(
+                      height: 50,
+                    ),
+                    SizedBox(
+                      height: 250,
+                    )
+                  ],
+                );
+              }
+            },
+          )
         ],
       );
     } else {
       return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: const [
-            SizedBox(
-              height: 50,
-            ),
-            SizedBox(
-              height: 250,
-            )
-          ]);
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: const [
+          SizedBox(
+            height: 50,
+          ),
+          SizedBox(
+            height: 250,
+          )
+        ],
+      );
     }
   }
 }

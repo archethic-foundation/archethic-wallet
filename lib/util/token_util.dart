@@ -16,11 +16,14 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/mime_util.dart';
 
 RegExp _base64 = RegExp(
-    r'^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$');
+  r'^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$',
+);
 
 class TokenUtil {
   static Future<Uint8List?> getImageFromTokenAddress(
-      String address, String typeMime) async {
+    String address,
+    String typeMime,
+  ) async {
     Uint8List? valueFileDecoded;
     Uint8List? imageDecoded;
     final Token token =
@@ -54,7 +57,9 @@ class TokenUtil {
   }
 
   static String getPropertyValue(
-      TokenInformations tokenInformations, String nameProperty) {
+    TokenInformations tokenInformations,
+    String nameProperty,
+  ) {
     String value = '';
     if (tokenInformations.tokenProperties != null &&
         tokenInformations.tokenProperties!

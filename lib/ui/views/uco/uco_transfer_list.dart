@@ -30,7 +30,8 @@ class UCOTransferListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     listUcoTransfer!.sort(
-        (UCOTransferWallet a, UCOTransferWallet b) => a.to!.compareTo(b.to!));
+      (UCOTransferWallet a, UCOTransferWallet b) => a.to!.compareTo(b.to!),
+    );
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
       padding: const EdgeInsets.only(left: 3.5, right: 3.5),
@@ -53,13 +54,16 @@ class UCOTransferListWidget extends StatelessWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Text('+ ${AppLocalization.of(context)!.estimatedFees}',
-                        style: AppStyles.textStyleSize14W600Primary(context)),
+                    Text(
+                      '+ ${AppLocalization.of(context)!.estimatedFees}',
+                      style: AppStyles.textStyleSize14W600Primary(context),
+                    ),
                   ],
                 ),
                 Text(
-                    '${feeEstimation!.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                    style: AppStyles.textStyleSize14W600Primary(context)),
+                  '${feeEstimation!.toStringAsFixed(8)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                  style: AppStyles.textStyleSize14W600Primary(context),
+                ),
               ],
             ),
           ),
@@ -71,13 +75,16 @@ class UCOTransferListWidget extends StatelessWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Text(AppLocalization.of(context)!.total,
-                        style: AppStyles.textStyleSize14W600Primary(context)),
+                    Text(
+                      AppLocalization.of(context)!.total,
+                      style: AppStyles.textStyleSize14W600Primary(context),
+                    ),
                   ],
                 ),
                 Text(
-                    '${(NumberUtil.formatThousands(_getTotal()))} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                    style: AppStyles.textStyleSize14W600Primary(context)),
+                  '${(NumberUtil.formatThousands(_getTotal()))} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                  style: AppStyles.textStyleSize14W600Primary(context),
+                ),
               ],
             ),
           ),
@@ -95,21 +102,25 @@ class UCOTransferListWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(AppLocalization.of(context)!.txListTo,
-                style: AppStyles.textStyleSize14W600Primary(context)),
             Text(
-                ucoTransfer.toContactName == null
-                    ? Address(ucoTransfer.to!).getShortString()
-                    : '${ucoTransfer.toContactName!}\n${Address(ucoTransfer.to!).getShortString()}',
-                style: AppStyles.textStyleSize14W600Primary(context)),
+              AppLocalization.of(context)!.txListTo,
+              style: AppStyles.textStyleSize14W600Primary(context),
+            ),
+            Text(
+              ucoTransfer.toContactName == null
+                  ? Address(ucoTransfer.to!).getShortString()
+                  : '${ucoTransfer.toContactName!}\n${Address(ucoTransfer.to!).getShortString()}',
+              style: AppStyles.textStyleSize14W600Primary(context),
+            ),
           ],
         ),
         const SizedBox(
           height: 20,
         ),
         Text(
-            '${(NumberUtil.formatThousands(fromBigInt(ucoTransfer.amount!)))} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-            style: AppStyles.textStyleSize14W600Primary(context)),
+          '${(NumberUtil.formatThousands(fromBigInt(ucoTransfer.amount!)))} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+          style: AppStyles.textStyleSize14W600Primary(context),
+        ),
       ],
     );
   }

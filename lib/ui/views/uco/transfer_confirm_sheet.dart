@@ -23,7 +23,6 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/token_transfer_wallet.dart';
 import 'package:aewallet/model/uco_transfer_wallet.dart';
-import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -40,16 +39,17 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 
 class TransferConfirmSheet extends StatefulWidget {
-  const TransferConfirmSheet(
-      {super.key,
-      required this.lastAddress,
-      required this.typeTransfer,
-      required this.feeEstimation,
-      required this.symbol,
-      this.title,
-      this.ucoTransferList,
-      this.tokenTransferList,
-      this.message});
+  const TransferConfirmSheet({
+    super.key,
+    required this.lastAddress,
+    required this.typeTransfer,
+    required this.feeEstimation,
+    required this.symbol,
+    this.title,
+    this.ucoTransferList,
+    this.tokenTransferList,
+    this.message,
+  });
 
   final String? lastAddress;
   final String? typeTransfer;
@@ -89,38 +89,43 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         }
 
         UIUtil.showSnackbar(
-            event.response!,
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!,
-            duration: const Duration(seconds: 5));
+          event.response!,
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+          duration: const Duration(seconds: 5),
+        );
         Navigator.of(context).pop();
       } else {
         if (event.response == 'ok' &&
             ConfirmationsUtil.isEnoughConfirmations(
-                event.nbConfirmations!, event.maxConfirmations!)) {
+              event.nbConfirmations!,
+              event.maxConfirmations!,
+            )) {
           UIUtil.showSnackbar(
-              event.nbConfirmations == 1
-                  ? AppLocalization.of(context)!
-                      .transferConfirmed1
-                      .replaceAll('%1', event.nbConfirmations.toString())
-                      .replaceAll('%2', event.maxConfirmations.toString())
-                  : AppLocalization.of(context)!
-                      .transferConfirmed
-                      .replaceAll('%1', event.nbConfirmations.toString())
-                      .replaceAll('%2', event.maxConfirmations.toString()),
-              context,
-              StateContainer.of(context).curTheme.text!,
-              StateContainer.of(context).curTheme.snackBarShadow!,
-              duration: const Duration(milliseconds: 5000));
+            event.nbConfirmations == 1
+                ? AppLocalization.of(context)!
+                    .transferConfirmed1
+                    .replaceAll('%1', event.nbConfirmations.toString())
+                    .replaceAll('%2', event.maxConfirmations.toString())
+                : AppLocalization.of(context)!
+                    .transferConfirmed
+                    .replaceAll('%1', event.nbConfirmations.toString())
+                    .replaceAll('%2', event.maxConfirmations.toString()),
+            context,
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!,
+            duration: const Duration(milliseconds: 5000),
+          );
           if (widget.typeTransfer == 'TOKEN') {
             Transaction transaction = await sl
                 .get<ApiService>()
                 .getLastTransaction((event.transactionAddress!));
 
             Token token = await sl.get<ApiService>().getToken(
-                transaction.data!.ledger!.token!.transfers![0].tokenAddress!,
-                request: 'id');
+                  transaction.data!.ledger!.token!.transfers![0].tokenAddress!,
+                  request: 'id',
+                );
             StateContainer.of(context)
                 .appWallet!
                 .appKeychain!
@@ -133,10 +138,11 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
           Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
         } else {
           UIUtil.showSnackbar(
-              AppLocalization.of(context)!.notEnoughConfirmations,
-              context,
-              StateContainer.of(context).curTheme.text!,
-              StateContainer.of(context).curTheme.snackBarShadow!);
+            AppLocalization.of(context)!.notEnoughConfirmations,
+            context,
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!,
+          );
           Navigator.of(context).pop();
         }
       }
@@ -168,11 +174,14 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
 
   void _showSendingAnimation(BuildContext context) {
     animationOpen = true;
-    Navigator.of(context).push(AnimationLoadingOverlay(
+    Navigator.of(context).push(
+      AnimationLoadingOverlay(
         AnimationType.send,
         StateContainer.of(context).curTheme.animationOverlayStrong!,
         StateContainer.of(context).curTheme.animationOverlayMedium!,
-        onPoppedCallback: () => animationOpen = false));
+        onPoppedCallback: () => animationOpen = false,
+      ),
+    );
   }
 
   @override
@@ -210,7 +219,11 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                   Container(
                     width: MediaQuery.of(context).size.width,
                     margin: const EdgeInsets.only(
-                        left: 20, right: 20, top: 20.0, bottom: 20.0),
+                      left: 20,
+                      right: 20,
+                      top: 20.0,
+                      bottom: 20.0,
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,9 +264,11 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                         final AuthenticationMethod authMethod =
                             preferences.getAuthMethod();
                         bool auth = await AuthFactory.authenticate(
-                            context, authMethod,
-                            activeVibrations:
-                                StateContainer.of(context).activeVibrations);
+                          context,
+                          authMethod,
+                          activeVibrations:
+                              StateContainer.of(context).activeVibrations,
+                        );
                         if (auth) {
                           EventTaxiImpl.singleton().fire(AuthenticatedEvent());
                         }
@@ -264,13 +279,15 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                 Row(
                   children: <Widget>[
                     AppButton.buildAppButton(
-                        const Key('cancel'),
-                        context,
-                        AppButtonType.primary,
-                        AppLocalization.of(context)!.cancel,
-                        Dimens.buttonBottomDimens, onPressed: () {
-                      Navigator.of(context).pop();
-                    }),
+                      const Key('cancel'),
+                      context,
+                      AppButtonType.primary,
+                      AppLocalization.of(context)!.cancel,
+                      Dimens.buttonBottomDimens,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
                   ],
                 ),
               ],
@@ -290,14 +307,17 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
 
       final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
-      String nameEncoded = Uri.encodeFull(StateContainer.of(context)
-          .appWallet!
-          .appKeychain!
-          .getAccountSelected()!
-          .name!);
+      String nameEncoded = Uri.encodeFull(
+        StateContainer.of(context)
+            .appWallet!
+            .appKeychain!
+            .getAccountSelected()!
+            .name!,
+      );
       final String service = 'archethic-wallet-$nameEncoded';
       final int index = (await sl.get<ApiService>().getTransactionIndex(
-              uint8ListToHex(keychain.deriveAddress(service, index: 0))))
+                uint8ListToHex(keychain.deriveAddress(service, index: 0)),
+              ))
           .chainLength!;
 
       final Transaction transaction =
@@ -307,13 +327,19 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       }
       for (TokenTransfer transfer in tokenTransferList) {
         transaction.addTokenTransfer(
-            transfer.to, transfer.amount!, transfer.tokenAddress,
-            tokenId: transfer.tokenId == null ? 0 : transfer.tokenId!);
+          transfer.to,
+          transfer.amount!,
+          transfer.tokenAddress,
+          tokenId: transfer.tokenId == null ? 0 : transfer.tokenId!,
+        );
       }
 
       if (widget.message!.isNotEmpty) {
-        final String aesKey = uint8ListToHex(Uint8List.fromList(
-            List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
+        final String aesKey = uint8ListToHex(
+          Uint8List.fromList(
+            List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
+          ),
+        );
 
         final KeyPair walletKeyPair = keychain.deriveKeypair(service);
 
@@ -343,13 +369,18 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         final List<AuthorizedKey> authorizedKeys =
             List<AuthorizedKey>.empty(growable: true);
         for (String key in authorizedPublicKeys) {
-          authorizedKeys.add(AuthorizedKey(
+          authorizedKeys.add(
+            AuthorizedKey(
               encryptedSecretKey: uint8ListToHex(ecEncrypt(aesKey, key)),
-              publicKey: key));
+              publicKey: key,
+            ),
+          );
         }
 
         transaction.addOwnership(
-            aesEncrypt(widget.message!, aesKey), authorizedKeys);
+          aesEncrypt(widget.message!, aesKey),
+          authorizedKeys,
+        );
       }
 
       Transaction signedTx = keychain
@@ -360,38 +391,50 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
 
       final Preferences preferences = await Preferences.getInstance();
       await subscriptionChannel.connect(
-          await preferences.getNetwork().getPhoenixHttpLink(),
-          await preferences.getNetwork().getWebsocketUri());
+        await preferences.getNetwork().getPhoenixHttpLink(),
+        await preferences.getNetwork().getWebsocketUri(),
+      );
 
       void waitConfirmationsTrf(QueryResult event) {
         waitConfirmations(event, transactionAddress: signedTx.address);
       }
 
       subscriptionChannel.addSubscriptionTransactionConfirmed(
-          transaction.address!, waitConfirmationsTrf);
+        transaction.address!,
+        waitConfirmationsTrf,
+      );
 
       await Future.delayed(const Duration(seconds: 1));
 
       transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
 
       if (transactionStatus.status == 'invalid') {
-        EventTaxiImpl.singleton().fire(TransactionSendEvent(
+        EventTaxiImpl.singleton().fire(
+          TransactionSendEvent(
             transactionType: TransactionSendEventType.transfer,
             response: '',
-            nbConfirmations: 0));
+            nbConfirmations: 0,
+          ),
+        );
         subscriptionChannel.close();
       }
     } on ArchethicConnectionException {
-      EventTaxiImpl.singleton().fire(TransactionSendEvent(
+      EventTaxiImpl.singleton().fire(
+        TransactionSendEvent(
           transactionType: TransactionSendEventType.token,
           response: AppLocalization.of(context)!.noConnection,
-          nbConfirmations: 0));
+          nbConfirmations: 0,
+        ),
+      );
       subscriptionChannel.close();
     } on Exception {
-      EventTaxiImpl.singleton().fire(TransactionSendEvent(
+      EventTaxiImpl.singleton().fire(
+        TransactionSendEvent(
           transactionType: TransactionSendEventType.token,
           response: AppLocalization.of(context)!.keychainNotExistWarning,
-          nbConfirmations: 0));
+          nbConfirmations: 0,
+        ),
+      );
       subscriptionChannel.close();
     }
   }
@@ -408,19 +451,23 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         maxConfirmations =
             event.data!['transactionConfirmed']['maxConfirmations'];
       }
-      EventTaxiImpl.singleton().fire(TransactionSendEvent(
+      EventTaxiImpl.singleton().fire(
+        TransactionSendEvent(
           transactionType: TransactionSendEventType.transfer,
           response: 'ok',
           nbConfirmations: nbConfirmations,
           transactionAddress: transactionAddress,
-          maxConfirmations: maxConfirmations));
+          maxConfirmations: maxConfirmations,
+        ),
+      );
     } else {
       EventTaxiImpl.singleton().fire(
         TransactionSendEvent(
-            transactionType: TransactionSendEventType.transfer,
-            nbConfirmations: 0,
-            maxConfirmations: 0,
-            response: 'ko'),
+          transactionType: TransactionSendEventType.transfer,
+          nbConfirmations: 0,
+          maxConfirmations: 0,
+          response: 'ko',
+        ),
       );
     }
     subscriptionChannel.close();

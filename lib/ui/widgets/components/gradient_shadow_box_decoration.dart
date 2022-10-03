@@ -28,8 +28,7 @@ class GradientShadowBoxDecoration extends Decoration {
     this.boxShadow,
     this.backgroundBlendMode,
     this.shape = BoxShape.rectangle,
-  })  : assert(shape != null),
-        assert(
+  }) : assert(
             backgroundBlendMode == null || color != null || gradient != null,
             "backgroundBlendMode applies to BoxDecoration's background color or "
             'gradient, but no color or gradient was provided.');
@@ -60,8 +59,9 @@ class GradientShadowBoxDecoration extends Decoration {
 
   @override
   bool debugAssertIsValid() {
-    assert(shape != BoxShape.circle ||
-        borderRadius == null); // Can't have a border radius if you're a circle.
+    assert(
+      shape != BoxShape.circle || borderRadius == null,
+    ); // Can't have a border radius if you're a circle.
     return super.debugAssertIsValid();
   }
 
@@ -161,7 +161,6 @@ class GradientShadowBoxDecoration extends Decoration {
         }
         return Path()..addRect(rect);
     }
-    return Path()..addRect(rect);
   }
 
   /// Returns a new box decoration that is scaled by the given factor.
@@ -222,11 +221,10 @@ class GradientShadowBoxDecoration extends Decoration {
   ///    and which use [BoxDecoration.lerp] when interpolating two
   ///    [BoxDecoration]s or a [BoxDecoration] to or from null.
   static GradientShadowBoxDecoration? lerp(
-      GradientShadowBoxDecoration a, GradientShadowBoxDecoration b, double t) {
-    assert(t != null);
-    if (a == null && b == null) return null;
-    if (a == null) return b.scale(t);
-    if (b == null) return a.scale(1.0 - t);
+    GradientShadowBoxDecoration a,
+    GradientShadowBoxDecoration b,
+    double t,
+  ) {
     if (t == 0.0) return a;
     if (t == 1.0) return b;
     return GradientShadowBoxDecoration(
@@ -257,12 +255,12 @@ class GradientShadowBoxDecoration extends Decoration {
 
   @override
   int get hashCode {
-    return hashValues(
+    return Object.hash(
       color,
       image,
       border,
       borderRadius,
-      hashList(boxShadow),
+      Object.hashAll(boxShadow ?? []),
       gradient,
       shape,
     );
@@ -276,24 +274,49 @@ class GradientShadowBoxDecoration extends Decoration {
       ..emptyBodyDescription = '<no decorations specified>';
 
     properties.add(ColorProperty('color', color, defaultValue: null));
-    properties.add(DiagnosticsProperty<DecorationImage>('image', image,
-        defaultValue: null));
     properties.add(
-        DiagnosticsProperty<BoxBorder>('border', border, defaultValue: null));
-    properties.add(DiagnosticsProperty<BorderRadiusGeometry>(
-        'borderRadius', borderRadius,
-        defaultValue: null));
-    properties.add(IterableProperty<BoxShadow>('boxShadow', boxShadow,
-        defaultValue: null, style: DiagnosticsTreeStyle.whitespace));
-    properties.add(DiagnosticsProperty<Gradient>('gradient', gradient,
-        defaultValue: null));
-    properties.add(EnumProperty<BoxShape>('shape', shape,
-        defaultValue: BoxShape.rectangle));
+      DiagnosticsProperty<DecorationImage>(
+        'image',
+        image,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<BoxBorder>('border', border, defaultValue: null),
+    );
+    properties.add(
+      DiagnosticsProperty<BorderRadiusGeometry>(
+        'borderRadius',
+        borderRadius,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      IterableProperty<BoxShadow>(
+        'boxShadow',
+        boxShadow,
+        defaultValue: null,
+        style: DiagnosticsTreeStyle.whitespace,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<Gradient>(
+        'gradient',
+        gradient,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      EnumProperty<BoxShape>(
+        'shape',
+        shape,
+        defaultValue: BoxShape.rectangle,
+      ),
+    );
   }
 
   @override
   bool hitTest(Size size, Offset position, {TextDirection? textDirection}) {
-    assert(shape != null);
     assert((Offset.zero & size).contains(position));
     switch (shape) {
       case BoxShape.rectangle:
@@ -312,7 +335,7 @@ class GradientShadowBoxDecoration extends Decoration {
   }
 
   @override
-  _BoxDecorationPainter createBoxPainter([VoidCallback? onChanged]) {
+  BoxPainter createBoxPainter([VoidCallback? onChanged]) {
     assert(onChanged != null || image == null);
     return _BoxDecorationPainter(this, onChanged!);
   }
@@ -321,17 +344,16 @@ class GradientShadowBoxDecoration extends Decoration {
 /// An object that paints a [GradientShadowBoxDecoration] into a canvas.
 class _BoxDecorationPainter extends BoxPainter {
   _BoxDecorationPainter(this._decoration, VoidCallback onChanged)
-      : assert(_decoration != null),
-        super(onChanged);
+      : super(onChanged);
 
   final GradientShadowBoxDecoration _decoration;
 
   Paint? _cachedBackgroundPaint;
   Rect? _rectForCachedBackgroundPaint;
   Paint _getBackgroundPaint(Rect rect, TextDirection textDirection) {
-    assert(rect != null);
     assert(
-        _decoration.gradient != null || _rectForCachedBackgroundPaint == null);
+      _decoration.gradient != null || _rectForCachedBackgroundPaint == null,
+    );
 
     if (_cachedBackgroundPaint == null ||
         (_decoration.gradient != null &&
@@ -353,7 +375,11 @@ class _BoxDecorationPainter extends BoxPainter {
   }
 
   void _paintBox(
-      Canvas canvas, Rect rect, Paint paint, TextDirection textDirection) {
+    Canvas canvas,
+    Rect rect,
+    Paint paint,
+    TextDirection textDirection,
+  ) {
     switch (_decoration.shape) {
       case BoxShape.circle:
         assert(_decoration.borderRadius == null);
@@ -366,31 +392,38 @@ class _BoxDecorationPainter extends BoxPainter {
           canvas.drawRect(rect, paint);
         } else {
           canvas.drawRRect(
-              _decoration.borderRadius!.resolve(textDirection).toRRect(rect),
-              paint);
+            _decoration.borderRadius!.resolve(textDirection).toRRect(rect),
+            paint,
+          );
         }
         break;
     }
   }
 
   void _paintShadows(Canvas canvas, Rect rect, TextDirection textDirection) {
-    if (_decoration.boxShadow == null) {
-      const boxShadow =
-          BoxShadow(blurRadius: 30, spreadRadius: 15, color: Colors.black);
+    const defaultBoxShadows = [
+      BoxShadow(
+        blurRadius: 30,
+        spreadRadius: 15,
+        color: Colors.black,
+      ),
+    ];
+
+    final boxShadowsToDraw = _decoration.boxShadow ?? defaultBoxShadows;
+    for (final boxShadow in boxShadowsToDraw) {
       _drawShadow(boxShadow, canvas, rect, textDirection);
-    } else
-      for (final boxShadow in _decoration.boxShadow!) {
-        _drawShadow(boxShadow, canvas, rect, textDirection);
-      }
+    }
   }
 
-  void _drawShadow(BoxShadow boxShadow, Canvas canvas, Rect rect,
-      TextDirection textDirection) {
+  void _drawShadow(
+    BoxShadow boxShadow,
+    Canvas canvas,
+    Rect rect,
+    TextDirection textDirection,
+  ) {
     final Paint paint = boxShadow.toPaint();
 
-    if (_decoration.gradient!.colors != null) {
-      paint..shader = _decoration.gradient!.createShader(rect);
-    }
+    paint.shader = _decoration.gradient!.createShader(rect);
 
     final Rect bounds =
         rect.shift(boxShadow.offset).inflate(boxShadow.spreadRadius);
@@ -398,16 +431,26 @@ class _BoxDecorationPainter extends BoxPainter {
   }
 
   void _paintBackgroundColor(
-      Canvas canvas, Rect rect, TextDirection textDirection) {
+    Canvas canvas,
+    Rect rect,
+    TextDirection textDirection,
+  ) {
     if (_decoration.color != null || _decoration.gradient != null) {
-      _paintBox(canvas, rect, _getBackgroundPaint(rect, textDirection),
-          textDirection);
+      _paintBox(
+        canvas,
+        rect,
+        _getBackgroundPaint(rect, textDirection),
+        textDirection,
+      );
     }
   }
 
   DecorationImagePainter? _imagePainter;
   void _paintBackgroundImage(
-      Canvas canvas, Rect rect, ImageConfiguration configuration) {
+    Canvas canvas,
+    Rect rect,
+    ImageConfiguration configuration,
+  ) {
     if (_decoration.image == null) return;
     _imagePainter ??= _decoration.image!.createPainter(onChanged!);
     Path? clipPath;
@@ -422,9 +465,11 @@ class _BoxDecorationPainter extends BoxPainter {
       case BoxShape.rectangle:
         if (_decoration.borderRadius != null) {
           clipPath = Path()
-            ..addRRect(_decoration.borderRadius!
-                .resolve(configuration.textDirection)
-                .toRRect(rect));
+            ..addRRect(
+              _decoration.borderRadius!
+                  .resolve(configuration.textDirection)
+                  .toRRect(rect),
+            );
         }
         break;
     }
@@ -440,17 +485,19 @@ class _BoxDecorationPainter extends BoxPainter {
   /// Paint the box decoration into the given location on the given canvas.
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    assert(configuration != null);
     assert(configuration.size != null);
     final Rect rect = offset & configuration.size!;
     final TextDirection textDirection = configuration.textDirection!;
     _paintShadows(canvas, rect, textDirection);
     _paintBackgroundColor(canvas, rect, textDirection);
     _paintBackgroundImage(canvas, rect, configuration);
-    _decoration.border?.paint(canvas, rect,
-        shape: _decoration.shape,
-        borderRadius: _decoration.borderRadius as BorderRadius,
-        textDirection: configuration.textDirection);
+    _decoration.border?.paint(
+      canvas,
+      rect,
+      shape: _decoration.shape,
+      borderRadius: _decoration.borderRadius as BorderRadius,
+      textDirection: configuration.textDirection,
+    );
   }
 
   @override

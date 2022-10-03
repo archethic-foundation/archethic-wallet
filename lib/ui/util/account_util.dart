@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 class AccountUtil {
+  /// TODO remove : never used
   String getShortName(String name) {
     final List<String> splitName = name.split(' ');
     if (splitName.length > 1 &&

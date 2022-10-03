@@ -61,25 +61,33 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
-                          Text(widget.tokenPropertyWithAccessInfos
-                              .tokenProperty!.keys.first),
-                          Text(widget.tokenPropertyWithAccessInfos
-                              .tokenProperty!.values.first),
+                          Text(
+                            widget.tokenPropertyWithAccessInfos.tokenProperty!
+                                .keys.first,
+                          ),
+                          Text(
+                            widget.tokenPropertyWithAccessInfos.tokenProperty!
+                                .values.first,
+                          ),
                           if (publicKeys != null)
                             Padding(
                               padding: const EdgeInsets.only(
-                                  top: 20, left: 10, right: 10),
+                                top: 20,
+                                left: 10,
+                                right: 10,
+                              ),
                               child: Wrap(
-                                  alignment: WrapAlignment.start,
-                                  children: publicKeys!
-                                      .asMap()
-                                      .entries
-                                      .map((MapEntry<dynamic, String> entry) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: _buildLine(context, entry.value),
-                                    );
-                                  }).toList()),
+                                alignment: WrapAlignment.start,
+                                children: publicKeys!
+                                    .asMap()
+                                    .entries
+                                    .map((MapEntry<dynamic, String> entry) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: _buildLine(context, entry.value),
+                                  );
+                                }).toList(),
+                              ),
                             ),
                         ],
                       ),
@@ -100,10 +108,11 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
       child: Card(
         shape: RoundedRectangleBorder(
           side: BorderSide(
-              color: StateContainer.of(context)
-                  .curTheme
-                  .backgroundAccountsListCardSelected!,
-              width: 1.0),
+            color: StateContainer.of(context)
+                .curTheme
+                .backgroundAccountsListCardSelected!,
+            width: 1.0,
+          ),
           borderRadius: BorderRadius.circular(10.0),
         ),
         elevation: 0,
@@ -135,7 +144,8 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
                                 AutoSizeText(
                                   '${publicKey.substring(0, 15)}...${publicKey.substring(publicKey.length - 15)}',
                                   style: AppStyles.textStyleSize12W600Primary(
-                                      context),
+                                    context,
+                                  ),
                                 ),
                               ],
                             ),

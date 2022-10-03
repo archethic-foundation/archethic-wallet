@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Dart imports:
+import 'dart:developer';
 import 'dart:io';
 
 // Flutter imports:
@@ -112,92 +113,88 @@ class _LedgerSheetState extends State<LedgerSheet> {
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
       child: Column(
         children: <Widget>[
-          SheetHeader(title: 'Ledger - Tests'),
+          const SheetHeader(title: 'Ledger - Tests'),
           Expanded(
             child: Container(
-                margin: const EdgeInsets.only(top: 60, bottom: 10),
-                child: SafeArea(
-                    minimum: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.height * 0.035,
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            'Payload',
-                            style:
-                                AppStyles.textStyleSize16W600Primary(context),
-                            textAlign: TextAlign.center,
-                          ),
-                          AppTextField(
-                            maxLines: 4,
-                            padding: const EdgeInsetsDirectional.only(
-                                start: 16, end: 16),
-                            focusNode: enterPayloadFocusNode,
-                            controller: enterPayloadController,
-                            textInputAction: TextInputAction.go,
-                            autofocus: true,
-                            onSubmitted: (_) async {
-                              FocusScope.of(context).unfocus();
-                            },
-                            onChanged: (String value) async {
-                              setState(() {});
-                            },
-                            inputFormatters: <LengthLimitingTextInputFormatter>[
-                              LengthLimitingTextInputFormatter(500),
-                            ],
-                            keyboardType: TextInputType.text,
-                            obscureText: false,
-                            textAlign: TextAlign.center,
-                            style:
-                                AppStyles.textStyleSize16W600Primary(context),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Response',
-                            style:
-                                AppStyles.textStyleSize16W600Primary(context),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 10.0, left: 10.0),
-                            child: SelectableText(
-                              response,
-                              style:
-                                  AppStyles.textStyleSize16W200Primary(context),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          SelectableText(
-                            'Info',
-                            style:
-                                AppStyles.textStyleSize16W600Primary(context),
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            info,
-                            style:
-                                AppStyles.textStyleSize16W200Primary(context),
-                            textAlign: TextAlign.center,
-                          ),
-                          SelectableText(
-                            labelResponse,
-                            style:
-                                AppStyles.textStyleSize16W200Primary(context),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
+              margin: const EdgeInsets.only(top: 60, bottom: 10),
+              child: SafeArea(
+                minimum: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.035,
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        'Payload',
+                        style: AppStyles.textStyleSize16W600Primary(context),
+                        textAlign: TextAlign.center,
                       ),
-                    ))),
+                      AppTextField(
+                        maxLines: 4,
+                        padding: const EdgeInsetsDirectional.only(
+                          start: 16,
+                          end: 16,
+                        ),
+                        focusNode: enterPayloadFocusNode,
+                        controller: enterPayloadController,
+                        textInputAction: TextInputAction.go,
+                        autofocus: true,
+                        onSubmitted: (_) async {
+                          FocusScope.of(context).unfocus();
+                        },
+                        onChanged: (String value) async {
+                          setState(() {});
+                        },
+                        inputFormatters: <LengthLimitingTextInputFormatter>[
+                          LengthLimitingTextInputFormatter(500),
+                        ],
+                        keyboardType: TextInputType.text,
+                        obscureText: false,
+                        textAlign: TextAlign.center,
+                        style: AppStyles.textStyleSize16W600Primary(context),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Response',
+                        style: AppStyles.textStyleSize16W600Primary(context),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+                        child: SelectableText(
+                          response,
+                          style: AppStyles.textStyleSize16W200Primary(context),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SelectableText(
+                        'Info',
+                        style: AppStyles.textStyleSize16W600Primary(context),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        info,
+                        style: AppStyles.textStyleSize16W200Primary(context),
+                        textAlign: TextAlign.center,
+                      ),
+                      SelectableText(
+                        labelResponse,
+                        style: AppStyles.textStyleSize16W200Primary(context),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
           kIsWeb || Platform.isMacOS
               ? Column(
@@ -205,75 +202,84 @@ class _LedgerSheetState extends State<LedgerSheet> {
                     Row(
                       children: <Widget>[
                         AppButton.buildAppButton(
-                            const Key('getPubKey'),
-                            context,
-                            AppButtonType.primary,
-                            'Get pubKey',
-                            Dimens.buttonTopDimens, onPressed: () async {
-                          setState(() {
-                            method = 'getPubKey';
-                            info = '';
-                          });
-                          await sl
-                              .get<LedgerNanoSImpl>()
-                              .connectLedger(getPubKeyAPDU());
-                        }),
+                          const Key('getPubKey'),
+                          context,
+                          AppButtonType.primary,
+                          'Get pubKey',
+                          Dimens.buttonTopDimens,
+                          onPressed: () async {
+                            setState(() {
+                              method = 'getPubKey';
+                              info = '';
+                            });
+                            await sl
+                                .get<LedgerNanoSImpl>()
+                                .connectLedger(getPubKeyAPDU());
+                          },
+                        ),
                         AppButton.buildAppButton(
-                            const Key('getArchAddress'),
-                            context,
-                            AppButtonType.primary,
-                            'Get Arch Address',
-                            Dimens.buttonTopDimens, onPressed: () async {
-                          setState(() {
-                            method = 'getArchAddress';
-                            info = '';
-                            labelResponse = '';
-                          });
-                          if (enterPayloadController!.text.trim() == '' ||
-                              isHex(enterPayloadController!.text) == false) {
-                            info = 'The payload is not valid.';
-                          } else {
-                            Uint8List getArchAddress = transport(
+                          const Key('getArchAddress'),
+                          context,
+                          AppButtonType.primary,
+                          'Get Arch Address',
+                          Dimens.buttonTopDimens,
+                          onPressed: () async {
+                            setState(() {
+                              method = 'getArchAddress';
+                              info = '';
+                              labelResponse = '';
+                            });
+                            if (enterPayloadController!.text.trim() == '' ||
+                                isHex(enterPayloadController!.text) == false) {
+                              info = 'The payload is not valid.';
+                            } else {
+                              Uint8List getArchAddress = transport(
                                 0xe0,
                                 0x04,
                                 0x00,
                                 0x00,
                                 Uint8List.fromList(
-                                    hex.decode(enterPayloadController!.text)));
-                            print(
-                                'getArchAddress: ${uint8ListToHex(getArchAddress)}');
-                            await sl
-                                .get<LedgerNanoSImpl>()
-                                .connectLedger(getArchAddress);
-                          }
-                        }),
+                                  hex.decode(enterPayloadController!.text),
+                                ),
+                              );
+                              log('getArchAddress: ${uint8ListToHex(getArchAddress)}');
+                              await sl
+                                  .get<LedgerNanoSImpl>()
+                                  .connectLedger(getArchAddress);
+                            }
+                          },
+                        ),
                         AppButton.buildAppButton(
-                            const Key('signTransaction'),
-                            context,
-                            AppButtonType.primary,
-                            'Sign Transaction',
-                            Dimens.buttonTopDimens, onPressed: () async {
-                          setState(() {
-                            method = 'signTxn';
-                            info = '';
-                            labelResponse = '';
-                          });
-                          if (enterPayloadController!.text.trim() == '' ||
-                              isHex(enterPayloadController!.text) == false) {
-                            info = 'The payload is not valid.';
-                          } else {
-                            Uint8List signTxn = transport(
+                          const Key('signTransaction'),
+                          context,
+                          AppButtonType.primary,
+                          'Sign Transaction',
+                          Dimens.buttonTopDimens,
+                          onPressed: () async {
+                            setState(() {
+                              method = 'signTxn';
+                              info = '';
+                              labelResponse = '';
+                            });
+                            if (enterPayloadController!.text.trim() == '' ||
+                                isHex(enterPayloadController!.text) == false) {
+                              info = 'The payload is not valid.';
+                            } else {
+                              Uint8List signTxn = transport(
                                 0xe0,
                                 0x08,
                                 0x00,
                                 0x00,
                                 Uint8List.fromList(
-                                    hex.decode(enterPayloadController!.text)));
-                            await sl
-                                .get<LedgerNanoSImpl>()
-                                .connectLedger(signTxn);
-                          }
-                        }),
+                                  hex.decode(enterPayloadController!.text),
+                                ),
+                              );
+                              await sl
+                                  .get<LedgerNanoSImpl>()
+                                  .connectLedger(signTxn);
+                            }
+                          },
+                        ),
                       ],
                     ),
                   ],

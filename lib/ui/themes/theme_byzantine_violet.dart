@@ -241,9 +241,10 @@ class ByzantineVioletTheme implements BaseTheme {
         topRight: Radius.circular(25.0),
       ),
       image: DecorationImage(
-          image: AssetImage(background2Small!),
-          fit: BoxFit.fitHeight,
-          opacity: 0.8),
+        image: AssetImage(background2Small!),
+        fit: BoxFit.fitHeight,
+        opacity: 0.8,
+      ),
     );
   }
 }

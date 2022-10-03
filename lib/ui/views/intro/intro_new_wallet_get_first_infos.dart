@@ -38,9 +38,11 @@ class _IntroNewWalletDisclaimerState
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(
-                  StateContainer.of(context).curTheme.background2Small!),
-              fit: BoxFit.fitHeight),
+            image: AssetImage(
+              StateContainer.of(context).curTheme.background2Small!,
+            ),
+            fit: BoxFit.fitHeight,
+          ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -54,8 +56,9 @@ class _IntroNewWalletDisclaimerState
           builder: (BuildContext context, BoxConstraints constraints) =>
               SafeArea(
             minimum: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.035,
-                top: MediaQuery.of(context).size.height * 0.075),
+              bottom: MediaQuery.of(context).size.height * 0.035,
+              top: MediaQuery.of(context).size.height * 0.075,
+            ),
             child: Column(
               children: <Widget>[
                 Expanded(
@@ -67,7 +70,8 @@ class _IntroNewWalletDisclaimerState
                           children: <Widget>[
                             Container(
                               margin: EdgeInsetsDirectional.only(
-                                  start: smallScreen(context) ? 15 : 20),
+                                start: smallScreen(context) ? 15 : 20,
+                              ),
                               height: 50,
                               width: 50,
                               child: BackButton(
@@ -82,69 +86,80 @@ class _IntroNewWalletDisclaimerState
                         ),
                         Container(
                           margin: const EdgeInsetsDirectional.only(
-                              start: 20, end: 20, top: 15.0),
+                            start: 20,
+                            end: 20,
+                            top: 15.0,
+                          ),
                           alignment: Alignment.bottomLeft,
                           child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                const SizedBox(
-                                  height: 30,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              AutoSizeText(
+                                AppLocalization.of(context)!
+                                    .introNewWalletGetFirstInfosWelcome,
+                                style: AppStyles.textStyleSize20W700Primary(
+                                  context,
                                 ),
-                                AutoSizeText(
-                                  AppLocalization.of(context)!
-                                      .introNewWalletGetFirstInfosWelcome,
-                                  style: AppStyles.textStyleSize20W700Primary(
-                                      context),
-                                  textAlign: TextAlign.left,
+                                textAlign: TextAlign.left,
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              AutoSizeText(
+                                AppLocalization.of(context)!
+                                    .introNewWalletGetFirstInfosNameRequest,
+                                style: AppStyles.textStyleSize16W600Primary(
+                                  context,
                                 ),
-                                const SizedBox(
-                                  height: 30,
+                                textAlign: TextAlign.left,
+                              ),
+                              AppTextField(
+                                topMargin: 0,
+                                leftMargin: 0,
+                                rightMargin: 0,
+                                focusNode: nameFocusNode,
+                                autocorrect: false,
+                                controller: nameController,
+                                keyboardType: TextInputType.text,
+                                style: AppStyles.textStyleSize14W600Primary(
+                                  context,
                                 ),
-                                AutoSizeText(
-                                  AppLocalization.of(context)!
-                                      .introNewWalletGetFirstInfosNameRequest,
-                                  style: AppStyles.textStyleSize16W600Primary(
-                                      context),
-                                  textAlign: TextAlign.left,
-                                ),
-                                AppTextField(
-                                  topMargin: 0,
-                                  leftMargin: 0,
-                                  rightMargin: 0,
-                                  focusNode: nameFocusNode,
-                                  autocorrect: false,
-                                  controller: nameController,
-                                  keyboardType: TextInputType.text,
-                                  style: AppStyles.textStyleSize14W600Primary(
-                                      context),
-                                  inputFormatters: <TextInputFormatter>[
-                                    LengthLimitingTextInputFormatter(20),
-                                    UpperCaseTextFormatter(),
-                                  ],
-                                ),
-                                nameError != null
-                                    ? SizedBox(
-                                        height: 40,
-                                        child: Text(nameError!,
-                                            style: AppStyles
-                                                .textStyleSize14W600Primary(
-                                                    context)),
-                                      )
-                                    : const SizedBox(
-                                        height: 40,
+                                inputFormatters: <TextInputFormatter>[
+                                  LengthLimitingTextInputFormatter(20),
+                                  UpperCaseTextFormatter(),
+                                ],
+                              ),
+                              nameError != null
+                                  ? SizedBox(
+                                      height: 40,
+                                      child: Text(
+                                        nameError!,
+                                        style: AppStyles
+                                            .textStyleSize14W600Primary(
+                                          context,
+                                        ),
                                       ),
-                                AutoSizeText(
-                                  AppLocalization.of(context)!
-                                      .introNewWalletGetFirstInfosNameInfos,
-                                  style: AppStyles.textStyleSize14W600Primary(
-                                      context),
-                                  textAlign: TextAlign.justify,
+                                    )
+                                  : const SizedBox(
+                                      height: 40,
+                                    ),
+                              AutoSizeText(
+                                AppLocalization.of(context)!
+                                    .introNewWalletGetFirstInfosNameInfos,
+                                style: AppStyles.textStyleSize14W600Primary(
+                                  context,
                                 ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                              ]),
+                                textAlign: TextAlign.justify,
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -171,16 +186,20 @@ class _IntroNewWalletDisclaimerState
                           });
                         } else {
                           AppDialogs.showConfirmDialog(
-                              context,
-                              AppLocalization.of(context)!.newAccount,
-                              AppLocalization.of(context)!
-                                  .newAccountConfirmation
-                                  .replaceAll('%1', nameController.text),
-                              AppLocalization.of(context)!.yes, () async {
-                            Navigator.of(context).pushNamed(
+                            context,
+                            AppLocalization.of(context)!.newAccount,
+                            AppLocalization.of(context)!
+                                .newAccountConfirmation
+                                .replaceAll('%1', nameController.text),
+                            AppLocalization.of(context)!.yes,
+                            () async {
+                              Navigator.of(context).pushNamed(
                                 '/intro_backup_safety',
-                                arguments: nameController.text);
-                          }, cancelText: AppLocalization.of(context)!.no);
+                                arguments: nameController.text,
+                              );
+                            },
+                            cancelText: AppLocalization.of(context)!.no,
+                          );
                         }
                       },
                     ),

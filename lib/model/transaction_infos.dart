@@ -7,8 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:aewallet/localization.dart';
 
 class TransactionInfos {
-  TransactionInfos(
-      {required this.domain, required this.titleInfo, required this.valueInfo});
+  TransactionInfos({
+    required this.domain,
+    required this.titleInfo,
+    required this.valueInfo,
+  });
 
   String domain = '';
   String titleInfo = '';

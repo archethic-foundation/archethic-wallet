@@ -1,11 +1,11 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:developer';
 
 // Package imports:
-import "package:gql/ast.dart" as ast;
-import "package:gql/language.dart" as lang;
+import 'package:gql/ast.dart' as ast;
+import 'package:gql/language.dart' as lang;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:archethic_lib_dart/src/utils/logs.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:http/http.dart' as http show Response, post;
 
@@ -15,33 +15,35 @@ import 'package:aewallet/util/confirmations/subscription_channel.dart';
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 class TransactionSender {
-  TransactionSender(
-      {this.endpoint,
-      this.onSent,
-      this.onConfirmation,
-      this.onFullConfirmation,
-      this.onRequiredConfirmation,
-      this.onError,
-      this.onTimeout,
-      this.confirmationNotifier,
-      this.errorNotifier,
-      this.absintheSocket,
-      this.timeout,
-      this.nbConfirmationReceived = 0});
+  TransactionSender({
+    this.endpoint,
+    this.onSent,
+    this.onConfirmation,
+    this.onFullConfirmation,
+    this.onRequiredConfirmation,
+    this.onError,
+    this.onTimeout,
+    this.confirmationNotifier,
+    this.errorNotifier,
+    this.absintheSocket,
+    this.timeout,
+    this.nbConfirmationReceived = 0,
+  });
 
-  TransactionSender.init(
-      {this.endpoint,
-      this.onSent,
-      this.onConfirmation,
-      this.onFullConfirmation,
-      this.onRequiredConfirmation,
-      this.onError,
-      this.onTimeout,
-      this.confirmationNotifier,
-      this.errorNotifier,
-      this.absintheSocket,
-      this.timeout,
-      this.nbConfirmationReceived = 0}) {
+  TransactionSender.init({
+    this.endpoint,
+    this.onSent,
+    this.onConfirmation,
+    this.onFullConfirmation,
+    this.onRequiredConfirmation,
+    this.onError,
+    this.onTimeout,
+    this.confirmationNotifier,
+    this.errorNotifier,
+    this.absintheSocket,
+    this.timeout,
+    this.nbConfirmationReceived = 0,
+  }) {
     onSent = List<Function>.empty(growable: true);
     onConfirmation = List<Function>.empty(growable: true);
     onFullConfirmation = List<Function>.empty(growable: true);
@@ -106,8 +108,12 @@ class TransactionSender {
   /// Send a transaction to the network
   /// @param {Object} tx Transaction to send
   Future<TransactionStatus> sendTx(
-      Transaction transaction, String phoenixHttpLink, String websocketUri,
-      {int confirmationThreshold = 100, int sendTxTimeout = 60}) async {
+    Transaction transaction,
+    String phoenixHttpLink,
+    String websocketUri, {
+    int confirmationThreshold = 100,
+    int sendTxTimeout = 60,
+  }) async {
     if (confirmationThreshold < 0 && confirmationThreshold > 100) {
       throw 'confirmationThreshold must be an integer between 0 and 100';
     }
@@ -122,12 +128,16 @@ class TransactionSender {
 
     try {
       confirmationNotifier = waitConfirmations(
-          transaction.address!,
-          absintheSocket!,
-          (nbConf, maxConf) =>
-              handleConfirmation(confirmationThreshold, nbConf, maxConf));
-      errorNotifier = waitError(transaction.address!, absintheSocket!,
-          (String context, String reason) => handleError(context, reason));
+        transaction.address!,
+        absintheSocket!,
+        (nbConf, maxConf) =>
+            handleConfirmation(confirmationThreshold, nbConf, maxConf),
+      );
+      errorNotifier = waitError(
+        transaction.address!,
+        absintheSocket!,
+        (String context, String reason) => handleError(context, reason),
+      );
     } catch (err) {
       for (Function function in onError!) {
         function(senderContext, err.toString());
@@ -144,9 +154,10 @@ class TransactionSender {
     log('sendTx: requestHttp.body=${transaction.convertToJSON()}');
     try {
       final http.Response responseHttp = await http.post(
-          Uri.parse('${endpoint!}/api/transaction'),
-          body: transaction.convertToJSON(),
-          headers: requestHeaders);
+        Uri.parse('${endpoint!}/api/transaction'),
+        body: transaction.convertToJSON(),
+        headers: requestHeaders,
+      );
       log('sendTx: responseHttp.body=${responseHttp.body}');
       transactionStatus = transactionStatusFromJson(responseHttp.body);
 
@@ -158,31 +169,40 @@ class TransactionSender {
     return completer.future;
   }
 
+  /// TODO implement
   Stream<Response>? waitConfirmations(
-      String address, SubscriptionChannel absintheSocket, Function function) {
-    ast.DocumentNode documentNode = lang.parseString(
-      'subscription { transactionConfirmed(address: "$address") { nbConfirmations, maxConfirmations } }',
-    );
-    Operation? operation =
-        Operation(operationName: null, document: documentNode);
-    Request request = Request(operation: operation, variables: {});
-    // return absintheSocket.phoenixLink!.request(request);
+    String address,
+    SubscriptionChannel absintheSocket,
+    Function function,
+  ) {
     return null;
+    // ast.DocumentNode documentNode = lang.parseString(
+    //   'subscription { transactionConfirmed(address: "$address") { nbConfirmations, maxConfirmations } }',
+    // );
+    // Operation? operation = Operation(operationName: null, document: documentNode);
+    // Request request = Request(operation: operation, variables: const {});
+    // return absintheSocket.phoenixLink!.request(request);
   }
 
   Stream<Response> waitError(
-      String address, SubscriptionChannel absintheSocket, Function function) {
+    String address,
+    SubscriptionChannel absintheSocket,
+    Function function,
+  ) {
     ast.DocumentNode documentNode = lang.parseString(
       'subscription { transactionError(address: "$address") { context, reason } }',
     );
     Operation? operation =
         Operation(operationName: null, document: documentNode);
-    Request request = Request(operation: operation, variables: {});
+    Request request = Request(operation: operation, variables: const {});
     return absintheSocket.client!.link.request(request);
   }
 
   void handleConfirmation(
-      int confirmationThreshold, int nbConfirmations, int maxConfirmations) {
+    int confirmationThreshold,
+    int nbConfirmations,
+    int maxConfirmations,
+  ) {
     /// Update nb confirmation received for timeout
     nbConfirmationReceived = nbConfirmations;
 /*

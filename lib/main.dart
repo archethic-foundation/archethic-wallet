@@ -65,7 +65,8 @@ Future<void> main() async {
 
   // Run app
   SystemChrome.setPreferredOrientations(
-      <DeviceOrientation>[DeviceOrientation.portraitUp]).then((_) {
+    <DeviceOrientation>[DeviceOrientation.portraitUp],
+  ).then((_) {
     runApp(
       const RestartWidget(
         child: StateContainer(
@@ -88,7 +89,8 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-        StateContainer.of(context).curTheme.statusBar!);
+      StateContainer.of(context).curTheme.statusBar!,
+    );
     return OKToast(
       textStyle: AppStyles.textStyleSize14W700Background(context),
       backgroundColor: StateContainer.of(context).curTheme.background,
@@ -127,7 +129,7 @@ class _AppState extends State<App> {
           Locale('cs', 'CZ'),
           Locale('da', 'DK'),
           Locale('fr', 'FR'),
-          Locale("ar", "AE"),
+          Locale('ar', 'AE'),
           Locale('en', 'GB'),
           Locale('zh', 'HK'),
           Locale('hu', 'HU'),
@@ -234,8 +236,9 @@ class _AppState extends State<App> {
                   settings.arguments as Map<String, dynamic>;
               return MaterialPageRoute<IntroBackupConfirm>(
                 builder: (_) => IntroBackupConfirm(
-                    name: args['name'] == null ? null : args['name'] as String,
-                    seed: args['seed'] == null ? null : args['seed'] as String),
+                  name: args['name'] == null ? null : args['name'] as String,
+                  seed: args['seed'] == null ? null : args['seed'] as String,
+                ),
                 settings: settings,
               );
             case '/lock_screen':
@@ -361,7 +364,8 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
           Navigator.of(context).pushReplacementNamed('/intro_welcome');
         }
         StateContainer.of(context).checkTransactionInputs(
-            AppLocalization.of(context)!.transactionInputNotification);
+          AppLocalization.of(context)!.transactionInputNotification,
+        );
         StateContainer.of(context).curTheme = preferences.getTheme().getTheme();
         if (preferences.getLock() || preferences.shouldLock()) {
           Navigator.of(context).pushReplacementNamed('/lock_screen');

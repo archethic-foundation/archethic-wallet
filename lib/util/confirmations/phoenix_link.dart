@@ -1,9 +1,9 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:developer';
 
 // Package imports:
-import 'package:gql_exec/gql_exec.dart';
-import 'package:gql_link/gql_link.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:phoenix_socket/phoenix_socket.dart';
 
 /// a link for subscriptions (or also mutations/queries) over phoenix channels
@@ -17,20 +17,23 @@ class PhoenixLink extends Link {
   /// create a new [PhoenixLink] using an established PhoenixChannel [channel].
   /// You can use the static [createChannel] method to create a [PhoenixChannel]
   /// from a websocket URI and optional parameters (e.g. for authentication)
-  PhoenixLink(
-      {required PhoenixChannel channel,
-      ResponseParser parser = const ResponseParser(),
-      RequestSerializer serializer = const RequestSerializer()})
-      : channel = channel,
-        _serializer = serializer,
+  PhoenixLink({
+    required this.channel,
+    ResponseParser parser = const ResponseParser(),
+    RequestSerializer serializer = const RequestSerializer(),
+  })  : _serializer = serializer,
         _parser = parser;
 
   /// create a new phoenix socket from the given websocketUri,
   /// connect to it, and create a channel, and join it
-  static Future<PhoenixChannel> createChannel(
-      {required String websocketUri, Map<String, String>? params}) async {
-    final socket = PhoenixSocket(websocketUri,
-        socketOptions: PhoenixSocketOptions(params: params));
+  static Future<PhoenixChannel> createChannel({
+    required String websocketUri,
+    Map<String, String>? params,
+  }) async {
+    final socket = PhoenixSocket(
+      websocketUri,
+      socketOptions: PhoenixSocketOptions(params: params),
+    );
     await socket.connect();
 
     final channel = socket.addChannel(topic: '__absinthe__:control');
@@ -60,8 +63,11 @@ class PhoenixLink extends Link {
 
         websocketSubscription = channel.socket
             .streamForTopic(phoenixSubscriptionId)
-            .map((event) => _parser.parseResponse(
-                event.payload!['result'] as Map<String, dynamic>))
+            .map(
+              (event) => _parser.parseResponse(
+                event.payload!['result'] as Map<String, dynamic>,
+              ),
+            )
             .listen(streamController.add, onError: streamController.addError);
         yield* streamController.stream;
       } else if (pushResponse.isOk) {
@@ -70,8 +76,8 @@ class PhoenixLink extends Link {
       } else if (pushResponse.isError) {
         throw _parser.parseError(pushResponse.response as Map<String, dynamic>);
       }
-    } catch (e) {
-      print(e);
+    } catch (e, stackTrace) {
+      log(e.toString(), error: e, stackTrace: stackTrace);
     } finally {
       await websocketSubscription?.cancel();
       await streamController?.close();

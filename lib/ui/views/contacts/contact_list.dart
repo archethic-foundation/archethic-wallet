@@ -75,8 +75,10 @@ class _ContactsListState extends State<ContactsList> {
       setState(() {
         contacts!.add(event.contact!);
         //Sort by name
-        contacts!.sort((Contact a, Contact b) =>
-            a.name!.toLowerCase().compareTo(b.name!.toLowerCase()));
+        contacts!.sort(
+          (Contact a, Contact b) =>
+              a.name!.toLowerCase().compareTo(b.name!.toLowerCase()),
+        );
       });
       // Full update
       _updateContacts();
@@ -104,8 +106,10 @@ class _ContactsListState extends State<ContactsList> {
       }
       // Re-sort list
       setState(() {
-        contacts.sort((Contact a, Contact b) =>
-            a.name!.toLowerCase().compareTo(b.name!.toLowerCase()));
+        contacts.sort(
+          (Contact a, Contact b) =>
+              a.name!.toLowerCase().compareTo(b.name!.toLowerCase()),
+        );
         contactsToDisplay = contacts;
       });
     });
@@ -114,158 +118,170 @@ class _ContactsListState extends State<ContactsList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-          color: StateContainer.of(context).curTheme.drawerBackground,
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: StateContainer.of(context).curTheme.overlay30!,
-                offset: const Offset(-5, 0),
-                blurRadius: 20),
-          ],
-        ),
-        child: SafeArea(
-          minimum: EdgeInsets.only(
-            bottom: MediaQuery.of(context).size.height * 0.035,
-            top: 60,
+      decoration: BoxDecoration(
+        color: StateContainer.of(context).curTheme.drawerBackground,
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: StateContainer.of(context).curTheme.overlay30!,
+            offset: const Offset(-5, 0),
+            blurRadius: 20,
           ),
-          child: Column(
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(bottom: 10.0, top: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      height: 40,
-                      width: 40,
-                      margin: const EdgeInsets.only(right: 10, left: 10),
-                      child: BackButton(
-                        key: const Key('back'),
-                        color: StateContainer.of(context).curTheme.text,
-                        onPressed: () {
-                          setState(() {
-                            widget.contactsOpen = false;
-                          });
-                          widget.contactsController.reverse();
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: AutoSizeText(
-                        AppLocalization.of(context)!.addressBookHeader,
-                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                            context),
-                        maxLines: 2,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                child: AppTextField(
-                  controller: searchNameController,
-                  autofocus: false,
-                  maxLines: 1,
-                  autocorrect: false,
-                  labelText: AppLocalization.of(context)!.searchField,
-                  keyboardType: TextInputType.text,
-                  style: AppStyles.textStyleSize16W600Primary(context),
-                  onChanged: (text) async {
-                    text = text.toLowerCase();
-                    contactsToDisplay =
-                        await StateContainer.of(context).getContacts();
-                    setState(() {
-                      contactsToDisplay =
-                          contactsToDisplay!.where((Contact contact) {
-                        var contactName = contact.name!.toLowerCase();
-                        return contactName.contains(text);
-                      }).toList();
-                    });
-                  },
-                ),
-              ),
-              Expanded(
-                child: Stack(
-                  children: <Widget>[
-                    // Contacts list
-                    ListView.builder(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      padding: const EdgeInsets.only(
-                          left: 15.0, top: 15.0, bottom: 15),
-                      itemCount: contactsToDisplay!.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        // Build contact
-                        return buildSingleContact(
-                            context, contactsToDisplay![index]);
+        ],
+      ),
+      child: SafeArea(
+        minimum: EdgeInsets.only(
+          bottom: MediaQuery.of(context).size.height * 0.035,
+          top: 60,
+        ),
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.only(bottom: 10.0, top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    height: 40,
+                    width: 40,
+                    margin: const EdgeInsets.only(right: 10, left: 10),
+                    child: BackButton(
+                      key: const Key('back'),
+                      color: StateContainer.of(context).curTheme.text,
+                      onPressed: () {
+                        setState(() {
+                          widget.contactsOpen = false;
+                        });
+                        widget.contactsController.reverse();
                       },
                     ),
-                    //List Top Gradient End
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        height: 20.0,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: <Color>[
-                              StateContainer.of(context)
-                                  .curTheme
-                                  .drawerBackground!,
-                              StateContainer.of(context)
-                                  .curTheme
-                                  .backgroundDark00!
-                            ],
-                            begin: const AlignmentDirectional(0.5, -1.0),
-                            end: const AlignmentDirectional(0.5, 1.0),
-                          ),
-                        ),
-                      ),
-                    ),
-                    //List Bottom Gradient End
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 15.0,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: <Color>[
-                              StateContainer.of(context)
-                                  .curTheme
-                                  .backgroundDark00!,
-                              StateContainer.of(context)
-                                  .curTheme
-                                  .drawerBackground!,
-                            ],
-                            begin: const AlignmentDirectional(0.5, -1.0),
-                            end: const AlignmentDirectional(0.5, 1.0),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 10),
-                child: Row(
-                  children: <Widget>[
-                    AppButton.buildAppButton(
-                        const Key('addContact'),
+                  ),
+                  Expanded(
+                    child: AutoSizeText(
+                      AppLocalization.of(context)!.addressBookHeader,
+                      style: AppStyles.textStyleSize24W700EquinoxPrimary(
                         context,
-                        AppButtonType.primary,
-                        AppLocalization.of(context)!.addContact,
-                        Dimens.buttonBottomDimens, onPressed: () {
-                      Sheets.showAppHeightNineSheet(
-                          context: context, widget: const AddContactSheet());
-                    }),
-                  ],
-                ),
+                      ),
+                      maxLines: 2,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ));
+            ),
+            Container(
+              padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+              child: AppTextField(
+                controller: searchNameController,
+                autofocus: false,
+                maxLines: 1,
+                autocorrect: false,
+                labelText: AppLocalization.of(context)!.searchField,
+                keyboardType: TextInputType.text,
+                style: AppStyles.textStyleSize16W600Primary(context),
+                onChanged: (text) async {
+                  text = text.toLowerCase();
+                  contactsToDisplay =
+                      await StateContainer.of(context).getContacts();
+                  setState(() {
+                    contactsToDisplay =
+                        contactsToDisplay!.where((Contact contact) {
+                      var contactName = contact.name!.toLowerCase();
+                      return contactName.contains(text);
+                    }).toList();
+                  });
+                },
+              ),
+            ),
+            Expanded(
+              child: Stack(
+                children: <Widget>[
+                  // Contacts list
+                  ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.only(
+                      left: 15.0,
+                      top: 15.0,
+                      bottom: 15,
+                    ),
+                    itemCount: contactsToDisplay!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      // Build contact
+                      return buildSingleContact(
+                        context,
+                        contactsToDisplay![index],
+                      );
+                    },
+                  ),
+                  //List Top Gradient End
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      height: 20.0,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: <Color>[
+                            StateContainer.of(context)
+                                .curTheme
+                                .drawerBackground!,
+                            StateContainer.of(context)
+                                .curTheme
+                                .backgroundDark00!
+                          ],
+                          begin: const AlignmentDirectional(0.5, -1.0),
+                          end: const AlignmentDirectional(0.5, 1.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  //List Bottom Gradient End
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 15.0,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: <Color>[
+                            StateContainer.of(context)
+                                .curTheme
+                                .backgroundDark00!,
+                            StateContainer.of(context)
+                                .curTheme
+                                .drawerBackground!,
+                          ],
+                          begin: const AlignmentDirectional(0.5, -1.0),
+                          end: const AlignmentDirectional(0.5, 1.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              child: Row(
+                children: <Widget>[
+                  AppButton.buildAppButton(
+                    const Key('addContact'),
+                    context,
+                    AppButtonType.primary,
+                    AppLocalization.of(context)!.addContact,
+                    Dimens.buttonBottomDimens,
+                    onPressed: () {
+                      Sheets.showAppHeightNineSheet(
+                        context: context,
+                        widget: const AddContactSheet(),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget buildSingleContact(BuildContext context, Contact contact) {
@@ -273,60 +289,65 @@ class _ContactsListState extends State<ContactsList> {
       onPressed: () {
         ContactDetailsSheet(contact).mainBottomSheet(context);
       },
-      child: Column(children: <Widget>[
-        Divider(
-          height: 2,
-          color: StateContainer.of(context).curTheme.text15,
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 4.0),
-          margin: const EdgeInsetsDirectional.only(start: 10.0, end: 10.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  height: 30,
-                  margin: const EdgeInsetsDirectional.only(start: 2.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          contact.type == 'keychainService'
-                              ? FaIcon(
-                                  FontAwesomeIcons.keycdn,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .iconDrawer!,
-                                  size: 16,
-                                )
-                              : Icon(
-                                  Icons.person,
-                                  color: StateContainer.of(context)
-                                      .curTheme
-                                      .iconDrawer!,
-                                  size: 16,
-                                ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(contact.name!.replaceFirst('@', ''),
+      child: Column(
+        children: <Widget>[
+          Divider(
+            height: 2,
+            color: StateContainer.of(context).curTheme.text15,
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            margin: const EdgeInsetsDirectional.only(start: 10.0, end: 10.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    height: 30,
+                    margin: const EdgeInsetsDirectional.only(start: 2.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            contact.type == 'keychainService'
+                                ? FaIcon(
+                                    FontAwesomeIcons.keycdn,
+                                    color: StateContainer.of(context)
+                                        .curTheme
+                                        .iconDrawer!,
+                                    size: 16,
+                                  )
+                                : Icon(
+                                    Icons.person,
+                                    color: StateContainer.of(context)
+                                        .curTheme
+                                        .iconDrawer!,
+                                    size: 16,
+                                  ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              contact.name!.replaceFirst('@', ''),
                               style: AppStyles.textStyleSize14W200Primary(
-                                  context)),
-                        ],
-                      ),
-                    ],
+                                context,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

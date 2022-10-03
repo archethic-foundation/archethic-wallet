@@ -3,8 +3,6 @@
 
 // Dart imports:
 import 'dart:async';
-import 'dart:convert';
-import 'dart:typed_data';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -64,11 +62,12 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
 
   int? supply;
   Token? token = Token(
-      name: '',
-      supply: 1,
-      symbol: '',
-      type: 'non-fungible',
-      tokenProperties: {});
+    name: '',
+    supply: 1,
+    symbol: '',
+    type: 'non-fungible',
+    tokenProperties: {},
+  );
 
   StreamSubscription<NftFileAddEvent>? _nftFileAddEventSub;
 
@@ -123,8 +122,9 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
             SheetHeader(
               title: AppLocalization.of(context)!.createNFTCollection,
               widgetBeforeTitle: BalanceIndicatorWidget(
-                  primaryCurrency: widget.primaryCurrency,
-                  displaySwitchButton: false),
+                primaryCurrency: widget.primaryCurrency,
+                displaySwitchButton: false,
+              ),
             ),
             Expanded(
               child: Container(
@@ -143,7 +143,8 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                               child: Text(
                                 '${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                 style: AppStyles.textStyleSize14W100Primary(
-                                    context),
+                                  context,
+                                ),
                                 textAlign: TextAlign.justify,
                               ),
                             )
@@ -154,7 +155,8 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                                 AppLocalization.of(context)!
                                     .estimatedFeesAddTokenNote,
                                 style: AppStyles.textStyleSize14W100Primary(
-                                    context),
+                                  context,
+                                ),
                                 textAlign: TextAlign.justify,
                               ),
                             ),
@@ -212,7 +214,8 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                                     _isPressed = false;
                                   });
                                   Navigator.of(context).popUntil(
-                                      RouteUtils.withNameLike('/home'));
+                                    RouteUtils.withNameLike('/home'),
+                                  );
                                 }
                               },
                             ),
@@ -251,7 +254,8 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                                       TokenInformations();
                                   tokenInformations.tokenProperties =
                                       List<TokenInformationsProperty>.empty(
-                                          growable: true);
+                                    growable: true,
+                                  );
                                   tokenInformations = TokenInformationsService
                                       .tokenToTokenInformations(token!);
                                   tokenInformations.onChain = false;
@@ -262,28 +266,31 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                                           .accountNFT ==
                                       null) {
                                     StateContainer.of(context)
-                                            .appWallet!
-                                            .appKeychain!
-                                            .getAccountSelected()!
-                                            .accountNFT =
-                                        List<AccountToken>.empty(
-                                            growable: true);
+                                        .appWallet!
+                                        .appKeychain!
+                                        .getAccountSelected()!
+                                        .accountNFT = List<AccountToken>.empty(
+                                      growable: true,
+                                    );
                                   }
                                   StateContainer.of(context)
                                       .appWallet!
                                       .appKeychain!
                                       .getAccountSelected()!
                                       .accountNFT!
-                                      .add(AccountToken(
-                                          tokenInformations:
-                                              tokenInformations));
+                                      .add(
+                                        AccountToken(
+                                          tokenInformations: tokenInformations,
+                                        ),
+                                      );
                                   UIUtil.showSnackbar(
-                                      'Saved',
-                                      context,
-                                      StateContainer.of(context).curTheme.text!,
-                                      StateContainer.of(context)
-                                          .curTheme
-                                          .snackBarShadow!);
+                                    'Saved',
+                                    context,
+                                    StateContainer.of(context).curTheme.text!,
+                                    StateContainer.of(context)
+                                        .curTheme
+                                        .snackBarShadow!,
+                                  );
                                   Navigator.of(context).pop();
                                 }
                                 setState(() {
@@ -334,8 +341,10 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 5, bottom: 5),
-                  child: Text(collectionNameValidationText!,
-                      style: AppStyles.textStyleSize14W600Primary(context)),
+                  child: Text(
+                    collectionNameValidationText!,
+                    style: AppStyles.textStyleSize14W600Primary(context),
+                  ),
                 ),
                 AppTextField(
                   focusNode: collectionSymbolFocusNode,
@@ -361,8 +370,10 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 5, bottom: 5),
-                  child: Text(collectionSymbolValidationText!,
-                      style: AppStyles.textStyleSize14W600Primary(context)),
+                  child: Text(
+                    collectionSymbolValidationText!,
+                    style: AppStyles.textStyleSize14W600Primary(context),
+                  ),
                 ),
                 Row(
                   children: <Widget>[
@@ -373,19 +384,22 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                             context,
                             AppButtonType.primary,
                             AppLocalization.of(context)!.addNFTFile,
-                            Dimens.buttonBottomDimens, onPressed: () {
-                            /* Sheets.showAppHeightNineSheet(
+                            Dimens.buttonBottomDimens,
+                            onPressed: () {
+                              /* Sheets.showAppHeightNineSheet(
                                 context: context,
                                 widget: const AddNFTFile(
                                     process: AddNFTFileProcess.collection));*/
-                          })
+                            },
+                          )
                         : AppButton.buildAppButtonTiny(
                             const Key('addNFT'),
                             context,
                             AppButtonType.primaryOutline,
                             AppLocalization.of(context)!.addNFTFile,
                             Dimens.buttonBottomDimens,
-                            onPressed: () {})
+                            onPressed: () {},
+                          )
                   ],
                 ),
               ],
@@ -432,68 +446,72 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
       final String? seed = await StateContainer.of(context).getSeed();
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
       fee = await sl.get<AppService>().getFeesEstimationCreateToken(
-          originPrivateKey,
-          seed!,
-          token!,
-          StateContainer.of(context)
-              .appWallet!
-              .appKeychain!
-              .getAccountSelected()!
-              .name!);
+            originPrivateKey,
+            seed!,
+            token!,
+            StateContainer.of(context)
+                .appWallet!
+                .appKeychain!
+                .getAccountSelected()!
+                .name!,
+          );
     } catch (e) {
       fee = 0;
     }
     return fee;
   }
 
+  /// TODO implement [NFTListPreview] [Widget]
   Widget getNFTListPreview(BuildContext context) {
     return Column(
       children: <Widget>[
         // Settings items
         ListView.separated(
-            itemCount: token!.tokenProperties!.length,
-            physics: const NeverScrollableScrollPhysics(),
-            separatorBuilder: (BuildContext context, int index) {
-              return const SizedBox(height: 10);
-            },
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              Map<String, dynamic>? properties = token!.tokenProperties!;
-              Image? image;
-              String name = '';
-              String typeMime = '';
-              String description = '';
-              Uint8List? imageDecoded;
-              properties.forEach((key, value) {
-                switch (key) {
-                  case 'file':
-                    // final directory = await getApplicationDocumentsDirectory();
-                    // file = File(base64Decode(tokenProperty.value));
-                    imageDecoded = base64Decode(value);
-                    break;
-                  case 'type/mime':
-                    typeMime = value;
-                    break;
-                  case 'name':
-                    name = value;
-                    break;
-                  case 'description':
-                    description = value;
-                    break;
-                  default:
-                    break;
-                }
-              });
+          itemCount: token!.tokenProperties!.length,
+          physics: const NeverScrollableScrollPhysics(),
+          separatorBuilder: (BuildContext context, int index) {
+            return const SizedBox(height: 10);
+          },
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return const SizedBox();
 
-              return SizedBox();
-              /*return NFTCard(
-                onTap: () {},
-                heroTag: name,
-                image: imageDecoded!,
-                description: description,
-                name: name,
-              );*/
-            }),
+            // Map<String, dynamic>? properties = token!.tokenProperties!;
+            // Image? image;
+            // String name = '';
+            // String typeMime = '';
+            // String description = '';
+            // Uint8List? imageDecoded;
+            // properties.forEach((key, value) {
+            //   switch (key) {
+            //     case 'file':
+            //       // final directory = await getApplicationDocumentsDirectory();
+            //       // file = File(base64Decode(tokenProperty.value));
+            //       imageDecoded = base64Decode(value);
+            //       break;
+            //     case 'type/mime':
+            //       typeMime = value;
+            //       break;
+            //     case 'name':
+            //       name = value;
+            //       break;
+            //     case 'description':
+            //       description = value;
+            //       break;
+            //     default:
+            //       break;
+            //   }
+            // });
+
+            // return NFTCard(
+            //   onTap: () {},
+            //   heroTag: name,
+            //   image: imageDecoded!,
+            //   description: description,
+            //   name: name,
+            // );
+          },
+        ),
       ],
     );
   }

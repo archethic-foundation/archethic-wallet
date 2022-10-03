@@ -32,10 +32,11 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/user_data_util.dart';
 
 class AddPublicKey extends StatefulWidget {
-  const AddPublicKey(
-      {super.key,
-      required this.tokenPropertyWithAccessInfos,
-      this.returnPublicKeys});
+  const AddPublicKey({
+    super.key,
+    required this.tokenPropertyWithAccessInfos,
+    this.returnPublicKeys,
+  });
 
   final TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos;
   final Function(List<String>)? returnPublicKeys;
@@ -89,10 +90,14 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
-                          Text(widget.tokenPropertyWithAccessInfos
-                              .tokenProperty!.keys.first),
-                          Text(widget.tokenPropertyWithAccessInfos
-                              .tokenProperty!.values.first),
+                          Text(
+                            widget.tokenPropertyWithAccessInfos.tokenProperty!
+                                .keys.first,
+                          ),
+                          Text(
+                            widget.tokenPropertyWithAccessInfos.tokenProperty!
+                                .values.first,
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(top: 20, bottom: 20),
                             child: Text(
@@ -125,9 +130,10 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                               icon: FontAwesomeIcons.at,
                               onPressed: () async {
                                 sl.get<HapticUtil>().feedback(
-                                    FeedbackType.light,
-                                    StateContainer.of(context)
-                                        .activeVibrations);
+                                      FeedbackType.light,
+                                      StateContainer.of(context)
+                                          .activeVibrations,
+                                    );
                                 Contact? contact =
                                     await ContactsDialog.getDialog(context);
                                 if (contact != null && contact.name != null) {
@@ -143,36 +149,41 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                     icon: FontAwesomeIcons.qrcode,
                                     onPressed: () async {
                                       sl.get<HapticUtil>().feedback(
-                                          FeedbackType.light,
-                                          StateContainer.of(context)
-                                              .activeVibrations);
+                                            FeedbackType.light,
+                                            StateContainer.of(context)
+                                                .activeVibrations,
+                                          );
                                       UIUtil.cancelLockEvent();
                                       final String? scanResult =
                                           await UserDataUtil.getQRData(
-                                              DataType.raw, context);
+                                        DataType.raw,
+                                        context,
+                                      );
                                       QRScanErrs.errorList;
                                       if (scanResult == null) {
                                         UIUtil.showSnackbar(
-                                            AppLocalization.of(context)!
-                                                .qrInvalidAddress,
-                                            context,
-                                            StateContainer.of(context)
-                                                .curTheme
-                                                .text!,
-                                            StateContainer.of(context)
-                                                .curTheme
-                                                .snackBarShadow!);
+                                          AppLocalization.of(context)!
+                                              .qrInvalidAddress,
+                                          context,
+                                          StateContainer.of(context)
+                                              .curTheme
+                                              .text!,
+                                          StateContainer.of(context)
+                                              .curTheme
+                                              .snackBarShadow!,
+                                        );
                                       } else if (QRScanErrs.errorList
                                           .contains(scanResult)) {
                                         UIUtil.showSnackbar(
-                                            scanResult,
-                                            context,
-                                            StateContainer.of(context)
-                                                .curTheme
-                                                .text!,
-                                            StateContainer.of(context)
-                                                .curTheme
-                                                .snackBarShadow!);
+                                          scanResult,
+                                          context,
+                                          StateContainer.of(context)
+                                              .curTheme
+                                              .text!,
+                                          StateContainer.of(context)
+                                              .curTheme
+                                              .snackBarShadow!,
+                                        );
                                         return;
                                       } else {
                                         setState(() {
@@ -199,16 +210,18 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                           .addNFTProperty,
                                       Dimens.buttonBottomDimens,
                                       onPressed: () async {
-                                      sl.get<HapticUtil>().feedback(
-                                          FeedbackType.light,
-                                          StateContainer.of(context)
-                                              .activeVibrations);
-                                      if (publicKeyAccessController!
-                                                  .text.length <
-                                              68 ||
-                                          !isHex(publicKeyAccessController!
-                                              .text)) {
-                                        UIUtil.showSnackbar(
+                                        sl.get<HapticUtil>().feedback(
+                                              FeedbackType.light,
+                                              StateContainer.of(context)
+                                                  .activeVibrations,
+                                            );
+                                        if (publicKeyAccessController!
+                                                    .text.length <
+                                                68 ||
+                                            !isHex(
+                                              publicKeyAccessController!.text,
+                                            )) {
+                                          UIUtil.showSnackbar(
                                             'The public key is not valid.',
                                             context,
                                             StateContainer.of(context)
@@ -216,18 +229,24 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                                 .text!,
                                             StateContainer.of(context)
                                                 .curTheme
-                                                .snackBarShadow!);
-                                      } else {
-                                        setState(() {
-                                          publicKeys!.add(
-                                              publicKeyAccessController!.text);
-                                          publicKeys!.sort((a, b) => a
-                                              .toLowerCase()
-                                              .compareTo(b.toLowerCase()));
-                                          publicKeyAccessController!.text = '';
-                                        });
-                                      }
-                                    })
+                                                .snackBarShadow!,
+                                          );
+                                        } else {
+                                          setState(() {
+                                            publicKeys!.add(
+                                              publicKeyAccessController!.text,
+                                            );
+                                            publicKeys!.sort(
+                                              (a, b) => a
+                                                  .toLowerCase()
+                                                  .compareTo(b.toLowerCase()),
+                                            );
+                                            publicKeyAccessController!.text =
+                                                '';
+                                          });
+                                        }
+                                      },
+                                    )
                                   : AppButton.buildAppButtonTiny(
                                       const Key('addPublicKey'),
                                       context,
@@ -235,24 +254,29 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                       AppLocalization.of(context)!
                                           .addNFTProperty,
                                       Dimens.buttonBottomDimens,
-                                      onPressed: () {}),
+                                      onPressed: () {},
+                                    ),
                             ],
                           ),
                           if (publicKeys != null)
                             Padding(
                               padding: const EdgeInsets.only(
-                                  top: 20, left: 10, right: 10),
+                                top: 20,
+                                left: 10,
+                                right: 10,
+                              ),
                               child: Wrap(
-                                  alignment: WrapAlignment.start,
-                                  children: publicKeys!
-                                      .asMap()
-                                      .entries
-                                      .map((MapEntry<dynamic, String> entry) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: _buildLine(context, entry.value),
-                                    );
-                                  }).toList()),
+                                alignment: WrapAlignment.start,
+                                children: publicKeys!
+                                    .asMap()
+                                    .entries
+                                    .map((MapEntry<dynamic, String> entry) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: _buildLine(context, entry.value),
+                                  );
+                                }).toList(),
+                              ),
                             ),
                         ],
                       ),
@@ -276,10 +300,11 @@ class _AddPublicKeyState extends State<AddPublicKey> {
         child: Card(
           shape: RoundedRectangleBorder(
             side: BorderSide(
-                color: StateContainer.of(context)
-                    .curTheme
-                    .backgroundAccountsListCardSelected!,
-                width: 1.0),
+              color: StateContainer.of(context)
+                  .curTheme
+                  .backgroundAccountsListCardSelected!,
+              width: 1.0,
+            ),
             borderRadius: BorderRadius.circular(10.0),
           ),
           elevation: 0,
@@ -312,7 +337,8 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                   AutoSizeText(
                                     '${publicKey.substring(0, 15)}...${publicKey.substring(publicKey.length - 15)}',
                                     style: AppStyles.textStyleSize12W600Primary(
-                                        context),
+                                      context,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -332,23 +358,27 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                             .backgroundDark!
                                             .withOpacity(0.3),
                                         border: Border.all(
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .backgroundDarkest!
-                                                .withOpacity(0.2),
-                                            width: 2),
+                                          color: StateContainer.of(context)
+                                              .curTheme
+                                              .backgroundDarkest!
+                                              .withOpacity(0.2),
+                                          width: 2,
+                                        ),
                                       ),
                                       child: IconButton(
-                                        icon: Icon(Icons.close,
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .backgroundDarkest!,
-                                            size: 21),
+                                        icon: Icon(
+                                          Icons.close,
+                                          color: StateContainer.of(context)
+                                              .curTheme
+                                              .backgroundDarkest!,
+                                          size: 21,
+                                        ),
                                         onPressed: () {
                                           sl.get<HapticUtil>().feedback(
-                                              FeedbackType.light,
-                                              StateContainer.of(context)
-                                                  .activeVibrations);
+                                                FeedbackType.light,
+                                                StateContainer.of(context)
+                                                    .activeVibrations,
+                                              );
                                           AppDialogs.showConfirmDialog(
                                               context,
                                               'Delete public key',
@@ -356,11 +386,13 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                               AppLocalization.of(context)!
                                                   .deleteOption, () {
                                             sl.get<HapticUtil>().feedback(
-                                                FeedbackType.light,
-                                                StateContainer.of(context)
-                                                    .activeVibrations);
-                                            publicKeys!.removeWhere((element) =>
-                                                element == publicKey);
+                                                  FeedbackType.light,
+                                                  StateContainer.of(context)
+                                                      .activeVibrations,
+                                                );
+                                            publicKeys!.removeWhere(
+                                              (element) => element == publicKey,
+                                            );
 
                                             setState(() {});
                                           });

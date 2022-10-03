@@ -15,11 +15,12 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 
 class BalanceIndicatorWidget extends StatefulWidget {
-  const BalanceIndicatorWidget(
-      {super.key,
-      this.primaryCurrency,
-      this.onPrimaryCurrencySelected,
-      this.displaySwitchButton = true});
+  const BalanceIndicatorWidget({
+    super.key,
+    this.primaryCurrency,
+    this.onPrimaryCurrencySelected,
+    this.displaySwitchButton = true,
+  });
 
   final PrimaryCurrencySetting? primaryCurrency;
   final ValueChanged<PrimaryCurrency>? onPrimaryCurrencySelected;
@@ -75,8 +76,10 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
                   alignment: Alignment.centerRight,
                   color: StateContainer.of(context).curTheme.textFieldIcon,
                   onPressed: () {
-                    sl.get<HapticUtil>().feedback(FeedbackType.light,
-                        StateContainer.of(context).activeVibrations);
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          StateContainer.of(context).activeVibrations,
+                        );
                     if (primaryCurrency == PrimaryCurrency.native) {
                       setState(() {
                         primaryCurrency = PrimaryCurrency.fiat;
@@ -141,13 +144,14 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
             ),
           TextSpan(
             text: CurrencyUtil.getConvertedAmount(
-                StateContainer.of(context).curCurrency.currency.name,
-                StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!
-                    .balance!
-                    .fiatCurrencyValue!),
+              StateContainer.of(context).curCurrency.currency.name,
+              StateContainer.of(context)
+                  .appWallet!
+                  .appKeychain!
+                  .getAccountSelected()!
+                  .balance!
+                  .fiatCurrencyValue!,
+            ),
             style: primary
                 ? AppStyles.textStyleSize16W700Primary(context)
                 : AppStyles.textStyleSize14W700Primary(context),

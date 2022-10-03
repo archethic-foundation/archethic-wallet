@@ -6,13 +6,14 @@ import 'package:event_taxi/event_taxi.dart';
 enum TransactionSendEventType { transfer, token, keychain, keychainAccess }
 
 class TransactionSendEvent implements Event {
-  TransactionSendEvent(
-      {required this.transactionType,
-      this.nbConfirmations,
-      this.maxConfirmations,
-      this.response,
-      this.params,
-      this.transactionAddress});
+  TransactionSendEvent({
+    required this.transactionType,
+    this.nbConfirmations,
+    this.maxConfirmations,
+    this.response,
+    this.params,
+    this.transactionAddress,
+  });
 
   final TransactionSendEventType? transactionType;
   final int? nbConfirmations;

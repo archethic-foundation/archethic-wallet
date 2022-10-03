@@ -31,391 +31,408 @@ class BalanceInfosWidget {
 
   Widget getBalance(BuildContext context) {
     return GestureDetector(
-        child: SizedBox(
-          height: 60,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Card(
-              color: Colors.transparent,
-              child: Container(
-                decoration:
-                    StateContainer.of(context).curTheme.getDecorationBalance(),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    child: StateContainer.of(context)
-                                .curPrimaryCurrency
-                                .primaryCurrency
-                                .name ==
-                            PrimaryCurrencySetting(
-                                    AvailablePrimaryCurrency.native)
-                                .primaryCurrency
-                                .name
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10.0),
-                                child: AutoSizeText(
-                                  StateContainer.of(context)
-                                      .curNetwork
-                                      .getNetworkCryptoCurrencyLabel(),
-                                  style: AppStyles
-                                      .textStyleSize35W900EquinoxPrimary(
-                                          context),
+      child: SizedBox(
+        height: 60,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Card(
+            color: Colors.transparent,
+            child: Container(
+              decoration:
+                  StateContainer.of(context).curTheme.getDecorationBalance(),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.95,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: StateContainer.of(context)
+                              .curPrimaryCurrency
+                              .primaryCurrency
+                              .name ==
+                          PrimaryCurrencySetting(
+                            AvailablePrimaryCurrency.native,
+                          ).primaryCurrency.name
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              child: AutoSizeText(
+                                StateContainer.of(context)
+                                    .curNetwork
+                                    .getNetworkCryptoCurrencyLabel(),
+                                style:
+                                    AppStyles.textStyleSize35W900EquinoxPrimary(
+                                  context,
                                 ),
                               ),
-                              StateContainer.of(context).showBalance
-                                  ? Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        AutoSizeText(
+                            ),
+                            StateContainer.of(context).showBalance
+                                ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      AutoSizeText(
+                                        StateContainer.of(context)
+                                            .appWallet!
+                                            .appKeychain!
+                                            .getAccountSelected()!
+                                            .balance!
+                                            .nativeTokenValueToString(),
+                                        style: AppStyles
+                                            .textStyleSize25W900EquinoxPrimary(
+                                          context,
+                                        ),
+                                      ),
+                                      AutoSizeText(
+                                        CurrencyUtil.getConvertedAmount(
+                                          StateContainer.of(context)
+                                              .curCurrency
+                                              .currency
+                                              .name,
                                           StateContainer.of(context)
                                               .appWallet!
                                               .appKeychain!
                                               .getAccountSelected()!
                                               .balance!
-                                              .nativeTokenValueToString(),
-                                          style: AppStyles
-                                              .textStyleSize25W900EquinoxPrimary(
-                                                  context),
+                                              .fiatCurrencyValue!,
                                         ),
-                                        AutoSizeText(
-                                          CurrencyUtil.getConvertedAmount(
-                                              StateContainer.of(context)
-                                                  .curCurrency
-                                                  .currency
-                                                  .name,
-                                              StateContainer.of(context)
-                                                  .appWallet!
-                                                  .appKeychain!
-                                                  .getAccountSelected()!
-                                                  .balance!
-                                                  .fiatCurrencyValue!),
-                                          textAlign: TextAlign.center,
-                                          style: AppStyles
-                                              .textStyleSize12W600Primary(
-                                                  context),
+                                        textAlign: TextAlign.center,
+                                        style: AppStyles
+                                            .textStyleSize12W600Primary(
+                                          context,
                                         ),
-                                      ],
-                                    )
-                                  : Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        AutoSizeText(
-                                          '···········',
-                                          style: AppStyles
-                                              .textStyleSize25W900EquinoxPrimary60(
-                                                  context),
+                                      ),
+                                    ],
+                                  )
+                                : Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      AutoSizeText(
+                                        '···········',
+                                        style: AppStyles
+                                            .textStyleSize25W900EquinoxPrimary60(
+                                          context,
                                         ),
-                                        AutoSizeText(
-                                          '···········',
-                                          textAlign: TextAlign.center,
-                                          style: AppStyles
-                                              .textStyleSize12W600Primary60(
-                                                  context),
+                                      ),
+                                      AutoSizeText(
+                                        '···········',
+                                        textAlign: TextAlign.center,
+                                        style: AppStyles
+                                            .textStyleSize12W600Primary60(
+                                          context,
                                         ),
-                                      ],
-                                    ),
-                            ],
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10.0),
-                                child: AutoSizeText(
-                                  StateContainer.of(context)
-                                      .appWallet!
-                                      .appKeychain!
-                                      .getAccountSelected()!
-                                      .balance!
-                                      .fiatCurrencyCode!,
-                                  style: AppStyles
-                                      .textStyleSize35W900EquinoxPrimary(
-                                          context),
+                                      ),
+                                    ],
+                                  ),
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              child: AutoSizeText(
+                                StateContainer.of(context)
+                                    .appWallet!
+                                    .appKeychain!
+                                    .getAccountSelected()!
+                                    .balance!
+                                    .fiatCurrencyCode!,
+                                style:
+                                    AppStyles.textStyleSize35W900EquinoxPrimary(
+                                  context,
                                 ),
                               ),
-                              StateContainer.of(context).showBalance
-                                  ? Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        AutoSizeText(
-                                          CurrencyUtil.getConvertedAmount(
-                                              StateContainer.of(context)
-                                                  .curCurrency
-                                                  .currency
-                                                  .name,
-                                              StateContainer.of(context)
-                                                  .appWallet!
-                                                  .appKeychain!
-                                                  .getAccountSelected()!
-                                                  .balance!
-                                                  .fiatCurrencyValue!),
-                                          textAlign: TextAlign.center,
-                                          style: AppStyles
-                                              .textStyleSize25W900EquinoxPrimary(
-                                                  context),
+                            ),
+                            StateContainer.of(context).showBalance
+                                ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      AutoSizeText(
+                                        CurrencyUtil.getConvertedAmount(
+                                          StateContainer.of(context)
+                                              .curCurrency
+                                              .currency
+                                              .name,
+                                          StateContainer.of(context)
+                                              .appWallet!
+                                              .appKeychain!
+                                              .getAccountSelected()!
+                                              .balance!
+                                              .fiatCurrencyValue!,
                                         ),
-                                        AutoSizeText(
-                                          '${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
-                                          style: AppStyles
-                                              .textStyleSize12W600Primary(
-                                                  context),
+                                        textAlign: TextAlign.center,
+                                        style: AppStyles
+                                            .textStyleSize25W900EquinoxPrimary(
+                                          context,
                                         ),
-                                      ],
-                                    )
-                                  : Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        AutoSizeText(
-                                          '···········',
-                                          style: AppStyles
-                                              .textStyleSize25W900EquinoxPrimary60(
-                                                  context),
+                                      ),
+                                      AutoSizeText(
+                                        '${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
+                                        style: AppStyles
+                                            .textStyleSize12W600Primary(
+                                          context,
                                         ),
-                                        AutoSizeText(
-                                          '···········',
-                                          textAlign: TextAlign.center,
-                                          style: AppStyles
-                                              .textStyleSize12W600Primary60(
-                                                  context),
+                                      ),
+                                    ],
+                                  )
+                                : Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      AutoSizeText(
+                                        '···········',
+                                        style: AppStyles
+                                            .textStyleSize25W900EquinoxPrimary60(
+                                          context,
                                         ),
-                                      ],
-                                    ),
-                            ],
-                          ),
-                  ),
+                                      ),
+                                      AutoSizeText(
+                                        '···········',
+                                        textAlign: TextAlign.center,
+                                        style: AppStyles
+                                            .textStyleSize12W600Primary60(
+                                          context,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                          ],
+                        ),
                 ),
               ),
             ),
           ),
         ),
-        onTapDown: (details) {
-          if (StateContainer.of(context)
-                  .appWallet!
-                  .appKeychain!
-                  .getAccountSelected()!
-                  .balance!
-                  .fiatCurrencyValue! >
-              0) {
-            showPopUpMenuAtPosition(context, details);
-          }
-        });
+      ),
+      onTapDown: (details) {
+        if (StateContainer.of(context)
+                .appWallet!
+                .appKeychain!
+                .getAccountSelected()!
+                .balance!
+                .fiatCurrencyValue! >
+            0) {
+          showPopUpMenuAtPosition(context, details);
+        }
+      },
+    );
   }
 
   void showPopUpMenuAtPosition(BuildContext context, TapDownDetails details) {
     showMenu(
-        color: StateContainer.of(context).curTheme.backgroundDark,
-        elevation: 5,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20)
-                .copyWith(topRight: const Radius.circular(0))),
-        context: context,
-        position: RelativeRect.fromLTRB(
-          details.globalPosition.dx,
-          details.globalPosition.dy,
-          details.globalPosition.dx,
-          details.globalPosition.dy,
-        ),
-        items: StateContainer.of(context)
-                    .curPrimaryCurrency
-                    .primaryCurrency
-                    .name ==
-                PrimaryCurrencySetting(AvailablePrimaryCurrency.native)
-                    .primaryCurrency
-                    .name
-            ? [
-                PopupMenuItem(
-                    value: '1',
-                    onTap: () {
-                      copyAmount(
-                          context,
+      color: StateContainer.of(context).curTheme.backgroundDark,
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20)
+            .copyWith(topRight: const Radius.circular(0)),
+      ),
+      context: context,
+      position: RelativeRect.fromLTRB(
+        details.globalPosition.dx,
+        details.globalPosition.dy,
+        details.globalPosition.dx,
+        details.globalPosition.dy,
+      ),
+      items: StateContainer.of(context)
+                  .curPrimaryCurrency
+                  .primaryCurrency
+                  .name ==
+              PrimaryCurrencySetting(AvailablePrimaryCurrency.native)
+                  .primaryCurrency
+                  .name
+          ? [
+              PopupMenuItem(
+                value: '1',
+                onTap: () {
+                  copyAmount(
+                    context,
+                    StateContainer.of(context)
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .balance!
+                        .nativeTokenValueToString(),
+                  );
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.copy,
+                          size: 20,
+                          color: StateContainer.of(context).curTheme.text,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
                           StateContainer.of(context)
                               .appWallet!
                               .appKeychain!
                               .getAccountSelected()!
                               .balance!
-                              .nativeTokenValueToString());
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.copy,
-                                size: 20,
-                                color:
-                                    StateContainer.of(context).curTheme.text),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              StateContainer.of(context)
-                                  .appWallet!
-                                  .appKeychain!
-                                  .getAccountSelected()!
-                                  .balance!
-                                  .nativeTokenValueToString(),
-                              style:
-                                  AppStyles.textStyleSize12W100Primary(context),
-                            ),
-                          ],
+                              .nativeTokenValueToString(),
+                          style: AppStyles.textStyleSize12W100Primary(context),
                         ),
                       ],
-                    )),
-                PopupMenuItem(
-                    value: '2',
-                    onTap: () {
-                      copyAmount(
-                          context,
-                          StateContainer.of(context)
-                              .appWallet!
-                              .appKeychain!
-                              .getAccountSelected()!
-                              .balance!
-                              .fiatCurrencyValue!
-                              .toString());
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: '2',
+                onTap: () {
+                  copyAmount(
+                    context,
+                    StateContainer.of(context)
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .balance!
+                        .fiatCurrencyValue!
+                        .toString(),
+                  );
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            Icon(Icons.copy,
-                                size: 20,
-                                color:
-                                    StateContainer.of(context).curTheme.text),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              StateContainer.of(context)
-                                  .appWallet!
-                                  .appKeychain!
-                                  .getAccountSelected()!
-                                  .balance!
-                                  .fiatCurrencyValue!
-                                  .toString(),
-                              style:
-                                  AppStyles.textStyleSize12W100Primary(context),
-                            ),
-                          ],
+                        Icon(
+                          Icons.copy,
+                          size: 20,
+                          color: StateContainer.of(context).curTheme.text,
                         ),
-                      ],
-                    )),
-              ]
-            : [
-                PopupMenuItem(
-                    value: '2',
-                    onTap: () {
-                      copyAmount(
-                          context,
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
                           StateContainer.of(context)
                               .appWallet!
                               .appKeychain!
                               .getAccountSelected()!
                               .balance!
                               .fiatCurrencyValue!
-                              .toString());
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.copy,
-                                size: 20,
-                                color:
-                                    StateContainer.of(context).curTheme.text),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              StateContainer.of(context)
-                                  .appWallet!
-                                  .appKeychain!
-                                  .getAccountSelected()!
-                                  .balance!
-                                  .fiatCurrencyValue!
-                                  .toString(),
-                              style:
-                                  AppStyles.textStyleSize12W100Primary(context),
-                            ),
-                          ],
+                              .toString(),
+                          style: AppStyles.textStyleSize12W100Primary(context),
                         ),
                       ],
-                    )),
-                PopupMenuItem(
-                    value: '1',
-                    onTap: () {
-                      copyAmount(
-                          context,
+                    ),
+                  ],
+                ),
+              ),
+            ]
+          : [
+              PopupMenuItem(
+                value: '2',
+                onTap: () {
+                  copyAmount(
+                    context,
+                    StateContainer.of(context)
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .balance!
+                        .fiatCurrencyValue!
+                        .toString(),
+                  );
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.copy,
+                          size: 20,
+                          color: StateContainer.of(context).curTheme.text,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
                           StateContainer.of(context)
                               .appWallet!
                               .appKeychain!
                               .getAccountSelected()!
                               .balance!
-                              .nativeTokenValueToString());
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.copy,
-                                size: 20,
-                                color:
-                                    StateContainer.of(context).curTheme.text),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              StateContainer.of(context)
-                                  .appWallet!
-                                  .appKeychain!
-                                  .getAccountSelected()!
-                                  .balance!
-                                  .nativeTokenValueToString(),
-                              style:
-                                  AppStyles.textStyleSize12W100Primary(context),
-                            ),
-                          ],
+                              .fiatCurrencyValue!
+                              .toString(),
+                          style: AppStyles.textStyleSize12W100Primary(context),
                         ),
                       ],
-                    )),
-              ]);
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: '1',
+                onTap: () {
+                  copyAmount(
+                    context,
+                    StateContainer.of(context)
+                        .appWallet!
+                        .appKeychain!
+                        .getAccountSelected()!
+                        .balance!
+                        .nativeTokenValueToString(),
+                  );
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.copy,
+                          size: 20,
+                          color: StateContainer.of(context).curTheme.text,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          StateContainer.of(context)
+                              .appWallet!
+                              .appKeychain!
+                              .getAccountSelected()!
+                              .balance!
+                              .nativeTokenValueToString(),
+                          style: AppStyles.textStyleSize12W100Primary(context),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+    );
   }
 
   void copyAmount(BuildContext context, String amount) {
     Clipboard.setData(ClipboardData(text: amount));
     UIUtil.showSnackbar(
-        AppLocalization.of(context)!.amountCopied,
-        context,
-        StateContainer.of(context).curTheme.text!,
-        StateContainer.of(context).curTheme.snackBarShadow!);
+      AppLocalization.of(context)!.amountCopied,
+      context,
+      StateContainer.of(context).curTheme.text!,
+      StateContainer.of(context).curTheme.snackBarShadow!,
+    );
   }
 
   Widget buildInfos(BuildContext context) {
     return InkWell(
       onTap: () async {
         await sl.get<HapticUtil>().feedback(
-            FeedbackType.light, StateContainer.of(context).activeVibrations);
+              FeedbackType.light,
+              StateContainer.of(context).activeVibrations,
+            );
         optionChartList = <OptionChart>[
           OptionChart('1h', ChartInfos.getChartOptionLabel(context, '1h')),
           OptionChart('24h', ChartInfos.getChartOptionLabel(context, '24h')),
@@ -462,11 +479,12 @@ class BalanceInfosWidget {
             break;
         }
         Sheets.showAppHeightNineSheet(
-            context: context,
-            widget: ChartSheet(
-              optionChartList: optionChartList,
-              optionChart: optionChart,
-            ));
+          context: context,
+          widget: ChartSheet(
+            optionChartList: optionChartList,
+            optionChart: optionChart,
+          ),
+        );
       },
       child: Ink(
         child: SizedBox(
@@ -475,20 +493,26 @@ class BalanceInfosWidget {
           child: Stack(
             children: <Widget>[
               Padding(
-                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalization.of(context)!.priceChartHeader,
-                        style: AppStyles.textStyleSize14W600EquinoxPrimary(
-                            context),
+                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      AppLocalization.of(context)!.priceChartHeader,
+                      style: AppStyles.textStyleSize14W600EquinoxPrimary(
+                        context,
                       ),
-                      IconWidget.buildIconDataWidget(
-                          context, Icons.arrow_circle_right_outlined, 20, 20),
-                    ],
-                  )),
+                    ),
+                    IconWidget.buildIconDataWidget(
+                      context,
+                      Icons.arrow_circle_right_outlined,
+                      20,
+                      20,
+                    ),
+                  ],
+                ),
+              ),
               FadeIn(
                 duration: const Duration(milliseconds: 1000),
                 child: Padding(
@@ -569,27 +593,35 @@ class BalanceInfosWidget {
                   style: StateContainer.of(context)
                               .chartInfos!
                               .getPriceChangePercentage(
-                                  StateContainer.of(context).idChartOption!)! >=
+                                StateContainer.of(context).idChartOption!,
+                              )! >=
                           0
                       ? AppStyles.textStyleSize12W100PositiveValue(context)
                       : AppStyles.textStyleSize12W100NegativeValue(context),
                 ),
                 const SizedBox(width: 5),
                 StateContainer.of(context).chartInfos!.getPriceChangePercentage(
-                            StateContainer.of(context).idChartOption!)! >=
+                              StateContainer.of(context).idChartOption!,
+                            )! >=
                         0
-                    ? FaIcon(FontAwesomeIcons.caretUp,
+                    ? FaIcon(
+                        FontAwesomeIcons.caretUp,
                         color:
-                            StateContainer.of(context).curTheme.positiveValue)
-                    : FaIcon(FontAwesomeIcons.caretDown,
+                            StateContainer.of(context).curTheme.positiveValue,
+                      )
+                    : FaIcon(
+                        FontAwesomeIcons.caretDown,
                         color:
-                            StateContainer.of(context).curTheme.negativeValue),
+                            StateContainer.of(context).curTheme.negativeValue,
+                      ),
                 const SizedBox(
                   width: 10,
                 ),
                 AutoSizeText(
                   ChartInfos.getChartOptionLabel(
-                      context, StateContainer.of(context).idChartOption!),
+                    context,
+                    StateContainer.of(context).idChartOption!,
+                  ),
                   style: AppStyles.textStyleSize12W100Primary(context),
                 ),
                 const SizedBox(
@@ -604,8 +636,10 @@ class BalanceInfosWidget {
                         .useOracleUcoPrice!
                     ? InkWell(
                         onTap: () {
-                          sl.get<HapticUtil>().feedback(FeedbackType.light,
-                              StateContainer.of(context).activeVibrations);
+                          sl.get<HapticUtil>().feedback(
+                                FeedbackType.light,
+                                StateContainer.of(context).activeVibrations,
+                              );
                           AppDialogs.showInfoDialog(
                             context,
                             AppLocalization.of(context)!.informations,

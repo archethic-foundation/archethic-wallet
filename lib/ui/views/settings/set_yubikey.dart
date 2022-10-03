@@ -70,9 +70,11 @@ class _SetYubikeyState extends State<SetYubikey> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(
-                  StateContainer.of(context).curTheme.background3Small!),
-              fit: BoxFit.fitHeight),
+            image: AssetImage(
+              StateContainer.of(context).curTheme.background3Small!,
+            ),
+            fit: BoxFit.fitHeight,
+          ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -87,8 +89,9 @@ class _SetYubikeyState extends State<SetYubikey> {
             builder: (BuildContext context, BoxConstraints constraints) =>
                 SafeArea(
               minimum: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.035,
-                  top: MediaQuery.of(context).size.height * 0.075),
+                bottom: MediaQuery.of(context).size.height * 0.035,
+                top: MediaQuery.of(context).size.height * 0.075,
+              ),
               child: Column(
                 children: <Widget>[
                   Expanded(
@@ -112,7 +115,11 @@ class _SetYubikeyState extends State<SetYubikey> {
                         ),
                         Container(
                           child: IconWidget.build(
-                              context, 'assets/icons/digital-key.png', 90, 90),
+                            context,
+                            'assets/icons/digital-key.png',
+                            90,
+                            90,
+                          ),
                         ),
                         Expanded(
                           child: SingleChildScrollView(
@@ -133,18 +140,23 @@ class _SetYubikeyState extends State<SetYubikey> {
                                       widget.header!,
                                       style:
                                           AppStyles.textStyleSize20W700Warning(
-                                              context),
+                                        context,
+                                      ),
                                     ),
                                   ),
                                 if (widget.description != null)
                                   Container(
                                     margin: const EdgeInsetsDirectional.only(
-                                        start: 20, end: 20, top: 15.0),
+                                      start: 20,
+                                      end: 20,
+                                      top: 15.0,
+                                    ),
                                     child: Text(
                                       widget.description!,
                                       style:
                                           AppStyles.textStyleSize16W600Primary(
-                                              context),
+                                        context,
+                                      ),
                                       textAlign: TextAlign.left,
                                     ),
                                   ),
@@ -157,7 +169,8 @@ class _SetYubikeyState extends State<SetYubikey> {
                                   child: Text(
                                     _clientIDValidationText,
                                     style: AppStyles.textStyleSize14W600Primary(
-                                        context),
+                                      context,
+                                    ),
                                   ),
                                 ),
                                 Container(
@@ -169,7 +182,8 @@ class _SetYubikeyState extends State<SetYubikey> {
                                   child: Text(
                                     _clientAPIKeyValidationText,
                                     style: AppStyles.textStyleSize14W600Primary(
-                                        context),
+                                      context,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(
@@ -191,13 +205,15 @@ class _SetYubikeyState extends State<SetYubikey> {
                         children: <Widget>[
                           // Next Button
                           AppButton.buildAppButton(
-                              const Key('confirm'),
-                              context,
-                              AppButtonType.primary,
-                              AppLocalization.of(context)!.confirm,
-                              Dimens.buttonTopDimens, onPressed: () async {
-                            await validate();
-                          }),
+                            const Key('confirm'),
+                            context,
+                            AppButtonType.primary,
+                            AppLocalization.of(context)!.confirm,
+                            Dimens.buttonTopDimens,
+                            onPressed: () async {
+                              await validate();
+                            },
+                          ),
                         ],
                       ),
                     ],
@@ -294,8 +310,10 @@ class _SetYubikeyState extends State<SetYubikey> {
         vault.setYubikeyClientID(_clientIDController!.text);
 
         bool auth = await AuthFactory.authenticate(
-            context, AuthenticationMethod(AuthMethod.yubikeyWithYubicloud),
-            activeVibrations: StateContainer.of(context).activeVibrations);
+          context,
+          AuthenticationMethod(AuthMethod.yubikeyWithYubicloud),
+          activeVibrations: StateContainer.of(context).activeVibrations,
+        );
         if (auth) {
           Navigator.of(context).pop(true);
         }
