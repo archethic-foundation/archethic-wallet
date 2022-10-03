@@ -16,37 +16,37 @@ Future<void> setupServiceLocator() async {
   if (sl.isRegistered<AppService>()) {
     sl.unregister<AppService>();
   }
-  sl.registerLazySingleton<AppService>(() => AppService());
+  sl.registerLazySingleton<AppService>(AppService.new);
 
   if (sl.isRegistered<ApiCoinsService>()) {
     sl.unregister<ApiCoinsService>();
   }
-  sl.registerLazySingleton<ApiCoinsService>(() => ApiCoinsService());
+  sl.registerLazySingleton<ApiCoinsService>(ApiCoinsService.new);
 
   if (sl.isRegistered<DBHelper>()) {
     sl.unregister<DBHelper>();
   }
-  sl.registerLazySingleton<DBHelper>(() => DBHelper());
+  sl.registerLazySingleton<DBHelper>(DBHelper.new);
 
   if (sl.isRegistered<HapticUtil>()) {
     sl.unregister<HapticUtil>();
   }
-  sl.registerLazySingleton<HapticUtil>(() => HapticUtil());
+  sl.registerLazySingleton<HapticUtil>(HapticUtil.new);
 
   if (sl.isRegistered<BiometricUtil>()) {
     sl.unregister<BiometricUtil>();
   }
-  sl.registerLazySingleton<BiometricUtil>(() => BiometricUtil());
+  sl.registerLazySingleton<BiometricUtil>(BiometricUtil.new);
 
   if (sl.isRegistered<NFCUtil>()) {
     sl.unregister<NFCUtil>();
   }
-  sl.registerLazySingleton<NFCUtil>(() => NFCUtil());
+  sl.registerLazySingleton<NFCUtil>(NFCUtil.new);
 
   if (sl.isRegistered<LedgerNanoSImpl>()) {
     sl.unregister<LedgerNanoSImpl>();
   }
-  sl.registerLazySingleton<LedgerNanoSImpl>(() => LedgerNanoSImpl());
+  sl.registerLazySingleton<LedgerNanoSImpl>(LedgerNanoSImpl.new);
 
   final preferences = await Preferences.getInstance();
   final network = await preferences.getNetwork().getLink();

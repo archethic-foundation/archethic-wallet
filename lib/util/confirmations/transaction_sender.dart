@@ -133,7 +133,7 @@ class TransactionSender {
       errorNotifier = waitError(
         transaction.address!,
         absintheSocket!,
-        (String context, String reason) => handleError(context, reason),
+        handleError,
       );
     } catch (err) {
       for (final function in onError!) {
