@@ -198,8 +198,6 @@ dev_dependencies:
   # Integration Tests
   #integration_test:
   #  sdk: flutter
-  # Automatically organize your dart imports
-  import_sorter: ^4.6.0
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl_generator: ^0.3.0
   # Automatically generate code for converting to and from JSON by annotating Dart classes.

@@ -1,19 +1,17 @@
 // Dart imports:
 import 'dart:math' as math;
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:ghost/ghost.dart';
-import 'package:intl/intl.dart';
-
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:ghost/ghost.dart';
+import 'package:intl/intl.dart';
 
 class LastArticlesWidget extends StatefulWidget {
   const LastArticlesWidget({super.key});

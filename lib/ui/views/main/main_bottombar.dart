@@ -1,18 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:ui';
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:bottom_bar/bottom_bar.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/util/preferences.dart';
+// Package imports:
+import 'package:bottom_bar/bottom_bar.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MainBottomBar extends StatelessWidget {
   const MainBottomBar({super.key});

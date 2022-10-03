@@ -1,30 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
-import 'package:event_taxi/event_taxi.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:filesize/filesize.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:mime_dart/mime_dart.dart';
-import 'package:path/path.dart' as path;
-import 'package:pdfx/pdfx.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -54,6 +32,24 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/mime_util.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/user_data_util.dart';
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
+import 'package:event_taxi/event_taxi.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:filesize/filesize.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mime_dart/mime_dart.dart';
+import 'package:path/path.dart' as path;
+import 'package:pdfx/pdfx.dart';
 
 enum NFTCreationProcessType { single, collection }
 

@@ -1,10 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:aewallet/model/setting_item.dart';
+import 'package:flutter/material.dart';
 
 enum AvailablePrimaryCurrency { native, fiat }
 

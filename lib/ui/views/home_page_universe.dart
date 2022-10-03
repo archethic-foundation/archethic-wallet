@@ -3,13 +3,6 @@
 // Dart imports:
 import 'dart:async';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
-import 'package:event_taxi/event_taxi.dart';
-
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/account_changed_event.dart';
@@ -31,6 +24,11 @@ import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:aewallet/util/preferences.dart';
+// Package imports:
+import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
+import 'package:event_taxi/event_taxi.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 
 class AppHomePageUniverse extends StatefulWidget {
   const AppHomePageUniverse({super.key});

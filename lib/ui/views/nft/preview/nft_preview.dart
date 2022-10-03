@@ -1,14 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:typed_data';
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:filesize/filesize.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -18,6 +9,11 @@ import 'package:aewallet/model/token_property_with_access_infos.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/mime_util.dart';
 import 'package:aewallet/util/token_util.dart';
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:filesize/filesize.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 
 class NFTPreviewWidget extends StatelessWidget {
   const NFTPreviewWidget({

@@ -1,12 +1,11 @@
 // Dart imports:
 import 'dart:async';
 
+// Project imports:
+import 'package:aewallet/util/confirmations/phoenix_link.dart';
 // Package imports:
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:phoenix_socket/phoenix_socket.dart';
-
-// Project imports:
-import 'package:aewallet/util/confirmations/phoenix_link.dart';
 
 class SubscriptionChannel {
   PhoenixSocket? socket;

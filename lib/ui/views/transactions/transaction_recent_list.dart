@@ -1,13 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:intl/intl.dart';
-
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -22,6 +13,11 @@ import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/number_util.dart';
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:intl/intl.dart';
 
 class TxListWidget extends StatelessWidget {
   const TxListWidget({super.key});

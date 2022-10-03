@@ -1,16 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:share_plus/share_plus.dart';
-
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -22,6 +10,14 @@ import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ReceiveSheet extends StatelessWidget {
   const ReceiveSheet({this.address, super.key});

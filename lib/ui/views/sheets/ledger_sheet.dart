@@ -1,18 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:developer';
 import 'dart:io';
-
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:convert/convert.dart';
-import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
 // Project imports:
 import 'package:aewallet/ui/util/dimens.dart';
@@ -22,6 +10,14 @@ import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/ledger/archethic_ledger_util.dart';
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:convert/convert.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
 /*final getArchAddress = transport(
     0xe0,

@@ -1,15 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_svg/svg.dart';
-
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/util/screen_util.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_svg/svg.dart';
 
 Widget getLogo(BuildContext context) {
   return Container(

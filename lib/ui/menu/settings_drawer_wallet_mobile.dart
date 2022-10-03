@@ -1,17 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// ignore_for_file: always_specify_types
-
-// Dart imports:
 import 'dart:async';
 import 'dart:io';
-
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -43,6 +32,12 @@ import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:aewallet/util/preferences.dart';
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsSheetWalletMobile extends StatefulWidget {
   const SettingsSheetWalletMobile({super.key});

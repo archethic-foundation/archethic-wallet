@@ -1,19 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// ignore_for_file: always_specify_types
-
-// Dart imports:
 import 'dart:async';
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:event_taxi/event_taxi.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:yubidart/yubidart.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -28,6 +14,15 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/nfc.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/vault.dart';
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:event_taxi/event_taxi.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:yubidart/yubidart.dart';
 
 class YubikeyScreen extends StatefulWidget {
   const YubikeyScreen({super.key});

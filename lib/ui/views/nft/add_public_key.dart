@@ -1,18 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:io';
-
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -29,6 +16,15 @@ import 'package:aewallet/ui/widgets/dialogs/contacts_dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/user_data_util.dart';
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AddPublicKey extends StatefulWidget {
   const AddPublicKey({

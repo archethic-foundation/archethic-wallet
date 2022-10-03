@@ -1,14 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:math';
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:password_strength/password_strength.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -21,6 +12,11 @@ import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/string_encryption.dart';
 import 'package:aewallet/util/vault.dart';
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:password_strength/password_strength.dart';
 
 class SetPassword extends StatefulWidget {
   const SetPassword({

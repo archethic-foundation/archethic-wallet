@@ -1,16 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// ignore_for_file: constant_identifier_names
-
-// Dart imports:
 import 'dart:io';
 import 'dart:ui';
-
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-
-// Package imports:
-import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 
 // Project imports:
 import 'package:aewallet/model/authentication_method.dart';
@@ -20,6 +10,11 @@ import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/primary_currency.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+// Package imports:
+import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
 class Preferences {
   Preferences._(this._box);

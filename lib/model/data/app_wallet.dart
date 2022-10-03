@@ -1,8 +1,5 @@
 
 // Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:hive/hive.dart';
-
 // Project imports:
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
@@ -10,6 +7,8 @@ import 'package:aewallet/model/data/app_keychain.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:hive/hive.dart';
 
 part 'app_wallet.g.dart';
 

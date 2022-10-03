@@ -1,16 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// ignore_for_file: avoid_unnecessary_containers
-
-// Dart imports:
 import 'dart:async';
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -35,6 +24,12 @@ import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:event_taxi/event_taxi.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AddNFTCollection extends StatefulWidget {
   const AddNFTCollection({

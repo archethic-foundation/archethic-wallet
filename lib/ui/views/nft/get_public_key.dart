@@ -1,17 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
 
 class GetPublicKeys extends StatefulWidget {
   const GetPublicKeys({

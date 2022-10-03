@@ -1,14 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// ignore_for_file: always_specify_types
-
-// Dart imports:
 import 'dart:async';
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -20,6 +11,10 @@ import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/string_encryption.dart';
 import 'package:aewallet/util/vault.dart';
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 
 class PasswordScreen extends StatefulWidget {
   const PasswordScreen({super.key});

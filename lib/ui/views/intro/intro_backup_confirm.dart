@@ -1,17 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// ignore_for_file: always_specify_types
-
-// Dart imports:
 import 'dart:async';
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:event_taxi/event_taxi.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -36,6 +24,12 @@ import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/vault.dart';
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:event_taxi/event_taxi.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 
 class IntroBackupConfirm extends StatefulWidget {
   const IntroBackupConfirm({required this.name, required this.seed, super.key});

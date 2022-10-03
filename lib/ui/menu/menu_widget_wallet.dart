@@ -1,13 +1,6 @@
 // ignore_for_file: avoid_unnecessary_containers
 
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -19,6 +12,9 @@ import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class MenuWidgetWallet extends StatelessWidget {
   const MenuWidgetWallet({super.key});
