@@ -101,12 +101,10 @@ class _PickerWidgetState extends State<PickerWidget> {
                     children: [
                       Row(
                         children: [
-                          pickerItem.icon == null
-                              ? const SizedBox(
+                          if (pickerItem.icon == null) const SizedBox(
                                   width: 0,
                                   height: 24,
-                                )
-                              : SizedBox(
+                                ) else SizedBox(
                                   height: 24,
                                   child: widget.pickerItems![index].iconColor ==
                                           null
@@ -140,8 +138,7 @@ class _PickerWidgetState extends State<PickerWidget> {
                                           ),
                                   ),
                                 ),
-                                widget.pickerItems![index].subLabel != null
-                                    ? Align(
+                                if (widget.pickerItems![index].subLabel != null) Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
                                           widget.pickerItems![index].subLabel!,
@@ -156,18 +153,15 @@ class _PickerWidgetState extends State<PickerWidget> {
                                                   context,
                                                 ),
                                         ),
-                                      )
-                                    : const SizedBox(),
+                                      ) else const SizedBox(),
                               ],
                             ),
                           ),
-                          isItemSelected
-                              ? const Icon(
+                          if (isItemSelected) const Icon(
                                   Icons.check_circle,
                                   size: 16,
                                   color: Colors.green,
-                                )
-                              : Container(),
+                                ) else Container(),
                         ],
                       ),
                       if (pickerItem.description != null)

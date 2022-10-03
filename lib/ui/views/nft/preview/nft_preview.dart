@@ -192,11 +192,10 @@ class NFTPreviewWidget extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            tokenPropertyWithAccessInfos.publicKeysList !=
+                            if (tokenPropertyWithAccessInfos.publicKeysList !=
                                         null &&
                                     tokenPropertyWithAccessInfos
-                                        .publicKeysList!.isNotEmpty
-                                ? tokenPropertyWithAccessInfos
+                                        .publicKeysList!.isNotEmpty) tokenPropertyWithAccessInfos
                                             .publicKeysList!.length ==
                                         1
                                     ? Container(
@@ -226,8 +225,7 @@ class NFTPreviewWidget extends StatelessWidget {
                                             context,
                                           ),
                                         ),
-                                      )
-                                : Container(
+                                      ) else Container(
                                     width:
                                         MediaQuery.of(context).size.width - 100,
                                     padding: const EdgeInsets.only(left: 20),

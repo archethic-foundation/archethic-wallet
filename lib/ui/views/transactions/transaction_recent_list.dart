@@ -173,8 +173,7 @@ class TxListWidget extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      transaction.typeTx == RecentTransaction.tokenCreation
-                          ? StateContainer.of(context).showBalance
+                      if (transaction.typeTx == RecentTransaction.tokenCreation) StateContainer.of(context).showBalance
                               ? AutoSizeText(
                                   '${NumberUtil.formatThousands(transaction.tokenInformations!.supply!)} ${transaction.tokenInformations!.symbol}',
                                   style: AppStyles.textStyleSize12W400Primary(
@@ -186,8 +185,7 @@ class TxListWidget extends StatelessWidget {
                                   style: AppStyles.textStyleSize12W600Primary60(
                                     context,
                                   ),
-                                )
-                          : StateContainer.of(context)
+                                ) else StateContainer.of(context)
                                       .curPrimaryCurrency
                                       .primaryCurrency
                                       .name ==
@@ -409,14 +407,12 @@ class TxListWidget extends StatelessWidget {
                       if (transaction.typeTx == RecentTransaction.tokenCreation)
                         Row(
                           children: [
-                            transaction.tokenInformations!.type == 'fungible'
-                                ? AutoSizeText(
+                            if (transaction.tokenInformations!.type == 'fungible') AutoSizeText(
                                     '${AppLocalization.of(context)!.tokenCreated}: ${transaction.tokenInformations!.name}',
                                     style: AppStyles.textStyleSize12W400Primary(
                                       context,
                                     ),
-                                  )
-                                : AutoSizeText(
+                                  ) else AutoSizeText(
                                     '${AppLocalization.of(context)!.nftCreated}: ${transaction.tokenInformations!.name}',
                                     style: AppStyles.textStyleSize12W400Primary(
                                       context,

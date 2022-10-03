@@ -228,16 +228,14 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          enterPasswordController!.text == ''
-                              ? AppButton.buildAppButton(
+                          if (enterPasswordController!.text == '') AppButton.buildAppButton(
                                   const Key('confirm'),
                                   context,
                                   AppButtonType.primaryOutline,
                                   AppLocalization.of(context)!.confirm,
                                   Dimens.buttonTopDimens,
                                   onPressed: () async {},
-                                )
-                              : AppButton.buildAppButton(
+                                ) else AppButton.buildAppButton(
                                   const Key('confirm'),
                                   context,
                                   AppButtonType.primary,

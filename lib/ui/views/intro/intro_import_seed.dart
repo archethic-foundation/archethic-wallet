@@ -407,16 +407,14 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    isPressed == true || phrase.contains('')
-                        ? AppButton.buildAppButton(
+                    if (isPressed == true || phrase.contains('')) AppButton.buildAppButton(
                             const Key('ok'),
                             context,
                             AppButtonType.primaryOutline,
                             AppLocalization.of(context)!.ok,
                             Dimens.buttonTopDimens,
                             onPressed: () {},
-                          )
-                        : AppButton.buildAppButton(
+                          ) else AppButton.buildAppButton(
                             const Key('ok'),
                             context,
                             AppButtonType.primary,
@@ -647,12 +645,10 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                 const SizedBox(
                   height: 5,
                 ),
-                accounts.length > 1
-                    ? Text(
+                if (accounts.length > 1) Text(
                         AppLocalization.of(context)!.selectAccountDescSeveral,
                         style: AppStyles.textStyleSize12W100Primary(context),
-                      )
-                    : Text(
+                      ) else Text(
                         AppLocalization.of(context)!.selectAccountDescOne,
                         style: AppStyles.textStyleSize12W100Primary(context),
                       ),

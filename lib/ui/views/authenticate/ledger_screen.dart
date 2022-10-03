@@ -125,8 +125,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                               stepGranularity: 0.1,
                             ),
                           ),
-                          kIsWeb
-                              ? method == 'getPubKey'
+                          if (kIsWeb) method == 'getPubKey'
                                   ? ElevatedButton(
                                       child: Text(
                                         'Ledger - Get Public Key',
@@ -213,8 +212,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                 .connectLedger(signTxn);
                                           },
                                         )
-                                      : const SizedBox()
-                              : const SizedBox(),
+                                      : const SizedBox() else const SizedBox(),
                         ],
                       ),
                     ),

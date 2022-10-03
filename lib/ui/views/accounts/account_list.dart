@@ -93,9 +93,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
             ),
           Row(
             children: <Widget>[
-              appWalletLive!.appKeychain!.accounts!.length >= kMaxAccounts
-                  ? const SizedBox()
-                  : AppButton.buildAppButtonTiny(
+              if (appWalletLive!.appKeychain!.accounts!.length >= kMaxAccounts) const SizedBox() else AppButton.buildAppButtonTiny(
                       const Key('addAccount'),
                       context,
                       AppButtonType.primary,
@@ -163,8 +161,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                               UpperCaseTextFormatter(),
                                             ],
                                           ),
-                                          nameError != null
-                                              ? SizedBox(
+                                          if (nameError != null) SizedBox(
                                                   height: 40,
                                                   child: Text(
                                                     nameError!,
@@ -173,8 +170,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                       context,
                                                     ),
                                                   ),
-                                                )
-                                              : const SizedBox(
+                                                ) else const SizedBox(
                                                   height: 40,
                                                 ),
                                           Text(
@@ -488,8 +484,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                             ],
                                           ),
                                         ),
-                                        StateContainer.of(context).showBalance
-                                            ? StateContainer.of(context)
+                                        if (StateContainer.of(context).showBalance) StateContainer.of(context)
                                                         .curPrimaryCurrency
                                                         .primaryCurrency
                                                         .name ==
@@ -615,8 +610,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                           ),
                                                       ],
                                                     ),
-                                                  )
-                                            : Expanded(
+                                                  ) else Expanded(
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,

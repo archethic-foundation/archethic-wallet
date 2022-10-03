@@ -358,8 +358,7 @@ class _TransferSheetState extends State<TransferSheet> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      _isPressed == true
-                          ? AppButton.buildAppButton(
+                      if (_isPressed == true) AppButton.buildAppButton(
                               const Key('send'),
                               context,
                               AppButtonType.primaryOutline,
@@ -367,8 +366,7 @@ class _TransferSheetState extends State<TransferSheet> {
                                   AppLocalization.of(context)!.send,
                               Dimens.buttonTopDimens,
                               onPressed: () {},
-                            )
-                          : AppButton.buildAppButton(
+                            ) else AppButton.buildAppButton(
                               const Key('send'),
                               context,
                               AppButtonType.primary,
@@ -809,8 +807,7 @@ class _TransferSheetState extends State<TransferSheet> {
             }
           },
         ),
-        widget.accountToken == null
-            ? Row(
+        if (widget.accountToken == null) Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
@@ -821,8 +818,7 @@ class _TransferSheetState extends State<TransferSheet> {
                       style: AppStyles.textStyleSize14W100Primary(context),
                     ),
                   ),
-                  _sendAmountController!.text.isNotEmpty
-                      ? Container(
+                  if (_sendAmountController!.text.isNotEmpty) Container(
                           margin: const EdgeInsets.only(right: 40),
                           alignment: Alignment.centerRight,
                           child: primaryCurrencySelected ==
@@ -841,11 +837,9 @@ class _TransferSheetState extends State<TransferSheet> {
                                     context,
                                   ),
                                 ),
-                        )
-                      : const SizedBox(),
+                        ) else const SizedBox(),
                 ],
-              )
-            : Row(
+              ) else Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(

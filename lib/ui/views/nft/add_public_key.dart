@@ -198,9 +198,8 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                           ),
                           Row(
                             children: <Widget>[
-                              publicKeyAccessController!.text.isNotEmpty &&
-                                      publicKeyAccessController!.text.isNotEmpty
-                                  ? AppButton.buildAppButtonTiny(
+                              if (publicKeyAccessController!.text.isNotEmpty &&
+                                      publicKeyAccessController!.text.isNotEmpty) AppButton.buildAppButtonTiny(
                                       const Key('addPublicKey'),
                                       context,
                                       AppButtonType.primary,
@@ -244,8 +243,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                           });
                                         }
                                       },
-                                    )
-                                  : AppButton.buildAppButtonTiny(
+                                    ) else AppButton.buildAppButtonTiny(
                                       const Key('addPublicKey'),
                                       context,
                                       AppButtonType.primaryOutline,

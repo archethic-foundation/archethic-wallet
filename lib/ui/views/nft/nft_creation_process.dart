@@ -678,12 +678,11 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                               ),
                                             ),
                                           ),
-                                          tokenPropertyAsset!.publicKeysList !=
+                                          if (tokenPropertyAsset!.publicKeysList !=
                                                       null &&
                                                   tokenPropertyAsset!
                                                       .publicKeysList!
-                                                      .isNotEmpty
-                                              ? tokenPropertyAsset!
+                                                      .isNotEmpty) tokenPropertyAsset!
                                                           .publicKeysList!
                                                           .length ==
                                                       1
@@ -722,8 +721,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                                           context,
                                                         ),
                                                       ),
-                                                    )
-                                              : Container(
+                                                    ) else Container(
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width -
@@ -1207,9 +1205,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
               ),
               Row(
                 children: <Widget>[
-                  nftPropertyNameController!.text.isNotEmpty &&
-                          nftPropertyValueController!.text.isNotEmpty
-                      ? AppButton.buildAppButtonTiny(
+                  if (nftPropertyNameController!.text.isNotEmpty &&
+                          nftPropertyValueController!.text.isNotEmpty) AppButton.buildAppButtonTiny(
                           const Key('addNFTProperty'),
                           context,
                           AppButtonType.primary,
@@ -1245,8 +1242,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                               setState(() {});
                             }
                           },
-                        )
-                      : AppButton.buildAppButtonTiny(
+                        ) else AppButton.buildAppButtonTiny(
                           const Key('addNFTProperty'),
                           context,
                           AppButtonType.primaryOutline,
@@ -1367,11 +1363,10 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                 ),
                               ),
                             ),
-                            tokenPropertyWithAccessInfos.publicKeysList !=
+                            if (tokenPropertyWithAccessInfos.publicKeysList !=
                                         null &&
                                     tokenPropertyWithAccessInfos
-                                        .publicKeysList!.isNotEmpty
-                                ? tokenPropertyWithAccessInfos
+                                        .publicKeysList!.isNotEmpty) tokenPropertyWithAccessInfos
                                             .publicKeysList!.length ==
                                         1
                                     ? Container(
@@ -1401,8 +1396,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                             context,
                                           ),
                                         ),
-                                      )
-                                : Container(
+                                      ) else Container(
                                     width:
                                         MediaQuery.of(context).size.width - 180,
                                     padding: const EdgeInsets.only(left: 20),
@@ -1557,8 +1551,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         child: SizedBox(
           child: Column(
             children: [
-              feeEstimation > 0
-                  ? Padding(
+              if (feeEstimation > 0) Padding(
                       padding: const EdgeInsets.only(
                         top: 20,
                         left: 20,
@@ -1569,8 +1562,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                         style: AppStyles.textStyleSize12W100Primary(context),
                         textAlign: TextAlign.justify,
                       ),
-                    )
-                  : Padding(
+                    ) else Padding(
                       padding: const EdgeInsets.only(
                         top: 20,
                         left: 20,
@@ -1588,16 +1580,14 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        isPressed == true
-                            ? AppButton.buildAppButton(
+                        if (isPressed == true) AppButton.buildAppButton(
                                 const Key('addNFTFile'),
                                 context,
                                 AppButtonType.primaryOutline,
                                 AppLocalization.of(context)!.createNFT,
                                 Dimens.buttonTopDimens,
                                 onPressed: () async {},
-                              )
-                            : AppButton.buildAppButton(
+                              ) else AppButton.buildAppButton(
                                 const Key('addNFTFile'),
                                 context,
                                 AppButtonType.primary,
@@ -1709,11 +1699,10 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        tokenPropertyAsset!.publicKeysList !=
+                                        if (tokenPropertyAsset!.publicKeysList !=
                                                     null &&
                                                 tokenPropertyAsset!
-                                                    .publicKeysList!.isNotEmpty
-                                            ? tokenPropertyAsset!
+                                                    .publicKeysList!.isNotEmpty) tokenPropertyAsset!
                                                         .publicKeysList!
                                                         .length ==
                                                     1
@@ -1752,8 +1741,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                                         context,
                                                       ),
                                                     ),
-                                                  )
-                                            : Container(
+                                                  ) else Container(
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width -

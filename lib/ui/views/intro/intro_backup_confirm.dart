@@ -390,16 +390,14 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        wordListSelected.length != 24
-                            ? AppButton.buildAppButton(
+                        if (wordListSelected.length != 24) AppButton.buildAppButton(
                                 const Key('confirm'),
                                 context,
                                 AppButtonType.primaryOutline,
                                 AppLocalization.of(context)!.confirm,
                                 Dimens.buttonTopDimens,
                                 onPressed: () {},
-                              )
-                            : AppButton.buildAppButton(
+                              ) else AppButton.buildAppButton(
                                 const Key('confirm'),
                                 context,
                                 AppButtonType.primary,
