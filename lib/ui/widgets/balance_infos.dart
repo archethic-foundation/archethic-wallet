@@ -226,8 +226,7 @@ class BalanceInfosWidget {
       color: StateContainer.of(context).curTheme.backgroundDark,
       elevation: 5,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20)
-            .copyWith(topRight: const Radius.circular(0)),
+        borderRadius: BorderRadius.circular(20).copyWith(topRight: Radius.zero),
       ),
       context: context,
       position: RelativeRect.fromLTRB(
@@ -536,8 +535,8 @@ class BalanceInfosWidget {
                                   .text!
                                   .withOpacity(0),
                             ],
-                            begin: const Alignment(0, 0),
-                            end: const Alignment(0, 1),
+                            begin: Alignment.center,
+                            end: Alignment.bottomCenter,
                           ),
                           tooltipBg: StateContainer.of(context)
                               .curTheme

@@ -108,8 +108,8 @@ class _ChartSheetState extends State<ChartSheet> {
                               .text!
                               .withOpacity(0),
                         ],
-                        begin: const Alignment(0, 0),
-                        end: const Alignment(0, 1),
+                        begin: Alignment.center,
+                        end: Alignment.bottomCenter,
                       ),
                       tooltipBg:
                           StateContainer.of(context).curTheme.backgroundDark!,

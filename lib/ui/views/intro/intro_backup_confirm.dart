@@ -275,7 +275,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                             end: 20,
                             top: 10,
                           ),
-                          alignment: const AlignmentDirectional(-1, 0),
+                          alignment: AlignmentDirectional.centerStart,
                           child: AutoSizeText(
                             AppLocalization.of(context)!.confirmSecretPhrase,
                             style:

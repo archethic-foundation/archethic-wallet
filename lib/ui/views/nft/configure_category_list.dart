@@ -101,13 +101,10 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(0),
-                child: Text(
-                  'Available categories',
-                  style: AppStyles.textStyleSize12W100Primary(context),
-                  textAlign: TextAlign.justify,
-                ),
+              Text(
+                'Available categories',
+                style: AppStyles.textStyleSize12W100Primary(context),
+                textAlign: TextAlign.justify,
               ),
               ReorderableListView(
                 shrinkWrap: true,

@@ -2263,13 +2263,10 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       case 4:
         return Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(0),
-              child: Text(
-                'Properties required by the category:',
-                style: AppStyles.textStyleSize12W100Primary(context),
-                textAlign: TextAlign.justify,
-              ),
+            Text(
+              'Properties required by the category:',
+              style: AppStyles.textStyleSize12W100Primary(context),
+              textAlign: TextAlign.justify,
             ),
             getNftPropertyAppTextField(
               nftPropertyAuthorFocusNode,
@@ -2303,13 +2300,10 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       case 6:
         return Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(0),
-              child: Text(
-                'Properties required by the category:',
-                style: AppStyles.textStyleSize12W100Primary(context),
-                textAlign: TextAlign.justify,
-              ),
+            Text(
+              'Properties required by the category:',
+              style: AppStyles.textStyleSize12W100Primary(context),
+              textAlign: TextAlign.justify,
             ),
             getNftPropertyAppTextField(
               nftPropertyNameStoreFocusNode,

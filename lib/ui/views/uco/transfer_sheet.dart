@@ -260,7 +260,7 @@ class _TransferSheetState extends State<TransferSheet> {
                                             'fungible'))
                                   getEnterAmountContainer(),
                                 Container(
-                                  alignment: const AlignmentDirectional(0, 0),
+                                  alignment: AlignmentDirectional.center,
                                   margin: const EdgeInsets.only(top: 3),
                                   child: Text(
                                     _amountValidationText!,
@@ -278,7 +278,7 @@ class _TransferSheetState extends State<TransferSheet> {
                                   child: getEnterAddressContainer(),
                                 ),
                                 Container(
-                                  alignment: const AlignmentDirectional(0, 0),
+                                  alignment: AlignmentDirectional.center,
                                   margin: const EdgeInsets.only(
                                     left: 50,
                                     right: 40,
@@ -330,7 +330,7 @@ class _TransferSheetState extends State<TransferSheet> {
                                 const SizedBox(height: 10),
                                 getEnterMessage(),
                                 Container(
-                                  alignment: const AlignmentDirectional(0, 0),
+                                  alignment: AlignmentDirectional.center,
                                   margin: const EdgeInsets.only(
                                     left: 50,
                                     right: 40,

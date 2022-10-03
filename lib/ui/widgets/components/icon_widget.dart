@@ -25,7 +25,7 @@ class IconWidget {
           ),
         ],
       ),
-      alignment: const AlignmentDirectional(0, 0),
+      alignment: AlignmentDirectional.center,
       child: SizedBox(
         child: Image.asset(
           icon,
@@ -56,7 +56,7 @@ class IconWidget {
                 ),
               ],
             ),
-            alignment: const AlignmentDirectional(0, 0),
+            alignment: AlignmentDirectional.center,
             child: ShaderMask(
               child: SizedBox(
                 child: Icon(
@@ -77,7 +77,7 @@ class IconWidget {
         : Container(
             width: width,
             height: height,
-            alignment: const AlignmentDirectional(0, 0),
+            alignment: AlignmentDirectional.center,
             child: SizedBox(
               child: Icon(
                 icon,
