@@ -382,7 +382,7 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
             controller: _pageController,
             children: _sizeReportingChildren
                 .asMap() //
-                .map((index, child) => MapEntry(index, child))
+                .map(MapEntry.new)
                 .values
                 .toList(),
           ),

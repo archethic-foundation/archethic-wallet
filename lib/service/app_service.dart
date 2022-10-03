@@ -124,7 +124,7 @@ class AppService {
                   (AuthorizedKey authKey) =>
                       authKey.publicKey!.toUpperCase() ==
                       uint8ListToHex(keypair.publicKey).toUpperCase(),
-                  orElse: () => AuthorizedKey(),
+                  orElse: AuthorizedKey.new,
                 );
                 if (authorizedPublicKey.encryptedSecretKey != null) {
                   final aesKey = ecDecrypt(
@@ -173,7 +173,7 @@ class AppService {
                   (AuthorizedKey authKey) =>
                       authKey.publicKey!.toUpperCase() ==
                       uint8ListToHex(keypair.publicKey).toUpperCase(),
-                  orElse: () => AuthorizedKey(),
+                  orElse: AuthorizedKey.new,
                 );
                 if (authorizedPublicKey.encryptedSecretKey != null) {
                   final aesKey = ecDecrypt(
@@ -225,7 +225,7 @@ class AppService {
                   (AuthorizedKey authKey) =>
                       authKey.publicKey!.toUpperCase() ==
                       uint8ListToHex(keypair.publicKey).toUpperCase(),
-                  orElse: () => AuthorizedKey(),
+                  orElse: AuthorizedKey.new,
                 );
                 if (authorizedPublicKey.encryptedSecretKey != null) {
                   final aesKey = ecDecrypt(
@@ -275,7 +275,7 @@ class AppService {
             (AuthorizedKey authKey) =>
                 authKey.publicKey!.toUpperCase() ==
                 uint8ListToHex(keypair.publicKey).toUpperCase(),
-            orElse: () => AuthorizedKey(),
+            orElse: AuthorizedKey.new,
           );
           if (authorizedPublicKey.encryptedSecretKey != null) {
             final aesKey = ecDecrypt(
@@ -488,7 +488,7 @@ class AppService {
             (AuthorizedKey authKey) =>
                 authKey.publicKey!.toUpperCase() ==
                 uint8ListToHex(keypair.publicKey).toUpperCase(),
-            orElse: () => AuthorizedKey(),
+            orElse: AuthorizedKey.new,
           );
           if (authorizedPublicKey.encryptedSecretKey != null) {
             final aesKey = ecDecrypt(
