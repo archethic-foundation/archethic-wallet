@@ -27,25 +27,25 @@ import 'package:aewallet/ui/themes/theme_sea_green_flat.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 
 enum ThemeOptions {
-  byzantine_violet,
-  byzantine_violet_flat,
+  byzantineViolet,
+  byzantineVioletFlat,
   dark,
-  dark_flat,
-  emerald_green,
-  emerald_green_flat,
-  fire_red,
-  fire_red_flat,
+  darkFlat,
+  emeraldGreen,
+  emeraldGreenFlat,
+  fireRed,
+  fireRedFlat,
   flat,
-  honey_orange,
-  honey_orange_flat,
-  navy_blue,
-  navy_blue_flat,
-  pearl_grey,
-  pearl_grey_flat,
-  sapphire_blue,
-  sapphire_blue_flat,
-  sea_green,
-  sea_green_flat,
+  honeyOrange,
+  honeyOrangeFlat,
+  navyBlue,
+  navyBlueFlat,
+  pearlGrey,
+  pearlGreyFlat,
+  sapphireBlue,
+  sapphireBlueFlat,
+  seaGreen,
+  seaGreenFlat,
 }
 
 /// Represent notification on/off setting
@@ -59,41 +59,41 @@ class ThemeSetting extends SettingSelectionItem {
     switch (theme) {
       case ThemeOptions.dark:
         return 'Dark';
-      case ThemeOptions.dark_flat:
+      case ThemeOptions.darkFlat:
         return 'Dark Flat';
-      case ThemeOptions.byzantine_violet:
+      case ThemeOptions.byzantineViolet:
         return 'Byzantine Violet';
-      case ThemeOptions.emerald_green:
+      case ThemeOptions.emeraldGreen:
         return 'Emerald Green';
-      case ThemeOptions.fire_red:
+      case ThemeOptions.fireRed:
         return 'Fire Red';
       case ThemeOptions.flat:
         return 'Flat';
-      case ThemeOptions.honey_orange:
+      case ThemeOptions.honeyOrange:
         return 'Honey Orange';
-      case ThemeOptions.navy_blue:
+      case ThemeOptions.navyBlue:
         return 'Navy Blue';
-      case ThemeOptions.pearl_grey:
+      case ThemeOptions.pearlGrey:
         return 'Pearl Grey';
-      case ThemeOptions.sapphire_blue:
+      case ThemeOptions.sapphireBlue:
         return 'Sapphire Blue';
-      case ThemeOptions.sea_green:
+      case ThemeOptions.seaGreen:
         return 'Sea Green';
-      case ThemeOptions.byzantine_violet_flat:
+      case ThemeOptions.byzantineVioletFlat:
         return 'Byzantine Violet Flat';
-      case ThemeOptions.emerald_green_flat:
+      case ThemeOptions.emeraldGreenFlat:
         return 'Emerald Green Flat';
-      case ThemeOptions.fire_red_flat:
+      case ThemeOptions.fireRedFlat:
         return 'Fire Red Flat';
-      case ThemeOptions.honey_orange_flat:
+      case ThemeOptions.honeyOrangeFlat:
         return 'Honey Orange Flat';
-      case ThemeOptions.navy_blue_flat:
+      case ThemeOptions.navyBlueFlat:
         return 'Navy Blue Flat';
-      case ThemeOptions.pearl_grey_flat:
+      case ThemeOptions.pearlGreyFlat:
         return 'Pearl Grey Flat';
-      case ThemeOptions.sapphire_blue_flat:
+      case ThemeOptions.sapphireBlueFlat:
         return 'Sapphire Blue Flat';
-      case ThemeOptions.sea_green_flat:
+      case ThemeOptions.seaGreenFlat:
         return 'Sea Green Flat';
       default:
         return 'Dark';
@@ -104,41 +104,41 @@ class ThemeSetting extends SettingSelectionItem {
     switch (theme) {
       case ThemeOptions.dark:
         return DarkTheme();
-      case ThemeOptions.dark_flat:
+      case ThemeOptions.darkFlat:
         return DarkFlatTheme();
-      case ThemeOptions.byzantine_violet:
+      case ThemeOptions.byzantineViolet:
         return ByzantineVioletTheme();
-      case ThemeOptions.emerald_green:
+      case ThemeOptions.emeraldGreen:
         return EmeraldGreenTheme();
-      case ThemeOptions.fire_red:
+      case ThemeOptions.fireRed:
         return FireRedTheme();
       case ThemeOptions.flat:
         return FlatTheme();
-      case ThemeOptions.honey_orange:
+      case ThemeOptions.honeyOrange:
         return HoneyOrangeTheme();
-      case ThemeOptions.navy_blue:
+      case ThemeOptions.navyBlue:
         return NavyBlueTheme();
-      case ThemeOptions.pearl_grey:
+      case ThemeOptions.pearlGrey:
         return PearlGreyTheme();
-      case ThemeOptions.sapphire_blue:
+      case ThemeOptions.sapphireBlue:
         return SapphireBlueTheme();
-      case ThemeOptions.sea_green:
+      case ThemeOptions.seaGreen:
         return SeaGreenTheme();
-      case ThemeOptions.byzantine_violet_flat:
+      case ThemeOptions.byzantineVioletFlat:
         return ByzantineVioletFlatTheme();
-      case ThemeOptions.emerald_green_flat:
+      case ThemeOptions.emeraldGreenFlat:
         return EmeraldGreenFlatTheme();
-      case ThemeOptions.fire_red_flat:
+      case ThemeOptions.fireRedFlat:
         return FireRedFlatTheme();
-      case ThemeOptions.honey_orange_flat:
+      case ThemeOptions.honeyOrangeFlat:
         return HoneyOrangeFlatTheme();
-      case ThemeOptions.navy_blue_flat:
+      case ThemeOptions.navyBlueFlat:
         return NavyBlueFlatTheme();
-      case ThemeOptions.pearl_grey_flat:
+      case ThemeOptions.pearlGreyFlat:
         return PearlGreyFlatTheme();
-      case ThemeOptions.sapphire_blue_flat:
+      case ThemeOptions.sapphireBlueFlat:
         return SapphireBlueFlatTheme();
-      case ThemeOptions.sea_green_flat:
+      case ThemeOptions.seaGreenFlat:
         return SeaGreenFlatTheme();
       default:
         return DarkTheme();

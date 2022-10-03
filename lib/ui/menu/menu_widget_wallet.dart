@@ -48,102 +48,146 @@ class MenuWidgetWallet extends StatelessWidget {
                     ? Padding(
                         padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                         child: InkWell(
-                            onTap: () {
-                              sl.get<HapticUtil>().feedback(FeedbackType.light,
-                                  StateContainer.of(context).activeVibrations);
-                              Sheets.showAppHeightNineSheet(
-                                context: context,
-                                widget: TransferSheet(
-                                    primaryCurrency: StateContainer.of(context)
-                                        .curPrimaryCurrency,
-                                    title: AppLocalization.of(context)!
-                                        .transferTokens
-                                        .replaceAll(
-                                            '%1',
-                                            StateContainer.of(context)
-                                                .curNetwork
-                                                .getNetworkCryptoCurrencyLabel()),
-                                    localCurrency:
-                                        StateContainer.of(context).curCurrency),
-                              );
-                            },
-                            child: Column(
-                              children: <Widget>[
-                                IconWidget.buildIconDataWidget(context,
-                                    Icons.arrow_circle_up_outlined, 40, 40),
-                                const SizedBox(height: 5),
-                                Text(AppLocalization.of(context)!.send,
-                                    style: AppStyles
-                                        .textStyleSize14W600EquinoxPrimary(
-                                            context)),
-                              ],
-                            )))
+                          onTap: () {
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  StateContainer.of(context).activeVibrations,
+                                );
+                            Sheets.showAppHeightNineSheet(
+                              context: context,
+                              widget: TransferSheet(
+                                primaryCurrency: StateContainer.of(context)
+                                    .curPrimaryCurrency,
+                                title: AppLocalization.of(context)!
+                                    .transferTokens
+                                    .replaceAll(
+                                      '%1',
+                                      StateContainer.of(context)
+                                          .curNetwork
+                                          .getNetworkCryptoCurrencyLabel(),
+                                    ),
+                                localCurrency:
+                                    StateContainer.of(context).curCurrency,
+                              ),
+                            );
+                          },
+                          child: Column(
+                            children: <Widget>[
+                              IconWidget.buildIconDataWidget(
+                                context,
+                                Icons.arrow_circle_up_outlined,
+                                40,
+                                40,
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                AppLocalization.of(context)!.send,
+                                style:
+                                    AppStyles.textStyleSize14W600EquinoxPrimary(
+                                  context,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
                     : Container(
                         child: Column(
-                        children: <Widget>[
-                          IconWidget.buildIconDataWidget(
-                              context, Icons.arrow_circle_up_outlined, 40, 40,
-                              enabled: false),
-                          const SizedBox(height: 5),
-                          Text(AppLocalization.of(context)!.send,
+                          children: <Widget>[
+                            IconWidget.buildIconDataWidget(
+                              context,
+                              Icons.arrow_circle_up_outlined,
+                              40,
+                              40,
+                              enabled: false,
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              AppLocalization.of(context)!.send,
                               style: AppStyles
                                   .textStyleSize14W600EquinoxPrimaryDisabled(
-                                      context)),
-                        ],
-                      )),
+                                context,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                   child: InkWell(
                     onTap: () {
-                      sl.get<HapticUtil>().feedback(FeedbackType.light,
-                          StateContainer.of(context).activeVibrations);
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            StateContainer.of(context).activeVibrations,
+                          );
                       Sheets.showAppHeightNineSheet(
-                          context: context,
-                          widget: ReceiveSheet(
-                              address: StateContainer.of(context)
-                                  .appWallet!
-                                  .appKeychain!
-                                  .getAccountSelected()!
-                                  .lastAddress!),
-                          onDisposed: () {
-                            setState(() {
-                              StateContainer.of(context)
-                                  .requestUpdate(forceUpdateChart: false);
-                            });
+                        context: context,
+                        widget: ReceiveSheet(
+                          address: StateContainer.of(context)
+                              .appWallet!
+                              .appKeychain!
+                              .getAccountSelected()!
+                              .lastAddress!,
+                        ),
+                        onDisposed: () {
+                          setState(() {
+                            StateContainer.of(context)
+                                .requestUpdate(forceUpdateChart: false);
                           });
+                        },
+                      );
                     },
                     child: Column(
                       children: <Widget>[
                         IconWidget.buildIconDataWidget(
-                            context, Icons.arrow_circle_down_outlined, 40, 40),
+                          context,
+                          Icons.arrow_circle_down_outlined,
+                          40,
+                          40,
+                        ),
                         const SizedBox(height: 5),
-                        Text(AppLocalization.of(context)!.receive,
-                            style: AppStyles.textStyleSize14W600EquinoxPrimary(
-                                context)),
+                        Text(
+                          AppLocalization.of(context)!.receive,
+                          style: AppStyles.textStyleSize14W600EquinoxPrimary(
+                            context,
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
                 Padding(
-                    padding: const EdgeInsets.only(left: 5.0, right: 10.0),
-                    child: InkWell(
-                        onTap: () {
-                          sl.get<HapticUtil>().feedback(FeedbackType.light,
-                              StateContainer.of(context).activeVibrations);
-                          Sheets.showAppHeightNineSheet(
-                              context: context, widget: const BuySheet());
-                        },
-                        child: Column(
-                          children: <Widget>[
-                            IconWidget.buildIconDataWidget(context,
-                                Icons.add_circle_outline_outlined, 40, 40),
-                            const SizedBox(height: 5),
-                            Text(AppLocalization.of(context)!.buy,
-                                style:
-                                    AppStyles.textStyleSize14W600EquinoxPrimary(
-                                        context)),
-                          ],
-                        ))),
+                  padding: const EdgeInsets.only(left: 5.0, right: 10.0),
+                  child: InkWell(
+                    onTap: () {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            StateContainer.of(context).activeVibrations,
+                          );
+                      Sheets.showAppHeightNineSheet(
+                        context: context,
+                        widget: const BuySheet(),
+                      );
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        IconWidget.buildIconDataWidget(
+                          context,
+                          Icons.add_circle_outline_outlined,
+                          40,
+                          40,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          AppLocalization.of(context)!.buy,
+                          style: AppStyles.textStyleSize14W600EquinoxPrimary(
+                            context,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 /*if (kIsWeb || Platform.isMacOS)
               Padding(
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0),

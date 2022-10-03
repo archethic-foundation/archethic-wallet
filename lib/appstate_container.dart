@@ -51,9 +51,7 @@ class StateContainer extends StatefulWidget {
   final Widget child;
 
   static StateContainerState of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<_InheritedStateContainer>()!
-        .data;
+    return context.dependOnInheritedWidgetOfExactType<_InheritedStateContainer>()!.data;
   }
 
   @override
@@ -69,10 +67,8 @@ class StateContainerState extends State<StateContainer> {
   Locale deviceLocale = const Locale('en', 'US');
   AvailableCurrency curCurrency = AvailableCurrency(AvailableCurrencyEnum.USD);
   LanguageSetting curLanguage = LanguageSetting(AvailableLanguage.DEFAULT);
-  PrimaryCurrencySetting curPrimaryCurrency =
-      PrimaryCurrencySetting(AvailablePrimaryCurrency.native);
-  NetworksSetting curNetwork =
-      NetworksSetting(AvailableNetworks.archethicMainNet);
+  PrimaryCurrencySetting curPrimaryCurrency = PrimaryCurrencySetting(AvailablePrimaryCurrency.native);
+  NetworksSetting curNetwork = NetworksSetting(AvailableNetworks.archethicMainNet);
   BaseTheme curTheme = DarkTheme();
 
   ChartInfos? chartInfos = ChartInfos();
@@ -97,7 +93,8 @@ class StateContainerState extends State<StateContainer> {
           curCurrency = preferences.getCurrency(deviceLocale);
           updateCurrency(curCurrency).then((_) {
             bottomBarPageController = PageController(
-                initialPage: preferences.getMainScreenCurrentPage());
+              initialPage: preferences.getMainScreenCurrentPage(),
+            );
             curLanguage = preferences.getLanguage();
             curPrimaryCurrency = preferences.getPrimaryCurrency();
             curNetwork = preferences.getNetwork();
@@ -123,72 +120,68 @@ class StateContainerState extends State<StateContainer> {
   }
 
   void checkTransactionInputs(String message) {
-    if (!kIsWeb &&
-        (Platform.isIOS == true ||
-            Platform.isAndroid == true ||
-            Platform.isMacOS == true)) {
+    if (!kIsWeb && (Platform.isIOS == true || Platform.isAndroid == true || Platform.isMacOS == true)) {
       if (appWallet != null) {
-        timerCheckTransactionInputs =
-            Timer.periodic(const Duration(seconds: 30), (Timer t) async {
+        timerCheckTransactionInputs = Timer.periodic(const Duration(seconds: 30), (Timer t) async {
           List<Account>? accounts = appWallet!.appKeychain!.accounts;
-          accounts!.forEach((Account account) async {
-            final List<TransactionInput> transactionInputList = await sl
-                .get<AppService>()
-                .getTransactionInputs(account.lastAddress!,
-                    'from, amount, timestamp, tokenAddress ');
+          for (var account in accounts!) {
+            final List<TransactionInput> transactionInputList = await sl.get<AppService>().getTransactionInputs(
+                  account.lastAddress!,
+                  'from, amount, timestamp, tokenAddress ',
+                );
 
-            if (transactionInputList.length > 0) {
-              transactionInputList
-                  .forEach((TransactionInput transactionInput) async {
+            if (transactionInputList.isNotEmpty) {
+              for (var transactionInput in transactionInputList) {
                 if (account.lastLoadingTransactionInputs == null ||
-                    transactionInput.timestamp! >
-                        account.lastLoadingTransactionInputs!) {
+                    transactionInput.timestamp! > account.lastLoadingTransactionInputs!) {
                   account.updateLastLoadingTransactionInputs();
                   if (transactionInput.from != account.lastAddress) {
                     String symbol = 'UCO';
                     if (transactionInput.tokenAddress != null) {
-                      symbol = (await sl
-                              .get<ApiService>()
-                              .getToken(transactionInput.tokenAddress!))
-                          .symbol!;
+                      symbol = (await sl.get<ApiService>().getToken(transactionInput.tokenAddress!)).symbol!;
                     }
                     NotificationsUtil.showNotification(
-                        title: 'Archethic',
-                        body: message
-                            .replaceAll('%1',
-                                fromBigInt(transactionInput.amount).toString())
-                            .replaceAll('%2', symbol)
-                            .replaceAll('%3', account.name!),
-                        payload: account.name!);
+                      title: 'Archethic',
+                      body: message
+                          .replaceAll(
+                            '%1',
+                            fromBigInt(transactionInput.amount).toString(),
+                          )
+                          .replaceAll('%2', symbol)
+                          .replaceAll('%3', account.name!),
+                      payload: account.name!,
+                    );
                     await requestUpdate(forceUpdateChart: false);
                   }
                 }
-              });
+              }
             }
-          });
+          }
         });
       }
     }
   }
 
   Future<List<Contact>> getContacts() async {
-    return await sl.get<DBHelper>().getContacts();
+    return sl.get<DBHelper>().getContacts();
   }
 
   Future<List<Token>> getTokenFungibles() async {
     List<Token> tokensFungibles = <Token>[];
-    List<Transaction> transactions = await sl
-        .get<ApiService>()
-        .networkTransactions('token', 1, request: 'address, data { content }');
+    List<Transaction> transactions =
+        await sl.get<ApiService>().networkTransactions('token', 1, request: 'address, data { content }');
 
     for (var transaction in transactions) {
       Token token = tokenFromJson(transaction.data!.content!);
-      tokensFungibles.add(Token(
+      tokensFungibles.add(
+        Token(
           address: transaction.address,
           name: token.name,
           supply: token.supply,
           type: 'fungible',
-          symbol: token.symbol));
+          symbol: token.symbol,
+        ),
+      );
     }
     return tokensFungibles;
   }
@@ -211,23 +204,20 @@ class StateContainerState extends State<StateContainer> {
   Future<void> updateCurrency(AvailableCurrency currency) async {
     if (appWallet != null) {
       Price tokenPrice = await Price.getCurrency(curCurrency.currency.name);
-      appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice =
-          tokenPrice;
+      appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice = tokenPrice;
       appWallet!.save();
       setState(() {
         price = tokenPrice;
         curCurrency = currency;
       });
-      await chartInfos!
-          .updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
+      await chartInfos!.updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
     }
   }
 
   // Change theme
   Future<void> updateTheme(ThemeSetting theme) async {
     if (showPriceChart && chartInfos != null) {
-      await chartInfos!
-          .updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
+      await chartInfos!.updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
     }
     if (mounted) {
       setState(() {
@@ -240,8 +230,10 @@ class StateContainerState extends State<StateContainer> {
     setState(() {});
   }
 
-  Future<void> requestUpdate(
-      {String? pagingAddress = '', bool forceUpdateChart = true}) async {
+  Future<void> requestUpdate({
+    String? pagingAddress = '',
+    bool forceUpdateChart = true,
+  }) async {
     await appWallet!.appKeychain!.getAccountSelected()!.updateLastAddress();
 
     await appWallet!.appKeychain!.getAccountSelected()!.updateFungiblesTokens();
@@ -255,26 +247,24 @@ class StateContainerState extends State<StateContainer> {
 
     Price tokenPrice = await Price.getCurrency(curCurrency.currency.name);
     await appWallet!.appKeychain!.getAccountSelected()!.updateBalance(
-        curNetwork.getNetworkCryptoCurrencyLabel(),
-        curCurrency.currency.name,
-        tokenPrice);
+          curNetwork.getNetworkCryptoCurrencyLabel(),
+          curCurrency.currency.name,
+          tokenPrice,
+        );
 
     setState(() {
       balanceLoading = false;
     });
 
     String? seed = await getSeed();
-    await appWallet!.appKeychain!
-        .getAccountSelected()!
-        .updateRecentTransactions(pagingAddress!, seed!);
+    await appWallet!.appKeychain!.getAccountSelected()!.updateRecentTransactions(pagingAddress!, seed!);
 
     setState(() {
       recentTransactionsLoading = false;
     });
 
     if (forceUpdateChart && showPriceChart) {
-      await chartInfos!
-          .updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
+      await chartInfos!.updateCoinsChart(curCurrency.currency.name, option: idChartOption!);
     }
   }
 

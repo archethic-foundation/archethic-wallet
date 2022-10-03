@@ -37,9 +37,10 @@ class BuySheet extends StatelessWidget {
                           InkWell(
                             onTap: () async {
                               UIUtil.showWebview(
-                                  context,
-                                  'https://rubic.exchange/?fromChain=ETH&toChain=ETH&from=ETH&to=UCO',
-                                  'Rubic');
+                                context,
+                                'https://rubic.exchange/?fromChain=ETH&toChain=ETH&from=ETH&to=UCO',
+                                'Rubic',
+                              );
                             },
                             child: SvgPicture.asset(
                               'assets/buy/Rubic.svg',
@@ -51,9 +52,10 @@ class BuySheet extends StatelessWidget {
                           InkWell(
                             onTap: () async {
                               UIUtil.showWebview(
-                                  context,
-                                  'https://info.quickswap.exchange/#/pair/0x25bae75f6760ac30554cc62f9282307c3038c3a0',
-                                  'Quick');
+                                context,
+                                'https://info.quickswap.exchange/#/pair/0x25bae75f6760ac30554cc62f9282307c3038c3a0',
+                                'Quick',
+                              );
                             },
                             child: Image.asset(
                               'assets/buy/Quickswap.png',
@@ -64,8 +66,11 @@ class BuySheet extends StatelessWidget {
                           const SizedBox(height: 30),
                           InkWell(
                             onTap: () async {
-                              UIUtil.showWebview(context,
-                                  'https://www.probit.com/en-us/', 'Probit');
+                              UIUtil.showWebview(
+                                context,
+                                'https://www.probit.com/en-us/',
+                                'Probit',
+                              );
                             },
                             child: Image.asset(
                               'assets/buy/Probit.png',
@@ -76,8 +81,11 @@ class BuySheet extends StatelessWidget {
                           const SizedBox(height: 30),
                           InkWell(
                             onTap: () async {
-                              UIUtil.showWebview(context,
-                                  'https://www.bitglobal.com/en-us', 'Bithumb');
+                              UIUtil.showWebview(
+                                context,
+                                'https://www.bitglobal.com/en-us',
+                                'Bithumb',
+                              );
                             },
                             child: Image.asset(
                               'assets/buy/Bithumb.png',
@@ -89,9 +97,10 @@ class BuySheet extends StatelessWidget {
                           InkWell(
                             onTap: () async {
                               UIUtil.showWebview(
-                                  context,
-                                  'https://app.uniswap.org/#/swap?outputCurrency=0x8a3d77e9d6968b780564936d15b09805827c21fa&use=V2',
-                                  'Bithumb');
+                                context,
+                                'https://app.uniswap.org/#/swap?outputCurrency=0x8a3d77e9d6968b780564936d15b09805827c21fa&use=V2',
+                                'Bithumb',
+                              );
                             },
                             child: SvgPicture.asset(
                               'assets/buy/Uniswap.svg',
@@ -103,7 +112,10 @@ class BuySheet extends StatelessWidget {
                           InkWell(
                             onTap: () async {
                               UIUtil.showWebview(
-                                  context, 'https://zebitex.com', 'Zebitex');
+                                context,
+                                'https://zebitex.com',
+                                'Zebitex',
+                              );
                             },
                             child: SvgPicture.asset(
                               'assets/buy/Zebitex.svg',
@@ -115,9 +127,10 @@ class BuySheet extends StatelessWidget {
                           InkWell(
                             onTap: () async {
                               UIUtil.showWebview(
-                                  context,
-                                  'https://pancakeswap.finance/swap?inputCurrency=0xe9e7cea3dedca5984780bafc599bd69add087d56&outputCurrency=0xb001f1E7c8bda414aC7Cf7Ecba5469fE8d24B6de',
-                                  'PancakeSwap');
+                                context,
+                                'https://pancakeswap.finance/swap?inputCurrency=0xe9e7cea3dedca5984780bafc599bd69add087d56&outputCurrency=0xb001f1E7c8bda414aC7Cf7Ecba5469fE8d24B6de',
+                                'PancakeSwap',
+                              );
                             },
                             child: Image.asset(
                               'assets/buy/Pancake.png',
@@ -128,8 +141,11 @@ class BuySheet extends StatelessWidget {
                           const SizedBox(height: 30),
                           InkWell(
                             onTap: () async {
-                              UIUtil.showWebview(context,
-                                  'https://dapps.zam.io/bridge', 'Zamio');
+                              UIUtil.showWebview(
+                                context,
+                                'https://dapps.zam.io/bridge',
+                                'Zamio',
+                              );
                             },
                             child: Image.asset(
                               'assets/buy/Zamio.png',

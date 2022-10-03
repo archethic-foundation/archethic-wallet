@@ -17,8 +17,11 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 
 class AuthentificationMethodDialog {
-  static Future<void> getDialog(BuildContext context, bool hasBiometrics,
-      AuthenticationMethod curAuthMethod) async {
+  static Future<void> getDialog(
+    BuildContext context,
+    bool hasBiometrics,
+    AuthenticationMethod curAuthMethod,
+  ) async {
     final Preferences preferences = await Preferences.getInstance();
     final List<PickerItem> pickerItemsList =
         List<PickerItem>.empty(growable: true);
@@ -30,14 +33,17 @@ class AuthentificationMethodDialog {
           displayed = true;
         }
       }
-      pickerItemsList.add(PickerItem(
+      pickerItemsList.add(
+        PickerItem(
           AuthenticationMethod(value).getDisplayName(context),
           AuthenticationMethod(value).getDescription(context),
           AuthenticationMethod.getIcon(value),
           StateContainer.of(context).curTheme.pickerItemIconEnabled,
           value,
           value == AuthMethod.biometricsUniris ? false : true,
-          displayed: displayed));
+          displayed: displayed,
+        ),
+      );
     }
     await showDialog<AuthMethod>(
       context: context,
@@ -48,9 +54,11 @@ class AuthentificationMethodDialog {
             style: AppStyles.textStyleSize20W700EquinoxPrimary(context),
           ),
           shape: RoundedRectangleBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-              side: BorderSide(
-                  color: StateContainer.of(context).curTheme.text45!)),
+            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            side: BorderSide(
+              color: StateContainer.of(context).curTheme.text45!,
+            ),
+          ),
           content: SingleChildScrollView(
             child: PickerWidget(
               pickerItems: pickerItemsList,
@@ -60,11 +68,14 @@ class AuthentificationMethodDialog {
                   case AuthMethod.biometrics:
                     bool auth = await sl
                         .get<BiometricUtil>()
-                        .authenticateWithBiometrics(context,
-                            AppLocalization.of(context)!.unlockBiometrics);
+                        .authenticateWithBiometrics(
+                          context,
+                          AppLocalization.of(context)!.unlockBiometrics,
+                        );
                     if (auth) {
                       preferences.setAuthMethod(
-                          AuthenticationMethod(AuthMethod.biometrics));
+                        AuthenticationMethod(AuthMethod.biometrics),
+                      );
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         '/home',
                         (Route<dynamic> route) => false,
@@ -76,11 +87,14 @@ class AuthentificationMethodDialog {
                     break;
                   case AuthMethod.pin:
                     final bool authenticated = await Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                      return const PinScreen(
-                        PinOverlayType.newPin,
-                      );
-                    }));
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return const PinScreen(
+                            PinOverlayType.newPin,
+                          );
+                        },
+                      ),
+                    );
                     if (authenticated == false) {
                       Navigator.pop(context, value.value);
                       await getDialog(context, hasBiometrics, curAuthMethod);
@@ -96,22 +110,27 @@ class AuthentificationMethodDialog {
                   case AuthMethod.password:
                     String? seed = await StateContainer.of(context).getSeed();
                     final bool authenticated = await Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                      return SetPassword(
-                          name: StateContainer.of(context)
-                              .appWallet!
-                              .appKeychain!
-                              .getAccountSelected()!
-                              .name,
-                          seed: seed);
-                    }));
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return SetPassword(
+                            name: StateContainer.of(context)
+                                .appWallet!
+                                .appKeychain!
+                                .getAccountSelected()!
+                                .name,
+                            seed: seed,
+                          );
+                        },
+                      ),
+                    );
 
                     if (authenticated == false) {
                       Navigator.pop(context, value.value);
                       await getDialog(context, hasBiometrics, curAuthMethod);
                     } else {
                       preferences.setAuthMethod(
-                          AuthenticationMethod(AuthMethod.password));
+                        AuthenticationMethod(AuthMethod.password),
+                      );
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         '/home',
                         (Route<dynamic> route) => false,
@@ -120,15 +139,21 @@ class AuthentificationMethodDialog {
                     break;
                   case AuthMethod.yubikeyWithYubicloud:
                     final bool authenticated = await Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                      return SetYubikey();
-                    }));
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return const SetYubikey();
+                        },
+                      ),
+                    );
                     if (authenticated == false) {
                       Navigator.pop(context, value.value);
                       await getDialog(context, hasBiometrics, curAuthMethod);
                     } else {
-                      preferences.setAuthMethod(AuthenticationMethod(
-                          AuthMethod.yubikeyWithYubicloud));
+                      preferences.setAuthMethod(
+                        AuthenticationMethod(
+                          AuthMethod.yubikeyWithYubicloud,
+                        ),
+                      );
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         '/home',
                         (Route<dynamic> route) => false,

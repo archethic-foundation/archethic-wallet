@@ -92,99 +92,111 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
     switch (verificationResponse.status) {
       case 'BAD_OTP':
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.yubikeyError_BAD_OTP,
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+          AppLocalization.of(context)!.yubikeyError_BAD_OTP,
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+        );
         Navigator.of(context).pop(false);
         break;
       case 'BACKEND_ERROR':
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.yubikeyError_BACKEND_ERROR,
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+          AppLocalization.of(context)!.yubikeyError_BACKEND_ERROR,
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+        );
         Navigator.of(context).pop(false);
         break;
       case 'BAD_SIGNATURE':
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.yubikeyError_BAD_SIGNATURE,
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+          AppLocalization.of(context)!.yubikeyError_BAD_SIGNATURE,
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+        );
         Navigator.of(context).pop(false);
         break;
       case 'MISSING_PARAMETER':
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.yubikeyError_MISSING_PARAMETER,
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+          AppLocalization.of(context)!.yubikeyError_MISSING_PARAMETER,
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+        );
         Navigator.of(context).pop(false);
         break;
       case 'NOT_ENOUGH_ANSWERS':
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.yubikeyError_NOT_ENOUGH_ANSWERS,
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+          AppLocalization.of(context)!.yubikeyError_NOT_ENOUGH_ANSWERS,
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+        );
         Navigator.of(context).pop(false);
         break;
       case 'NO_SUCH_CLIENT':
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.yubikeyError_NO_SUCH_CLIENT,
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+          AppLocalization.of(context)!.yubikeyError_NO_SUCH_CLIENT,
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+        );
         Navigator.of(context).pop(false);
         break;
       case 'OPERATION_NOT_ALLOWED':
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.yubikeyError_OPERATION_NOT_ALLOWED,
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+          AppLocalization.of(context)!.yubikeyError_OPERATION_NOT_ALLOWED,
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+        );
         Navigator.of(context).pop(false);
         break;
       case 'REPLAYED_OTP':
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.yubikeyError_REPLAYED_OTP,
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+          AppLocalization.of(context)!.yubikeyError_REPLAYED_OTP,
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+        );
         Navigator.of(context).pop(false);
         break;
       case 'REPLAYED_REQUEST':
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.yubikeyError_REPLAYED_REQUEST,
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+          AppLocalization.of(context)!.yubikeyError_REPLAYED_REQUEST,
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+        );
         Navigator.of(context).pop(false);
         break;
       case 'RESPONSE_KO':
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.yubikeyError_RESPONSE_KO,
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+          AppLocalization.of(context)!.yubikeyError_RESPONSE_KO,
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+        );
         Navigator.of(context).pop(false);
         break;
       case 'OK':
         UIUtil.showSnackbar(
-            verificationResponse.status,
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+          verificationResponse.status,
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+        );
         preferences.resetLockAttempts();
         Navigator.of(context).pop(true);
         break;
       default:
         UIUtil.showSnackbar(
-            verificationResponse.status,
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+          verificationResponse.status,
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+        );
         Navigator.of(context).pop(false);
         break;
     }
@@ -200,9 +212,11 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage(
-                      StateContainer.of(context).curTheme.background5Small!),
-                  fit: BoxFit.fitHeight),
+                image: AssetImage(
+                  StateContainer.of(context).curTheme.background5Small!,
+                ),
+                fit: BoxFit.fitHeight,
+              ),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -241,7 +255,11 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           IconWidget.build(
-                              context, 'assets/icons/digital-key.png', 90, 90),
+                            context,
+                            'assets/icons/digital-key.png',
+                            90,
+                            90,
+                          ),
                           const SizedBox(
                             height: 30,
                           ),
@@ -258,30 +276,37 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                           ),
                           if (isNFCAvailable)
                             ElevatedButton(
-                                child: Text(buttonNFCLabel,
-                                    style: AppStyles.textStyleSize16W200Primary(
-                                        context)),
-                                onPressed: () async {
-                                  sl.get<HapticUtil>().feedback(
+                              child: Text(
+                                buttonNFCLabel,
+                                style: AppStyles.textStyleSize16W200Primary(
+                                  context,
+                                ),
+                              ),
+                              onPressed: () async {
+                                sl.get<HapticUtil>().feedback(
                                       FeedbackType.light,
                                       StateContainer.of(context)
-                                          .activeVibrations);
-                                  setState(() {
-                                    buttonNFCLabel =
-                                        AppLocalization.of(context)!
-                                            .yubikeyConnectHoldNearDevice;
-                                  });
-                                  await _tagRead();
-                                })
+                                          .activeVibrations,
+                                    );
+                                setState(() {
+                                  buttonNFCLabel = AppLocalization.of(context)!
+                                      .yubikeyConnectHoldNearDevice;
+                                });
+                                await _tagRead();
+                              },
+                            )
                           else
                             Container(
                               margin: const EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 10),
+                                horizontal: 40,
+                                vertical: 10,
+                              ),
                               child: AutoSizeText(
                                 AppLocalization.of(context)!
                                     .yubikeyConnectInvite,
                                 style: AppStyles.textStyleSize16W200Primary(
-                                    context),
+                                  context,
+                                ),
                                 textAlign: TextAlign.center,
                                 maxLines: 1,
                                 stepGranularity: 0.1,
@@ -296,7 +321,9 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                               topMargin: 30,
                               maxLines: 3,
                               padding: const EdgeInsetsDirectional.only(
-                                  start: 16, end: 16),
+                                start: 16,
+                                end: 16,
+                              ),
                               focusNode: enterOTPFocusNode,
                               controller: enterOTPController,
                               textInputAction: TextInputAction.go,
@@ -323,9 +350,10 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                                 icon: FontAwesomeIcons.paste,
                                 onPressed: () {
                                   sl.get<HapticUtil>().feedback(
-                                      FeedbackType.light,
-                                      StateContainer.of(context)
-                                          .activeVibrations);
+                                        FeedbackType.light,
+                                        StateContainer.of(context)
+                                            .activeVibrations,
+                                      );
                                   Clipboard.getData('text/plain')
                                       .then((ClipboardData? data) async {
                                     if (data == null || data.text == null) {
@@ -333,8 +361,10 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
                                     }
                                     enterOTPController!.text = data.text!;
                                     EventTaxiImpl.singleton().fire(
-                                        OTPReceiveEvent(
-                                            otp: enterOTPController!.text));
+                                      OTPReceiveEvent(
+                                        otp: enterOTPController!.text,
+                                      ),
+                                    );
                                   });
                                 },
                               ),

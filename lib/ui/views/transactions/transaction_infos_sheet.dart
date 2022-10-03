@@ -36,99 +36,111 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        minimum:
-            EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
-        child: FutureBuilder<List<TransactionInfos>>(
-            future: sl.get<AppService>().getTransactionAllInfos(
-                widget.txAddress,
-                DateFormat.yMEd(Localizations.localeOf(context).languageCode),
-                StateContainer.of(context)
-                    .curNetwork
-                    .getNetworkCryptoCurrencyLabel(),
-                context,
-                StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!
-                    .name!),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<TransactionInfos>> list) {
-              return Column(
-                children: <Widget>[
-                  SheetHeader(
-                    title: AppLocalization.of(context)!.transactionInfosHeader,
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: Stack(
-                        children: <Widget>[
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.8,
-                            child: SafeArea(
-                              minimum: EdgeInsets.only(
-                                bottom:
-                                    MediaQuery.of(context).size.height * 0.035,
-                              ),
-                              child: Column(
-                                children: <Widget>[
-                                  // list
-                                  Expanded(
-                                    child: Stack(
-                                      children: <Widget>[
-                                        //  list
-                                        ListView.builder(
-                                          physics:
-                                              const AlwaysScrollableScrollPhysics(),
-                                          padding: const EdgeInsets.only(
-                                              top: 15.0, bottom: 15),
-                                          itemCount: list.data == null
-                                              ? 0
-                                              : list.data!.length,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return buildInfo(
-                                                context, list.data![index]);
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      AppButton.buildAppButton(
-                                          const Key('viewExplorer'),
+      minimum:
+          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+      child: FutureBuilder<List<TransactionInfos>>(
+        future: sl.get<AppService>().getTransactionAllInfos(
+              widget.txAddress,
+              DateFormat.yMEd(Localizations.localeOf(context).languageCode),
+              StateContainer.of(context)
+                  .curNetwork
+                  .getNetworkCryptoCurrencyLabel(),
+              context,
+              StateContainer.of(context)
+                  .appWallet!
+                  .appKeychain!
+                  .getAccountSelected()!
+                  .name!,
+            ),
+        builder: (
+          BuildContext context,
+          AsyncSnapshot<List<TransactionInfos>> list,
+        ) {
+          return Column(
+            children: <Widget>[
+              SheetHeader(
+                title: AppLocalization.of(context)!.transactionInfosHeader,
+              ),
+              Expanded(
+                child: Center(
+                  child: Stack(
+                    children: <Widget>[
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        child: SafeArea(
+                          minimum: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).size.height * 0.035,
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              // list
+                              Expanded(
+                                child: Stack(
+                                  children: <Widget>[
+                                    //  list
+                                    ListView.builder(
+                                      physics:
+                                          const AlwaysScrollableScrollPhysics(),
+                                      padding: const EdgeInsets.only(
+                                        top: 15.0,
+                                        bottom: 15,
+                                      ),
+                                      itemCount: list.data == null
+                                          ? 0
+                                          : list.data!.length,
+                                      itemBuilder: (
+                                        BuildContext context,
+                                        int index,
+                                      ) {
+                                        return buildInfo(
                                           context,
-                                          AppButtonType.primary,
-                                          AppLocalization.of(context)!
-                                              .viewExplorer,
-                                          Dimens.buttonBottomDimens,
-                                          icon: Icon(
-                                            Icons.more_horiz,
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .text,
-                                          ), onPressed: () async {
-                                        UIUtil.showWebview(
-                                            context,
-                                            '${await StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${widget.txAddress}',
-                                            '');
-                                      }),
-                                    ],
+                                          list.data![index],
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  AppButton.buildAppButton(
+                                    const Key('viewExplorer'),
+                                    context,
+                                    AppButtonType.primary,
+                                    AppLocalization.of(context)!.viewExplorer,
+                                    Dimens.buttonBottomDimens,
+                                    icon: Icon(
+                                      Icons.more_horiz,
+                                      color: StateContainer.of(context)
+                                          .curTheme
+                                          .text,
+                                    ),
+                                    onPressed: () async {
+                                      UIUtil.showWebview(
+                                        context,
+                                        '${await StateContainer.of(context).curNetwork.getLink()}/explorer/transaction/${widget.txAddress}',
+                                        '',
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
-                            ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              );
-            }));
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 
   Widget buildInfo(BuildContext context, TransactionInfos transactionInfo) {
@@ -144,14 +156,16 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                       const SizedBox()
                     else
                       Container(
-                          padding: const EdgeInsets.only(left: 10.0, top: 20),
-                          width: 50,
-                          height: 50,
-                          child: IconWidget.build(
-                              context,
-                              'assets/icons/txInfos/${transactionInfo.titleInfo}.png',
-                              50,
-                              50)),
+                        padding: const EdgeInsets.only(left: 10.0, top: 20),
+                        width: 50,
+                        height: 50,
+                        child: IconWidget.build(
+                          context,
+                          'assets/icons/txInfos/${transactionInfo.titleInfo}.png',
+                          50,
+                          50,
+                        ),
+                      ),
                     if (transactionInfo.titleInfo == '')
                       Container(
                         color: StateContainer.of(context).curTheme.text05,
@@ -162,7 +176,10 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                               // Main Container
                               Container(
                                 padding: const EdgeInsets.only(
-                                    left: 45.0, right: 5, bottom: 15),
+                                  left: 45.0,
+                                  right: 5,
+                                  bottom: 15,
+                                ),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
@@ -182,12 +199,13 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                                   AutoSizeText(
                                                     TransactionInfos
                                                         .getDisplayName(
-                                                            context,
-                                                            transactionInfo
-                                                                .domain),
+                                                      context,
+                                                      transactionInfo.domain,
+                                                    ),
                                                     style: AppStyles
                                                         .textStyleSize16W600Primary(
-                                                            context),
+                                                      context,
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -211,7 +229,10 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                             // Main Container
                             Container(
                               padding: const EdgeInsets.only(
-                                  left: 45.0, right: 5, bottom: 15),
+                                left: 45.0,
+                                right: 5,
+                                bottom: 15,
+                              ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
@@ -223,17 +244,22 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         AutoSizeText(
-                                            TransactionInfos.getDisplayName(
-                                                context,
-                                                transactionInfo.titleInfo),
-                                            style: AppStyles
-                                                .textStyleSize14W600Primary(
-                                                    context)),
+                                          TransactionInfos.getDisplayName(
+                                            context,
+                                            transactionInfo.titleInfo,
+                                          ),
+                                          style: AppStyles
+                                              .textStyleSize14W600Primary(
+                                            context,
+                                          ),
+                                        ),
                                         SelectableText(
-                                            transactionInfo.valueInfo,
-                                            style: AppStyles
-                                                .textStyleSize14W100Primary(
-                                                    context)),
+                                          transactionInfo.valueInfo,
+                                          style: AppStyles
+                                              .textStyleSize14W100Primary(
+                                            context,
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),

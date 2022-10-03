@@ -16,17 +16,25 @@ class ContactsDialog {
     FocusNode? searchNameFocusNode = FocusNode();
     TextEditingController? searchNameController = TextEditingController();
 
-    final List<PickerItem> pickerItemsList =
-        List<PickerItem>.empty(growable: true);
+    final List<PickerItem> pickerItemsList = List<PickerItem>.empty(growable: true);
     List<Contact> contacts = await StateContainer.of(context).getContacts();
     for (var contact in contacts) {
-      pickerItemsList.add(PickerItem(
-          contact.name!.substring(1), null, null, null, contact, true));
+      pickerItemsList.add(
+        PickerItem(
+          contact.name!.substring(1),
+          null,
+          null,
+          null,
+          contact,
+          true,
+        ),
+      );
     }
-    return await showDialog<Contact>(
-        context: context,
-        builder: (BuildContext context) {
-          return StatefulBuilder(builder: (context, setState) {
+    return showDialog<Contact>(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
             return AlertDialog(
               insetPadding: const EdgeInsets.only(top: 100.0, bottom: 100.0),
               alignment: Alignment.topCenter,
@@ -55,13 +63,16 @@ class ContactsDialog {
                           }).toList();
                           pickerItemsList.clear();
                           for (var contact in contacts) {
-                            pickerItemsList.add(PickerItem(
+                            pickerItemsList.add(
+                              PickerItem(
                                 contact.name!.substring(1),
                                 null,
                                 null,
                                 null,
                                 contact,
-                                true));
+                                true,
+                              ),
+                            );
                           }
                         },
                       );
@@ -70,9 +81,11 @@ class ContactsDialog {
                 ],
               ),
               shape: RoundedRectangleBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                  side: BorderSide(
-                      color: StateContainer.of(context).curTheme.text45!)),
+                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                side: BorderSide(
+                  color: StateContainer.of(context).curTheme.text45!,
+                ),
+              ),
               content: SingleChildScrollView(
                 child: PickerWidget(
                   pickerItems: pickerItemsList,
@@ -82,7 +95,9 @@ class ContactsDialog {
                 ),
               ),
             );
-          });
-        });
+          },
+        );
+      },
+    );
   }
 }

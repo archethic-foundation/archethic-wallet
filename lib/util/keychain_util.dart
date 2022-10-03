@@ -19,24 +19,26 @@ import 'package:aewallet/model/data/app_wallet.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/price.dart';
-import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/confirmations/subscription_channel.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 
 class KeychainUtil {
   Future<Transaction?> createKeyChainAccess(
-      String? seed,
-      String? name,
-      String keychainAddress,
-      String originPrivateKey,
-      Keychain keychain,
-      SubscriptionChannel subscriptionChannel) async {
+    String? seed,
+    String? name,
+    String keychainAddress,
+    String originPrivateKey,
+    Keychain keychain,
+    SubscriptionChannel subscriptionChannel,
+  ) async {
     /// Create Keychain Access for wallet
-    final Transaction accessKeychainTx = sl
-        .get<ApiService>()
-        .newAccessKeychainTransaction(seed!, hexToUint8List(keychainAddress),
-            hexToUint8List(originPrivateKey));
+    final Transaction accessKeychainTx =
+        sl.get<ApiService>().newAccessKeychainTransaction(
+              seed!,
+              hexToUint8List(keychainAddress),
+              hexToUint8List(originPrivateKey),
+            );
 
     void waitConfirmationsKeychainAccess(QueryResult event) {
       Map<String, Object>? params = {
@@ -44,12 +46,17 @@ class KeychainUtil {
         'keychain': keychain
       };
 
-      waitConfirmations(event, TransactionSendEventType.keychainAccess,
-          params: params);
+      waitConfirmations(
+        event,
+        TransactionSendEventType.keychainAccess,
+        params: params,
+      );
     }
 
     subscriptionChannel.addSubscriptionTransactionConfirmed(
-        accessKeychainTx.address!, waitConfirmationsKeychainAccess);
+      accessKeychainTx.address!,
+      waitConfirmationsKeychainAccess,
+    );
 
     await Future.delayed(const Duration(seconds: 1));
 
@@ -61,17 +68,21 @@ class KeychainUtil {
   }
 
   Future<void> createKeyChain(
-      String? seed,
-      String? name,
-      String originPrivateKey,
-      Preferences preferences,
-      SubscriptionChannel subscriptionChannel) async {
+    String? seed,
+    String? name,
+    String originPrivateKey,
+    Preferences preferences,
+    SubscriptionChannel subscriptionChannel,
+  ) async {
     /// Get Wallet KeyPair
     final KeyPair walletKeyPair = deriveKeyPair(seed!, 0);
 
     /// Generate keyChain Seed from random value
-    final String keychainSeed = uint8ListToHex(Uint8List.fromList(
-        List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
+    final String keychainSeed = uint8ListToHex(
+      Uint8List.fromList(
+        List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
+      ),
+    );
 
     String nameEncoded = Uri.encodeFull(name!);
 
@@ -85,14 +96,14 @@ class KeychainUtil {
     keychain.addService(kServiceName, kDerivationPath);
 
     /// Create Keychain from keyChain seed and wallet public key to encrypt secret
-    final Transaction keychainTransaction = sl
-        .get<ApiService>()
-        .newKeychainTransaction(
-            keychainSeed,
-            <String>[uint8ListToHex(walletKeyPair.publicKey)],
-            hexToUint8List(originPrivateKey),
-            serviceName: kServiceName,
-            derivationPath: kDerivationPath);
+    final Transaction keychainTransaction =
+        sl.get<ApiService>().newKeychainTransaction(
+              keychainSeed,
+              <String>[uint8ListToHex(walletKeyPair.publicKey)],
+              hexToUint8List(originPrivateKey),
+              serviceName: kServiceName,
+              derivationPath: kDerivationPath,
+            );
 
     void waitConfirmationsKeychain(QueryResult event) {
       Map<String, Object>? params = {
@@ -100,12 +111,17 @@ class KeychainUtil {
         'originPrivateKey': originPrivateKey,
         'keychain': keychain
       };
-      waitConfirmations(event, TransactionSendEventType.keychain,
-          params: params);
+      waitConfirmations(
+        event,
+        TransactionSendEventType.keychain,
+        params: params,
+      );
     }
 
     subscriptionChannel.addSubscriptionTransactionConfirmed(
-        keychainTransaction.address!, waitConfirmationsKeychain);
+      keychainTransaction.address!,
+      waitConfirmationsKeychain,
+    );
 
     await Future.delayed(const Duration(seconds: 1));
 
@@ -114,8 +130,13 @@ class KeychainUtil {
         await sl.get<ApiService>().sendTx(keychainTransaction);
   }
 
-  Future<AppWallet?> addAccountInKeyChain(AppWallet? appWallet, String? seed,
-      String? name, String currency, String networkCurrency) async {
+  Future<AppWallet?> addAccountInKeyChain(
+    AppWallet? appWallet,
+    String? seed,
+    String? name,
+    String currency,
+    String networkCurrency,
+  ) async {
     Account? selectedAcct;
 
     final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
@@ -133,14 +154,18 @@ class KeychainUtil {
     String kDerivationPath = '$kDerivationPathWithoutIndex$index';
     keychain.addService(kServiceName, kDerivationPath);
 
-    final Transaction lastTransactionKeychain = await sl
-        .get<ApiService>()
-        .getLastTransaction(genesisAddressKeychain,
-            request:
-                'chainLength, data { content, ownerships { authorizedPublicKeys { publicKey } } }');
+    final Transaction lastTransactionKeychain =
+        await sl.get<ApiService>().getLastTransaction(
+              genesisAddressKeychain,
+              request:
+                  'chainLength, data { content, ownerships { authorizedPublicKeys { publicKey } } }',
+            );
 
-    final String aesKey = uint8ListToHex(Uint8List.fromList(
-        List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
+    final String aesKey = uint8ListToHex(
+      Uint8List.fromList(
+        List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
+      ),
+    );
 
     Transaction keychainTransaction =
         Transaction(type: 'keychain', data: Transaction.initData())
@@ -150,19 +175,26 @@ class KeychainUtil {
         List<AuthorizedKey>.empty(growable: true);
     List<AuthorizedKey> authorizedKeysList =
         lastTransactionKeychain.data!.ownerships![0].authorizedPublicKeys!;
-    authorizedKeysList.forEach((AuthorizedKey authorizedKey) {
-      authorizedKeys.add(AuthorizedKey(
+    for (var authorizedKey in authorizedKeysList) {
+      authorizedKeys.add(
+        AuthorizedKey(
           encryptedSecretKey:
               uint8ListToHex(ecEncrypt(aesKey, authorizedKey.publicKey)),
-          publicKey: authorizedKey.publicKey));
-    });
+          publicKey: authorizedKey.publicKey,
+        ),
+      );
+    }
 
     keychainTransaction.addOwnership(
-        aesEncrypt(keychain.encode(), aesKey), authorizedKeys);
+      aesEncrypt(keychain.encode(), aesKey),
+      authorizedKeys,
+    );
 
     keychainTransaction
-        .build(uint8ListToHex(keychain.seed!),
-            lastTransactionKeychain.chainLength!)
+        .build(
+          uint8ListToHex(keychain.seed!),
+          lastTransactionKeychain.chainLength!,
+        )
         .originSign(originPrivateKey);
 
     // ignore: unused_local_variable
@@ -173,18 +205,20 @@ class KeychainUtil {
 
     Uint8List genesisAddress = keychain.deriveAddress(kServiceName, index: 0);
     selectedAcct = Account(
-        lastLoadingTransactionInputs: 0,
-        lastAddress: uint8ListToHex(genesisAddress),
-        genesisAddress: uint8ListToHex(genesisAddress),
-        name: name,
-        balance: AccountBalance(
-            fiatCurrencyCode: '',
-            fiatCurrencyValue: 0,
-            nativeTokenName: networkCurrency,
-            nativeTokenValue: 0,
-            tokenPrice: tokenPrice),
-        selected: false,
-        recentTransactions: []);
+      lastLoadingTransactionInputs: 0,
+      lastAddress: uint8ListToHex(genesisAddress),
+      genesisAddress: uint8ListToHex(genesisAddress),
+      name: name,
+      balance: AccountBalance(
+        fiatCurrencyCode: '',
+        fiatCurrencyValue: 0,
+        nativeTokenName: networkCurrency,
+        nativeTokenValue: 0,
+        tokenPrice: tokenPrice,
+      ),
+      selected: false,
+      recentTransactions: [],
+    );
 
     appWallet!.appKeychain!.accounts!.add(selectedAcct);
     appWallet.appKeychain!.accounts!.sort((a, b) => a.name!.compareTo(b.name!));
@@ -197,19 +231,25 @@ class KeychainUtil {
     await appWallet.save();
 
     final Contact newContact = Contact(
-        name: '@$name',
-        address: uint8ListToHex(genesisAddress),
-        type: 'keychainService');
+      name: '@$name',
+      address: uint8ListToHex(genesisAddress),
+      type: 'keychainService',
+    );
     await sl.get<DBHelper>().saveContact(newContact);
 
     return appWallet;
   }
 
-  Future<AppWallet?> getListAccountsFromKeychain(AppWallet? appWallet,
-      String? seed, String currency, String tokenName, Price tokenPrice,
-      {String? currentName = '',
-      bool loadBalance = true,
-      bool loadRecentTransactions = true}) async {
+  Future<AppWallet?> getListAccountsFromKeychain(
+    AppWallet? appWallet,
+    String? seed,
+    String currency,
+    String tokenName,
+    Price tokenPrice, {
+    String? currentName = '',
+    bool loadBalance = true,
+    bool loadRecentTransactions = true,
+  }) async {
     List<Account> accounts = List<Account>.empty(growable: true);
 
     try {
@@ -248,19 +288,21 @@ class KeychainUtil {
           String nameDecoded = Uri.decodeFull(name);
 
           Account account = Account(
-              lastLoadingTransactionInputs:
-                  DateTime.now().millisecondsSinceEpoch ~/
-                      Duration.millisecondsPerSecond,
-              lastAddress: uint8ListToHex(genesisAddress),
-              genesisAddress: uint8ListToHex(genesisAddress),
-              name: nameDecoded,
-              balance: AccountBalance(
-                  fiatCurrencyCode: '',
-                  fiatCurrencyValue: 0,
-                  nativeTokenName: '',
-                  nativeTokenValue: 0,
-                  tokenPrice: tokenPrice),
-              recentTransactions: []);
+            lastLoadingTransactionInputs:
+                DateTime.now().millisecondsSinceEpoch ~/
+                    Duration.millisecondsPerSecond,
+            lastAddress: uint8ListToHex(genesisAddress),
+            genesisAddress: uint8ListToHex(genesisAddress),
+            name: nameDecoded,
+            balance: AccountBalance(
+              fiatCurrencyCode: '',
+              fiatCurrencyValue: 0,
+              nativeTokenName: '',
+              nativeTokenValue: 0,
+              tokenPrice: tokenPrice,
+            ),
+            recentTransactions: [],
+          );
           if (currentName == nameDecoded) {
             account.selected = true;
           } else {
@@ -273,9 +315,10 @@ class KeychainUtil {
             await sl.get<DBHelper>().getContactWithName(account.name!);
           } catch (e) {
             final Contact newContact = Contact(
-                name: '@$nameDecoded',
-                address: uint8ListToHex(genesisAddress),
-                type: 'keychainService');
+              name: '@$nameDecoded',
+              address: uint8ListToHex(genesisAddress),
+              type: 'keychainService',
+            );
             await sl.get<DBHelper>().saveContact(newContact);
           }
         }
@@ -315,8 +358,10 @@ class KeychainUtil {
   }
 
   void waitConfirmations(
-      QueryResult event, TransactionSendEventType transactionSendEventType,
-      {Map<String, Object>? params}) {
+    QueryResult event,
+    TransactionSendEventType transactionSendEventType, {
+    Map<String, Object>? params,
+  }) {
     int nbConfirmations = 0;
     int maxConfirmations = 0;
     if (event.data != null && event.data!['transactionConfirmed'] != null) {
@@ -328,19 +373,23 @@ class KeychainUtil {
         maxConfirmations =
             event.data!['transactionConfirmed']['maxConfirmations'];
       }
-      EventTaxiImpl.singleton().fire(TransactionSendEvent(
+      EventTaxiImpl.singleton().fire(
+        TransactionSendEvent(
           transactionType: transactionSendEventType,
           response: 'ok',
           nbConfirmations: nbConfirmations,
           maxConfirmations: maxConfirmations,
-          params: params));
+          params: params,
+        ),
+      );
     } else {
       EventTaxiImpl.singleton().fire(
         TransactionSendEvent(
-            transactionType: transactionSendEventType,
-            nbConfirmations: 0,
-            maxConfirmations: 0,
-            response: 'ko'),
+          transactionType: transactionSendEventType,
+          nbConfirmations: 0,
+          maxConfirmations: 0,
+          response: 'ko',
+        ),
       );
     }
   }

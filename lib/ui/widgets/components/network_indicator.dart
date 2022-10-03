@@ -21,8 +21,10 @@ class NetworkIndicator extends StatelessWidget {
           '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
           height: 30,
         ),
-        Text(StateContainer.of(context).curNetwork.getDisplayName(context),
-            style: AppStyles.textStyleSize10W100Primary(context)),
+        Text(
+          StateContainer.of(context).curNetwork.getDisplayName(context),
+          style: AppStyles.textStyleSize10W100Primary(context),
+        ),
       ],
     );
   }

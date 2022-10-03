@@ -9,8 +9,12 @@ class NoTransitionRoute<T> extends MaterialPageRoute<T> {
   NoTransitionRoute({required super.builder, required super.settings});
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     return child;
   }
 }
@@ -21,8 +25,12 @@ class NoPushTransitionRoute<T> extends MaterialPageRoute<T> {
   NoPushTransitionRoute({required super.builder});
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     // is popping
     if (animation.status == AnimationStatus.reverse) {
       return super
@@ -38,8 +46,12 @@ class NoPopTransitionRoute<T> extends MaterialPageRoute<T> {
   NoPopTransitionRoute({required super.builder, required super.settings});
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     // is pushing
     if (animation.status == AnimationStatus.forward) {
       return super

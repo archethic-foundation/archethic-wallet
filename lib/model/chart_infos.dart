@@ -11,18 +11,24 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show ApiCoinsService, CoinsPriceResponse, CoinsCurrentDataResponse;
 
+/// TODO refacto
+/// - [ChartInfos] should become immutable
+/// - a StateNotifier should hold
+///   - [ChartInfos] state
+///   - an [updateCoinChart] method
 class ChartInfos {
-  ChartInfos(
-      {this.data,
-      this.priceChangePercentage1h,
-      this.priceChangePercentage24h,
-      this.priceChangePercentage14d,
-      this.priceChangePercentage1y,
-      this.priceChangePercentage200d,
-      this.priceChangePercentage30d,
-      this.priceChangePercentage60d,
-      this.priceChangePercentage7d,
-      this.priceChangePercentageAll});
+  ChartInfos({
+    this.data,
+    this.priceChangePercentage1h,
+    this.priceChangePercentage24h,
+    this.priceChangePercentage14d,
+    this.priceChangePercentage1y,
+    this.priceChangePercentage200d,
+    this.priceChangePercentage30d,
+    this.priceChangePercentage60d,
+    this.priceChangePercentage7d,
+    this.priceChangePercentageAll,
+  });
 
   List<AssetHistoryInterval>? data;
   double? priceChangePercentage1h = 0;
@@ -85,8 +91,10 @@ class ChartInfos {
     }
   }
 
-  Future<void> updateCoinsChart(String currencyIso4217Code,
-      {String option = '1h'}) async {
+  Future<void> updateCoinsChart(
+    String currencyIso4217Code, {
+    String option = '1h',
+  }) async {
     int nbDays = 0;
     int nbHours = 0;
     bool all = false;
@@ -246,9 +254,11 @@ class ChartInfos {
           List<AssetHistoryInterval>.empty(growable: true);
       for (int i = 0; i < coinsPriceResponse.prices!.length; i = i + 1) {
         AssetHistoryInterval assetHistoryInterval = AssetHistoryInterval(
-            price: coinsPriceResponse.prices![i][1],
-            time: DateTime.fromMillisecondsSinceEpoch(
-                coinsPriceResponse.prices![i][0].toInt()));
+          price: coinsPriceResponse.prices![i][1],
+          time: DateTime.fromMillisecondsSinceEpoch(
+            coinsPriceResponse.prices![i][0].toInt(),
+          ),
+        );
         assetHistoryIntervalList.add(assetHistoryInterval);
       }
       data = assetHistoryIntervalList;

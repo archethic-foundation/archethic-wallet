@@ -25,7 +25,6 @@ import 'package:aewallet/ui/views/main/account_tab.dart';
 import 'package:aewallet/ui/views/main/accounts_list_tab.dart';
 import 'package:aewallet/ui/views/main/main_appbar.dart';
 import 'package:aewallet/ui/views/main/main_bottombar.dart';
-import 'package:aewallet/ui/views/main/nft_tab.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/add_token.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -272,15 +271,19 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
         children: const [AccountsListTab(), AccountTab()],
         onPageChanged: (index) {
           setState(
-              () => StateContainer.of(context).bottomBarCurrentPage = index);
+            () => StateContainer.of(context).bottomBarCurrentPage = index,
+          );
         },
       ),
     );
   }
 
+  // TODO remove ?
   Future<void> _networkDialog() async {
     StateContainer.of(context).curNetwork = (await NetworkDialog.getDialog(
-        context, StateContainer.of(context).curNetwork))!;
+      context,
+      StateContainer.of(context).curNetwork,
+    ))!;
     await StateContainer.of(context).requestUpdate();
     setState(() {});
   }
@@ -336,8 +339,9 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
           height: 80,
           child: ContainedTabBarView(
             tabBarProperties: TabBarProperties(
-                indicatorColor:
-                    StateContainer.of(context).curTheme.backgroundDarkest),
+              indicatorColor:
+                  StateContainer.of(context).curTheme.backgroundDarkest,
+            ),
             tabs: [
               Text(
                 AppLocalization.of(context)!.recentTransactionsHeader,
@@ -387,18 +391,21 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
             child: Row(
               children: <Widget>[
                 AppButton.buildAppButtonTiny(
-                    const Key('createTokenFungible'),
-                    context,
-                    AppButtonType.primary,
-                    AppLocalization.of(context)!.createFungibleToken,
-                    Dimens.buttonBottomDimens, onPressed: () {
-                  Sheets.showAppHeightNineSheet(
+                  const Key('createTokenFungible'),
+                  context,
+                  AppButtonType.primary,
+                  AppLocalization.of(context)!.createFungibleToken,
+                  Dimens.buttonBottomDimens,
+                  onPressed: () {
+                    Sheets.showAppHeightNineSheet(
                       context: context,
                       widget: AddTokenSheet(
                         primaryCurrency:
                             StateContainer.of(context).curPrimaryCurrency,
-                      ));
-                }),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),

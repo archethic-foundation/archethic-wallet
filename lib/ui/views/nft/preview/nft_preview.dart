@@ -20,13 +20,14 @@ import 'package:aewallet/util/mime_util.dart';
 import 'package:aewallet/util/token_util.dart';
 
 class NFTPreviewWidget extends StatelessWidget {
-  const NFTPreviewWidget(
-      {super.key,
-      this.nftFile,
-      this.tokenPropertyWithAccessInfos,
-      this.nftSize = 0,
-      required this.tokenInformations,
-      this.nftPropertiesDeleteAction = true});
+  const NFTPreviewWidget({
+    super.key,
+    this.nftFile,
+    this.tokenPropertyWithAccessInfos,
+    this.nftSize = 0,
+    required this.tokenInformations,
+    this.nftPropertiesDeleteAction = true,
+  });
 
   final Uint8List? nftFile;
 
@@ -62,26 +63,30 @@ class NFTPreviewWidget extends StatelessWidget {
                 MimeUtil.isPdf(typeMime) == true)
               if (tokenInformations.address != null)
                 FutureBuilder<Uint8List?>(
-                    future: TokenUtil.getImageFromTokenAddress(
-                        tokenInformations.address!, typeMime),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        return Container(
-                            decoration: BoxDecoration(
-                              color: StateContainer.of(context).curTheme.text,
-                              border: Border.all(
-                                width: 1,
-                              ),
-                            ),
-                            child: Image.memory(
-                              snapshot.data!,
-                              width: MediaQuery.of(context).size.width,
-                              fit: BoxFit.fitWidth,
-                            ));
-                      } else {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                    })
+                  future: TokenUtil.getImageFromTokenAddress(
+                    tokenInformations.address!,
+                    typeMime,
+                  ),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: StateContainer.of(context).curTheme.text,
+                          border: Border.all(
+                            width: 1,
+                          ),
+                        ),
+                        child: Image.memory(
+                          snapshot.data!,
+                          width: MediaQuery.of(context).size.width,
+                          fit: BoxFit.fitWidth,
+                        ),
+                      );
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                )
               else
                 Container(
                   decoration: BoxDecoration(
@@ -113,22 +118,22 @@ class NFTPreviewWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
                 child: Wrap(
-                    alignment: WrapAlignment.start,
-                    children: tokenPropertyWithAccessInfos!.asMap().entries.map(
-                        (MapEntry<dynamic, TokenPropertyWithAccessInfos>
-                            entry) {
-                      return entry.value.tokenProperty!.keys.first != 'file' &&
-                              entry.value.tokenProperty!.keys.first !=
-                                  'description' &&
-                              entry.value.tokenProperty!.keys.first != 'name' &&
-                              entry.value.tokenProperty!.keys.first !=
-                                  'type/mime'
-                          ? Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: _buildTokenProperty(context, entry.value),
-                            )
-                          : const SizedBox();
-                    }).toList()),
+                  alignment: WrapAlignment.start,
+                  children: tokenPropertyWithAccessInfos!.asMap().entries.map((
+                    MapEntry<dynamic, TokenPropertyWithAccessInfos> entry,
+                  ) {
+                    return entry.value.tokenProperty!.keys.first != 'file' &&
+                            entry.value.tokenProperty!.keys.first !=
+                                'description' &&
+                            entry.value.tokenProperty!.keys.first != 'name' &&
+                            entry.value.tokenProperty!.keys.first != 'type/mime'
+                        ? Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: _buildTokenProperty(context, entry.value),
+                          )
+                        : const SizedBox();
+                  }).toList(),
+                ),
               ),
           ],
         ),
@@ -136,8 +141,10 @@ class NFTPreviewWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildTokenProperty(BuildContext context,
-      TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos) {
+  Widget _buildTokenProperty(
+    BuildContext context,
+    TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: GestureDetector(
@@ -152,7 +159,8 @@ class NFTPreviewWidget extends StatelessWidget {
                     color: StateContainer.of(context)
                         .curTheme
                         .backgroundAccountsListCardSelected!,
-                    width: 1.0),
+                    width: 1.0,
+                  ),
             borderRadius: BorderRadius.circular(10.0),
           ),
           elevation: 0,
@@ -178,7 +186,8 @@ class NFTPreviewWidget extends StatelessWidget {
                                 tokenPropertyWithAccessInfos
                                     .tokenProperty!.keys.first,
                                 style: AppStyles.textStyleSize12W600Primary(
-                                    context),
+                                  context,
+                                ),
                               ),
                             ),
                             Container(
@@ -188,7 +197,8 @@ class NFTPreviewWidget extends StatelessWidget {
                                 tokenPropertyWithAccessInfos
                                     .tokenProperty!.values.first,
                                 style: AppStyles.textStyleSize12W400Primary(
-                                    context),
+                                  context,
+                                ),
                               ),
                             ),
                             tokenPropertyWithAccessInfos.publicKeysList !=
@@ -208,7 +218,8 @@ class NFTPreviewWidget extends StatelessWidget {
                                           'This property is protected and accessible by ${tokenPropertyWithAccessInfos.publicKeysList!.length} public key',
                                           style: AppStyles
                                               .textStyleSize12W400Primary(
-                                                  context),
+                                            context,
+                                          ),
                                         ),
                                       )
                                     : Container(
@@ -221,7 +232,8 @@ class NFTPreviewWidget extends StatelessWidget {
                                           'This property is protected and accessible by ${tokenPropertyWithAccessInfos.publicKeysList!.length} public keys',
                                           style: AppStyles
                                               .textStyleSize12W400Primary(
-                                                  context),
+                                            context,
+                                          ),
                                         ),
                                       )
                                 : Container(
@@ -232,7 +244,8 @@ class NFTPreviewWidget extends StatelessWidget {
                                       'This property is accessible for everyone',
                                       style:
                                           AppStyles.textStyleSize12W400Primary(
-                                              context),
+                                        context,
+                                      ),
                                     ),
                                   ),
                           ],

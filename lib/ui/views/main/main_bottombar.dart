@@ -36,37 +36,37 @@ class MainBottomBar extends StatelessWidget {
             },
             items: <BottomBarItem>[
               BottomBarItem(
-                  icon: const FaIcon(FontAwesomeIcons.keycdn),
-                  backgroundColorOpacity: StateContainer.of(context)
-                      .curTheme
-                      .bottomBarBackgroundColorOpacity!,
-                  activeIconColor: StateContainer.of(context)
-                      .curTheme
-                      .bottomBarActiveIconColor!,
-                  activeTitleColor: StateContainer.of(context)
-                      .curTheme
-                      .bottomBarActiveTitleColor!,
-                  activeColor:
-                      StateContainer.of(context).curTheme.bottomBarActiveColor!,
-                  inactiveColor: StateContainer.of(context)
-                      .curTheme
-                      .bottomBarInactiveIcon!),
+                icon: const FaIcon(FontAwesomeIcons.keycdn),
+                backgroundColorOpacity: StateContainer.of(context)
+                    .curTheme
+                    .bottomBarBackgroundColorOpacity!,
+                activeIconColor: StateContainer.of(context)
+                    .curTheme
+                    .bottomBarActiveIconColor!,
+                activeTitleColor: StateContainer.of(context)
+                    .curTheme
+                    .bottomBarActiveTitleColor!,
+                activeColor:
+                    StateContainer.of(context).curTheme.bottomBarActiveColor!,
+                inactiveColor:
+                    StateContainer.of(context).curTheme.bottomBarInactiveIcon!,
+              ),
               BottomBarItem(
-                  icon: const Icon(Icons.account_circle),
-                  backgroundColorOpacity: StateContainer.of(context)
-                      .curTheme
-                      .bottomBarBackgroundColorOpacity!,
-                  activeIconColor: StateContainer.of(context)
-                      .curTheme
-                      .bottomBarActiveIconColor!,
-                  activeTitleColor: StateContainer.of(context)
-                      .curTheme
-                      .bottomBarActiveTitleColor!,
-                  activeColor:
-                      StateContainer.of(context).curTheme.bottomBarActiveColor!,
-                  inactiveColor: StateContainer.of(context)
-                      .curTheme
-                      .bottomBarInactiveIcon!),
+                icon: const Icon(Icons.account_circle),
+                backgroundColorOpacity: StateContainer.of(context)
+                    .curTheme
+                    .bottomBarBackgroundColorOpacity!,
+                activeIconColor: StateContainer.of(context)
+                    .curTheme
+                    .bottomBarActiveIconColor!,
+                activeTitleColor: StateContainer.of(context)
+                    .curTheme
+                    .bottomBarActiveTitleColor!,
+                activeColor:
+                    StateContainer.of(context).curTheme.bottomBarActiveColor!,
+                inactiveColor:
+                    StateContainer.of(context).curTheme.bottomBarInactiveIcon!,
+              ),
               /*BottomBarItem(
                   icon: const Icon(Icons.collections_bookmark),
                   backgroundColorOpacity: StateContainer.of(context)

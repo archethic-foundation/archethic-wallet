@@ -8,8 +8,12 @@ import 'package:aewallet/appstate_container.dart';
 
 class IconWidget {
   static Widget build(
-      BuildContext context, String icon, double width, double height,
-      {Color? color}) {
+    BuildContext context,
+    String icon,
+    double width,
+    double height, {
+    Color? color,
+  }) {
     return Container(
       width: width,
       height: height,
@@ -23,15 +27,21 @@ class IconWidget {
       ),
       alignment: const AlignmentDirectional(0, 0),
       child: SizedBox(
-        child: Image.asset(icon,
-            color: color ?? StateContainer.of(context).curTheme.iconDrawer),
+        child: Image.asset(
+          icon,
+          color: color ?? StateContainer.of(context).curTheme.iconDrawer,
+        ),
       ),
     );
   }
 
   static Widget buildIconDataWidget(
-      BuildContext context, IconData icon, double width, double height,
-      {bool enabled = true}) {
+    BuildContext context,
+    IconData icon,
+    double width,
+    double height, {
+    bool enabled = true,
+  }) {
     return enabled
         ? Container(
             width: width,

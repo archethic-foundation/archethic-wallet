@@ -5,11 +5,12 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 /// [TokenTransferWallet] represents the an asset transfer
 class TokenTransferWallet extends TokenTransfer {
-  TokenTransferWallet(
-      {super.amount,
-      super.to,
-      super.tokenAddress,
-      super.tokenId,
-      this.toContactName});
+  TokenTransferWallet({
+    super.amount,
+    super.to,
+    super.tokenAddress,
+    super.tokenId,
+    this.toContactName,
+  });
   String? toContactName;
 }

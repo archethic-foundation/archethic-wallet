@@ -65,8 +65,10 @@ class _NFTTabState extends State<NFTTab> {
           child: RefreshIndicator(
             backgroundColor: StateContainer.of(context).curTheme.backgroundDark,
             onRefresh: () => Future<void>.sync(() async {
-              sl.get<HapticUtil>().feedback(FeedbackType.light,
-                  StateContainer.of(context).activeVibrations);
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    StateContainer.of(context).activeVibrations,
+                  );
               await StateContainer.of(context)
                   .appWallet!
                   .appKeychain!
@@ -86,11 +88,12 @@ class _NFTTabState extends State<NFTTab> {
                     height: MediaQuery.of(context).size.height,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage(StateContainer.of(context)
-                              .curTheme
-                              .background3Small!),
-                          fit: BoxFit.fitHeight,
-                          opacity: 0.7),
+                        image: AssetImage(
+                          StateContainer.of(context).curTheme.background3Small!,
+                        ),
+                        fit: BoxFit.fitHeight,
+                        opacity: 0.7,
+                      ),
                     ),
                     child: CustomScrollView(
                       slivers: <Widget>[
@@ -128,12 +131,16 @@ class _NFTTabState extends State<NFTTab> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 250, left: 20, right: 20),
+                                    top: 250,
+                                    left: 20,
+                                    right: 20,
+                                  ),
                                   child: Text(
                                     AppLocalization.of(context)!
                                         .nftTabDescriptionHeader,
                                     style: AppStyles.textStyleSize12W600Primary(
-                                        context),
+                                      context,
+                                    ),
                                     textAlign: TextAlign.justify,
                                   ),
                                 ),
@@ -142,11 +149,12 @@ class _NFTTabState extends State<NFTTab> {
                           ),
                         ),
                         NftCategoryMenu(
-                            nftCategories: StateContainer.of(context)
-                                .appWallet!
-                                .appKeychain!
-                                .getAccountSelected()!
-                                .getListNftCategory(context)),
+                          nftCategories: StateContainer.of(context)
+                              .appWallet!
+                              .appKeychain!
+                              .getAccountSelected()!
+                              .getListNftCategory(context),
+                        ),
                       ],
                     ),
                   ),

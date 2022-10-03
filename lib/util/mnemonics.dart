@@ -13,8 +13,10 @@ import 'package:aewallet/util/seeds.dart';
 // ignore: avoid_classes_with_only_static_members
 class AppMnemomics {
   /// Converts a seed to a 24-word mnemonic word list
-  static List<String> seedToMnemonic(String seed,
-      {String languageCode = 'en'}) {
+  static List<String> seedToMnemonic(
+    String seed, {
+    String languageCode = 'en',
+  }) {
     if (!AppSeeds.isValidSeed(seed)) {
       throw Exception('Invalid Seed');
     }
@@ -25,12 +27,19 @@ class AppMnemomics {
   }
 
   /// Convert a 24-word mnemonic word list to a seed
-  static String mnemonicListToSeed(List<String> words,
-      {String languageCode = 'en'}) {
+  static String mnemonicListToSeed(
+    List<String> words, {
+    String languageCode = 'en',
+  }) {
     try {
-      return uint8ListToHex(Uint8List.fromList(bip39.Mnemonic.fromSentence(
-              words.join(' '), getLanguage(languageCode))
-          .entropy));
+      return uint8ListToHex(
+        Uint8List.fromList(
+          bip39.Mnemonic.fromSentence(
+            words.join(' '),
+            getLanguage(languageCode),
+          ).entropy,
+        ),
+      );
     } catch (e) {
       return '';
     }

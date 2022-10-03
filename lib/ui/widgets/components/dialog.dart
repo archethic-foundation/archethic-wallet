@@ -16,9 +16,15 @@ import 'package:aewallet/util/haptic_util.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class AppDialogs {
-  static void showConfirmDialog(BuildContext context, String title,
-      String content, String buttonText, Function onPressed,
-      {String? cancelText, Function? cancelAction}) {
+  static void showConfirmDialog(
+    BuildContext context,
+    String title,
+    String content,
+    String buttonText,
+    Function onPressed, {
+    String? cancelText,
+    Function? cancelAction,
+  }) {
     cancelText ??= AppLocalization.of(context)!.cancel;
     showDialog(
       context: context,
@@ -29,11 +35,15 @@ class AppDialogs {
             style: AppStyles.textStyleSize20W700EquinoxPrimary(context),
           ),
           shape: RoundedRectangleBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-              side: BorderSide(
-                  color: StateContainer.of(context).curTheme.text45!)),
-          content: Text(content,
-              style: AppStyles.textStyleSize16W400Primary(context)),
+            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            side: BorderSide(
+              color: StateContainer.of(context).curTheme.text45!,
+            ),
+          ),
+          content: Text(
+            content,
+            style: AppStyles.textStyleSize16W400Primary(context),
+          ),
           actions: <Widget>[
             TextButton(
               child: Container(
@@ -44,8 +54,10 @@ class AppDialogs {
                 ),
               ),
               onPressed: () {
-                sl.get<HapticUtil>().feedback(FeedbackType.light,
-                    StateContainer.of(context).activeVibrations);
+                sl.get<HapticUtil>().feedback(
+                      FeedbackType.light,
+                      StateContainer.of(context).activeVibrations,
+                    );
                 Navigator.of(context).pop();
                 if (cancelAction != null) {
                   cancelAction();
@@ -61,8 +73,10 @@ class AppDialogs {
                 ),
               ),
               onPressed: () {
-                sl.get<HapticUtil>().feedback(FeedbackType.light,
-                    StateContainer.of(context).activeVibrations);
+                sl.get<HapticUtil>().feedback(
+                      FeedbackType.light,
+                      StateContainer.of(context).activeVibrations,
+                    );
                 Navigator.of(context).pop();
                 onPressed();
               },
@@ -74,7 +88,10 @@ class AppDialogs {
   }
 
   static void showInfoDialog(
-      BuildContext context, String title, String content) {
+    BuildContext context,
+    String title,
+    String content,
+  ) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -84,11 +101,15 @@ class AppDialogs {
             style: AppStyles.textStyleSize20W700Primary(context),
           ),
           shape: RoundedRectangleBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-              side: BorderSide(
-                  color: StateContainer.of(context).curTheme.text45!)),
-          content: Text(content,
-              style: AppStyles.textStyleSize16W400Primary(context)),
+            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            side: BorderSide(
+              color: StateContainer.of(context).curTheme.text45!,
+            ),
+          ),
+          content: Text(
+            content,
+            style: AppStyles.textStyleSize16W400Primary(context),
+          ),
           actions: <Widget>[
             TextButton(
               child: Container(
@@ -99,8 +120,10 @@ class AppDialogs {
                 ),
               ),
               onPressed: () {
-                sl.get<HapticUtil>().feedback(FeedbackType.light,
-                    StateContainer.of(context).activeVibrations);
+                sl.get<HapticUtil>().feedback(
+                      FeedbackType.light,
+                      StateContainer.of(context).activeVibrations,
+                    );
                 Navigator.of(context).pop();
               },
             ),
@@ -116,8 +139,13 @@ enum AnimationType {
 }
 
 class AnimationLoadingOverlay extends ModalRoute<void> {
-  AnimationLoadingOverlay(this.type, this.overlay85, this.overlay70,
-      {this.onPoppedCallback, this.title});
+  AnimationLoadingOverlay(
+    this.type,
+    this.overlay85,
+    this.overlay70, {
+    this.onPoppedCallback,
+    this.title,
+  });
 
   AnimationType type;
   Function? onPoppedCallback;
@@ -175,8 +203,10 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
         );
       default:
         return CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(
-                StateContainer.of(context).curTheme.text60!));
+          valueColor: AlwaysStoppedAnimation<Color>(
+            StateContainer.of(context).curTheme.text60!,
+          ),
+        );
     }
   }
 
@@ -198,8 +228,12 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   }
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     return child;
   }
 }
@@ -246,29 +280,30 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
             animation: _animation!,
             builder: (context, _) {
               return Ink(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: StateContainer.of(context).curTheme.iconDrawer,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      for (int i = 1; i <= 2; i++)
-                        BoxShadow(
-                          color: StateContainer.of(context)
-                              .curTheme
-                              .iconDrawer!
-                              .withOpacity(_animationController!.value / 2),
-                          spreadRadius: _animation!.value * i,
-                        )
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      SvgPicture.asset(
-                        '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
-                        height: 30,
-                      ),
-                    ],
-                  ));
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: StateContainer.of(context).curTheme.iconDrawer,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    for (int i = 1; i <= 2; i++)
+                      BoxShadow(
+                        color: StateContainer.of(context)
+                            .curTheme
+                            .iconDrawer!
+                            .withOpacity(_animationController!.value / 2),
+                        spreadRadius: _animation!.value * i,
+                      )
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    SvgPicture.asset(
+                      '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logoAlone!}.svg',
+                      height: 30,
+                    ),
+                  ],
+                ),
+              );
             },
           ),
         ),

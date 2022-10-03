@@ -59,7 +59,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
     if (enterPasswordController!.text ==
         stringDecryptBase64(
-            vault.getPassword()!, await StateContainer.of(context).getSeed())) {
+          vault.getPassword()!,
+          await StateContainer.of(context).getSeed(),
+        )) {
       preferences.resetLockAttempts();
       Navigator.of(context).pop(true);
     } else {
@@ -69,7 +71,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
       if (_failedAttempts >= maxAttempts) {
         preferences.updateLockDate();
         Navigator.of(context).pushNamedAndRemoveUntil(
-            '/lock_screen_transition', (Route<dynamic> route) => false);
+          '/lock_screen_transition',
+          (Route<dynamic> route) => false,
+        );
       }
 
       if (mounted) {
@@ -89,9 +93,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage(
-                      StateContainer.of(context).curTheme.background5Small!),
-                  fit: BoxFit.fitHeight),
+                image: AssetImage(
+                  StateContainer.of(context).curTheme.background5Small!,
+                ),
+                fit: BoxFit.fitHeight,
+              ),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -139,19 +145,24 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           ),
                           Container(
                             margin: const EdgeInsets.symmetric(
-                                horizontal: 40, vertical: 10),
+                              horizontal: 40,
+                              vertical: 10,
+                            ),
                             child: Text(
                               AppLocalization.of(context)!.passwordMethod,
                               style:
                                   AppStyles.textStyleSize24W700EquinoxPrimary(
-                                      context),
+                                context,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           ),
                           AppTextField(
                             topMargin: 30,
                             padding: const EdgeInsetsDirectional.only(
-                                start: 16, end: 16),
+                              start: 16,
+                              end: 16,
+                            ),
                             focusNode: enterPasswordFocusNode,
                             controller: enterPasswordController,
                             textInputAction: TextInputAction.go,
@@ -189,11 +200,14 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           if (_failedAttempts > 0)
                             Container(
                               margin: const EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 10),
+                                horizontal: 40,
+                                vertical: 10,
+                              ),
                               child: AutoSizeText(
                                 '${AppLocalization.of(context)!.attempt}$_failedAttempts/$maxAttempts',
                                 style: AppStyles.textStyleSize14W200Primary(
-                                    context),
+                                  context,
+                                ),
                                 textAlign: TextAlign.center,
                                 maxLines: 1,
                                 stepGranularity: 0.1,
@@ -204,9 +218,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
                             alignment: const AlignmentDirectional(0, 0),
                             margin: const EdgeInsets.only(top: 3),
                             child: Text(
-                                passwordError == null ? '' : passwordError!,
-                                style: AppStyles.textStyleSize14W600Primary(
-                                    context)),
+                              passwordError == null ? '' : passwordError!,
+                              style: AppStyles.textStyleSize14W600Primary(
+                                context,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -223,15 +239,18 @@ class _PasswordScreenState extends State<PasswordScreen> {
                                   AppButtonType.primaryOutline,
                                   AppLocalization.of(context)!.confirm,
                                   Dimens.buttonTopDimens,
-                                  onPressed: () async {})
+                                  onPressed: () async {},
+                                )
                               : AppButton.buildAppButton(
                                   const Key('confirm'),
                                   context,
                                   AppButtonType.primary,
                                   AppLocalization.of(context)!.confirm,
-                                  Dimens.buttonTopDimens, onPressed: () async {
-                                  await _verifyPassword();
-                                }),
+                                  Dimens.buttonTopDimens,
+                                  onPressed: () async {
+                                    await _verifyPassword();
+                                  },
+                                ),
                         ],
                       ),
                     ],

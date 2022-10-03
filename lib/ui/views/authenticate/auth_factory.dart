@@ -20,8 +20,11 @@ import 'package:aewallet/util/vault.dart';
 
 class AuthFactory {
   static Future<bool> authenticate(
-      BuildContext context, AuthenticationMethod authMethod,
-      {bool transitions = false, bool activeVibrations = false}) async {
+    BuildContext context,
+    AuthenticationMethod authMethod, {
+    bool transitions = false,
+    bool activeVibrations = false,
+  }) async {
     bool auth = false;
     switch (authMethod.method) {
       case (AuthMethod.yubikeyWithYubicloud):
@@ -53,66 +56,90 @@ class AuthFactory {
     return auth;
   }
 
-  static Future<bool> _authenticateWithYubikey(BuildContext context,
-      {bool transitions = false}) async {
+  static Future<bool> _authenticateWithYubikey(
+    BuildContext context, {
+    bool transitions = false,
+  }) async {
     bool auth = false;
     if (transitions) {
-      auth = await Navigator.of(context)
-          .push(MaterialPageRoute(builder: (BuildContext context) {
-        return const YubikeyScreen();
-      })) as bool;
+      auth = await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return const YubikeyScreen();
+          },
+        ),
+      ) as bool;
     } else {
-      auth = await Navigator.of(context)
-          .push(NoPushTransitionRoute(builder: (BuildContext context) {
-        return const YubikeyScreen();
-      })) as bool;
+      auth = await Navigator.of(context).push(
+        NoPushTransitionRoute(
+          builder: (BuildContext context) {
+            return const YubikeyScreen();
+          },
+        ),
+      ) as bool;
     }
     await Future<void>.delayed(const Duration(milliseconds: 200));
     return auth;
   }
 
-  static Future<bool> _authenticateWithPassword(BuildContext context,
-      {bool transitions = false}) async {
+  static Future<bool> _authenticateWithPassword(
+    BuildContext context, {
+    bool transitions = false,
+  }) async {
     bool auth = false;
     if (transitions) {
-      auth = await Navigator.of(context)
-          .push(MaterialPageRoute(builder: (BuildContext context) {
-        return const PasswordScreen();
-      })) as bool;
+      auth = await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return const PasswordScreen();
+          },
+        ),
+      ) as bool;
     } else {
-      auth = await Navigator.of(context)
-          .push(NoPushTransitionRoute(builder: (BuildContext context) {
-        return const PasswordScreen();
-      })) as bool;
+      auth = await Navigator.of(context).push(
+        NoPushTransitionRoute(
+          builder: (BuildContext context) {
+            return const PasswordScreen();
+          },
+        ),
+      ) as bool;
     }
     await Future<void>.delayed(const Duration(milliseconds: 200));
     return auth;
   }
 
-  static Future<bool> _authenticateWithPin(BuildContext context,
-      {bool transitions = false}) async {
+  static Future<bool> _authenticateWithPin(
+    BuildContext context, {
+    bool transitions = false,
+  }) async {
     final Vault vault = await Vault.getInstance();
     final String? expectedPin = vault.getPin();
     bool auth = false;
     if (transitions) {
       // TODO: add the description
-      auth = await Navigator.of(context)
-          .push(MaterialPageRoute(builder: (BuildContext context) {
-        return PinScreen(
-          PinOverlayType.enterPin,
-          expectedPin: expectedPin!,
-          description: '',
-        );
-      })) as bool;
+      auth = await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return PinScreen(
+              PinOverlayType.enterPin,
+              expectedPin: expectedPin!,
+              description: '',
+            );
+          },
+        ),
+      ) as bool;
     } else {
-      auth = await Navigator.of(context)
-          .push(NoPushTransitionRoute(builder: (BuildContext context) {
-        return PinScreen(
-          PinOverlayType.enterPin,
-          expectedPin: expectedPin!,
-          description: '',
-        );
-      })) as bool;
+      auth = await Navigator.of(context).push(
+        NoPushTransitionRoute(
+          builder: (BuildContext context) {
+            return PinScreen(
+              PinOverlayType.enterPin,
+              expectedPin: expectedPin!,
+              description: '',
+            );
+          },
+        ),
+      ) as bool;
     }
     await Future<void>.delayed(const Duration(milliseconds: 200));
     return auth;
@@ -120,7 +147,9 @@ class AuthFactory {
 
   static Future<bool> _authenticateWithBiometrics(BuildContext context) async {
     final bool auth = await sl.get<BiometricUtil>().authenticateWithBiometrics(
-        context, AppLocalization.of(context)!.unlockBiometrics);
+          context,
+          AppLocalization.of(context)!.unlockBiometrics,
+        );
     await Future<void>.delayed(const Duration(milliseconds: 200));
     return auth;
   }

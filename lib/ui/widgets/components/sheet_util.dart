@@ -19,79 +19,83 @@ import 'package:aewallet/util/haptic_util.dart';
 // ignore: avoid_classes_with_only_static_members
 class Sheets {
   //App Ninty Height Sheet
-  static Future<T?>? showAppHeightNineSheet<T>(
-      {required BuildContext context,
-      required Widget widget,
-      Color? color,
-      double radius = 25.0,
-      Color? bgColor,
-      int animationDurationMs = 250,
-      bool closeOnTap = false,
-      Function? onDisposed}) {
+  static Future<T?>? showAppHeightNineSheet<T>({
+    required BuildContext context,
+    required Widget widget,
+    Color? color,
+    double radius = 25.0,
+    Color? bgColor,
+    int animationDurationMs = 250,
+    bool closeOnTap = false,
+    Function? onDisposed,
+  }) {
     assert(radius > 0.0);
     color ??= StateContainer.of(context).curTheme.backgroundDark;
     bgColor ??= StateContainer.of(context).curTheme.sheetBackground;
     final _AppHeightNineModalRoute<T> route = _AppHeightNineModalRoute<T>(
-        builder: (BuildContext context) {
-          return Container(
-            decoration:
-                StateContainer.of(context).curTheme.getDecorationSheet(),
-            child: TweenAnimationBuilder(
-              tween: Tween(begin: 0.0, end: 1.0),
-              duration: const Duration(milliseconds: 500),
-              builder: (context, double value, child) {
-                return ShaderMask(
-                    shaderCallback: (rect) {
-                      return RadialGradient(
-                              radius: (value * 5),
-                              colors: const [
-                                Colors.white,
-                                Colors.white,
-                                Colors.transparent,
-                                Colors.transparent
-                              ],
-                              stops: const [0.0, 0.55, 0.6, 1.0],
-                              center: const FractionalOffset(0.95, 0.95))
-                          .createShader(rect);
-                    },
-                    child: widget);
-              },
-            ),
-          );
-        },
-        color: color!,
-        radius: radius,
-        barrierLabel:
-            MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        bgColor: bgColor!,
-        animationDurationMs: animationDurationMs,
-        closeOnTap: closeOnTap,
-        onDisposed: onDisposed);
+      builder: (BuildContext context) {
+        return Container(
+          decoration: StateContainer.of(context).curTheme.getDecorationSheet(),
+          child: TweenAnimationBuilder(
+            tween: Tween(begin: 0.0, end: 1.0),
+            duration: const Duration(milliseconds: 500),
+            builder: (context, double value, child) {
+              return ShaderMask(
+                shaderCallback: (rect) {
+                  return RadialGradient(
+                    radius: (value * 5),
+                    colors: const [
+                      Colors.white,
+                      Colors.white,
+                      Colors.transparent,
+                      Colors.transparent
+                    ],
+                    stops: const [0.0, 0.55, 0.6, 1.0],
+                    center: const FractionalOffset(0.95, 0.95),
+                  ).createShader(rect);
+                },
+                child: widget,
+              );
+            },
+          ),
+        );
+      },
+      color: color!,
+      radius: radius,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      bgColor: bgColor!,
+      animationDurationMs: animationDurationMs,
+      closeOnTap: closeOnTap,
+      onDisposed: onDisposed,
+    );
 
     return Navigator.push<T>(context, route);
   }
 
   //App Height Eigth Sheet
-  static Future<T?> showAppHeightEightSheet<T>(
-      {required BuildContext context,
-      required WidgetBuilder builder,
-      Color? color,
-      double radius = 25.0,
-      Color? bgColor,
-      int animationDurationMs = 225}) {
+  static Future<T?> showAppHeightEightSheet<T>({
+    required BuildContext context,
+    required WidgetBuilder builder,
+    Color? color,
+    double radius = 25.0,
+    Color? bgColor,
+    int animationDurationMs = 225,
+  }) {
     assert(radius > 0.0);
     color ??= StateContainer.of(context).curTheme.backgroundDark;
     bgColor ??= StateContainer.of(context).curTheme.sheetBackground;
     return Navigator.push<T>(
-        context,
-        _AppHeightEightModalRoute<T>(
-            builder: builder,
-            color: color,
-            radius: radius,
-            barrierLabel:
-                MaterialLocalizations.of(context).modalBarrierDismissLabel,
-            bgColor: bgColor,
-            animationDurationMs: animationDurationMs));
+      context,
+      _AppHeightEightModalRoute<T>(
+        builder: builder,
+        color: color,
+        radius: radius,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        bgColor: bgColor,
+        animationDurationMs: animationDurationMs,
+      ),
+    );
   }
 }
 
@@ -104,26 +108,29 @@ class _AppHeightNineSheetLayout extends SingleChildLayoutDelegate {
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
     if (constraints.maxHeight < 667) {
       return BoxConstraints(
-          minWidth: constraints.maxWidth,
-          maxWidth: constraints.maxWidth,
-          minHeight: 0.0,
-          maxHeight: constraints.maxHeight * 0.95);
+        minWidth: constraints.maxWidth,
+        maxWidth: constraints.maxWidth,
+        minHeight: 0.0,
+        maxHeight: constraints.maxHeight * 0.95,
+      );
     }
     if ((constraints.maxHeight / constraints.maxWidth > 2.1 &&
             !kIsWeb &&
             Platform.isAndroid) ||
         constraints.maxHeight > 812) {
       return BoxConstraints(
-          minWidth: constraints.maxWidth,
-          maxWidth: constraints.maxWidth,
-          minHeight: 0.0,
-          maxHeight: constraints.maxHeight * 0.8);
+        minWidth: constraints.maxWidth,
+        maxWidth: constraints.maxWidth,
+        minHeight: 0.0,
+        maxHeight: constraints.maxHeight * 0.8,
+      );
     } else {
       return BoxConstraints(
-          minWidth: constraints.maxWidth,
-          maxWidth: constraints.maxWidth,
-          minHeight: 0.0,
-          maxHeight: constraints.maxHeight * 0.9);
+        minWidth: constraints.maxWidth,
+        maxWidth: constraints.maxWidth,
+        minHeight: 0.0,
+        maxHeight: constraints.maxHeight * 0.9,
+      );
     }
   }
 
@@ -139,16 +146,17 @@ class _AppHeightNineSheetLayout extends SingleChildLayoutDelegate {
 }
 
 class _AppHeightNineModalRoute<T> extends PopupRoute<T> {
-  _AppHeightNineModalRoute(
-      {this.builder,
-      this.barrierLabel,
-      this.color,
-      this.radius,
-      super.settings,
-      this.bgColor,
-      this.animationDurationMs,
-      this.closeOnTap,
-      this.onDisposed});
+  _AppHeightNineModalRoute({
+    this.builder,
+    this.barrierLabel,
+    this.color,
+    this.radius,
+    super.settings,
+    this.bgColor,
+    this.animationDurationMs,
+    this.closeOnTap,
+    this.onDisposed,
+  });
 
   final WidgetBuilder? builder;
   final double? radius;
@@ -186,10 +194,10 @@ class _AppHeightNineModalRoute<T> extends PopupRoute<T> {
     _animationController!.duration =
         Duration(milliseconds: animationDurationMs!);
     appSheetAnimation = CurvedAnimation(
-        parent: _animationController!,
-        curve: Curves.easeOut,
-        reverseCurve: Curves.linear)
-      ..addStatusListener((AnimationStatus animationStatus) {
+      parent: _animationController!,
+      curve: Curves.easeOut,
+      reverseCurve: Curves.linear,
+    )..addStatusListener((AnimationStatus animationStatus) {
         if (animationStatus == AnimationStatus.completed) {
           appSheetAnimation!.curve = Curves.linear;
         }
@@ -198,16 +206,21 @@ class _AppHeightNineModalRoute<T> extends PopupRoute<T> {
   }
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
       child: GestureDetector(
         onTap: () {
           if (closeOnTap!) {
-            sl.get<HapticUtil>().feedback(FeedbackType.light,
-                StateContainer.of(context).activeVibrations);
+            sl.get<HapticUtil>().feedback(
+                  FeedbackType.light,
+                  StateContainer.of(context).activeVibrations,
+                );
             // Close when tapped anywhere
             Navigator.of(context).pop();
           }
@@ -263,23 +276,26 @@ class _AppHeightEightSheetLayout extends SingleChildLayoutDelegate {
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
     if (constraints.maxHeight < 667) {
       return BoxConstraints(
-          minWidth: constraints.maxWidth,
-          maxWidth: constraints.maxWidth,
-          minHeight: 0.0,
-          maxHeight: constraints.maxHeight * 0.9);
+        minWidth: constraints.maxWidth,
+        maxWidth: constraints.maxWidth,
+        minHeight: 0.0,
+        maxHeight: constraints.maxHeight * 0.9,
+      );
     }
     if (constraints.maxHeight / constraints.maxWidth > 2.1) {
       return BoxConstraints(
-          minWidth: constraints.maxWidth,
-          maxWidth: constraints.maxWidth,
-          minHeight: 0.0,
-          maxHeight: constraints.maxHeight * 0.7);
+        minWidth: constraints.maxWidth,
+        maxWidth: constraints.maxWidth,
+        minHeight: 0.0,
+        maxHeight: constraints.maxHeight * 0.7,
+      );
     } else {
       return BoxConstraints(
-          minWidth: constraints.maxWidth,
-          maxWidth: constraints.maxWidth,
-          minHeight: 0.0,
-          maxHeight: constraints.maxHeight * 0.8);
+        minWidth: constraints.maxWidth,
+        maxWidth: constraints.maxWidth,
+        minHeight: 0.0,
+        maxHeight: constraints.maxHeight * 0.8,
+      );
     }
   }
 
@@ -295,14 +311,15 @@ class _AppHeightEightSheetLayout extends SingleChildLayoutDelegate {
 }
 
 class _AppHeightEightModalRoute<T> extends PopupRoute<T> {
-  _AppHeightEightModalRoute(
-      {this.builder,
-      this.barrierLabel,
-      this.color,
-      this.radius,
-      super.settings,
-      this.bgColor,
-      this.animationDurationMs});
+  _AppHeightEightModalRoute({
+    this.builder,
+    this.barrierLabel,
+    this.color,
+    this.radius,
+    super.settings,
+    this.bgColor,
+    this.animationDurationMs,
+  });
 
   final WidgetBuilder? builder;
   final double? radius;
@@ -330,10 +347,10 @@ class _AppHeightEightModalRoute<T> extends PopupRoute<T> {
     _animationController!.duration =
         Duration(milliseconds: animationDurationMs!);
     appSheetAnimation = CurvedAnimation(
-        parent: _animationController!,
-        curve: Curves.easeOut,
-        reverseCurve: Curves.linear)
-      ..addStatusListener((AnimationStatus animationStatus) {
+      parent: _animationController!,
+      curve: Curves.easeOut,
+      reverseCurve: Curves.linear,
+    )..addStatusListener((AnimationStatus animationStatus) {
         if (animationStatus == AnimationStatus.completed) {
           appSheetAnimation!.curve = Curves.linear;
         }
@@ -342,8 +359,11 @@ class _AppHeightEightModalRoute<T> extends PopupRoute<T> {
   }
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,

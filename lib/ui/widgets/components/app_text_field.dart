@@ -21,54 +21,58 @@ class TextFieldButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 48,
-        width: 48,
-        child: TextButton(
-          onPressed: () {
-            if (onPressed != null) {
-              onPressed!();
-            }
-          },
-          child: FaIcon(icon,
-              size: 20,
-              color: StateContainer.of(context).curTheme.textFieldIcon),
-        ));
+      height: 48,
+      width: 48,
+      child: TextButton(
+        onPressed: () {
+          if (onPressed != null) {
+            onPressed!();
+          }
+        },
+        child: FaIcon(
+          icon,
+          size: 20,
+          color: StateContainer.of(context).curTheme.textFieldIcon,
+        ),
+      ),
+    );
   }
 }
 
 /// A widget for our custom textfields
 class AppTextField extends StatefulWidget {
-  const AppTextField(
-      {this.focusNode,
-      this.controller,
-      this.cursorColor,
-      this.inputFormatters,
-      this.textInputAction,
-      this.hintText,
-      this.labelText,
-      this.prefixButton,
-      this.suffixButton,
-      this.fadePrefixOnCondition,
-      this.prefixShowFirstCondition,
-      this.fadeSuffixOnCondition,
-      this.suffixShowFirstCondition,
-      this.overrideTextFieldWidget,
-      this.keyboardType,
-      this.onSubmitted,
-      this.onChanged,
-      this.style,
-      this.leftMargin,
-      this.rightMargin,
-      this.obscureText = false,
-      this.textAlign = TextAlign.center,
-      this.keyboardAppearance = Brightness.dark,
-      this.autocorrect = true,
-      this.maxLines = 1,
-      this.padding = EdgeInsets.zero,
-      this.buttonFadeDurationMs = 100,
-      this.topMargin = 0,
-      this.autofocus = false,
-      super.key});
+  const AppTextField({
+    this.focusNode,
+    this.controller,
+    this.cursorColor,
+    this.inputFormatters,
+    this.textInputAction,
+    this.hintText,
+    this.labelText,
+    this.prefixButton,
+    this.suffixButton,
+    this.fadePrefixOnCondition,
+    this.prefixShowFirstCondition,
+    this.fadeSuffixOnCondition,
+    this.suffixShowFirstCondition,
+    this.overrideTextFieldWidget,
+    this.keyboardType,
+    this.onSubmitted,
+    this.onChanged,
+    this.style,
+    this.leftMargin,
+    this.rightMargin,
+    this.obscureText = false,
+    this.textAlign = TextAlign.center,
+    this.keyboardAppearance = Brightness.dark,
+    this.autocorrect = true,
+    this.maxLines = 1,
+    this.padding = EdgeInsets.zero,
+    this.buttonFadeDurationMs = 100,
+    this.topMargin = 0,
+    this.autofocus = false,
+    super.key,
+  });
 
   final TextAlign? textAlign;
   final FocusNode? focusNode;
@@ -162,7 +166,8 @@ class _AppTextFieldState extends State<AppTextField> {
                                 labelText: widget.labelText ?? '',
                                 labelStyle:
                                     AppStyles.textStyleSize16W400Primary60(
-                                        context),
+                                  context,
+                                ),
                                 suffixIcon:
                                     const SizedBox(width: 48, height: 48),
                               )
@@ -170,9 +175,12 @@ class _AppTextFieldState extends State<AppTextField> {
                                 labelText: widget.labelText ?? '',
                                 labelStyle:
                                     AppStyles.textStyleSize16W400Primary60(
-                                        context),
+                                  context,
+                                ),
                                 prefixIconConstraints: const BoxConstraints(
-                                    minWidth: 48, maxHeight: 48),
+                                  minWidth: 48,
+                                  maxHeight: 48,
+                                ),
                                 prefixIcon:
                                     const SizedBox(width: 48, height: 48),
                                 suffixIcon:
@@ -200,7 +208,8 @@ class _AppTextFieldState extends State<AppTextField> {
                           widget.prefixButton != null)
                         AnimatedCrossFade(
                           duration: Duration(
-                              milliseconds: widget.buttonFadeDurationMs!),
+                            milliseconds: widget.buttonFadeDurationMs!,
+                          ),
                           firstChild: widget.prefixButton!,
                           secondChild: const SizedBox(height: 48, width: 48),
                           crossFadeState: widget.prefixShowFirstCondition!
@@ -214,7 +223,8 @@ class _AppTextFieldState extends State<AppTextField> {
                           widget.suffixButton != null)
                         AnimatedCrossFade(
                           duration: Duration(
-                              milliseconds: widget.buttonFadeDurationMs!),
+                            milliseconds: widget.buttonFadeDurationMs!,
+                          ),
                           firstChild: widget.suffixButton!,
                           secondChild: const SizedBox(height: 48, width: 48),
                           crossFadeState: widget.suffixShowFirstCondition!

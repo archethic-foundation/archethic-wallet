@@ -49,10 +49,12 @@ class _IntroWelcomeState extends State<IntroWelcome> {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(
-                        StateContainer.of(context).curTheme.background4Small!),
-                    fit: BoxFit.fitHeight,
-                    opacity: 0.8),
+                  image: AssetImage(
+                    StateContainer.of(context).curTheme.background4Small!,
+                  ),
+                  fit: BoxFit.fitHeight,
+                  opacity: 0.8,
+                ),
               ),
             ),
           ),
@@ -60,8 +62,9 @@ class _IntroWelcomeState extends State<IntroWelcome> {
             builder: (BuildContext context, BoxConstraints constraints) =>
                 SafeArea(
               minimum: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.035,
-                  top: MediaQuery.of(context).size.height * 0.075),
+                bottom: MediaQuery.of(context).size.height * 0.035,
+                top: MediaQuery.of(context).size.height * 0.075,
+              ),
               child: Column(
                 children: <Widget>[
                   Expanded(
@@ -74,22 +77,28 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                             child: Center(
                               child: Container(
                                 padding: const EdgeInsets.only(
-                                    left: 20.0, right: 20.0),
+                                  left: 20.0,
+                                  right: 20.0,
+                                ),
                                 child: SizedBox(
                                   height: 200,
                                   child: AspectRatio(
-                                      aspectRatio: 3 / 1,
-                                      child: Image.asset(
-                                        '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logo!}.png',
-                                        height: 200,
-                                      )),
+                                    aspectRatio: 3 / 1,
+                                    child: Image.asset(
+                                      '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logo!}.png',
+                                      height: 200,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                           Container(
                             margin: const EdgeInsets.only(
-                                top: 20, right: 20, left: 20),
+                              top: 20,
+                              right: 20,
+                              left: 20,
+                            ),
                             child: AutoSizeText(
                               AppLocalization.of(context)!.welcomeText,
                               maxLines: 5,
@@ -111,14 +120,18 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.only(
-                                      left: 15, right: 15),
+                                    left: 15,
+                                    right: 15,
+                                  ),
                                   child: CheckboxListTile(
                                     title: Text(
-                                        AppLocalization.of(context)!
-                                            .welcomeDisclaimerChoice,
-                                        style: AppStyles
-                                            .textStyleSize14W600Primary(
-                                                context)),
+                                      AppLocalization.of(context)!
+                                          .welcomeDisclaimerChoice,
+                                      style:
+                                          AppStyles.textStyleSize14W600Primary(
+                                        context,
+                                      ),
+                                    ),
                                     value: checkedValue,
                                     tristate: false,
                                     onChanged: (newValue) {
@@ -135,18 +148,20 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                                     controlAffinity:
                                         ListTileControlAffinity.leading,
                                     secondary: IconButton(
-                                        icon: const Icon(Icons.read_more),
-                                        iconSize: 30,
-                                        color: StateContainer.of(context)
-                                            .curTheme
-                                            .backgroundDarkest,
-                                        onPressed: () {
-                                          UIUtil.showWebview(
-                                              context,
-                                              'https://archethic.net',
-                                              AppLocalization.of(context)!
-                                                  .welcomeDisclaimerLink);
-                                        }),
+                                      icon: const Icon(Icons.read_more),
+                                      iconSize: 30,
+                                      color: StateContainer.of(context)
+                                          .curTheme
+                                          .backgroundDarkest,
+                                      onPressed: () {
+                                        UIUtil.showWebview(
+                                          context,
+                                          'https://archethic.net',
+                                          AppLocalization.of(context)!
+                                              .welcomeDisclaimerLink,
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),

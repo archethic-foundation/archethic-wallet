@@ -10,11 +10,12 @@ import 'package:aewallet/ui/util/styles.dart';
 enum AddressTextType { primary60, primary }
 
 class OneOrThreeLineAddressText extends StatelessWidget {
-  OneOrThreeLineAddressText(
-      {super.key,
-      @required this.address,
-      @required this.type,
-      this.contactName});
+  OneOrThreeLineAddressText({
+    super.key,
+    @required this.address,
+    @required this.type,
+    this.contactName,
+  });
 
   String? address;
   String? contactName;
@@ -156,8 +157,9 @@ class OneOrThreeLineAddressText extends StatelessWidget {
                     style: AppStyles.textStyleSize14W100Text60(context),
                   ),
                   TextSpan(
-                      text: stringPartFive,
-                      style: AppStyles.textStyleSize14W100Text60(context)),
+                    text: stringPartFive,
+                    style: AppStyles.textStyleSize14W100Text60(context),
+                  ),
                 ],
               ),
             )
@@ -168,8 +170,10 @@ class OneOrThreeLineAddressText extends StatelessWidget {
             ? RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                    text: contactName,
-                    style: AppStyles.textStyleSize14W100Primary(context)))
+                  text: contactName,
+                  style: AppStyles.textStyleSize14W100Primary(context),
+                ),
+              )
             : const SizedBox();
         return Column(
           children: <Widget>[

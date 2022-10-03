@@ -77,43 +77,59 @@ class Preferences {
   Future<void> setAuthMethod(AuthenticationMethod method) =>
       _setValue(_auth_method, method.getIndex());
 
-  AuthenticationMethod getAuthMethod() => AuthenticationMethod(AuthMethod
-      .values[_getValue(_auth_method, defaultValue: AuthMethod.pin.index)]);
+  AuthenticationMethod getAuthMethod() => AuthenticationMethod(
+        AuthMethod.values[
+            _getValue(_auth_method, defaultValue: AuthMethod.pin.index)],
+      );
 
   Future<void> setCurrency(AvailableCurrency currency) =>
       _setValue(_cur_currency, currency.getIndex());
 
-  AvailableCurrency getCurrency(Locale deviceLocale) =>
-      AvailableCurrency(AvailableCurrencyEnum.values[_getValue(_cur_currency,
-          defaultValue: AvailableCurrency.getBestForLocale(deviceLocale)
-              .currency
-              .index)]);
+  AvailableCurrency getCurrency(Locale deviceLocale) => AvailableCurrency(
+        AvailableCurrencyEnum.values[_getValue(
+          _cur_currency,
+          defaultValue:
+              AvailableCurrency.getBestForLocale(deviceLocale).currency.index,
+        )],
+      );
 
   Future<void> setLanguage(LanguageSetting language) =>
       _setValue(_cur_language, language.getIndex());
 
-  LanguageSetting getLanguage() => LanguageSetting(AvailableLanguage.values[
-      _getValue(_cur_language, defaultValue: AvailableLanguage.DEFAULT.index)]);
+  LanguageSetting getLanguage() => LanguageSetting(
+        AvailableLanguage.values[_getValue(
+          _cur_language,
+          defaultValue: AvailableLanguage.DEFAULT.index,
+        )],
+      );
 
   Future<void> setPrimaryCurrency(PrimaryCurrencySetting primarySetting) =>
       _setValue(_cur_primary_setting, primarySetting.getIndex());
 
   PrimaryCurrencySetting getPrimaryCurrency() => PrimaryCurrencySetting(
-      AvailablePrimaryCurrency.values[_getValue(_cur_primary_setting,
-          defaultValue: AvailablePrimaryCurrency.native.index)]);
+        AvailablePrimaryCurrency.values[_getValue(
+          _cur_primary_setting,
+          defaultValue: AvailablePrimaryCurrency.native.index,
+        )],
+      );
 
   Future<void> setNetwork(NetworksSetting network) =>
       _setValue(_cur_network, network.getIndex());
 
-  NetworksSetting getNetwork() =>
-      NetworksSetting(AvailableNetworks.values[_getValue(_cur_network,
-          defaultValue: AvailableNetworks.archethicMainNet.index)]);
+  NetworksSetting getNetwork() => NetworksSetting(
+        AvailableNetworks.values[_getValue(
+          _cur_network,
+          defaultValue: AvailableNetworks.archethicMainNet.index,
+        )],
+      );
 
   Future<void> setNetworkDevEndpoint(String s) =>
       _setValue(_cur_network_dev_endpoint, s);
 
-  String getNetworkDevEndpoint() => _getValue(_cur_network_dev_endpoint,
-      defaultValue: 'http://localhost:4000');
+  String getNetworkDevEndpoint() => _getValue(
+        _cur_network_dev_endpoint,
+        defaultValue: 'http://localhost:4000',
+      );
 
   Future<void> setLanguageSeed(String v) => _setValue(_language_seed, v);
 
@@ -165,9 +181,12 @@ class Preferences {
   Future<void> setLockTimeout(LockTimeoutSetting setting) =>
       _setValue(_lock_timeout, setting.getIndex());
 
-  LockTimeoutSetting getLockTimeout() =>
-      LockTimeoutSetting(LockTimeoutOption.values[
-          _getValue(_lock_timeout, defaultValue: LockTimeoutOption.one.index)]);
+  LockTimeoutSetting getLockTimeout() => LockTimeoutSetting(
+        LockTimeoutOption.values[_getValue(
+          _lock_timeout,
+          defaultValue: LockTimeoutOption.one.index,
+        )],
+      );
 
   int getLockAttempts() => _getValue(_pin_attempts, defaultValue: 0);
 
@@ -191,30 +210,34 @@ class Preferences {
     if (attempts >= 20) {
       // 4+ failed attempts
       _setValue(
-          _pin_lock_until,
-          DateFormat.yMd()
-              .add_jms()
-              .format(DateTime.now().toUtc().add(const Duration(hours: 24))));
+        _pin_lock_until,
+        DateFormat.yMd()
+            .add_jms()
+            .format(DateTime.now().toUtc().add(const Duration(hours: 24))),
+      );
     } else if (attempts >= 15) {
       // 3 failed attempts
       _setValue(
-          _pin_lock_until,
-          DateFormat.yMd()
-              .add_jms()
-              .format(DateTime.now().toUtc().add(const Duration(minutes: 15))));
+        _pin_lock_until,
+        DateFormat.yMd()
+            .add_jms()
+            .format(DateTime.now().toUtc().add(const Duration(minutes: 15))),
+      );
     } else if (attempts >= 10) {
       // 2 failed attempts
       _setValue(
-          _pin_lock_until,
-          DateFormat.yMd()
-              .add_jms()
-              .format(DateTime.now().toUtc().add(const Duration(minutes: 5))));
+        _pin_lock_until,
+        DateFormat.yMd()
+            .add_jms()
+            .format(DateTime.now().toUtc().add(const Duration(minutes: 5))),
+      );
     } else if (attempts >= 5) {
       _setValue(
-          _pin_lock_until,
-          DateFormat.yMd()
-              .add_jms()
-              .format(DateTime.now().toUtc().add(const Duration(minutes: 1))));
+        _pin_lock_until,
+        DateFormat.yMd()
+            .add_jms()
+            .format(DateTime.now().toUtc().add(const Duration(minutes: 1))),
+      );
     }
   }
 
@@ -230,15 +253,18 @@ class Preferences {
   Future<void> setTheme(ThemeSetting theme) =>
       _setValue(_cur_theme, theme.getIndex());
 
-  ThemeSetting getTheme() => ThemeSetting(ThemeOptions
-      .values[_getValue(_cur_theme, defaultValue: ThemeOptions.dark.index)]);
+  ThemeSetting getTheme() => ThemeSetting(
+        ThemeOptions.values[
+            _getValue(_cur_theme, defaultValue: ThemeOptions.dark.index)],
+      );
 
   Future<void> clearAll() async {
     await _box.clear();
   }
 
   static Future<void> initWallet(
-      AuthenticationMethod authenticationMethod) async {
+    AuthenticationMethod authenticationMethod,
+  ) async {
     final Preferences preferences = await Preferences.getInstance();
     preferences.setLock(true);
     preferences.setShowBalances(true);
@@ -255,7 +281,8 @@ class Preferences {
     preferences.setPinPadShuffle(false);
     preferences.setShowPriceChart(true);
     preferences.setPrimaryCurrency(
-        PrimaryCurrencySetting(AvailablePrimaryCurrency.native));
+      PrimaryCurrencySetting(AvailablePrimaryCurrency.native),
+    );
     preferences.setLockTimeout(LockTimeoutSetting(LockTimeoutOption.one));
     preferences.setAuthMethod(authenticationMethod);
     preferences.setMainScreenCurrentPage(1);

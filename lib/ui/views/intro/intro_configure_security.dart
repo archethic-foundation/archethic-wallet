@@ -28,8 +28,12 @@ class IntroConfigureSecurity extends StatefulWidget {
   final String? name;
   final String? seed;
 
-  const IntroConfigureSecurity(
-      {super.key, this.accessModes, required this.name, required this.seed});
+  const IntroConfigureSecurity({
+    super.key,
+    this.accessModes,
+    required this.name,
+    required this.seed,
+  });
 
   @override
   State<IntroConfigureSecurity> createState() => _IntroConfigureSecurityState();
@@ -52,9 +56,11 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(
-                  StateContainer.of(context).curTheme.background2Small!),
-              fit: BoxFit.fitHeight),
+            image: AssetImage(
+              StateContainer.of(context).curTheme.background2Small!,
+            ),
+            fit: BoxFit.fitHeight,
+          ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -68,7 +74,8 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
           builder: (BuildContext context, BoxConstraints constraints) =>
               SafeArea(
             minimum: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.075),
+              top: MediaQuery.of(context).size.height * 0.075,
+            ),
             child: Column(
               children: <Widget>[
                 Expanded(
@@ -95,7 +102,11 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                         ),
                         Container(
                           child: IconWidget.build(
-                              context, 'assets/icons/finger-print.png', 90, 90),
+                            context,
+                            'assets/icons/finger-print.png',
+                            90,
+                            90,
+                          ),
                         ),
                         Container(
                           margin: const EdgeInsetsDirectional.only(
@@ -112,7 +123,10 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                         ),
                         Container(
                           margin: const EdgeInsetsDirectional.only(
-                              start: 20, end: 20, top: 15.0),
+                            start: 20,
+                            end: 20,
+                            top: 15.0,
+                          ),
                           child: AutoSizeText(
                             AppLocalization.of(context)!
                                 .configureSecurityExplanation,
@@ -129,7 +143,9 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                         if (widget.accessModes != null)
                           Container(
                             margin: const EdgeInsetsDirectional.only(
-                                start: 20, end: 20),
+                              start: 20,
+                              end: 20,
+                            ),
                             child: PickerWidget(
                               pickerItems: widget.accessModes,
                               onSelected: (value) async {
@@ -145,53 +161,65 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                     authenticated = await sl
                                         .get<BiometricUtil>()
                                         .authenticateWithBiometrics(
-                                            context,
-                                            AppLocalization.of(context)!
-                                                .unlockBiometrics);
+                                          context,
+                                          AppLocalization.of(context)!
+                                              .unlockBiometrics,
+                                        );
                                     break;
                                   case AuthMethod.password:
-                                    authenticated = await Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (BuildContext context) {
-                                      return SetPassword(
-                                        header: AppLocalization.of(context)!
-                                            .setPasswordHeader,
-                                        description: AppLocalization.of(
-                                                context)!
-                                            .configureSecurityExplanationPassword,
-                                        name: widget.name!,
-                                        seed: widget.seed!,
-                                      );
-                                    }));
+                                    authenticated =
+                                        await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                          return SetPassword(
+                                            header: AppLocalization.of(context)!
+                                                .setPasswordHeader,
+                                            description: AppLocalization.of(
+                                              context,
+                                            )!
+                                                .configureSecurityExplanationPassword,
+                                            name: widget.name!,
+                                            seed: widget.seed!,
+                                          );
+                                        },
+                                      ),
+                                    );
                                     break;
                                   case AuthMethod.pin:
-                                    authenticated = await Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (BuildContext context) {
-                                      return const PinScreen(
-                                        PinOverlayType.newPin,
-                                      );
-                                    }));
+                                    authenticated =
+                                        await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                          return const PinScreen(
+                                            PinOverlayType.newPin,
+                                          );
+                                        },
+                                      ),
+                                    );
                                     break;
                                   case AuthMethod.yubikeyWithYubicloud:
-                                    authenticated = await Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (BuildContext context) {
-                                      return SetYubikey(
-                                        header: AppLocalization.of(context)!
-                                            .seYubicloudHeader,
-                                        description:
-                                            AppLocalization.of(context)!
-                                                .seYubicloudDescription,
-                                      );
-                                    }));
+                                    authenticated =
+                                        await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                          return SetYubikey(
+                                            header: AppLocalization.of(context)!
+                                                .seYubicloudHeader,
+                                            description:
+                                                AppLocalization.of(context)!
+                                                    .seYubicloudDescription,
+                                          );
+                                        },
+                                      ),
+                                    );
                                     break;
                                   default:
                                     break;
                                 }
                                 if (authenticated) {
                                   await Preferences.initWallet(
-                                      AuthenticationMethod(authMethod));
+                                    AuthenticationMethod(authMethod),
+                                  );
                                   EventTaxiImpl.singleton()
                                       .fire(AuthenticatedEvent());
                                 }

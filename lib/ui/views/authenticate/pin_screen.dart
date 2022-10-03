@@ -31,11 +31,13 @@ class ShakeCurve extends Curve {
 }
 
 class PinScreen extends StatefulWidget {
-  const PinScreen(this.type,
-      {this.description = '',
-      this.expectedPin = '',
-      this.pinScreenBackgroundColor,
-      super.key});
+  const PinScreen(
+    this.type, {
+    this.description = '',
+    this.expectedPin = '',
+    this.pinScreenBackgroundColor,
+    super.key,
+  });
 
   final PinOverlayType type;
   final String expectedPin;
@@ -97,7 +99,9 @@ class _PinScreenState extends State<PinScreen>
 
       // Set animation
       _controller = AnimationController(
-          duration: const Duration(milliseconds: 350), vsync: this);
+        duration: const Duration(milliseconds: 350),
+        vsync: this,
+      );
       final Animation<double> curve =
           CurvedAnimation(parent: _controller!, curve: ShakeCurve());
       _animation = Tween(begin: 0.0, end: 25.0).animate(curve)
@@ -112,8 +116,9 @@ class _PinScreenState extends State<PinScreen>
                   });
                   preferences.updateLockDate().then((_) {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/lock_screen_transition',
-                        (Route<dynamic> route) => false);
+                      '/lock_screen_transition',
+                      (Route<dynamic> route) => false,
+                    );
                   });
                 } else {
                   setState(() {
@@ -206,83 +211,98 @@ class _PinScreenState extends State<PinScreen>
       height: smallScreen(context) ? buttonSize - 15 : buttonSize,
       width: smallScreen(context) ? buttonSize - 15 : buttonSize,
       child: InkWell(
-          key: Key('pinButton$buttonText'),
-          borderRadius: BorderRadius.circular(200),
-          highlightColor: StateContainer.of(context).curTheme.text15,
-          splashColor: StateContainer.of(context).curTheme.text30,
-          onTap: () {},
-          onTapDown: (TapDownDetails details) {
-            sl.get<HapticUtil>().feedback(FeedbackType.light,
-                StateContainer.of(context).activeVibrations);
-            if (_controller!.status == AnimationStatus.forward ||
-                _controller!.status == AnimationStatus.reverse) {
-              return;
-            }
-            if (_setCharacter(buttonText)) {
-              // Mild delay so they can actually see the last dot get filled
-              Future<void>.delayed(const Duration(milliseconds: 50), () async {
-                if (widget.type == PinOverlayType.enterPin) {
-                  // Pin is not what was expected
-                  if (_pin != widget.expectedPin) {
-                    sl.get<HapticUtil>().feedback(FeedbackType.error,
-                        StateContainer.of(context).activeVibrations);
-                    _controller!.forward();
-                  } else {
-                    Preferences.getInstance().then((Preferences preferences) {
-                      preferences.resetLockAttempts();
-                      Navigator.of(context).pop(true);
-                    });
-                  }
+        key: Key('pinButton$buttonText'),
+        borderRadius: BorderRadius.circular(200),
+        highlightColor: StateContainer.of(context).curTheme.text15,
+        splashColor: StateContainer.of(context).curTheme.text30,
+        onTap: () {},
+        onTapDown: (TapDownDetails details) {
+          sl.get<HapticUtil>().feedback(
+                FeedbackType.light,
+                StateContainer.of(context).activeVibrations,
+              );
+          if (_controller!.status == AnimationStatus.forward ||
+              _controller!.status == AnimationStatus.reverse) {
+            return;
+          }
+          if (_setCharacter(buttonText)) {
+            // Mild delay so they can actually see the last dot get filled
+            Future<void>.delayed(const Duration(milliseconds: 50), () async {
+              if (widget.type == PinOverlayType.enterPin) {
+                // Pin is not what was expected
+                if (_pin != widget.expectedPin) {
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.error,
+                        StateContainer.of(context).activeVibrations,
+                      );
+                  _controller!.forward();
                 } else {
-                  if (!_awaitingConfirmation!) {
-                    // Switch to confirm pin
-                    setState(() {
-                      _awaitingConfirmation = true;
-                      _dotStates = List<IconData>.filled(
-                          _pinLength, FontAwesomeIcons.minus);
-                      _header = AppLocalization.of(context)!.pinConfirmTitle;
-                    });
+                  Preferences.getInstance().then((Preferences preferences) {
+                    preferences.resetLockAttempts();
+                    Navigator.of(context).pop(true);
+                  });
+                }
+              } else {
+                if (!_awaitingConfirmation!) {
+                  // Switch to confirm pin
+                  setState(() {
+                    _awaitingConfirmation = true;
+                    _dotStates = List<IconData>.filled(
+                      _pinLength,
+                      FontAwesomeIcons.minus,
+                    );
+                    _header = AppLocalization.of(context)!.pinConfirmTitle;
+                  });
+                } else {
+                  // First and second pins match
+                  if (_pin == _pinConfirmed) {
+                    final Vault vault = await Vault.getInstance();
+                    vault.setPin(_pin!);
+                    Navigator.of(context).pop(true);
                   } else {
-                    // First and second pins match
-                    if (_pin == _pinConfirmed) {
-                      final Vault vault = await Vault.getInstance();
-                      vault.setPin(_pin!);
-                      Navigator.of(context).pop(true);
-                    } else {
-                      sl.get<HapticUtil>().feedback(FeedbackType.error,
-                          StateContainer.of(context).activeVibrations);
-                      _controller!.forward();
-                    }
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.error,
+                          StateContainer.of(context).activeVibrations,
+                        );
+                    _controller!.forward();
                   }
                 }
-              });
-            }
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: StateContainer.of(context).curTheme.background40!,
-                    blurRadius: 15,
-                    spreadRadius: -15),
-              ],
-            ),
-            alignment: const AlignmentDirectional(0, 0),
-            child: Text(
-              buttonText,
-              textAlign: TextAlign.center,
-              style: AppStyles.textStyleSize20W700Primary(context),
-            ),
-          )),
+              }
+            });
+          }
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: StateContainer.of(context).curTheme.background40!,
+                blurRadius: 15,
+                spreadRadius: -15,
+              ),
+            ],
+          ),
+          alignment: const AlignmentDirectional(0, 0),
+          child: Text(
+            buttonText,
+            textAlign: TextAlign.center,
+            style: AppStyles.textStyleSize20W700Primary(context),
+          ),
+        ),
+      ),
     );
   }
 
   List<Widget> _buildPinDots() {
     final List<Widget> ret = List<Widget>.empty(growable: true);
     for (int i = 0; i < _pinLength; i++) {
-      ret.add(FaIcon(_dotStates![i],
-          color: StateContainer.of(context).curTheme.text, size: 15.0));
+      ret.add(
+        FaIcon(
+          _dotStates![i],
+          color: StateContainer.of(context).curTheme.text,
+          size: 15.0,
+        ),
+      );
     }
     return ret;
   }
@@ -311,9 +331,11 @@ class _PinScreenState extends State<PinScreen>
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(
-                  StateContainer.of(context).curTheme.background3Small!),
-              fit: BoxFit.fitHeight),
+            image: AssetImage(
+              StateContainer.of(context).curTheme.background3Small!,
+            ),
+            fit: BoxFit.fitHeight,
+          ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -329,7 +351,8 @@ class _PinScreenState extends State<PinScreen>
             children: <Widget>[
               Container(
                 margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.06),
+                  top: MediaQuery.of(context).size.height * 0.06,
+                ),
                 child: Column(
                   children: <Widget>[
                     Row(
@@ -353,7 +376,8 @@ class _PinScreenState extends State<PinScreen>
                       child: AutoSizeText(
                         _header!,
                         style: AppStyles.textStyleSize24W700EquinoxPrimary(
-                            context),
+                          context,
+                        ),
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         stepGranularity: 0.1,
@@ -362,7 +386,9 @@ class _PinScreenState extends State<PinScreen>
                     if (widget.description.isNotEmpty)
                       Container(
                         margin: const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 10),
+                          horizontal: 40,
+                          vertical: 10,
+                        ),
                         child: AutoSizeText(
                           widget.description,
                           style: AppStyles.textStyleSize16W200Primary(context),
@@ -384,13 +410,16 @@ class _PinScreenState extends State<PinScreen>
                         top: MediaQuery.of(context).size.height * 0.05,
                       ),
                       child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: _buildPinDots()),
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: _buildPinDots(),
+                      ),
                     ),
                     if (_failedAttempts > 0)
                       Container(
                         margin: const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 10),
+                          horizontal: 40,
+                          vertical: 10,
+                        ),
                         child: AutoSizeText(
                           '${AppLocalization.of(context)!.attempt}$_failedAttempts/$maxAttempts',
                           style: AppStyles.textStyleSize16W200Primary(context),
@@ -405,73 +434,87 @@ class _PinScreenState extends State<PinScreen>
               Expanded(
                 child: Container(
                   margin: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.07,
-                      right: MediaQuery.of(context).size.width * 0.07,
-                      bottom: smallScreen(context)
-                          ? MediaQuery.of(context).size.height * 0.02
-                          : MediaQuery.of(context).size.height * 0.05,
-                      top: MediaQuery.of(context).size.height * 0.05),
+                    left: MediaQuery.of(context).size.width * 0.07,
+                    right: MediaQuery.of(context).size.width * 0.07,
+                    bottom: smallScreen(context)
+                        ? MediaQuery.of(context).size.height * 0.02
+                        : MediaQuery.of(context).size.height * 0.05,
+                    top: MediaQuery.of(context).size.height * 0.05,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).size.height * 0.01),
+                          bottom: MediaQuery.of(context).size.height * 0.01,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             _buildPinScreenButton(
-                                _listPinNumber.elementAt(0).toString(),
-                                context),
+                              _listPinNumber.elementAt(0).toString(),
+                              context,
+                            ),
                             _buildPinScreenButton(
-                                _listPinNumber.elementAt(1).toString(),
-                                context),
+                              _listPinNumber.elementAt(1).toString(),
+                              context,
+                            ),
                             _buildPinScreenButton(
-                                _listPinNumber.elementAt(2).toString(),
-                                context),
+                              _listPinNumber.elementAt(2).toString(),
+                              context,
+                            ),
                           ],
                         ),
                       ),
                       Container(
                         margin: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).size.height * 0.01),
+                          bottom: MediaQuery.of(context).size.height * 0.01,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             _buildPinScreenButton(
-                                _listPinNumber.elementAt(3).toString(),
-                                context),
+                              _listPinNumber.elementAt(3).toString(),
+                              context,
+                            ),
                             _buildPinScreenButton(
-                                _listPinNumber.elementAt(4).toString(),
-                                context),
+                              _listPinNumber.elementAt(4).toString(),
+                              context,
+                            ),
                             _buildPinScreenButton(
-                                _listPinNumber.elementAt(5).toString(),
-                                context),
+                              _listPinNumber.elementAt(5).toString(),
+                              context,
+                            ),
                           ],
                         ),
                       ),
                       Container(
                         margin: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).size.height * 0.01),
+                          bottom: MediaQuery.of(context).size.height * 0.01,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             _buildPinScreenButton(
-                                _listPinNumber.elementAt(6).toString(),
-                                context),
+                              _listPinNumber.elementAt(6).toString(),
+                              context,
+                            ),
                             _buildPinScreenButton(
-                                _listPinNumber.elementAt(7).toString(),
-                                context),
+                              _listPinNumber.elementAt(7).toString(),
+                              context,
+                            ),
                             _buildPinScreenButton(
-                                _listPinNumber.elementAt(8).toString(),
-                                context),
+                              _listPinNumber.elementAt(8).toString(),
+                              context,
+                            ),
                           ],
                         ),
                       ),
                       Container(
                         margin: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).size.height * 0.009),
+                          bottom: MediaQuery.of(context).size.height * 0.009,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
@@ -484,8 +527,9 @@ class _PinScreenState extends State<PinScreen>
                                   : buttonSize,
                             ),
                             _buildPinScreenButton(
-                                _listPinNumber.elementAt(9).toString(),
-                                context),
+                              _listPinNumber.elementAt(9).toString(),
+                              context,
+                            ),
                             SizedBox(
                               height: smallScreen(context)
                                   ? buttonSize - 15
@@ -494,40 +538,43 @@ class _PinScreenState extends State<PinScreen>
                                   ? buttonSize - 15
                                   : buttonSize,
                               child: InkWell(
-                                  borderRadius: BorderRadius.circular(200),
-                                  highlightColor: StateContainer.of(context)
-                                      .curTheme
-                                      .text15,
-                                  splashColor: StateContainer.of(context)
-                                      .curTheme
-                                      .text30,
-                                  onTap: () {},
-                                  onTapDown: (TapDownDetails details) {
-                                    sl.get<HapticUtil>().feedback(
+                                borderRadius: BorderRadius.circular(200),
+                                highlightColor:
+                                    StateContainer.of(context).curTheme.text15,
+                                splashColor:
+                                    StateContainer.of(context).curTheme.text30,
+                                onTap: () {},
+                                onTapDown: (TapDownDetails details) {
+                                  sl.get<HapticUtil>().feedback(
                                         FeedbackType.light,
                                         StateContainer.of(context)
-                                            .activeVibrations);
-                                    _backSpace();
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      boxShadow: <BoxShadow>[
-                                        BoxShadow(
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .background40!,
-                                            blurRadius: 15,
-                                            spreadRadius: -15),
-                                      ],
-                                    ),
-                                    alignment: const AlignmentDirectional(0, 0),
-                                    child: FaIcon(Icons.backspace,
+                                            .activeVibrations,
+                                      );
+                                  _backSpace();
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    boxShadow: <BoxShadow>[
+                                      BoxShadow(
                                         color: StateContainer.of(context)
                                             .curTheme
-                                            .text,
-                                        size: 20.0),
-                                  )),
+                                            .background40!,
+                                        blurRadius: 15,
+                                        spreadRadius: -15,
+                                      ),
+                                    ],
+                                  ),
+                                  alignment: const AlignmentDirectional(0, 0),
+                                  child: FaIcon(
+                                    Icons.backspace,
+                                    color: StateContainer.of(context)
+                                        .curTheme
+                                        .text,
+                                    size: 20.0,
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),

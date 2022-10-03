@@ -69,36 +69,41 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
         .listen((TransactionSendEvent event) async {
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         UIUtil.showSnackbar(
-            '${AppLocalization.of(context)!.sendError} (${event.response!})',
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+          '${AppLocalization.of(context)!.sendError} (${event.response!})',
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+        );
         Navigator.of(context).pop(false);
       } else {
         if (event.response == 'ok' &&
             ConfirmationsUtil.isEnoughConfirmations(
-                event.nbConfirmations!, event.maxConfirmations!)) {
+              event.nbConfirmations!,
+              event.maxConfirmations!,
+            )) {
           switch (event.transactionType) {
             case TransactionSendEventType.keychain:
               UIUtil.showSnackbar(
-                  event.nbConfirmations == 1
-                      ? AppLocalization.of(context)!
-                          .keychainCreationTransactionConfirmed1
-                          .replaceAll('%1', event.nbConfirmations.toString())
-                          .replaceAll('%2', event.maxConfirmations.toString())
-                      : AppLocalization.of(context)!
-                          .keychainCreationTransactionConfirmed
-                          .replaceAll('%1', event.nbConfirmations.toString())
-                          .replaceAll('%2', event.maxConfirmations.toString()),
-                  context,
-                  StateContainer.of(context).curTheme.text!,
-                  StateContainer.of(context).curTheme.snackBarShadow!,
-                  duration: const Duration(milliseconds: 5000));
+                event.nbConfirmations == 1
+                    ? AppLocalization.of(context)!
+                        .keychainCreationTransactionConfirmed1
+                        .replaceAll('%1', event.nbConfirmations.toString())
+                        .replaceAll('%2', event.maxConfirmations.toString())
+                    : AppLocalization.of(context)!
+                        .keychainCreationTransactionConfirmed
+                        .replaceAll('%1', event.nbConfirmations.toString())
+                        .replaceAll('%2', event.maxConfirmations.toString()),
+                context,
+                StateContainer.of(context).curTheme.text!,
+                StateContainer.of(context).curTheme.snackBarShadow!,
+                duration: const Duration(milliseconds: 5000),
+              );
 
               Preferences preferences = await Preferences.getInstance();
               await subscriptionChannel2.connect(
-                  await preferences.getNetwork().getPhoenixHttpLink(),
-                  await preferences.getNetwork().getWebsocketUri());
+                await preferences.getNetwork().getPhoenixHttpLink(),
+                await preferences.getNetwork().getWebsocketUri(),
+              );
 
               await KeychainUtil().createKeyChainAccess(
                 widget.seed!,
@@ -111,47 +116,51 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
               break;
             case TransactionSendEventType.keychainAccess:
               UIUtil.showSnackbar(
-                  event.nbConfirmations == 1
-                      ? AppLocalization.of(context)!
-                          .keychainAccessCreationTransactionConfirmed1
-                          .replaceAll('%1', event.nbConfirmations.toString())
-                          .replaceAll('%2', event.maxConfirmations.toString())
-                      : AppLocalization.of(context)!
-                          .keychainAccessCreationTransactionConfirmed
-                          .replaceAll('%1', event.nbConfirmations.toString())
-                          .replaceAll('%2', event.maxConfirmations.toString()),
-                  context,
-                  StateContainer.of(context).curTheme.text!,
-                  StateContainer.of(context).curTheme.snackBarShadow!,
-                  duration: const Duration(milliseconds: 5000));
+                event.nbConfirmations == 1
+                    ? AppLocalization.of(context)!
+                        .keychainAccessCreationTransactionConfirmed1
+                        .replaceAll('%1', event.nbConfirmations.toString())
+                        .replaceAll('%2', event.maxConfirmations.toString())
+                    : AppLocalization.of(context)!
+                        .keychainAccessCreationTransactionConfirmed
+                        .replaceAll('%1', event.nbConfirmations.toString())
+                        .replaceAll('%2', event.maxConfirmations.toString()),
+                context,
+                StateContainer.of(context).curTheme.text!,
+                StateContainer.of(context).curTheme.snackBarShadow!,
+                duration: const Duration(milliseconds: 5000),
+              );
 
               bool error = false;
               try {
-                StateContainer.of(context).appWallet = await AppWallet()
-                    .createNewAppWallet(
-                        event.params!['keychainAddress']! as String,
-                        event.params!['keychain']! as Keychain,
-                        widget.name!);
+                StateContainer.of(context).appWallet =
+                    await AppWallet().createNewAppWallet(
+                  event.params!['keychainAddress']! as String,
+                  event.params!['keychain']! as Keychain,
+                  widget.name!,
+                );
               } catch (e) {
                 error = true;
                 UIUtil.showSnackbar(
-                    '${AppLocalization.of(context)!.sendError} ($e)',
-                    context,
-                    StateContainer.of(context).curTheme.text!,
-                    StateContainer.of(context).curTheme.snackBarShadow!);
+                  '${AppLocalization.of(context)!.sendError} ($e)',
+                  context,
+                  StateContainer.of(context).curTheme.text!,
+                  StateContainer.of(context).curTheme.snackBarShadow!,
+                );
               }
               if (error == false) {
                 await StateContainer.of(context).requestUpdate();
 
                 StateContainer.of(context).checkTransactionInputs(
-                    AppLocalization.of(context)!.transactionInputNotification);
+                  AppLocalization.of(context)!.transactionInputNotification,
+                );
                 Preferences preferences = await Preferences.getInstance();
                 StateContainer.of(context).bottomBarCurrentPage =
                     preferences.getMainScreenCurrentPage();
                 StateContainer.of(context).bottomBarPageController =
                     PageController(
-                        initialPage:
-                            StateContainer.of(context).bottomBarCurrentPage);
+                  initialPage: StateContainer.of(context).bottomBarCurrentPage,
+                );
                 Navigator.of(context).pushNamedAndRemoveUntil(
                   '/home',
                   (Route<dynamic> route) => false,
@@ -165,10 +174,11 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
           }
         } else {
           UIUtil.showSnackbar(
-              AppLocalization.of(context)!.notEnoughConfirmations,
-              context,
-              StateContainer.of(context).curTheme.text!,
-              StateContainer.of(context).curTheme.snackBarShadow!);
+            AppLocalization.of(context)!.notEnoughConfirmations,
+            context,
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!,
+          );
           Navigator.of(context).pop();
         }
       }
@@ -198,11 +208,15 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
     _registerBus();
     Preferences.getInstance().then((Preferences preferences) {
       setState(() {
-        wordListToSelect = AppMnemomics.seedToMnemonic(widget.seed!,
-            languageCode: preferences.getLanguageSeed());
+        wordListToSelect = AppMnemomics.seedToMnemonic(
+          widget.seed!,
+          languageCode: preferences.getLanguageSeed(),
+        );
         wordListToSelect.shuffle();
-        originalWordsList = AppMnemomics.seedToMnemonic(widget.seed!,
-            languageCode: preferences.getLanguageSeed());
+        originalWordsList = AppMnemomics.seedToMnemonic(
+          widget.seed!,
+          languageCode: preferences.getLanguageSeed(),
+        );
       });
     });
   }
@@ -215,9 +229,11 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(
-                  StateContainer.of(context).curTheme.background3Small!),
-              fit: BoxFit.fitHeight),
+            image: AssetImage(
+              StateContainer.of(context).curTheme.background3Small!,
+            ),
+            fit: BoxFit.fitHeight,
+          ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -231,8 +247,9 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
           builder: (BuildContext context, BoxConstraints constraints) =>
               SafeArea(
             minimum: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.035,
-                top: MediaQuery.of(context).size.height * 0.075),
+              bottom: MediaQuery.of(context).size.height * 0.035,
+              top: MediaQuery.of(context).size.height * 0.075,
+            ),
             child: Column(
               children: <Widget>[
                 Row(
@@ -272,7 +289,10 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                         ),
                         Container(
                           margin: const EdgeInsetsDirectional.only(
-                              start: 20, end: 20, top: 15.0),
+                            start: 20,
+                            end: 20,
+                            top: 15.0,
+                          ),
                           child: AutoSizeText(
                             AppLocalization.of(context)!
                                 .confirmSecretPhraseExplanation,
@@ -285,38 +305,47 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                         ),
                         Container(
                           margin: const EdgeInsetsDirectional.only(
-                              start: 20, end: 20, top: 15.0),
+                            start: 20,
+                            end: 20,
+                            top: 15.0,
+                          ),
                           child: Wrap(
-                              spacing: 10,
-                              alignment: WrapAlignment.start,
-                              children: wordListSelected
-                                  .asMap()
-                                  .entries
-                                  .map((MapEntry entry) {
-                                return SizedBox(
-                                  height: 35,
-                                  child: Chip(
-                                    avatar: CircleAvatar(
-                                      backgroundColor: Colors.grey.shade800,
-                                      child: Text((entry.key + 1).toString(),
-                                          style: AppStyles
-                                              .textStyleSize12W100Primary60(
-                                                  context)),
+                            spacing: 10,
+                            alignment: WrapAlignment.start,
+                            children: wordListSelected
+                                .asMap()
+                                .entries
+                                .map((MapEntry entry) {
+                              return SizedBox(
+                                height: 35,
+                                child: Chip(
+                                  avatar: CircleAvatar(
+                                    backgroundColor: Colors.grey.shade800,
+                                    child: Text(
+                                      (entry.key + 1).toString(),
+                                      style: AppStyles
+                                          .textStyleSize12W100Primary60(
+                                        context,
+                                      ),
                                     ),
-                                    label: Text(entry.value,
-                                        style: AppStyles
-                                            .textStyleSize12W400Primary(
-                                                context)),
-                                    onDeleted: () {
-                                      setState(() {
-                                        wordListToSelect.add(entry.value);
-                                        wordListSelected.removeAt(entry.key);
-                                      });
-                                    },
-                                    deleteIconColor: Colors.white,
                                   ),
-                                );
-                              }).toList()),
+                                  label: Text(
+                                    entry.value,
+                                    style: AppStyles.textStyleSize12W400Primary(
+                                      context,
+                                    ),
+                                  ),
+                                  onDeleted: () {
+                                    setState(() {
+                                      wordListToSelect.add(entry.value);
+                                      wordListSelected.removeAt(entry.key);
+                                    });
+                                  },
+                                  deleteIconColor: Colors.white,
+                                ),
+                              );
+                            }).toList(),
+                          ),
                         ),
                         Divider(
                           height: 15,
@@ -324,29 +353,38 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                         ),
                         Container(
                           margin: const EdgeInsetsDirectional.only(
-                              start: 20, end: 20, top: 15.0),
+                            start: 20,
+                            end: 20,
+                            top: 15.0,
+                          ),
                           child: Wrap(
-                              spacing: 10,
-                              alignment: WrapAlignment.start,
-                              children: wordListToSelect
-                                  .asMap()
-                                  .entries
-                                  .map((MapEntry entry) {
-                                return SizedBox(
-                                    height: 35,
-                                    child: GestureDetector(
-                                        onTap: () {
-                                          wordListSelected.add(entry.value);
-                                          wordListToSelect.removeAt(entry.key);
-                                          setState(() {});
-                                        },
-                                        child: Chip(
-                                          label: Text(entry.value,
-                                              style: AppStyles
-                                                  .textStyleSize12W400Primary(
-                                                      context)),
-                                        )));
-                              }).toList()),
+                            spacing: 10,
+                            alignment: WrapAlignment.start,
+                            children: wordListToSelect
+                                .asMap()
+                                .entries
+                                .map((MapEntry entry) {
+                              return SizedBox(
+                                height: 35,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    wordListSelected.add(entry.value);
+                                    wordListToSelect.removeAt(entry.key);
+                                    setState(() {});
+                                  },
+                                  child: Chip(
+                                    label: Text(
+                                      entry.value,
+                                      style:
+                                          AppStyles.textStyleSize12W400Primary(
+                                        context,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ],
                     ),
@@ -372,20 +410,21 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                 context,
                                 AppButtonType.primary,
                                 AppLocalization.of(context)!.confirm,
-                                Dimens.buttonTopDimens, onPressed: () async {
-                                bool orderOk = true;
+                                Dimens.buttonTopDimens,
+                                onPressed: () async {
+                                  bool orderOk = true;
 
-                                for (int i = 0;
-                                    i < originalWordsList.length;
-                                    i++) {
-                                  if (originalWordsList[i] !=
-                                      wordListSelected[i]) {
-                                    orderOk = false;
+                                  for (int i = 0;
+                                      i < originalWordsList.length;
+                                      i++) {
+                                    if (originalWordsList[i] !=
+                                        wordListSelected[i]) {
+                                      orderOk = false;
+                                    }
                                   }
-                                }
-                                if (orderOk == false) {
-                                  setState(() {
-                                    UIUtil.showSnackbar(
+                                  if (orderOk == false) {
+                                    setState(() {
+                                      UIUtil.showSnackbar(
                                         AppLocalization.of(context)!
                                             .confirmSecretPhraseKo,
                                         context,
@@ -394,13 +433,17 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                             .text!,
                                         StateContainer.of(context)
                                             .curTheme
-                                            .snackBarShadow!);
-                                  });
-                                } else {
-                                  await _launchSecurityConfiguration(
-                                      widget.name!, widget.seed!);
-                                }
-                              }),
+                                            .snackBarShadow!,
+                                      );
+                                    });
+                                  } else {
+                                    await _launchSecurityConfiguration(
+                                      widget.name!,
+                                      widget.seed!,
+                                    );
+                                  }
+                                },
+                              ),
                       ],
                     ),
                     Row(
@@ -420,7 +463,9 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                     .passBackupConfirmationMessage,
                                 AppLocalization.of(context)!.yes, () async {
                               await _launchSecurityConfiguration(
-                                  widget.name!, widget.seed!);
+                                widget.name!,
+                                widget.seed!,
+                              );
                             });
                           },
                         )
@@ -439,30 +484,40 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   Future<bool> _launchSecurityConfiguration(String name, String seed) async {
     bool biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
     List<PickerItem> accessModes = [];
-    accessModes.add(PickerItem(
+    accessModes.add(
+      PickerItem(
         AuthenticationMethod(AuthMethod.pin).getDisplayName(context),
         AuthenticationMethod(AuthMethod.pin).getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.pin),
         StateContainer.of(context).curTheme.pickerItemIconEnabled,
         AuthMethod.pin,
-        true));
-    accessModes.add(PickerItem(
+        true,
+      ),
+    );
+    accessModes.add(
+      PickerItem(
         AuthenticationMethod(AuthMethod.password).getDisplayName(context),
         AuthenticationMethod(AuthMethod.password).getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.password),
         StateContainer.of(context).curTheme.pickerItemIconEnabled,
         AuthMethod.password,
-        true));
+        true,
+      ),
+    );
     if (biometricsAvalaible) {
-      accessModes.add(PickerItem(
+      accessModes.add(
+        PickerItem(
           AuthenticationMethod(AuthMethod.biometrics).getDisplayName(context),
           AuthenticationMethod(AuthMethod.biometrics).getDescription(context),
           AuthenticationMethod.getIcon(AuthMethod.biometrics),
           StateContainer.of(context).curTheme.pickerItemIconEnabled,
           AuthMethod.biometrics,
-          true));
+          true,
+        ),
+      );
     }
-    accessModes.add(PickerItem(
+    accessModes.add(
+      PickerItem(
         AuthenticationMethod(AuthMethod.biometricsUniris)
             .getDisplayName(context),
         AuthenticationMethod(AuthMethod.biometricsUniris)
@@ -470,8 +525,11 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
         AuthenticationMethod.getIcon(AuthMethod.biometricsUniris),
         StateContainer.of(context).curTheme.pickerItemIconEnabled,
         AuthMethod.biometricsUniris,
-        false));
-    accessModes.add(PickerItem(
+        false,
+      ),
+    );
+    accessModes.add(
+      PickerItem(
         AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
             .getDisplayName(context),
         AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
@@ -479,26 +537,34 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
         AuthenticationMethod.getIcon(AuthMethod.yubikeyWithYubicloud),
         StateContainer.of(context).curTheme.pickerItemIconEnabled,
         AuthMethod.yubikeyWithYubicloud,
-        true));
+        true,
+      ),
+    );
 
-    bool securityConfiguration = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) {
-      return IntroConfigureSecurity(
-        accessModes: accessModes,
-        name: name,
-        seed: seed,
-      );
-    }));
+    bool securityConfiguration = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return IntroConfigureSecurity(
+            accessModes: accessModes,
+            name: name,
+            seed: seed,
+          );
+        },
+      ),
+    );
 
     return securityConfiguration;
   }
 
   void _showSendingAnimation(BuildContext context) {
-    Navigator.of(context).push(AnimationLoadingOverlay(
+    Navigator.of(context).push(
+      AnimationLoadingOverlay(
         AnimationType.send,
         StateContainer.of(context).curTheme.animationOverlayStrong!,
         StateContainer.of(context).curTheme.animationOverlayMedium!,
-        title: AppLocalization.of(context)!.appWalletInitInProgress));
+        title: AppLocalization.of(context)!.appWalletInitInProgress,
+      ),
+    );
   }
 
   Future<void> createKeychain() async {
@@ -516,18 +582,25 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
       Preferences preferences = await Preferences.getInstance();
 
       await subscriptionChannel.connect(
-          await preferences.getNetwork().getPhoenixHttpLink(),
-          await preferences.getNetwork().getWebsocketUri());
+        await preferences.getNetwork().getPhoenixHttpLink(),
+        await preferences.getNetwork().getWebsocketUri(),
+      );
 
-      await KeychainUtil().createKeyChain(widget.seed!, widget.name!,
-          originPrivateKey, preferences, subscriptionChannel);
+      await KeychainUtil().createKeyChain(
+        widget.seed!,
+        widget.name!,
+        originPrivateKey,
+        preferences,
+        subscriptionChannel,
+      );
     } catch (e) {
       error = true;
       UIUtil.showSnackbar(
-          '${AppLocalization.of(context)!.sendError} ($e)',
-          context,
-          StateContainer.of(context).curTheme.text!,
-          StateContainer.of(context).curTheme.snackBarShadow!);
+        '${AppLocalization.of(context)!.sendError} ($e)',
+        context,
+        StateContainer.of(context).curTheme.text!,
+        StateContainer.of(context).curTheme.snackBarShadow!,
+      );
     }
 
     if (error == false) {

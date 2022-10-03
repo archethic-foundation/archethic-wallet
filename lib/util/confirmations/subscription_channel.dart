@@ -17,7 +17,9 @@ class SubscriptionChannel {
   Stream<Map> get onMessage => _onMessageController.stream;
 
   Future<void> connect(
-      String phoenixHttpLinkEndpoint, String websocketUriEndpoint) async {
+    String phoenixHttpLinkEndpoint,
+    String websocketUriEndpoint,
+  ) async {
     final HttpLink phoenixHttpLink = HttpLink(
       phoenixHttpLinkEndpoint,
     );
@@ -29,7 +31,10 @@ class SubscriptionChannel {
     );
 
     var link = Link.split(
-        (request) => request.isSubscription, phoenixLink, phoenixHttpLink);
+      (request) => request.isSubscription,
+      phoenixLink,
+      phoenixHttpLink,
+    );
     client = GraphQLClient(
       link: link,
       cache: GraphQLCache(),
@@ -37,7 +42,9 @@ class SubscriptionChannel {
   }
 
   void addSubscriptionTransactionConfirmed(
-      String address, Function(QueryResult) function) {
+    String address,
+    Function(QueryResult) function,
+  ) {
     final subscriptionDocument = gql(
       'subscription { transactionConfirmed(address: "$address") { nbConfirmations, maxConfirmations } }',
     );

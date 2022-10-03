@@ -10,11 +10,15 @@ class NotificationsUtil {
 
   static Future _notificationDetails() async {
     return const NotificationDetails(
-        android: AndroidNotificationDetails('channel id', 'channel name',
-            channelDescription: 'channel description',
-            importance: Importance.max),
-        iOS: IOSNotificationDetails(),
-        macOS: MacOSNotificationDetails());
+      android: AndroidNotificationDetails(
+        'channel id',
+        'channel name',
+        channelDescription: 'channel description',
+        importance: Importance.max,
+      ),
+      iOS: IOSNotificationDetails(),
+      macOS: MacOSNotificationDetails(),
+    );
   }
 
   static Future init() async {
@@ -23,10 +27,12 @@ class NotificationsUtil {
     const macOS = MacOSInitializationSettings();
     const settings =
         InitializationSettings(android: android, iOS: iOS, macOS: macOS);
-    await _notifications.initialize(settings,
-        onSelectNotification: (payload) async {
-      onNotifications.add(payload);
-    });
+    await _notifications.initialize(
+      settings,
+      onSelectNotification: (payload) async {
+        onNotifications.add(payload);
+      },
+    );
   }
 
   static Future showNotification({
@@ -35,6 +41,11 @@ class NotificationsUtil {
     String? body,
     String? payload,
   }) async =>
-      _notifications.show(id, title, body, await _notificationDetails(),
-          payload: payload);
+      _notifications.show(
+        id,
+        title,
+        body,
+        await _notificationDetails(),
+        payload: payload,
+      );
 }

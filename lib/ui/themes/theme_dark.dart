@@ -237,7 +237,9 @@ class DarkTheme implements BaseTheme {
         topRight: Radius.circular(25.0),
       ),
       image: DecorationImage(
-          image: AssetImage(background2Small!), fit: BoxFit.fitHeight),
+        image: AssetImage(background2Small!),
+        fit: BoxFit.fitHeight,
+      ),
     );
   }
 }

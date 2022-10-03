@@ -68,7 +68,8 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
       await StateContainer.of(context).requestUpdate();
 
       StateContainer.of(context).checkTransactionInputs(
-          AppLocalization.of(context)!.transactionInputNotification);
+        AppLocalization.of(context)!.transactionInputNotification,
+      );
       Navigator.of(context).pushNamedAndRemoveUntil(
         '/home',
         (Route<dynamic> route) => false,
@@ -95,9 +96,11 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(
-                  StateContainer.of(context).curTheme.background2Small!),
-              fit: BoxFit.fitHeight),
+            image: AssetImage(
+              StateContainer.of(context).curTheme.background2Small!,
+            ),
+            fit: BoxFit.fitHeight,
+          ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -111,8 +114,9 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
           builder: (BuildContext context, BoxConstraints constraints) =>
               SafeArea(
             minimum: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.035,
-                top: MediaQuery.of(context).size.height * 0.075),
+              bottom: MediaQuery.of(context).size.height * 0.035,
+              top: MediaQuery.of(context).size.height * 0.075,
+            ),
             child: Column(
               children: <Widget>[
                 Expanded(
@@ -126,7 +130,8 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                           children: <Widget>[
                             Container(
                               margin: EdgeInsetsDirectional.only(
-                                  start: smallScreen(context) ? 15 : 20),
+                                start: smallScreen(context) ? 15 : 20,
+                              ),
                               height: 50,
                               width: 50,
                               child: BackButton(
@@ -141,15 +146,17 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                               children: [
                                 Container(
                                   margin: const EdgeInsetsDirectional.only(
-                                      start: 15),
+                                    start: 15,
+                                  ),
                                   height: 50,
                                   width: 50,
                                   child: TextButton(
                                     onPressed: () async {
                                       sl.get<HapticUtil>().feedback(
-                                          FeedbackType.light,
-                                          StateContainer.of(context)
-                                              .activeVibrations);
+                                            FeedbackType.light,
+                                            StateContainer.of(context)
+                                                .activeVibrations,
+                                          );
 
                                       Preferences preferences =
                                           await Preferences.getInstance();
@@ -160,25 +167,29 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                     },
                                     child: language == 'en'
                                         ? Image.asset(
-                                            'assets/icons/languages/united-states.png')
+                                            'assets/icons/languages/united-states.png',
+                                          )
                                         : Opacity(
                                             opacity: 0.3,
                                             child: Image.asset(
-                                                'assets/icons/languages/united-states.png'),
+                                              'assets/icons/languages/united-states.png',
+                                            ),
                                           ),
                                   ),
                                 ),
                                 Container(
                                   margin: const EdgeInsetsDirectional.only(
-                                      start: 15),
+                                    start: 15,
+                                  ),
                                   height: 50,
                                   width: 50,
                                   child: TextButton(
                                     onPressed: () async {
                                       sl.get<HapticUtil>().feedback(
-                                          FeedbackType.light,
-                                          StateContainer.of(context)
-                                              .activeVibrations);
+                                            FeedbackType.light,
+                                            StateContainer.of(context)
+                                                .activeVibrations,
+                                          );
 
                                       Preferences preferences =
                                           await Preferences.getInstance();
@@ -189,11 +200,13 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                     },
                                     child: language == 'fr'
                                         ? Image.asset(
-                                            'assets/icons/languages/france.png')
+                                            'assets/icons/languages/france.png',
+                                          )
                                         : Opacity(
                                             opacity: 0.3,
                                             child: Image.asset(
-                                                'assets/icons/languages/france.png'),
+                                              'assets/icons/languages/france.png',
+                                            ),
                                           ),
                                   ),
                                 ),
@@ -219,9 +232,10 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                         ),
                         Container(
                           margin: EdgeInsets.only(
-                              left: smallScreen(context) ? 30 : 40,
-                              right: smallScreen(context) ? 30 : 40,
-                              top: 15.0),
+                            left: smallScreen(context) ? 30 : 40,
+                            right: smallScreen(context) ? 30 : 40,
+                            top: 15.0,
+                          ),
                           alignment: Alignment.centerLeft,
                           child: Text(
                             AppLocalization.of(context)!.importSecretPhraseHint,
@@ -236,9 +250,12 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                         if (_mnemonicError != '')
                           SizedBox(
                             height: 40,
-                            child: Text(_mnemonicError,
-                                style: AppStyles.textStyleSize14W200Primary(
-                                    context)),
+                            child: Text(
+                              _mnemonicError,
+                              style: AppStyles.textStyleSize14W200Primary(
+                                context,
+                              ),
+                            ),
                           )
                         else
                           const SizedBox(
@@ -251,127 +268,143 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             children: <Widget>[
                               const SizedBox(height: 10),
                               GridView.count(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  childAspectRatio: 1.2,
-                                  padding:
-                                      const EdgeInsets.only(top: 0, bottom: 0),
-                                  shrinkWrap: true,
-                                  crossAxisCount: 4,
-                                  children: List.generate(24, (index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10, right: 10),
-                                      child: Column(
-                                        children: [
-                                          Text((index + 1).toString(),
-                                              style: AppStyles
-                                                  .textStyleSize12W100Primary(
-                                                      context)),
-                                          Autocomplete<String>(
-                                            optionsBuilder: (TextEditingValue
-                                                textEditingValue) {
-                                              if (textEditingValue.text == '') {
-                                                return const Iterable<
-                                                    String>.empty();
-                                              }
-                                              return AppMnemomics.getLanguage(
-                                                      language)
-                                                  .list
-                                                  .where((String option) {
-                                                return option.contains(unorm
-                                                    .nfkd(textEditingValue.text
-                                                        .toLowerCase()));
-                                              });
-                                            },
-                                            onSelected: (String selection) {
-                                              if (!AppMnemomics.isValidWord(
-                                                  selection,
-                                                  languageCode: language)) {
-                                                setState(() {
-                                                  _mnemonicIsValid = false;
-                                                  _mnemonicError =
-                                                      AppLocalization.of(
-                                                              context)!
-                                                          .mnemonicInvalidWord
-                                                          .replaceAll(
-                                                              '%1', selection);
-                                                });
-                                              } else {
-                                                phrase[index] = selection;
-                                                setState(() {
-                                                  _mnemonicError = '';
-                                                  _mnemonicIsValid = true;
-                                                });
-                                              }
-                                              ;
-                                            },
-                                            fieldViewBuilder: ((context,
-                                                textEditingController,
-                                                focusNode,
-                                                onFieldSubmitted) {
-                                              return Stack(
-                                                alignment:
-                                                    AlignmentDirectional.center,
-                                                children: <Widget>[
-                                                  TextFormField(
-                                                    controller:
-                                                        textEditingController,
-                                                    focusNode: focusNode,
-                                                    style: AppStyles
-                                                        .textStyleSize12W400Primary(
-                                                            context),
-                                                    autocorrect: false,
-                                                    onChanged: (value) {
-                                                      if (!AppMnemomics
-                                                          .isValidWord(value,
-                                                              languageCode:
-                                                                  language)) {
-                                                        setState(() {
-                                                          _mnemonicIsValid =
-                                                              false;
-                                                          _mnemonicError =
-                                                              AppLocalization.of(
-                                                                      context)!
-                                                                  .mnemonicInvalidWord
-                                                                  .replaceAll(
-                                                                      '%1',
-                                                                      value);
-                                                        });
-                                                      } else {
-                                                        phrase[index] = value;
-                                                        setState(() {
-                                                          _mnemonicError = '';
-                                                          _mnemonicIsValid =
-                                                              true;
-                                                        });
-                                                      }
-                                                    },
-                                                  ),
-                                                  Positioned(
-                                                    bottom: 1,
-                                                    child: Container(
-                                                      height: 1,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                              .size
-                                                              .width,
-                                                      decoration: BoxDecoration(
-                                                        gradient:
-                                                            StateContainer.of(
-                                                                    context)
-                                                                .curTheme
-                                                                .gradient!,
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              );
-                                            }),
+                                physics: const NeverScrollableScrollPhysics(),
+                                childAspectRatio: 1.2,
+                                padding:
+                                    const EdgeInsets.only(top: 0, bottom: 0),
+                                shrinkWrap: true,
+                                crossAxisCount: 4,
+                                children: List.generate(24, (index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 10,
+                                      right: 10,
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          (index + 1).toString(),
+                                          style: AppStyles
+                                              .textStyleSize12W100Primary(
+                                            context,
                                           ),
-                                        ],
-                                      ),
-                                    );
-                                  })),
+                                        ),
+                                        Autocomplete<String>(
+                                          optionsBuilder: (
+                                            TextEditingValue textEditingValue,
+                                          ) {
+                                            if (textEditingValue.text == '') {
+                                              return const Iterable<
+                                                  String>.empty();
+                                            }
+                                            return AppMnemomics.getLanguage(
+                                              language,
+                                            ).list.where((String option) {
+                                              return option.contains(
+                                                unorm.nfkd(
+                                                  textEditingValue.text
+                                                      .toLowerCase(),
+                                                ),
+                                              );
+                                            });
+                                          },
+                                          onSelected: (String selection) {
+                                            if (!AppMnemomics.isValidWord(
+                                              selection,
+                                              languageCode: language,
+                                            )) {
+                                              setState(() {
+                                                _mnemonicIsValid = false;
+                                                _mnemonicError =
+                                                    AppLocalization.of(
+                                                  context,
+                                                )!
+                                                        .mnemonicInvalidWord
+                                                        .replaceAll(
+                                                          '%1',
+                                                          selection,
+                                                        );
+                                              });
+                                            } else {
+                                              phrase[index] = selection;
+                                              setState(() {
+                                                _mnemonicError = '';
+                                                _mnemonicIsValid = true;
+                                              });
+                                            }
+                                          },
+                                          fieldViewBuilder: ((
+                                            context,
+                                            textEditingController,
+                                            focusNode,
+                                            onFieldSubmitted,
+                                          ) {
+                                            return Stack(
+                                              alignment:
+                                                  AlignmentDirectional.center,
+                                              children: <Widget>[
+                                                TextFormField(
+                                                  controller:
+                                                      textEditingController,
+                                                  focusNode: focusNode,
+                                                  style: AppStyles
+                                                      .textStyleSize12W400Primary(
+                                                    context,
+                                                  ),
+                                                  autocorrect: false,
+                                                  onChanged: (value) {
+                                                    if (!AppMnemomics
+                                                        .isValidWord(
+                                                      value,
+                                                      languageCode: language,
+                                                    )) {
+                                                      setState(() {
+                                                        _mnemonicIsValid =
+                                                            false;
+                                                        _mnemonicError =
+                                                            AppLocalization.of(
+                                                          context,
+                                                        )!
+                                                                .mnemonicInvalidWord
+                                                                .replaceAll(
+                                                                  '%1',
+                                                                  value,
+                                                                );
+                                                      });
+                                                    } else {
+                                                      phrase[index] = value;
+                                                      setState(() {
+                                                        _mnemonicError = '';
+                                                        _mnemonicIsValid = true;
+                                                      });
+                                                    }
+                                                  },
+                                                ),
+                                                Positioned(
+                                                  bottom: 1,
+                                                  child: Container(
+                                                    height: 1,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    decoration: BoxDecoration(
+                                                      gradient:
+                                                          StateContainer.of(
+                                                        context,
+                                                      ).curTheme.gradient!,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            );
+                                          }),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                              ),
                             ],
                           ),
                         ),
@@ -411,8 +444,10 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                   _mnemonicError = AppLocalization.of(context)!
                                       .mnemonicSizeError;
                                 } else {
-                                  if (AppMnemomics.isValidWord(word,
-                                          languageCode: language) ==
+                                  if (AppMnemomics.isValidWord(
+                                        word,
+                                        languageCode: language,
+                                      ) ==
                                       false) {
                                     _mnemonicIsValid = false;
                                     _mnemonicError =
@@ -426,75 +461,79 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                 await sl.get<DBHelper>().clearAppWallet();
                                 StateContainer.of(context).appWallet = null;
                                 String seed = AppMnemomics.mnemonicListToSeed(
-                                    phrase,
-                                    languageCode: language);
+                                  phrase,
+                                  languageCode: language,
+                                );
                                 final Vault vault = await Vault.getInstance();
                                 vault.setSeed(seed);
                                 Price tokenPrice = await Price.getCurrency(
-                                    StateContainer.of(context)
-                                        .curCurrency
-                                        .currency
-                                        .name);
+                                  StateContainer.of(context)
+                                      .curCurrency
+                                      .currency
+                                      .name,
+                                );
 
                                 try {
                                   AppWallet? appWallet = await KeychainUtil()
                                       .getListAccountsFromKeychain(
-                                          StateContainer.of(context).appWallet,
-                                          seed,
-                                          StateContainer.of(context)
-                                              .curCurrency
-                                              .currency
-                                              .name,
-                                          StateContainer.of(context)
-                                              .curNetwork
-                                              .getNetworkCryptoCurrencyLabel(),
-                                          tokenPrice,
-                                          loadBalance: true,
-                                          loadRecentTransactions: true);
+                                    StateContainer.of(context).appWallet,
+                                    seed,
+                                    StateContainer.of(context)
+                                        .curCurrency
+                                        .currency
+                                        .name,
+                                    StateContainer.of(context)
+                                        .curNetwork
+                                        .getNetworkCryptoCurrencyLabel(),
+                                    tokenPrice,
+                                    loadBalance: true,
+                                    loadRecentTransactions: true,
+                                  );
 
                                   StateContainer.of(context).appWallet =
                                       appWallet;
                                   List<Account>? accounts =
                                       appWallet!.appKeychain!.accounts;
 
-                                  if (accounts == null ||
-                                      accounts.length == 0) {
+                                  if (accounts == null || accounts.isEmpty) {
                                     setState(() {
                                       _mnemonicIsValid = false;
                                     });
                                     UIUtil.showSnackbar(
-                                        AppLocalization.of(context)!.noKeychain,
-                                        context,
-                                        StateContainer.of(context)
-                                            .curTheme
-                                            .text!,
-                                        StateContainer.of(context)
-                                            .curTheme
-                                            .snackBarShadow!);
+                                      AppLocalization.of(context)!.noKeychain,
+                                      context,
+                                      StateContainer.of(context).curTheme.text!,
+                                      StateContainer.of(context)
+                                          .curTheme
+                                          .snackBarShadow!,
+                                    );
                                     Navigator.of(context).pop();
                                   } else {
                                     accounts.sort(
-                                        (a, b) => a.name!.compareTo(b.name!));
+                                      (a, b) => a.name!.compareTo(b.name!),
+                                    );
                                     await _accountsDialog(accounts);
                                     await _launchSecurityConfiguration(
-                                        StateContainer.of(context)
-                                            .appWallet!
-                                            .appKeychain!
-                                            .getAccountSelected()!
-                                            .name!,
-                                        seed);
+                                      StateContainer.of(context)
+                                          .appWallet!
+                                          .appKeychain!
+                                          .getAccountSelected()!
+                                          .name!,
+                                      seed,
+                                    );
                                   }
                                 } catch (e) {
                                   setState(() {
                                     _mnemonicIsValid = false;
                                   });
                                   UIUtil.showSnackbar(
-                                      AppLocalization.of(context)!.noKeychain,
-                                      context,
-                                      StateContainer.of(context).curTheme.text!,
-                                      StateContainer.of(context)
-                                          .curTheme
-                                          .snackBarShadow!);
+                                    AppLocalization.of(context)!.noKeychain,
+                                    context,
+                                    StateContainer.of(context).curTheme.text!,
+                                    StateContainer.of(context)
+                                        .curTheme
+                                        .snackBarShadow!,
+                                  );
                                   Navigator.of(context).pop();
                                 }
                               }
@@ -517,30 +556,40 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   Future<bool> _launchSecurityConfiguration(String name, String seed) async {
     bool biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
     List<PickerItem> accessModes = [];
-    accessModes.add(PickerItem(
+    accessModes.add(
+      PickerItem(
         AuthenticationMethod(AuthMethod.pin).getDisplayName(context),
         AuthenticationMethod(AuthMethod.pin).getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.pin),
         StateContainer.of(context).curTheme.pickerItemIconEnabled,
         AuthMethod.pin,
-        true));
-    accessModes.add(PickerItem(
+        true,
+      ),
+    );
+    accessModes.add(
+      PickerItem(
         AuthenticationMethod(AuthMethod.password).getDisplayName(context),
         AuthenticationMethod(AuthMethod.password).getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.password),
         StateContainer.of(context).curTheme.pickerItemIconEnabled,
         AuthMethod.password,
-        true));
+        true,
+      ),
+    );
     if (biometricsAvalaible) {
-      accessModes.add(PickerItem(
+      accessModes.add(
+        PickerItem(
           AuthenticationMethod(AuthMethod.biometrics).getDisplayName(context),
           AuthenticationMethod(AuthMethod.biometrics).getDescription(context),
           AuthenticationMethod.getIcon(AuthMethod.biometrics),
           StateContainer.of(context).curTheme.pickerItemIconEnabled,
           AuthMethod.biometrics,
-          true));
+          true,
+        ),
+      );
     }
-    accessModes.add(PickerItem(
+    accessModes.add(
+      PickerItem(
         AuthenticationMethod(AuthMethod.biometricsUniris)
             .getDisplayName(context),
         AuthenticationMethod(AuthMethod.biometricsUniris)
@@ -548,8 +597,11 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
         AuthenticationMethod.getIcon(AuthMethod.biometricsUniris),
         StateContainer.of(context).curTheme.pickerItemIconEnabled,
         AuthMethod.biometricsUniris,
-        false));
-    accessModes.add(PickerItem(
+        false,
+      ),
+    );
+    accessModes.add(
+      PickerItem(
         AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
             .getDisplayName(context),
         AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
@@ -557,16 +609,21 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
         AuthenticationMethod.getIcon(AuthMethod.yubikeyWithYubicloud),
         StateContainer.of(context).curTheme.pickerItemIconEnabled,
         AuthMethod.yubikeyWithYubicloud,
-        true));
+        true,
+      ),
+    );
 
-    bool securityConfiguration = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) {
-      return IntroConfigureSecurity(
-        accessModes: accessModes,
-        name: name,
-        seed: seed,
-      );
-    }));
+    bool securityConfiguration = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return IntroConfigureSecurity(
+            accessModes: accessModes,
+            name: name,
+            seed: seed,
+          );
+        },
+      ),
+    );
 
     return securityConfiguration;
   }
@@ -580,50 +637,53 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
     }
 
     final Account? selection = await showDialog<Account>(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalization.of(context)!.keychainHeader,
-                    style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  accounts.length > 1
-                      ? Text(
-                          AppLocalization.of(context)!.selectAccountDescSeveral,
-                          style: AppStyles.textStyleSize12W100Primary(context),
-                        )
-                      : Text(
-                          AppLocalization.of(context)!.selectAccountDescOne,
-                          style: AppStyles.textStyleSize12W100Primary(context),
-                        ),
-                ],
-              ),
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppLocalization.of(context)!.keychainHeader,
+                  style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                accounts.length > 1
+                    ? Text(
+                        AppLocalization.of(context)!.selectAccountDescSeveral,
+                        style: AppStyles.textStyleSize12W100Primary(context),
+                      )
+                    : Text(
+                        AppLocalization.of(context)!.selectAccountDescOne,
+                        style: AppStyles.textStyleSize12W100Primary(context),
+                      ),
+              ],
             ),
-            shape: RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                side: BorderSide(
-                    color: StateContainer.of(context).curTheme.text45!)),
-            content: SingleChildScrollView(
-              child: PickerWidget(
-                pickerItems: pickerItemsList,
-                selectedIndex: 0,
-                onSelected: (value) {
-                  Navigator.pop(context, value.value);
-                },
-              ),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            side: BorderSide(
+              color: StateContainer.of(context).curTheme.text45!,
             ),
-          );
-        });
+          ),
+          content: SingleChildScrollView(
+            child: PickerWidget(
+              pickerItems: pickerItemsList,
+              selectedIndex: 0,
+              onSelected: (value) {
+                Navigator.pop(context, value.value);
+              },
+            ),
+          ),
+        );
+      },
+    );
     if (selection != null) {
       await StateContainer.of(context)
           .appWallet!
@@ -633,10 +693,12 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
   }
 
   void _showSendingAnimation(BuildContext context) {
-    Navigator.of(context).push(AnimationLoadingOverlay(
-      AnimationType.send,
-      StateContainer.of(context).curTheme.animationOverlayStrong!,
-      StateContainer.of(context).curTheme.animationOverlayMedium!,
-    ));
+    Navigator.of(context).push(
+      AnimationLoadingOverlay(
+        AnimationType.send,
+        StateContainer.of(context).curTheme.animationOverlayStrong!,
+        StateContainer.of(context).curTheme.animationOverlayMedium!,
+      ),
+    );
   }
 }

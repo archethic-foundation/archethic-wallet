@@ -42,8 +42,10 @@ class DBHelper {
   Future<List<Contact>> getContacts() async {
     final Box<Contact> box = await Hive.openBox<Contact>(contactsTable);
     final List<Contact> contactsList = box.values.toList();
-    contactsList.sort((Contact a, Contact b) =>
-        a.name!.toLowerCase().compareTo(b.name!.toLowerCase()));
+    contactsList.sort(
+      (Contact a, Contact b) =>
+          a.name!.toLowerCase().compareTo(b.name!.toLowerCase()),
+    );
     return contactsList;
   }
 
@@ -201,7 +203,9 @@ class DBHelper {
   }
 
   Future<void> updateAccountBalance(
-      Account selectedAccount, AccountBalance balance) async {
+    Account selectedAccount,
+    AccountBalance balance,
+  ) async {
     // ignore: prefer_final_locals
     Box<AppWallet> box = await Hive.openBox<AppWallet>(appWalletTable);
     AppWallet appWallet = box.get(0)!;

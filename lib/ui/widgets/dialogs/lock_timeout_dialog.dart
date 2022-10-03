@@ -13,52 +13,58 @@ import 'package:aewallet/util/preferences.dart';
 
 class LockTimeoutDialog {
   static Future<LockTimeoutSetting?> getDialog(
-      BuildContext context, LockTimeoutSetting curTimeoutSetting) async {
+    BuildContext context,
+    LockTimeoutSetting curTimeoutSetting,
+  ) async {
     final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList =
-        List<PickerItem>.empty(growable: true);
+    final List<PickerItem> pickerItemsList = List<PickerItem>.empty(growable: true);
     for (var value in LockTimeoutOption.values) {
-      pickerItemsList.add(PickerItem(
+      pickerItemsList.add(
+        PickerItem(
           LockTimeoutSetting(value).getDisplayName(context),
           null,
           null,
           null,
           value,
-          true));
+          true,
+        ),
+      );
     }
-    return await showDialog<LockTimeoutSetting>(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                AppLocalization.of(context)!.autoLockHeader,
-                style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
-              ),
+    return showDialog<LockTimeoutSetting>(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: Text(
+              AppLocalization.of(context)!.autoLockHeader,
+              style: AppStyles.textStyleSize24W700EquinoxPrimary(context),
             ),
-            shape: RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                side: BorderSide(
-                    color: StateContainer.of(context).curTheme.text45!)),
-            content: SingleChildScrollView(
-              child: PickerWidget(
-                pickerItems: pickerItemsList,
-                selectedIndex: curTimeoutSetting.setting.index,
-                onSelected: (value) {
-                  if (curTimeoutSetting.setting !=
-                      value.value as LockTimeoutOption) {
-                    preferences.setLockTimeout(
-                        LockTimeoutSetting(value.value as LockTimeoutOption));
-                    curTimeoutSetting =
-                        LockTimeoutSetting(value.value as LockTimeoutOption);
-                  }
-                  Navigator.pop(context, curTimeoutSetting);
-                },
-              ),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            side: BorderSide(
+              color: StateContainer.of(context).curTheme.text45!,
             ),
-          );
-        });
+          ),
+          content: SingleChildScrollView(
+            child: PickerWidget(
+              pickerItems: pickerItemsList,
+              selectedIndex: curTimeoutSetting.setting.index,
+              onSelected: (value) {
+                if (curTimeoutSetting.setting != value.value as LockTimeoutOption) {
+                  preferences.setLockTimeout(
+                    LockTimeoutSetting(value.value as LockTimeoutOption),
+                  );
+                  curTimeoutSetting = LockTimeoutSetting(value.value as LockTimeoutOption);
+                }
+                Navigator.pop(context, curTimeoutSetting);
+              },
+            ),
+          ),
+        );
+      },
+    );
   }
 }

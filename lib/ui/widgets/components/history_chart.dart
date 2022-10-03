@@ -12,18 +12,18 @@ import 'package:aewallet/model/asset_history_interval.dart';
 import 'package:aewallet/util/currency_util.dart';
 
 class HistoryChart extends StatelessWidget {
-  const HistoryChart(
-      {Key? key,
-      required this.intervals,
-      required this.gradientColors,
-      required this.gradientColorsBar,
-      required this.tooltipBg,
-      required this.tooltipText,
-      required this.axisTextStyle,
-      required this.optionChartSelected,
-      required this.currency,
-      required this.completeChart})
-      : super(key: key);
+  const HistoryChart({
+    Key? key,
+    required this.intervals,
+    required this.gradientColors,
+    required this.gradientColorsBar,
+    required this.tooltipBg,
+    required this.tooltipText,
+    required this.axisTextStyle,
+    required this.optionChartSelected,
+    required this.currency,
+    required this.completeChart,
+  }) : super(key: key);
 
   final List<AssetHistoryInterval> intervals;
   final Gradient gradientColors;
@@ -144,88 +144,96 @@ class HistoryChart extends StatelessWidget {
         topTitles: completeChart
             ? AxisTitles(
                 sideTitles: SideTitles(
-                    showTitles: true,
-                    interval: (intervals.length ~/ 4).toDouble(),
-                    reservedSize: 30,
-                    getTitlesWidget: (value, titleMeta) {
-                      String title = '';
-                      if (value != 0 &&
-                          value < intervals.length - intervals.length ~/ 4) {
-                        DateTime dt = intervals[value.toInt()].time;
-                        switch (optionChartSelected) {
-                          case '1h':
-                            title =
-                                '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
-                            break;
-                          case '24h':
-                            title = '${dt.hour.toString().padLeft(2, '0')}h';
-                            break;
-                          case '7d':
-                            title =
-                                '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
-                            break;
-                          case '14d':
-                            title =
-                                '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
-                            break;
-                          case '30d':
-                            title =
-                                '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
-                            break;
-                          case '60d':
-                            title =
-                                '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
-                            break;
-                          case '200d':
-                            title =
-                                '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
-                            break;
-                          case '1y':
-                            title =
-                                '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
-                            break;
-                          case 'all':
-                            title =
-                                '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
-                            break;
-                          default:
-                            title = '${dt.hour.toString().padLeft(2, '0')}h';
-                            break;
-                        }
+                  showTitles: true,
+                  interval: (intervals.length ~/ 4).toDouble(),
+                  reservedSize: 30,
+                  getTitlesWidget: (value, titleMeta) {
+                    String title = '';
+                    if (value != 0 &&
+                        value < intervals.length - intervals.length ~/ 4) {
+                      DateTime dt = intervals[value.toInt()].time;
+                      switch (optionChartSelected) {
+                        case '1h':
+                          title =
+                              '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
+                          break;
+                        case '24h':
+                          title = '${dt.hour.toString().padLeft(2, '0')}h';
+                          break;
+                        case '7d':
+                          title =
+                              '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
+                          break;
+                        case '14d':
+                          title =
+                              '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
+                          break;
+                        case '30d':
+                          title =
+                              '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
+                          break;
+                        case '60d':
+                          title =
+                              '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
+                          break;
+                        case '200d':
+                          title =
+                              '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
+                          break;
+                        case '1y':
+                          title =
+                              '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
+                          break;
+                        case 'all':
+                          title =
+                              '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
+                          break;
+                        default:
+                          title = '${dt.hour.toString().padLeft(2, '0')}h';
+                          break;
                       }
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 8.0, left: 5),
-                        child: Text(
-                          title,
-                          style: axisTextStyle,
-                        ),
-                      );
-                    }),
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 8.0, left: 5),
+                      child: Text(
+                        title,
+                        style: axisTextStyle,
+                      ),
+                    );
+                  },
+                ),
               )
             : AxisTitles(sideTitles: SideTitles(showTitles: false)),
         rightTitles: completeChart
             ? AxisTitles(
                 sideTitles: SideTitles(
-                    showTitles: true,
-                    reservedSize: 60,
-                    getTitlesWidget: (value, titleMeta) {
-                      final axisTitle = value == titleMeta.max ||
-                              value == titleMeta.min
-                          ? const SizedBox.shrink()
-                          : Text(
-                              CurrencyUtil.getConvertedAmountWithNumberOfDigits(
-                                  currency, value, 3),
-                              style: axisTextStyle,
-                            );
-                      return SideTitleWidget(
-                          axisSide: titleMeta.axisSide, child: axisTitle);
-                    }),
+                  showTitles: true,
+                  reservedSize: 60,
+                  getTitlesWidget: (value, titleMeta) {
+                    final axisTitle = value == titleMeta.max ||
+                            value == titleMeta.min
+                        ? const SizedBox.shrink()
+                        : Text(
+                            CurrencyUtil.getConvertedAmountWithNumberOfDigits(
+                              currency,
+                              value,
+                              3,
+                            ),
+                            style: axisTextStyle,
+                          );
+                    return SideTitleWidget(
+                      axisSide: titleMeta.axisSide,
+                      child: axisTitle,
+                    );
+                  },
+                ),
               )
             : AxisTitles(sideTitles: SideTitles(showTitles: false)),
       ),
       gridData: FlGridData(
-          drawVerticalLine: false,
-          drawHorizontalLine: completeChart ? true : false),
+        drawVerticalLine: false,
+        drawHorizontalLine: completeChart ? true : false,
+      ),
       maxY: maxY,
       minY: minY,
     );

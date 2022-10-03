@@ -45,7 +45,8 @@ class _AppLockScreenState extends State<AppLockScreen> {
     StateContainer.of(context).bottomBarCurrentPage =
         preferences.getMainScreenCurrentPage();
     StateContainer.of(context).bottomBarPageController = PageController(
-        initialPage: StateContainer.of(context).bottomBarCurrentPage);
+      initialPage: StateContainer.of(context).bottomBarCurrentPage,
+    );
 
     StateContainer.of(context).requestUpdate();
     Navigator.of(context).pushNamedAndRemoveUntil(
@@ -142,8 +143,11 @@ class _AppLockScreenState extends State<AppLockScreen> {
       _lockedOut = false;
     });
     final AuthenticationMethod authMethod = preferences.getAuthMethod();
-    bool auth = await AuthFactory.authenticate(context, authMethod,
-        transitions: transitions);
+    bool auth = await AuthFactory.authenticate(
+      context,
+      authMethod,
+      transitions: transitions,
+    );
     if (auth) {
       _goHome();
     }
@@ -166,9 +170,11 @@ class _AppLockScreenState extends State<AppLockScreen> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage(
-                      StateContainer.of(context).curTheme.background3Small!),
-                  fit: BoxFit.fitHeight),
+                image: AssetImage(
+                  StateContainer.of(context).curTheme.background3Small!,
+                ),
+                fit: BoxFit.fitHeight,
+              ),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -183,8 +189,9 @@ class _AppLockScreenState extends State<AppLockScreen> {
             builder: (BuildContext context, BoxConstraints constraints) =>
                 SafeArea(
               minimum: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.035,
-                  top: MediaQuery.of(context).size.height * 0.075),
+                bottom: MediaQuery.of(context).size.height * 0.035,
+                top: MediaQuery.of(context).size.height * 0.075,
+              ),
               child: Column(
                 children: <Widget>[
                   Expanded(
@@ -196,17 +203,19 @@ class _AppLockScreenState extends State<AppLockScreen> {
                           children: <Widget>[
                             Container(
                               margin: EdgeInsetsDirectional.only(
-                                  start: smallScreen(context) ? 15 : 20),
+                                start: smallScreen(context) ? 15 : 20,
+                              ),
                               height: 50,
                               child: TextButton(
                                 onPressed: () {
                                   AppDialogs.showConfirmDialog(
                                       context,
                                       CaseChange.toUpperCase(
-                                          AppLocalization.of(context)!.warning,
-                                          StateContainer.of(context)
-                                              .curLanguage
-                                              .getLocaleString()),
+                                        AppLocalization.of(context)!.warning,
+                                        StateContainer.of(context)
+                                            .curLanguage
+                                            .getLocaleString(),
+                                      ),
                                       AppLocalization.of(context)!
                                           .removeWalletDetail,
                                       AppLocalization.of(context)!
@@ -225,27 +234,34 @@ class _AppLockScreenState extends State<AppLockScreen> {
                                       StateContainer.of(context).curTheme =
                                           DarkTheme();
                                       Navigator.of(context)
-                                          .pushNamedAndRemoveUntil('/',
-                                              (Route<dynamic> route) => false);
+                                          .pushNamedAndRemoveUntil(
+                                        '/',
+                                        (Route<dynamic> route) => false,
+                                      );
                                     });
                                   });
                                 },
                                 child: Row(
                                   children: <Widget>[
-                                    FaIcon(FontAwesomeIcons.rightFromBracket,
-                                        size: 16,
-                                        color: StateContainer.of(context)
-                                            .curTheme
-                                            .text),
+                                    FaIcon(
+                                      FontAwesomeIcons.rightFromBracket,
+                                      size: 16,
+                                      color: StateContainer.of(context)
+                                          .curTheme
+                                          .text,
+                                    ),
                                     Container(
                                       margin: const EdgeInsetsDirectional.only(
-                                          start: 4),
+                                        start: 4,
+                                      ),
                                       child: Text(
-                                          AppLocalization.of(context)!
-                                              .removeWallet,
-                                          style: AppStyles
-                                              .textStyleSize14W600Primary(
-                                                  context)),
+                                        AppLocalization.of(context)!
+                                            .removeWallet,
+                                        style: AppStyles
+                                            .textStyleSize14W600Primary(
+                                          context,
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -260,14 +276,17 @@ class _AppLockScreenState extends State<AppLockScreen> {
                               AppLocalization.of(context)!.locked,
                               style:
                                   AppStyles.textStyleSize24W700EquinoxPrimary(
-                                      context),
+                                context,
+                              ),
                             ),
                           ),
                         if (_lockedOut)
                           Container(
                             width: MediaQuery.of(context).size.width - 100,
                             margin: const EdgeInsets.symmetric(
-                                horizontal: 50, vertical: 20),
+                              horizontal: 50,
+                              vertical: 20,
+                            ),
                             child: Text(
                               AppLocalization.of(context)!
                                   .tooManyFailedAttempts,
@@ -285,19 +304,24 @@ class _AppLockScreenState extends State<AppLockScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       AppButton.buildAppButton(
-                          const Key('unlock'),
-                          context,
-                          AppButtonType.primary,
-                          _lockedOut
-                              ? _countDownTxt
-                              : AppLocalization.of(context)!.unlock,
-                          Dimens.buttonBottomDimens, onPressed: () {
-                        if (!_lockedOut) {
-                          sl.get<HapticUtil>().feedback(FeedbackType.light,
-                              StateContainer.of(context).activeVibrations);
-                          _authenticate(transitions: false);
-                        }
-                      }, disabled: _lockedOut),
+                        const Key('unlock'),
+                        context,
+                        AppButtonType.primary,
+                        _lockedOut
+                            ? _countDownTxt
+                            : AppLocalization.of(context)!.unlock,
+                        Dimens.buttonBottomDimens,
+                        onPressed: () {
+                          if (!_lockedOut) {
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  StateContainer.of(context).activeVibrations,
+                                );
+                            _authenticate(transitions: false);
+                          }
+                        },
+                        disabled: _lockedOut,
+                      ),
                     ],
                   ),
                 ],

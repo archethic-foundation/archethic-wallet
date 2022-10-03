@@ -26,9 +26,11 @@ class NFTListPerCategory extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(
-                  StateContainer.of(context).curTheme.background2Small!),
-              fit: BoxFit.fitHeight),
+            image: AssetImage(
+              StateContainer.of(context).curTheme.background2Small!,
+            ),
+            fit: BoxFit.fitHeight,
+          ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -50,7 +52,8 @@ class NFTListPerCategory extends StatelessWidget {
                       children: <Widget>[
                         Container(
                           margin: EdgeInsetsDirectional.only(
-                              start: smallScreen(context) ? 15 : 20),
+                            start: smallScreen(context) ? 15 : 20,
+                          ),
                           height: 50,
                           width: 50,
                           child: BackButton(
@@ -64,9 +67,10 @@ class NFTListPerCategory extends StatelessWidget {
                       ],
                     ),
                     BalanceIndicatorWidget(
-                        primaryCurrency:
-                            StateContainer.of(context).curPrimaryCurrency,
-                        displaySwitchButton: false),
+                      primaryCurrency:
+                          StateContainer.of(context).curPrimaryCurrency,
+                      displaySwitchButton: false,
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(right: 10, top: 10),
                       child: Column(
@@ -83,7 +87,9 @@ class NFTListPerCategory extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
                                 side: const BorderSide(
-                                    color: Colors.white10, width: 1),
+                                  color: Colors.white10,
+                                  width: 1,
+                                ),
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15),
@@ -109,7 +115,8 @@ class NFTListPerCategory extends StatelessWidget {
                 Expanded(
                   child: SingleChildScrollView(
                     child: NFTList(
-                        currentNftCategoryIndex: currentNftCategoryIndex),
+                      currentNftCategoryIndex: currentNftCategoryIndex,
+                    ),
                   ),
                 ),
               ],

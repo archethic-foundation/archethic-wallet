@@ -49,7 +49,7 @@ import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/confirmations/confirmations_util.dart';
-import 'package:aewallet/util/confirmations/subscription_channel%20copy.dart';
+import 'package:aewallet/util/confirmations/subscription_channel.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/mime_util.dart';
@@ -63,11 +63,12 @@ class NFTCreationProcess extends StatefulWidget {
   final NFTCreationProcessType? process;
   final PrimaryCurrencySetting? primaryCurrency;
 
-  const NFTCreationProcess(
-      {super.key,
-      this.currentNftCategoryIndex,
-      this.process,
-      this.primaryCurrency});
+  const NFTCreationProcess({
+    super.key,
+    this.currentNftCategoryIndex,
+    this.process,
+    this.primaryCurrency,
+  });
 
   @override
   State<NFTCreationProcess> createState() => _NFTCreationProcessState();
@@ -167,11 +168,13 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
   }
 
   void _showSendingAnimation(BuildContext context) {
-    Navigator.of(context).push(AnimationLoadingOverlay(
-      AnimationType.send,
-      StateContainer.of(context).curTheme.animationOverlayStrong!,
-      StateContainer.of(context).curTheme.animationOverlayMedium!,
-    ));
+    Navigator.of(context).push(
+      AnimationLoadingOverlay(
+        AnimationType.send,
+        StateContainer.of(context).curTheme.animationOverlayStrong!,
+        StateContainer.of(context).curTheme.animationOverlayMedium!,
+      ),
+    );
   }
 
   void _registerBus() {
@@ -190,39 +193,44 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         Navigator.of(context).pop();
 
         UIUtil.showSnackbar(
-            event.response!,
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!,
-            duration: const Duration(seconds: 5));
+          event.response!,
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+          duration: const Duration(seconds: 5),
+        );
         Navigator.of(context).pop();
       } else {
         if (event.response == 'ok' &&
             ConfirmationsUtil.isEnoughConfirmations(
-                event.nbConfirmations!, event.maxConfirmations!)) {
+              event.nbConfirmations!,
+              event.maxConfirmations!,
+            )) {
           UIUtil.showSnackbar(
-              event.nbConfirmations == 1
-                  ? AppLocalization.of(context)!
-                      .nftCreationTransactionConfirmed1
-                      .replaceAll('%1', event.nbConfirmations.toString())
-                      .replaceAll('%2', event.maxConfirmations.toString())
-                  : AppLocalization.of(context)!
-                      .nftCreationTransactionConfirmed
-                      .replaceAll('%1', event.nbConfirmations.toString())
-                      .replaceAll('%2', event.maxConfirmations.toString()),
-              context,
-              StateContainer.of(context).curTheme.text!,
-              StateContainer.of(context).curTheme.snackBarShadow!,
-              duration: const Duration(milliseconds: 5000));
+            event.nbConfirmations == 1
+                ? AppLocalization.of(context)!
+                    .nftCreationTransactionConfirmed1
+                    .replaceAll('%1', event.nbConfirmations.toString())
+                    .replaceAll('%2', event.maxConfirmations.toString())
+                : AppLocalization.of(context)!
+                    .nftCreationTransactionConfirmed
+                    .replaceAll('%1', event.nbConfirmations.toString())
+                    .replaceAll('%2', event.maxConfirmations.toString()),
+            context,
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!,
+            duration: const Duration(milliseconds: 5000),
+          );
 
           await StateContainer.of(context)
               .appWallet!
               .appKeychain!
               .getAccountSelected()!
               .updateNftInfosOffChain(
-                  tokenAddress: event.transactionAddress!,
-                  categoryNftIndex: widget.currentNftCategoryIndex!,
-                  favorite: false);
+                tokenAddress: event.transactionAddress!,
+                categoryNftIndex: widget.currentNftCategoryIndex!,
+                favorite: false,
+              );
 
           StateContainer.of(context).requestUpdate();
 
@@ -230,10 +238,11 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
               .popUntil(RouteUtils.withNameLike('/nft_list_per_category'));
         } else {
           UIUtil.showSnackbar(
-              AppLocalization.of(context)!.notEnoughConfirmations,
-              context,
-              StateContainer.of(context).curTheme.text!,
-              StateContainer.of(context).curTheme.snackBarShadow!);
+            AppLocalization.of(context)!.notEnoughConfirmations,
+            context,
+            StateContainer.of(context).curTheme.text!,
+            StateContainer.of(context).curTheme.snackBarShadow!,
+          );
           Navigator.of(context).pop();
         }
       }
@@ -247,9 +256,11 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(
-                  StateContainer.of(context).curTheme.background4Small!),
-              fit: BoxFit.fitHeight),
+            image: AssetImage(
+              StateContainer.of(context).curTheme.background4Small!,
+            ),
+            fit: BoxFit.fitHeight,
+          ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -273,7 +284,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                       children: <Widget>[
                         Container(
                           margin: EdgeInsetsDirectional.only(
-                              start: smallScreen(context) ? 15 : 20),
+                            start: smallScreen(context) ? 15 : 20,
+                          ),
                           height: 50,
                           width: 50,
                           child: BackButton(
@@ -287,8 +299,9 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                       ],
                     ),
                     BalanceIndicatorWidget(
-                        primaryCurrency: widget.primaryCurrency,
-                        displaySwitchButton: false),
+                      primaryCurrency: widget.primaryCurrency,
+                      displaySwitchButton: false,
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(right: 10, top: 10),
                       child: Column(
@@ -302,7 +315,9 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                               side: const BorderSide(
-                                  color: Colors.white10, width: 1),
+                                color: Colors.white10,
+                                width: 1,
+                              ),
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
@@ -332,7 +347,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                     constraints: const BoxConstraints.expand(height: 100),
                     child: ContainedTabBarView(
                       tabBarViewProperties: const TabBarViewProperties(
-                          physics: NeverScrollableScrollPhysics()),
+                        physics: NeverScrollableScrollPhysics(),
+                      ),
                       tabBarProperties: TabBarProperties(
                         labelColor: StateContainer.of(context).curTheme.text,
                         labelStyle:
@@ -344,22 +360,27 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                       ),
                       tabs: [
                         Tab(
-                            text: AppLocalization.of(context)!
-                                .nftCreationProcessTabImportHeader,
-                            icon: const Icon(Icons.arrow_downward)),
+                          text: AppLocalization.of(context)!
+                              .nftCreationProcessTabImportHeader,
+                          icon: const Icon(Icons.arrow_downward),
+                        ),
                         Tab(
-                            text: AppLocalization.of(context)!
-                                .nftCreationProcessTabDescriptionHeader,
-                            icon: const Icon(Icons.info_outline)),
+                          text: AppLocalization.of(context)!
+                              .nftCreationProcessTabDescriptionHeader,
+                          icon: const Icon(Icons.info_outline),
+                        ),
                         Tab(
-                            text: AppLocalization.of(context)!
-                                .nftCreationProcessTabPropertiesHeader,
-                            icon: const Icon(Icons.insert_comment_rounded)),
+                          text: AppLocalization.of(context)!
+                              .nftCreationProcessTabPropertiesHeader,
+                          icon: const Icon(Icons.insert_comment_rounded),
+                        ),
                         Tab(
-                            text: AppLocalization.of(context)!
-                                .nftCreationProcessTabConfirmationHeader,
-                            icon: const Icon(
-                                Icons.check_circle_outline_outlined)),
+                          text: AppLocalization.of(context)!
+                              .nftCreationProcessTabConfirmationHeader,
+                          icon: const Icon(
+                            Icons.check_circle_outline_outlined,
+                          ),
+                        ),
                       ],
                       views: [
                         importTab(context),
@@ -408,7 +429,9 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                   padding: const EdgeInsets.only(bottom: 20),
                   child: Text(
                     NftCategory.getDescriptionHearder(
-                        context, widget.currentNftCategoryIndex!),
+                      context,
+                      widget.currentNftCategoryIndex!,
+                    ),
                     style: AppStyles.textStyleSize12W100Primary(context),
                     textAlign: TextAlign.justify,
                   ),
@@ -432,9 +455,11 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                       children: <Widget>[
                         SizedBox(
                           width: 30,
-                          child: FaIcon(FontAwesomeIcons.file,
-                              size: 18,
-                              color: StateContainer.of(context).curTheme.text),
+                          child: FaIcon(
+                            FontAwesomeIcons.file,
+                            size: 18,
+                            color: StateContainer.of(context).curTheme.text,
+                          ),
                         ),
                         const SizedBox(
                           width: 20,
@@ -484,11 +509,12 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                             children: <Widget>[
                               SizedBox(
                                 width: 30,
-                                child: FaIcon(FontAwesomeIcons.photoFilm,
-                                    size: 18,
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .text),
+                                child: FaIcon(
+                                  FontAwesomeIcons.photoFilm,
+                                  size: 18,
+                                  color:
+                                      StateContainer.of(context).curTheme.text,
+                                ),
                               ),
                               const SizedBox(
                                 width: 20,
@@ -496,7 +522,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                               Text(
                                 AppLocalization.of(context)!.nftAddImportPhoto,
                                 style: AppStyles.textStyleSize12W400Primary(
-                                    context),
+                                  context,
+                                ),
                               ),
                               const SizedBox(
                                 width: 30,
@@ -511,8 +538,10 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                           ),
                           InkWell(
                             onTap: () {
-                              sl.get<HapticUtil>().feedback(FeedbackType.light,
-                                  StateContainer.of(context).activeVibrations);
+                              sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    StateContainer.of(context).activeVibrations,
+                                  );
                               AppDialogs.showInfoDialog(
                                 context,
                                 AppLocalization.of(context)!.informations,
@@ -522,10 +551,11 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                             },
                             child: SizedBox(
                               width: 30,
-                              child: FaIcon(FontAwesomeIcons.circleInfo,
-                                  size: 18,
-                                  color:
-                                      StateContainer.of(context).curTheme.text),
+                              child: FaIcon(
+                                FontAwesomeIcons.circleInfo,
+                                size: 18,
+                                color: StateContainer.of(context).curTheme.text,
+                              ),
                             ),
                           ),
                         ],
@@ -560,11 +590,12 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                             children: <Widget>[
                               SizedBox(
                                 width: 30,
-                                child: FaIcon(FontAwesomeIcons.cameraRetro,
-                                    size: 18,
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .text),
+                                child: FaIcon(
+                                  FontAwesomeIcons.cameraRetro,
+                                  size: 18,
+                                  color:
+                                      StateContainer.of(context).curTheme.text,
+                                ),
                               ),
                               const SizedBox(
                                 width: 20,
@@ -572,7 +603,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                               Text(
                                 'Take a photo',
                                 style: AppStyles.textStyleSize12W400Primary(
-                                    context),
+                                  context,
+                                ),
                               ),
                               const SizedBox(
                                 width: 30,
@@ -604,12 +636,15 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                           side: tokenPropertyAsset!.publicKeysList != null &&
                                   tokenPropertyAsset!.publicKeysList!.isNotEmpty
                               ? const BorderSide(
-                                  color: Colors.redAccent, width: 2.0)
+                                  color: Colors.redAccent,
+                                  width: 2.0,
+                                )
                               : BorderSide(
                                   color: StateContainer.of(context)
                                       .curTheme
                                       .backgroundAccountsListCardSelected!,
-                                  width: 1.0),
+                                  width: 1.0,
+                                ),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         elevation: 0,
@@ -618,7 +653,10 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                             .backgroundAccountsListCardSelected,
                         child: Padding(
                           padding: const EdgeInsets.only(
-                              top: 10, bottom: 10, right: 5),
+                            top: 10,
+                            bottom: 10,
+                            right: 5,
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -639,7 +677,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                                   .tokenProperty!.keys.first,
                                               style: AppStyles
                                                   .textStyleSize12W600Primary(
-                                                      context),
+                                                context,
+                                              ),
                                             ),
                                           ),
                                           Container(
@@ -651,7 +690,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                                   .tokenProperty!.values.first,
                                               style: AppStyles
                                                   .textStyleSize12W400Primary(
-                                                      context),
+                                                context,
+                                              ),
                                             ),
                                           ),
                                           tokenPropertyAsset!.publicKeysList !=
@@ -671,12 +711,14 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                                               180,
                                                       padding:
                                                           const EdgeInsets.only(
-                                                              left: 20),
+                                                        left: 20,
+                                                      ),
                                                       child: AutoSizeText(
                                                         'This asset is protected and accessible by ${tokenPropertyAsset!.publicKeysList!.length} public key',
                                                         style: AppStyles
                                                             .textStyleSize12W400Primary(
-                                                                context),
+                                                          context,
+                                                        ),
                                                       ),
                                                     )
                                                   : Container(
@@ -687,12 +729,14 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                                               180,
                                                       padding:
                                                           const EdgeInsets.only(
-                                                              left: 20),
+                                                        left: 20,
+                                                      ),
                                                       child: AutoSizeText(
                                                         'This asset is protected and accessible by ${tokenPropertyAsset!.publicKeysList!.length} public keys',
                                                         style: AppStyles
                                                             .textStyleSize12W400Primary(
-                                                                context),
+                                                          context,
+                                                        ),
                                                       ),
                                                     )
                                               : Container(
@@ -702,12 +746,14 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                                       180,
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          left: 20),
+                                                    left: 20,
+                                                  ),
                                                   child: AutoSizeText(
                                                     'This asset is accessible by everyone',
                                                     style: AppStyles
                                                         .textStyleSize12W400Primary(
-                                                            context),
+                                                      context,
+                                                    ),
                                                   ),
                                                 ),
                                         ],
@@ -732,37 +778,43 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                             .backgroundDark!
                                             .withOpacity(0.3),
                                         border: Border.all(
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .backgroundDarkest!
-                                                .withOpacity(0.2),
-                                            width: 2),
+                                          color: StateContainer.of(context)
+                                              .curTheme
+                                              .backgroundDarkest!
+                                              .withOpacity(0.2),
+                                          width: 2,
+                                        ),
                                       ),
                                       child: IconButton(
-                                        icon: Icon(Icons.key,
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .backgroundDarkest!,
-                                            size: 21),
+                                        icon: Icon(
+                                          Icons.key,
+                                          color: StateContainer.of(context)
+                                              .curTheme
+                                              .backgroundDarkest!,
+                                          size: 21,
+                                        ),
                                         onPressed: () {
                                           sl.get<HapticUtil>().feedback(
-                                              FeedbackType.light,
-                                              StateContainer.of(context)
-                                                  .activeVibrations);
+                                                FeedbackType.light,
+                                                StateContainer.of(context)
+                                                    .activeVibrations,
+                                              );
                                           Sheets.showAppHeightNineSheet(
-                                              context: context,
-                                              widget: AddPublicKey(
-                                                tokenPropertyWithAccessInfos:
-                                                    tokenPropertyAsset!,
-                                                returnPublicKeys: (List<String>
-                                                    publicKeysList) {
-                                                  tokenPropertyAsset!
-                                                          .publicKeysList =
-                                                      publicKeysList;
+                                            context: context,
+                                            widget: AddPublicKey(
+                                              tokenPropertyWithAccessInfos:
+                                                  tokenPropertyAsset!,
+                                              returnPublicKeys: (
+                                                List<String> publicKeysList,
+                                              ) {
+                                                tokenPropertyAsset!
+                                                        .publicKeysList =
+                                                    publicKeysList;
 
-                                                  setState(() {});
-                                                },
-                                              ));
+                                                setState(() {});
+                                              },
+                                            ),
+                                          );
                                         },
                                       ),
                                     ),
@@ -781,23 +833,27 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                             .backgroundDark!
                                             .withOpacity(0.3),
                                         border: Border.all(
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .backgroundDarkest!
-                                                .withOpacity(0.2),
-                                            width: 2),
+                                          color: StateContainer.of(context)
+                                              .curTheme
+                                              .backgroundDarkest!
+                                              .withOpacity(0.2),
+                                          width: 2,
+                                        ),
                                       ),
                                       child: IconButton(
-                                        icon: Icon(Icons.close,
-                                            color: StateContainer.of(context)
-                                                .curTheme
-                                                .backgroundDarkest!,
-                                            size: 21),
+                                        icon: Icon(
+                                          Icons.close,
+                                          color: StateContainer.of(context)
+                                              .curTheme
+                                              .backgroundDarkest!,
+                                          size: 21,
+                                        ),
                                         onPressed: () {
                                           sl.get<HapticUtil>().feedback(
-                                              FeedbackType.light,
-                                              StateContainer.of(context)
-                                                  .activeVibrations);
+                                                FeedbackType.light,
+                                                StateContainer.of(context)
+                                                    .activeVibrations,
+                                              );
                                           AppDialogs.showConfirmDialog(
                                               context,
                                               'Delete file',
@@ -805,20 +861,23 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                               AppLocalization.of(context)!
                                                   .deleteOption, () {
                                             sl.get<HapticUtil>().feedback(
-                                                FeedbackType.light,
-                                                StateContainer.of(context)
-                                                    .activeVibrations);
+                                                  FeedbackType.light,
+                                                  StateContainer.of(context)
+                                                      .activeVibrations,
+                                                );
                                             importSelection = 0;
                                             file = null;
                                             file64 = '';
                                             tokenPropertyWithAccessInfosList
-                                                .removeWhere((element) =>
-                                                    element.tokenProperty!.keys
-                                                        .first ==
-                                                    tokenPropertyAsset!
-                                                        .tokenProperty!
-                                                        .keys
-                                                        .first);
+                                                .removeWhere(
+                                              (element) =>
+                                                  element.tokenProperty!.keys
+                                                      .first ==
+                                                  tokenPropertyAsset!
+                                                      .tokenProperty!
+                                                      .keys
+                                                      .first,
+                                            );
                                             tokenPropertyAsset!.publicKeysList!
                                                 .clear();
                                             setState(() {});
@@ -914,40 +973,43 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
               ],
               onChanged: (text) {
                 tokenPropertyWithAccessInfosList.removeWhere(
-                    (element) => element.tokenProperty!.keys.first == 'name');
+                  (element) => element.tokenProperty!.keys.first == 'name',
+                );
                 tokenPropertyWithAccessInfosList.add(
-                    TokenPropertyWithAccessInfos(
-                        tokenProperty: <String, String>{
+                  TokenPropertyWithAccessInfos(
+                    tokenProperty: <String, String>{
                       'name': nftNameController!.text
-                    }));
+                    },
+                  ),
+                );
               },
               suffixButton: kIsWeb == false &&
                       (Platform.isIOS || Platform.isAndroid)
                   ? TextFieldButton(
                       icon: FontAwesomeIcons.qrcode,
                       onPressed: () async {
-                        sl.get<HapticUtil>().feedback(FeedbackType.light,
-                            StateContainer.of(context).activeVibrations);
+                        sl.get<HapticUtil>().feedback(
+                              FeedbackType.light,
+                              StateContainer.of(context).activeVibrations,
+                            );
                         UIUtil.cancelLockEvent();
                         final String? scanResult =
                             await UserDataUtil.getQRData(DataType.raw, context);
                         QRScanErrs.errorList;
                         if (scanResult == null) {
                           UIUtil.showSnackbar(
-                              AppLocalization.of(context)!.qrInvalidAddress,
-                              context,
-                              StateContainer.of(context).curTheme.text!,
-                              StateContainer.of(context)
-                                  .curTheme
-                                  .snackBarShadow!);
+                            AppLocalization.of(context)!.qrInvalidAddress,
+                            context,
+                            StateContainer.of(context).curTheme.text!,
+                            StateContainer.of(context).curTheme.snackBarShadow!,
+                          );
                         } else if (QRScanErrs.errorList.contains(scanResult)) {
                           UIUtil.showSnackbar(
-                              scanResult,
-                              context,
-                              StateContainer.of(context).curTheme.text!,
-                              StateContainer.of(context)
-                                  .curTheme
-                                  .snackBarShadow!);
+                            scanResult,
+                            context,
+                            StateContainer.of(context).curTheme.text!,
+                            StateContainer.of(context).curTheme.snackBarShadow!,
+                          );
                           return;
                         } else {
                           setState(() {
@@ -971,41 +1033,45 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                 LengthLimitingTextInputFormatter(40),
               ],
               onChanged: (text) {
-                tokenPropertyWithAccessInfosList.removeWhere((element) =>
-                    element.tokenProperty!.keys.first == 'description');
+                tokenPropertyWithAccessInfosList.removeWhere(
+                  (element) =>
+                      element.tokenProperty!.keys.first == 'description',
+                );
                 tokenPropertyWithAccessInfosList.add(
-                    TokenPropertyWithAccessInfos(
-                        tokenProperty: <String, String>{
+                  TokenPropertyWithAccessInfos(
+                    tokenProperty: <String, String>{
                       'description': nftDescriptionController!.text
-                    }));
+                    },
+                  ),
+                );
               },
               suffixButton: kIsWeb == false &&
                       (Platform.isIOS || Platform.isAndroid)
                   ? TextFieldButton(
                       icon: FontAwesomeIcons.qrcode,
                       onPressed: () async {
-                        sl.get<HapticUtil>().feedback(FeedbackType.light,
-                            StateContainer.of(context).activeVibrations);
+                        sl.get<HapticUtil>().feedback(
+                              FeedbackType.light,
+                              StateContainer.of(context).activeVibrations,
+                            );
                         UIUtil.cancelLockEvent();
                         final String? scanResult =
                             await UserDataUtil.getQRData(DataType.raw, context);
                         QRScanErrs.errorList;
                         if (scanResult == null) {
                           UIUtil.showSnackbar(
-                              AppLocalization.of(context)!.qrInvalidAddress,
-                              context,
-                              StateContainer.of(context).curTheme.text!,
-                              StateContainer.of(context)
-                                  .curTheme
-                                  .snackBarShadow!);
+                            AppLocalization.of(context)!.qrInvalidAddress,
+                            context,
+                            StateContainer.of(context).curTheme.text!,
+                            StateContainer.of(context).curTheme.snackBarShadow!,
+                          );
                         } else if (QRScanErrs.errorList.contains(scanResult)) {
                           UIUtil.showSnackbar(
-                              scanResult,
-                              context,
-                              StateContainer.of(context).curTheme.text!,
-                              StateContainer.of(context)
-                                  .curTheme
-                                  .snackBarShadow!);
+                            scanResult,
+                            context,
+                            StateContainer.of(context).curTheme.text!,
+                            StateContainer.of(context).curTheme.snackBarShadow!,
+                          );
                           return;
                         } else {
                           setState(() {
@@ -1058,44 +1124,50 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                 inputFormatters: <LengthLimitingTextInputFormatter>[
                   LengthLimitingTextInputFormatter(20),
                 ],
-                suffixButton: kIsWeb == false &&
-                        (Platform.isIOS || Platform.isAndroid)
-                    ? TextFieldButton(
-                        icon: FontAwesomeIcons.qrcode,
-                        onPressed: () async {
-                          sl.get<HapticUtil>().feedback(FeedbackType.light,
-                              StateContainer.of(context).activeVibrations);
-                          UIUtil.cancelLockEvent();
-                          final String? scanResult =
-                              await UserDataUtil.getQRData(
-                                  DataType.raw, context);
-                          QRScanErrs.errorList;
-                          if (scanResult == null) {
-                            UIUtil.showSnackbar(
-                                AppLocalization.of(context)!.qrInvalidAddress,
+                suffixButton:
+                    kIsWeb == false && (Platform.isIOS || Platform.isAndroid)
+                        ? TextFieldButton(
+                            icon: FontAwesomeIcons.qrcode,
+                            onPressed: () async {
+                              sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    StateContainer.of(context).activeVibrations,
+                                  );
+                              UIUtil.cancelLockEvent();
+                              final String? scanResult =
+                                  await UserDataUtil.getQRData(
+                                DataType.raw,
                                 context,
-                                StateContainer.of(context).curTheme.text!,
-                                StateContainer.of(context)
-                                    .curTheme
-                                    .snackBarShadow!);
-                          } else if (QRScanErrs.errorList
-                              .contains(scanResult)) {
-                            UIUtil.showSnackbar(
-                                scanResult,
-                                context,
-                                StateContainer.of(context).curTheme.text!,
-                                StateContainer.of(context)
-                                    .curTheme
-                                    .snackBarShadow!);
-                            return;
-                          } else {
-                            setState(() {
-                              nftPropertyNameController!.text = scanResult;
-                            });
-                          }
-                        },
-                      )
-                    : null,
+                              );
+                              QRScanErrs.errorList;
+                              if (scanResult == null) {
+                                UIUtil.showSnackbar(
+                                  AppLocalization.of(context)!.qrInvalidAddress,
+                                  context,
+                                  StateContainer.of(context).curTheme.text!,
+                                  StateContainer.of(context)
+                                      .curTheme
+                                      .snackBarShadow!,
+                                );
+                              } else if (QRScanErrs.errorList
+                                  .contains(scanResult)) {
+                                UIUtil.showSnackbar(
+                                  scanResult,
+                                  context,
+                                  StateContainer.of(context).curTheme.text!,
+                                  StateContainer.of(context)
+                                      .curTheme
+                                      .snackBarShadow!,
+                                );
+                                return;
+                              } else {
+                                setState(() {
+                                  nftPropertyNameController!.text = scanResult;
+                                });
+                              }
+                            },
+                          )
+                        : null,
               ),
               AppTextField(
                 focusNode: nftPropertyValueFocusNode,
@@ -1112,50 +1184,58 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                 inputFormatters: <LengthLimitingTextInputFormatter>[
                   LengthLimitingTextInputFormatter(20),
                 ],
-                suffixButton: kIsWeb == false &&
-                        (Platform.isIOS || Platform.isAndroid)
-                    ? TextFieldButton(
-                        icon: FontAwesomeIcons.qrcode,
-                        onPressed: () async {
-                          sl.get<HapticUtil>().feedback(FeedbackType.light,
-                              StateContainer.of(context).activeVibrations);
-                          UIUtil.cancelLockEvent();
-                          final String? scanResult =
-                              await UserDataUtil.getQRData(
-                                  DataType.raw, context);
-                          QRScanErrs.errorList;
-                          if (scanResult == null) {
-                            UIUtil.showSnackbar(
-                                AppLocalization.of(context)!.qrInvalidAddress,
+                suffixButton:
+                    kIsWeb == false && (Platform.isIOS || Platform.isAndroid)
+                        ? TextFieldButton(
+                            icon: FontAwesomeIcons.qrcode,
+                            onPressed: () async {
+                              sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    StateContainer.of(context).activeVibrations,
+                                  );
+                              UIUtil.cancelLockEvent();
+                              final String? scanResult =
+                                  await UserDataUtil.getQRData(
+                                DataType.raw,
                                 context,
-                                StateContainer.of(context).curTheme.text!,
-                                StateContainer.of(context)
-                                    .curTheme
-                                    .snackBarShadow!);
-                          } else if (QRScanErrs.errorList
-                              .contains(scanResult)) {
-                            UIUtil.showSnackbar(
-                                scanResult,
-                                context,
-                                StateContainer.of(context).curTheme.text!,
-                                StateContainer.of(context)
-                                    .curTheme
-                                    .snackBarShadow!);
-                            return;
-                          } else {
-                            setState(() {
-                              nftPropertyValueController!.text = scanResult;
-                            });
-                          }
-                        },
-                      )
-                    : null,
+                              );
+                              QRScanErrs.errorList;
+                              if (scanResult == null) {
+                                UIUtil.showSnackbar(
+                                  AppLocalization.of(context)!.qrInvalidAddress,
+                                  context,
+                                  StateContainer.of(context).curTheme.text!,
+                                  StateContainer.of(context)
+                                      .curTheme
+                                      .snackBarShadow!,
+                                );
+                              } else if (QRScanErrs.errorList
+                                  .contains(scanResult)) {
+                                UIUtil.showSnackbar(
+                                  scanResult,
+                                  context,
+                                  StateContainer.of(context).curTheme.text!,
+                                  StateContainer.of(context)
+                                      .curTheme
+                                      .snackBarShadow!,
+                                );
+                                return;
+                              } else {
+                                setState(() {
+                                  nftPropertyValueController!.text = scanResult;
+                                });
+                              }
+                            },
+                          )
+                        : null,
               ),
               Align(
                 alignment: Alignment.center,
-                child: Text(addNFTPropertyMessage,
-                    textAlign: TextAlign.center,
-                    style: AppStyles.textStyleSize12W100Primary(context)),
+                child: Text(
+                  addNFTPropertyMessage,
+                  textAlign: TextAlign.center,
+                  style: AppStyles.textStyleSize12W100Primary(context),
+                ),
               ),
               Row(
                 children: <Widget>[
@@ -1166,36 +1246,46 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                           context,
                           AppButtonType.primary,
                           AppLocalization.of(context)!.addNFTProperty,
-                          Dimens.buttonBottomDimens, onPressed: () async {
-                          if (validateAddNFTProperty() == true) {
-                            tokenPropertyWithAccessInfosList.sort(
-                                (TokenPropertyWithAccessInfos a,
-                                        TokenPropertyWithAccessInfos b) =>
+                          Dimens.buttonBottomDimens,
+                          onPressed: () async {
+                            if (validateAddNFTProperty() == true) {
+                              tokenPropertyWithAccessInfosList.sort(
+                                (
+                                  TokenPropertyWithAccessInfos a,
+                                  TokenPropertyWithAccessInfos b,
+                                ) =>
                                     a.tokenProperty!.keys.first
                                         .toLowerCase()
-                                        .compareTo(b.tokenProperty!.keys.first
-                                            .toLowerCase()));
+                                        .compareTo(
+                                          b.tokenProperty!.keys.first
+                                              .toLowerCase(),
+                                        ),
+                              );
 
-                            tokenPropertyWithAccessInfosList.add(
+                              tokenPropertyWithAccessInfosList.add(
                                 TokenPropertyWithAccessInfos(
-                                    tokenProperty: <String, dynamic>{
-                                  nftPropertyNameController!.text:
-                                      nftPropertyValueController!.text
-                                }));
-                            nftPropertyNameController!.text = '';
-                            nftPropertyValueController!.text = '';
-                            FocusScope.of(context)
-                                .requestFocus(nftPropertyNameFocusNode);
-                            setState(() {});
-                          }
-                        })
+                                  tokenProperty: <String, dynamic>{
+                                    nftPropertyNameController!.text:
+                                        nftPropertyValueController!.text
+                                  },
+                                ),
+                              );
+                              nftPropertyNameController!.text = '';
+                              nftPropertyValueController!.text = '';
+                              FocusScope.of(context)
+                                  .requestFocus(nftPropertyNameFocusNode);
+                              setState(() {});
+                            }
+                          },
+                        )
                       : AppButton.buildAppButtonTiny(
                           const Key('addNFTProperty'),
                           context,
                           AppButtonType.primaryOutline,
                           AppLocalization.of(context)!.addNFTProperty,
                           Dimens.buttonBottomDimens,
-                          onPressed: () {}),
+                          onPressed: () {},
+                        ),
                 ],
               ),
               Container(
@@ -1216,32 +1306,36 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: Wrap(
-                    alignment: WrapAlignment.start,
-                    children: tokenPropertyWithAccessInfosList
-                        .asMap()
-                        .entries
-                        .map((MapEntry<dynamic, TokenPropertyWithAccessInfos>
-                            entry) {
-                      return entry.value.tokenProperty!.keys.first != 'file' &&
-                              entry.value.tokenProperty!.keys.first !=
-                                  'description' &&
-                              entry.value.tokenProperty!.keys.first != 'name' &&
-                              entry.value.tokenProperty!.keys.first !=
-                                  'type/mime' &&
-                              (nftPropertySearchController!.text.isNotEmpty &&
-                                      entry.value.tokenProperty!.keys.first
-                                          .toLowerCase()
-                                          .contains(nftPropertySearchController!
-                                              .text
-                                              .toLowerCase()) ||
-                                  nftPropertySearchController!.text.isEmpty)
-                          ? Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: _buildTokenProperty(context, entry.value,
-                                  readOnly: false),
-                            )
-                          : const SizedBox();
-                    }).toList()),
+                  alignment: WrapAlignment.start,
+                  children:
+                      tokenPropertyWithAccessInfosList.asMap().entries.map((
+                    MapEntry<dynamic, TokenPropertyWithAccessInfos> entry,
+                  ) {
+                    return entry.value.tokenProperty!.keys.first != 'file' &&
+                            entry.value.tokenProperty!.keys.first !=
+                                'description' &&
+                            entry.value.tokenProperty!.keys.first != 'name' &&
+                            entry.value.tokenProperty!.keys.first !=
+                                'type/mime' &&
+                            (nftPropertySearchController!.text.isNotEmpty &&
+                                    entry.value.tokenProperty!.keys.first
+                                        .toLowerCase()
+                                        .contains(
+                                          nftPropertySearchController!.text
+                                              .toLowerCase(),
+                                        ) ||
+                                nftPropertySearchController!.text.isEmpty)
+                        ? Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: _buildTokenProperty(
+                              context,
+                              entry.value,
+                              readOnly: false,
+                            ),
+                          )
+                        : const SizedBox();
+                  }).toList(),
+                ),
               ),
             ],
           ),
@@ -1250,9 +1344,11 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
     }
   }
 
-  Widget _buildTokenProperty(BuildContext context,
-      TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos,
-      {bool readOnly = false}) {
+  Widget _buildTokenProperty(
+    BuildContext context,
+    TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos, {
+    bool readOnly = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: GestureDetector(
@@ -1267,7 +1363,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                     color: StateContainer.of(context)
                         .curTheme
                         .backgroundAccountsListCardSelected!,
-                    width: 1.0),
+                    width: 1.0,
+                  ),
             borderRadius: BorderRadius.circular(10.0),
           ),
           elevation: 0,
@@ -1293,7 +1390,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                 tokenPropertyWithAccessInfos
                                     .tokenProperty!.keys.first,
                                 style: AppStyles.textStyleSize12W600Primary(
-                                    context),
+                                  context,
+                                ),
                               ),
                             ),
                             Container(
@@ -1303,7 +1401,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                 tokenPropertyWithAccessInfos
                                     .tokenProperty!.values.first,
                                 style: AppStyles.textStyleSize12W400Primary(
-                                    context),
+                                  context,
+                                ),
                               ),
                             ),
                             tokenPropertyWithAccessInfos.publicKeysList !=
@@ -1323,7 +1422,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                           'This property is protected and accessible by ${tokenPropertyWithAccessInfos.publicKeysList!.length} public key',
                                           style: AppStyles
                                               .textStyleSize12W400Primary(
-                                                  context),
+                                            context,
+                                          ),
                                         ),
                                       )
                                     : Container(
@@ -1336,7 +1436,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                           'This property is protected and accessible by ${tokenPropertyWithAccessInfos.publicKeysList!.length} public keys',
                                           style: AppStyles
                                               .textStyleSize12W400Primary(
-                                                  context),
+                                            context,
+                                          ),
                                         ),
                                       )
                                 : Container(
@@ -1347,7 +1448,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                       'This property is accessible by everyone',
                                       style:
                                           AppStyles.textStyleSize12W400Primary(
-                                              context),
+                                        context,
+                                      ),
                                     ),
                                   ),
                           ],
@@ -1371,42 +1473,49 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                               .backgroundDark!
                               .withOpacity(0.3),
                           border: Border.all(
-                              color: StateContainer.of(context)
-                                  .curTheme
-                                  .backgroundDarkest!
-                                  .withOpacity(0.2),
-                              width: 2),
+                            color: StateContainer.of(context)
+                                .curTheme
+                                .backgroundDarkest!
+                                .withOpacity(0.2),
+                            width: 2,
+                          ),
                         ),
                         child: IconButton(
-                          icon: Icon(Icons.key,
-                              color: StateContainer.of(context)
-                                  .curTheme
-                                  .backgroundDarkest!,
-                              size: 21),
+                          icon: Icon(
+                            Icons.key,
+                            color: StateContainer.of(context)
+                                .curTheme
+                                .backgroundDarkest!,
+                            size: 21,
+                          ),
                           onPressed: () {
-                            sl.get<HapticUtil>().feedback(FeedbackType.light,
-                                StateContainer.of(context).activeVibrations);
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  StateContainer.of(context).activeVibrations,
+                                );
                             if (readOnly) {
                               Sheets.showAppHeightNineSheet(
-                                  context: context,
-                                  widget: GetPublicKeys(
-                                    tokenPropertyWithAccessInfos:
-                                        tokenPropertyWithAccessInfos,
-                                  ));
+                                context: context,
+                                widget: GetPublicKeys(
+                                  tokenPropertyWithAccessInfos:
+                                      tokenPropertyWithAccessInfos,
+                                ),
+                              );
                             } else {
                               Sheets.showAppHeightNineSheet(
-                                  context: context,
-                                  widget: AddPublicKey(
-                                    tokenPropertyWithAccessInfos:
-                                        tokenPropertyWithAccessInfos,
-                                    returnPublicKeys:
-                                        (List<String> publicKeysList) {
-                                      tokenPropertyWithAccessInfos
-                                          .publicKeysList = publicKeysList;
+                                context: context,
+                                widget: AddPublicKey(
+                                  tokenPropertyWithAccessInfos:
+                                      tokenPropertyWithAccessInfos,
+                                  returnPublicKeys:
+                                      (List<String> publicKeysList) {
+                                    tokenPropertyWithAccessInfos
+                                        .publicKeysList = publicKeysList;
 
-                                      setState(() {});
-                                    },
-                                  ));
+                                    setState(() {});
+                                  },
+                                ),
+                              );
                             }
                           },
                         ),
@@ -1426,21 +1535,26 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                 .backgroundDark!
                                 .withOpacity(0.3),
                             border: Border.all(
-                                color: StateContainer.of(context)
-                                    .curTheme
-                                    .backgroundDarkest!
-                                    .withOpacity(0.2),
-                                width: 2),
+                              color: StateContainer.of(context)
+                                  .curTheme
+                                  .backgroundDarkest!
+                                  .withOpacity(0.2),
+                              width: 2,
+                            ),
                           ),
                           child: IconButton(
-                            icon: Icon(Icons.close,
-                                color: StateContainer.of(context)
-                                    .curTheme
-                                    .backgroundDarkest!,
-                                size: 21),
+                            icon: Icon(
+                              Icons.close,
+                              color: StateContainer.of(context)
+                                  .curTheme
+                                  .backgroundDarkest!,
+                              size: 21,
+                            ),
                             onPressed: () {
-                              sl.get<HapticUtil>().feedback(FeedbackType.light,
-                                  StateContainer.of(context).activeVibrations);
+                              sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    StateContainer.of(context).activeVibrations,
+                                  );
                               AppDialogs.showConfirmDialog(
                                   context,
                                   'Delete property',
@@ -1448,15 +1562,17 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                   AppLocalization.of(context)!.deleteOption,
                                   () {
                                 sl.get<HapticUtil>().feedback(
-                                    FeedbackType.light,
-                                    StateContainer.of(context)
-                                        .activeVibrations);
+                                      FeedbackType.light,
+                                      StateContainer.of(context)
+                                          .activeVibrations,
+                                    );
 
                                 tokenPropertyWithAccessInfosList.removeWhere(
-                                    (element) =>
-                                        element.tokenProperty!.keys.first ==
-                                        tokenPropertyWithAccessInfos
-                                            .tokenProperty!.keys.first);
+                                  (element) =>
+                                      element.tokenProperty!.keys.first ==
+                                      tokenPropertyWithAccessInfos
+                                          .tokenProperty!.keys.first,
+                                );
                                 setState(() {});
                               });
                             },
@@ -1482,7 +1598,11 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
               feeEstimation > 0
                   ? Padding(
                       padding: const EdgeInsets.only(
-                          top: 20, bottom: 0, left: 20, right: 20),
+                        top: 20,
+                        bottom: 0,
+                        left: 20,
+                        right: 20,
+                      ),
                       child: Text(
                         '${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                         style: AppStyles.textStyleSize12W100Primary(context),
@@ -1491,7 +1611,11 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                     )
                   : Padding(
                       padding: const EdgeInsets.only(
-                          top: 20, bottom: 0, left: 20, right: 20),
+                        top: 20,
+                        bottom: 0,
+                        left: 20,
+                        right: 20,
+                      ),
                       child: Text(
                         AppLocalization.of(context)!.estimatedFeesAddNFTNote,
                         style: AppStyles.textStyleSize12W100Primary(context),
@@ -1527,49 +1651,50 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                   updateToken();
                                   if (await validateAddNFT(context) == true) {
                                     AppDialogs.showConfirmDialog(
-                                        context,
-                                        AppLocalization.of(context)!.createNFT,
-                                        AppLocalization.of(context)!
-                                            .createNFTConfirmation,
-                                        AppLocalization.of(context)!.yes,
-                                        () async {
-                                          setState(() {
-                                            isPressed = false;
-                                          });
-                                          // Authenticate
-                                          final Preferences preferences =
-                                              await Preferences.getInstance();
-                                          final AuthenticationMethod
-                                              authMethod =
-                                              preferences.getAuthMethod();
-                                          bool auth =
-                                              await AuthFactory.authenticate(
-                                                  context, authMethod,
-                                                  activeVibrations:
-                                                      StateContainer.of(context)
-                                                          .activeVibrations);
-                                          if (auth) {
-                                            EventTaxiImpl.singleton()
-                                                .fire(AuthenticatedEvent());
-                                          }
-                                        },
-                                        cancelText:
-                                            AppLocalization.of(context)!.no,
-                                        cancelAction: () {
-                                          setState(() {
-                                            isPressed = false;
-                                          });
+                                      context,
+                                      AppLocalization.of(context)!.createNFT,
+                                      AppLocalization.of(context)!
+                                          .createNFTConfirmation,
+                                      AppLocalization.of(context)!.yes,
+                                      () async {
+                                        setState(() {
+                                          isPressed = false;
                                         });
+                                        // Authenticate
+                                        final Preferences preferences =
+                                            await Preferences.getInstance();
+                                        final AuthenticationMethod authMethod =
+                                            preferences.getAuthMethod();
+                                        bool auth =
+                                            await AuthFactory.authenticate(
+                                          context,
+                                          authMethod,
+                                          activeVibrations:
+                                              StateContainer.of(context)
+                                                  .activeVibrations,
+                                        );
+                                        if (auth) {
+                                          EventTaxiImpl.singleton()
+                                              .fire(AuthenticatedEvent());
+                                        }
+                                      },
+                                      cancelText:
+                                          AppLocalization.of(context)!.no,
+                                      cancelAction: () {
+                                        setState(() {
+                                          isPressed = false;
+                                        });
+                                      },
+                                    );
                                   } else {
                                     UIUtil.showSnackbar(
-                                        addNFTMessage,
-                                        context,
-                                        StateContainer.of(context)
-                                            .curTheme
-                                            .text!,
-                                        StateContainer.of(context)
-                                            .curTheme
-                                            .snackBarShadow!);
+                                      addNFTMessage,
+                                      context,
+                                      StateContainer.of(context).curTheme.text!,
+                                      StateContainer.of(context)
+                                          .curTheme
+                                          .snackBarShadow!,
+                                    );
 
                                     setState(() {
                                       isPressed = false;
@@ -1593,12 +1718,15 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                         side: tokenPropertyAsset!.publicKeysList != null &&
                                 tokenPropertyAsset!.publicKeysList!.isNotEmpty
                             ? const BorderSide(
-                                color: Colors.redAccent, width: 2.0)
+                                color: Colors.redAccent,
+                                width: 2.0,
+                              )
                             : BorderSide(
                                 color: StateContainer.of(context)
                                     .curTheme
                                     .backgroundAccountsListCardSelected!,
-                                width: 1.0),
+                                width: 1.0,
+                              ),
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       elevation: 0,
@@ -1607,7 +1735,10 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                           .backgroundAccountsListCardSelected,
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            top: 10, bottom: 10, right: 5),
+                          top: 10,
+                          bottom: 10,
+                          right: 5,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -1636,12 +1767,14 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                                             100,
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            left: 20),
+                                                      left: 20,
+                                                    ),
                                                     child: AutoSizeText(
                                                       'This asset is protected and accessible by ${tokenPropertyAsset!.publicKeysList!.length} public key',
                                                       style: AppStyles
                                                           .textStyleSize12W400Primary(
-                                                              context),
+                                                        context,
+                                                      ),
                                                     ),
                                                   )
                                                 : Container(
@@ -1652,12 +1785,14 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                                             100,
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            left: 20),
+                                                      left: 20,
+                                                    ),
                                                     child: AutoSizeText(
                                                       'This asset is protected and accessible by ${tokenPropertyAsset!.publicKeysList!.length} public keys',
                                                       style: AppStyles
                                                           .textStyleSize12W400Primary(
-                                                              context),
+                                                        context,
+                                                      ),
                                                     ),
                                                   )
                                             : Container(
@@ -1666,12 +1801,14 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                                         .width -
                                                     100,
                                                 padding: const EdgeInsets.only(
-                                                    left: 20),
+                                                  left: 20,
+                                                ),
                                                 child: AutoSizeText(
                                                   'This asset is accessible by everyone',
                                                   style: AppStyles
                                                       .textStyleSize12W400Primary(
-                                                          context),
+                                                    context,
+                                                  ),
                                                 ),
                                               ),
                                       ],
@@ -1746,32 +1883,36 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                 child: Wrap(
-                    alignment: WrapAlignment.start,
-                    children: tokenPropertyWithAccessInfosList
-                        .asMap()
-                        .entries
-                        .map((MapEntry<dynamic, TokenPropertyWithAccessInfos>
-                            entry) {
-                      return entry.value.tokenProperty!.keys.first != 'file' &&
-                              entry.value.tokenProperty!.keys.first !=
-                                  'description' &&
-                              entry.value.tokenProperty!.keys.first != 'name' &&
-                              entry.value.tokenProperty!.keys.first !=
-                                  'type/mime' &&
-                              (nftPropertySearchController!.text.isNotEmpty &&
-                                      entry.value.tokenProperty!.keys.first
-                                          .toLowerCase()
-                                          .contains(nftPropertySearchController!
-                                              .text
-                                              .toLowerCase()) ||
-                                  nftPropertySearchController!.text.isEmpty)
-                          ? Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: _buildTokenProperty(context, entry.value,
-                                  readOnly: true),
-                            )
-                          : const SizedBox();
-                    }).toList()),
+                  alignment: WrapAlignment.start,
+                  children:
+                      tokenPropertyWithAccessInfosList.asMap().entries.map((
+                    MapEntry<dynamic, TokenPropertyWithAccessInfos> entry,
+                  ) {
+                    return entry.value.tokenProperty!.keys.first != 'file' &&
+                            entry.value.tokenProperty!.keys.first !=
+                                'description' &&
+                            entry.value.tokenProperty!.keys.first != 'name' &&
+                            entry.value.tokenProperty!.keys.first !=
+                                'type/mime' &&
+                            (nftPropertySearchController!.text.isNotEmpty &&
+                                    entry.value.tokenProperty!.keys.first
+                                        .toLowerCase()
+                                        .contains(
+                                          nftPropertySearchController!.text
+                                              .toLowerCase(),
+                                        ) ||
+                                nftPropertySearchController!.text.isEmpty)
+                        ? Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: _buildTokenProperty(
+                              context,
+                              entry.value,
+                              readOnly: true,
+                            ),
+                          )
+                        : const SizedBox();
+                  }).toList(),
+                ),
               ),
             ],
           ),
@@ -1789,17 +1930,25 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
 
     tokenPropertyWithAccessInfosList
         .removeWhere((element) => element.tokenProperty!.keys.first == 'file');
-    tokenPropertyWithAccessInfosList.add(TokenPropertyWithAccessInfos(
-        tokenProperty: <String, String>{'file': file64}));
+    tokenPropertyWithAccessInfosList.add(
+      TokenPropertyWithAccessInfos(
+        tokenProperty: <String, String>{'file': file64},
+      ),
+    );
 
     try {
       typeMime = Mime.getTypesFromExtension(
-          path.extension(file.path).replaceAll('.', ''))![0];
+        path.extension(file.path).replaceAll('.', ''),
+      )![0];
 
       tokenPropertyWithAccessInfosList.removeWhere(
-          (element) => element.tokenProperty!.keys.first == 'type/mime');
-      tokenPropertyWithAccessInfosList.add(TokenPropertyWithAccessInfos(
-          tokenProperty: <String, String>{'type/mime': typeMime}));
+        (element) => element.tokenProperty!.keys.first == 'type/mime',
+      );
+      tokenPropertyWithAccessInfosList.add(
+        TokenPropertyWithAccessInfos(
+          tokenProperty: <String, String>{'type/mime': typeMime},
+        ),
+      );
     } catch (e) {}
 
     if (MimeUtil.isImage(typeMime) == true) {
@@ -1868,12 +2017,13 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
 
   void updateToken() {
     token = Token(
-        name: nftNameController!.text,
-        supply: 100000000,
-        symbol: '',
-        id: '1',
-        type: 'non-fungible',
-        tokenProperties: {});
+      name: nftNameController!.text,
+      supply: 100000000,
+      symbol: '',
+      id: '1',
+      type: 'non-fungible',
+      tokenProperties: {},
+    );
 
     for (TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
         in tokenPropertyWithAccessInfosList) {
@@ -1894,14 +2044,15 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         sl
             .get<AppService>()
             .getFeesEstimationCreateToken(
-                originPrivateKey,
-                seed!,
-                token,
-                StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!
-                    .name!)
+              originPrivateKey,
+              seed!,
+              token,
+              StateContainer.of(context)
+                  .appWallet!
+                  .appKeychain!
+                  .getAccountSelected()!
+                  .name!,
+            )
             .then((value) {
           setState(() {
             fee = value;
@@ -1956,13 +2107,13 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                     .nativeTokenValue!) {
               isValid = false;
               setState(() {
-                addNFTMessage = AppLocalization.of(context)!
-                    .insufficientBalance
-                    .replaceAll(
-                        '%1',
-                        StateContainer.of(context)
-                            .curNetwork
-                            .getNetworkCryptoCurrencyLabel());
+                addNFTMessage =
+                    AppLocalization.of(context)!.insufficientBalance.replaceAll(
+                          '%1',
+                          StateContainer.of(context)
+                              .curNetwork
+                              .getNetworkCryptoCurrencyLabel(),
+                        );
               });
             }
           }
@@ -1979,21 +2130,27 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       final String? seed = await StateContainer.of(context).getSeed();
       final String originPrivateKey = sl.get<ApiService>().getOriginKey();
       final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
-      String nameEncoded = Uri.encodeFull(StateContainer.of(context)
-          .appWallet!
-          .appKeychain!
-          .getAccountSelected()!
-          .name!);
+      String nameEncoded = Uri.encodeFull(
+        StateContainer.of(context)
+            .appWallet!
+            .appKeychain!
+            .getAccountSelected()!
+            .name!,
+      );
       final String service = 'archethic-wallet-$nameEncoded';
       final int index = (await sl.get<ApiService>().getTransactionIndex(
-              uint8ListToHex(keychain.deriveAddress(service, index: 0))))
+                uint8ListToHex(keychain.deriveAddress(service, index: 0)),
+              ))
           .chainLength!;
 
       final Transaction transaction =
           Transaction(type: 'token', data: Transaction.initData());
 
-      final String aesKey = uint8ListToHex(Uint8List.fromList(
-          List<int>.generate(32, (int i) => Random.secure().nextInt(256))));
+      final String aesKey = uint8ListToHex(
+        Uint8List.fromList(
+          List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
+        ),
+      );
 
       final KeyPair walletKeyPair = keychain.deriveKeypair(service);
 
@@ -2013,15 +2170,21 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
           final List<AuthorizedKey> authorizedKeys =
               List<AuthorizedKey>.empty(growable: true);
           for (String key in authorizedPublicKeys) {
-            authorizedKeys.add(AuthorizedKey(
+            authorizedKeys.add(
+              AuthorizedKey(
                 encryptedSecretKey: uint8ListToHex(ecEncrypt(aesKey, key)),
-                publicKey: key));
+                publicKey: key,
+              ),
+            );
           }
 
           transaction.addOwnership(
-              aesEncrypt(tokenPropertyWithAccessInfos.tokenProperty!.toString(),
-                  aesKey),
-              authorizedKeys);
+            aesEncrypt(
+              tokenPropertyWithAccessInfos.tokenProperty!.toString(),
+              aesKey,
+            ),
+            authorizedKeys,
+          );
         }
       }
 
@@ -2035,12 +2198,15 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         }
       }
 
-      String content = tokenToJsonForTxDataContent(Token(
+      String content = tokenToJsonForTxDataContent(
+        Token(
           name: token.name,
           supply: token.supply,
           type: token.type,
           symbol: token.symbol,
-          tokenProperties: clearTokenPropertyList));
+          tokenProperties: clearTokenPropertyList,
+        ),
+      );
       transaction.setContent(content);
       Transaction signedTx = keychain
           .buildTransaction(transaction, service, index)
@@ -2050,38 +2216,50 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
 
       final Preferences preferences = await Preferences.getInstance();
       await subscriptionChannel.connect(
-          await preferences.getNetwork().getPhoenixHttpLink(),
-          await preferences.getNetwork().getWebsocketUri());
+        await preferences.getNetwork().getPhoenixHttpLink(),
+        await preferences.getNetwork().getWebsocketUri(),
+      );
 
       void waitConfirmationsNFT(QueryResult event) {
         waitConfirmations(event, transactionAddress: signedTx.address);
       }
 
       subscriptionChannel.addSubscriptionTransactionConfirmed(
-          transaction.address!, waitConfirmationsNFT);
+        transaction.address!,
+        waitConfirmationsNFT,
+      );
 
       await Future.delayed(const Duration(seconds: 1));
 
       transactionStatus = await sl.get<ApiService>().sendTx(signedTx);
 
       if (transactionStatus.status == 'invalid') {
-        EventTaxiImpl.singleton().fire(TransactionSendEvent(
+        EventTaxiImpl.singleton().fire(
+          TransactionSendEvent(
             transactionType: TransactionSendEventType.token,
             response: '',
-            nbConfirmations: 0));
+            nbConfirmations: 0,
+          ),
+        );
         subscriptionChannel.close();
       }
     } on ArchethicConnectionException {
-      EventTaxiImpl.singleton().fire(TransactionSendEvent(
+      EventTaxiImpl.singleton().fire(
+        TransactionSendEvent(
           transactionType: TransactionSendEventType.token,
           response: AppLocalization.of(context)!.noConnection,
-          nbConfirmations: 0));
+          nbConfirmations: 0,
+        ),
+      );
       subscriptionChannel.close();
     } on Exception {
-      EventTaxiImpl.singleton().fire(TransactionSendEvent(
+      EventTaxiImpl.singleton().fire(
+        TransactionSendEvent(
           transactionType: TransactionSendEventType.token,
           response: AppLocalization.of(context)!.keychainNotExistWarning,
-          nbConfirmations: 0));
+          nbConfirmations: 0,
+        ),
+      );
       subscriptionChannel.close();
     }
   }
@@ -2098,27 +2276,33 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         maxConfirmations =
             event.data!['transactionConfirmed']['maxConfirmations'];
       }
-      EventTaxiImpl.singleton().fire(TransactionSendEvent(
+      EventTaxiImpl.singleton().fire(
+        TransactionSendEvent(
           transactionType: TransactionSendEventType.token,
           response: 'ok',
           transactionAddress: transactionAddress,
           nbConfirmations: nbConfirmations,
-          maxConfirmations: maxConfirmations));
+          maxConfirmations: maxConfirmations,
+        ),
+      );
     } else {
       EventTaxiImpl.singleton().fire(
         TransactionSendEvent(
-            transactionType: TransactionSendEventType.token,
-            nbConfirmations: 0,
-            maxConfirmations: 0,
-            response: 'ko'),
+          transactionType: TransactionSendEventType.token,
+          nbConfirmations: 0,
+          maxConfirmations: 0,
+          response: 'ko',
+        ),
       );
     }
     subscriptionChannel.close();
   }
 
   Widget getCategoryTemplateForm(
-      BuildContext context, int _currentNftCategoryIndex) {
-    switch (_currentNftCategoryIndex) {
+    BuildContext context,
+    int currentNftCategoryIndex,
+  ) {
+    switch (currentNftCategoryIndex) {
       case 4:
         return Column(
           children: [
@@ -2130,10 +2314,18 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                 textAlign: TextAlign.justify,
               ),
             ),
-            getNftPropertyAppTextField(nftPropertyAuthorFocusNode,
-                nftPropertyAuthorController, 'Compositor', 'Compositor'),
-            getNftPropertyAppTextField(nftPropertyCompositorFocusNode,
-                nftPropertyCompositorController, 'Author', 'Author'),
+            getNftPropertyAppTextField(
+              nftPropertyAuthorFocusNode,
+              nftPropertyAuthorController,
+              'Compositor',
+              'Compositor',
+            ),
+            getNftPropertyAppTextField(
+              nftPropertyCompositorFocusNode,
+              nftPropertyCompositorController,
+              'Author',
+              'Author',
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Divider(
@@ -2163,14 +2355,23 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
               ),
             ),
             getNftPropertyAppTextField(
-                nftPropertyNameStoreFocusNode,
-                nftPropertyNameStoreController,
-                'Name of the store',
-                'Name of the store'),
-            getNftPropertyAppTextField(nftPropertyIdCardFocusNode,
-                nftPropertyIdCardController, 'Id Card', 'Id Card'),
-            getNftPropertyAppTextField(nftPropertyExpiryDateFocusNode,
-                nftPropertyxpiryDateController, 'Expiry date', 'Expiry Date'),
+              nftPropertyNameStoreFocusNode,
+              nftPropertyNameStoreController,
+              'Name of the store',
+              'Name of the store',
+            ),
+            getNftPropertyAppTextField(
+              nftPropertyIdCardFocusNode,
+              nftPropertyIdCardController,
+              'Id Card',
+              'Id Card',
+            ),
+            getNftPropertyAppTextField(
+              nftPropertyExpiryDateFocusNode,
+              nftPropertyxpiryDateController,
+              'Expiry date',
+              'Expiry Date',
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Divider(
@@ -2195,10 +2396,11 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
   }
 
   Widget getNftPropertyAppTextField(
-      FocusNode focusNode,
-      TextEditingController textEditingController,
-      String hint,
-      String propertyKey) {
+    FocusNode focusNode,
+    TextEditingController textEditingController,
+    String hint,
+    String propertyKey,
+  ) {
     return AppTextField(
       focusNode: focusNode,
       controller: textEditingController,
@@ -2214,17 +2416,26 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       onChanged: (text) {
         if (text == '') {
           tokenPropertyWithAccessInfosList.removeWhere(
-              (element) => element.tokenProperty!.keys.first == propertyKey);
+            (element) => element.tokenProperty!.keys.first == propertyKey,
+          );
         } else {
           tokenPropertyWithAccessInfosList.removeWhere(
-              (element) => element.tokenProperty!.keys.first == propertyKey);
-          tokenPropertyWithAccessInfosList.add(TokenPropertyWithAccessInfos(
-              tokenProperty: {propertyKey: textEditingController.text}));
-          tokenPropertyWithAccessInfosList.sort((TokenPropertyWithAccessInfos a,
-                  TokenPropertyWithAccessInfos b) =>
-              a.tokenProperty!.keys.first
-                  .toLowerCase()
-                  .compareTo(b.tokenProperty!.keys.first.toLowerCase()));
+            (element) => element.tokenProperty!.keys.first == propertyKey,
+          );
+          tokenPropertyWithAccessInfosList.add(
+            TokenPropertyWithAccessInfos(
+              tokenProperty: {propertyKey: textEditingController.text},
+            ),
+          );
+          tokenPropertyWithAccessInfosList.sort(
+            (
+              TokenPropertyWithAccessInfos a,
+              TokenPropertyWithAccessInfos b,
+            ) =>
+                a.tokenProperty!.keys.first
+                    .toLowerCase()
+                    .compareTo(b.tokenProperty!.keys.first.toLowerCase()),
+          );
         }
 
         setState(() {});
@@ -2233,24 +2444,28 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
           ? TextFieldButton(
               icon: FontAwesomeIcons.qrcode,
               onPressed: () async {
-                sl.get<HapticUtil>().feedback(FeedbackType.light,
-                    StateContainer.of(context).activeVibrations);
+                sl.get<HapticUtil>().feedback(
+                      FeedbackType.light,
+                      StateContainer.of(context).activeVibrations,
+                    );
                 UIUtil.cancelLockEvent();
                 final String? scanResult =
                     await UserDataUtil.getQRData(DataType.raw, context);
                 QRScanErrs.errorList;
                 if (scanResult == null) {
                   UIUtil.showSnackbar(
-                      AppLocalization.of(context)!.qrInvalidAddress,
-                      context,
-                      StateContainer.of(context).curTheme.text!,
-                      StateContainer.of(context).curTheme.snackBarShadow!);
+                    AppLocalization.of(context)!.qrInvalidAddress,
+                    context,
+                    StateContainer.of(context).curTheme.text!,
+                    StateContainer.of(context).curTheme.snackBarShadow!,
+                  );
                 } else if (QRScanErrs.errorList.contains(scanResult)) {
                   UIUtil.showSnackbar(
-                      scanResult,
-                      context,
-                      StateContainer.of(context).curTheme.text!,
-                      StateContainer.of(context).curTheme.snackBarShadow!);
+                    scanResult,
+                    context,
+                    StateContainer.of(context).curTheme.text!,
+                    StateContainer.of(context).curTheme.snackBarShadow!,
+                  );
                   return;
                 } else {
                   setState(() {

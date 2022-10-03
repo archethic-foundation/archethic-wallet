@@ -91,6 +91,7 @@ dependencies:
 
   # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter.
   graphql_flutter: ^5.1.1-beta.4
+  gql: ^0.13.1
 
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files
   flutter_svg: ^1.1.5

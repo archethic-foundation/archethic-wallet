@@ -39,7 +39,8 @@ class _ConfigureCategoryListState extends State<ConfigureCategoryList> {
     return Column(
       children: <Widget>[
         SheetHeader(
-            title: AppLocalization.of(context)!.customizeCategoryListHeader),
+          title: AppLocalization.of(context)!.customizeCategoryListHeader,
+        ),
         Expanded(
           child: Center(
             child: SizedBox(
@@ -98,142 +99,151 @@ class _ReorderableWidgetState extends State<ReorderableWidget> {
           top: 20,
         ),
         child: SingleChildScrollView(
-            child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(0),
-              child: Text(
-                'Available categories',
-                style: AppStyles.textStyleSize12W100Primary(context),
-                textAlign: TextAlign.justify,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(0),
+                child: Text(
+                  'Available categories',
+                  style: AppStyles.textStyleSize12W100Primary(context),
+                  textAlign: TextAlign.justify,
+                ),
               ),
-            ),
-            ReorderableListView(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              onReorder: ((oldIndex, newIndex) async {
-                if (oldIndex < newIndex) {
-                  newIndex -= 1;
-                }
-                setState(() {
-                  final nftCategory = nftCategoryToSort!.removeAt(oldIndex);
-                  nftCategoryToSort!.insert(newIndex, nftCategory);
-                });
-                await StateContainer.of(context)
-                    .appWallet!
-                    .appKeychain!
-                    .getAccountSelected()!
-                    .updateNftCategoryList(nftCategoryToSort!);
-              }),
-              children: [
-                for (NftCategory nftCategory in nftCategoryToSort!)
-                  Column(
-                    key: ValueKey(nftCategory),
-                    children: [
-                      ListTile(
-                        title: Text(
-                          nftCategory.name!,
-                          style: AppStyles.textStyleSize12W400Primary(context),
-                        ),
-                        leading: nftCategory.id != 0
-                            ? IconButton(
-                                icon: const Icon(Icons.remove_circle),
-                                hoverColor:
-                                    StateContainer.of(context).curTheme.text,
-                                onPressed: (() async {
-                                  nftCategoryToSort!.removeWhere(
-                                    (element) => element.id == nftCategory.id,
-                                  );
-                                  setState(() {});
-                                  await StateContainer.of(context)
-                                      .appWallet!
-                                      .appKeychain!
-                                      .getAccountSelected()!
-                                      .updateNftCategoryList(
-                                          nftCategoryToSort!);
-                                }),
-                                color: Colors.redAccent[400]!.withOpacity(0.5))
-                            : const SizedBox(),
-                        trailing: !kIsWeb && Platform.isIOS
-                            ? ReorderableDragStartListener(
-                                index: nftCategoryToSort!.indexOf(nftCategory),
-                                child: const Icon(Icons.drag_handle),
-                              )
-                            : null,
-                      ),
-                      const Divider(
-                        height: 1,
-                      )
-                    ],
-                  ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Text(
-                'Hidden categories',
-                style: AppStyles.textStyleSize12W100Primary(context),
-                textAlign: TextAlign.justify,
-              ),
-            ),
-            ListView(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              children: [
-                for (NftCategory nftCategory in nftCategoryToHidden!)
-                  if (nftCategory.id != 0)
+              ReorderableListView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                onReorder: ((oldIndex, newIndex) async {
+                  if (oldIndex < newIndex) {
+                    newIndex -= 1;
+                  }
+                  setState(() {
+                    final nftCategory = nftCategoryToSort!.removeAt(oldIndex);
+                    nftCategoryToSort!.insert(newIndex, nftCategory);
+                  });
+                  await StateContainer.of(context)
+                      .appWallet!
+                      .appKeychain!
+                      .getAccountSelected()!
+                      .updateNftCategoryList(nftCategoryToSort!);
+                }),
+                children: [
+                  for (NftCategory nftCategory in nftCategoryToSort!)
                     Column(
                       key: ValueKey(nftCategory),
                       children: [
                         ListTile(
+                          title: Text(
+                            nftCategory.name!,
+                            style:
+                                AppStyles.textStyleSize12W400Primary(context),
+                          ),
+                          leading: nftCategory.id != 0
+                              ? IconButton(
+                                  icon: const Icon(Icons.remove_circle),
+                                  hoverColor:
+                                      StateContainer.of(context).curTheme.text,
+                                  onPressed: (() async {
+                                    nftCategoryToSort!.removeWhere(
+                                      (element) => element.id == nftCategory.id,
+                                    );
+                                    setState(() {});
+                                    await StateContainer.of(context)
+                                        .appWallet!
+                                        .appKeychain!
+                                        .getAccountSelected()!
+                                        .updateNftCategoryList(
+                                          nftCategoryToSort!,
+                                        );
+                                  }),
+                                  color:
+                                      Colors.redAccent[400]!.withOpacity(0.5),
+                                )
+                              : const SizedBox(),
+                          trailing: !kIsWeb && Platform.isIOS
+                              ? ReorderableDragStartListener(
+                                  index:
+                                      nftCategoryToSort!.indexOf(nftCategory),
+                                  child: const Icon(Icons.drag_handle),
+                                )
+                              : null,
+                        ),
+                        const Divider(
+                          height: 1,
+                        )
+                      ],
+                    ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Text(
+                  'Hidden categories',
+                  style: AppStyles.textStyleSize12W100Primary(context),
+                  textAlign: TextAlign.justify,
+                ),
+              ),
+              ListView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                children: [
+                  for (NftCategory nftCategory in nftCategoryToHidden!)
+                    if (nftCategory.id != 0)
+                      Column(
+                        key: ValueKey(nftCategory),
+                        children: [
+                          ListTile(
                             title: Text(
                               nftCategory.name!,
                               style:
                                   AppStyles.textStyleSize12W400Primary(context),
                             ),
                             leading: IconButton(
-                                icon: const Icon(Icons.add_circle),
-                                onPressed: (() async {
-                                  nftCategoryToHidden!.removeWhere(
-                                    (element) => element.id == nftCategory.id,
-                                  );
-                                  nftCategoryToSort!.add(nftCategory);
+                              icon: const Icon(Icons.add_circle),
+                              onPressed: (() async {
+                                nftCategoryToHidden!.removeWhere(
+                                  (element) => element.id == nftCategory.id,
+                                );
+                                nftCategoryToSort!.add(nftCategory);
 
-                                  setState(() {});
-                                  await StateContainer.of(context)
-                                      .appWallet!
-                                      .appKeychain!
-                                      .getAccountSelected()!
-                                      .updateNftCategoryList(
-                                          nftCategoryToSort!);
-                                }),
-                                color:
-                                    Colors.greenAccent[400]!.withOpacity(0.5))),
-                        const Divider(
-                          height: 1,
-                        )
-                      ],
-                    ),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                AppButton.buildAppButtonTiny(
+                                setState(() {});
+                                await StateContainer.of(context)
+                                    .appWallet!
+                                    .appKeychain!
+                                    .getAccountSelected()!
+                                    .updateNftCategoryList(
+                                      nftCategoryToSort!,
+                                    );
+                              }),
+                              color: Colors.greenAccent[400]!.withOpacity(0.5),
+                            ),
+                          ),
+                          const Divider(
+                            height: 1,
+                          )
+                        ],
+                      ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  AppButton.buildAppButtonTiny(
                     const Key('addNftNewCategory'),
                     context,
                     AppButtonType.primaryOutline,
                     AppLocalization.of(context)!.addNftNewCategory,
                     Dimens.buttonBottomDimens,
-                    onPressed: () {}),
-              ],
-            )
-          ],
-        )),
+                    onPressed: () {},
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

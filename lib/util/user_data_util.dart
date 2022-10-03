@@ -83,17 +83,19 @@ class UserDataUtil {
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.cameraAccessDenied) {
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.qrInvalidPermissions,
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+          AppLocalization.of(context)!.qrInvalidPermissions,
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+        );
         return QRScanErrs.permissionDenied;
       } else {
         UIUtil.showSnackbar(
-            AppLocalization.of(context)!.qrUnknownError,
-            context,
-            StateContainer.of(context).curTheme.text!,
-            StateContainer.of(context).curTheme.snackBarShadow!);
+          AppLocalization.of(context)!.qrUnknownError,
+          context,
+          StateContainer.of(context).curTheme.text!,
+          StateContainer.of(context).curTheme.snackBarShadow!,
+        );
         return QRScanErrs.unknownError;
       }
     } on FormatException {

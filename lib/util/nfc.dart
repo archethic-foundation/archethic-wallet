@@ -20,7 +20,7 @@ class NFCUtil {
   /// @returns [true] if device has NFC available, [false] otherwise
   Future<bool> hasNFC() async {
     if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
-      return await NfcManager.instance.isAvailable();
+      return NfcManager.instance.isAvailable();
     } else {
       return false;
     }
@@ -32,12 +32,13 @@ class NFCUtil {
     final bool hasNFCEnrolled = await hasNFC();
     if (hasNFCEnrolled) {
       await NfcManager.instance.startSession(
-          alertMessage: 'Yubikey OTP Validation',
-          onDiscovered: (NfcTag tag) async {
-            otp = YubicoService().getOTPFromYubiKeyNFC(tag);
-            EventTaxiImpl.singleton().fire(OTPReceiveEvent(otp: otp));
-            await NfcManager.instance.stopSession();
-          });
+        alertMessage: 'Yubikey OTP Validation',
+        onDiscovered: (NfcTag tag) async {
+          otp = YubicoService().getOTPFromYubiKeyNFC(tag);
+          EventTaxiImpl.singleton().fire(OTPReceiveEvent(otp: otp));
+          await NfcManager.instance.stopSession();
+        },
+      );
     }
   }
 }

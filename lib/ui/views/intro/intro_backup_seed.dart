@@ -56,9 +56,11 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage(
-                      StateContainer.of(context).curTheme.background4Small!),
-                  fit: BoxFit.fitHeight),
+                image: AssetImage(
+                  StateContainer.of(context).curTheme.background4Small!,
+                ),
+                fit: BoxFit.fitHeight,
+              ),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -73,8 +75,9 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
             builder: (BuildContext context, BoxConstraints constraints) =>
                 SafeArea(
               minimum: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.035,
-                  top: MediaQuery.of(context).size.height * 0.075),
+                bottom: MediaQuery.of(context).size.height * 0.035,
+                top: MediaQuery.of(context).size.height * 0.075,
+              ),
               child: Column(
                 children: <Widget>[
                   Expanded(
@@ -101,19 +104,22 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                               children: [
                                 Container(
                                   margin: const EdgeInsetsDirectional.only(
-                                      start: 15),
+                                    start: 15,
+                                  ),
                                   height: 50,
                                   width: 50,
                                   child: TextButton(
                                     onPressed: () async {
                                       sl.get<HapticUtil>().feedback(
-                                          FeedbackType.light,
-                                          StateContainer.of(context)
-                                              .activeVibrations);
+                                            FeedbackType.light,
+                                            StateContainer.of(context)
+                                                .activeVibrations,
+                                          );
                                       seed = AppSeeds.generateSeed();
                                       mnemonic = AppMnemomics.seedToMnemonic(
-                                          seed!,
-                                          languageCode: 'en');
+                                        seed!,
+                                        languageCode: 'en',
+                                      );
                                       Preferences preferences =
                                           await Preferences.getInstance();
                                       preferences.setLanguageSeed('en');
@@ -123,29 +129,34 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                     },
                                     child: language == 'en'
                                         ? Image.asset(
-                                            'assets/icons/languages/united-states.png')
+                                            'assets/icons/languages/united-states.png',
+                                          )
                                         : Opacity(
                                             opacity: 0.3,
                                             child: Image.asset(
-                                                'assets/icons/languages/united-states.png'),
+                                              'assets/icons/languages/united-states.png',
+                                            ),
                                           ),
                                   ),
                                 ),
                                 Container(
                                   margin: const EdgeInsetsDirectional.only(
-                                      start: 15),
+                                    start: 15,
+                                  ),
                                   height: 50,
                                   width: 50,
                                   child: TextButton(
                                     onPressed: () async {
                                       sl.get<HapticUtil>().feedback(
-                                          FeedbackType.light,
-                                          StateContainer.of(context)
-                                              .activeVibrations);
+                                            FeedbackType.light,
+                                            StateContainer.of(context)
+                                                .activeVibrations,
+                                          );
                                       seed = AppSeeds.generateSeed();
                                       mnemonic = AppMnemomics.seedToMnemonic(
-                                          seed!,
-                                          languageCode: 'fr');
+                                        seed!,
+                                        languageCode: 'fr',
+                                      );
                                       Preferences preferences =
                                           await Preferences.getInstance();
                                       preferences.setLanguageSeed('fr');
@@ -155,11 +166,13 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                                     },
                                     child: language == 'fr'
                                         ? Image.asset(
-                                            'assets/icons/languages/france.png')
+                                            'assets/icons/languages/france.png',
+                                          )
                                         : Opacity(
                                             opacity: 0.3,
                                             child: Image.asset(
-                                                'assets/icons/languages/france.png'),
+                                              'assets/icons/languages/france.png',
+                                            ),
                                           ),
                                   ),
                                 ),
@@ -169,7 +182,11 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                         ),
                         Container(
                           child: IconWidget.build(
-                              context, 'assets/icons/key-word.png', 90, 90),
+                            context,
+                            'assets/icons/key-word.png',
+                            90,
+                            90,
+                          ),
                         ),
                         Container(
                           margin: const EdgeInsetsDirectional.only(
@@ -212,11 +229,12 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                               Dimens.buttonBottomDimens,
                               onPressed: () async {
                                 Navigator.of(context).pushNamed(
-                                    '/intro_backup_confirm',
-                                    arguments: {
-                                      'name': widget.name,
-                                      'seed': seed
-                                    });
+                                  '/intro_backup_confirm',
+                                  arguments: {
+                                    'name': widget.name,
+                                    'seed': seed
+                                  },
+                                );
                               },
                             ),
                     ],

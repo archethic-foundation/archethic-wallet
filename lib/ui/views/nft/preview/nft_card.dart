@@ -69,31 +69,35 @@ class NFTCard extends StatelessWidget {
                 if (MimeUtil.isImage(typeMime) == true ||
                     MimeUtil.isPdf(typeMime) == true)
                   FutureBuilder<Uint8List?>(
-                      future: TokenUtil.getImageFromTokenAddress(
-                          tokenInformations.address!, typeMime),
-                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        if (snapshot.hasData) {
-                          return ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .text,
-                                    border: Border.all(
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: Image.memory(
-                                    snapshot.data!,
-                                    height: 130,
-                                    fit: BoxFit.fitHeight,
-                                  )));
-                        } else {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
-                      })
+                    future: TokenUtil.getImageFromTokenAddress(
+                      tokenInformations.address!,
+                      typeMime,
+                    ),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: StateContainer.of(context).curTheme.text,
+                              border: Border.all(
+                                width: 1,
+                              ),
+                            ),
+                            child: Image.memory(
+                              snapshot.data!,
+                              height: 130,
+                              fit: BoxFit.fitHeight,
+                            ),
+                          ),
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  )
               ],
             ),
           ),
@@ -157,15 +161,18 @@ class _NFTCardBottomState extends State<NFTCardBottom> {
                 ),*/
                 InkWell(
                   onTap: (() async {
-                    sl.get<HapticUtil>().feedback(FeedbackType.light,
-                        StateContainer.of(context).activeVibrations);
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          StateContainer.of(context).activeVibrations,
+                        );
 
                     StateContainer.of(context)
                         .appWallet!
                         .appKeychain!
                         .getAccountSelected()!
                         .updateNftInfosOffChainFavorite(
-                            widget.tokenInformations.id);
+                          widget.tokenInformations.id,
+                        );
                     setState(() {});
                   }),
                   child: nftInfosOffChain == null ||
