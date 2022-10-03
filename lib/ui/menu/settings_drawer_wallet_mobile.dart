@@ -54,14 +54,14 @@ class SettingsSheetWalletMobile extends StatefulWidget {
 
 class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     with TickerProviderStateMixin, WidgetsBindingObserver {
-  AnimationController? _contactsController;
-  Animation<Offset>? _contactsOffsetFloat;
-  AnimationController? _securityController;
-  Animation<Offset>? _securityOffsetFloat;
-  AnimationController? _customController;
-  Animation<Offset>? _customOffsetFloat;
-  AnimationController? _aboutController;
-  Animation<Offset>? _aboutOffsetFloat;
+  late AnimationController _contactsController;
+  late Animation<Offset>? _contactsOffsetFloat;
+  late AnimationController? _securityController;
+  late Animation<Offset>? _securityOffsetFloat;
+  late AnimationController? _customController;
+  late Animation<Offset>? _customOffsetFloat;
+  late AnimationController? _aboutController;
+  late Animation<Offset>? _aboutOffsetFloat;
 
   String versionString = '';
 
@@ -74,10 +74,10 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   NetworksSetting _curNetworksSetting =
       NetworksSetting(AvailableNetworks.archethicMainNet);
 
-  bool? _securityOpen;
-  bool? _customOpen;
-  bool? _aboutOpen;
-  bool? _contactsOpen;
+  late bool _securityOpen;
+  late bool _customOpen;
+  late bool _aboutOpen;
+  late bool _contactsOpen;
 
   bool _pinPadShuffleActive = false;
   bool _showBalancesActive = false;
@@ -138,7 +138,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     );
     _contactsOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
-            .animate(_contactsController!);
+            .animate(_contactsController);
     _securityOffsetFloat =
         Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero)
             .animate(_securityController!);
@@ -158,7 +158,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
 
   @override
   void dispose() {
-    _contactsController!.dispose();
+    _contactsController.dispose();
     _securityController!.dispose();
     _customController!.dispose();
     _aboutController!.dispose();
@@ -227,19 +227,19 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
   }
 
   Future<bool> _onBackButtonPressed() async {
-    if (_contactsOpen!) {
+    if (_contactsOpen) {
       _contactsOpen = false;
-      _contactsController!.reverse();
+      _contactsController.reverse();
       return false;
-    } else if (_securityOpen!) {
+    } else if (_securityOpen) {
       _securityOpen = false;
       _securityController!.reverse();
       return false;
-    } else if (_customOpen!) {
+    } else if (_customOpen) {
       _customOpen = false;
       _customController!.reverse();
       return false;
-    } else if (_aboutOpen!) {
+    } else if (_aboutOpen) {
       _aboutOpen = false;
       _aboutController!.reverse();
       return false;
@@ -262,8 +262,8 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
             SlideTransition(
               position: _contactsOffsetFloat!,
               child: ContactsList(
-                _contactsController!,
-                _contactsOpen!,
+                _contactsController,
+                _contactsOpen,
               ),
             ),
             SlideTransition(
@@ -384,7 +384,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                             StateContainer.of(context).curTheme.iconDrawer,
                         onPressed: () {
                           _contactsOpen = true;
-                          _contactsController!.forward();
+                          _contactsController.forward();
                         },
                       ),
                       Divider(

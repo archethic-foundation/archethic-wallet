@@ -292,7 +292,7 @@ class Splash extends StatefulWidget {
 }
 
 class SplashState extends State<Splash> with WidgetsBindingObserver {
-  bool? _hasCheckedLoggedIn;
+  late bool _hasCheckedLoggedIn;
 
   Future<void> checkLoggedIn() async {
     final Preferences preferences = await Preferences.getInstance();
@@ -326,7 +326,7 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       }
     }*/
 
-    if (!_hasCheckedLoggedIn!) {
+    if (!_hasCheckedLoggedIn) {
       _hasCheckedLoggedIn = true;
     } else {
       return;

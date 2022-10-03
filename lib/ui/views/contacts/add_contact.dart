@@ -49,11 +49,11 @@ class _AddContactSheetState extends State<AddContactSheet> {
   TextEditingController? _addressController;
 
   // State variables
-  bool? _addressValid;
-  bool? _showPasteButton;
-  bool? _addressValidAndUnfocused;
-  String? _nameValidationText;
-  String? _addressValidationText;
+  late bool _addressValid;
+  late bool _showPasteButton;
+  late bool _addressValidAndUnfocused;
+  late String _nameValidationText;
+  late String _addressValidationText;
 
   @override
   void initState() {
@@ -92,7 +92,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
   bool _shouldShowTextField() {
     if (widget.address != null) {
       return false;
-    } else if (_addressValidAndUnfocused!) {
+    } else if (_addressValidAndUnfocused) {
       return false;
     }
     return true;
@@ -154,7 +154,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                   Container(
                     margin: const EdgeInsets.only(top: 5, bottom: 5),
                     child: Text(
-                      _nameValidationText!,
+                      _nameValidationText,
                       style: AppStyles.textStyleSize14W600Primary(context),
                     ),
                   ),
@@ -167,7 +167,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                         : EdgeInsets.zero,
                     focusNode: _addressFocusNode,
                     controller: _addressController,
-                    style: _addressValid!
+                    style: _addressValid
                         ? AppStyles.textStyleSize14W100Primary(context)
                         : AppStyles.textStyleSize14W100Text60(context),
                     inputFormatters: <LengthLimitingTextInputFormatter>[
@@ -211,7 +211,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                     suffixButton: TextFieldButton(
                       icon: FontAwesomeIcons.paste,
                       onPressed: () async {
-                        if (!_showPasteButton!) {
+                        if (!_showPasteButton) {
                           return;
                         }
                         sl.get<HapticUtil>().feedback(
@@ -291,7 +291,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                   Container(
                     margin: const EdgeInsets.only(top: 5, bottom: 5),
                     child: Text(
-                      _addressValidationText!,
+                      _addressValidationText,
                       style: AppStyles.textStyleSize14W600Primary(context),
                     ),
                   ),

@@ -88,14 +88,14 @@ class _TransferSheetState extends State<TransferSheet> {
   TextEditingController? _messageController;
 
   AddressStyle? _sendAddressStyle;
-  String? _amountValidationText = '';
-  String? _addressValidationText = '';
-  String? _messageValidationText = '';
+  String _amountValidationText = '';
+  String _addressValidationText = '';
+  String _messageValidationText = '';
   String? quickSendAmount;
   bool _addressValidAndUnfocused = false;
   bool _isContact = false;
   bool _qrCodeButtonVisible = true;
-  NumberFormat? _localCurrencyFormat;
+  late NumberFormat _localCurrencyFormat;
   String? _rawAmount;
   bool validRequest = true;
   double feeEstimation = 0;
@@ -263,7 +263,7 @@ class _TransferSheetState extends State<TransferSheet> {
                                   alignment: AlignmentDirectional.center,
                                   margin: const EdgeInsets.only(top: 3),
                                   child: Text(
-                                    _amountValidationText!,
+                                    _amountValidationText,
                                     style: AppStyles.textStyleSize14W600Primary(
                                       context,
                                     ),
@@ -285,7 +285,7 @@ class _TransferSheetState extends State<TransferSheet> {
                                     top: 3,
                                   ),
                                   child: Text(
-                                    _addressValidationText!,
+                                    _addressValidationText,
                                     style: AppStyles.textStyleSize14W600Primary(
                                       context,
                                     ),
@@ -337,7 +337,7 @@ class _TransferSheetState extends State<TransferSheet> {
                                     top: 3,
                                   ),
                                   child: Text(
-                                    _messageValidationText!,
+                                    _messageValidationText,
                                     style: AppStyles.textStyleSize14W600Primary(
                                       context,
                                     ),
@@ -704,11 +704,11 @@ class _TransferSheetState extends State<TransferSheet> {
                           .primaryCurrency
                           .name
                   ? 8
-                  : _localCurrencyFormat!.decimalDigits!,
+                  : _localCurrencyFormat.decimalDigits!,
             ),
             LocalCurrencyFormatter(
               active: false,
-              currencyFormat: _localCurrencyFormat!,
+              currencyFormat: _localCurrencyFormat,
             ),
             FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,8}')),
           ],
@@ -776,7 +776,7 @@ class _TransferSheetState extends State<TransferSheet> {
                         .fiatCurrencyValue! -
                     selectedCurrencyFee;
                 _sendAmountController!.text = sendAmount
-                    .toStringAsFixed(_localCurrencyFormat!.decimalDigits!);
+                    .toStringAsFixed(_localCurrencyFormat.decimalDigits!);
               }
 
               setState(() {
@@ -1185,7 +1185,7 @@ class _TransferSheetState extends State<TransferSheet> {
   String _convertNetworkCurrencyToSelectedCurrency() {
     final String convertedAmt = NumberUtil.sanitizeNumber(
       _sendAmountController!.text,
-      maxDecimalDigits: _localCurrencyFormat!.decimalDigits!,
+      maxDecimalDigits: _localCurrencyFormat.decimalDigits!,
     );
     if (convertedAmt.isEmpty) {
       return '';
@@ -1202,6 +1202,6 @@ class _TransferSheetState extends State<TransferSheet> {
             ) *
             Decimal.parse(convertedAmt))
         .toDouble();
-    return _localCurrencyFormat!.format(priceConverted);
+    return _localCurrencyFormat.format(priceConverted);
   }
 }

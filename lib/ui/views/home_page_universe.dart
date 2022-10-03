@@ -41,9 +41,9 @@ class AppHomePageUniverse extends StatefulWidget {
 
 class _AppHomePageUniverseState extends State<AppHomePageUniverse>
     with WidgetsBindingObserver, TickerProviderStateMixin {
-  AnimationController? _placeholderCardAnimationController;
-  Animation<double>? _opacityAnimation;
-  bool? _animationDisposed;
+  late AnimationController _placeholderCardAnimationController;
+  late Animation<double> _opacityAnimation;
+  late bool _animationDisposed;
 
   bool _lockDisabled = false; // whether we should avoid locking the app
 
@@ -74,17 +74,17 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-    _placeholderCardAnimationController!
+    _placeholderCardAnimationController
         .addListener(_animationControllerListener);
     _opacityAnimation = Tween<double>(begin: 1, end: 0.4).animate(
       CurvedAnimation(
-        parent: _placeholderCardAnimationController!,
+        parent: _placeholderCardAnimationController,
         curve: Curves.easeIn,
         reverseCurve: Curves.easeOut,
       ),
     );
-    _opacityAnimation!.addStatusListener(_animationStatusListener);
-    _placeholderCardAnimationController!.forward();
+    _opacityAnimation.addStatusListener(_animationStatusListener);
+    _placeholderCardAnimationController.forward();
   }
 
   StreamSubscription<String?> listenNotifications() =>
@@ -97,10 +97,10 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
   void _animationStatusListener(AnimationStatus status) {
     switch (status) {
       case AnimationStatus.dismissed:
-        _placeholderCardAnimationController!.forward();
+        _placeholderCardAnimationController.forward();
         break;
       case AnimationStatus.completed:
-        _placeholderCardAnimationController!.reverse();
+        _placeholderCardAnimationController.reverse();
         break;
       default:
         break;
@@ -112,22 +112,22 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
   }
 
   void _startAnimation() {
-    if (_animationDisposed!) {
+    if (_animationDisposed) {
       _animationDisposed = false;
-      _placeholderCardAnimationController!
+      _placeholderCardAnimationController
           .addListener(_animationControllerListener);
-      _opacityAnimation!.addStatusListener(_animationStatusListener);
-      _placeholderCardAnimationController!.forward();
+      _opacityAnimation.addStatusListener(_animationStatusListener);
+      _placeholderCardAnimationController.forward();
     }
   }
 
   void _disposeAnimation() {
-    if (!_animationDisposed!) {
+    if (!_animationDisposed) {
       _animationDisposed = true;
-      _opacityAnimation!.removeStatusListener(_animationStatusListener);
-      _placeholderCardAnimationController!
+      _opacityAnimation.removeStatusListener(_animationStatusListener);
+      _placeholderCardAnimationController
           .removeListener(_animationControllerListener);
-      _placeholderCardAnimationController!.stop();
+      _placeholderCardAnimationController.stop();
     }
   }
 
@@ -186,7 +186,7 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
     _destroyBus();
     WidgetsBinding.instance.removeObserver(this);
     tabController!.dispose();
-    _placeholderCardAnimationController!.dispose();
+    _placeholderCardAnimationController.dispose();
     super.dispose();
   }
 
@@ -304,10 +304,10 @@ class ExpandablePageView extends StatefulWidget {
 class _ExpandablePageViewState extends State<ExpandablePageView>
     with TickerProviderStateMixin {
   PageController? _pageController;
-  List<double>? _heights;
+  late List<double> _heights;
   int _currentPage = 0;
 
-  double get _currentHeight => _heights![_currentPage];
+  double get _currentHeight => _heights[_currentPage];
 
   @override
   void initState() {
@@ -371,7 +371,7 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
         TweenAnimationBuilder<double>(
           curve: Curves.easeInOutCubic,
           duration: const Duration(milliseconds: 100),
-          tween: Tween<double>(begin: _heights![0], end: _currentHeight),
+          tween: Tween<double>(begin: _heights[0], end: _currentHeight),
           builder: (context, value, child) =>
               SizedBox(height: value, child: child),
           child: PageView(
@@ -423,7 +423,7 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
             alignment: Alignment.topCenter,
             child: SizeReportingWidget(
               onSizeChange: (size) =>
-                  setState(() => _heights![index] = size.height),
+                  setState(() => _heights[index] = size.height),
               child: Align(child: child),
             ),
           ),

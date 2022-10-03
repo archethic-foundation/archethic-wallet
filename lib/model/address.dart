@@ -11,11 +11,11 @@ class Address {
   }
 
   String? _address;
-  String? _amount;
+  late String _amount;
 
   String get address => _address!;
 
-  String get amount => _amount!;
+  String get amount => _amount;
 
   String getShortString() {
     if (_address == null) {

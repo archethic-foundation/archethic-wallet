@@ -249,7 +249,7 @@ class PulsatingCircleLogo extends StatefulWidget {
 class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
     with SingleTickerProviderStateMixin {
   AnimationController? _animationController;
-  Animation<double>? _animation;
+  late Animation<double> _animation;
 
   @override
   void initState() {
@@ -277,7 +277,7 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
         InkWell(
           borderRadius: BorderRadius.circular(100),
           child: AnimatedBuilder(
-            animation: _animation!,
+            animation: _animation,
             builder: (context, _) {
               return Ink(
                 padding: const EdgeInsets.all(16),
@@ -291,7 +291,7 @@ class PulsatingCircleLogoState extends State<PulsatingCircleLogo>
                             .curTheme
                             .iconDrawer!
                             .withOpacity(_animationController!.value / 2),
-                        spreadRadius: _animation!.value * i,
+                        spreadRadius: _animation.value * i,
                       )
                   ],
                 ),

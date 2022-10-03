@@ -49,9 +49,9 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
   TextEditingController? _symbolController;
   TextEditingController? _initialSupplyController;
 
-  String? _nameValidationText;
-  String? _symbolValidationText;
-  String? _initialSupplyValidationText;
+  late String _nameValidationText;
+  late String _symbolValidationText;
+  late String _initialSupplyValidationText;
 
   bool? animationOpen;
   double feeEstimation = 0;
@@ -140,7 +140,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                             Container(
                               margin: const EdgeInsets.only(top: 5, bottom: 5),
                               child: Text(
-                                _nameValidationText!,
+                                _nameValidationText,
                                 style: AppStyles.textStyleSize14W600Primary(
                                   context,
                                 ),
@@ -188,7 +188,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                             Container(
                               margin: const EdgeInsets.only(top: 5, bottom: 5),
                               child: Text(
-                                _symbolValidationText!,
+                                _symbolValidationText,
                                 style: AppStyles.textStyleSize14W600Primary(
                                   context,
                                 ),
@@ -222,7 +222,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                             Container(
                               margin: const EdgeInsets.only(top: 5, bottom: 5),
                               child: Text(
-                                _initialSupplyValidationText!,
+                                _initialSupplyValidationText,
                                 style: AppStyles.textStyleSize14W600Primary(
                                   context,
                                 ),
