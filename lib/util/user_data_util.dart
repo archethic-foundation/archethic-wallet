@@ -40,24 +40,24 @@ class UserDataUtil {
   static StreamSubscription<dynamic>? setStream;
 
   static String? _parseData(String data, DataType type) {
-    data = data.trim();
+    final String dataTrim = data.trim();
     if (type == DataType.raw) {
-      return data;
+      return dataTrim;
     } else if (type == DataType.url) {
-      if (isIP(data)) {
-        return data;
-      } else if (isURL(data)) {
-        return data;
+      if (isIP(dataTrim)) {
+        return dataTrim;
+      } else if (isURL(dataTrim)) {
+        return dataTrim;
       }
     } else if (type == DataType.address) {
-      final Address address = Address(data);
+      final Address address = Address(dataTrim);
       if (address.isValid()) {
         return address.address;
       }
     } else if (type == DataType.seed) {
       // Check if valid seed
-      if (AppSeeds.isValidSeed(data)) {
-        return data;
+      if (AppSeeds.isValidSeed(dataTrim)) {
+        return dataTrim;
       }
     }
     return null;

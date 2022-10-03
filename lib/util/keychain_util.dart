@@ -252,6 +252,7 @@ class KeychainUtil {
   }) async {
     final List<Account> accounts = List<Account>.empty(growable: true);
 
+    AppWallet currentAppWallet;
     try {
       /// Get KeyChain Wallet
       final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
@@ -263,9 +264,11 @@ class KeychainUtil {
         final Transaction lastTransaction =
             await sl.get<ApiService>().getLastTransaction(addressKeychain);
 
-        appWallet = await sl
+        currentAppWallet = await sl
             .get<DBHelper>()
             .createAppWallet('', lastTransaction.address!);
+      } else {
+        currentAppWallet = appWallet;
       }
 
       const String kDerivationPathWithoutService = "m/650'/archethic-wallet-";
@@ -344,16 +347,16 @@ class KeychainUtil {
       final Transaction lastTransactionKeychain = await sl
           .get<ApiService>()
           .getLastTransaction(genesisAddressKeychain, request: 'address');
-      appWallet.appKeychain!.address = lastTransactionKeychain.address;
+      currentAppWallet.appKeychain!.address = lastTransactionKeychain.address;
       accounts.sort((a, b) => a.name!.compareTo(b.name!));
-      appWallet.appKeychain!.accounts = accounts;
+      currentAppWallet.appKeychain!.accounts = accounts;
 
-      await appWallet.save();
+      await currentAppWallet.save();
     } catch (e) {
       throw Exception();
     }
 
-    return appWallet;
+    return currentAppWallet;
   }
 
   void waitConfirmations(

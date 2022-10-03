@@ -57,20 +57,21 @@ class NumberUtil {
   /// @returns 1.512
   static String sanitizeNumber(String input, {int maxDecimalDigits = 8}) {
     String sanitized = '';
-    final List<String> splitStr = input.split('.');
+    String inputSplitted = input;
+    final List<String> splitStr = inputSplitted.split('.');
     if (splitStr.length > 1) {
       if (splitStr[1].length > maxDecimalDigits) {
         splitStr[1] = splitStr[1].substring(0, maxDecimalDigits);
-        input = '${splitStr[0]}.${splitStr[1]}';
+        inputSplitted = '${splitStr[0]}.${splitStr[1]}';
       }
     }
-    for (int i = 0; i < input.length; i++) {
+    for (int i = 0; i < inputSplitted.length; i++) {
       try {
-        if (input[i] == '.') {
-          sanitized = sanitized + input[i];
+        if (inputSplitted[i] == '.') {
+          sanitized = sanitized + inputSplitted[i];
         } else {
-          int.parse(input[i]);
-          sanitized = sanitized + input[i];
+          int.parse(inputSplitted[i]);
+          sanitized = sanitized + inputSplitted[i];
         }
       } catch (e) {
         // TODO(Chralu): shouldn't we return default value ? or maybe null ?
