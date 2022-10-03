@@ -59,17 +59,17 @@ class _PinScreenState extends State<PinScreen>
   String pinCreateTitle = '';
 
   // Stateful data
-  List<IconData>? _dotStates;
+  late List<IconData> _dotStates;
   String? _pin;
   String? _pinConfirmed;
-  bool?
+  late bool
       _awaitingConfirmation; // true if pin has been entered once, false if not entered once
-  String? _header;
+  late String _header;
   int _failedAttempts = 0;
   final List<int> _listPinNumber = <int>[1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
   // Invalid animation
-  AnimationController? _controller;
+  late AnimationController _controller;
   Animation<double>? _animation;
 
   @override
@@ -103,7 +103,7 @@ class _PinScreenState extends State<PinScreen>
         vsync: this,
       );
       final Animation<double> curve =
-          CurvedAnimation(parent: _controller!, curve: ShakeCurve());
+          CurvedAnimation(parent: _controller, curve: ShakeCurve());
       _animation = Tween<double>(begin: 0, end: 25).animate(curve)
         ..addStatusListener((status) {
           if (status == AnimationStatus.completed) {
@@ -112,7 +112,7 @@ class _PinScreenState extends State<PinScreen>
                 _failedAttempts++;
                 if (_failedAttempts >= maxAttempts) {
                   setState(() {
-                    _controller!.value = 0;
+                    _controller.value = 0;
                   });
                   preferences.updateLockDate().then((_) {
                     Navigator.of(context).pushNamedAndRemoveUntil(
@@ -126,7 +126,7 @@ class _PinScreenState extends State<PinScreen>
                     _header = AppLocalization.of(context)!.pinInvalid;
                     _dotStates =
                         List.filled(_pinLength, FontAwesomeIcons.minus);
-                    _controller!.value = 0;
+                    _controller.value = 0;
                   });
                 }
               });
@@ -137,7 +137,7 @@ class _PinScreenState extends State<PinScreen>
                 _pin = '';
                 _pinConfirmed = '';
                 _header = AppLocalization.of(context)!.pinConfirmError;
-                _controller!.value = 0;
+                _controller.value = 0;
               });
             }
           }
@@ -152,14 +152,14 @@ class _PinScreenState extends State<PinScreen>
 
   @override
   void dispose() {
-    _controller!.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   /// Set next character in the pin set
   /// return true if all characters entered
   bool _setCharacter(String character) {
-    if (_awaitingConfirmation!) {
+    if (_awaitingConfirmation) {
       setState(() {
         _pinConfirmed = _pinConfirmed! + character;
       });
@@ -168,35 +168,35 @@ class _PinScreenState extends State<PinScreen>
         _pin = _pin! + character;
       });
     }
-    for (int i = 0; i < _dotStates!.length; i++) {
-      if (_dotStates![i] == FontAwesomeIcons.minus) {
+    for (int i = 0; i < _dotStates.length; i++) {
+      if (_dotStates[i] == FontAwesomeIcons.minus) {
         setState(() {
-          _dotStates![i] = FontAwesomeIcons.solidCircle;
+          _dotStates[i] = FontAwesomeIcons.solidCircle;
         });
         break;
       }
     }
-    if (_dotStates!.last == FontAwesomeIcons.solidCircle) {
+    if (_dotStates.last == FontAwesomeIcons.solidCircle) {
       return true;
     }
     return false;
   }
 
   void _backSpace() {
-    if (_dotStates![0] != FontAwesomeIcons.minus) {
+    if (_dotStates[0] != FontAwesomeIcons.minus) {
       int lastFilledIndex = 0;
-      for (int i = 0; i < _dotStates!.length; i++) {
-        if (_dotStates![i] == FontAwesomeIcons.solidCircle) {
-          if (i == _dotStates!.length ||
-              _dotStates![i + 1] == FontAwesomeIcons.minus) {
+      for (int i = 0; i < _dotStates.length; i++) {
+        if (_dotStates[i] == FontAwesomeIcons.solidCircle) {
+          if (i == _dotStates.length ||
+              _dotStates[i + 1] == FontAwesomeIcons.minus) {
             lastFilledIndex = i;
             break;
           }
         }
       }
       setState(() {
-        _dotStates![lastFilledIndex] = FontAwesomeIcons.minus;
-        if (_awaitingConfirmation!) {
+        _dotStates[lastFilledIndex] = FontAwesomeIcons.minus;
+        if (_awaitingConfirmation) {
           _pinConfirmed =
               _pinConfirmed!.substring(0, _pinConfirmed!.length - 1);
         } else {
@@ -221,8 +221,8 @@ class _PinScreenState extends State<PinScreen>
                 FeedbackType.light,
                 StateContainer.of(context).activeVibrations,
               );
-          if (_controller!.status == AnimationStatus.forward ||
-              _controller!.status == AnimationStatus.reverse) {
+          if (_controller.status == AnimationStatus.forward ||
+              _controller.status == AnimationStatus.reverse) {
             return;
           }
           if (_setCharacter(buttonText)) {
@@ -235,7 +235,7 @@ class _PinScreenState extends State<PinScreen>
                         FeedbackType.error,
                         StateContainer.of(context).activeVibrations,
                       );
-                  _controller!.forward();
+                  _controller.forward();
                 } else {
                   Preferences.getInstance().then((Preferences preferences) {
                     preferences.resetLockAttempts();
@@ -243,7 +243,7 @@ class _PinScreenState extends State<PinScreen>
                   });
                 }
               } else {
-                if (!_awaitingConfirmation!) {
+                if (!_awaitingConfirmation) {
                   // Switch to confirm pin
                   setState(() {
                     _awaitingConfirmation = true;
@@ -264,7 +264,7 @@ class _PinScreenState extends State<PinScreen>
                           FeedbackType.error,
                           StateContainer.of(context).activeVibrations,
                         );
-                    _controller!.forward();
+                    _controller.forward();
                   }
                 }
               }
@@ -298,7 +298,7 @@ class _PinScreenState extends State<PinScreen>
     for (int i = 0; i < _pinLength; i++) {
       ret.add(
         FaIcon(
-          _dotStates![i],
+          _dotStates[i],
           color: StateContainer.of(context).curTheme.text,
           size: 15,
         ),
@@ -374,7 +374,7 @@ class _PinScreenState extends State<PinScreen>
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 40),
                       child: AutoSizeText(
-                        _header!,
+                        _header,
                         style: AppStyles.textStyleSize24W700EquinoxPrimary(
                           context,
                         ),

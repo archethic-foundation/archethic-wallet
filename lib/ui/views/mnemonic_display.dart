@@ -30,7 +30,7 @@ class MnemonicDisplay extends StatefulWidget {
 }
 
 class _MnemonicDisplayState extends State<MnemonicDisplay> {
-  bool? _seedObscured;
+  late bool _seedObscured;
   int curWord = 0;
 
   @override
@@ -53,7 +53,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                 );
             if (widget.obscureSeed) {
               setState(() {
-                _seedObscured = !_seedObscured!;
+                _seedObscured = !_seedObscured;
               });
             }
           },
@@ -77,7 +77,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
                         ),
                       ),
                       label: Text(
-                        _seedObscured! && widget.obscureSeed
+                        _seedObscured && widget.obscureSeed
                             ? '•' * 6
                             : entry.value,
                         style: AppStyles.textStyleSize12W400Primary(context),
@@ -90,7 +90,7 @@ class _MnemonicDisplayState extends State<MnemonicDisplay> {
               if (widget.obscureSeed)
                 Container(
                   margin: const EdgeInsetsDirectional.only(top: 8),
-                  child: _seedObscured!
+                  child: _seedObscured
                       ? AutoSizeText(
                           AppLocalization.of(context)!.tapToReveal,
                           style: AppStyles.textStyleSize14W600Primary(context),
