@@ -1,19 +1,8 @@
 // ignore_for_file: cancel_subscriptions
 
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:async';
 import 'dart:developer' as dev;
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:barcode_scan2/barcode_scan2.dart';
-import 'package:quiver/strings.dart';
-import 'package:validators/validators.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -21,6 +10,13 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/address.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/util/seeds.dart';
+// Package imports:
+import 'package:barcode_scan2/barcode_scan2.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:quiver/strings.dart';
+import 'package:validators/validators.dart';
 
 enum DataType { raw, url, address, seed }
 

@@ -1,14 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Flutter imports:
-import 'package:flutter/widgets.dart';
-
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/util/styles.dart';
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/widgets.dart';
 
 class SheetHeader extends StatelessWidget {
   const SheetHeader({

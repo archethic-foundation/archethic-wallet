@@ -1,16 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:async';
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:event_taxi/event_taxi.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -34,6 +23,13 @@ import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/vault.dart';
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:event_taxi/event_taxi.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
 class IntroImportSeedPage extends StatefulWidget {
   const IntroImportSeedPage({super.key});

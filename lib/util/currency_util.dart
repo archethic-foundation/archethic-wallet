@@ -1,10 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:decimal/decimal.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CurrencyUtil {

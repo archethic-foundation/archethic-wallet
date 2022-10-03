@@ -1,11 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// ignore_for_file: must_be_immutable
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:flutter/material.dart';
 
 enum AddressTextType { primary60, primary }
 

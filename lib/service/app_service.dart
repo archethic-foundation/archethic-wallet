@@ -1,18 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as dev;
 import 'dart:math';
 import 'dart:typed_data';
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:intl/intl.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -24,6 +15,11 @@ import 'package:aewallet/model/data/token_informations_property.dart';
 import 'package:aewallet/model/transaction_infos.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/number_util.dart';
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AppService {
   // TODO(reddwarf03): Error loading recent transactions when tx number > 10, https://github.com/archethic-foundation/archethic-wallet/issues/262

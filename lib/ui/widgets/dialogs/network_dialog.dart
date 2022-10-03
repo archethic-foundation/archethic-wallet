@@ -1,12 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:flutter_svg/flutter_svg.dart';
-
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -18,6 +10,10 @@ import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/service_locator.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+// Package imports:
+import 'package:flutter_svg/flutter_svg.dart';
 
 class NetworkDialog {
   static Future<NetworksSetting?> getDialog(

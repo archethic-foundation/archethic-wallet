@@ -1,19 +1,16 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:collection/collection.dart';
-import 'package:pdfx/pdfx.dart';
 
 // Project imports:
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/mime_util.dart';
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:collection/collection.dart';
+import 'package:pdfx/pdfx.dart';
 
 RegExp _base64 = RegExp(
   r'^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$',

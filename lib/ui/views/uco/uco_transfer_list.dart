@@ -1,14 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// ignore_for_file: must_be_immutable
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:decimal/decimal.dart';
-
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -16,6 +6,10 @@ import 'package:aewallet/model/address.dart';
 import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/number_util.dart';
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:decimal/decimal.dart';
+import 'package:flutter/material.dart';
 
 class UCOTransferListWidget extends StatelessWidget {
   UCOTransferListWidget({

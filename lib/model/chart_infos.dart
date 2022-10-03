@@ -1,15 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/asset_history_interval.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show ApiCoinsService, CoinsPriceResponse, CoinsCurrentDataResponse;
+import 'package:flutter/material.dart';
 
 // TODO(Chralu): refacto
 // - [ChartInfos] should become immutable

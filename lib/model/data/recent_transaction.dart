@@ -1,14 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:hive/hive.dart';
-
 // Project imports:
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:hive/hive.dart';
 
 part 'recent_transaction.g.dart';
 

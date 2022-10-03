@@ -1,13 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/nft_list.dart';
 import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
+import 'package:flutter/material.dart';
 
 class NFTListPerCategory extends StatelessWidget {
   const NFTListPerCategory({super.key, this.currentNftCategoryIndex});

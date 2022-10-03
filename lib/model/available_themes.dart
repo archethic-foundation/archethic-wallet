@@ -1,8 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:aewallet/model/setting_item.dart';
 import 'package:aewallet/ui/themes/theme_byzantine_violet.dart';
@@ -25,6 +21,7 @@ import 'package:aewallet/ui/themes/theme_sapphire_blue_flat.dart';
 import 'package:aewallet/ui/themes/theme_sea_green.dart';
 import 'package:aewallet/ui/themes/theme_sea_green_flat.dart';
 import 'package:aewallet/ui/themes/themes.dart';
+import 'package:flutter/material.dart';
 
 enum ThemeOptions {
   byzantineViolet,

@@ -1,14 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:typed_data';
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:bip39_mnemonic/bip39_mnemonic.dart' as bip39;
 
 // Project imports:
 import 'package:aewallet/util/seeds.dart';
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:bip39_mnemonic/bip39_mnemonic.dart' as bip39;
 
 // ignore: avoid_classes_with_only_static_members
 class AppMnemomics {

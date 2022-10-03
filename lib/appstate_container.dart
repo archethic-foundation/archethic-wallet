@@ -1,15 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:async';
 import 'dart:io';
-
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 // Project imports:
 import 'package:aewallet/main.dart';
@@ -31,6 +22,11 @@ import 'package:aewallet/util/notifications_util.dart';
 import 'package:aewallet/util/preferences.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:aewallet/util/vault.dart';
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class _InheritedStateContainer extends InheritedWidget {
   const _InheritedStateContainer({

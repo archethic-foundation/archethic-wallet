@@ -1,21 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:io';
-
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:oktoast/oktoast.dart';
-import 'package:window_manager/window_manager.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -39,6 +25,16 @@ import 'package:aewallet/ui/views/nft/nft_creation_process.dart';
 import 'package:aewallet/ui/views/nft/nft_list_per_category.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
+// Package imports:
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();

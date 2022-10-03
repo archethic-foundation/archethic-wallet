@@ -1,8 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -10,6 +6,7 @@ import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/preferences.dart';
+import 'package:flutter/material.dart';
 
 class LockDialog {
   static Future<UnlockSetting?> getDialog(

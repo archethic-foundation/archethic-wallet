@@ -1,15 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:math';
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Project imports:
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/widgets/components/gradient_shadow_box_decoration.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class NavyBlueFlatTheme implements BaseTheme {
   @override

@@ -1,12 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show ApiCoinsService, ApiService, AddressService, OracleService;
-
-// Package imports:
-import 'package:ledger_dart_lib/ledger_dart_lib.dart';
-
 // Project imports:
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/service/app_service.dart';
@@ -15,6 +7,10 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/nfc.dart';
 import 'package:aewallet/util/preferences.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart'
+    show ApiCoinsService, ApiService, AddressService, OracleService;
+// Package imports:
+import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
 Future<void> setupServiceLocator() async {
   if (sl.isRegistered<AppService>()) {

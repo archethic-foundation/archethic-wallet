@@ -1,15 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+// Package imports:
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /// TextField button
 class TextFieldButton extends StatelessWidget {

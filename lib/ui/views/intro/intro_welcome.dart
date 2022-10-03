@@ -1,12 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// ignore_for_file: avoid_unnecessary_containers
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
@@ -16,6 +8,9 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/buttons.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
+// Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
 
 class IntroWelcome extends StatefulWidget {
   const IntroWelcome({super.key});

@@ -1,21 +1,17 @@
 // ignore_for_file: cancel_subscriptions
 
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:async';
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:event_taxi/event_taxi.dart';
-import 'package:oktoast/oktoast.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:aewallet/bus/disable_lock_timeout_event.dart';
 import 'package:aewallet/ui/util/styles.dart';
+// Package imports:
+import 'package:event_taxi/event_taxi.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 enum ThreeLineAddressTextType { primary60, primary }
 

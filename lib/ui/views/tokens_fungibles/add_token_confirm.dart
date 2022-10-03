@@ -1,17 +1,7 @@
 // ignore_for_file: cancel_subscriptions, avoid_unnecessary_containers
 
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-// Dart imports:
 import 'dart:async';
-
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:event_taxi/event_taxi.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
@@ -32,6 +22,12 @@ import 'package:aewallet/util/confirmations/subscription_channel.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:aewallet/util/preferences.dart';
+// Package imports:
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:event_taxi/event_taxi.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 // Project imports:
 
