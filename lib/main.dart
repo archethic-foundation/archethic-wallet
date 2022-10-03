@@ -280,7 +280,8 @@ class _AppState extends State<App> {
 }
 
 /// Splash
-/// Default page route that determines if user is logged in and routes them appropriately.
+/// Default page route that determines if user is logged in
+/// and routes them appropriately.
 class Splash extends StatefulWidget {
   const Splash({super.key});
 
@@ -329,7 +330,8 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
       return;
     }
     try {
-      // iOS key store is persistent, so if this is first launch then we will clear the keystore
+      // iOS key store is persistent, so if this is first launch
+      // then we will clear the keystore
       /*bool firstLaunch = preferences.getFirstLaunch();
       if (firstLaunch) {
         Vault vault = await Vault.getInstance();
