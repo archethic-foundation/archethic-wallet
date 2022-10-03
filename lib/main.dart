@@ -41,8 +41,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/preferences.dart';
 
 Future<void> main() async {
-  final widgetsBinding =
-      WidgetsFlutterBinding.ensureInitialized();
+  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await DBHelper.setupDatabase();
   if (!kIsWeb && (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
@@ -229,8 +228,7 @@ class _AppState extends State<App> {
                 settings: settings,
               );
             case '/intro_backup_confirm':
-              final args =
-                  settings.arguments as Map<String, dynamic>? ?? {};
+              final args = settings.arguments as Map<String, dynamic>? ?? {};
               return MaterialPageRoute<IntroBackupConfirm>(
                 builder: (_) => IntroBackupConfirm(
                   name: args['name'] == null ? null : args['name'] as String,
@@ -256,8 +254,7 @@ class _AppState extends State<App> {
                 settings: settings,
               );
             case '/nft_creation':
-              final args =
-                  settings.arguments as Map<String, dynamic>? ?? {};
+              final args = settings.arguments as Map<String, dynamic>? ?? {};
               return MaterialPageRoute<NFTCreationProcess>(
                 builder: (_) => NFTCreationProcess(
                   currentNftCategoryIndex:
@@ -411,7 +408,10 @@ class SplashState extends State<Splash> with WidgetsBindingObserver {
         setLanguage();
         super.didChangeAppLifecycleState(state);
         break;
-      default:
+      case AppLifecycleState.inactive:
+        super.didChangeAppLifecycleState(state);
+        break;
+      case AppLifecycleState.detached:
         super.didChangeAppLifecycleState(state);
         break;
     }

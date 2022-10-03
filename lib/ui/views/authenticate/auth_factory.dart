@@ -39,13 +39,14 @@ class AuthFactory {
         auth = await _authenticateWithPin(context, transitions: transitions);
         break;
       case AuthMethod.biometrics:
-        final hasBiometrics =
-            await sl.get<BiometricUtil>().hasBiometrics();
+        final hasBiometrics = await sl.get<BiometricUtil>().hasBiometrics();
         if (hasBiometrics) {
           auth = await _authenticateWithBiometrics(context);
         }
         break;
-      default:
+      case AuthMethod.biometricsUniris:
+        break;
+      case AuthMethod.ledger:
         break;
     }
     if (auth) {

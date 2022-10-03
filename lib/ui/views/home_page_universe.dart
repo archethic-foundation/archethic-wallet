@@ -102,7 +102,9 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
       case AnimationStatus.completed:
         _placeholderCardAnimationController.reverse();
         break;
-      default:
+      case AnimationStatus.reverse:
+        break;
+      case AnimationStatus.forward:
         break;
     }
   }
@@ -215,7 +217,10 @@ class _AppHomePageUniverseState extends State<AppHomePageUniverse>
         cancelLockEvent();
         super.didChangeAppLifecycleState(state);
         break;
-      default:
+      case AppLifecycleState.inactive:
+        super.didChangeAppLifecycleState(state);
+        break;
+      case AppLifecycleState.detached:
         super.didChangeAppLifecycleState(state);
         break;
     }

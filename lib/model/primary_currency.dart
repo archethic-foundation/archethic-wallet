@@ -21,8 +21,6 @@ class PrimaryCurrencySetting extends SettingSelectionItem {
         return 'Native';
       case AvailablePrimaryCurrency.fiat:
         return 'Fiat';
-      default:
-        return 'Fiat';
     }
   }
 

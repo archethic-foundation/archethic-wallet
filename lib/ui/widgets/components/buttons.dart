@@ -188,8 +188,6 @@ class AppButton {
                   ),
           ),
         );
-      default:
-        throw Exception('Invalid Button Type $type');
     }
   } //
 
@@ -363,8 +361,6 @@ class AppButton {
                   ),
           ),
         );
-      default:
-        throw Exception('Invalid Button Type $type');
     }
   } //
 }
