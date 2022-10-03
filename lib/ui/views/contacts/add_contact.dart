@@ -88,7 +88,8 @@ class _AddContactSheetState extends State<AddContactSheet> {
     });
   }
 
-  /// Return true if textfield should be shown, false if colorized should be shown
+  /// Return true if textfield should be shown,
+  /// false if colorized should be shown
   bool _shouldShowTextField() {
     if (widget.address != null) {
       return false;
@@ -187,8 +188,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                                     StateContainer.of(context).activeVibrations,
                                   );
                               UIUtil.cancelLockEvent();
-                              final scanResult =
-                                  await UserDataUtil.getQRData(
+                              final scanResult = await UserDataUtil.getQRData(
                                 DataType.address,
                                 context,
                               );
@@ -218,8 +218,7 @@ class _AddContactSheetState extends State<AddContactSheet> {
                               FeedbackType.light,
                               StateContainer.of(context).activeVibrations,
                             );
-                        final data =
-                            await UserDataUtil.getClipboardText(
+                        final data = await UserDataUtil.getClipboardText(
                           DataType.address,
                         );
                         if (data != null) {
