@@ -15,8 +15,8 @@ class PrimaryCurrencyDialog {
   static Future<AvailablePrimaryCurrency?> getDialog(
     BuildContext context,
   ) async {
-    final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList =
+    final preferences = await Preferences.getInstance();
+    final pickerItemsList =
         List<PickerItem>.empty(growable: true);
     for (final value in AvailablePrimaryCurrency.values) {
       pickerItemsList.add(

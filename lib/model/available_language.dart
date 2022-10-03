@@ -45,7 +45,7 @@ class LanguageSetting extends SettingSelectionItem {
   }
 
   Locale getLocale() {
-    final String localeStr = getLocaleString();
+    final localeStr = getLocaleString();
     if (localeStr == 'DEFAULT') {
       return const Locale('en');
     }

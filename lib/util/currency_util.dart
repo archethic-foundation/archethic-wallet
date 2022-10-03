@@ -302,7 +302,7 @@ class CurrencyUtil {
     double price,
     double amount,
   ) {
-    final double amountConverted = convertAmount(price, amount);
+    final amountConverted = convertAmount(price, amount);
     return getConvertedAmount(currency, amountConverted);
   }
 
@@ -312,7 +312,7 @@ class CurrencyUtil {
     double amount,
     int numberOfDigits,
   ) {
-    final double amountConverted = convertAmount(price, amount);
+    final amountConverted = convertAmount(price, amount);
     return getConvertedAmountWithNumberOfDigits(
       currency,
       amountConverted,

@@ -29,11 +29,11 @@ class UIUtil {
     ThreeLineAddressTextType type = ThreeLineAddressTextType.primary,
     String? contactName,
   }) {
-    String stringPartOne = '';
-    String stringPartTwo = '';
-    String stringPartThree = '';
-    String stringPartFour = '';
-    String stringPartFive = '';
+    var stringPartOne = '';
+    var stringPartTwo = '';
+    var stringPartThree = '';
+    var stringPartFour = '';
+    var stringPartFive = '';
     if (address.length >= 12) {
       stringPartOne = address.substring(0, 12);
     } else {
@@ -184,8 +184,8 @@ class UIUtil {
     String address, {
     OneLineAddressTextType type = OneLineAddressTextType.primary,
   }) {
-    final String stringPartOne = address.substring(0, 12);
-    final String stringPartFive = address.substring(59);
+    final stringPartOne = address.substring(0, 12);
+    final stringPartFive = address.substring(59);
     switch (type) {
       case OneLineAddressTextType.primary60:
         return Column(
@@ -247,11 +247,11 @@ class UIUtil {
     String address, {
     TextStyle? textStyle,
   }) {
-    final TextStyle resolvedTextStyle =
+    final resolvedTextStyle =
         textStyle ?? AppStyles.textStyleSize14W100Primary(context);
-    final String stringPartOne = address.substring(0, 22);
-    final String stringPartTwo = address.substring(22, 44);
-    final String stringPartThree = address.substring(44, 64);
+    final stringPartOne = address.substring(0, 22);
+    final stringPartTwo = address.substring(22, 44);
+    final stringPartThree = address.substring(44, 64);
     return Column(
       children: <Widget>[
         Text(

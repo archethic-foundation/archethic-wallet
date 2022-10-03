@@ -13,8 +13,8 @@ import 'package:aewallet/util/preferences.dart';
 
 class LanguageDialog {
   static Future<AvailableLanguage?> getDialog(BuildContext context) async {
-    final Preferences preferences = await Preferences.getInstance();
-    final List<PickerItem> pickerItemsList =
+    final preferences = await Preferences.getInstance();
+    final pickerItemsList =
         List<PickerItem>.empty(growable: true);
     for (final value in AvailableLanguage.values) {
       pickerItemsList.add(

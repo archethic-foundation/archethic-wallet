@@ -151,9 +151,9 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
                                   _accessModesSelected = value;
                                 });
                                 if (_accessModesSelected == null) return;
-                                final AuthMethod authMethod =
+                                final authMethod =
                                     _accessModesSelected!.value as AuthMethod;
-                                bool authenticated = false;
+                                var authenticated = false;
                                 switch (authMethod) {
                                   case AuthMethod.biometrics:
                                     authenticated = await sl

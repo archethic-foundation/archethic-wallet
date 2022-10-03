@@ -28,7 +28,7 @@ class AppKeychain extends HiveObject {
 
   Account? getAccountSelected() {
     if (accounts != null) {
-      for (final Account account in accounts!) {
+      for (final account in accounts!) {
         if (account.selected!) {
           return account;
         }
@@ -43,7 +43,7 @@ class AppKeychain extends HiveObject {
 
   Account? getAccount(Account accountToSelected) {
     if (accounts != null) {
-      for (final Account account in accounts!) {
+      for (final account in accounts!) {
         if (accountToSelected.name == account.name) {
           return account;
         }
@@ -53,7 +53,7 @@ class AppKeychain extends HiveObject {
   }
 
   Account? getAccountWithName(String name) {
-    for (final Account account in accounts!) {
+    for (final account in accounts!) {
       if (name == account.name) {
         return account;
       }

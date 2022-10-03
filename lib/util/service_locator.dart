@@ -52,8 +52,8 @@ Future<void> setupServiceLocator() async {
   }
   sl.registerLazySingleton<LedgerNanoSImpl>(() => LedgerNanoSImpl());
 
-  final Preferences preferences = await Preferences.getInstance();
-  final String network = await preferences.getNetwork().getLink();
+  final preferences = await Preferences.getInstance();
+  final network = await preferences.getNetwork().getLink();
   if (sl.isRegistered<ApiService>()) {
     sl.unregister<ApiService>();
   }

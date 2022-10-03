@@ -99,7 +99,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                 duration: const Duration(milliseconds: 5000),
               );
 
-              final Preferences preferences = await Preferences.getInstance();
+              final preferences = await Preferences.getInstance();
               await subscriptionChannel2.connect(
                 await preferences.getNetwork().getPhoenixHttpLink(),
                 await preferences.getNetwork().getWebsocketUri(),
@@ -131,7 +131,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                 duration: const Duration(milliseconds: 5000),
               );
 
-              bool error = false;
+              var error = false;
               try {
                 StateContainer.of(context).appWallet =
                     await AppWallet().createNewAppWallet(
@@ -154,7 +154,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                 StateContainer.of(context).checkTransactionInputs(
                   AppLocalization.of(context)!.transactionInputNotification,
                 );
-                final Preferences preferences = await Preferences.getInstance();
+                final preferences = await Preferences.getInstance();
                 StateContainer.of(context).bottomBarCurrentPage =
                     preferences.getMainScreenCurrentPage();
                 StateContainer.of(context).bottomBarPageController =
@@ -404,9 +404,9 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                                 AppLocalization.of(context)!.confirm,
                                 Dimens.buttonTopDimens,
                                 onPressed: () async {
-                                  bool orderOk = true;
+                                  var orderOk = true;
 
-                                  for (int i = 0;
+                                  for (var i = 0;
                                       i < originalWordsList.length;
                                       i++) {
                                     if (originalWordsList[i] !=
@@ -474,9 +474,9 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   }
 
   Future<bool> _launchSecurityConfiguration(String name, String seed) async {
-    final bool biometricsAvalaible =
+    final biometricsAvalaible =
         await sl.get<BiometricUtil>().hasBiometrics();
-    final List<PickerItem> accessModes = [];
+    final accessModes = <PickerItem>[];
     accessModes.add(
       PickerItem(
         AuthenticationMethod(AuthMethod.pin).getDisplayName(context),
@@ -563,16 +563,16 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
   Future<void> createKeychain() async {
     _showSendingAnimation(context);
 
-    bool error = false;
+    var error = false;
 
     try {
       await sl.get<DBHelper>().clearAppWallet();
-      final Vault vault = await Vault.getInstance();
+      final vault = await Vault.getInstance();
       await vault.setSeed(widget.seed!);
 
-      final String originPrivateKey = sl.get<ApiService>().getOriginKey();
+      final originPrivateKey = sl.get<ApiService>().getOriginKey();
 
-      final Preferences preferences = await Preferences.getInstance();
+      final preferences = await Preferences.getInstance();
 
       await subscriptionChannel.connect(
         await preferences.getNetwork().getPhoenixHttpLink(),

@@ -16,7 +16,7 @@ class LockTimeoutDialog {
     LockTimeoutSetting timeoutSettings,
     LockTimeoutOption lockTimeoutOption,
   ) async {
-    final Preferences preferences = await Preferences.getInstance();
+    final preferences = await Preferences.getInstance();
 
     if (timeoutSettings.setting != lockTimeoutOption) {
       await preferences.setLockTimeout(
@@ -32,7 +32,7 @@ class LockTimeoutDialog {
     BuildContext context,
     LockTimeoutSetting curTimeoutSetting,
   ) async {
-    final List<PickerItem> pickerItemsList =
+    final pickerItemsList =
         List<PickerItem>.empty(growable: true);
     for (final value in LockTimeoutOption.values) {
       pickerItemsList.add(

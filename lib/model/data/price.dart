@@ -28,14 +28,14 @@ class Price extends HiveObject {
 
   // Change currency
   static Future<Price> getCurrency(String currency) async {
-    final Price price = Price();
-    SimplePriceResponse simplePriceResponse = SimplePriceResponse();
+    final price = Price();
+    var simplePriceResponse = SimplePriceResponse();
     price.useOracleUcoPrice = false;
     // if eur or usd, use Archethic Oracle
     // Provide a way to get the last value of an oracle #451
     if (currency == 'EUR' || currency == 'USD') {
       try {
-        final OracleUcoPrice oracleUcoPrice =
+        final oracleUcoPrice =
             await sl.get<OracleService>().getOracleData();
         if (oracleUcoPrice.uco == null || oracleUcoPrice.uco!.eur == 0) {
           simplePriceResponse =

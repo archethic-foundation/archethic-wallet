@@ -7,8 +7,6 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/data/account_token.dart';
-import 'package:aewallet/model/data/token_informations.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/nft_creation_process.dart';
@@ -33,7 +31,7 @@ final GlobalKey expandedKey = GlobalKey();
 class _NFTListState extends State<NFTList> {
   @override
   Widget build(BuildContext context) {
-    final List<AccountToken> accountTokenList = StateContainer.of(context)
+    final accountTokenList = StateContainer.of(context)
         .appWallet!
         .appKeychain!
         .getAccountSelected()!
@@ -56,7 +54,7 @@ class _NFTListState extends State<NFTList> {
                 itemCount: accountTokenList.length,
                 padding: const EdgeInsets.only(top: 20, bottom: 20),
                 itemBuilder: (context, index) {
-                  final TokenInformations tokenInformations =
+                  final tokenInformations =
                       accountTokenList[index].tokenInformations!;
 
                   return NFTCard(

@@ -17,10 +17,10 @@ class AppSeeds {
   }
 
   static String generateSeed() {
-    String result = '';
-    const String chars = 'abcdef0123456789';
-    final Random rng = Random.secure();
-    for (int i = 0; i < 64; i++) {
+    var result = '';
+    const chars = 'abcdef0123456789';
+    final rng = Random.secure();
+    for (var i = 0; i < 64; i++) {
       // ignore: use_string_buffers
       result += chars[rng.nextInt(chars.length)];
     }

@@ -56,8 +56,8 @@ class AvailableCurrency extends SettingSelectionItem {
   // Get best currency for a given locale
   // Default to USD
   factory AvailableCurrency.getBestForLocale(Locale locale) {
-    for (final AvailableCurrencyEnum value in AvailableCurrencyEnum.values) {
-      final AvailableCurrency currency = AvailableCurrency(value);
+    for (final value in AvailableCurrencyEnum.values) {
+      final currency = AvailableCurrency(value);
       if (locale.countryCode == null) {
         // Special cases
         if (<String>[

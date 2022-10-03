@@ -36,7 +36,7 @@ class HistoryChart extends StatelessWidget {
   final bool completeChart;
 
   double get maxY {
-    final double max = intervals.fold<double>(
+    final max = intervals.fold<double>(
       0,
       (acc, i) => i.price > acc ? i.price.toDouble() : acc,
     );
@@ -44,7 +44,7 @@ class HistoryChart extends StatelessWidget {
   }
 
   double get minY {
-    final double min = intervals.fold<double>(
+    final min = intervals.fold<double>(
       double.maxFinite,
       (acc, i) => i.price < acc ? i.price.toDouble() : acc,
     );
@@ -52,7 +52,7 @@ class HistoryChart extends StatelessWidget {
   }
 
   LineChartData get _chartData {
-    final LineChartBarData barData = LineChartBarData(
+    final barData = LineChartBarData(
       spots: intervals
           .mapIndexed<FlSpot>(
             (idx, i) => FlSpot(
@@ -80,8 +80,8 @@ class HistoryChart extends StatelessWidget {
           tooltipBgColor: tooltipBg.withOpacity(1),
           getTooltipItems: (List<LineBarSpot> touchedSpots) {
             return touchedSpots.map((LineBarSpot touchedSpot) {
-              String title = '';
-              final DateTime dt = intervals[touchedSpot.x.toInt()].time;
+              var title = '';
+              final dt = intervals[touchedSpot.x.toInt()].time;
               switch (optionChartSelected) {
                 case '1h':
                   title =
@@ -148,10 +148,10 @@ class HistoryChart extends StatelessWidget {
                   interval: (intervals.length ~/ 4).toDouble(),
                   reservedSize: 30,
                   getTitlesWidget: (value, titleMeta) {
-                    String title = '';
+                    var title = '';
                     if (value != 0 &&
                         value < intervals.length - intervals.length ~/ 4) {
-                      final DateTime dt = intervals[value.toInt()].time;
+                      final dt = intervals[value.toInt()].time;
                       switch (optionChartSelected) {
                         case '1h':
                           title =

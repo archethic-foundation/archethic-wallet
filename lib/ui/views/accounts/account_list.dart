@@ -102,8 +102,8 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                       AppLocalization.of(context)!.addAccount,
                       Dimens.buttonBottomDimens,
                       onPressed: () async {
-                        final FocusNode nameFocusNode = FocusNode();
-                        final TextEditingController nameController =
+                        final nameFocusNode = FocusNode();
+                        final nameController =
                             TextEditingController();
                         String? nameError;
                         await showDialog(
@@ -217,8 +217,8 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                                   );
                                                 });
                                               } else {
-                                                bool accountExists = false;
-                                                for (final Account account
+                                                var accountExists = false;
+                                                for (final account
                                                     in appWalletLive!
                                                         .appKeychain!
                                                         .accounts!) {
@@ -397,7 +397,7 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
           StateContainer.of(context)
               .bottomBarPageController!
               .jumpToPage(StateContainer.of(context).bottomBarCurrentPage);
-          final Preferences preferences = await Preferences.getInstance();
+          final preferences = await Preferences.getInstance();
           preferences.setMainScreenCurrentPage(
             StateContainer.of(context).bottomBarCurrentPage,
           );

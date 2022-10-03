@@ -18,7 +18,6 @@ import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/chart_infos.dart';
-import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/app_wallet.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
@@ -131,9 +130,9 @@ class StateContainerState extends State<StateContainer> {
       if (appWallet != null) {
         timerCheckTransactionInputs =
             Timer.periodic(const Duration(seconds: 30), (Timer t) async {
-          final List<Account>? accounts = appWallet!.appKeychain!.accounts;
+          final accounts = appWallet!.appKeychain!.accounts;
           for (final account in accounts!) {
-            final List<TransactionInput> transactionInputList =
+            final transactionInputList =
                 await sl.get<AppService>().getTransactionInputs(
                       account.lastAddress!,
                       'from, amount, timestamp, tokenAddress ',
@@ -146,7 +145,7 @@ class StateContainerState extends State<StateContainer> {
                         account.lastLoadingTransactionInputs!) {
                   account.updateLastLoadingTransactionInputs();
                   if (transactionInput.from != account.lastAddress) {
-                    String symbol = 'UCO';
+                    var symbol = 'UCO';
                     if (transactionInput.tokenAddress != null) {
                       symbol = (await sl
                               .get<ApiService>()
@@ -180,13 +179,13 @@ class StateContainerState extends State<StateContainer> {
   }
 
   Future<List<Token>> getTokenFungibles() async {
-    final List<Token> tokensFungibles = <Token>[];
-    final List<Transaction> transactions = await sl
+    final tokensFungibles = <Token>[];
+    final transactions = await sl
         .get<ApiService>()
         .networkTransactions('token', 1, request: 'address, data { content }');
 
     for (final transaction in transactions) {
-      final Token token = tokenFromJson(transaction.data!.content!);
+      final token = tokenFromJson(transaction.data!.content!);
       tokensFungibles.add(
         Token(
           address: transaction.address,
@@ -217,7 +216,7 @@ class StateContainerState extends State<StateContainer> {
   // Change currency
   Future<void> updateCurrency(AvailableCurrency currency) async {
     if (appWallet != null) {
-      final Price tokenPrice =
+      final tokenPrice =
           await Price.getCurrency(curCurrency.currency.name);
       appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice =
           tokenPrice;
@@ -263,7 +262,7 @@ class StateContainerState extends State<StateContainer> {
       recentTransactionsLoading = true;
     });
 
-    final Price tokenPrice = await Price.getCurrency(curCurrency.currency.name);
+    final tokenPrice = await Price.getCurrency(curCurrency.currency.name);
     await appWallet!.appKeychain!.getAccountSelected()!.updateBalance(
           curNetwork.getNetworkCryptoCurrencyLabel(),
           curCurrency.currency.name,
@@ -274,7 +273,7 @@ class StateContainerState extends State<StateContainer> {
       balanceLoading = false;
     });
 
-    final String? seed = await getSeed();
+    final seed = await getSeed();
     await appWallet!.appKeychain!
         .getAccountSelected()!
         .updateRecentTransactions(pagingAddress!, seed!);
@@ -300,8 +299,8 @@ class StateContainerState extends State<StateContainer> {
   }
 
   Future<String?> getSeed() async {
-    final Vault vault = await Vault.getInstance();
-    final String? seed = vault.getSeed();
+    final vault = await Vault.getInstance();
+    final seed = vault.getSeed();
     return seed;
   }
 

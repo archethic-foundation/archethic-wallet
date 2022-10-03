@@ -38,7 +38,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
   Future<void> update() async {
     switch (method) {
       case 'getPubKey':
-        final String responseHex =
+        final responseHex =
             hex.encode(sl.get<LedgerNanoSImpl>().response).toUpperCase();
         originPubKey = responseHex.substring(4, responseHex.length - 4);
         method = 'signTxn';
@@ -152,7 +152,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                             ),
                                           ),
                                           onPressed: () async {
-                                            const String addressIndex = '';
+                                            const addressIndex = '';
                                             // TODO(redDwarf03): To review
                                             /*String addressIndex =
                                                 StateContainer.of(context)
@@ -160,19 +160,19 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                     .index!
                                                     .toRadixString(16)
                                                     .padLeft(8, '0');*/
-                                            final Transaction transaction =
+                                            final transaction =
                                                 Transaction(
                                               type: 'transfer',
                                               data: Transaction.initData(),
                                             );
-                                            for (final UCOTransfer transfer
+                                            for (final transfer
                                                 in widget.ucoTransferList!) {
                                               transaction.addUCOTransfer(
                                                 transfer.to,
                                                 transfer.amount!,
                                               );
                                             }
-                                            final Transaction lastTransaction =
+                                            final lastTransaction =
                                                 await sl
                                                     .get<ApiService>()
                                                     .getLastTransaction(
@@ -185,10 +185,10 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                           .lastAddress!,
                                                       request: 'chainLength',
                                                     );
-                                            final String? transactionChainSeed =
+                                            final transactionChainSeed =
                                                 await StateContainer.of(context)
                                                     .getSeed();
-                                            final String originPrivateKey = sl
+                                            final originPrivateKey = sl
                                                 .get<ApiService>()
                                                 .getOriginKey();
                                             transaction
@@ -197,8 +197,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
                                                   lastTransaction.chainLength!,
                                                 )
                                                 .originSign(originPrivateKey);
-                                            final OnChainWalletData
-                                                onChainWalletData =
+                                            final onChainWalletData =
                                                 walletEncoder(originPubKey);
 
                                             const hashType = 0;

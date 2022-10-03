@@ -20,7 +20,7 @@ class AppMnemomics {
     if (!AppSeeds.isValidSeed(seed)) {
       throw Exception('Invalid Seed');
     }
-    final String words =
+    final words =
         bip39.Mnemonic(hexToUint8List(seed), getLanguage(languageCode))
             .sentence;
     return words.split(' ');
@@ -56,7 +56,7 @@ class AppMnemomics {
 
   /// Validate a specific menmonic word
   static bool isValidWord(String word, {String languageCode = 'en'}) {
-    final bip39.Language language = getLanguage(languageCode);
+    final language = getLanguage(languageCode);
     return language.isValid(word);
   }
 

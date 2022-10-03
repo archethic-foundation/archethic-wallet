@@ -76,7 +76,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final double bottom = MediaQuery.of(context).viewInsets.bottom;
+    final bottom = MediaQuery.of(context).viewInsets.bottom;
     return TapOutsideUnfocus(
       child: SafeArea(
         minimum:
@@ -130,7 +130,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                 LengthLimitingTextInputFormatter(40),
                               ],
                               onChanged: (_) async {
-                                final double fee = await getFee();
+                                final fee = await getFee();
                                 // Always reset the error message to be less annoying
                                 setState(() {
                                   feeEstimation = fee;
@@ -163,7 +163,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                 LengthLimitingTextInputFormatter(4),
                               ],
                               onChanged: (_) async {
-                                final double fee = await getFee();
+                                final fee = await getFee();
                                 // Always reset the error message to be less annoying
                                 setState(() {
                                   feeEstimation = fee;
@@ -212,7 +212,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                 ),
                               ],
                               onChanged: (_) async {
-                                final double fee = await getFee();
+                                final fee = await getFee();
                                 // Always reset the error message to be less annoying
                                 setState(() {
                                   feeEstimation = fee;
@@ -331,7 +331,7 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
   }
 
   Future<bool> _validateRequest() async {
-    bool isValid = true;
+    var isValid = true;
     setState(() {
       _nameValidationText = '';
       _symbolValidationText = '';
@@ -406,16 +406,16 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
   }
 
   Future<double> getFee() async {
-    double fee = 0;
+    var fee = 0.0;
     if (_initialSupplyController!.text.isEmpty ||
         _symbolController!.text.isEmpty ||
         _nameController!.text.isEmpty) {
       return fee;
     }
     try {
-      final String? seed = await StateContainer.of(context).getSeed();
-      final String originPrivateKey = sl.get<ApiService>().getOriginKey();
-      final Token token = Token(
+      final seed = await StateContainer.of(context).getSeed();
+      final originPrivateKey = sl.get<ApiService>().getOriginKey();
+      final token = Token(
         name: _nameController!.text,
         supply: toBigInt(
           double.tryParse(

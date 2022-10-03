@@ -40,7 +40,7 @@ class UserDataUtil {
   static StreamSubscription<dynamic>? setStream;
 
   static String? _parseData(String data, DataType type) {
-    final String dataTrim = data.trim();
+    final dataTrim = data.trim();
     if (type == DataType.raw) {
       return dataTrim;
     } else if (type == DataType.url) {
@@ -50,7 +50,7 @@ class UserDataUtil {
         return dataTrim;
       }
     } else if (type == DataType.address) {
-      final Address address = Address(dataTrim);
+      final address = Address(dataTrim);
       if (address.isValid()) {
         return address.address;
       }
@@ -64,7 +64,7 @@ class UserDataUtil {
   }
 
   static Future<String?> getClipboardText(DataType type) async {
-    final ClipboardData? data = await Clipboard.getData('text/plain');
+    final data = await Clipboard.getData('text/plain');
     if (data == null || data.text == null) {
       return null;
     }
@@ -74,8 +74,8 @@ class UserDataUtil {
   static Future<String?> getQRData(DataType type, BuildContext context) async {
     UIUtil.cancelLockEvent();
     try {
-      final ScanResult scanResult = await BarcodeScanner.scan();
-      final String data = scanResult.rawContent;
+      final scanResult = await BarcodeScanner.scan();
+      final data = scanResult.rawContent;
       if (isEmpty(data)) {
         return null;
       }

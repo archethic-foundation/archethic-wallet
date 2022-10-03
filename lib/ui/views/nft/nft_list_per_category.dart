@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/nft_list.dart';
 import 'package:aewallet/ui/widgets/components/balance_indicator.dart';
@@ -16,7 +15,7 @@ class NFTListPerCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<NftCategory> nftCategories = StateContainer.of(context)
+    final nftCategories = StateContainer.of(context)
         .appWallet!
         .appKeychain!
         .getAccountSelected()!

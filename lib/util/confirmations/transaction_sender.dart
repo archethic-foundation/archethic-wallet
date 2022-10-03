@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:developer';
 
 // Package imports:
-import 'package:gql/ast.dart' as ast;
 import 'package:gql/language.dart' as lang;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -120,7 +119,7 @@ class TransactionSender {
     if (sendTxTimeout <= 0) {
       throw 'sendTxTimeout must be an integer greater than 0';
     }
-    final SubscriptionChannel subscriptionChannel = SubscriptionChannel();
+    final subscriptionChannel = SubscriptionChannel();
     await subscriptionChannel.connect(phoenixHttpLink, websocketUri);
 
     absintheSocket = subscriptionChannel;
@@ -138,21 +137,21 @@ class TransactionSender {
         (String context, String reason) => handleError(context, reason),
       );
     } catch (err) {
-      for (final Function function in onError!) {
+      for (final function in onError!) {
         function(senderContext, err.toString());
       }
     }
 
-    final Completer<TransactionStatus> completer =
+    final completer =
         Completer<TransactionStatus>();
-    final Map<String, String> requestHeaders = <String, String>{
+    final requestHeaders = <String, String>{
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
-    TransactionStatus transactionStatus = TransactionStatus();
+    var transactionStatus = TransactionStatus();
     log('sendTx: requestHttp.body=${transaction.convertToJSON()}');
     try {
-      final http.Response responseHttp = await http.post(
+      final responseHttp = await http.post(
         Uri.parse('${endpoint!}/api/transaction'),
         body: transaction.convertToJSON(),
         headers: requestHeaders,
@@ -188,11 +187,11 @@ class TransactionSender {
     SubscriptionChannel absintheSocket,
     Function function,
   ) {
-    final ast.DocumentNode documentNode = lang.parseString(
+    final documentNode = lang.parseString(
       'subscription { transactionError(address: "$address") { context, reason } }',
     );
-    final Operation operation = Operation(document: documentNode);
-    final Request request = Request(operation: operation);
+    final operation = Operation(document: documentNode);
+    final request = Request(operation: operation);
     return absintheSocket.client!.link.request(request);
   }
 

@@ -39,9 +39,9 @@ class NFTPreviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String description =
+    final description =
         TokenUtil.getPropertyValue(tokenInformations, 'description');
-    final String typeMime =
+    final typeMime =
         TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
 
     return Padding(

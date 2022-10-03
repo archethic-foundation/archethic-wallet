@@ -20,7 +20,6 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/token_transfer_wallet.dart';
 import 'package:aewallet/model/uco_transfer_wallet.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -118,11 +117,11 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
             duration: const Duration(milliseconds: 5000),
           );
           if (widget.typeTransfer == 'TOKEN') {
-            final Transaction transaction = await sl
+            final transaction = await sl
                 .get<ApiService>()
                 .getLastTransaction(event.transactionAddress!);
 
-            final Token token = await sl.get<ApiService>().getToken(
+            final token = await sl.get<ApiService>().getToken(
                   transaction.data!.ledger!.token!.transfers![0].tokenAddress!,
                   request: 'id',
                 );
@@ -256,12 +255,12 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       AppLocalization.of(context)!.confirm,
                       Dimens.buttonTopDimens,
                       onPressed: () async {
-                        final Preferences preferences =
+                        final preferences =
                             await Preferences.getInstance();
                         // Authenticate
-                        final AuthenticationMethod authMethod =
+                        final authMethod =
                             preferences.getAuthMethod();
-                        final bool auth = await AuthFactory.authenticate(
+                        final auth = await AuthFactory.authenticate(
                           context,
                           authMethod,
                           activeVibrations:
@@ -299,27 +298,27 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   Future<void> _doSend() async {
     try {
       _showSendingAnimation(context);
-      final String? seed = await StateContainer.of(context).getSeed();
-      final List<UCOTransferWallet> ucoTransferList = widget.ucoTransferList!;
-      final List<TokenTransferWallet> tokenTransferList =
+      final seed = await StateContainer.of(context).getSeed();
+      final ucoTransferList = widget.ucoTransferList!;
+      final tokenTransferList =
           widget.tokenTransferList!;
-      final String originPrivateKey = sl.get<ApiService>().getOriginKey();
+      final originPrivateKey = sl.get<ApiService>().getOriginKey();
 
-      final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
-      final String nameEncoded = Uri.encodeFull(
+      final keychain = await sl.get<ApiService>().getKeychain(seed!);
+      final nameEncoded = Uri.encodeFull(
         StateContainer.of(context)
             .appWallet!
             .appKeychain!
             .getAccountSelected()!
             .name!,
       );
-      final String service = 'archethic-wallet-$nameEncoded';
-      final int index = (await sl.get<ApiService>().getTransactionIndex(
+      final service = 'archethic-wallet-$nameEncoded';
+      final index = (await sl.get<ApiService>().getTransactionIndex(
                 uint8ListToHex(keychain.deriveAddress(service)),
               ))
           .chainLength!;
 
-      final Transaction transaction =
+      final transaction =
           Transaction(type: 'transfer', data: Transaction.initData());
       for (final UCOTransfer transfer in ucoTransferList) {
         transaction.addUCOTransfer(transfer.to, transfer.amount!);
@@ -334,20 +333,20 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       }
 
       if (widget.message!.isNotEmpty) {
-        final String aesKey = uint8ListToHex(
+        final aesKey = uint8ListToHex(
           Uint8List.fromList(
             List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
           ),
         );
 
-        final KeyPair walletKeyPair = keychain.deriveKeypair(service);
+        final walletKeyPair = keychain.deriveKeypair(service);
 
-        final List<String> authorizedPublicKeys =
+        final authorizedPublicKeys =
             List<String>.empty(growable: true);
         authorizedPublicKeys.add(uint8ListToHex(walletKeyPair.publicKey));
 
         for (final UCOTransfer transfer in ucoTransferList) {
-          final List<Transaction> firstTxListRecipient = await sl
+          final firstTxListRecipient = await sl
               .get<ApiService>()
               .getTransactionChain(transfer.to!, request: 'previousPublicKey');
           if (firstTxListRecipient.isNotEmpty) {
@@ -357,7 +356,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         }
 
         for (final TokenTransfer transfer in tokenTransferList) {
-          final List<Transaction> firstTxListRecipient = await sl
+          final firstTxListRecipient = await sl
               .get<ApiService>()
               .getTransactionChain(transfer.to!, request: 'previousPublicKey');
           if (firstTxListRecipient.isNotEmpty) {
@@ -366,9 +365,9 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
           }
         }
 
-        final List<AuthorizedKey> authorizedKeys =
+        final authorizedKeys =
             List<AuthorizedKey>.empty(growable: true);
-        for (final String key in authorizedPublicKeys) {
+        for (final key in authorizedPublicKeys) {
           authorizedKeys.add(
             AuthorizedKey(
               encryptedSecretKey: uint8ListToHex(ecEncrypt(aesKey, key)),
@@ -383,13 +382,13 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
         );
       }
 
-      final Transaction signedTx = keychain
+      final signedTx = keychain
           .buildTransaction(transaction, service, index)
           .originSign(originPrivateKey);
 
-      TransactionStatus transactionStatus = TransactionStatus();
+      var transactionStatus = TransactionStatus();
 
-      final Preferences preferences = await Preferences.getInstance();
+      final preferences = await Preferences.getInstance();
       await subscriptionChannel.connect(
         await preferences.getNetwork().getPhoenixHttpLink(),
         await preferences.getNetwork().getWebsocketUri(),
@@ -440,8 +439,8 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
   }
 
   void waitConfirmations(QueryResult event, {String? transactionAddress}) {
-    int nbConfirmations = 0;
-    int maxConfirmations = 0;
+    var nbConfirmations = 0;
+    var maxConfirmations = 0;
     if (event.data != null && event.data!['transactionConfirmed'] != null) {
       if (event.data!['transactionConfirmed']['nbConfirmations'] != null) {
         nbConfirmations =

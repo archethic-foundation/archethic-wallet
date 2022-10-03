@@ -17,7 +17,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -134,7 +133,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                       StateContainer.of(context)
                                           .activeVibrations,
                                     );
-                                final Contact? contact =
+                                final contact =
                                     await ContactsDialog.getDialog(context);
                                 if (contact != null && contact.name != null) {
                                   publicKeyAccessController!.text =
@@ -154,7 +153,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                                                 .activeVibrations,
                                           );
                                       UIUtil.cancelLockEvent();
-                                      final String? scanResult =
+                                      final scanResult =
                                           await UserDataUtil.getQRData(
                                         DataType.raw,
                                         context,

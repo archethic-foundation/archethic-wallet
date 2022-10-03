@@ -175,7 +175,7 @@ class SlidingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double gauss = math.exp(-(math.pow(offset!.abs() - 0.5, 2) / 0.08));
+    final gauss = math.exp(-(math.pow(offset!.abs() - 0.5, 2) / 0.08));
     return Transform.translate(
       offset: Offset(-32 * gauss * offset!.sign, 0),
       child: Card(

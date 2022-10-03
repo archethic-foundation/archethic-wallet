@@ -18,10 +18,10 @@ class BiometricUtil {
   Future<bool> hasBiometrics() async {
     if (!kIsWeb &&
         (Platform.isIOS || Platform.isAndroid || Platform.isWindows)) {
-      final LocalAuthentication localAuth = LocalAuthentication();
-      final bool canCheck = await localAuth.canCheckBiometrics;
+      final localAuth = LocalAuthentication();
+      final canCheck = await localAuth.canCheckBiometrics;
       if (canCheck) {
-        final List<BiometricType> availableBiometrics =
+        final availableBiometrics =
             await localAuth.getAvailableBiometrics();
         if (availableBiometrics.contains(BiometricType.face) ||
             availableBiometrics.contains(BiometricType.fingerprint) ||
@@ -45,9 +45,9 @@ class BiometricUtil {
     BuildContext context,
     String message,
   ) async {
-    final bool hasBiometricsEnrolled = await hasBiometrics();
+    final hasBiometricsEnrolled = await hasBiometrics();
     if (hasBiometricsEnrolled) {
-      final LocalAuthentication localAuth = LocalAuthentication();
+      final localAuth = LocalAuthentication();
       return localAuth.authenticate(
         localizedReason: message,
         options: const AuthenticationOptions(

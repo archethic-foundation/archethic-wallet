@@ -10,7 +10,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // Project imports:
 import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/themes/theme_dark.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -41,7 +40,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
       Navigator.of(context)
           .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
     }
-    final Preferences preferences = await Preferences.getInstance();
+    final preferences = await Preferences.getInstance();
     StateContainer.of(context).bottomBarCurrentPage =
         preferences.getMainScreenCurrentPage();
     StateContainer.of(context).bottomBarPageController = PageController(
@@ -58,22 +57,22 @@ class _AppLockScreenState extends State<AppLockScreen> {
   String _formatCountDisplay(int count) {
     if (count <= 60) {
       // Seconds only
-      String secondsStr = count.toString();
+      var secondsStr = count.toString();
       if (count < 10) {
         secondsStr = '0$secondsStr';
       }
       return '00:$secondsStr';
     } else if (count > 60 && count <= 3600) {
       // Minutes:Seconds
-      String minutesStr = '';
-      final int minutes = count ~/ 60;
+      var minutesStr = '';
+      final minutes = count ~/ 60;
       if (minutes < 10) {
         minutesStr = '0$minutes';
       } else {
         minutesStr = minutes.toString();
       }
-      String secondsStr = '';
-      final int seconds = count % 60;
+      var secondsStr = '';
+      final seconds = count % 60;
       if (seconds < 10) {
         secondsStr = '0$seconds';
       } else {
@@ -82,23 +81,23 @@ class _AppLockScreenState extends State<AppLockScreen> {
       return '$minutesStr:$secondsStr';
     } else {
       // Hours:Minutes:Seconds
-      String hoursStr = '';
-      final int hours = count ~/ 3600;
+      var hoursStr = '';
+      final hours = count ~/ 3600;
       if (hours < 10) {
         hoursStr = '0$hours';
       } else {
         hoursStr = hours.toString();
       }
-      final int remainingSeconds = count % 3600;
-      String minutesStr = '';
-      final int minutes = remainingSeconds ~/ 60;
+      final remainingSeconds = count % 3600;
+      var minutesStr = '';
+      final minutes = remainingSeconds ~/ 60;
       if (minutes < 10) {
         minutesStr = '0$minutes';
       } else {
         minutesStr = minutes.toString();
       }
-      String secondsStr = '';
-      final int seconds = count % 60;
+      var secondsStr = '';
+      final seconds = count % 60;
       if (seconds < 10) {
         secondsStr = '0$seconds';
       } else {
@@ -129,10 +128,10 @@ class _AppLockScreenState extends State<AppLockScreen> {
   }
 
   Future<void> _authenticate({bool transitions = false}) async {
-    final Preferences preferences = await Preferences.getInstance();
-    final DateTime? lockUntil = preferences.getLockDate();
+    final preferences = await Preferences.getInstance();
+    final lockUntil = preferences.getLockDate();
     if (lockUntil != null) {
-      final int countDown =
+      final countDown =
           lockUntil.difference(DateTime.now().toUtc()).inSeconds;
       if (countDown > 0) {
         _runCountdown(countDown);
@@ -142,8 +141,8 @@ class _AppLockScreenState extends State<AppLockScreen> {
     setState(() {
       _lockedOut = false;
     });
-    final AuthenticationMethod authMethod = preferences.getAuthMethod();
-    final bool auth = await AuthFactory.authenticate(
+    final authMethod = preferences.getAuthMethod();
+    final auth = await AuthFactory.authenticate(
       context,
       authMethod,
       transitions: transitions,

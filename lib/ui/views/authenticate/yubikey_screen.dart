@@ -82,10 +82,10 @@ class _YubikeyScreenState extends State<YubikeyScreen> {
   }
 
   Future<void> _verifyOTP(String otp) async {
-    final Preferences preferences = await Preferences.getInstance();
-    final Vault vault = await Vault.getInstance();
-    final String yubikeyClientAPIKey = vault.getYubikeyClientAPIKey();
-    final String yubikeyClientID = vault.getYubikeyClientID();
+    final preferences = await Preferences.getInstance();
+    final vault = await Vault.getInstance();
+    final yubikeyClientAPIKey = vault.getYubikeyClientAPIKey();
+    final yubikeyClientID = vault.getYubikeyClientID();
     verificationResponse = await YubicoService()
         .verifyYubiCloudOTP(otp, yubikeyClientAPIKey, yubikeyClientID);
     switch (verificationResponse.status) {

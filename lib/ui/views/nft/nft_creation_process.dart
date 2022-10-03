@@ -31,7 +31,6 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/model/token_property_with_access_infos.dart';
@@ -429,8 +428,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                   child: InkWell(
                     onTap: () async {
                       importSelection = 1;
-                      final FilePickerResult? result =
-                          await FilePicker.platform.pickFiles();
+                      final result = await FilePicker.platform.pickFiles();
 
                       if (result != null) {
                         file = File(result.files.single.path!);
@@ -479,7 +477,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                     height: 40,
                     child: InkWell(
                       onTap: () async {
-                        final XFile? pickedFile = await ImagePicker().pickImage(
+                        final pickedFile = await ImagePicker().pickImage(
                           source: ImageSource.gallery,
                           maxWidth: 1800,
                           maxHeight: 1800,
@@ -560,7 +558,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                     height: 40,
                     child: InkWell(
                       onTap: () async {
-                        final XFile? pickedFile = await ImagePicker().pickImage(
+                        final pickedFile = await ImagePicker().pickImage(
                           source: ImageSource.camera,
                           maxWidth: 1800,
                           maxHeight: 1800,
@@ -972,7 +970,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                               StateContainer.of(context).activeVibrations,
                             );
                         UIUtil.cancelLockEvent();
-                        final String? scanResult =
+                        final scanResult =
                             await UserDataUtil.getQRData(DataType.raw, context);
                         if (scanResult == null) {
                           UIUtil.showSnackbar(
@@ -1033,7 +1031,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                               StateContainer.of(context).activeVibrations,
                             );
                         UIUtil.cancelLockEvent();
-                        final String? scanResult =
+                        final scanResult =
                             await UserDataUtil.getQRData(DataType.raw, context);
                         if (scanResult == null) {
                           UIUtil.showSnackbar(
@@ -1109,8 +1107,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                     StateContainer.of(context).activeVibrations,
                                   );
                               UIUtil.cancelLockEvent();
-                              final String? scanResult =
-                                  await UserDataUtil.getQRData(
+                              final scanResult = await UserDataUtil.getQRData(
                                 DataType.raw,
                                 context,
                               );
@@ -1168,8 +1165,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                     StateContainer.of(context).activeVibrations,
                                   );
                               UIUtil.cancelLockEvent();
-                              final String? scanResult =
-                                  await UserDataUtil.getQRData(
+                              final scanResult = await UserDataUtil.getQRData(
                                 DataType.raw,
                                 context,
                               );
@@ -1625,11 +1621,11 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                           isPressed = false;
                                         });
                                         // Authenticate
-                                        final Preferences preferences =
+                                        final preferences =
                                             await Preferences.getInstance();
-                                        final AuthenticationMethod authMethod =
+                                        final authMethod =
                                             preferences.getAuthMethod();
-                                        final bool auth =
+                                        final auth =
                                             await AuthFactory.authenticate(
                                           context,
                                           authMethod,
@@ -1925,12 +1921,12 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       }*/
     } else {
       if (MimeUtil.isPdf(typeMime) == true) {
-        final PdfDocument pdfDocument = await PdfDocument.openData(
+        final pdfDocument = await PdfDocument.openData(
           File(file.path).readAsBytesSync(),
         );
-        final PdfPage pdfPage = await pdfDocument.getPage(1);
+        final pdfPage = await pdfDocument.getPage(1);
 
-        final PdfPageImage? pdfPageImage =
+        final pdfPageImage =
             await pdfPage.render(width: pdfPage.width, height: pdfPage.height);
         fileDecodedForPreview = pdfPageImage!.bytes;
       }
@@ -1939,7 +1935,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
   }
 
   bool validateAddNFTProperty() {
-    bool isValid = true;
+    var isValid = true;
     setState(() {
       addNFTPropertyMessage = '';
     });
@@ -1956,7 +1952,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
           isValid = false;
         });
       } else {
-        for (final TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
+        for (final tokenPropertyWithAccessInfos
             in tokenPropertyWithAccessInfosList) {
           if (tokenPropertyWithAccessInfos.tokenProperty!.keys.first ==
               nftPropertyNameController!.text) {
@@ -1982,7 +1978,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
       tokenProperties: {},
     );
 
-    for (final TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
+    for (final tokenPropertyWithAccessInfos
         in tokenPropertyWithAccessInfosList) {
       token.tokenProperties!
           .addAll(tokenPropertyWithAccessInfos.tokenProperty!);
@@ -1990,13 +1986,13 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
   }
 
   double getFee(BuildContext context) {
-    double fee = 0;
+    var fee = 0.0;
 
     if (token.name!.isEmpty) {
       return fee;
     }
     try {
-      final String originPrivateKey = sl.get<ApiService>().getOriginKey();
+      final originPrivateKey = sl.get<ApiService>().getOriginKey();
       StateContainer.of(context).getSeed().then((String? seed) {
         sl
             .get<AppService>()
@@ -2023,7 +2019,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
   }
 
   Future<bool> validateAddNFT(BuildContext context) async {
-    bool isValid = true;
+    var isValid = true;
     setState(() {
       addNFTMessage = '';
     });
@@ -2084,49 +2080,47 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
   Future<void> _doAdd() async {
     try {
       _showSendingAnimation(context);
-      final String? seed = await StateContainer.of(context).getSeed();
-      final String originPrivateKey = sl.get<ApiService>().getOriginKey();
-      final Keychain keychain = await sl.get<ApiService>().getKeychain(seed!);
-      final String nameEncoded = Uri.encodeFull(
+      final seed = await StateContainer.of(context).getSeed();
+      final originPrivateKey = sl.get<ApiService>().getOriginKey();
+      final keychain = await sl.get<ApiService>().getKeychain(seed!);
+      final nameEncoded = Uri.encodeFull(
         StateContainer.of(context)
             .appWallet!
             .appKeychain!
             .getAccountSelected()!
             .name!,
       );
-      final String service = 'archethic-wallet-$nameEncoded';
-      final int index = (await sl.get<ApiService>().getTransactionIndex(
+      final service = 'archethic-wallet-$nameEncoded';
+      final index = (await sl.get<ApiService>().getTransactionIndex(
                 uint8ListToHex(keychain.deriveAddress(service)),
               ))
           .chainLength!;
 
-      final Transaction transaction =
+      final transaction =
           Transaction(type: 'token', data: Transaction.initData());
 
-      final String aesKey = uint8ListToHex(
+      final aesKey = uint8ListToHex(
         Uint8List.fromList(
           List<int>.generate(32, (int i) => Random.secure().nextInt(256)),
         ),
       );
 
-      final KeyPair walletKeyPair = keychain.deriveKeypair(service);
+      final walletKeyPair = keychain.deriveKeypair(service);
 
-      for (final TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
+      for (final tokenPropertyWithAccessInfos
           in tokenPropertyWithAccessInfosList) {
         if (tokenPropertyWithAccessInfos.publicKeysList != null &&
             tokenPropertyWithAccessInfos.publicKeysList!.isNotEmpty) {
-          final List<String> authorizedPublicKeys =
-              List<String>.empty(growable: true);
+          final authorizedPublicKeys = List<String>.empty(growable: true);
           authorizedPublicKeys.add(uint8ListToHex(walletKeyPair.publicKey));
 
-          for (final String publicKey
+          for (final publicKey
               in tokenPropertyWithAccessInfos.publicKeysList!) {
             authorizedPublicKeys.add(publicKey);
           }
 
-          final List<AuthorizedKey> authorizedKeys =
-              List<AuthorizedKey>.empty(growable: true);
-          for (final String key in authorizedPublicKeys) {
+          final authorizedKeys = List<AuthorizedKey>.empty(growable: true);
+          for (final key in authorizedPublicKeys) {
             authorizedKeys.add(
               AuthorizedKey(
                 encryptedSecretKey: uint8ListToHex(ecEncrypt(aesKey, key)),
@@ -2145,8 +2139,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         }
       }
 
-      final Map<String, dynamic> clearTokenPropertyList = {};
-      for (final TokenPropertyWithAccessInfos tokenPropertyWithAccessInfos
+      final clearTokenPropertyList = <String, dynamic>{};
+      for (final tokenPropertyWithAccessInfos
           in tokenPropertyWithAccessInfosList) {
         if (tokenPropertyWithAccessInfos.publicKeysList == null ||
             tokenPropertyWithAccessInfos.publicKeysList!.isEmpty) {
@@ -2155,7 +2149,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         }
       }
 
-      final String content = tokenToJsonForTxDataContent(
+      final content = tokenToJsonForTxDataContent(
         Token(
           name: token.name,
           supply: token.supply,
@@ -2165,13 +2159,13 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         ),
       );
       transaction.setContent(content);
-      final Transaction signedTx = keychain
+      final signedTx = keychain
           .buildTransaction(transaction, service, index)
           .originSign(originPrivateKey);
 
-      TransactionStatus transactionStatus = TransactionStatus();
+      var transactionStatus = TransactionStatus();
 
-      final Preferences preferences = await Preferences.getInstance();
+      final preferences = await Preferences.getInstance();
       await subscriptionChannel.connect(
         await preferences.getNetwork().getPhoenixHttpLink(),
         await preferences.getNetwork().getWebsocketUri(),
@@ -2222,8 +2216,8 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
   }
 
   void waitConfirmations(QueryResult event, {String? transactionAddress}) {
-    int nbConfirmations = 0;
-    int maxConfirmations = 0;
+    var nbConfirmations = 0;
+    var maxConfirmations = 0;
     if (event.data != null && event.data!['transactionConfirmed'] != null) {
       if (event.data!['transactionConfirmed']['nbConfirmations'] != null) {
         nbConfirmations =
@@ -2400,7 +2394,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                       StateContainer.of(context).activeVibrations,
                     );
                 UIUtil.cancelLockEvent();
-                final String? scanResult =
+                final scanResult =
                     await UserDataUtil.getQRData(DataType.raw, context);
                 if (scanResult == null) {
                   UIUtil.showSnackbar(
