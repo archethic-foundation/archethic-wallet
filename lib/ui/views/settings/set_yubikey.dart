@@ -66,7 +66,7 @@ class _SetYubikeyState extends State<SetYubikey> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: Container(
+      body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(

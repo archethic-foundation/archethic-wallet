@@ -286,7 +286,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
 
   // TODO(Chralu): convert to [Widget] subclass
   Widget buildMainSettings(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: StateContainer.of(context).curTheme.drawerBackground,
         gradient: LinearGradient(
@@ -315,7 +315,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         height: 2,
                         color: StateContainer.of(context).curTheme.text15,
                       ),
-                      Container(
+                      DecoratedBox(
                         decoration: BoxDecoration(
                           color: StateContainer.of(context).curTheme.text05,
                         ),
@@ -391,7 +391,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         height: 2,
                         color: StateContainer.of(context).curTheme.text15,
                       ),
-                      Container(
+                      DecoratedBox(
                         decoration: BoxDecoration(
                           color: StateContainer.of(context).curTheme.text05,
                         ),
@@ -443,7 +443,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         height: 2,
                         color: StateContainer.of(context).curTheme.text15,
                       ),
-                      Container(
+                      DecoratedBox(
                         decoration: BoxDecoration(
                           color: StateContainer.of(context).curTheme.text05,
                         ),
@@ -532,7 +532,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
 
   // TODO(Chralu): convert to [Widget] subclass
   Widget buildSecurityMenu(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: StateContainer.of(context).curTheme.drawerBackground,
         gradient: LinearGradient(
@@ -594,7 +594,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                         height: 2,
                         color: StateContainer.of(context).curTheme.text15,
                       ),
-                      Container(
+                      DecoratedBox(
                         decoration: BoxDecoration(
                           color: StateContainer.of(context).curTheme.text05,
                         ),
@@ -792,7 +792,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
 
   // TODO(Chralu): convert to [Widget] subclass
   Widget buildCustomMenu(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: StateContainer.of(context).curTheme.drawerBackground,
         gradient: LinearGradient(
@@ -848,7 +848,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                   ListView(
                     padding: const EdgeInsets.only(top: 15),
                     children: <Widget>[
-                      Container(
+                      DecoratedBox(
                         decoration: BoxDecoration(
                           color: StateContainer.of(context).curTheme.text05,
                         ),
@@ -1091,7 +1091,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
 
   // TODO(Chralu): convert to [Widget] subclass
   Widget buildAboutMenu(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: StateContainer.of(context).curTheme.drawerBackground,
         gradient: LinearGradient(

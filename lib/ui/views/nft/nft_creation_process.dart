@@ -246,7 +246,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
+      body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
@@ -881,7 +881,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                 if (file != null &&
                     (MimeUtil.isImage(typeMime) == true ||
                         MimeUtil.isPdf(typeMime) == true))
-                  Container(
+                  DecoratedBox(
                     decoration: BoxDecoration(
                       color: StateContainer.of(context).curTheme.text,
                       border: Border.all(),
@@ -1806,7 +1806,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                       MimeUtil.isPdf(typeMime) == true))
                 Padding(
                   padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
-                  child: Container(
+                  child: DecoratedBox(
                     decoration: BoxDecoration(
                       color: StateContainer.of(context).curTheme.text,
                       border: Border.all(),

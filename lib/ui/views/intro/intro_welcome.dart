@@ -35,7 +35,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
-          Container(
+          DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -46,7 +46,7 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                 ],
               ),
             ),
-            child: Container(
+            child: DecoratedBox(
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(

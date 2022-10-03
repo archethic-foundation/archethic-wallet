@@ -85,7 +85,7 @@ class ReceiveSheet extends StatelessWidget {
                           StateContainer.of(context).curTheme.snackBarShadow!,
                         );
                       },
-                      child: Container(
+                      child: DecoratedBox(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                         ),

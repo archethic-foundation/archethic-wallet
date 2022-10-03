@@ -23,7 +23,7 @@ class NFTListPerCategory extends StatelessWidget {
         .getListNftCategory(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
+      body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(

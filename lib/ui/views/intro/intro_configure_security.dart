@@ -52,7 +52,7 @@ class _IntroConfigureSecurityState extends State<IntroConfigureSecurity> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
+      body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(

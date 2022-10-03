@@ -222,7 +222,7 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
-      body: Container(
+      body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
