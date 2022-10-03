@@ -44,7 +44,7 @@ dependencies:
   local_auth: ^2.1.2
   
   # Flutter plugin for accessing the NFC features on Android and iOS.
-  nfc_manager: ^3.2.0
+  nfc_manager: ^3.1.1
 
   # A Dart library implementing cryptographic algorithms and primitives, modeled on the BouncyCastle library
   pointycastle: ^3.6.2
