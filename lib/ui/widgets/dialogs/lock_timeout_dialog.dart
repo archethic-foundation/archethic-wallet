@@ -29,8 +29,7 @@ class LockTimeoutDialog {
     BuildContext context,
     LockTimeoutSetting curTimeoutSetting,
   ) async {
-    final pickerItemsList =
-        List<PickerItem>.empty(growable: true);
+    final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in LockTimeoutOption.values) {
       pickerItemsList.add(
         PickerItem(

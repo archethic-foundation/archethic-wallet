@@ -1,4 +1,3 @@
-
 // Package imports:
 // Project imports:
 import 'package:aewallet/model/data/account.dart';

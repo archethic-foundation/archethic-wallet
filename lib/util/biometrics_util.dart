@@ -21,8 +21,7 @@ class BiometricUtil {
       final localAuth = LocalAuthentication();
       final canCheck = await localAuth.canCheckBiometrics;
       if (canCheck) {
-        final availableBiometrics =
-            await localAuth.getAvailableBiometrics();
+        final availableBiometrics = await localAuth.getAvailableBiometrics();
         if (availableBiometrics.contains(BiometricType.face) ||
             availableBiometrics.contains(BiometricType.fingerprint) ||
             availableBiometrics.contains(BiometricType.strong) ||

@@ -36,49 +36,50 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: AppBar(
             actions: [
-              if (StateContainer.of(context).bottomBarCurrentPage == 2) IconButton(
-                      icon: const FaIcon(FontAwesomeIcons.gear),
-                      onPressed: () async {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              StateContainer.of(context).activeVibrations,
-                            );
-                        Sheets.showAppHeightNineSheet(
-                          context: context,
-                          widget: const ConfigureCategoryList(),
+              if (StateContainer.of(context).bottomBarCurrentPage == 2)
+                IconButton(
+                  icon: const FaIcon(FontAwesomeIcons.gear),
+                  onPressed: () async {
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          StateContainer.of(context).activeVibrations,
                         );
-                      },
-                    ) else StateContainer.of(context).showBalance
-                      ? IconButton(
-                          icon: const FaIcon(FontAwesomeIcons.eye),
-                          onPressed: () async {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  StateContainer.of(context).activeVibrations,
-                                );
-                            StateContainer.of(context).showBalance = false;
+                    Sheets.showAppHeightNineSheet(
+                      context: context,
+                      widget: const ConfigureCategoryList(),
+                    );
+                  },
+                )
+              else
+                StateContainer.of(context).showBalance
+                    ? IconButton(
+                        icon: const FaIcon(FontAwesomeIcons.eye),
+                        onPressed: () async {
+                          sl.get<HapticUtil>().feedback(
+                                FeedbackType.light,
+                                StateContainer.of(context).activeVibrations,
+                              );
+                          StateContainer.of(context).showBalance = false;
 
-                            final preferences =
-                                await Preferences.getInstance();
-                            await preferences.setShowBalances(false);
-                            StateContainer.of(context).updateState();
-                          },
-                        )
-                      : IconButton(
-                          icon: const FaIcon(FontAwesomeIcons.eyeLowVision),
-                          onPressed: () async {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  StateContainer.of(context).activeVibrations,
-                                );
-                            StateContainer.of(context).showBalance = true;
+                          final preferences = await Preferences.getInstance();
+                          await preferences.setShowBalances(false);
+                          StateContainer.of(context).updateState();
+                        },
+                      )
+                    : IconButton(
+                        icon: const FaIcon(FontAwesomeIcons.eyeLowVision),
+                        onPressed: () async {
+                          sl.get<HapticUtil>().feedback(
+                                FeedbackType.light,
+                                StateContainer.of(context).activeVibrations,
+                              );
+                          StateContainer.of(context).showBalance = true;
 
-                            final preferences =
-                                await Preferences.getInstance();
-                            await preferences.setShowBalances(true);
-                            StateContainer.of(context).updateState();
-                          },
-                        ),
+                          final preferences = await Preferences.getInstance();
+                          await preferences.setShowBalances(true);
+                          StateContainer.of(context).updateState();
+                        },
+                      ),
               if (!kIsWeb &&
                   (Platform.isIOS == true ||
                       Platform.isAndroid == true ||
@@ -100,8 +101,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 .timerCheckTransactionInputs!
                                 .cancel();
                           }
-                          final preferences =
-                              await Preferences.getInstance();
+                          final preferences = await Preferences.getInstance();
                           await preferences.setActiveNotifications(false);
                         },
                       )
@@ -125,8 +125,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                             AppLocalization.of(context)!
                                 .transactionInputNotification,
                           );
-                          final preferences =
-                              await Preferences.getInstance();
+                          final preferences = await Preferences.getInstance();
                           await preferences.setActiveNotifications(true);
                         },
                       )

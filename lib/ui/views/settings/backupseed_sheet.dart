@@ -30,13 +30,16 @@ class AppSeedBackupSheet extends StatelessWidget {
                     Expanded(
                       child: Column(
                         children: <Widget>[
-                          if (mnemonic != null) Padding(
-                                  padding: const EdgeInsets.only(top: 30),
-                                  child: MnemonicDisplay(
-                                    wordList: mnemonic!,
-                                    obscureSeed: true,
-                                  ),
-                                ) else const SizedBox()
+                          if (mnemonic != null)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 30),
+                              child: MnemonicDisplay(
+                                wordList: mnemonic!,
+                                obscureSeed: true,
+                              ),
+                            )
+                          else
+                            const SizedBox()
                         ],
                       ),
                     ),

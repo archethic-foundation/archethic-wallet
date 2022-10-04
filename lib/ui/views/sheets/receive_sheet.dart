@@ -236,8 +236,7 @@ class ReceiveSheet extends StatelessWidget {
                       color: StateContainer.of(context).curTheme.text,
                     ),
                     onPressed: () {
-                      final box =
-                          context.findRenderObject() as RenderBox?;
+                      final box = context.findRenderObject() as RenderBox?;
                       final textToShare = address!.toUpperCase();
                       Share.share(
                         textToShare,

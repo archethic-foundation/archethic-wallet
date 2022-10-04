@@ -429,8 +429,7 @@ class _BoxDecorationPainter extends BoxPainter {
     final paint = boxShadow.toPaint()
       ..shader = _decoration.gradient!.createShader(rect);
 
-    final bounds =
-        rect.shift(boxShadow.offset).inflate(boxShadow.spreadRadius);
+    final bounds = rect.shift(boxShadow.offset).inflate(boxShadow.spreadRadius);
     _paintBox(canvas, bounds, paint, textDirection);
   }
 

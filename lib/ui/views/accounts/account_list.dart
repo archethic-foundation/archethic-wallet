@@ -91,274 +91,271 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
             ),
           Row(
             children: <Widget>[
-              if (appWalletLive!.appKeychain!.accounts!.length >= kMaxAccounts) const SizedBox() else AppButton.buildAppButtonTiny(
-                      const Key('addAccount'),
-                      context,
-                      AppButtonType.primary,
-                      AppLocalization.of(context)!.addAccount,
-                      Dimens.buttonBottomDimens,
-                      onPressed: () async {
-                        final nameFocusNode = FocusNode();
-                        final nameController =
-                            TextEditingController();
-                        String? nameError;
-                        await showDialog(
-                          context: expandedKey.currentContext!,
-                          builder: (BuildContext context) {
-                            return StatefulBuilder(
-                              builder: (context, setState) {
-                                return AlertDialog(
-                                  title: Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          AppLocalization.of(context)!
-                                              .introNewWalletGetFirstInfosNameRequest,
-                                          style: AppStyles
-                                              .textStyleSize12W400Primary(
-                                            context,
-                                          ),
-                                        ),
-                                      ],
+              if (appWalletLive!.appKeychain!.accounts!.length >= kMaxAccounts)
+                const SizedBox()
+              else
+                AppButton.buildAppButtonTiny(
+                  const Key('addAccount'),
+                  context,
+                  AppButtonType.primary,
+                  AppLocalization.of(context)!.addAccount,
+                  Dimens.buttonBottomDimens,
+                  onPressed: () async {
+                    final nameFocusNode = FocusNode();
+                    final nameController = TextEditingController();
+                    String? nameError;
+                    await showDialog(
+                      context: expandedKey.currentContext!,
+                      builder: (BuildContext context) {
+                        return StatefulBuilder(
+                          builder: (context, setState) {
+                            return AlertDialog(
+                              title: Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      AppLocalization.of(context)!
+                                          .introNewWalletGetFirstInfosNameRequest,
+                                      style:
+                                          AppStyles.textStyleSize12W400Primary(
+                                        context,
+                                      ),
                                     ),
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(16),
-                                    ),
-                                    side: BorderSide(
-                                      color: StateContainer.of(context)
-                                          .curTheme
-                                          .text45!,
-                                    ),
-                                  ),
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
+                                  ],
+                                ),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(16),
+                                ),
+                                side: BorderSide(
+                                  color: StateContainer.of(context)
+                                      .curTheme
+                                      .text45!,
+                                ),
+                              ),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          AppTextField(
-                                            leftMargin: 0,
-                                            rightMargin: 0,
-                                            focusNode: nameFocusNode,
-                                            autocorrect: false,
-                                            controller: nameController,
-                                            keyboardType: TextInputType.text,
+                                      AppTextField(
+                                        leftMargin: 0,
+                                        rightMargin: 0,
+                                        focusNode: nameFocusNode,
+                                        autocorrect: false,
+                                        controller: nameController,
+                                        keyboardType: TextInputType.text,
+                                        style: AppStyles
+                                            .textStyleSize12W600Primary(
+                                          context,
+                                        ),
+                                        inputFormatters: <TextInputFormatter>[
+                                          LengthLimitingTextInputFormatter(
+                                            20,
+                                          ),
+                                          UpperCaseTextFormatter(),
+                                        ],
+                                      ),
+                                      if (nameError != null)
+                                        SizedBox(
+                                          height: 40,
+                                          child: Text(
+                                            nameError!,
                                             style: AppStyles
                                                 .textStyleSize12W600Primary(
                                               context,
                                             ),
-                                            inputFormatters: <
-                                                TextInputFormatter>[
-                                              LengthLimitingTextInputFormatter(
-                                                20,
-                                              ),
-                                              UpperCaseTextFormatter(),
-                                            ],
                                           ),
-                                          if (nameError != null) SizedBox(
-                                                  height: 40,
-                                                  child: Text(
-                                                    nameError!,
-                                                    style: AppStyles
-                                                        .textStyleSize12W600Primary(
-                                                      context,
-                                                    ),
-                                                  ),
-                                                ) else const SizedBox(
-                                                  height: 40,
-                                                ),
-                                          Text(
-                                            AppLocalization.of(context)!
-                                                .introNewWalletGetFirstInfosNameInfos,
-                                            style: AppStyles
-                                                .textStyleSize12W600Primary(
-                                              context,
-                                            ),
-                                            textAlign: TextAlign.justify,
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      Row(
-                                        children: [
-                                          AppButton.buildAppButtonTiny(
-                                            const Key('addName'),
-                                            context,
-                                            isPressed == false
-                                                ? AppButtonType.primary
-                                                : AppButtonType.primaryOutline,
-                                            AppLocalization.of(context)!.ok,
-                                            Dimens.buttonBottomDimens,
-                                            onPressed: () async {
-                                              if (isPressed == true) {
-                                                return;
-                                              }
-                                              nameError = '';
-                                              if (nameController.text.isEmpty) {
-                                                setState(() {
-                                                  nameError = AppLocalization
-                                                          .of(context)!
-                                                      .introNewWalletGetFirstInfosNameBlank;
-                                                  FocusScope.of(context)
-                                                      .requestFocus(
-                                                    nameFocusNode,
-                                                  );
-                                                });
-                                              } else {
-                                                var accountExists = false;
-                                                for (final account
-                                                    in appWalletLive!
-                                                        .appKeychain!
-                                                        .accounts!) {
-                                                  if (account.name ==
-                                                      nameController.text) {
-                                                    accountExists = true;
-                                                  }
-                                                }
-                                                if (accountExists == true) {
-                                                  setState(() {
-                                                    nameError =
-                                                        AppLocalization.of(
-                                                      context,
-                                                    )!
-                                                            .addAccountExists;
-                                                    FocusScope.of(context)
-                                                        .requestFocus(
-                                                      nameFocusNode,
-                                                    );
-                                                  });
-                                                } else {
-                                                  setState(() {
-                                                    isPressed = true;
-                                                  });
-                                                  AppDialogs.showConfirmDialog(
-                                                    context,
-                                                    AppLocalization.of(
-                                                      context,
-                                                    )!
-                                                        .addAccount,
-                                                    AppLocalization.of(
-                                                      context,
-                                                    )!
-                                                        .addAccountConfirmation
-                                                        .replaceAll(
-                                                          '%1',
-                                                          nameController.text,
-                                                        ),
-                                                    AppLocalization.of(
-                                                      context,
-                                                    )!
-                                                        .yes,
-                                                    () async {
-                                                      try {
-                                                        await KeychainUtil()
-                                                            .addAccountInKeyChain(
-                                                          StateContainer.of(
-                                                            context,
-                                                          ).appWallet,
-                                                          await StateContainer
-                                                              .of(
-                                                            context,
-                                                          ).getSeed(),
-                                                          nameController.text,
-                                                          StateContainer.of(
-                                                            context,
-                                                          )
-                                                              .curCurrency
-                                                              .currency
-                                                              .name,
-                                                          StateContainer.of(
-                                                            context,
-                                                          )
-                                                              .curNetwork
-                                                              .getNetworkCryptoCurrencyLabel(),
-                                                        );
-                                                      } on ArchethicConnectionException {
-                                                        UIUtil.showSnackbar(
-                                                          AppLocalization.of(
-                                                            context,
-                                                          )!
-                                                              .noConnection,
-                                                          context,
-                                                          StateContainer.of(
-                                                            context,
-                                                          ).curTheme.text!,
-                                                          StateContainer.of(
-                                                            context,
-                                                          )
-                                                              .curTheme
-                                                              .snackBarShadow!,
-                                                          duration:
-                                                              const Duration(
-                                                            seconds: 5,
-                                                          ),
-                                                        );
-                                                      } on Exception {
-                                                        UIUtil.showSnackbar(
-                                                          AppLocalization.of(
-                                                            context,
-                                                          )!
-                                                              .keychainNotExistWarning,
-                                                          context,
-                                                          StateContainer.of(
-                                                            context,
-                                                          ).curTheme.text!,
-                                                          StateContainer.of(
-                                                            context,
-                                                          )
-                                                              .curTheme
-                                                              .snackBarShadow!,
-                                                          duration:
-                                                              const Duration(
-                                                            seconds: 5,
-                                                          ),
-                                                        );
-                                                      }
-
-                                                      setState(() {
-                                                        isPressed = false;
-                                                      });
-                                                      Navigator.pop(
-                                                        context,
-                                                        true,
-                                                      );
-                                                    },
-                                                    cancelText:
-                                                        AppLocalization.of(
-                                                      context,
-                                                    )!
-                                                            .no,
-                                                    cancelAction: () {
-                                                      setState(() {
-                                                        isPressed = false;
-                                                      });
-                                                    },
-                                                  );
-                                                }
-                                              }
-                                            },
-                                          ),
-                                        ],
+                                        )
+                                      else
+                                        const SizedBox(
+                                          height: 40,
+                                        ),
+                                      Text(
+                                        AppLocalization.of(context)!
+                                            .introNewWalletGetFirstInfosNameInfos,
+                                        style: AppStyles
+                                            .textStyleSize12W600Primary(
+                                          context,
+                                        ),
+                                        textAlign: TextAlign.justify,
                                       ),
                                     ],
                                   ),
-                                );
-                              },
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Row(
+                                    children: [
+                                      AppButton.buildAppButtonTiny(
+                                        const Key('addName'),
+                                        context,
+                                        isPressed == false
+                                            ? AppButtonType.primary
+                                            : AppButtonType.primaryOutline,
+                                        AppLocalization.of(context)!.ok,
+                                        Dimens.buttonBottomDimens,
+                                        onPressed: () async {
+                                          if (isPressed == true) {
+                                            return;
+                                          }
+                                          nameError = '';
+                                          if (nameController.text.isEmpty) {
+                                            setState(() {
+                                              nameError = AppLocalization.of(
+                                                      context)!
+                                                  .introNewWalletGetFirstInfosNameBlank;
+                                              FocusScope.of(context)
+                                                  .requestFocus(
+                                                nameFocusNode,
+                                              );
+                                            });
+                                          } else {
+                                            var accountExists = false;
+                                            for (final account in appWalletLive!
+                                                .appKeychain!.accounts!) {
+                                              if (account.name ==
+                                                  nameController.text) {
+                                                accountExists = true;
+                                              }
+                                            }
+                                            if (accountExists == true) {
+                                              setState(() {
+                                                nameError = AppLocalization.of(
+                                                  context,
+                                                )!
+                                                    .addAccountExists;
+                                                FocusScope.of(context)
+                                                    .requestFocus(
+                                                  nameFocusNode,
+                                                );
+                                              });
+                                            } else {
+                                              setState(() {
+                                                isPressed = true;
+                                              });
+                                              AppDialogs.showConfirmDialog(
+                                                context,
+                                                AppLocalization.of(
+                                                  context,
+                                                )!
+                                                    .addAccount,
+                                                AppLocalization.of(
+                                                  context,
+                                                )!
+                                                    .addAccountConfirmation
+                                                    .replaceAll(
+                                                      '%1',
+                                                      nameController.text,
+                                                    ),
+                                                AppLocalization.of(
+                                                  context,
+                                                )!
+                                                    .yes,
+                                                () async {
+                                                  try {
+                                                    await KeychainUtil()
+                                                        .addAccountInKeyChain(
+                                                      StateContainer.of(
+                                                        context,
+                                                      ).appWallet,
+                                                      await StateContainer.of(
+                                                        context,
+                                                      ).getSeed(),
+                                                      nameController.text,
+                                                      StateContainer.of(
+                                                        context,
+                                                      )
+                                                          .curCurrency
+                                                          .currency
+                                                          .name,
+                                                      StateContainer.of(
+                                                        context,
+                                                      )
+                                                          .curNetwork
+                                                          .getNetworkCryptoCurrencyLabel(),
+                                                    );
+                                                  } on ArchethicConnectionException {
+                                                    UIUtil.showSnackbar(
+                                                      AppLocalization.of(
+                                                        context,
+                                                      )!
+                                                          .noConnection,
+                                                      context,
+                                                      StateContainer.of(
+                                                        context,
+                                                      ).curTheme.text!,
+                                                      StateContainer.of(
+                                                        context,
+                                                      )
+                                                          .curTheme
+                                                          .snackBarShadow!,
+                                                      duration: const Duration(
+                                                        seconds: 5,
+                                                      ),
+                                                    );
+                                                  } on Exception {
+                                                    UIUtil.showSnackbar(
+                                                      AppLocalization.of(
+                                                        context,
+                                                      )!
+                                                          .keychainNotExistWarning,
+                                                      context,
+                                                      StateContainer.of(
+                                                        context,
+                                                      ).curTheme.text!,
+                                                      StateContainer.of(
+                                                        context,
+                                                      )
+                                                          .curTheme
+                                                          .snackBarShadow!,
+                                                      duration: const Duration(
+                                                        seconds: 5,
+                                                      ),
+                                                    );
+                                                  }
+
+                                                  setState(() {
+                                                    isPressed = false;
+                                                  });
+                                                  Navigator.pop(
+                                                    context,
+                                                    true,
+                                                  );
+                                                },
+                                                cancelText: AppLocalization.of(
+                                                  context,
+                                                )!
+                                                    .no,
+                                                cancelAction: () {
+                                                  setState(() {
+                                                    isPressed = false;
+                                                  });
+                                                },
+                                              );
+                                            }
+                                          }
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             );
                           },
                         );
-                        setState(() {
-                          appWalletLive!.appKeychain!.accounts!
-                              .sort((a, b) => a.name!.compareTo(b.name!));
-                        });
                       },
-                    ),
+                    );
+                    setState(() {
+                      appWalletLive!.appKeychain!.accounts!
+                          .sort((a, b) => a.name!.compareTo(b.name!));
+                    });
+                  },
+                ),
             ],
           ),
         ],
@@ -482,165 +479,164 @@ class _AccountsListWidgetState extends State<AccountsListWidget> {
                                             ],
                                           ),
                                         ),
-                                        if (StateContainer.of(context).showBalance) StateContainer.of(context)
-                                                        .curPrimaryCurrency
-                                                        .primaryCurrency
-                                                        .name ==
-                                                    PrimaryCurrencySetting(
-                                                      AvailablePrimaryCurrency
-                                                          .native,
-                                                    ).primaryCurrency.name
-                                                ? Expanded(
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      children: <Widget>[
-                                                        AutoSizeText(
-                                                          '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName!}',
-                                                          style: AppStyles
-                                                              .textStyleSize12W400Primary(
-                                                            context,
-                                                          ),
+                                        if (StateContainer.of(context)
+                                            .showBalance)
+                                          StateContainer.of(context)
+                                                      .curPrimaryCurrency
+                                                      .primaryCurrency
+                                                      .name ==
+                                                  PrimaryCurrencySetting(
+                                                    AvailablePrimaryCurrency
+                                                        .native,
+                                                  ).primaryCurrency.name
+                                              ? Expanded(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    children: <Widget>[
+                                                      AutoSizeText(
+                                                        '${account.balance!.nativeTokenValueToString()} ${account.balance!.nativeTokenName!}',
+                                                        style: AppStyles
+                                                            .textStyleSize12W400Primary(
+                                                          context,
                                                         ),
-                                                        AutoSizeText(
-                                                          CurrencyUtil
-                                                              .getConvertedAmount(
-                                                            StateContainer.of(
-                                                              context,
-                                                            )
-                                                                .curCurrency
-                                                                .currency
-                                                                .name,
-                                                            account.balance!
-                                                                .fiatCurrencyValue!,
-                                                          ),
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: AppStyles
-                                                              .textStyleSize12W400Primary(
-                                                            context,
-                                                          ),
-                                                        ),
-                                                        if (account.accountTokens !=
-                                                                null &&
-                                                            account
-                                                                .accountTokens!
-                                                                .isNotEmpty)
-                                                          AutoSizeText(
-                                                            account.accountTokens!
-                                                                        .length >
-                                                                    1
-                                                                ? '${account.accountTokens!.length} ${AppLocalization.of(context)!.tokens}'
-                                                                : '${account.accountTokens!.length} ${AppLocalization.of(context)!.token}',
-                                                            style: AppStyles
-                                                                .textStyleSize12W400Primary(
-                                                              context,
-                                                            ),
-                                                          ),
-                                                        if (account.accountNFT !=
-                                                                null &&
-                                                            account.accountNFT!
-                                                                .isNotEmpty)
-                                                          AutoSizeText(
-                                                            '${account.accountNFT!.length} ${AppLocalization.of(context)!.nft}',
-                                                            style: AppStyles
-                                                                .textStyleSize12W400Primary(
-                                                              context,
-                                                            ),
-                                                          ),
-                                                      ],
-                                                    ),
-                                                  )
-                                                : Expanded(
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      children: <Widget>[
-                                                        AutoSizeText(
-                                                          CurrencyUtil
-                                                              .getConvertedAmount(
-                                                            StateContainer.of(
-                                                              context,
-                                                            )
-                                                                .curCurrency
-                                                                .currency
-                                                                .name,
-                                                            account.balance!
-                                                                .fiatCurrencyValue!,
-                                                          ),
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: AppStyles
-                                                              .textStyleSize12W400Primary(
-                                                            context,
-                                                          ),
-                                                        ),
-                                                        AutoSizeText(
-                                                          '${account.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
-                                                          style: AppStyles
-                                                              .textStyleSize12W400Primary(
-                                                            context,
-                                                          ),
-                                                        ),
-                                                        if (account.accountTokens !=
-                                                                null &&
-                                                            account
-                                                                .accountTokens!
-                                                                .isNotEmpty)
-                                                          AutoSizeText(
-                                                            account.accountTokens!
-                                                                        .length >
-                                                                    1
-                                                                ? '${account.accountTokens!.length} ${AppLocalization.of(context)!.tokens}'
-                                                                : '${account.accountTokens!.length} ${AppLocalization.of(context)!.token}',
-                                                            style: AppStyles
-                                                                .textStyleSize12W400Primary(
-                                                              context,
-                                                            ),
-                                                          ),
-                                                      ],
-                                                    ),
-                                                  ) else Expanded(
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: <Widget>[
-                                                    AutoSizeText(
-                                                      '···········',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: AppStyles
-                                                          .textStyleSize12W600Primary60(
-                                                        context,
                                                       ),
-                                                    ),
-                                                    AutoSizeText(
-                                                      '···········',
-                                                      style: AppStyles
-                                                          .textStyleSize12W600Primary60(
-                                                        context,
+                                                      AutoSizeText(
+                                                        CurrencyUtil
+                                                            .getConvertedAmount(
+                                                          StateContainer.of(
+                                                            context,
+                                                          )
+                                                              .curCurrency
+                                                              .currency
+                                                              .name,
+                                                          account.balance!
+                                                              .fiatCurrencyValue!,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: AppStyles
+                                                            .textStyleSize12W400Primary(
+                                                          context,
+                                                        ),
                                                       ),
-                                                    ),
-                                                    AutoSizeText(
-                                                      '···········',
-                                                      style: AppStyles
-                                                          .textStyleSize12W600Primary60(
-                                                        context,
+                                                      if (account.accountTokens !=
+                                                              null &&
+                                                          account.accountTokens!
+                                                              .isNotEmpty)
+                                                        AutoSizeText(
+                                                          account.accountTokens!
+                                                                      .length >
+                                                                  1
+                                                              ? '${account.accountTokens!.length} ${AppLocalization.of(context)!.tokens}'
+                                                              : '${account.accountTokens!.length} ${AppLocalization.of(context)!.token}',
+                                                          style: AppStyles
+                                                              .textStyleSize12W400Primary(
+                                                            context,
+                                                          ),
+                                                        ),
+                                                      if (account.accountNFT !=
+                                                              null &&
+                                                          account.accountNFT!
+                                                              .isNotEmpty)
+                                                        AutoSizeText(
+                                                          '${account.accountNFT!.length} ${AppLocalization.of(context)!.nft}',
+                                                          style: AppStyles
+                                                              .textStyleSize12W400Primary(
+                                                            context,
+                                                          ),
+                                                        ),
+                                                    ],
+                                                  ),
+                                                )
+                                              : Expanded(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    children: <Widget>[
+                                                      AutoSizeText(
+                                                        CurrencyUtil
+                                                            .getConvertedAmount(
+                                                          StateContainer.of(
+                                                            context,
+                                                          )
+                                                              .curCurrency
+                                                              .currency
+                                                              .name,
+                                                          account.balance!
+                                                              .fiatCurrencyValue!,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: AppStyles
+                                                            .textStyleSize12W400Primary(
+                                                          context,
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                      AutoSizeText(
+                                                        '${account.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
+                                                        style: AppStyles
+                                                            .textStyleSize12W400Primary(
+                                                          context,
+                                                        ),
+                                                      ),
+                                                      if (account.accountTokens !=
+                                                              null &&
+                                                          account.accountTokens!
+                                                              .isNotEmpty)
+                                                        AutoSizeText(
+                                                          account.accountTokens!
+                                                                      .length >
+                                                                  1
+                                                              ? '${account.accountTokens!.length} ${AppLocalization.of(context)!.tokens}'
+                                                              : '${account.accountTokens!.length} ${AppLocalization.of(context)!.token}',
+                                                          style: AppStyles
+                                                              .textStyleSize12W400Primary(
+                                                            context,
+                                                          ),
+                                                        ),
+                                                    ],
+                                                  ),
+                                                )
+                                        else
+                                          Expanded(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: <Widget>[
+                                                AutoSizeText(
+                                                  '···········',
+                                                  textAlign: TextAlign.center,
+                                                  style: AppStyles
+                                                      .textStyleSize12W600Primary60(
+                                                    context,
+                                                  ),
                                                 ),
-                                              )
+                                                AutoSizeText(
+                                                  '···········',
+                                                  style: AppStyles
+                                                      .textStyleSize12W600Primary60(
+                                                    context,
+                                                  ),
+                                                ),
+                                                AutoSizeText(
+                                                  '···········',
+                                                  style: AppStyles
+                                                      .textStyleSize12W600Primary60(
+                                                    context,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
                                       ],
                                     ),
                                   ),

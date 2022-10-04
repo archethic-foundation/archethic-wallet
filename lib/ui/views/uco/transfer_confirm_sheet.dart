@@ -251,11 +251,9 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
                       AppLocalization.of(context)!.confirm,
                       Dimens.buttonTopDimens,
                       onPressed: () async {
-                        final preferences =
-                            await Preferences.getInstance();
+                        final preferences = await Preferences.getInstance();
                         // Authenticate
-                        final authMethod =
-                            preferences.getAuthMethod();
+                        final authMethod = preferences.getAuthMethod();
                         final auth = await AuthFactory.authenticate(
                           context,
                           authMethod,
@@ -296,8 +294,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
       _showSendingAnimation(context);
       final seed = await StateContainer.of(context).getSeed();
       final ucoTransferList = widget.ucoTransferList!;
-      final tokenTransferList =
-          widget.tokenTransferList!;
+      final tokenTransferList = widget.tokenTransferList!;
       final originPrivateKey = sl.get<ApiService>().getOriginKey();
 
       final keychain = await sl.get<ApiService>().getKeychain(seed!);
@@ -337,8 +334,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
 
         final walletKeyPair = keychain.deriveKeypair(service);
 
-        final authorizedPublicKeys =
-            List<String>.empty(growable: true);
+        final authorizedPublicKeys = List<String>.empty(growable: true);
         authorizedPublicKeys.add(uint8ListToHex(walletKeyPair.publicKey));
 
         for (final UCOTransfer transfer in ucoTransferList) {
@@ -361,8 +357,7 @@ class _TransferConfirmSheetState extends State<TransferConfirmSheet> {
           }
         }
 
-        final authorizedKeys =
-            List<AuthorizedKey>.empty(growable: true);
+        final authorizedKeys = List<AuthorizedKey>.empty(growable: true);
         for (final key in authorizedPublicKeys) {
           authorizedKeys.add(
             AuthorizedKey(

@@ -69,14 +69,20 @@ class AccountTab extends StatelessWidget {
                             ),
 
                             /// PRICE CHART
-                            if (StateContainer.of(context).showPriceChart) Stack(
-                                    children: <Widget>[
-                                      BalanceInfosWidget().buildInfos(context),
-                                    ],
-                                  ) else const SizedBox(),
+                            if (StateContainer.of(context).showPriceChart)
+                              Stack(
+                                children: <Widget>[
+                                  BalanceInfosWidget().buildInfos(context),
+                                ],
+                              )
+                            else
+                              const SizedBox(),
 
                             /// KPI
-                            if (StateContainer.of(context).showPriceChart) BalanceInfosWidget().buildKPI(context) else const SizedBox(),
+                            if (StateContainer.of(context).showPriceChart)
+                              BalanceInfosWidget().buildKPI(context)
+                            else
+                              const SizedBox(),
 
                             Divider(
                               height: 1,

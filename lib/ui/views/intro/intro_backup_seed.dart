@@ -206,29 +206,29 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      if (isPressed == true) AppButton.buildAppButton(
-                              const Key('iveBackedItUp'),
-                              context,
-                              AppButtonType.primaryOutline,
-                              AppLocalization.of(context)!.iveBackedItUp,
-                              Dimens.buttonBottomDimens,
-                              onPressed: () {},
-                            ) else AppButton.buildAppButton(
-                              const Key('iveBackedItUp'),
-                              context,
-                              AppButtonType.primary,
-                              AppLocalization.of(context)!.iveBackedItUp,
-                              Dimens.buttonBottomDimens,
-                              onPressed: () async {
-                                Navigator.of(context).pushNamed(
-                                  '/intro_backup_confirm',
-                                  arguments: {
-                                    'name': widget.name,
-                                    'seed': seed
-                                  },
-                                );
-                              },
-                            ),
+                      if (isPressed == true)
+                        AppButton.buildAppButton(
+                          const Key('iveBackedItUp'),
+                          context,
+                          AppButtonType.primaryOutline,
+                          AppLocalization.of(context)!.iveBackedItUp,
+                          Dimens.buttonBottomDimens,
+                          onPressed: () {},
+                        )
+                      else
+                        AppButton.buildAppButton(
+                          const Key('iveBackedItUp'),
+                          context,
+                          AppButtonType.primary,
+                          AppLocalization.of(context)!.iveBackedItUp,
+                          Dimens.buttonBottomDimens,
+                          onPressed: () async {
+                            Navigator.of(context).pushNamed(
+                              '/intro_backup_confirm',
+                              arguments: {'name': widget.name, 'seed': seed},
+                            );
+                          },
+                        ),
                     ],
                   ),
                 ],

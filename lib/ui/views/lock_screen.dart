@@ -127,8 +127,7 @@ class _AppLockScreenState extends State<AppLockScreen> {
     final preferences = await Preferences.getInstance();
     final lockUntil = preferences.getLockDate();
     if (lockUntil != null) {
-      final countDown =
-          lockUntil.difference(DateTime.now().toUtc()).inSeconds;
+      final countDown = lockUntil.difference(DateTime.now().toUtc()).inSeconds;
       if (countDown > 0) {
         _runCountdown(countDown);
         return;

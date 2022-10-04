@@ -11,8 +11,7 @@ import 'package:flutter/material.dart';
 class LanguageDialog {
   static Future<AvailableLanguage?> getDialog(BuildContext context) async {
     final preferences = await Preferences.getInstance();
-    final pickerItemsList =
-        List<PickerItem>.empty(growable: true);
+    final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AvailableLanguage.values) {
       pickerItemsList.add(
         PickerItem(

@@ -36,76 +36,78 @@ class MenuWidgetWallet extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 if (StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
-                        .balance!
-                        .isNativeTokenValuePositive()) Padding(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-                        child: InkWell(
-                          onTap: () {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  StateContainer.of(context).activeVibrations,
-                                );
-                            Sheets.showAppHeightNineSheet(
-                              context: context,
-                              widget: TransferSheet(
-                                primaryCurrency: StateContainer.of(context)
-                                    .curPrimaryCurrency,
-                                title: AppLocalization.of(context)!
-                                    .transferTokens
-                                    .replaceAll(
-                                      '%1',
-                                      StateContainer.of(context)
-                                          .curNetwork
-                                          .getNetworkCryptoCurrencyLabel(),
-                                    ),
-                                localCurrency:
-                                    StateContainer.of(context).curCurrency,
-                              ),
+                    .appWallet!
+                    .appKeychain!
+                    .getAccountSelected()!
+                    .balance!
+                    .isNativeTokenValuePositive())
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: InkWell(
+                      onTap: () {
+                        sl.get<HapticUtil>().feedback(
+                              FeedbackType.light,
+                              StateContainer.of(context).activeVibrations,
                             );
-                          },
-                          child: Column(
-                            children: <Widget>[
-                              IconWidget.buildIconDataWidget(
-                                context,
-                                Icons.arrow_circle_up_outlined,
-                                40,
-                                40,
-                              ),
-                              const SizedBox(height: 5),
-                              Text(
-                                AppLocalization.of(context)!.send,
-                                style:
-                                    AppStyles.textStyleSize14W600EquinoxPrimary(
-                                  context,
+                        Sheets.showAppHeightNineSheet(
+                          context: context,
+                          widget: TransferSheet(
+                            primaryCurrency:
+                                StateContainer.of(context).curPrimaryCurrency,
+                            title: AppLocalization.of(context)!
+                                .transferTokens
+                                .replaceAll(
+                                  '%1',
+                                  StateContainer.of(context)
+                                      .curNetwork
+                                      .getNetworkCryptoCurrencyLabel(),
                                 ),
-                              ),
-                            ],
+                            localCurrency:
+                                StateContainer.of(context).curCurrency,
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: <Widget>[
+                          IconWidget.buildIconDataWidget(
+                            context,
+                            Icons.arrow_circle_up_outlined,
+                            40,
+                            40,
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            AppLocalization.of(context)!.send,
+                            style: AppStyles.textStyleSize14W600EquinoxPrimary(
+                              context,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  Container(
+                    child: Column(
+                      children: <Widget>[
+                        IconWidget.buildIconDataWidget(
+                          context,
+                          Icons.arrow_circle_up_outlined,
+                          40,
+                          40,
+                          enabled: false,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          AppLocalization.of(context)!.send,
+                          style: AppStyles
+                              .textStyleSize14W600EquinoxPrimaryDisabled(
+                            context,
                           ),
                         ),
-                      ) else Container(
-                        child: Column(
-                          children: <Widget>[
-                            IconWidget.buildIconDataWidget(
-                              context,
-                              Icons.arrow_circle_up_outlined,
-                              40,
-                              40,
-                              enabled: false,
-                            ),
-                            const SizedBox(height: 5),
-                            Text(
-                              AppLocalization.of(context)!.send,
-                              style: AppStyles
-                                  .textStyleSize14W600EquinoxPrimaryDisabled(
-                                context,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      ],
+                    ),
+                  ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   child: InkWell(

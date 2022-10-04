@@ -13,8 +13,7 @@ class PrimaryCurrencyDialog {
     BuildContext context,
   ) async {
     final preferences = await Preferences.getInstance();
-    final pickerItemsList =
-        List<PickerItem>.empty(growable: true);
+    final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AvailablePrimaryCurrency.values) {
       pickerItemsList.add(
         PickerItem(

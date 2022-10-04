@@ -30,10 +30,13 @@ class SheetHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            if (widgetLeft != null) widgetLeft! else const SizedBox(
-                    width: 60,
-                    height: 40,
-                  ),
+            if (widgetLeft != null)
+              widgetLeft!
+            else
+              const SizedBox(
+                width: 60,
+                height: 40,
+              ),
             Column(
               children: <Widget>[
                 Container(
@@ -76,10 +79,13 @@ class SheetHeader extends StatelessWidget {
                 ),
               ],
             ),
-            if (widgetRight != null) widgetRight! else const SizedBox(
-                    width: 60,
-                    height: 40,
-                  ),
+            if (widgetRight != null)
+              widgetRight!
+            else
+              const SizedBox(
+                width: 60,
+                height: 40,
+              ),
           ],
         ),
       ],

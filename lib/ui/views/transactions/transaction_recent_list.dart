@@ -169,81 +169,50 @@ class TxListWidget extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      if (transaction.typeTx == RecentTransaction.tokenCreation) StateContainer.of(context).showBalance
-                              ? AutoSizeText(
-                                  '${NumberUtil.formatThousands(transaction.tokenInformations!.supply!)} ${transaction.tokenInformations!.symbol}',
-                                  style: AppStyles.textStyleSize12W400Primary(
-                                    context,
-                                  ),
-                                )
-                              : AutoSizeText(
-                                  '···········',
-                                  style: AppStyles.textStyleSize12W600Primary60(
-                                    context,
-                                  ),
-                                ) else StateContainer.of(context)
-                                      .curPrimaryCurrency
-                                      .primaryCurrency
-                                      .name ==
-                                  PrimaryCurrencySetting(
-                                    AvailablePrimaryCurrency.native,
-                                  ).primaryCurrency.name
-                              ? Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    if (transaction.amount != null)
-                                      if (StateContainer.of(context)
-                                              .showBalance ==
-                                          true)
-                                        if (transaction.typeTx ==
-                                            RecentTransaction.transferOutput)
-                                          if (transaction.tokenInformations ==
-                                              null)
-                                            transaction.amount! > 1000000
-                                                ? AutoSizeText(
-                                                    '-${NumberUtil.formatThousands(transaction.amount!.round())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                                    style: AppStyles
-                                                        .textStyleSize12W400Primary(
-                                                      context,
-                                                    ),
-                                                  )
-                                                : AutoSizeText(
-                                                    '-${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                                    style: AppStyles
-                                                        .textStyleSize12W400Primary(
-                                                      context,
-                                                    ),
-                                                  )
-                                          else
-                                            transaction.amount! > 1000000
-                                                ? AutoSizeText(
-                                                    '-${NumberUtil.formatThousands(transaction.amount!.round())} ${transaction.tokenInformations!.symbol!}',
-                                                    style: AppStyles
-                                                        .textStyleSize12W400Primary(
-                                                      context,
-                                                    ),
-                                                  )
-                                                : AutoSizeText(
-                                                    '-${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
-                                                    style: AppStyles
-                                                        .textStyleSize12W400Primary(
-                                                      context,
-                                                    ),
-                                                  )
-                                        else if (transaction
-                                                .tokenInformations ==
+                      if (transaction.typeTx == RecentTransaction.tokenCreation)
+                        StateContainer.of(context).showBalance
+                            ? AutoSizeText(
+                                '${NumberUtil.formatThousands(transaction.tokenInformations!.supply!)} ${transaction.tokenInformations!.symbol}',
+                                style: AppStyles.textStyleSize12W400Primary(
+                                  context,
+                                ),
+                              )
+                            : AutoSizeText(
+                                '···········',
+                                style: AppStyles.textStyleSize12W600Primary60(
+                                  context,
+                                ),
+                              )
+                      else
+                        StateContainer.of(context)
+                                    .curPrimaryCurrency
+                                    .primaryCurrency
+                                    .name ==
+                                PrimaryCurrencySetting(
+                                  AvailablePrimaryCurrency.native,
+                                ).primaryCurrency.name
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  if (transaction.amount != null)
+                                    if (StateContainer.of(context)
+                                            .showBalance ==
+                                        true)
+                                      if (transaction.typeTx ==
+                                          RecentTransaction.transferOutput)
+                                        if (transaction.tokenInformations ==
                                             null)
                                           transaction.amount! > 1000000
                                               ? AutoSizeText(
-                                                  '${NumberUtil.formatThousands(transaction.amount!.round())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                                  '-${NumberUtil.formatThousands(transaction.amount!.round())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                                   style: AppStyles
                                                       .textStyleSize12W400Primary(
                                                     context,
                                                   ),
                                                 )
                                               : AutoSizeText(
-                                                  '${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                                  '-${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                                   style: AppStyles
                                                       .textStyleSize12W400Primary(
                                                     context,
@@ -252,127 +221,142 @@ class TxListWidget extends StatelessWidget {
                                         else
                                           transaction.amount! > 1000000
                                               ? AutoSizeText(
-                                                  '${NumberUtil.formatThousands(transaction.amount!.round())} ${transaction.tokenInformations!.symbol!}',
+                                                  '-${NumberUtil.formatThousands(transaction.amount!.round())} ${transaction.tokenInformations!.symbol!}',
                                                   style: AppStyles
                                                       .textStyleSize12W400Primary(
                                                     context,
                                                   ),
                                                 )
                                               : AutoSizeText(
-                                                  '${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
+                                                  '-${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
                                                   style: AppStyles
                                                       .textStyleSize12W400Primary(
                                                     context,
                                                   ),
                                                 )
+                                      else if (transaction.tokenInformations ==
+                                          null)
+                                        transaction.amount! > 1000000
+                                            ? AutoSizeText(
+                                                '${NumberUtil.formatThousands(transaction.amount!.round())} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                                style: AppStyles
+                                                    .textStyleSize12W400Primary(
+                                                  context,
+                                                ),
+                                              )
+                                            : AutoSizeText(
+                                                '${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                                style: AppStyles
+                                                    .textStyleSize12W400Primary(
+                                                  context,
+                                                ),
+                                              )
                                       else
-                                        AutoSizeText(
-                                          '···········',
-                                          style: AppStyles
-                                              .textStyleSize12W600Primary60(
-                                            context,
-                                          ),
+                                        transaction.amount! > 1000000
+                                            ? AutoSizeText(
+                                                '${NumberUtil.formatThousands(transaction.amount!.round())} ${transaction.tokenInformations!.symbol!}',
+                                                style: AppStyles
+                                                    .textStyleSize12W400Primary(
+                                                  context,
+                                                ),
+                                              )
+                                            : AutoSizeText(
+                                                '${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
+                                                style: AppStyles
+                                                    .textStyleSize12W400Primary(
+                                                  context,
+                                                ),
+                                              )
+                                    else
+                                      AutoSizeText(
+                                        '···········',
+                                        style: AppStyles
+                                            .textStyleSize12W600Primary60(
+                                          context,
                                         ),
-                                    if (transaction.tokenInformations == null &&
-                                        transaction.amount != null)
-                                      if (StateContainer.of(context)
-                                              .showBalance ==
-                                          true)
-                                        Text(
-                                          CurrencyUtil.convertAmountFormated(
-                                            StateContainer.of(context)
-                                                .curCurrency
-                                                .currency
-                                                .name,
-                                            StateContainer.of(context)
-                                                .appWallet!
-                                                .appKeychain!
-                                                .getAccountSelected()!
-                                                .balance!
-                                                .tokenPrice!
-                                                .amount!,
-                                            transaction.amount!,
-                                          ),
-                                          style: AppStyles
-                                              .textStyleSize12W400Primary(
-                                            context,
-                                          ),
-                                        )
-                                      else
-                                        AutoSizeText(
-                                          '···········',
-                                          style: AppStyles
-                                              .textStyleSize12W600Primary60(
-                                            context,
-                                          ),
+                                      ),
+                                  if (transaction.tokenInformations == null &&
+                                      transaction.amount != null)
+                                    if (StateContainer.of(context)
+                                            .showBalance ==
+                                        true)
+                                      Text(
+                                        CurrencyUtil.convertAmountFormated(
+                                          StateContainer.of(context)
+                                              .curCurrency
+                                              .currency
+                                              .name,
+                                          StateContainer.of(context)
+                                              .appWallet!
+                                              .appKeychain!
+                                              .getAccountSelected()!
+                                              .balance!
+                                              .tokenPrice!
+                                              .amount!,
+                                          transaction.amount!,
                                         ),
-                                  ],
-                                )
-                              : Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    if (transaction.tokenInformations == null &&
-                                        transaction.amount != null)
-                                      if (StateContainer.of(context)
-                                              .showBalance ==
-                                          true)
-                                        Text(
-                                          CurrencyUtil.convertAmountFormated(
-                                            StateContainer.of(context)
-                                                .curCurrency
-                                                .currency
-                                                .name,
-                                            StateContainer.of(context)
-                                                .appWallet!
-                                                .appKeychain!
-                                                .getAccountSelected()!
-                                                .balance!
-                                                .tokenPrice!
-                                                .amount!,
-                                            transaction.amount!,
-                                          ),
-                                          style: AppStyles
-                                              .textStyleSize12W400Primary(
-                                            context,
-                                          ),
-                                        )
-                                      else
-                                        AutoSizeText(
-                                          '···········',
-                                          style: AppStyles
-                                              .textStyleSize12W600Primary60(
-                                            context,
-                                          ),
+                                        style: AppStyles
+                                            .textStyleSize12W400Primary(
+                                          context,
                                         ),
-                                    if (transaction.amount != null)
-                                      if (StateContainer.of(context)
-                                              .showBalance ==
-                                          true)
-                                        if (transaction.typeTx ==
-                                            RecentTransaction.transferOutput)
-                                          if (transaction.tokenInformations ==
-                                              null)
-                                            AutoSizeText(
-                                              '-${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                              style: AppStyles
-                                                  .textStyleSize12W400Primary(
-                                                context,
-                                              ),
-                                            )
-                                          else
-                                            AutoSizeText(
-                                              '-${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
-                                              style: AppStyles
-                                                  .textStyleSize12W400Primary(
-                                                context,
-                                              ),
-                                            )
-                                        else if (transaction
-                                                .tokenInformations ==
+                                      )
+                                    else
+                                      AutoSizeText(
+                                        '···········',
+                                        style: AppStyles
+                                            .textStyleSize12W600Primary60(
+                                          context,
+                                        ),
+                                      ),
+                                ],
+                              )
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  if (transaction.tokenInformations == null &&
+                                      transaction.amount != null)
+                                    if (StateContainer.of(context)
+                                            .showBalance ==
+                                        true)
+                                      Text(
+                                        CurrencyUtil.convertAmountFormated(
+                                          StateContainer.of(context)
+                                              .curCurrency
+                                              .currency
+                                              .name,
+                                          StateContainer.of(context)
+                                              .appWallet!
+                                              .appKeychain!
+                                              .getAccountSelected()!
+                                              .balance!
+                                              .tokenPrice!
+                                              .amount!,
+                                          transaction.amount!,
+                                        ),
+                                        style: AppStyles
+                                            .textStyleSize12W400Primary(
+                                          context,
+                                        ),
+                                      )
+                                    else
+                                      AutoSizeText(
+                                        '···········',
+                                        style: AppStyles
+                                            .textStyleSize12W600Primary60(
+                                          context,
+                                        ),
+                                      ),
+                                  if (transaction.amount != null)
+                                    if (StateContainer.of(context)
+                                            .showBalance ==
+                                        true)
+                                      if (transaction.typeTx ==
+                                          RecentTransaction.transferOutput)
+                                        if (transaction.tokenInformations ==
                                             null)
                                           AutoSizeText(
-                                            '${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                            '-${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                             style: AppStyles
                                                 .textStyleSize12W400Primary(
                                               context,
@@ -380,22 +364,39 @@ class TxListWidget extends StatelessWidget {
                                           )
                                         else
                                           AutoSizeText(
-                                            '${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
+                                            '-${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
                                             style: AppStyles
                                                 .textStyleSize12W400Primary(
                                               context,
                                             ),
                                           )
-                                      else
+                                      else if (transaction.tokenInformations ==
+                                          null)
                                         AutoSizeText(
-                                          '···········',
+                                          '${NumberUtil.formatThousands(transaction.amount!)} ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
                                           style: AppStyles
-                                              .textStyleSize12W600Primary60(
+                                              .textStyleSize12W400Primary(
                                             context,
                                           ),
+                                        )
+                                      else
+                                        AutoSizeText(
+                                          '${NumberUtil.formatThousands(transaction.amount!)} ${transaction.tokenInformations!.symbol!}',
+                                          style: AppStyles
+                                              .textStyleSize12W400Primary(
+                                            context,
+                                          ),
+                                        )
+                                    else
+                                      AutoSizeText(
+                                        '···········',
+                                        style: AppStyles
+                                            .textStyleSize12W600Primary60(
+                                          context,
                                         ),
-                                  ],
-                                )
+                                      ),
+                                ],
+                              )
                     ],
                   ),
                   Column(
@@ -403,17 +404,21 @@ class TxListWidget extends StatelessWidget {
                       if (transaction.typeTx == RecentTransaction.tokenCreation)
                         Row(
                           children: [
-                            if (transaction.tokenInformations!.type == 'fungible') AutoSizeText(
-                                    '${AppLocalization.of(context)!.tokenCreated}: ${transaction.tokenInformations!.name}',
-                                    style: AppStyles.textStyleSize12W400Primary(
-                                      context,
-                                    ),
-                                  ) else AutoSizeText(
-                                    '${AppLocalization.of(context)!.nftCreated}: ${transaction.tokenInformations!.name}',
-                                    style: AppStyles.textStyleSize12W400Primary(
-                                      context,
-                                    ),
-                                  ),
+                            if (transaction.tokenInformations!.type ==
+                                'fungible')
+                              AutoSizeText(
+                                '${AppLocalization.of(context)!.tokenCreated}: ${transaction.tokenInformations!.name}',
+                                style: AppStyles.textStyleSize12W400Primary(
+                                  context,
+                                ),
+                              )
+                            else
+                              AutoSizeText(
+                                '${AppLocalization.of(context)!.nftCreated}: ${transaction.tokenInformations!.name}',
+                                style: AppStyles.textStyleSize12W400Primary(
+                                  context,
+                                ),
+                              ),
                           ],
                         ),
                       if (transaction.typeTx ==

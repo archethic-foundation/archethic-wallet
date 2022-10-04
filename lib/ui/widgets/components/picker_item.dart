@@ -97,25 +97,26 @@ class _PickerWidgetState extends State<PickerWidget> {
                     children: [
                       Row(
                         children: [
-                          if (pickerItem.icon == null) const SizedBox(
-                                  width: 0,
-                                  height: 24,
-                                ) else SizedBox(
-                                  height: 24,
-                                  child: widget.pickerItems![index].iconColor ==
-                                          null
-                                      ? Image.asset(pickerItem.icon!)
-                                      : Image.asset(
-                                          pickerItem.icon!,
-                                          color:
-                                              widget.pickerItems![index].enabled
-                                                  ? widget.pickerItems![index]
-                                                      .iconColor
-                                                  : StateContainer.of(context)
-                                                      .curTheme
-                                                      .pickerItemIconDisabled,
-                                        ),
-                                ),
+                          if (pickerItem.icon == null)
+                            const SizedBox(
+                              width: 0,
+                              height: 24,
+                            )
+                          else
+                            SizedBox(
+                              height: 24,
+                              child: widget.pickerItems![index].iconColor ==
+                                      null
+                                  ? Image.asset(pickerItem.icon!)
+                                  : Image.asset(
+                                      pickerItem.icon!,
+                                      color: widget.pickerItems![index].enabled
+                                          ? widget.pickerItems![index].iconColor
+                                          : StateContainer.of(context)
+                                              .curTheme
+                                              .pickerItemIconDisabled,
+                                    ),
+                            ),
                           const SizedBox(width: 10),
                           Expanded(
                             child: Column(
@@ -134,30 +135,35 @@ class _PickerWidgetState extends State<PickerWidget> {
                                           ),
                                   ),
                                 ),
-                                if (widget.pickerItems![index].subLabel != null) Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          widget.pickerItems![index].subLabel!,
-                                          style: widget
-                                                  .pickerItems![index].enabled
-                                              ? AppStyles
-                                                  .textStyleSize12W400Primary(
-                                                  context,
-                                                )
-                                              : AppStyles
-                                                  .textStyleSize12W400PrimaryDisabled(
-                                                  context,
-                                                ),
-                                        ),
-                                      ) else const SizedBox(),
+                                if (widget.pickerItems![index].subLabel != null)
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      widget.pickerItems![index].subLabel!,
+                                      style: widget.pickerItems![index].enabled
+                                          ? AppStyles
+                                              .textStyleSize12W400Primary(
+                                              context,
+                                            )
+                                          : AppStyles
+                                              .textStyleSize12W400PrimaryDisabled(
+                                              context,
+                                            ),
+                                    ),
+                                  )
+                                else
+                                  const SizedBox(),
                               ],
                             ),
                           ),
-                          if (isItemSelected) const Icon(
-                                  Icons.check_circle,
-                                  size: 16,
-                                  color: Colors.green,
-                                ) else Container(),
+                          if (isItemSelected)
+                            const Icon(
+                              Icons.check_circle,
+                              size: 16,
+                              color: Colors.green,
+                            )
+                          else
+                            Container(),
                         ],
                       ),
                       if (pickerItem.description != null)
