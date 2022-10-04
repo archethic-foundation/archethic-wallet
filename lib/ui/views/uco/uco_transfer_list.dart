@@ -87,6 +87,7 @@ class UCOTransferListWidget extends StatelessWidget {
     );
   }
 
+  // TODO(chralu): Create a Widget subclass
   Widget displayUcoDetail(BuildContext context, UCOTransferWallet ucoTransfer) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,

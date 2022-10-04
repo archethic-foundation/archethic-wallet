@@ -97,6 +97,7 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
     );
   }
 
+  // TODO(chralu): Create a Widget subclass
   Widget _buildLine(BuildContext context, String publicKey) {
     return Container(
       padding: const EdgeInsets.only(bottom: 8),

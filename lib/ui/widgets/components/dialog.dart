@@ -191,6 +191,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
     );
   }
 
+// TODO(chralu): Create a Widget subclass
   Widget _getAnimation(BuildContext context) {
     switch (type) {
       case AnimationType.send:
@@ -200,6 +201,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
     }
   }
 
+// TODO(chralu): Create a Widget subclass
   Widget _buildOverlayContent(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,

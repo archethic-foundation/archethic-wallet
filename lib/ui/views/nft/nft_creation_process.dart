@@ -392,6 +392,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
     );
   }
 
+// TODO(chralu): Create a Widget subclass
   Widget importTab(BuildContext context) {
     if (tabActiveIndex != 0) {
       return const SizedBox();
@@ -913,6 +914,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
     }
   }
 
+// TODO(chralu): Create a Widget subclass
   Widget enterInfosTab(BuildContext context) {
     if (tabActiveIndex != 1) {
       return const SizedBox();
@@ -1058,6 +1060,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
     }
   }
 
+// TODO(chralu): Create a Widget subclass
   Widget enterPropertiesTab(BuildContext context) {
     if (tabActiveIndex != 2) {
       return const SizedBox();
@@ -1541,6 +1544,7 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
     );
   }
 
+// TODO(chralu): Create a Widget subclass
   Widget confirmationTab(BuildContext context) {
     if (file != null && tabActiveIndex == 3) {
       return SingleChildScrollView(

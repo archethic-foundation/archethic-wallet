@@ -25,6 +25,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class BalanceInfosWidget {
   List<OptionChart> optionChartList = List<OptionChart>.empty(growable: true);
 
+  // TODO(chralu): Create a Widget subclass
   Widget getBalance(BuildContext context) {
     return GestureDetector(
       child: SizedBox(
@@ -419,6 +420,7 @@ class BalanceInfosWidget {
     );
   }
 
+// TODO(chralu): Create a Widget subclass
   Widget buildInfos(BuildContext context) {
     return InkWell(
       onTap: () async {
@@ -559,6 +561,7 @@ class BalanceInfosWidget {
     );
   }
 
+// TODO(chralu): Create a Widget subclass
   Widget buildKPI(BuildContext context) {
     if (StateContainer.of(context).chartInfos != null &&
         StateContainer.of(context).chartInfos!.data != null) {

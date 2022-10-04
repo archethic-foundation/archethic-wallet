@@ -94,6 +94,7 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
         : const SizedBox();
   }
 
+// TODO(chralu): Create a Widget subclass
   Widget _balanceNative(BuildContext context, bool primary) {
     return RichText(
       text: TextSpan(
@@ -125,6 +126,7 @@ class _BalanceIndicatorWidgetState extends State<BalanceIndicatorWidget> {
     );
   }
 
+// TODO(chralu): Create a Widget subclass
   Widget _balanceFiat(BuildContext context, bool primary) {
     return RichText(
       text: TextSpan(

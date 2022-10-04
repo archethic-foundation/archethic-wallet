@@ -59,6 +59,7 @@ class TxListWidget extends StatelessWidget {
     );
   }
 
+// TODO(chralu): Create a Widget subclass
   Container getLign(BuildContext context, int num) {
     return Container(
       color: Colors.transparent,

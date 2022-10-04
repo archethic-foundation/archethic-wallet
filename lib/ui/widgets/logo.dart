@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_svg/svg.dart';
 
+// TODO(chralu): Create a Widget subclass
 Widget getLogo(BuildContext context) {
   return Container(
     padding: const EdgeInsets.only(left: 10),
