@@ -18,6 +18,8 @@ class FungiblesTokensListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -34,7 +36,7 @@ class FungiblesTokensListWidget extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(top: 26),
               child: Text(
-                AppLocalization.of(context)!.fungiblesTokensListNoTokenYet,
+                localizations.fungiblesTokensListNoTokenYet,
                 style: AppStyles.textStyleSize14W600Primary(context),
               ),
             ),
@@ -48,13 +50,19 @@ class FungiblesTokensListWidget extends StatelessWidget {
                     .accountTokens!
                     .length;
             i++)
-          getLign(context, i)
+          _FungiblesTokensLine(num: i)
       ],
     );
   }
+}
 
-  // TODO(chralu): Create a Widget subclass
-  static Container getLign(BuildContext context, int num) {
+class _FungiblesTokensLine extends StatelessWidget {
+  const _FungiblesTokensLine({required this.num, super.key});
+
+  final int num;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       color: Colors.transparent,
       width: MediaQuery.of(context).size.width,
@@ -81,9 +89,8 @@ class FungiblesTokensListWidget extends StatelessWidget {
                             .accountTokens!
                             .length >
                         num)
-            ? displayTxDetailTransfer(
-                context,
-                StateContainer.of(context)
+            ? _FungiblesTokensDetailTransfer(
+                accountFungibleToken: StateContainer.of(context)
                     .appWallet!
                     .appKeychain!
                     .getAccountSelected()!
@@ -93,11 +100,19 @@ class FungiblesTokensListWidget extends StatelessWidget {
       ),
     );
   }
+}
 
-  static Widget displayTxDetailTransfer(
-    BuildContext context,
-    AccountToken accountFungibleToken,
-  ) {
+class _FungiblesTokensDetailTransfer extends StatelessWidget {
+  const _FungiblesTokensDetailTransfer(
+      {required this.accountFungibleToken, super.key});
+
+  final AccountToken accountFungibleToken;
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = StateContainer.of(context).curTheme;
+
     return InkWell(
       onTap: () {
         sl.get<HapticUtil>().feedback(
@@ -110,16 +125,12 @@ class FungiblesTokensListWidget extends StatelessWidget {
           Card(
             shape: RoundedRectangleBorder(
               side: BorderSide(
-                color: StateContainer.of(context)
-                    .curTheme
-                    .backgroundFungiblesTokensListCard!,
+                color: theme.backgroundFungiblesTokensListCard!,
               ),
               borderRadius: BorderRadius.circular(10),
             ),
             elevation: 0,
-            color: StateContainer.of(context)
-                .curTheme
-                .backgroundFungiblesTokensListCard,
+            color: theme.backgroundFungiblesTokensListCard,
             child: Container(
               padding: const EdgeInsets.all(9.5),
               width: MediaQuery.of(context).size.width,
@@ -134,24 +145,16 @@ class FungiblesTokensListWidget extends StatelessWidget {
                         width: 40,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color: StateContainer.of(context)
-                              .curTheme
-                              .backgroundDark!
-                              .withOpacity(0.3),
+                          color: theme.backgroundDark!.withOpacity(0.3),
                           border: Border.all(
-                            color: StateContainer.of(context)
-                                .curTheme
-                                .backgroundDarkest!
-                                .withOpacity(0.2),
+                            color: theme.backgroundDarkest!.withOpacity(0.2),
                             width: 2,
                           ),
                         ),
                         child: IconButton(
                           icon: Icon(
                             Icons.arrow_circle_up_outlined,
-                            color: StateContainer.of(context)
-                                .curTheme
-                                .backgroundDarkest,
+                            color: theme.backgroundDarkest,
                             size: 21,
                           ),
                           onPressed: () {
@@ -165,13 +168,11 @@ class FungiblesTokensListWidget extends StatelessWidget {
                                 accountToken: accountFungibleToken,
                                 primaryCurrency: StateContainer.of(context)
                                     .curPrimaryCurrency,
-                                title: AppLocalization.of(context)!
-                                    .transferTokens
-                                    .replaceAll(
-                                      '%1',
-                                      accountFungibleToken
-                                          .tokenInformations!.symbol!,
-                                    ),
+                                title: localizations.transferTokens.replaceAll(
+                                  '%1',
+                                  accountFungibleToken
+                                      .tokenInformations!.symbol!,
+                                ),
                                 localCurrency:
                                     StateContainer.of(context).curCurrency,
                               ),

@@ -31,6 +31,8 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
+
     return SafeArea(
       minimum:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
@@ -88,9 +90,8 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                         BuildContext context,
                                         int index,
                                       ) {
-                                        return buildInfo(
-                                          context,
-                                          list.data![index],
+                                        return _TransactionBuildInfos(
+                                          transactionInfo: list.data![index],
                                         );
                                       },
                                     ),
@@ -110,9 +111,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                                     Dimens.buttonBottomDimens,
                                     icon: Icon(
                                       Icons.more_horiz,
-                                      color: StateContainer.of(context)
-                                          .curTheme
-                                          .text,
+                                      color: theme.text,
                                     ),
                                     onPressed: () async {
                                       UIUtil.showWebview(
@@ -138,9 +137,17 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
       ),
     );
   }
+}
 
-  // TODO(chralu): Create a Widget subclass
-  Widget buildInfo(BuildContext context, TransactionInfos transactionInfo) {
+class _TransactionBuildInfos extends StatelessWidget {
+  const _TransactionBuildInfos({required this.transactionInfo, super.key});
+
+  final TransactionInfos transactionInfo;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
+
     return (StateContainer.of(context).showBalance == true ||
             (StateContainer.of(context).showBalance == false &&
                 transactionInfo.titleInfo != 'Amount'))
@@ -165,7 +172,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                       ),
                     if (transactionInfo.titleInfo == '')
                       Container(
-                        color: StateContainer.of(context).curTheme.text05,
+                        color: theme.text05,
                         child: Container(
                           padding: const EdgeInsets.only(left: 15, top: 15),
                           child: Column(
@@ -264,7 +271,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
                       ),
                     Divider(
                       height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
+                      color: theme.text15,
                     ),
                   ],
                 ),

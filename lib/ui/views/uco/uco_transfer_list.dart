@@ -23,6 +23,9 @@ class UCOTransferListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+    final theme = StateContainer.of(context).curTheme;
+
     listUcoTransfer!.sort(
       (UCOTransferWallet a, UCOTransferWallet b) => a.to!.compareTo(b.to!),
     );
@@ -37,7 +40,7 @@ class UCOTransferListWidget extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: listUcoTransfer!.length,
               itemBuilder: (BuildContext context, int index) {
-                return displayUcoDetail(context, listUcoTransfer![index]);
+                return _UCOTransferDetail(ucoTransfer: listUcoTransfer![index]);
               },
             ),
           ),
@@ -49,7 +52,7 @@ class UCOTransferListWidget extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Text(
-                      '+ ${AppLocalization.of(context)!.estimatedFees}',
+                      '+ ${localizations.estimatedFees}',
                       style: AppStyles.textStyleSize14W600Primary(context),
                     ),
                   ],
@@ -61,7 +64,7 @@ class UCOTransferListWidget extends StatelessWidget {
               ],
             ),
           ),
-          Divider(height: 4, color: StateContainer.of(context).curTheme.text),
+          Divider(height: 4, color: theme.text),
           SizedBox(
             height: 50,
             child: Row(
@@ -70,7 +73,7 @@ class UCOTransferListWidget extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Text(
-                      AppLocalization.of(context)!.total,
+                      localizations.total,
                       style: AppStyles.textStyleSize14W600Primary(context),
                     ),
                   ],
@@ -87,8 +90,30 @@ class UCOTransferListWidget extends StatelessWidget {
     );
   }
 
-  // TODO(chralu): Create a Widget subclass
-  Widget displayUcoDetail(BuildContext context, UCOTransferWallet ucoTransfer) {
+  double _getTotal() {
+    var totalAmount = 0.0;
+    for (var i = 0; i < listUcoTransfer!.length; i++) {
+      final amount = (Decimal.parse(listUcoTransfer![i].amount!.toString()) /
+              Decimal.parse('100000000'))
+          .toDouble();
+      totalAmount = (Decimal.parse(totalAmount.toString()) +
+              Decimal.parse(amount.toString()))
+          .toDouble();
+    }
+    return (Decimal.parse(totalAmount.toString()) +
+            Decimal.parse(feeEstimation!.toString()))
+        .toDouble();
+  }
+}
+
+class _UCOTransferDetail extends StatelessWidget {
+  const _UCOTransferDetail({required this.ucoTransfer, super.key});
+
+  final UCOTransferWallet ucoTransfer;
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -97,7 +122,7 @@ class UCOTransferListWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              AppLocalization.of(context)!.txListTo,
+              localizations.txListTo,
               style: AppStyles.textStyleSize14W600Primary(context),
             ),
             Text(
@@ -117,20 +142,5 @@ class UCOTransferListWidget extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  double _getTotal() {
-    var totalAmount = 0.0;
-    for (var i = 0; i < listUcoTransfer!.length; i++) {
-      final amount = (Decimal.parse(listUcoTransfer![i].amount!.toString()) /
-              Decimal.parse('100000000'))
-          .toDouble();
-      totalAmount = (Decimal.parse(totalAmount.toString()) +
-              Decimal.parse(amount.toString()))
-          .toDouble();
-    }
-    return (Decimal.parse(totalAmount.toString()) +
-            Decimal.parse(feeEstimation!.toString()))
-        .toDouble();
   }
 }
