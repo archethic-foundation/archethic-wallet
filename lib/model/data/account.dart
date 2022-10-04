@@ -235,6 +235,9 @@ class Account extends HiveObject {
   }
 
   Future<void> removeftInfosOffChain(String? tokenId) async {
+    if (nftInfosOffChainList == null) {
+      return;
+    }
     for (final nftInfosOffChain in nftInfosOffChainList!) {
       if (nftInfosOffChain.id == tokenId) {
         nftInfosOffChain.delete();
