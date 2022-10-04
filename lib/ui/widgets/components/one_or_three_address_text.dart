@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 enum AddressTextType { primary60, primary }
 
 class OneOrThreeLineAddressText extends StatelessWidget {
-  OneOrThreeLineAddressText({
+  const OneOrThreeLineAddressText({
     super.key,
     @required this.address,
     @required this.type,
     this.contactName,
   });
 
-  String? address;
-  String? contactName;
-  AddressTextType? type;
+  final String? address;
+  final String? contactName;
+  final AddressTextType? type;
 
   @override
   Widget build(BuildContext context) {

@@ -347,72 +347,73 @@ class _TransferSheetState extends State<TransferSheet> {
                 ),
               ),
             ),
-            Container(
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      if (_isPressed == true) AppButton.buildAppButton(
-                              const Key('send'),
-                              context,
-                              AppButtonType.primaryOutline,
-                              widget.actionButtonTitle ??
-                                  AppLocalization.of(context)!.send,
-                              Dimens.buttonTopDimens,
-                              onPressed: () {},
-                            ) else AppButton.buildAppButton(
-                              const Key('send'),
-                              context,
-                              AppButtonType.primary,
-                              widget.actionButtonTitle ??
-                                  AppLocalization.of(context)!.send,
-                              Dimens.buttonTopDimens,
-                              onPressed: () async {
-                                setState(() {
-                                  _isPressed = true;
-                                });
-                                validRequest = await _validateRequest();
-                                if (validRequest) {
-                                  Sheets.showAppHeightNineSheet(
-                                    onDisposed: () {
-                                      if (mounted) {
-                                        setState(() {
-                                          _isPressed = false;
-                                        });
-                                      }
-                                    },
-                                    context: context,
-                                    widget: TransferConfirmSheet(
-                                      lastAddress: StateContainer.of(context)
-                                          .appWallet!
-                                          .appKeychain!
-                                          .getAccountSelected()!
-                                          .lastAddress,
-                                      ucoTransferList: ucoTransferList,
-                                      tokenTransferList: tokenTransferList,
-                                      title: widget.title,
-                                      typeTransfer: widget.accountToken == null
-                                          ? 'UCO'
-                                          : 'TOKEN',
-                                      feeEstimation: feeEstimation,
-                                      message: _messageController!.text.trim(),
-                                      symbol: widget.accountToken == null
-                                          ? null
-                                          : widget.accountToken!
-                                              .tokenInformations!.symbol!,
-                                    ),
-                                  );
-                                } else {
+            Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    if (_isPressed == true)
+                      AppButton.buildAppButton(
+                        const Key('send'),
+                        context,
+                        AppButtonType.primaryOutline,
+                        widget.actionButtonTitle ??
+                            AppLocalization.of(context)!.send,
+                        Dimens.buttonTopDimens,
+                        onPressed: () {},
+                      )
+                    else
+                      AppButton.buildAppButton(
+                        const Key('send'),
+                        context,
+                        AppButtonType.primary,
+                        widget.actionButtonTitle ??
+                            AppLocalization.of(context)!.send,
+                        Dimens.buttonTopDimens,
+                        onPressed: () async {
+                          setState(() {
+                            _isPressed = true;
+                          });
+                          validRequest = await _validateRequest();
+                          if (validRequest) {
+                            Sheets.showAppHeightNineSheet(
+                              onDisposed: () {
+                                if (mounted) {
                                   setState(() {
                                     _isPressed = false;
                                   });
                                 }
                               },
-                            ),
-                    ],
-                  ),
-                ],
-              ),
+                              context: context,
+                              widget: TransferConfirmSheet(
+                                lastAddress: StateContainer.of(context)
+                                    .appWallet!
+                                    .appKeychain!
+                                    .getAccountSelected()!
+                                    .lastAddress,
+                                ucoTransferList: ucoTransferList,
+                                tokenTransferList: tokenTransferList,
+                                title: widget.title,
+                                typeTransfer: widget.accountToken == null
+                                    ? 'UCO'
+                                    : 'TOKEN',
+                                feeEstimation: feeEstimation,
+                                message: _messageController!.text.trim(),
+                                symbol: widget.accountToken == null
+                                    ? null
+                                    : widget.accountToken!.tokenInformations!
+                                        .symbol!,
+                              ),
+                            );
+                          } else {
+                            setState(() {
+                              _isPressed = false;
+                            });
+                          }
+                        },
+                      ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),
@@ -801,51 +802,56 @@ class _TransferSheetState extends State<TransferSheet> {
             }
           },
         ),
-        if (widget.accountToken == null) Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 40),
-                    alignment: Alignment.centerLeft,
-                    child: AutoSizeText(
-                      '1 ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!} = ${CurrencyUtil.getAmountPlusSymbol(StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.fiatCurrencyCode!, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!)}',
-                      style: AppStyles.textStyleSize14W100Primary(context),
-                    ),
-                  ),
-                  if (_sendAmountController!.text.isNotEmpty) Container(
-                          margin: const EdgeInsets.only(right: 40),
-                          alignment: Alignment.centerRight,
-                          child: primaryCurrencySelected ==
-                                  PrimaryCurrency.native
-                              ? Text(
-                                  '= ${_convertNetworkCurrencyToSelectedCurrency()}',
-                                  textAlign: TextAlign.right,
-                                  style: AppStyles.textStyleSize14W100Primary(
-                                    context,
-                                  ),
-                                )
-                              : Text(
-                                  '= ${_convertSelectedCurrencyToNetworkCurrency()}',
-                                  textAlign: TextAlign.right,
-                                  style: AppStyles.textStyleSize14W100Primary(
-                                    context,
-                                  ),
-                                ),
-                        ) else const SizedBox(),
-                ],
-              ) else Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 40),
-                    alignment: Alignment.centerLeft,
-                    child: AutoSizeText(
-                      '${NumberUtil.formatThousands(widget.accountToken!.amount!)} ${widget.accountToken!.tokenInformations!.symbol}',
-                      style: AppStyles.textStyleSize14W100Primary(context),
-                    ),
-                  ),
-                ],
-              )
+        if (widget.accountToken == null)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(left: 40),
+                alignment: Alignment.centerLeft,
+                child: AutoSizeText(
+                  '1 ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!} = ${CurrencyUtil.getAmountPlusSymbol(StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.fiatCurrencyCode!, StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.tokenPrice!.amount!)}',
+                  style: AppStyles.textStyleSize14W100Primary(context),
+                ),
+              ),
+              if (_sendAmountController!.text.isNotEmpty)
+                Container(
+                  margin: const EdgeInsets.only(right: 40),
+                  alignment: Alignment.centerRight,
+                  child: primaryCurrencySelected == PrimaryCurrency.native
+                      ? Text(
+                          '= ${_convertNetworkCurrencyToSelectedCurrency()}',
+                          textAlign: TextAlign.right,
+                          style: AppStyles.textStyleSize14W100Primary(
+                            context,
+                          ),
+                        )
+                      : Text(
+                          '= ${_convertSelectedCurrencyToNetworkCurrency()}',
+                          textAlign: TextAlign.right,
+                          style: AppStyles.textStyleSize14W100Primary(
+                            context,
+                          ),
+                        ),
+                )
+              else
+                const SizedBox(),
+            ],
+          )
+        else
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(left: 40),
+                alignment: Alignment.centerLeft,
+                child: AutoSizeText(
+                  '${NumberUtil.formatThousands(widget.accountToken!.amount!)} ${widget.accountToken!.tokenInformations!.symbol}',
+                  style: AppStyles.textStyleSize14W100Primary(context),
+                ),
+              ),
+            ],
+          )
       ],
     );
   }

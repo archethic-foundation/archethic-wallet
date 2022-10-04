@@ -68,21 +68,19 @@ class _IntroWelcomeState extends State<IntroWelcome> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Container(
-                            child: Center(
-                              child: Container(
-                                padding: const EdgeInsets.only(
-                                  left: 20,
-                                  right: 20,
-                                ),
-                                child: SizedBox(
-                                  height: 200,
-                                  child: AspectRatio(
-                                    aspectRatio: 3 / 1,
-                                    child: Image.asset(
-                                      '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logo!}.png',
-                                      height: 200,
-                                    ),
+                          Center(
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                left: 20,
+                                right: 20,
+                              ),
+                              child: SizedBox(
+                                height: 200,
+                                child: AspectRatio(
+                                  aspectRatio: 3 / 1,
+                                  child: Image.asset(
+                                    '${StateContainer.of(context).curTheme.assetsFolder!}${StateContainer.of(context).curTheme.logo!}.png',
+                                    height: 200,
                                   ),
                                 ),
                               ),

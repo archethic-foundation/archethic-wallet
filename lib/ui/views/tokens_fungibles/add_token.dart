@@ -223,34 +223,35 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                                 ),
                               ),
                             ),
-                            if (feeEstimation > 0) Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 30,
-                                      right: 30,
-                                    ),
-                                    child: Text(
-                                      '${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                      style:
-                                          AppStyles.textStyleSize14W100Primary(
-                                        context,
-                                      ),
-                                      textAlign: TextAlign.justify,
-                                    ),
-                                  ) else Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 30,
-                                      right: 30,
-                                    ),
-                                    child: Text(
-                                      AppLocalization.of(context)!
-                                          .estimatedFeesAddTokenNote,
-                                      style:
-                                          AppStyles.textStyleSize14W100Primary(
-                                        context,
-                                      ),
-                                      textAlign: TextAlign.justify,
-                                    ),
+                            if (feeEstimation > 0)
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 30,
+                                  right: 30,
+                                ),
+                                child: Text(
+                                  '${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                                  style: AppStyles.textStyleSize14W100Primary(
+                                    context,
                                   ),
+                                  textAlign: TextAlign.justify,
+                                ),
+                              )
+                            else
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 30,
+                                  right: 30,
+                                ),
+                                child: Text(
+                                  AppLocalization.of(context)!
+                                      .estimatedFeesAddTokenNote,
+                                  style: AppStyles.textStyleSize14W100Primary(
+                                    context,
+                                  ),
+                                  textAlign: TextAlign.justify,
+                                ),
+                              ),
                           ],
                         ),
                       ),
@@ -259,61 +260,62 @@ class _AddTokenSheetState extends State<AddTokenSheet> {
                 ),
               ),
             ),
-            Container(
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      if (_isPressed == true) AppButton.buildAppButton(
-                              const Key('createToken'),
-                              context,
-                              AppButtonType.primaryOutline,
-                              AppLocalization.of(context)!.createToken,
-                              Dimens.buttonTopDimens,
-                              onPressed: () {},
-                            ) else AppButton.buildAppButton(
-                              const Key('createToken'),
-                              context,
-                              AppButtonType.primary,
-                              AppLocalization.of(context)!.createToken,
-                              Dimens.buttonTopDimens,
-                              onPressed: () async {
-                                setState(() {
-                                  _isPressed = true;
-                                });
+            Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    if (_isPressed == true)
+                      AppButton.buildAppButton(
+                        const Key('createToken'),
+                        context,
+                        AppButtonType.primaryOutline,
+                        AppLocalization.of(context)!.createToken,
+                        Dimens.buttonTopDimens,
+                        onPressed: () {},
+                      )
+                    else
+                      AppButton.buildAppButton(
+                        const Key('createToken'),
+                        context,
+                        AppButtonType.primary,
+                        AppLocalization.of(context)!.createToken,
+                        Dimens.buttonTopDimens,
+                        onPressed: () async {
+                          setState(() {
+                            _isPressed = true;
+                          });
 
-                                validRequest = await _validateRequest();
-                                if (validRequest) {
-                                  Sheets.showAppHeightNineSheet(
-                                    onDisposed: () {
-                                      if (mounted) {
-                                        setState(() {
-                                          _isPressed = false;
-                                        });
-                                      }
-                                    },
-                                    context: context,
-                                    widget: AddTokenConfirm(
-                                      tokenName: _nameController!.text,
-                                      tokenSymbol: _symbolController!.text,
-                                      feeEstimation: feeEstimation,
-                                      tokenInitialSupply: double.tryParse(
-                                        _initialSupplyController!.text
-                                            .replaceAll(' ', ''),
-                                      ),
-                                    ),
-                                  );
-                                } else {
+                          validRequest = await _validateRequest();
+                          if (validRequest) {
+                            Sheets.showAppHeightNineSheet(
+                              onDisposed: () {
+                                if (mounted) {
                                   setState(() {
                                     _isPressed = false;
                                   });
                                 }
                               },
-                            ),
-                    ],
-                  ),
-                ],
-              ),
+                              context: context,
+                              widget: AddTokenConfirm(
+                                tokenName: _nameController!.text,
+                                tokenSymbol: _symbolController!.text,
+                                feeEstimation: feeEstimation,
+                                tokenInitialSupply: double.tryParse(
+                                  _initialSupplyController!.text
+                                      .replaceAll(' ', ''),
+                                ),
+                              ),
+                            );
+                          } else {
+                            setState(() {
+                              _isPressed = false;
+                            });
+                          }
+                        },
+                      ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),
