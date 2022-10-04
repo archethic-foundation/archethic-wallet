@@ -297,6 +297,7 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
     );
   }
 
+  // TODO(Chralu): transform to [Widget] subclass
   Widget collectionInfos(BuildContext context, double bottom) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),

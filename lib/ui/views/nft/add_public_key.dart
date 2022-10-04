@@ -281,6 +281,7 @@ class _AddPublicKeyState extends State<AddPublicKey> {
     );
   }
 
+  // TODO(Chralu): transform to [Widget] subclass
   Widget _buildLine(BuildContext context, String publicKey) {
     return Container(
       padding: const EdgeInsets.only(bottom: 8),

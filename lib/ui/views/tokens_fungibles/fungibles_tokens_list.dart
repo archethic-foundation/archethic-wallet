@@ -53,6 +53,7 @@ class FungiblesTokensListWidget extends StatelessWidget {
     );
   }
 
+  // TODO(chralu): Create a Widget subclass
   static Container getLign(BuildContext context, int num) {
     return Container(
       color: Colors.transparent,

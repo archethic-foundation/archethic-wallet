@@ -139,6 +139,7 @@ class _TransactionInfosSheetState extends State<TransactionInfosSheet> {
     );
   }
 
+  // TODO(chralu): Create a Widget subclass
   Widget buildInfo(BuildContext context, TransactionInfos transactionInfo) {
     return (StateContainer.of(context).showBalance == true ||
             (StateContainer.of(context).showBalance == false &&

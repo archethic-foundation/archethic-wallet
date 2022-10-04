@@ -278,6 +278,7 @@ class _ContactsListState extends State<ContactsList> {
     );
   }
 
+  // TODO(Chralu): transform to [Widget] subclass
   Widget buildSingleContact(BuildContext context, Contact contact) {
     return TextButton(
       onPressed: () {
