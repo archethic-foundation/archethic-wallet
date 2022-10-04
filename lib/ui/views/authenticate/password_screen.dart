@@ -83,172 +83,162 @@ class _PasswordScreenState extends State<PasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: <Widget>[
-          DecoratedBox(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  StateContainer.of(context).curTheme.background5Small!,
-                ),
-                fit: BoxFit.fitHeight,
-              ),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: <Color>[
-                  StateContainer.of(context).curTheme.backgroundDark!,
-                  StateContainer.of(context).curTheme.background!
-                ],
-              ),
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              StateContainer.of(context).curTheme.background5Small!,
             ),
+            fit: BoxFit.fitHeight,
           ),
-          LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) =>
-                SafeArea(
-              minimum: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.035,
-                top: MediaQuery.of(context).size.height * 0.10,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                margin:
-                                    const EdgeInsetsDirectional.only(start: 15),
-                                height: 50,
-                                width: 50,
-                                child: BackButton(
-                                  key: const Key('back'),
-                                  color:
-                                      StateContainer.of(context).curTheme.text,
-                                  onPressed: () {
-                                    Navigator.pop(context, false);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 40,
-                              vertical: 10,
-                            ),
-                            child: Text(
-                              AppLocalization.of(context)!.passwordMethod,
-                              style:
-                                  AppStyles.textStyleSize24W700EquinoxPrimary(
-                                context,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          AppTextField(
-                            topMargin: 30,
-                            padding: const EdgeInsetsDirectional.only(
-                              start: 16,
-                              end: 16,
-                            ),
-                            focusNode: enterPasswordFocusNode,
-                            controller: enterPasswordController,
-                            textInputAction: TextInputAction.go,
-                            autocorrect: false,
-                            autofocus: true,
-                            onChanged: (String newText) {
-                              setState(() {
-                                if (passwordError != null) {
-                                  passwordError = null;
-                                }
-                              });
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: <Color>[
+              StateContainer.of(context).curTheme.backgroundDark!,
+              StateContainer.of(context).curTheme.background!
+            ],
+          ),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.06,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          margin: const EdgeInsetsDirectional.only(start: 15),
+                          height: 50,
+                          width: 50,
+                          child: BackButton(
+                            key: const Key('back'),
+                            color: StateContainer.of(context).curTheme.text,
+                            onPressed: () {
+                              Navigator.pop(context, false);
                             },
-                            onSubmitted: (value) async {
-                              FocusScope.of(context).unfocus();
-                            },
-                            labelText:
-                                AppLocalization.of(context)!.enterPasswordHint,
-                            keyboardType: TextInputType.text,
-                            obscureText: !enterPasswordVisible!,
-                            style:
-                                AppStyles.textStyleSize16W700Primary(context),
-                            suffixButton: TextFieldButton(
-                              icon: enterPasswordVisible!
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              onPressed: () {
-                                setState(() {
-                                  enterPasswordVisible = !enterPasswordVisible!;
-                                });
-                              },
-                            ),
                           ),
-                          if (_failedAttempts > 0)
-                            Container(
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 40,
-                                vertical: 10,
-                              ),
-                              child: AutoSizeText(
-                                '${AppLocalization.of(context)!.attempt}$_failedAttempts/$maxAttempts',
-                                style: AppStyles.textStyleSize14W200Primary(
-                                  context,
-                                ),
-                                textAlign: TextAlign.center,
-                                maxLines: 1,
-                                stepGranularity: 0.1,
-                              ),
-                            ),
-                          // Error Container
-                          Container(
-                            alignment: AlignmentDirectional.center,
-                            margin: const EdgeInsets.only(top: 3),
-                            child: Text(
-                              passwordError == null ? '' : passwordError!,
-                              style: AppStyles.textStyleSize14W600Primary(
-                                context,
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
+                      ],
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 40,
+                        vertical: 10,
+                      ),
+                      child: Text(
+                        AppLocalization.of(context)!.passwordMethod,
+                        style: AppStyles.textStyleSize24W700EquinoxPrimary(
+                          context,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          if (enterPasswordController!.text == '') AppButton.buildAppButton(
-                                  const Key('confirm'),
-                                  context,
-                                  AppButtonType.primaryOutline,
-                                  AppLocalization.of(context)!.confirm,
-                                  Dimens.buttonTopDimens,
-                                  onPressed: () async {},
-                                ) else AppButton.buildAppButton(
-                                  const Key('confirm'),
-                                  context,
-                                  AppButtonType.primary,
-                                  AppLocalization.of(context)!.confirm,
-                                  Dimens.buttonTopDimens,
-                                  onPressed: () async {
-                                    await _verifyPassword();
-                                  },
-                                ),
-                        ],
+                    AppTextField(
+                      topMargin: 30,
+                      padding: const EdgeInsetsDirectional.only(
+                        start: 16,
+                        end: 16,
                       ),
-                    ],
-                  ),
-                ],
+                      focusNode: enterPasswordFocusNode,
+                      controller: enterPasswordController,
+                      textInputAction: TextInputAction.go,
+                      autocorrect: false,
+                      autofocus: true,
+                      onChanged: (String newText) {
+                        setState(() {
+                          if (passwordError != null) {
+                            passwordError = null;
+                          }
+                        });
+                      },
+                      onSubmitted: (value) async {
+                        FocusScope.of(context).unfocus();
+                      },
+                      labelText: AppLocalization.of(context)!.enterPasswordHint,
+                      keyboardType: TextInputType.text,
+                      obscureText: !enterPasswordVisible!,
+                      style: AppStyles.textStyleSize16W700Primary(context),
+                      suffixButton: TextFieldButton(
+                        icon: enterPasswordVisible!
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        onPressed: () {
+                          setState(() {
+                            enterPasswordVisible = !enterPasswordVisible!;
+                          });
+                        },
+                      ),
+                    ),
+                    if (_failedAttempts > 0)
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 10,
+                        ),
+                        child: AutoSizeText(
+                          '${AppLocalization.of(context)!.attempt}$_failedAttempts/$maxAttempts',
+                          style: AppStyles.textStyleSize14W200Primary(
+                            context,
+                          ),
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          stepGranularity: 0.1,
+                        ),
+                      ),
+                    Container(
+                      alignment: AlignmentDirectional.center,
+                      margin: const EdgeInsets.only(top: 3),
+                      child: Text(
+                        passwordError == null ? '' : passwordError!,
+                        style: AppStyles.textStyleSize14W600Primary(
+                          context,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 40),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        if (enterPasswordController!.text == '')
+                          AppButton.buildAppButton(
+                            const Key('confirm'),
+                            context,
+                            AppButtonType.primaryOutline,
+                            AppLocalization.of(context)!.confirm,
+                            Dimens.buttonTopDimens,
+                            onPressed: () async {},
+                          )
+                        else
+                          AppButton.buildAppButton(
+                            const Key('confirm'),
+                            context,
+                            AppButtonType.primary,
+                            AppLocalization.of(context)!.confirm,
+                            Dimens.buttonTopDimens,
+                            onPressed: () async {
+                              await _verifyPassword();
+                            },
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
