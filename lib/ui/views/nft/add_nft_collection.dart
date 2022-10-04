@@ -128,165 +128,168 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                     children: [
                       collectionInfos(context, bottom),
                       getNFTListPreview(context),
-                      if (feeEstimation > 0) Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 30, right: 30),
-                              child: Text(
-                                '${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                                style: AppStyles.textStyleSize14W100Primary(
-                                  context,
-                                ),
-                                textAlign: TextAlign.justify,
-                              ),
-                            ) else Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 30, right: 30),
-                              child: Text(
-                                AppLocalization.of(context)!
-                                    .estimatedFeesAddTokenNote,
-                                style: AppStyles.textStyleSize14W100Primary(
-                                  context,
-                                ),
-                                textAlign: TextAlign.justify,
-                              ),
+                      if (feeEstimation > 0)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30, right: 30),
+                          child: Text(
+                            '${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                            style: AppStyles.textStyleSize14W100Primary(
+                              context,
                             ),
+                            textAlign: TextAlign.justify,
+                          ),
+                        )
+                      else
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30, right: 30),
+                          child: Text(
+                            AppLocalization.of(context)!
+                                .estimatedFeesAddTokenNote,
+                            style: AppStyles.textStyleSize14W100Primary(
+                              context,
+                            ),
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
                     ],
                   ),
                 ),
               ),
             ),
-            Container(
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      if (_isPressed == true ||
-                              (_isPressed == false &&
-                                  (collectionNameController!.text.isEmpty ||
-                                      collectionSymbolController!.text.isEmpty))) AppButton.buildAppButton(
-                              const Key('createNFTCollection'),
-                              context,
-                              AppButtonType.primaryOutline,
-                              AppLocalization.of(context)!.createNFTCollection,
-                              Dimens.buttonTopDimens,
-                              onPressed: () {},
-                            ) else AppButton.buildAppButton(
-                              const Key('createNFTCollection'),
-                              context,
-                              AppButtonType.primary,
-                              AppLocalization.of(context)!.createNFTCollection,
-                              Dimens.buttonTopDimens,
-                              onPressed: () async {
-                                setState(() {
-                                  _isPressed = true;
-                                });
+            Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    if (_isPressed == true ||
+                        (_isPressed == false &&
+                            (collectionNameController!.text.isEmpty ||
+                                collectionSymbolController!.text.isEmpty)))
+                      AppButton.buildAppButton(
+                        const Key('createNFTCollection'),
+                        context,
+                        AppButtonType.primaryOutline,
+                        AppLocalization.of(context)!.createNFTCollection,
+                        Dimens.buttonTopDimens,
+                        onPressed: () {},
+                      )
+                    else
+                      AppButton.buildAppButton(
+                        const Key('createNFTCollection'),
+                        context,
+                        AppButtonType.primary,
+                        AppLocalization.of(context)!.createNFTCollection,
+                        Dimens.buttonTopDimens,
+                        onPressed: () async {
+                          setState(() {
+                            _isPressed = true;
+                          });
 
-                                validRequest = await _validateRequest(context);
-                                if (validRequest) {
-                                  Sheets.showAppHeightNineSheet(
-                                    onDisposed: () {
-                                      if (mounted) {
-                                        setState(() {
-                                          _isPressed = false;
-                                        });
-                                      }
-                                    },
-                                    context: context,
-                                    widget: AddNFTCollectionConfirm(
-                                      token: token,
-                                      feeEstimation: feeEstimation,
-                                    ),
-                                  );
-                                } else {
+                          validRequest = await _validateRequest(context);
+                          if (validRequest) {
+                            Sheets.showAppHeightNineSheet(
+                              onDisposed: () {
+                                if (mounted) {
                                   setState(() {
                                     _isPressed = false;
                                   });
-                                  Navigator.of(context).popUntil(
-                                    RouteUtils.withNameLike('/home'),
-                                  );
                                 }
                               },
-                            ),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      if (_isPressed == true ||
-                              (_isPressed == false &&
-                                  (collectionNameController!.text.isEmpty ||
-                                      collectionSymbolController!.text.isEmpty))) AppButton.buildAppButton(
-                              const Key('saveNFTCollectionInLocal'),
-                              context,
-                              AppButtonType.primaryOutline,
-                              AppLocalization.of(context)!
-                                  .saveNFTCollectionInLocal,
-                              Dimens.buttonBottomDimens,
-                              onPressed: () {},
-                            ) else AppButton.buildAppButton(
-                              const Key('saveNFTCollectionInLocal'),
-                              context,
-                              AppButtonType.primary,
-                              AppLocalization.of(context)!
-                                  .saveNFTCollectionInLocal,
-                              Dimens.buttonBottomDimens,
-                              onPressed: () async {
-                                setState(() {
-                                  _isPressed = true;
-                                });
+                              context: context,
+                              widget: AddNFTCollectionConfirm(
+                                token: token,
+                                feeEstimation: feeEstimation,
+                              ),
+                            );
+                          } else {
+                            setState(() {
+                              _isPressed = false;
+                            });
+                            Navigator.of(context).popUntil(
+                              RouteUtils.withNameLike('/home'),
+                            );
+                          }
+                        },
+                      ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    if (_isPressed == true ||
+                        (_isPressed == false &&
+                            (collectionNameController!.text.isEmpty ||
+                                collectionSymbolController!.text.isEmpty)))
+                      AppButton.buildAppButton(
+                        const Key('saveNFTCollectionInLocal'),
+                        context,
+                        AppButtonType.primaryOutline,
+                        AppLocalization.of(context)!.saveNFTCollectionInLocal,
+                        Dimens.buttonBottomDimens,
+                        onPressed: () {},
+                      )
+                    else
+                      AppButton.buildAppButton(
+                        const Key('saveNFTCollectionInLocal'),
+                        context,
+                        AppButtonType.primary,
+                        AppLocalization.of(context)!.saveNFTCollectionInLocal,
+                        Dimens.buttonBottomDimens,
+                        onPressed: () async {
+                          setState(() {
+                            _isPressed = true;
+                          });
 
-                                validRequest = await _validateRequest(context);
-                                if (validRequest) {
-                                  var tokenInformations = TokenInformations();
-                                  tokenInformations.tokenProperties =
-                                      List<TokenInformationsProperty>.empty(
-                                    growable: true,
-                                  );
-                                  tokenInformations = TokenInformationsService
-                                      .tokenToTokenInformations(token!);
-                                  tokenInformations.onChain = false;
-                                  if (StateContainer.of(context)
-                                          .appWallet!
-                                          .appKeychain!
-                                          .getAccountSelected()!
-                                          .accountNFT ==
-                                      null) {
-                                    StateContainer.of(context)
-                                        .appWallet!
-                                        .appKeychain!
-                                        .getAccountSelected()!
-                                        .accountNFT = List<AccountToken>.empty(
-                                      growable: true,
-                                    );
-                                  }
-                                  StateContainer.of(context)
-                                      .appWallet!
-                                      .appKeychain!
-                                      .getAccountSelected()!
-                                      .accountNFT!
-                                      .add(
-                                        AccountToken(
-                                          tokenInformations: tokenInformations,
-                                        ),
-                                      );
-                                  UIUtil.showSnackbar(
-                                    'Saved',
-                                    context,
-                                    StateContainer.of(context).curTheme.text!,
-                                    StateContainer.of(context)
-                                        .curTheme
-                                        .snackBarShadow!,
-                                  );
-                                  Navigator.of(context).pop();
-                                }
-                                setState(() {
-                                  _isPressed = false;
-                                });
-                              },
-                            ),
-                    ],
-                  ),
-                ],
-              ),
+                          validRequest = await _validateRequest(context);
+                          if (validRequest) {
+                            var tokenInformations = TokenInformations();
+                            tokenInformations.tokenProperties =
+                                List<TokenInformationsProperty>.empty(
+                              growable: true,
+                            );
+                            tokenInformations = TokenInformationsService
+                                .tokenToTokenInformations(token!);
+                            tokenInformations.onChain = false;
+                            if (StateContainer.of(context)
+                                    .appWallet!
+                                    .appKeychain!
+                                    .getAccountSelected()!
+                                    .accountNFT ==
+                                null) {
+                              StateContainer.of(context)
+                                  .appWallet!
+                                  .appKeychain!
+                                  .getAccountSelected()!
+                                  .accountNFT = List<AccountToken>.empty(
+                                growable: true,
+                              );
+                            }
+                            StateContainer.of(context)
+                                .appWallet!
+                                .appKeychain!
+                                .getAccountSelected()!
+                                .accountNFT!
+                                .add(
+                                  AccountToken(
+                                    tokenInformations: tokenInformations,
+                                  ),
+                                );
+                            UIUtil.showSnackbar(
+                              'Saved',
+                              context,
+                              StateContainer.of(context).curTheme.text!,
+                              StateContainer.of(context)
+                                  .curTheme
+                                  .snackBarShadow!,
+                            );
+                            Navigator.of(context).pop();
+                          }
+                          setState(() {
+                            _isPressed = false;
+                          });
+                        },
+                      ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),
@@ -363,26 +366,29 @@ class _AddNFTCollectionState extends State<AddNFTCollection> {
                 Row(
                   children: <Widget>[
                     if (collectionNameController!.text.isNotEmpty &&
-                            collectionSymbolController!.text.isNotEmpty) AppButton.buildAppButtonTiny(
-                            const Key('addNFT'),
-                            context,
-                            AppButtonType.primary,
-                            AppLocalization.of(context)!.addNFTFile,
-                            Dimens.buttonBottomDimens,
-                            onPressed: () {
-                              /* Sheets.showAppHeightNineSheet(
+                        collectionSymbolController!.text.isNotEmpty)
+                      AppButton.buildAppButtonTiny(
+                        const Key('addNFT'),
+                        context,
+                        AppButtonType.primary,
+                        AppLocalization.of(context)!.addNFTFile,
+                        Dimens.buttonBottomDimens,
+                        onPressed: () {
+                          /* Sheets.showAppHeightNineSheet(
                                 context: context,
                                 widget: const AddNFTFile(
                                     process: AddNFTFileProcess.collection));*/
-                            },
-                          ) else AppButton.buildAppButtonTiny(
-                            const Key('addNFT'),
-                            context,
-                            AppButtonType.primaryOutline,
-                            AppLocalization.of(context)!.addNFTFile,
-                            Dimens.buttonBottomDimens,
-                            onPressed: () {},
-                          )
+                        },
+                      )
+                    else
+                      AppButton.buildAppButtonTiny(
+                        const Key('addNFT'),
+                        context,
+                        AppButtonType.primaryOutline,
+                        AppLocalization.of(context)!.addNFTFile,
+                        Dimens.buttonBottomDimens,
+                        onPressed: () {},
+                      )
                   ],
                 ),
               ],

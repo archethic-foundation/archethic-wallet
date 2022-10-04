@@ -12,13 +12,13 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 
 class UCOTransferListWidget extends StatelessWidget {
-  UCOTransferListWidget({
+  const UCOTransferListWidget({
     super.key,
     required this.listUcoTransfer,
     required this.feeEstimation,
   });
 
-  List<UCOTransferWallet>? listUcoTransfer;
+  final List<UCOTransferWallet>? listUcoTransfer;
   final double? feeEstimation;
 
   @override

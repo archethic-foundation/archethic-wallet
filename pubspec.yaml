@@ -10,63 +10,6 @@ environment:
 
 dependencies:
 
-  # A flutter plugin for scanning 2D barcodes and QRCodes via camera
-  barcode_scan2: ^4.2.1
-  
-  # Dart implementation of Bitcoin BIP39 Mnemonic code for generating deterministic keys
-  bip39_mnemonic: ^3.0.4
-
-  # A set of high-level APIs over PointyCastle for two-way cryptography.
-  encrypt: ^5.0.1
-  
-  # A Flutter widget that can be expanded or collapsed by clicking on a header or an icon.
-  expandable: ^5.0.1
-  
-  # Collections and utilities functions and classes related to collections.
-  collection: ^1.16.0
-
-  # Implementations of SHA, MD5, and HMAC cryptographic functions
-  crypto: ^3.0.2
-  
-  # A cross platform plugin for displaying local notifications.
-  flutter_local_notifications: ^9.7.1
-
-  # Flutter Secure Storage provides API to store data in secure storage. Keychain is used in iOS, KeyStore based solution is used in Android
-  flutter_secure_storage: ^6.0.0
-
-  # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
-  get_it: ^7.2.0
-
-  # A composable, multi-platform, Future-based API for HTTP requests
-  http: ^0.13.5
-
-  # Flutter plugin for Android and iOS devices to allow local authentication via fingerprint, touch ID, face ID, passcode, pin, or pattern
-  local_auth: ^2.1.2
-  
-  # Flutter plugin for accessing the NFC features on Android and iOS.
-  nfc_manager: ^3.1.1
-
-  # A Dart library implementing cryptographic algorithms and primitives, modeled on the BouncyCastle library
-  pointycastle: ^3.6.2
-  
-  # Quiver is a set of utility libraries for Dart that makes using many Dart libraries easier and more convenient, or adds additional functionality
-  quiver: ^3.1.0
-
-  # RxDart is an implementation of the popular reactiveX api for asynchronous programming, leveraging the native Dart Streams api.  
-  rxdart: ^0.27.5
-
-  # Tuple data structure
-  tuple: ^2.0.0
-
-  # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes
-  url_launcher: ^6.1.6
-  
-  # String validation and sanitization for Dart
-  validators: ^3.0.0
-  
-  # Yubico dart library for Dart/Flutter
-  yubidart: ^1.0.4
-
   # Beautiful animations inspired on Animate.css, every animation is a widget that contains default but customizable values that look attractive.
   animate_do: ^2.1.0
 
@@ -80,18 +23,71 @@ dependencies:
   # Flutter widget that automatically resizes text to fit perfectly within its bounds
   auto_size_text: ^3.0.0
 
+  # A flutter package for creating badges. Badges can be used for an additional marker for any widget, e.g. show a number of items in a shopping cart.
+  badges: ^2.0.3
+
+  # A flutter plugin for scanning 2D barcodes and QRCodes via camera
+  barcode_scan2: ^4.2.1
+
+  # Dart implementation of Bitcoin BIP39 Mnemonic code for generating deterministic keys
+  bip39_mnemonic: ^3.0.4
+
+  # Bottom bar helps create an optimized bottom navigation bar with beautiful animations
+  bottom_bar: ^2.0.2
+
+  # Collections and utilities functions and classes related to collections.
+  collection: ^1.16.0
+
+  # Encapsulates TabController, TabBar and TabBarView into a single customizable Widget.
+  contained_tab_bar_view: ^0.8.0
+
   # Utilities for converting between data representations. Provides a number of Sink, Codec, Decoder, and Encoder types
   convert: ^3.0.2
+
+  # Implementations of SHA, MD5, and HMAC cryptographic functions
+  crypto: ^3.0.2
 
   # The decimal package allows you to deal with decimal numbers without losing precision
   decimal: ^2.2.0
 
+  # A set of high-level APIs over PointyCastle for two-way cryptography.
+  encrypt: ^5.0.1
+  
   # EventTaxi could be used to send events through different layers of the application decoupled from the architecture
   event_taxi: ^1.0.0
+  
+  # Dart package to decode Exif data from tiff, jpeg and heic files.
+  exif: ^3.1.2
 
-  # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter.
-  graphql_flutter: ^5.1.1-beta.4
-  gql: ^0.13.1
+  # A Flutter widget that can be expanded or collapsed by clicking on a header or an icon.
+  expandable: ^5.0.1
+
+  # A package that allows you to use a native file explorer to pick single or multiple absolute file paths, with extension filtering support.
+  file_picker: ^5.0.1
+
+  # A package to get humanized file sizes. Translate raw file size into human readable strings
+  filesize: ^2.0.1
+
+  # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart.
+  fl_chart: ^0.55.2
+
+  flutter:
+    sdk: flutter
+
+  # Flutter jailbreak and root detection plugin. This plugin wraps Rootbeer for use on Android and DTTJailbreakDetection for use on iOS.
+  flutter_jailbreak_detection: ^1.8.0
+
+  # A cross platform plugin for displaying local notifications.
+  flutter_local_notifications: ^9.7.1
+
+  flutter_localizations:
+    sdk: flutter
+
+  # Customize Flutter's default white native splash screen with background color and splash image. Supports dark mode, full screen, and more.
+  flutter_native_splash: ^2.2.10+1
+  
+  # Flutter Secure Storage provides API to store data in secure storage. Keychain is used in iOS, KeyStore based solution is used in Android
+  flutter_secure_storage: ^6.0.0
 
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files
   flutter_svg: ^1.1.5
@@ -102,6 +98,9 @@ dependencies:
   # The Font Awesome Icon pack available as set of Flutter Icons.
   font_awesome_flutter: ^10.2.1
 
+  # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
+  get_it: ^7.2.0
+
   # Ghost CMS API client that closely follows the official implementation
   #ghost: ^1.0.2
   ghost:
@@ -109,90 +108,93 @@ dependencies:
       url: https://github.com/redDwarf03/dart_ghost.git
       ref: main
 
+  # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter.
+  gql: ^0.13.1
+  graphql_flutter: ^5.1.1-beta.4
+
+  # Hive is a lightweight and blazing fast key-value database written in pure Dart
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # A composable, multi-platform, Future-based API for HTTP requests
+  http: ^0.13.5
+
+  # Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera
+  image_picker: ^0.8.5+3
+
   # Localization
   intl: ^0.17.0
 
   # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
   ledger_dart_lib: ^0.1.2
 
-  # Customizable indicators for your PageViews.
-  page_view_indicators: ^2.0.0
+  # Flutter plugin for Android and iOS devices to allow local authentication via fingerprint, touch ID, face ID, passcode, pin, or pattern
+  local_auth: ^2.1.2
+  
+  # Get Mime Types, Extensions, Compressible for Dart and Flutter. Inspired from IANA Database
+  mime_dart: ^2.0.1
 
-  # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
-  package_info_plus: ^1.4.3+1
-
-  # QR.Flutter is a Flutter library for simple and fast QR code rendering via a Widget or custom painter
-  qr_flutter: ^4.0.0
-
-  # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
-  share_plus: ^4.1.0
-
-  # Encapsulates TabController, TabBar and TabBarView into a single customizable Widget.
-  contained_tab_bar_view: ^0.8.0
-
-  # Bottom bar helps create an optimized bottom navigation bar with beautiful animations
-  bottom_bar: ^2.0.2
-
-  # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart.
-  fl_chart: ^0.55.2
-
-  # Unicode 8.0 Normalization - NFC, NFD, NFKC, NFKD
-  unorm_dart: ^0.2.0
-
-  # This plugin allows Flutter desktop apps to resizing and repositioning the window
-  window_manager: ^0.2.7
-
-  # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter
-  phoenix_socket: ^0.6.1
-
-  flutter:
-    sdk: flutter
-  flutter_localizations:
-    sdk: flutter
-
-  # Customize Flutter's default white native splash screen with background color and splash image. Supports dark mode, full screen, and more.
-  flutter_native_splash: ^2.2.10+1
-
-  # Hive is a lightweight and blazing fast key-value database written in pure Dart
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
+  # Flutter plugin for accessing the NFC features on Android and iOS.
+  nfc_manager: ^3.1.1
 
   # A pure flutter toast library Support custom style/widget. Easy to use. You can use this library to achieve the same effect as Android toast
   oktoast: ^3.3.1
 
-  # Flutter jailbreak and root detection plugin. This plugin wraps Rootbeer for use on Android and DTTJailbreakDetection for use on iOS.
-  flutter_jailbreak_detection: ^1.8.0
+  # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
+  package_info_plus: ^1.4.3+1
+
+  # Customizable indicators for your PageViews.
+  page_view_indicators: ^2.0.0
 
   # A basic password strength estimator for Dart. Considers the length of the password, used characters, and whether or not the password appears in the top 10,000 most used passwords.
   password_strength: ^0.2.0
-
-  # A package that allows you to use a native file explorer to pick single or multiple absolute file paths, with extension filtering support.
-  file_picker: ^5.0.1
-
-  # A package to get humanized file sizes. Translate raw file size into human readable strings
-  filesize: ^2.0.1
-
-  # Get Mime Types, Extensions, Compressible for Dart and Flutter. Inspired from IANA Database
-  mime_dart: ^2.0.1
   
   # A string-based path manipulation library. All of the path operations you know and love, with solid support for Windows, POSIX (Linux and Mac OS X), and the web.
   path: ^1.8.2
 
-  # Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera
-  image_picker: ^0.8.5+3
-
   # Flutter plugin to render & show PDF pages as images on Web, MacOS, Windows, Android and iOS.
   pdfx: ^2.2.0
 
-  # Dart package to decode Exif data from tiff, jpeg and heic files.
-  exif: ^3.1.2
+  # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter
+  phoenix_socket: ^0.6.1
 
-  # A flutter package for creating badges. Badges can be used for an additional marker for any widget, e.g. show a number of items in a shopping cart.
-  badges: ^2.0.3
+  # A Dart library implementing cryptographic algorithms and primitives, modeled on the BouncyCastle library
+  pointycastle: ^3.6.2
+  
+  # QR.Flutter is a Flutter library for simple and fast QR code rendering via a Widget or custom painter
+  qr_flutter: ^4.0.0
+
+  # Quiver is a set of utility libraries for Dart that makes using many Dart libraries easier and more convenient, or adds additional functionality
+  quiver: ^3.1.0
+
+  # RxDart is an implementation of the popular reactiveX api for asynchronous programming, leveraging the native Dart Streams api.  
+  rxdart: ^0.27.5
+
+  # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
+  share_plus: ^4.1.0
+
+  # Tuple data structure
+  tuple: ^2.0.0
+
+  # Unicode 8.0 Normalization - NFC, NFD, NFKC, NFKD
+  unorm_dart: ^0.2.0
+
+  # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes
+  url_launcher: ^6.1.6
+  
+  # String validation and sanitization for Dart
+  validators: ^3.0.0
+  
+  # This plugin allows Flutter desktop apps to resizing and repositioning the window
+  window_manager: ^0.2.7
+
+  # Yubico dart library for Dart/Flutter
+  yubidart: ^1.0.4
 
 dev_dependencies:
-  flutter_lints: ^2.0.1
   build_runner: ^2.2.0
+  flutter_launcher_icons: ^0.10.0
+  flutter_lints: ^2.0.1
   # A build system for Dart code generation and modular compilation
   hive_generator: ^1.1.3
   # Integration Tests
@@ -204,7 +206,6 @@ dev_dependencies:
   json_serializable: ^6.3.1
   # A command-line tool that create Msix installer from your flutter windows-build files.
   msix: ^3.6.3
-  flutter_launcher_icons: ^0.10.0
 
 flutter_icons:
   android: true
