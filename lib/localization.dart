@@ -1715,7 +1715,7 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
 
   @override
   Future<AppLocalization> load(Locale locale) {
-    if (languageSetting.language == AvailableLanguage.DEFAULT) {
+    if (languageSetting.language == AvailableLanguage.systemDefault) {
       return AppLocalization.load(locale);
     }
     return AppLocalization.load(Locale(languageSetting.getLocaleString()));
