@@ -4,6 +4,7 @@ import 'package:aewallet/appstate_container.dart';
 import 'package:flutter/material.dart';
 
 class IconWidget {
+  // TODO(Chralu): convert to [Widget] subclass
   static Widget build(
     BuildContext context,
     String icon,
@@ -32,6 +33,7 @@ class IconWidget {
     );
   }
 
+  // TODO(Chralu): convert to [Widget] subclass
   static Widget buildIconDataWidget(
     BuildContext context,
     IconData icon,
