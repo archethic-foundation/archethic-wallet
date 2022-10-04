@@ -4,7 +4,7 @@ import 'package:aewallet/localization.dart';
 import 'package:aewallet/model/asset_history_interval.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show ApiCoinsService, CoinsPriceResponse, CoinsCurrentDataResponse;
+    show ApiCoinsService, CoinsPriceResponse;
 import 'package:flutter/material.dart';
 
 // TODO(Chralu): refacto
@@ -214,8 +214,7 @@ class ChartInfos {
             now.subtract(const Duration(days: 365000)).millisecondsSinceEpoch ~/
                 Duration.millisecondsPerSecond;
 
-        final to =
-            now.millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
+        final to = now.millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
         coinsPriceResponse = await sl
             .get<ApiCoinsService>()
             .getCoinsChartRange(currencyIso4217Code, from, to);
