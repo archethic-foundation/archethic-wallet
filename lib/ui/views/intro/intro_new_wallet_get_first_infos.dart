@@ -126,18 +126,20 @@ class _IntroNewWalletDisclaimerState
                                   UpperCaseTextFormatter(),
                                 ],
                               ),
-                              if (nameError != null) SizedBox(
-                                      height: 40,
-                                      child: Text(
-                                        nameError!,
-                                        style: AppStyles
-                                            .textStyleSize14W600Primary(
-                                          context,
-                                        ),
-                                      ),
-                                    ) else const SizedBox(
-                                      height: 40,
+                              if (nameError != null)
+                                SizedBox(
+                                  height: 40,
+                                  child: Text(
+                                    nameError!,
+                                    style: AppStyles.textStyleSize14W600Primary(
+                                      context,
                                     ),
+                                  ),
+                                )
+                              else
+                                const SizedBox(
+                                  height: 40,
+                                ),
                               AutoSizeText(
                                 AppLocalization.of(context)!
                                     .introNewWalletGetFirstInfosNameInfos,

@@ -62,63 +62,65 @@ class BalanceInfosWidget {
                                 ),
                               ),
                             ),
-                            if (StateContainer.of(context).showBalance) Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      AutoSizeText(
-                                        StateContainer.of(context)
-                                            .appWallet!
-                                            .appKeychain!
-                                            .getAccountSelected()!
-                                            .balance!
-                                            .nativeTokenValueToString(),
-                                        style: AppStyles
-                                            .textStyleSize25W900EquinoxPrimary(
-                                          context,
-                                        ),
-                                      ),
-                                      AutoSizeText(
-                                        CurrencyUtil.getConvertedAmount(
-                                          StateContainer.of(context)
-                                              .curCurrency
-                                              .currency
-                                              .name,
-                                          StateContainer.of(context)
-                                              .appWallet!
-                                              .appKeychain!
-                                              .getAccountSelected()!
-                                              .balance!
-                                              .fiatCurrencyValue!,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                        style: AppStyles
-                                            .textStyleSize12W600Primary(
-                                          context,
-                                        ),
-                                      ),
-                                    ],
-                                  ) else Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      AutoSizeText(
-                                        '···········',
-                                        style: AppStyles
-                                            .textStyleSize25W900EquinoxPrimary60(
-                                          context,
-                                        ),
-                                      ),
-                                      AutoSizeText(
-                                        '···········',
-                                        textAlign: TextAlign.center,
-                                        style: AppStyles
-                                            .textStyleSize12W600Primary60(
-                                          context,
-                                        ),
-                                      ),
-                                    ],
+                            if (StateContainer.of(context).showBalance)
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  AutoSizeText(
+                                    StateContainer.of(context)
+                                        .appWallet!
+                                        .appKeychain!
+                                        .getAccountSelected()!
+                                        .balance!
+                                        .nativeTokenValueToString(),
+                                    style: AppStyles
+                                        .textStyleSize25W900EquinoxPrimary(
+                                      context,
+                                    ),
                                   ),
+                                  AutoSizeText(
+                                    CurrencyUtil.getConvertedAmount(
+                                      StateContainer.of(context)
+                                          .curCurrency
+                                          .currency
+                                          .name,
+                                      StateContainer.of(context)
+                                          .appWallet!
+                                          .appKeychain!
+                                          .getAccountSelected()!
+                                          .balance!
+                                          .fiatCurrencyValue!,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                    style: AppStyles.textStyleSize12W600Primary(
+                                      context,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            else
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  AutoSizeText(
+                                    '···········',
+                                    style: AppStyles
+                                        .textStyleSize25W900EquinoxPrimary60(
+                                      context,
+                                    ),
+                                  ),
+                                  AutoSizeText(
+                                    '···········',
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        AppStyles.textStyleSize12W600Primary60(
+                                      context,
+                                    ),
+                                  ),
+                                ],
+                              ),
                           ],
                         )
                       : Row(
@@ -139,58 +141,60 @@ class BalanceInfosWidget {
                                 ),
                               ),
                             ),
-                            if (StateContainer.of(context).showBalance) Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      AutoSizeText(
-                                        CurrencyUtil.getConvertedAmount(
-                                          StateContainer.of(context)
-                                              .curCurrency
-                                              .currency
-                                              .name,
-                                          StateContainer.of(context)
-                                              .appWallet!
-                                              .appKeychain!
-                                              .getAccountSelected()!
-                                              .balance!
-                                              .fiatCurrencyValue!,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                        style: AppStyles
-                                            .textStyleSize25W900EquinoxPrimary(
-                                          context,
-                                        ),
-                                      ),
-                                      AutoSizeText(
-                                        '${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
-                                        style: AppStyles
-                                            .textStyleSize12W600Primary(
-                                          context,
-                                        ),
-                                      ),
-                                    ],
-                                  ) else Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      AutoSizeText(
-                                        '···········',
-                                        style: AppStyles
-                                            .textStyleSize25W900EquinoxPrimary60(
-                                          context,
-                                        ),
-                                      ),
-                                      AutoSizeText(
-                                        '···········',
-                                        textAlign: TextAlign.center,
-                                        style: AppStyles
-                                            .textStyleSize12W600Primary60(
-                                          context,
-                                        ),
-                                      ),
-                                    ],
+                            if (StateContainer.of(context).showBalance)
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  AutoSizeText(
+                                    CurrencyUtil.getConvertedAmount(
+                                      StateContainer.of(context)
+                                          .curCurrency
+                                          .currency
+                                          .name,
+                                      StateContainer.of(context)
+                                          .appWallet!
+                                          .appKeychain!
+                                          .getAccountSelected()!
+                                          .balance!
+                                          .fiatCurrencyValue!,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                    style: AppStyles
+                                        .textStyleSize25W900EquinoxPrimary(
+                                      context,
+                                    ),
                                   ),
+                                  AutoSizeText(
+                                    '${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenValueToString()} ${StateContainer.of(context).appWallet!.appKeychain!.getAccountSelected()!.balance!.nativeTokenName!}',
+                                    style: AppStyles.textStyleSize12W600Primary(
+                                      context,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            else
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  AutoSizeText(
+                                    '···········',
+                                    style: AppStyles
+                                        .textStyleSize25W900EquinoxPrimary60(
+                                      context,
+                                    ),
+                                  ),
+                                  AutoSizeText(
+                                    '···········',
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        AppStyles.textStyleSize12W600Primary60(
+                                      context,
+                                    ),
+                                  ),
+                                ],
+                              ),
                           ],
                         ),
                 ),
@@ -587,18 +591,21 @@ class BalanceInfosWidget {
                       : AppStyles.textStyleSize12W100NegativeValue(context),
                 ),
                 const SizedBox(width: 5),
-                if (StateContainer.of(context).chartInfos!.getPriceChangePercentage(
-                              StateContainer.of(context).idChartOption!,
-                            )! >=
-                        0) FaIcon(
-                        FontAwesomeIcons.caretUp,
-                        color:
-                            StateContainer.of(context).curTheme.positiveValue,
-                      ) else FaIcon(
-                        FontAwesomeIcons.caretDown,
-                        color:
-                            StateContainer.of(context).curTheme.negativeValue,
-                      ),
+                if (StateContainer.of(context)
+                        .chartInfos!
+                        .getPriceChangePercentage(
+                          StateContainer.of(context).idChartOption!,
+                        )! >=
+                    0)
+                  FaIcon(
+                    FontAwesomeIcons.caretUp,
+                    color: StateContainer.of(context).curTheme.positiveValue,
+                  )
+                else
+                  FaIcon(
+                    FontAwesomeIcons.caretDown,
+                    color: StateContainer.of(context).curTheme.negativeValue,
+                  ),
                 const SizedBox(
                   width: 10,
                 ),
@@ -613,30 +620,33 @@ class BalanceInfosWidget {
                   width: 10,
                 ),
                 if (StateContainer.of(context)
-                        .appWallet!
-                        .appKeychain!
-                        .getAccountSelected()!
-                        .balance!
-                        .tokenPrice!
-                        .useOracleUcoPrice!) InkWell(
-                        onTap: () {
-                          sl.get<HapticUtil>().feedback(
-                                FeedbackType.light,
-                                StateContainer.of(context).activeVibrations,
-                              );
-                          AppDialogs.showInfoDialog(
-                            context,
-                            AppLocalization.of(context)!.informations,
-                            AppLocalization.of(context)!.currencyOracleInfo,
+                    .appWallet!
+                    .appKeychain!
+                    .getAccountSelected()!
+                    .balance!
+                    .tokenPrice!
+                    .useOracleUcoPrice!)
+                  InkWell(
+                    onTap: () {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            StateContainer.of(context).activeVibrations,
                           );
-                        },
-                        child: IconWidget.build(
-                          context,
-                          'assets/icons/oracle.png',
-                          15,
-                          15,
-                        ),
-                      ) else const SizedBox(),
+                      AppDialogs.showInfoDialog(
+                        context,
+                        AppLocalization.of(context)!.informations,
+                        AppLocalization.of(context)!.currencyOracleInfo,
+                      );
+                    },
+                    child: IconWidget.build(
+                      context,
+                      'assets/icons/oracle.png',
+                      15,
+                      15,
+                    ),
+                  )
+                else
+                  const SizedBox(),
               ],
             ),
           ),

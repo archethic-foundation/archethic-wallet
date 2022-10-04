@@ -30,12 +30,11 @@ class KeychainUtil {
     SubscriptionChannel subscriptionChannel,
   ) async {
     /// Create Keychain Access for wallet
-    final accessKeychainTx =
-        sl.get<ApiService>().newAccessKeychainTransaction(
-              seed!,
-              hexToUint8List(keychainAddress),
-              hexToUint8List(originPrivateKey),
-            );
+    final accessKeychainTx = sl.get<ApiService>().newAccessKeychainTransaction(
+          seed!,
+          hexToUint8List(keychainAddress),
+          hexToUint8List(originPrivateKey),
+        );
 
     void waitConfirmationsKeychainAccess(QueryResult event) {
       final params = <String, Object>{
@@ -89,19 +88,17 @@ class KeychainUtil {
     const index = '0';
     final kDerivationPath = '$kDerivationPathWithoutIndex$index';
 
-    final keychain =
-        Keychain(hexToUint8List(keychainSeed), version: 1);
+    final keychain = Keychain(hexToUint8List(keychainSeed), version: 1);
     keychain.addService(kServiceName, kDerivationPath);
 
     /// Create Keychain from keyChain seed and wallet public key to encrypt secret
-    final keychainTransaction =
-        sl.get<ApiService>().newKeychainTransaction(
-              keychainSeed,
-              <String>[uint8ListToHex(walletKeyPair.publicKey)],
-              hexToUint8List(originPrivateKey),
-              serviceName: kServiceName,
-              derivationPath: kDerivationPath,
-            );
+    final keychainTransaction = sl.get<ApiService>().newKeychainTransaction(
+          keychainSeed,
+          <String>[uint8ListToHex(walletKeyPair.publicKey)],
+          hexToUint8List(originPrivateKey),
+          serviceName: kServiceName,
+          derivationPath: kDerivationPath,
+        );
 
     void waitConfirmationsKeychain(QueryResult event) {
       final params = <String, Object>{
@@ -169,8 +166,7 @@ class KeychainUtil {
         Transaction(type: 'keychain', data: Transaction.initData())
             .setContent(jsonEncode(keychain.toDID()));
 
-    final authorizedKeys =
-        List<AuthorizedKey>.empty(growable: true);
+    final authorizedKeys = List<AuthorizedKey>.empty(growable: true);
     final authorizedKeysList =
         lastTransactionKeychain.data!.ownerships![0].authorizedPublicKeys!;
     for (final authorizedKey in authorizedKeysList) {

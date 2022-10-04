@@ -187,43 +187,46 @@ class FungiblesTokensListWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  if (StateContainer.of(context).showBalance == true) Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              NumberUtil.formatThousands(
-                                accountFungibleToken.amount!,
-                              ),
-                              style: AppStyles.textStyleSize12W400Primary(
-                                context,
-                              ),
-                            ),
-                            Text(
-                              accountFungibleToken.tokenInformations!.symbol!,
-                              style: AppStyles.textStyleSize12W600Primary(
-                                context,
-                              ),
-                            ),
-                          ],
-                        ) else Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              '···········',
-                              style: AppStyles.textStyleSize12W600Primary60(
-                                context,
-                              ),
-                            ),
-                            Text(
-                              accountFungibleToken.tokenInformations!.symbol!,
-                              style: AppStyles.textStyleSize12W600Primary(
-                                context,
-                              ),
-                            ),
-                          ],
-                        )
+                  if (StateContainer.of(context).showBalance == true)
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          NumberUtil.formatThousands(
+                            accountFungibleToken.amount!,
+                          ),
+                          style: AppStyles.textStyleSize12W400Primary(
+                            context,
+                          ),
+                        ),
+                        Text(
+                          accountFungibleToken.tokenInformations!.symbol!,
+                          style: AppStyles.textStyleSize12W600Primary(
+                            context,
+                          ),
+                        ),
+                      ],
+                    )
+                  else
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          '···········',
+                          style: AppStyles.textStyleSize12W600Primary60(
+                            context,
+                          ),
+                        ),
+                        Text(
+                          accountFungibleToken.tokenInformations!.symbol!,
+                          style: AppStyles.textStyleSize12W600Primary(
+                            context,
+                          ),
+                        ),
+                      ],
+                    )
                 ],
               ),
             ),

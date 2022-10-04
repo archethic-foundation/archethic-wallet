@@ -13,8 +13,7 @@ class ContactsDialog {
     final searchNameFocusNode = FocusNode();
     final searchNameController = TextEditingController();
 
-    final pickerItemsList =
-        List<PickerItem>.empty(growable: true);
+    final pickerItemsList = List<PickerItem>.empty(growable: true);
     var contacts = await StateContainer.of(context).getContacts();
     for (final contact in contacts) {
       pickerItemsList.add(

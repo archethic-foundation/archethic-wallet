@@ -20,8 +20,7 @@ class AuthentificationMethodDialog {
     AuthenticationMethod curAuthMethod,
   ) async {
     final preferences = await Preferences.getInstance();
-    final pickerItemsList =
-        List<PickerItem>.empty(growable: true);
+    final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AuthMethod.values) {
       var displayed = false;
       if (value != AuthMethod.ledger) {
@@ -105,8 +104,7 @@ class AuthentificationMethodDialog {
                     }
                     break;
                   case AuthMethod.password:
-                    final seed =
-                        await StateContainer.of(context).getSeed();
+                    final seed = await StateContainer.of(context).getSeed();
                     final bool authenticated = await Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {

@@ -25,8 +25,7 @@ class NetworkDialog {
     String? endpointError;
 
     final preferences = await Preferences.getInstance();
-    final pickerItemsList =
-        List<PickerItem>.empty(growable: true);
+    final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AvailableNetworks.values) {
       pickerItemsList.add(
         PickerItem(
@@ -146,19 +145,22 @@ class NetworkDialog {
                                       context,
                                     ),
                                   ),
-                                  if (endpointError != null) Container(
-                                          margin: const EdgeInsets.only(
-                                            top: 5,
-                                            bottom: 5,
-                                          ),
-                                          child: Text(
-                                            endpointError!,
-                                            style: AppStyles
-                                                .textStyleSize14W600Primary(
-                                              context,
-                                            ),
-                                          ),
-                                        ) else const SizedBox(),
+                                  if (endpointError != null)
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                        top: 5,
+                                        bottom: 5,
+                                      ),
+                                      child: Text(
+                                        endpointError!,
+                                        style: AppStyles
+                                            .textStyleSize14W600Primary(
+                                          context,
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    const SizedBox(),
                                 ],
                               ),
                               const SizedBox(

@@ -384,52 +384,53 @@ class _IntroBackupConfirmState extends State<IntroBackupConfirm> {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        if (wordListSelected.length != 24) AppButton.buildAppButton(
-                                const Key('confirm'),
-                                context,
-                                AppButtonType.primaryOutline,
-                                AppLocalization.of(context)!.confirm,
-                                Dimens.buttonTopDimens,
-                                onPressed: () {},
-                              ) else AppButton.buildAppButton(
-                                const Key('confirm'),
-                                context,
-                                AppButtonType.primary,
-                                AppLocalization.of(context)!.confirm,
-                                Dimens.buttonTopDimens,
-                                onPressed: () async {
-                                  var orderOk = true;
+                        if (wordListSelected.length != 24)
+                          AppButton.buildAppButton(
+                            const Key('confirm'),
+                            context,
+                            AppButtonType.primaryOutline,
+                            AppLocalization.of(context)!.confirm,
+                            Dimens.buttonTopDimens,
+                            onPressed: () {},
+                          )
+                        else
+                          AppButton.buildAppButton(
+                            const Key('confirm'),
+                            context,
+                            AppButtonType.primary,
+                            AppLocalization.of(context)!.confirm,
+                            Dimens.buttonTopDimens,
+                            onPressed: () async {
+                              var orderOk = true;
 
-                                  for (var i = 0;
-                                      i < originalWordsList.length;
-                                      i++) {
-                                    if (originalWordsList[i] !=
-                                        wordListSelected[i]) {
-                                      orderOk = false;
-                                    }
-                                  }
-                                  if (orderOk == false) {
-                                    setState(() {
-                                      UIUtil.showSnackbar(
-                                        AppLocalization.of(context)!
-                                            .confirmSecretPhraseKo,
-                                        context,
-                                        StateContainer.of(context)
-                                            .curTheme
-                                            .text!,
-                                        StateContainer.of(context)
-                                            .curTheme
-                                            .snackBarShadow!,
-                                      );
-                                    });
-                                  } else {
-                                    await _launchSecurityConfiguration(
-                                      widget.name!,
-                                      widget.seed!,
-                                    );
-                                  }
-                                },
-                              ),
+                              for (var i = 0;
+                                  i < originalWordsList.length;
+                                  i++) {
+                                if (originalWordsList[i] !=
+                                    wordListSelected[i]) {
+                                  orderOk = false;
+                                }
+                              }
+                              if (orderOk == false) {
+                                setState(() {
+                                  UIUtil.showSnackbar(
+                                    AppLocalization.of(context)!
+                                        .confirmSecretPhraseKo,
+                                    context,
+                                    StateContainer.of(context).curTheme.text!,
+                                    StateContainer.of(context)
+                                        .curTheme
+                                        .snackBarShadow!,
+                                  );
+                                });
+                              } else {
+                                await _launchSecurityConfiguration(
+                                  widget.name!,
+                                  widget.seed!,
+                                );
+                              }
+                            },
+                          ),
                       ],
                     ),
                     Row(

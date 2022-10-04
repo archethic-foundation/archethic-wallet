@@ -17,8 +17,7 @@ class ThemeDialog {
     ThemeSetting curThemeSetting,
   ) async {
     final preferences = await Preferences.getInstance();
-    final pickerItemsList =
-        List<PickerItem>.empty(growable: true);
+    final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in ThemeOptions.values) {
       value == ThemeOptions.flat ||
               value == ThemeOptions.byzantineVioletFlat ||

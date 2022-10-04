@@ -268,33 +268,36 @@ class _SetPasswordState extends State<SetPassword> {
                                                       : Colors.green,
                                           minHeight: 5,
                                         ),
-                                        if (passwordStrength <= 0.25) Text(
-                                                AppLocalization.of(context)!
-                                                    .passwordStrengthWeak,
-                                                textAlign: TextAlign.end,
-                                                style: AppStyles
-                                                    .textStyleSize12W100Primary(
-                                                  context,
-                                                ),
-                                              ) else passwordStrength <= 0.8
-                                                ? Text(
-                                                    AppLocalization.of(context)!
-                                                        .passwordStrengthAlright,
-                                                    textAlign: TextAlign.end,
-                                                    style: AppStyles
-                                                        .textStyleSize12W100Primary(
-                                                      context,
-                                                    ),
-                                                  )
-                                                : Text(
-                                                    AppLocalization.of(context)!
-                                                        .passwordStrengthStrong,
-                                                    textAlign: TextAlign.end,
-                                                    style: AppStyles
-                                                        .textStyleSize12W100Primary(
-                                                      context,
-                                                    ),
+                                        if (passwordStrength <= 0.25)
+                                          Text(
+                                            AppLocalization.of(context)!
+                                                .passwordStrengthWeak,
+                                            textAlign: TextAlign.end,
+                                            style: AppStyles
+                                                .textStyleSize12W100Primary(
+                                              context,
+                                            ),
+                                          )
+                                        else
+                                          passwordStrength <= 0.8
+                                              ? Text(
+                                                  AppLocalization.of(context)!
+                                                      .passwordStrengthAlright,
+                                                  textAlign: TextAlign.end,
+                                                  style: AppStyles
+                                                      .textStyleSize12W100Primary(
+                                                    context,
                                                   ),
+                                                )
+                                              : Text(
+                                                  AppLocalization.of(context)!
+                                                      .passwordStrengthStrong,
+                                                  textAlign: TextAlign.end,
+                                                  style: AppStyles
+                                                      .textStyleSize12W100Primary(
+                                                    context,
+                                                  ),
+                                                ),
                                       ],
                                     ),
                                   ),

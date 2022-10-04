@@ -304,19 +304,22 @@ class _ContactsListState extends State<ContactsList> {
                       children: <Widget>[
                         Row(
                           children: [
-                            if (contact.type == 'keychainService') FaIcon(
-                                    FontAwesomeIcons.keycdn,
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .iconDrawer,
-                                    size: 16,
-                                  ) else Icon(
-                                    Icons.person,
-                                    color: StateContainer.of(context)
-                                        .curTheme
-                                        .iconDrawer,
-                                    size: 16,
-                                  ),
+                            if (contact.type == 'keychainService')
+                              FaIcon(
+                                FontAwesomeIcons.keycdn,
+                                color: StateContainer.of(context)
+                                    .curTheme
+                                    .iconDrawer,
+                                size: 16,
+                              )
+                            else
+                              Icon(
+                                Icons.person,
+                                color: StateContainer.of(context)
+                                    .curTheme
+                                    .iconDrawer,
+                                size: 16,
+                              ),
                             const SizedBox(
                               width: 10,
                             ),

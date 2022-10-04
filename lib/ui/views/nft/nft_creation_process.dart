@@ -674,66 +674,67 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                               ),
                                             ),
                                           ),
-                                          if (tokenPropertyAsset!.publicKeysList !=
-                                                      null &&
-                                                  tokenPropertyAsset!
-                                                      .publicKeysList!
-                                                      .isNotEmpty) tokenPropertyAsset!
-                                                          .publicKeysList!
-                                                          .length ==
-                                                      1
-                                                  ? Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width -
-                                                              180,
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                        left: 20,
-                                                      ),
-                                                      child: AutoSizeText(
-                                                        'This asset is protected and accessible by ${tokenPropertyAsset!.publicKeysList!.length} public key',
-                                                        style: AppStyles
-                                                            .textStyleSize12W400Primary(
-                                                          context,
-                                                        ),
-                                                      ),
-                                                    )
-                                                  : Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width -
-                                                              180,
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                        left: 20,
-                                                      ),
-                                                      child: AutoSizeText(
-                                                        'This asset is protected and accessible by ${tokenPropertyAsset!.publicKeysList!.length} public keys',
-                                                        style: AppStyles
-                                                            .textStyleSize12W400Primary(
-                                                          context,
-                                                        ),
-                                                      ),
-                                                    ) else Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width -
-                                                      180,
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                    left: 20,
-                                                  ),
-                                                  child: AutoSizeText(
-                                                    'This asset is accessible by everyone',
-                                                    style: AppStyles
-                                                        .textStyleSize12W400Primary(
-                                                      context,
+                                          if (tokenPropertyAsset!
+                                                      .publicKeysList !=
+                                                  null &&
+                                              tokenPropertyAsset!
+                                                  .publicKeysList!.isNotEmpty)
+                                            tokenPropertyAsset!.publicKeysList!
+                                                        .length ==
+                                                    1
+                                                ? Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width -
+                                                            180,
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                      left: 20,
                                                     ),
-                                                  ),
+                                                    child: AutoSizeText(
+                                                      'This asset is protected and accessible by ${tokenPropertyAsset!.publicKeysList!.length} public key',
+                                                      style: AppStyles
+                                                          .textStyleSize12W400Primary(
+                                                        context,
+                                                      ),
+                                                    ),
+                                                  )
+                                                : Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width -
+                                                            180,
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                      left: 20,
+                                                    ),
+                                                    child: AutoSizeText(
+                                                      'This asset is protected and accessible by ${tokenPropertyAsset!.publicKeysList!.length} public keys',
+                                                      style: AppStyles
+                                                          .textStyleSize12W400Primary(
+                                                        context,
+                                                      ),
+                                                    ),
+                                                  )
+                                          else
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width -
+                                                  180,
+                                              padding: const EdgeInsets.only(
+                                                left: 20,
+                                              ),
+                                              child: AutoSizeText(
+                                                'This asset is accessible by everyone',
+                                                style: AppStyles
+                                                    .textStyleSize12W400Primary(
+                                                  context,
                                                 ),
+                                              ),
+                                            ),
                                         ],
                                       ),
                                     ],
@@ -1202,50 +1203,52 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
               Row(
                 children: <Widget>[
                   if (nftPropertyNameController!.text.isNotEmpty &&
-                          nftPropertyValueController!.text.isNotEmpty) AppButton.buildAppButtonTiny(
-                          const Key('addNFTProperty'),
-                          context,
-                          AppButtonType.primary,
-                          AppLocalization.of(context)!.addNFTProperty,
-                          Dimens.buttonBottomDimens,
-                          onPressed: () async {
-                            if (validateAddNFTProperty() == true) {
-                              tokenPropertyWithAccessInfosList.sort(
-                                (
-                                  TokenPropertyWithAccessInfos a,
-                                  TokenPropertyWithAccessInfos b,
-                                ) =>
-                                    a.tokenProperty!.keys.first
-                                        .toLowerCase()
-                                        .compareTo(
-                                          b.tokenProperty!.keys.first
-                                              .toLowerCase(),
-                                        ),
-                              );
+                      nftPropertyValueController!.text.isNotEmpty)
+                    AppButton.buildAppButtonTiny(
+                      const Key('addNFTProperty'),
+                      context,
+                      AppButtonType.primary,
+                      AppLocalization.of(context)!.addNFTProperty,
+                      Dimens.buttonBottomDimens,
+                      onPressed: () async {
+                        if (validateAddNFTProperty() == true) {
+                          tokenPropertyWithAccessInfosList.sort(
+                            (
+                              TokenPropertyWithAccessInfos a,
+                              TokenPropertyWithAccessInfos b,
+                            ) =>
+                                a.tokenProperty!.keys.first
+                                    .toLowerCase()
+                                    .compareTo(
+                                      b.tokenProperty!.keys.first.toLowerCase(),
+                                    ),
+                          );
 
-                              tokenPropertyWithAccessInfosList.add(
-                                TokenPropertyWithAccessInfos(
-                                  tokenProperty: <String, dynamic>{
-                                    nftPropertyNameController!.text:
-                                        nftPropertyValueController!.text
-                                  },
-                                ),
-                              );
-                              nftPropertyNameController!.text = '';
-                              nftPropertyValueController!.text = '';
-                              FocusScope.of(context)
-                                  .requestFocus(nftPropertyNameFocusNode);
-                              setState(() {});
-                            }
-                          },
-                        ) else AppButton.buildAppButtonTiny(
-                          const Key('addNFTProperty'),
-                          context,
-                          AppButtonType.primaryOutline,
-                          AppLocalization.of(context)!.addNFTProperty,
-                          Dimens.buttonBottomDimens,
-                          onPressed: () {},
-                        ),
+                          tokenPropertyWithAccessInfosList.add(
+                            TokenPropertyWithAccessInfos(
+                              tokenProperty: <String, dynamic>{
+                                nftPropertyNameController!.text:
+                                    nftPropertyValueController!.text
+                              },
+                            ),
+                          );
+                          nftPropertyNameController!.text = '';
+                          nftPropertyValueController!.text = '';
+                          FocusScope.of(context)
+                              .requestFocus(nftPropertyNameFocusNode);
+                          setState(() {});
+                        }
+                      },
+                    )
+                  else
+                    AppButton.buildAppButtonTiny(
+                      const Key('addNFTProperty'),
+                      context,
+                      AppButtonType.primaryOutline,
+                      AppLocalization.of(context)!.addNFTProperty,
+                      Dimens.buttonBottomDimens,
+                      onPressed: () {},
+                    ),
                 ],
               ),
               Container(
@@ -1360,50 +1363,47 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                               ),
                             ),
                             if (tokenPropertyWithAccessInfos.publicKeysList !=
-                                        null &&
-                                    tokenPropertyWithAccessInfos
-                                        .publicKeysList!.isNotEmpty) tokenPropertyWithAccessInfos
-                                            .publicKeysList!.length ==
-                                        1
-                                    ? Container(
-                                        width:
-                                            MediaQuery.of(context).size.width -
-                                                180,
-                                        padding:
-                                            const EdgeInsets.only(left: 20),
-                                        child: AutoSizeText(
-                                          'This property is protected and accessible by ${tokenPropertyWithAccessInfos.publicKeysList!.length} public key',
-                                          style: AppStyles
-                                              .textStyleSize12W400Primary(
-                                            context,
-                                          ),
+                                    null &&
+                                tokenPropertyWithAccessInfos
+                                    .publicKeysList!.isNotEmpty)
+                              tokenPropertyWithAccessInfos
+                                          .publicKeysList!.length ==
+                                      1
+                                  ? Container(
+                                      width: MediaQuery.of(context).size.width -
+                                          180,
+                                      padding: const EdgeInsets.only(left: 20),
+                                      child: AutoSizeText(
+                                        'This property is protected and accessible by ${tokenPropertyWithAccessInfos.publicKeysList!.length} public key',
+                                        style: AppStyles
+                                            .textStyleSize12W400Primary(
+                                          context,
                                         ),
-                                      )
-                                    : Container(
-                                        width:
-                                            MediaQuery.of(context).size.width -
-                                                180,
-                                        padding:
-                                            const EdgeInsets.only(left: 20),
-                                        child: AutoSizeText(
-                                          'This property is protected and accessible by ${tokenPropertyWithAccessInfos.publicKeysList!.length} public keys',
-                                          style: AppStyles
-                                              .textStyleSize12W400Primary(
-                                            context,
-                                          ),
-                                        ),
-                                      ) else Container(
-                                    width:
-                                        MediaQuery.of(context).size.width - 180,
-                                    padding: const EdgeInsets.only(left: 20),
-                                    child: AutoSizeText(
-                                      'This property is accessible by everyone',
-                                      style:
-                                          AppStyles.textStyleSize12W400Primary(
-                                        context,
                                       ),
-                                    ),
+                                    )
+                                  : Container(
+                                      width: MediaQuery.of(context).size.width -
+                                          180,
+                                      padding: const EdgeInsets.only(left: 20),
+                                      child: AutoSizeText(
+                                        'This property is protected and accessible by ${tokenPropertyWithAccessInfos.publicKeysList!.length} public keys',
+                                        style: AppStyles
+                                            .textStyleSize12W400Primary(
+                                          context,
+                                        ),
+                                      ),
+                                    )
+                            else
+                              Container(
+                                width: MediaQuery.of(context).size.width - 180,
+                                padding: const EdgeInsets.only(left: 20),
+                                child: AutoSizeText(
+                                  'This property is accessible by everyone',
+                                  style: AppStyles.textStyleSize12W400Primary(
+                                    context,
                                   ),
+                                ),
+                              ),
                           ],
                         ),
                       ],
@@ -1547,107 +1547,111 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
         child: SizedBox(
           child: Column(
             children: [
-              if (feeEstimation > 0) Padding(
-                      padding: const EdgeInsets.only(
-                        top: 20,
-                        left: 20,
-                        right: 20,
-                      ),
-                      child: Text(
-                        '${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
-                        style: AppStyles.textStyleSize12W100Primary(context),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ) else Padding(
-                      padding: const EdgeInsets.only(
-                        top: 20,
-                        left: 20,
-                        right: 20,
-                      ),
-                      child: Text(
-                        AppLocalization.of(context)!.estimatedFeesAddNFTNote,
-                        style: AppStyles.textStyleSize12W100Primary(context),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
+              if (feeEstimation > 0)
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 20,
+                    left: 20,
+                    right: 20,
+                  ),
+                  child: Text(
+                    '${AppLocalization.of(context)!.estimatedFees}: $feeEstimation ${StateContainer.of(context).curNetwork.getNetworkCryptoCurrencyLabel()}',
+                    style: AppStyles.textStyleSize12W100Primary(context),
+                    textAlign: TextAlign.justify,
+                  ),
+                )
+              else
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 20,
+                    left: 20,
+                    right: 20,
+                  ),
+                  child: Text(
+                    AppLocalization.of(context)!.estimatedFeesAddNFTNote,
+                    style: AppStyles.textStyleSize12W100Primary(context),
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: Column(
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        if (isPressed == true) AppButton.buildAppButton(
-                                const Key('addNFTFile'),
-                                context,
-                                AppButtonType.primaryOutline,
-                                AppLocalization.of(context)!.createNFT,
-                                Dimens.buttonTopDimens,
-                                onPressed: () async {},
-                              ) else AppButton.buildAppButton(
-                                const Key('addNFTFile'),
-                                context,
-                                AppButtonType.primary,
-                                AppLocalization.of(context)!.createNFT,
-                                Dimens.buttonTopDimens,
-                                onPressed: () async {
-                                  setState(() {
-                                    isPressed = true;
-                                  });
+                        if (isPressed == true)
+                          AppButton.buildAppButton(
+                            const Key('addNFTFile'),
+                            context,
+                            AppButtonType.primaryOutline,
+                            AppLocalization.of(context)!.createNFT,
+                            Dimens.buttonTopDimens,
+                            onPressed: () async {},
+                          )
+                        else
+                          AppButton.buildAppButton(
+                            const Key('addNFTFile'),
+                            context,
+                            AppButtonType.primary,
+                            AppLocalization.of(context)!.createNFT,
+                            Dimens.buttonTopDimens,
+                            onPressed: () async {
+                              setState(() {
+                                isPressed = true;
+                              });
 
-                                  updateToken();
-                                  if (await validateAddNFT(context) == true) {
-                                    AppDialogs.showConfirmDialog(
-                                      context,
-                                      AppLocalization.of(context)!.createNFT,
-                                      AppLocalization.of(context)!
-                                          .createNFTConfirmation,
-                                      AppLocalization.of(context)!.yes,
-                                      () async {
-                                        setState(() {
-                                          isPressed = false;
-                                        });
-                                        // Authenticate
-                                        final preferences =
-                                            await Preferences.getInstance();
-                                        final authMethod =
-                                            preferences.getAuthMethod();
-                                        final auth =
-                                            await AuthFactory.authenticate(
-                                          context,
-                                          authMethod,
-                                          activeVibrations:
-                                              StateContainer.of(context)
-                                                  .activeVibrations,
-                                        );
-                                        if (auth) {
-                                          EventTaxiImpl.singleton()
-                                              .fire(AuthenticatedEvent());
-                                        }
-                                      },
-                                      cancelText:
-                                          AppLocalization.of(context)!.no,
-                                      cancelAction: () {
-                                        setState(() {
-                                          isPressed = false;
-                                        });
-                                      },
-                                    );
-                                  } else {
-                                    UIUtil.showSnackbar(
-                                      addNFTMessage,
-                                      context,
-                                      StateContainer.of(context).curTheme.text!,
-                                      StateContainer.of(context)
-                                          .curTheme
-                                          .snackBarShadow!,
-                                    );
-
+                              updateToken();
+                              if (await validateAddNFT(context) == true) {
+                                AppDialogs.showConfirmDialog(
+                                  context,
+                                  AppLocalization.of(context)!.createNFT,
+                                  AppLocalization.of(context)!
+                                      .createNFTConfirmation,
+                                  AppLocalization.of(context)!.yes,
+                                  () async {
                                     setState(() {
                                       isPressed = false;
                                     });
-                                  }
-                                },
-                              ),
+                                    // Authenticate
+                                    final preferences =
+                                        await Preferences.getInstance();
+                                    final authMethod =
+                                        preferences.getAuthMethod();
+                                    final auth = await AuthFactory.authenticate(
+                                      context,
+                                      authMethod,
+                                      activeVibrations:
+                                          StateContainer.of(context)
+                                              .activeVibrations,
+                                    );
+                                    if (auth) {
+                                      EventTaxiImpl.singleton()
+                                          .fire(AuthenticatedEvent());
+                                    }
+                                  },
+                                  cancelText: AppLocalization.of(context)!.no,
+                                  cancelAction: () {
+                                    setState(() {
+                                      isPressed = false;
+                                    });
+                                  },
+                                );
+                              } else {
+                                UIUtil.showSnackbar(
+                                  addNFTMessage,
+                                  context,
+                                  StateContainer.of(context).curTheme.text!,
+                                  StateContainer.of(context)
+                                      .curTheme
+                                      .snackBarShadow!,
+                                );
+
+                                setState(() {
+                                  isPressed = false;
+                                });
+                              }
+                            },
+                          ),
                       ],
                     ),
                   ],
@@ -1695,64 +1699,65 @@ class _NFTCreationProcessState extends State<NFTCreationProcess>
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        if (tokenPropertyAsset!.publicKeysList !=
-                                                    null &&
-                                                tokenPropertyAsset!
-                                                    .publicKeysList!.isNotEmpty) tokenPropertyAsset!
-                                                        .publicKeysList!
-                                                        .length ==
-                                                    1
-                                                ? Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width -
-                                                            100,
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                      left: 20,
-                                                    ),
-                                                    child: AutoSizeText(
-                                                      'This asset is protected and accessible by ${tokenPropertyAsset!.publicKeysList!.length} public key',
-                                                      style: AppStyles
-                                                          .textStyleSize12W400Primary(
-                                                        context,
-                                                      ),
-                                                    ),
-                                                  )
-                                                : Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width -
-                                                            100,
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                      left: 20,
-                                                    ),
-                                                    child: AutoSizeText(
-                                                      'This asset is protected and accessible by ${tokenPropertyAsset!.publicKeysList!.length} public keys',
-                                                      style: AppStyles
-                                                          .textStyleSize12W400Primary(
-                                                        context,
-                                                      ),
-                                                    ),
-                                                  ) else Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width -
-                                                    100,
-                                                padding: const EdgeInsets.only(
-                                                  left: 20,
-                                                ),
-                                                child: AutoSizeText(
-                                                  'This asset is accessible by everyone',
-                                                  style: AppStyles
-                                                      .textStyleSize12W400Primary(
-                                                    context,
+                                        if (tokenPropertyAsset!
+                                                    .publicKeysList !=
+                                                null &&
+                                            tokenPropertyAsset!
+                                                .publicKeysList!.isNotEmpty)
+                                          tokenPropertyAsset!
+                                                      .publicKeysList!.length ==
+                                                  1
+                                              ? Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width -
+                                                      100,
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                    left: 20,
                                                   ),
-                                                ),
+                                                  child: AutoSizeText(
+                                                    'This asset is protected and accessible by ${tokenPropertyAsset!.publicKeysList!.length} public key',
+                                                    style: AppStyles
+                                                        .textStyleSize12W400Primary(
+                                                      context,
+                                                    ),
+                                                  ),
+                                                )
+                                              : Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width -
+                                                      100,
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                    left: 20,
+                                                  ),
+                                                  child: AutoSizeText(
+                                                    'This asset is protected and accessible by ${tokenPropertyAsset!.publicKeysList!.length} public keys',
+                                                    style: AppStyles
+                                                        .textStyleSize12W400Primary(
+                                                      context,
+                                                    ),
+                                                  ),
+                                                )
+                                        else
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width -
+                                                100,
+                                            padding: const EdgeInsets.only(
+                                              left: 20,
+                                            ),
+                                            child: AutoSizeText(
+                                              'This asset is accessible by everyone',
+                                              style: AppStyles
+                                                  .textStyleSize12W400Primary(
+                                                context,
                                               ),
+                                            ),
+                                          ),
                                       ],
                                     ),
                                   ],

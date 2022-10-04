@@ -190,93 +190,96 @@ class _LedgerSheetState extends State<LedgerSheet> {
               ),
             ),
           ),
-          if (kIsWeb || Platform.isMacOS) Column(
+          if (kIsWeb || Platform.isMacOS)
+            Column(
+              children: <Widget>[
+                Row(
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        AppButton.buildAppButton(
-                          const Key('getPubKey'),
-                          context,
-                          AppButtonType.primary,
-                          'Get pubKey',
-                          Dimens.buttonTopDimens,
-                          onPressed: () async {
-                            setState(() {
-                              method = 'getPubKey';
-                              info = '';
-                            });
-                            await sl
-                                .get<LedgerNanoSImpl>()
-                                .connectLedger(getPubKeyAPDU());
-                          },
-                        ),
-                        AppButton.buildAppButton(
-                          const Key('getArchAddress'),
-                          context,
-                          AppButtonType.primary,
-                          'Get Arch Address',
-                          Dimens.buttonTopDimens,
-                          onPressed: () async {
-                            setState(() {
-                              method = 'getArchAddress';
-                              info = '';
-                              labelResponse = '';
-                            });
-                            if (enterPayloadController!.text.trim() == '' ||
-                                isHex(enterPayloadController!.text) == false) {
-                              info = 'The payload is not valid.';
-                            } else {
-                              final getArchAddress = transport(
-                                0xe0,
-                                0x04,
-                                0x00,
-                                0x00,
-                                Uint8List.fromList(
-                                  hex.decode(enterPayloadController!.text),
-                                ),
-                              );
-                              log('getArchAddress: ${uint8ListToHex(getArchAddress)}');
-                              await sl
-                                  .get<LedgerNanoSImpl>()
-                                  .connectLedger(getArchAddress);
-                            }
-                          },
-                        ),
-                        AppButton.buildAppButton(
-                          const Key('signTransaction'),
-                          context,
-                          AppButtonType.primary,
-                          'Sign Transaction',
-                          Dimens.buttonTopDimens,
-                          onPressed: () async {
-                            setState(() {
-                              method = 'signTxn';
-                              info = '';
-                              labelResponse = '';
-                            });
-                            if (enterPayloadController!.text.trim() == '' ||
-                                isHex(enterPayloadController!.text) == false) {
-                              info = 'The payload is not valid.';
-                            } else {
-                              final signTxn = transport(
-                                0xe0,
-                                0x08,
-                                0x00,
-                                0x00,
-                                Uint8List.fromList(
-                                  hex.decode(enterPayloadController!.text),
-                                ),
-                              );
-                              await sl
-                                  .get<LedgerNanoSImpl>()
-                                  .connectLedger(signTxn);
-                            }
-                          },
-                        ),
-                      ],
+                    AppButton.buildAppButton(
+                      const Key('getPubKey'),
+                      context,
+                      AppButtonType.primary,
+                      'Get pubKey',
+                      Dimens.buttonTopDimens,
+                      onPressed: () async {
+                        setState(() {
+                          method = 'getPubKey';
+                          info = '';
+                        });
+                        await sl
+                            .get<LedgerNanoSImpl>()
+                            .connectLedger(getPubKeyAPDU());
+                      },
+                    ),
+                    AppButton.buildAppButton(
+                      const Key('getArchAddress'),
+                      context,
+                      AppButtonType.primary,
+                      'Get Arch Address',
+                      Dimens.buttonTopDimens,
+                      onPressed: () async {
+                        setState(() {
+                          method = 'getArchAddress';
+                          info = '';
+                          labelResponse = '';
+                        });
+                        if (enterPayloadController!.text.trim() == '' ||
+                            isHex(enterPayloadController!.text) == false) {
+                          info = 'The payload is not valid.';
+                        } else {
+                          final getArchAddress = transport(
+                            0xe0,
+                            0x04,
+                            0x00,
+                            0x00,
+                            Uint8List.fromList(
+                              hex.decode(enterPayloadController!.text),
+                            ),
+                          );
+                          log('getArchAddress: ${uint8ListToHex(getArchAddress)}');
+                          await sl
+                              .get<LedgerNanoSImpl>()
+                              .connectLedger(getArchAddress);
+                        }
+                      },
+                    ),
+                    AppButton.buildAppButton(
+                      const Key('signTransaction'),
+                      context,
+                      AppButtonType.primary,
+                      'Sign Transaction',
+                      Dimens.buttonTopDimens,
+                      onPressed: () async {
+                        setState(() {
+                          method = 'signTxn';
+                          info = '';
+                          labelResponse = '';
+                        });
+                        if (enterPayloadController!.text.trim() == '' ||
+                            isHex(enterPayloadController!.text) == false) {
+                          info = 'The payload is not valid.';
+                        } else {
+                          final signTxn = transport(
+                            0xe0,
+                            0x08,
+                            0x00,
+                            0x00,
+                            Uint8List.fromList(
+                              hex.decode(enterPayloadController!.text),
+                            ),
+                          );
+                          await sl
+                              .get<LedgerNanoSImpl>()
+                              .connectLedger(signTxn);
+                        }
+                      },
                     ),
                   ],
-                ) else const SizedBox(),
+                ),
+              ],
+            )
+          else
+            const SizedBox(),
         ],
       ),
     );

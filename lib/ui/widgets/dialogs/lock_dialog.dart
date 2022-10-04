@@ -14,8 +14,7 @@ class LockDialog {
     UnlockSetting curUnlockSetting,
   ) async {
     final preferences = await Preferences.getInstance();
-    final pickerItemsList =
-        List<PickerItem>.empty(growable: true);
+    final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in UnlockOption.values) {
       pickerItemsList.add(
         PickerItem(

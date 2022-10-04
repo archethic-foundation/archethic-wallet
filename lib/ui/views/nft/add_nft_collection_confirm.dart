@@ -226,10 +226,8 @@ class _AddNFTCollectionConfirmState extends State<AddNFTCollectionConfirm> {
                       Dimens.buttonTopDimens,
                       onPressed: () async {
                         // Authenticate
-                        final preferences =
-                            await Preferences.getInstance();
-                        final authMethod =
-                            preferences.getAuthMethod();
+                        final preferences = await Preferences.getInstance();
+                        final authMethod = preferences.getAuthMethod();
                         final auth = await AuthFactory.authenticate(
                           context,
                           authMethod,

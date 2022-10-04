@@ -195,59 +195,58 @@ class _AddPublicKeyState extends State<AddPublicKey> {
                           Row(
                             children: <Widget>[
                               if (publicKeyAccessController!.text.isNotEmpty &&
-                                      publicKeyAccessController!.text.isNotEmpty) AppButton.buildAppButtonTiny(
-                                      const Key('addPublicKey'),
-                                      context,
-                                      AppButtonType.primary,
-                                      AppLocalization.of(context)!
-                                          .addNFTProperty,
-                                      Dimens.buttonBottomDimens,
-                                      onPressed: () async {
-                                        sl.get<HapticUtil>().feedback(
-                                              FeedbackType.light,
-                                              StateContainer.of(context)
-                                                  .activeVibrations,
-                                            );
-                                        if (publicKeyAccessController!
-                                                    .text.length <
-                                                68 ||
-                                            !isHex(
-                                              publicKeyAccessController!.text,
-                                            )) {
-                                          UIUtil.showSnackbar(
-                                            'The public key is not valid.',
-                                            context,
-                                            StateContainer.of(context)
-                                                .curTheme
-                                                .text!,
-                                            StateContainer.of(context)
-                                                .curTheme
-                                                .snackBarShadow!,
-                                          );
-                                        } else {
-                                          setState(() {
-                                            publicKeys!.add(
-                                              publicKeyAccessController!.text,
-                                            );
-                                            publicKeys!.sort(
-                                              (a, b) => a
-                                                  .toLowerCase()
-                                                  .compareTo(b.toLowerCase()),
-                                            );
-                                            publicKeyAccessController!.text =
-                                                '';
-                                          });
-                                        }
-                                      },
-                                    ) else AppButton.buildAppButtonTiny(
-                                      const Key('addPublicKey'),
-                                      context,
-                                      AppButtonType.primaryOutline,
-                                      AppLocalization.of(context)!
-                                          .addNFTProperty,
-                                      Dimens.buttonBottomDimens,
-                                      onPressed: () {},
-                                    ),
+                                  publicKeyAccessController!.text.isNotEmpty)
+                                AppButton.buildAppButtonTiny(
+                                  const Key('addPublicKey'),
+                                  context,
+                                  AppButtonType.primary,
+                                  AppLocalization.of(context)!.addNFTProperty,
+                                  Dimens.buttonBottomDimens,
+                                  onPressed: () async {
+                                    sl.get<HapticUtil>().feedback(
+                                          FeedbackType.light,
+                                          StateContainer.of(context)
+                                              .activeVibrations,
+                                        );
+                                    if (publicKeyAccessController!.text.length <
+                                            68 ||
+                                        !isHex(
+                                          publicKeyAccessController!.text,
+                                        )) {
+                                      UIUtil.showSnackbar(
+                                        'The public key is not valid.',
+                                        context,
+                                        StateContainer.of(context)
+                                            .curTheme
+                                            .text!,
+                                        StateContainer.of(context)
+                                            .curTheme
+                                            .snackBarShadow!,
+                                      );
+                                    } else {
+                                      setState(() {
+                                        publicKeys!.add(
+                                          publicKeyAccessController!.text,
+                                        );
+                                        publicKeys!.sort(
+                                          (a, b) => a
+                                              .toLowerCase()
+                                              .compareTo(b.toLowerCase()),
+                                        );
+                                        publicKeyAccessController!.text = '';
+                                      });
+                                    }
+                                  },
+                                )
+                              else
+                                AppButton.buildAppButtonTiny(
+                                  const Key('addPublicKey'),
+                                  context,
+                                  AppButtonType.primaryOutline,
+                                  AppLocalization.of(context)!.addNFTProperty,
+                                  Dimens.buttonBottomDimens,
+                                  onPressed: () {},
+                                ),
                             ],
                           ),
                           if (publicKeys != null)

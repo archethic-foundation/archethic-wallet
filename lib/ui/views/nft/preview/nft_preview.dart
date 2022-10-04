@@ -37,8 +37,7 @@ class NFTPreviewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final description =
         TokenUtil.getPropertyValue(tokenInformations, 'description');
-    final typeMime =
-        TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
+    final typeMime = TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
 
     return Padding(
       padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
@@ -189,50 +188,47 @@ class NFTPreviewWidget extends StatelessWidget {
                               ),
                             ),
                             if (tokenPropertyWithAccessInfos.publicKeysList !=
-                                        null &&
-                                    tokenPropertyWithAccessInfos
-                                        .publicKeysList!.isNotEmpty) tokenPropertyWithAccessInfos
-                                            .publicKeysList!.length ==
-                                        1
-                                    ? Container(
-                                        width:
-                                            MediaQuery.of(context).size.width -
-                                                100,
-                                        padding:
-                                            const EdgeInsets.only(left: 20),
-                                        child: AutoSizeText(
-                                          'This property is protected and accessible by ${tokenPropertyWithAccessInfos.publicKeysList!.length} public key',
-                                          style: AppStyles
-                                              .textStyleSize12W400Primary(
-                                            context,
-                                          ),
+                                    null &&
+                                tokenPropertyWithAccessInfos
+                                    .publicKeysList!.isNotEmpty)
+                              tokenPropertyWithAccessInfos
+                                          .publicKeysList!.length ==
+                                      1
+                                  ? Container(
+                                      width: MediaQuery.of(context).size.width -
+                                          100,
+                                      padding: const EdgeInsets.only(left: 20),
+                                      child: AutoSizeText(
+                                        'This property is protected and accessible by ${tokenPropertyWithAccessInfos.publicKeysList!.length} public key',
+                                        style: AppStyles
+                                            .textStyleSize12W400Primary(
+                                          context,
                                         ),
-                                      )
-                                    : Container(
-                                        width:
-                                            MediaQuery.of(context).size.width -
-                                                100,
-                                        padding:
-                                            const EdgeInsets.only(left: 20),
-                                        child: AutoSizeText(
-                                          'This property is protected and accessible by ${tokenPropertyWithAccessInfos.publicKeysList!.length} public keys',
-                                          style: AppStyles
-                                              .textStyleSize12W400Primary(
-                                            context,
-                                          ),
-                                        ),
-                                      ) else Container(
-                                    width:
-                                        MediaQuery.of(context).size.width - 100,
-                                    padding: const EdgeInsets.only(left: 20),
-                                    child: AutoSizeText(
-                                      'This property is accessible for everyone',
-                                      style:
-                                          AppStyles.textStyleSize12W400Primary(
-                                        context,
                                       ),
-                                    ),
+                                    )
+                                  : Container(
+                                      width: MediaQuery.of(context).size.width -
+                                          100,
+                                      padding: const EdgeInsets.only(left: 20),
+                                      child: AutoSizeText(
+                                        'This property is protected and accessible by ${tokenPropertyWithAccessInfos.publicKeysList!.length} public keys',
+                                        style: AppStyles
+                                            .textStyleSize12W400Primary(
+                                          context,
+                                        ),
+                                      ),
+                                    )
+                            else
+                              Container(
+                                width: MediaQuery.of(context).size.width - 100,
+                                padding: const EdgeInsets.only(left: 20),
+                                child: AutoSizeText(
+                                  'This property is accessible for everyone',
+                                  style: AppStyles.textStyleSize12W400Primary(
+                                    context,
                                   ),
+                                ),
+                              ),
                           ],
                         ),
                       ],

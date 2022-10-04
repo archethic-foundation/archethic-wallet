@@ -27,8 +27,7 @@ class NFTCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final typeMime =
-        TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
+    final typeMime = TokenUtil.getPropertyValue(tokenInformations, 'type/mime');
     return Column(
       children: <Widget>[
         Expanded(

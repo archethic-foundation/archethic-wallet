@@ -121,94 +121,95 @@ class _LedgerScreenState extends State<LedgerScreen> {
                               stepGranularity: 0.1,
                             ),
                           ),
-                          if (kIsWeb) method == 'getPubKey'
-                                  ? ElevatedButton(
-                                      child: Text(
-                                        'Ledger - Get Public Key',
-                                        style: AppStyles
-                                            .textStyleSize16W200Primary(
-                                          context,
-                                        ),
+                          if (kIsWeb)
+                            method == 'getPubKey'
+                                ? ElevatedButton(
+                                    child: Text(
+                                      'Ledger - Get Public Key',
+                                      style:
+                                          AppStyles.textStyleSize16W200Primary(
+                                        context,
                                       ),
-                                      onPressed: () async {
-                                        method = 'getPubKey';
-                                        await sl
-                                            .get<LedgerNanoSImpl>()
-                                            .connectLedger(getPubKeyAPDU());
-                                      },
-                                    )
-                                  : method == 'signTxn'
-                                      ? ElevatedButton(
-                                          child: Text(
-                                            'Ledger - Verify transaction',
-                                            style: AppStyles
-                                                .textStyleSize16W200Primary(
-                                              context,
-                                            ),
+                                    ),
+                                    onPressed: () async {
+                                      method = 'getPubKey';
+                                      await sl
+                                          .get<LedgerNanoSImpl>()
+                                          .connectLedger(getPubKeyAPDU());
+                                    },
+                                  )
+                                : method == 'signTxn'
+                                    ? ElevatedButton(
+                                        child: Text(
+                                          'Ledger - Verify transaction',
+                                          style: AppStyles
+                                              .textStyleSize16W200Primary(
+                                            context,
                                           ),
-                                          onPressed: () async {
-                                            const addressIndex = '';
-                                            // TODO(redDwarf03): To review
-                                            /*String addressIndex =
+                                        ),
+                                        onPressed: () async {
+                                          const addressIndex = '';
+                                          // TODO(redDwarf03): To review
+                                          /*String addressIndex =
                                                 StateContainer.of(context)
                                                     .selectedAccount
                                                     .index!
                                                     .toRadixString(16)
                                                     .padLeft(8, '0');*/
-                                            final transaction =
-                                                Transaction(
-                                              type: 'transfer',
-                                              data: Transaction.initData(),
+                                          final transaction = Transaction(
+                                            type: 'transfer',
+                                            data: Transaction.initData(),
+                                          );
+                                          for (final transfer
+                                              in widget.ucoTransferList!) {
+                                            transaction.addUCOTransfer(
+                                              transfer.to,
+                                              transfer.amount!,
                                             );
-                                            for (final transfer
-                                                in widget.ucoTransferList!) {
-                                              transaction.addUCOTransfer(
-                                                transfer.to,
-                                                transfer.amount!,
-                                              );
-                                            }
-                                            final lastTransaction =
-                                                await sl
-                                                    .get<ApiService>()
-                                                    .getLastTransaction(
-                                                      StateContainer.of(
-                                                        context,
-                                                      )
-                                                          .appWallet!
-                                                          .appKeychain!
-                                                          .getAccountSelected()!
-                                                          .lastAddress!,
-                                                      request: 'chainLength',
-                                                    );
-                                            final transactionChainSeed =
-                                                await StateContainer.of(context)
-                                                    .getSeed();
-                                            final originPrivateKey = sl
-                                                .get<ApiService>()
-                                                .getOriginKey();
-                                            transaction
-                                                .build(
-                                                  transactionChainSeed!,
-                                                  lastTransaction.chainLength!,
+                                          }
+                                          final lastTransaction = await sl
+                                              .get<ApiService>()
+                                              .getLastTransaction(
+                                                StateContainer.of(
+                                                  context,
                                                 )
-                                                .originSign(originPrivateKey);
-                                            final onChainWalletData =
-                                                walletEncoder(originPubKey);
+                                                    .appWallet!
+                                                    .appKeychain!
+                                                    .getAccountSelected()!
+                                                    .lastAddress!,
+                                                request: 'chainLength',
+                                              );
+                                          final transactionChainSeed =
+                                              await StateContainer.of(context)
+                                                  .getSeed();
+                                          final originPrivateKey = sl
+                                              .get<ApiService>()
+                                              .getOriginKey();
+                                          transaction
+                                              .build(
+                                                transactionChainSeed!,
+                                                lastTransaction.chainLength!,
+                                              )
+                                              .originSign(originPrivateKey);
+                                          final onChainWalletData =
+                                              walletEncoder(originPubKey);
 
-                                            const hashType = 0;
-                                            final signTxn = getSignTxnAPDU(
-                                              onChainWalletData,
-                                              transaction,
-                                              hashType,
-                                              int.tryParse(addressIndex)!,
-                                            );
-                                            log('signTxn:${uint8ListToHex(signTxn)}'); // TODO(Chralu): is this useful ?
-                                            await sl
-                                                .get<LedgerNanoSImpl>()
-                                                .connectLedger(signTxn);
-                                          },
-                                        )
-                                      : const SizedBox() else const SizedBox(),
+                                          const hashType = 0;
+                                          final signTxn = getSignTxnAPDU(
+                                            onChainWalletData,
+                                            transaction,
+                                            hashType,
+                                            int.tryParse(addressIndex)!,
+                                          );
+                                          log('signTxn:${uint8ListToHex(signTxn)}'); // TODO(Chralu): is this useful ?
+                                          await sl
+                                              .get<LedgerNanoSImpl>()
+                                              .connectLedger(signTxn);
+                                        },
+                                      )
+                                    : const SizedBox()
+                          else
+                            const SizedBox(),
                         ],
                       ),
                     ),
