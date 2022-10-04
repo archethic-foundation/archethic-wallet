@@ -8,7 +8,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 // Package imports:
 import 'package:gql/language.dart' as lang;
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:http/http.dart' as http show Response, post;
+import 'package:http/http.dart' as http show post;
 
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -141,8 +141,7 @@ class TransactionSender {
       }
     }
 
-    final completer =
-        Completer<TransactionStatus>();
+    final completer = Completer<TransactionStatus>();
     final requestHeaders = <String, String>{
       'Content-type': 'application/json',
       'Accept': 'application/json',

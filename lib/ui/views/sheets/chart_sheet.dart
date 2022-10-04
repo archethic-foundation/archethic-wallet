@@ -84,7 +84,8 @@ class _ChartSheetState extends State<ChartSheet> {
             padding: const EdgeInsets.only(top: 20),
             child: Padding(
               padding: const EdgeInsets.only(right: 5, left: 5),
-              child: StateContainer.of(context).chartInfos != null
+              child: StateContainer.of(context).chartInfos != null &&
+                      StateContainer.of(context).chartInfos!.data != null
                   ? HistoryChart(
                       intervals: StateContainer.of(context).chartInfos!.data!,
                       gradientColors: LinearGradient(
