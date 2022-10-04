@@ -9,7 +9,7 @@ import 'package:aewallet/bus/account_changed_event.dart';
 import 'package:aewallet/bus/disable_lock_timeout_event.dart';
 import 'package:aewallet/bus/notifications_event.dart';
 import 'package:aewallet/localization.dart';
-import 'package:aewallet/ui/menu/settings_drawer_wallet_mobile.dart';
+import 'package:aewallet/ui/menu/settings_drawer/settings_drawer_wallet_mobile.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/routes.dart';
