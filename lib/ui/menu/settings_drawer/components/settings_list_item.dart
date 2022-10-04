@@ -1,334 +1,103 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-// Project imports:
-import 'package:aewallet/appstate_container.dart';
-import 'package:aewallet/model/setting_item.dart';
-import 'package:aewallet/ui/util/responsive.dart';
-import 'package:aewallet/ui/util/styles.dart';
-import 'package:aewallet/ui/widgets/components/icon_widget.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+part of '../settings_drawer_wallet_mobile.dart';
 
-// ignore: avoid_classes_with_only_static_members
-class AppSettings {
-  //Settings item with a dropdown option
-  static Widget buildSettingsListItemWithDefaultValue(
-    BuildContext context,
-    String heading,
-    SettingSelectionItem defaultMethod,
-    String icon,
-    Color iconColor,
-    Function onPressed, {
-    bool disabled = false,
-  }) {
-    return IgnorePointer(
-      ignoring: disabled,
-      child: TextButton(
-        onPressed: () {
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                StateContainer.of(context).activeVibrations,
-              );
-          onPressed();
-        },
-        child: Container(
-          height: 55,
-          margin: const EdgeInsetsDirectional.only(start: 10),
-          child: Row(
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsetsDirectional.only(end: 13),
-                child: IconWidget.build(
-                  context,
-                  icon,
-                  30,
-                  30,
-                  color: iconColor,
-                ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    width: Responsive.drawerWidth(context) - 100,
-                    child: Text(
-                      heading,
-                      style: disabled
-                          ? AppStyles.textStyleSize16W600EquinoxPrimary30(
-                              context,
-                            )
-                          : AppStyles.textStyleSize16W600EquinoxPrimary(
-                              context,
-                            ),
-                    ),
-                  ),
-                  AutoSizeText(
-                    defaultMethod.getDisplayName(context),
-                    style: disabled
-                        ? AppStyles.textStyleSize12W100Primary30(context)
-                        : AppStyles.textStyleSize12W100Primary(context),
-                    maxLines: 1,
-                    stepGranularity: 0.1,
-                    minFontSize: 8,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+abstract class _SettingsListItem extends StatelessWidget {
+  const _SettingsListItem({super.key});
 
-  // TODO(Chralu): convert to [Widget] subclass
-  static Widget buildSettingsListItemWithDefaultValueWithInfos(
-    BuildContext context,
-    String heading,
-    String info,
-    SettingSelectionItem defaultMethod,
-    String icon,
-    Color iconColor,
-    Function onPressed, {
-    bool disabled = false,
-  }) {
-    return TextButton(
-      onPressed: () {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              StateContainer.of(context).activeVibrations,
-            );
-        onPressed();
-      },
-      child: Container(
-        height: 65,
-        margin: const EdgeInsetsDirectional.only(start: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsetsDirectional.only(end: 13),
-              child: IconWidget.build(context, icon, 30, 30, color: iconColor),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  width: Responsive.drawerWidth(context) - 70,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        heading,
-                        style: AppStyles.textStyleSize16W600EquinoxPrimary(
-                          context,
-                        ),
-                      ),
-                      Text(
-                        defaultMethod.getDisplayName(context),
-                        style: disabled
-                            ? AppStyles.textStyleSize12W100Primary30(
-                                context,
-                              )
-                            : AppStyles.textStyleSize12W100Primary(context),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: Responsive.drawerWidth(context) - 80,
-                  child: AutoSizeText(
-                    info,
-                    maxLines: 5,
-                    stepGranularity: 0.1,
-                    minFontSize: 8,
-                    style: AppStyles.textStyleSize12W100Primary(context),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  const factory _SettingsListItem.spacer({Key? key}) = _SettingsListSpacer;
+  const factory _SettingsListItem.title({
+    required String text,
+    Key? key,
+  }) = _SettingsListTitle;
 
-  // TODO(Chralu): convert to [Widget] subclass
-  static Widget buildSettingsListItemSingleLineWithInfos(
-    BuildContext context,
-    String heading,
-    String info, {
+  /// Settings item without any dropdown option but rather a direct functionality
+  const factory _SettingsListItem.singleLine({
+    required String heading,
+    required TextStyle headingStyle,
+    required String icon,
+    required Color iconColor,
+    VoidCallback? onPressed,
+    Key? key,
+  }) = _SettingsListItemSingleLine;
+
+  /// Settings item with a dropdown option
+  const factory _SettingsListItem.withDefaultValue({
+    required String heading,
+    required SettingSelectionItem defaultMethod,
+    required String icon,
+    required Color iconColor,
+    required Function onPressed,
+    bool disabled,
+    Key? key,
+  }) = _SettingsListItemWithDefaultValue;
+
+  const factory _SettingsListItem.withDefaultValueWithInfos({
+    required String heading,
+    required String info,
+    required SettingSelectionItem defaultMethod,
+    required String icon,
+    required Color iconColor,
+    required Function onPressed,
+    bool disabled,
+    Key? key,
+  }) = _SettingsListItemWithDefaultValueWithInfos;
+
+  const factory _SettingsListItem.singleLineWithInfos({
+    required String heading,
+    required String info,
     Function? onPressed,
     String? icon,
     Color? iconColor,
-  }) {
-    return TextButton(
-      onPressed: () {
-        if (onPressed != null) {
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                StateContainer.of(context).activeVibrations,
-              );
-          onPressed();
-        } else {
-          return;
-        }
-      },
-      child: Container(
-        height: 60,
-        margin: const EdgeInsetsDirectional.only(start: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsetsDirectional.only(end: 13),
-              child: IconWidget.build(context, icon!, 30, 30, color: iconColor),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  width: Responsive.drawerWidth(context) - 100,
-                  child: Text(
-                    heading,
-                    style: AppStyles.textStyleSize16W600EquinoxPrimary(context),
-                  ),
-                ),
-                SizedBox(
-                  width: Responsive.drawerWidth(context) - 100,
-                  child: AutoSizeText(
-                    info,
-                    maxLines: 5,
-                    stepGranularity: 0.1,
-                    minFontSize: 8,
-                    style: AppStyles.textStyleSize12W100Primary(context),
-                  ),
-                ),
-              ],
-            ),
-            FaIcon(
-              FontAwesomeIcons.chevronRight,
-              color: StateContainer.of(context).curTheme.iconDrawer,
-              size: 15,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+    Key? key,
+  }) = _SettingsListItemSingleLineWithInfos;
 
-  //Settings item without any dropdown option but rather a direct functionality
-  static Widget buildSettingsListItemSingleLine(
-    BuildContext context,
-    String heading,
-    TextStyle headingStyle,
-    String icon,
-    Color iconColor, {
-    Function? onPressed,
-  }) {
-    return TextButton(
-      onPressed: () {
-        if (onPressed != null) {
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                StateContainer.of(context).activeVibrations,
-              );
-          onPressed();
-        } else {
-          return;
-        }
-      },
-      child: Container(
-        height: 50,
-        margin: const EdgeInsetsDirectional.only(start: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsetsDirectional.only(end: 13),
-              child: Container(
-                child: IconWidget.build(
-                  context,
-                  icon,
-                  30,
-                  30,
-                  color: iconColor,
-                ),
-              ),
-            ),
-            SizedBox(
-              width: Responsive.drawerWidth(context) - 100,
-              child: AutoSizeText(
-                heading,
-                style: headingStyle,
-              ),
-            ),
-            FaIcon(
-              FontAwesomeIcons.chevronRight,
-              color: StateContainer.of(context).curTheme.iconDrawer,
-              size: 15,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // TODO(Chralu): convert to [Widget] subclass
-  static Widget buildSettingsListItemSwitch(
-    BuildContext context,
-    String heading,
-    String icon,
-    Color iconColor,
-    bool isSwitched, {
+  const factory _SettingsListItem.withSwitch({
+    required String heading,
+    required String icon,
+    required Color iconColor,
+    required bool isSwitched,
     Function? onChanged,
-  }) {
-    return TextButton(
-      onPressed: () {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              StateContainer.of(context).activeVibrations,
-            );
-      },
+    Key? key,
+  }) = _SettingsListItemSwitch;
+}
+
+class _SettingsListSpacer extends _SettingsListItem {
+  const _SettingsListSpacer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Divider(
+      height: 2,
+      color: StateContainer.of(context).curTheme.text15,
+    );
+  }
+}
+
+class _SettingsListTitle extends _SettingsListItem {
+  const _SettingsListTitle({
+    required this.text,
+    super.key,
+  });
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: StateContainer.of(context).curTheme.text05,
+      ),
       child: Container(
-        height: 50,
-        margin: const EdgeInsetsDirectional.only(start: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsetsDirectional.only(end: 13),
-              child: IconWidget.build(context, icon, 30, 30, color: iconColor),
-            ),
-            SizedBox(
-              width: Responsive.drawerWidth(context) - 130,
-              child: Text(
-                heading,
-                style: AppStyles.textStyleSize16W600EquinoxPrimary(context),
-              ),
-            ),
-            Switch(
-              value: isSwitched,
-              onChanged: (bool value) {
-                if (onChanged != null) {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        StateContainer.of(context).activeVibrations,
-                      );
-                  onChanged(value);
-                } else {
-                  return;
-                }
-              },
-              inactiveTrackColor:
-                  StateContainer.of(context).curTheme.inactiveTrackColorSwitch,
-              activeTrackColor:
-                  StateContainer.of(context).curTheme.activeTrackColorSwitch,
-              activeColor: StateContainer.of(context).curTheme.backgroundDark,
-            )
-          ],
+        alignment: Alignment.center,
+        margin: const EdgeInsetsDirectional.only(
+          top: 15,
+          bottom: 15,
+        ),
+        child: Text(
+          text,
+          style: AppStyles.textStyleSize20W700EquinoxPrimary(
+            context,
+          ),
         ),
       ),
     );
