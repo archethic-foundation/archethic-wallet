@@ -935,6 +935,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                             StateContainer.of(context).showBalance =
                                 _showBalancesActive;
                             preferences.setShowBalances(_showBalancesActive);
+                            StateContainer.of(context).setState(() {});
                           });
                         },
                       ),
@@ -955,6 +956,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                             StateContainer.of(context).showBlog =
                                 _showBlogActive;
                             preferences.setShowBlog(_showBlogActive);
+                            StateContainer.of(context).setState(() {});
                           });
                         },
                       ),
@@ -976,6 +978,7 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
                                 _showPriceChartActive;
                             preferences
                                 .setShowPriceChart(_showPriceChartActive);
+                            StateContainer.of(context).setState(() {});
                           });
                         },
                       ),
