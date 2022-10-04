@@ -40,9 +40,11 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+
     return Column(
       children: <Widget>[
-        SheetHeader(title: AppLocalization.of(context)!.getPublicKeyHeader),
+        SheetHeader(title: localizations.getPublicKeyHeader),
         Expanded(
           child: Center(
             child: Stack(
@@ -79,7 +81,8 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
                                     .map((MapEntry<dynamic, String> entry) {
                                   return Padding(
                                     padding: const EdgeInsets.all(5),
-                                    child: _buildLine(context, entry.value),
+                                    child: _GetPublicKeyLine(
+                                        publicKey: entry.value),
                                   );
                                 }).toList(),
                               ),
@@ -96,27 +99,31 @@ class _GetPublicKeysState extends State<GetPublicKeys> {
       ],
     );
   }
+}
 
-  // TODO(chralu): Create a Widget subclass
-  Widget _buildLine(BuildContext context, String publicKey) {
+class _GetPublicKeyLine extends StatelessWidget {
+  const _GetPublicKeyLine({required this.publicKey, super.key});
+
+  final String publicKey;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
+
     return Container(
       padding: const EdgeInsets.only(bottom: 8),
       child: Card(
         shape: RoundedRectangleBorder(
           side: BorderSide(
-            color: StateContainer.of(context)
-                .curTheme
-                .backgroundAccountsListCardSelected!,
+            color: theme.backgroundAccountsListCardSelected!,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
         elevation: 0,
-        color: StateContainer.of(context)
-            .curTheme
-            .backgroundAccountsListCardSelected,
+        color: theme.backgroundAccountsListCardSelected,
         child: Container(
           height: 60,
-          color: StateContainer.of(context).curTheme.backgroundAccountsListCard,
+          color: theme.backgroundAccountsListCard,
           child: Column(
             children: [
               Row(

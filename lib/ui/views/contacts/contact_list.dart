@@ -199,9 +199,8 @@ class _ContactsListState extends State<ContactsList> {
                     itemCount: contactsToDisplay!.length,
                     itemBuilder: (BuildContext context, int index) {
                       // Build contact
-                      return buildSingleContact(
-                        context,
-                        contactsToDisplay![index],
+                      return _SignleContact(
+                        contact: contactsToDisplay![index],
                       );
                     },
                   ),
@@ -277,9 +276,17 @@ class _ContactsListState extends State<ContactsList> {
       ),
     );
   }
+}
 
-  // TODO(Chralu): transform to [Widget] subclass
-  Widget buildSingleContact(BuildContext context, Contact contact) {
+class _SignleContact extends StatelessWidget {
+  const _SignleContact({required this.contact, super.key});
+
+  final Contact contact;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = StateContainer.of(context).curTheme;
+
     return TextButton(
       onPressed: () {
         ContactDetailsSheet(contact).mainBottomSheet(context);
@@ -288,7 +295,7 @@ class _ContactsListState extends State<ContactsList> {
         children: <Widget>[
           Divider(
             height: 2,
-            color: StateContainer.of(context).curTheme.text15,
+            color: theme.text15,
           ),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 4),
@@ -316,9 +323,7 @@ class _ContactsListState extends State<ContactsList> {
                             else
                               Icon(
                                 Icons.person,
-                                color: StateContainer.of(context)
-                                    .curTheme
-                                    .iconDrawer,
+                                color: theme.iconDrawer,
                                 size: 16,
                               ),
                             const SizedBox(
