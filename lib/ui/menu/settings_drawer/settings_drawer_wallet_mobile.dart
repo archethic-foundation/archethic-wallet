@@ -10,8 +10,8 @@ import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
+import 'package:aewallet/ui/menu/settings_drawer/components/settings_list_item.dart';
 import 'package:aewallet/ui/themes/theme_dark.dart';
-import 'package:aewallet/ui/util/settings_list_item.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
@@ -38,6 +38,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+
+part 'components/main_settings.dart';
 
 class SettingsSheetWalletMobile extends StatefulWidget {
   const SettingsSheetWalletMobile({super.key});
@@ -245,6 +247,26 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
     return true;
   }
 
+  void showContacts() {
+    _contactsOpen = true;
+    _contactsController.forward();
+  }
+
+  void showSecurity() {
+    _securityOpen = true;
+    _securityController!.forward();
+  }
+
+  void showCustom() {
+    _customOpen = true;
+    _customController!.forward();
+  }
+
+  void showAbout() {
+    _aboutOpen = true;
+    _aboutController!.forward();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -256,7 +278,12 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
               color: StateContainer.of(context).curTheme.backgroundDark,
               constraints: const BoxConstraints.expand(),
             ),
-            buildMainSettings(context),
+            MainSettings(
+              showContacts: showContacts,
+              showSecurity: showSecurity,
+              showCustom: showCustom,
+              showAbout: showAbout,
+            ),
             SlideTransition(
               position: _contactsOffsetFloat!,
               child: ContactsList(
@@ -275,252 +302,6 @@ class _SettingsSheetWalletMobileState extends State<SettingsSheetWalletMobile>
             SlideTransition(
               position: _aboutOffsetFloat!,
               child: buildAboutMenu(context),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // TODO(Chralu): convert to [Widget] subclass
-  Widget buildMainSettings(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: StateContainer.of(context).curTheme.drawerBackground,
-        gradient: LinearGradient(
-          colors: <Color>[
-            StateContainer.of(context).curTheme.drawerBackground!,
-            StateContainer.of(context).curTheme.backgroundDark00!,
-          ],
-          begin: Alignment.center,
-          end: const Alignment(5, 0),
-        ),
-      ),
-      child: SafeArea(
-        minimum: EdgeInsets.only(
-          top: MediaQuery.of(context).padding.top + 30,
-        ),
-        child: Column(
-          children: <Widget>[
-            // Settings items
-            Expanded(
-              child: Stack(
-                children: <Widget>[
-                  ListView(
-                    padding: const EdgeInsets.only(top: 15),
-                    children: <Widget>[
-                      Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.text15,
-                      ),
-                      DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: StateContainer.of(context).curTheme.text05,
-                        ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsetsDirectional.only(
-                            top: 15,
-                            bottom: 15,
-                          ),
-                          child: Text(
-                            AppLocalization.of(context)!.manage,
-                            style: AppStyles.textStyleSize20W700EquinoxPrimary(
-                              context,
-                            ),
-                          ),
-                        ),
-                      ),
-                      if (StateContainer.of(context)
-                          .appWallet!
-                          .appKeychain!
-                          .getAccountSelected()!
-                          .balance!
-                          .isNativeTokenValuePositive())
-                        Divider(
-                          height: 2,
-                          color: StateContainer.of(context).curTheme.text15,
-                        )
-                      else
-                        const SizedBox(),
-                      /* if (StateContainer.of(context).wallet != null &&
-                        StateContainer.of(context)
-                                .wallet!
-                                .accountBalance
-                                .networkCurrencyValue !=
-                            null &&
-                        StateContainer.of(context)
-                                .wallet!
-                                .accountBalance
-                                .networkCurrencyValue! >
-                            0)
-                      AppSettings.buildSettingsListItemSingleLineWithInfos(
-                          context,
-                          AppLocalization.of(context)!.tokenHeader,
-                          AppLocalization.of(context)!.tokenHeaderDesc,
-                          icon: 'assets/icons/token.png',
-                          iconColor: StateContainer.of(context)
-                              .curTheme
-                              .iconDrawer!, onPressed: () {
-                        setState(() {
-                          _tokenOpen = true;
-                        });
-                        _tokenController!.forward();
-                      })
-                    else
-                      const SizedBox(),
-                    Divider(
-                      height: 2,
-                      color: StateContainer.of(context).curTheme.text15,
-                    ),*/
-                      AppSettings.buildSettingsListItemSingleLineWithInfos(
-                        context,
-                        AppLocalization.of(context)!.addressBookHeader,
-                        AppLocalization.of(context)!.addressBookDesc,
-                        icon: 'assets/icons/address-book.png',
-                        iconColor:
-                            StateContainer.of(context).curTheme.iconDrawer,
-                        onPressed: () {
-                          _contactsOpen = true;
-                          _contactsController.forward();
-                        },
-                      ),
-                      Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.text15,
-                      ),
-                      DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: StateContainer.of(context).curTheme.text05,
-                        ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsetsDirectional.only(
-                            top: 15,
-                            bottom: 15,
-                          ),
-                          child: Text(
-                            AppLocalization.of(context)!.preferences,
-                            style: AppStyles.textStyleSize20W700EquinoxPrimary(
-                              context,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.text15,
-                      ),
-                      AppSettings.buildSettingsListItemSingleLine(
-                        context,
-                        AppLocalization.of(context)!.securityHeader,
-                        AppStyles.textStyleSize16W600EquinoxPrimary(context),
-                        'assets/icons/encrypted.png',
-                        StateContainer.of(context).curTheme.iconDrawer!,
-                        onPressed: () {
-                          _securityOpen = true;
-                          _securityController!.forward();
-                        },
-                      ),
-                      Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.text15,
-                      ),
-                      AppSettings.buildSettingsListItemSingleLine(
-                        context,
-                        AppLocalization.of(context)!.customHeader,
-                        AppStyles.textStyleSize16W600EquinoxPrimary(context),
-                        'assets/icons/brush.png',
-                        StateContainer.of(context).curTheme.iconDrawer!,
-                        onPressed: () {
-                          _customOpen = true;
-                          _customController!.forward();
-                        },
-                      ),
-                      Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.text15,
-                      ),
-                      DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: StateContainer.of(context).curTheme.text05,
-                        ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsetsDirectional.only(
-                            top: 15,
-                            bottom: 15,
-                          ),
-                          child: Text(
-                            AppLocalization.of(context)!.informations,
-                            style: AppStyles.textStyleSize20W700EquinoxPrimary(
-                              context,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.text15,
-                      ),
-                      AppSettings.buildSettingsListItemSingleLineWithInfos(
-                        context,
-                        AppLocalization.of(context)!.aeWebsiteLinkHeader,
-                        AppLocalization.of(context)!.aeWebsiteLinkDesc,
-                        icon: 'assets/icons/home.png',
-                        iconColor:
-                            StateContainer.of(context).curTheme.iconDrawer,
-                        onPressed: () async {
-                          UIUtil.showWebview(
-                            context,
-                            'https://www.archethic.net',
-                            AppLocalization.of(context)!.aeWebsiteLinkHeader,
-                          );
-                        },
-                      ),
-                      Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.text15,
-                      ),
-                      AppSettings.buildSettingsListItemSingleLineWithInfos(
-                        context,
-                        AppLocalization.of(context)!.labLinkHeader,
-                        AppLocalization.of(context)!.labLinkDesc,
-                        icon: 'assets/icons/microscope.png',
-                        iconColor:
-                            StateContainer.of(context).curTheme.iconDrawer,
-                        onPressed: () async {
-                          UIUtil.showWebview(
-                            context,
-                            'https://www.archethic.net/lab.html',
-                            AppLocalization.of(context)!.labLinkHeader,
-                          );
-                        },
-                      ),
-                      Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.text15,
-                      ),
-                      AppSettings.buildSettingsListItemSingleLine(
-                        context,
-                        AppLocalization.of(context)!.aboutHeader,
-                        AppStyles.textStyleSize16W600EquinoxPrimary(context),
-                        'assets/icons/help.png',
-                        StateContainer.of(context).curTheme.iconDrawer!,
-                        onPressed: () {
-                          _aboutOpen = true;
-                          _aboutController!.forward();
-                        },
-                      ),
-                      Divider(
-                        height: 2,
-                        color: StateContainer.of(context).curTheme.text15,
-                      ),
-                      const SizedBox(height: 30),
-                    ].where(notNull).toList(),
-                  ),
-                ],
-              ),
             ),
           ],
         ),

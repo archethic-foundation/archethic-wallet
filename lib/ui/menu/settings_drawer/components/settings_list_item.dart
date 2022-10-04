@@ -85,6 +85,7 @@ class AppSettings {
     );
   }
 
+  // TODO(Chralu): convert to [Widget] subclass
   static Widget buildSettingsListItemWithDefaultValueWithInfos(
     BuildContext context,
     String heading,
@@ -156,6 +157,7 @@ class AppSettings {
     );
   }
 
+  // TODO(Chralu): convert to [Widget] subclass
   static Widget buildSettingsListItemSingleLineWithInfos(
     BuildContext context,
     String heading,
@@ -275,6 +277,7 @@ class AppSettings {
     );
   }
 
+  // TODO(Chralu): convert to [Widget] subclass
   static Widget buildSettingsListItemSwitch(
     BuildContext context,
     String heading,
